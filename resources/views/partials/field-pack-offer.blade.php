@@ -1,5 +1,6 @@
 {{-- The field helpers pack offer (2026-10-14, the owner): the Weed Control
-     Helper, the Pest Finder, the Disease Finder and the Variety Finder are
+     Helper, the Pest Finder, the Disease Finder, the Nutrient Deficiency
+     Finder (2026-10-16) and the Variety Finder are
      locked on the free plan and open for a month with a small add-on, or with
      any plan above Libre. Used as a sheet on the dashboard (any tile with
      [data-field-pack] opens it) and as the body of the locked tool page.
@@ -11,6 +12,7 @@
         ['weed', 'Weed Control Helper', 'What to do first and what to spray at your crop\'s age'],
         ['pest', 'Pest Finder', 'From the damage you see to the pest and what controls it'],
         ['disease', 'Disease Finder', 'From the signs you see to the disease and what to do'],
+        ['nutrient', 'Nutrient Deficiency Finder', 'From the leaves you see to the missing nutrient and its fertilizer'],
         ['rice-variety', 'Variety Finder', 'Every registered variety, compared for your farm'],
     ];
     $fpWorker = \App\Support\WorkerContext::inWorkerContext();

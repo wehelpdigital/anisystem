@@ -1,0 +1,596 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "cucumber-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 370,
+ "title": "Cucumber Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Cucumber Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Cucumber nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and magnesium in pipino, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "cucumber nutrient deficiency",
+ "keywords": [
+  "cucumber nutrient deficiency",
+  "cucumber deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Cucumber nutrient deficiency is one of the first things to check when the leaves of your pipino (cucumber) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, phosphorus, calcium, boron and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for cucumber",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, magnesium and phosphorus move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which cucumber nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Cucumber nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of pipino",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Old leaves bleach yellow, vines are thin, and fruits come pale and misshapen.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaf edges yellow and scorch to dry paper, and fruits stay thin at the stem end.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves yellow between the big veins, leaving a narrow green band along each vein.",
+     "Magnesium sulfate (Epsom salt), Dolomite"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Stunted vines with small, dull grey green leaves and weak roots.",
+     "Ammonium phosphate 16 20 0, Complete 14 14 14"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of pipino",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Youngest leaves scorch and cup downward, the tip dies, and fruits fail at the blossom end.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Young fruits drop, and older fruits show yellow streaks that turn corky near the blossom end.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Middle and upper leaves turn pale yellow while the veins stay green.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a cucumber nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest cucumber nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in cucumber",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves bleach, then yellow and die, and the yellowing climbs the vine. Growth is slow and stems are thin. Fruits are pale, small, thick or misshapen, and yield falls. You see it most at this stage: rapid vine growth and fruit set."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in pipino"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, heavy rain or irrigation, low organic matter, and too long between side dressings during harvest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage yellows between the veins of old leaves and leaves the veins green. Downy mildew makes angular yellow spots limited by the veins, not an even yellowing. To be sure, soil test and leaf tissue test. Haifa samples the youngest fully mature leaf with its stalk at early flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Side dress urea or ammonium sulfate based on the soil test, in split doses. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days. The University of Kentucky advises putting part of the season's nitrogen in before planting and the rest in one or two side dressings before fruit forms, or through drip lines."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add compost and split nitrogen through the season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in cucumber",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "The edges of older leaves turn yellow and scorch. The damage moves in between the veins until the leaf is dry and papery. Leaves curl, dead spots form along the midrib, stems weaken and plants wilt easily. Fewer female flowers form, and fruits can be brown or spotted and fail to fill out at the stem end. You see it most at this stage: fruiting and harvest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in pipino"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or acid soils, heavy rain or irrigation, and long harvests without potash side dressing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage yellows between the veins with a green band along the veins. Potassium burns the edges first. To be sure, soil test for potassium and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU suggests a morning spray of sulfate of potash at 10 grams per liter of water with a sticker. Keep soil pH above 6."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Potassium nitrate 13 0 46"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, include potash in the basal fertilizer and in side dressings through harvest."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in cucumber",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn yellow between the major veins while a narrow green border stays along the veins. The yellowing moves up the vine, and in severe cases the yellow tissue turns tan, papery and falls out, leaving holes. Yields drop. You see it most at this stage: fruit enlargement, during fast growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in pipino"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils with low holding capacity, low pH, dry years, and heavy potash, lime or ammonium fertilizer that compete with magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Manganese toxicity on very acid soil also gives yellow or bronze spots on old leaves. A soil pH test tells them apart. To be sure, soil test for magnesium, potassium and pH, and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "The University of Kentucky advises keeping pH near 6.5 and feeding Epsom salt (magnesium sulfate) through drip lines. It notes leaf sprays usually do not fix a serious shortage. KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it with potash."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Dolomite",
+    "Magnesium oxide"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite on acid soil before planting and avoid heavy potassium, calcium or ammonium fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in cucumber",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants are stunted with weak roots. Leaves are small, dark and grey green, and leaves and veins can turn purplish. The oldest leaf may turn bright yellow while the one above stays dark green, and brown scorched patches form between the veins. You see it most at this stage: seedling and early vine growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in pipino"
+  },
+  {
+   "type": "text",
+   "text": "Acid or iron rich soils, low organic matter, cold or waterlogged soil, and no phosphorus at planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Root knot nematodes also stunt vines. Pull a plant and look for galls on the roots. To be sure, soil test for available phosphorus and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply phosphorus near the roots based on the soil test. KAU lists single superphosphate for a quick fix and rock phosphate or bone meal for the long term, with best uptake near pH 6.2 to 7.0."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium phosphate 16 20 0",
+    "Complete 14 14 14",
+    "Single superphosphate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a phosphorus starter such as 16 20 0 or 14 14 14 in the hill at planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in cucumber",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves are scorched and distorted and cup downward, sometimes with yellow stripes along the midrib. Flowers may drop and the growing point can die. Fruits are small, tasteless and may fail to develop at the blossom end. You see it most at this stage: fast vine growth and early fruiting, in hot dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in pipino"
+  },
+  {
+   "type": "text",
+   "text": "Uneven watering or dry soil, acid sandy soils, and heavy ammonium or potash. High phosphorus and low boron add to it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron shortage also deforms new growth but brings corky streaks on fruit. To be sure, soil test for calcium and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Water evenly and mulch. On acid soil, KAU suggests lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soil before planting and keep the soil evenly moist."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in cucumber",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "New leaves are distorted and the oldest leaves get a broad yellow edge. Buds die so the plant grows bushy, and young fruits abort. Mature fruits show yellow streaks that turn corky (scurfing), often near the blossom end, and may crack or stay small. You see it most at this stage: flowering and fruit set."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in pipino"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils where boron leaches, overlimed soils, low organic matter and drought."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Poor pollination also causes young fruit to abort, but the leaves stay normal. To be sure, soil test for boron and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Delaware lists cucumber among crops with a medium boron need, about 2 pounds of boron per acre before planting. Do not mix borax with calcium or ammonium fertilizers."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor (sodium borate)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add boron to the basal fertilizer on sandy soils, but never repeat doses without a test."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in cucumber",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "On middle to upper leaves, the veins stay green while the rest of the blade turns pale green to yellow. Small dead spots and a fine net of green veins appear, and leaves are smaller with crimped edges. You see it most at this stage: vine growth and fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in pipino"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soil, sandy or organic soils, and cold wet spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron shortage hits the newest leaves with a sharper net pattern. Magnesium shortage starts on the oldest leaves. To be sure, soil pH and a leaf tissue test. Leaf tests for manganese mislead if fungicides containing manganese were sprayed."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests a manganese sulfate spray at 2 grams per liter of water after a soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not overlime."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any cucumber nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your pipino needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick pipino, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Cucumber nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my pipino leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: old leaves bleach yellow, vines are thin, and fruits come pale and misshapen. If the young leaves turn yellow first instead, look at manganese deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in cucumber?",
+     "a": "Side dress urea or ammonium sulfate based on the soil test, in split doses. For a quick fix, KAU gives a urea leaf spray at 10 grams per liter of water every 15 days."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in cucumber?",
+     "a": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU suggests a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+    },
+    {
+     "q": "What fertilizer fixes magnesium deficiency in cucumber?",
+     "a": "The University of Kentucky advises keeping pH near 6.5 and feeding Epsom salt (magnesium sulfate) through drip lines. It notes leaf sprays usually do not fix a serious shortage."
+    },
+    {
+     "q": "How do I know which nutrient my pipino lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the cucumber nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Haifa: Crop guide, nutrients for cucumber",
+     "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
+    },
+    {
+     "label": "KAU Agri Infotech Portal: Cucumber nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/cucumber/deficiency.php"
+    },
+    {
+     "label": "University of Kentucky Vegetable Scouting: Nitrogen deficiency of cucurbits",
+     "url": "https://veggiescout.mgcafe.uky.edu/node/60"
+    },
+    {
+     "label": "University of Kentucky Vegetable Scouting: Magnesium deficiency of cucurbit crops",
+     "url": "https://veggiescout.mgcafe.uky.edu/magnesium-deficiency-cucurbit-crops"
+    },
+    {
+     "label": "University of Delaware Weekly Crop Update: Boron and molybdenum in vegetable crops",
+     "url": "https://sites.udel.edu/weeklycropupdate/?p=22766"
+    }
+   ]
+  }
+ ]
+}

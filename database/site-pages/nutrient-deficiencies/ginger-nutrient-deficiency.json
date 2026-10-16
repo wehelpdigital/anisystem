@@ -1,0 +1,593 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "ginger-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 210,
+ "title": "Ginger Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Ginger Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Ginger nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and phosphorus in luya, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "ginger nutrient deficiency",
+ "keywords": [
+  "ginger nutrient deficiency",
+  "ginger deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Ginger nutrient deficiency is one of the first things to check when the leaves of your luya (ginger) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, magnesium, zinc, iron and calcium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for ginger",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, iron and calcium stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which ginger nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Ginger nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of luya",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Lower leaves turn pale yellow, leaves are small and the clump grows weak.",
+     "Urea 46 0 0, Complete 14 14 14"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves yellow and burn at the edges, with dead spots, and plants wilt easily.",
+     "Muriate of potash 0 0 60, Complete 14 14 14"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Dark green plants with purple leaf undersides and small, stunted rhizomes.",
+     "Single superphosphate 0 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves yellow between green veins with brown spots, sometimes with a yellow arrowhead at the leaf base.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of luya",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Small, puckered leaves bunched at the top, yellow between the veins.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "Young leaves yellow between green veins, then bleach almost white.",
+     "Ferrous sulfate"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, the roots",
+     "Young leaves crinkle and twist with dead edges, and roots are stunted and rot.",
+     "Agricultural lime, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a ginger nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest ginger nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in ginger",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn pale or yellow, starting low and moving up. Reddish tints can creep from the leaf edges toward the midrib. Leaves stay small, plants are stunted and roots weak, and the rhizome yield drops. You see it most at this stage: from 2 to 5 months after planting, during tillering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in luya"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or worn out soils, heavy rain washing nitrogen away, and little or no fertilizer. Ginger takes up large amounts of nutrients (DA CAR)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency yellows veins and all on the young leaves too. Bacterial wilt yellows leaves quickly with rotting, foul smelling rhizomes. To be sure, check that the old leaves yellowed first. Soil test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "The DA CAR technoguide gives a general need of 180 kg N, 180 kg P2O5 and 255 kg K2O per hectare. Split the nitrogen through the season. For quick help TNAU gives a 1 percent urea spray (10 g per liter). KAU repeats it every 15 days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Complete 14 14 14",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, mix decomposed organic matter into the furrows before planting, and mulch with rice straw or coconut leaves (DA CAR)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in ginger",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "The edges of older leaves turn yellow, then burn or scorch, and dead spots form in the leaf. Internodes stay short, plants wilt easily and growth is stunted. You see it most at this stage: rhizome bulking."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in luya"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and acid soils, and fields not given potash. Ginger needs more potash than nitrogen (DA CAR)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Leaf spot disease gives spots with a yellow ring scattered over the leaf, not edge burn. To be sure, soil test for potassium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "The DA CAR technoguide gives a general need of 180 kg N, 180 kg P2O5 and 255 kg K2O per hectare. Apply Muriate of potash 0 0 60 in splits (KAU). TNAU gives a 1 percent potassium chloride spray (10 g per liter)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep the soil pH above 6 and add wood ash or compost."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in ginger",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants look darker green than healthy ones, with purple color on the leaf undersides. Older leaves yellow from the tip to the base, roots are poor and rhizomes small and stunted. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in luya"
+  },
+  {
+   "type": "text",
+   "text": "Acid and volcanic soils that hold phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency gives pale plants, not dark. To be sure, soil test for available phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "The DA CAR technoguide gives a general need of 180 kg N, 180 kg P2O5 and 255 kg K2O per hectare. KAU uses single superphosphate for a quick fix and rock phosphate for the long term, following the soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Single superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "16 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, mix phosphorus and compost into the furrows at planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in ginger",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Leaves yellow between the veins while the veins stay green, and brown dead spots spread from the tips or edges. Leaves curl or cup, and old leaves can show a triangular arrowhead pattern near the stalk. Rhizomes stay small. You see it most at this stage: mid season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in luya"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy soils and heavy potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency burns the edges without the green vein pattern. To be sure, soil test for magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply it apart from potash. Use Dolomite on acid soils over the long run."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soils with dolomite."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in ginger",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Leaves yellow between the veins and come out small, distorted and puckered, bunched in a rosette at the top. Plants branch less and roots are short. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in luya"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils and heavy phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency bleaches the young leaves without the bunching. To be sure, soil test for zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or in severe cases a morning spray of 2 g zinc sulfate with 2.5 g lime per liter. Keep zinc and phosphate applications apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep the soil pH between 5 and 7.5."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in ginger",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves yellow between the veins while the veins stay green, then turn pale white. Rhizomes stay small. You see it most at this stage: early to mid growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in luya"
+  },
+  {
+   "type": "text",
+   "text": "High pH or limey soils, waterlogging, and low potassium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency looks similar but yellows veins too. To be sure, soil test, since many soils have plenty of iron. The cause is often pH or waterlogging."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 0.5 percent ferrous sulfate spray (5 g per liter). KAU gives about 15 kg ferrous sulfate per hectare to the soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, plant on well drained raised beds."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in ginger",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves crinkle, twist or grow unevenly, and their edges die. Plants are small and weak, and roots are stunted, misshapen and decay. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in luya"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils and high phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also deforms young leaves, with white rolled tips. To be sure, soil pH and calcium test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid uplands ahead of planting."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any ginger nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your luya needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick luya, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Ginger nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my luya leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: lower leaves turn pale yellow, leaves are small and the clump grows weak. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in ginger?",
+     "a": "The DA CAR technoguide gives a general need of 180 kg N, 180 kg P2O5 and 255 kg K2O per hectare. Split the nitrogen through the season."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in ginger?",
+     "a": "The DA CAR technoguide gives a general need of 180 kg N, 180 kg P2O5 and 255 kg K2O per hectare. Apply Muriate of potash 0 0 60 in splits (KAU)."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in ginger?",
+     "a": "The DA CAR technoguide gives a general need of 180 kg N, 180 kg P2O5 and 255 kg K2O per hectare. KAU uses single superphosphate for a quick fix and rock phosphate for the long term, following the soil test."
+    },
+    {
+     "q": "How do I know which nutrient my luya lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the ginger nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "TNAU Agritech Portal: Ginger, nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/ginger_nitrogen.html"
+    },
+    {
+     "label": "DA CAR Technoguide: Production and management of ginger",
+     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-GINGER.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech Portal: Ginger nutrient deficiencies",
+     "url": "https://celkau.in/crops/spices/ginger/deficiency.php"
+    },
+    {
+     "label": "TNAU Agritech Portal: Ginger, potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/ginger_potassium.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Ginger, iron deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/ginger_iron.html"
+    }
+   ]
+  }
+ ]
+}

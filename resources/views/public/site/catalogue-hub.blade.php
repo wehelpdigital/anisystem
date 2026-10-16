@@ -106,6 +106,7 @@
                     <a href="{{ $S::url('pests') }}" class="{{ $section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}" class="{{ $section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
                     <a href="{{ $S::url('weeds') }}">Weeds and grasses</a>
+                    <a href="{{ $S::url('nutrient-deficiencies') }}">Nutrient deficiencies</a>
                     <a href="{{ $S::url('blog') }}">Latest in Agriculture</a>
                 </div>
             </div>

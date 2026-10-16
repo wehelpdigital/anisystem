@@ -1,0 +1,742 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "soybean-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 80,
+ "title": "Soybean Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Soybean Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Soybean nutrient deficiency shows in the leaves. See the signs of nitrogen, phosphorus and potassium in utaw, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "soybean nutrient deficiency",
+ "keywords": [
+  "soybean nutrient deficiency",
+  "soybean deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Soybean nutrient deficiency is one of the first things to check when the leaves of your utaw (soybean) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, sulfur, molybdenum, iron, manganese, zinc and magnesium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/soybean-potassium-deficiency.webp",
+  "alt": "Soybean plants whose leaves turn yellow along the edges, potassium shortage in the upper canopy",
+  "credit": "Ark. Agricultural Experiment Station, CC BY SA 2.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus, potassium, molybdenum and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, iron, manganese and zinc stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which soybean nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Soybean nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of utaw",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Light green, stunted plants, often in patches or rows, with few or white nodules on the roots.",
+     "Rhizobium inoculant for soybean, Urea 46 0 0"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the whole plant",
+     "Short, dark bluish green plants with few pods.",
+     "Complete 14 14 14, 16 20 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves yellow in blotches from the edges inward.",
+     "Muriate of potash 0 0 60, Complete 14 14 14"
+    ],
+    [
+     "Molybdenum",
+     "the whole plant",
+     "Light green plants that look nitrogen starved, on very acid soil, even with nodules present.",
+     "Sodium molybdate, Ammonium molybdate"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves turn yellow between the veins, then deep yellow with rusty specks.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of utaw",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The newest leaves turn pale first, then the whole plant is evenly yellow green.",
+     "Gypsum"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "Youngest leaves turn yellow with green veins, then almost white, on limey soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Leaves pale green to yellow between green veins, later with brown spots, often after liming.",
+     "Manganese sulfate"
+    ],
+    [
+     "Zinc",
+     "the whole plant, between the veins",
+     "Leaves pale evenly between green veins, then turn rusty brown.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a soybean nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest soybean nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in soybean",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Plants are stunted with very pale green leaves, starting on the older leaves. TNAU notes this happens because the roots did not nodulate or the nodules do not work, from poor soil fertility or too little molybdenum. Yellow strips in the field often mark where the inoculant was missed. You see it most at this stage: two to six weeks after emergence."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "In a legume this usually means poor nodulation: no inoculant in a field new to the crop, inoculant killed by sun or heat, very acid soil, waterlogging, hot dry soil, or too much nitrogen fertilizer near the seed, which stops nodules from forming."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Molybdenum deficiency looks exactly the same, because the nodules need molybdenum to work. It shows on very acid soils. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "If nodules are poor and plants are yellow, Penn State advises up to about 56 kg of nitrogen per hectare (50 pounds per acre) before full bloom. TNAU also gives a 1 percent urea spray (10 g per liter) every 15 days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Rhizobium inoculant for soybean",
+    "Urea 46 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, before planting, coat 10 kg of seed with a 100 g pack of soybean inoculant after wetting the seed with a glass of water, keep it in the shade and sow at once (DA)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in soybean",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants stay small and dark bluish green, sometimes with purple or bronze tints. Growth is slow, nodules are few and pods are fewer. You see it most at this stage: early growth to flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "Acid upland soils and soils low in phosphorus, and fields cropped for years without fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen and molybdenum deficiency make plants pale, not dark. To be sure, soil test for phosphorus before planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "DA Region 2 advises 2 bags of Complete 14 14 14 per hectare along the furrows before sowing when there is no soil test. Soybean also uses phosphorus left by the corn or rice before it, so feeding that crop well helps."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Complete 14 14 14",
+    "16 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, fertilize the rotation, not only the soybean, and add organic matter."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in soybean",
+   "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/soybean-potassium-deficiency.webp",
+   "alt": "Soybean plants whose leaves turn yellow along the edges, potassium shortage in the upper canopy",
+   "caption": "Photo: Ark. Agricultural Experiment Station, CC BY SA 2.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "Irregular yellow mottling appears around the edges of the leaves, joins into a yellow band and then moves toward the center of the leaf, followed by dead brown tissue. It starts on the lower leaves. In severe cases all but the newest leaves show it. You see it most at this stage: early growth to pod filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, highly weathered soils and fields cropped without potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Manganese and iron deficiency start on young leaves. Nitrogen deficiency pales the whole leaf, not the edges. To be sure, soil test for potassium, and check that edges of the old leaves yellow first."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 following the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter) every 15 days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, return crop residues and include potash in the rotation."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in soybean",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "New leaves are the first to turn pale, then the whole plant becomes evenly pale yellow. It looks like nitrogen deficiency but is not centred on the old leaves. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, and sulfur free fertilizer over many years. Legumes need more sulfur than grasses (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the older leaves. Iron deficiency keeps the veins green. To be sure, soil and leaf test for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 0.5 to 1 percent calcium sulfate spray (5 to 10 g per liter). For the soil, Gypsum adds sulfur without nitrogen. The University of Wisconsin finds about 11 kg of sulfur per hectare enough for row crops."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use gypsum or a sulfur bearing fertilizer every few seasons."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Molybdenum deficiency in soybean",
+   "id": "molybdenum"
+  },
+  {
+   "type": "text",
+   "text": "Plants are light green and small, just like nitrogen deficiency, because the nodules need molybdenum to fix nitrogen. Nodules may be present but work poorly. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why molybdenum deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "Very acid, sandy or highly weathered soils, where iron and aluminum hold molybdenum tightly."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency from missed inoculation looks the same. Check soil pH. To be sure, soil pH test (below about 5.5 is a warning) and a look at the nodules."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for molybdenum deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Liming to pH 6.0 or above often fixes it alone (UW). Otherwise treat seed with about 35 g of molybdenum per hectare (half an ounce per acre), or spray about 140 to 210 g of sodium or ammonium molybdate per hectare (2 to 3 ounces per acre) on the growing crop."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sodium molybdate",
+    "Ammonium molybdate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with molybdenum: **Tierramino Molybdenum** by Unilox Far East Resources Inc. (16 percent molybdenum), **YaraVita Teprosyn Mo** by Yara Fertilizers Philippines, Inc. (15 percent P2O5 and 15.3 percent molybdenum), **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo) and **Grow More Liquid Chelate General Purpose** by Sagrex Corporation (2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [molybdenum deficiency](/nutrient-deficiencies/molybdenum-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid fields before planting and use a molybdenum seed treatment where the pH is low (Penn State)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in soybean",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "Young upper leaves turn yellow between the veins first, then the veins yellow too. In severe cases the leaves become almost white. Older leaves stay green, and the patches follow spots of limey soil. You see it most at this stage: seedling and early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils with plenty of free lime."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Manganese deficiency also yellows between the veins, but the veins stay green and brown spots form. Nitrogen deficiency starts on the old leaves. To be sure, soil pH test and a young leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 1 percent ferrous sulfate spray (10 g per liter) every 15 days, or 5 to 10 kg ferrous sulfate per hectare to the soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid planting soybean on limey patches or choose tolerant varieties."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in soybean",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn pale green to pale yellow between the veins while the veins stay green. As it gets worse, brown spots and dead patches form. New leaves can grow out normal later in the season. You see it most at this stage: early to mid growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "High pH, sandy soils, over limed fields and soils high in organic matter. Soybean and beans need much manganese (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency turns the veins yellow too. Magnesium deficiency starts on the old leaves. To be sure, leaf test for manganese and a soil pH test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 0.5 percent manganese sulfate spray (5 g per liter) every 15 days, or 20 to 25 kg manganese sulfate per hectare to the soil. The University of Wisconsin uses about 5.6 kg of manganese per hectare to the soil or 1.1 kg as a spray. Warns that chelated manganese in the soil can make it worse."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not lime above about pH 6.5 on sandy soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in soybean",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Leaves become pale between the veins, which stay green, and then turn rusty brown. The pale color is even over the leaf, not starting at the edges as with potassium. It is not common. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils, heavy phosphorus and sandy soils low in organic matter."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency starts at the leaf edges. Manganese deficiency is hard to tell apart without a leaf test. To be sure, leaf test for zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 1 percent zinc sulfate spray (10 g per liter) every 15 days, or 20 to 25 kg zinc sulfate per hectare to the soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add zinc to the basal fertilizer on high pH soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in soybean",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "The spaces between the veins of older leaves turn yellow, then deep yellow, with rusty specks and dead blotches between the veins and at the edges. Late in the season the crop looks like it is maturing early. You see it most at this stage: mid season to pod filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in utaw"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy soils in rainy areas and heavy potash on soils low in magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency begins at the leaf edges. Manganese deficiency starts on the young leaves. To be sure, soil test for magnesium and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 2 percent magnesium sulfate spray (20 g Epsom salt per liter) every 15 days. Lime acid soils with Dolomite as the soil test advises."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite rather than plain lime on acid soils low in magnesium."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any soybean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your utaw needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick utaw, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Soybean nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my utaw leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: light green, stunted plants, often in patches or rows, with few or white nodules on the roots. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in soybean?",
+     "a": "If nodules are poor and plants are yellow, Penn State advises up to about 56 kg of nitrogen per hectare (50 pounds per acre) before full bloom. TNAU also gives a 1 percent urea spray (10 g per liter) every 15 days."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in soybean?",
+     "a": "DA Region 2 advises 2 bags of Complete 14 14 14 per hectare along the furrows before sowing when there is no soil test. Soybean also uses phosphorus left by the corn or rice before it, so feeding that crop well helps."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in soybean?",
+     "a": "Apply Muriate of potash 0 0 60 following the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter) every 15 days."
+    },
+    {
+     "q": "How do I know which nutrient my utaw lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the soybean nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency in all crops",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Molybdenum deficiency in all crops",
+     "url": "/nutrient-deficiencies/molybdenum-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "TNAU Agritech Portal: Soybean, nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_nitro.html"
+    },
+    {
+     "label": "Penn State Extension: Evaluating nodulation in soybeans",
+     "url": "https://extension.psu.edu/evaluating-nodulation-in-soybeans"
+    },
+    {
+     "label": "DA Regional Field Office 02: Soybean production handbook",
+     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/soybean281111.pdf"
+    },
+    {
+     "label": "Texas AandM AgriLife: Mid season assessment of Rhizobium nodulation in Texas peanuts and other legumes",
+     "url": "https://agrilife.org/texasrowcrops/?p=1736"
+    },
+    {
+     "label": "University of Wisconsin Extension A2520: Soil and applied phosphorus",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2520.pdf"
+    },
+    {
+     "label": "Iowa State University Extension IPM42: Nutrient deficiencies and application injuries in field crops",
+     "url": "https://www.agronext.iastate.edu/soilfertility/info/IPM42.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Soybean, potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_pota.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Soybean, sulphur deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_sul.html"
+    },
+    {
+     "label": "University of Wisconsin Extension A2525: Soil and applied sulfur",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2525.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A3555: Soil and applied molybdenum",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a3555.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Soybean, iron deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_iron.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Soybean, manganese deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/soy_mangan.html"
+    }
+   ]
+  }
+ ]
+}

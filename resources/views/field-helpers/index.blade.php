@@ -46,7 +46,7 @@
 <div class="max-w-6xl mx-auto">
     <div class="fh-hero">
         <img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="">
-        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From PhilRice and the NSIC registry.' : ($tool === 'landprep' ? 'Following PhilRice and DA practice.' : 'Active ingredients, their groups and products sold here.') }}</p></div>
+        <div><h2>{{ $fhName }}</h2><p>{{ $fhLead }}. {{ $tool === 'varieties' ? 'From PhilRice and the NSIC registry.' : ($tool === 'landprep' ? 'Following PhilRice and DA practice.' : ($tool === 'nutrients' ? 'From PhilRice, IRRI, the DA and extension practice, with fertilizers registered here.' : 'Active ingredients, their groups and products sold here.')) }}</p></div>
     </div>
     <div class="fh-body">
         @if ($tool === 'weeds')
@@ -55,6 +55,8 @@
             @include('field-helpers.land-prep', ['book' => $landBook, 'defaultCrop' => $defaultCrop])
         @elseif ($tool === 'varieties')
             @include('field-helpers.partials.varieties', ['vBook' => $vBook, 'vCrops' => $vCrops])
+        @elseif ($tool === 'nutrients')
+            @include('field-helpers.partials.nutrients', ['book' => $book, 'defaultCrop' => $defaultCrop])
         @else
             @include('field-helpers.partials.problems', ['book' => $book, 'defaultCrop' => $defaultCrop])
         @endif

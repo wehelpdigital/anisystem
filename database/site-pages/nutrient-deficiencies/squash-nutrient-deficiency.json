@@ -1,0 +1,599 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "squash-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 360,
+ "title": "Squash Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Squash Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Squash nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and magnesium in kalabasa, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "squash nutrient deficiency",
+ "keywords": [
+  "squash nutrient deficiency",
+  "squash deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Squash nutrient deficiency is one of the first things to check when the leaves of your kalabasa (squash) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, phosphorus, calcium, boron and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for squash",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, magnesium and phosphorus move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron and zinc stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which squash nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Squash nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of kalabasa",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Older leaves yellow from the tips and drop, and fruits are small and pale.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves scorch and cup up, and fewer female flowers and good fruits form.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves yellow between the veins, and the yellow patches die and fall out.",
+     "Magnesium sulfate (Epsom salt), Dolomite"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the whole plant",
+     "Purplish leaves and veins, short thin runners and poor yield.",
+     "Complete 14 14 14, Ammonium phosphate 16 20 0"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of kalabasa",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "fruit, grain or tubers, young leaves and the tip",
+     "Young fruits rot at the flower end, and new leaves crinkle and scorch.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Young fruits drop, and fruits show corky streaks and cracks.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves are pale with green veins and bunched on short runners.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a squash nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest squash nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in squash",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn pale, yellowing starts at the leaf tips and spreads up the vine, and old leaves die or drop. Vines are stunted and fruits are small, pale and thick. You see it most at this stage: rapid vine growth and fruit set."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in kalabasa"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, heavy rain, low organic matter, and no side dressing before fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage leaves green veins on the old leaves. Downy mildew gives angular yellow patches. To be sure, old leaves yellow first. Soil test and leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Side dress urea or ammonium sulfate based on the soil test, in one or two doses before the fruits form, as the University of Kentucky advises for cucurbits. KAU gives a urea leaf spray at 10 grams per liter of water every 15 days for pumpkin (Cucurbita moschata, the same kind as Philippine kalabasa)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add manure in the hills before planting and side dress before fruit set."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in squash",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves yellow and scorch, cup or curl upward, and get dead spots along the midrib. Shoots die back, stems weaken, fewer female flowers form and fruit quality drops. You see it most at this stage: flowering and fruit filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in kalabasa"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or acid soils, heavy rain, and no potash after planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage yellows between veins first. Potassium burns the edges first. To be sure, soil test for potassium and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker. Keep pH above 6 with lime or dolomite."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, include potash at planting and at flowering."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in squash",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing between the veins starts on the oldest leaves and moves up the vine. The leaf centre yellows while the edges stay green. The yellow tissue can turn red or brown, die and drop out, leaving holes. Leaves fall early and yield drops. You see it most at this stage: fruit enlargement."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in kalabasa"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, low pH, dry years, and heavy potash, lime or ammonium fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage yellows the whole leaf. Manganese toxicity on very acid soil gives bronze spots. To be sure, soil test for magnesium, potassium and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). The University of Kentucky advises keeping pH near 6.5 and notes leaf sprays usually do not fix a serious shortage. Do not apply magnesium with potash."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite on acid soils before planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in squash",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Leaves and veins turn purplish, shoots are short and thin, leaves look dull and shrivelled, and yield is poor. You see it most at this stage: early vine growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in kalabasa"
+  },
+  {
+   "type": "text",
+   "text": "Acid or iron rich soils, low organic matter, and no phosphorus at planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Root knot nematodes also stunt vines. Look for root galls. To be sure, soil test for available phosphorus and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply phosphorus in the hill based on the soil test. KAU lists single superphosphate for a quick fix and rock phosphate or bone meal for the long term, with best uptake near pH 6.2 to 7.0."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Complete 14 14 14",
+    "Ammonium phosphate 16 20 0",
+    "Single superphosphate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use complete fertilizer or 16 20 0 in the hill at planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in squash",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Fruits develop a sunken, leathery rot at the blossom end, starting as small light brown spots on young fruit. Young leaves show yellow stripes along the midrib, crinkle and scorch at the edges and become brittle. Vine tips can die back. Fruits may be small or tasteless. You see it most at this stage: early fruit growth, in hot dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in kalabasa"
+  },
+  {
+   "type": "text",
+   "text": "Too little calcium reaching the fruit because of uneven or poor watering, dry or salty soil, sandy soils and heavy ammonium fertilizer. Excess phosphorus and low boron add to it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Poor pollination makes young fruit shrivel and yellow from the tip without the leathery patch. Fruit rots from fungi are soft and mouldy from the start. To be sure, soil test for calcium and pH, and a check of your watering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Water evenly and mulch. On acid soil, KAU suggests lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Remove rotten fruits."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soil before planting, keep watering steady and avoid heavy ammonium fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in squash",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "New leaves are malformed and the plant grows bushy as buds die. Young fruits drop, and fruits show corky marks, streaks and cracks. You see it most at this stage: flowering and fruit set."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in kalabasa"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, overlimed soils, low organic matter and drought."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Poor pollination also drops young fruits but leaves stay normal. To be sure, soil test for boron and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Delaware lists squash among crops with a medium boron need, about 2 pounds of boron per acre before planting. Do not mix borax with calcium or ammonium fertilizers."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor (sodium borate)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add a small boron dose to the basal fertilizer on sandy soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in squash",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves yellow between the veins and can turn white. Leaves are pale with green veins, the spaces between leaves are short and leaves form distorted rosettes. You see it most at this stage: vine growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in kalabasa"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soils, heavy phosphorus and waterlogged soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Mosaic viruses also give small, mottled leaves, often with aphids around. To be sure, soil test for zinc and pH, and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests zinc sulfate in the soil at about 20 kg per hectare (8 kg per acre). In severe cases a morning spray of zinc sulfate at 2 grams plus calcium carbonate at 2.5 grams per liter of water. Do not apply zinc and phosphate together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep soil pH between 5 and 7.5."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any squash nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kalabasa needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick kalabasa, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Squash nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my kalabasa leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: older leaves yellow from the tips and drop, and fruits are small and pale. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in squash?",
+     "a": "Side dress urea or ammonium sulfate based on the soil test, in one or two doses before the fruits form, as the University of Kentucky advises for cucurbits. KAU gives a urea leaf spray at 10 grams per liter of water every 15 days for pumpkin (Cucurbita moschata, the same kind as Philippine kalabasa)."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in squash?",
+     "a": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+    },
+    {
+     "q": "What fertilizer fixes magnesium deficiency in squash?",
+     "a": "KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). The University of Kentucky advises keeping pH near 6.5 and notes leaf sprays usually do not fix a serious shortage."
+    },
+    {
+     "q": "How do I know which nutrient my kalabasa lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the squash nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "KAU Agri Infotech Portal: Pumpkin nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/pumpkin/deficiency.php"
+    },
+    {
+     "label": "University of Kentucky Vegetable Scouting: Nitrogen deficiency of cucurbits",
+     "url": "https://veggiescout.mgcafe.uky.edu/node/60"
+    },
+    {
+     "label": "University of Kentucky Vegetable Scouting: Magnesium deficiency of cucurbit crops",
+     "url": "https://veggiescout.mgcafe.uky.edu/magnesium-deficiency-cucurbit-crops"
+    },
+    {
+     "label": "UC IPM: Blossom end rot",
+     "url": "https://ipm.ucanr.edu/home-and-landscape/blossom-end-rot/"
+    },
+    {
+     "label": "UC Cooperative Extension: How to recognize visual signs of nutrient issues in vegetable crops",
+     "url": "https://www.ucanr.edu/sites/default/files/2026-02/How%20to%20Recognize%20Visual%20Signs%20of%20Nutrient%20Issues%20in%20Vegetable%20Crops%20Presentation%202.23.2026.pdf"
+    },
+    {
+     "label": "University of Delaware Weekly Crop Update: Boron and molybdenum in vegetable crops",
+     "url": "https://sites.udel.edu/weeklycropupdate/?p=22766"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,749 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "sugarcane-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 510,
+ "title": "Sugarcane Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Sugarcane Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Sugarcane nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and phosphorus in tubo, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "sugarcane nutrient deficiency",
+ "keywords": [
+  "sugarcane nutrient deficiency",
+  "sugarcane deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Sugarcane nutrient deficiency is one of the first things to check when the leaves of your tubo (sugarcane) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, sulfur, zinc, magnesium, calcium, iron and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/sugarcane-iron-deficiency.webp",
+  "alt": "Sugarcane leaves striped pale yellow to white between green veins from iron shortage",
+  "credit": "Amityadav8, CC BY SA 3.0, via Wikimedia Commons"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, zinc, calcium, iron and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which sugarcane nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sugarcane nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of tubo",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "The whole field looks pale yellow green, the lower leaves dry early and the stalks stay thin.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves turn yellow orange with scorched edges and red midribs, while the young leaves stay dark green.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the whole plant",
+     "Leaves look dark bluish green with purple tips and edges, tillers are few and the stalks stay short.",
+     "16 20 0, Ammonium phosphate 18 46 0"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves",
+     "Older leaves look rusty, covered with small orange brown freckles.",
+     "Magnesium sulfate (Epsom salt), Kieserite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of tubo",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The top young leaves turn yellow green with purple edges, while the old leaves stay greener.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves show a broad yellow band across the middle of the blade, while the midrib and edges stay green.",
+     "Zinc sulfate"
+    ],
+    [
+     "Calcium",
+     "old, lower leaves, young leaves and the tip",
+     "Older leaves get tiny dead spots and a rusty look, and in bad cases the spindle tip dies.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "Young leaves show pale stripes from base to tip and can turn almost white.",
+     "Ferrous sulfate, Urea 46 0 0"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Pale stripes on the young leaves start in the middle of the blade and run to the tip. The leaves split in the wind.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a sugarcane nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest sugarcane nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in sugarcane",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The older, lower leaves turn pale first, then the whole stool becomes yellowish green. Old leaves dry from the tips and die early, and leaf sheaths pull away from the stalk too soon. Stalks are thin, internodes stay short and the cane grows slowly. Young leaves stay pale green instead of turning dark green. You see it most at this stage: tillering and the grand growth period, when cane takes up nitrogen fastest. Ratoons that got no fertilizer after harvest show it early."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in organic matter, skipped or late side dressing, and heavy rain that washes nitrogen out of light soils. Urea left on the soil surface also loses nitrogen to the air."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency also makes cane pale, but it starts on the youngest top leaves and does not dry the tips of old leaves. Yellow leaf virus starts as a yellow midrib on the underside of leaves 3 to 6 from the top, not as a pale lower canopy. To be sure, send the top visible dewlap leaf blade (the highest leaf with a visible collar) to a lab during the grand growth period. UF IFAS counts below 1.8 percent N as deficient and 2.0 to 2.6 percent as the target."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Side dress Urea 46 0 0 or Ammonium sulfate 21 0 0 now, placed beside the row and covered with soil so it is not lost to the air. Split the nitrogen into two or more doses through tillering and early grand growth rather than one big dose. Set the total from the SRA soil analysis, since the right rate depends on the field. For a quick boost, TNAU gives a 1 to 2 percent urea spray (10 to 20 g urea per liter of water) twice, one week apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, fertilize every crop, including each ratoon, from a soil analysis."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in sugarcane",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Older, lower leaves show yellow to orange patches with many small spots that turn brown with dead centers. The edges and tips dry as if scorched. The upper side of the midrib turns red. Young leaves stay dark green, stalks are slender and growth slows. In long deficiency the top bunches into a fan shape and roots stay weak. You see it most at this stage: grand growth and ripening, when the cane takes up the most potassium. It gets worse ratoon after ratoon when no potash is given."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or light soils, acid soils low in exchangeable potassium, and fields cropped for many ratoons without potash. A 100 ton cane crop takes about 150 to 200 kg of potassium out of each hectare."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also starts on old leaves but shows small rusty freckles, not scorched edges. Salt burn and some leaf diseases can also scorch tips or redden midribs, so confirm with a leaf test when in doubt. To be sure, send the top visible dewlap leaf blade to a lab: UF IFAS counts below 0.9 percent K as deficient and 1.0 to 1.6 percent as the target. A soil test for exchangeable potassium before planting shows how much potash the field needs."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 at the rate the soil test gives, split between planting and the side dressing. For a quick fix on a standing crop, TNAU gives a 1 percent potassium chloride spray (10 g per liter) twice, two weeks apart. Do not overdo it: cane takes up more potash than it needs. Extra potassium raises ash in the juice and lowers sugar recovery."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test the soil at every new planting and keep cane trash in the field instead of burning it."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in sugarcane",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn dark green to bluish green and stay short and narrow, with red to purple tips and margins. Older leaves yellow and die back from the tip. The cane makes few tillers, roots are poor, and stalks are short and thin, tapering fast toward the top. You see it most at this stage: germination to tillering. A shortage at planting is hard to make up later in the crop."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils that lock up phosphorus and fields that never got phosphate. Sugarcane farms in Bukidnon, for example, tested medium acid with very deficient phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency makes leaves pale yellow, not dark bluish green. Potassium deficiency reddens the midrib rather than the leaf tips and edges, and it scorches the old leaves. To be sure, send the top visible dewlap leaf blade to a lab: UF IFAS counts below 0.19 percent P as deficient and 0.22 to 0.30 percent as the target. Soil test before planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Phosphorus works best placed in the planting furrow at planting, using Ammonium phosphate 16 20 0, Ammonium phosphate 18 46 0 or Superphosphate 0 18 0 at the soil test rate. On a standing crop, TNAU gives a 2 percent DAP spray (20 g of 18 46 0 per liter) twice, two weeks apart, to carry the cane until the next crop. Lime acid fields so the phosphate stays available."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "16 20 0",
+    "Ammonium phosphate 18 46 0",
+    "Superphosphate 0 18 0",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid fields to the soil test rate and put all the phosphate in the furrow at planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in sugarcane",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves at the top turn pale yellowish green first. As it gets worse, purple bands show along both leaf margins. Leaves become shorter and narrower, and stalks are thin and bend easily at the tip. You see it most at this stage: young cane and fast growth, often after several crops fed with urea only."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in organic matter, sandy leached soils, and years of urea and other fertilizers that carry no sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the old leaves and dries their tips. Sulfur deficiency starts at the top and does not dry the tips. To be sure, send the top visible dewlap leaf blade to a lab: below 0.13 percent S is low in the UF IFAS table. Ask for sulfate sulfur on the soil test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, since it carries sulfur as well. Gypsum or sulfur dust also add sulfur. KAU gives sulfur dust at about 25 kg per hectare (10 kg per acre). For a quick fix TNAU gives a 1 percent potassium sulfate spray (10 g per liter) twice, two weeks apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum",
+    "Sulfate of potash 0 0 50"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use ammonium sulfate for at least one nitrogen dose each crop and keep trash and organic matter in the field."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in sugarcane",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Young, newly opened leaves turn light green to yellow in broad bands. While the midrib and leaf edges stay green until it is severe. The yellow tissue can get red spots, then dries and collapses between the veins. Leaves are shorter and wider at the middle, internodes are short and the cane is stunted. You see it most at this stage: young cane and early tillering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Liming that raises the soil pH, land leveling that exposes low zinc subsoil, sandy soils, and heavy phosphate use."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency stripes the whole length of the leaf from base to tip and can bleach it white. Manganese stripes start in the middle of the leaf and run to the tip, and the blades split in the wind. To be sure, send the top visible dewlap leaf blade to a lab: UF IFAS counts below 15 mg/kg Zn as deficient and 17 to 32 mg/kg as the target. Test soil zinc and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Zinc sulfate at 0.5 percent (5 g per liter of water) on the leaves, as TNAU advises. Repeat if new leaves still show bands. For the next planting, mix Zinc sulfate into the soil. KAU gives about 20 kg per hectare (8 kg per acre). Do not put zinc in the same application as phosphate fertilizer."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime only to the soil test, and add zinc sulfate at planting on fields that showed bands before."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in sugarcane",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves get small yellow spots that turn reddish brown, giving the leaf a rusty, freckled look. It can spread to all the leaves, and old leaves drop early. In severe cases stalks are stunted and the inside of the stalk turns brown. You see it most at this stage: grand growth, mostly in ratoons on acid, sandy soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Acid sandy soils low in magnesium, and heavy potash that blocks magnesium uptake."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Brown rust and orange rust also give orange brown spots. Rust spots are raised pustules that leave colored powder on your finger, while nutrient freckles do not. To be sure, send the top visible dewlap leaf blade to a lab: UF IFAS counts below 0.13 percent Mg as deficient and 0.15 to 0.32 percent as the target. A soil test shows exchangeable magnesium and the balance with potassium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply magnesium sulfate (Epsom salt or kieserite) to the soil. TNAU gives 25 kg per hectare, or a 2 percent magnesium sulfate spray (20 g per liter) twice, two weeks apart. On acid soils, Dolomite raises the pH and adds magnesium. KAU advises not to apply magnesium and potassium fertilizers together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Kieserite",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite rather than plain lime when acid fields need liming."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in sugarcane",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves show mottling and tiny yellow spots with dead centers that turn dark reddish brown, giving a rusty look, and they die early. Plants are weak with thin, soft stalks. In acute cases the tips and edges of the spindle leaves die and young leaves come out twisted. You see it most at this stage: any stage on very acid soils, most visible in young cane."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils, below about pH 5.2, where aluminum is high and calcium is low. It is uncommon on soils that are limed."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also gives rusty spots on old leaves. A soil test for calcium, magnesium and pH tells them apart. To be sure, send the top visible dewlap leaf blade to a lab: below 0.20 percent Ca is low in the UF IFAS table. Test soil pH and exchangeable calcium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Lime acid fields with Agricultural lime or Dolomite at the soil test rate, worked in before planting. On fields where the pH is fine, TNAU gives Gypsum at 100 kg per hectare. Lime needs vary a lot: one study on Bukidnon cane farms set 1.6 to 7 tons of lime per hectare. So always follow the soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, check soil pH at every planting and lime before it falls below about 5.2."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in sugarcane",
+   "id": "iron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/sugarcane-iron-deficiency.webp",
+   "alt": "Sugarcane leaves striped pale yellow to white between green veins from iron shortage",
+   "caption": "Photo: Amityadav8, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves show pale yellow stripes between the veins that run the full length of the leaf, from base to tip. In bad cases the whole leaf, even the veins and midrib, turns white. Roots stay short and the cane is stunted with short internodes. It often shows in patches beside healthy cane, and young plants may grow out of it as roots go deeper. You see it most at this stage: young cane and ratoon regrowth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils, limestone and other calcareous soils, and over liming. It is rare on the usual acid sugarcane soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Manganese deficiency stripes start in the middle of the leaf and run to the tip, not from the base. Grassy shoot disease also gives white leaves, but the stool throws many thin, grassy tillers. To be sure, check soil pH first, since iron shortage is mostly a high pH problem. UF IFAS counts below 50 mg/kg Fe in the top visible dewlap leaf as low."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Ferrous sulfate at 2.5 to 5 g per liter (250 to 500 g per 100 liters), or 5 kg ferrous sulfate plus 2.5 kg urea in 500 liters per hectare. Repeat every 7 to 10 days until new leaves are green, as TNAU advises. TNAU also gives 25 kg ferrous sulfate per hectare to the soil, or 100 kg mixed with 12.5 tons of farm manure. Stop liming the field."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate",
+    "Urea 46 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime only to the soil test and add manure or mill mud on calcareous fields."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in sugarcane",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves show pale stripes between the veins that begin in the middle of the leaf and run toward the tip. The blades may split and fray in the wind, and the edges can curl upward. In severe cases the whole leaf bleaches and a grey purplish shine shows on the upper surface. You see it most at this stage: young cane and early grand growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "High pH or over limed soils, and some very weathered tropical soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency stripes run from the base to the tip of the leaf. Zinc deficiency gives a broad yellow band with green edges and midrib. To be sure, send the top visible dewlap leaf blade to a lab: UF IFAS counts below 16 mg/kg Mn as deficient and 20 to 100 mg/kg as the target. Check soil pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Manganese sulfate on the leaves. TNAU gives 1 to 2 percent (10 to 20 g per liter) while KAU gives 5 g per liter. So start with the lower rate on a few stools to check for leaf burn. Stop liming until the pH comes down."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime only to the rate the soil test gives."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any sugarcane nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your tubo needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick tubo, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sugarcane nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my tubo leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: the whole field looks pale yellow green, the lower leaves dry early and the stalks stay thin. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in sugarcane?",
+     "a": "Side dress Urea 46 0 0 or Ammonium sulfate 21 0 0 now, placed beside the row and covered with soil so it is not lost to the air. Split the nitrogen into two or more doses through tillering and early grand growth rather than one big dose."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in sugarcane?",
+     "a": "Apply Muriate of potash 0 0 60 at the rate the soil test gives, split between planting and the side dressing. For a quick fix on a standing crop, TNAU gives a 1 percent potassium chloride spray (10 g per liter) twice, two weeks apart."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in sugarcane?",
+     "a": "Phosphorus works best placed in the planting furrow at planting, using Ammonium phosphate 16 20 0, Ammonium phosphate 18 46 0 or Superphosphate 0 18 0 at the soil test rate. On a standing crop, TNAU gives a 2 percent DAP spray (20 g of 18 46 0 per liter) twice, two weeks apart, to carry the cane until the next crop."
+    },
+    {
+     "q": "How do I know which nutrient my tubo lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the sugarcane nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency in all crops",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "UF IFAS EDIS SC075: Sugarcane Plant Nutrient Diagnosis",
+     "url": "https://ask.ifas.ufl.edu/publication/SC075"
+    },
+    {
+     "label": "TNAU Agritech: Nitrogen deficiency in sugarcane",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sug_nitro.html"
+    },
+    {
+     "label": "DOST PCAARRD: Nutrio biofertilizer improves sugarcane yield. Helps reduce cost of inorganic N fertilizer",
+     "url": "https://pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/nutrio-biofertilizer-improves-sugarcane-yield-helps-reduce-cost-of-inorganic-n-fertilizer"
+    },
+    {
+     "label": "UF IFAS EDIS SS AGR 256: Sugarcane Yellow Leaf Disease",
+     "url": "https://journals.flvc.org/edis/article/download/115161/113464"
+    },
+    {
+     "label": "Visayas State University news 2017: SRA funds a soil lab so Leyte and Cebu cane farmers get soil test based fertilizer advice",
+     "url": "https://www.vsu.edu.ph/articles/news/1408-soil-lab-sugar"
+    },
+    {
+     "label": "TNAU Agritech: Potassium deficiency in sugarcane",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sug_pota.html"
+    },
+    {
+     "label": "SASRI Information Sheet 7.5: Potassium management",
+     "url": "https://sasri.org.za/download/162/7-soils-nutrition/28618/7-5-potassium-management.pdf"
+    },
+    {
+     "label": "Yara: Reddening of sugarcane leaves and crop nutrition",
+     "url": "https://int-english-master.yara.co.uk/crop-nutrition-master/sugarcane/reddening-of-sugarcane-leaves-and-crop-nutrition/"
+    },
+    {
+     "label": "Labajo and Pabiona 2022: Physical and chemical properties of soil on selected sugarcane farms in Mt. Nebo, Valencia City, Bukidnon",
+     "url": "https://smujo.id/aja/article/view/10842"
+    },
+    {
+     "label": "TNAU Agritech: Phosphorus deficiency in sugarcane",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sug_phos.html"
+    },
+    {
+     "label": "Yara: Yellowing of young leaves in sugarcane and crop nutrition",
+     "url": "https://int-english-master.yara.co.uk/crop-nutrition-master/sugarcane/yellowing-of-young-leaves-in-sugarcane-and-crop-nutrition/"
+    },
+    {
+     "label": "TNAU Agritech: Sulphur deficiency in sugarcane",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sug_sul.html"
+    }
+   ]
+  }
+ ]
+}

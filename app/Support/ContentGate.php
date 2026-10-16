@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Session;
 class ContentGate
 {
     // Crop guides (/crops) stay open to everyone (the owner, 2026-10-14).
-    public const SECTIONS = ['crop-varieties', 'rice-varieties', 'land-preparation', 'pests', 'diseases', 'weeds'];
+    public const SECTIONS = ['crop-varieties', 'rice-varieties', 'land-preparation', 'pests', 'diseases', 'weeds', 'nutrient-deficiencies'];
 
     /**
      * The section front pages that are gated too (2026-10-14, the owner):
@@ -32,7 +32,7 @@ class ContentGate
      * finder's answer asks for a free sign up. Every card is still in the
      * HTML. See partials/hub-gate.
      */
-    public const HUBS = ['pests', 'diseases', 'weeds', 'rice-varieties'];
+    public const HUBS = ['pests', 'diseases', 'weeds', 'rice-varieties', 'nutrient-deficiencies'];
 
     /** The class the gated part wears; the structured data names it. */
     public const SELECTOR = '.sp-gated';

@@ -44,10 +44,10 @@ TRANSITIONS = [
     "in other words", "for this reason", "that means", "this means", "above", "besides that", "on top of that",
 ]
 
-SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features", "rice-varieties", "crop-varieties"}
+SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features", "rice-varieties", "crop-varieties", "nutrient-deficiencies"}
 BLOCK_TYPES = {"heading", "text", "list", "steps", "table", "callout", "image", "quote", "faq", "cta", "links", "sources"}
 
-SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/land-preparation", "/blog", "/rice-varieties", "/crop-varieties"}
+SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/nutrient-deficiencies", "/land-preparation", "/blog", "/rice-varieties", "/crop-varieties"}
 
 
 def url_map():
@@ -67,7 +67,7 @@ def url_map():
                  "starapple": "star-apple", "pigeonpea": "pigeon-pea"}
         n = Counter(v["crop"] for v in json.load(open(vf, encoding="utf-8")))
         hubs = set("/crop-varieties/%s" % slugs.get(k, k) for k, c in n.items() if c >= 3)
-    return SITE_URLS | pages | hubs | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog|rice-varieties|crop-varieties)/[a-z0-9\-]+)", part))
+    return SITE_URLS | pages | hubs | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog|rice-varieties|crop-varieties|nutrient-deficiencies)/[a-z0-9\-]+)", part))
 
 
 LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -237,7 +237,8 @@ def check(path, urls, focus_seen):
     # ingredient table by rice age adds about 250 words (2026-10-06).
     profile = (sec == "weeds" and page.get("category") in ("Grasses", "Sedges", "Broadleaves")) or (sec in ("pests", "diseases") and page.get("profile"))
     # A rice variety page is a spec sheet with its meaning spelled out (2026-10-13).
-    lo, hi = (600, 1100) if sec == "features" else (450, 1200) if sec in ("rice-varieties", "crop-varieties") else (650, 1700) if profile else (900, 1800)
+    # A crop's nutrient deficiency page holds every deficiency of that crop, a section each (2026-10-16).
+    lo, hi = (600, 1100) if sec == "features" else (450, 1200) if sec in ("rice-varieties", "crop-varieties") else (650, 1700) if profile else (900, 5200) if sec == "nutrient-deficiencies" else (900, 1800)
     if all_words < lo:
         errs.append("only %d words (at least %d)" % (all_words, lo))
     elif all_words > hi:

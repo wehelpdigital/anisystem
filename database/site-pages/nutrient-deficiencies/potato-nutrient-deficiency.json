@@ -1,0 +1,680 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "potato-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 180,
+ "title": "Potato Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Potato Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Potato nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and phosphorus in patatas, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "potato nutrient deficiency",
+ "keywords": [
+  "potato nutrient deficiency",
+  "potato deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Potato nutrient deficiency is one of the first things to check when the leaves of your patatas (potato) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, magnesium, calcium, boron, sulfur and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/potato-potassium-deficiency.webp",
+  "alt": "Potato leaves with brown, scorched, curled edges from potassium shortage",
+  "credit": "Simranpreetsidhu, CC BY SA 4.0, via Wikimedia Commons"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron, sulfur and zinc stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which potato nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potato nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of patatas",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Whole leaves, veins included, turn evenly pale yellow, starting low on the plant.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Leaflets crinkle, tips burn and dead patches form between green veins, turning the leaf scorched and dark.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the whole plant",
+     "Short, dark plants with purple stems and leaf undersides, and leaflets curled upward.",
+     "Single superphosphate 0 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Mottled yellow between the veins of young mature leaves, then dead scorched patches.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of patatas",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Young leaves small, pale and curled, sprout tips black, and rusty spots inside the tubers.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip",
+     "The growing tip dies and the plant turns bushy. Young leaves wilt even with enough water.",
+     "Borax"
+    ],
+    [
+     "Sulfur",
+     "the whole plant, young leaves and the tip",
+     "The whole plant, young leaves included, yellows evenly, with reddish veins and leaf stalks.",
+     "Ammonium sulfate 21 0 0, Single superphosphate 0 20 0"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves yellow and mature leaves get pitted, dead spots between green veins.",
+     "Zinc sulfate, Agricultural lime"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a potato nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest potato nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in potato",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn evenly yellow, veins and all, starting on the older leaves. When nitrogen is given, young leaves green up but the old ones stay yellow. Severe shortage makes leaves cup upward, and the crop stops early with small tubers. You see it most at this stage: before and during tuber set."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, heavy rain that washes nitrogen out, and too little fertilizer in highland fields cropped every season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency also yellows the whole plant but includes the young leaves and gives a reddish tint to veins. Magnesium deficiency yellows between green veins. To be sure, check that the yellowing started on the old leaves, then test the soil. A leaf tissue test confirms it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 following the soil test, hilled in beside the rows. KAU gives a urea spray of 10 g per liter every 15 days for quick help."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, split nitrogen between planting and hilling, and add compost."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in potato",
+   "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/potato-potassium-deficiency.webp",
+   "alt": "Potato leaves with brown, scorched, curled edges from potassium shortage",
+   "caption": "Photo: Simranpreetsidhu, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  {
+   "type": "text",
+   "text": "Leaflets crinkle, the tips burn and dead tissue spreads between the veins while the veins stay green. Leaves curl and look scorched, with dark edges. The yellowing does not reverse even after potash is given, and tubers stay small. You see it most at this stage: tuber bulking."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and acid soils, and fields cropped for years without potash. Potato needs a higher soil potassium level than most field crops (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency can look much the same when advanced, but starts as mottled yellow between veins. Early blight gives round spots with rings. To be sure, soil test for potassium (aim higher than for field crops) and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, split between planting and hilling (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep the soil pH above 6 with lime or dolomite, add organic matter and wood ash, and give potash every crop."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in potato",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants grow slowly and stay stunted and darker than normal. Stems, leaf stalks and the undersides of leaves turn purple, and the lower leaf surface looks grey green. Older leaves get dead spots and leaflets curl upward. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "Acid and volcanic soils that lock up phosphorus, and cold soil early in the season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also curls leaflets but burns the tips and edges. Purple top viruses give purple and rolled top leaves, not dark plants. To be sure, soil test for available phosphorus (potato needs a higher level than field crops, UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU uses single superphosphate for a quick fix and bone meal or rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.2 to 7.0. Band it near the seed pieces at planting."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Single superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "16 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, apply phosphorus at planting each crop and lime acid soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in potato",
+   "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/potato-magnesium-deficiency.webp",
+   "alt": "Potato leaves yellow between the veins with brown dead patches from magnesium shortage (small credit line in corner)",
+   "caption": "Photo: ScotGov SASA, CC BY 2.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "Mottled yellow areas form between the veins, first on young mature leaves. In advanced cases dead tissue between the veins gives a scorched look that can resemble potassium deficiency. You see it most at this stage: mid season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy soils in rainy highlands, and heavy potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency starts with burned tips and crinkled leaflets. To be sure, soil test for magnesium and pH, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply it apart from potash. Use Dolomite on acid soils over the long run."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid fields with dolomite instead of plain lime."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in potato",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves and leaflet tips turn pale, stay small and curl slightly. Severe cases stunt the plant. Sprout tips can turn black and die, and tubers show rusty brown spots inside. You see it most at this stage: tuber bulking, and in stored seed potatoes as they sprout."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils, and also higher pH sandy soils, where potatoes may respond well to added calcium (UW). High phosphorus and boron shortage make it worse."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also kills the growing point and gives brittle leaves. A leaf test does not show tuber calcium, since calcium may reach the leaves but not the tubers (UW). To be sure, soil pH and calcium test. Cut tubers to look for internal spots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils, or to add calcium without raising pH, use Gypsum."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test the soil before each crop and keep the soil evenly moist so calcium can move into the tubers."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in potato",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Leaves pale slightly. The growing tip dies, so the plant loses its main shoot and grows in a bushy rosette. Leaves turn brittle and break easily, and young leaves wilt even when the soil is moist. You see it most at this stage: mid season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, high pH soils and dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency looks very similar. A soil or leaf test separates them. To be sure, soil test for boron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Keep boron apart from calcium and ammonium fertilizers."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test for boron before planting on sandy fields."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in potato",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "The whole plant yellows evenly, young leaves included, with a reddish tint in the veins, leaf stalks and leaf undersides. In advanced cases leaves stand upright, twist and turn brittle. You see it most at this stage: early to mid growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in organic matter, sulfur free fertilizer for years, and burning crop waste."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the old leaves and has no red veins. To be sure, soil and leaf test for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use a sulfur bearing fertilizer such as Ammonium sulfate 21 0 0 or single superphosphate. KAU gives about 25 kg sulfur dust per hectare (10 kg per acre) on sulfur poor soils, or Gypsum on alkaline soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Single superphosphate 0 20 0",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add organic matter and use a fertilizer that carries sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in potato",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves yellow and mature leaves show small pits on the upper surface between the veins. Dead patches between the veins spread while the main veins stay green. You see it most at this stage: early to mid growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in patatas"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils, heavy phosphorus, and soils low in zinc. Potato has a medium zinc need (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency yellows between veins on older leaves without pitting. To be sure, soil and leaf test for zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or in severe cases a morning spray of 2 g zinc sulfate with 2.5 g lime per liter. Keep zinc and phosphate applications apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep soil pH between 5 and 7.5 and test for zinc."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any potato nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your patatas needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick patatas, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potato nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my patatas leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: whole leaves, veins included, turn evenly pale yellow, starting low on the plant. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in potato?",
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 following the soil test, hilled in beside the rows. KAU gives a urea spray of 10 g per liter every 15 days for quick help."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in potato?",
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, split between planting and hilling (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU)."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in potato?",
+     "a": "KAU uses single superphosphate for a quick fix and bone meal or rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.2 to 7.0."
+    },
+    {
+     "q": "How do I know which nutrient my patatas lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the potato nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Kerala Agricultural University Agri Infotech Portal: Potato nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/potato/deficiency.php"
+    },
+    {
+     "label": "University of Wisconsin Extension A2521: Soil and applied potassium",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2521.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A2520: Soil and applied phosphorus",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2520.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A2524: Soil and applied magnesium",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2524.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A2523: Soil and applied calcium",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2523.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A2522: Soil and applied boron",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A2525: Soil and applied sulfur",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2525.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension A2528: Soil and applied zinc",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2528.pdf"
+    }
+   ]
+  }
+ ]
+}

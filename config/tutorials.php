@@ -326,6 +326,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.field.nutrients' => [
+            'title' => 'Nutrient Deficiency Finder',
+            'blurb' => 'Pick your crop, where the leaves change first and what they look like, and see which nutrient is missing, how to be sure, and the fertilizers sold here that fix it.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.field.varieties' => [
             'title' => 'Variety Finder',
             'blurb' => 'Every registered variety of your crop, with its days to harvest, its yield and what it resists. Filter them to find the one for your farm.',

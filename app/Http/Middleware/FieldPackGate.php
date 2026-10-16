@@ -26,7 +26,7 @@ class FieldPackGate
         $tool = (string) ($request->route('tool') ?? $request->route('section') ?? '');
         if ($tool === '') {
             // A catalogue or detail route without a {tool}: read the path.
-            if (preg_match('#^app/field-helpers/(?:[a-z-]+/)?(weeds|pests|diseases|varieties)\b#', $request->path(), $m)) {
+            if (preg_match('#^app/field-helpers/(?:[a-z-]+/)?(weeds|pests|diseases|nutrients|varieties)\b#', $request->path(), $m)) {
                 $tool = $m[1];
             }
         }

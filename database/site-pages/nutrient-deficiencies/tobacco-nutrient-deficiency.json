@@ -1,0 +1,619 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "tobacco-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 530,
+ "title": "Tobacco Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Tobacco Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Tobacco nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and magnesium in tabako, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "tobacco nutrient deficiency",
+ "keywords": [
+  "tobacco nutrient deficiency",
+  "tobacco deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Tobacco nutrient deficiency is one of the first things to check when the leaves of your tabako (tobacco) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, sulfur, boron, calcium and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for tobacco",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, boron, calcium and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which tobacco nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Tobacco nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of tabako",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Lower leaves turn paler than the top leaves and dry up early. The plant stays small and the cured leaf is pale and thin.",
+     "Ammonium sulfate 21 0 0, Urea 46 0 0"
+    ],
+    [
+     "Potassium",
+     "leaf edges and tips, old, lower leaves",
+     "The tips and edges of the middle leaves turn yellow, then brown to black, and the cured leaf burns poorly.",
+     "Sulfate of potash 0 0 50, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Lower leaves yellow between the veins, starting near the tip and edge, while the top stays green.",
+     "Dolomite, Magnesium sulfate (Epsom salt)"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of tabako",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The bud and the top leaves pale first, and the whole plant slowly turns light green from the top down.",
+     "Ammonium sulfate 21 0 0, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip",
+     "The bud twists and dies, the top leaves are thick, brittle and curled down, and the midribs crack across.",
+     "Borax, Solubor"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "New leaves bend down like a shepherd's crook, their edges yellow and die, and the bud can rot.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Yellow netting between the veins with small white spots, on fields that were limed too much.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a tobacco nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest tobacco nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in tobacco",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The lower leaves turn paler than the upper ones and then yellow and dry up early, which growers call burning up. The yellowing moves up the stalk as nitrogen moves from old leaves to the new growth. Plants stay short with small, thin leaves, and the cured leaf comes out pale and slick, so both yield and grade drop. You see it most at this stage: from two to five weeks after transplanting, when the crop grows fastest, up to topping."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in tabako"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen washes out of sandy soils quickly after heavy rain or heavy irrigation. Skipping or delaying the sidedress after off barring brings it on."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur shortage looks almost the same, but it starts at the bud and the top leaves pale first. While the lower leaves do not burn up. To be sure, NC State notes that a soil test does not tell how much nitrogen tobacco needs, because nitrogen leaches. Compare the field with the rate and timing your NTA program gives."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Sidedress with Ammonium sulfate 21 0 0 along the row as soon as you see it, then hill up. In the NTA 2025 manual, Virginia neutral flavor tobacco gets 4 bags of 10 18 24 at transplanting, then 4 bags of Ammonium sulfate 21 0 0 at 21 to 28 days after transplanting. Native tobacco programs use Urea 46 0 0 as the sidedress. Do not overdo it: NC State warns that too much nitrogen delays ripening, makes curing harder and feeds suckers, hornworms and aphids."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Urea 46 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, follow the NTA rate for your tobacco type and split it between transplanting and the sidedress."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in tobacco",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Leaf tips and edges yellow first on leaves in the middle of the stalk. If not corrected, the yellowing spreads to the upper leaves, and in bad cases the yellow tissue turns black and falls away. Leaf yield, quality and price all drop, and leaf low in potash burns poorly. You see it most at this stage: mid season to ripening, often during weather extremes: drought, long wet spells or very hot weather."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in tabako"
+  },
+  {
+   "type": "text",
+   "text": "Potash leaches from deep sandy soils, and dry soil or waterlogged soil slows its movement to the roots. NC State notes that many cases come from the weather and weak roots, not only from a lack of potash in the soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage also yellows lower leaves, but the yellow runs between the veins, starting near the edge and tip, rather than a scorch on the edge itself. Natural ripening yellows the whole leaf evenly from the bottom up. To be sure, send a leaf sample and a soil test for potash to a lab. Check the soil moisture and the roots, since NC State notes that many cases clear on their own once moisture and root growth improve."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Sulfate of potash 0 0 50, not Muriate of potash 0 0 60. NC State advises avoiding muriate because it is about 40 percent chlorine. Chlorine above about 34 kg per hectare (30 pounds per acre) is toxic to the crop. K+S notes that chloride in the leaf spoils burning, color, aroma and storage. In the NTA 2025 manual every potash dose for Virginia and Burley comes as 0 0 50 or the tobacco grade 10 18 24. For example, Virginia neutral flavor gets 1 bag of 0 0 50 sidedressed at 21 to 28 days after transplanting. Add more potash only in extreme cases where rain has leached it, as NC State advises."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sulfate of potash 0 0 50",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, follow the NTA potash rate for your tobacco type with sulfate of potash."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in tobacco",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "The lower, older leaves yellow between the veins first, starting at the leaf edge near the tip, while the veins stay green. Dead brown patches can form between the veins later. Magnesium moves from old leaves to the new growth, so the top stays green the longest. You see it most at this stage: mid to late season. Worst after heavy rain on sandy soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in tabako"
+  },
+  {
+   "type": "text",
+   "text": "Deep sandy soils under heavy leaching, acid soils that were not limed, and heavy potash use. NC State notes it can show even on limed fields when sandy soil is leached hard."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potash shortage starts as a yellow scorch on the tip and edge of middle leaves. Manganese shortage also yellows between the veins, but on the upper leaves. To be sure, do a soil test with pH, magnesium and potash, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "NC State advises keeping soil pH at 5.8 to 6.2 with Dolomite, which supplies both calcium and magnesium. Where soils are sandy and leached, they advise 17 to 22 kg of magnesium per hectare (15 to 20 pounds per acre) in the fertilizer. Sulfate of potash magnesia (K Mag, 0 0 22 with 11 percent magnesium) gives magnesium with the potash. Magnesium sulfate (Epsom salt) also works. Follow the label for a leaf spray."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Dolomite",
+    "Magnesium sulfate (Epsom salt)",
+    "Kieserite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime with Dolomite rather than plain lime, based on a soil test."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in tobacco",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing starts in the bud and the youngest leaves, and the leaves slowly pale from the top down. Unlike nitrogen shortage, the lower leaves do not dry up early unless nitrogen is also short. Adding nitrogen does not green the plant and can lower leaf quality. You see it most at this stage: early to mid season, after heavy rain."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in tabako"
+  },
+  {
+   "type": "text",
+   "text": "NC State notes it shows most on deep sandy soils very low in organic matter, after heavy rain. When the fertilizer carries no sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage gives the same pale color, but it starts on the lower leaves, which dry up early. A leaf test is often needed to tell the two apart, as NC State advises. To be sure, send a leaf sample to a lab. NC State notes that soil tests for sulfur are not reliable."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "NC State advises banding 112 to 168 kg per hectare (100 to 150 pounds per acre) of Sulfate of potash 0 0 50 or sulfate of potash magnesia as soon as it is found, before the last hilling up. Ammonium sulfate 21 0 0 as the sidedress also adds sulfur."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Sulfate of potash 0 0 50",
+    "Kieserite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, give about 22 to 34 kg of sulfur per hectare (20 to 30 pounds per acre) every year through the fertilizer, as NC State advises."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in tobacco",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Plants are stunted early. The growing point twists, and the youngest leaves get kinks, then turn thick and brittle with a ridged feel. The bud soon dies and may drop off, and suckers grow because the top is lost. Whole leaves curl down and crinkle, older leaves turn darker green. In bad cases the midribs crack across near the stem and the stem shows brown spots. You see it most at this stage: early, from a few weeks after transplanting. Once signs start, they move fast."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in tabako"
+  },
+  {
+   "type": "text",
+   "text": "No Philippine reports were found. In general, boron runs short on sandy soils low in organic matter, on soils limed to a high pH, and in long dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium shortage also kills the bud and twists new leaves. But NC State notes that calcium shortage curls the leaf edges down, while boron shortage curls the whole leaf down. To be sure, send young leaves to a lab for a leaf test, and test the soil and its pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Borax or Solubor to the soil or as a leaf spray, following the label or a soil test. No tobacco rate from a Philippine source was found. Boron is easy to overdo. NC State also lists boron toxicity, so measure the dose with care."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep organic matter up, do not lime above the pH your soil test calls for."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in tobacco",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "The edges of the newest leaves turn yellow, and those edge cells die. Because the dead edges cannot grow, the new leaf bends down at the tip like a shepherd's crook. The edges then tear and brown, and in bad cases the growing tip dies with a dark, spongy bud, the plant stops growing and suckers take over. You see it most at this stage: fast growth before topping, mostly during drought or waterlogging."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in tabako"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils low in calcium. NC State notes that it can show even when soil calcium is enough, because drought or waterlogged soil stops the plant from taking it up."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron shortage also kills the bud, but it curls the whole leaf down and cracks the midribs. While calcium shortage curls the leaf edges down first. To be sure, do a soil test with pH and calcium, and a leaf test of young leaves."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Correct acid soil with Agricultural lime or Dolomite, based on a soil test. NC State keeps tobacco soil at pH 5.8 to 6.2. Where lime does not cover it, they give 45 to 56 kg of calcium per hectare (40 to 50 pounds per acre) through the fertilizer. Gypsum adds calcium without raising pH. Water evenly in dry spells."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime before planting, based on a soil test, and avoid long dry spells or waterlogging."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in tobacco",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "The leaves yellow between the veins, giving a white netted look. Small white spots then form and grow larger. NC State's diagnostic key shows it on the upper leaves. While their fertility page notes the flecks can look much like weather fleck from ozone. You see it most at this stage: mid season, mostly on soils with high pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in tabako"
+  },
+  {
+   "type": "text",
+   "text": "NC State links it to over liming: it shows on soils at pH 6.2 or higher that are low in manganese. It should be rare on acid soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Weather fleck from ozone gives small flecks too, but soil pH is normal. Magnesium shortage yellows between the veins on the lower leaves instead. To be sure, do a soil test with pH and manganese, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Manganese sulfate as a leaf spray or banded in the soil. NC State gives about 3.4 kg of actual manganese per hectare banded (3 pounds per acre), 11 kg broadcast, or 0.56 kg as a leaf spray. Warns not to broadcast it on soils above pH 6.1."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not lime above the rate your soil test calls for."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any tobacco nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your tabako needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick tabako, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Tobacco nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my tabako leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: lower leaves turn paler than the top leaves and dry up early. The plant stays small and the cured leaf is pale and thin. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in tobacco?",
+     "a": "Sidedress with Ammonium sulfate 21 0 0 along the row as soon as you see it, then hill up. In the NTA 2025 manual, Virginia neutral flavor tobacco gets 4 bags of 10 18 24 at transplanting, then 4 bags of Ammonium sulfate 21 0 0 at 21 to 28 days after transplanting."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in tobacco?",
+     "a": "Use Sulfate of potash 0 0 50, not Muriate of potash 0 0 60. NC State advises avoiding muriate because it is about 40 percent chlorine."
+    },
+    {
+     "q": "What fertilizer fixes magnesium deficiency in tobacco?",
+     "a": "NC State advises keeping soil pH at 5.8 to 6.2 with Dolomite, which supplies both calcium and magnesium. Where soils are sandy and leached, they advise 17 to 22 kg of magnesium per hectare (15 to 20 pounds per acre) in the fertilizer."
+    },
+    {
+     "q": "How do I know which nutrient my tabako lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the tobacco nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency in all crops",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "National Tobacco Administration (DA): Tobacco Production Manual 2025 (Virginia, Burley, Native)",
+     "url": "https://www.nta.da.gov.ph/wp-content/uploads/2025/06/tobaccoprodmanual2025.pdf"
+    },
+    {
+     "label": "NC State Extension Tobacco Growers Information: Fertility, nutrients (Vann)",
+     "url": "https://tobacco.ces.ncsu.edu/tobacco-fertility-nutrients/"
+    },
+    {
+     "label": "NC State Extension: Potassium fertility for flue cured tobacco, nutrient demand, application rates and deficiency",
+     "url": "https://tobacco.ces.ncsu.edu/tobacco-fertility-nutrients/potassium-fertility-an-overview-of-nutrient-demand-application-rates-and-deficiency"
+    },
+    {
+     "label": "K+S Kali Academy: Tobacco, potassium, chloride and leaf quality",
+     "url": "https://www.kpluss.com/en-us/our-business-products/agriculture/kali-academy/crops/en-tobacco/"
+    },
+    {
+     "label": "NC State Tobacco Diagnostic Key: Magnesium deficiency",
+     "url": "https://diagnosis.ces.ncsu.edu/tobacco/disorder/detail/magnesium-deficiency"
+    },
+    {
+     "label": "NC State Tobacco Diagnostic Key: Boron deficiency",
+     "url": "https://diagnosis.ces.ncsu.edu/tobacco/disorder/detail/boron-deficiency"
+    },
+    {
+     "label": "NC State Extension, From the Field Agronomy Notes: Boron deficiency in tobacco",
+     "url": "https://tobacco.ces.ncsu.edu/2016/09/from-the-field-agronomy-notes-23"
+    },
+    {
+     "label": "U.S. Borax crop guide: Boron deficiency in drug, fumitory and masticatory crops (tobacco)",
+     "url": "https://agriculture.borax.com/crop-guides/drug-fumitory-and-masticatory-crops"
+    },
+    {
+     "label": "NC State Extension, From the Field Agronomy Notes: Calcium deficiency in tobacco",
+     "url": "https://tobacco.ces.ncsu.edu/2016/08/from-the-field-agronomy-notes-20/"
+    },
+    {
+     "label": "NC State Tobacco Diagnostic Key: Calcium deficiency",
+     "url": "https://diagnosis.ces.ncsu.edu/tobacco/disorder/detail/calcium-deficiency"
+    },
+    {
+     "label": "NC State Tobacco Diagnostic Key: Manganese deficiency",
+     "url": "https://diagnosis.ces.ncsu.edu/tobacco/disorder/detail/manganese-deficiency"
+    }
+   ]
+  }
+ ]
+}

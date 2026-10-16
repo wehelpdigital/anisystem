@@ -1,0 +1,2225 @@
+{
+ "note": "Fertilizers sold in the Philippines, registered with the FPA (list of 15 Sep 2026). The register lines stay in the scratchpad audit file, never shown.",
+ "products": [
+  {
+   "key": "atlas-granular-urea",
+   "brand": "Atlas Granular Urea",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "46 0 0",
+   "nutrients": [
+    "n"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "The strongest common nitrogen bag. Put it on moist soil or work it in so less nitrogen is lost to the air.",
+   "crops": []
+  },
+  {
+   "key": "atlas-prilled-urea",
+   "brand": "Atlas Prilled Urea",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "46 0 0",
+   "nutrients": [
+    "n"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "The same 46 percent nitrogen as granular urea in smaller beads, used the same way.",
+   "crops": []
+  },
+  {
+   "key": "yaravera-viking-ship-granular-urea",
+   "brand": "YaraVera Viking Ship Granular Urea",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "straight",
+   "grade": "46 0 0",
+   "nutrients": [
+    "n"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Plain granular urea for nitrogen at tillering or early growth, best applied before rain or irrigation rather than on dry hot soil.",
+   "crops": []
+  },
+  {
+   "key": "planters-products-granular-urea",
+   "brand": "Planters Products Granular Urea",
+   "company": "Planters Products, Inc.",
+   "kind": "straight",
+   "grade": "46 0 0",
+   "nutrients": [
+    "n"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Granular urea for fixing pale yellow older leaves caused by low nitrogen.",
+   "crops": []
+  },
+  {
+   "key": "harbest-granular-urea",
+   "brand": "Harbest Granular Urea",
+   "company": "Harbest Agribusiness Corporation",
+   "kind": "straight",
+   "grade": "46 0 0",
+   "nutrients": [
+    "n"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Granular urea from Harbest dealers. Give it in split doses so the crop gets nitrogen when it grows fastest.",
+   "crops": []
+  },
+  {
+   "key": "swire-granular-urea",
+   "brand": "Swire Granular Urea",
+   "company": "Swire Agrotech Agricultural Products Inc.",
+   "kind": "straight",
+   "grade": "46 0 0",
+   "nutrients": [
+    "n"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Granular urea under the Swire label for side dressing nitrogen hungry crops.",
+   "crops": []
+  },
+  {
+   "key": "atlas-ammosul",
+   "brand": "Atlas Ammosul",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "21 0 0 with 24 percent sulfur",
+   "nutrients": [
+    "n",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Gives nitrogen and sulfur together and leaves the soil a little more acid. So it suits neutral or alkaline fields better than very acid ones.",
+   "crops": []
+  },
+  {
+   "key": "philphos-21-0-0",
+   "brand": "Philphos 21 0 0",
+   "company": "Philippine Phosphate Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "21 0 0 (ammonium sulfate)",
+   "nutrients": [
+    "n",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Ammonium sulfate from the Leyte plant, used for corn, rice and vegetables when both nitrogen and sulfur are short.",
+   "crops": []
+  },
+  {
+   "key": "harbest-ammonium-sulphate",
+   "brand": "Harbest Ammonium Sulphate",
+   "company": "Harbest Agribusiness Corporation",
+   "kind": "straight",
+   "grade": "21 0 0 with 24 percent sulfur",
+   "nutrients": [
+    "n",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Ammonium sulfate for crops that show pale young leaves from low sulfur as well as low nitrogen.",
+   "crops": []
+  },
+  {
+   "key": "marca-bulaklak-ammonium-sulfate",
+   "brand": "Marca Bulaklak Ammonium Sulfate",
+   "company": "Ferex Agrochem Development Corporation",
+   "kind": "straight",
+   "grade": "21 0 0 with 24 percent sulfur",
+   "nutrients": [
+    "n",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A widely stocked ammonium sulfate brand that supplies nitrogen plus sulfur in one bag.",
+   "crops": []
+  },
+  {
+   "key": "atlas-ammonium-chloride",
+   "brand": "Atlas Ammonium Chloride",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "25 0 0",
+   "nutrients": [
+    "n"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A cheaper nitrogen source often used on rice and coconut. But avoid it on tobacco and other crops that do not like chloride.",
+   "crops": []
+  },
+  {
+   "key": "yaravera-viking-ship-urea-zinc",
+   "brand": "YaraVera Viking Ship Granular Urea + Zinc",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "straight",
+   "grade": "45.8 0 0 with 0.2 percent zinc",
+   "nutrients": [
+    "n",
+    "zn"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Urea with a light zinc coat that helps keep zinc up in rice, though it is too little zinc to cure a clear zinc deficiency.",
+   "crops": []
+  },
+  {
+   "key": "dddd-nitrogen-zinc",
+   "brand": "DDDD Planters Choice Nitrogen Zinc Mixed Fertilizer",
+   "company": "Modern Time Enterprises, Inc.",
+   "kind": "straight",
+   "grade": "45 0 0 with 1 percent zinc",
+   "nutrients": [
+    "n",
+    "zn"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Urea mixed with more zinc than the coated kinds, useful on rice fields that often show zinc trouble.",
+   "crops": []
+  },
+  {
+   "key": "philphos-16-20-0",
+   "brand": "Philphos 16 20 0",
+   "company": "Philippine Phosphate Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "16 20 0 (ammophos)",
+   "nutrients": [
+    "n",
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Ammophos for rice, corn and vegetables at planting, when roots and tillers need phosphorus early.",
+   "crops": []
+  },
+  {
+   "key": "atlas-super-gro-16-20-0",
+   "brand": "Atlas Super Gro",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "16 20 0",
+   "nutrients": [
+    "n",
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Ammophos applied at planting or early so phosphorus is close to young roots. Atlas says it also carries some calcium and sulfur.",
+   "crops": []
+  },
+  {
+   "key": "harbest-np-16-20",
+   "brand": "Harbest NP 16 to 20",
+   "company": "Harbest Agribusiness Corporation",
+   "kind": "compound",
+   "grade": "16 20 0",
+   "nutrients": [
+    "n",
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Nitrogen plus phosphorus for the basal dose, worked into the soil before or at planting.",
+   "crops": []
+  },
+  {
+   "key": "swire-16-20-0-ammophos",
+   "brand": "Swire 16 20 0 Ammophos",
+   "company": "Swire Agrotech Agricultural Products Inc.",
+   "kind": "compound",
+   "grade": "16 20 0",
+   "nutrients": [
+    "n",
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Ammophos under the Swire label for a basal phosphorus dose on rice and corn.",
+   "crops": []
+  },
+  {
+   "key": "philphos-18-46-0",
+   "brand": "Philphos 18 46 0",
+   "company": "Philippine Phosphate Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "18 46 0 (diammonium phosphate)",
+   "nutrients": [
+    "n",
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "The richest phosphorus bag in common use, so a small amount fixes a phosphorus shortage. Keep it from touching seed.",
+   "crops": []
+  },
+  {
+   "key": "atlas-dap-18-46-0",
+   "brand": "Atlas Di Ammonium Phosphate",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "18 46 0",
+   "nutrients": [
+    "n",
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Diammonium phosphate for strong phosphorus at planting on soils that test low.",
+   "crops": []
+  },
+  {
+   "key": "amigo-planters-single-superphosphate",
+   "brand": "Amigo Planters Granular Single Super Phosphate",
+   "company": "La Filipina Uy Gongco Corporation",
+   "kind": "straight",
+   "grade": "0 18 0 (single superphosphate)",
+   "nutrients": [
+    "p",
+    "ca",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Phosphorus without nitrogen. Single superphosphate also carries calcium and sulfur, which helps peanut and legumes.",
+   "crops": []
+  },
+  {
+   "key": "newman-triple-superphosphate",
+   "brand": "Triple Super Phosphate",
+   "company": "Newman Chemicals Corporation",
+   "kind": "straight",
+   "grade": "0 46 0",
+   "nutrients": [
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "High phosphorus with no nitrogen, for crops that need phosphorus but already have enough nitrogen.",
+   "crops": []
+  },
+  {
+   "key": "sagrex-duofos-guano-phosphate",
+   "brand": "Sagrex Duofos Granular Guano Phosphate",
+   "company": "Sagrex Corporation",
+   "kind": "straight",
+   "grade": "0 22 0 (guano phosphate)",
+   "nutrients": [
+    "p"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Granular guano phosphate that releases phosphorus slowly, best on acid soils and for tree crops.",
+   "crops": []
+  },
+  {
+   "key": "tierraphos-guano-granule",
+   "brand": "Tierraphos Guano Granule",
+   "company": "Unilox Far East Resources Inc.",
+   "kind": "straight",
+   "grade": "0 20 0 with 28 to 46 percent CaO",
+   "nutrients": [
+    "p",
+    "ca"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Guano phosphate that also adds calcium, worked into the soil before planting.",
+   "crops": []
+  },
+  {
+   "key": "calphos",
+   "brand": "Calphos",
+   "company": "Bacphil Planters Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "4 14 0 with 15 percent calcium and 12 percent sulfur",
+   "nutrients": [
+    "n",
+    "p",
+    "ca",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A basal mix of phosphorus with calcium and sulfur for soils short in all three.",
+   "crops": []
+  },
+  {
+   "key": "atlas-urea-superphosphate",
+   "brand": "Atlas Urea Superphosphate",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "20 10 0 with 11 percent sulfur and 1 percent CaO",
+   "nutrients": [
+    "n",
+    "p",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Nitrogen with some ready phosphorus and sulfur for early growth.",
+   "crops": []
+  },
+  {
+   "key": "crown-champion-map-12-61-0",
+   "brand": "Crown Champion Monoammonium Phosphate (MAP)",
+   "company": "Philippines Aqua Hydroponic Prime Ventures Corp.",
+   "kind": "straight",
+   "grade": "12 61 0",
+   "nutrients": [
+    "n",
+    "p"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Fully soluble phosphorus for drip lines, seedling drenches or foliar sprays when roots cannot take up enough.",
+   "crops": []
+  },
+  {
+   "key": "haifa-mkp-0-52-34",
+   "brand": "Haifa MKP",
+   "company": "ABG Trading Corporation",
+   "kind": "straight",
+   "grade": "0 52 34 (mono potassium phosphate)",
+   "nutrients": [
+    "p",
+    "k"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Soluble phosphorus and potassium with no nitrogen, sprayed or dripped at flowering and fruit set.",
+   "crops": []
+  },
+  {
+   "key": "harbest-naturfos",
+   "brand": "Naturfos",
+   "company": "Harbest Agribusiness Corporation",
+   "kind": "foliar",
+   "grade": "0 to 29.5 to 21.75",
+   "nutrients": [
+    "p",
+    "k"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A liquid phosphorus and potassium spray for flowering and fruiting stages.",
+   "crops": []
+  },
+  {
+   "key": "yaravita-glytrel-znp",
+   "brand": "YaraVita GLYTREL ZnP",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "micronutrient",
+   "grade": "7.4 percent P2O5 and 7.4 percent zinc",
+   "nutrients": [
+    "p",
+    "zn"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "Zinc and phosphorus spray registered for corn, for early zinc shortage on young plants.",
+   "crops": [
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
+   ]
+  },
+  {
+   "key": "atlas-muriate-of-potash",
+   "brand": "Atlas Muriate of Potash",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "0 0 60",
+   "nutrients": [
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "The usual potassium bag for burnt leaf edges on older leaves and for better grain filling and fruit size.",
+   "crops": []
+  },
+  {
+   "key": "philphos-muriate-of-potash",
+   "brand": "Philphos Muriate of Potash",
+   "company": "Philippine Phosphate Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "0 0 60",
+   "nutrients": [
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Muriate of potash for potassium, often given as a top dress before flowering or panicle start.",
+   "crops": []
+  },
+  {
+   "key": "harbest-granular-muriate-of-potash",
+   "brand": "Harbest Granular Muriate of Potash",
+   "company": "Harbest Agribusiness Corporation",
+   "kind": "straight",
+   "grade": "0 0 60",
+   "nutrients": [
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Granular potash that spreads evenly by hand, used for potassium on rice, corn, banana and coconut.",
+   "crops": []
+  },
+  {
+   "key": "swire-muriate-of-potash",
+   "brand": "Swire Muriate of Potash",
+   "company": "Swire Agrotech Agricultural Products Inc.",
+   "kind": "straight",
+   "grade": "0 0 60",
+   "nutrients": [
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Potash under the Swire label for crops with scorched leaf margins and weak stems.",
+   "crops": []
+  },
+  {
+   "key": "yaratera-krista-sop",
+   "brand": "YaraTera KRISTA SOP",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "straight",
+   "grade": "0 0 51 with 18 percent sulfur",
+   "nutrients": [
+    "k",
+    "s"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Chloride free potassium with sulfur that dissolves fully, for drip feeding vegetables and fruit crops that dislike chloride.",
+   "crops": []
+  },
+  {
+   "key": "harvester-sulphate-of-potash",
+   "brand": "Harvester Planters' Choice Sulphate of Potash",
+   "company": "Universal Harvester, Inc.",
+   "kind": "straight",
+   "grade": "0 0 50",
+   "nutrients": [
+    "k",
+    "s"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Sulfate of potash for tobacco, potato, onion and fruit where chloride from muriate of potash should be avoided.",
+   "crops": []
+  },
+  {
+   "key": "parafield-potassium-nitrate",
+   "brand": "Potassium Nitrate",
+   "company": "Parafield Enterprises, Inc.",
+   "kind": "straight",
+   "grade": "13 0 46",
+   "nutrients": [
+    "n",
+    "k"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Soluble potassium with nitrate nitrogen for sprays and drip feeding at fruit growth.",
+   "crops": []
+  },
+  {
+   "key": "crown-champion-potassium-nitrate",
+   "brand": "Crown Champion Potassium Nitrate",
+   "company": "Philippines Aqua Hydroponic Prime Ventures Corp.",
+   "kind": "straight",
+   "grade": "13.5 0 46",
+   "nutrients": [
+    "n",
+    "k"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "Potassium nitrate registered for mango, where it is sprayed to bring on flowering and it also feeds potassium.",
+   "crops": [
+    "mango"
+   ]
+  },
+  {
+   "key": "haifa-bonus-12-2-44",
+   "brand": "Haifa Bonus",
+   "company": "Oracle Chem Corp.",
+   "kind": "foliar",
+   "grade": "12 2 44",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A high potassium leaf spray for fruit filling and for quick help when potassium runs short late in the season.",
+   "crops": []
+  },
+  {
+   "key": "polysulphate-standard",
+   "brand": "Polysulphate Standard",
+   "company": "Allied Botanical Corporation",
+   "kind": "compound",
+   "grade": "0 0 13 with 16.5 percent CaO, 5.6 percent MgO, 46.5 percent SO3",
+   "nutrients": [
+    "k",
+    "ca",
+    "mg",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A natural mineral that slowly gives potassium, calcium, magnesium and sulfur together.",
+   "crops": []
+  },
+  {
+   "key": "harbest-npk-17-0-17",
+   "brand": "Harbest NPK 17 0 17",
+   "company": "Harbest Agribusiness Corporation",
+   "kind": "compound",
+   "grade": "17 0 17",
+   "nutrients": [
+    "n",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Nitrogen and potassium together for the second dose on rice and corn.",
+   "crops": []
+  },
+  {
+   "key": "atlas-top-dress-17-0-17",
+   "brand": "Atlas Top Dress",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "17 0 17 with 1 percent CaO, 12 percent S, 13 percent Cl",
+   "nutrients": [
+    "n",
+    "k",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A rice top dress that feeds panicle formation and grain filling with nitrogen, potassium and sulfur.",
+   "crops": [
+    "rice"
+   ]
+  },
+  {
+   "key": "atlas-perfect-gro-14-14-14",
+   "brand": "Atlas Perfect Gro",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "14 14 14",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Complete fertilizer for the basal dose. Atlas says it also carries some calcium, sulfur and magnesium.",
+   "crops": []
+  },
+  {
+   "key": "philphos-14-14-14",
+   "brand": "Philphos 14 14 14",
+   "company": "Philippine Phosphate Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "14 14 14",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "The common complete fertilizer for the first application on rice, corn and vegetables.",
+   "crops": []
+  },
+  {
+   "key": "viking-ship-npk-14-14-14",
+   "brand": "Viking Ship NPK 14 14 14",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "compound",
+   "grade": "14 14 14",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Yara complete fertilizer for an even start of nitrogen, phosphorus and potassium.",
+   "crops": []
+  },
+  {
+   "key": "planters-products-14-14-14",
+   "brand": "Planters Products 14 14 14 (Complete)",
+   "company": "Planters Products, Inc.",
+   "kind": "compound",
+   "grade": "14 14 14",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Complete fertilizer worked into the soil at planting.",
+   "crops": []
+  },
+  {
+   "key": "harbest-npk-14-14-14",
+   "brand": "Harbest NPK 14 14 14",
+   "company": "Harbest Agribusiness Corporation",
+   "kind": "compound",
+   "grade": "14 14 14",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Complete fertilizer from Harbest dealers for the basal dose.",
+   "crops": []
+  },
+  {
+   "key": "amigo-planters-14-14-14-11s",
+   "brand": "Amigo Planters NPK 14 14 14+11S",
+   "company": "La Filipina Uy Gongco Corporation",
+   "kind": "compound",
+   "grade": "14 14 14 with 11 percent sulfur",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Complete fertilizer with added sulfur, a good basal choice where sulfur is also short.",
+   "crops": []
+  },
+  {
+   "key": "yaramila-unik-16",
+   "brand": "YaraMila UNIK 16",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "compound",
+   "grade": "16 16 16",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A balanced complete fertilizer for early growth and for recovery after harvest in tree crops.",
+   "crops": []
+  },
+  {
+   "key": "yaramila-winner",
+   "brand": "YaraMila WINNER",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "compound",
+   "grade": "15 9 20 with 1.8 percent MgO, 3.8 percent S and traces of B, Mn, Zn",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A high potassium compound with some magnesium and sulfur in each granule, for crops at flowering and fruiting.",
+   "crops": []
+  },
+  {
+   "key": "yaramila-hydran",
+   "brand": "YaraMila HYDRAN",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "compound",
+   "grade": "19 4 19 with 2.4 percent MgO, 1.8 percent S, 0.1 percent B, 0.1 percent Zn",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Nitrogen and potassium heavy compound with magnesium for crops in full growth.",
+   "crops": []
+  },
+  {
+   "key": "yaramila-complex",
+   "brand": "YaraMila COMPLEX",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "compound",
+   "grade": "12 11 18 with 1.5 percent MgO, 6 percent S and traces of B, Fe, Mn, Zn",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A compound with magnesium, sulfur and small amounts of trace elements, used on vegetables and high value crops.",
+   "crops": []
+  },
+  {
+   "key": "yarabasa-kumple-o",
+   "brand": "YaraBasa KUMPLE+O",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "compound",
+   "grade": "14 14 14 with organic matter",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Complete fertilizer with a little organic matter, sold in small repacks for gardens and vegetables.",
+   "crops": []
+  },
+  {
+   "key": "atlas-basal-12-12-17",
+   "brand": "Atlas Basal",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "12 12 17 with 9 percent S, 10 percent Cl",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A basal fertilizer for rice and corn with more potassium than 14 14 14.",
+   "crops": [
+    "rice",
+    "corn_yellow"
+   ]
+  },
+  {
+   "key": "atlas-basal-plus-zinc",
+   "brand": "Atlas Basal Plus Zinc",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "15 5 15 with 1.5 percent zinc and sulfur",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "s",
+    "zn"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A basal fertilizer for irrigated rice that adds zinc where rice often runs short of it.",
+   "crops": [
+    "rice"
+   ]
+  },
+  {
+   "key": "atlas-hi-yield-gro-17-7-17",
+   "brand": "Atlas Hi Yield Gro",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "17 7 17 with 1 percent CaO, 8 percent S, 13 percent Cl",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A rice basal fertilizer for tillering and panicle start, with sulfur added.",
+   "crops": [
+    "rice"
+   ]
+  },
+  {
+   "key": "atlas-14-5-20-boron",
+   "brand": "Atlas 14 5 20+0.02B",
+   "company": "Atlas Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "14 5 20 with 0.02 percent B, 0.5 percent CaO, 7 percent S, 15 percent Cl",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A high potassium compound for fruit bearing crops, with a trace of boron for fruit set.",
+   "crops": []
+  },
+  {
+   "key": "tierracoat-mx-12-12-17-2",
+   "brand": "TIERRACOAT MX 12 12 17 2+TE",
+   "company": "Tierra Agri Technologies, Inc.",
+   "kind": "compound",
+   "grade": "12 12 17 with 2 percent Mg and traces of Zn, B",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "The 12 12 17 2 grade with magnesium, suited to vegetables and fruit trees on soils low in magnesium.",
+   "crops": []
+  },
+  {
+   "key": "philphos-16-16-8",
+   "brand": "Philphos 16 16 8",
+   "company": "Philippine Phosphate Fertilizer Corporation",
+   "kind": "compound",
+   "grade": "16 16 8",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A compound with less potassium, for soils that already hold enough potassium.",
+   "crops": []
+  },
+  {
+   "key": "nutricote-13-11-11-te",
+   "brand": "Nutricote 13 11 11+2MgO+TE",
+   "company": "Ramgo International Corporation",
+   "kind": "compound",
+   "grade": "13 11 11 with 2 percent MgO, 5 percent S and trace elements",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Coated slow release fertilizer for pots, seedling trays and nurseries that feeds for months.",
+   "crops": []
+  },
+  {
+   "key": "tierracoat-mx-23-5-10-fe",
+   "brand": "Tierracoat MX 23 5 10 + Fe",
+   "company": "Tierra Agri Technologies, Inc.",
+   "kind": "compound",
+   "grade": "23 5 10 with 2 percent iron",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "fe"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A compound that adds iron to the soil along with the main nutrients.",
+   "crops": []
+  },
+  {
+   "key": "bayfolan",
+   "brand": "Bayfolan",
+   "company": "Bayer CropScience, Inc.",
+   "kind": "foliar",
+   "grade": "11 8 6 with traces of Fe, Cu, Mn, Mo, B, Zn",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "fe",
+    "cu",
+    "mn",
+    "mo",
+    "b",
+    "zn"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A long sold leaf spray with the main nutrients and small amounts of six trace elements, registered for tomato, coffee and citrus.",
+   "crops": [
+    "tomato",
+    "coffee",
+    "citrus"
+   ]
+  },
+  {
+   "key": "bayer-ambition-complete-foliar",
+   "brand": "Ambition Complete Foliar",
+   "company": "Bayer CropScience, Inc.",
+   "kind": "foliar",
+   "grade": "8 8 6 with traces of B, Cu, Fe, Mn, Mo, Zn",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "b",
+    "cu",
+    "fe",
+    "mn",
+    "mo",
+    "zn"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A Bayer leaf spray with the main nutrients and trace elements for crops under stress.",
+   "crops": []
+  },
+  {
+   "key": "crop-giant-15-15-30",
+   "brand": "Crop Giant 15 15 30+M.E.",
+   "company": "Aldiz Incorporated",
+   "kind": "foliar",
+   "grade": "15 15 30 with Fe, Mn, B, Zn, Cu, Mo",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "fe",
+    "mn",
+    "b",
+    "zn",
+    "cu",
+    "mo"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A high potassium leaf spray with trace elements for flowering and fruit filling.",
+   "crops": []
+  },
+  {
+   "key": "crop-giant-19-19-19",
+   "brand": "Crop Giant 19 19 19+M.E.",
+   "company": "Aldiz Incorporated",
+   "kind": "foliar",
+   "grade": "19 19 19 with Fe, Mn, B, Zn, Cu, Mo",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "fe",
+    "mn",
+    "b",
+    "zn",
+    "cu",
+    "mo"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A balanced leaf spray with trace elements for the growing stage.",
+   "crops": []
+  },
+  {
+   "key": "peters-professional-20-20-20",
+   "brand": "Peters Professional 20 20 20+TE",
+   "company": "Allied Botanical Corporation",
+   "kind": "foliar",
+   "grade": "20 20 20 with B, Cu, Fe, Mn, Mo, Zn",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "b",
+    "cu",
+    "fe",
+    "mn",
+    "mo",
+    "zn"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "A soluble all purpose feed for sprays, drip and seedling trays.",
+   "crops": []
+  },
+  {
+   "key": "groviota-growth-30-10-10",
+   "brand": "Groviota Growth",
+   "company": "Ramgo International Corporation",
+   "kind": "foliar",
+   "grade": "30 10 10 with Mg, S and trace elements",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg",
+    "s",
+    "fe",
+    "mn",
+    "zn",
+    "b",
+    "cu",
+    "mo"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A high nitrogen leaf spray for leafy growth with small amounts of trace elements.",
+   "crops": []
+  },
+  {
+   "key": "megabooster-10-20-30",
+   "brand": "Megabooster",
+   "company": "Leads Agricultural Products Corporation",
+   "kind": "foliar",
+   "grade": "10 20 30 with trace elements",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "fe",
+    "mn",
+    "zn",
+    "cu",
+    "b",
+    "mo"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A Leads Agri leaf spray high in phosphorus and potassium for flowering and fruit set.",
+   "crops": []
+  },
+  {
+   "key": "polaris-t14-foliar",
+   "brand": "Polaris T14+ Foliar",
+   "company": "Leads Agricultural Products Corporation",
+   "kind": "foliar",
+   "grade": "14 14 14 with 8 percent MgO, 17.5 percent SO3, 1 percent Zn",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg",
+    "s",
+    "zn"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A balanced leaf spray that also carries useful magnesium, sulfur and zinc.",
+   "crops": []
+  },
+  {
+   "key": "haifa-poly-feed-11-11-33",
+   "brand": "Haifa Poly Feed 11 11 33+2MgO",
+   "company": "Rosemeadows Farm Inc.",
+   "kind": "foliar",
+   "grade": "11 11 33 with 2 percent MgO",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "mg"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "A soluble feed high in potassium with magnesium, for drip or sprays on fruiting crops.",
+   "crops": []
+  },
+  {
+   "key": "agway-mega-kel-p",
+   "brand": "Mega Kel P",
+   "company": "Agway Chemicals Corp.",
+   "kind": "foliar",
+   "grade": "4 9 2.1 with S, Zn, Mn, Mg, Fe, Cu, B, Mo",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "s",
+    "zn",
+    "mn",
+    "mg",
+    "fe",
+    "cu",
+    "b",
+    "mo"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A liquid leaf spray with a wide spread of trace elements, useful when several small shortages show at once.",
+   "crops": []
+  },
+  {
+   "key": "omex-calmax-foliar",
+   "brand": "Omex Calmax Foliar",
+   "company": "Jardine Distribution, Inc.",
+   "kind": "foliar",
+   "grade": "12.75 percent N, 22.5 percent CaO, 3 percent MgO with traces of Mn, Fe, Cu, Zn, B, Mo (w/v)",
+   "nutrients": [
+    "n",
+    "ca",
+    "mg",
+    "mn",
+    "fe",
+    "cu",
+    "zn",
+    "b",
+    "mo"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A calcium rich leaf spray with magnesium and trace elements, registered for fruiting vegetables, squash, rice, mango and banana.",
+   "crops": [
+    "squash",
+    "rice",
+    "mango",
+    "banana"
+   ]
+  },
+  {
+   "key": "yaraliva-tropicote",
+   "brand": "YaraLiva TROPICOTE",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "straight",
+   "grade": "15.1 0 0 with 25.5 percent CaO",
+   "nutrients": [
+    "n",
+    "ca"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Calcium nitrate for side dressing tomato, pepper and other fruiting crops to cut blossom end rot.",
+   "crops": []
+  },
+  {
+   "key": "yaraliva-nitrabor",
+   "brand": "YaraLiva NITRABOR",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "straight",
+   "grade": "15.4 0 0 with 25.6 percent CaO and 0.3 percent boron",
+   "nutrients": [
+    "n",
+    "ca",
+    "b"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Calcium nitrate with boron, for crops prone to cracked fruit, hollow stems or poor fruit set.",
+   "crops": []
+  },
+  {
+   "key": "yaratera-calcinit",
+   "brand": "YaraTera CALCINIT",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "straight",
+   "grade": "15.5 0 0 with 26.5 percent CaO",
+   "nutrients": [
+    "n",
+    "ca"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Fully soluble calcium nitrate for drip lines and sprays. Do not mix it in the same tank with sulfates or phosphates.",
+   "crops": []
+  },
+  {
+   "key": "ramgo-calcipro",
+   "brand": "Calcipro",
+   "company": "Ramgo International Corporation",
+   "kind": "straight",
+   "grade": "15.5 0 0 with 18.8 percent calcium",
+   "nutrients": [
+    "n",
+    "ca"
+   ],
+   "form": "granular",
+   "use": "both",
+   "note": "Calcium nitrate from Ramgo for fruiting vegetables that need calcium in the fruit.",
+   "crops": []
+  },
+  {
+   "key": "great-calcium-n",
+   "brand": "Great Calcium N",
+   "company": "Agway Chemicals Corp.",
+   "kind": "straight",
+   "grade": "15.5 0 0 with 18.5 percent calcium",
+   "nutrients": [
+    "n",
+    "ca"
+   ],
+   "form": "granular",
+   "use": "both",
+   "note": "Agway calcium nitrate for tip burn in leafy crops and blossom end rot in tomato.",
+   "crops": []
+  },
+  {
+   "key": "grow-more-liquid-chelate-calcium",
+   "brand": "Grow More Liquid Chelate Calcium",
+   "company": "Sagrex Corporation",
+   "kind": "foliar",
+   "grade": "12 percent calcium",
+   "nutrients": [
+    "ca"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A chelated calcium spray for fruit crops and vegetables during fruit growth.",
+   "crops": []
+  },
+  {
+   "key": "brexil-ca",
+   "brand": "Brexil Ca",
+   "company": "Zetryl.Chem Phils., Inc.",
+   "kind": "foliar",
+   "grade": "20 percent CaO with 0.5 percent boron",
+   "nutrients": [
+    "ca",
+    "b"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A calcium and boron spray powder for fruit set and firm fruit.",
+   "crops": []
+  },
+  {
+   "key": "agway-calcium-boron-max",
+   "brand": "Calcium Boron Max Foliar",
+   "company": "Agway Chemicals Corp.",
+   "kind": "foliar",
+   "grade": "12 percent calcium and 1 percent boron (w/v)",
+   "nutrients": [
+    "ca",
+    "b"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A calcium boron spray used at flowering and fruit set on vegetables and fruit trees.",
+   "crops": []
+  },
+  {
+   "key": "grow-more-calcium-boron",
+   "brand": "Grow More Liquid Chelate Calcium Boron",
+   "company": "Sagrex Corporation",
+   "kind": "foliar",
+   "grade": "8 percent calcium and 1 percent boron",
+   "nutrients": [
+    "ca",
+    "b"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A chelated calcium boron spray for poor fruit set and fruit cracking.",
+   "crops": []
+  },
+  {
+   "key": "comet-calcium-boron",
+   "brand": "Comet Calcium Boron",
+   "company": "Corvill Agricom, Inc.",
+   "kind": "foliar",
+   "grade": "11 percent calcium and 1 percent boron",
+   "nutrients": [
+    "ca",
+    "b"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A calcium boron foliar for fruiting vegetables during flowering.",
+   "crops": []
+  },
+  {
+   "key": "unisus-liquid-ca-b",
+   "brand": "Unisus (Liquid Ca B)",
+   "company": "Newman Chemicals Corporation",
+   "kind": "foliar",
+   "grade": "10 percent CaO and 3 percent boron",
+   "nutrients": [
+    "ca",
+    "b"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A liquid with more boron than most calcium boron sprays, for crops with hollow stems or misshapen fruit.",
+   "crops": []
+  },
+  {
+   "key": "planters-products-lifelime",
+   "brand": "Planters Products Lifelime",
+   "company": "Planters Products, Inc.",
+   "kind": "liming",
+   "grade": "50.59 percent CaO",
+   "nutrients": [
+    "ca"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Agricultural lime that raises the pH of acid soil and adds calcium. Apply it weeks before planting and follow the soil test.",
+   "crops": []
+  },
+  {
+   "key": "macrock-limestone",
+   "brand": "Macrock Limestone",
+   "company": "Donumdei 1 Corp.",
+   "kind": "liming",
+   "grade": "36 to 42 percent calcium",
+   "nutrients": [
+    "ca"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Ground limestone for correcting acid soil, mixed in during land preparation.",
+   "crops": []
+  },
+  {
+   "key": "calcic-lime",
+   "brand": "Calcic Lime",
+   "company": "Mindanao Agriplus Corporation",
+   "kind": "liming",
+   "grade": "35.52 percent calcium",
+   "nutrients": [
+    "ca"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Calcium lime for acid fields where crops show weak roots and calcium shortage.",
+   "crops": []
+  },
+  {
+   "key": "a6-dolomite",
+   "brand": "Dolomite",
+   "company": "A6 Agrisource Limited Corporation",
+   "kind": "liming",
+   "grade": "24 percent calcium and 11 percent magnesium",
+   "nutrients": [
+    "ca",
+    "mg"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Dolomite raises soil pH and adds magnesium as well as calcium, the better lime where magnesium is also low.",
+   "crops": []
+  },
+  {
+   "key": "philphos-gypsum",
+   "brand": "Philphos Gypsum",
+   "company": "Philippine Phosphate Fertilizer Corporation",
+   "kind": "straight",
+   "grade": "31 percent CaO and 43.5 percent SO3",
+   "nutrients": [
+    "ca",
+    "s"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Gypsum adds calcium and sulfur without changing soil pH much, often used for peanut and on sodic soils.",
+   "crops": []
+  },
+  {
+   "key": "simplot-trugyp-gypsum",
+   "brand": "Simplot Trugyp Gypsum",
+   "company": "Nutranta Inc.",
+   "kind": "straight",
+   "grade": "21 percent calcium and 17 percent sulfur",
+   "nutrients": [
+    "ca",
+    "s"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Gypsum for calcium and sulfur at pegging in peanut and for crops on hard crusting soils.",
+   "crops": []
+  },
+  {
+   "key": "yaratera-krista-mgs",
+   "brand": "YaraTera KRISTA MgS",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "straight",
+   "grade": "16 percent MgO and 13 percent sulfur",
+   "nutrients": [
+    "mg",
+    "s"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Soluble magnesium sulfate for yellowing between the veins of older leaves, given by drip or spray.",
+   "crops": []
+  },
+  {
+   "key": "ramgo-magnepro",
+   "brand": "Magnepro",
+   "company": "Ramgo International Corporation",
+   "kind": "straight",
+   "grade": "16 percent MgO and 12.8 percent sulfur",
+   "nutrients": [
+    "mg",
+    "s"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Magnesium sulfate from Ramgo for sprays or soil when old leaves turn yellow between green veins.",
+   "crops": []
+  },
+  {
+   "key": "lucky-planters-epsom-salt",
+   "brand": "Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)",
+   "company": "Mindanao Agriplus Corporation",
+   "kind": "straight",
+   "grade": "16.27 percent MgO and 13 percent sulfur",
+   "nutrients": [
+    "mg",
+    "s"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Epsom salt for magnesium and sulfur, quick acting as a leaf spray.",
+   "crops": []
+  },
+  {
+   "key": "agsmart-kieserite",
+   "brand": "AgSmart Kieserite Granule",
+   "company": "AgSmart Corporation",
+   "kind": "straight",
+   "grade": "27 percent MgO and 20 percent sulfur",
+   "nutrients": [
+    "mg",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Granular magnesium sulfate for soil use in banana, oil palm, coconut and vegetables.",
+   "crops": []
+  },
+  {
+   "key": "lucky-planters-kieserite",
+   "brand": "Lucky Planters Kieserite Granular",
+   "company": "Mindanao AgriPlus Corporation",
+   "kind": "straight",
+   "grade": "26 percent MgO and 14 percent sulfur",
+   "nutrients": [
+    "mg",
+    "s"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "Kieserite for soil magnesium on sandy or acid soils.",
+   "crops": []
+  },
+  {
+   "key": "yaravita-magtrac-300",
+   "brand": "YaraVita MAGTRAC 300",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "foliar",
+   "grade": "20 percent magnesium (w/v)",
+   "nutrients": [
+    "mg"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A concentrated liquid magnesium spray for a fast fix while soil magnesium is being built up.",
+   "crops": []
+  },
+  {
+   "key": "sagrex-liquid-chelate-magnesium",
+   "brand": "Liquid Chelate Magnesium w/ Sulfur",
+   "company": "Sagrex Corporation",
+   "kind": "foliar",
+   "grade": "4 percent magnesium and 4 percent sulfur",
+   "nutrients": [
+    "mg",
+    "s"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A chelated magnesium spray from the Grow More line.",
+   "crops": []
+  },
+  {
+   "key": "farmfix-sulfur",
+   "brand": "Farmfix Sulfur",
+   "company": "Philippine FarmFix , Inc.",
+   "kind": "straight",
+   "grade": "99 percent sulfur",
+   "nutrients": [
+    "s"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Elemental sulfur must turn into sulfate in the soil first, so it works slowly and also lowers soil pH.",
+   "crops": []
+  },
+  {
+   "key": "vsi-sulfur-powder",
+   "brand": "VSI Sulfur Powder",
+   "company": "Newman Chemicals Corporation",
+   "kind": "straight",
+   "grade": "99.5 percent sulfur",
+   "nutrients": [
+    "s"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Sulfur powder for building soil sulfur ahead of the crop, or for lowering pH in alkaline soil.",
+   "crops": []
+  },
+  {
+   "key": "harvester-zinc-sulphate",
+   "brand": "Harvester Zinc Sulphate Heptahydrate",
+   "company": "Universal Harvester, Inc.",
+   "kind": "micronutrient",
+   "grade": "22 percent zinc",
+   "nutrients": [
+    "zn"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Zinc sulfate for rice and corn with bronzed, stunted plants, given to the soil, the seedbed or as a spray.",
+   "crops": []
+  },
+  {
+   "key": "great-planters-zinc-sulphate",
+   "brand": "Great Planters Zinc Sulphate Heptahydrate",
+   "company": "Agway Chemicals Corp.",
+   "kind": "micronutrient",
+   "grade": "21 percent zinc",
+   "nutrients": [
+    "zn"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Agway zinc sulfate for zinc poor soils such as wet, alkaline or newly leveled fields.",
+   "crops": []
+  },
+  {
+   "key": "agsmart-zinc",
+   "brand": "Agsmart Zinc",
+   "company": "AgSmart Corporation",
+   "kind": "micronutrient",
+   "grade": "22 percent zinc and 10 percent sulfur",
+   "nutrients": [
+    "zn",
+    "s"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Zinc sulfate that also gives some sulfur.",
+   "crops": []
+  },
+  {
+   "key": "petbowe-zinc-sulphate-monohydrate",
+   "brand": "Zinc Sulphate Monohydrate",
+   "company": "Petbowe Trading Corporation",
+   "kind": "micronutrient",
+   "grade": "33 percent zinc",
+   "nutrients": [
+    "zn"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "The stronger dry form of zinc sulfate, so less is needed per hectare than the heptahydrate.",
+   "crops": []
+  },
+  {
+   "key": "yaravita-zintrac-700",
+   "brand": "YaraVita ZINTRAC 700",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "micronutrient",
+   "grade": "40 percent zinc",
+   "nutrients": [
+    "zn"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A concentrated zinc spray for a fast fix of zinc shortage in rice, corn and fruit trees.",
+   "crops": []
+  },
+  {
+   "key": "yaravita-teprosyn-np-zn",
+   "brand": "YaraVita TEPROSYN NP+Zn",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "micronutrient",
+   "grade": "9 percent N, 15 percent P2O5, 18 percent zinc",
+   "nutrients": [
+    "n",
+    "p",
+    "zn"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A concentrated zinc and phosphorus liquid made mainly to coat seed before planting so seedlings start with zinc.",
+   "crops": []
+  },
+  {
+   "key": "grow-more-liquid-chelate-zinc",
+   "brand": "Grow More Liquid Chelate Zinc with Sulfur",
+   "company": "Sagrex Corporation",
+   "kind": "micronutrient",
+   "grade": "10 percent zinc and 5 percent sulfur",
+   "nutrients": [
+    "zn",
+    "s"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A chelated zinc spray for crops with small, bunched young leaves.",
+   "crops": []
+  },
+  {
+   "key": "white-label-zinc-foliar",
+   "brand": "White Label Zinc Foliar",
+   "company": "Corteva Asia Pacific Inc. Philippine Branch",
+   "kind": "micronutrient",
+   "grade": "10 percent zinc and 5 percent sulfur",
+   "nutrients": [
+    "zn",
+    "s"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A zinc and sulfur spray from Corteva for zinc shortage in rice and corn.",
+   "crops": []
+  },
+  {
+   "key": "nutriplant-zinc-foliar",
+   "brand": "Nutriplant Zinc Foliar",
+   "company": "Amway Philippines L.L.C.",
+   "kind": "micronutrient",
+   "grade": "4 percent N and 8.1 percent zinc",
+   "nutrients": [
+    "n",
+    "zn"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A zinc leaf spray sold through Amway.",
+   "crops": []
+  },
+  {
+   "key": "omex-zynergy",
+   "brand": "Omex Zynergy",
+   "company": "Jardine Distribution, Inc.",
+   "kind": "micronutrient",
+   "grade": "3.75 percent zinc and 2.11 percent copper",
+   "nutrients": [
+    "zn",
+    "cu"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A zinc and copper spray registered for fruiting and leafy vegetables.",
+   "crops": []
+  },
+  {
+   "key": "solubor",
+   "brand": "Solubor",
+   "company": "Caldic Philippines Inc.",
+   "kind": "micronutrient",
+   "grade": "21 percent boron",
+   "nutrients": [
+    "b"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Fast dissolving boron for sprays or soil, used for poor fruit set, hollow stems and cracked fruit.",
+   "crops": []
+  },
+  {
+   "key": "caldic-borax-decahydrate",
+   "brand": "Borax Decahydrate",
+   "company": "Caldic Philippines Inc.",
+   "kind": "micronutrient",
+   "grade": "36.9 to 38.2 percent B2O3 (about 11 percent boron)",
+   "nutrients": [
+    "b"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Borax for soil boron, mixed evenly with other fertilizer because too much boron burns plants.",
+   "crops": []
+  },
+  {
+   "key": "etifert-11-borax",
+   "brand": "Etifert 11 (Borax Decahydrate)",
+   "company": "Zetryl.Chem Phils., Inc.",
+   "kind": "micronutrient",
+   "grade": "11 percent boron",
+   "nutrients": [
+    "b"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Borax for soil application on coconut, vegetables and fruit trees short of boron.",
+   "crops": []
+  },
+  {
+   "key": "etifert-17-boric-acid",
+   "brand": "Etifert 17 (Boric Acid)",
+   "company": "Zetryl.Chem Phils., Inc.",
+   "kind": "micronutrient",
+   "grade": "17 percent boron",
+   "nutrients": [
+    "b"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Boric acid that dissolves well for boron sprays.",
+   "crops": []
+  },
+  {
+   "key": "yaravita-bortrac-150",
+   "brand": "YaraVita BORTRAC 150",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "micronutrient",
+   "grade": "11.1 percent boron",
+   "nutrients": [
+    "b"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A liquid boron spray given before flowering for better pollination and fruit set.",
+   "crops": []
+  },
+  {
+   "key": "grow-more-liquid-chelate-boron",
+   "brand": "Grow More Liquid Chelate Boron",
+   "company": "Sagrex Corporation",
+   "kind": "micronutrient",
+   "grade": "10 percent boron",
+   "nutrients": [
+    "b"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A liquid boron spray for flowering crops.",
+   "crops": []
+  },
+  {
+   "key": "ezertech-proboron",
+   "brand": "Proboron",
+   "company": "Ezertech Corporation",
+   "kind": "micronutrient",
+   "grade": "130 g boron per liter",
+   "nutrients": [
+    "b"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A strong liquid boron, so measure it carefully because the gap between enough and too much boron is small.",
+   "crops": []
+  },
+  {
+   "key": "cleveland-ferrous-sulphate",
+   "brand": "Ferrous Sulphate Heptahydrate",
+   "company": "Cleveland Industries Inc.",
+   "kind": "micronutrient",
+   "grade": "20 percent iron",
+   "nutrients": [
+    "fe"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Iron sulfate for yellow young leaves with green veins, best as a spray because soil often locks the iron up.",
+   "crops": []
+  },
+  {
+   "key": "zetryl-ferrous-sulfate-monohydrate",
+   "brand": "Ferrous Sulfate Monohydrate",
+   "company": "Zetryl.Chem Phils., Inc.",
+   "kind": "micronutrient",
+   "grade": "30 percent iron",
+   "nutrients": [
+    "fe"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "A stronger dry iron sulfate for soil use.",
+   "crops": []
+  },
+  {
+   "key": "grow-more-liquid-chelate-iron",
+   "brand": "Grow More Liquid Chelate Iron with Sulfur",
+   "company": "Sagrex Corporation",
+   "kind": "micronutrient",
+   "grade": "5 percent iron and 3 percent sulfur",
+   "nutrients": [
+    "fe",
+    "s"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A chelated iron spray that stays available on leaves better than plain iron sulfate.",
+   "crops": []
+  },
+  {
+   "key": "brexil-fe-foliar",
+   "brand": "Brexil Fe Foliar",
+   "company": "Zetryl.Chem Phils., Inc.",
+   "kind": "micronutrient",
+   "grade": "10 percent iron",
+   "nutrients": [
+    "fe"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A chelated iron powder for sprays on crops with pale young leaves.",
+   "crops": []
+  },
+  {
+   "key": "micro-combo-edta",
+   "brand": "Micro Combo EDTA",
+   "company": "Ateretpaz Technologies, Inc.",
+   "kind": "micronutrient",
+   "grade": "7.5 percent Fe, 3.3 percent Mn, 1.3 percent Zn, 1.3 percent B, 0.28 percent Cu",
+   "nutrients": [
+    "fe",
+    "mn",
+    "zn",
+    "b",
+    "cu"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "A chelated trace element mix registered for lettuce and tomato, given by spray or drip.",
+   "crops": [
+    "lettuce",
+    "tomato"
+   ]
+  },
+  {
+   "key": "zetryl-manganese-sulfate",
+   "brand": "Manganese Sulfate",
+   "company": "Zetryl.Chem Phils., Inc.",
+   "kind": "micronutrient",
+   "grade": "31 percent manganese",
+   "nutrients": [
+    "mn"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Manganese sulfate for pale young leaves with a fine net of green veins, common on limed or alkaline soils.",
+   "crops": []
+  },
+  {
+   "key": "tierramino-mn",
+   "brand": "Tierramino Mn",
+   "company": "Unilox Far East Resources Inc.",
+   "kind": "micronutrient",
+   "grade": "12 percent manganese and 7 percent N",
+   "nutrients": [
+    "mn",
+    "n"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "An amino acid manganese for leaf sprays.",
+   "crops": []
+  },
+  {
+   "key": "agway-multimate",
+   "brand": "Multimate",
+   "company": "Agway Chemicals Corp.",
+   "kind": "micronutrient",
+   "grade": "1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)",
+   "nutrients": [
+    "mn",
+    "zn",
+    "n",
+    "s"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A manganese and zinc spray for crops that show both shortages on young leaves.",
+   "crops": []
+  },
+  {
+   "key": "biozome",
+   "brand": "Biozome",
+   "company": "Manchem Industries, Inc.",
+   "kind": "micronutrient",
+   "grade": "12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo",
+   "nutrients": [
+    "s",
+    "zn",
+    "mn",
+    "mg",
+    "fe",
+    "cu",
+    "b",
+    "mo"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A soil applied mix of trace elements for fields with several small shortages at once.",
+   "crops": []
+  },
+  {
+   "key": "growers-choice-copper-sulphate",
+   "brand": "Grower's Choice Copper Sulphate Pentahydrate",
+   "company": "Zetryl.Chem Phils., Inc.",
+   "kind": "micronutrient",
+   "grade": "25 percent copper and 12 percent sulfur",
+   "nutrients": [
+    "cu",
+    "s"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Copper sulfate for copper shortage on peat and very sandy soils. Use small amounts because copper builds up in soil.",
+   "crops": []
+  },
+  {
+   "key": "agsmart-copper-sulphate",
+   "brand": "Agsmart Copper Sulphate",
+   "company": "AgSmart Corporation",
+   "kind": "micronutrient",
+   "grade": "25 percent copper and 12 percent sulfur",
+   "nutrients": [
+    "cu",
+    "s"
+   ],
+   "form": "water soluble",
+   "use": "both",
+   "note": "Copper sulfate for soil or a weak spray when young leaves wilt, twist or die back.",
+   "crops": []
+  },
+  {
+   "key": "sagrex-liquid-chelate-copper",
+   "brand": "Liquid Chelate Copper w/ Sulfur",
+   "company": "Sagrex Corporation",
+   "kind": "micronutrient",
+   "grade": "5 percent copper and 2 percent sulfur",
+   "nutrients": [
+    "cu",
+    "s"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A chelated copper spray from the Grow More line.",
+   "crops": []
+  },
+  {
+   "key": "sagrex-liquid-chelate-molybdenum",
+   "brand": "Liquid Chelate Molybdenum",
+   "company": "Sagrex Corporation",
+   "kind": "micronutrient",
+   "grade": "5 percent molybdenum",
+   "nutrients": [
+    "mo"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A molybdenum spray registered for peanut, where molybdenum helps root nodules fix nitrogen.",
+   "crops": [
+    "peanut"
+   ]
+  },
+  {
+   "key": "tierramino-molybdenum",
+   "brand": "Tierramino Molybdenum",
+   "company": "Unilox Far East Resources Inc.",
+   "kind": "micronutrient",
+   "grade": "16 percent molybdenum",
+   "nutrients": [
+    "mo"
+   ],
+   "form": "water soluble",
+   "use": "foliar",
+   "note": "A concentrated molybdenum product for legumes and cabbage family crops. Only grams are needed.",
+   "crops": []
+  },
+  {
+   "key": "yaravita-teprosyn-mo",
+   "brand": "YaraVita Teprosyn Mo",
+   "company": "Yara Fertilizers Philippines, Inc.",
+   "kind": "micronutrient",
+   "grade": "15 percent P2O5 and 15.3 percent molybdenum",
+   "nutrients": [
+    "p",
+    "mo"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A molybdenum and phosphorus liquid mainly used to coat legume seed before planting.",
+   "crops": []
+  },
+  {
+   "key": "grow-more-liquid-chelate-general-purpose",
+   "brand": "Grow More Liquid Chelate General Purpose",
+   "company": "Sagrex Corporation",
+   "kind": "micronutrient",
+   "grade": "2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo",
+   "nutrients": [
+    "fe",
+    "mn",
+    "mg",
+    "s",
+    "cu",
+    "zn",
+    "b",
+    "mo"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A chelated trace element mix for sprays when the exact shortage is not yet known.",
+   "crops": []
+  },
+  {
+   "key": "nutriplant-sl",
+   "brand": "Nutriplant SL",
+   "company": "Amway Philippines L.L.C.",
+   "kind": "micronutrient",
+   "grade": "2 percent Fe, 2 percent Zn, 1 percent Mg, 0.5 percent Mn, 0.15 percent Cu, 3 percent S with a trace of Mo",
+   "nutrients": [
+    "fe",
+    "zn",
+    "mg",
+    "mn",
+    "cu",
+    "s",
+    "mo"
+   ],
+   "form": "liquid",
+   "use": "foliar",
+   "note": "A trace element leaf spray sold through Amway.",
+   "crops": []
+  },
+  {
+   "key": "vermicast",
+   "brand": "Vermicast (vermicompost)",
+   "company": "Local farms, farmer groups and LGU composting centers",
+   "kind": "organic",
+   "grade": "Varies by maker. Low in N, P and K",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Worm castings that improve the soil and release small amounts of nutrients slowly, so they are usually paired with regular fertilizer.",
+   "crops": []
+  },
+  {
+   "key": "chicken-manure",
+   "brand": "Chicken manure (ipot ng manok)",
+   "company": "Poultry farms and agri supply stores",
+   "kind": "organic",
+   "grade": "Decomposed or air dried. Content varies",
+   "nutrients": [
+    "n",
+    "p",
+    "k",
+    "ca"
+   ],
+   "form": "powder",
+   "use": "soil",
+   "note": "Decomposed or air dried chicken manure adds nitrogen, phosphorus and organic matter. Never use it fresh because it can burn roots.",
+   "crops": []
+  },
+  {
+   "key": "harvester-petroganik",
+   "brand": "Harvester Planters' Choice Petroganik Granular",
+   "company": "Universal Harvester, Inc.",
+   "kind": "organic",
+   "grade": "0.91 to 1.81 to 1.29",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A granular organic fertilizer for building soil organic matter alongside regular fertilizer.",
+   "crops": []
+  },
+  {
+   "key": "kawa-4-2-2",
+   "brand": "Kawa 4 2 2",
+   "company": "Leads Agricultural Products Corporation",
+   "kind": "organic",
+   "grade": "4 2 2 (fortified organic)",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A fortified organic fertilizer registered for potato and cabbage.",
+   "crops": [
+    "potato",
+    "cabbage"
+   ]
+  },
+  {
+   "key": "terralizer",
+   "brand": "Terralizer",
+   "company": "Agrifix Farm Development and Supply, Inc.",
+   "kind": "organic",
+   "grade": "2.84 to 3.95 to 3.66 (fortified organic)",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A fortified organic fertilizer registered for rice.",
+   "crops": [
+    "rice"
+   ]
+  },
+  {
+   "key": "rich-soil",
+   "brand": "Rich Soil",
+   "company": "St. Ruiz Agro Farm Supply and General Merchandise",
+   "kind": "organic",
+   "grade": "3 3 2 with 30 percent organic matter",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A fortified organic fertilizer registered for rice, corn and vegetables.",
+   "crops": [
+    "rice",
+    "corn_yellow"
+   ]
+  },
+  {
+   "key": "melro-compost",
+   "brand": "Melro Compost",
+   "company": "Meljay Agri Business Corp.",
+   "kind": "organic",
+   "grade": "2 2 2.4",
+   "nutrients": [
+    "n",
+    "p",
+    "k"
+   ],
+   "form": "granular",
+   "use": "soil",
+   "note": "A compost registered as a soil conditioner for rice.",
+   "crops": [
+    "rice"
+   ]
+  }
+ ]
+}

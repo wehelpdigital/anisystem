@@ -1,0 +1,609 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "sorghum-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 50,
+ "title": "Sorghum Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Sorghum Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Sorghum nutrient deficiency shows in the leaves. See the signs of nitrogen, phosphorus and potassium in batad, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "sorghum nutrient deficiency",
+ "keywords": [
+  "sorghum nutrient deficiency",
+  "sorghum deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Sorghum nutrient deficiency is one of the first things to check when the leaves of your batad (sorghum) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, zinc, iron, sulfur and magnesium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-p.webp",
+  "alt": "Phosphorus deficiency on a leaf, shown on another crop as a stand in for sorghum",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus, potassium and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, iron and sulfur stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which sorghum nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sorghum nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of batad",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Pale, thin plants whose lower leaves yellow from the tip down the midrib.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Short, stiff, dark green plants with red or purple leaves and sheaths.",
+     "Diammonium phosphate 18 46 0, 16 20 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves dry at the tips and edges, with red specks and brown streaks.",
+     "Muriate of potash 0 0 60, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves turn dark yellow between the veins, then deep red and rusty brown.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of batad",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "White to pale yellow bands on the lower half of young leaves, with a red line on the edges.",
+     "Zinc sulfate"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "On limey, high pH soil, young leaves turn yellow to white between green veins, in patches of the field.",
+     "Ferrous sulfate, Chelated iron (Fe EDDHA)"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The young upper leaves turn evenly pale yellow, with no dead spots.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a sorghum nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest sorghum nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in sorghum",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Plants are stunted, thin and pale yellow green. The older leaves turn yellow from the tip, along the midrib and edges toward the base, then dry. Heads come out small with fewer seeds. You see it most at this stage: from the 5 leaf stage to boot, when the crop grows fastest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in batad"
+  },
+  {
+   "type": "text",
+   "text": "Little or no fertilizer, sandy soils, low organic matter, nitrogen washed away by heavy rain. Ratoon crops that were not fed again after the first harvest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency gives an even pale yellow on the young leaves without dead tissue. Iron deficiency stripes the young leaves between the veins. To be sure, check that yellowing started on the lowest leaves at the tip and runs down the midrib. Compare with a few rows given urea, and test the soil before the next crop."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Sidedress Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows, following the soil test. Work it in or water it. For quick help, TNAU gives a 1 percent urea spray (10 g per liter) or a 2 percent DAP 18 46 0 spray (20 g per liter)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, split nitrogen between planting and about 30 days after, and feed a ratoon crop again after cutting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in sorghum",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants are stunted and thin, with dark green, stiff and upright leaves that take on a dark red or purple color, also on the leaf sheaths. Roots stay small and turn dark brown to black. Grain filling is poor. You see it most at this stage: seedling to early growth, with the loss showing later as poor heads."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in batad"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils, calcareous soils, soils low in organic matter, and cold or dry spells that slow the roots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also brings red color but with dead patches on the leaf edges and tips. Magnesium gives stripes between the veins. To be sure, soil test for available phosphorus before planting, and look at the roots for small, dark root systems."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "For the standing crop, TNAU gives 2 to 3 sprays of 2 percent DAP 18 46 0 (20 g per liter). For the next crop, place 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Diammonium phosphate 18 46 0",
+    "16 20 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, apply phosphorus at planting near the seed, and lime acid soils as the soil test says."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in sorghum",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "The older leaves show yellow then brown, dead tissue at the tips and edges, mixed with red specks and streaks between the veins. The damage moves from the tip and edge toward the leaf base. Stalks are weak. You see it most at this stage: mid growth to grain filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in batad"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and highly weathered soils, fields cropped for years without potash, and removal of stalks for fodder."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency yellows the midrib first, while potassium burns the edges. Magnesium deficiency starts between the veins. To be sure, soil test for potassium and a look at where the browning starts on the bottom leaves."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 1 percent potassium chloride spray (10 g Muriate of potash per liter). For the soil, sidedress Muriate of potash 0 0 60 following the soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, return stalks or ash to the field when they are not used for fodder, and include potash at planting on sandy soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in sorghum",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "New leaves come out evenly pale green, then white to pale yellow bands form in the lower half of the leaf and spread toward the tip. Leaf edges can show a clear red line and bleached white patches. Older leaves get yellow stripes between the veins and plants stay short. You see it most at this stage: seedling to early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in batad"
+  },
+  {
+   "type": "text",
+   "text": "High pH and calcareous soils, low organic matter and heavy phosphorus fertilizer on zinc poor soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency stripes the young leaves along their full length. Sulfur deficiency gives an even pale yellow with no bands. To be sure, soil test for zinc and pH, or a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives 20 to 25 kg Zinc sulfate per hectare to the soil, or a 0.5 percent zinc sulfate spray (5 g per liter)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add zinc sulfate with the basal fertilizer on high pH soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in sorghum",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "The newest leaves turn pale yellow between the veins, which stay green, so the leaf looks striped along its whole length. In bad cases the leaves turn yellow to white and the crop looks bleached and dries. It shows in uneven patches that follow the soil, and it delays maturity. You see it most at this stage: the first 30 to 60 days. Plants often grow out of it in good weather."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in batad"
+  },
+  {
+   "type": "text",
+   "text": "Sorghum is very prone to it on high pH, calcareous soils with free lime and low organic matter, worse in drought or waterlogging."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Zinc deficiency gives bands in the lower half of the leaf, not full length stripes. Sulfur deficiency is an even pale yellow with no green veins standing out. To be sure, soil pH test and a check for lime (fizzing with vinegar is a field hint). A leaf test for iron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 1 percent ferrous sulfate spray (10 g per liter) every week until new leaves are green, or 20 to 25 kg ferrous sulfate per hectare to the soil. In Kansas trials a chelated iron product (Fe EDDHA) placed in the furrow at about 3.4 kg product per hectare (3 pounds per acre), or split at planting and 2 weeks later, cut the yellowing and raised yield."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate",
+    "Chelated iron (Fe EDDHA)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, choose tolerant hybrids for limey fields, add manure, and treat the first 30 days, which are the critical period."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in sorghum",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "The new upper leaves come out pale yellow, evenly over the leaf, and the veins do not stand out. There are no dead patches. Plants grow slowly. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in batad"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, heavy rain that washes sulfate down, and years of sulfur free fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the old leaves and dries the tips. Iron deficiency leaves green veins on the young leaves. To be sure, note that the youngest leaves are the palest. Test soil and leaves for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Ammonium sulfate 21 0 0 for the sidedress nitrogen, or add Gypsum, following the soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, include a sulfur source such as ammonium sulfate in the fertilizer plan on sandy soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in sorghum",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn dark yellow between the veins, then develop rusty brown dead spots, mostly at the tips and edges. Leaves can turn deep red, become brittle and die. You see it most at this stage: mid growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in batad"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy soils in rainy areas and heavy potash on soils already low in magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency browns the edges first, not between the veins. Iron deficiency hits young leaves. To be sure, soil test for magnesium and pH, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 2 percent magnesium sulfate spray (20 g Epsom salt per liter). On acid soils apply Dolomite following the soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soils with dolomite and keep potash balanced."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any sorghum nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your batad needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick batad, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sorghum nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my batad leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: pale, thin plants whose lower leaves yellow from the tip down the midrib. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in sorghum?",
+     "a": "Sidedress Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the rows, following the soil test. Work it in or water it."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in sorghum?",
+     "a": "For the standing crop, TNAU gives 2 to 3 sprays of 2 percent DAP 18 46 0 (20 g per liter). For the next crop, place 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in sorghum?",
+     "a": "TNAU gives a 1 percent potassium chloride spray (10 g Muriate of potash per liter). For the soil, sidedress Muriate of potash 0 0 60 following the soil test."
+    },
+    {
+     "q": "How do I know which nutrient my batad lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the sorghum nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Iron deficiency in all crops",
+     "url": "/nutrient-deficiencies/iron-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "TNAU Agritech Portal: Sorghum, nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_nitro.html"
+    },
+    {
+     "label": "University of Nebraska CropWatch: Key to nutrient deficiencies of corn and sorghum",
+     "url": "https://cropwatch.unl.edu/key-nutrient-deficiencies-corn-and-sorghum/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Sorghum, phosphorus deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_phos.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Sorghum, potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_pota.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Sorghum, zinc deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_zin.html"
+    },
+    {
+     "label": "Obour and others, Kansas State: Evaluating the effectiveness of iron chelates in managing iron deficiency chlorosis in grain sorghum",
+     "url": "https://journals.newprairiepress.org/kaesrr/article/7094/galley/7029/download/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Sorghum, iron deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_iro.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Sorghum, sulphur deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_sul.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Sorghum, magnesium deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/sorghum_magnes.html"
+    }
+   ]
+  }
+ ]
+}

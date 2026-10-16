@@ -1,0 +1,838 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "tomato-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 330,
+ "title": "Tomato Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Tomato Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Tomato nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and calcium in kamatis, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "tomato nutrient deficiency",
+ "keywords": [
+  "tomato nutrient deficiency",
+  "tomato deficiency",
+  "nutrient deficiency in plants",
+  "fertilizer for tomato",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Tomato nutrient deficiency is one of the first things to check when the leaves of your kamatis (tomato) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, calcium, phosphorus, magnesium, boron, zinc, sulfur, iron and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/tomato-potassium-deficiency.webp",
+  "alt": "Tomato leaf yellow and brown along the edges from potassium shortage",
+  "credit": "Goldlocki, CC BY SA 3.0, via Wikimedia Commons"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron, zinc, sulfur, iron and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which tomato nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Tomato nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of kamatis",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Lower leaves turn pale yellow first and the plant looks thin and spindly.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves get scorched, curled edges and the fruit ripens in green or yellow blotches.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the whole plant",
+     "Small, stiff, dark bluish green plants with purple undersides on the lower leaves.",
+     "Ammonium phosphate 16 20 0, Diammonium phosphate 18 46 0"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Lower leaves turn yellow between green veins, starting from the leaf edge, while fruits are filling.",
+     "Magnesium sulfate (Epsom salt), Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of kamatis",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "fruit, grain or tubers, young leaves and the tip",
+     "A dark, sunken, leathery patch at the bottom end of the fruit, opposite the stem.",
+     "Calcium nitrate, Calcium chloride"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Brittle leaf stalks that snap, a dying tip, and fruits with rough, cracked or corky skin.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Short, bunched shoots with small, stiff, leathery leaves that curl down.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "Young top leaves turn pale yellow green, stiff and curled down, with purple stems.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "New top leaves turn yellow with a fine net of green veins, but keep their normal shape.",
+     "Ferrous sulfate, Iron chelate"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Young leaves get orange yellow mottling between green veins with tiny dark brown dots.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a tomato nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest tomato nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in tomato",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The oldest, lowest leaves turn pale green and then yellow, and the yellowing climbs up the plant as the shortage gets worse. Leaflets stay small and stand upright, and the veins on the underside can look pink or purple. Shoots are thin, flower buds may yellow and drop, and the fruits that set stay small. In bad cases the old leaves turn fully yellow or brown and fall off. You see it most at this stage: any time, but most often from early growth to fruit set when the plant is growing fast."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or light soils, heavy rain or heavy watering that washes nitrogen down, low organic matter. Fresh straw or raw manure that ties up nitrogen while it rots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur shortage also makes the plant pale. But it starts on the young top leaves, while nitrogen starts on the old bottom leaves. To be sure, look at where the yellowing starts (bottom leaves first). A soil test for organic matter and a leaf tissue test give a firm answer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Side dress with urea or ammonium sulfate based on your soil test, split into small doses. For a fast green up, spray urea at 10 grams per liter of water. KAU suggests repeating every 15 days and TNAU gives two sprays one week apart. Water after side dressing so the fertilizer reaches the roots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, mix compost or well rotted manure into the beds and split nitrogen into several side dressings instead of one big dose."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in tomato",
+   "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tomato-potassium-deficiency.webp",
+   "alt": "Tomato leaf yellow and brown along the edges from potassium shortage",
+   "caption": "Photo: Goldlocki, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  {
+   "type": "text",
+   "text": "The edges of the older leaves turn yellow, then brown and dry, and the scorch moves in between the veins. Small whitish dead spots can appear inside the yellow areas, and the leaf edges curl. On the fruit, patches near the stem stay green or yellow when the rest turns red. The flesh under them is firm and tasteless. Fruit can also be soft, hollow or poorly colored. You see it most at this stage: most often from fruit set to harvest, when the fruits pull a lot of potassium out of the leaves."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, acid soils, heavy rain or irrigation that leaches potassium, soils with low potassium reserves, and soils rich in magnesium. Drought and cool cloudy weather make blotchy ripening worse."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Salt damage also burns leaf edges. A salty soil or irrigation water test tells them apart. To be sure, A soil test for exchangeable potassium and a leaf tissue test. The University of Kentucky notes that a leaf test, or a handheld potassium meter on leaf sap, shows the plant's potassium status."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply muriate of potash or sulfate of potash based on your soil test, split into two or three side dressings. For a quick fix, spray sulfate of potash at 10 grams per liter of water with a sticker in the morning. TNAU gives three sprays one week apart. On acid soil, lime or dolomite helps the plant hold and use potassium."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Potassium nitrate 13 0 46",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, give potassium before flowering and again during fruiting, add organic matter, and keep soil pH above 6."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in tomato",
+   "id": "calcium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tomato-calcium-deficiency.webp",
+   "alt": "Ripe tomato with a big black, sunken patch at the blossom end from calcium shortage",
+   "caption": "Photo: Mark, CC BY 2.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "A small light brown or water soaked spot appears at the blossom end of young green fruit. It grows into a sunken, dark brown to black, leathery patch with a sharp border, and the fruit often ripens early. Some fruits have hard brown tissue inside with no outside mark. In severe cases the top leaves curl, their edges die and the growing tip dies. You see it most at this stage: early fruit growth, usually on the first fruit clusters and in hot, dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "Usually not a lack of calcium in the soil but uneven watering: when the soil dries out or stays waterlogged, too little calcium moves with water into the fruit. Sandy and acid soils, salty soil, too much nitrogen or potassium, root damage and large fruited or elongated varieties raise the risk."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sunscald makes a pale or white patch on the side facing the sun, not at the bottom end. Fruit rots from disease are soft and often show mould from the start. To be sure, check the pattern first: bottom end of the fruit, early fruits, after a dry spell. A soil test for calcium and pH tells you if lime or gypsum is needed."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Water deeply and regularly so the root zone never dries out or stays soggy, and mulch to hold moisture. TNAU suggests a calcium chloride spray at 5 grams per liter of water, three times two weeks apart. On acid soil, KAU suggests lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare split in two doses when pH is 3.5 to 4.5. Use gypsum on soil that is not acid. Remove damaged fruits. They will not recover."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Calcium nitrate",
+    "Calcium chloride",
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soil before planting, mulch, water on a steady schedule, and avoid heavy nitrogen or ammonium fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in tomato",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants stay small with thin stems and few side branches, and the leaves turn dark blue green. The undersides of the older leaves and their veins turn purple or reddish, starting at the edges, and leaflets curl down. Later the old leaves get brown dead patches, yellow and drop early. Roots are small and brownish, and flowering and fruit set are delayed. You see it most at this stage: seedling and early growth after transplanting, especially in cool weather."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "Strongly acid soils and iron rich soils that lock up phosphorus, very alkaline soils, low organic matter, cold or waterlogged soil, and weak or damaged roots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Cold nights alone can turn seedlings purple for a while even when soil phosphorus is fine. The color fades once it warms up. To be sure, A soil test for available phosphorus and pH, plus a leaf tissue test if the soil looks fine."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply phosphorus at planting based on your soil test, placed in the hole or band near the roots, not broadcast on top. For a quick boost, TNAU suggests spraying DAP at 10 grams per liter of water, twice two weeks apart. Correct very acid soil with lime so phosphorus stays available."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium phosphate 16 20 0",
+    "Diammonium phosphate 18 46 0",
+    "Complete 14 14 14",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a starter of 16 20 0 or 14 14 14 at transplanting, keep the soil near pH 6 to 7, and add compost or manure."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in tomato",
+   "id": "magnesium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tomato-magnesium-deficiency.webp",
+   "alt": "Tomato leaf with yellow patches between green veins from magnesium shortage",
+   "caption": "Photo: Goldlocki (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn yellow or yellow orange between the veins while the main veins stay green. The yellowing starts at the leaf edges and moves inward. Small whitish to light brown dead spots form in the yellow areas. The problem moves from the bottom of the plant upward, and in bad cases whole lower leaves die and yield drops. You see it most at this stage: fruit set and fruit filling, when the plant moves magnesium from old leaves to the fruits."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and acid soils, heavy rain, and heavy use of potash or ammonium fertilizer, which push magnesium out of the root zone and block its uptake."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron and manganese shortage also yellow between the veins but on the young top leaves. Nitrogen shortage yellows the whole leaf, veins too. To be sure, leaf tissue test and a soil test for magnesium and potassium. A high potassium to magnesium balance points to magnesium shortage."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray magnesium sulfate (Epsom salt) at 20 grams per liter of water, twice two weeks apart (TNAU). For the soil, KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare. TNAU suggests dolomite at about 2 tonnes per hectare on acid soil. Do not apply potash and magnesium fertilizer at the same time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Dolomite",
+    "Kieserite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite instead of plain lime on acid soil and keep potash rates in line with the soil test."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in tomato",
+   "id": "boron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/tomato-boron-deficiency.webp",
+   "alt": "Tomato leaves yellowing and browning at the edges and tips from boron shortage",
+   "caption": "Photo: Goldlocki (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves stay small, curl inward and become misshapen, with yellow to orange spots between the veins. Leaf stalks become brittle and snap easily. The growing tips of the main shoot and side shoots can die, and stems become thick, stiff and short. Fruits ripen unevenly and show rough, cracked skin or corky pits, and some fruits are hollow. You see it most at this stage: flowering and fruit set, and after dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils where boron washes out, soils low in organic matter, overliming or alkaline soil, heavy nitrogen or calcium, and drought."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium shortage also kills the growing tip but brings blossom end rot and dead leaf edges. Fruit cracking also comes from sudden heavy watering after a dry spell. To be sure, soil test for available boron and a leaf tissue test. Boron has a narrow safe range, so confirm before applying more than one dose."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray borax at 1 gram per liter of water (KAU), or up to 3 grams per liter twice two weeks apart (TNAU). For the soil, KAU gives borax at about 10 kg per hectare. Do not mix borax with calcium or ammonium fertilizers in one application, and never double the dose. Too much boron burns leaf edges."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor (sodium borate)",
+    "Boric acid"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, include boron in the basal fertilizer on sandy or heavily limed fields and keep organic matter up."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in tomato",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Leaves are small, thick and leathery, and the leaflet edges curl down. Yellowing shows between the veins and along the midrib, which can turn white in bad cases. The spaces between leaves on the stem become short, so the plant looks bunched and stiff. Growth and fruiting both drop. You see it most at this stage: early vegetative growth, especially after a cold or waterlogged spell."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soil, soils very high in phosphorus or heavily fertilized with phosphorus, waterlogged soil, and organic or peaty soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Herbicide drift also twists and narrows leaves. Zinc shortage shows yellowing between the veins and short internodes over a whole patch. To be sure, soil test for zinc and pH, and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests a morning spray of zinc sulfate at 2 grams plus calcium carbonate (or lime) at 2.5 grams per liter of water. Soil zinc sulfate at about 20 kg per hectare on deficient fields. TNAU gives zinc sulfate sprays twice two weeks apart. Do not apply zinc and phosphate fertilizer at the same time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid heavy phosphorus beyond the soil test, keep pH between 5 and 7.5."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in tomato",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "It looks like nitrogen shortage but starts on the young leaves at the top. Leaves turn light green to yellow, often more between the veins, and become stiff and curl downward. Stems, veins and leaf stalks can turn purple, and stems become hard and woody. Old leaves may get dead tips and edges with small purple spots. You see it most at this stage: early growth on light soils, and after long rainy periods."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils where sulfate washes out, low organic matter, acid soils, waterlogged soils. Long use of fertilizers with no sulfur such as urea and muriate of potash alone."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage starts on the old bottom leaves. Sulfur starts on the young top leaves. To be sure, soil test for sulfate and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Switch part of the nitrogen to ammonium sulfate, or use sulfate of potash for the potassium. TNAU suggests gypsum at 50 kg per hectare in the soil, or a spray of calcium sulfate at 10 grams per liter twice two weeks apart. KAU gives sulfur dust at about 25 kg per hectare on sulfur deficient soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum",
+    "Sulfate of potash 0 0 50",
+    "Elemental sulfur"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use some sulfur containing fertilizer every season and keep organic matter up."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in tomato",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "The young leaves at the shoot tips turn yellow between the veins while the veins stay green, giving a net pattern. The leaves are small but not deformed. As it gets worse, the whole tip turns yellow and the leaves can become almost white, veins included. You see it most at this stage: any stage, often after heavy watering or on limed soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "High pH, calcareous or overlimed soil, waterlogged soil, and soil high in copper, manganese or zinc. Many Philippine soils are acid and rich in iron, so true iron shortage is uncommon there."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage looks similar but starts on old lower leaves. Manganese shortage also hits young leaves, but more veins stay green and small dead spots appear. To be sure, soil pH test first, then a soil or leaf test for iron. KAU warns that low potassium can also bring on iron yellowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU suggests spraying ferrous sulfate at 5 grams per liter of water on the leaves. KAU gives ferrous sulfate at about 15 kg per hectare in the soil only where a test shows iron is low. Improve drainage and stop liming."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate",
+    "Iron chelate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Micro Combo EDTA** by Ateretpaz Technologies, Inc. (7.5 percent Fe, 3.3 percent Mn, 1.3 percent Zn, 1.3 percent B, 0.28 percent Cu). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not overlime, and keep beds well drained."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in tomato",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "Orange yellow mottling starts between the veins near the leaflet tip and spreads over the leaflet while the veins stay green. Very young leaves show many small dark brown dead spots. Leaves are smaller, sometimes narrow and long, and roots are smaller than normal. You see it most at this stage: vegetative growth and early flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in kamatis"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soil, sandy soil, organic soil, and cold, wet spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron shortage gives a cleaner yellow with no dead dots. Magnesium shortage starts on old leaves. To be sure, soil pH and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray manganese sulfate at 2 grams per liter of water (KAU). TNAU uses a stronger 5 grams per liter, twice two weeks apart. Avoid more lime until the pH is checked."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Micro Combo EDTA** by Ateretpaz Technologies, Inc. (7.5 percent Fe, 3.3 percent Mn, 1.3 percent Zn, 1.3 percent B, 0.28 percent Cu). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep soil pH near 6 to 6.5 and do not overlime."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any tomato nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kamatis needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick kamatis, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Tomato nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my kamatis leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: lower leaves turn pale yellow first and the plant looks thin and spindly. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in tomato?",
+     "a": "Side dress with urea or ammonium sulfate based on your soil test, split into small doses. For a fast green up, spray urea at 10 grams per liter of water."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in tomato?",
+     "a": "Apply muriate of potash or sulfate of potash based on your soil test, split into two or three side dressings. For a quick fix, spray sulfate of potash at 10 grams per liter of water with a sticker in the morning."
+    },
+    {
+     "q": "What fertilizer fixes calcium deficiency in tomato?",
+     "a": "Water deeply and regularly so the root zone never dries out or stays soggy, and mulch to hold moisture. TNAU suggests a calcium chloride spray at 5 grams per liter of water, three times two weeks apart."
+    },
+    {
+     "q": "How do I know which nutrient my kamatis lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the tomato nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "How to grow kamatis",
+     "url": "/blog/fertilizer-for-tomatoes"
+    },
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Yara US: Nitrogen deficiency in tomato",
+     "url": "https://yara.us/crop-nutrition/tomato/nutrient-deficiencies/nitrogen-deficiency-tomato/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Tomato nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/tomato_nitro.html"
+    },
+    {
+     "label": "KAU Agri Infotech Portal: Tomato nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/tomato/deficiency.php"
+    },
+    {
+     "label": "Yara US: Potassium deficiency in tomato",
+     "url": "https://yara.us/crop-nutrition/tomato/nutrient-deficiencies/potassium-deficiency-tomato/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Tomato potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/tomato_pota.html"
+    },
+    {
+     "label": "University of Kentucky Vegetable Scouting: Blotchy ripening",
+     "url": "https://veggiescout.mgcafe.uky.edu/node/115"
+    },
+    {
+     "label": "UC IPM: Blossom end rot",
+     "url": "https://ipm.ucanr.edu/home-and-landscape/blossom-end-rot/"
+    },
+    {
+     "label": "Yara US: Calcium deficiency in tomato",
+     "url": "https://yara.us/crop-nutrition/tomato/nutrient-deficiencies/calcium-deficiency-tomato/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Tomato calcium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/tomato_cal.html"
+    },
+    {
+     "label": "University of Kentucky Vegetable Scouting: Blossom end rot of solanaceous crops",
+     "url": "https://veggiescout.mgcafe.uky.edu/node/114"
+    },
+    {
+     "label": "Yara US: Phosphorus deficiency in tomato",
+     "url": "https://yara.us/crop-nutrition/tomato/nutrient-deficiencies/phosphorus-deficiency-tomato/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Tomato phosphorus deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/tomato_phos.html"
+    }
+   ]
+  }
+ ]
+}

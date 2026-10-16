@@ -1,0 +1,733 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "chili-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 390,
+ "title": "Chili Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Chili Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Chili nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and calcium in sili, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "chili nutrient deficiency",
+ "keywords": [
+  "chili nutrient deficiency",
+  "chili deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Chili nutrient deficiency is one of the first things to check when the leaves of your sili (chili) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, calcium, phosphorus, magnesium, boron, zinc, sulfur and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/chili-nitrogen-deficiency.webp",
+  "alt": "Close view of chili leaves turned pale yellow green from nitrogen shortage",
+  "credit": "Maja Dumat, CC BY 2.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron, zinc, sulfur and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which chili nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Chili nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of sili",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Lower leaves turn pale yellow, veins included, and plants branch little.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Leaf tips and edges burn brown and leaves crinkle and curl.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Purple stems and leaf undersides, few branches, and late flowering.",
+     "Ammonium phosphate 16 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Leaves that just reached full size turn yellow between the big green veins and drop early.",
+     "Magnesium sulfate (Epsom salt), Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of sili",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "fruit, grain or tubers, young leaves and the tip",
+     "Sunken, water soaked spots at the tip of the fruit that dry out and turn black.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Brittle, twisted new leaves and fruits that crack or drop.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves are small, stiff and mottled yellow, and the plant is short jointed.",
+     "Zinc sulfate"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "Young top leaves turn evenly pale and curl down, with reddish veins.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Young leaves are mottled yellow with a fine net of green veins and dark spots along the veins.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a chili nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest chili nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in chili",
+   "id": "nitrogen"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/chili-nitrogen-deficiency.webp",
+   "alt": "Close view of chili leaves turned pale yellow green from nitrogen shortage",
+   "caption": "Photo: Maja Dumat, CC BY 2.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn pale to light green and then yellow evenly, veins included. Plants branch less and stay short, leaves are small, and fruits are small and pale. In severe cases lower leaves yellow and drop early. You see it most at this stage: from early growth through fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, heavy rain or watering, low organic matter and long gaps between side dressings."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur shortage starts on the young leaves. Magnesium shortage keeps veins green on old leaves. To be sure, check that the bottom leaves yellow first, then do a soil test and leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Side dress with urea or ammonium sulfate based on the soil test. For a quick fix, KAU suggests a urea spray at 10 grams per liter of water every 15 days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add compost at planting and split nitrogen into several side dressings."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in chili",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Leaf tips burn and dead patches appear between the veins, starting on older leaves. Leaves crinkle and curl, become fewer and smaller, and the plant is stunted. Yellowing from potassium shortage does not recover even after feeding, so act early. You see it most at this stage: fruiting, when fruits draw potassium from the leaves."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or acid soils, heavy rain that leaches potassium, and fertilizer programs with little potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Salt or fertilizer burn also scorches tips. Check if fertilizer was placed too close to the stem. To be sure, soil test for potassium and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU suggests a morning spray of sulfate of potash at 10 grams per liter of water with a sticker. Lime acid soil to keep pH above 6."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, give potash at planting and again at flowering and fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in chili",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Sunken, water soaked spots form near the tip (blossom end) of the fruit, then harden, dry and turn black. Mould may grow on them. Young leaves curl upward, are small and deformed, and their edges yellow then die. Root and shoot tips can brown and die, and flower buds may fail. You see it most at this stage: flowering and early fruit growth, in hot dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "Uneven watering and dry spells, acid sandy soils, salty soils, and heavy nitrogen or potassium. Boron shortage and high phosphorus can add to it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sunscald makes pale papery patches on the sun side of the fruit, not at the tip. Fruit rots from disease spread fast and are soft from the start. To be sure, look for the spots at the tip end of young fruits after dry weather, then do a soil test for calcium and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Water evenly and mulch. KAU suggests lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid. Remove affected fruits."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soil before planting, keep the soil evenly moist, and avoid heavy ammonium fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in chili",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Stems, leaf stalks and the undersides of leaves turn purple. In severe cases leaves get a blue grey sheen. Plants have fewer leaves, short thin shoots, few branches and weak roots. Flowering and ripening come late and fruits are small and distorted. You see it most at this stage: seedling and early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "Acid or iron rich soils, low organic matter, cold or waterlogged soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Cool nights can turn seedlings purple for a short time. Nitrogen shortage gives pale rather than purple leaves. To be sure, soil test for available phosphorus and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply the recommended phosphorus near the roots based on the soil test. KAU lists single superphosphate for a quick fix and rock phosphate or bone meal for the long term. Keep soil near pH 6.2 to 7.0."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium phosphate 16 20 0",
+    "Complete 14 14 14",
+    "Single superphosphate",
+    "Rock phosphate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a phosphorus starter at transplanting and add compost."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in chili",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Leaves that have just reached full size, and older leaves, turn yellow between the veins while the largest veins stay green. Dead spots form in the yellow areas, leaves drop early and yield falls. You see it most at this stage: fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "Sandy acid soils, heavy rain, and heavy potash or ammonium fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Manganese and iron shortage start on the young top leaves, where even small veins stay green. To be sure, soil test for magnesium and potassium, and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply magnesium and potassium fertilizer together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite on acid soil."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in chili",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "New leaves are pale, misshapen, brittle and small, and the plant loses its main tip and grows bushy. Fruits stay small and light, crack, and drop before they mature. You see it most at this stage: flowering and fruit set."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils where boron leaches, heavily limed or alkaline soils, low organic matter and drought."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Virus diseases also twist new leaves. Check for insects such as thrips and mites, and whether the pattern follows soil patches. To be sure, soil test for boron and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests borax in the soil at about 10 kg per hectare (4 kg per acre) or a borax spray at 1 gram per liter of water. Peppers need only a little boron, so do not repeat doses without a test. Do not mix borax with calcium or ammonium fertilizer."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor (sodium borate)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use boron only where tests show low levels, and keep organic matter up."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in chili",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves yellow between the veins and can turn whitish. Leaves are small, stiff and brittle, stems are thin, and the space between leaves is short. The crop matures unevenly. You see it most at this stage: vegetative growth and early flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soil, heavy phosphorus fertilizer, waterlogged soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Leaf curl virus also makes small, crinkled leaves, but it comes with whiteflies on the plants. Zinc shortage shows yellowing between the veins over a whole soil patch. To be sure, soil test for zinc and pH, and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests zinc sulfate in the soil at about 20 kg per hectare (8 kg per acre). In severe cases a morning spray of zinc sulfate at 2 grams plus calcium carbonate at 2.5 grams per liter of water. Do not apply zinc and phosphate together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep soil pH between 5 and 7.5 and avoid excess phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in chili",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn pale then yellow overall, with reddish veins and leaf stalks. Leaves are small, brittle and twisted and curl downward, and growth is held back. You see it most at this stage: early growth on light soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "Sandy, low organic matter soils and fertilizer programs with no sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage starts at the bottom leaves. To be sure, soil test for sulfate and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use ammonium sulfate or other sulfur containing fertilizer. KAU suggests sulfur dust at about 25 kg per hectare (10 kg per acre) on sulfur deficient soil, and gypsum on alkaline soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum",
+    "Elemental sulfur"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, include ammonium sulfate in the program and add organic matter."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in chili",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "Leaves that are nearly full size show mottled yellowing between the veins, leaving a fine net of green veins on a light green leaf. Young leaves yellow at the edges and dark dead areas form along the veins. Fruits may show raised dark brown to black spots. You see it most at this stage: vegetative growth and fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in sili"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soils, sandy soils, and cold wet spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage starts on old leaves. Iron shortage gives a clean yellow without dark spots. To be sure, soil pH test and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU suggests a manganese sulfate spray at 2 grams per liter of water after a soil test confirms the need."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not overlime."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any chili nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your sili needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick sili, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Chili nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my sili leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: lower leaves turn pale yellow, veins included, and plants branch little. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in chili?",
+     "a": "Side dress with urea or ammonium sulfate based on the soil test. For a quick fix, KAU suggests a urea spray at 10 grams per liter of water every 15 days."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in chili?",
+     "a": "Apply muriate of potash based on the soil test, in split doses. For immediate relief, KAU suggests a morning spray of sulfate of potash at 10 grams per liter of water with a sticker."
+    },
+    {
+     "q": "What fertilizer fixes calcium deficiency in chili?",
+     "a": "Water evenly and mulch. KAU suggests lime at about 250 kg per hectare when soil pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5."
+    },
+    {
+     "q": "How do I know which nutrient my sili lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the chili nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "KAU Agri Infotech Portal: Chilli nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/chilli/deficiency.php"
+    },
+    {
+     "label": "Yara UK: Nitrogen deficiency in pepper",
+     "url": "https://www.yara.co.uk/crop-nutrition/sweet-pepper/nutrient-deficiencies-pepper/nitrogen-deficiency-pepper/"
+    },
+    {
+     "label": "Yara UK: Potassium deficiency in pepper",
+     "url": "https://www.yara.co.uk/crop-nutrition/sweet-pepper/nutrient-deficiencies-pepper/potassium-deficiency-pepper/"
+    },
+    {
+     "label": "UC IPM: Blossom end rot",
+     "url": "https://ipm.ucanr.edu/home-and-landscape/blossom-end-rot/"
+    },
+    {
+     "label": "Yara UK: Magnesium deficiency in pepper",
+     "url": "https://www.yara.co.uk/crop-nutrition/sweet-pepper/nutrient-deficiencies-pepper/magnesium-deficiency-pepper/"
+    },
+    {
+     "label": "University of Delaware Weekly Crop Update: Boron and molybdenum in vegetable crops",
+     "url": "https://sites.udel.edu/weeklycropupdate/?p=22766"
+    },
+    {
+     "label": "Yara UK: Zinc deficiency in pepper",
+     "url": "https://www.yara.co.uk/crop-nutrition/sweet-pepper/nutrient-deficiencies-pepper/zinc-deficiency-pepper/"
+    },
+    {
+     "label": "Yara UK: Manganese deficiency in pepper",
+     "url": "https://www.yara.co.uk/crop-nutrition/sweet-pepper/nutrient-deficiencies-pepper/manganese-deficiency-pepper/"
+    }
+   ]
+  }
+ ]
+}

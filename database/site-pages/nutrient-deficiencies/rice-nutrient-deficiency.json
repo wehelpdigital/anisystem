@@ -1,0 +1,873 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "rice-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 10,
+ "title": "Rice Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Rice Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Rice nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and phosphorus in palay, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "rice nutrient deficiency",
+ "keywords": [
+  "rice nutrient deficiency",
+  "rice deficiency",
+  "nutrient deficiency in plants",
+  "fertilizer for rice",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Rice nutrient deficiency is one of the first things to check when the leaves of your palay (rice) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, zinc, sulfur, iron, magnesium, manganese, boron, copper and calcium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for rice",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, sulfur, iron, manganese, boron, copper and calcium stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which rice nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Rice nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of palay",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Lower leaves turn pale yellow green first and the whole field looks light green and short.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Dark green plants whose lower leaves dry yellow brown at the tips and edges.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the whole plant",
+     "Short, very upright, dirty dark green plants with very few tillers.",
+     "16 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves show orange yellow stripes between the veins, like a string of beads, and hang wavy.",
+     "Epsom salt / magnesium sulfate, Kieserite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of palay",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, the whole plant",
+     "Two to four weeks after transplanting, patches of short plants with dusty brown spots and pale midribs.",
+     "Zinc sulfate, Zinc oxide"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The whole plant is pale yellow, and the youngest leaves are the palest.",
+     "Ammonium sulfate 21 0 0, Complete 14 14 14 with sulfur (14 14 14 12S)"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "The newest leaves turn yellow between the veins, then almost white, in dry upland or alkaline fields.",
+     "Ammonium sulfate 21 0 0, Ferrous sulfate"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Young leaves turn greyish green between the veins from the tip down, then get brown spots.",
+     "Manganese sulfate, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip",
+     "Tips of the youngest leaves turn white and roll, and plants are short.",
+     "Boric acid, Borax"
+    ],
+    [
+     "Copper",
+     "young leaves and the tip, leaf edges and tips",
+     "New leaves stay rolled into needles at the tip, plants are bluish green, and many grains are empty.",
+     "Copper sulfate"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "Tips of the youngest leaves turn white, split and roll, only on very acid or leached soils.",
+     "Calcium chloride, Gypsum"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a rice nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest rice nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in rice",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The oldest leaves turn yellowish green first, starting at the tip, while the young leaves stay greener. Leaves become narrow, short and stand very upright. Plants stay short with few tillers, and in a bad case the whole field looks yellow. Fewer grains form and the harvest drops. You see it most at this stage: tillering up to panicle initiation, when the crop takes up the most nitrogen."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Too little fertilizer for a modern variety, or nitrogen given at the wrong time or in the wrong way. Soils very low in organic matter, acid sulfate, saline, poorly drained and calcareous soils supply little nitrogen or lose it fast."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency looks almost the same, but it yellows the young leaves first. Iron deficiency starts on the newest leaf, with yellow between green veins. To be sure, use the leaf color chart every 7 days from 14 days after transplanting (or 21 days after seeding) until early flowering. If more than 5 of 10 leaves read below 4, the crop needs nitrogen."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "When the leaf color chart reads below 4, PhilRice advises 1.5 bags of Urea 46 0 0 per hectare in the dry season or 1 bag in the wet season. If the crop also shows sulfur deficiency, use Ammonium sulfate 21 0 0 instead: 3.5 bags in the dry season or 2 bags in the wet season. Keep water in the field after applying, but do not let it spill over the bunds right away."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. Also, the [LCC Checker](/features/lcc-checker) in anee.io reads your leaf color chart, or a photo of the leaves, and says how much urea your palay needs now. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, split nitrogen into several doses timed by the leaf color chart, keep weeds down, and return straw, manure or compost."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in rice",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Plants stay dark green, but the tips and edges of the older leaves turn yellowish brown and dark brown spots appear. The browning moves from the tip down to the base of the leaf. Upper leaves become short, droopy and dirty dark green. Panicles get rusty brown spots and many unfilled grains, and plants fall over easily. You see it most at this stage: mostly from late tillering to grain filling, so it is often noticed late."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils with small potassium reserves, highly weathered acid soils, poorly drained soils. Fields given plenty of nitrogen and phosphorus but no potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "PhilRice notes the color looks like tungro, but potassium deficiency covers the field evenly while tungro shows in patches. Phosphorus deficiency also gives dark green plants, but without the brown leaf edges. To be sure, soil test for exchangeable potassium or a MOET kit test. A small strip given potash next to the rest of the field also shows the difference within a few weeks."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 to the soil following the soil test. For quick help, TNAU advises a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) every 15 days until the symptoms stop."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, plow the straw back in instead of burning or hauling it away, spread straw ash evenly."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in rice",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants stay short with thin stems and very few tillers. Leaves are narrow, short, very upright and dirty dark green. The older leaves turn brown and die while the young ones look healthy. Some varieties turn red or purple. Panicles and grains are fewer, and the crop can mature a week or more late. You see it most at this stage: early growth and tillering. Mild cases are hard to see in the field."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Acid upland soils, sandy soils low in organic matter, degraded lowland soils, acid sulfate soils, volcanic soils and calcareous soils, which hold phosphorus tightly."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also gives dark green plants, but with yellow brown leaf edges. Phosphorus deficiency often comes together with zinc deficiency or iron toxicity, so look for more than one problem. To be sure, run a MOET kit test or a soil test for available phosphorus before planting. A plot left without phosphorus beside a fertilized plot shows the gap in tillers."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 early, following the soil test. TNAU gives 15 to 30 kg of phosphorus (P) per hectare to the soil. For a quick boost, spray 2 percent DAP 18 46 0 (20 g per liter, soaked overnight and filtered) twice, 15 days apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "16 20 0",
+    "Complete 14 14 14",
+    "Superphosphate 0 18 0",
+    "Diammonium phosphate 18 46 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, replace the phosphorus each harvest removes with fertilizer, manure or compost, and plow straw back in."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in rice",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Two to four weeks after transplanting the crop grows unevenly and some hills stay short. Young leaves turn pale along the midrib near the base, and dusty brown spots and streaks appear and join on the leaves. Leaf blades are smaller and tillering drops. In severe cases seedlings rust and die, direct seeded rice fails to come up, and maturity is late. You see it most at this stage: seedbed and the first 2 to 4 weeks after transplanting. Plants may recover once the field is drained, but yield is lost."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Neutral to alkaline and calcareous soils, fields that stay flooded all year (three crops a year), sodic, saline and peat soils, and soils high in phosphorus. PhilRice calls it the most widespread micronutrient problem of rice."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron toxicity gives similar brown spotting, but on waterlogged acid soils with orange leaves. Iron deficiency yellows the newest leaves between the veins. To be sure, drain a small part of the field. Zinc deficient plants often perk up after the soil dries."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Broadcast 25 kg Zinc sulfate per hectare 10 to 14 days after transplanting. In the seedbed, apply 0.5 kg zinc sulfate per 400 square meters (2 kg if severe) 7 to 10 days after sowing, or dip seedlings in a 2 percent zinc oxide mix for 15 to 30 minutes. For direct seeding, add 1 kg zinc sulfate per 40 kg seed to the last soaking water. TNAU also gives a 0.5 percent zinc sulfate spray (5 g per liter) twice, 15 days apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Zinc oxide",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, PhilRice advises 25 kg zinc sulfate per hectare at 14 days after transplanting once a year, in the dry season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in rice",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "The whole plant turns pale green to yellow, but unlike nitrogen deficiency the young leaves yellow first and their tips may die. Plants are short with fewer tillers, yet not dark like phosphorus or potassium deficient plants. Seedlings in the seedbed turn yellow and many die after transplanting. Panicles are fewer and shorter, and maturity comes 1 to 2 weeks late. You see it most at this stage: seedbed and vegetative growth. The loss is biggest when it starts early."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, soils low in organic matter, highly weathered soils, and fields given only sulfur free fertilizer such as urea for years. Burning or hauling away straw removes sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "It is easy to take for nitrogen deficiency. Nitrogen yellows the old leaves first, sulfur yellows the young leaves first. To be sure, check which leaves turned yellow first, then run a MOET kit test or a soil and leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Ammonium sulfate 21 0 0 (24 percent sulfur) instead of urea for the next nitrogen doses: PhilRice gives 3.5 bags per hectare in the dry season or 2 bags in the wet season when the leaf color chart reads below 4. The sulfur in 14 14 14 12S at the PalayCheck rate is enough for the usual shortage. TNAU also gives a 0.5 percent wettable sulfur spray (5 g per liter) twice, 15 days apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14 with sulfur (14 14 14 12S)",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a sulfur bearing fertilizer such as 14 14 14 12S or ammonium sulfate each season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in rice",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing starts between the veins of the newest leaves while the older leaves stay green. The whole leaf then turns pale yellow and nearly white. In severe cases the whole plant turns pale, grows little and can die. You see it most at this stage: seedling and early growth, mostly in upland or dry seeded fields."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Rare in flooded rice. Seen on neutral, alkaline or calcareous upland soils, lowland soils low in organic matter or watered with alkaline water, and sandy soils from granite."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Zinc deficiency also hits alkaline soils, but gives brown spots and pale midribs. Nitrogen deficiency starts on the old leaves. To be sure, check the soil pH (alkaline soil is the warning sign) and send soil and young leaf samples to a laboratory."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Ammonium sulfate 21 0 0 instead of urea to make the root zone more acid, add manure or crop residues. Use fertilizers that carry iron as a trace element. For an iron product such as ferrous sulfate, follow the soil test and the label."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, grow iron efficient varieties on alkaline uplands and keep the soil rich in organic matter."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in rice",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn orange yellow between the veins, with green and yellow stripes along the leaf like a string of beads. Leaves become wavy and droopy because they bend wider away from the stem. As it gets worse the younger leaves pale too and the old leaves die. Height and tillers change little, but grains are fewer and lighter. You see it most at this stage: middle of the season to grain filling. The flag leaf can show it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Rare in irrigated rice, where the water brings magnesium. Seen in rainfed and upland rice on acid, sandy, leached soils and old acid sulfate soils that have been cropped for years without replacing it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency starts at the leaf tips and edges, not between the veins. Iron toxicity gives orange leaves too, but with tiny brown spots on waterlogged soils. To be sure, soil test for exchangeable magnesium and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU advises a 0.5 percent magnesium sulfate spray (5 g Epsom salt per liter) twice, 15 days apart. For the soil, a soluble source such as kieserite corrects it fast. Follow the soil test for the rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Kieserite",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, replace the magnesium taken away in grain and straw with fertilizer or manure."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in rice",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn pale greyish green between the veins, starting at the tip and moving to the base. Brown dead spots follow and the leaf can turn dark brown. New leaves come out short, narrow and light green, and plants stay short with small roots, though tillering is not much affected. You see it most at this stage: tillering, mostly in upland rice."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Common in upland rice but rare in flooded fields, where manganese dissolves easily. Acid upland soils, alkaline or calcareous soils low in organic matter, leached sandy soils and old degraded paddies."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency also yellows young leaves between the veins, but without the grey tone and brown spots. Manganese deficient plants also catch brown spot disease more easily. To be sure, leaf test and soil test, and note whether the field is upland or alkaline."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU advises a 0.2 percent manganese sulfate spray (2 g per liter) twice, 15 days apart. For the soil, manganese sulfate can be banded along the rows at 5 to 20 kg of manganese per hectare. Use ammonium sulfate instead of urea and add manure or straw."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep organic matter up with manure or straw and choose acid forming nitrogen such as ammonium sulfate on alkaline uplands."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in rice",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "The tips of the young leaves turn white and roll, and plants stay short. In severe cases the growing point dies, though new tillers keep coming. If it strikes at panicle initiation the plant may not form panicles at all. You see it most at this stage: vegetative growth up to panicle initiation."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Rare, especially in irrigated rice. Highly weathered acid soils, sandy soils, acid soils from igneous rock, and fields where water drains through the soil fast."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency gives the same white rolled leaf tips. Only a leaf or soil test tells them apart. To be sure, send soil and plant samples to a laboratory."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU advises a 0.3 percent boric acid spray (3 g per liter) twice, 15 days apart. Borax can also go to the soil, but follow the soil test, because a little too much boron burns rice."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Boric acid",
+    "Borax"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid heavy leaching and over drainage, and never apply boron without a test."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Copper deficiency in rice",
+   "id": "copper"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn bluish green with pale streaks on both sides of the midrib. Dark brown dead patches form on the leaf tips. New leaves stay rolled, with a needle like upper part, while the lower part looks normal. Tillering drops and pollen is poor, so many grains stay empty. You see it most at this stage: tillering to flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why copper deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Rare. Peat and other soils very high in organic matter, highly weathered red soils, sandy soils and calcareous soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron and calcium deficiency also roll the young leaf tips, but the tips turn white. Copper gives bluish green leaves with brown needle tips and streaks along the midrib. To be sure, send soil and plant samples to a laboratory."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for copper deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU advises a 0.2 percent copper sulfate spray (2 g per liter) twice, 15 days apart. Soil copper sulfate (TNAU gives 1 to 5 kg of copper per hectare) should only follow a soil test, since copper builds up in the soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Copper sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with copper: **Omex Zynergy** by Jardine Distribution, Inc. (3.75 percent zinc and 2.11 percent copper), **Grower's Choice Copper Sulphate Pentahydrate** by Zetryl.Chem Phils., Inc. (25 percent copper and 12 percent sulfur), **Agsmart Copper Sulphate** by AgSmart Corporation (25 percent copper and 12 percent sulfur) and **Liquid Chelate Copper w/ Sulfur** by Sagrex Corporation (5 percent copper and 2 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [copper deficiency](/nutrient-deficiencies/copper-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, on peat soils, test for copper before planting and use a fertilizer with trace elements."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in rice",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "The tips of the youngest leaves turn white or bleached, then split, roll and curl. Dead tissue can form along the leaf edges, and old leaves later turn brown and die. In extreme cases the growing points stay short and die. It only shows when the shortage is severe. You see it most at this stage: any stage, but only under severe shortage."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in palay"
+  },
+  {
+   "type": "text",
+   "text": "Very rare in lowland rice, since fertilizer and irrigation water bring calcium. Seen on acid, strongly leached, sandy soils, old acid sulfate soils and soils from serpentine rock."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency gives the same white rolled tips. Calcium deficient plants also suffer more from iron toxicity on acid soils. To be sure, send soil and plant samples to a laboratory. A soil pH test also helps."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU advises a 1 percent calcium chloride spray (10 g per liter) for quick relief. About 500 kg Gypsum per hectare on calcium poor high pH soils. Superphosphate also carries calcium. On acid soils use Agricultural lime as the soil test advises."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Calcium chloride",
+    "Gypsum",
+    "Superphosphate 0 18 0",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, return straw or manure to the field, and correct strong acidity before planting."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any rice nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your palay needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick palay, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Rice nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my palay leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: lower leaves turn pale yellow green first and the whole field looks light green and short. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in rice?",
+     "a": "When the leaf color chart reads below 4, PhilRice advises 1.5 bags of Urea 46 0 0 per hectare in the dry season or 1 bag in the wet season. If the crop also shows sulfur deficiency, use Ammonium sulfate 21 0 0 instead: 3.5 bags in the dry season or 2 bags in the wet season."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in rice?",
+     "a": "Apply Muriate of potash 0 0 60 to the soil following the soil test. For quick help, TNAU advises a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) every 15 days until the symptoms stop."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in rice?",
+     "a": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 early, following the soil test. TNAU gives 15 to 30 kg of phosphorus (P) per hectare to the soil."
+    },
+    {
+     "q": "How do I know which nutrient my palay lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the rice nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "How to grow palay",
+     "url": "/crops/pagtatanim-ng-palay"
+    },
+    {
+     "label": "Fertilizer for rice",
+     "url": "/blog/fertilizer-for-rice"
+    },
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency in all crops",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "PhilRice PalayCheck System, Key Check 5: nutrient management",
+     "url": "https://www.pinoyrice.com/wp-content/uploads/boxes/check5_reco.html"
+    },
+    {
+     "label": "IRRI Rice Doctor fact sheet: Nitrogen deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Nitrogen_deficiency.htm"
+    },
+    {
+     "label": "DA ATI CAR: Major fertilizers and their roles in rice production",
+     "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/major_fertilizers-their_roles_in_rice_production.pdf"
+    },
+    {
+     "label": "IRRI Rice Doctor fact sheet: Potassium deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Potassium_deficiency.htm"
+    },
+    {
+     "label": "TNAU Agritech Portal: Rice, potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/rice_potassium.html"
+    },
+    {
+     "label": "IRRI Rice Doctor fact sheet: Phosphorus deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Phosphorus_deficiency.htm"
+    },
+    {
+     "label": "TNAU Agritech Portal: Rice, phosphorus deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/Rice_Phosphorus.html"
+    },
+    {
+     "label": "PhilRice: RCEF helps solve zinc deficient Pangasinan farms",
+     "url": "https://www.philrice.gov.ph/rcef-helps-solve-zinc-deficient-pangasinan-farms/"
+    },
+    {
+     "label": "IRRI Rice Doctor fact sheet: Zinc deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Zinc_deficiency.htm"
+    },
+    {
+     "label": "TNAU Agritech Portal: Rice, zinc deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/rice_zin.html"
+    },
+    {
+     "label": "IRRI Rice Doctor fact sheet: Sulfur deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Sulfur_deficiency.htm"
+    },
+    {
+     "label": "TNAU Agritech Portal: Rice, sulphur deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/rice_sulphur.html"
+    }
+   ]
+  }
+ ]
+}

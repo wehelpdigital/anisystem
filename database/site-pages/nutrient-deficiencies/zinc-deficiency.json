@@ -1,0 +1,651 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "zinc-deficiency",
+ "lang": "en",
+ "category": "Nutrient guides",
+ "sortOrder": 960,
+ "title": "Zinc Deficiency in Plants: Signs, Causes and How to Fix It",
+ "metaTitle": "Zinc Deficiency in Plants: Signs and Fixes",
+ "metaDescription": "Zinc deficiency shows on the young leaves first. See the signs crop by crop, what causes it, and the fertilizer sold here that fixes it.",
+ "focusKeyword": "zinc deficiency",
+ "keywords": [
+  "zinc deficiency",
+  "zinc deficiency symptoms",
+  "zinc deficiency in plants",
+  "fertilizer with zinc"
+ ],
+ "excerpt": "Zinc deficiency in plants starts on the young leaves and the growing tip. Zinc helps the plant make its own growth hormone, so new leaves and stems reach full size. It is part of many enzymes and helps make chlorophyll, proteins and starch. It also helps seed and grain form and ripen. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-zn.webp",
+  "alt": "Citrus leaves with yellow blotches between green veins: the zinc shortage mottle",
+  "credit": "Scot Nelson (photo by Erika Magarifuji Location), CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Zinc moves only a little inside the plant. So the first signs usually appear on young and middle leaves early in the season. Rice shows pale midribs at the base of young leaves along with brown blotches on the lower leaves."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency symptoms"
+  },
+  {
+   "type": "text",
+   "text": "New leaves come out small, narrow and mottled, and the joints of the stem grow close together, so shoots look bunched. Corn shows a broad pale or white band on each side of the midrib, starting at the base of the leaf. In rice, dusty brown spots appear 2 to 4 weeks after transplanting, growth turns patchy, and tillering slows and maturity comes late. Bad cases kill transplanted seedlings or stop direct seeded rice from coming up."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency by crop"
+  },
+  {
+   "type": "text",
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [zinc in rice](/nutrient-deficiencies/rice-nutrient-deficiency#zinc)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Rice"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in rice",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Palay](/nutrient-deficiencies/rice-nutrient-deficiency#zinc)",
+     "Two to four weeks after transplanting, patches of short plants with dusty brown spots and pale midribs.",
+     "Zinc sulfate, Zinc oxide"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Corn and Sorghum"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in corn and sorghum",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Mais](/nutrient-deficiencies/corn-nutrient-deficiency#zinc)",
+     "Wide white or pale yellow bands on both sides of the midrib from the leaf base, on short plants with bunched leaves.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Batad](/nutrient-deficiencies/sorghum-nutrient-deficiency#zinc)",
+     "White to pale yellow bands on the lower half of young leaves, with a red line on the edges.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Legumes"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in legumes",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Monggo](/nutrient-deficiencies/mungbean-nutrient-deficiency#zinc)",
+     "About a month after sowing, leaves turn small and yellow between green veins and the plants stop growing.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Mani](/nutrient-deficiencies/peanut-nutrient-deficiency#zinc)",
+     "Light yellow stripes along the veins of the leaves, and the bud at the top stops growing.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Utaw](/nutrient-deficiencies/soybean-nutrient-deficiency#zinc)",
+     "Leaves pale evenly between green veins, then turn rusty brown.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Patani](/nutrient-deficiencies/lima-bean-nutrient-deficiency#zinc)",
+     "Leaves yellow between green veins, internodes stay short and pod set drops.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Kadyos](/nutrient-deficiencies/pigeon-pea-nutrient-deficiency#zinc)",
+     "Narrow, pale leaves that yellow between the veins from the tip, leaving only the midrib green.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Root Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in root crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Kamote](/nutrient-deficiencies/sweet-potato-nutrient-deficiency#zinc)",
+     "Short internodes, small pale young leaves, and purple shoot tips.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Kamoteng kahoy](/nutrient-deficiencies/cassava-nutrient-deficiency#zinc)",
+     "Young leaves have narrow, pale lobes that curl up, on short internodes.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Gabi](/nutrient-deficiencies/taro-nutrient-deficiency#zinc)",
+     "Plants are just stunted with small leaves. There are few other signs.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Ubi](/nutrient-deficiencies/purple-yam-nutrient-deficiency#zinc)",
+     "Smaller, narrow, curled or wavy leaves on short internodes, and cracked tubers.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Patatas](/nutrient-deficiencies/potato-nutrient-deficiency#zinc)",
+     "Young leaves yellow and mature leaves get pitted, dead spots between green veins.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Karot](/nutrient-deficiencies/carrot-nutrient-deficiency#zinc)",
+     "Young leaves stay small (little leaf) and turn yellow.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Luya](/nutrient-deficiencies/ginger-nutrient-deficiency#zinc)",
+     "Small, puckered leaves bunched at the top, yellow between the veins.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Luyang dilaw](/nutrient-deficiencies/turmeric-nutrient-deficiency#zinc)",
+     "Small, distorted, bunched leaves at the top with yellow between the veins.",
+     "Zinc sulfate, Agricultural lime"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Vegetables"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in vegetables",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Kamatis](/nutrient-deficiencies/tomato-nutrient-deficiency#zinc)",
+     "Short, bunched shoots with small, stiff, leathery leaves that curl down.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Talong](/nutrient-deficiencies/eggplant-nutrient-deficiency#zinc)",
+     "Small, bunched rosettes of yellowish new leaves and flowers that drop without fruiting.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Ampalaya](/nutrient-deficiencies/bitter-gourd-nutrient-deficiency#zinc)",
+     "Young leaves are small, pale with green veins, and bunched on short vines.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Kalabasa](/nutrient-deficiencies/squash-nutrient-deficiency#zinc)",
+     "Young leaves are pale with green veins and bunched on short runners.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Okra](/nutrient-deficiencies/okra-nutrient-deficiency#zinc)",
+     "Young leaves yellow between the veins, turn whitish and stay few and small.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Sili](/nutrient-deficiencies/chili-nutrient-deficiency#zinc)",
+     "Young leaves are small, stiff and mottled yellow, and the plant is short jointed.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Atsal](/nutrient-deficiencies/bell-pepper-nutrient-deficiency#zinc)",
+     "Short, stunted plants with small leaves crowded on short stems.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Sayote](/nutrient-deficiencies/chayote-nutrient-deficiency#zinc)",
+     "New leaves are small and mottled yellow, with many dead spots.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Pakwan](/nutrient-deficiencies/watermelon-nutrient-deficiency#zinc)",
+     "Young leaves pale with green veins, small and bunched on short runners.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Onion and Garlic"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in onion and garlic",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Sibuyas](/nutrient-deficiencies/onion-nutrient-deficiency#zinc)",
+     "Stunted plants with twisted, bent leaves and faint yellow stripes.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Sibuyas na mura](/nutrient-deficiencies/spring-onion-nutrient-deficiency#zinc)",
+     "Stunted plants with twisted leaves and faint yellow stripes.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Bawang](/nutrient-deficiencies/garlic-nutrient-deficiency#zinc)",
+     "Young leaves pale and stay small, and bulbing is late.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Sibuyas Tagalog](/nutrient-deficiencies/shallot-nutrient-deficiency#zinc)",
+     "Stunted plants with twisted, bent leaves and yellow stripes.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sugarcane and Industrial Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in sugarcane and industrial crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Tubo](/nutrient-deficiencies/sugarcane-nutrient-deficiency#zinc)",
+     "Young leaves show a broad yellow band across the middle of the blade, while the midrib and edges stay green.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Pinya](/nutrient-deficiencies/pineapple-nutrient-deficiency#zinc)",
+     "The heart leaves bunch together and the top bends over to one side, called crookneck.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Bulak](/nutrient-deficiencies/cotton-nutrient-deficiency#zinc)",
+     "Young leaves thick, leathery and cupped upward, yellow between the veins, on short, bushy plants.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Abaka](/nutrient-deficiencies/abaca-nutrient-deficiency#zinc)",
+     "Young leaves narrow with yellow stripes between the veins, but no dark streaks like bunchy top.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Goma](/nutrient-deficiencies/rubber-nutrient-deficiency#zinc)",
+     "In young plants, new leaflets come small, narrow, hooked like a claw and wavy edged, with yellow between the veins.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fruits and Plantation Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Zinc deficiency in fruits and plantation crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Saging](/nutrient-deficiencies/banana-nutrient-deficiency#zinc)",
+     "Young leaves narrow and pointed, with yellow and green stripes and a purple tint underneath.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Papaya](/nutrient-deficiencies/papaya-nutrient-deficiency#zinc)",
+     "New leaves come small and yellow between the veins, and the top bunches up.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Mangga](/nutrient-deficiencies/mango-nutrient-deficiency#zinc)",
+     "New leaves small, thick, brittle and crowded in a rosette at the shoot tip, pale between green veins (little leaf).",
+     "Zinc sulfate"
+    ],
+    [
+     "[Kalamansi](/nutrient-deficiencies/calamansi-nutrient-deficiency#zinc)",
+     "Young leaves with yellow patches between green veins (mottle leaf), small, narrow and standing upright.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Citrus, dalandan or ponkan](/nutrient-deficiencies/citrus-nutrient-deficiency#zinc)",
+     "Young leaves mottled yellow between green veins, small, narrow and upright. Small, smooth, pale fruit.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Suha](/nutrient-deficiencies/pomelo-nutrient-deficiency#zinc)",
+     "Young leaves mottled yellow between green veins, small, narrow and upright.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Langka](/nutrient-deficiencies/jackfruit-nutrient-deficiency#zinc)",
+     "Small leaves on short stalks crowd into a rosette and yellow between the veins. Many fruits drop.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Abukado](/nutrient-deficiencies/avocado-nutrient-deficiency#zinc)",
+     "Little leaf: new leaves small, mottled yellow between the veins and crowded in tufts at the twig tips. Fruit small and round.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Bayabas](/nutrient-deficiencies/guava-nutrient-deficiency#zinc)",
+     "Newest leaves small, narrow and pointed, strongly yellow between bright green veins, with tiny brown dots.",
+     "Zinc sulfate, Ammonium phosphate 18 46 0"
+    ],
+    [
+     "[Lansones](/nutrient-deficiencies/lanzones-nutrient-deficiency#zinc)",
+     "New leaflets come out small, narrow and bunched, yellow between the veins.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Rambutan](/nutrient-deficiencies/rambutan-nutrient-deficiency#zinc)",
+     "New leaflets small, narrow and bunched, yellow between the veins. Few, short flower panicles.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Sapodilla](/nutrient-deficiencies/chico-nutrient-deficiency#zinc)",
+     "Young leaves come out small and pale, crowded at the shoot tip.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Atis](/nutrient-deficiencies/sugar-apple-nutrient-deficiency#zinc)",
+     "Young leaves yellow between the veins, bend downward and crowd on short shoots.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Santol](/nutrient-deficiencies/santol-nutrient-deficiency#zinc)",
+     "New leaflets come out small, pale between the veins and crowded on short shoots.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Sampalok](/nutrient-deficiencies/tamarind-nutrient-deficiency#zinc)",
+     "New leaflets come out small and pale, bunched on short shoots.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Kasoy](/nutrient-deficiencies/cashew-nutrient-deficiency#zinc)",
+     "Newest leaves small, long and pale with green veins, on short shoots with few side branches.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Kape](/nutrient-deficiencies/coffee-nutrient-deficiency#zinc)",
+     "New leaves narrow and strap like, yellow between dark green veins, bunched at the branch tip.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "[Kakaw](/nutrient-deficiencies/cacao-nutrient-deficiency#zinc)",
+     "Sickle leaf: new leaves narrow, curved and lopsided, with wavy edges and pale bands between prominent veins.",
+     "Zinc sulfate"
+    ],
+    [
+     "[Malunggay](/nutrient-deficiencies/moringa-nutrient-deficiency#zinc)",
+     "New leaflets come small and pale between the veins, and shoots stay short.",
+     "Zinc sulfate, Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What causes zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Zinc shortage is common in flooded lowland rice, because long flooding and high bicarbonate keep zinc out of reach. It has been reported across Central Luzon, Cagayan, Bicol, Western Visayas and Mindanao. Calcareous soils with a pH of 7.5 or more, saline and sodic soils, peat soils and fields high in phosphorus also run short. Fields cropped three times a year, sandy or eroded soils, and cool, wet weather early in the season make it worse."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to be sure it is zinc"
+  },
+  {
+   "type": "text",
+   "text": "Iron shortage also yellows young leaves between the veins. But zinc makes bands near the leaf base, and iron runs the full leaf length. In rice, iron toxicity, tungro and grassy stunt can look alike, so a soil and plant test settles it. A soil test for available zinc at a DA Regional Soils Laboratory predicts the need well. A leaf tissue test at tillering confirms it. In lowland rice, the PhilRice MOET pots show if zinc is the missing nutrient."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to fix zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Zinc sulfate is the usual material, and a typical PhilRice rate for rice is 25 kg per hectare, 10 to 14 days after transplanting. Rice seedlings can also be dipped in a 2 percent zinc oxide mix for 15 to 30 minutes before transplanting. Let the soil test confirm the need, and swap some urea for ammonium sulfate, add manure and drain fields now and then."
+  },
+  {
+   "type": "text",
+   "text": "A typical zinc sulfate spray is about 5 grams per liter of water, and PhilRice starts rice sprays 14 days after transplanting. Treat it as an emergency fix, because a soil dose before or at planting works better."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizers sold here that supply zinc"
+  },
+  {
+   "type": "table",
+   "caption": "Registered with the FPA. Follow the label and your soil test",
+   "rows": [
+    [
+     "Product",
+     "Made or sold by",
+     "What it holds",
+     "Use"
+    ],
+    [
+     "Harvester Zinc Sulphate Heptahydrate",
+     "Universal Harvester, Inc.",
+     "22 percent zinc",
+     "Soil or leaves"
+    ],
+    [
+     "Great Planters Zinc Sulphate Heptahydrate",
+     "Agway Chemicals Corp.",
+     "21 percent zinc",
+     "Soil or leaves"
+    ],
+    [
+     "Zinc Sulphate Monohydrate",
+     "Petbowe Trading Corporation",
+     "33 percent zinc",
+     "On the soil"
+    ],
+    [
+     "YaraVita ZINTRAC 700",
+     "Yara Fertilizers Philippines, Inc.",
+     "40 percent zinc",
+     "On the leaves"
+    ],
+    [
+     "YaraVita GLYTREL ZnP",
+     "Yara Fertilizers Philippines, Inc.",
+     "7.4 percent P2O5 and 7.4 percent zinc",
+     "On the leaves"
+    ],
+    [
+     "Agsmart Zinc",
+     "AgSmart Corporation",
+     "22 percent zinc and 10 percent sulfur",
+     "Soil or leaves"
+    ],
+    [
+     "Grow More Liquid Chelate Zinc with Sulfur",
+     "Sagrex Corporation",
+     "10 percent zinc and 5 percent sulfur",
+     "On the leaves"
+    ],
+    [
+     "White Label Zinc Foliar",
+     "Corteva Asia Pacific Inc. Philippine Branch",
+     "10 percent zinc and 5 percent sulfur",
+     "On the leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "For rates and timing, see our guides to [fertilizer with zinc](/blog/micronutrients-for-rice) and to [fertilizer application methods](/blog/fertilizer-application-methods). Also, [anee.io](/features/cropping-calendar) keeps every application on the cropping calendar, so you know what went on each lot and when."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to keep zinc deficiency away"
+  },
+  {
+   "type": "text",
+   "text": "Plant zinc efficient varieties and add zinc sulfate before planting on fields known to be short. Avoid heavy phosphorus, add manure, and let flooded fields drain and dry between crops."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Too much is a problem too",
+   "text": "Very high soil zinc, above about 100 parts per million of exchangeable zinc, can poison many crops. Zinc toxicity is rare, but stop adding zinc once the soil test shows enough."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Pick your crop in the Nutrient Deficiency Finder, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf in Tagalog or English",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "What does zinc deficiency look like in rice?",
+     "a": "Dusty brown spots and streaks appear on the leaves 2 to 4 weeks after transplanting. Young leaves show a pale midrib near the base. Plants stay short and patchy, tiller poorly and ripen late."
+    },
+    {
+     "q": "What is the best fertilizer for zinc deficiency?",
+     "a": "Zinc sulfate is the most used source because it dissolves well and costs little. PhilRice gives a typical rate of 25 kg per hectare for rice, 10 to 14 days after transplanting."
+    },
+    {
+     "q": "How do I dip rice seedlings in zinc?",
+     "a": "Mix zinc oxide in water to make a 2 percent mix, about 20 grams per liter. Soak the seedling roots in it for 15 to 30 minutes before transplanting."
+    },
+    {
+     "q": "Why is zinc deficiency common in flooded rice fields?",
+     "a": "Long flooding raises the soil pH and bicarbonate, which lock zinc away from the roots. Draining the field from time to time and adding manure help free it."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "PhilRice, RCEF helps solve zinc deficient Pangasinan farms",
+     "url": "https://www.philrice.gov.ph/rcef-helps-solve-zinc-deficient-pangasinan-farms/"
+    },
+    {
+     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Zinc deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Zinc_deficiency.htm"
+    },
+    {
+     "label": "Palanog and others, Zinc and Iron Nutrition Status in the Philippines Population and Local Soils, Frontiers in Nutrition",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6568233/"
+    },
+    {
+     "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension, Soil and Applied Zinc (A2528)",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2528.pdf"
+    },
+    {
+     "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",
+     "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
+    }
+   ]
+  }
+ ]
+}

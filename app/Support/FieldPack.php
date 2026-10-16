@@ -27,9 +27,9 @@ final class FieldPack
     public const KEY = 'fieldpack';
 
     /** The field helpers in the pack (FieldHelperController::TOOLS keys). */
-    public const TOOLS = ['weeds', 'pests', 'diseases', 'varieties'];
+    public const TOOLS = ['weeds', 'pests', 'diseases', 'nutrients', 'varieties'];
 
-    public const NAMES = ['Weed Control Helper', 'Pest Finder', 'Disease Finder', 'Variety Finder'];
+    public const NAMES = ['Weed Control Helper', 'Pest Finder', 'Disease Finder', 'Nutrient Deficiency Finder', 'Variety Finder'];
 
     /** One purchase opens the pack for a month (a calendar month; DAYS is its length for the per day line). */
     public const DAYS = 30;

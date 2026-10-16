@@ -1,0 +1,317 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "molybdenum-deficiency",
+ "lang": "en",
+ "category": "Nutrient guides",
+ "sortOrder": 1010,
+ "title": "Molybdenum Deficiency in Plants: Signs, Causes and How to Fix It",
+ "metaTitle": "Molybdenum Deficiency in Plants: Signs and Fixes",
+ "metaDescription": "Molybdenum deficiency shows on the old leaves first. See the signs crop by crop, what causes it, and the fertilizer sold here that fixes it.",
+ "focusKeyword": "molybdenum deficiency",
+ "keywords": [
+  "molybdenum deficiency",
+  "molybdenum deficiency symptoms",
+  "molybdenum deficiency in plants",
+  "foliar fertilizer"
+ ],
+ "excerpt": "Molybdenum deficiency in plants starts on the old, lower leaves. Molybdenum is part of the enzyme that turns nitrate into protein. So a plant short of it cannot use the nitrogen it takes up. Legumes need even more of it, because the bacteria in their root nodules use it to fix nitrogen from the air. Plants need less of it than of any other nutrient, as little as 50 grams per hectare. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-mo.webp",
+  "alt": "Poinsettia leaves with a thin yellow band along the leaf edges, a classic molybdenum shortage sign",
+  "credit": "aaa, CC BY SA 4.0, via Wikimedia Commons"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "The plant moves some molybdenum to new growth. So in most crops the older and middle leaves pale first, much as with nitrogen shortage. Cauliflower and broccoli are the exception, because their young heart leaves grow narrow and twisted into the classic whiptail."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Molybdenum deficiency symptoms"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn pale green or yellowish green between the veins and along the edges, and the plant stays stunted. Unlike nitrogen shortage, the leaf edges burn and roll or cup, because unused nitrate builds up in them. Cauliflower and broccoli grow whiptail, narrow and twisted heart leaves with almost no blade. Legumes stay yellow and stunted, like plants with no working nodules."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Molybdenum deficiency by crop"
+  },
+  {
+   "type": "text",
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [molybdenum in soybean](/nutrient-deficiencies/soybean-nutrient-deficiency#molybdenum)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Legumes"
+  },
+  {
+   "type": "table",
+   "caption": "Molybdenum deficiency in legumes",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Utaw](/nutrient-deficiencies/soybean-nutrient-deficiency#molybdenum)",
+     "Light green plants that look nitrogen starved, on very acid soil, even with nodules present.",
+     "Sodium molybdate, Ammonium molybdate"
+    ],
+    [
+     "[Sigarilyas](/nutrient-deficiencies/winged-bean-nutrient-deficiency#molybdenum)",
+     "Pale, nitrogen starved vines on very acid soil even when nodules are present.",
+     "Sodium molybdate, Ammonium molybdate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Vegetables"
+  },
+  {
+   "type": "table",
+   "caption": "Molybdenum deficiency in vegetables",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Repolyo](/nutrient-deficiencies/cabbage-nutrient-deficiency#molybdenum)",
+     "On acid soil, faint yellow green plants with narrow, toothed leaves that bend down and loose heads.",
+     "Sodium molybdate, Ammonium molybdate"
+    ],
+    [
+     "[Litsugas](/nutrient-deficiencies/lettuce-nutrient-deficiency#molybdenum)",
+     "On acid soil, pale stunted plants whose leaf edges wilt and die back, with clear spots between veins.",
+     "Sodium molybdate, Agricultural lime"
+    ],
+    [
+     "[Brokoli](/nutrient-deficiencies/broccoli-nutrient-deficiency#molybdenum)",
+     "On acid soil, narrow, cupped young leaves with yellow, scorched edges in patches of the field.",
+     "Sodium molybdate, Ammonium molybdate"
+    ],
+    [
+     "[Koliplor](/nutrient-deficiencies/cauliflower-nutrient-deficiency#molybdenum)",
+     "New leaves are narrow and strap like, sometimes only the midrib, and no proper curd forms.",
+     "Sodium molybdate, Ammonium molybdate"
+    ],
+    [
+     "[Milon](/nutrient-deficiencies/melon-nutrient-deficiency#molybdenum)",
+     "On acid soil, crown leaves turn pale between the veins as vines start to run, then leaf edges burn.",
+     "Sodium molybdate, Agricultural lime"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What causes molybdenum deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Molybdenum is the one micronutrient that acid soil locks up, and most shortages occur at a soil pH of 5.5 or less. So the strongly acid clays of many Philippine uplands are where it shows, mostly on cauliflower, broccoli, cabbage, tomato and legumes. Fields that never get manure or lime are more at risk."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to be sure it is molybdenum"
+  },
+  {
+   "type": "text",
+   "text": "Molybdenum shortage looks like nitrogen shortage, but the leaf edges scorch and roll. It often shows in patches within an otherwise healthy crop. In legumes it looks just like plants with no working nodules, so a test spray settles it. The surest test is a small trial with sodium or ammonium molybdate on a few plants. If they grow greener and better than untreated plants, molybdenum was short. Whiptail in nearby cauliflower and a soil pH of 5.5 or less also point to it."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to fix molybdenum deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Liming acid soil with agricultural lime or dolomite frees the molybdenum already there, but it works slowly, over several months. A molybdenum salt is quicker, at a typical vegetable rate of 1 kg of sodium molybdate per hectare mixed with the fertilizer. For cauliflower, cabbage and tomato seedlings, water 40 grams in 50 liters onto each 10 square meters of seedbed, one to two weeks before transplanting."
+  },
+  {
+   "type": "text",
+   "text": "A typical spray is about 50 grams of sodium or ammonium molybdate in 100 liters of water, on tomatoes, beans and other crops. Do not go above it, because more only wastes money and can injure the plants."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizers sold here that supply molybdenum"
+  },
+  {
+   "type": "table",
+   "caption": "Registered with the FPA. Follow the label and your soil test",
+   "rows": [
+    [
+     "Product",
+     "Made or sold by",
+     "What it holds",
+     "Use"
+    ],
+    [
+     "Liquid Chelate Molybdenum",
+     "Sagrex Corporation",
+     "5 percent molybdenum",
+     "On the leaves"
+    ],
+    [
+     "Tierramino Molybdenum",
+     "Unilox Far East Resources Inc.",
+     "16 percent molybdenum",
+     "On the leaves"
+    ],
+    [
+     "YaraVita Teprosyn Mo",
+     "Yara Fertilizers Philippines, Inc.",
+     "15 percent P2O5 and 15.3 percent molybdenum",
+     "On the leaves"
+    ],
+    [
+     "Biozome",
+     "Manchem Industries, Inc.",
+     "12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo",
+     "On the soil"
+    ],
+    [
+     "Grow More Liquid Chelate General Purpose",
+     "Sagrex Corporation",
+     "2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo",
+     "On the leaves"
+    ],
+    [
+     "Nutriplant SL",
+     "Amway Philippines L.L.C.",
+     "2 percent Fe, 2 percent Zn, 1 percent Mg, 0.5 percent Mn, 0.15 percent Cu, 3 percent S with a trace of Mo",
+     "On the leaves"
+    ],
+    [
+     "Bayfolan",
+     "Bayer CropScience, Inc.",
+     "11 8 6 with traces of Fe, Cu, Mn, Mo, B, Zn",
+     "On the leaves"
+    ],
+    [
+     "Ambition Complete Foliar",
+     "Bayer CropScience, Inc.",
+     "8 8 6 with traces of B, Cu, Fe, Mn, Mo, Zn",
+     "On the leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "For rates and timing, see our guides to [foliar fertilizer](/blog/foliar-fertilizer) and to [fertilizer application methods](/blog/fertilizer-application-methods). Also, [anee.io](/features/cropping-calendar) keeps every application on the cropping calendar, so you know what went on each lot and when."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to keep molybdenum deficiency away"
+  },
+  {
+   "type": "text",
+   "text": "Keep acid fields limed to a moderate pH and add manure, which carries some molybdenum. For legumes, a molybdenum seed treatment is the most common way to give the tiny amount they need."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Too much is a problem too",
+   "text": "Plants seldom suffer from extra molybdenum, but forage too rich in it can harm grazing animals. Apply only the small rates given, since more is wasted and can injure crops."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Pick your crop in the Nutrient Deficiency Finder, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf in Tagalog or English",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Molybdenum deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "What is whiptail in cauliflower?",
+     "a": "Whiptail is molybdenum shortage in cauliflower and broccoli. The young heart leaves lose their edges and grow narrow and twisted, like a whip."
+    },
+    {
+     "q": "What does molybdenum deficiency look like?",
+     "a": "Older and middle leaves turn pale green or yellow, much like nitrogen shortage, but their edges scorch and roll. Legumes stay yellow and stunted, as if their nodules were not working."
+    },
+    {
+     "q": "What is the best fertilizer for molybdenum deficiency?",
+     "a": "Sodium molybdate, which dissolves easily in cold water, or ammonium molybdate, used in very small amounts. On acid soils, liming also frees the molybdenum already in the soil."
+    },
+    {
+     "q": "Why does liming help molybdenum but hurt other micronutrients?",
+     "a": "Molybdenum becomes more available as soil pH rises, the opposite of iron, zinc, manganese and copper. So lime that frees molybdenum on acid soil can lock up those others if you overdo it."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "NSW Department of Primary Industries, Agfact AC.4: Molybdenum deficiency in plants (AUSVEG copy)",
+     "url": "https://ausveg.com.au/app/data/technical-insights/docs/TL27.pdf"
+    },
+    {
+     "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
+    },
+    {
+     "label": "Mosaic Crop Nutrition, Molybdenum",
+     "url": "https://www.cropnutrition.com/crop-nutrition/key-nutrients/molybdenum/"
+    },
+    {
+     "label": "Calubaquib, Edaphological characteristics of selected Philippine acid upland soils, UPLB (FAO AGRIS record)",
+     "url": "https://agris.fao.org/search/ru/records/6473b0bf542a3f9f03b3186e"
+    }
+   ]
+  }
+ ]
+}

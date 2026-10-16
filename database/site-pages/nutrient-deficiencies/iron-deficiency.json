@@ -1,0 +1,535 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "iron-deficiency",
+ "lang": "en",
+ "category": "Nutrient guides",
+ "sortOrder": 970,
+ "title": "Iron Deficiency in Plants: Signs, Causes and How to Fix It",
+ "metaTitle": "Iron Deficiency in Plants: Signs and Fixes",
+ "metaDescription": "Iron deficiency shows on the young leaves first. See the signs crop by crop, what causes it, and the fertilizer sold here that fixes it.",
+ "focusKeyword": "iron deficiency",
+ "keywords": [
+  "iron deficiency",
+  "iron deficiency symptoms",
+  "iron deficiency in plants",
+  "foliar fertilizer"
+ ],
+ "excerpt": "Iron deficiency in plants starts on the young leaves and the growing tip. Iron is needed to make and keep chlorophyll, so without it new leaves cannot turn green. It is part of the enzymes that run photosynthesis and respiration. It also helps the plant use nitrate and sulfate to build proteins. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-fe.webp",
+  "alt": "Gardenia twig with young leaves yellow between dark green veins from iron shortage",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Iron does not move out of old leaves, so the yellowing shows on the newest leaves first. In bad cases the youngest leaves turn almost white while the old ones stay green."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency symptoms"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn yellow between the veins while the veins stay green, a pattern that runs the full length of the leaf. As it worsens, the whole leaf turns pale yellow to white, and the leaf edges may scorch brown. Growth slows and yield drops, and in rice a severe case can kill the plant. It is worst on limy, compacted or waterlogged ground."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency by crop"
+  },
+  {
+   "type": "text",
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [iron in rice](/nutrient-deficiencies/rice-nutrient-deficiency#iron)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Rice"
+  },
+  {
+   "type": "table",
+   "caption": "Iron deficiency in rice",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Palay](/nutrient-deficiencies/rice-nutrient-deficiency#iron)",
+     "The newest leaves turn yellow between the veins, then almost white, in dry upland or alkaline fields.",
+     "Ammonium sulfate 21 0 0, Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Corn and Sorghum"
+  },
+  {
+   "type": "table",
+   "caption": "Iron deficiency in corn and sorghum",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Mais](/nutrient-deficiencies/corn-nutrient-deficiency#iron)",
+     "Upper leaves turn pale yellow to white between the veins along their whole length.",
+     "Ferrous sulfate, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "[Batad](/nutrient-deficiencies/sorghum-nutrient-deficiency#iron)",
+     "On limey, high pH soil, young leaves turn yellow to white between green veins, in patches of the field.",
+     "Ferrous sulfate, Chelated iron (Fe EDDHA)"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Legumes"
+  },
+  {
+   "type": "table",
+   "caption": "Iron deficiency in legumes",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Monggo](/nutrient-deficiencies/mungbean-nutrient-deficiency#iron)",
+     "New leaves turn yellow green with green veins, then fully yellow, on limey or high pH soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Mani](/nutrient-deficiencies/peanut-nutrient-deficiency#iron)",
+     "Young leaves suddenly turn yellow between green veins and stay small, on limey soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Utaw](/nutrient-deficiencies/soybean-nutrient-deficiency#iron)",
+     "Youngest leaves turn yellow with green veins, then almost white, on limey soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Paayap](/nutrient-deficiencies/cowpea-nutrient-deficiency#iron)",
+     "Young leaves turn yellow, veins and all, then nearly white, on limey soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Kadyos](/nutrient-deficiencies/pigeon-pea-nutrient-deficiency#iron)",
+     "Young leaves turn light green between dark green veins, on limey soil.",
+     "Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Root Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Iron deficiency in root crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Gabi](/nutrient-deficiencies/taro-nutrient-deficiency#iron)",
+     "Young leaves yellow between the veins, then bleach evenly, in dry upland fields.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Ubi](/nutrient-deficiencies/purple-yam-nutrient-deficiency#iron)",
+     "Young leaves turn pale with a fine network of green veins, then bleach white, on coral or limey soil.",
+     "Chelated iron, Ferrous sulfate"
+    ],
+    [
+     "[Luya](/nutrient-deficiencies/ginger-nutrient-deficiency#iron)",
+     "Young leaves yellow between green veins, then bleach almost white.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Luyang dilaw](/nutrient-deficiencies/turmeric-nutrient-deficiency#iron)",
+     "Young leaves yellow between the veins, fast spreading over the whole leaf until it is white.",
+     "Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Vegetables"
+  },
+  {
+   "type": "table",
+   "caption": "Iron deficiency in vegetables",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Kangkong](/nutrient-deficiencies/water-spinach-nutrient-deficiency#iron)",
+     "The newest shoot tips turn pale yellow between green veins, then fully yellow.",
+     "Ferrous sulfate, Iron chelate"
+    ],
+    [
+     "[Alugbati](/nutrient-deficiencies/malabar-spinach-nutrient-deficiency#iron)",
+     "On limed or alkaline soil, the newest leaves turn pale yellow between green veins.",
+     "Ferrous sulfate, Iron chelate"
+    ],
+    [
+     "[Saluyot](/nutrient-deficiencies/jute-mallow-nutrient-deficiency#iron)",
+     "On limed or alkaline soil, the newest top leaves turn pale yellow between green veins.",
+     "Ferrous sulfate, Iron chelate"
+    ],
+    [
+     "[Kamatis](/nutrient-deficiencies/tomato-nutrient-deficiency#iron)",
+     "New top leaves turn yellow with a fine net of green veins, but keep their normal shape.",
+     "Ferrous sulfate, Iron chelate"
+    ],
+    [
+     "[Atsal](/nutrient-deficiencies/bell-pepper-nutrient-deficiency#iron)",
+     "Newest leaves at the tip turn yellow green between dark green veins.",
+     "Ferrous sulfate, Iron chelate"
+    ],
+    [
+     "[Presa](/nutrient-deficiencies/strawberry-nutrient-deficiency#iron)",
+     "The youngest centre leaves turn pale yellow between the veins and can bleach.",
+     "Iron chelate, Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sugarcane and Industrial Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Iron deficiency in sugarcane and industrial crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Tubo](/nutrient-deficiencies/sugarcane-nutrient-deficiency#iron)",
+     "Young leaves show pale stripes from base to tip and can turn almost white.",
+     "Ferrous sulfate, Urea 46 0 0"
+    ],
+    [
+     "[Pinya](/nutrient-deficiencies/pineapple-nutrient-deficiency#iron)",
+     "The young heart leaves turn pale yellow, often on acid red soils that are high in manganese.",
+     "Ferrous sulfate, Urea 46 0 0"
+    ],
+    [
+     "[Kawayan](/nutrient-deficiencies/bamboo-nutrient-deficiency#iron)",
+     "New leaves turn yellow with green veins, on limestone or high pH soils.",
+     "Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fruits and Plantation Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Iron deficiency in fruits and plantation crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Saging](/nutrient-deficiencies/banana-nutrient-deficiency#iron)",
+     "Young leaves turn yellow to almost white while the veins stay green for a while.",
+     "Ferrous sulfate, Urea 46 0 0"
+    ],
+    [
+     "[Mangga](/nutrient-deficiencies/mango-nutrient-deficiency#iron)",
+     "Newest leaves pale yellow to almost white with a fine net of green veins.",
+     "Ferrous sulfate, Iron chelate (Fe EDDHA)"
+    ],
+    [
+     "[Kalamansi](/nutrient-deficiencies/calamansi-nutrient-deficiency#iron)",
+     "Newest leaves yellow to ivory with green veins. Worst in wet, poorly drained or limey spots.",
+     "Iron chelate (Fe EDDHA), Ferrous sulfate"
+    ],
+    [
+     "[Citrus, dalandan or ponkan](/nutrient-deficiencies/citrus-nutrient-deficiency#iron)",
+     "Newest leaves yellow to white with green veins. Tops of trees die back on wet or limey ground.",
+     "Iron chelate (Fe EDDHA), Ferrous sulfate"
+    ],
+    [
+     "[Langka](/nutrient-deficiencies/jackfruit-nutrient-deficiency#iron)",
+     "Young leaves turn yellow between green veins. In bad cases the whole new leaf goes yellow.",
+     "Ferrous sulfate, Iron chelate (Fe EDDHA)"
+    ],
+    [
+     "[Abukado](/nutrient-deficiencies/avocado-nutrient-deficiency#iron)",
+     "Young leaves yellow with narrow dark green strips along the veins. Later the veins pale too and leaves drop.",
+     "Iron chelate (Fe EDDHA)"
+    ],
+    [
+     "[Mangostan](/nutrient-deficiencies/mangosteen-nutrient-deficiency#iron)",
+     "Seedlings in the nursery whose young leaves turn more and more yellow while old leaves stay green.",
+     "Ferrous sulfate, Urea 46 0 0"
+    ],
+    [
+     "[Atis](/nutrient-deficiencies/sugar-apple-nutrient-deficiency#iron)",
+     "The newest leaves turn yellow with a fine net of green veins, and later go fully yellow.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Kaimito](/nutrient-deficiencies/star-apple-nutrient-deficiency#iron)",
+     "New leaves turn pale yellow with green veins, mostly on limestone or high pH soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Saniata](/nutrient-deficiencies/dragon-fruit-nutrient-deficiency#iron)",
+     "New shoots come out pale yellow on high pH or limestone soils.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Kape](/nutrient-deficiencies/coffee-nutrient-deficiency#iron)",
+     "Young leaves light yellow to creamy white with a sharp net of green veins. Old leaves stay green.",
+     "Ferrous sulfate"
+    ],
+    [
+     "[Kakaw](/nutrient-deficiencies/cacao-nutrient-deficiency#iron)",
+     "Leaves dull yellow green with sharp green veins and a bumpy surface between them.",
+     "Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What causes iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Iron shortage comes mostly on calcareous, alkaline or over limed soils, where high pH turns iron into forms roots cannot take. Upland crops on neutral to alkaline soils, fields irrigated with alkaline water, and soils low in organic matter are most at risk. Wet, compacted soils and very high phosphorus make it worse. On acid, flooded rice soils the problem is usually the opposite, with too much iron."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to be sure it is iron"
+  },
+  {
+   "type": "text",
+   "text": "Manganese shortage also yellows young leaves between the veins. But as small yellow spots, while iron chlorosis is smooth and turns leaves whitish. Zinc makes pale bands near the leaf base, and in flooded rice, sulfide damage looks like iron shortage but blackens the roots. Check the soil pH first, because iron shortage usually comes with high pH or too much lime. A DA Regional Soils Laboratory can test soil iron, and a leaf tissue test helps. A trial spray of iron on a few plants is a quick check, because the new leaves green up within days if iron was short."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to fix iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On high pH soils most iron products fail in the soil. Only an iron chelate called FeEDDHA works well above pH 7.2. For fruit trees, a mix of ferrous sulfate and elemental sulfur placed in holes around the drip line lowers the pH near the roots. Use ammonium sulfate instead of urea, and add compost or manure."
+  },
+  {
+   "type": "text",
+   "text": "A typical spray is about 0.5 percent ferrous sulfate (5 grams per liter) or an iron chelate by its label, and it works within days. The green fades as new leaves grow, so repeat the spray, and spray in the evening to avoid leaf burn."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizers sold here that supply iron"
+  },
+  {
+   "type": "table",
+   "caption": "Registered with the FPA. Follow the label and your soil test",
+   "rows": [
+    [
+     "Product",
+     "Made or sold by",
+     "What it holds",
+     "Use"
+    ],
+    [
+     "Ferrous Sulphate Heptahydrate",
+     "Cleveland Industries Inc.",
+     "20 percent iron",
+     "Soil or leaves"
+    ],
+    [
+     "Ferrous Sulfate Monohydrate",
+     "Zetryl.Chem Phils., Inc.",
+     "30 percent iron",
+     "On the soil"
+    ],
+    [
+     "Brexil Fe Foliar",
+     "Zetryl.Chem Phils., Inc.",
+     "10 percent iron",
+     "On the leaves"
+    ],
+    [
+     "Grow More Liquid Chelate Iron with Sulfur",
+     "Sagrex Corporation",
+     "5 percent iron and 3 percent sulfur",
+     "On the leaves"
+    ],
+    [
+     "Micro Combo EDTA",
+     "Ateretpaz Technologies, Inc.",
+     "7.5 percent Fe, 3.3 percent Mn, 1.3 percent Zn, 1.3 percent B, 0.28 percent Cu",
+     "Soil or leaves"
+    ],
+    [
+     "Biozome",
+     "Manchem Industries, Inc.",
+     "12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo",
+     "On the soil"
+    ],
+    [
+     "Grow More Liquid Chelate General Purpose",
+     "Sagrex Corporation",
+     "2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo",
+     "On the leaves"
+    ],
+    [
+     "Nutriplant SL",
+     "Amway Philippines L.L.C.",
+     "2 percent Fe, 2 percent Zn, 1 percent Mg, 0.5 percent Mn, 0.15 percent Cu, 3 percent S with a trace of Mo",
+     "On the leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "For rates and timing, see our guides to [foliar fertilizer](/blog/foliar-fertilizer) and to [fertilizer application methods](/blog/fertilizer-application-methods). Also, [anee.io](/features/cropping-calendar) keeps every application on the cropping calendar, so you know what went on each lot and when."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to keep iron deficiency away"
+  },
+  {
+   "type": "text",
+   "text": "Do not over lime, and on calcareous soils choose iron efficient varieties and acidifying fertilizers such as ammonium sulfate. Keep organic matter up, and avoid waterlogging and heavy phosphorus."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Too much is a problem too",
+   "text": "In flooded, acid rice soils, too much iron is the more common problem, reported in many Central Luzon rice areas. Iron toxicity starts as tiny brown spots at the tips of the lower leaves, which spread until the leaves turn orange to brown."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Pick your crop in the Nutrient Deficiency Finder, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf in Tagalog or English",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "What does iron deficiency look like?",
+     "a": "The newest leaves turn yellow between green veins, and in bad cases the whole young leaf turns almost white. The old leaves stay green."
+    },
+    {
+     "q": "What is the best fertilizer for iron deficiency?",
+     "a": "On high pH soil, a foliar spray of ferrous sulfate or an iron chelate gives the quickest result. For the soil, only an iron chelate made for alkaline soil (FeEDDHA) works well above pH 7.2."
+    },
+    {
+     "q": "Why are the young leaves of my plants yellow but the old ones green?",
+     "a": "Shortages of iron, zinc, manganese, sulfur or calcium all start on young leaves, because these nutrients do not move out of old leaves. Iron is the likely one if the soil is limy and the yellow lies between green veins."
+    },
+    {
+     "q": "How often should I spray iron?",
+     "a": "Spray again whenever new pale leaves appear, because the green from one spray does not carry over to new growth. Spray in the evening or on a cool, cloudy day to avoid leaf burn."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Iron deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Iron_deficiency.htm"
+    },
+    {
+     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Iron toxicity",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Iron_toxicity.htm"
+    },
+    {
+     "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
+    },
+    {
+     "label": "Utah State University Extension, Preventing and Treating Iron Chlorosis in Trees and Shrubs",
+     "url": "https://extension.usu.edu/forestry/trees-cities-towns/tree-care/preventing-iron-chlorosis"
+    },
+    {
+     "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",
+     "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
+    },
+    {
+     "label": "Palanog and others, Zinc and Iron Nutrition Status in the Philippines Population and Local Soils, Frontiers in Nutrition",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6568233/"
+    }
+   ]
+  }
+ ]
+}

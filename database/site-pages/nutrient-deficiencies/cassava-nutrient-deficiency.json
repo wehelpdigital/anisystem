@@ -1,0 +1,646 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "cassava-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 150,
+ "title": "Cassava Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Cassava Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Cassava nutrient deficiency shows in the leaves. See the signs of potassium and nitrogen in kamoteng kahoy, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "cassava nutrient deficiency",
+ "keywords": [
+  "cassava nutrient deficiency",
+  "cassava deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Cassava nutrient deficiency is one of the first things to check when the leaves of your kamoteng kahoy (cassava) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are potassium, nitrogen, phosphorus, zinc, magnesium, calcium, sulfur and boron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for cassava",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Potassium, nitrogen, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, calcium, sulfur and boron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which cassava nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Cassava nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of kamoteng kahoy",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves yellow between the veins and scorch at the edges. Plants branch a lot and sprawl.",
+     "Muriate of potash 0 0 60, Complete 14 14 14"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Pale green plants with short stems and small leaves, yellowing from the bottom up.",
+     "Urea 46 0 0, Complete 14 14 14"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Stunted plants with a few yellow lower leaves and purple under the leaves, and late harvest.",
+     "Single superphosphate 0 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Lower leaves turn yellow between green veins and cup inward.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of kamoteng kahoy",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves have narrow, pale lobes that curl up, on short internodes.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "Upper leaves curl and get brown to black spots at the tips and edges, on very acid soil.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The young upper leaves yellow first, and stems are thin and weak.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip",
+     "Small deformed young leaves on short stalks with brown gummy spots on the stalks and stem tips.",
+     "Borax"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a cassava nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest cassava nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in cassava",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing between the veins starts on older leaves and moves up. Leaf edges die and turn brown, and the dead area spreads inward. Plants branch too much and sprawl, leaves are smaller and narrower, and roots carry less starch. You see it most at this stage: from about 3 months after planting, as roots bulk."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Fields planted to cassava year after year, since roots take away a lot of potassium, and sandy, acid soils. A Philippine study noted cassava takes up more potassium than nitrogen or phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also yellows between veins but without edge scorch. Mite damage gives speckled, bronzed leaves, with mites under the leaf. To be sure, soil test for potassium. Check the oldest leaves for edge scorch."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). In Philippine trials, one third of the N and K went in at planting and the rest at 2.5 and 5 months. KAU gives a potassium sulfate spray of 10 g per liter in the morning for quick help."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Complete 14 14 14",
+    "Sulfate of potash 0 0 50"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, the national recommendation is 8 bags of Complete 14 14 14 per hectare."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in cassava",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The whole plant turns pale to light green, starting on the older, lower leaves and moving up. Stems are short and leaves small, and new leaves come slowly. Roots are fewer and smaller, with less starch. You see it most at this stage: first 3 to 4 months."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in organic matter, sandy soils, and fields cropped for years without fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency burns the leaf edges. Sulfur deficiency yellows the young upper leaves first. To be sure, check that yellowing starts at the bottom of the plant. Soil test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Urea 46 0 0 following the soil test, split with the potash. KAU also gives a urea spray of 10 g per liter every 15 days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use compost or manure and a balanced fertilizer at planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in cassava",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants are stunted with a small root system. A few lower leaves turn yellow while the upper leaves stay green, and the underside of leaves may turn purple. Maturity is late and roots are small with less starch. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Acid upland soils. In Philippine omission trials, plots without phosphorus yielded about half as much as fully fed plots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also yellows lower leaves but scorches the edges. To be sure, soil test for available phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply all the phosphorus at planting, as in the Philippine trials, using Superphosphate, 16 20 0 or 14 14 14 following the soil test. KAU uses single superphosphate for a quick fix and rock phosphate for the long term."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Single superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "16 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, apply phosphorus each crop and add organic manure."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in cassava",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn yellow between the veins and the leaf lobes become narrow, pale and curl upward. Leaf tips die, internodes stay short and leaves are deformed. Maturity is delayed. You see it most at this stage: early growth, from the first weeks after planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in zinc, soils outside pH 5 to 7.5, and heavy phosphorus. Zinc deficiency is a known cause of low yield on sandy soils in Northeast Thailand."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Mite damage also distorts young leaves but with speckling. Mosaic virus gives a yellow and green mosaic with twisted leaves. To be sure, soil test for zinc and pH, or a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil, or in severe cases a spray of 2 g zinc sulfate with 2.5 g lime per liter in the morning. A Thai field trial got the best yield and return from 18.75 kg zinc sulfate per hectare worked into the soil with the NPK."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add zinc sulfate with the basal fertilizer on sandy fields, and do not apply it together with phosphate."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in cassava",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing between the veins starts on older leaves and moves to younger ones while the veins stay green. Leaves curl or cup inward, and in extreme cases turn whitish and die. Plants are stunted. You see it most at this stage: mid season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, acid soils and heavy potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency scorches the leaf edges. Zinc deficiency narrows the young leaf lobes. To be sure, soil test for magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Do not apply magnesium and potash at the same time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use Dolomite over the long run on acid soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in cassava",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Upper leaves curl and twist, and dead spots form at the tips and edges that grow brown to black. Stems are short and brittle, leaves small, and roots shallow. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils, soils high in phosphorus, and boron shortage, which calcium needs to work."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also deforms young leaves, with gummy brown spots on the leaf stalks. To be sure, soil pH and calcium test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soils ahead of planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in cassava",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing appears first on the upper, younger leaves and moves down. Shoots and roots grow less, stems are thin and weak, maturity is late and root yield drops. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in organic matter and burning of crop waste."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the lower leaves. To be sure, soil and leaf test for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Ammonium sulfate 21 0 0 or single superphosphate in the program. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soils, or Gypsum on alkaline soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum",
+    "Single superphosphate 0 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add organic matter and stop burning crop waste."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in cassava",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves come out small and deformed on short leaf stalks, with abnormal edges. Brown, gummy spots form on the leaf stalks and the growing part of the stem, stems turn brittle and root growth drops. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in kamoteng kahoy"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter and dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency also curls young leaves but without gummy spots. Zinc deficiency narrows the leaf lobes. To be sure, soil test for boron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Keep boron and calcium applications apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test sandy fields before planting."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any cassava nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kamoteng kahoy needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick kamoteng kahoy, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Cassava nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my kamoteng kahoy leaves turning yellow?",
+     "a": "The most common cause is potassium deficiency: older leaves yellow between the veins and scorch at the edges. Plants branch a lot and sprawl. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in cassava?",
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, split in parts (KAU). In Philippine trials, one third of the N and K went in at planting and the rest at 2.5 and 5 months."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in cassava?",
+     "a": "Apply Urea 46 0 0 following the soil test, split with the potash. KAU also gives a urea spray of 10 g per liter every 15 days."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in cassava?",
+     "a": "Apply all the phosphorus at planting, as in the Philippine trials, using Superphosphate, 16 20 0 or 14 14 14 following the soil test. KAU uses single superphosphate for a quick fix and rock phosphate for the long term."
+    },
+    {
+     "q": "How do I know which nutrient my kamoteng kahoy lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the cassava nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Kerala Agricultural University Agri Infotech Portal: Tapioca (cassava) nutrient deficiencies",
+     "url": "https://celkau.in/crops/tuber/tapioca/deficiency.php"
+    },
+    {
+     "label": "Ocampo and others, Philippine Journal of Crop Science (2017): Towards increasing cassava production in the Philippines through site particular nutrient management",
+     "url": "https://agris.fao.org/search/fr/records/6473b0c413d110e4e7a990e6"
+    },
+    {
+     "label": "Kunlanit and others, Asia Pacific Journal of Science and Technology (2022): Zinc promotes growth, yield and economic return of cassava",
+     "url": "https://so01.tci-thaijo.org/index.php/APST/article/view/261613"
+    }
+   ]
+  }
+ ]
+}

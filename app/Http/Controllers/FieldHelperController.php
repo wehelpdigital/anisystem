@@ -26,6 +26,8 @@ class FieldHelperController extends Controller
         'diseases' => ['Disease Finder', 'Find the disease from the signs you see on any crop, and what to spray', 'disease'],
         // Every rice variety in PhilRice's seed database (2026-10-13), the finder of /rice-varieties,
         // and every other crop's since the same day, the finders of /crop-varieties/{crop}.
+        // Every crop's nutrient deficiencies, with photos and the fertilizers sold here (2026-10-16, App\Support\DeficiencyCatalogue).
+        'nutrients' => ['Nutrient Deficiency Finder', 'Find the missing nutrient from the leaves you see on any crop, and what fertilizer fixes it', 'nutrient'],
         'varieties' => ['Variety Finder', 'Every registered variety of rice, corn, vegetables, root crops and fruit trees, with days to harvest, yield and resistance', 'rice-variety'],
         // Every land preparation step, dated back from the planting day (2026-10-14, App\Support\LandPrep).
         'landprep' => ['Land Prep Planner', 'Every step of getting your field ready, dated back from your planting day', 'land-prep'],
@@ -45,6 +47,8 @@ class FieldHelperController extends Controller
             $book = FieldBook::problems($tool);
         } elseif ($tool === 'weeds') {
             $book = FieldBook::weeds();
+        } elseif ($tool === 'nutrients') {
+            $book = FieldBook::deficiencies();
         } elseif ($tool === 'varieties') {
             // The crop asked for (?crop=), else the newest season's, else rice.
             $vCrops = VarietyFinder::crops();

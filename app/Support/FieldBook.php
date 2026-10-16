@@ -62,6 +62,62 @@ final class FieldBook
         ];
     }
 
+    /**
+     * Everything the in-app Nutrient Deficiency Finder and its catalogue need
+     * (2026-10-16): one entry a crop and a nutrient, its photo, and only the
+     * fertilizers sold here this page can show, per nutrient and crop.
+     */
+    public static function deficiencies(): array
+    {
+        $D = DeficiencyCatalogue::class;
+        $entries = [];
+        $cards = [];
+        $byNc = [];
+        foreach ($D::entries() as $slug => $e) {
+            $ph = $D::photo($slug, $e['nutrient']);
+            $entries[] = [
+                'k' => $slug, 'name' => $e['name'], 'local' => (string) ($e['local'] ?? ''), 'kind' => $e['nutrientName'], 'n' => $e['nutrient'], 'sym' => $e['symbol'],
+                'hue' => $e['hue'], 'crops' => [$e['crop']], 'where' => $e['where'], 'signs' => $e['signs'],
+                'hint' => (string) ($e['hint'] ?? ''), 'symptoms' => (string) ($e['symptoms'] ?? ''), 'stage' => (string) ($e['stage'] ?? ''),
+                'causes' => (string) ($e['causes'] ?? ''), 'confuse' => (string) ($e['confuse'] ?? ''), 'confirm' => (string) ($e['confirm'] ?? ''),
+                'fix' => (string) ($e['fix'] ?? ''), 'prevent' => (string) ($e['prevent'] ?? ''), 'materials' => $e['materials'],
+                'ranks' => (object) [$e['crop'] => $e['rank']],
+                // The list's small picture is the crop's own photo only; the entry shows a stand in, said to be one.
+                'thumb' => $ph && empty($ph['standin']) ? SitePages::img($ph['thumb'] ?? $ph['src']) : null, 'photo' => $ph ? SitePages::img($ph['src']) : null,
+                'alt' => (string) ($ph['alt'] ?? $e['name']), 'credit' => trim((string) ($ph['credit'] ?? '')) ?: null, 'standin' => ! empty($ph['standin']),
+                'sources' => self::sources(array_map(fn ($x) => ['label' => $x['title'] ?? ($x['label'] ?? ''), 'url' => $x['url'] ?? null], $e['sources'])),
+            ];
+            if (! isset($byNc[$e['nutrient']][$e['crop']])) {
+                $ps = $D::productsFor($e['nutrient'], $e['crop'], 6);
+                $byNc[$e['nutrient']][$e['crop']] = array_column($ps, 'key');
+                foreach ($ps as $p) {
+                    $cards[$p['key']] ??= [
+                        'key' => $p['key'], 'brand' => $p['brand'], 'company' => $p['company'] ?? '', 'kind' => $p['kind'] ?? '', 'fert' => true,
+                        'grade' => $p['grade'] ?? '', 'form' => $p['form'] ?? '', 'use' => $p['use'] ?? '', 'note' => $p['note'] ?? '',
+                        'nutrients' => array_values(array_map(fn ($n) => $D::NUTRIENTS[$n][0] ?? $n, (array) ($p['nutrients'] ?? []))),
+                        'crops' => array_values((array) ($p['crops'] ?? [])),
+                    ];
+                }
+            }
+        }
+        $crops = $D::crops();
+        $kinds = collect($entries)->countBy('n');
+
+        return [
+            'section' => $D::SECTION,
+            'entries' => $entries,
+            'crops' => $crops,
+            'cropNames' => self::cropNames($crops),
+            'where' => $D::WHERE,
+            'signs' => $D::SIGNS,
+            // The nutrient filter: [key, name, symbol, how many], N P K first.
+            'facets' => collect($D::NUTRIENTS)->filter(fn ($x, $k) => isset($kinds[$k]))->map(fn ($x, $k) => [$x[0], $x[0], $x[1], $kinds[$k]])->values()->all(),
+            'nutrients' => collect($D::NUTRIENTS)->map(fn ($x) => ['name' => $x[0], 'sym' => $x[1], 'tl' => $x[2], 'mobile' => $x[3], 'hue' => $x[4], 'role' => $x[5]])->all(),
+            'kinds' => $D::KINDS,
+            'products' => ['cards' => $cards, 'nc' => $byNc],
+        ];
+    }
+
     /** Everything the in-app weed catalogue needs (the helper reads its plans itself). */
     public static function weeds(): array
     {

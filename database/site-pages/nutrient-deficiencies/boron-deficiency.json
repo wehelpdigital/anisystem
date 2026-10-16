@@ -1,0 +1,682 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "boron-deficiency",
+ "lang": "en",
+ "category": "Nutrient guides",
+ "sortOrder": 990,
+ "title": "Boron Deficiency in Plants: Signs, Causes and How to Fix It",
+ "metaTitle": "Boron Deficiency in Plants: Signs and Fixes",
+ "metaDescription": "Boron deficiency shows on the young leaves first. See the signs crop by crop, what causes it, and the fertilizer sold here that fixes it.",
+ "focusKeyword": "boron deficiency",
+ "keywords": [
+  "boron deficiency",
+  "boron deficiency symptoms",
+  "boron deficiency in plants",
+  "foliar fertilizer"
+ ],
+ "excerpt": "Boron deficiency in plants starts on the young leaves and the growing tip. Boron is part of the cell walls and keeps the growing tips of shoots and roots dividing. Pollen needs it to sprout and grow, so it decides flowering, fruit set and seed set. It also helps move sugars inside the plant. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-b.webp",
+  "alt": "Coconut frond with leaflets stuck together and crumpled like an accordion: a boron shortage sign",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Boron is immobile in the plant, so the damage shows first on the growing point and the young leaves. The growing tip can die while the older leaves still look normal."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency symptoms"
+  },
+  {
+   "type": "text",
+   "text": "The growing tip stops and dies, and young leaves come out thick, brittle, curled or crumpled. Stems may crack or turn hollow, as in hollow stem of cabbage, broccoli and cauliflower and cracked celery stalks. Papaya fruit grows bumpy and may ooze latex, and many crops drop flowers or set poor fruit. In rice the tips of new leaves turn white and roll, and plants may fail to make panicles."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency by crop"
+  },
+  {
+   "type": "text",
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [boron in rice](/nutrient-deficiencies/rice-nutrient-deficiency#boron)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Rice"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in rice",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Palay](/nutrient-deficiencies/rice-nutrient-deficiency#boron)",
+     "Tips of the youngest leaves turn white and roll, and plants are short.",
+     "Boric acid, Borax"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Corn and Sorghum"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in corn and sorghum",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Mais](/nutrient-deficiencies/corn-nutrient-deficiency#boron)",
+     "Upper leaves have white spots and waxy brown streaks, and tassels and ears fail to come out.",
+     "Borax"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Legumes"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in legumes",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Monggo](/nutrient-deficiencies/mungbean-nutrient-deficiency#boron)",
+     "The top of the plant bunches into a rosette and the upper leaves turn yellow or reddish at the tips.",
+     "Borax"
+    ],
+    [
+     "[Mani](/nutrient-deficiencies/peanut-nutrient-deficiency#boron)",
+     "Young leaves stay small in a rosette, and kernels have a hollow, dark heart.",
+     "Borax, Gypsum"
+    ],
+    [
+     "[Sitaw](/nutrient-deficiencies/string-bean-nutrient-deficiency#boron)",
+     "Top leaves crinkle and stay small, and flowers drop.",
+     "Borax"
+    ],
+    [
+     "[Paayap](/nutrient-deficiencies/cowpea-nutrient-deficiency#boron)",
+     "New leaves come out small and crinkled.",
+     "Borax"
+    ],
+    [
+     "[Patani](/nutrient-deficiencies/lima-bean-nutrient-deficiency#boron)",
+     "New leaves curl and crinkle, and flowers and pods are few.",
+     "Borax"
+    ],
+    [
+     "[Kadyos](/nutrient-deficiencies/pigeon-pea-nutrient-deficiency#boron)",
+     "The top bunches into a rosette and upper leaves yellow or redden at the tips.",
+     "Borax"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Root Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in root crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Kamote](/nutrient-deficiencies/sweet-potato-nutrient-deficiency#boron)",
+     "Young leaves are distorted and brittle, and storage roots have hollow or brown spots inside.",
+     "Borax"
+    ],
+    [
+     "[Kamoteng kahoy](/nutrient-deficiencies/cassava-nutrient-deficiency#boron)",
+     "Small deformed young leaves on short stalks with brown gummy spots on the stalks and stem tips.",
+     "Borax"
+    ],
+    [
+     "[Patatas](/nutrient-deficiencies/potato-nutrient-deficiency#boron)",
+     "The growing tip dies and the plant turns bushy. Young leaves wilt even with enough water.",
+     "Borax"
+    ],
+    [
+     "[Karot](/nutrient-deficiencies/carrot-nutrient-deficiency#boron)",
+     "Crinkled young leaves, a dead growing point, orange tinted old leaves and small carrots.",
+     "Borax"
+    ],
+    [
+     "[Labanos](/nutrient-deficiencies/radish-nutrient-deficiency#boron)",
+     "Roots crack and develop poorly, and the growing point may die.",
+     "Borax, Solubor (sodium borate)"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Vegetables"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in vegetables",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Petsay](/nutrient-deficiencies/pechay-nutrient-deficiency#boron)",
+     "New centre leaves come out small, thick and crinkled, and stalks may crack.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Repolyo](/nutrient-deficiencies/cabbage-nutrient-deficiency#boron)",
+     "Hollow, brown centre of the stem and light, loose heads.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Litsugas](/nutrient-deficiencies/lettuce-nutrient-deficiency#boron)",
+     "Damage sits at the growing point of the youngest leaves, with poor, stubby roots.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Mustasa](/nutrient-deficiencies/mustard-nutrient-deficiency#boron)",
+     "New leaves come out small, crinkled and brittle, and stalks may crack.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Brokoli](/nutrient-deficiencies/broccoli-nutrient-deficiency#boron)",
+     "The stem is hollow with brown tissue inside, and new leaves look crinkled.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Koliplor](/nutrient-deficiencies/cauliflower-nutrient-deficiency#boron)",
+     "Brown or pink patches on the curd and a hollow, water soaked stem.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Saluyot](/nutrient-deficiencies/jute-mallow-nutrient-deficiency#boron)",
+     "New leaves and tips are small, brittle and deformed, and roots stay short.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Kintsay](/nutrient-deficiencies/celery-nutrient-deficiency#boron)",
+     "Stalks crack across or split along the veins, like claw marks.",
+     "Solubor (sodium borate), Borax"
+    ],
+    [
+     "[Kamatis](/nutrient-deficiencies/tomato-nutrient-deficiency#boron)",
+     "Brittle leaf stalks that snap, a dying tip, and fruits with rough, cracked or corky skin.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Talong](/nutrient-deficiencies/eggplant-nutrient-deficiency#boron)",
+     "New leaves come out wrinkled and brittle, tips die, and the plant stops branching and flowering.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Ampalaya](/nutrient-deficiencies/bitter-gourd-nutrient-deficiency#boron)",
+     "Young fruits drop, and fruits that stay show yellow streaks, corky skin and cracks.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Kalabasa](/nutrient-deficiencies/squash-nutrient-deficiency#boron)",
+     "Young fruits drop, and fruits show corky streaks and cracks.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Pipino](/nutrient-deficiencies/cucumber-nutrient-deficiency#boron)",
+     "Young fruits drop, and older fruits show yellow streaks that turn corky near the blossom end.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Okra](/nutrient-deficiencies/okra-nutrient-deficiency#boron)",
+     "New leaves are small and brittle, and pods stay short and misshapen with few seeds.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Sili](/nutrient-deficiencies/chili-nutrient-deficiency#boron)",
+     "Brittle, twisted new leaves and fruits that crack or drop.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Patola](/nutrient-deficiencies/sponge-gourd-nutrient-deficiency#boron)",
+     "New leaves come out deformed and brittle, and young fruits drop or crack.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Upo](/nutrient-deficiencies/bottle-gourd-nutrient-deficiency#boron)",
+     "Young fruits drop, and fruits show corky marks and cracks.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Sayote](/nutrient-deficiencies/chayote-nutrient-deficiency#boron)",
+     "New leaves and tips come out brittle and deformed, with few female flowers and fruits.",
+     "Boric acid, Borax"
+    ],
+    [
+     "[Pakwan](/nutrient-deficiencies/watermelon-nutrient-deficiency#boron)",
+     "Young fruits drop, and fruits show yellow streaks, corky scurf and cracks.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Milon](/nutrient-deficiencies/melon-nutrient-deficiency#boron)",
+     "Young fruits drop, and fruits show yellow streaks, corky marks and cracks.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "[Presa](/nutrient-deficiencies/strawberry-nutrient-deficiency#boron)",
+     "Misshapen, bumpy berries, aborted flowers and small young leaves with dark dead tips.",
+     "Borax, Solubor (sodium borate)"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Onion and Garlic"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in onion and garlic",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Sibuyas](/nutrient-deficiencies/onion-nutrient-deficiency#boron)",
+     "Brittle, bluish green, distorted leaves with yellow cross lines and cracks near the base.",
+     "Borax"
+    ],
+    [
+     "[Bawang](/nutrient-deficiencies/garlic-nutrient-deficiency#boron)",
+     "Young leaves distorted, the growing point dies, and bulbs crack or are misshapen.",
+     "Borax"
+    ],
+    [
+     "[Sibuyas Tagalog](/nutrient-deficiencies/shallot-nutrient-deficiency#boron)",
+     "Brittle, distorted leaves with cracks near the base, and split bulbs.",
+     "Borax"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sugarcane and Industrial Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in sugarcane and industrial crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Pinya](/nutrient-deficiencies/pineapple-nutrient-deficiency#boron)",
+     "The fruitlets crack and turn corky between the eyes, and the flesh browns inside.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Tabako](/nutrient-deficiencies/tobacco-nutrient-deficiency#boron)",
+     "The bud twists and dies, the top leaves are thick, brittle and curled down, and the midribs crack across.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Bulak](/nutrient-deficiencies/cotton-nutrient-deficiency#boron)",
+     "Dark green rings on the leaf stalks, many squares and young bolls dropping, and small, misshapen bolls.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Palma](/nutrient-deficiencies/oil-palm-nutrient-deficiency#boron)",
+     "Leaflet tips on new fronds bend into a hook. In bad cases fronds look like a fish bone.",
+     "Borax, Solubor"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fruits and Plantation Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Boron deficiency in fruits and plantation crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Saging](/nutrient-deficiencies/banana-nutrient-deficiency#boron)",
+     "Young leaves curl and crumple, with white streaks across the veins on the underside.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Papaya](/nutrient-deficiencies/papaya-nutrient-deficiency#boron)",
+     "Bumpy, lumpy fruit that bleed latex, with empty or poorly formed seeds inside.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Mangga](/nutrient-deficiencies/mango-nutrient-deficiency#boron)",
+     "Fruit cracks and shows brown, soft, watery flesh inside. Many flowers drop. New leaves thick and misshapen.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Niyog](/nutrient-deficiencies/coconut-nutrient-deficiency#boron)",
+     "New fronds stay crinkled and unopened, leaflet tips hook, and young nuts (buttons) fall.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Kalamansi](/nutrient-deficiencies/calamansi-nutrient-deficiency#boron)",
+     "Fruit small, hard and lumpy with gum spots in the white peel. Leaves curl and shoot tips die, sending out many shoots.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Citrus, dalandan or ponkan](/nutrient-deficiencies/citrus-nutrient-deficiency#boron)",
+     "Small, hard, lumpy fruit with gum pockets in the white peel. Many fruit drop. Shoot tips die and branch out.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Suha](/nutrient-deficiencies/pomelo-nutrient-deficiency#boron)",
+     "Small, hard, lumpy fruit with gum spots in the thick white peel. Many fruit drop. Shoot tips die.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Langka](/nutrient-deficiencies/jackfruit-nutrient-deficiency#boron)",
+     "Fruits split or crack with a reddish purple color and gum in the cracks. Young leaves yellow and brittle.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Abukado](/nutrient-deficiencies/avocado-nutrient-deficiency#boron)",
+     "Tip growth discolored and burnt, leaves twisted with corky split veins. Lumpy, misshapen fruit.",
+     "Solubor, Borax"
+    ],
+    [
+     "[Bayabas](/nutrient-deficiencies/guava-nutrient-deficiency#boron)",
+     "Newest leaves narrow, thick and brittle, bent down as if the stalk were broken. Shoot tips die back.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Lansones](/nutrient-deficiencies/lanzones-nutrient-deficiency#boron)",
+     "Shoot tips stunt and die back, flowers and young fruits drop, and some fruits crack or come out misshapen.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Duryan](/nutrient-deficiencies/durian-nutrient-deficiency#boron)",
+     "Poor fruit set, small or lopsided fruits, cracked husks, and hard, leathery flesh inside.",
+     "Solubor, Borax"
+    ],
+    [
+     "[Sapodilla](/nutrient-deficiencies/chico-nutrient-deficiency#boron)",
+     "Yellowish green leaves with burnt tips and edges, and split midribs on the leaf underside.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Atis](/nutrient-deficiencies/sugar-apple-nutrient-deficiency#boron)",
+     "Few fruits set, misshapen or cracked fruits, and shoot tips that stop growing.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Guyabano](/nutrient-deficiencies/soursop-nutrient-deficiency#boron)",
+     "Many flowers but few fruits set, lopsided or cracked fruits, and shoot tips that stop growing.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Kasoy](/nutrient-deficiencies/cashew-nutrient-deficiency#boron)",
+     "Growing buds and young leaves die, flowers drop, apples split and nuts stay empty.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Kape](/nutrient-deficiencies/coffee-nutrient-deficiency#boron)",
+     "New leaves come out small, bent and misshapen with dead tips, and the shoot tip dies.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Kakaw](/nutrient-deficiencies/cacao-nutrient-deficiency#boron)",
+     "Many chupons, new leaves twisted and falling before they harden, brittle old leaves with dead tips.",
+     "Borax, Solubor"
+    ],
+    [
+     "[Malunggay](/nutrient-deficiencies/moringa-nutrient-deficiency#boron)",
+     "Few flowers and few pods set on trees that look healthy, with new shoots that may twist.",
+     "Borax, Solubor"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What causes boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Boron washes easily out of sandy soils, and the heavy rains of the wet season and typhoons leach it below the roots. Soils low in organic matter hold little, and a dry spell makes it worse, because roots stop feeding in the dry topsoil. High pH and heavily limed soils also lock it up. Papaya, cauliflower, celery, tomato, peanut and forage legumes need more boron than most crops."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to be sure it is boron"
+  },
+  {
+   "type": "text",
+   "text": "Calcium shortage also kills growing tips and deforms young leaves, so a tissue test may be needed to tell the two apart. Hollow or cracked stems and bumpy papaya fruit point to boron, while blossom end rot points to calcium. A soil test for boron is only a rough guide, so a leaf tissue test is the better check. In papaya, leaf stalks with about 20 parts per million of boron or less go with bumpy fruit. While about 25 or more is normal."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to fix boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Borax (11 percent boron) or Solubor (20 percent boron) are the usual materials, broadcast and mixed well into the soil. For papaya, a typical rate is 1 to 3 kg of boron per hectare, or 0.5 to 5 grams of borax around each tree. Never put boron in the seed row, because it harms germinating seed, and let the soil test set the rate."
+  },
+  {
+   "type": "text",
+   "text": "A typical borax spray for papaya is 0.25 percent, about 2.5 grams per liter of water. Test it on a few plants first, because boron toxicity is easy to cause."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizers sold here that supply boron"
+  },
+  {
+   "type": "table",
+   "caption": "Registered with the FPA. Follow the label and your soil test",
+   "rows": [
+    [
+     "Product",
+     "Made or sold by",
+     "What it holds",
+     "Use"
+    ],
+    [
+     "Solubor",
+     "Caldic Philippines Inc.",
+     "21 percent boron",
+     "Soil or leaves"
+    ],
+    [
+     "Borax Decahydrate",
+     "Caldic Philippines Inc.",
+     "36.9 to 38.2 percent B2O3 (about 11 percent boron)",
+     "On the soil"
+    ],
+    [
+     "Etifert 11 (Borax Decahydrate)",
+     "Zetryl.Chem Phils., Inc.",
+     "11 percent boron",
+     "On the soil"
+    ],
+    [
+     "Etifert 17 (Boric Acid)",
+     "Zetryl.Chem Phils., Inc.",
+     "17 percent boron",
+     "Soil or leaves"
+    ],
+    [
+     "YaraVita BORTRAC 150",
+     "Yara Fertilizers Philippines, Inc.",
+     "11.1 percent boron",
+     "On the leaves"
+    ],
+    [
+     "Grow More Liquid Chelate Boron",
+     "Sagrex Corporation",
+     "10 percent boron",
+     "On the leaves"
+    ],
+    [
+     "Proboron",
+     "Ezertech Corporation",
+     "130 g boron per liter",
+     "On the leaves"
+    ],
+    [
+     "Micro Combo EDTA",
+     "Ateretpaz Technologies, Inc.",
+     "7.5 percent Fe, 3.3 percent Mn, 1.3 percent Zn, 1.3 percent B, 0.28 percent Cu",
+     "Soil or leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "For rates and timing, see our guides to [foliar fertilizer](/blog/foliar-fertilizer) and to [fertilizer application methods](/blog/fertilizer-application-methods). Also, [anee.io](/features/cropping-calendar) keeps every application on the cropping calendar, so you know what went on each lot and when."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to keep boron deficiency away"
+  },
+  {
+   "type": "text",
+   "text": "Add compost and manure, which hold and release boron, and avoid over liming. On sandy soils and for boron hungry crops such as papaya and cauliflower, give a small dose each season instead of one big one."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Too much is a problem too",
+   "text": "The gap between too little and too much boron is very narrow. Above about 5 parts per million of available boron in the soil, many crops yellow and burn at the leaf edges."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Pick your crop in the Nutrient Deficiency Finder, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf in Tagalog or English",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "What does boron deficiency look like?",
+     "a": "The growing tip dies and young leaves turn thick, brittle and curled. Stems may crack or turn hollow, flowers drop, and fruit such as papaya grows lumpy."
+    },
+    {
+     "q": "Why is my papaya fruit bumpy?",
+     "a": "Bumpy, lumpy papaya fruit is a classic sign of boron shortage, often with latex oozing from the fruit. A borax spray of about 0.25 percent, or a small dose of borax around the tree, prevents it on the fruit that forms later."
+    },
+    {
+     "q": "How much borax should I use?",
+     "a": "Very little, because boron turns toxic easily. A typical rate is 0.5 to 5 grams of borax around a papaya tree, and the soil or leaf test decides."
+    },
+    {
+     "q": "Can I mix borax into the fertilizer I put in the seed row?",
+     "a": "No. Boron placed in the seed row harms germination, so broadcast it and work it well into the soil instead."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
+    },
+    {
+     "label": "University of Hawaii CTAHR, Boron Deficiency (bumpy fruit of papaya)",
+     "url": "https://cms.ctahr.hawaii.edu/ckm/Home/Plant-Disease-Pathogens/Non-Parasites/Boron-Deficiency-bumpy-fruit-of-papaya"
+    },
+    {
+     "label": "Pacific Pests, Pathogens and Weeds (ACIAR, University of Queensland): Lumpy fruit of papaya, brown heart of celery",
+     "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/papaya__celery_boron_deficiency_191.htm"
+    },
+    {
+     "label": "University of Wisconsin Extension, Soil and Applied Boron (A2522)",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
+    },
+    {
+     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Boron deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Boron_deficiency.htm"
+    }
+   ]
+  }
+ ]
+}

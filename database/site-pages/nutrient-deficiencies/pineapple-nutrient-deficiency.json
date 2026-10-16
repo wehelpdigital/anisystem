@@ -1,0 +1,735 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "pineapple-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 520,
+ "title": "Pineapple Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Pineapple Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Pineapple nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and iron in pinya, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "pineapple nutrient deficiency",
+ "keywords": [
+  "pineapple nutrient deficiency",
+  "pineapple deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Pineapple nutrient deficiency is one of the first things to check when the leaves of your pinya (pineapple) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, iron, zinc, magnesium, phosphorus, boron, calcium and copper. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for pineapple",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, magnesium and phosphorus move inside the plant, so a shortage shows on the old, lower leaves first. But iron, zinc, boron, calcium and copper stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which pineapple nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Pineapple nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of pinya",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Plants look pale yellow green with narrow leaves, and the fruits come out small (batterball).",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves get yellow to orange spots and dry tips while young leaves stay dark green. The fruit is small and sour.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves turn yellow between the veins, most often where potash is applied heavily.",
+     "Kieserite, Magnesium sulfate (Epsom salt)"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, young leaves and the tip",
+     "Leaves stay small and narrow with a purple or bronze color, and the plant barely grows.",
+     "16 20 0, Ammonium phosphate 18 46 0"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of pinya",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, the whole plant",
+     "The young heart leaves turn pale yellow, often on acid red soils that are high in manganese.",
+     "Ferrous sulfate, Urea 46 0 0"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, old, lower leaves",
+     "The heart leaves bunch together and the top bends over to one side, called crookneck.",
+     "Zinc sulfate"
+    ],
+    [
+     "Boron",
+     "fruit, grain or tubers, young leaves and the tip",
+     "The fruitlets crack and turn corky between the eyes, and the flesh browns inside.",
+     "Borax, Solubor"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Young leaves go pale and curl down, then turn pinkish red, and the fruit is soft or brown inside.",
+     "Gypsum, Calcium nitrate"
+    ],
+    [
+     "Copper",
+     "young leaves and the tip",
+     "Young leaves fold up into a narrow gutter shape and their tips droop, then die.",
+     "Copper sulfate, Bordeaux mixture"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a pineapple nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest pineapple nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in pineapple",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Older, lower leaves turn pale green to light yellow first, often starting at the tips, and then the whole plant looks pale. Leaves stay narrow and the plant grows slowly. Fruits come late, small and less sweet. DA Bicol warns that cutting fertilizer doses gives the small fruits farmers call batterball. You see it most at this stage: vegetative growth in the first 8 months, before flower induction."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Skipped or late urea doses, sandy and leached soils, and heavy rain."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Mealybug wilt turns leaves red then pink, with tips dying and curling down and rotten roots. Look for mealybugs and ants at the base. To be sure, leaf color is the quickest guide: healthy pineapple is an intense green, and pale or yellowish green means low nitrogen. For a lab test, send D leaves (the longest, youngest fully grown leaves) at 6 to 8 months."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 on a split schedule. DA Bicol advises, per hill for Formosa: 10 g Ammonium phosphate 16 20 0 and 5 g Muriate of potash 0 0 60 one month after planting, then 5 g urea at 3, 5 and 7 months. For a quick fix, spray 1 to 2 percent urea (10 to 20 g per liter) every two weeks. From about 12 months, place fertilizer in the axils of the old leaves."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "16 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not cut doses or skip splits."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in pineapple",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Older, lower leaves get white, yellow or orange spots and streaks that spread in from the tips and edges, and the tips die. The upper leaf surface turns reddish purple while the young leaves stay dark green. Leaves curl down and lose their firmness. Fruits are small and low in sugar, and the flesh can turn brown. You see it most at this stage: grand growth and fruit filling, when potassium need is highest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Sandy, acid soils low in exchangeable potassium and too little potash in the schedule. Pineapple takes up more potassium than nitrogen."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Mealybug wilt also reddens the leaves, but it starts about halfway up the plant, turns pink and wilts, and the roots rot. Magnesium shortage yellows the old leaves between the veins without the orange spotting and dead tips. To be sure, send D leaves at 6 to 8 months. ICL counts below about 2.2 percent K as low."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Keep potash in the schedule. DA Bicol gives 5 g Muriate of potash 0 0 60 per hill at one month and again at about five months for Formosa. Haifa notes pineapple gives better yield and fruit quality with Sulfate of potash 0 0 50 than with the chloride form. For a quick fix, spray potassium sulfate at 1 percent (10 g per liter) every two weeks."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, set potash from a soil test, and balance it with magnesium because high potassium holds back magnesium uptake."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in pineapple",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves in the heart turn pale yellow first, and later the whole leaf goes yellow. Growth slows. On acid soils rich in manganese, whole blocks of the field can yellow even though the soil holds plenty of iron. You see it most at this stage: vegetative growth, worst during fast growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Two kinds of soil cause it: acid soils very high in manganese, where manganese stops iron from working inside the plant. High pH or limed soils, where iron is locked in the soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency yellows the older leaves first, while iron starts in the young heart leaves. Zinc deficiency gives yellow spots and a bent heart (crookneck). To be sure, test soil pH and manganese. A test spray of ferrous sulfate on a few plants that greens the new heart leaves confirms it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Ferrous sulfate at 2 to 3 percent (20 to 30 g per liter) monthly or as needed, best mixed into the urea spray, as Haifa advises. Queensland growers add 3 percent ferrous sulfate to the urea spray. Vikaspedia gives a milder 0.5 to 1 percent spray, so try the lower rate first on young plants. Do not lime to fix it: in Hawaii, lime raised root and heart rot. Without iron sprays no calcium source stopped the yellowing."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate",
+    "Urea 46 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, on high manganese soils, plan regular iron sprays from the start of the crop."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in pineapple",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "In young plants the heart leaves bunch together and then tilt over sideways, which is called crookneck. Leaves are narrow and pale, with yellowing between the veins that starts at the tip and leaves only the midrib green. Older plants get yellow spots and dashes near the edges of older leaves that join into brown, blister like patches that feel rough. You see it most at this stage: young plants in the first months after planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Old pineapple soils and sandy soils low in zinc, high pH or limed soils, and heavy phosphate use."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Copper deficiency gives narrow young leaves folded into a U shape with drooping tips, but the heart does not bend over. Mealybug wilt makes leaves curl down and turn red to pink. To be sure, look for the bent heart in young plants. Send D leaves for a zinc test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Zinc sulfate at 1 percent (10 g per liter), once or twice, as Haifa advises. Vikaspedia gives 0.5 percent (5 g per liter). Where crookneck keeps coming back, mix Zinc sulfate into the soil before planting. KAU gives about 20 kg per hectare (8 kg per acre). Do not mix zinc with phosphate fertilizer in one application."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, on fields with past crookneck, add zinc sulfate at planting and spray young plants once."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in pineapple",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn yellow between the veins while the young leaves stay green. On fruiting plants, the leaves at the base of the fruit crown can die. Yield drops: in Brazilian trials, plants given no magnesium bore less fruit than fully fed plants. You see it most at this stage: grand growth and fruit development."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy soils with exchangeable magnesium below about 70 ppm, and heavy potash, which holds back magnesium uptake."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also starts on old leaves, but it shows orange spots and dry tips. Nitrogen deficiency yellows the whole leaf evenly rather than between the veins. To be sure, send D leaves at 6 to 8 months. ICL counts below about 0.25 percent Mg as low."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Where soil magnesium is low, Haifa gives 50 to 120 kg MgO per hectare from a magnesium fertilizer such as Kieserite or magnesium sulfate, keeping MgO to K2O at about 1 to 2.5. ICL notes foliar magnesium works during fast fruit growth. Use magnesium sulfate at the label rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Kieserite",
+    "Magnesium sulfate (Epsom salt)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not pile on potash without magnesium, and test the soil before each crop."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in pineapple",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Leaves are small and narrow with a purplish or bronze color. Older leaves develop dead patches and drop. New leaves can turn reddish purple and fruits get a reddish skin. Plants are stunted with weak roots, and badly starved plants may bear no fruit at all. You see it most at this stage: early growth, from planting to about 6 months."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils that lock up phosphorus and no phosphate at planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Strong sun and drought also redden pineapple leaves, but the plant keeps growing. Phosphorus shortage comes with small, narrow leaves and poor growth. To be sure, send D leaves to a lab. ICL gives 0.2 to 0.3 percent P as the target."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Give phosphate early: DA Bicol uses 10 g Ammonium phosphate 16 20 0 per hill one month after planting. For a quick fix, Vikaspedia gives a 2 percent DAP spray (20 g of 18 46 0 per liter)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "16 20 0",
+    "Ammonium phosphate 18 46 0",
+    "Superphosphate 0 18 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, put the phosphate in at or soon after planting, at the soil test rate."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in pineapple",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "The fruit shows corky tissue and cracks between the fruitlets, and fruits come out misshapen. Inside, the flesh browns from the center outward, and brownish black areas can show on the skin. Buds and young growth can die back, and fruit set is poor. You see it most at this stage: flowering and fruit development."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Sandy, leached soils low in organic matter, and dry spells during fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Fruit borers and fruit rots also make brown spots in fruit. But borers leave holes and gum, while boron gives corky lines and cracks between the eyes. To be sure, send D leaves for a boron test. Haifa lists about 14 mg/kg B as optimum in Red Spanish."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Borax at 0.3 percent (3 g per liter) two or three times late in grand growth, as Haifa advises. KAU gives 1 g per liter and Vikaspedia 0.5 percent. KAU gives soil borax at about 10 kg per hectare (4 kg per acre). Do not overdo boron, because too much is toxic to the plant."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add compost to sandy fields, and give one or two boron sprays before fruiting on fields that showed cracked fruit."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in pineapple",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Young emerging leaves turn pale green and curl down, later turning greenish pink or red. Root and leaf tips brown and die, and leaf edges become ragged and brittle. Fruit quality falls: low calcium, often with low boron, gives soft fruit with brown flesh inside and more glassy, translucent flesh. You see it most at this stage: fast growth and fruit development."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Very acid, leached soils. Growers keep the pH low to avoid rot, so calcium can run short."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Mealybug wilt also reddens and curls the leaves, but it starts halfway up the plant and the roots rot. Copper deficiency gives narrow U shaped young leaves with drooping tips. To be sure, send D leaves to a lab. ICL gives 0.4 to 0.7 percent Ca as the target."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Gypsum to add calcium without raising the pH. In a Hawaii trial gypsum raised calcium in the leaves and fruit and cut translucent flesh. While lime raised the risk of root and heart rot. ICL notes foliar calcium works during fast fruit growth. Use a calcium foliar product at the label rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use gypsum rather than lime on pineapple fields, and keep boron and calcium in the program."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Copper deficiency in pineapple",
+   "id": "copper"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves are narrow, with the edges folded up so the leaf looks like the letter U in cross section. The leaf tip droops, then dies back. The underside looks waxy because it lacks its normal powdery bloom. Badly affected plants are stunted, with short heart leaves and dead older leaves. You see it most at this stage: from about a year after planting, on poor soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why copper deficiency happens in pinya"
+  },
+  {
+   "type": "text",
+   "text": "Very acid, sandy soils and fields that never got copper."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Zinc deficiency bends the whole heart over (crookneck), while copper folds each young leaf into a U with a drooping tip. Mealybug wilt makes leaves curl down and turn red to pink. To be sure, send the white basal part of D leaves to a lab: in a Queensland trial, deficient plants had about 3 ppm Cu while healthy plants in other studies had 8 ppm or more."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for copper deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU advises copper sulfate in the soil at 30 kg per hectare, because copper sprays can burn the leaves. Haifa gives Bordeaux mixture carrying 7 to 11 kg copper sulfate per hectare."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Copper sulfate",
+    "Bordeaux mixture"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with copper: **Omex Zynergy** by Jardine Distribution, Inc. (3.75 percent zinc and 2.11 percent copper), **Grower's Choice Copper Sulphate Pentahydrate** by Zetryl.Chem Phils., Inc. (25 percent copper and 12 percent sulfur), **Agsmart Copper Sulphate** by AgSmart Corporation (25 percent copper and 12 percent sulfur) and **Liquid Chelate Copper w/ Sulfur** by Sagrex Corporation (5 percent copper and 2 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [copper deficiency](/nutrient-deficiencies/copper-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, on acid sandy soils, include copper in the basal fertilizer when a soil or leaf test shows it is low."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any pineapple nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your pinya needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick pinya, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Pineapple nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my pinya leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: plants look pale yellow green with narrow leaves, and the fruits come out small (batterball). If the young leaves turn yellow first instead, look at iron deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in pineapple?",
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 on a split schedule. DA Bicol advises, per hill for Formosa: 10 g Ammonium phosphate 16 20 0 and 5 g Muriate of potash 0 0 60 one month after planting, then 5 g urea at 3, 5 and 7 months."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in pineapple?",
+     "a": "Keep potash in the schedule. DA Bicol gives 5 g Muriate of potash 0 0 60 per hill at one month and again at about five months for Formosa."
+    },
+    {
+     "q": "What fertilizer fixes iron deficiency in pineapple?",
+     "a": "Spray Ferrous sulfate at 2 to 3 percent (20 to 30 g per liter) monthly or as needed, best mixed into the urea spray, as Haifa advises. Queensland growers add 3 percent ferrous sulfate to the urea spray."
+    },
+    {
+     "q": "How do I know which nutrient my pinya lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the pineapple nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Iron deficiency in all crops",
+     "url": "/nutrient-deficiencies/iron-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "DA Regional Field Office 5: DA Bicol continuously helps pineapple farmers of Cam. Norte",
+     "url": "https://bicol.da.gov.ph/da-bicol-continuously-helps-pineapple-farmers-of-cam-norte/"
+    },
+    {
+     "label": "Haifa: Pineapple crop data and fertilizer recommendation",
+     "url": "https://www.haifa-group.com/sites/default/files/crop/fertilizer%20recommendation.pdf"
+    },
+    {
+     "label": "Vikaspedia (NIPHM): Nutritional deficiencies of pineapple",
+     "url": "https://en.vikaspedia.in/viewcontent/agriculture/crop-production/integrated-pest-managment/ipm-for-fruit-crops/ipm-strategies-for-pineapple/nutritional-deficiencies-of-pine-apple?lgn=en"
+    },
+    {
+     "label": "ICL: Pineapple complete nutrition and fertigation guide",
+     "url": "https://icl-growingsolutions.com/agriculture/crops/pineapple/"
+    },
+    {
+     "label": "Pacific Pests and Pathogens: Pineapple mealybug wilt disease",
+     "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/pineapple_wilt_disease_380.htm"
+    },
+    {
+     "label": "Ramos et al. 2009: Visual symptoms of macronutrient and boron deficiency in Imperial pineapple (Rev. Bras. Fruticultura)",
+     "url": "https://scielo.br/j/rbf/a/ZxyDpr58BPcpJ3VStWwp7LM/abstract/?lang=en"
+    },
+    {
+     "label": "Silva et al. 2006: Lime, gypsum, and basaltic dust effects on the calcium nutrition and fruit quality of pineapple (Acta Horticulturae 702)",
+     "url": "https://ishs.org/ishs-article/702_15/"
+    },
+    {
+     "label": "TNAU (Jeyakumar and Balamohan): Micronutrients for horticultural crops",
+     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Micronutrients%20for%20horticultural%20crops.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University: Pineapple nutrient deficiency",
+     "url": "https://celkau.in/crops/fruits/Pineapple/deficiency.php"
+    },
+    {
+     "label": "Jorgensen 1978: Copper deficiency in pineapples (Queensland DPI Bulletin 776)",
+     "url": "https://era.daf.qld.gov.au/id/eprint/12361/1/QJAAS_35%5B2%5D_1978_pp77-83_jorgensen.pdf"
+    },
+    {
+     "label": "Haag et al. 1963: Studies on the mineral nutrition of pineapple (Anais ESALQ)",
+     "url": "https://scielo.br/j/aesalq/a/TV9HCxMpghdMQp8jpbtNkvP/?lang=pt"
+    }
+   ]
+  }
+ ]
+}

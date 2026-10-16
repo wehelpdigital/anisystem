@@ -1,0 +1,674 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "peanut-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 70,
+ "title": "Peanut Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Peanut Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Peanut nutrient deficiency shows in the leaves. See the signs of calcium, nitrogen and potassium in mani, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "peanut nutrient deficiency",
+ "keywords": [
+  "peanut nutrient deficiency",
+  "peanut deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Peanut nutrient deficiency is one of the first things to check when the leaves of your mani (peanut) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are calcium, nitrogen, potassium, boron, sulfur, iron, zinc and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-ca.webp",
+  "alt": "Calcium deficiency on a leaf, shown on another crop as a stand in for peanut",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen and potassium move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron, sulfur, iron, zinc and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which peanut nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Peanut nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of mani",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Pale yellow, stunted plants, sometimes with reddish stems, and few nodules on the roots.",
+     "Rhizobium inoculant for peanut, Urea 46 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Lower leaves pale slightly between the veins, then the leaf edges turn yellow and dry.",
+     "Muriate of potash 0 0 60"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of mani",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "fruit, grain or tubers",
+     "The plants look fine, but many pods are empty (pops) or the kernels are shrunken and dark.",
+     "Gypsum, Agricultural lime"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Young leaves stay small in a rosette, and kernels have a hollow, dark heart.",
+     "Borax, Gypsum"
+    ],
+    [
+     "Sulfur",
+     "the whole plant, young leaves and the tip",
+     "The whole plant is evenly light green, thin stemmed and spindly.",
+     "Gypsum"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "Young leaves suddenly turn yellow between green veins and stay small, on limey soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Light yellow stripes along the veins of the leaves, and the bud at the top stops growing.",
+     "Zinc sulfate"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Leaves pale between the veins and plants stay short, often after heavy liming.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a peanut nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest peanut nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in peanut",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Leaves rarely show it. Pods form but stay empty (pops), kernels are shrunken or misshapen with a dark germ, and more pods rot. Seed from such pods sprouts poorly. In bad cases the buds at branch tips blacken and the leaves there are small and twisted. You see it most at this stage: pegging and pod filling, about 20 to 80 days after the pegs enter the soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "Pods take calcium straight from the soil around them, not through the roots. So a dry or calcium poor pegging zone causes it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency gives hollow, discolored hearts in the kernels and stubby branches. Drought and poor pollination also leave empty pods. To be sure, crack open pods from a test row: many pops point to calcium. Test the top 8 cm of soil next to the row soon after emergence (UF IFAS)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spread Gypsum over the rows at early flowering, 30 to 45 days after planting. TNAU gives 200 kg gypsum per hectare at 45 days. UF IFAS gives about 1,100 kg per hectare (1,000 pounds per acre) for seed crops and low testing soils. Gypsum after 100 days is too late."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Gypsum",
+    "Agricultural lime",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime soils below pH 5.8 a few months before planting to reach pH 6.2 to 6.5."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in peanut",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn pale yellow and plants stay short. Stems may turn reddish. Peanut makes its own nitrogen through root nodules, so pale plants usually mean the nodules failed. Yellow rows next to green rows often mark a missed inoculant row. You see it most at this stage: five to six weeks after planting, when nodules should be well formed."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "In a legume this usually means poor nodulation: no inoculant in a field new to the crop, inoculant killed by sun or heat, very acid soil, waterlogging, hot dry soil, or too much nitrogen fertilizer near the seed, which stops nodules from forming."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency also gives evenly pale plants. Check the nodules first. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Feed the crop, since new nodules cannot be added now. TNAU gives a 1 to 2 percent urea spray (10 to 20 g per liter) every 15 days. A light sidedress of Urea 46 0 0 also helps when nodules are poor."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Rhizobium inoculant for peanut",
+    "Urea 46 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, inoculate seed with a peanut Rhizobium inoculant at planting, keep it out of the sun, and avoid heavy nitrogen near the seed."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in peanut",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves first show a slight yellowing between the veins, then the edges of the leaflets turn yellow and later brown and dry. It starts on the lowest leaves and climbs the plant as pods fill. You see it most at this stage: mid growth to pod filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils and soils cropped for years without potash. Note that too much potash in the pegging zone blocks calcium from reaching the pods (UF IFAS)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also yellows between the veins of old leaves, but without the scorched edges. To be sure, soil test for potassium. Keep the calcium to potassium balance in mind."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 1 to 2 percent potassium chloride spray (10 to 20 g Muriate of potash per liter) every 15 days. Give soil potash only as the soil test advises, because too much crowds calcium out of the pods."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, balance potash with gypsum or lime so pods still get enough calcium."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in peanut",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Growth of young leaves is held back, giving a rosette look, with small leaves and stubby branches. Stems may split. Pods form poorly and many are pops, and kernels show a hollow, discolored heart. You see it most at this stage: flowering to pod filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, high pH soils and drought."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency also gives pops, but kernels are shrunken with a dark germ rather than hollow. Check both in a soil test. To be sure, split kernels to look for the hollow heart. Test soil and leaves for boron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives 10 kg Borax per hectare together with 200 kg Gypsum per hectare at 45 days after sowing. Spread it evenly and never more, because too much boron burns the crop."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test for boron on sandy soils before planting peanut."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in peanut",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Plants look light green all over, young leaves included, rather than yellowing from the bottom up. They stay short and thin stemmed and look spindly. You see it most at this stage: early growth to flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter and fields fed for years with sulfur free fertilizer. Legumes need more sulfur than cereals (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency also gives pale plants. Check the nodules and whether the old leaves yellowed first. To be sure, soil and leaf test for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives 200 kg Gypsum per hectare to the soil, which also feeds the pods calcium."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, gypsum at flowering covers both sulfur and calcium needs."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in peanut",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves come out small and suddenly turn yellow between the veins. Growth of both tops and roots slows and plants are stunted. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils with free lime, and wet or poorly aerated soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Manganese deficiency also yellows between the veins but is usually milder. Sulfur deficiency yellows the whole leaf evenly. To be sure, soil pH test and a young leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 1 percent ferrous sulfate spray (10 g per liter) at 30, 40 and 50 days after sowing."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid over liming, and add compost to limey fields."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in peanut",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Leaves show light yellow stripes along the veins. In severe cases the yellowing spreads between the veins and the growing bud at the top stops. Older leaves may pale slightly. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "High pH and calcareous soils and heavy phosphorus fertilizer on zinc poor soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency starts on the youngest leaves with green veins and no stripes along the veins. To be sure, soil test for zinc and pH, or a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives 25 kg Zinc sulfate per hectare as a basal dose, or a 1 percent zinc sulfate spray (10 g per liter) every 15 days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add zinc sulfate with the basal fertilizer on high pH soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in peanut",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn pale yellow between the veins while the veins stay green. Plants stay short and grow unevenly across the field. You see it most at this stage: early to mid growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils, sandy soils that were limed too much, and soils high in organic matter (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency gives a stronger yellow on the newest leaves. Magnesium deficiency starts on the older leaves. To be sure, leaf test for manganese and a soil pH test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 0.5 percent manganese sulfate spray (5 g per liter) every 15 days, or 5 to 10 kg manganese sulfate per hectare to the soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not lime above the target pH of 6.2 to 6.5."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any peanut nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your mani needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick mani, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Peanut nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my mani leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: pale yellow, stunted plants, sometimes with reddish stems, and few nodules on the roots. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes calcium deficiency in peanut?",
+     "a": "Spread Gypsum over the rows at early flowering, 30 to 45 days after planting. TNAU gives 200 kg gypsum per hectare at 45 days."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in peanut?",
+     "a": "Feed the crop, since new nodules cannot be added now. TNAU gives a 1 to 2 percent urea spray (10 to 20 g per liter) every 15 days."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in peanut?",
+     "a": "TNAU gives a 1 to 2 percent potassium chloride spray (10 to 20 g Muriate of potash per liter) every 15 days. Give soil potash only as the soil test advises, because too much crowds calcium out of the pods."
+    },
+    {
+     "q": "How do I know which nutrient my mani lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the peanut nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency in all crops",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "UF IFAS: Calcium fertilization in peanuts, importance, sources and considerations",
+     "url": "https://ask.ifas.ufl.edu/publication/AG482"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, calcium deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_cal.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_nitro.html"
+    },
+    {
+     "label": "Texas AandM AgriLife: Mid season assessment of Rhizobium nodulation in Texas peanuts and other legumes",
+     "url": "https://agrilife.org/texasrowcrops/?p=1736"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_pota.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, boron deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_boron.html"
+    },
+    {
+     "label": "University of Wisconsin Extension A2522: Soil and applied boron",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, sulphur deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_sul.html"
+    },
+    {
+     "label": "University of Wisconsin Extension A2525: Soil and applied sulfur",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2525.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, iron deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_iron.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, zinc deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_zinc.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Groundnut, manganese deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/gnut_mangan.html"
+    }
+   ]
+  }
+ ]
+}

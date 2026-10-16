@@ -1,0 +1,480 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "manganese-deficiency",
+ "lang": "en",
+ "category": "Nutrient guides",
+ "sortOrder": 980,
+ "title": "Manganese Deficiency in Plants: Signs, Causes and How to Fix It",
+ "metaTitle": "Manganese Deficiency in Plants: Signs and Fixes",
+ "metaDescription": "Manganese deficiency shows on the young leaves first. See the signs crop by crop, what causes it, and the fertilizer sold here that fixes it.",
+ "focusKeyword": "manganese deficiency",
+ "keywords": [
+  "manganese deficiency",
+  "manganese deficiency symptoms",
+  "manganese deficiency in plants",
+  "foliar fertilizer"
+ ],
+ "excerpt": "Manganese deficiency in plants starts on the young leaves and the growing tip. Manganese switches on many enzymes and works in the part of photosynthesis that splits water and releases oxygen. It also helps the plant make chlorophyll and protein. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-mn.webp",
+  "alt": "Rose leaf pale yellow between a net of green veins from manganese shortage",
+  "credit": "Sten Porse, CC BY SA 3.0, via Wikimedia Commons"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Manganese is very immobile in the plant, so the first signs show on the young leaves. The old leaves stay green until the shortage gets severe."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency symptoms"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn pale yellow between the veins, often as a fine mottle of tiny yellow spots, while the veins stay green. Rice and corn show grayish green specks or streaks on the young leaves, which later turn yellow, orange and brown. New leaves come out short and narrow, and plants stay small with smaller roots. In rice, plants short of manganese also get more brown spot disease."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency by crop"
+  },
+  {
+   "type": "text",
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [manganese in rice](/nutrient-deficiencies/rice-nutrient-deficiency#manganese)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Rice"
+  },
+  {
+   "type": "table",
+   "caption": "Manganese deficiency in rice",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Palay](/nutrient-deficiencies/rice-nutrient-deficiency#manganese)",
+     "Young leaves turn greyish green between the veins from the tip down, then get brown spots.",
+     "Manganese sulfate, Ammonium sulfate 21 0 0"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Legumes"
+  },
+  {
+   "type": "table",
+   "caption": "Manganese deficiency in legumes",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Mani](/nutrient-deficiencies/peanut-nutrient-deficiency#manganese)",
+     "Leaves pale between the veins and plants stay short, often after heavy liming.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Utaw](/nutrient-deficiencies/soybean-nutrient-deficiency#manganese)",
+     "Leaves pale green to yellow between green veins, later with brown spots, often after liming.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Sitaw](/nutrient-deficiencies/string-bean-nutrient-deficiency#manganese)",
+     "New leaves pale between green veins, often where lime was spread heavily.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Paayap](/nutrient-deficiencies/cowpea-nutrient-deficiency#manganese)",
+     "Young leaves pale between green veins, later with brown spots, often on limed sandy soil.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Patani](/nutrient-deficiencies/lima-bean-nutrient-deficiency#manganese)",
+     "Top leaves turn yellow between green veins, often where the soil was limed too much.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Root Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Manganese deficiency in root crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Ubi](/nutrient-deficiencies/purple-yam-nutrient-deficiency#manganese)",
+     "Young leaves show fine pale, sunken spots between the veins that turn into dead spots, on limey soil.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Labanos](/nutrient-deficiencies/radish-nutrient-deficiency#manganese)",
+     "A general yellowing of the leaves about midway through the season, on high pH soil.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Luyang dilaw](/nutrient-deficiencies/turmeric-nutrient-deficiency#manganese)",
+     "New leaves look mottled, light green to yellow green between the veins.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Vegetables"
+  },
+  {
+   "type": "table",
+   "caption": "Manganese deficiency in vegetables",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Kamatis](/nutrient-deficiencies/tomato-nutrient-deficiency#manganese)",
+     "Young leaves get orange yellow mottling between green veins with tiny dark brown dots.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Pipino](/nutrient-deficiencies/cucumber-nutrient-deficiency#manganese)",
+     "Middle and upper leaves turn pale yellow while the veins stay green.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Sili](/nutrient-deficiencies/chili-nutrient-deficiency#manganese)",
+     "Young leaves are mottled yellow with a fine net of green veins and dark spots along the veins.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Atsal](/nutrient-deficiencies/bell-pepper-nutrient-deficiency#manganese)",
+     "Young leaves go pale between the veins while even the small veins stay dark green.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Onion and Garlic"
+  },
+  {
+   "type": "table",
+   "caption": "Manganese deficiency in onion and garlic",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Sibuyas](/nutrient-deficiencies/onion-nutrient-deficiency#manganese)",
+     "Older leaves yellow between veins, tips burn and curl, and bulbs have thick necks.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sugarcane and Industrial Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Manganese deficiency in sugarcane and industrial crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Tubo](/nutrient-deficiencies/sugarcane-nutrient-deficiency#manganese)",
+     "Pale stripes on the young leaves start in the middle of the blade and run to the tip. The leaves split in the wind.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Tabako](/nutrient-deficiencies/tobacco-nutrient-deficiency#manganese)",
+     "Yellow netting between the veins with small white spots, on fields that were limed too much.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fruits and Plantation Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Manganese deficiency in fruits and plantation crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Saging](/nutrient-deficiencies/banana-nutrient-deficiency#manganese)",
+     "The second or third youngest leaf yellows from the edge inward along the veins, like the teeth of a comb.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Mangga](/nutrient-deficiencies/mango-nutrient-deficiency#manganese)",
+     "Leaves just reaching full size turn yellowish green with a fine net of green veins and grey specks.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Niyog](/nutrient-deficiencies/coconut-nutrient-deficiency#manganese)",
+     "New fronds come out yellow with dead streaks, then wither and frizzle. Leaflet tips drop off.",
+     "Manganese sulfate"
+    ],
+    [
+     "[Kalamansi](/nutrient-deficiencies/calamansi-nutrient-deficiency#manganese)",
+     "Young full size leaves pale between the veins with broad dark green bands along the veins. Leaf size stays normal.",
+     "Manganese sulfate, Urea 46 0 0"
+    ],
+    [
+     "[Citrus, dalandan or ponkan](/nutrient-deficiencies/citrus-nutrient-deficiency#manganese)",
+     "Young and medium leaves light green between dark green vein bands. Leaves keep their size. Fruit pale and soft.",
+     "Manganese sulfate, Urea 46 0 0"
+    ],
+    [
+     "[Sapodilla](/nutrient-deficiencies/chico-nutrient-deficiency#manganese)",
+     "Pale yellow between the veins with wide green bands along the veins, light spots and early leaf drop.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What causes manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Manganese shortage comes on calcareous, alkaline and over limed soils, because high pH locks it up. Neutral soils high in organic matter, leached sandy soils, and old, highly weathered or degraded soils low in manganese also run short. Upland rice and other dryland crops suffer more than flooded rice, because flooding makes manganese more soluble."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to be sure it is manganese"
+  },
+  {
+   "type": "text",
+   "text": "Iron shortage also yellows young leaves, but it is a smooth yellow that can turn white, while manganese gives a speckled mottle. Magnesium shortage looks alike between the veins but starts on the old leaves, and manganese shortage often comes with phosphorus shortage. A soil test for manganese at a DA Regional Soils Laboratory, read together with the soil pH, shows the risk. A leaf tissue test is the more accurate check, because it measures what the plant actually takes up."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to fix manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On high pH soils the soil ties up manganese fast. So band manganese sulfate near the row or spray it instead of broadcasting. Use ammonium sulfate instead of urea to acidify the root zone. Add manure or straw where soil manganese and organic matter are low. Let the soil and tissue tests decide the rate."
+  },
+  {
+   "type": "text",
+   "text": "Manganese sulfate works well as a spray. A typical rate in a Haifa vegetable guide is about 100 grams per 100 liters of water. Two or three sprays are sometimes needed for a full response."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizers sold here that supply manganese"
+  },
+  {
+   "type": "table",
+   "caption": "Registered with the FPA. Follow the label and your soil test",
+   "rows": [
+    [
+     "Product",
+     "Made or sold by",
+     "What it holds",
+     "Use"
+    ],
+    [
+     "Manganese Sulfate",
+     "Zetryl.Chem Phils., Inc.",
+     "31 percent manganese",
+     "Soil or leaves"
+    ],
+    [
+     "Tierramino Mn",
+     "Unilox Far East Resources Inc.",
+     "12 percent manganese and 7 percent N",
+     "On the leaves"
+    ],
+    [
+     "Multimate",
+     "Agway Chemicals Corp.",
+     "1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)",
+     "On the leaves"
+    ],
+    [
+     "Micro Combo EDTA",
+     "Ateretpaz Technologies, Inc.",
+     "7.5 percent Fe, 3.3 percent Mn, 1.3 percent Zn, 1.3 percent B, 0.28 percent Cu",
+     "Soil or leaves"
+    ],
+    [
+     "Biozome",
+     "Manchem Industries, Inc.",
+     "12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo",
+     "On the soil"
+    ],
+    [
+     "Grow More Liquid Chelate General Purpose",
+     "Sagrex Corporation",
+     "2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo",
+     "On the leaves"
+    ],
+    [
+     "Nutriplant SL",
+     "Amway Philippines L.L.C.",
+     "2 percent Fe, 2 percent Zn, 1 percent Mg, 0.5 percent Mn, 0.15 percent Cu, 3 percent S with a trace of Mo",
+     "On the leaves"
+    ],
+    [
+     "Bayfolan",
+     "Bayer CropScience, Inc.",
+     "11 8 6 with traces of Fe, Cu, Mn, Mo, B, Zn",
+     "On the leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "For rates and timing, see our guides to [foliar fertilizer](/blog/foliar-fertilizer) and to [fertilizer application methods](/blog/fertilizer-application-methods). Also, [anee.io](/features/cropping-calendar) keeps every application on the cropping calendar, so you know what went on each lot and when."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to keep manganese deficiency away"
+  },
+  {
+   "type": "text",
+   "text": "Do not over lime, and on soils known to be low in manganese keep the pH near neutral rather than high. Use acidifying fertilizers such as ammonium sulfate and keep returning organic matter."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Too much is a problem too",
+   "text": "On strongly acid soils below about pH 5.5, manganese turns toxic, giving crumpled leaves with dark brown specks and dead leaf edges. Toxic manganese levels have also been found in Central Luzon rice soils, and liming acid soils is the usual cure."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Pick your crop in the Nutrient Deficiency Finder, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf in Tagalog or English",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "What does manganese deficiency look like?",
+     "a": "Young leaves turn pale between green veins, often as a fine speckled mottle, and later show brown spots. In rice and corn the young leaves show grayish green specks or streaks."
+    },
+    {
+     "q": "What is the best fertilizer for manganese deficiency?",
+     "a": "Manganese sulfate is the most common source, used as a spray or banded near the row. Broadcasting it on high pH soil works poorly because the soil ties it up."
+    },
+    {
+     "q": "Why does my soil have manganese but my plants are short of it?",
+     "a": "High pH and lots of organic matter lock manganese into forms roots cannot take, even when the soil holds plenty. A leaf tissue test shows what the plant really gets."
+    },
+    {
+     "q": "Can too much manganese harm my crop?",
+     "a": "Yes. On very acid soils below about pH 5.5, manganese can turn toxic and crumple the leaves with dark specks. Liming the soil by the soil test fixes it."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Manganese deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Manganese_deficiency.htm"
+    },
+    {
+     "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension, Soil and Applied Manganese (A2526)",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2526.pdf"
+    },
+    {
+     "label": "Mosaic Crop Nutrition, Manganese",
+     "url": "https://www.cropnutrition.com/crop-nutrition/key-nutrients/manganese/"
+    },
+    {
+     "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",
+     "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
+    },
+    {
+     "label": "Palanog and others, Zinc and Iron Nutrition Status in the Philippines Population and Local Soils, Frontiers in Nutrition",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6568233/"
+    }
+   ]
+  }
+ ]
+}

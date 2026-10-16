@@ -1,0 +1,826 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "banana-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 590,
+ "title": "Banana Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Banana Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Banana nutrient deficiency shows in the leaves. See the signs of potassium, nitrogen and magnesium in saging, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "banana nutrient deficiency",
+ "keywords": [
+  "banana nutrient deficiency",
+  "banana deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Banana nutrient deficiency is one of the first things to check when the leaves of your saging (banana) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are potassium, nitrogen, magnesium, zinc, boron, calcium, phosphorus, sulfur, manganese and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/banana-nitrogen-deficiency.webp",
+  "alt": "Row of young banana plants with pale, yellow green leaves from a mild nitrogen shortage",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Potassium, nitrogen, magnesium and phosphorus move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, boron, calcium, sulfur, manganese and iron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which banana nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Banana nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of saging",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves turn orange yellow from the tip, the edges scorch brown and the midrib bends.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Pale green to yellow leaves, pinkish red leaf stalks and a thin, slow plant.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Old leaves yellow in the middle of the blade while the edge stays green. Purple blotches on the leaf stalk.",
+     "Magnesium sulfate (Epsom salt), Kieserite"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, leaf edges and tips",
+     "Short plant with weak roots. Old leaf edges yellow in a saw tooth pattern and young leaves look bluish.",
+     "Ammonium phosphate 18 46 0, 16 20 0"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of saging",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves narrow and pointed, with yellow and green stripes and a purple tint underneath.",
+     "Zinc sulfate"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Young leaves curl and crumple, with white streaks across the veins on the underside.",
+     "Borax, Solubor"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, fruit, grain or tubers",
+     "New leaves come out as a spike with little or no blade. Ripe fruit peel splits.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "Young leaves even pale yellow, veins included, on a small slow plant.",
+     "Ammonium sulfate 21 0 0, 16 20 0"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, leaf edges and tips",
+     "The second or third youngest leaf yellows from the edge inward along the veins, like the teeth of a comb.",
+     "Manganese sulfate"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "Young leaves turn yellow to almost white while the veins stay green for a while.",
+     "Ferrous sulfate, Urea 46 0 0"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a banana nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest banana nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in banana",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "The oldest leaves yellow first, starting at the leaf tip and between the veins. The yellow turns orange, the patches join, and the tissue dries dark brown, often as a scorch along the edges. Leaves get smaller, may split along the side veins, and the midrib can bend and break. Bunches come late and stay short and thin, with small fingers that fill poorly. You see it most at this stage: any age, but worst from the fast leaf growth stage to bunch filling, when the plant takes up the most potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or light soils, acid soils and heavy rain that washes potash away. Soils already rich in magnesium, which hold back potash uptake."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also starts on old leaves. But the yellow band sits between the midrib and the edge while the edge stays green, and the leaf stalk shows purple mottling. To be sure, send a leaf sample and a soil sample to a lab. A soil test that shows low potash, or a high magnesium to potash balance, points to this."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 to the soil around the mat, split into several doses, following the soil test. A quick foliar spray of Sulfate of potash at 1 percent (10 grams per liter) helps leaves while the soil dose works, as Indian extension guides advise. Keep the soil pH above 6 with lime or dolomite on acid soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, give potash every cycle, in splits, from the early vegetative stage up to bunch emergence."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in banana",
+   "id": "nitrogen"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-nitrogen-deficiency.webp",
+   "alt": "Row of young banana plants with pale, yellow green leaves from a mild nitrogen shortage",
+   "caption": "Photo: Scot Nelson, CC0 1.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "The oldest leaves go light green, then yellow, and the veins do not stay green. Leaf stalks, midribs and leaf sheaths take on a pink to reddish color. The pseudostem stays thin, new leaves are small and come slowly, and leaves may crowd together. Bunch weight and fruit quality drop. You see it most at this stage: from early growth to bunch emergence, most often in fast growing young plants."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils with little organic matter, heavy rain or irrigation that washes nitrogen down. Fresh straw or raw manure that ties up nitrogen as it rots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency also gives light green to yellow leaves, but it starts on the young leaves. Iron deficiency starts on young leaves and keeps the midrib and veins green for a while. To be sure, A leaf test shows low nitrogen. Check that the roots are healthy."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 around the mat and water it in. The National Horticulture Board of India gives 300 grams of Urea per plant followed by irrigation. Split it into smaller doses on sandy soil. Add compost or well rotted manure to build the soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, split nitrogen through the crop, from the third month up to bunch emergence."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in banana",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Old leaves yellow in the middle part of the blade, along the midrib, while the leaf edge stays green. Dead spots form inside the yellow parts. The leaf stalk shows bluish purple mottling, and leaf sheaths may pull away from the pseudostem. Bunch weight and yield fall. You see it most at this stage: mostly on older plants and after heavy potash feeding, during the vegetative stage and bunch filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and acid soils, and heavy use of potash, which competes with magnesium. Cold, wet spells make it worse."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also hits old leaves, but it starts at the tip and edge as an orange scorch. Manganese deficiency looks similar but starts on young leaves. To be sure, do a soil test for magnesium, potash and calcium together, since the balance matters, and a leaf test. Purple mottled leaf stalks with green leaf edges are a strong field sign."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Magnesium sulfate (Epsom salt) or Kieserite around the mat and water it in. The National Horticulture Board of India gives 25 grams of Magnesium sulfate per plant. On acid soils use Dolomite, which gives both lime and magnesium. Do not put magnesium and potash fertilizer down on the same day."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Kieserite",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, base potash and magnesium on a soil test so one does not crowd out the other."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in banana",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves come out smaller and more lance shaped, with yellow to white stripes between the side veins that give a striped, mottled look. The underside of the rolled new leaf shows a strong purple tint. Leaves may crowd into a rosette. Bunches are small and the fingers short, thin, twisted and light green at the tip. You see it most at this stage: on young plants and suckers, and in later cycles. Losses often show in the second or third year."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "High pH or limed soils, organic soils, heavy phosphorus fertilizer, and cold wet weather. It is the most common micronutrient shortage in banana."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Bunchy top virus also gives narrow, bunched leaves. But it shows dark green dot and dash streaks along the veins and leaf stalk and the leaves stand stiff and upright. To be sure, A leaf test for zinc and a soil test for pH and phosphorus. Spray a few plants with zinc sulfate."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Zinc sulfate on the leaves. Indian guides give 5 grams per liter (0.5 percent), or 2 grams per liter mixed with 2.5 grams of lime per liter on young leaves. On poor soils also apply Zinc sulfate to the soil, following the soil test. Do not apply it on the same day as phosphate fertilizer."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid overliming and very heavy phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in banana",
+   "id": "boron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-boron-deficiency.webp",
+   "alt": "Banana leaf with a crinkled, rippled blade, a boron shortage sign",
+   "caption": "Photo: Forest and Kim Starr, CC BY 2.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves show it. Leaf edges go pale and curl inward, then brown. White streaks run across the veins on the underside, the side veins thicken, and the blade can be crumpled, misshapen or missing. Plants may be stunted with leaves bunched in a fan. Bunches are light, poorly filled or deformed. You see it most at this stage: during fast leaf growth and around flowering, often after a dry spell."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or alkaline soils low in organic matter, drought, and very high nitrogen or calcium. Cold wet spells can also bring it on."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency also damages young leaves, but its dead tissue is lighter brown and starts at the tip. The side veins thicken more. To be sure, A leaf test for boron, and a soil test. New leaves that come out normal after a light boron dose confirm it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Borax to the soil around the root zone. The National Horticulture Board of India gives 25 grams per plant. A foliar spray of Borax at 1 gram per liter also works. Boron is toxic in excess, so do not repeat high doses without a test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep organic matter up and water during dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in banana",
+   "id": "calcium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/banana-calcium-deficiency.webp",
+   "alt": "Banana plant whose youngest leaf is curled and bent over, a calcium shortage sign",
+   "caption": "Photo: Scot Nelson, CC0 1.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves fail to open fully, giving a 'spike leaf' with a deformed or missing blade. Leaves pale, then die back light brown from the tip, with thick side veins. Roots are short and thick. The peel splits as fruit ripens, fingers curl, and weak fruit tips let cigar end rot in. You see it most at this stage: during fast growth and fruit formation."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils, sandy soils that leach, soils high in sodium or aluminum, drought, and heavy potash or nitrogen that pushes calcium out."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also hurts young leaves, but its dead tissue is darker and starts at the leaf edge with white streaks under the leaf. Virus and herbicide damage can also deform new leaves. To be sure, soil test for pH and calcium, and a leaf test. Low pH with spike leaves points to calcium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils apply Agricultural lime or Dolomite to the mat, following the soil test. Indian guides range from 50 grams up to 1 kg of lime per plant split over the year. On soils with normal pH use Gypsum or Calcium nitrate. Do not overload potash."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soils before planting, keep water steady, and keep potash and calcium in balance."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in banana",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Growth is slow and the plant stays short, with a thin, woody pseudostem and weak roots. The edges of old leaves yellow in a saw tooth pattern with purplish brown flecks, then die, and the leaves curl. Leaf stalks break easily. Young leaves look dark bluish green, sometimes purple underneath. You see it most at this stage: early growth, right after planting and in young suckers."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils that lock up phosphorus, very alkaline soils, low organic matter, cold or waterlogged soil, and poor roots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Too much nitrogen also gives dark blue green leaves. Manganese deficiency also kills leaf edges, but its dead areas are darker and it starts on younger leaves. To be sure, soil test for available phosphorus and pH, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply a phosphorus fertilizer near the roots and water it in. The National Horticulture Board of India gives 50 grams of DAP (Ammonium phosphate 18 46 0) per plant. On acid soils correct the pH with lime so the phosphorus stays available."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium phosphate 18 46 0",
+    "16 20 0",
+    "Complete 14 14 14",
+    "Superphosphate 0 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, put phosphorus in the planting hole and in the first months, and lime acid soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in banana",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn light green to yellowish white, evenly over the whole leaf, veins included. New leaves are small and the side veins can look thick, and in bad cases the edges die. The plant grows slowly and bunches stay small or get stuck in the throat. You see it most at this stage: during fast vegetative growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy soils that leach, low organic matter, waterlogged soils. Years of using only urea and muriate of potash with no sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency looks the same but starts on old leaves. Iron deficiency also hits young leaves, but it is patchy and keeps green areas near the midrib. To be sure, leaf test for sulfur and a soil test. Plants that green up after a sulfur fertilizer confirm it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use a nitrogen or phosphorus fertilizer that carries sulfur, such as Ammonium sulfate 21 0 0 or 16 20 0, in place of part of the urea. The National Horticulture Board of India gives 20 grams per plant of a sulfur containing complex. Gypsum also supplies sulfur."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "16 20 0",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use ammonium sulfate or 16 20 0 for part of the nitrogen every cycle."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in banana",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "It shows first on the second or third youngest leaf. Mild cases are just light green. Then yellow starts at the leaf edge and runs in along the veins toward the midrib, giving a comb tooth pattern. In bad cases the yellow areas die and the edges curl down. You see it most at this stage: during fast growth, more often in cool wet months."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "High pH or limed soils, sandy soils, organic soils, and cold wet periods."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency looks similar but starts on old leaves. Iron deficiency yellows the whole young leaf without the comb tooth pattern or dead areas. To be sure, leaf test for manganese and soil test for pH. Test spray a few plants."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Manganese sulfate on the leaves at 0.5 percent (5 grams per liter), as Indian extension guides advise. Repeat if new leaves still show it."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid overliming."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in banana",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn yellowish green, then yellow or nearly white. The yellow starts between the veins near the base and edges and spreads to the tip, giving a mottled look. The midrib and veins stay green longer but fade in bad cases. Growth slows and bunches stay small. You see it most at this stage: young plants and new leaves, especially after flooding."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in saging"
+  },
+  {
+   "type": "text",
+   "text": "High pH and limey soils, waterlogged soils, and too much copper, manganese or zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency also yellows young leaves, but evenly with no green veins. Nitrogen deficiency starts on old leaves. To be sure, soil test for pH and check drainage. A test spray of iron on a few plants that greens the new leaves confirms it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Ferrous sulfate at 0.5 percent (5 grams per liter) mixed with Urea at 1 percent (10 grams per liter), as the National Horticulture Board of India advises. Improve drainage where water stands."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate",
+    "Urea 46 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, drain wet spots and avoid overliming."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any banana nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your saging needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick saging, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Banana nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my saging leaves turning yellow?",
+     "a": "The most common cause is potassium deficiency: old leaves turn orange yellow from the tip, the edges scorch brown and the midrib bends. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in banana?",
+     "a": "Apply Muriate of potash 0 0 60 to the soil around the mat, split into several doses, following the soil test. A quick foliar spray of Sulfate of potash at 1 percent (10 grams per liter) helps leaves while the soil dose works, as Indian extension guides advise."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in banana?",
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 around the mat and water it in. The National Horticulture Board of India gives 300 grams of Urea per plant followed by irrigation."
+    },
+    {
+     "q": "What fertilizer fixes magnesium deficiency in banana?",
+     "a": "Apply Magnesium sulfate (Epsom salt) or Kieserite around the mat and water it in. The National Horticulture Board of India gives 25 grams of Magnesium sulfate per plant."
+    },
+    {
+     "q": "How do I know which nutrient my saging lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the banana nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "How to grow saging",
+     "url": "/crops/banana-farming-philippines"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Yara Philippines: Potassium deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/potassium-deficiency-banana/"
+    },
+    {
+     "label": "Haifa: Crop guide, banana fertilizer (deficiency symptoms)",
+     "url": "https://www.haifa-group.com/banana-fertilizer/crop-guide-banana-fertilizer"
+    },
+    {
+     "label": "National Horticulture Board India: Banana manuring and fertilization",
+     "url": "https://www.nhb.gov.in/pdf/fruits/banana/ban007.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech: Banana nutrient deficiencies",
+     "url": "https://celkau.in/crops/fruits/banana/deficiency.php"
+    },
+    {
+     "label": "Salibay and Salomez 2009, Banana fertilization at the plantation: soil and leaf analysis results (Davao del Norte)",
+     "url": "https://ejournals.ph/article.php?id=9061"
+    },
+    {
+     "label": "Yara Philippines: Nitrogen deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/nitrogen-deficiency-banana/"
+    },
+    {
+     "label": "Yara Philippines: Magnesium deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/magnesium-deficiency-banana/"
+    },
+    {
+     "label": "Yara Philippines: Zinc deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/zinc-deficiency-banana/"
+    },
+    {
+     "label": "Yara Philippines: Boron deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/boron-deficiency-banana/"
+    },
+    {
+     "label": "Yara Philippines: Calcium deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/calcium-deficiency-banana/"
+    },
+    {
+     "label": "Yara Philippines: Phosphorus deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/phosphorus-deficiency-banana/"
+    },
+    {
+     "label": "Yara Philippines: Sulfur deficiency in banana",
+     "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/sulphur-deficiency-banana/"
+    }
+   ]
+  }
+ ]
+}

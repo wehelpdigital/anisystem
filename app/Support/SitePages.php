@@ -68,6 +68,18 @@ class SitePages
             'intro' => 'Damo steals the light, water and fertilizer your crop needs. Find the weeds in your field by their look and their local names, then see what to do about them at every age of your palay, mais, gulay or orchard.',
             'kicker' => 'Weeds and grasses',
         ],
+        // Nutrient deficiencies (2026-10-16, the owner): one page per crop, every
+        // deficiency of it a section, one page per nutrient, and the catalogue
+        // at the front. See App\Support\DeficiencyCatalogue.
+        'nutrient-deficiencies' => [
+            'label' => 'Nutrient Deficiencies',
+            'crumb' => 'Nutrient deficiencies',
+            'hubTitle' => 'Nutrient Deficiency in Plants: Signs and Fixes by Crop',
+            'metaTitle' => 'Nutrient Deficiency in Plants: Signs and Fertilizer Fix',
+            'metaDescription' => 'Yellow, purple or burnt leaves? See the nutrient deficiency signs of every Philippine crop, how to be sure, and the fertilizer sold here that fixes it.',
+            'intro' => 'Yellow lower leaves, purple young plants, burnt leaf edges or empty grain often mean the soil is short of one nutrient. Find your crop, see where the change starts and what it looks like, then the fertilizer that fixes it, from urea and potash to zinc and boron.',
+            'kicker' => 'Nutrient deficiencies',
+        ],
         // The old one section door, kept as the front door to the three.
         'problems' => [
             'label' => 'Crop Problems',
@@ -194,6 +206,7 @@ class SitePages
         'satellite-weather' => ['Satellite Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', 'Clouds and rain over your farm, played back and forward, with every typhoon\'s path and its distance to you.', 210],
         'npk-plus-calculator' => ['NPK Plus Calculator', 'M6 7h12l-1 13H7L6 7zm3 0V5a3 3 0 016 0v2', 'Every nutrient in your fertilizer plan, checked against what your crop needs. Free.', 35],
         'pest-and-disease-finders' => ['Pest and Disease Finders', 'M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z', 'From the damage you see to the active ingredient to spray, with its group, for every crop, and weed control by the age of your crop.', 0],
+        'nutrient-deficiency-finder' => ['Nutrient Deficiency Finder', 'M7 20c0-7 4-13 13-15-1 9-6 14-13 15zm0 0c2-4 5-7 9-10M5 9a2 2 0 104 0c0-1.5-2-4-2-4s-2 2.5-2 4z', 'From the leaves you see to the missing nutrient and the fertilizer sold here that fixes it, for every crop.', 52],
         'the-stash' => ['The Stash', 'M4 7h16M4 7l1 12h14l1-12M4 7l2-3h12l2 3M9 11h6', 'Magazines and guides shared by anee.io\'s partners, starting with every PhilRice Magazine issue.', 45],
         'view-as-protocol' => ['View as Protocol', 'M9 5h11M9 12h11M9 19h11M4.5 5h.01M4.5 12h.01M4.5 19h.01', 'Your best lot\'s finished season as a step by step recipe for the next one.', 150],
         'lcc-checker' => ['LCC Checker', 'M5 21c0-9 5-15 14-17-1 9-6 15-14 17zm0 0l7-8', 'Read your rice leaves against the leaf color chart, or let Anee read your photos, and know if urea is due and how much.', 95],
@@ -373,11 +386,19 @@ class SitePages
         $out = [];
         foreach ($blocks as $i => $b) {
             if (($b['type'] ?? '') === 'heading' && (int) ($b['level'] ?? 2) === 2 && trim((string) ($b['text'] ?? '')) !== '') {
-                $out[] = ['id' => self::anchor($b['text'], $i), 'text' => (string) $b['text']];
+                $out[] = ['id' => self::blockAnchor($b, $i), 'text' => (string) $b['text']];
             }
         }
 
         return $out;
+    }
+
+    /** A heading's anchor: its own `id` when the page gives one (a stable address, like a crop page's "zinc"), else its words and place. */
+    public static function blockAnchor(array $b, int $i): string
+    {
+        $id = Str::slug((string) ($b['id'] ?? ''));
+
+        return $id !== '' ? $id : self::anchor((string) ($b['text'] ?? ''), $i);
     }
 
     public static function anchor(string $text, int $i): string

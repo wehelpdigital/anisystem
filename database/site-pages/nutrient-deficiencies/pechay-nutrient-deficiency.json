@@ -1,0 +1,626 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "pechay-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 230,
+ "title": "Pechay Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Pechay Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Pechay nutrient deficiency shows in the leaves. See the signs of nitrogen, calcium and potassium in petsay, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "pechay nutrient deficiency",
+ "keywords": [
+  "pechay nutrient deficiency",
+  "pechay deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Pechay nutrient deficiency is one of the first things to check when the leaves of your petsay (pechay) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, calcium, potassium, phosphorus, magnesium, boron and sulfur. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-ca.webp",
+  "alt": "Calcium deficiency on a leaf, shown on another crop as a stand in for pechay",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron and sulfur stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which pechay nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Pechay nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of petsay",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Outer leaves turn pale yellow and the plants stay small and slow.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves get a light brown, dry band along the edges that curls up.",
+     "Complete 14 14 14, Muriate of potash 0 0 60"
+    ],
+    [
+     "Phosphorus",
+     "the whole plant, old, lower leaves",
+     "Seedlings and young plants stay small and dark, sometimes with purple undersides.",
+     "Complete 14 14 14, Ammonium phosphate 16 20 0"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Outer leaves yellow between the veins while the veins stay green.",
+     "Magnesium sulfate (Epsom salt), Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of petsay",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "The tips and edges of the young centre leaves turn brown and dry, and soft rot can follow.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip",
+     "New centre leaves come out small, thick and crinkled, and stalks may crack.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "Young centre leaves turn pale with blue green veins and purple undersides.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a pechay nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest pechay nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in pechay",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The outer, older leaves turn pale green and then yellow, and the yellowing spreads to the whole plant. Leaves stay small and growth slows, so plants are light at harvest. Old leaves may get reddish tints and die early. You see it most at this stage: from transplanting to harvest. Pechay is harvested only three to four weeks after transplanting, so any shortage shows fast."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in petsay"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, heavy rain or daily watering that leaches nitrogen, low organic matter, and missed weekly drenches."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur shortage starts on the young centre leaves. Root damage from clubroot or waterlogging also yellows plants. To be sure, old leaves yellow first. A soil test for organic matter and nitrogen, and a quick test drench on a few plants."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "The DA guide from ATI Region 7 drenches urea dissolved in 16 liters of water at 150 ml per hill, using 75 grams of urea in the first week, 150 grams in the second, 225 grams in the third and 300 grams in the fourth. KAU gives a urea leaf spray at 10 grams per liter of water for cole crops. Water after feeding."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14",
+    "Chicken manure"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, mix chicken manure or compost into the beds before planting, as the DA guide does, and keep up the weekly drench."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in pechay",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "The tips and edges of young, fast growing leaves die and turn brown, and the damage spreads inward. Young leaves can be cupped or claw shaped. Soft rot bacteria often enter the burnt tissue, so the heart of the plant turns slimy. You see it most at this stage: fast growth in hot, dry weather, close to harvest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in petsay"
+  },
+  {
+   "type": "text",
+   "text": "Poor calcium movement into fast growing leaves, mainly from uneven watering, plus acid sandy soils, high nitrogen, potassium or ammonium, and high humidity."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Bacterial soft rot starts as a wet, smelly rot. With tip burn the edges die first and rot comes later. To be sure, look at the youngest leaves for burnt tips. Soil test for calcium and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Water evenly every day as the DA guide advises, and do not let beds dry out. On acid soil, KAU suggests lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5. Gypsum on soil that is not acid."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid beds before planting (pechay grows best at pH 5.5 to 6.5), keep watering steady, and avoid heavy ammonium fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in pechay",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "The edges of older leaves turn yellow, then light brown and dry, and the band spreads inward. Leaf edges curl upward and the plant grows less. You see it most at this stage: mid growth to harvest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in petsay"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or acid soils, heavy rain and daily watering that leach potassium, and fertilizing with urea only."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Fertilizer burn from a strong drench poured on the leaves also browns edges. It appears suddenly after feeding. To be sure, soil test for potassium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Include potash in the basal fertilizer, such as complete 14 14 14, and apply muriate of potash based on the soil test. For a quick fix, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water for cabbage, a close relative."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Complete 14 14 14",
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use complete fertilizer at bed preparation instead of urea alone."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in pechay",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Growth slows sharply while leaves may stay dark green, so the problem is easy to miss. Some plants show purple or reddish undersides on the older leaves and weak roots. You see it most at this stage: seedling and the first two weeks after transplanting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in petsay"
+  },
+  {
+   "type": "text",
+   "text": "Acid or iron rich soils that hold phosphorus, low organic matter, cold or waterlogged soil, and fertilizing with urea only."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Root problems such as clubroot or nematodes also stunt plants. Check the roots. To be sure, soil test for available phosphorus and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use complete 14 14 14 or 16 20 0 in the bed before planting, based on the soil test, and lime very acid soil. KAU lists single superphosphate for a quick correction in cole crops."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Complete 14 14 14",
+    "Ammonium phosphate 16 20 0",
+    "Single superphosphate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, apply a phosphorus fertilizer and manure at bed preparation, and keep pH between 5.5 and 6.5."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in pechay",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn yellow between the veins, starting at the edges, while the veins stay green. Later the yellow areas can turn orange or die. Michigan State extension notes Chinese cabbage, a close relative of pechay, is especially prone to it. You see it most at this stage: mid growth to harvest."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in petsay"
+  },
+  {
+   "type": "text",
+   "text": "Low pH soils, soils high in potassium, heavy potash fertilizer, sandy soils and heavy rain."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage yellows the whole leaf evenly, veins included. To be sure, soil test for magnesium, potassium and pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray magnesium sulfate on the leaves for quick relief. For cole crops KAU gives magnesium sulfate in a band near the plants at about 80 kg per hectare (32 kg per acre). Do not apply it together with potash."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite instead of plain lime on acid beds."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in pechay",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves stay small, curl and become deformed and brittle, with yellow mottling along the edges. Stalks and midribs can crack or turn corky, and in severe cases the growing point dies. Plants stay stunted and open. You see it most at this stage: mid growth, after dry spells or on limed beds."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in petsay"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils where boron leaches, alkaline or overlimed soils, low organic matter, high nitrogen and drought. Crucifers need more boron than most crops."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium tip burn kills leaf edges but does not make leaves thick and crinkled. Aphid feeding also curls young leaves. To be sure, soil test for boron and a leaf tissue test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "For cole crops, KAU gives borax at about 10 kg per hectare in the soil or a spray at 1 gram per liter of water. Do not mix borax with lime or ammonium fertilizer, and do not repeat without a test, because too much boron burns leaves."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor (sodium borate)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add a small dose of borax to the basal fertilizer on sandy beds."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in pechay",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Plants are small and spindly. Young and middle leaves turn pale between the veins, with the veins standing out in a blurred blue green pattern. The leaves cup and may become brittle. The undersides can turn purple or bronze. You see it most at this stage: early growth on light soils after heavy rain."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in petsay"
+  },
+  {
+   "type": "text",
+   "text": "Light, sandy soils with low organic matter after wet weather. Fertilizing with urea and muriate of potash only, which carry no sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage starts on the outer, older leaves. To be sure, teagasc notes a leaf tissue test is the most reliable check, since sulfate leaches and soil tests can mislead."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use ammonium sulfate for part of the nitrogen. Teagasc advises about 20 kg of sulfur per hectare for brassicas on light soils, which is roughly 85 kg of ammonium sulfate per hectare. Leaf sprays may help but are not a sure cure."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum",
+    "Sulfate of potash 0 0 50"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use ammonium sulfate in the drench or side dressing every crop and add manure."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any pechay nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your petsay needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick petsay, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Pechay nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my petsay leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: outer leaves turn pale yellow and the plants stay small and slow. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in pechay?",
+     "a": "The DA guide from ATI Region 7 drenches urea dissolved in 16 liters of water at 150 ml per hill, using 75 grams of urea in the first week, 150 grams in the second, 225 grams in the third and 300 grams in the fourth. KAU gives a urea leaf spray at 10 grams per liter of water for cole crops."
+    },
+    {
+     "q": "What fertilizer fixes calcium deficiency in pechay?",
+     "a": "Water evenly every day as the DA guide advises, and do not let beds dry out. On acid soil, KAU suggests lime at about 250 kg per hectare when pH is 5.5 to 6, or about 840 kg per hectare in two doses when pH is 3.5 to 4.5."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in pechay?",
+     "a": "Include potash in the basal fertilizer, such as complete 14 14 14, and apply muriate of potash based on the soil test. For a quick fix, KAU gives a morning spray of sulfate of potash at 10 grams per liter of water for cabbage, a close relative."
+    },
+    {
+     "q": "How do I know which nutrient my petsay lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the pechay nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "ATI Region 7 (DA): Pechay production guide",
+     "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
+    },
+    {
+     "label": "Yara UK: Nitrogen deficiency in cabbage",
+     "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/nitrogen-deficiency-cabbage/"
+    },
+    {
+     "label": "KAU Agri Infotech Portal: Cabbage nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/cabbage/deficiency.php"
+    },
+    {
+     "label": "Yara UK: Calcium deficiency in cabbage",
+     "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/calcium-deficiency-cabbage/"
+    },
+    {
+     "label": "Michigan State University Extension: Disorders of cole crops (archive bulletin E1668)",
+     "url": "https://sanweb.lib.msu.edu/DMC/extension_publications/e1668/e1668-1983.pdf"
+    },
+    {
+     "label": "Yara UK: Potassium deficiency in cabbage",
+     "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/potassium-deficiency-cabbage/"
+    },
+    {
+     "label": "Yara UK: Phosphorus deficiency in cabbage",
+     "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/phosphorus-deficiency-cabbage/"
+    },
+    {
+     "label": "Yara UK: Magnesium deficiency in cabbage",
+     "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/magnesium-deficiency-cabbage/"
+    },
+    {
+     "label": "Yara UK: Boron deficiency in cabbage",
+     "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/boron-deficiency-cabbage/"
+    },
+    {
+     "label": "University of Delaware Weekly Crop Update: Boron and molybdenum in vegetable crops",
+     "url": "https://sites.udel.edu/weeklycropupdate/?p=22766"
+    },
+    {
+     "label": "Teagasc: Sulphur requirements of brassica crops (technical note 2020)",
+     "url": "https://teagasc.ie/wp-content/uploads/media/website/publications/2020/Sulphur_for_brassicas_2020.pdf"
+    },
+    {
+     "label": "Yara UK: Sulfur deficiency in cabbage",
+     "url": "https://www.yara.co.uk/crop-nutrition/cabbage/nutrient-deficiencies-cabbage/sulphur-deficiency-cabbage/"
+    }
+   ]
+  }
+ ]
+}

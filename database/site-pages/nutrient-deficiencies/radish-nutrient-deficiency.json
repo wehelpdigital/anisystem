@@ -1,0 +1,604 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "radish-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 200,
+ "title": "Radish Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Radish Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Radish nutrient deficiency shows in the leaves. See the signs of nitrogen, boron and potassium in labanos, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "radish nutrient deficiency",
+ "keywords": [
+  "radish nutrient deficiency",
+  "radish deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Radish nutrient deficiency is one of the first things to check when the leaves of your labanos (radish) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, boron, potassium, phosphorus, manganese, magnesium and calcium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-b.webp",
+  "alt": "Boron deficiency on a leaf, shown on another crop as a stand in for radish",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But boron, manganese and calcium stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which radish nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Radish nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of labanos",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Small, pale tops that yellow from the oldest leaves, with thin, fibrous roots.",
+     "Urea 46 0 0, Complete 14 14 14"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves scorch at the edges, brown and collapse, and curl backward.",
+     "Muriate of potash 0 0 60, Complete 14 14 14"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Older leaves turn strongly purple and die early, and plants stay small.",
+     "Single superphosphate 0 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Bottom leaves yellow between dark green veins, then redden and get dead spots.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of labanos",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Boron",
+     "the roots, young leaves and the tip",
+     "Roots crack and develop poorly, and the growing point may die.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, the whole plant",
+     "A general yellowing of the leaves about midway through the season, on high pH soil.",
+     "Manganese sulfate"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, the roots",
+     "Growing tips of leaves and roots brown and die, and leaf stalks collapse.",
+     "Agricultural lime, Gypsum"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a radish nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest radish nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in radish",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn pale then yellow from the oldest leaves, often with red tints, then die. Leaves are fewer and smaller, plants stunted, and roots thin, stiff and fibrous. You see it most at this stage: from the first true leaves to harvest. Radish grows fast, so any shortage shows quickly."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in labanos"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, heavy rain and too little fertilizer. Repeated crops on the same beds run low."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency yellows young leaves first. Manganese deficiency gives a general yellowing midway through the season on high pH soils. To be sure, check that the oldest leaves yellowed first. Test the soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Michigan State gives about 45 kg of nitrogen per hectare (40 pounds per acre) before the first crop of the season. For a standing crop TNAU gives a 1 percent urea spray (10 g per liter). Too much nitrogen and potash makes radish brittle and prone to cracking."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Complete 14 14 14",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add compost and feed the beds again before the last crop of the year."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in radish",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Roots develop poorly and crack, and may show brown, broken down flesh inside. The growing point can die and young leaves bunch into a rosette, while older leaves turn orange and pale. You see it most at this stage: root swelling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in labanos"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, soils at pH 7 or above, over limed beds and dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Cracking also comes from uneven watering and too much nitrogen and potash. Black root disease turns roots black inside and out. To be sure, soil test for boron. Cut roots to look for brown centers."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Michigan State includes about 1.1 kg of boron (about 11 kg Borax) per hectare in the broadcast fertilizer, or sprays about 0.2 kg of boron per hectare about 15 days after seeding. KAU gives about 10 kg borax per hectare to the soil or a borax spray of 1 g per liter."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor (sodium borate)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add boron to the basal fertilizer on sandy beds and water evenly."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in radish",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "The edges of older leaves scorch first, then the whole leaf browns and collapses. Growth stops, leaves curl backward and roots stay small. You see it most at this stage: root swelling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in labanos"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils and beds cropped many times a year without potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency yellows old leaves without scorch. To be sure, soil test for potassium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Michigan State gives about 85 to 140 kg K2O per hectare (75 to 125 pounds per acre) before the first crop of the season, depending on the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter). Do not overdo potash, which can make roots crack."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, feed potash once for the season and add wood ash or compost."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in radish",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Root growth is poor, so plants stay stunted. The older leaves turn strongly purple and die early. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in labanos"
+  },
+  {
+   "type": "text",
+   "text": "Acid and volcanic soils, and cold, wet soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Cool weather can tint leaves for a short time. True phosphorus shortage also stunts the plant. To be sure, soil test for available phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Michigan State gives about 55 to 110 kg P2O5 per hectare (50 to 100 pounds per acre) before the first crop, depending on the soil test. KAU uses single superphosphate for a quick fix."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Single superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "16 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, mix phosphorus into the beds before sowing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in radish",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "Leaves yellow in general, usually about midway through the season, with young leaves turning pale yellow first. Unlike nitrogen deficiency, it does not start on the oldest leaves. You see it most at this stage: midway through the season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in labanos"
+  },
+  {
+   "type": "text",
+   "text": "Soils above pH 6.5, over limed sands and soils high in organic matter. Radish needs a lot of manganese (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the old leaves. Iron deficiency keeps the veins green on young leaves. To be sure, leaf test for manganese and a soil pH test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Michigan State sprays about 4.5 kg manganese sulfate per hectare (4 pounds per acre) twice, 7 to 10 days apart. TNAU gives a 0.5 percent manganese sulfate spray (5 g per liter)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not lime beyond pH 6.5."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in radish",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Bottom leaves yellow between dark green veins first, and the yellowing moves up. The yellow leaves turn red, develop dead spots and drop. Roots are small, stiff and pale. You see it most at this stage: mid season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in labanos"
+  },
+  {
+   "type": "text",
+   "text": "Acid sandy soils and heavy potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency scorches leaf edges first. To be sure, soil test for magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 0.5 to 1 percent magnesium sulfate spray (5 to 10 g Epsom salt per liter). KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply it apart from potash."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite on acid beds."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in radish",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "The growing tips of roots and leaves brown and die. Internodes shorten into a rosette, leaf edges turn ragged and brittle, and leaf stalks collapse so the leaves wither. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in labanos"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils, high phosphorus and boron shortage."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also kills the growing point, with cracked roots and orange old leaves. To be sure, soil pH and calcium test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Gypsum",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep beds at pH 6.0 to 6.5 (Michigan State)."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any radish nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your labanos needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick labanos, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Radish nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my labanos leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: small, pale tops that yellow from the oldest leaves, with thin, fibrous roots. If the young leaves turn yellow first instead, look at manganese deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in radish?",
+     "a": "Michigan State gives about 45 kg of nitrogen per hectare (40 pounds per acre) before the first crop of the season. For a standing crop TNAU gives a 1 percent urea spray (10 g per liter)."
+    },
+    {
+     "q": "What fertilizer fixes boron deficiency in radish?",
+     "a": "Michigan State includes about 1.1 kg of boron (about 11 kg Borax) per hectare in the broadcast fertilizer, or sprays about 0.2 kg of boron per hectare about 15 days after seeding. KAU gives about 10 kg borax per hectare to the soil or a borax spray of 1 g per liter."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in radish?",
+     "a": "Michigan State gives about 85 to 140 kg K2O per hectare (75 to 125 pounds per acre) before the first crop of the season, depending on the soil test. TNAU gives a 1 percent potassium chloride spray (10 g per liter)."
+    },
+    {
+     "q": "How do I know which nutrient my labanos lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the radish nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Manganese deficiency in all crops",
+     "url": "/nutrient-deficiencies/manganese-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Michigan State University Extension E2207: Commercial vegetable recommendations, radish, rutabaga, turnip",
+     "url": "https://archive.lib.msu.edu/DMC/extension_publications/e2207/E2207-1989.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Radish, nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/radish_nitrogen.html"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech Portal: Radish nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/radish/deficiency.php"
+    },
+    {
+     "label": "TNAU Agritech Portal: Radish, boron deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/radish_boron.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Radish, potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/radish_potassium.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Radish, manganese deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/radish_manganese.html"
+    },
+    {
+     "label": "University of Wisconsin Extension A2526: Soil and applied manganese",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2526.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Radish, magnesium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/radish_magnesium.html"
+    }
+   ]
+  }
+ ]
+}

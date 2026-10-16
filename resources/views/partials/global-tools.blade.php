@@ -407,7 +407,7 @@
                @if ($qFhLocked) data-field-pack @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qFhLocked ? 'tl-dim' : '' }}">
-                    <b>{{ $fhName }}{{ \App\Support\Tagalog::flag(['weeds' => 'weed-control-helper', 'pests' => 'pest-finder', 'diseases' => 'disease-finder', 'varieties' => 'variety-finder'][$fhKey] ?? '') }}</b>
+                    <b>{{ $fhName }}{{ \App\Support\Tagalog::flag(['weeds' => 'weed-control-helper', 'pests' => 'pest-finder', 'diseases' => 'disease-finder', 'nutrients' => 'nutrient-deficiency-finder', 'varieties' => 'variety-finder'][$fhKey] ?? '') }}</b>
                     <i>{{ $fhLead }}.</i>
                 </span>
                 @if ($qFhLocked)

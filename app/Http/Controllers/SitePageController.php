@@ -41,6 +41,14 @@ class SitePageController extends Controller
                 'pages' => SitePages::inSection($section),
             ]);
         }
+        // Nutrient deficiencies (2026-10-16): the catalogue of every crop's, the crop and nutrient pages.
+        if ($section === 'nutrient-deficiencies') {
+            return view('public.site.deficiency-hub', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+                'pages' => SitePages::inSection($section),
+            ]);
+        }
         // Rice varieties: the finder over every variety (2026-10-13).
         if ($section === 'rice-varieties') {
             return view('public.site.varieties-hub', [
@@ -168,7 +176,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
+        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
         // Each crop's variety finder (2026-10-13).
         foreach (\App\Support\CropVarieties::crops() as $c) {
             if ($c['hasHub']) {
@@ -226,7 +234,7 @@ class SitePageController extends Controller
             }
             $out[] = '';
         }
-        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'rice-varieties' => 'Rice varieties (PhilRice data)', 'crop-varieties' => 'Crop varieties (NSIC registry and seed sellers)', 'features' => 'Feature pages'];
+        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties (PhilRice data)', 'crop-varieties' => 'Crop varieties (NSIC registry and seed sellers)', 'features' => 'Feature pages'];
         try {
             $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);
             foreach ($names as $section => $name) {

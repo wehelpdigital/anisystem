@@ -1961,6 +1961,7 @@
                 <a href="{{ url('/crops') }}" class="hc-link" style="--h: 100">Crop guides ›</a>
                 <a href="{{ url('/pests') }}" class="hc-link" style="--h: 30">Crop pests ›</a>
                 <a href="{{ url('/weeds') }}" class="hc-link" style="--h: 80">Weeds and grasses ›</a>
+                <a href="{{ url('/nutrient-deficiencies') }}" class="hc-link" style="--h: 52">Nutrient deficiencies ›</a>
                 <a href="{{ url('/blog') }}" class="hc-link" style="--h: 150">Latest in Agriculture ›</a>
             </div>
             <div class="hp-cta reveal">

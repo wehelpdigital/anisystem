@@ -1,0 +1,471 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "rubber-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 560,
+ "title": "Rubber Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Rubber Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Rubber nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and magnesium in goma, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "rubber nutrient deficiency",
+ "keywords": [
+  "rubber nutrient deficiency",
+  "rubber deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "complete fertilizer"
+ ],
+ "excerpt": "Rubber nutrient deficiency is one of the first things to check when the leaves of your goma (rubber) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, magnesium, phosphorus and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for rubber",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, magnesium and phosphorus move inside the plant, so a shortage shows on the old, lower leaves first. But zinc stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which rubber nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Rubber nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of goma",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Leaves of the lower storeys turn evenly pale yellow green, worst on leaves in full sun, and the canopy stays thin.",
+     "Complete 14 14 14, Urea 46 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves yellow at the tips and edges, then the edges die brown. Leaves come out smaller.",
+     "Muriate of potash 0 0 60, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Old leaves in the lower storeys yellow between the veins, the yellow moving in from the edge while the veins stay green.",
+     "Magnesium sulfate (Epsom salt), Kieserite"
+    ],
+    [
+     "Phosphorus",
+     "young leaves and the tip",
+     "Bronzing under part of the leaf, often on one half and at the far end, with dying leaf tips and early leaf fall.",
+     "Superphosphate 0 20 0, Complete 14 14 14"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of goma",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "In young plants, new leaflets come small, narrow, hooked like a claw and wavy edged, with yellow between the veins.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a rubber nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest rubber nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in rubber",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The whole leaf turns pale yellow green, then yellow. It shows first on the older leaves of the lower storeys and, when severe, moves up to the young storeys. Leaves in full sun show it more than shaded ones. Young trees grow slowly and the canopy stays small, so trees reach tapping size late. You see it most at this stage: young trees in the first years after planting, and trees under tapping that are never fertilized."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in goma"
+  },
+  {
+   "type": "text",
+   "text": "Young plantations without fertilizer or cover crops, weedy rows that compete for nitrogen, and leached, eroded soils on slopes."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Rubber sheds its leaves once a year (wintering), and leaves turn yellow to orange before they drop. That is normal and the whole tree changes together. To be sure, the DA guide advises basing fertilizer on soil and leaf tests. Kerala Agricultural University also advises a soil test to judge how severe it is."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Without a test, the DA guide gives Complete 14 14 14 at 125 grams per tree in the first year, 250 grams in the second. 500 grams in the third and fourth years, split into two doses six months apart, spread in a ring 30, 60, 90 and 120 cm from the trunk as the tree grows. For trees under tapping, the Rubber Research Institute of Sri Lanka gives about 200 grams of Urea 46 0 0 per tree per year with potash and rock phosphate. For a quick boost, KAU gives a urea leaf spray of 10 grams per liter."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Complete 14 14 14",
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, plant a legume cover crop between rows, as the DA guide advises, keep the tree rings weeded, and fertilize every year."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in rubber",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Only the older leaves of the lower storeys show it. The tips and edges turn yellow, and then the edges die and turn brown. Leaves get smaller, and in bad cases yellowing between the veins and dead patches spread, leaf stalks and stems shorten, and the bud at the top can die. You see it most at this stage: young trees and trees under tapping."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in goma"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and leached soils, heavy rain, and trees fed only nitrogen. The Rubber Research Institute of Sri Lanka lists potassium among the nutrients short in most of its rubber soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage also starts on old leaves, but it yellows between the veins inward from the edge, without the brown edge scorch. Leaf diseases such as Colletotrichum leave spots spread over the blade, not a band along the edge. To be sure, soil and leaf tests, as the DA guide and Kerala Agricultural University advise."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 based on a soil test, in split doses, as KAU advises. KAU gives a quick leaf spray of Sulfate of potash at 10 grams per liter. For trees under tapping, the Rubber Research Institute of Sri Lanka gives about 200 grams of Muriate of potash per tree per year on virgin bark. 150 grams on renewed bark."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Complete 14 14 14",
+    "Sulfate of potash 0 0 50"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a complete fertilizer such as 14 14 14 in young trees and straight potash once trees are tapped."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in rubber",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Leaves in the lower, older storeys yellow between the veins first. The yellow usually spreads inward from the leaf edge while the veins stay green. In young seedlings and buddings, the yellow patches may sit away from the edge. Leaf size drops only a little, but severe cases bring heavy leaf fall and slow growth. You see it most at this stage: young and mature trees. Kerala Agricultural University notes it shows most from September to December in Kerala."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in goma"
+  },
+  {
+   "type": "text",
+   "text": "Acid, leached soils low in magnesium, and heavy potash use. Some clones are more sensitive."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potash shortage also starts on old leaves, but scorches the tip and edge brown. Manganese shortage keeps the midrib and main veins as green bands on a pale leaf, but with no dead tips or edges. To be sure, do a soil test, as KAU advises, and a leaf test of leaves from the lower storey."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives 50 kg of Magnesium sulfate per hectare for plantations that show the yellowing. The Rubber Research Institute of Sri Lanka adds Dolomite to the yearly fertilizer on low magnesium soils, from 50 to 75 grams per tree in the first year up to 150 to 250 grams per tree from the fifth year to tapping. Warns not to mix dolomite with urea based mixtures. Kieserite is another source. Do not apply magnesium and potash together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Kieserite",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, on acid, low magnesium soils give magnesium every year with the fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in rubber",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "A bronze color shows on part of the underside of the leaf and is hard to see from the top. It is often limited to one half of the leaf and starts at the far end of the blade. The leaf tip often dies back. It shows first on leaves in the middle and upper storeys, and many leaves can fall. You see it most at this stage: young trees on poor soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in goma"
+  },
+  {
+   "type": "text",
+   "text": "Old, weathered acid soils that hold phosphorus tightly, and no phosphate at planting. The Rubber Research Institute of Sri Lanka lists phosphorus among the nutrients short in most of its rubber soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Mites and thrips can also bronze the leaf underside, so check with a hand lens. Potash and magnesium shortage start on the lower, older storeys, not the middle and upper ones. To be sure, soil and leaf tests, as Kerala Agricultural University and the DA guide advise."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "For quick correction, KAU advises Superphosphate 0 20 0. For the long term, rock phosphate or bone meal. The Rubber Research Institute of Sri Lanka uses rock phosphate in its mixtures and about 100 grams per tree per year for trees tapped on virgin bark."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "Ammonium phosphate 18 46 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, put phosphate in the planting hole and use a complete fertilizer such as 14 14 14 in the first years, as the DA guide does."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in rubber",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "It shows mostly in young rubber plants in the nursery or the field. New leaves yellow between the veins and come out smaller, both shorter and narrower. Young leaflets look hooked or claw like, the blade can twist, and the edges turn wavy. In bad cases the growing tip dies and side shoots grow from below it. You see it most at this stage: nursery and young field plants."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in goma"
+  },
+  {
+   "type": "text",
+   "text": "Soils outside pH 5 to 7.5, as Kerala Agricultural University notes, and heavy phosphate use, which ties up zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Powdery mildew and Colletotrichum leaf disease also twist and spot young leaves. But they leave white powder or dark spots and patches on the leaflets. To be sure, do a soil test, as KAU advises. Spray a few plants with zinc to see if the next flush comes out normal."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives Zinc sulfate at 40 grams per plant (8 kg per acre) to the soil. In severe cases, KAU gives a morning leaf spray of Zinc sulfate at 2 grams per liter with 2.5 grams per liter of calcium carbonate. Do not apply zinc and phosphate fertilizer at the same time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add compost to nursery soil and test nursery and young field soils for zinc."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any rubber nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your goma needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick goma, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Rubber nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my goma leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: leaves of the lower storeys turn evenly pale yellow green, worst on leaves in full sun, and the canopy stays thin. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in rubber?",
+     "a": "Without a test, the DA guide gives Complete 14 14 14 at 125 grams per tree in the first year, 250 grams in the second. 500 grams in the third and fourth years, split into two doses six months apart, spread in a ring 30, 60, 90 and 120 cm from the trunk as the tree grows."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in rubber?",
+     "a": "Apply Muriate of potash 0 0 60 based on a soil test, in split doses, as KAU advises. KAU gives a quick leaf spray of Sulfate of potash at 10 grams per liter."
+    },
+    {
+     "q": "What fertilizer fixes magnesium deficiency in rubber?",
+     "a": "KAU gives 50 kg of Magnesium sulfate per hectare for plantations that show the yellowing. The Rubber Research Institute of Sri Lanka adds Dolomite to the yearly fertilizer on low magnesium soils, from 50 to 75 grams per tree in the first year up to 150 to 250 grams per tree from the fifth year to tapping."
+    },
+    {
+     "q": "How do I know which nutrient my goma lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the rubber nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "DA High Value Crops Development Program: Rubber production guide (rubber plantation establishment)",
+     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Rubber-Production-Guide.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech: Rubber nutrient deficiencies",
+     "url": "https://celkau.in/crops/cashcrops/rubber/deficiency.php"
+    },
+    {
+     "label": "Rubber Research Institute of Sri Lanka: Fertilizer recommendations for rubber",
+     "url": "https://www.rrisl.gov.lk/content/files/downDoc/2.%20Fertilizer%20for%20Rubber.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech: Rubber manuring",
+     "url": "https://celkau.in/crops/cashcrops/rubber/manuring.php"
+    }
+   ]
+  }
+ ]
+}

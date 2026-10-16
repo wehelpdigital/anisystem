@@ -1,0 +1,160 @@
+{
+ "section": "features",
+ "slug": "nutrient-deficiency-finder",
+ "sortOrder": 435,
+ "lang": "en",
+ "category": "Crop care",
+ "title": "Nutrient Deficiency Finder: From the Leaves You See to the Fertilizer That Fixes It",
+ "metaTitle": "Nutrient Deficiency Finder for Every Philippine Crop",
+ "metaDescription": "The nutrient deficiency finder in anee.io reads where the leaves changed and how they look, then names the missing nutrient and the fertilizer sold here.",
+ "focusKeyword": "nutrient deficiency finder",
+ "keywords": [
+  "nutrient deficiency finder",
+  "nutrient deficiency in plants",
+  "fertilizer for plants",
+  "foliar fertilizer",
+  "fertilizer with zinc"
+ ],
+ "excerpt": "The nutrient deficiency finder in anee.io turns yellow, purple or burnt leaves into an answer. Pick your crop and say where the change started and what it looks like. It then lists the nutrients your crop is likely short of. Each one comes with how to be sure, what to apply and the fertilizers sold in the Philippines that supply it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Leaf edges scorched brown from potassium deficiency, the kind of sign the nutrient deficiency finder reads",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How the nutrient deficiency finder works"
+  },
+  {
+   "type": "text",
+   "text": "First, pick your crop. The list holds the crops of Philippine farms, each with its local name. It runs from palay and mais to gulay, root crops, sugarcane, coconut, banana and the fruit trees. The finder opens on the crop of your newest season, so most days you skip this step."
+  },
+  {
+   "type": "text",
+   "text": "Next, say where the change started. This is the best clue there is. Nitrogen, phosphorus, potassium, magnesium and molybdenum move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, sulfur, zinc, iron, manganese, boron and copper stay put. So the young leaves and the growing tip show them first."
+  },
+  {
+   "type": "text",
+   "text": "Then pick what it looks like, such as pale leaves, yellow veins, purple color or burnt edges. The deficiencies that fit both answers come first, with a tag that says so. Among equals, the commonest one for your crop leads."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply, and what is sold here"
+  },
+  {
+   "type": "text",
+   "text": "Open a card for what to apply. You get the fix as the sources give it and the materials that supply the nutrient, such as urea, zinc sulfate or borax. Then come the fertilizers sold in the Philippines that carry it. Every product is on the list of the Fertilizer and Pesticide Authority. Tap one for its grade, its form and where it goes. A quick search of Shopee and Lazada is there too."
+  },
+  {
+   "type": "text",
+   "text": "For the trace nutrients, the products made for that nutrient come first, such as a zinc sulfate or a chelated iron. The mixed [foliar fertilizer](/blog/foliar-fertilizer) that only carries a little of it comes after. That way you do not pay for a blend when one material does the job."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Confirm before you buy",
+   "text": "Dry soil, standing water, cold nights, a pest or a disease can look like a deficiency. So check the roots and the field, and ask your Municipal Agriculture Office about a soil test. The finder tells you how to be sure for each nutrient."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Every deficiency, with its photo"
+  },
+  {
+   "type": "text",
+   "text": "The catalogue at the top of the finder holds every deficiency of every crop in one place. Search by crop or nutrient, or filter by nutrient. Open any one for its photo, its signs, its causes and how to keep it away. The photos carry free licences and their credits. Where no photo of that crop exists, a photo of the same deficiency on another crop stands in. The page says so."
+  },
+  {
+   "type": "text",
+   "text": "The same knowledge is on our public pages, one page per crop and one per nutrient. Start at [nutrient deficiencies by crop](/nutrient-deficiencies), or read the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency). Each crop has its own, such as [rice nutrient deficiency](/nutrient-deficiencies/rice-nutrient-deficiency)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Inside anee.io, beside your season"
+  },
+  {
+   "type": "text",
+   "text": "The nutrient deficiency finder sits with the other field helpers, next to the [Pest and Disease Finders](/features/pest-and-disease-finders). Still not sure? Send a photo of the leaf to Anee, the [smart farm technician](/features/ai-agricultural-technician). She reads it with your crop, its age and your soil, in Tagalog or English. For palay, the [LCC Checker](/features/lcc-checker) also says when urea is due."
+  },
+  {
+   "type": "text",
+   "text": "When you know what to apply, the [NPK Plus Calculator](/features/npk-plus-calculator) checks your whole fertilizer plan. Then the cropping calendar dates each application, so nothing is forgotten."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient before you buy",
+   "text": "Sign up, add your season, and keep the nutrient deficiency finder one tap away.\nEvery crop of Philippine farms, with photos\nFertilizers registered with the FPA, sold here\nAnee reads a photo of the leaf",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about the nutrient deficiency finder"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Do I need an account?",
+     "a": "Yes. The finder lives inside anee.io and comes with every plan above Libre. On Libre, the field helpers pack opens it, along with the Pest Finder, the Disease Finder, the Weed Control Helper and the Variety Finder."
+    },
+    {
+     "q": "Which crops does it cover?",
+     "a": "The crops of Philippine farms, from palay and the corns to legumes, root crops and vegetables. Sugarcane, coconut, banana and the fruit trees are there too, each with the deficiencies that matter for it."
+    },
+    {
+     "q": "Does it tell me how much fertilizer to apply?",
+     "a": "Where PhilRice, the DA or the extension guides give a rate, the fix says it. Otherwise it says to follow your soil test and the product label, because the right amount depends on your soil."
+    },
+    {
+     "q": "Is a photo of the leaf enough?",
+     "a": "A photo helps, and Anee can read one. But a soil test or a leaf test is the surest check before you spend on fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nutrient deficiencies by crop",
+     "url": "/nutrient-deficiencies"
+    },
+    {
+     "label": "Fertilizer for plants",
+     "url": "/blog/fertilizer-for-plants"
+    },
+    {
+     "label": "Micronutrients for rice",
+     "url": "/blog/micronutrients-for-rice"
+    },
+    {
+     "label": "Pest and Disease Finders",
+     "url": "/features/pest-and-disease-finders"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "FPA: Registered fertilizer products",
+     "url": "https://fpa.da.gov.ph/"
+    },
+    {
+     "label": "PhilRice: PalayCheck System",
+     "url": "https://www.philrice.gov.ph/"
+    },
+    {
+     "label": "IRRI Rice Knowledge Bank: Nutrient management",
+     "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
+    }
+   ]
+  }
+ ]
+}

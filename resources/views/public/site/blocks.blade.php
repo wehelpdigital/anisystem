@@ -11,9 +11,9 @@
         @case('heading')
             @if (trim((string) ($b['text'] ?? '')) !== '')
                 @if ((int) ($b['level'] ?? 2) === 3)
-                    <h3 id="{{ $S::anchor($b['text'], $i) }}">{{ $b['text'] }}</h3>
+                    <h3 id="{{ $S::blockAnchor($b, $i) }}">{{ $b['text'] }}</h3>
                 @else
-                    <h2 id="{{ $S::anchor($b['text'], $i) }}">{{ $b['text'] }}</h2>
+                    <h2 id="{{ $S::blockAnchor($b, $i) }}">{{ $b['text'] }}</h2>
                 @endif
             @endif
             @break

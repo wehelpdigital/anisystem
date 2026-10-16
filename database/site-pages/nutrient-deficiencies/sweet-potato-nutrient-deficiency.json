@@ -1,0 +1,648 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "sweet-potato-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 140,
+ "title": "Sweet potato Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Sweet potato Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Sweet potato nutrient deficiency shows in the leaves. See the signs of potassium and nitrogen in kamote, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "sweet potato nutrient deficiency",
+ "keywords": [
+  "sweet potato nutrient deficiency",
+  "sweet potato deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Sweet potato nutrient deficiency is one of the first things to check when the leaves of your kamote (sweet potato) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are potassium, nitrogen, phosphorus, magnesium, boron, calcium, sulfur and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for sweet potato",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Potassium, nitrogen, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But boron, calcium, sulfur and zinc stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which sweet potato nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sweet potato nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of kamote",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves yellow and scorch at the edges and roll up, and roots stay small.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Pale green vines that spread slowly, with the oldest leaves yellowing and drying.",
+     "Urea 46 0 0, Complete 14 14 14"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Small, stunted vines with dark old leaves and purple red color under the leaves.",
+     "Single superphosphate 0 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves yellow between the veins, sometimes with red or purple on top, and cup.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of kamote",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, the roots",
+     "Young leaves are distorted and brittle, and storage roots have hollow or brown spots inside.",
+     "Borax"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, the roots",
+     "Leaf tips die back and storage roots come out soft, small and misshapen, on very acid soil.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "Leaves yellow from the tip to the base, veins included, and vines stay short with few branches.",
+     "Ammonium sulfate 21 0 0, Single superphosphate 0 20 0"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip",
+     "Short internodes, small pale young leaves, and purple shoot tips.",
+     "Zinc sulfate, Agricultural lime"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a sweet potato nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest sweet potato nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in sweet potato",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing starts at the edges of the older leaves and turns into brown, scorched margins. Leaves may curl or roll upward at the edges, age early and drop, so the vine covers less ground. Vines wilt even in moist soil, and fewer and smaller storage roots form. You see it most at this stage: mid season, when storage roots bulk up."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and highly weathered soils, and fields planted to root crops for years, since roots carry away a lot of potassium. Acid soils hold less potassium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency yellows between the veins of old leaves rather than burning the edges. Drought scorch shows on many leaves at once and recovers after rain. To be sure, soil test for potassium, and a leaf test. Look for edge scorch starting on the oldest leaves."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 following the soil test, best split between planting and early vine growth (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU), or 1 percent potassium chloride every 15 days (TNAU)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add organic matter and wood ash, keep the soil pH above 6 with lime or dolomite, and give potash every season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in sweet potato",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn an even light green, starting on the older, lower leaves. Vines grow slowly with fewer leaves, so the ground stays bare longer. The oldest leaves yellow, wilt and dry, and young leaves may show purple veins. You see it most at this stage: first two months, while the vines spread."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, soils low in organic matter, and rain that washes nitrogen out."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency yellows the young leaves too and veins do not stay green. Magnesium deficiency shows yellow between green veins. To be sure, check that yellowing started on the oldest leaves, then test the soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Urea 46 0 0 following the soil test. KAU also gives a urea spray of 10 g per liter every 15 days. Do not overdo nitrogen. It grows vines at the cost of roots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Complete 14 14 14",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use compost or manure before planting and a balanced fertilizer such as 14 14 14."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in sweet potato",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants stay small and stunted with a poor root system. Older leaves turn dark green, and a purple red color shows mostly on the underside of the leaves. Yellow patches then spread unevenly and the oldest leaves die. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils and volcanic soils that hold phosphorus tightly, and soils low in organic matter."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency can be confused with the dark old leaves, but it yellows the young leaves. Cold or wet weather also gives purple tints for a short time. To be sure, soil test for available phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU advises single superphosphate for a quick fix, or bone meal and rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.5 to 7.5."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Single superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "Rock phosphate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add organic manure with phosphorus fertilizer and correct strong acidity."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in sweet potato",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves yellow between the veins and age early, and may curl or cup. Red or purple color can appear on the upper side of old leaves, and the yellow parts turn brown and dead. Roots may come out small and misshapen. You see it most at this stage: mid season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and acid soils, and heavy potash, which blocks magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency burns the leaf edges first. Nitrogen deficiency yellows the whole leaf evenly. To be sure, soil test for magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Apply magnesium and potash at different times."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use Dolomite over the long run on acid soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in sweet potato",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves become distorted and pale, stems are brittle, and leaf tips and edges yellow and die in spots. Storage roots develop poorly and can have hollow areas in the flesh, which ruins their sale. You see it most at this stage: root bulking."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, high pH soils, and dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency also hits the growing tips, but gives small, soft roots. Weevil damage leaves tunnels, not hollows. To be sure, soil test for boron. Cut roots to look inside."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Do not apply boron together with calcium or ammonium fertilizers."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test for boron on sandy fields before planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in sweet potato",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Growing points and young leaves show dead spots and tip dieback, with some yellowing between the veins. Root growth is poor, and storage roots can be soft, very small and misshapen. You see it most at this stage: early growth to root bulking."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils, and soils very high in phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also damages the tips, with brittle stems and hollows in the roots. To be sure, soil pH and calcium test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils, KAU limes about 250 kg per hectare where the pH is 5.5 to 6. About 840 kg per hectare in two splits where it is 3.5 to 4.5. On alkaline soils use Gypsum instead."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test the pH every few seasons and lime ahead of planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in sweet potato",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Yellowing starts at the leaf tip and moves to the base, and the veins turn yellow too. Plants are badly stunted with small leaves and few branches, and leaves may curl or cup. Roots can be misshapen. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in organic matter, and burning crop waste, which drives off sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the old leaves. Iron deficiency keeps the veins green. To be sure, soil and leaf test for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use a sulfur bearing fertilizer such as Ammonium sulfate 21 0 0 or single superphosphate. KAU gives about 25 kg sulfur dust per hectare (10 kg per acre) on sulfur poor soils, or Gypsum on alkaline soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Single superphosphate 0 20 0",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add organic matter and stop burning crop waste."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in sweet potato",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Internodes stay short and young leaves show vein clearing and paling. Shoot tips may turn purple. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in kamote"
+  },
+  {
+   "type": "text",
+   "text": "Soils outside pH 5 to 7.5, and heavy phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Phosphorus deficiency gives purple older leaves, not purple tips. Iron deficiency yellows young leaves between green veins. To be sure, soil test for zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre) to the soil. In severe cases spray 2 g zinc sulfate with 2.5 g lime (calcium carbonate) per liter in the morning. Do not apply zinc and phosphate together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep the soil pH between 5 and 7.5."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any sweet potato nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kamote needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick kamote, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sweet potato nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my kamote leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: pale green vines that spread slowly, with the oldest leaves yellowing and drying. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in sweet potato?",
+     "a": "Apply Muriate of potash 0 0 60 following the soil test, best split between planting and early vine growth (KAU). For quick help spray potassium sulfate at 10 g per liter in the morning (KAU), or 1 percent potassium chloride every 15 days (TNAU)."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in sweet potato?",
+     "a": "Apply Urea 46 0 0 following the soil test. KAU also gives a urea spray of 10 g per liter every 15 days."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in sweet potato?",
+     "a": "KAU advises single superphosphate for a quick fix, or bone meal and rock phosphate for the long term, following the soil test. Phosphorus is taken up best at pH 6.5 to 7.5."
+    },
+    {
+     "q": "How do I know which nutrient my kamote lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the sweet potato nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Kerala Agricultural University Agri Infotech Portal: Sweet potato nutrient deficiencies",
+     "url": "https://celkau.in/crops/tuber/sweetpotato/deficiency.php"
+    },
+    {
+     "label": "TNAU Agritech Portal: Sweet potato, potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/sweetpotato_potassium.html"
+    },
+    {
+     "label": "Tulin and others, Annals of Tropical Research (2004): Characterization of nutrient deficiency symptoms in sweetpotato through a farmer and scientist participatory approach",
+     "url": "https://ejournals.ph/article.php?id=29672"
+    }
+   ]
+  }
+ ]
+}

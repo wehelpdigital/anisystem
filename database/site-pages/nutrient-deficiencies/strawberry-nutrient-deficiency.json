@@ -1,0 +1,613 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "strawberry-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 460,
+ "title": "Strawberry Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Strawberry Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Strawberry nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and calcium in presa, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "strawberry nutrient deficiency",
+ "keywords": [
+  "strawberry nutrient deficiency",
+  "strawberry deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Strawberry nutrient deficiency is one of the first things to check when the leaves of your presa (strawberry) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, calcium, boron, phosphorus, magnesium and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/strawberry-iron-deficiency.webp",
+  "alt": "Strawberry leaves yellow between dark green veins, iron shortage on the youngest leaves",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron and iron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which strawberry nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Strawberry nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of presa",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Mature leaves turn pale then evenly yellow, with reddish stalks and edges.",
+     "Calcium nitrate, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Mature leaves brown and dry along the edges, with sunken brown spots and dark leaf stalks.",
+     "Sulfate of potash 0 0 50, Potassium nitrate 13 0 46"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves",
+     "Older leaves turn dull deep green with a metallic sheen and purple undersides.",
+     "Ammonium phosphate 16 20 0, Complete 14 14 14"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaf edges yellow and scorch, then the leaf turns bright yellow while its base stays green.",
+     "Magnesium sulfate (Epsom salt), Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of presa",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "Young leaves crinkle with dead tips, and berries are small, hard and seedy at the tip.",
+     "Calcium nitrate, Agricultural lime"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Misshapen, bumpy berries, aborted flowers and small young leaves with dark dead tips.",
+     "Borax, Solubor (sodium borate)"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "The youngest centre leaves turn pale yellow between the veins and can bleach.",
+     "Iron chelate, Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a strawberry nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest strawberry nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in strawberry",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Mature leaves are hit first: they turn pale green, then evenly yellow, and stay small. As they age, the leaf edges and stalks turn reddish and whole blades can redden. In severe cases lower leaves turn yellow to red with dead blotches and growth is badly stunted. You see it most at this stage: runner and leaf growth, and during long fruiting periods."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in presa"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, heavy rain or irrigation, low organic matter, raw manure or straw mulch tying up nitrogen. Very low or high pH."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur or molybdenum shortage can give similar yellowing. A leaf test settles it. To be sure, leaf tissue test and soil test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Side dress or fertigate small, frequent doses of nitrogen based on the soil test. Follow the soil test for the rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Calcium nitrate",
+    "Ammonium sulfate 21 0 0",
+    "Urea 46 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add compost before planting and feed little and often rather than one big dose."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in strawberry",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "The first sign is browning and drying along the edges of mature leaves, which spreads inward between the veins. Light and dark brown sunken spots can appear on the blade, with yellowing between the veins. The leaf base, midrib and stalk may darken and, in severe cases, die. You see it most at this stage: fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in presa"
+  },
+  {
+   "type": "text",
+   "text": "Acid or sandy soils, heavy rain or irrigation, drought, low potassium reserves and soils rich in magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage and salt burn give similar edges. Potassium shortage usually also affects the leaf base. To be sure, leaf tissue test (Yara notes deficient leaves hold less than 0.5 percent potassium) and a soil test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply sulfate of potash or potassium nitrate based on the soil test, in split doses. Follow the soil test for the rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sulfate of potash 0 0 50",
+    "Potassium nitrate 13 0 46",
+    "Muriate of potash 0 0 60"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep potash in the fertilizer program through fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in strawberry",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Young leaf blades crinkle and may get dead tips (tip burn), most often during fast leaf growth. Fruits are small, hard and sour, with a dense cluster of seeds at the tip or over the whole berry. You see it most at this stage: fast leaf growth and fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in presa"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils, sandy soils, drought, and high nitrogen or potassium. Yara notes deficient leaves hold less than 0.2 percent calcium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron shortage gives similar leaf symptoms, but its small fruits are bumpy and misshapen. To be sure, leaf tissue test for calcium and boron, and a soil pH test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Keep watering even and lime acid soil based on the soil test. Calcium nitrate as part of the feed supplies calcium. Follow the soil test for rates."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Calcium nitrate",
+    "Agricultural lime",
+    "Gypsum"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid beds before planting and avoid heavy nitrogen and potash."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in strawberry",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Leaves yellow between the veins from the edges, medium aged leaves get bronze veins near the edges. The youngest leaves have dark dead tips and stay very small. Flowers are damaged or abort, and poor fruit set gives misshapen, bumpy berries that are smaller and softer. Side roots are stubby and brown. You see it most at this stage: flowering and fruit set."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in presa"
+  },
+  {
+   "type": "text",
+   "text": "High soil pH or sandy soils where boron leaches, low organic matter, high nitrogen or calcium, and drought."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Poor pollination from too few bees or cold also gives misshapen berries, but leaves stay normal. Calcium shortage also kills leaf tips. To be sure, leaf tissue test for boron and calcium before treating."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply boron only after a test confirms it. Delaware lists strawberry among crops with a medium boron need, about 2 pounds of boron per acre (about 2.2 kg per hectare) before planting. Do not repeat doses."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor (sodium borate)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep organic matter up and avoid overliming."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in strawberry",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves are dark green and slightly small, with a purple tint that deepens as they age. Upper surfaces can take a dark metallic sheen while undersides turn reddish purple. In severe cases edges yellow then brown from the tips, and flowers and fruits are smaller, sometimes with pale patches. You see it most at this stage: early growth in cold or wet soil, and before flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in presa"
+  },
+  {
+   "type": "text",
+   "text": "Cold, dry or wet conditions, strongly acid or alkaline soils, iron rich soils, low organic matter and weak roots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Cool weather alone can redden old strawberry leaves. To be sure, leaf stalk tissue test and soil test for available phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply phosphorus near the roots based on the soil test. Follow the soil test for the rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium phosphate 16 20 0",
+    "Complete 14 14 14",
+    "Diammonium phosphate 18 46 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a phosphorus fertilizer at planting and keep the soil near pH 5.5 to 6.5."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in strawberry",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves show it first: the edges turn yellow and scorch. Yellowing spreads inward between the veins until the leaf is bright yellow with dead tints. The leaf base stays green longest. Later the oldest leaves can turn fully brown while young centre leaves stay green. You see it most at this stage: fruiting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in presa"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or acid soils, soils rich in potassium, heavy potash fertilizer and cold wet weather."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium shortage and salt damage look similar, but potassium shortage usually also darkens the leaf base. To be sure, leaf tissue test (Yara notes deficient leaves hold under 0.1 percent magnesium) and soil test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray magnesium sulfate on the leaves for quick relief and correct the soil with dolomite or magnesium sulfate based on the soil test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite on acid beds and keep potash balanced."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in strawberry",
+   "id": "iron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/strawberry-iron-deficiency.webp",
+   "alt": "Strawberry leaves yellow between dark green veins, iron shortage on the youngest leaves",
+   "caption": "Photo: Scot Nelson, CC0 1.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "Yellow or pale yellow color appears between the veins of the youngest leaves. If it lasts, the veins also yellow and leaves bleach, then dead areas spread from the edges, and growth is stunted. Fruits are rarely affected. You see it most at this stage: any stage, often after heavy watering or liming."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in presa"
+  },
+  {
+   "type": "text",
+   "text": "Soil pH above 6.5, calcareous or overlimed soils, waterlogged soils, and high copper, manganese or zinc. Root damage, including from waterlogging, gives the same look."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium and manganese shortage usually do not start on the youngest leaves. To be sure, soil pH test and leaf tissue test (Yara notes deficient leaves hold less than 40 ppm iron)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Improve drainage, stop liming, and spray iron chelate or ferrous sulfate on the leaves. Follow the product label."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Iron chelate",
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep beds raised and well drained and do not overlime."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any strawberry nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your presa needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick presa, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Strawberry nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my presa leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: mature leaves turn pale then evenly yellow, with reddish stalks and edges. If the young leaves turn yellow first instead, look at iron deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in strawberry?",
+     "a": "Side dress or fertigate small, frequent doses of nitrogen based on the soil test. Follow the soil test for the rate."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in strawberry?",
+     "a": "Apply sulfate of potash or potassium nitrate based on the soil test, in split doses. Follow the soil test for the rate."
+    },
+    {
+     "q": "What fertilizer fixes calcium deficiency in strawberry?",
+     "a": "Keep watering even and lime acid soil based on the soil test. Calcium nitrate as part of the feed supplies calcium."
+    },
+    {
+     "q": "How do I know which nutrient my presa lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the strawberry nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Yara UK: Nitrogen deficiency in strawberry",
+     "url": "https://www.yara.co.uk/crop-nutrition/strawberries/nutrient-deficiencies-strawberry/nitrogen-deficiency-strawberry/"
+    },
+    {
+     "label": "Yara UK: Potassium deficiency in strawberry",
+     "url": "https://www.yara.co.uk/crop-nutrition/strawberries/nutrient-deficiencies-strawberry/potassium-deficiency-strawberry/"
+    },
+    {
+     "label": "Yara UK: Calcium deficiency in strawberry",
+     "url": "https://www.yara.co.uk/crop-nutrition/strawberries/nutrient-deficiencies-strawberry/calcium-deficiency-strawberry/"
+    },
+    {
+     "label": "Yara UK: Boron deficiency in strawberry",
+     "url": "https://www.yara.co.uk/crop-nutrition/strawberries/nutrient-deficiencies-strawberry/boron-deficiency-strawberry/"
+    },
+    {
+     "label": "University of Delaware Weekly Crop Update: Boron and molybdenum in vegetable crops",
+     "url": "https://sites.udel.edu/weeklycropupdate/?p=22766"
+    },
+    {
+     "label": "Yara UK: Phosphorus deficiency in strawberry",
+     "url": "https://www.yara.co.uk/crop-nutrition/strawberries/nutrient-deficiencies-strawberry/phosphorus-deficiency-strawberry/"
+    },
+    {
+     "label": "Yara UK: Magnesium deficiency in strawberry",
+     "url": "https://www.yara.co.uk/crop-nutrition/strawberries/nutrient-deficiencies-strawberry/magnesium-deficiency-strawberry/"
+    },
+    {
+     "label": "Yara UK: Iron deficiency in strawberry",
+     "url": "https://www.yara.co.uk/crop-nutrition/strawberries/nutrient-deficiencies-strawberry/iron-deficiency-strawberry/"
+    }
+   ]
+  }
+ ]
+}

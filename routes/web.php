@@ -141,6 +141,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // The newsletter module (2026-10-17): the code, the kit, and whether the migration ran.
             'newsletter' => class_exists(\App\Support\Newsletter\Planner::class) && is_file(public_path('nl-kit/nl.js'))
                 && Illuminate\Support\Facades\Schema::hasTable('as_nl_emails'),
+            'nutrientDeficiencies' => class_exists(\App\Support\DeficiencyCatalogue::class) && is_file(database_path('field-catalogue/deficiencies.json'))
+                && Illuminate\Support\Facades\Schema::hasTable('as_site_pages') && \App\Models\AsSitePage::where('section', 'nutrient-deficiencies')->exists(),
             'lpCosts' => method_exists(\App\Support\LandPrepPlanner::class, 'costs'),
             'nlMergeTags' => class_exists(\App\Support\Newsletter\MergeTags::class),
             'saltMulti' => ! empty(\App\Support\FieldProfile::QUESTIONS['salt']['multi']),
@@ -289,6 +291,9 @@ Route::get('/problems', [App\Http\Controllers\SitePageController::class, 'hub'])
 // /problems/{slug} address moves the visitor to the page's new home.
 Route::get('/problems/{slug}', [App\Http\Controllers\SitePageController::class, 'movedProblem'])->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.problems.show');
 Route::get('/pests', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'pests')->name('site.pests');
+// Nutrient deficiencies (2026-10-16): the catalogue, the crop pages and the nutrient pages.
+Route::get('/nutrient-deficiencies', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'nutrient-deficiencies')->name('site.deficiencies');
+Route::get('/nutrient-deficiencies/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'nutrient-deficiencies')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.deficiencies.show');
 Route::get('/pests/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'pests')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.pests.show');
 Route::get('/diseases', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'diseases')->name('site.diseases');
 Route::get('/diseases/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'diseases')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.diseases.show');
@@ -853,7 +858,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // The old free field helper now opens the planner (defined before fh.page so it wins).
     Route::get('/app/field-helpers/landprep', fn () => redirect()->route('landprep.page'))->name('landprep.legacy');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.
-    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|varieties|landprep')->name('fh.page');
+    Route::get('/app/field-helpers/{tool}', [App\Http\Controllers\FieldHelperController::class, 'page'])->where('tool', 'weeds|pests|diseases|nutrients|varieties|landprep')->name('fh.page');
     // The Variety Finder's data (2026-10-14): one crop's varieties, or every variety's names (?index=1).
     Route::get('/app/field-helpers/{tool}/data', [App\Http\Controllers\FieldHelperController::class, 'data'])->where('tool', 'varieties')->middleware('throttle:120,1')->name('fh.data');
     // NPK Plus (2026-10-07): the free fertilizer calculator, and Anee's reading of a plan.

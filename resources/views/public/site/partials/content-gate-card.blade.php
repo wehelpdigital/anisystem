@@ -8,7 +8,7 @@
     $cardId = $cardId ?? 'spGateCard';
     $lead = $lead ?? ($tl
         ? 'Mag-register nang libre sa anee.io para mabasa ang buong pahina, pati ang bawat gabay sa pananim, binhi, paghahanda ng lupa, peste, sakit at damo.'
-        : 'Register for free on anee.io to read the whole page, and every guide on crops, varieties, land preparation, pests, diseases and weeds.');
+        : 'Register for free on anee.io to read the whole page, and every guide on crops, varieties, land preparation, pests, diseases, weeds and nutrient deficiencies.');
 @endphp
 <div class="sp-gate-card" @if ($cardId) id="{{ $cardId }}" @endif data-gate-card>
     @if (\App\Support\ContentGate::previewing())

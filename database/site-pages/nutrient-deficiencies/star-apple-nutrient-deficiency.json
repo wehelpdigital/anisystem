@@ -1,0 +1,476 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "star-apple-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 770,
+ "title": "Star apple Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Star apple Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Star apple nutrient deficiency shows in the leaves. See the signs of nitrogen and potassium in kaimito, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "star apple nutrient deficiency",
+ "keywords": [
+  "star apple nutrient deficiency",
+  "star apple deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Star apple nutrient deficiency is one of the first things to check when the leaves of your kaimito (star apple) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, magnesium and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for star apple",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But iron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which star apple nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Star apple nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of kaimito",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "The upper side of the leaves turns pale, older leaves yellow and drop, and new shoots stay short.",
+     "Ammonium sulfate 21 0 0, Complete 14 14 14"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Edges and tips of older leaves scorch brown. Fruits stay small and poor in quality.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves",
+     "Young trees grow slowly and older leaves take on a purplish tint, most on the underside.",
+     "Superphosphate 0 20 0, 16 20 0"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Older leaves yellow between the veins while the veins stay green.",
+     "Dolomite, Magnesium sulfate (Epsom salt)"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of kaimito",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "New leaves turn pale yellow with green veins, mostly on limestone or high pH soil.",
+     "Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a star apple nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest star apple nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in star apple",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "No kaimito particular description was found, so this follows general fruit tree signs. The shiny upper side of the leaves loses its deep green, the older leaves turn yellow, then brown, and fall. Growth slows, new shoots are short, and the tree flowers and fruits less. You see it most at this stage: young trees in the first years after planting, and bearing trees during fruit growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in kaimito"
+  },
+  {
+   "type": "text",
+   "text": "Trees that are never fed (Morton notes most kaimito trees in tropical America never get fertilizer), sandy or limestone soils low in organic matter. Heavy rain that washes nitrogen down."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "In a long dry season kaimito sheds many leaves and its fruits shrivel (PROSEA), which is drought, not hunger. The underside of a kaimito leaf is normally golden brown (UF IFAS), so judge the color on the upper side. To be sure, A leaf test of mature leaves from recent growth shows low nitrogen. New leaves that come out deep green after a nitrogen dose confirm it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "PROSEA gives 150 to 200 grams of Ammonium sulfate 21 0 0 per tree twice a year for young trees not yet bearing. At the start of fruiting, 500 grams of complete fertilizer go on twice a year. Full grown trees may need 3 kg or more of complete fertilizer a year. Apply at the start of the rainy season and again near its end, in a ring or in shallow holes under the canopy."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14",
+    "Urea 46 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, feed every year and mulch the root zone."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in star apple",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "No kaimito particular description was found, so this follows general fruit tree signs. The edges and tips of older leaves look burnt, and the scorch moves inward. Fruit size and quality drop. You see it most at this stage: bearing trees, most of all while fruits are growing. UF IFAS raises the potash share of the fertilizer once trees bear."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in kaimito"
+  },
+  {
+   "type": "text",
+   "text": "Sandy and leached soils, heavy rain, and years of fruiting with no potash returned."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "The golden brown underside of kaimito leaves is normal (UF IFAS). Phomopsis and Phyllosticta leaf spots make separate spots on the blade rather than a scorch along the edge. To be sure, A soil test for potash and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "For bearing trees, UF IFAS raises potash in the fertilizer to 9 to 15 percent and cuts phosphate to 2 to 4 percent. Mixes such as 8 3 9 with magnesium are used. In the Philippines, give the PROSEA rates of Complete 14 14 14 and add Muriate of potash 0 0 60 where the soil test shows low potash, in two doses at the start and near the end of the rainy season."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, give potash every year once the tree bears, and return fallen leaves under the canopy."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in star apple",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "No kaimito particular description was found, so this follows general fruit tree signs. Growth is slow and the tree stays small. Older leaves take on a purple color, most of all on the underside, though on kaimito this can be hard to see against the natural golden brown underside. You see it most at this stage: young trees in the first years, before bearing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in kaimito"
+  },
+  {
+   "type": "text",
+   "text": "Acid and eroded soils low in organic matter, limestone soils, and no phosphate at planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage gives an even pale color without the purple tint. Drought stress slows growth and makes leaves drop (PROSEA). To be sure, A soil test for available phosphorus and pH, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "UF IFAS uses 6 to 10 percent phosphate in the fertilizer for young trees. Work Superphosphate 0 20 0, 16 20 0 or Complete 14 14 14 into the soil under the canopy, following the soil test, with manure or compost."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Superphosphate 0 20 0",
+    "16 20 0",
+    "Complete 14 14 14",
+    "Ammonium phosphate 18 46 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, put phosphate and manure in the planting hole and feed young trees with a complete fertilizer every 1 to 2 months in the first year, as UF IFAS advises."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in star apple",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "No kaimito particular description was found, so this follows general fruit tree signs. Older leaves turn yellow between the veins while the veins stay green, and growth slows. UF IFAS includes 4 to 6 percent magnesium in the fertilizer for young kaimito trees as part of its regular feeding. You see it most at this stage: bearing trees during fruit growth, and trees fed heavy potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in kaimito"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy and leached soils, and heavy potash fertilizer, which competes with magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron shortage also yellows between the veins, but on the young leaves at the shoot tip. Potassium shortage scorches the leaf edges. To be sure, A soil test for magnesium, potash and calcium together, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils apply Dolomite, which supplies both lime and magnesium. Take the amount from the soil test. Where the pH is already fine, spread Magnesium sulfate (Epsom salt) or Kieserite under the canopy and follow the label."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Dolomite",
+    "Magnesium sulfate (Epsom salt)",
+    "Kieserite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a fertilizer that carries magnesium, such as the 6 6 6 2 and 8 3 9 mixes with magnesium that UF IFAS lists."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in star apple",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "UF IFAS notes kaimito is prone to iron shortage on alkaline, high pH soils but gives no detailed description. So this follows general fruit tree signs. The newest leaves turn light green to yellow between the veins while the veins stay green, making a net pattern. In bad cases the new leaves bleach almost white and may burn, while older leaves stay green. You see it most at this stage: new flushes on limestone or high pH soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in kaimito"
+  },
+  {
+   "type": "text",
+   "text": "Alkaline, limestone (calcareous) soils, where iron is locked up. Too much phosphate also brings it on."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium shortage yellows between the veins of older leaves, not the newest ones. Zinc shortage makes the new leaves small and crowded. To be sure, A soil pH test. Trouble is likely on limestone soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On alkaline and high pH soils, UF IFAS advises regular soil applications of an iron chelate made for high pH soils. On low pH soils, regular soil doses of Ferrous sulfate can be used. Follow the label for the amount."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not overlime, avoid heavy phosphate, and plant on well drained ground."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any star apple nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kaimito needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick kaimito, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Star apple nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my kaimito leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: the upper side of the leaves turns pale, older leaves yellow and drop, and new shoots stay short. If the young leaves turn yellow first instead, look at iron deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in star apple?",
+     "a": "PROSEA gives 150 to 200 grams of Ammonium sulfate 21 0 0 per tree twice a year for young trees not yet bearing. At the start of fruiting, 500 grams of complete fertilizer go on twice a year."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in star apple?",
+     "a": "For bearing trees, UF IFAS raises potash in the fertilizer to 9 to 15 percent and cuts phosphate to 2 to 4 percent. Mixes such as 8 3 9 with magnesium are used."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in star apple?",
+     "a": "UF IFAS uses 6 to 10 percent phosphate in the fertilizer for young trees. Work Superphosphate 0 20 0, 16 20 0 or Complete 14 14 14 into the soil under the canopy, following the soil test, with manure or compost."
+    },
+    {
+     "q": "How do I know which nutrient my kaimito lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the star apple nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Iron deficiency in all crops",
+     "url": "/nutrient-deficiencies/iron-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "PROSEA Plant Resources of South East Asia: Chrysophyllum cainito (star apple, kaimito), husbandry",
+     "url": "https://prosea.prota4u.org/view.aspx?id=1487"
+    },
+    {
+     "label": "UF IFAS EDIS HS1069/HS309: Caimito (star apple) growing in the Florida home garden",
+     "url": "https://edis.ifas.ufl.edu/publication/HS309"
+    },
+    {
+     "label": "Morton, Fruits of Warm Climates (Purdue NewCROP): Star apple",
+     "url": "https://hort.purdue.edu/newcrop/morton/star_apple.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Mineral nutrition, deficiency and excess symptoms",
+     "url": "https://agritech.tnau.ac.in/agriculture/agri_min_nutri_def_symptoms.html"
+    },
+    {
+     "label": "TNAU (Jeyakumar and Balamohan): Micronutrients for horticultural crops",
+     "url": "https://agritech.tnau.ac.in/agriculture/pdf/Micronutrients%20for%20horticultural%20crops.pdf"
+    }
+   ]
+  }
+ ]
+}

@@ -327,6 +327,7 @@
                     <a href="{{ $S::url('pests') }}" class="{{ $page->section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}" class="{{ $page->section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
                     <a href="{{ $S::url('weeds') }}" class="{{ $page->section === 'weeds' ? 'is-on' : '' }}">Weeds and grasses</a>
+                    <a href="{{ $S::url('nutrient-deficiencies') }}" class="{{ $page->section === 'nutrient-deficiencies' ? 'is-on' : '' }}">Nutrient deficiencies</a>
                     <a href="{{ $S::url('blog') }}" class="{{ $page->section === 'blog' ? 'is-on' : '' }}">Latest in Agriculture</a>
                     <a href="{{ route('features') }}" class="{{ $page->section === 'features' ? 'is-on' : '' }}">Features</a>
                 </div>

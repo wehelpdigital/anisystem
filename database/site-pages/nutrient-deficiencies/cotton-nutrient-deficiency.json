@@ -1,0 +1,634 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "cotton-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 540,
+ "title": "Cotton Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Cotton Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Cotton nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium and boron in bulak, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "cotton nutrient deficiency",
+ "keywords": [
+  "cotton nutrient deficiency",
+  "cotton deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Cotton nutrient deficiency is one of the first things to check when the leaves of your bulak (cotton) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, boron, magnesium, phosphorus, sulfur and zinc. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/cotton-potassium-deficiency.webp",
+  "alt": "Cotton plants with some leaves turned yellow and orange from potassium shortage (small credit line in corner)",
+  "credit": "Soil Science, CC BY 2.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, magnesium and phosphorus move inside the plant, so a shortage shows on the old, lower leaves first. But boron, sulfur and zinc stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which cotton nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Cotton nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of bulak",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Lower leaves turn pale yellow, then reddish. Plants stay short with few fruiting branches and shed their squares.",
+     "Urea 46 0 0, Complete 14 14 14"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Yellow white mottling on leaf tips and edges that turns brown. Leaves curl, turn reddish brown and drop early, and bolls stay small.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Lower leaves turn purple red between green veins, then drop early.",
+     "Magnesium sulfate (Epsom salt), Dolomite"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Dark green, stunted plants with reddish purple old leaves and late flowering.",
+     "16 20 0, Complete 14 14 14"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of bulak",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Dark green rings on the leaf stalks, many squares and young bolls dropping, and small, misshapen bolls.",
+     "Borax, Solubor"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The young top leaves turn pale green to yellow while the old leaves stay green. Plants are small and spindly.",
+     "Ammonium sulfate 21 0 0, Superphosphate 0 20 0"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves thick, leathery and cupped upward, yellow between the veins, on short, bushy plants.",
+     "Zinc sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a cotton nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest cotton nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in cotton",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "The older, lower leaves turn light green, then evenly yellow, often starting at the leaf tip. In bad cases the yellow leaves turn red and then die. Plants stay short and weak, with small leaves, few fruiting branches and few nodes, and they hold fewer squares and bolls. You see it most at this stage: squaring to boll filling, when most of the nitrogen goes into the fruit."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in bulak"
+  },
+  {
+   "type": "text",
+   "text": "Sandy, light soils, heavy rain or irrigation that washes nitrogen down, and a late or skipped sidedress. Applying urea at noon or on dry soil also loses nitrogen to the air, as PhilFIDA warns."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur shortage also gives pale plants, but it starts on the young top leaves while old leaves stay green. Magnesium shortage reddens old leaves too, but the veins stay green. To be sure, do a soil test before planting, as Kerala Agricultural University advises. In season, a leaf test of the most recently matured leaf, about four or five nodes below the top, tells the plant's status, as Bayer notes."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Sidedress Urea 46 0 0 3 to 5 cm from the plant base, hill up and irrigate. PhilFIDA sidedresses cotton at 42 to 47 days after planting, or splits it at 35 to 42 and 55 to 60 days on sandy soil. For cotton after garlic it gives 3 to 4 bags of urea per hectare. For a quick boost, KAU gives a urea leaf spray of 10 grams per liter every 15 days. TNAU gives 1 percent urea (10 grams per liter) or 2 percent DAP."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Complete 14 14 14",
+    "16 20 0",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, band a basal fertilizer at planting and sidedress on time."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in cotton",
+   "id": "potassium"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/cotton-potassium-deficiency.webp",
+   "alt": "Cotton plants with some leaves turned yellow and orange from potassium shortage (small credit line in corner)",
+   "caption": "Photo: Soil Science, CC BY 2.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "Yellowish white mottling starts at the tips and edges and between the veins, then turns into brown dead spots. The edges and tips curl down and break, and the whole leaf turns reddish brown, dry and brittle. Leaves drop early, the crop cuts out early, and bolls stay small, may not open, and give weak lint. Before bloom it shows on the old leaves. Late in the season it can show on the young upper leaves, as the bolls pull potash from them. You see it most at this stage: from first bloom to boll filling. About 70 percent of potash uptake comes after first bloom, as Yara notes."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in bulak"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils that hold little potash, dry soil (potash moves to roots through soil water), acid soil, hardpans or nematodes that limit roots, and soils high in magnesium. High yielding, early varieties are more prone, as UF IFAS notes."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Leafhopper damage also yellows and reddens leaf edges and makes them curl down. But you will find the small green insects under the leaves. To be sure, UF IFAS advises a petiole test at early bloom from the fourth or fifth fully developed leaf from the top. A soil test before planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 by soil test, split: UF IFAS suggests a third at planting and two thirds at squaring to early bloom on sandy soils. For quick help, Georgia research cited by UF IFAS gives two leaf sprays of 5.6 to 11 kg of potash per hectare (5 to 10 pounds per acre) during peak bloom, with potassium nitrate as the usual spray. KAU gives Sulfate of potash at 10 grams per liter, and TNAU gives 1 percent potassium chloride."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep soil pH above 6 with lime or Dolomite, as KAU advises, give potash in splits."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in cotton",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Leaf stalks get short, with dark green rings or bands. Young leaves turn thick and brittle, with water soaked spots, and new growth can be misshapen. Many squares and young bolls drop, and the bolls that stay are small, flat sided and dark at the base, and mature late. In bad cases the growing tip dies and many short side branches form. You see it most at this stage: squaring to boll development, when cotton needs the most boron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in bulak"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils and heavy rain that leach boron, soils above pH 7.5 or over limed soils. Drought, which cuts boron uptake, as Yara notes."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Heat, drought and plant bugs also make squares and young bolls drop, and bollworms leave holes in bolls. The dark rings on the leaf stalks point to boron. To be sure, do a soil test, as KAU advises. A leaf or petiole test before or at early bloom, which Yara uses to decide on more boron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Yara gives a base of about 0.56 kg of boron per hectare (0.5 pound per acre), best given as two leaf sprays of 0.28 kg boron per hectare between first square and first bloom. KAU gives Borax at 4 kg per acre (about 10 kg per hectare) to the soil, or a Borax spray of 1 gram per liter. TNAU gives a 0.2 percent Borax spray. Use Solubor for sprays since it dissolves easily, and never overdo the rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, plan boron every season on sandy or limed soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in cotton",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "The lower, older leaves turn purple red between the veins while the veins stay green. In bad cases whitish to brown spots form and the edges die. Affected leaves age early and fall, and plants may look stunted. TNAU describes cupping and yellowing between the veins starting on young leaves. But most sources, KAU and Bayer included, put it on the old leaves first. You see it most at this stage: from flowering on, when the bolls take up magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in bulak"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils, sandy soils that have lost magnesium to rain, and heavy potash use, which competes with magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potash shortage starts at the tips and edges with yellow white mottling and brown spots. Nitrogen shortage reddens the whole leaf, veins included. To be sure, do a soil test for magnesium, potash and pH, as KAU advises, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives Magnesium sulfate at 32 kg per acre (about 80 kg per hectare) in bands near the plants. TNAU gives a 1 percent Magnesium sulfate leaf spray (10 grams per liter). Do not apply magnesium and potash fertilizer together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Dolomite",
+    "Kieserite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use Dolomite on acid soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in cotton",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants stay short and dark green, with small leaves, weak stems and few side branches. Older leaves can turn reddish purple. Roots grow poorly, flowering and boll set come late, and boll numbers drop. You see it most at this stage: seedling to early squaring."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in bulak"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils, which tie up phosphorus, as Bayer notes. KAU notes cotton takes it up best between pH 6.5 and 7.5."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage also stunts the plant, but leaves are pale, not dark green. Cold or waterlogged soil also slows early growth and can redden seedlings, and it clears as soil warms or drains. To be sure, do a soil test for phosphorus and pH before planting, as KAU advises."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "For quick correction, KAU advises Superphosphate 0 20 0. For the long term, bone meal or rock phosphate. TNAU gives a 2 percent DAP leaf spray (20 grams of Ammonium phosphate 18 46 0 per liter)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "16 20 0",
+    "Complete 14 14 14",
+    "Ammonium phosphate 18 46 0",
+    "Superphosphate 0 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, band a phosphate basal at planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in cotton",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves at the top turn pale green to yellow while older leaves stay green. Veins stay green for a while, but in bad cases they pale too. Plants are small and spindly with thin stalks, few side branches and small bolls. You see it most at this stage: early to mid season, after heavy rain or waterlogging."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in bulak"
+  },
+  {
+   "type": "text",
+   "text": "Sandy, well drained soils low in organic matter and waterlogged soils, as Bayer notes. Using only urea and phosphate fertilizers that carry no sulfur adds to it, and KAU notes that burning crop waste loses sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage gives the same pale color, but it starts on the old, lower leaves, as TNAU notes. Iron shortage also yellows young leaves, but with green veins standing out sharply. To be sure, A leaf test of young leaves for sulfur and nitrogen together. A soil test helps."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use a sulfur fertilizer such as Ammonium sulfate 21 0 0 or Superphosphate, as KAU advises. On very short soils, KAU gives sulfur dust at 10 kg per acre (about 25 kg per hectare). TNAU gives a 1 percent Magnesium sulfate leaf spray as a quick fix."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Superphosphate 0 20 0",
+    "Gypsum",
+    "Magnesium sulfate (Epsom salt)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use Ammonium sulfate 21 0 0 for part of the nitrogen, return crop waste instead of burning it, and add organic matter."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in cotton",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "New leaves yellow between the veins, starting from the edge, and turn thick, brittle, leathery and cupped upward. Leaves stay small and may look bronzed, and the space between nodes shortens so plants look bushy. TNAU also notes red coloring on old and young leaves and brown spots. Squares and flowers may drop. You see it most at this stage: seedling to early squaring."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in bulak"
+  },
+  {
+   "type": "text",
+   "text": "Soils outside pH 5 to 7.5, as KAU notes, and heavy phosphate use, which ties up zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Manganese shortage also yellows young leaves between the veins, but TNAU notes zinc short leaves are more misshapen, with long narrow tips. Leafhopper or mite damage also cups and bronzes leaves, so check under the leaves for insects. To be sure, do a soil test with pH, as KAU advises, and a leaf test. Spray zinc on a few rows and compare the new leaves."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives Zinc sulfate at 5 kg per hectare to the soil, or a 1 percent Zinc sulfate leaf spray (10 grams per liter). KAU gives a milder morning spray of Zinc sulfate at 2 grams per liter with 2.5 grams per liter of calcium carbonate. So start with the lower rate on young plants. Do not apply zinc and phosphate fertilizer at the same time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, base zinc on a soil test and do not overuse phosphate fertilizer."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any cotton nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your bulak needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick bulak, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Cotton nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my bulak leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: lower leaves turn pale yellow, then reddish. Plants stay short with few fruiting branches and shed their squares. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in cotton?",
+     "a": "Sidedress Urea 46 0 0 3 to 5 cm from the plant base, hill up and irrigate. PhilFIDA sidedresses cotton at 42 to 47 days after planting, or splits it at 35 to 42 and 55 to 60 days on sandy soil."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in cotton?",
+     "a": "Apply Muriate of potash 0 0 60 by soil test, split: UF IFAS suggests a third at planting and two thirds at squaring to early bloom on sandy soils. For quick help, Georgia research cited by UF IFAS gives two leaf sprays of 5.6 to 11 kg of potash per hectare (5 to 10 pounds per acre) during peak bloom, with potassium nitrate as the usual spray."
+    },
+    {
+     "q": "What fertilizer fixes boron deficiency in cotton?",
+     "a": "Yara gives a base of about 0.56 kg of boron per hectare (0.5 pound per acre), best given as two leaf sprays of 0.28 kg boron per hectare between first square and first bloom. KAU gives Borax at 4 kg per acre (about 10 kg per hectare) to the soil, or a Borax spray of 1 gram per liter."
+    },
+    {
+     "q": "How do I know which nutrient my bulak lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the cotton nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency in all crops",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "PhilFIDA (DA): The recommended cotton production technology",
+     "url": "https://philfida.da.gov.ph/images/Publications/cottonbrochures/rcpt-2017-as-of-may-2018-revised.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech: Cotton nutrient deficiencies",
+     "url": "https://celkau.in/crops/cashcrops/cotton/deficiency.php"
+    },
+    {
+     "label": "TNAU Agritech Portal: Nitrogen deficiency in cotton",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/Cotton_Nitrogen.html"
+    },
+    {
+     "label": "Bayer Crop Science US: Identifying nutrient deficiencies in cotton",
+     "url": "https://www.cropscience.bayer.us/articles/dad/identifying-nutrient-deficiencies-in-cotton"
+    },
+    {
+     "label": "Yara US: Role of nitrogen in cotton production",
+     "url": "https://int.yara.us/crop-nutrition/cotton/role-of-nitrogen/"
+    },
+    {
+     "label": "UF IFAS EDIS AG475: Potassium deficiency in cotton, causes, symptoms and considerations",
+     "url": "https://ask.ifas.ufl.edu/publication/AG475"
+    },
+    {
+     "label": "Yara US: Role of potassium in cotton production",
+     "url": "https://int.yara.us/crop-nutrition/cotton/role-of-potassium/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Potassium deficiency in cotton",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/Cotton_Potassium.html"
+    },
+    {
+     "label": "Yara US: Role of boron in cotton production",
+     "url": "https://int.yara.us/crop-nutrition/cotton/role-of-boron/"
+    },
+    {
+     "label": "TNAU Agritech Portal: Boron deficiency in cotton",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/Cotton_Boron.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Magnesium deficiency in cotton",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/Cotton_Magnesium.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Phosphorus deficiency in cotton",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/Cotton_Phosphorus.html"
+    }
+   ]
+  }
+ ]
+}

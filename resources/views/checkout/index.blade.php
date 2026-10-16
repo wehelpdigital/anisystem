@@ -166,7 +166,7 @@
                     @endif
                     @if (($item['credits'] ?? 0) > 0) Comes with {{ number_format($item['credits']) }} AI credits. @endif
                 @elseif ($isAddon)
-                    The Weed Control Helper, Pest Finder, Disease Finder and Variety Finder for one month. That is {{ \App\Support\FieldPack::perDay() }}.
+                    The Weed Control Helper, Pest Finder, Disease Finder, Nutrient Deficiency Finder and Variety Finder for one month. That is {{ \App\Support\FieldPack::perDay() }}.
                 @elseif ($item)
                     AI credits never expire.
                 @endif
@@ -552,7 +552,7 @@
             const plan = o.kind === 'plan', addon = o.kind === 'addon';
             html = addon ? `<div class="co-badge ok">${ICON.ok}</div>
                 <h2>Your field helpers are open</h2>
-                <p>The Weed Control Helper, Pest Finder, Disease Finder and Variety Finder are yours until ${esc(o.expiresAt || '')}.${o.decidedByAi ? ' Anee checked your receipt.' : ''}</p>
+                <p>The Weed Control Helper, Pest Finder, Disease Finder, Nutrient Deficiency Finder and Variety Finder are yours until ${esc(o.expiresAt || '')}.${o.decidedByAi ? ' Anee checked your receipt.' : ''}</p>
                 ${facts(base.concat([['Open until', o.expiresAt]]))}
                 <div class="co-actions"><a class="btn btn-primary btn-lg" href="${LINKS.helpers}">Open the Pest Finder</a><a class="btn btn-white btn-lg" href="${LINKS.farm}">Back to my farm</a></div>`
                 : `<div class="co-badge ok">${ICON.ok}</div>

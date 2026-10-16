@@ -1,0 +1,596 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "calcium-deficiency",
+ "lang": "en",
+ "category": "Nutrient guides",
+ "sortOrder": 950,
+ "title": "Calcium Deficiency in Plants: Signs, Causes and How to Fix It",
+ "metaTitle": "Calcium Deficiency in Plants: Signs and Fixes",
+ "metaDescription": "Calcium deficiency shows on the young leaves first. See the signs crop by crop, what causes it, and the fertilizer sold here that fixes it.",
+ "focusKeyword": "calcium deficiency",
+ "keywords": [
+  "calcium deficiency",
+  "calcium deficiency symptoms",
+  "calcium deficiency in plants",
+  "fertilizer for tomatoes"
+ ],
+ "excerpt": "Calcium deficiency in plants starts on the young leaves and the growing tip. Calcium builds the walls of new cells and holds the cell membranes together. So growing tips, young leaves, roots and fruit need a steady supply. It also activates enzymes and supports normal root growth. Peanut needs it to form seed in the pods. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-ca.webp",
+  "alt": "Tomatoes with dark sunken rot at the blossom end: the classic calcium shortage sign in fruit",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Calcium does not move out of old leaves. It travels only with the water that the roots pull up to the leaves. So the damage shows on the growing tips, young leaves and fruit, which the water stream reaches last."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency symptoms"
+  },
+  {
+   "type": "text",
+   "text": "Growing tips of shoots and roots turn brown and die. New leaves come out cupped, crinkled or stuck together at the edges. In corn the new leaves fail to unfold, and in rice the tips of the youngest leaves turn white and roll. Tomato, pepper and eggplant show blossom end rot, a dark, sunken, leathery patch at the bottom of the fruit. Buds and blossoms may also fall early."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency by crop"
+  },
+  {
+   "type": "text",
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [calcium in rice](/nutrient-deficiencies/rice-nutrient-deficiency#calcium)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Rice"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in rice",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Palay](/nutrient-deficiencies/rice-nutrient-deficiency#calcium)",
+     "Tips of the youngest leaves turn white, split and roll, only on very acid or leached soils.",
+     "Calcium chloride, Gypsum"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Corn and Sorghum"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in corn and sorghum",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Mais](/nutrient-deficiencies/corn-nutrient-deficiency#calcium)",
+     "Tips of the young leaves stick together like a ladder, on very acid soil.",
+     "Agricultural lime, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Legumes"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in legumes",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Mani](/nutrient-deficiencies/peanut-nutrient-deficiency#calcium)",
+     "The plants look fine, but many pods are empty (pops) or the kernels are shrunken and dark.",
+     "Gypsum, Agricultural lime"
+    ],
+    [
+     "[Sigarilyas](/nutrient-deficiencies/winged-bean-nutrient-deficiency#calcium)",
+     "Growing tips and roots fail to develop on very acid soil.",
+     "Agricultural lime, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Root Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in root crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Kamote](/nutrient-deficiencies/sweet-potato-nutrient-deficiency#calcium)",
+     "Leaf tips die back and storage roots come out soft, small and misshapen, on very acid soil.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Kamoteng kahoy](/nutrient-deficiencies/cassava-nutrient-deficiency#calcium)",
+     "Upper leaves curl and get brown to black spots at the tips and edges, on very acid soil.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Gabi](/nutrient-deficiencies/taro-nutrient-deficiency#calcium)",
+     "The youngest leaf yellows between the veins and cups, with brown edges, and roots die back.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Patatas](/nutrient-deficiencies/potato-nutrient-deficiency#calcium)",
+     "Young leaves small, pale and curled, sprout tips black, and rusty spots inside the tubers.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Karot](/nutrient-deficiencies/carrot-nutrient-deficiency#calcium)",
+     "The tips of young leaves and roots brown and die, leaf edges turn ragged, and roots stay small.",
+     "Calcium chloride, Agricultural lime"
+    ],
+    [
+     "[Labanos](/nutrient-deficiencies/radish-nutrient-deficiency#calcium)",
+     "Growing tips of leaves and roots brown and die, and leaf stalks collapse.",
+     "Agricultural lime, Gypsum"
+    ],
+    [
+     "[Luya](/nutrient-deficiencies/ginger-nutrient-deficiency#calcium)",
+     "Young leaves crinkle and twist with dead edges, and roots are stunted and rot.",
+     "Agricultural lime, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Vegetables"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in vegetables",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Petsay](/nutrient-deficiencies/pechay-nutrient-deficiency#calcium)",
+     "The tips and edges of the young centre leaves turn brown and dry, and soft rot can follow.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Repolyo](/nutrient-deficiencies/cabbage-nutrient-deficiency#calcium)",
+     "Brown, dry edges on the inner leaves of the head, seen only when you cut it open.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Litsugas](/nutrient-deficiencies/lettuce-nutrient-deficiency#calcium)",
+     "Brown or grey dead edges on the young inner leaves, worse in hot weather.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Mustasa](/nutrient-deficiencies/mustard-nutrient-deficiency#calcium)",
+     "Brown, dead tips on the youngest leaves in hot, dry weather.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Brokoli](/nutrient-deficiencies/broccoli-nutrient-deficiency#calcium)",
+     "Burnt, dead tips and edges on the youngest leaves.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Koliplor](/nutrient-deficiencies/cauliflower-nutrient-deficiency#calcium)",
+     "Young leaves get dead, burnt tips and claw like curling. Curd segments turn brown and glassy.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Kintsay](/nutrient-deficiencies/celery-nutrient-deficiency#calcium)",
+     "The young heart leaves in the centre turn brown to black and rot.",
+     "Calcium nitrate, Agricultural lime"
+    ],
+    [
+     "[Kamatis](/nutrient-deficiencies/tomato-nutrient-deficiency#calcium)",
+     "A dark, sunken, leathery patch at the bottom end of the fruit, opposite the stem.",
+     "Calcium nitrate, Calcium chloride"
+    ],
+    [
+     "[Talong](/nutrient-deficiencies/eggplant-nutrient-deficiency#calcium)",
+     "Brown to black leathery spots at the bottom end of the fruit and curled, hard young leaves.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Ampalaya](/nutrient-deficiencies/bitter-gourd-nutrient-deficiency#calcium)",
+     "New leaves come out hooked and scorched, the vine tip dies, and fruits fail to set.",
+     "Dolomite, Agricultural lime"
+    ],
+    [
+     "[Kalabasa](/nutrient-deficiencies/squash-nutrient-deficiency#calcium)",
+     "Young fruits rot at the flower end, and new leaves crinkle and scorch.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Pipino](/nutrient-deficiencies/cucumber-nutrient-deficiency#calcium)",
+     "Youngest leaves scorch and cup downward, the tip dies, and fruits fail at the blossom end.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Okra](/nutrient-deficiencies/okra-nutrient-deficiency#calcium)",
+     "Growing tips brown and die, and young leaves rosette with ragged, upturned edges.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Sili](/nutrient-deficiencies/chili-nutrient-deficiency#calcium)",
+     "Sunken, water soaked spots at the tip of the fruit that dry out and turn black.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Atsal](/nutrient-deficiencies/bell-pepper-nutrient-deficiency#calcium)",
+     "Large sunken, water soaked patches near the bottom of the fruit that turn black and leathery.",
+     "Calcium nitrate, Agricultural lime"
+    ],
+    [
+     "[Upo](/nutrient-deficiencies/bottle-gourd-nutrient-deficiency#calcium)",
+     "New leaves crinkle and curl, vine tips die, and fruits fail to set or rot at the end.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Pakwan](/nutrient-deficiencies/watermelon-nutrient-deficiency#calcium)",
+     "A dark rot at the flower end of young fruits, opposite the stem.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Milon](/nutrient-deficiencies/melon-nutrient-deficiency#calcium)",
+     "New leaves crinkle and hook, vine tips die, and fruits are small, soft or tasteless.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Presa](/nutrient-deficiencies/strawberry-nutrient-deficiency#calcium)",
+     "Young leaves crinkle with dead tips, and berries are small, hard and seedy at the tip.",
+     "Calcium nitrate, Agricultural lime"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Onion and Garlic"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in onion and garlic",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Bawang](/nutrient-deficiencies/garlic-nutrient-deficiency#calcium)",
+     "Young leaf tips die, roots are short, and bulbs are soft and store poorly.",
+     "Agricultural lime, Gypsum"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sugarcane and Industrial Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in sugarcane and industrial crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Tubo](/nutrient-deficiencies/sugarcane-nutrient-deficiency#calcium)",
+     "Older leaves get tiny dead spots and a rusty look, and in bad cases the spindle tip dies.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Pinya](/nutrient-deficiencies/pineapple-nutrient-deficiency#calcium)",
+     "Young leaves go pale and curl down, then turn pinkish red, and the fruit is soft or brown inside.",
+     "Gypsum, Calcium nitrate"
+    ],
+    [
+     "[Tabako](/nutrient-deficiencies/tobacco-nutrient-deficiency#calcium)",
+     "New leaves bend down like a shepherd's crook, their edges yellow and die, and the bud can rot.",
+     "Agricultural lime, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fruits and Plantation Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Calcium deficiency in fruits and plantation crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Saging](/nutrient-deficiencies/banana-nutrient-deficiency#calcium)",
+     "New leaves come out as a spike with little or no blade. Ripe fruit peel splits.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Papaya](/nutrient-deficiencies/papaya-nutrient-deficiency#calcium)",
+     "New leaves pale with curled edges and small dead spots, a bunched top, and soft fruit flesh.",
+     "Agricultural lime, Gypsum"
+    ],
+    [
+     "[Mangga](/nutrient-deficiencies/mango-nutrient-deficiency#calcium)",
+     "Ripening fruit go soft and watery at the tip (soft nose) or brown and jelly like inside near the seed.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Duryan](/nutrient-deficiencies/durian-nutrient-deficiency#calcium)",
+     "New leaf tips burn and shoot tips die back on acid soils. Fruit quality drops.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Mangostan](/nutrient-deficiencies/mangosteen-nutrient-deficiency#calcium)",
+     "Glassy, water soaked flesh inside the fruit, and yellow gum (gamboge) in the flesh or oozing on the rind.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Guyabano](/nutrient-deficiencies/soursop-nutrient-deficiency#calcium)",
+     "The tips of the youngest leaves burn dark brown and roll up while the rest of the leaf stays green.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Kape](/nutrient-deficiencies/coffee-nutrient-deficiency#calcium)",
+     "Young leaves turn bronze at the edges and cup downward. The shoot tip dies back.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "[Kakaw](/nutrient-deficiencies/cacao-nutrient-deficiency#calcium)",
+     "Small yellow green leaves with tiny white spots seen against the light, and dead tips and edges.",
+     "Dolomite, Agricultural lime"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What causes calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Strongly acid, leached upland soils and coarse sandy soils hold little calcium, and soils from serpentine rock are poor in it too. In fruit, the usual cause is uneven watering, drought or root damage, which keeps calcium from reaching the fruit even when the soil has enough. Heavy nitrogen, ammonium fertilizers and big potash doses also cut calcium uptake. On very acid soils, the acidity itself often stunts the roots before any calcium signs appear."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to be sure it is calcium"
+  },
+  {
+   "type": "text",
+   "text": "Boron shortage also kills the growing tip and deforms young leaves, and herbicide injury can stop new corn leaves from unfolding. Blossom end rot is not a disease, so it never spreads from plant to plant the way a fruit rot does. Test the soil pH and exchangeable calcium at a DA Regional Soils Laboratory, because most calcium trouble comes with acid soil. A leaf tissue test helps, but it cannot show if enough calcium reaches the fruit, so check the watering record too."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to fix calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils, apply agricultural lime or dolomite by the soil test, because it raises the pH and adds calcium. Where the pH is already right or the crop needs an acid soil, gypsum or superphosphate (0 20 0) adds calcium. For blossom end rot, keep the soil evenly moist with mulch and regular watering, and go easy on ammonium fertilizers."
+  },
+  {
+   "type": "text",
+   "text": "A calcium nitrate spray at about 800 grams per 100 liters of water is a typical rate in a Haifa vegetable guide. It can slow the damage on the parts it wets, but even watering does more for blossom end rot."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizers sold here that supply calcium"
+  },
+  {
+   "type": "table",
+   "caption": "Registered with the FPA. Follow the label and your soil test",
+   "rows": [
+    [
+     "Product",
+     "Made or sold by",
+     "What it holds",
+     "Use"
+    ],
+    [
+     "Planters Products Lifelime",
+     "Planters Products, Inc.",
+     "50.59 percent CaO",
+     "On the soil"
+    ],
+    [
+     "Macrock Limestone",
+     "Donumdei 1 Corp.",
+     "36 to 42 percent calcium",
+     "On the soil"
+    ],
+    [
+     "Calcic Lime",
+     "Mindanao Agriplus Corporation",
+     "35.52 percent calcium",
+     "On the soil"
+    ],
+    [
+     "Dolomite",
+     "A6 Agrisource Limited Corporation",
+     "24 percent calcium and 11 percent magnesium",
+     "On the soil"
+    ],
+    [
+     "Tierraphos Guano Granule",
+     "Unilox Far East Resources Inc.",
+     "0 20 0 with 28 to 46 percent CaO",
+     "On the soil"
+    ],
+    [
+     "YaraLiva TROPICOTE",
+     "Yara Fertilizers Philippines, Inc.",
+     "15.1 0 0 with 25.5 percent CaO",
+     "On the soil"
+    ],
+    [
+     "YaraTera CALCINIT",
+     "Yara Fertilizers Philippines, Inc.",
+     "15.5 0 0 with 26.5 percent CaO",
+     "Soil or leaves"
+    ],
+    [
+     "Calcipro",
+     "Ramgo International Corporation",
+     "15.5 0 0 with 18.8 percent calcium",
+     "Soil or leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "For rates and timing, see our guides to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes) and to [fertilizer application methods](/blog/fertilizer-application-methods). Also, [anee.io](/features/cropping-calendar) keeps every application on the cropping calendar, so you know what went on each lot and when."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to keep calcium deficiency away"
+  },
+  {
+   "type": "text",
+   "text": "Lime acid fields by the soil test and keep the pH where the crop likes it. Water fruit crops evenly, mulch to hold moisture, and avoid heavy nitrogen and ammonium fertilizer while the fruit is forming."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Too much is a problem too",
+   "text": "Too much lime pushes the pH up and locks up iron, zinc, manganese and boron. Over liming, mostly on sandy soils, can bring on zinc and iron shortage."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Pick your crop in the Nutrient Deficiency Finder, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf in Tagalog or English",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "What does calcium deficiency look like?",
+     "a": "The growing tips and youngest leaves suffer first, turning brown, cupped or stuck together, and the roots stop growing. In tomato, pepper and eggplant it shows as blossom end rot on the fruit."
+    },
+    {
+     "q": "What causes blossom end rot in tomatoes?",
+     "a": "It is a calcium shortage inside the fruit, usually caused by uneven watering or drought, not by a lack of calcium in the soil. Keep the soil evenly moist, mulch, and avoid too much nitrogen."
+    },
+    {
+     "q": "What is the best fertilizer for calcium deficiency?",
+     "a": "On acid soils, agricultural lime or dolomite applied by the soil test is the usual source. Where the pH is already right, use gypsum, and calcium nitrate works as a spray."
+    },
+    {
+     "q": "Will spraying calcium fix blossom end rot?",
+     "a": "A calcium spray can slow it on the fruit it wets, but it rarely cures it. Even watering and mulch fix the cause, since calcium reaches the fruit only with the water the plant takes up."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Zinc deficiency",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Calcium deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Calcium_deficiency.htm"
+    },
+    {
+     "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension, Soil and Applied Calcium (A2523)",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2523.pdf"
+    },
+    {
+     "label": "UConn Extension IPM, Tomato Blossom End Rot",
+     "url": "https://ipm.cahnr.uconn.edu/tomato-blossom-end-rot"
+    },
+    {
+     "label": "Utah State University Extension, Blossom End Rot",
+     "url": "https://extension.usu.edu/vegetableguide/tomato-pepper-eggplant/blossom-end-rot"
+    },
+    {
+     "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",
+     "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
+    }
+   ]
+  }
+ ]
+}

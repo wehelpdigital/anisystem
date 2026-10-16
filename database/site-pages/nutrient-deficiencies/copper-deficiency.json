@@ -1,0 +1,364 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "copper-deficiency",
+ "lang": "en",
+ "category": "Nutrient guides",
+ "sortOrder": 1000,
+ "title": "Copper Deficiency in Plants: Signs, Causes and How to Fix It",
+ "metaTitle": "Copper Deficiency in Plants: Signs and Fixes",
+ "metaDescription": "Copper deficiency shows on the young leaves first. See the signs crop by crop, what causes it, and the fertilizer sold here that fixes it.",
+ "focusKeyword": "copper deficiency",
+ "keywords": [
+  "copper deficiency",
+  "copper deficiency symptoms",
+  "copper deficiency in plants",
+  "foliar fertilizer"
+ ],
+ "excerpt": "Copper deficiency in plants starts on the young leaves and the growing tip. Copper is part of the enzymes that run photosynthesis and respiration. It helps form chlorophyll and lignin, the stiff material in cell walls. It keeps pollen alive, so a crop short of copper sets empty grain. Legumes also need it to form nodules and fix nitrogen. Here are the signs in each crop, what brings it, how to be sure and the fertilizer that fixes it.",
+ "heroImage": null,
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Copper is the least mobile of the micronutrients, so the young leaves and growing tips show it first. In grasses such as rice, the newest leaves fail to unroll while the lower part of the plant looks normal."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Copper deficiency symptoms"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn pale or bluish green, wilt, curl and twist, and their tips die back. Rice leaves roll into needles, tillering drops, and many grains stay empty because the pollen fails. In fruit trees, twigs die back and many small shoots sprout at the tips, giving a bushy look. Onion leaves turn white at the tips and twist."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Copper deficiency by crop"
+  },
+  {
+   "type": "text",
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [copper in rice](/nutrient-deficiencies/rice-nutrient-deficiency#copper)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Rice"
+  },
+  {
+   "type": "table",
+   "caption": "Copper deficiency in rice",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Palay](/nutrient-deficiencies/rice-nutrient-deficiency#copper)",
+     "New leaves stay rolled into needles at the tip, plants are bluish green, and many grains are empty.",
+     "Copper sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Corn and Sorghum"
+  },
+  {
+   "type": "table",
+   "caption": "Copper deficiency in corn and sorghum",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Mais](/nutrient-deficiencies/corn-nutrient-deficiency#copper)",
+     "The youngest leaves come out yellow, and their tips brown, roll and break.",
+     "Copper sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Onion and Garlic"
+  },
+  {
+   "type": "table",
+   "caption": "Copper deficiency in onion and garlic",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Sibuyas](/nutrient-deficiencies/onion-nutrient-deficiency#copper)",
+     "Bulb scales are thin and pale yellow, bulbs are soft, and leaf tips burn.",
+     "Copper sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sugarcane and Industrial Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Copper deficiency in sugarcane and industrial crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Pinya](/nutrient-deficiencies/pineapple-nutrient-deficiency#copper)",
+     "Young leaves fold up into a narrow gutter shape and their tips droop, then die.",
+     "Copper sulfate, Bordeaux mixture"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fruits and Plantation Crops"
+  },
+  {
+   "type": "table",
+   "caption": "Copper deficiency in fruits and plantation crops",
+   "rows": [
+    [
+     "Crop",
+     "The first sign",
+     "Fix with"
+    ],
+    [
+     "[Kalamansi](/nutrient-deficiencies/calamansi-nutrient-deficiency#copper)",
+     "Extra large, dark green leaves on long, soft, S shaped shoots, gum blisters at the nodes and twig dieback.",
+     "Copper sulfate"
+    ],
+    [
+     "[Citrus, dalandan or ponkan](/nutrient-deficiencies/citrus-nutrient-deficiency#copper)",
+     "Brown gum stains on the fruit peel, fruit that split, and long, soft, S shaped shoots with big dark leaves.",
+     "Copper sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What causes copper deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Peat and other soils very high in organic matter bind copper tightly, so they are the most likely to run short. Sandy soils, highly weathered soils, calcareous soils and fields limed to a high pH also give little copper. Newly drained peat fields often show it in the first years, until the organic matter starts to break down."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to be sure it is copper"
+  },
+  {
+   "type": "text",
+   "text": "Mild copper shortage has no clear signs, and the wilting, rolled young leaves look like drought even when the soil is moist. Look for bushy dieback in trees and white, twisted tips in onion, and confirm with a tissue test. A leaf tissue test is the best check, because soil tests for copper are less reliable. A DA Regional Soils Laboratory tests copper in soil and plant tissue. In lowland rice, the PhilRice MOET pots also show if copper is the missing nutrient."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to fix copper deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply copper only after a tissue test confirms the shortage, because too much is hard to undo. Copper sulfate (25 percent copper) mixed with the basal fertilizer is the common choice. One correct dose lasts 5 to 8 years. Let the soil and tissue tests set the rate, and stop once the field has had enough."
+  },
+  {
+   "type": "text",
+   "text": "A typical spray in a Haifa vegetable guide is copper sulfate at up to 1 gram per liter, with about 0.5 percent hydrated lime. Copper fungicide sprays also add copper, so count them before you add more."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizers sold here that supply copper"
+  },
+  {
+   "type": "table",
+   "caption": "Registered with the FPA. Follow the label and your soil test",
+   "rows": [
+    [
+     "Product",
+     "Made or sold by",
+     "What it holds",
+     "Use"
+    ],
+    [
+     "Omex Zynergy",
+     "Jardine Distribution, Inc.",
+     "3.75 percent zinc and 2.11 percent copper",
+     "On the leaves"
+    ],
+    [
+     "Grower's Choice Copper Sulphate Pentahydrate",
+     "Zetryl.Chem Phils., Inc.",
+     "25 percent copper and 12 percent sulfur",
+     "Soil or leaves"
+    ],
+    [
+     "Agsmart Copper Sulphate",
+     "AgSmart Corporation",
+     "25 percent copper and 12 percent sulfur",
+     "Soil or leaves"
+    ],
+    [
+     "Liquid Chelate Copper w/ Sulfur",
+     "Sagrex Corporation",
+     "5 percent copper and 2 percent sulfur",
+     "On the leaves"
+    ],
+    [
+     "Micro Combo EDTA",
+     "Ateretpaz Technologies, Inc.",
+     "7.5 percent Fe, 3.3 percent Mn, 1.3 percent Zn, 1.3 percent B, 0.28 percent Cu",
+     "Soil or leaves"
+    ],
+    [
+     "Biozome",
+     "Manchem Industries, Inc.",
+     "12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo",
+     "On the soil"
+    ],
+    [
+     "Grow More Liquid Chelate General Purpose",
+     "Sagrex Corporation",
+     "2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo",
+     "On the leaves"
+    ],
+    [
+     "Nutriplant SL",
+     "Amway Philippines L.L.C.",
+     "2 percent Fe, 2 percent Zn, 1 percent Mg, 0.5 percent Mn, 0.15 percent Cu, 3 percent S with a trace of Mo",
+     "On the leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "For rates and timing, see our guides to [foliar fertilizer](/blog/foliar-fertilizer) and to [fertilizer application methods](/blog/fertilizer-application-methods). Also, [anee.io](/features/cropping-calendar) keeps every application on the cropping calendar, so you know what went on each lot and when."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to keep copper deficiency away"
+  },
+  {
+   "type": "text",
+   "text": "Test peat and very organic soils before the first crop, and add copper only where the test shows a need. Keep track of every copper fungicide and fertilizer applied, so the field never builds up too much."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Too much is a problem too",
+   "text": "Years of Bordeaux mixture and other copper fungicides can build copper to toxic levels that last for many years. Toxic copper weakens germination and shoot growth and blocks iron, and heavy hog manure can add to it."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Pick your crop in the Nutrient Deficiency Finder, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf in Tagalog or English",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Copper deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "What does copper deficiency look like?",
+     "a": "Young leaves turn pale or bluish green, wilt, curl and die back at the tips. In rice the new leaves roll like needles and many grains stay empty."
+    },
+    {
+     "q": "What is the best fertilizer for copper deficiency?",
+     "a": "Copper sulfate is the common source, mixed into the soil with the basal fertilizer or used as a weak spray. Apply it only after a tissue test confirms the need."
+    },
+    {
+     "q": "Do copper fungicides feed my plants copper?",
+     "a": "Yes, copper fungicides add copper to the leaves and the soil. Repeated sprays over many years can build up to toxic levels, so keep a record of what you apply."
+    },
+    {
+     "q": "Which soils are short of copper?",
+     "a": "Peat and other very organic soils are the most likely, followed by sandy, highly weathered and calcareous soils. Newly drained peat fields often show it in the first few years."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Magnesium deficiency",
+     "url": "/nutrient-deficiencies/magnesium-deficiency"
+    },
+    {
+     "label": "Calcium deficiency",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Rice Doctor (IRRI, ACIAR, University of Queensland): Copper deficiency",
+     "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Copper_deficiency.htm"
+    },
+    {
+     "label": "University of Hawaii CTAHR, Essential Nutrients for Plant Growth: Nutrient Functions and Deficiency Symptoms",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/pnm3.pdf"
+    },
+    {
+     "label": "University of Wisconsin Extension, Soil and Applied Copper (A2527)",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2527.pdf"
+    },
+    {
+     "label": "Mosaic Crop Nutrition, Copper",
+     "url": "https://www.cropnutrition.com/crop-nutrition/key-nutrients/copper/"
+    },
+    {
+     "label": "Haifa Group, Crop Guide: Nutrients for Cucumber",
+     "url": "https://www.haifa-group.com/cucumber-0/crop-guide-nutrients-cucumber"
+    },
+    {
+     "label": "Rice Today, Diagnosis by deduction (the MOET kit)",
+     "url": "https://ricetoday.irri.org/diagnosis-by-deduction/"
+    }
+   ]
+  }
+ ]
+}

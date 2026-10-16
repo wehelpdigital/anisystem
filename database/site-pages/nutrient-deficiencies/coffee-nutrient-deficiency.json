@@ -1,0 +1,752 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "coffee-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 810,
+ "title": "Coffee Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Coffee Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Coffee nutrient deficiency shows in the leaves. See the signs of nitrogen, phosphorus and potassium in kape, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "coffee nutrient deficiency",
+ "keywords": [
+  "coffee nutrient deficiency",
+  "coffee deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Coffee nutrient deficiency is one of the first things to check when the leaves of your kape (coffee) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, boron, zinc, magnesium, calcium, sulfur and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/coffee-iron-deficiency.webp",
+  "alt": "Coffee leaf turned yellow between a net of green veins, an iron shortage sign on young leaves",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus, potassium and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But boron, zinc, calcium, sulfur and iron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which coffee nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Coffee nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of kape",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "the whole plant, old, lower leaves",
+     "The whole tree turns pale yellow green, leaves lose their shine and new shoots barely grow.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Old leaves go mottled yellow or take a pink to purple tint. Roots and new growth stay weak.",
+     "Ammonium phosphate 18 46 0, 16 20 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves get a yellow band at the edge, then dark brown dead spots that join into a burnt edge. The centre stays green.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Old leaves yellow along the edges and between the veins, with a wide band of sunken light brown spots.",
+     "Magnesium sulfate (Epsom salt), Kieserite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of kape",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "New leaves come out small, bent and misshapen with dead tips, and the shoot tip dies.",
+     "Borax, Solubor"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "New leaves narrow and strap like, yellow between dark green veins, bunched at the branch tip.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "Young leaves turn bronze at the edges and cup downward. The shoot tip dies back.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "Young leaves pale yellow, a little more along the midrib, but they keep their shine.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "Young leaves light yellow to creamy white with a sharp net of green veins. Old leaves stay green.",
+     "Ferrous sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a coffee nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest coffee nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in coffee",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Leaves turn an even pale green, then yellow green, until the whole tree looks pale. In the Hawaii trial the young leaves paled first in full sun and the old leaves followed. Indian guides say the older, lower leaves go first. Leaves lose their normal glossy shine, old leaves may show whitish veins and drop early. Shoot growth falls by half or more. Flowering comes late and beans fill poorly. You see it most at this stage: any age, worst during new leaf growth and flowering, when uptake peaks, and on heavy bearing trees."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "Trees that get little or no fertilizer, sandy or eroded soils with little organic matter, heavy rain that washes nitrogen down. Coffee grown in full sun, which uses nitrogen fast."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency also yellows young leaves, but those leaves keep their shine and the yellow sits along the midrib. Coffee leaf rust gives round pale yellow spots on top of the leaf with orange powder underneath, starting on the lower branches, not an even pale color. To be sure, send a leaf sample: on a lateral branch about halfway up the tree, pick the most recently matured leaf, usually the third or fourth pair back from the tip, from at least 15 trees, at or just before flowering, as the University of Hawaii coffee guide advises. Healthy leaves in the Hawaii trial held 3.0 to 3.7 percent nitrogen and deficient ones 1.5 to 1.9 percent."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in a ring under the canopy and work it in, following the soil test. For a quick boost, Kerala Agricultural University gives a foliar spray of Urea at 10 grams per liter every 15 days. Yara puts the yearly nitrogen uptake of mature coffee at 150 to 250 kg per hectare. So split the soil dose over the rainy season."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, fertilize every year in splits at the start and middle of the rains, keep a mulch and organic matter on the soil."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in coffee",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "It develops slowly. Older leaves first show a faint mottled yellowing, then a soft yellow between the veins, and in bad cases dead spots. Indian guides also note a pink or purple tint on old leaves. Roots stay small, the tree grows slowly, and flowering and fruit set come late. You see it most at this stage: nursery and young trees after planting, and before flowering in bearing trees."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils that lock up phosphorus, and soils low in organic matter. A study of 22 coffee farms in Pigtauranan, Bukidnon found soil phosphorus very deficient on moderately acid soils (pH 5.6 to 6)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency makes the whole tree pale, not mottled or purplish. Magnesium deficiency also yellows old leaves between the veins. To be sure, soil test for available phosphorus and pH, plus a leaf test of the third or fourth leaf pair on a fruiting branch. Healthy leaves in the Hawaii trial held 0.14 to 0.18 percent phosphorus and deficient ones 0.05 to 0.08 percent."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply a phosphorus fertilizer near the roots, following the soil test. Superphosphate 0 20 0 acts fast. Rock phosphate and bone meal work slowly, as Kerala Agricultural University advises. The Bukidnon study suggests 16 20 0 and Ammonium phosphate 18 46 0. TNAU gives a foliar spray of DAP (Ammonium phosphate 18 46 0) at 2 percent (20 grams per liter) for a quick fix. Lime very acid soils, since phosphorus is most available near pH 6.5."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium phosphate 18 46 0",
+    "16 20 0",
+    "Superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, put phosphorus in the planting hole, add compost or manure every year, and lime acid soils based on a soil test."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in coffee",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Only the older leaves show it. A yellow band forms along the leaf edge, then dark brown dead spots appear on the edge and grow until the whole edge is dark brown while the area along the midrib stays green. Young leaves stay normal. Badly hit leaves fall early and branches can die back. You see it most at this stage: bearing trees, most of all while the berries grow and fill, when potash demand peaks."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "Sandy or porous soils and heavy rain that leach potash, heavy crops that carry potash away in the pulp. Heavy liming or magnesium that crowd out potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also starts on old leaves. But its spots are sunken and light brown in a wide band, with yellowing between the veins near the midrib. To be sure, leaf test of the third or fourth leaf pair on a fruiting branch, at or before flowering. Healthy leaves in the Hawaii trial held 2.6 to 3.9 percent potassium and deficient ones 0.4 to 1.1 percent."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 to the soil under the canopy in split doses, following the soil test, as Kerala Agricultural University advises. For a quick fix spray Sulfate of potash at 10 grams per liter with a sticker in the morning. Yara puts the yearly potash uptake of mature coffee at 150 to 250 kg per hectare, about the same as nitrogen."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, give potash every year together with nitrogen, in splits during the rains, and return pulp and prunings to the field."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in coffee",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves come out light green, small, curved and leathery, mottled with small dead spots and with dead tips and uneven edges. The tip bud grows abnormally and can die, and the side branches show the same on their newest leaves. Older leaves stay normal. Flowers drop, fruit set is poor and beans can be hollow. You see it most at this stage: new flushes and flowering, often after a long dry season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in boron, heavy liming, high rates of muriate of potash, and long droughts or very heavy rain. A Yara survey of about 16,000 coffee leaf samples found 29 percent below the critical boron level."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency also damages young leaves and kills the tip bud, but the leaves turn bronze along the edges and cup downward. Zinc deficiency gives narrow, strap like leaves with green veins on a yellow background and short internodes, without dead spots and tips. To be sure, leaf test of the third or fourth leaf pair on a fruiting branch. In the Hawaii trial deficient leaves held 9 ppm boron and healthy ones 31 to 52 ppm."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Kerala Agricultural University gives Borax to the soil at 4 grams per tree, or a foliar spray of Borax at 1 gram per liter. TNAU gives a 0.2 percent Borax spray (2 grams per liter). Do not mix borax with calcium or ammonium fertilizers in the same tank. Boron is toxic in excess, so do not repeat high doses without a test."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep organic matter up, do not overlime, and add a small boron dose before flowering on soils that tested low."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in coffee",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves yellow between the veins, at first just like iron deficiency. Later new leaves stay small and narrow, often strap like, with dark green veins, mostly along the midrib, on a yellow green background. Internodes stay short so leaves bunch into a rosette. Older leaves look normal. Berries can be misshapen and fruit develops poorly. You see it most at this stage: new flushes before and around flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soils, heavy phosphate fertilizer, and soils low in organic matter. Zinc is most available between pH 5 and 7.5."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency also yellows young leaves between green veins, but the leaves grow to normal size and shape and do not bunch. Boron deficiency also deforms new leaves, but with dead spots, dead tips and a dying tip bud. To be sure, leaf test of the third or fourth leaf pair on a fruiting branch. Healthy coffee leaves held 18 to 25 ppm zinc in the Hawaii trial."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "In bad cases Kerala Agricultural University gives a morning spray of Zinc sulfate at 2 grams per liter mixed with 2.5 grams per liter of lime (calcium carbonate). TNAU gives Zinc sulfate at 0.5 percent (5 grams per liter). Do not apply zinc on the same day as phosphate fertilizer."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid overliming and very heavy phosphate, and spray zinc before flowering where leaf tests run low."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in coffee",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves first go pale along the edges, then sunken, yellow brown to light brown dead spots form in a wide band along the edge. The leaf also yellows between the veins, most of all near the midrib. Leaves can curl or cup and drop early after a long shortage. Young leaves stay normal. You see it most at this stage: bearing trees, mostly as the berries mature."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "Acid, sandy, leached soils and heavy use of potash or lime, which compete with magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also starts at the edge of old leaves. But its spots are dark brown and join into a solid burnt edge, without yellowing between the veins. To be sure, leaf test of the third or fourth leaf pair on a fruiting branch. Healthy leaves in the Hawaii trial held 0.30 to 0.35 percent magnesium and deficient ones 0.04 to 0.11 percent."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Kerala Agricultural University gives Magnesium sulfate at 32 grams per tree, placed in a band near the tree after a soil test. On acid soils Dolomite gives magnesium and lime together and keeps the problem away over time. Do not apply magnesium and potash fertilizer at the same time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Kieserite",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use Dolomite instead of plain lime on acid soils and keep potash and magnesium in balance."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in coffee",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn bronze, mostly along the edges, while the area along the midrib stays green. They do not open fully and cup downward. Later the newest leaves die and the tip bud dies back. Roots stay short and weak, and berries can be misshapen. You see it most at this stage: new flushes and while berries fill."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils, sandy soils that leach, and heavy potash or phosphorus, which push calcium out."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also hits young leaves and the tip. But leaves are small, curved and spotted, with dead tips, not bronzed and cupped. To be sure, soil test for pH and calcium, and a leaf test of the third or fourth leaf pair. Healthy leaves in the Hawaii trial held 0.94 to 1.16 percent calcium and deficient ones 0.36 to 0.55 percent."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils Kerala Agricultural University gives 340 grams of lime per tree per year. Use Dolomite if magnesium is also low. On soils that are not acid use Gypsum. TNAU gives a calcium chloride spray at 1 to 2 percent for a quick fix on leaves."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soils based on a soil test and keep potash and phosphorus in balance."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in coffee",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves turn evenly pale, with a faint yellow between the veins that is strongest along the midrib. Unlike nitrogen shortage, the leaves keep their glossy shine. New leaves stay small, internodes are short and shoots grow slowly. In long cases older leaves pale too. Fruit set drops and ripening is late. You see it most at this stage: new flushes and berry maturing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "Soils low in organic matter, sandy soils that leach, burning of prunings and weeds. Years of urea and muriate of potash with no sulfur source."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency also gives pale leaves, but the tree loses its shine and the old leaves yellow too. Iron deficiency gives a sharp net of green veins on a yellow or cream young leaf. To be sure, leaf test of the third or fourth leaf pair on a fruiting branch. Healthy leaves in the Hawaii trial held 0.12 to 0.17 percent sulfur and deficient ones 0.04 to 0.05 percent."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use a sulfur carrying fertilizer such as Ammonium sulfate 21 0 0 or Superphosphate 0 20 0 in place of part of the urea. Kerala Agricultural University gives sulfur dust at 10 grams per tree on sulfur deficient soils, and Gypsum on alkaline soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum",
+    "Superphosphate 0 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep ammonium sulfate in the yearly program, return prunings as mulch instead of burning them, and build organic matter."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in coffee",
+   "id": "iron"
+  },
+  {
+   "type": "image",
+   "src": "/images/site/deficiencies/coffee-iron-deficiency.webp",
+   "alt": "Coffee leaf turned yellow between a net of green veins, an iron shortage sign on young leaves",
+   "caption": "Photo: Scot Nelson, CC0 1.0, via Flickr"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves turn light green between the veins, then yellow and finally almost creamy white. While every vein stays green and stands out as a clear net. The leaves grow to near normal shape but can be thin and small. Older leaves stay green. In bad cases leaf tips and edges brown, leaves drop and fruits stay small. You see it most at this stage: new flushes, most often after waterlogging or on limed spots."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in kape"
+  },
+  {
+   "type": "text",
+   "text": "High pH or overlimed soils and waterlogged soils. Kerala Agricultural University notes that low potash can bring it on."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Zinc deficiency starts the same way, but the leaves turn narrow and strap like and bunch into a rosette. Sulfur deficiency gives an even pale leaf without the sharp green vein net. To be sure, soil test for pH and check drainage. Leaf test of the third or fourth leaf pair: the Hawaii trial found 1 to 25 ppm iron in deficient leaves and 43 to 61 ppm in healthy ones."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a foliar spray of Ferrous sulfate at 0.5 percent (5 grams per liter). Kerala Agricultural University gives 6 grams of Ferrous sulfate per tree to the soil where a test shows low iron. Fix drainage where water stands."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not overlime, drain wet spots and keep potash in balance."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any coffee nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your kape needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick kape, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Coffee nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my kape leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: the whole tree turns pale yellow green, leaves lose their shine and new shoots barely grow. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in coffee?",
+     "a": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 in a ring under the canopy and work it in, following the soil test. For a quick boost, Kerala Agricultural University gives a foliar spray of Urea at 10 grams per liter every 15 days."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in coffee?",
+     "a": "Apply a phosphorus fertilizer near the roots, following the soil test. Superphosphate 0 20 0 acts fast."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in coffee?",
+     "a": "Apply Muriate of potash 0 0 60 to the soil under the canopy in split doses, following the soil test, as Kerala Agricultural University advises. For a quick fix spray Sulfate of potash at 10 grams per liter with a sticker in the morning."
+    },
+    {
+     "q": "How do I know which nutrient my kape lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the coffee nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Nagao, Kobayashi and Yasuda 1986, Mineral deficiency symptoms of coffee (UH CTAHR RES 073)",
+     "url": "https://www3.ctahr.hawaii.edu/oc/freepubs/pdf/RES-073.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech: Coffee nutrient deficiencies",
+     "url": "https://celkau.in/crops/plantation/coffee/deficiency.php"
+    },
+    {
+     "label": "UH CTAHR Hawaii Coffee Ed: How to take coffee leaf and soil samples",
+     "url": "https://www.hawaiicoffeeed.com/uploads/2/6/7/7/26772370/how_to_take_coffee_leaf_and_soil_samples_092525.pdf"
+    },
+    {
+     "label": "Yara: Nutritional summary, coffee",
+     "url": "https://english-master.yara.co.uk/crop-nutrition-master/coffee/nutritional-summary-coffee/"
+    },
+    {
+     "label": "Pacific Pests, Pathogens and Weeds fact sheet: Coffee brown eye spot",
+     "url": "https://apps.lucidcentral.org/pppw_v10/text/web_full/entities/coffee_browneye_spot_142.htm"
+    },
+    {
+     "label": "TNAU Agritech: Nitrogen deficiency in coffee",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/coffee_nitrogen.html"
+    },
+    {
+     "label": "Francisco, Labajo and Ebuna 2022, Soil quality assessment on coffee farms in Pigtauranan, Bukidnon, Philippines",
+     "url": "https://smujo.id/td/article/view/12036"
+    },
+    {
+     "label": "TNAU Agritech: Phosphorus deficiency in coffee",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/coffee_phosphorus.html"
+    },
+    {
+     "label": "UH CTAHR Hawaii Coffee Ed: Nutritional problems",
+     "url": "https://www.hawaiicoffeeed.com/nutritional-problems.html"
+    },
+    {
+     "label": "TNAU Agritech: Potassium deficiency in coffee",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/coffee_potassium.html"
+    },
+    {
+     "label": "Kawabata and Nakamoto, Spraying to suppress coffee leaf rust in Hawaii (UH CTAHR PD 118)",
+     "url": "https://www.hawaiicoffeeed.com/uploads/2/6/7/7/26772370/pd-118_15.pdf"
+    },
+    {
+     "label": "U.S. Borax: Boron and coffee plant nutrition",
+     "url": "https://agriculture.borax.com/blog/2024/boron-and-coffee-plant-nutrition"
+    }
+   ]
+  }
+ ]
+}

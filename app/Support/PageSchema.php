@@ -188,7 +188,7 @@ class PageSchema
         $heading = null;
         foreach ($blocks as $i => $b) {
             if (($b['type'] ?? '') === 'heading') {
-                $heading = ['text' => (string) ($b['text'] ?? ''), 'i' => $i];
+                $heading = ['text' => (string) ($b['text'] ?? ''), 'i' => $i, 'id' => SitePages::blockAnchor($b, $i)];
             }
             if (($b['type'] ?? '') !== 'steps') {
                 continue;
@@ -207,7 +207,7 @@ class PageSchema
                     'position' => $n + 1,
                     'name' => trim((string) ($s['title'] ?? '')) ?: Str::limit(SitePages::plain((string) ($s['text'] ?? '')), 80, ''),
                     'text' => SitePages::plain((string) ($s['text'] ?? $s['title'] ?? '')),
-                    'url' => $heading ? $canonical . '#' . SitePages::anchor($heading['text'], $heading['i']) : null,
+                    'url' => $heading ? $canonical . '#' . $heading['id'] : null,
                 ], fn ($v) => $v !== null && $v !== ''), $steps, array_keys($steps)),
             ];
         }

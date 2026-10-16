@@ -1,0 +1,558 @@
+{
+ "note": "Photos of the nutrient deficiency entries (2026-10-16): free licences only, a stand in said as one. Built by the scratchpad nd/photos.py.",
+ "entries": {
+  "avocado-potassium-deficiency": {
+   "src": "/images/site/deficiencies/avocado-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/avocado-potassium-deficiency-480.webp",
+   "alt": "Avocado leaves with wide brown, scorched edges from potassium shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
+   "standin": false
+  },
+  "avocado-boron-deficiency": {
+   "src": "/images/site/deficiencies/avocado-boron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/avocado-boron-deficiency-480.webp",
+   "alt": "Deformed, lumpy avocado fruits, possibly from boron shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
+   "standin": false
+  },
+  "banana-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/banana-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/banana-nitrogen-deficiency-480.webp",
+   "alt": "Row of young banana plants with pale, yellow green leaves from a mild nitrogen shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/33893278323/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/4172/33893278323_7921af18a5_o.jpg",
+   "standin": false
+  },
+  "banana-calcium-deficiency": {
+   "src": "/images/site/deficiencies/banana-calcium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/banana-calcium-deficiency-480.webp",
+   "alt": "Banana plant whose youngest leaf is curled and bent over, a calcium shortage sign",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/32416931791/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/301/32416931791_473ec7bde7_o.jpg",
+   "standin": false
+  },
+  "banana-boron-deficiency": {
+   "src": "/images/site/deficiencies/banana-boron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/banana-boron-deficiency-480.webp",
+   "alt": "Banana leaf with a crinkled, rippled blade, a boron shortage sign",
+   "credit": "Forest and Kim Starr, CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/97499887@N06/24954808580/",
+   "license": "CC BY 2.0",
+   "big": "https://live.staticflickr.com/1510/24954808580_9225722047_o.jpg",
+   "standin": false
+  },
+  "cabbage-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/cabbage-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cabbage-nitrogen-deficiency-480.webp",
+   "alt": "Small cabbage plant with pale leaves and yellow, reddish older leaves from nitrogen shortage",
+   "credit": "Rasbak (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "cabbage-potassium-deficiency": {
+   "src": "/images/site/deficiencies/cabbage-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cabbage-potassium-deficiency-480.webp",
+   "alt": "Cabbage with dry, scorched outer leaf edges from potassium shortage",
+   "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:K_deficient_cabbage_2017_05_10_6923.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/6/62/K_deficient_cabbage_2017_05_10_6923.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "cabbage-calcium-deficiency": {
+   "src": "/images/site/deficiencies/cabbage-calcium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cabbage-calcium-deficiency-480.webp",
+   "alt": "Cabbage head cut open showing brown rotten inner leaves (internal tip burn) from calcium shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/9738859776/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7411/9738859776_5d3bbcf589_o.jpg",
+   "standin": false
+  },
+  "cacao-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/cacao-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cacao-nitrogen-deficiency-480.webp",
+   "alt": "Cacao seedlings in pots with yellowing leaves (nitrogen shortage), some with brown leaf edges (potassium)",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
+   "standin": false
+  },
+  "cacao-potassium-deficiency": {
+   "src": "/images/site/deficiencies/cacao-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cacao-potassium-deficiency-480.webp",
+   "alt": "Cacao seedlings whose older leaves have brown, scorched edges from potassium shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/14720642156/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3872/14720642156_5970d7d4cf_o.jpg",
+   "standin": false
+  },
+  "cauliflower-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/cauliflower-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cauliflower-nitrogen-deficiency-480.webp",
+   "alt": "Cauliflower plants whose older leaves turn pale and reddish purple from nitrogen shortage",
+   "credit": "Rasbak (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Brassica_oleracea_Cauliflower_Bloemkool_stikstofgebrek.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/3/32/Brassica_oleracea_Cauliflower_Bloemkool_stikstofgebrek.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "chili-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/chili-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/chili-nitrogen-deficiency-480.webp",
+   "alt": "Close view of chili leaves turned pale yellow green from nitrogen shortage",
+   "credit": "Maja Dumat, CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/47439717@N05/46589851562/",
+   "license": "CC BY 2.0",
+   "big": "https://live.staticflickr.com/4847/46589851562_b5bcaabb79_o.jpg",
+   "standin": false
+  },
+  "citrus-zinc-deficiency": {
+   "src": "/images/site/deficiencies/citrus-zinc-deficiency.webp",
+   "thumb": "/images/site/deficiencies/citrus-zinc-deficiency-480.webp",
+   "alt": "Citrus leaves with yellow blotches between green veins, a zinc shortage pattern",
+   "credit": "Scot Nelson (photo by Erika Magarifuji Location), CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
+   "standin": false
+  },
+  "citrus-iron-deficiency": {
+   "src": "/images/site/deficiencies/citrus-iron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/citrus-iron-deficiency-480.webp",
+   "alt": "Potted Meyer lemon with pale, yellowing leaves from a shortage of iron, zinc and other minor nutrients",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/15314315350/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3952/15314315350_327f6437f2_o.jpg",
+   "standin": false
+  },
+  "coconut-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/coconut-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/coconut-nitrogen-deficiency-480.webp",
+   "alt": "Young coconut palm with pale yellow fronds all over from nitrogen shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/5684679401/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/5025/5684679401_3cf822cdff_o.jpg",
+   "standin": false
+  },
+  "coconut-potassium-deficiency": {
+   "src": "/images/site/deficiencies/coconut-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/coconut-potassium-deficiency-480.webp",
+   "alt": "Coconut palm whose fronds are dried and brown at the tips from severe potassium shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/33617154135/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/2898/33617154135_33d89f6da9_o.jpg",
+   "standin": false
+  },
+  "coconut-boron-deficiency": {
+   "src": "/images/site/deficiencies/coconut-boron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/coconut-boron-deficiency-480.webp",
+   "alt": "Coconut frond with leaflets stuck together and crumpled like an accordion, a boron shortage sign",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/9543099088/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3817/9543099088_14bd5462ee_o.jpg",
+   "standin": false
+  },
+  "coffee-iron-deficiency": {
+   "src": "/images/site/deficiencies/coffee-iron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/coffee-iron-deficiency-480.webp",
+   "alt": "Coffee leaf turned yellow between a net of green veins, an iron shortage sign on young leaves",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/13669749005/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7179/13669749005_821492b905_o.jpg",
+   "standin": false
+  },
+  "corn-yellow-phosphorus-deficiency": {
+   "src": "/images/site/deficiencies/corn-yellow-phosphorus-deficiency.webp",
+   "thumb": "/images/site/deficiencies/corn-yellow-phosphorus-deficiency-480.webp",
+   "alt": "Young corn plants with purple red leaves among green ones, a phosphorus shortage sign",
+   "credit": "Agronom, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Niedob%C3%B3r_fosforu,_objawy.JPG",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Niedob%C3%B3r_fosforu%2C_objawy.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "corn-yellow-potassium-deficiency": {
+   "src": "/images/site/deficiencies/corn-yellow-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/corn-yellow-potassium-deficiency-480.webp",
+   "alt": "Corn plant whose lower leaves are yellow then brown along the edges from potassium shortage",
+   "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "corn-yellow-magnesium-deficiency": {
+   "src": "/images/site/deficiencies/corn-yellow-magnesium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/corn-yellow-magnesium-deficiency-480.webp",
+   "alt": "Corn leaf with pale yellow stripes between green veins from magnesium shortage",
+   "credit": "Alandmanson, CC BY 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
+   "license": "CC BY 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "corn-yellow-zinc-deficiency": {
+   "src": "/images/site/deficiencies/corn-yellow-zinc-deficiency.webp",
+   "thumb": "/images/site/deficiencies/corn-yellow-zinc-deficiency-480.webp",
+   "alt": "Young corn plant with broad white to pale yellow bands on the young leaves from zinc shortage",
+   "credit": "Agronom, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Maize_of_Zn_deficiency,_symptoms_on_leaves.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Maize_of_Zn_deficiency%2C_symptoms_on_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "cotton-potassium-deficiency": {
+   "src": "/images/site/deficiencies/cotton-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cotton-potassium-deficiency-480.webp",
+   "alt": "Cotton plants with some leaves turned yellow and orange from potassium shortage (small credit line in corner)",
+   "credit": "Soil Science, CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/22503286@N06/5087815254/",
+   "license": "CC BY 2.0",
+   "big": "https://live.staticflickr.com/4146/5087815254_e7a3115aff_o.jpg",
+   "standin": false
+  },
+  "ginger-iron-deficiency": {
+   "src": "/images/site/deficiencies/ginger-iron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/ginger-iron-deficiency-480.webp",
+   "alt": "Flowering ginger leaf turned pale yellow green with green veins from iron shortage (relative of ginger), shown on another crop as a stand in for ginger",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/44263355572/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/1869/44263355572_cdcbd0e752_o.jpg",
+   "standin": true
+  },
+  "guava-potassium-deficiency": {
+   "src": "/images/site/deficiencies/guava-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/guava-potassium-deficiency-480.webp",
+   "alt": "Guava leaves with brown, scorched edges and small brown specks from potassium shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/9570327169/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3759/9570327169_3793e0e6f2_o.jpg",
+   "standin": false
+  },
+  "jackfruit-potassium-deficiency": {
+   "src": "/images/site/deficiencies/jackfruit-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/jackfruit-potassium-deficiency-480.webp",
+   "alt": "Breadfruit tree (jackfruit relative) whose older leaves show scorched spots and edges from potassium shortage, shown on another crop as a stand in for jackfruit",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/39575220174/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/4623/39575220174_296914b073_o.jpg",
+   "standin": true
+  },
+  "lettuce-phosphorus-deficiency": {
+   "src": "/images/site/deficiencies/lettuce-phosphorus-deficiency.webp",
+   "thumb": "/images/site/deficiencies/lettuce-phosphorus-deficiency-480.webp",
+   "alt": "Lettuce plants whose older leaves take on a dull purple red tint from phosphorus shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
+   "standin": false
+  },
+  "lettuce-calcium-deficiency": {
+   "src": "/images/site/deficiencies/lettuce-calcium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/lettuce-calcium-deficiency-480.webp",
+   "alt": "Lettuce with browned, burnt edges on the young inner leaves (tip burn), linked to calcium shortage",
+   "credit": "AquaponicsLab.org, CC BY SA 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/128394688@N07/16846117238/",
+   "license": "CC BY SA 2.0",
+   "big": "https://live.staticflickr.com/8712/16846117238_17b4afa199_o.jpg",
+   "standin": false
+  },
+  "lettuce-boron-deficiency": {
+   "src": "/images/site/deficiencies/lettuce-boron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/lettuce-boron-deficiency-480.webp",
+   "alt": "Endive head (lettuce relative) whose growing point has died and turned black from boron shortage, shown on another crop as a stand in for lettuce",
+   "credit": "Hinrichs Berger, Jan, Dr., Fachreferent für Mykologie, LTZ Augustenber, CC BY 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Endivien_Bormangel,_Hinrichs-Berger,_Jan,_LTZ_Augustenberg.jpg",
+   "license": "CC BY 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Endivien_Bormangel%2C_Hinrichs-Berger%2C_Jan%2C_LTZ_Augustenberg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": true
+  },
+  "oilpalm-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/oilpalm-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/oilpalm-nitrogen-deficiency-480.webp",
+   "alt": "Young potted palm whose fronds are pale yellow green all over from nitrogen shortage (stand in for oil palm), shown on another crop as a stand in for oil palm",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/41915470222/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/904/41915470222_3cdd4cfc9d_o.jpg",
+   "standin": true
+  },
+  "oilpalm-potassium-deficiency": {
+   "src": "/images/site/deficiencies/oilpalm-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/oilpalm-potassium-deficiency-480.webp",
+   "alt": "Palm leaflets covered with orange yellow flecks and spots on older fronds from potassium shortage (stand in for oil palm), shown on another crop as a stand in for oil palm",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/33977810776/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/2855/33977810776_7b9c3e1aee_o.jpg",
+   "standin": true
+  },
+  "oilpalm-magnesium-deficiency": {
+   "src": "/images/site/deficiencies/oilpalm-magnesium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/oilpalm-magnesium-deficiency-480.webp",
+   "alt": "Date palm with golden yellow older fronds and green young fronds from magnesium shortage (stand in for oil palm), shown on another crop as a stand in for oil palm",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/41941114725/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/1762/41941114725_c6c90a9bd1_o.jpg",
+   "standin": true
+  },
+  "oilpalm-boron-deficiency": {
+   "src": "/images/site/deficiencies/oilpalm-boron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/oilpalm-boron-deficiency-480.webp",
+   "alt": "Palm frond with wavy, accordion folded leaflets, an early boron shortage sign (stand in for oil palm), shown on another crop as a stand in for oil palm",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/14600867158/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3913/14600867158_2a8f57914b_o.jpg",
+   "standin": true
+  },
+  "papaya-potassium-deficiency": {
+   "src": "/images/site/deficiencies/papaya-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/papaya-potassium-deficiency-480.webp",
+   "alt": "Papaya leaf turning yellow then brown along the edges, a potassium shortage sign on older leaves",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/34988210121/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/4267/34988210121_3f621ecbc6_o.jpg",
+   "standin": false
+  },
+  "papaya-boron-deficiency": {
+   "src": "/images/site/deficiencies/papaya-boron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/papaya-boron-deficiency-480.webp",
+   "alt": "Row of papaya fruits that grow lumpy and misshapen from boron shortage",
+   "credit": "Scot Nelson (photo by Wayne Nishijima), CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/5794720200/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/2195/5794720200_75243e3ff8_o.jpg",
+   "standin": false
+  },
+  "potato-potassium-deficiency": {
+   "src": "/images/site/deficiencies/potato-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/potato-potassium-deficiency-480.webp",
+   "alt": "Potato leaves with brown, scorched, curled edges from potassium shortage",
+   "credit": "Simranpreetsidhu, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Potassium_deficiency_in_potatoes.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/5/57/Potassium_deficiency_in_potatoes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "potato-magnesium-deficiency": {
+   "src": "/images/site/deficiencies/potato-magnesium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/potato-magnesium-deficiency-480.webp",
+   "alt": "Potato leaves yellow between the veins with brown dead patches from magnesium shortage (small credit line in corner)",
+   "credit": "ScotGov SASA, CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/141760766@N08/27057825523/",
+   "license": "CC BY 2.0",
+   "big": "https://live.staticflickr.com/7344/27057825523_2f158e2069_o.png",
+   "standin": false
+  },
+  "soybean-potassium-deficiency": {
+   "src": "/images/site/deficiencies/soybean-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/soybean-potassium-deficiency-480.webp",
+   "alt": "Soybean plants whose leaves turn yellow along the edges, potassium shortage in the upper canopy",
+   "credit": "Ark. Agricultural Experiment Station, CC BY SA 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/89175420@N02/49784213493/",
+   "license": "CC BY SA 2.0",
+   "big": "https://live.staticflickr.com/65535/49784213493_cc1c156088_o.jpg",
+   "standin": false
+  },
+  "strawberry-iron-deficiency": {
+   "src": "/images/site/deficiencies/strawberry-iron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/strawberry-iron-deficiency-480.webp",
+   "alt": "Strawberry leaves yellow between dark green veins, iron shortage on the youngest leaves",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/16265642638/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7359/16265642638_64c60f9d3c_o.jpg",
+   "standin": false
+  },
+  "stringbean-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/stringbean-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/stringbean-nitrogen-deficiency-480.webp",
+   "alt": "Bean plant (common bean) pale yellow green all over from nitrogen shortage (stand in for string bean), shown on another crop as a stand in for string bean",
+   "credit": "Rasbak, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": true
+  },
+  "stringbean-potassium-deficiency": {
+   "src": "/images/site/deficiencies/stringbean-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/stringbean-potassium-deficiency-480.webp",
+   "alt": "Bean plants (common bean) with leaves yellow between the veins and brown edges from potassium shortage (stand in for string bean), shown on another crop as a stand in for string bean",
+   "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/c/c2/K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": true
+  },
+  "sugarcane-iron-deficiency": {
+   "src": "/images/site/deficiencies/sugarcane-iron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/sugarcane-iron-deficiency-480.webp",
+   "alt": "Sugarcane leaves striped pale yellow to white between green veins from iron shortage",
+   "credit": "Amityadav8, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Amit_000_P_010_-_Copy.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Amit_000_P_010_-_Copy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "taro-potassium-deficiency": {
+   "src": "/images/site/deficiencies/taro-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/taro-potassium-deficiency-480.webp",
+   "alt": "Taro leaf scorched brown along the edges and between the veins from potassium shortage",
+   "credit": "Scot Nelson (photo by Douglas Hunefeld Photograph), CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/15243363620/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3927/15243363620_53da35506e_o.jpg",
+   "standin": false
+  },
+  "tomato-potassium-deficiency": {
+   "src": "/images/site/deficiencies/tomato-potassium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/tomato-potassium-deficiency-480.webp",
+   "alt": "Tomato leaf yellow and brown along the edges from potassium shortage",
+   "credit": "Goldlocki, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "tomato-magnesium-deficiency": {
+   "src": "/images/site/deficiencies/tomato-magnesium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/tomato-magnesium-deficiency-480.webp",
+   "alt": "Tomato leaf with yellow patches between green veins from magnesium shortage",
+   "credit": "Goldlocki (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  },
+  "tomato-calcium-deficiency": {
+   "src": "/images/site/deficiencies/tomato-calcium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/tomato-calcium-deficiency-480.webp",
+   "alt": "Ripe tomato with a big black, sunken patch at the blossom end from calcium shortage",
+   "credit": "Mark, CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/35387910@N04/6011378943/",
+   "license": "CC BY 2.0",
+   "big": "https://live.staticflickr.com/6138/6011378943_54961b0c18_o.jpg",
+   "standin": false
+  },
+  "tomato-boron-deficiency": {
+   "src": "/images/site/deficiencies/tomato-boron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/tomato-boron-deficiency-480.webp",
+   "alt": "Tomato leaves yellowing and browning at the edges and tips from boron shortage",
+   "credit": "Goldlocki (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_B-Mangel.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/1/13/Tomate_Blatt_B-Mangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "standin": false
+  }
+ },
+ "general": {
+  "p": {
+   "src": "/images/site/deficiencies/general-p.webp",
+   "thumb": "/images/site/deficiencies/general-p-480.webp",
+   "alt": "Low groundcover plant whose older leaves turn purple red, a phosphorus shortage sign",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/16233464175/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/8596/16233464175_ff7cac1833_o.jpg"
+  },
+  "k": {
+   "src": "/images/site/deficiencies/general-k.webp",
+   "thumb": "/images/site/deficiencies/general-k-480.webp",
+   "alt": "Leaves with brown, scorched edges (avocado): the classic potassium shortage sign on older leaves",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/25002992546/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/1569/25002992546_17d1269aa8_o.jpg"
+  },
+  "mg": {
+   "src": "/images/site/deficiencies/general-mg.webp",
+   "thumb": "/images/site/deficiencies/general-mg-480.webp",
+   "alt": "Tomato leaf yellow between green veins on an older, lower leaf: the magnesium shortage pattern",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/14840241853/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3899/14840241853_4039c2acec_o.jpg"
+  },
+  "ca": {
+   "src": "/images/site/deficiencies/general-ca.webp",
+   "thumb": "/images/site/deficiencies/general-ca-480.webp",
+   "alt": "Tomatoes with dark sunken rot at the blossom end: the classic calcium shortage sign in fruit",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/9737392836/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7392/9737392836_021bd7a41d_o.jpg"
+  },
+  "zn": {
+   "src": "/images/site/deficiencies/general-zn.webp",
+   "thumb": "/images/site/deficiencies/general-zn-480.webp",
+   "alt": "Citrus leaves with yellow blotches between green veins: the zinc shortage mottle",
+   "credit": "Scot Nelson (photo by Erika Magarifuji Location), CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg"
+  },
+  "fe": {
+   "src": "/images/site/deficiencies/general-fe.webp",
+   "thumb": "/images/site/deficiencies/general-fe-480.webp",
+   "alt": "Gardenia twig with young leaves yellow between dark green veins from iron shortage",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/11376214843/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3740/11376214843_36ba439b40_o.jpg"
+  },
+  "mn": {
+   "src": "/images/site/deficiencies/general-mn.webp",
+   "thumb": "/images/site/deficiencies/general-mn-480.webp",
+   "alt": "Rose leaf pale yellow between a net of green veins from manganese shortage",
+   "credit": "Sten Porse, CC BY SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Manganese-deficiency-rose.jpg",
+   "license": "CC BY SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/0/06/Manganese-deficiency-rose.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+  },
+  "b": {
+   "src": "/images/site/deficiencies/general-b.webp",
+   "thumb": "/images/site/deficiencies/general-b-480.webp",
+   "alt": "Coconut frond with leaflets stuck together and crumpled like an accordion: a boron shortage sign",
+   "credit": "Scot Nelson, CC0 1.0, via Flickr",
+   "page": "https://www.flickr.com/photos/62295966@N07/9543099088/",
+   "license": "CC0 1.0",
+   "big": "https://live.staticflickr.com/3817/9543099088_14bd5462ee_o.jpg"
+  },
+  "mo": {
+   "src": "/images/site/deficiencies/general-mo.webp",
+   "thumb": "/images/site/deficiencies/general-mo-480.webp",
+   "alt": "Poinsettia leaves with a thin yellow band along the leaf edges, a classic molybdenum shortage sign",
+   "credit": "aaa, CC BY SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Mo-def-points2.jpg",
+   "license": "CC BY SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Mo-def-points2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+  }
+ }
+}

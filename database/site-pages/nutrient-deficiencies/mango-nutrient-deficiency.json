@@ -1,0 +1,743 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "mango-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 610,
+ "title": "Mango Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Mango Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Mango nutrient deficiency shows in the leaves. See the signs of nitrogen, potassium, zinc and boron in mangga, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "mango nutrient deficiency",
+ "keywords": [
+  "mango nutrient deficiency",
+  "mango deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer"
+ ],
+ "excerpt": "Mango nutrient deficiency is one of the first things to check when the leaves of your mangga (mango) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, zinc, boron, calcium, magnesium, phosphorus, iron and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for mango",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, magnesium and phosphorus move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, boron, calcium, iron and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which mango nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Mango nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of mangga",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Small, pale yellow leaves over the whole tree, yellowish twigs, weak flushes and small fruit.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Old leaves get grey to brown dead edges and scattered yellow to orange spots. Fruit stays small.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves, between the veins",
+     "Old leaves yellow between the veins while the veins stay dark green like a fishbone. Edges bronze.",
+     "Magnesium sulfate (Epsom salt), Kieserite"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves",
+     "Slow growth, old leaves fall early, shoot tips die back and new leaves stay small and dark green.",
+     "Superphosphate 0 20 0, Complete 14 14 14"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of mangga",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "New leaves small, thick, brittle and crowded in a rosette at the shoot tip, pale between green veins (little leaf).",
+     "Zinc sulfate"
+    ],
+    [
+     "Boron",
+     "fruit, grain or tubers, young leaves and the tip",
+     "Fruit cracks and shows brown, soft, watery flesh inside. Many flowers drop. New leaves thick and misshapen.",
+     "Borax, Solubor"
+    ],
+    [
+     "Calcium",
+     "fruit, grain or tubers, young leaves and the tip",
+     "Ripening fruit go soft and watery at the tip (soft nose) or brown and jelly like inside near the seed.",
+     "Agricultural lime, Dolomite"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "Newest leaves pale yellow to almost white with a fine net of green veins.",
+     "Ferrous sulfate, Iron chelate (Fe EDDHA)"
+    ],
+    [
+     "Manganese",
+     "young leaves and the tip, between the veins",
+     "Leaves just reaching full size turn yellowish green with a fine net of green veins and grey specks.",
+     "Manganese sulfate"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a mango nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest mango nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in mango",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Leaves come out undersized and turn an even pale green to yellow, older leaves first, until the whole canopy looks yellowish. Even the young twigs take on a yellow color. New flushes are short and few, growth slows badly, and the fruit that sets stays small and matures early. You see it most at this stage: any age. Most common in young trees that are never fed and in bearing trees that carried a big crop without fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "Trees that get little or no fertilizer, sandy soils low in organic matter, and heavy rain that washes nitrogen down. Thick grass and weeds under the canopy also compete for it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also starts on old leaves. But the veins stay dark green in a fishbone pattern while the tissue between them yellows. To be sure, take a leaf test before flower induction: the youngest fully expanded, hardened leaf of a flush (about eight weeks old), four or five leaves per tree from ten trees, as the Australian mango industry guide describes. A soil test taken at the same time helps read the leaf result."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Feed nitrogen in a ring under the edge of the canopy and cover it with soil. The DA mango GAP code gives Complete 14 14 14 by tree age, for example 500 g to 1 kg per tree at 5 to 6 years, 2 kg at 7 to 8 years, 3 kg at 9 to 10 years and 5 kg at 11 to 15 years, half at the start and half at the end of the rainy season. For quick greening, Kerala Agricultural University gives a Urea spray of 10 grams per liter every 15 days. TNAU gives 80 kg of nitrogen per hectare as its soil rate."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, fertilize every year in two splits and add compost or manure."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in mango",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves show it first. Yara describes greyish dead tissue along the leaf edges, after which the leaves die, without a general yellowing of the blade. Indian guides add white, yellow or orange spots scattered over both sides of old leaves, scorch that starts at the tip and edge, and edges that curl up. In bad cases leaves are small, roots are weak, shoot tips burn and die back, and fruit size and yield drop. You see it most at this stage: bearing trees, most during fruit growth, and trees on sandy soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils, sandy soils, heavy rain or heavy irrigation that leaches potash, drought, and soils with little potash in reserve. Years of nitrogen only feeding make it worse."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency also starts on old leaves. But the tissue between the veins yellows in a fishbone pattern, not a grey brown edge scorch. To be sure, leaf test of the youngest fully expanded, hardened leaves before flower induction. A soil test for potash, magnesium and calcium together, since their balance matters."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 under the canopy edge in split doses, following the soil test, as Kerala Agricultural University advises. As a quick help, KAU gives a Sulfate of potash spray at 10 grams per liter with a sticker in the morning. TNAU gives a potassium chloride spray at 2 percent (20 grams per liter) every two weeks. Keep the soil pH above 6 with lime or dolomite on acid soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50",
+    "Complete 14 14 14",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a complete fertilizer every year, such as the 14 14 14 schedule in the DA mango GAP code."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in mango",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "The new flush shows it. Leaves come out small, narrow, thick and brittle, with wavy edges that bend up or down and tips that curl back. The tissue between the veins turns pale green to yellow while the midrib stays green. Short internodes crowd the leaves into a rosette, and some twigs die back. Flower panicles on these shoots are small, odd shaped and drooping. You see it most at this stage: on new flushes, in young trees and in old trees on poor soils. It also cuts flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "High pH and limestone soils, sandy soils, and heavy phosphate fertilizer, which holds zinc back. Zinc is most available between pH 5 and 7.5."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Mango malformation, a disease caused by the fungus Fusarium mangiferae, also shortens shoot internodes into bunches. Its panicles become short, thick and clustered, set no fruit and dry black. To be sure, leaf test of the youngest fully hardened leaves and a soil test for pH and zinc. Spray zinc on a few branches."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives Zinc sulfate on the soil at 10 kg per hectare, or a spray at 0.5 percent (5 grams per liter). For severe cases Kerala Agricultural University gives a morning spray of 2 grams of Zinc sulfate plus 2.5 grams of fine lime (calcium carbonate) per liter. 8 kg per acre (about 20 kg per hectare) on the soil. Spray when the new flush is expanding. Do not apply zinc and phosphate fertilizer at the same time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, the DA mango GAP code calls for a foliar fertilizer with zinc, boron, magnesium and calcium 18 to 25 days after flower induction, before bagging."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in mango",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "It shows at the growing points, in young leaves and in developing fruit. New leaves stay small and turn thick, leathery and uneven in shape. Many flowers drop. Fruit may crack, the yellow flesh shows brown areas. In bad cases the flesh turns soft and watery and splits down to the centre. You see it most at this stage: flowering to fruit growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "TNAU links it to high rainfall areas, high temperature, acid soils and also limestone soils. Sandy soils low in organic matter and dry spells add to it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Floral malformation (Fusarium) gives short, thick, crowded panicles that set no fruit and turn black. Boron shortage shows instead as flower drop, thick misshapen young leaves and damaged fruit. To be sure, soil test for boron and a leaf test. Boron is a key trace element for mango but is hard to manage, so do not add it on guesswork."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives Borax at 5 to 10 kg per hectare on the soil, or a spray of Borax at 0.25 percent (2.5 grams per liter) every 10 days, or Solubor at 3 grams per liter. Kerala Agricultural University gives a lighter Borax spray of 1 gram per liter. Do not mix boron with calcium sprays or put borax down with ammonium fertilizers. Boron is toxic in excess, so keep to low rates."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax",
+    "Solubor"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, on soils that tested low, include boron in the foliar fertilizer the DA mango GAP code calls for after flower induction."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in mango",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "The fruit shows it first, from the inside. The flesh turns brown and breaks down (internal breakdown). At ripening the blossom end goes soft and water soaked while the shoulders are still firm (soft nose). Other forms are a hollow at the stem end, over ripe flesh around the seed (jelly seed), or spongy greyish black patches. On the tree, young leaves may yellow, wilt and curl down near the bud, and root and shoot tips brown and die. You see it most at this stage: fruit ripening, worse in fruit left to ripen on the tree."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "Acid and sandy soils low in calcium, soils high in sodium or aluminium, drought, and too much nitrogen or potash. High phosphorus and a shortage of boron also cut calcium use."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Fruit fly maggots also rot the flesh, but you will find sting marks on the skin and larvae inside. Stem end rot and anthracnose start as dark patches on the skin. To be sure, soil test for pH and calcium, and a leaf test. Cut open a sample of ripe fruit from each block and count how many show breakdown."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils Kerala Agricultural University gives Agricultural lime at 1 kg per tree per year in four doses of 250 grams. On neutral or alkaline soils use Gypsum. TNAU gives 50 kg per hectare. Cut back nitrogen on trees with soft nose, as UF IFAS advises, and harvest at the mature green stage. Calcium in the foliar spray after flower induction, as the DA GAP code lists, helps the fruit."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Dolomite",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soils, keep nitrogen and potash in balance, and water during long dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in mango",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Lower, older leaves yellow between the veins while the veins stay dark green, giving a fishbone pattern, often with a green wedge down the middle of the leaf. Bronzing starts at the edge, in the rounded margin between each pair of side veins. The yellow parts later brown and die. Leaves may curl and cup and fall early, and the tree grows less. You see it most at this stage: bearing trees, often after heavy potash feeding."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils, soils rich in potash or given heavy potash, and cold, wet periods."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Potassium deficiency also hits old leaves, but as a grey to brown scorch on the edges without the fishbone yellowing. Nitrogen deficiency yellows the whole leaf, veins included. To be sure, soil test for magnesium, potash and calcium, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives Magnesium sulfate at 5 to 10 kg per hectare on the soil, or a 2 percent spray (20 grams per liter) every two weeks. Kerala Agricultural University gives 32 kg per acre in bands near the trees and Dolomite for long term correction. Do not apply magnesium and potash fertilizer together."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Magnesium sulfate (Epsom salt)",
+    "Kieserite",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use dolomite instead of plain lime on acid soils and keep potash in balance with magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in mango",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Kerala Agricultural University notes a reddish color on the underside of leaves as the first sign, on older leaves. Leaf tips die, older leaves drop early and branches partly die back from the tip. Small, dark green young leaves sit at the ends of the branches, roots grow poorly, and fruit ripening and quality are delayed. You see it most at this stage: young trees and trees on poor, acid soils. Growth and flushing slow down."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "Acid soils that lock up phosphorus, and soils low in organic matter. Phosphorus is taken up best at pH 6.2 to 7.0."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency makes leaves pale, not dark. Drought, root damage and twig dieback diseases can also drop leaves and kill shoot tips. To be sure, soil test for available phosphorus and pH, and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Superphosphate for a quick fix, or bone meal or rock phosphate for slow, long term correction, as Kerala Agricultural University advises. TNAU also gives a phosphoric acid spray at 0.5 percent three times. On acid soils lime toward pH 6.2 to 7.0. Organic manure with phosphate dissolving bacteria helps free phosphorus."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Superphosphate 0 20 0",
+    "Complete 14 14 14",
+    "16 20 0",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, put phosphorus in the planting hole and use the Complete 14 14 14 schedule of the DA mango GAP code every year."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in mango",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "The youngest leaves show it first. At first even the smallest veins stay green, giving a net of green veins on a yellow leaf. Later the whole leaf turns pale yellow or bleaches white, and new leaves come out smaller. In extreme cases leaves dry from the tip down and shoots die back. You see it most at this stage: new flushes, mostly in trees on limey or waterlogged soils."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "High pH and limestone soils (lime induced chlorosis), waterlogged soils, and low potash. Many tropical soils hold plenty of iron (Kerala Agricultural University notes this for Kerala soils)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Zinc deficiency also hits young leaves, but they are small, thick and crowded in rosettes. Manganese deficiency shows on leaves just reaching full size, is milder, and has grey brown specks. To be sure, soil test for pH and iron, and check drainage. The Australian mango guide notes that soil iron is a more reliable measure than leaf iron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On high pH soils, UF IFAS advises chelated iron (Fe EDDHA works best) as a soil drench two or three times a year. On neutral or acid soils, Ferrous sulfate can go on the soil and be watered in two or three times a year. Kerala Agricultural University gives 6 kg per acre. UF notes that iron sprays on the leaves are generally not effective. Drain wet spots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate",
+    "Iron chelate (Fe EDDHA)"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid overliming and keep the soil drained."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Manganese deficiency in mango",
+   "id": "manganese"
+  },
+  {
+   "type": "text",
+   "text": "It shows on leaves that are just reaching full size, in the middle of the canopy. They turn yellowish green between the veins with a fine network of green veins on the upper side. Mature leaves become thicker and blunt, and light grey to greyish brown specks appear. In severe cases the leaves brown and growth slows. You see it most at this stage: new and maturing flushes. Leaf signs appear late."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why manganese deficiency happens in mangga"
+  },
+  {
+   "type": "text",
+   "text": "High pH and limestone soils, and sandy soils. In Florida it is part of mango decline together with iron shortage."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency shows on the very newest leaves and bleaches them paler, often to white. Zinc deficiency makes leaves small and crowded. To be sure, leaf test and soil test for pH and manganese. Spray a few branches."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for manganese deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Manganese sulfate on the leaves. Kerala Agricultural University gives 5 grams per liter. TNAU gives 0.2 percent (2 grams per liter) every two weeks. UF IFAS advises yearly sprays that carry manganese, zinc and boron on limey soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Manganese sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, avoid overliming and include manganese in the yearly foliar program on high pH soils."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any mango nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your mangga needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick mangga, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Mango nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my mangga leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: small, pale yellow leaves over the whole tree, yellowish twigs, weak flushes and small fruit. If the young leaves turn yellow first instead, look at zinc deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in mango?",
+     "a": "Feed nitrogen in a ring under the edge of the canopy and cover it with soil. The DA mango GAP code gives Complete 14 14 14 by tree age, for example 500 g to 1 kg per tree at 5 to 6 years, 2 kg at 7 to 8 years, 3 kg at 9 to 10 years and 5 kg at 11 to 15 years, half at the start and half at the end of the rainy season."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in mango?",
+     "a": "Apply Muriate of potash 0 0 60 under the canopy edge in split doses, following the soil test, as Kerala Agricultural University advises. As a quick help, KAU gives a Sulfate of potash spray at 10 grams per liter with a sticker in the morning."
+    },
+    {
+     "q": "What fertilizer fixes zinc deficiency in mango?",
+     "a": "TNAU gives Zinc sulfate on the soil at 10 kg per hectare, or a spray at 0.5 percent (5 grams per liter). For severe cases Kerala Agricultural University gives a morning spray of 2 grams of Zinc sulfate plus 2.5 grams of fine lime (calcium carbonate) per liter."
+    },
+    {
+     "q": "How do I know which nutrient my mangga lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the mango nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Calcium deficiency in all crops",
+     "url": "/nutrient-deficiencies/calcium-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "TNAU Agritech: Mango nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/mango_nitro.html"
+    },
+    {
+     "label": "DA BAFS Code of Good Agricultural Practices for Mango (PNS/BAFPS 45:2009), Explanatory Manual 2025",
+     "url": "https://bafs.da.gov.ph/wp-content/uploads/2025/05/2025_EM-GAP-Mango_compressed.pdf"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech: Mango nutrient deficiencies",
+     "url": "https://celkau.in/crops/fruits/mango/deficiency.php"
+    },
+    {
+     "label": "Australian Mango Industry Association: Leaf and soil analysis (mango best practice resource)",
+     "url": "https://www.industry.mangoes.net.au/cmsb/media/mango-bpr-leafsoil-analysis-april2020.pdf"
+    },
+    {
+     "label": "Magat and others 2004, Soil and leaf nutrient levels as diagnostic tools in selected fruit crops in the Philippines (AGRIS record)",
+     "url": "https://agris.fao.org/search/en/records/647246bc2c1d629bc97985a2"
+    },
+    {
+     "label": "UF IFAS EDIS HS2: Mango growing in the Florida home garden",
+     "url": "https://ask.ifas.ufl.edu/publication/MG216"
+    },
+    {
+     "label": "Yara Philippines: Potassium deficiency in mango",
+     "url": "https://www.yara.ph/crop-nutrition/mango/nutrient-deficiencies-mango/potassium-deficiency-mango/"
+    },
+    {
+     "label": "TNAU Agritech: Mango potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/mango_pota.html"
+    },
+    {
+     "label": "TNAU Agritech: Mango zinc deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/mango_zin.html"
+    },
+    {
+     "label": "TNAU Agritech: Mango boron deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/mango_bor.html"
+    },
+    {
+     "label": "Yara Philippines: Calcium deficiency in mango",
+     "url": "https://www.yara.ph/crop-nutrition/mango/nutrient-deficiencies-mango/calcium-deficiency-mango/"
+    },
+    {
+     "label": "TNAU Agritech: Mango calcium deficiency",
+     "url": "https://agritech.tnau.ac.in/horticulture/plant_nutri/mango_cal.html"
+    }
+   ]
+  }
+ ]
+}

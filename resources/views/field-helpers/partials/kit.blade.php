@@ -675,7 +675,7 @@
     // opts.help: the worded way into the explainer under the cards (when no spray list above has its "?").
     FH.prodStrip = (cards, opts) => { const seen = new Set(), o = opts || {}; return (cards && cards.length) ? '<div class="fh-pcards">' + cards.map((p) => '<div class="fh-pcard"><button type="button" class="fh-pcard-n" data-prod="' + esc(p.key) + '">'
         + '<b>' + esc(p.brand) + '</b><small' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</small>'
-        + ((p.ai || []).length ? '<span>' + esc(p.ai.join(' plus ')) + '</span>' : '') + (p.group ? '<i' + tlAttr(FH.tlGroup(p.group)) + '>' + esc(p.group) + '</i>' : '')
+        + ((p.ai || []).length ? '<span>' + esc(p.ai.join(' plus ')) + '</span>' : '') + (p.fert && p.grade ? '<span>' + esc(p.grade) + '</span>' : '') + (p.group ? '<i' + tlAttr(FH.tlGroup(p.group)) + '>' + esc(p.group) + '</i>' : '')
         + FH.mobChips(p.mob) + FH.selChip(p)
         + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '') + '</button>' + FH.prodShop(p) + '</div>').join('') + '</div>'
         + (o.help && cards.some((p) => (p.mob || []).length) ? '<div class="fh-mob-foot">' + FH.mobAskBtn() + '</div>' : '') : ''; };
@@ -852,19 +852,25 @@
         sheet._multi = false;
         sheet.setAttribute('aria-label', p.brand);
         // Each fact: its label, its value, and the Tagalog flag its label carries.
-        const facts = [['Active ingredients', (p.ai || []).join(', '), 'active-ingredient'], ['Group', p.group, FH.tlGroup(p.group)], ['Form', p.form, FH.tlForm(p.form) || 'formulation'],
-            ['When', p.timing && TIMING[p.timing] ? TIMING[p.timing][1] : '', TIMING_TL[p.timing]], ['Labelled for', (p.crops || []).join(', ')]].filter((x) => x[1]);
+        // A fertilizer (the Nutrient Deficiency Finder, 2026-10-16) says its grade and what it supplies instead.
+        const USE = { soil: 'On the soil', foliar: 'Sprayed on the leaves', both: 'On the soil or on the leaves' };
+        const facts = (p.fert
+            ? [['Grade', p.grade], ['Supplies', (p.nutrients || []).join(', ')], ['Form', p.form], ['Use', USE[p.use] || p.use], ['Labelled for', (p.crops || []).join(', ')]]
+            : [['Active ingredients', (p.ai || []).join(', '), 'active-ingredient'], ['Group', p.group, FH.tlGroup(p.group)], ['Form', p.form, FH.tlForm(p.form) || 'formulation'],
+                ['When', p.timing && TIMING[p.timing] ? TIMING[p.timing][1] : '', TIMING_TL[p.timing]], ['Labelled for', (p.crops || []).join(', ')]]).filter((x) => x[1]);
+        const FERT_KIND = { straight: 'Straight fertilizer', compound: 'Compound fertilizer', foliar: 'Foliar fertilizer', micronutrient: 'Micronutrient fertilizer', organic: 'Organic fertilizer', liming: 'Lime and soil conditioner' };
         // How its active ingredients move (the card's classes), each one's note from the book, and the way into the explainer.
         const pm = FH.mobChips(Array.isArray(p.mob) ? p.mob : [].concat(...(p.ai || []).map((a) => (FH.mob(a) || {}).c || [])));
         const pn = (p.ai || []).map((a) => { const m = FH.mob(a); return m && m.n ? ((p.ai.length > 1 && m.n.indexOf(':') < 0) ? a + ': ' : '') + m.n : ''; }).filter(Boolean).join(' ');
         sheet.innerHTML = '<div class="cp-box" tabindex="-1"><div class="cp-grip" aria-hidden="true"></div>'
             + '<div class="cp-head"><h2>' + esc(p.brand) + '</h2><button type="button" class="cp-x" aria-label="Close">' + FH.icon.x + '</button></div>'
-            + '<div class="fh-psheet"><p class="fh-pkind"><span' + tlAttr(KIND[p.kind] ? p.kind : '') + '>' + esc(KIND[p.kind] || p.kind || 'Product') + '</span>' + (p.company ? 'by ' + esc(p.company) : '') + '</p>'
+            + '<div class="fh-psheet"><p class="fh-pkind"><span' + tlAttr(!p.fert && KIND[p.kind] ? p.kind : '') + '>' + esc((p.fert ? FERT_KIND[p.kind] : KIND[p.kind]) || p.kind || 'Product') + '</span>' + (p.company ? 'by ' + esc(p.company) : '') + '</p>'
             + (pm ? '<div class="fh-psheet-mob">' + pm + FH.mobHelpBtn() + '</div>' + (pn ? '<p class="fh-ing-note">' + esc(pn) + '</p>' : '') : '')
             + '<div class="fhd-facts">' + facts.map(([l, v, k]) => '<div><small' + tlAttr(k) + '>' + esc(l) + '</small><b style="font-size:.88rem">' + esc(v) + '</b></div>').join('') + '</div>'
             + (p.note ? '<p class="fh-pnote">' + esc(p.note) + '</p>' : '')
             + '<div class="fh-psheet-shop"><b>Find it in a shop</b>' + FH.prodShop(p, true) + '</div>'
-            + FH.rateLine(p.kind === 'herbicide' ? 'weeds' : (p.kind === 'fungicide' ? 'disease' : 'pest'))
+            + (p.fert ? '<p class="fh-fine fh-rate">Use the rate on the label and your soil test. More than the crop needs is money lost, and too much of one nutrient can lock up another.</p>'
+                : FH.rateLine(p.kind === 'herbicide' ? 'weeds' : (p.kind === 'fungicide' ? 'disease' : 'pest')))
             + '<p class="fh-fine">The links only search Shopee and Lazada for this name. They are not a recommendation of any seller. Check the label and the FPA registration before you buy.</p></div>'
             + '<div class="fh-sheet-foot"><button type="button" class="fh-sheet-done">Close</button></div></div>';
         sheetTok++;

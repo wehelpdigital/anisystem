@@ -1,0 +1,646 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "garlic-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 490,
+ "title": "Garlic Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Garlic Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Garlic nutrient deficiency shows in the leaves. See the signs of nitrogen, sulfur and potassium in bawang, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "garlic nutrient deficiency",
+ "keywords": [
+  "garlic nutrient deficiency",
+  "garlic deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "complete fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Garlic nutrient deficiency is one of the first things to check when the leaves of your bawang (garlic) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, sulfur, potassium, phosphorus, boron, zinc, magnesium and calcium. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-k.webp",
+  "alt": "Potassium deficiency on a leaf, shown on another crop as a stand in for garlic",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, boron, zinc and calcium stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which garlic nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Garlic nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of bawang",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Older leaves turn pale to yellow, plants stay thin, and bulbs are small.",
+     "Urea 46 0 0, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Older leaves yellow and die along the edges, and bulbs stay small and store poorly.",
+     "Muriate of potash 0 0 60, Sulfate of potash 0 0 50"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Dark green, slow plants, sometimes reddish purple, with small roots and bulbs.",
+     "16 20 0, Single superphosphate 0 20 0"
+    ],
+    [
+     "Magnesium",
+     "old, lower leaves",
+     "Older leaves yellow, with whitish tips, and bulbs grow slowly.",
+     "Epsom salt / magnesium sulfate, Dolomite"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of bawang",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "Young leaves turn evenly yellow, plants are thin and weak, and bulbs are light with weak flavour.",
+     "Ammonium sulfate 21 0 0, Gypsum"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip, fruit, grain or tubers",
+     "Young leaves distorted, the growing point dies, and bulbs crack or are misshapen.",
+     "Borax"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "Young leaves pale and stay small, and bulbing is late.",
+     "Zinc sulfate, Agricultural lime"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "Young leaf tips die, roots are short, and bulbs are soft and store poorly.",
+     "Agricultural lime, Gypsum"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a garlic nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest garlic nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in garlic",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn pale green to yellow, growth slows, and plants are thin and stunted. Bulbs stay small and yield drops. You see it most at this stage: from emergence to the start of bulbing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, such as many fields that follow rice, and too little nitrogen."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency yellows the young leaves first. Viruses give yellow stripes along the leaves, not even yellowing. To be sure, check that older leaves yellowed first. Soil test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "In California trials, about 112 kg N per hectare (100 pounds per acre) raised yields in nine of ten fields. More helped in only four. Split the nitrogen through early growth (ICL). For quick help a 1 percent urea spray (10 g per liter) can be used (KAU)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Urea 46 0 0",
+    "Ammonium sulfate 21 0 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, do not give heavy nitrogen late."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in garlic",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn evenly yellow first. Plants are thin and weak, and bulbs weigh less and taste less pungent. You see it most at this stage: before and during bulbing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Garlic needs more sulfur than most vegetables (ICL). Sandy soils, low organic matter and sulfur free fertilizers bring it on."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on older leaves. To be sure, soil and leaf test for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ammonium sulfate 21 0 0",
+    "Gypsum",
+    "Single superphosphate 0 20 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep a sulfur source in every crop."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in garlic",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves yellow and then die along the edges. Bulbs are smaller with less dry matter and store poorly. You see it most at this stage: bulb enlargement, when potassium demand rises sharply."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils and fields cropped for years without potash. California soils with over 100 ppm potassium showed no response, so test first."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Leaf blight and purple blotch give spots, not even edge burn. To be sure, soil test for exchangeable potassium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 before planting and, where needed, again during bulbing (ICL), following the soil test. KAU gives a potassium sulfate spray of 10 g per liter for quick help."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Sulfate of potash 0 0 50"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, base potash on a soil test every season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in garlic",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Growth is stunted and slow, and leaves are dark green, sometimes with a reddish purple tint. Roots and bulbs develop poorly. You see it most at this stage: establishment."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Acid and volcanic soils. Garlic's small root system needs phosphorus close by at planting (ICL)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency makes leaves pale, not dark. To be sure, soil test for phosphorus. In California trials garlic seldom responded to phosphorus, so add it only when the test is low."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Place phosphorus in the root zone at planting, such as 16 20 0 or single superphosphate, following the soil test (ICL)."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "16 20 0",
+    "Single superphosphate 0 20 0",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, band phosphorus near the cloves at planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in garlic",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves become distorted, and in severe cases the growing point dies. Bulbs crack or grow misshapen. You see it most at this stage: bulbing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, alkaline soils and dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Calcium deficiency kills young leaf tips and softens bulbs. To be sure, soil test for boron."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 10 kg Borax per hectare (4 kg per acre) to the soil, or a borax spray of 1 g per liter. Do not exceed it. Boron is toxic in excess."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, test before applying boron."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in garlic",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves turn pale between the veins and fail to expand fully. Growth is stunted and bulbs form late. You see it most at this stage: early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Alkaline soils, low organic matter and heavy phosphorus."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency also yellows young leaves but bleaches them more. To be sure, soil and leaf test for zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 20 kg Zinc sulfate per hectare (8 kg per acre), or a morning spray of 2 g zinc sulfate with 2.5 g lime per liter in severe cases. Keep zinc and phosphate apart."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate",
+    "Agricultural lime"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep soil pH between 5 and 7.5."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Magnesium deficiency in garlic",
+   "id": "magnesium"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn yellow between the veins, sometimes with white tips and oval pale patches. Bulb growth slows. You see it most at this stage: mid season."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why magnesium deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Acid sandy soils and heavy potash."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency yellows leaves from the tips and keeps them upright. To be sure, soil test for magnesium."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for magnesium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "KAU gives about 80 kg magnesium sulfate per hectare (32 kg per acre) in bands near the plants. Use Dolomite on acid soils."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Epsom salt / magnesium sulfate",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid fields with dolomite."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Calcium deficiency in garlic",
+   "id": "calcium"
+  },
+  {
+   "type": "text",
+   "text": "The tips of young leaves die and turn brown, and roots grow less. Bulbing is late, and bulbs are soft and store poorly. You see it most at this stage: bulbing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why calcium deficiency happens in bawang"
+  },
+  {
+   "type": "text",
+   "text": "Very acid soils and dry spells that stop calcium moving into the plant."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Boron deficiency also damages young leaves but cracks the bulbs. To be sure, soil pH and calcium test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for calcium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "On acid soils KAU limes about 250 kg per hectare where the pH is 5.5 to 6. On alkaline soils use Gypsum."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Agricultural lime",
+    "Gypsum",
+    "Calcium nitrate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep moisture even so calcium keeps moving into the bulbs (ICL)."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any garlic nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your bawang needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick bawang, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Garlic nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my bawang leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: older leaves turn pale to yellow, plants stay thin, and bulbs are small. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in garlic?",
+     "a": "In California trials, about 112 kg N per hectare (100 pounds per acre) raised yields in nine of ten fields. More helped in only four."
+    },
+    {
+     "q": "What fertilizer fixes sulfur deficiency in garlic?",
+     "a": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, or add Gypsum or single superphosphate, following the soil test. KAU gives about 25 kg sulfur dust per hectare on sulfur poor soils."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in garlic?",
+     "a": "Apply Muriate of potash 0 0 60 before planting and, where needed, again during bulbing (ICL), following the soil test. KAU gives a potassium sulfate spray of 10 g per liter for quick help."
+    },
+    {
+     "q": "How do I know which nutrient my bawang lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the garlic nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency in all crops",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Boron deficiency in all crops",
+     "url": "/nutrient-deficiencies/boron-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "Tyler and others, California Agriculture (1988): Diagnosing nutrient needs of garlic",
+     "url": "https://www.haifa-group.com/sites/default/files/2024-03/Tyler%2520et%2520al.%25201988%252C%2520Diagnosing%2520nutrient%2520need%2520of%2520garlic.pdf"
+    },
+    {
+     "label": "ICL Growing: Growing garlic",
+     "url": "https://icl-growingsolutions.com/agriculture/crops/garlic/"
+    },
+    {
+     "label": "Kerala Agricultural University Agri Infotech Portal: Garlic nutrient deficiencies",
+     "url": "https://celkau.in/crops/vegetables/garlic/deficiency.php"
+    }
+   ]
+  }
+ ]
+}

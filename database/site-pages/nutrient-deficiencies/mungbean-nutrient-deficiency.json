@@ -1,0 +1,619 @@
+{
+ "section": "nutrient-deficiencies",
+ "slug": "mungbean-nutrient-deficiency",
+ "lang": "en",
+ "category": "Crop deficiencies",
+ "sortOrder": 60,
+ "title": "Mungbean Nutrient Deficiency: Signs, Causes and the Fertilizer That Fixes It",
+ "metaTitle": "Mungbean Nutrient Deficiency: Signs and Fertilizer Fix",
+ "metaDescription": "Mungbean nutrient deficiency shows in the leaves. See the signs of nitrogen and phosphorus in monggo, how to be sure, and the fertilizer to apply.",
+ "focusKeyword": "mungbean nutrient deficiency",
+ "keywords": [
+  "mungbean nutrient deficiency",
+  "mungbean deficiency",
+  "nutrient deficiency in plants",
+  "potash fertilizer",
+  "fertilizer with zinc",
+  "foliar fertilizer",
+  "ammonium sulfate fertilizer"
+ ],
+ "excerpt": "Mungbean nutrient deficiency is one of the first things to check when the leaves of your monggo (mungbean) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, sulfur, zinc, iron and boron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "heroImage": {
+  "src": "/images/site/deficiencies/general-p.webp",
+  "alt": "Phosphorus deficiency on a leaf, shown on another crop as a stand in for mungbean",
+  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+ },
+ "blocks": [
+  {
+   "type": "text",
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus and potassium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, zinc, iron and boron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which mungbean nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Mungbean nutrient deficiency signs, old leaves and young leaves"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the old leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the old leaves of monggo",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Nitrogen",
+     "old, lower leaves, the whole plant",
+     "Pale, thin plants with few branches whose lower leaves yellow and drop. The roots often have few or dead nodules.",
+     "Rhizobium inoculant for mungbean, Complete 14 14 14"
+    ],
+    [
+     "Phosphorus",
+     "old, lower leaves, the roots",
+     "Plants stay small and dark green with few pods, often without clear leaf marks.",
+     "Complete 14 14 14, 16 20 0"
+    ],
+    [
+     "Potassium",
+     "old, lower leaves, leaf edges and tips",
+     "Yellow patches on the edges of the lower leaves join up, with dark spots and curled edges.",
+     "Muriate of potash 0 0 60, Complete 14 14 14"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Shows first on the young leaves"
+  },
+  {
+   "type": "table",
+   "caption": "Deficiencies that start on the young leaves of monggo",
+   "rows": [
+    [
+     "Nutrient",
+     "Where it starts",
+     "What you see",
+     "Fix with"
+    ],
+    [
+     "Sulfur",
+     "young leaves and the tip, the whole plant",
+     "The young leaves turn pale yellow first, then the whole plant is evenly pale.",
+     "Gypsum, Ammonium sulfate 21 0 0"
+    ],
+    [
+     "Zinc",
+     "young leaves and the tip, between the veins",
+     "About a month after sowing, leaves turn small and yellow between green veins and the plants stop growing.",
+     "Zinc sulfate"
+    ],
+    [
+     "Iron",
+     "young leaves and the tip, between the veins",
+     "New leaves turn yellow green with green veins, then fully yellow, on limey or high pH soil.",
+     "Ferrous sulfate"
+    ],
+    [
+     "Boron",
+     "young leaves and the tip",
+     "The top of the plant bunches into a rosette and the upper leaves turn yellow or reddish at the tips.",
+     "Borax"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before you buy fertilizer for a mungbean nutrient deficiency"
+  },
+  {
+   "type": "text",
+   "text": "So use the table to pick the likeliest mungbean nutrient deficiency, then read its section below. Also keep in mind that dry soil, standing water, cold nights, a pest or a disease can look the same. That is why it pays to check the roots and the whole field first."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Nitrogen deficiency in mungbean",
+   "id": "nitrogen"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves turn pale and then yellow and fall early, while the rest of the plant stays pale green. Stems are thin and weak, with fewer leaves and branches. In mungbean this usually means the root nodules are not working, so the plant cannot make its own nitrogen. You see it most at this stage: two to five weeks after emergence, when nodules should be fixing nitrogen."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why nitrogen deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "In a legume this usually means poor nodulation: no inoculant in a field new to the crop, inoculant killed by sun or heat, very acid soil, waterlogging, hot dry soil, or too much nitrogen fertilizer near the seed, which stops nodules from forming."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Sulfur deficiency also yellows the whole plant, but the young leaves first. Iron deficiency yellows the young leaves between green veins. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for nitrogen deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Nodules cannot be added to a standing crop, so feed it. TNAU gives 10 to 20 kg of nitrogen per hectare, or a 2 percent DAP 18 46 0 spray (20 g per liter) every week. Urea 46 0 0 beside the rows also works."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Rhizobium inoculant for mungbean",
+    "Complete 14 14 14",
+    "Urea 46 0 0",
+    "Diammonium phosphate 18 46 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, coat the seed with a mungbean Rhizobium inoculant just before planting and keep it out of the sun (DA)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Phosphorus deficiency in mungbean",
+   "id": "phosphorus"
+  },
+  {
+   "type": "text",
+   "text": "Plants grow slowly and stay short with dark, sometimes bluish green leaves, but there are often no clear marks on the leaves. Roots and nodules are few, branching is poor, and pods are few and late. You see it most at this stage: seedling to flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why phosphorus deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "Acid upland soils and soils low in phosphorus. Each harvest takes phosphorus away, so fields cropped for years without fertilizer run low (DA)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency makes plants pale, not dark. Drought also stunts plants, but leaves wilt in the heat of the day. To be sure, soil test for phosphorus before planting, or compare with a strip given 14 14 14."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for phosphorus deficiency"
+  },
+  {
+   "type": "text",
+   "text": "DA advises 30 to 45 kg each of phosphorus and potassium per hectare before planting on poor soils, or, without a soil test, 3 bags of Complete 14 14 14 per hectare on heavy soils and 4 bags on light soils as a basal dose. For a standing crop, TNAU gives a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Complete 14 14 14",
+    "16 20 0",
+    "Diammonium phosphate 18 46 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, apply phosphorus at planting every season and add compost or manure."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Potassium deficiency in mungbean",
+   "id": "potassium"
+  },
+  {
+   "type": "text",
+   "text": "Yellow patches form on the edges of the lower leaves and join, until the leaf turns yellow. Dark spots appear on the yellow parts, leaf tips go black to brown and the leaf curls. Upper leaves stay green for a while. You see it most at this stage: flowering and pod filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why potassium deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils, soils cropped for years without potash, and fields where straw and crop residues are always removed."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Magnesium deficiency yellows between the veins, not from the edges. Leaf spot diseases give round spots with rings, scattered over the leaf. To be sure, soil test for potassium, and check that the yellow edges start on the lowest leaves."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for potassium deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Apply Muriate of potash 0 0 60 to the soil following the soil test. DA gives 30 to 45 kg of potassium per hectare on potassium poor soils. TNAU also gives a 1 percent potash spray (10 g Muriate of potash per liter) at flowering."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Muriate of potash 0 0 60",
+    "Complete 14 14 14"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use Complete 14 14 14 at planting and return crop residues to the field."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Sulfur deficiency in mungbean",
+   "id": "sulfur"
+  },
+  {
+   "type": "text",
+   "text": "The newest leaves turn pale yellow first, and over time the whole plant becomes evenly pale yellow. Growth slows and nodules work less well. You see it most at this stage: early growth to flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why sulfur deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter and years of sulfur free fertilizer. Legumes need a lot of sulfur, so they show it before cereals do (UW)."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen deficiency starts on the old leaves. Iron deficiency keeps the veins green on yellow young leaves. To be sure, note that the youngest leaves are the palest, then test soil and leaves for sulfur."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for sulfur deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Add a sulfur source such as Gypsum, which suits a legume because it adds no nitrogen. The University of Wisconsin finds about 11 kg of sulfur per hectare (10 pounds per acre) enough for row crops on sulfur poor soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Gypsum",
+    "Ammonium sulfate 21 0 0"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, use a fertilizer with sulfur, or gypsum, every few seasons on sandy soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Zinc deficiency in mungbean",
+   "id": "zinc"
+  },
+  {
+   "type": "text",
+   "text": "About a month after germination the leaves turn yellow between the veins, which stay green, and the yellow parts die early. New leaves come out small and yellowish, and plants grow little. You see it most at this stage: about 30 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why zinc deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "High pH and calcareous soils, sandy soils, and heavy phosphorus on soils low in zinc."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Iron deficiency also yellows young leaves between the veins but turns the whole leaf yellow to white. Manganese deficiency is hard to tell apart. To be sure, soil test for zinc and pH, or a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for zinc deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives 25 kg Zinc sulfate per hectare as a basal dose. A 0.5 percent zinc sulfate spray (5 g per liter) at 20, 30 and 40 days after sowing."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Zinc sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, on high pH soils, mix zinc sulfate into the basal fertilizer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Iron deficiency in mungbean",
+   "id": "iron"
+  },
+  {
+   "type": "text",
+   "text": "Newly opened leaves turn yellowish green while the veins stay green. In time the whole leaf turns yellow to almost white and growth slows. You see it most at this stage: seedling and early growth."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why iron deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "High pH soils with free lime, and wet, cold or poorly aerated soil."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Zinc deficiency also gives small leaves and dead spots. Nitrogen deficiency starts on the old leaves. To be sure, soil pH test and a leaf test."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for iron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 1 percent ferrous sulfate spray (10 g per liter) three times, 10 days apart. 25 kg ferrous sulfate per hectare as a basal dose."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Ferrous sulfate"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, add compost and choose fields that are not limey for mungbean."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in mungbean",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "The upper internodes stay short, so the top of the plant bunches into a rosette. Leaves near the growing point turn yellow and sometimes red, worst at the tips while the leaf bases stay green. You see it most at this stage: flowering and pod setting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "Sandy soils low in organic matter, high pH soils and dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Zinc deficiency also gives short internodes, but with yellow between the veins. To be sure, leaf or soil test for boron before treating."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "TNAU gives a 0.2 percent borax spray (2 g per liter) every 15 days. Do not put boron fertilizer in the seed row. The University of Wisconsin warns a band of boron is toxic to bean seed."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep organic matter up and water during flowering in dry spells."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Let a soil test decide the rate",
+   "text": "A soil test is the surest check for any mungbean nutrient deficiency. Before you buy, ask your Municipal Agriculture Office where to send a soil sample. The DA regional soil laboratories and the Bureau of Soils and Water Management test soil, and the result says how much of each fertilizer your monggo needs. That saves money, because extra fertilizer is money lost."
+  },
+  {
+   "type": "cta",
+   "title": "Find the missing nutrient in anee.io",
+   "text": "Open the Nutrient Deficiency Finder, pick monggo, say where the leaves changed first and what you see, and get the fertilizers sold here that fix it.\nAnee, the smart farm technician, reads a photo of the leaf\nThe cropping calendar dates every fertilizer application of your season",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Mungbean nutrient deficiency questions"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Why are my monggo leaves turning yellow?",
+     "a": "The most common cause is nitrogen deficiency: pale, thin plants with few branches whose lower leaves yellow and drop. The roots often have few or dead nodules. If the young leaves turn yellow first instead, look at sulfur deficiency."
+    },
+    {
+     "q": "What fertilizer fixes nitrogen deficiency in mungbean?",
+     "a": "Nodules cannot be added to a standing crop, so feed it. TNAU gives 10 to 20 kg of nitrogen per hectare, or a 2 percent DAP 18 46 0 spray (20 g per liter) every week."
+    },
+    {
+     "q": "What fertilizer fixes phosphorus deficiency in mungbean?",
+     "a": "DA advises 30 to 45 kg each of phosphorus and potassium per hectare before planting on poor soils, or, without a soil test, 3 bags of Complete 14 14 14 per hectare on heavy soils and 4 bags on light soils as a basal dose. For a standing crop, TNAU gives a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
+    },
+    {
+     "q": "What fertilizer fixes potassium deficiency in mungbean?",
+     "a": "Apply Muriate of potash 0 0 60 to the soil following the soil test. DA gives 30 to 45 kg of potassium per hectare on potassium poor soils."
+    },
+    {
+     "q": "How do I know which nutrient my monggo lacks?",
+     "a": "First look at where the change began, on the old leaves or the young ones, then at the color and the pattern. Next, confirm the mungbean nutrient deficiency with a soil test or a leaf test before you buy fertilizer."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Related pages",
+   "items": [
+    {
+     "label": "Nitrogen deficiency in all crops",
+     "url": "/nutrient-deficiencies/nitrogen-deficiency"
+    },
+    {
+     "label": "Phosphorus deficiency in all crops",
+     "url": "/nutrient-deficiencies/phosphorus-deficiency"
+    },
+    {
+     "label": "Potassium deficiency in all crops",
+     "url": "/nutrient-deficiencies/potassium-deficiency"
+    },
+    {
+     "label": "Sulfur deficiency in all crops",
+     "url": "/nutrient-deficiencies/sulfur-deficiency"
+    },
+    {
+     "label": "Zinc deficiency in all crops",
+     "url": "/nutrient-deficiencies/zinc-deficiency"
+    },
+    {
+     "label": "Every nutrient deficiency by crop",
+     "url": "/nutrient-deficiencies"
+    }
+   ]
+  },
+  {
+   "type": "sources",
+   "items": [
+    {
+     "label": "DA High Value Crops Development Program: Mungbean production guide",
+     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Greengram (mungbean), nitrogen deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/ggram_nitro.html"
+    },
+    {
+     "label": "Texas AandM AgriLife: Mid season assessment of Rhizobium nodulation in Texas peanuts and other legumes",
+     "url": "https://agrilife.org/texasrowcrops/?p=1736"
+    },
+    {
+     "label": "Penn State Extension: Evaluating nodulation in soybeans",
+     "url": "https://extension.psu.edu/evaluating-nodulation-in-soybeans"
+    },
+    {
+     "label": "University of Wisconsin Extension A2520: Soil and applied phosphorus",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2520.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Redgram (pigeon pea), phosphorus deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/redgram_phos.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Greengram (mungbean), potassium deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/ggram_pota.html"
+    },
+    {
+     "label": "TNAU Agritech Portal: Greengram (mungbean), sulphur deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/ggram_sul.html"
+    },
+    {
+     "label": "University of Wisconsin Extension A2525: Soil and applied sulfur",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2525.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Greengram (mungbean), zinc deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/ggram_zinc.html"
+    },
+    {
+     "label": "University of Wisconsin Extension A2528: Soil and applied zinc",
+     "url": "https://corn.aae.wisc.edu/Management/pdfs/a2528.pdf"
+    },
+    {
+     "label": "TNAU Agritech Portal: Greengram (mungbean), iron deficiency",
+     "url": "https://agritech.tnau.ac.in/agriculture/plant_nutri/ggram_iron.html"
+    }
+   ]
+  }
+ ]
+}
