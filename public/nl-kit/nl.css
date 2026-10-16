@@ -9,9 +9,9 @@
   --paper: #f6f8f2; --card: #ffffff; --panel: #f3f8ec;
   --high: #c2410c; --high-soft: #fff1e8; --news: #1d63c9; --news-soft: #eaf2ff; --reg: #3d6b22; --reg-soft: #edf5e3;
   --red: #b42318; --red-soft: #fdecea;
-  --gbg: #2B3A1C; --card2: var(--card2); --soft: var(--soft); --chip: var(--chip); --input: #ffffff; --view: var(--view); --switch: var(--switch); --grip: var(--grip);
-  --date-soft: var(--date-soft); --date-ink: var(--date-ink); --acu-soft: var(--acu-soft); --acu-ink: var(--acu-ink); --demo-soft: var(--demo-soft); --demo-ink: #7a5b00;
-  --exp-soft: var(--exp-soft); --exp-ink: var(--exp-ink); --draft-ink: var(--draft-ink); --note-ink: #7a5b00; --part-ink: var(--part-ink); --skel2: var(--skel2);
+  --gbg: #2B3A1C; --card2: #fbfcf9; --soft: #eef2e8; --chip: #f1f3ee; --input: #ffffff; --view: #e9eee2; --switch: #d6dccd; --grip: #b7c2aa;
+  --date-soft: #eef4ff; --date-ink: #2a4f8f; --acu-soft: #f5efff; --acu-ink: #6b3fb5; --demo-soft: #fff3c4; --demo-ink: #7a5b00;
+  --exp-soft: #f3eeee; --exp-ink: #8d6b6b; --draft-ink: #77776d; --note-ink: #7a5b00; --part-ink: #8a6a00; --skel2: #f8faf5;
   --ease: cubic-bezier(.22,1,.36,1); --t: .28s;
   --r: 16px; --r-sm: 11px;
   --shadow: 0 1px 2px rgba(31,42,23,.06), 0 6px 20px rgba(31,42,23,.06);
