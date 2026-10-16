@@ -49,6 +49,30 @@ final class NewsEmail
         return self::fromPage($page, $now, self::auto() ? 'queued' : 'draft');
     }
 
+    /**
+     * A roundup page as its news email, made the moment the page is
+     * published (NewsRoundup::finish, 2026-10-16, the owner: "every generated
+     * news ... a 2nd level priority newsletter item ... added in the queue"),
+     * dated the page's own day. Made once: the tick's ensure() finds it.
+     */
+    public static function forPage(int $pageId): ?AsNlEmail
+    {
+        if (! Schema::hasTable('as_nl_emails')) {
+            return null;
+        }
+        $page = DB::table('as_site_pages')->where('id', $pageId)->where('kind', 'roundup')->where('deleteStatus', 1)->first();
+        if (! $page) {
+            return null;
+        }
+        $made = AsNlEmail::where('newsPageId', $page->id)->where(fn ($q) => $q->whereNull('meta')->orWhere('meta', 'not like', '%"demo"%'))->first();
+        if ($made) {
+            return $made;
+        }
+        $day = Carbon::parse((string) ($page->created_at ?? 'now'), 'Asia/Manila');
+
+        return self::fromPage($page, $day, self::auto() ? 'queued' : 'draft');
+    }
+
     public static function fromPage(object $page, Carbon $day, string $status = 'queued'): AsNlEmail
     {
         $url = EmailSkin::ASSET_BASE . '/' . trim((string) $page->section, '/') . '/' . $page->slug;
@@ -75,7 +99,11 @@ final class NewsEmail
                 }
                 if ($type === 'text') {
                     $words = (string) ($x['text'] ?? '');
-                    if (preg_match('~^\*\*([^*,]+?)(,[^*]*)?\.?\*\*~', $words, $m) && str_contains($words, '](')) {
+                    if (preg_match('~^\*\*[^*]*\*\*\s*Read it at\s~', $words) && preg_match_all('~\[([^\]]+)\]\(https?://~', $words, $ns)) {
+                        // The same news from several newsrooms: their names (2026-10-16).
+                        $names = array_values(array_unique(array_map('trim', $ns[1])));
+                        $source = count($names) > 1 ? implode(', ', array_slice($names, 0, -1)) . ' at ' . end($names) : (string) ($names[0] ?? '');
+                    } elseif (preg_match('~^\*\*([^*,]+?)(,[^*]*)?\.?\*\*~', $words, $m) && str_contains($words, '](')) {
                         $source = trim($m[1]);
                     } elseif ($text === '') {
                         $text = $words;

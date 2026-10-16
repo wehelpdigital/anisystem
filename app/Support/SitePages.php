@@ -351,6 +351,33 @@ class SitePages
         return preg_match('#^https?://#i', $src) ? $src : asset(ltrim($src, '/'));
     }
 
+    /**
+     * The small icon of the newsroom a link goes to (NewsIconController), as a
+     * path, so a page or an article stored with it names no host.
+     */
+    public static function newsIcon(string $link): string
+    {
+        $host = strtolower((string) preg_replace('/^www\./i', '', (string) parse_url($link, PHP_URL_HOST)));
+
+        return '/news-icon/' . ($host !== '' ? $host : 'anee.io');
+    }
+
+    /**
+     * A news roundup's line of newsrooms (NewsRoundup::build, 2026-10-16):
+     * "**3 newsrooms, October 16.** Read it at [Inquirer](...), [...](...) and
+     * [...](...)." as [lead words, [[name, url], ...]], or null when the
+     * paragraph is anything else. Both readers draw it as icon chips.
+     */
+    public static function outletLine(string $para): ?array
+    {
+        if (! preg_match('/^\*\*(.+?)\*\*\s*Read it at\s+(.+)$/u', trim($para), $m)
+            || ! preg_match_all('/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/', $m[2], $links, PREG_SET_ORDER)) {
+            return null;
+        }
+
+        return [rtrim($m[1], '.'), array_map(fn ($l) => [$l[1], $l[2]], $links)];
+    }
+
     /** Minutes to read, at the pace of someone reading carefully. */
     public static function readMinutes(AsSitePage|array $page): int
     {

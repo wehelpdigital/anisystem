@@ -454,9 +454,10 @@ class AiClient
                      * farmer got a 44-token stub cut mid-sentence. So the
                      * thoughts get their own bounded lane, and the settings
                      * row's number stays what it reads as: the ANSWER budget. */
-                    'maxOutputTokens' => (int) ($maxOut ?? $s->maxOutputTokens) + self::GEMINI_THINKING_BUDGET,
+                    'maxOutputTokens' => (int) ($maxOut ?? $s->maxOutputTokens) + ($s->thinkingLevel ? 1024 : self::GEMINI_THINKING_BUDGET),
                     'temperature' => (float) $s->temperature,
-                    'thinkingConfig' => ['thinkingBudget' => self::GEMINI_THINKING_BUDGET],
+                    // A cheap check asks for the least thinking by level (AiSetting::cheap()).
+                    'thinkingConfig' => $s->thinkingLevel ? ['thinkingLevel' => $s->thinkingLevel] : ['thinkingBudget' => self::GEMINI_THINKING_BUDGET],
                 ],
             ]);
 

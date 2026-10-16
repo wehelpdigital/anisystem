@@ -90,6 +90,15 @@
     .article-body .a-btn.a-out { display:inline-flex; align-items:center; gap:.45rem; }
     .article-body .a-btn.a-out::after { content:''; flex:none; width:.95rem; height:.95rem; background:currentColor;
         -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5'/%3E%3C/svg%3E") center / contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5'/%3E%3C/svg%3E") center / contain no-repeat; }
+    /* The same news from several newsrooms (2026-10-16): a chip with the newsroom's icon for each. */
+    .article-body .a-outlets { display:flex; flex-wrap:wrap; gap:.45rem; margin:.2rem 0 1rem; }
+    .article-body .a-outlet { display:inline-flex; align-items:center; gap:.45rem; min-height:2.5rem; padding:.35rem .85rem .35rem .5rem; border-radius:999px;
+        border:1.5px solid var(--color-gray-200); background:var(--color-white); color:var(--color-gray-800) !important; font-size:.86rem; font-weight:700; text-decoration:none;
+        transition:border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .article-body .a-outlet:hover { border-color:var(--color-brand-500, #6b9f3d); }
+    .article-body .a-outlet img { flex:none; width:1.15rem; height:1.15rem; margin:0; border-radius:.3rem; background:#fff; object-fit:contain; }
+    html.dark .article-body .a-outlet { border-color:#2b3a1c; background:#151b12; color:#e8efe1 !important; }
+    @media (prefers-reduced-motion: reduce) { .article-body .a-outlet { transition:none; } }
     .article-body .a-embed { position:relative; padding-top:56.25%; margin:1.2rem 0; border-radius:.85rem; overflow:hidden; }
     .article-body .a-embed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
     .article-body table { width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; }

@@ -6,6 +6,7 @@ use App\Models\AiSetting;
 use App\Models\AsSitePage;
 use App\Models\AsSiteSetting;
 use App\Support\AiUsage;
+use App\Support\Newsletter\NewsEmail;
 use App\Support\ArticleStyle;
 use App\Support\SeoKeywords;
 use App\Support\SitePages;
@@ -25,6 +26,9 @@ use Illuminate\Support\Str;
  *      its link), so a story two feeds carry is still one story
  *   2. take the stories no roundup has featured yet, from the last ten days
  *      (and never older than the last roundup's range)
+ *   2b. the cheapest model finds the repeats (sameNews, 2026-10-16): the
+ *      same news from several newsrooms becomes one story with its other
+ *      newsrooms beside it, and news already posted is set aside
  *   3. too few (under MIN_STORIES)? nothing is written: the run says why
  *   4. Anee picks the ones that matter to a Filipino farmer, groups them by
  *      theme, and writes for each a short summary in her own words and the
@@ -35,6 +39,11 @@ use Illuminate\Support\Str;
  *      (ArticleStyle); a page that misses goes back once with the list
  *   6. the page is published under /blog (kind 'roundup'), and its stories
  *      are marked featured so the next roundup leaves them out
+ *   7. the page becomes today's news email in the newsletter's second line
+ *      (NewsEmail, 2026-10-16), queued for the newsletter's next tick
+ *
+ * The feed since 2026-10-16 is the mother app's own RSS (its RSS Feeds
+ * module compiles the newsrooms into one), as_news_feeds like any other.
  *
  * Asked for by the cron address (/cron/news-roundup?key=...), by the mother
  * app's "Write one now", or by the scheduler. Every few days only
@@ -50,6 +59,18 @@ class NewsRoundup
 
     /** A run older than this that never finished is taken as dead. */
     public const STALE_MINUTES = 20;
+
+    /** New stories the repeat check reads at most, newest first. */
+    public const CHECK_MAX = 60;
+
+    /** The days of posted stories the check compares the new ones with (news repeats within days; later it is a new turn). */
+    public const POSTED_DAYS = 3;
+
+    /** Stories Anee is given to write from, after the repeats are folded in. */
+    public const WRITE_MAX = 30;
+
+    /** Newsrooms shown beside one story at most. */
+    public const OUTLETS_MAX = 6;
 
     /** Sites whose posts are social videos: kept, but never their pictures (they expire). */
     private const SOCIAL = ['facebook.com', 'fb.watch', 'instagram.com', 'tiktok.com', 'x.com', 'twitter.com', 'youtube.com', 'youtu.be', 'threads.net'];
@@ -168,8 +189,19 @@ class NewsRoundup
 
                 return ['status' => 'skipped', 'reason' => 'No new stories yet.'];
             }
-            $note(['reason' => 'Anee is writing (' . $items->count() . ' new stories)']);
-            return $this->finish($runId, $this->write($items));
+            // The same news told twice, by two newsrooms or by yesterday's page: one story, its other reports beside it.
+            $note(['reason' => 'Checking ' . $items->count() . ' new stories for repeats']);
+            $same = $this->sameNews($items, $runId);
+            $stories = $same['stories'];
+            if ($stories->count() < self::MIN_STORIES) {
+                $note(['status' => 'skipped', 'reason' => 'No new news yet: ' . $items->count() . ' new stories, ' . $same['repeats'] . ' of them told on a page already.', 'itemCount' => $stories->count()]);
+
+                return ['status' => 'skipped', 'reason' => 'No new news yet.'];
+            }
+            $note(['reason' => 'Anee is writing (' . $stories->count() . ' stories' . ($same['merged'] ? ', ' . $same['merged'] . ' more reports of the same news beside them' : '')
+                . ($same['repeats'] ? ', ' . $same['repeats'] . ' already told set aside' : '') . ')']);
+
+            return $this->finish($runId, $this->write($stories, $same['also'], $items) + ['check' => $same]);
         } catch (\Throwable $e) {
             report($e);
             $note(['status' => 'failed', 'reason' => Str::limit($e->getMessage(), 480, '')]);
@@ -195,6 +227,13 @@ class NewsRoundup
         }
         $page = $this->publish($out['page']);
         DB::table('as_news_items')->whereIn('id', $out['used'])->update(['featuredPageId' => $page->id, 'featuredAt' => now(), 'updated_at' => now()]);
+        // The other newsrooms' reports of a story go with it (sameAsId: the story they repeat).
+        foreach ((array) ($out['also'] ?? []) as $lead => $members) {
+            if ($members && in_array((int) $lead, $out['used'], true)) {
+                DB::table('as_news_items')->whereIn('id', $members)->whereNull('featuredPageId')
+                    ->update(['featuredPageId' => $page->id, 'featuredAt' => now(), 'updated_at' => now()] + (self::remembersSame() ? ['sameAsId' => (int) $lead] : []));
+            }
+        }
         $note(['status' => 'created', 'reason' => $page->title, 'pageId' => $page->id, 'itemCount' => count($out['used']),
             'rangeFrom' => $out['range'][0]->toDateString(), 'rangeTo' => $out['range'][1]->toDateString()]);
         if ((int) ($out['result']['tokensIn'] ?? 0) > 0) {
@@ -204,8 +243,15 @@ class NewsRoundup
             }
         }
         SitePages::forgetCaches();
+        // Every roundup is also the day's news email, second in the newsletter's line (2026-10-16, the owner).
+        $email = null;
+        try {
+            $email = NewsEmail::forPage((int) $page->id);
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
-        return ['status' => 'created', 'url' => SitePages::pageUrl($page), 'title' => $page->title];
+        return ['status' => 'created', 'url' => SitePages::pageUrl($page), 'title' => $page->title, 'email' => $email?->id];
     }
 
     /**
@@ -321,7 +367,7 @@ class NewsRoundup
             'linkHash' => sha1(self::canonical($link)),
             'title' => Str::limit($title, 390, ''),
             'link' => Str::limit($link, 990, ''),
-            'source' => self::publisher($host, $link),
+            'source' => self::publisher($host, $link, trim((string) $it->children('http://purl.org/dc/elements/1.1/')->creator)),
             'imageUrl' => $image ? Str::limit($image, 1490, '') : null,
             'summary' => $desc !== '' && $desc !== $title ? Str::limit($desc, 900, '') : null,
             'isSocial' => $social,
@@ -343,7 +389,7 @@ class NewsRoundup
         return strtolower(preg_replace('/^www\./', '', (string) ($p['host'] ?? ''))) . rtrim((string) ($p['path'] ?? ''), '/') . ($q ? '?' . http_build_query($q) : '');
     }
 
-    private static function publisher(string $host, string $link): string
+    private static function publisher(string $host, string $link, string $creator = ''): string
     {
         foreach (self::PUBLISHERS as $domain => $name) {
             if ($host === $domain || str_ends_with($host, '.' . $domain)) {
@@ -354,6 +400,10 @@ class NewsRoundup
             $first = strtolower((string) explode('/', trim((string) parse_url($link, PHP_URL_PATH), '/'))[0]);
 
             return isset(self::PAGES[$first]) ? self::PAGES[$first] . ' on Facebook' : 'Facebook';
+        }
+        // The mother app's feed names each newsroom (dc:creator): "The Chronicle PH", "Traders Union".
+        if ($creator !== '' && mb_strlen($creator) <= 60 && ! preg_match('#^https?://#i', $creator)) {
+            return Str::limit($creator, 110, '');
         }
         $base = preg_replace('/\.(com|net|org|gov|edu)?\.?(ph)?$/', '', $host);
 
@@ -375,9 +425,164 @@ class NewsRoundup
 
         return DB::table('as_news_items')->whereNull('featuredPageId')
             ->where('publishedAt', '>=', $since)->where('publishedAt', '<=', now()->addHours(12))
-            ->orderByDesc('publishedAt')->limit(30)->get()
-            // The same story told by two feeds under two links: the first one stays.
-            ->unique(fn ($r) => Str::slug(Str::limit($r->title, 60, '')))->values();
+            ->orderByDesc('publishedAt')->limit(self::CHECK_MAX)->get()
+            // The same title word for word under two links: the first one stays (the check finds the rest).
+            ->unique(fn ($r) => Str::slug((string) $r->title))->values();
+    }
+
+    /**
+     * THE SAME NEWS, TOLD AGAIN (2026-10-16, the owner: "check if an article
+     * was already posted to avoid redundancy especially since these are news
+     * sites, then you might have multiple same news on the different news
+     * site"). The cheapest model (AiSetting::cheap, the owner: "the checking
+     * part uses the cheap ai model") reads the new stories' titles beside the
+     * stories posted in the last POSTED_DAYS days and names the repeats.
+     *
+     *  - New stories that only tell again what a posted story told are set
+     *    aside for good: featured with the page that told it, sameAsId the
+     *    story they repeat. A real development is new news, not a repeat.
+     *  - New stories that tell the same news as each other become one story,
+     *    told by its best report (worth()), the other newsrooms beside it on
+     *    the page so a reader picks where to read it.
+     *
+     * When the check cannot answer, nothing is lost: every story goes on as
+     * it did before the check. Its cost is in the ledger as news-check.
+     *
+     * @return array{stories: Collection, also: array<int, list<int>>, repeats: int, told?: array<int, int>, merged: int, ok: bool}
+     */
+    public function sameNews(Collection $items, ?int $runId = null): array
+    {
+        $plain = ['stories' => $items->take(self::WRITE_MAX)->values(), 'also' => [], 'repeats' => 0, 'merged' => 0, 'ok' => false];
+        if ($items->count() < 2) {
+            return $plain;
+        }
+        $posted = DB::table('as_news_items')->whereNotNull('featuredPageId')->when(self::remembersSame(), fn ($q) => $q->whereNull('sameAsId'))
+            ->where('featuredAt', '>=', now()->subDays(self::POSTED_DAYS))->orderByDesc('featuredAt')->limit(80)
+            ->get(['id', 'title', 'source', 'publishedAt', 'featuredPageId']);
+        $line = fn ($r, bool $new) => json_encode(array_filter([
+            'id' => (int) $r->id,
+            'src' => $new ? $r->source : null,
+            'date' => $r->publishedAt ? Carbon::parse($r->publishedAt)->timezone('Asia/Manila')->format('M j') : null,
+            'title' => Str::limit((string) $r->title, 170, ''),
+            'about' => $new && ! empty($r->summary) ? Str::limit((string) $r->summary, 170, '') : null,
+        ]), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $prompt = "Below are the NEW stories our feeds collected for a farm news page in the Philippines (one JSON object per line), and the stories the page already POSTED in the last " . self::POSTED_DAYS . " days.\n"
+            . "Many newsrooms report the same news, and feeds bring it back again. Find the repeats:\n"
+            . "- NEW stories belong in one group when they report the same news: the same event, announcement, decision, report or figures, even worded differently or from different newsrooms. Repeated bulletins about the same storm or weather system (its track, signals, rain and forecasts) are the same news.\n"
+            . "  For example: two newsrooms on the same storm's track or forecast, even when only one names it; the morning and afternoon bulletins of the same weather office; reports of the same protest, rally, fine, launch, ban or figures.\n"
+            . "- Different news on the same topic is NOT a repeat: two different price changes, two different storms, the same program in two different provinces.\n"
+            . "- A group, or a single NEW story, that only tells again what a POSTED story told gets \"posted\": that POSTED story's id. A new turn in the story is new news and gets \"posted\": null: something now declared, approved, signed, landed, arrived or changed again, or new figures. When in doubt, null.\n"
+            . "Go through the list story by story and compare each one with every other before you answer.\n\n"
+            . "NEW:\n" . $items->map(fn ($r) => $line($r, true))->implode("\n") . "\n\n"
+            . "POSTED:\n" . ($posted->isNotEmpty() ? $posted->map(fn ($r) => $line($r, false))->implode("\n") : '(none)') . "\n\n"
+            . "List only the repeats: groups of two or more NEW stories, and NEW stories that repeat a POSTED one. Leave out every story that stands alone. Use each NEW id once at most.\n"
+            . 'Return ONLY this JSON, no fences, no commentary: {"groups": [{"ids": [101, 105], "posted": null}, {"ids": [110], "posted": 55}]}';
+        // The cheapest model, allowed a little thinking: comparing sixty stories pair by pair is more than a glance.
+        $settings = AiSetting::current()->cheap('low');
+        $result = $this->ai->askForJson($settings, $prompt, 2500, fn (string $t) => self::parseGroups($t),
+            ['system' => 'You sort farm news stories for a news desk in the Philippines. You answer only with JSON.', 'timeout' => 90, 'retryAfterTimeout' => false]);
+        if ((int) ($result['tokensIn'] ?? 0) > 0) {
+            try {
+                AiUsage::record('news-check', 0, 0, $runId, $settings, $result, 0);
+            } catch (\Throwable $e) {
+            }
+        }
+        if (! is_array($result['data'] ?? null)) {
+            return $plain;
+        }
+
+        $byId = $items->keyBy('id');
+        $told = $posted->keyBy('id');
+        $taken = [];
+        $repeats = 0;
+        $also = [];
+        $drop = [];
+        $toldIds = [];
+        foreach ($result['data']['groups'] as $g) {
+            $ids = array_values(array_unique(array_filter(array_map('intval', (array) ($g['ids'] ?? [])), fn ($id) => isset($byId[$id]) && ! isset($taken[$id]))));
+            if (! $ids) {
+                continue;
+            }
+            foreach ($ids as $id) {
+                $taken[$id] = true;
+            }
+            $was = isset($g['posted']) && is_numeric($g['posted']) && isset($told[(int) $g['posted']]) ? $told[(int) $g['posted']] : null;
+            if ($was) {
+                // Told already: set aside with the page that told it.
+                DB::table('as_news_items')->whereIn('id', $ids)->whereNull('featuredPageId')
+                    ->update(['featuredPageId' => $was->featuredPageId, 'featuredAt' => now(), 'updated_at' => now()] + (self::remembersSame() ? ['sameAsId' => (int) $was->id] : []));
+                $repeats += count($ids);
+                foreach ($ids as $id) {
+                    $drop[$id] = true;
+                    $toldIds[$id] = (int) $was->id;
+                }
+
+                continue;
+            }
+            if (count($ids) < 2) {
+                continue;
+            }
+            $group = collect($ids)->map(fn ($id) => $byId[$id])->sort(fn ($a, $b) => [self::worth($b), (string) $b->publishedAt] <=> [self::worth($a), (string) $a->publishedAt])->values();
+            $lead = (int) $group->first()->id;
+            $also[$lead] = $group->slice(1)->pluck('id')->map(fn ($id) => (int) $id)->values()->all();
+            foreach ($also[$lead] as $id) {
+                $drop[$id] = true;
+            }
+        }
+        $stories = $items->reject(fn ($r) => isset($drop[(int) $r->id]))->take(self::WRITE_MAX)->values();
+        $also = array_intersect_key($also, array_flip($stories->pluck('id')->map(fn ($id) => (int) $id)->all()));
+
+        return ['stories' => $stories, 'also' => $also, 'repeats' => $repeats, 'told' => $toldIds, 'merged' => array_sum(array_map('count', $also)), 'ok' => true];
+    }
+
+    /** Whether the stories remember the story they repeat (the column comes with the 2026-10-17 migration). */
+    private static function remembersSame(): bool
+    {
+        static $has = null;
+
+        return $has ??= Schema::hasColumn('as_news_items', 'sameAsId');
+    }
+
+    /** The check's answer: {"groups": [...]}, or null when it cannot be read. */
+    private static function parseGroups(string $text): ?array
+    {
+        $t = preg_replace('/^```(?:json)?\s*|\s*```$/i', '', trim($text));
+        $start = strpos((string) $t, '{');
+        $end = strrpos((string) $t, '}');
+        if ($start === false || $end === false) {
+            return null;
+        }
+        $d = json_decode(substr((string) $t, $start, $end - $start + 1), true);
+
+        return is_array($d) && is_array($d['groups'] ?? null) ? ['groups' => array_values(array_filter($d['groups'], 'is_array'))] : null;
+    }
+
+    /** Which report of the same news tells it best: a newsroom's own page, in English, with a picture and the most words. */
+    private static function worth(object $r): int
+    {
+        return (! empty($r->isSocial) ? 0 : 4) + (! empty($r->imageUrl) ? 2 : 0) + (mb_strlen((string) ($r->summary ?? '')) > 120 ? 1 : 0)
+            + (in_array((string) $r->source, self::PUBLISHERS, true) ? 1 : 0)
+            // The page is in English: a title in Cebuano or Tagalog is another report's to lead.
+            + (preg_match('/\b(the|of|for|to|in|on|and|as|with|from|amid|over|by)\b/i', (string) $r->title) ? 3 : 0);
+    }
+
+    /** "A", "A and B", "A, B and C". */
+    private static function andList(array $words): string
+    {
+        $words = array_values($words);
+        if (count($words) < 2) {
+            return (string) ($words[0] ?? '');
+        }
+
+        return implode(', ', array_slice($words, 0, -1)) . ' and ' . end($words);
+    }
+
+    /** A story and the other newsrooms' reports of the same news, each newsroom once, the best first. */
+    private static function outlets(object $item, array $also, ?Collection $pool): Collection
+    {
+        $more = collect($also[(int) $item->id] ?? [])->map(fn ($id) => $pool[$id] ?? null)->filter();
+
+        return collect([$item])->merge($more)->unique(fn ($r) => mb_strtolower(trim((string) $r->source)))->values()->take(self::OUTLETS_MAX);
     }
 
     // ------------------------------------------------------------------
@@ -387,8 +592,9 @@ class NewsRoundup
     /**
      * @return array{ok: bool, page?: array, used?: list<int>, range?: array, error?: string, skip?: bool, result: array}
      */
-    public function write(Collection $items): array
+    public function write(Collection $items, array $also = [], ?Collection $pool = null): array
     {
+        $pool = ($pool ?? $items)->keyBy('id');
         // Gemini Flash, not Pro (2026-10-12): a roundup rewrites the stories' own facts.
         $settings = AiSetting::current()->forField('PH')->fast();
         $byId = $items->keyBy('id');
@@ -400,14 +606,14 @@ class NewsRoundup
             ->map(fn ($k) => $k->keyword . ' (' . number_format((int) $k->volume) . ' searches)')->all();
         $usedFocus = AsSitePage::query()->where('section', 'blog')->whereNotNull('focusKeyword')->pluck('focusKeyword')->map(fn ($f) => mb_strtolower($f))->unique()->values()->all();
 
-        $prompt = $this->prompt($items, $range, $keywords, $usedFocus);
+        $prompt = $this->prompt($items, $range, $keywords, $usedFocus, $also, $pool);
         $parse = fn (string $t) => $this->parse($t);
         $result = $this->ai->askForJson($settings, $prompt, 9000, $parse);
         if (! is_array($result['data'] ?? null)) {
             return ['ok' => false, 'error' => $result['error'] ?? 'The roundup came back unreadable.', 'result' => $result];
         }
         $data = $result['data'];
-        $built = $this->build($data, $byId);
+        $built = $this->build($data, $byId, $also, $pool);
         if (count($built['used']) < self::MIN_STORIES) {
             return ['ok' => false, 'skip' => true, 'error' => 'Anee found fewer than ' . self::MIN_STORIES . ' stories worth a farmer\'s time.', 'result' => $result];
         }
@@ -420,7 +626,7 @@ class NewsRoundup
                 $result[$k] = (int) ($result[$k] ?? 0) + (int) ($fix[$k] ?? 0);
             }
             if (is_array($fix['data'] ?? null)) {
-                $again = $this->build($fix['data'], $byId);
+                $again = $this->build($fix['data'], $byId, $also, $pool);
                 if (count($again['used']) >= self::MIN_STORIES && count(PageWriter::audit($again['page'])) < count($problems)) {
                     $built = $again;
                 }
@@ -429,7 +635,8 @@ class NewsRoundup
         $used = $built['used'];
         $span = collect($used)->map(fn ($id) => Carbon::parse($byId[$id]->publishedAt));
 
-        return ['ok' => true, 'page' => $built['page'], 'used' => $used, 'range' => [$span->min(), $span->max()], 'result' => $result];
+        return ['ok' => true, 'page' => $built['page'], 'used' => $used, 'range' => [$span->min(), $span->max()], 'result' => $result,
+            'also' => array_intersect_key($also, array_flip($used))];
     }
 
     /** "September 28 to October 7, 2026", "October 1 to 7, 2026". */
@@ -451,24 +658,31 @@ class NewsRoundup
         return $from->format('F j') . ' to ' . $to->format('F j, Y');
     }
 
-    private function prompt(Collection $items, string $range, array $keywords, array $usedFocus): string
+    private function prompt(Collection $items, string $range, array $keywords, array $usedFocus, array $also = [], ?Collection $pool = null): string
     {
-        $list = $items->map(fn ($r) => json_encode(array_filter([
-            'id' => $r->id,
-            'date' => Carbon::parse($r->publishedAt)->timezone('Asia/Manila')->format('M j'),
-            'source' => $r->source,
-            'title' => $r->title,
-            'summary' => $r->summary ? Str::limit($r->summary, 400) : null,
-            'social' => $r->isSocial ? 'a social media video post' : null,
-        ]), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))->implode("\n");
+        $list = $items->map(function ($r) use ($also, $pool) {
+            // The same news from other newsrooms (sameNews): one story, more facts to draw on.
+            $more = collect($also[(int) $r->id] ?? [])->map(fn ($id) => $pool[$id] ?? null)->filter();
+
+            return json_encode(array_filter([
+                'id' => $r->id,
+                'date' => Carbon::parse($r->publishedAt)->timezone('Asia/Manila')->format('M j'),
+                'source' => $r->source,
+                'title' => $r->title,
+                'summary' => $r->summary ? Str::limit($r->summary, 400) : null,
+                'social' => $r->isSocial ? 'a social media video post' : null,
+                'alsoReportedBy' => $more->pluck('source')->unique()->reject(fn ($s) => $s === $r->source)->values()->all() ?: null,
+                'otherReports' => $more->filter(fn ($m) => ! empty($m->summary))->take(2)->map(fn ($m) => Str::limit((string) $m->summary, 220))->values()->all() ?: null,
+            ]), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        })->implode("\n");
 
         return "You are writing anee.io's \"Latest in Agriculture\" farm news roundup for farmers in the Philippines, for {$range}.\n"
-            . "Below are the news stories our feeds collected (one JSON object per line). You only have each story's title, source, date and a short description: use nothing else as fact.\n\n"
+            . "Below are the news stories our feeds collected (one JSON object per line). You only have each story's title, source, date and a short description: use nothing else as fact. A story with alsoReportedBy was carried by those newsrooms too: it is ONE story, and its otherReports are more facts you may use.\n\n"
             . $list . "\n\n"
             . "--- What to do ---\n"
             . "1. Pick the " . self::MIN_STORIES . ' to ' . self::MAX_STORIES . " stories that matter most to a Filipino farmer: rice and palay, corn, vegetables, prices of farm goods, fertilizer and fuel costs, weather and typhoons, government programs and aid, trade and imports, research a farmer can use. Leave out stories with nothing for a farmer, and when two stories report the same news, keep one.\n"
             . "2. Group them by theme, 2 to 5 themes, never one story per theme unless it stands alone. Each theme gets an H2 heading in Title Case that names the topic exactly (for example \"Palay Prices and Rice Supply\", \"Fuel and Farm Costs\", \"Weather and Typhoon Watch\", \"Help From the Government\", \"Exports and Markets\"). Order the themes by how much they matter to a farmer this week.\n"
-            . "3. For every story: a headline in your own words (at most 12 words, Title Case), a summary of the core facts in your own words in 1 or 2 sentences (never copy the source's sentences), and the \"so what\": 2 or 3 sentences on why this news matters to a Filipino farmer and what they can do about it, in plain field terms (palay, cavans, hectares, inputs, the planting window, the harvest). The so what is our own commentary: it is what makes this page worth reading. Never add a number, name or claim that is not in the story given.\n"
+            . "3. For every story: a headline in your own words (at most 12 words, Title Case) that keeps the story's key terms exact (a cartel stays a cartel, a fine stays a fine), a summary of the core facts in your own words in 1 or 2 sentences (never copy the source's sentences), and the \"so what\": 2 or 3 sentences on why this news matters to a Filipino farmer and what they can do about it, in plain field terms (palay, cavans, hectares, inputs, the planting window, the harvest). The so what is our own commentary: it is what makes this page worth reading. Never add a number, name or claim that is not in the story given.\n"
             . "4. The title: lead with the most important story in specific words, then the rest (for example \"Palay Stocks Fall Before Harvest, Plus Fuel Prices and Typhoon Watch\"). Never a generic \"news roundup\" title. It must contain the focus keyphrase.\n"
             . "5. The excerpt: the first paragraph, 2 or 3 sentences, naming today's date ({$range}) and the top story, with the focus keyphrase.\n"
             . "6. The intro: one short paragraph on what today's news means for farm work.\n"
@@ -516,8 +730,9 @@ class NewsRoundup
      *
      * @return array{page: array, used: list<int>}
      */
-    private function build(array $d, Collection $byId): array
+    private function build(array $d, Collection $byId, array $also = [], ?Collection $pool = null): array
     {
+        $pool = ($pool ?? $byId)->keyBy('id');
         $c = fn ($s) => ArticleStyle::clean((string) $s);
         $known = PageWriter::knownPaths();
         $blocks = [];
@@ -555,10 +770,19 @@ class NewsRoundup
                 if (trim((string) ($s['soWhat'] ?? '')) !== '') {
                     $blocks[] = ['type' => 'callout', 'tone' => 'tip', 'title' => 'What it means for your farm', 'text' => $c($s['soWhat'])];
                 }
-                $blocks[] = ['type' => 'text', 'text' => '**' . $item->source . ', ' . $when . '.** [Read the full report at ' . $item->source . '](' . $item->link . ')'];
-                // A feed title can carry a web address or a broken one at its end ("... https:/."): words only.
-                $title = trim((string) preg_replace(['#\s*https?:/*\S*#i', '#\s*www\.\S+#i', '#[\s.:,;]+$#'], ['', '', ''], (string) $item->title));
-                $sources[] = ['label' => $item->source . ': ' . $c($title !== '' ? $title : (string) $item->title), 'url' => $item->link];
+                // The same news from several newsrooms (2026-10-16, the owner): each one a small icon to pick.
+                $outlets = self::outlets($item, $also, $pool);
+                if ($outlets->count() > 1) {
+                    $blocks[] = ['type' => 'text', 'text' => '**' . $outlets->count() . ' newsrooms, ' . $when . '.** Read it at '
+                        . self::andList($outlets->map(fn ($o) => '[' . str_replace(['[', ']'], '', (string) $o->source) . '](' . $o->link . ')')->all()) . '.'];
+                } else {
+                    $blocks[] = ['type' => 'text', 'text' => '**' . $item->source . ', ' . $when . '.** [Read the full report at ' . $item->source . '](' . $item->link . ')'];
+                }
+                foreach ($outlets as $o) {
+                    // A feed title can carry a web address or a broken one at its end ("... https:/."): words only.
+                    $title = trim((string) preg_replace(['#\s*https?:/*\S*#i', '#\s*www\.\S+#i', '#[\s.:,;]+$#'], ['', '', ''], (string) $o->title));
+                    $sources[] = ['label' => $o->source . ': ' . $c($title !== '' ? $title : (string) $o->title), 'url' => $o->link];
+                }
             }
         }
 
@@ -588,8 +812,8 @@ class NewsRoundup
 
         // Up top: what this is, before the first story.
         $range = self::today();
-        $names = collect($used)->map(fn ($id) => $byId[$id]->source)->unique()->values();
-        $from = $names->count() > 1 ? $names->slice(0, -1)->implode(', ') . ' and ' . $names->last() : $names->implode('');
+        $names = collect($used)->flatMap(fn ($id) => self::outlets($byId[$id], $also, $pool)->pluck('source'))->unique()->values();
+        $from = $names->count() > 5 ? $names->count() . ' newsrooms, among them ' . self::andList($names->take(3)->all()) : self::andList($names->all());
         $lead = [['type' => 'callout', 'tone' => 'info', 'title' => 'Farm news for ' . $range,
             'text' => count($used) . ' stories from ' . $from . '. Each one comes with what it means for your farm and a link to the full report.']];
         if (trim((string) ($d['intro'] ?? '')) !== '') {

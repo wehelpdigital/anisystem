@@ -104,6 +104,8 @@ return [
 
     // The quick model for the house's simple writing (App\Models\AiSetting::fast); blank = the provider's default quick model.
     'ai_fast_model' => (string) env('AI_FAST_MODEL', ''),
+    // The cheapest model, for the system's own checks (AiSetting::cheap()).
+    'ai_cheap_model' => (string) env('AI_CHEAP_MODEL', ''),
 
     // The field health service (services/field-health, FastAPI + Google Earth
     // Engine): Sentinel-2 NDVI and Sentinel-1 radar for Satellite Analysis,

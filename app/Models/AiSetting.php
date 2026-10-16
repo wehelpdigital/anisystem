@@ -323,6 +323,33 @@ class AiSetting extends BaseModel
         return $c;
     }
 
+    /**
+     * The cheapest model of each provider, for checks the system makes on its
+     * own where nothing is written for anyone to read (2026-10-16, the owner:
+     * "the checking part uses the cheap ai model for lower cost"): which news
+     * stories tell the same news. The least thinking the model allows: a sort,
+     * not a reasoning (Gemini 3 refuses a zero budget and takes a level).
+     * AI_CHEAP_MODEL in the environment overrides the model.
+     */
+    public const CHEAP_MODELS = [
+        'gemini' => 'gemini-flash-lite-latest',
+        'claude' => 'claude-haiku-5-5',
+        'openai' => 'gpt-4o-mini',
+    ];
+
+    /** The thinking level a copy asks for instead of the client's budget (Gemini: minimal, low, medium, high). */
+    public ?string $thinkingLevel = null;
+
+    /** A copy of these settings on the provider's cheapest model, thinking at its least or a little (never saved). */
+    public function cheap(string $thinking = 'minimal'): static
+    {
+        $c = clone $this;
+        $c->model = (string) (config('services.ai_cheap_model') ?: (self::CHEAP_MODELS[$this->provider] ?? $this->effectiveModel()));
+        $c->thinkingLevel = in_array($thinking, ['minimal', 'low'], true) ? $thinking : 'minimal';
+
+        return $c;
+    }
+
     /** A copy of these settings for an analysis of a field in another country. */
     public function forField(?string $country): static
     {

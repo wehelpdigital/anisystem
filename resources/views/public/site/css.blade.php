@@ -186,7 +186,16 @@
     .sp-srcbtn svg { flex: none; width: 1rem; height: 1rem; }
     .sp-body .sp-srcline .sp-srcbtn:hover { background: #f3f8ec; border-color: #6b9f3d; }
     .sp-srcbtn:active { transform: scale(.98); }
-    @media (prefers-reduced-motion: reduce) { .sp-body .sp-srcline .sp-srcbtn { transition: none; } }
+    .sp-srcbtn img, .sp-outlet img { flex: none; width: 1.15rem; height: 1.15rem; border-radius: .3rem; background: #fff; object-fit: contain; }
+    /* The same news from several newsrooms (2026-10-16): each a chip with its icon, the reader picks. */
+    .sp-body .sp-srcline.is-many { align-items: flex-start; flex-direction: column; gap: .45rem; }
+    .sp-srcline .sp-outlets { display: flex; flex-wrap: wrap; gap: .45rem; font-size: inherit; font-weight: inherit; color: inherit; }
+    .sp-body .sp-srcline .sp-outlet { display: inline-flex; align-items: center; gap: .45rem; min-height: 2.6rem; padding: .4rem .85rem .4rem .55rem; border-radius: 999px; border: 1.5px solid #dfe8d4;
+        background: #fff; color: #2d5016; font-size: .86rem; font-weight: 800; line-height: 1.2; text-decoration: none;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .sp-body .sp-srcline .sp-outlet:hover { background: #f3f8ec; border-color: #6b9f3d; }
+    .sp-outlet:active { transform: scale(.97); }
+    @media (prefers-reduced-motion: reduce) { .sp-body .sp-srcline .sp-srcbtn, .sp-body .sp-srcline .sp-outlet { transition: none; } }
     .sp-cta { border-radius: 1.25rem; padding: 1.5rem 1.4rem; color: #e8efe1; background: linear-gradient(135deg, #3d6823, #24400f 75%); position: relative; overflow: hidden; }
     .sp-cta::after { content: ''; position: absolute; right: -3rem; top: -3rem; width: 11rem; height: 11rem; border-radius: 999px; background: rgb(245 197 24 / .14); }
     .sp-cta b { position: relative; display: block; font-family: var(--font-heading); font-size: 1.3rem; color: #fff; line-height: 1.3; }

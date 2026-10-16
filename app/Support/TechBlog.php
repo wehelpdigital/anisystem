@@ -34,7 +34,7 @@ class TechBlog
     public const AUTHOR = 'anee.io Technicians';
 
     /** Bump when the drawing below changes, so every article is drawn again. */
-    private const VERSION = 5;
+    private const VERSION = 6;
 
     private const STAMP = 'tech-blog:synced';
 
@@ -199,6 +199,14 @@ class TechBlog
                 $h .= "<$tag>" . e($b['text']) . "</$tag>\n";
             } elseif ($type === 'text') {
                 foreach (SitePages::paragraphs($b['text'] ?? '') as $para) {
+                    // The same news from several newsrooms (2026-10-16): a chip with its icon for each.
+                    if ($outlets = SitePages::outletLine($para)) {
+                        $h .= '<p><strong>' . e($outlets[0]) . '.</strong> Read it at:</p><div class="a-outlets">'
+                            . implode('', array_map(fn ($o) => '<a class="a-outlet" href="' . e($o[1]) . '" title="Opens in your browser"><img src="' . e(SitePages::newsIcon($o[1])) . '" alt="" width="18" height="18">' . e($o[0]) . '</a>', $outlets[1]))
+                            . "</div>\n";
+
+                        continue;
+                    }
                     // A news roundup's "Read the full report" line is a button
                     // (the owner, 2026-10-07); the purifier sends it to a new
                     // tab, which a phone's installed app opens in the browser.

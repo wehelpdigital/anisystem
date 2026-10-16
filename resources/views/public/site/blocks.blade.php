@@ -19,11 +19,16 @@
             @break
         @case('text')
             @foreach ($S::paragraphs($b['text'] ?? '') as $para)
-                @if (preg_match('/^\*\*(.+?)\*\*\s*\[(Read the full report[^\]]*)\]\((https?:\/\/[^)\s]+)\)\s*$/', trim($para), $m))
+                @if ($outlets = $S::outletLine($para))
+                    {{-- The same news from several newsrooms (the owner, 2026-10-16): each newsroom a
+                         small icon chip, the reader picks where to read it (the Tech Blog draws it the same). --}}
+                    <p class="sp-srcline is-many"><span>{{ $outlets[0] }}. Read it at:</span>
+                        <span class="sp-outlets">@foreach ($outlets[1] as [$oName, $oUrl])<a class="sp-outlet" href="{{ $oUrl }}" target="_blank" rel="noopener" title="Read it at {{ $oName }}"><img src="{{ url($S::newsIcon($oUrl)) }}" alt="" width="18" height="18" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">{{ $oName }}</a>@endforeach</span></p>
+                @elseif (preg_match('/^\*\*(.+?)\*\*\s*\[(Read the full report[^\]]*)\]\((https?:\/\/[^)\s]+)\)\s*$/', trim($para), $m))
                     {{-- A news roundup's source line: who and when, then the report itself as a
                          button a thumb can hit (the owner, 2026-10-07; the Tech Blog draws it the same). --}}
                     <p class="sp-srcline"><span>{{ rtrim($m[1], '.') }}</span>
-                        <a class="sp-srcbtn" href="{{ $m[3] }}" target="_blank" rel="noopener">{{ $m[2] }}<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6m0-6L10 14M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg></a></p>
+                        <a class="sp-srcbtn" href="{{ $m[3] }}" target="_blank" rel="noopener"><img src="{{ url($S::newsIcon($m[3])) }}" alt="" width="18" height="18" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">{{ $m[2] }}<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6m0-6L10 14M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg></a></p>
                 @else
                     <p>{!! $S::inline($para) !!}</p>
                 @endif

@@ -42,6 +42,12 @@ Route::get('/tl/glossary.json', [App\Http\Controllers\TagalogController::class, 
     ->withoutMiddleware('web')
     ->name('tl.glossary');
 
+// A newsroom's small icon beside a news roundup's story (2026-10-16): no session either.
+Route::get('/news-icon/{host}', [App\Http\Controllers\NewsIconController::class, 'show'])
+    ->where('host', '[A-Za-z0-9.-]+')
+    ->withoutMiddleware('web')
+    ->name('news.icon');
+
 /**
  * Which build is actually serving? "The fix is pushed" and "the fix is live"
  * are different claims, and without this the difference is guesswork: it
@@ -158,6 +164,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'lpDateMode' => method_exists(\App\Support\LandPrepPlanner::class, 'forecast'),
             'wtpTwenty' => str_contains((string) @file_get_contents(app_path('Http/Controllers/WhatToPlantController.php')), 'TWENTY crops'),
             'vaNoPicks' => ! str_contains((string) @file_get_contents(resource_path('views/variety-analysis/index.blade.php')), 'id="vaBook"'),
+            // The news reads the mother app's RSS; the cheap model finds the repeats; the page becomes a news email.
+            'newsSameCheck' => method_exists(\App\Services\NewsRoundup::class, 'sameNews') && method_exists(\App\Support\Newsletter\NewsEmail::class, 'forPage')
+                && Illuminate\Support\Facades\Schema::hasColumn('as_news_items', 'sameAsId'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
