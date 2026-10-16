@@ -1627,7 +1627,7 @@
   "heat_oil": {
    "level": "no",
    "why": "Spray oils burn leaves in the heat, in very humid air and on plants short of water.",
-   "fix": "Spray oil early in the morning or late in the afternoon, on watered plants, below about 32 C.",
+   "fix": "Spray oil in the cool of the early morning or late in the day, on watered plants, below about 32 C.",
    "src": [
     "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7408.html",
     "https://www.greenbook.net/api/products/48917/documents/10639/download",
@@ -1637,7 +1637,7 @@
   "heat_fert": {
    "level": "care",
    "why": "Foliar fertilizer dries fast in the heat and the salt left on the leaf burns it.",
-   "fix": "Spray early in the morning or late in the afternoon, and keep the strength at the lower end.",
+   "fix": "Spray in the cool of the early morning or late in the day, and keep the strength at the lower end.",
    "src": []
   },
   "rain_soon": {
@@ -1672,7 +1672,7 @@
   "heat_propanil": {
    "level": "no",
    "why": "Propanil labels ban spraying when it is hotter than 32 C.",
-   "fix": "Spray {a} early in the morning or late in the afternoon on a cooler day.",
+   "fix": "Spray {a} in the cool of the early morning or late in the day, on a cooler day.",
    "src": [
     "https://www.greenbook.net/api/products/65484/documents/37497/download",
     "https://www.greenbook.net/api/products/46656/documents/9112/download"
