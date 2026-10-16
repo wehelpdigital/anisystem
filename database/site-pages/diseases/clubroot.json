@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Clubroot comes from Plasmodiophora brassicae, a soil organism that is not a true fungus. The Pacific Pests and Pathogens sheet places it in a separate group of protists. Every member of the cabbage family can catch it, including the weeds. Chinese cabbage, head cabbage, broccoli and turnip are very susceptible, while cauliflower suffers a little less.\n\nIn the Philippines, a 1983 survey in Philippine Phytopathology found clubroot serious in some cabbage fields of Atok, Benguet, and suspected it in Bangao and Buguias. The authors warned that it could limit cabbage production there. The acid soils and the intensive cropping favor it. Later, Benguet State University tested lime and friendly fungi against it. If your cabbage wilts in moist soil, pull a plant and check the roots."
+      "text": "Clubroot comes from Plasmodiophora brassicae, a soil organism that is not a true fungus. The Pacific Pests and Pathogens sheet places it in a separate group of protists. Every member of the cabbage family can catch it, including the weeds. Chinese cabbage, head cabbage, broccoli and turnip are very susceptible, while cauliflower suffers a little less.\n\nIn the Philippines, a 1983 survey in Philippine Phytopathology found clubroot serious in some cabbage fields of Atok, Benguet, and suspected it in Bangao and Buguias. The authors warned that it could limit cabbage production there. The acid soils and the intensive cropping favor it. Later trials tested lime and friendly fungi against it. If your cabbage wilts in moist soil, pull a plant and check the roots."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "Clubroot kills by thirst. The clubs block water uptake, so early infections stunt the plants, and later ones stop the heads from forming. The Pacific Pests and Pathogens sheet reports yearly losses of at least 10 percent in brassica crops in Australia, with total crop loss possible over time. Worse, once a field is infested, the resting spores stay alive for 10 years or more.\n\nThe disease needs four things: acid soil below pH 7, wet soil, about 20 to 25 degrees Celsius, and a host crop. That is why cool, wet highland fields suffer. In a Benguet State University trial, lime plus the friendly fungus Paecilomyces lilacinus gave about 70 percent control. Lime alone gave about 59 percent. So lime is the backbone of control, and no spray cures a clubbed root."
+      "text": "Clubroot kills by thirst. The clubs block water uptake, so early infections stunt the plants, and later ones stop the heads from forming. The Pacific Pests and Pathogens sheet reports yearly losses of at least 10 percent in brassica crops in Australia, with total crop loss possible over time. Worse, once a field is infested, the resting spores stay alive for 10 years or more.\n\nThe disease needs four things: acid soil below pH 7, wet soil, about 20 to 25 degrees Celsius, and a host crop. That is why cool, wet highland fields suffer. In a trial, lime plus the friendly fungus Paecilomyces lilacinus gave about 70 percent control. Lime alone gave about 59 percent. So lime is the backbone of control, and no spray cures a clubbed root."
     },
     {
       "type": "heading",
@@ -119,10 +119,10 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Raise the soil pH. NC State Extension advises liming to a pH of 7.1 to 7.5, and the Benguet trial found lime alone gave about 59 percent control. Have the soil tested first, and lime before transplanting.",
+        "Raise the soil pH. Lime to a pH of 7.1 to 7.5, and the Benguet trial found lime alone gave about 59 percent control. Have the soil tested first, and lime before transplanting.",
         "Plant only clean seedlings. Raise them in clean trays with pasteurized or soilless mix. Never buy seedlings from a field with clubroot, since the 1983 Benguet survey traced spread to infected seedlings.",
         "Drain the field. Use raised beds and open canals, because wet soil lets the spores swim to the roots.",
-        "Add biological help to the lime. In the Benguet State University trial, Paecilomyces lilacinus plus lime gave the best result, about 70 percent control.",
+        "Add biological help to the lime. In a trial, Paecilomyces lilacinus plus lime gave the best result, about 70 percent control.",
         "Keep the spores home. Wash soil off boots, tools and tillers before you move from an infested field to a clean one. The [diamondback moth](/pests/diamondback-moth) also cut yields in that trial, so manage both."
       ]
     },
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "The Pacific Pests and Pathogens sheet says no chemicals are available to smallholders for clubroot. In the United States, NC State lists fluazinam and cyazofamid as registered for it, applied to the soil before or at transplanting. Check the FPA registration in the Philippines before you use either, and follow the label."
+      "text": "The Pacific Pests and Pathogens sheet says no chemicals are available to smallholders for clubroot. In the United States, fluazinam and cyazofamid are registered for it, applied to the soil before or at transplanting. Check the FPA registration in the Philippines before you use either, and follow the label."
     },
     {
       "type": "table",
@@ -206,7 +206,7 @@
         },
         {
           "q": "Does lime cure clubroot?",
-          "a": "Lime does not cure plants already sick, but it cuts new infections. NC State advises raising the soil pH to 7.1 to 7.5. In a Benguet State University trial, lime alone gave about 59 percent control, and lime plus Paecilomyces lilacinus gave about 70 percent."
+          "a": "Lime does not cure plants already sick, but it cuts new infections. Raise the soil pH to 7.1 to 7.5. In a trial, lime alone gave about 59 percent control, and lime plus Paecilomyces lilacinus gave about 70 percent."
         },
         {
           "q": "How is clubroot different from root knot nematode?",

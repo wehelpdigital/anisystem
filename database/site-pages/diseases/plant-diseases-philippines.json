@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice defines a disease as any disturbance of a plant's normal structure, function or economic value. So a stunted tiller, a rotting fruit and a spotted leaf all count. Not every disease comes from a germ, though. Zinc deficiency or a herbicide burn can make a plant sick too, but it never spreads.\n\nDiseased in Tagalog is may sakit, and a sick plant is halamang may sakit. Sakit means illness or disease, so farmers call plant diseases sakit ng halaman. Mildew in Tagalog is amag, the same word for mold on bread. Rice blast, for example, is mata mata in Bisaya and agupaw in Waray."
+      "text": "A disease is any disturbance of a plant's normal structure, function or economic value. So a stunted tiller, a rotting fruit and a spotted leaf all count. Not every disease comes from a germ, though. Zinc deficiency or a herbicide burn can make a plant sick too, but it never spreads.\n\nDiseased in Tagalog is may sakit, and a sick plant is halamang may sakit. Sakit means illness or disease, so farmers call plant diseases sakit ng halaman. Mildew in Tagalog is amag, the same word for mold on bread. Rice blast, for example, is mata mata in Bisaya and agupaw in Waray."
     },
     {
       "type": "heading",
@@ -41,7 +41,7 @@
     },
     {
       "type": "text",
-      "text": "Fungi cause many of the worst crop diseases, and their spores travel by wind, water, insects, seed, soil and tools, says PhilRice. Water molds, or oomycetes, look like fungi but form a separate group that thrives in wet weather. Bacteria are single cells that enter through wounds and natural openings. Viruses and viroids multiply only inside living cells, and insects carry many of them. Finally, nematodes are tiny soil worms that feed on roots."
+      "text": "Fungi cause many of the worst crop diseases, and their spores travel by wind, water, insects, seed, soil and tools. Water molds, or oomycetes, look like fungi but form a separate group that thrives in wet weather. Bacteria are single cells that enter through wounds and natural openings. Viruses and viroids multiply only inside living cells, and insects carry many of them. Finally, nematodes are tiny soil worms that feed on roots."
     },
     {
       "type": "table",
@@ -81,7 +81,7 @@
     },
     {
       "type": "text",
-      "text": "A symptom is how the plant reacts, such as yellowing. A sign is the germ itself: fungal growth, sclerotia or bacterial ooze. For example, IRRI's test for bacterial leaf blight is to stand a cut lesion in clear water and watch for cloudy streams."
+      "text": "A symptom is how the plant reacts, such as yellowing. A sign is the germ itself: fungal growth, sclerotia or bacterial ooze. For example, the test for bacterial leaf blight is to stand a cut lesion in clear water and watch for cloudy streams."
     },
     {
       "type": "heading",
@@ -92,7 +92,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Seed.** [Bakanae](/diseases/bakanae) and [brown spot](/diseases/rice-brown-spot) ride on rice seed. IRRI says the brown spot fungus survives in seed for more than four years.",
+        "**Seed.** [Bakanae](/diseases/bakanae) and [brown spot](/diseases/rice-brown-spot) ride on rice seed. The brown spot fungus survives in seed for more than four years.",
         "**Soil.** [Fusarium wilt](/diseases/fusarium-wilt), [clubroot](/diseases/clubroot) and root knot nematodes wait in the soil for the next crop.",
         "**Water.** Irrigation water spreads [bacterial leaf streak](/diseases/bacterial-leaf-streak), and the resting bodies of [sheath blight](/diseases/sheath-blight) float from hill to hill.",
         "**Wind and rain.** Blast spores travel far in the air, and rain splashes bacterial leaf blight around.",
@@ -117,7 +117,7 @@
         [
           "Rice (palay)",
           "[Blast](/diseases/rice-blast), [bacterial leaf blight](/diseases/bacterial-leaf-blight), [tungro](/diseases/rice-tungro), [sheath blight](/diseases/sheath-blight)",
-          "PhilRice says all four rise in the rainy season."
+          "All four rise in the rainy season."
         ],
         [
           "Corn (mais)",
@@ -132,7 +132,7 @@
         [
           "Banana",
           "[Fusarium wilt TR4](/diseases/fusarium-wilt), [bunchy top](/diseases/banana-bunchy-top), [moko](/diseases/moko-disease), [black sigatoka](/diseases/black-sigatoka)",
-          "Bunchy top can cut yield by up to 75 percent, says PCAARRD."
+          "Bunchy top can cut yield by up to 75 percent."
         ],
         [
           "Coconut",
@@ -142,13 +142,13 @@
         [
           "Mango",
           "[Anthracnose](/diseases/anthracnose), blossom blight, scab, stem end rot",
-          "PCAARRD lists all four."
+          "All four are main diseases of mango."
         ]
       ]
     },
     {
       "type": "text",
-      "text": "For rice, see our [rice diseases](/diseases/rice-diseases) guide. Against corn downy mildew, the DA advises resistant varieties, early and synchronous planting, and no corn near sugarcane, sorghum or talahib grass."
+      "text": "For rice, see our [rice diseases](/diseases/rice-diseases) guide. Against corn downy mildew, use resistant varieties, plant early and at the same time as your neighbors, and grow no corn near sugarcane, sorghum or talahib grass."
     },
     {
       "type": "heading",
@@ -157,7 +157,7 @@
     },
     {
       "type": "text",
-      "text": "Pests leave evidence: the insect, its eggs, chewed holes or droppings. Diseases leave symptoms and often signs, and they spread to neighboring plants over days. Nutrient problems and chemical burns do not spread, and PhilRice notes they often hit a large area at once.\n\nSome look alikes fool even old hands. Rice with tungro turns yellow and stunted, like rice short of nitrogen or zinc. Kresek, the seedling form of bacterial leaf blight, looks like stem borer damage. Yet a kresek plant does not pull out easily. Ask these questions, adapted from the PhilRice field guide, before you buy anything."
+      "text": "Pests leave evidence: the insect, its eggs, chewed holes or droppings. Diseases leave symptoms and often signs, and they spread to neighboring plants over days. Nutrient problems and chemical burns do not spread, and they often hit a large area at once.\n\nSome look alikes fool even old hands. Rice with tungro turns yellow and stunted, like rice short of nitrogen or zinc. Kresek, the seedling form of bacterial leaf blight, looks like stem borer damage. Yet a kresek plant does not pull out easily. Ask these questions before you buy anything."
     },
     {
       "type": "list",
@@ -181,18 +181,18 @@
     },
     {
       "type": "text",
-      "text": "PhilRice teaches that a disease needs three things at once: a virulent germ, a susceptible plant and favorable weather. Take away any one and the disease stalls. That is why prevention beats any spray."
+      "text": "A disease needs three things at once: a virulent germ, a susceptible plant and favorable weather. Take away any one and the disease stalls. That is why prevention beats any spray."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Plant resistant varieties.** PhilRice calls resistance the most widely used control. Ask your DA office which ones resist the diseases your farm had before.",
+        "**Plant resistant varieties.** Resistance is the most widely used control. Ask your DA office which ones resist the diseases your farm had before.",
         "**Use clean seed and planting material.** Certified seed, inspection and quarantine keep germs off new land.",
         "**Plant with your neighbors.** Planting within a month of the usual local date keeps insect borne viruses like tungro low.",
         "**Feed in balance.** Too much nitrogen raises blast, sheath blight and bacterial leaf blight. A lack of potassium invites brown spot.",
         "**Give plants air.** Wider spacing and good drainage keep leaves drier, and moisture helps spores sprout.",
-        "**Clean up and rotate.** Plow under sick stubble and remove sick plants early. UC IPM finds rotation with non host crops works well against root knot nematodes."
+        "**Clean up and rotate.** Plow under sick stubble and remove sick plants early. Rotation with non host crops works well against root knot nematodes."
       ]
     },
     {
@@ -213,7 +213,7 @@
     },
     {
       "type": "text",
-      "text": "A fungicide is made for fungi and water molds. It does not cure a virus, and PhilRice says chemicals against bacterial leaf blight are neither economical nor effective. Contact fungicides protect the leaf surface, while systemic ones move into the plant.\n\nFRAC, the Fungicide Resistance Action Committee, gives every active ingredient a group code meant for the label. The group tells you how it works and how fast fungi learn to beat it."
+      "text": "A fungicide is made for fungi and water molds. It does not cure a virus, and chemicals against bacterial leaf blight are neither economical nor effective. Contact fungicides protect the leaf surface, while systemic ones move into the plant.\n\nFRAC, the Fungicide Resistance Action Committee, gives every active ingredient a group code meant for the label. The group tells you how it works and how fast fungi learn to beat it."
     },
     {
       "type": "table",
@@ -258,7 +258,7 @@
     },
     {
       "type": "text",
-      "text": "Fungi adapt. If a fungus resists one member of a group, FRAC warns, it will most likely resist the others too. So two brands with the same group number count as one spray. Switch groups for the next application, and lean on the low risk M groups. IRRI, for example, warns that repeated benomyl seed treatment lets the bakanae fungus build resistance. Our [fungicide guide](/blog/fungicides) explains more."
+      "text": "Fungi adapt. If a fungus resists one member of a group, FRAC warns, it will most likely resist the others too. So two brands with the same group number count as one spray. Switch groups for the next application, and lean on the low risk M groups. For example, repeated benomyl seed treatment lets the bakanae fungus build resistance. Our [fungicide guide](/blog/fungicides) explains more."
     },
     {
       "type": "callout",
@@ -284,7 +284,7 @@
         },
         {
           "q": "Can a fungicide cure a virus or a bacterial disease?",
-          "a": "No. Nothing cures a virus, so remove sick plants and manage the insect that carries it. For bacteria, PhilRice says chemicals against bacterial leaf blight are not economical or effective."
+          "a": "No. Nothing cures a virus, so remove sick plants and manage the insect that carries it. For bacteria, chemicals against bacterial leaf blight are not economical or effective."
         },
         {
           "q": "Why did my fungicide stop working?",

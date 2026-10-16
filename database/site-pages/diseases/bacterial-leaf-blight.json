@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Bacterial leaf blight, often shortened to BLB, attacks rice in irrigated and rainfed lowlands. IRRI calls it one of the most serious diseases of rice. It thrives at 25 to 34 degrees Celsius with relative humidity above 70 percent. It spreads fast when strong winds and continuous heavy rains hit. That is why PhilRice lists it among the major diseases to watch in the rainy season.\n\nIt is also a national problem. Bureau of Plant Industry data from 2021 to 2025 put BLB among the top five threats to rice. PhilRice expected it to spread in Central Luzon and Bicol early in 2026. Regional names include nauga nga dahon in Cebuano, nadurot nga tanum in Waray and naggapula in Ilonggo. Its cousin, [bacterial leaf streak](/diseases/bacterial-leaf-streak), looks the same at first."
+      "text": "Bacterial leaf blight, often shortened to BLB, attacks rice in irrigated and rainfed lowlands. This is one of the most serious diseases of rice. It thrives at 25 to 34 degrees Celsius with relative humidity above 70 percent. It spreads fast when strong winds and continuous heavy rains hit. That is why it is among the major diseases to watch in the rainy season.\n\nIt is also a national problem. From 2021 to 2025, BLB was among the top five threats to rice. It was expected to spread in Central Luzon and Bicol early in 2026. Regional names include nauga nga dahon in Cebuano, nadurot nga tanum in Waray and naggapula in Ilonggo. Its cousin, [bacterial leaf streak](/diseases/bacterial-leaf-streak), looks the same at first."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI puts the loss at up to 70 percent when susceptible varieties grow in weather that favors the disease. The earlier it starts, the bigger the loss. If infection comes only at booting, the yield holds, but grain quality drops and more kernels break at milling. Besides that, heavy nitrogen on a susceptible variety makes it severe.\n\nThere is only one spray line to know. PhilRice says chemical control of BLB is neither economical nor effective as a routine, and its field advice keeps a copper based fungicide for fields where about 30 percent or more of the crop is hit. So your real decisions happen before planting and in how you handle water and fertilizer. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to keep nitrogen balanced. PhilRice also warns that excess nitrogen and too little phosphorus and potassium raise infection."
+      "text": "The loss can reach 70 percent when susceptible varieties grow in weather that favors the disease. The earlier it starts, the bigger the loss. If infection comes only at booting, the yield holds, but grain quality drops and more kernels break at milling. Besides that, heavy nitrogen on a susceptible variety makes it severe.\n\nThere is only one spray line to know. Chemical control of BLB is neither economical nor effective as a routine. A copper based fungicide is kept for fields where about 30 percent or more of the crop is hit. So your real decisions happen before planting and in how you handle water and fertilizer. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to keep nitrogen balanced. Excess nitrogen and too little phosphorus and potassium also raise infection."
     },
     {
       "type": "heading",
@@ -119,9 +119,9 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Plant a resistant variety. IRRI calls it the most efficient, reliable and cheapest control, and PhilRice names NSIC Rc242 among varieties resistant to BLB.",
+        "Plant a resistant variety. It is the most efficient, reliable and cheapest control, and NSIC Rc242 is among the varieties resistant to BLB.",
         "Use certified seed of a resistant variety, or seed from healthy plants. Handle seedlings gently and do not cut their leaf tips at transplanting, since wounds let the bacteria in.",
-        "Keep beds and fields from flooding. PhilRice advises a shallow water level of 2 to 3 cm, and IRRI stresses good drainage in seedbeds and fields.",
+        "Keep beds and fields from flooding. Keep a shallow water level of 2 to 3 cm, and drain seedbeds and fields well.",
         "When the infection is heavy and spread across the field, lower the water or drain the field. Never let irrigation water flow from a sick field into a healthy one.",
         "Apply fertilizer at proper rates and split the nitrogen into several doses, since excess nitrogen feeds the disease.",
         "Weed regularly, and remove weed hosts on the bunds along with ratoons and volunteer seedlings.",
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice says chemicals to control bacterial leaf blight are neither economical nor effective as a routine, so prevention carries the load. Its field advice keeps one exception: a copper based fungicide, only if needed, once about 30 percent or more of the field is hit. Pick a product whose FPA label lists rice, follow the label, and ask your local agriculture office before you buy. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) shows how this line compares with other rice problems."
+      "text": "Chemicals to control bacterial leaf blight are neither economical nor effective as a routine, so prevention carries the load. There is one exception: a copper based fungicide, only if needed, once about 30 percent or more of the field is hit. Pick a product whose FPA label lists rice, follow the label, and ask your local agriculture office before you buy. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) shows how this line compares with other rice problems."
     },
     {
       "type": "callout",
@@ -188,7 +188,7 @@
         },
         {
           "q": "Is there a spray that cures bacterial leaf blight?",
-          "a": "No reliable one. PhilRice says chemicals for BLB are neither economical nor effective as a routine, and it keeps a copper based fungicide for fields where about 30 percent or more is hit. So resistant varieties, clean seed, water control and balanced fertilizer carry the load instead."
+          "a": "No reliable one. Chemicals for BLB are neither economical nor effective as a routine. A copper based fungicide is kept for fields where about 30 percent or more is hit. So resistant varieties, clean seed, water control and balanced fertilizer carry the load instead."
         },
         {
           "q": "How do I tell kresek from stem borer damage?",
@@ -196,7 +196,7 @@
         },
         {
           "q": "Which variety resists bacterial leaf blight?",
-          "a": "PhilRice names NSIC Rc242 as resistant to BLB. Still, ask your local agriculture office for the current list for your area, and see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines)."
+          "a": "NSIC Rc242 is resistant to BLB. Still, ask your local agriculture office for the current list for your area, and see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines)."
         }
       ]
     },

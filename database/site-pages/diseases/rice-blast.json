@@ -17,7 +17,7 @@
     "blast disease of rice",
     "Pyricularia oryzae"
   ],
-  "excerpt": "Rice blast is the fungal disease many farmers call mata mata. IRRI ranks it among the most destructive diseases of palay (rice still in the husk). It spots the leaves, blackens the nodes and rots the neck of the panicle. A bad attack can leave few or no grains.",
+  "excerpt": "Rice blast is the fungal disease many farmers call mata mata. It ranks among the most destructive diseases of palay (rice still in the husk). It spots the leaves, blackens the nodes and rots the neck of the panicle. A bad attack can leave few or no grains.",
   "heroImage": {
     "src": "/images/site/diseases/rice-blast.webp",
     "thumb": "/images/site/diseases/rice-blast-480.webp",
@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Rice blast comes from the fungus Pyricularia oryzae, also called Magnaporthe oryzae. It can attack every part of the plant above the ground. That runs from the leaf and collar to the node, the neck and the panicle. PhilRice says it strikes where irrigation runs short and in upland fields. It does so most of all when the sky stays cloudy and rain keeps falling.\n\nPhilRice handouts call it mata mata, the word for its spots on the leaf. A PhilRice disease poster also lists agupaw in Waray and taya taya in Cebuano areas of Mindanao. Blast hits twice. Early on it can kill seedlings and young plants. Later, neck blast cuts the panicle off right when the grain should fill. So the first defense is the seed you buy, and our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) can help you choose."
+      "text": "Rice blast comes from the fungus Pyricularia oryzae, also called Magnaporthe oryzae. It can attack every part of the plant above the ground. That runs from the leaf and collar to the node, the neck and the panicle. It strikes where irrigation runs short and in upland fields. It does so most of all when the sky stays cloudy and rain keeps falling.\n\nIn Tagalog it is called mata mata, the word for its spots on the leaf. It is also called agupaw in Waray and taya taya in Cebuano areas of Mindanao. Blast hits twice. Early on it can kill seedlings and young plants. Later, neck blast cuts the panicle off right when the grain should fill. So the first defense is the seed you buy, and our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) can help you choose."
     },
     {
       "type": "table",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI calls blast one of the most destructive diseases of rice. Leaf blast can kill seedlings or plants up to tillering. On older plants, a severe attack shrinks the green leaf area that fills the grain. Neck and node blast hurt even more, because they hit the panicle directly. If the neck is infected before the milky stage, no grain forms at all.\n\nThere is no simple count that tells you when to spray. Instead, IRRI advises a fungicide at heading only where the risk of yield loss is high. PhilRice also warns that the disease keeps building as long as blast spores stay in the air. So a field that had neck blast last season needs a plan before booting, and nitrogen is a big part of it. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to split it."
+      "text": "Blast is one of the most destructive diseases of rice. Leaf blast can kill seedlings or plants up to tillering. On older plants, a severe attack shrinks the green leaf area that fills the grain. Neck and node blast hurt even more, because they hit the panicle directly. If the neck is infected before the milky stage, no grain forms at all.\n\nThere is no simple count that tells you when to spray. Instead, use a fungicide at heading only where the risk of yield loss is high. The disease also keeps building as long as blast spores stay in the air. So a field that had neck blast last season needs a plan before booting, and nitrogen is a big part of it. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to split it."
     },
     {
       "type": "heading",
@@ -120,12 +120,12 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Plant a resistant variety first. PhilRice lists PSB Rc10, NSIC Rc122, Rc242 and Rc300 among varieties that hold up against blast, and your local agriculture office knows which suit your area.",
-        "Sow clean, healthy seed early, soon after the rains begin. PhilRice prefers transplanting to broadcasting, and seedlings raised in a wet bed.",
-        "Split your nitrogen into two or more applications and never pile it on. PhilRice adds that nitrate nitrogen raises the risk more than ammonium nitrogen.",
-        "Keep water on the field. IRRI advises flooding as often as you can, and PhilRice says irrigation cuts the attack, most of all in rainfed areas.",
+        "Plant a resistant variety first. PSB Rc10, NSIC Rc122, Rc242 and Rc300 are among the varieties that hold up against blast, and your local agriculture office knows which suit your area.",
+        "Sow clean, healthy seed early, soon after the rains begin. Transplant rather than broadcast, and use seedlings raised in a wet bed.",
+        "Split your nitrogen into two or more applications and never pile it on. Nitrate nitrogen raises the risk more than ammonium nitrogen.",
+        "Keep water on the field. Flood as often as you can, since irrigation cuts the attack, most of all in rainfed areas.",
         "Avoid close planting, and stay out of the field while the leaves are wet, since walking through a wet crop spreads the disease.",
-        "On soils short of silicon, IRRI suggests calcium silicate, or straw from high silicon rice that is free of blast."
+        "On soils short of silicon, apply calcium silicate, or straw from high silicon rice that is free of blast."
       ]
     },
     {
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "A fungicide makes sense only in three cases: a susceptible variety meeting wet, cloudy weather near heading, a field that had neck blast before, or leaf blast that already showed up at tillering. Then PhilRice advises two sprays to protect the neck and the panicle: one as the panicles start to come out and another when about half have emerged. Use a fungicide only when it is needed, and follow the FPA registered label for the rate. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) sets this timing next to other rice problems."
+      "text": "A fungicide makes sense only in three cases: a susceptible variety meeting wet, cloudy weather near heading, a field that had neck blast before, or leaf blast that already showed up at tillering. Then give two sprays to protect the neck and the panicle: one as the panicles start to come out and another when about half have emerged. Use a fungicide only when it is needed, and follow the FPA registered label for the rate. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) sets this timing next to other rice problems."
     },
     {
       "type": "table",
@@ -149,22 +149,22 @@
         [
           "Tricyclazole",
           "FRAC 16.1",
-          "named by PhilRice for blast, protects the leaves and the neck"
+          "used for blast, protects the leaves and the neck"
         ],
         [
           "Benomyl",
           "FRAC 1",
-          "named by PhilRice for blast, rotate it with another group"
+          "used for blast, rotate it with another group"
         ],
         [
           "Pyroquilon",
           "FRAC 16.1",
-          "named by PhilRice for blast, a melanin inhibitor like tricyclazole, so do not rotate between the two"
+          "used for blast, a melanin inhibitor like tricyclazole, so do not rotate between the two"
         ],
         [
           "Azoxystrobin plus difenoconazole",
           "FRAC 11 plus FRAC 3",
-          "a strobilurin with a triazole, the two classes IRRI names for blast, at heading"
+          "a strobilurin with a triazole, the two classes used for blast, at heading"
         ]
       ]
     },
@@ -183,9 +183,9 @@
       "type": "list",
       "items": [
         "Choose a blast resistant variety, and ask your local agriculture office for the current list.",
-        "Use clean, healthy seed, as PhilRice advises.",
-        "Right after harvesting a blast hit field, plow under or burn the stubble, as PhilRice advises, so the fungus dies and the stubble rots faster.",
-        "Rotate the field with mungo, pakwan, talong or mais when you can, as PhilRice suggests.",
+        "Use clean, healthy seed.",
+        "Right after harvesting a blast hit field, plow under or burn the stubble, so the fungus dies and the stubble rots faster.",
+        "Rotate the field with mungo, pakwan, talong or mais when you can.",
         "Feed the crop in split doses and keep the field flooded, instead of letting the soil dry out."
       ]
     },
@@ -215,7 +215,7 @@
       "items": [
         {
           "q": "What is mata mata in rice?",
-          "a": "Mata mata is a local name for rice blast, the fungal disease caused by Pyricularia oryzae. PhilRice uses it in its Tagalog handouts and lists it as the Bisaya name too. In Waray the same disease is agupaw."
+          "a": "Mata mata is a local name for rice blast, the fungal disease caused by Pyricularia oryzae. It is the Tagalog name, and the Bisaya name too. In Waray the same disease is agupaw."
         },
         {
           "q": "How do I tell neck blast from stem borer damage?",
@@ -223,7 +223,7 @@
         },
         {
           "q": "When should I spray a fungicide for rice blast?",
-          "a": "Only when the risk is high: a susceptible variety, a history of blast, leaf blast seen at tillering, or wet, cloudy weather near heading. PhilRice suggests two sprays, at the start of heading and when about half the panicles are out."
+          "a": "Only when the risk is high: a susceptible variety, a history of blast, leaf blast seen at tillering, or wet, cloudy weather near heading. Give two sprays, at the start of heading and when about half the panicles are out."
         },
         {
           "q": "Are my round brown spots blast too?",

@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Tungro comes from two viruses working together: rice tungro bacilliform virus and rice tungro spherical virus. PhilRice notes that the leafhopper cannot pass on the bacilliform virus unless the spherical virus is also present. Besides cultivated rice, the viruses infect some wild rice relatives and grassy weeds in and around the paddy.\n\nIRRI counts tungro among the most damaging diseases of rice in South and Southeast Asia, and PhilRice lists it among the major diseases to watch in the rainy season. It moves fast in young fields, because the [green leafhopper](/pests/green-leafhopper) prefers young plants and picks up the viruses more easily from them. So a field planted weeks after its neighbors is the one most at risk."
+      "text": "Tungro comes from two viruses working together: rice tungro bacilliform virus and rice tungro spherical virus. The leafhopper cannot pass on the bacilliform virus unless the spherical virus is also present. Besides cultivated rice, the viruses infect some wild rice relatives and grassy weeds in and around the paddy.\n\nTungro is among the most damaging diseases of rice in South and Southeast Asia, and among the major diseases to watch in the rainy season. It moves fast in young fields, because the [green leafhopper](/pests/green-leafhopper) prefers young plants and picks up the viruses more easily from them. So a field planted weeks after its neighbors is the one most at risk."
     },
     {
       "type": "table",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "In severe cases, IRRI says susceptible varieties infected early can lose up to 100 percent of their yield. The disease builds quickly in young fields. Late planted fields suffer most, and they also carry the disease into the early plantings of the next season.\n\nThere is no leafhopper count that tells you when to spray. IRRI warns that insecticides often fail against tungro, because leafhoppers keep moving in from nearby fields and spread the viruses in very short feeds. So the real action point is the first sick plant. PhilRice advises pulling infected plants out as soon as you find them, then watching the field closely for new ones."
+      "text": "In severe cases, susceptible varieties infected early can lose up to 100 percent of their yield. The disease builds quickly in young fields. Late planted fields suffer most, and they also carry the disease into the early plantings of the next season.\n\nThere is no leafhopper count that tells you when to spray. Insecticides often fail against tungro, because leafhoppers keep moving in from nearby fields and spread the viruses in very short feeds. So the real action point is the first sick plant. Pull infected plants out as soon as you find them, then watching the field closely for new ones."
     },
     {
       "type": "heading",
@@ -120,12 +120,12 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Plant a tungro resistant or leafhopper resistant variety. IRRI calls this the most economical defense, and PhilRice names NSIC Rc120 for tungro.",
+        "Plant a tungro resistant or leafhopper resistant variety. This is the most economical defense, and NSIC Rc120 is a good pick for tungro.",
         "Plant at the same time as the farms around you. Late or staggered planting gives the leafhoppers and the viruses a steady supply of young rice.",
-        "Leave a fallow of at least one month between crops, as PhilRice advises, to cut the food supply of the leafhoppers.",
+        "Leave a fallow of at least one month between crops to cut the food supply of the leafhoppers.",
         "Walk the field often to look for leafhoppers and sick plants, and pull infected plants out as soon as you see them.",
         "Plow under the stubble right after harvest to remove virus sources and destroy leafhopper eggs and breeding sites.",
-        "Avoid seedbeds near tungro hit fields and long nursery periods, since IRRI links nurseries of 5 to 6 weeks in tungro areas to more infection."
+        "Avoid seedbeds near tungro hit fields and long nursery periods, since nurseries of 5 to 6 weeks in tungro areas lead to more infection."
       ]
     },
     {
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "No chemical cures a plant with tungro. An insecticide against the green leafhopper helps only where tungro is already in the area and hoppers are many, and even then IRRI warns it often fails. PhilRice also advises no pesticide for 30 to 40 days after planting, because early sprays kill the spiders and wasps that keep pests down. Follow the FPA label."
+      "text": "No chemical cures a plant with tungro. An insecticide against the green leafhopper helps only where tungro is already in the area and hoppers are many, and even then it often fails. Also use no pesticide for 30 to 40 days after planting, because early sprays kill the spiders and wasps that keep pests down. Follow the FPA label."
     },
     {
       "type": "table",
@@ -205,7 +205,7 @@
       "items": [
         {
           "q": "Can a rice plant recover from tungro?",
-          "a": "No. Once a plant has tungro it cannot be cured. In varieties with some resistance, the yellowing may stay mild and fade as the plant matures. Even so, PhilRice advises pulling infected plants early."
+          "a": "No. Once a plant has tungro it cannot be cured. In varieties with some resistance, the yellowing may stay mild and fade as the plant matures. Even so, pull infected plants early."
         },
         {
           "q": "What insect spreads rice tungro?",
@@ -217,7 +217,7 @@
         },
         {
           "q": "Should I spray insecticide to stop tungro?",
-          "a": "Only on advice, and only where tungro is already in the area. IRRI says insecticides against leafhoppers often fail, because the hoppers keep moving in from nearby fields. Resistant varieties and synchronous planting do far more."
+          "a": "Only on advice, and only where tungro is already in the area. Insecticides against leafhoppers often fail, because the hoppers keep moving in from nearby fields. Resistant varieties and synchronous planting do far more."
         }
       ]
     },

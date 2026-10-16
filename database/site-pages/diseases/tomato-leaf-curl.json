@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Tomato leaf curl is caused by viruses in the begomovirus group. The whitefly, Bemisia tabaci, carries them. DOST PCAARRD calls it the most destructive disease of tomato in the Philippines. Research in the country has found begomoviruses on tomato and squash alike.\n\nThe virus has no cure, and a sick plant stays sick. So the plan is to stop the first infection. Raise seedlings in a clean place, keep the [whitefly](/pests/whitefly) down, and pull out infected plants early. Plants infected before flowering lose the most."
+      "text": "Tomato leaf curl is caused by viruses in the begomovirus group. The whitefly, Bemisia tabaci, carries them. It is the most destructive disease of tomato in the Philippines. Research in the country has found begomoviruses on tomato and squash alike.\n\nThe virus has no cure, and a sick plant stays sick. So the plan is to stop the first infection. Raise seedlings in a clean place, keep the [whitefly](/pests/whitefly) down, and pull out infected plants early. Plants infected before flowering lose the most."
     },
     {
       "type": "table",
@@ -71,7 +71,7 @@
         ],
         [
           "How it spreads",
-          "Whiteflies carry the virus from plant to plant as they feed. This is the main way it spreads, so a clean seedbed and few whiteflies protect the crop. One DOST PCAARRD page also lists seed as a possible route, so buy seed from a source you trust."
+          "Whiteflies carry the virus from plant to plant as they feed. This is the main way it spreads, so a clean seedbed and few whiteflies protect the crop. Seed is also a possible route, so buy seed from a source you trust."
         ]
       ]
     },
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "An Indian review of tomato yellow leaf curl virus says that plants infected early do not bear fruit and stay severely stunted, and that losses in India can reach 100 percent. A DOST PCAARRD page puts the loss at 50 to 100 percent under high disease pressure. These are worst cases from research summaries. Your own loss depends on the variety, the age of the plants and the whitefly pressure.\n\nIn the Philippines, a DOST PCAARRD program in Ilocos named leaf curl as the most destructive tomato disease. Its work covers healthy seedling technology and a seaweed based product called carrageenan."
+      "text": "An Indian review of tomato yellow leaf curl virus says that plants infected early do not bear fruit and stay severely stunted, and that losses in India can reach 100 percent. Under high disease pressure the loss can reach 50 to 100 percent. These are worst cases from research summaries. Your own loss depends on the variety, the age of the plants and the whitefly pressure.\n\nIn the Philippines, a program in Ilocos named leaf curl as the most destructive tomato disease. Its work covers healthy seedling technology and a seaweed based product called carrageenan."
     },
     {
       "type": "heading",
@@ -118,7 +118,7 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Raise seedlings in a screened nursery or net house, so whiteflies cannot reach them. Healthy seedling technology is a core part of the PCAARRD program.",
+        "Raise seedlings in a screened nursery or net house, so whiteflies cannot reach them. Healthy seedling technology is a core part of the Ilocos program.",
         "Check seedlings for whiteflies and curling before transplanting. Throw away any sick seedling, and never plant it.",
         "Scout the underside of the leaves for whiteflies every week, and keep field borders clear of weeds.",
         "Pull out the first sick plants as soon as you see them, and bag them at once before you carry them out. Then whiteflies cannot feed on them and spread the virus. After harvest, destroy the crop residue.",
@@ -186,7 +186,7 @@
         },
         {
           "q": "How does the virus spread?",
-          "a": "Whiteflies spread it as they feed, and this is the main route. One DOST PCAARRD page also says seed may carry it, so use seed from a trusted source."
+          "a": "Whiteflies spread it as they feed, and this is the main route. Seed may also carry it, so use seed from a trusted source."
         },
         {
           "q": "Which plants get infected most?",

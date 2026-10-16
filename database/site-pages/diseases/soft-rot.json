@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Bacterial soft rot is a group of diseases. The main one in the Philippines is Pectobacterium carotovorum, which older papers call Erwinia carotovora. A Philippine survey of 518 vegetable specimens from 14 provinces in Luzon, 5 in the Visayas and 8 in Mindanao found that 82.5 percent of the harmful isolates belonged to this bacterium.\n\nIt attacks cabbage, lettuce, potato, carrot, tomato and many other vegetables. It often follows [black rot](/diseases/black-rot), the [diamondback moth](/pests/diamondback-moth) or any injury that opens the plant. DOST PCAARRD notes that no effective control strategy for soft rot of vegetables exists in the Philippines at present, which is why prevention carries so much weight."
+      "text": "Bacterial soft rot is a group of diseases. The main one in the Philippines is Pectobacterium carotovorum, which older papers call Erwinia carotovora. A Philippine survey of 518 vegetable specimens from 14 provinces in Luzon, 5 in the Visayas and 8 in Mindanao found that 82.5 percent of the harmful isolates belonged to this bacterium.\n\nIt attacks cabbage, lettuce, potato, carrot, tomato and many other vegetables. It often follows [black rot](/diseases/black-rot), the [diamondback moth](/pests/diamondback-moth) or any injury that opens the plant. No effective control strategy for soft rot of vegetables exists in the Philippines at present, which is why prevention carries so much weight."
     },
     {
       "type": "table",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "Sprays do not stop soft rot. The bacteria live in the soil and inside the plant, so the Pacific pest sheet calls pesticides generally ineffective, except where soil insects add to the problem. For that reason we list no active ingredient. DOST PCAARRD and UPLB are testing bacteriophages, which are viruses that attack bacteria, but they are still in research."
+      "text": "Sprays do not stop soft rot. The bacteria live in the soil and inside the plant, so the Pacific pest sheet calls pesticides generally ineffective, except where soil insects add to the problem. For that reason we list no active ingredient. Bacteriophages, which are viruses that attack bacteria, are being tested, but they are still in research."
     },
     {
       "type": "callout",
@@ -190,7 +190,7 @@
         },
         {
           "q": "Is there a spray for soft rot?",
-          "a": "No effective control exists in the Philippines at present, according to DOST PCAARRD. Drainage, wound care and clean tools are the best protection."
+          "a": "No effective control exists in the Philippines at present. Drainage, wound care and clean tools are the best protection."
         }
       ]
     },

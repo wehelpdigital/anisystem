@@ -22,7 +22,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The FAO notes that people suspected Tropical Race 4, or TR4, in the country as early as the 1970s, but researchers confirmed it in Philippine Cavendish only in 2008. Cases on the farms they surveyed rose from 700 in 2005 to 15,000 in 2007. In 2012, according to PCAARRD, TR4 ravaged 635 hectares of banana plantation in Davao and threatened Bukidnon, North Cotabato and Agusan del Sur.\n\nTomato growers face their own form of the same fungus. The disease moves with soil, water and planting material, so a farm that controls those three has a real chance of keeping it out."
+      "text": "People suspected Tropical Race 4, or TR4, in the country as early as the 1970s, but researchers confirmed it in Philippine Cavendish only in 2008. Cases on the farms they surveyed rose from 700 in 2005 to 15,000 in 2007. In 2012, TR4 ravaged 635 hectares of banana plantation in Davao and threatened Bukidnon, North Cotabato and Agusan del Sur.\n\nTomato growers face their own form of the same fungus. The disease moves with soil, water and planting material, so a farm that controls those three has a real chance of keeping it out."
     },
     {
       "type": "heading",
@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Fusarium oxysporum lives in the soil. It enters through the roots, grows into the xylem, the pipes that carry water up the plant, and blocks them. So the plant wilts even when the soil is wet.\n\nThe fungus comes in forms that each attack a narrow range of crops. Fusarium oxysporum f. sp. cubense, or Foc, attacks banana. Fusarium oxysporum f. sp. lycopersici attacks tomato. The banana form is not the one that wilts tomatoes, but both forms behave the same way in the soil.\n\nWhat makes it worse is how long it lasts. The fungus forms thick walled resting spores that, according to the FAO, can survive in soil for more than 20 years."
+      "text": "Fusarium oxysporum lives in the soil. It enters through the roots, grows into the xylem, the pipes that carry water up the plant, and blocks them. So the plant wilts even when the soil is wet.\n\nThe fungus comes in forms that each attack a narrow range of crops. Fusarium oxysporum f. sp. cubense, or Foc, attacks banana. Fusarium oxysporum f. sp. lycopersici attacks tomato. The banana form is not the one that wilts tomatoes, but both forms behave the same way in the soil.\n\nWhat makes it worse is how long it lasts. The fungus forms thick walled resting spores that can survive in soil for more than 20 years."
     },
     {
       "type": "heading",
@@ -40,7 +40,7 @@
     },
     {
       "type": "text",
-      "text": "Look at the oldest leaves first. These are the signs the FAO lists for Panama disease:"
+      "text": "Look at the oldest leaves first. These are the signs of Panama disease:"
     },
     {
       "type": "list",
@@ -143,7 +143,7 @@
     },
     {
       "type": "text",
-      "text": "Because nothing cures the disease, the lasting answer is a variety the fungus cannot kill. For Cavendish, breeders in Taiwan selected Giant Cavendish tissue culture variants, called GCTCV, that hold up against TR4. Seven of them went through trials in Mindanao with DOST PCAARRD, UPLB and the DA.\n\nFarmer cooperators preferred GCTCV 218 and GCTCV 219. GCTCV 218 had a sturdy pseudostem, even hands and bunches comparable to Grand Nain, while GCTCV 219 proved highly resistant to TR4. An ACIAR project in Davao del Norte found GCTCV 218 the only way smallholders with TR4 could keep growing bananas. The project also helped set up tissue culture labs to supply them. The PCAARRD program, for its part, worked out biological control and soil amendment steps to use alongside these plants.\n\nResistant does not mean immune. PCAARRD found that how well these varieties hold up depends on the farm, its soil management, soil acidity and how much fungus is already in the soil. GCTCV 219 also gave malformed fingers in the same study. So keep every sanitation step even with the new plants. For tomato, pick a variety whose seed packet lists resistance to Fusarium. For the full crop guide, read our page on [banana farming in the Philippines](/crops/banana-farming-philippines), and for vegetables see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+      "text": "Because nothing cures the disease, the lasting answer is a variety the fungus cannot kill. For Cavendish, breeders in Taiwan selected Giant Cavendish tissue culture variants, called GCTCV, that hold up against TR4. Seven of them went through trials in Mindanao.\n\nFarmer cooperators preferred GCTCV 218 and GCTCV 219. GCTCV 218 had a sturdy pseudostem, even hands and bunches comparable to Grand Nain, while GCTCV 219 proved highly resistant to TR4. A project in Davao del Norte found GCTCV 218 the only way smallholders with TR4 could keep growing bananas. The project also helped set up tissue culture labs to supply them. The Mindanao program, for its part, worked out biological control and soil amendment steps to use alongside these plants.\n\nResistant does not mean immune. How well these varieties hold up depends on the farm, its soil management, soil acidity and how much fungus is already in the soil. GCTCV 219 also gave malformed fingers in the same study. So keep every sanitation step even with the new plants. For tomato, pick a variety whose seed packet lists resistance to Fusarium. For the full crop guide, read our page on [banana farming in the Philippines](/crops/banana-farming-philippines), and for vegetables see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
     },
     {
       "type": "heading",
@@ -187,7 +187,7 @@
         },
         {
           "q": "Does Panama disease damage the banana fruit?",
-          "a": "No. The FAO notes that the fruit shows no symptoms. The damage is in the roots, corm, pseudostem and leaves."
+          "a": "No. The fruit shows no symptoms. The damage is in the roots, corm, pseudostem and leaves."
         }
       ]
     },

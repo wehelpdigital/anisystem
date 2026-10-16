@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Moko and bugtok both come from the bacterium Ralstonia solanacearum. A UPLB lecture on the two diseases explains that the name depends on what the bacterium does to the plant. Moko wilts Cavendish and other dessert bananas. Bugtok discolors the fruit pulp of cooking bananas such as saba and cardaba. The Pacific Pests and Pathogens fact sheet says that bugtok was first described in the southern Philippines. It later spread to the central Philippines and parts of the north.\n\nWhen first described in the 1960s, bugtok was of minor importance. Since then it has become a major problem. In many areas farmers have abandoned the popular saba and cardaba crops. If you grow [banana in the Philippines](/crops/banana-farming-philippines), your best defense is clean planting material and clean tools."
+      "text": "Moko and bugtok both come from the bacterium Ralstonia solanacearum. The name depends on what the bacterium does to the plant. Moko wilts Cavendish and other dessert bananas. Bugtok discolors the fruit pulp of cooking bananas such as saba and cardaba. The Pacific Pests and Pathogens fact sheet says that bugtok was first described in the southern Philippines. It later spread to the central Philippines and parts of the north.\n\nWhen first described in the 1960s, bugtok was of minor importance. Since then it has become a major problem. In many areas farmers have abandoned the popular saba and cardaba crops. If you grow [banana in the Philippines](/crops/banana-farming-philippines), your best defense is clean planting material and clean tools."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "For a smallholder, the loss is large. The Pacific Pests and Pathogens fact sheet notes that bugtok made farmers in many areas of the Philippines abandon their crops of saba and cardaba. These varieties give the high starch cooking banana that many Filipino dishes and snack products depend on.\n\nIn UPLB inoculation tests, Cavendish showed a high rate of wilt within two to three weeks. Cardaba moved more slowly but ended with nearly full infection. The sources we read give no national loss figure, so treat any single number you hear with care."
+      "text": "For a smallholder, the loss is large. The Pacific Pests and Pathogens fact sheet notes that bugtok made farmers in many areas of the Philippines abandon their crops of saba and cardaba. These varieties give the high starch cooking banana that many Filipino dishes and snack products depend on.\n\nIn inoculation tests, Cavendish showed a high rate of wilt within two to three weeks. Cardaba moved more slowly but ended with nearly full infection. The sources we read give no national loss figure, so treat any single number you hear with care."
     },
     {
       "type": "heading",
@@ -120,7 +120,7 @@
       "ordered": true,
       "items": [
         "Plant only healthy planting material. Use tissue cultured plantlets, and never take suckers from a farm that has moko or bugtok.",
-        "Walk the farm often. Find sick plants early and remove them with the whole mat. UPLB advises burning standing infected plants so the bacterium does not enter the soil.",
+        "Walk the farm often. Find sick plants early and remove them with the whole mat. Burn standing infected plants so the bacterium does not enter the soil.",
         "Disinfect cutting tools between plants when you desucker and prune. The Pacific fact sheet suggests a dilute bleach, with 3 percent sodium hypochlorite named for moko.",
         "For bugtok, protect the flowers. Bag the emerging flower bud, and remove the male bud early with a forked stick, so insects cannot carry the bacterium.",
         "Remove weeds that host the bacterium, since some carry it without showing signs.",
@@ -183,7 +183,7 @@
       "items": [
         {
           "q": "Are moko and bugtok the same disease?",
-          "a": "They are the same bacterium. According to the UPLB lecture, moko is the name when the bacterium wilts Cavendish and other dessert bananas. Bugtok is the name when it discolors the fruit of cooking bananas like saba and cardaba."
+          "a": "They are the same bacterium. Moko is the name when the bacterium wilts Cavendish and other dessert bananas. Bugtok is the name when it discolors the fruit of cooking bananas like saba and cardaba."
         },
         {
           "q": "Can sick fruit and suckers spread the disease?",

@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Root knot nematodes are microscopic roundworms of the genus Meloidogyne. The young worms are only about 0.5 mm long, so you need a microscope to see them. They feed inside the roots of many [vegetables in the Philippines](/crops/vegetables-philippines). Examples are tomato, eggplant, pepper, beans, carrot, cucumber, lettuce and sweet potato. Banana, papaya and pineapple are hosts as well, while grasses usually suffer less.\n\nIn Central Luzon, many farmers in San Jose and Bongabon, Nueva Ecija, plant onion right after rice. There, the rice root knot nematode (Meloidogyne graminicola) attacks both crops. So PhilRice and VISCA scientists tested ways to manage it in the rice and onion system. Plants with galled roots also fall more easily to [bacterial wilt](/diseases/bacterial-wilt) and other soil diseases."
+      "text": "Root knot nematodes are microscopic roundworms of the genus Meloidogyne. The young worms are only about 0.5 mm long, so you need a microscope to see them. They feed inside the roots of many [vegetables in the Philippines](/crops/vegetables-philippines). Examples are tomato, eggplant, pepper, beans, carrot, cucumber, lettuce and sweet potato. Banana, papaya and pineapple are hosts as well, while grasses usually suffer less.\n\nIn Central Luzon, many farmers in San Jose and Bongabon, Nueva Ecija, plant onion right after rice. There, the rice root knot nematode (Meloidogyne graminicola) attacks both crops. So scientists tested ways to manage it in the rice and onion system. Plants with galled roots also fall more easily to [bacterial wilt](/diseases/bacterial-wilt) and other soil diseases."
     },
     {
       "type": "table",
@@ -123,7 +123,7 @@
         "Start clean. Raise seedlings in pasteurized soil or a soil free potting mix, and never plant seedlings with knotted roots.",
         "Solarize the beds before planting. Wet the soil and cover it with clear plastic for 4 to 6 weeks, and the heat kills nematodes in the top 30 cm, along with many weed seeds and soil diseases.",
         "Starve them out. Leave the field bare for 4 to 6 months with frequent plowing and no weeds, or rotate to poor hosts, since corn and peanut are poor hosts of the common Meloidogyne incognita.",
-        "In rice and onion fields, grow Crotalaria or marigold (Tagetes) during the fallow. In PhilRice pot trials, these plants left no galls and cut the nematodes in the soil by 73 to 96 percent, and onions planted after them carried far fewer galls.",
+        "In rice and onion fields, grow Crotalaria or marigold (Tagetes) during the fallow. In pot trials, these plants left no galls and cut the nematodes in the soil by 73 to 96 percent, and onions planted after them carried far fewer galls.",
         "Feed the soil with compost or manure, mulch, and water deeply so plants can outgrow the damage. After harvest, collect the old roots and crop debris and burn them.",
         "Use resistant varieties where you can find them, since nematode resistant types exist for tomato, beans and sweet potato. For biological control, ask your agriculturist if a product with the fungus Paecilomyces lilacinus is registered in your area."
       ]
@@ -149,12 +149,12 @@
         [
           "Fluopyram",
           "IRAC N3",
-          "listed by the University of Florida among nematicides registered for vegetable crops"
+          "listed among nematicides registered for vegetable crops in Florida"
         ],
         [
           "Fluensulfone",
           "IRAC N UN",
-          "a newer nematicide listed by the University of Florida for vegetable crops"
+          "a newer nematicide listed for vegetable crops in Florida"
         ],
         [
           "Oxamyl",
@@ -214,7 +214,7 @@
         },
         {
           "q": "Does burning rice hull on the field kill nematodes?",
-          "a": "In a PhilRice study in Nueva Ecija, burning a thick layer of rice hull killed the nematodes down to 15 cm. Onion yield came out almost three times higher. But the authors warn that the smoke pollutes the air and that burning may change the soil structure and nutrients. So treat it as a last resort, and favor cover crops such as Crotalaria and marigold."
+          "a": "In a study in Nueva Ecija, burning a thick layer of rice hull killed the nematodes down to 15 cm. Onion yield came out almost three times higher. But the authors warn that the smoke pollutes the air and that burning may change the soil structure and nutrients. So treat it as a last resort, and favor cover crops such as Crotalaria and marigold."
         },
         {
           "q": "Can I get rid of root knot nematodes for good?",

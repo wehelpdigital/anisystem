@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "The phloem bacterium Candidatus Liberibacter asiaticus causes citrus greening. The University of Florida describes it as a yellow dragon disease that affects citrus, including mandarins and calamansi. It is spread by the Asian citrus psyllid, Diaphorina citri.\n\nPCAARRD reports that Huanglongbing and citrus tristeza virus are the main causes of low citrus production in the country. Government projects now test mother trees, geotag the infected ones and supply clean planting material. BPI also issued a Special Quarantine Order in 2013 on the movement of citrus plants. If you grow [fruit trees in the Philippines](/crops/pagtatanim-ng-puno), clean seedlings matter more than anything you can spray later."
+      "text": "The phloem bacterium Candidatus Liberibacter asiaticus causes citrus greening. It is known as a yellow dragon disease that affects citrus, including mandarins and calamansi. It is spread by the Asian citrus psyllid, Diaphorina citri.\n\nHuanglongbing and citrus tristeza virus are the main causes of low citrus production in the country. Government projects now test mother trees, geotag the infected ones and supply clean planting material. BPI also issued a Special Quarantine Order in 2013 on the movement of citrus plants. If you grow [fruit trees in the Philippines](/crops/pagtatanim-ng-puno), clean seedlings matter more than anything you can spray later."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "Once a tree is infected, there is no cure, and fertilizer will not cure it, though good nutrition can improve the productivity of an affected tree. PCAARRD names huanglongbing as a main cause of low citrus production in the Philippines.\n\nThe sources we read give no single national loss figure. For your own farm, count the trees with signs each season. A tree that shows signs gives poorer fruit, and it also feeds the psyllids that infect your healthy trees."
+      "text": "Once a tree is infected, there is no cure, and fertilizer will not cure it, though good nutrition can improve the productivity of an affected tree. Huanglongbing is a main cause of low citrus production in the Philippines.\n\nThe sources we read give no single national loss figure. For your own farm, count the trees with signs each season. A tree that shows signs gives poorer fruit, and it also feeds the psyllids that infect your healthy trees."
     },
     {
       "type": "heading",
@@ -121,7 +121,7 @@
       "items": [
         "Start with healthy seedlings. Buy only certified, disease indexed planting material from a protected nursery, such as those supported by BPI and PCAARRD projects.",
         "Never take budwood or cuttings from a tree that shows signs. Grafting infected budwood is a main way the disease reaches new trees.",
-        "Scout often and remove infected trees. The University of Florida and the FFTC both list eradication of infected trees with healthy planting material and vector control as the core of management.",
+        "Scout often and remove infected trees. Removing infected trees, planting healthy material and controlling the vector are the core of management.",
         "Watch the new flushes for psyllids, which prefer tender new growth, and control them.",
         "Feed and water trees well. Good nutrition does not cure the disease, but it helps the productivity of affected trees.",
         "Follow the BPI rules on moving citrus plants and planting material, and do not carry them across areas without the right papers."
@@ -148,7 +148,7 @@
         [
           "Imidacloprid",
           "IRAC 4A",
-          "a neonicotinoid used by the University of Florida on young trees for psyllid control"
+          "a neonicotinoid used on young trees for psyllid control"
         ],
         [
           "Thiamethoxam",
@@ -203,15 +203,15 @@
       "items": [
         {
           "q": "Can citrus greening be cured?",
-          "a": "No. The University of Florida says that once a tree is infected there is no cure, and fertilizer will not cure it. You can remove sick trees, control the psyllid and plant clean seedlings."
+          "a": "No. Once a tree is infected there is no cure, and fertilizer will not cure it. You can remove sick trees, control the psyllid and plant clean seedlings."
         },
         {
           "q": "How does citrus greening spread?",
-          "a": "The Asian citrus psyllid carries it from tree to tree, and grafting with infected budwood spreads it in nurseries. That is why PCAARRD and BPI stress clean, indexed planting material."
+          "a": "The Asian citrus psyllid carries it from tree to tree, and grafting with infected budwood spreads it in nurseries. That is why clean, indexed planting material matters most."
         },
         {
           "q": "Is calamansi affected?",
-          "a": "Yes. The University of Florida lists mandarins and calamansi among the citrus that the disease affects."
+          "a": "Yes. Mandarins and calamansi are among the citrus that the disease affects."
         }
       ]
     },

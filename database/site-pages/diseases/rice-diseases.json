@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice names bacterial leaf blight, blast, sheath blight and tungro as the major diseases of palay, the rice crop still in its husk. All four rise in the rainy season. IRRI reports up to 70 percent yield loss from bacterial leaf blight on susceptible varieties. Tungro can be worse. In severe cases, IRRI says, a susceptible variety infected young can lose the whole crop.\n\nFarmers know many of these by local names. Blast is mata mata in Bisaya, agupaw in Waray and taya taya among Cebuano speakers in Mindanao. Sheath blight is masot in Pangasinan. Grassy stunt and ragged stunt share the Tagalog name burit."
+      "text": "Bacterial leaf blight, blast, sheath blight and tungro are the major diseases of palay, the rice crop still in its husk. All four rise in the rainy season. Bacterial leaf blight can cut yield by up to 70 percent on susceptible varieties. Tungro can be worse. In severe cases, a susceptible variety infected young can lose the whole crop.\n\nFarmers know many of these by local names. Blast is mata mata in Bisaya, agupaw in Waray and taya taya among Cebuano speakers in Mindanao. Sheath blight is masot in Pangasinan. Grassy stunt and ragged stunt share the Tagalog name burit."
     },
     {
       "type": "heading",
@@ -45,7 +45,7 @@
     },
     {
       "type": "table",
-      "caption": "When the main rice diseases strike, from the PhilRice field guide and IRRI",
+      "caption": "When the main rice diseases strike",
       "rows": [
         [
           "Stage",
@@ -95,7 +95,7 @@
     },
     {
       "type": "text",
-      "text": "[Rice blast](/diseases/rice-blast) comes from the fungus Magnaporthe oryzae and can hit the leaf, collar, node and neck. Leaf spots are spindle shaped, with gray centers and brown borders. If the neck rots before the milky stage, no grain forms. High nitrogen, long dew, light rain and water stress all favor it. Both IRRI and PhilRice put resistant varieties first, then moderate, split nitrogen and no water stress."
+      "text": "[Rice blast](/diseases/rice-blast) comes from the fungus Magnaporthe oryzae and can hit the leaf, collar, node and neck. Leaf spots are spindle shaped, with gray centers and brown borders. If the neck rots before the milky stage, no grain forms. High nitrogen, long dew, light rain and water stress all favor it. So put resistant varieties first, then moderate, split nitrogen and no water stress."
     },
     {
       "type": "heading",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "[Tungro](/diseases/rice-tungro) is two viruses carried by the [green leafhopper](/pests/green-leafhopper). Leaves turn yellow to orange from the tip down, plants stay short, and sick hills show up in clusters that grow. It does not travel in seed.\n\n[Grassy stunt](/diseases/rice-grassy-stunt) and [ragged stunt](/diseases/rice-ragged-stunt) ride with the [brown planthopper](/pests/brown-planthopper). Grassy stunt makes an upright, grassy tuft of many tillers. Ragged stunt leaves torn, twisted leaves on a plant that stays dark green. PhilRice says there is no known cure yet for a virus infected rice plant."
+      "text": "[Tungro](/diseases/rice-tungro) is two viruses carried by the [green leafhopper](/pests/green-leafhopper). Leaves turn yellow to orange from the tip down, plants stay short, and sick hills show up in clusters that grow. It does not travel in seed.\n\n[Grassy stunt](/diseases/rice-grassy-stunt) and [ragged stunt](/diseases/rice-ragged-stunt) ride with the [brown planthopper](/pests/brown-planthopper). Grassy stunt makes an upright, grassy tuft of many tillers. Ragged stunt leaves torn, twisted leaves on a plant that stays dark green. There is no known cure yet for a virus infected rice plant."
     },
     {
       "type": "heading",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "[Sheath blight](/diseases/sheath-blight), from the fungus Rhizoctonia solani, starts as oval greenish gray spots on the sheath just above the water. In dense, heavily fertilized palay it climbs to the leaves and spreads to the next hill. Its hard resting bodies, the sclerotia, survive in the soil for months and float on the water. IRRI says no resistant variety is available yet. So wider spacing, moderate nitrogen and a few days of draining at maximum tillering do the work."
+      "text": "[Sheath blight](/diseases/sheath-blight), from the fungus Rhizoctonia solani, starts as oval greenish gray spots on the sheath just above the water. In dense, heavily fertilized palay it climbs to the leaves and spreads to the next hill. Its hard resting bodies, the sclerotia, survive in the soil for months and float on the water. No resistant variety is available yet. So wider spacing, moderate nitrogen and a few days of draining at maximum tillering do the work."
     },
     {
       "type": "heading",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "[Brown spot](/diseases/rice-brown-spot) makes round brown spots with gray centers. IRRI ties it to poor, unflooded soil, and PhilRice adds potassium deficiency, so fix the soil first.\n\n[False smut](/diseases/rice-false-smut) turns single grains into velvety balls, orange at first and greenish black later. Rain, high humidity and high nitrogen favor it. [Bakanae](/diseases/bakanae) is seedborne. Infected seedlings grow tall, thin and pale, then die or give empty grains."
+      "text": "[Brown spot](/diseases/rice-brown-spot) makes round brown spots with gray centers. It is tied to poor, unflooded soil and to potassium deficiency, so fix the soil first.\n\n[False smut](/diseases/rice-false-smut) turns single grains into velvety balls, orange at first and greenish black later. Rain, high humidity and high nitrogen favor it. [Bakanae](/diseases/bakanae) is seedborne. Infected seedlings grow tall, thin and pale, then die or give empty grains."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice highly recommends a resistant variety against blast, bacterial leaf blight, tungro, grassy stunt and ragged stunt. IRRI calls it the cheapest, most reliable control for bacterial leaf blight. PhilRice has named examples: PSB Rc10 for blast, Rc 242 for bacterial leaf blight and Rc 120 for tungro.\n\nResistance works disease by disease, though. In PhilRice trials, the hybrid Mestiso 19 (NSIC Rc202H) withstood tungro, yet it was susceptible to bacterial leaf blight. So pick a variety that resists the diseases your farm had before. New ones come out every year, and IRRI suggests asking your local agriculture office for the current list."
+      "text": "A resistant variety is the top choice against blast, bacterial leaf blight, tungro, grassy stunt and ragged stunt. It is the cheapest, most reliable control for bacterial leaf blight. Examples are PSB Rc10 for blast, Rc 242 for bacterial leaf blight and Rc 120 for tungro.\n\nResistance works disease by disease, though. In trials, the hybrid Mestiso 19 (NSIC Rc202H) withstood tungro, yet it was susceptible to bacterial leaf blight. So pick a variety that resists the diseases your farm had before. New ones come out every year, so ask your local agriculture office for the current list."
     },
     {
       "type": "text",
@@ -156,15 +156,15 @@
       "items": [
         {
           "title": "Start with clean seed",
-          "text": "Certified seed carries fewer germs. Against bakanae, IRRI advises sorting seed in salt water so light, infected grains float off. Against brown spot, it describes a hot water soak at 53 to 54 degrees Celsius for 10 to 12 minutes."
+          "text": "Certified seed carries fewer germs. Against bakanae, sort seed in salt water so light, infected grains float off. Against brown spot, use a hot water soak at 53 to 54 degrees Celsius for 10 to 12 minutes."
         },
         {
           "title": "Split the nitrogen",
-          "text": "Too much nitrogen raises blast, sheath blight and bacterial leaf blight, says PhilRice. Split it into two or more doses timed with the Leaf Color Chart, and add potassium where the soil lacks it. See our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
+          "text": "Too much nitrogen raises blast, sheath blight and bacterial leaf blight. Split it into two or more doses timed with the Leaf Color Chart, and add potassium where the soil lacks it. See our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
         },
         {
           "title": "Manage the water",
-          "text": "IRRI says flooding the field as often as possible holds blast back. Sheath blight wants the opposite: drain for a few days at maximum tillering. Against bacterial leaf blight, PhilRice advises keeping seedbeds and fields from flooding, at 2 to 3 cm of water."
+          "text": "Flooding the field as often as possible holds blast back. Sheath blight wants the opposite: drain for a few days at maximum tillering. Against bacterial leaf blight, keep seedbeds and fields from flooding, at 2 to 3 cm of water."
         },
         {
           "title": "Plant together, then clean up",
@@ -190,16 +190,16 @@
     },
     {
       "type": "text",
-      "text": "A fungicide is the last step, never the first. It does nothing against tungro, grassy stunt or ragged stunt, because those are viruses. PhilRice also says chemicals against bacterial leaf blight are not economical or effective. For the fungal diseases, spray only when scouting and the weather show real risk."
+      "text": "A fungicide is the last step, never the first. It does nothing against tungro, grassy stunt or ragged stunt, because those are viruses. Chemicals against bacterial leaf blight are not economical or effective either. For the fungal diseases, spray only when scouting and the weather show real risk."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Blast.** IRRI says triazoles (FRAC group 3) and strobilurins (FRAC group 11) can be used with care. One spray at heading can pay where the risk of yield loss is high.",
-        "**Sheath blight.** If you spray, PhilRice says to aim at the leaf sheaths between stem elongation and booting.",
-        "**Brown spot and bakanae.** Treat the seed, not the field. IRRI lists propiconazole (group 3) and azoxystrobin (group 11) among brown spot seed treatments. It also warns that the bakanae fungus builds resistance to repeated benomyl (group 1).",
-        "**False smut.** IRRI names no spray. Keep the field clean, use moderate nitrogen and plant certified seed."
+        "**Blast.** Triazoles (FRAC group 3) and strobilurins (FRAC group 11) can be used with care. One spray at heading can pay where the risk of yield loss is high.",
+        "**Sheath blight.** If you spray, aim at the leaf sheaths between stem elongation and booting.",
+        "**Brown spot and bakanae.** Treat the seed, not the field. Propiconazole (group 3) and azoxystrobin (group 11) are among the brown spot seed treatments. The bakanae fungus also builds resistance to repeated benomyl (group 1).",
+        "**False smut.** No spray is recommended. Keep the field clean, use moderate nitrogen and plant certified seed."
       ]
     },
     {
@@ -222,15 +222,15 @@
       "items": [
         {
           "q": "What are the most common rice diseases in the Philippines?",
-          "a": "PhilRice names bacterial leaf blight, blast, sheath blight and tungro as the major ones. Brown spot, false smut, bakanae, sheath rot, stem rot and the stunt viruses also turn up."
+          "a": "Bacterial leaf blight, blast, sheath blight and tungro are the major ones. Brown spot, false smut, bakanae, sheath rot, stem rot and the stunt viruses also turn up."
         },
         {
           "q": "Can I spray an insecticide to stop tungro?",
-          "a": "Often it does not help. IRRI explains that green leafhoppers keep moving between fields and pass the virus in very short feeds. Resistant varieties and synchronous planting work better."
+          "a": "Often it does not help. Green leafhoppers keep moving between fields and pass the virus in very short feeds. Resistant varieties and synchronous planting work better."
         },
         {
           "q": "Is there a spray for bacterial leaf blight?",
-          "a": "Not a reliable one. PhilRice says chemicals against it are not economical or effective. Plant a resistant variety and avoid excess nitrogen."
+          "a": "Not a reliable one. Chemicals against it are not economical or effective. Plant a resistant variety and avoid excess nitrogen."
         },
         {
           "q": "Why does sheath blight come back every wet season?",
@@ -238,7 +238,7 @@
         },
         {
           "q": "How do I tell neck blast from stem borer whiteheads?",
-          "a": "Tug the white panicle. A stem borer whitehead pulls out, while one from neck blast stays attached, says IRRI."
+          "a": "Tug the white panicle. A stem borer whitehead pulls out, while one from neck blast stays attached."
         }
       ]
     },

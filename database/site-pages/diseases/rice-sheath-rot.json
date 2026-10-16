@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Sheath rot is caused by the fungus Sarocladium oryzae, and the related species Sarocladium attenuatum can cause it too. IRRI says it occurs in most rice growing countries, most of all in rainfed rice, and that it is worse in the wet season than in the dry season.\n\nThe disease hits at the worst time, just as the panicle forms. Because the sheath wraps the panicle, rot in the sheath chokes the panicle inside. That is why farmers should watch the crop from panicle initiation, and why stem borer control matters, since borer holes let the fungus in. See our page on the [rice stem borer](/pests/rice-stem-borer)."
+      "text": "Sheath rot is caused by the fungus Sarocladium oryzae, and the related species Sarocladium attenuatum can cause it too. It occurs in most rice growing countries, most of all in rainfed rice, and it is worse in the wet season than in the dry season.\n\nThe disease hits at the worst time, just as the panicle forms. Because the sheath wraps the panicle, rot in the sheath chokes the panicle inside. That is why farmers should watch the crop from panicle initiation, and why stem borer control matters, since borer holes let the fungus in. See our page on the [rice stem borer](/pests/rice-stem-borer)."
     },
     {
       "type": "table",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI says sheath rot cuts yield by slowing or stopping the panicle from coming out, and by leaving unfilled grains and sterile panicles. It also lowers grain quality, because the panicles rot and the grains discolor. Research papers from India report yield losses of 20 to 85 percent in bad attacks, but the figure depends on the variety, the weather and the year, so use it only as a sign of how bad it can get.\n\nThe risk rises with close planting and with heavy nitrogen. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to split nitrogen safely. We found no official action threshold for the Philippines."
+      "text": "Sheath rot cuts yield by slowing or stopping the panicle from coming out, and by leaving unfilled grains and sterile panicles. It also lowers grain quality, because the panicles rot and the grains discolor. Research papers from India report yield losses of 20 to 85 percent in bad attacks, but the figure depends on the variety, the weather and the year, so use it only as a sign of how bad it can get.\n\nThe risk rises with close planting and with heavy nitrogen. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows how to split nitrogen safely. We found no official action threshold for the Philippines."
     },
     {
       "type": "heading",
@@ -119,7 +119,7 @@
       "ordered": true,
       "items": [
         "Use healthy seed that comes from a field free of the disease, and never save seed from a sick crop.",
-        "Do not plant too close. IRRI notes that incidence goes up with planting density.",
+        "Do not plant too close. Incidence goes up with planting density.",
         "Apply nitrogen in split doses, and add potash instead of piling on more nitrogen.",
         "Control stem borers and other insects, because their holes give the fungus a way in. Also read our page on the [rice stem borer](/pests/rice-stem-borer) for how to scout it, and remember that early insecticide sprays in the first 30 to 40 days after transplanting kill the spiders and wasps that protect the crop.",
         "Remove infected stubble and crop residue after harvest, and plow it under.",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "A spray makes sense only where sheath rot was bad before. Once the panicle is stuck inside the sheath, a spray cannot free it. IRRI says seed can be treated, and that foliar sprays are an option. Follow the label of an FPA registered product, and rotate groups."
+      "text": "A spray makes sense only where sheath rot was bad before. Once the panicle is stuck inside the sheath, a spray cannot free it. Seed can be treated, and foliar sprays are an option. Follow the label of an FPA registered product, and rotate groups."
     },
     {
       "type": "table",
@@ -147,17 +147,17 @@
         [
           "Carbendazim",
           "FRAC 1",
-          "seed treatment, as listed by IRRI"
+          "seed treatment"
         ],
         [
           "Mancozeb",
           "FRAC M3",
-          "seed treatment, as listed by IRRI"
+          "seed treatment"
         ],
         [
           "Copper oxychloride",
           "FRAC M1",
-          "a foliar spray, as listed by IRRI"
+          "a foliar spray"
         ]
       ]
     },

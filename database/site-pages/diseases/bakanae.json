@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Bakanae is caused by the fungus Fusarium fujikuroi. It attacks rice, and it can come in with the seed you plant. The fungus makes a plant hormone called gibberellin, and that hormone is what stretches infected seedlings so tall and thin. IRRI reports crop losses of up to 20 percent in outbreaks in South and Southeast Asia, and the loss is higher in some countries.\n\nThe disease matters because it often starts from your own seed lot. An infected plant can carry the fungus into the grain, so seed saved from a field with tall, pale plants brings the problem back next season. Check our guide to [rice diseases](/diseases/rice-diseases) to see where bakanae sits among the other palay diseases, and read about [rice varieties in the Philippines](/crops/rice-varieties-philippines) before you pick seed."
+      "text": "Bakanae is caused by the fungus Fusarium fujikuroi. It attacks rice, and it can come in with the seed you plant. The fungus makes a plant hormone called gibberellin, and that hormone is what stretches infected seedlings so tall and thin. Outbreaks in South and Southeast Asia cause crop losses of up to 20 percent, and the loss is higher in some countries.\n\nThe disease matters because it often starts from your own seed lot. An infected plant can carry the fungus into the grain, so seed saved from a field with tall, pale plants brings the problem back next season. Check our guide to [rice diseases](/diseases/rice-diseases) to see where bakanae sits among the other palay diseases, and read about [rice varieties in the Philippines](/crops/rice-varieties-philippines) before you pick seed."
     },
     {
       "type": "table",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI reports crop losses of up to 20 percent in outbreaks in South and Southeast Asia. Reports from other countries range from about 4 percent in India and 15 percent in Thailand to 20 to 50 percent in Japan, so the loss depends on how many seeds carry the fungus. Research in other regions has also recorded losses above 70 percent in severe infections.\n\nThere is no spray threshold, because the damage is decided before and just after planting. The count of tall plants in your seedbed tells you how bad the seed lot is. If you see them, act on the seed first and the field second. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) also helps, since a healthy, evenly fed crop hides fewer problems."
+      "text": "Outbreaks in South and Southeast Asia cause crop losses of up to 20 percent. Reports from other countries range from about 4 percent in India and 15 percent in Thailand to 20 to 50 percent in Japan, so the loss depends on how many seeds carry the fungus. Research in other regions has also recorded losses above 70 percent in severe infections.\n\nThere is no spray threshold, because the damage is decided before and just after planting. The count of tall plants in your seedbed tells you how bad the seed lot is. If you see them, act on the seed first and the field second. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) also helps, since a healthy, evenly fed crop hides fewer problems."
     },
     {
       "type": "heading",
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "Fungicides work best as a seed treatment before sowing, and not as a spray on the standing crop. TNAU and the Pacific Pests and Pathogens fact sheet name the ingredients below for seed. Follow the FPA registered label."
+      "text": "Fungicides work best as a seed treatment before sowing, and not as a spray on the standing crop. The ingredients below are the ones used on seed. Follow the FPA registered label."
     },
     {
       "type": "table",
@@ -149,12 +149,12 @@
         [
           "Thiram",
           "FRAC M3",
-          "seed treatment, named by TNAU and the Pacific Pests fact sheet"
+          "seed treatment"
         ],
         [
           "Carbendazim",
           "FRAC 1",
-          "seed treatment, named by TNAU"
+          "seed treatment"
         ],
         [
           "Thiophanate methyl",
@@ -164,7 +164,7 @@
         [
           "Captan",
           "FRAC M4",
-          "seed treatment, named by TNAU"
+          "seed treatment"
         ]
       ]
     },

@@ -17,7 +17,7 @@
     "pecky rice",
     "brown spot disease in palay"
   ],
-  "excerpt": "Rice brown spot is a fungal disease that dots palay leaves with round brown spots and leaves the grains spotted and light. It follows hungry, dry soil and infected seed. A Department of Agriculture survey now counts it among the top pests of Philippine rice. Much of the control starts with the seed and the soil.",
+  "excerpt": "Rice brown spot is a fungal disease that dots palay leaves with round brown spots and leaves the grains spotted and light. It follows hungry, dry soil and infected seed. A survey of 53 provinces now counts it among the top pests of Philippine rice. Much of the control starts with the seed and the soil.",
   "heroImage": {
     "src": "/images/site/diseases/rice-brown-spot.webp",
     "thumb": "/images/site/diseases/rice-brown-spot-480.webp",
@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Brown spot comes from the fungus Bipolaris oryzae. It can infect the young shoot, the leaves, the leaf sheath, the panicle branches, the glumes and the spikelets. IRRI says it was long ignored, though it is one of the most common and most damaging rice diseases. IRRI also notes it was considered a major factor in the Great Bengal Famine of 1943.\n\nIn the Philippines it is on the rise. The PRIME project of the Department of Agriculture surveyed 53 provinces over five years. It named brown spot among the top five pests of rice. In December 2023, its incidence passed 5 percent in Antique, Aklan, Capiz, Iloilo and Negros Occidental. Besides that, a survey of 2,186 farm fields from 2015 to 2018 linked more brown spot to rainfed fields. It also linked more of it to direct seeded rice and hybrid rice. Farmers often confuse it with [rice blast](/diseases/rice-blast)."
+      "text": "Brown spot comes from the fungus Bipolaris oryzae. It can infect the young shoot, the leaves, the leaf sheath, the panicle branches, the glumes and the spikelets. Brown spot was long ignored, though it is one of the most common and most damaging rice diseases. It was also considered a major factor in the Great Bengal Famine of 1943.\n\nIn the Philippines it is on the rise. A survey of 53 provinces over five years named brown spot among the top five pests of rice. In December 2023, its incidence passed 5 percent in Antique, Aklan, Capiz, Iloilo and Negros Occidental. Besides that, a survey of 2,186 farm fields from 2015 to 2018 linked more brown spot to rainfed fields. It also linked more of it to direct seeded rice and hybrid rice. Farmers often confuse it with [rice blast](/diseases/rice-blast)."
     },
     {
       "type": "table",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "Brown spot cuts both the amount and the quality of the harvest. IRRI puts the average loss at 5 percent across lowland rice in South and Southeast Asia. A badly infected field can lose up to 45 percent. Heavily infected seed causes seedling blight that kills 10 to 58 percent of the seedlings. It also lowers the number of grains per panicle and the weight of each kernel.\n\nThere is no set spray threshold. The bigger lesson is that brown spot points to a soil problem. It is common in unflooded and nutrient poor soils and in soils that build up toxic substances. So a field that keeps getting it needs a soil check before it needs more fungicide. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the potassium that PhilRice advises."
+      "text": "Brown spot cuts both the amount and the quality of the harvest. The average loss is 5 percent across lowland rice in South and Southeast Asia. A badly infected field can lose up to 45 percent. Heavily infected seed causes seedling blight that kills 10 to 58 percent of the seedlings. It also lowers the number of grains per panicle and the weight of each kernel.\n\nThere is no set spray threshold. The bigger lesson is that brown spot points to a soil problem. It is common in unflooded and nutrient poor soils and in soils that build up toxic substances. So a field that keeps getting it needs a soil check before it needs more fungicide. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the potassium your soil needs."
     },
     {
       "type": "heading",
@@ -120,9 +120,9 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Use clean, high quality seed, as PhilRice advises, since infected seed gives rise to infected seedlings.",
-        "Treat the seed with hot water at 53 to 54 degrees Celsius for 10 to 12 minutes before sowing. IRRI adds that soaking it in cold water for eight hours first makes the treatment work better.",
-        "Fix the soil. Test it, apply the fertilizer it lacks, and use potassium rich fertilizer as PhilRice advises. On soils low in silicon, IRRI suggests calcium silicate slag before planting.",
+        "Use clean, high quality seed, since infected seed gives rise to infected seedlings.",
+        "Treat the seed with hot water at 53 to 54 degrees Celsius for 10 to 12 minutes before sowing. Soaking it in cold water for eight hours first makes the treatment work better.",
+        "Fix the soil. Test it, apply the fertilizer it lacks, and use potassium rich fertilizer. On soils low in silicon, apply calcium silicate slag before planting.",
         "Plant a resistant variety, and ask your local agriculture office for the current list.",
         "Keep water on the field where you can, since brown spot is common in unflooded soil.",
         "Remove volunteer rice, crop debris and weeds that carry the fungus between seasons."
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI recommends fungicides mainly as seed treatments, and PhilRice lists fungicides among the ways to reduce its impact. Spray the crop only if the leaves keep spotting after you fix the seed and the soil. Choose a product whose FPA label lists brown leaf spot on rice. Follow the label for the rate."
+      "text": "Fungicides work mainly as seed treatments, and they are one of the ways to reduce its impact. Spray the crop only if the leaves keep spotting after you fix the seed and the soil. Choose a product whose FPA label lists brown leaf spot on rice. Follow the label for the rate."
     },
     {
       "type": "table",
@@ -159,7 +159,7 @@
         [
           "Iprodione",
           "FRAC 2",
-          "named by IRRI as a seed treatment against brown spot"
+          "a seed treatment against brown spot"
         ]
       ]
     },
@@ -218,11 +218,11 @@
         },
         {
           "q": "Does potassium help against brown spot?",
-          "a": "It can. PhilRice advises potassium rich fertilizer to reduce its impact, and IRRI says improving soil fertility is the first step. Have the soil tested so you add what is really missing."
+          "a": "It can. Potassium rich fertilizer reduces its impact, and improving soil fertility is the first step. Have the soil tested so you add what is really missing."
         },
         {
           "q": "Can I save seed from a field with brown spot?",
-          "a": "It is risky, because IRRI says the fungus survives in the seed for more than four years. If you do, treat it with hot water at 53 to 54 degrees Celsius for 10 to 12 minutes before sowing."
+          "a": "It is risky, because the fungus survives in the seed for more than four years. If you do, treat it with hot water at 53 to 54 degrees Celsius for 10 to 12 minutes before sowing."
         }
       ]
     },

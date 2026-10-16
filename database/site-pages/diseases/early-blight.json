@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Early blight comes from the fungus Alternaria solani. NC State Extension now calls the tomato fungus Alternaria linariae, its newer name. It attacks tomato (kamatis), potato, eggplant (talong), pepper (sili) and wild plants of the same family. Also, it hits every part of the plant: leaves, stems and fruit.\n\nIn the Philippines, the DA Cagayan Valley tomato guide lists early and late blight among the most common tomato diseases. DOST PCAARRD reports that growers in parts of Laguna and Quezon have found it. It warns that early blight can cause serious crop loss in tomato and eggplant, mostly in the wet season. So it matters to anyone who grows kamatis or talong for the market. Its cousin, [late blight](/diseases/late-blight), is a different and faster killer."
+      "text": "Early blight comes from the fungus Alternaria solani. The tomato fungus now goes by a newer name, Alternaria linariae. It attacks tomato (kamatis), potato, eggplant (talong), pepper (sili) and wild plants of the same family. Also, it hits every part of the plant: leaves, stems and fruit.\n\nIn the Philippines, early and late blight are among the most common tomato diseases. Growers in parts of Laguna and Quezon have found it. Early blight can cause serious crop loss in tomato and eggplant, mostly in the wet season. So it matters to anyone who grows kamatis or talong for the market. Its cousin, [late blight](/diseases/late-blight), is a different and faster killer."
     },
     {
       "type": "table",
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "Early blight rarely kills a plant outright. Instead, it strips the leaves, so the plant sets fewer and smaller fruit, and bare fruit burn in the sun. The Pacific Pests and Pathogens fact sheet says the yield loss is hard to measure but is probably at least 5 percent. Losses climb in warm, humid weather with heavy dew or rain. NC State Extension notes that the disease favors temperatures above about 27 degrees Celsius with moderate to heavy rain.\n\nNo spray threshold is set for small farms. So walk the field every week and turn over the lower leaves. Act when target spots start to climb the plant. Since the fungus also lives in old crop debris and on seed, one bad season can carry over to the next crop on the same ground."
+      "text": "Early blight rarely kills a plant outright. Instead, it strips the leaves, so the plant sets fewer and smaller fruit, and bare fruit burn in the sun. The Pacific Pests and Pathogens fact sheet says the yield loss is hard to measure but is probably at least 5 percent. Losses climb in warm, humid weather with heavy dew or rain. The disease favors temperatures above about 27 degrees Celsius with moderate to heavy rain.\n\nNo spray threshold is set for small farms. So walk the field every week and turn over the lower leaves. Act when target spots start to climb the plant. Since the fungus also lives in old crop debris and on seed, one bad season can carry over to the next crop on the same ground."
     },
     {
       "type": "heading",
@@ -123,8 +123,8 @@
         "Start clean. Use disease free seed and check every seedling before transplanting, because the fungus rides on seed and can rot young stems in the seedbed.",
         "Give the plants air. Space them 60 to 90 cm apart, stake or trellis them, and prune the lowest leaves and branches so the canopy dries fast.",
         "Keep water off the leaves. Water at the base of the plant instead of overhead, and lay mulch so rain does not splash soil onto the leaves.",
-        "Keep the plants strong with enough fertilizer, as NC State Extension advises. Then pick off badly spotted lower leaves early and carry them out of the field.",
-        "For biological control, NC State lists Bacillus biofungicides for organic growers, and DOST PCAARRD has a project to develop a local biofungicide for tomato and eggplant. Use them early, before the spots spread. Our [fungicides guide](/blog/fungicides) explains the other options."
+        "Keep the plants strong with enough fertilizer. Then pick off badly spotted lower leaves early and carry them out of the field.",
+        "For biological control, Bacillus biofungicides suit organic growers, and a local biofungicide for tomato and eggplant is being developed. Use them early, before the spots spread. Our [fungicides guide](/blog/fungicides) explains the other options."
       ]
     },
     {
@@ -153,7 +153,7 @@
         [
           "Chlorothalonil",
           "FRAC M5",
-          "protectant, named by NC State and the Pacific Pests sheet"
+          "protectant, named by the Pacific Pests sheet"
         ],
         [
           "Difenoconazole",
@@ -163,7 +163,7 @@
         [
           "Azoxystrobin",
           "FRAC 11",
-          "systemic strobilurin, NC State reports resistance, so never use it alone or back to back"
+          "systemic strobilurin, resistance has been reported, so never use it alone or back to back"
         ]
       ]
     },
@@ -185,7 +185,7 @@
         "After harvest, burn or bury the old plants deeply, since the fungus survives in crop debris.",
         "Pull volunteer tomato plants and weeds of the tomato family that carry the fungus between crops.",
         "Do not plant a new tomato crop next to an older one that already has the disease.",
-        "Ask your Municipal Agriculture Office about tolerant varieties. NC State lists tolerant tomatoes, but no fully resistant ones."
+        "Ask your Municipal Agriculture Office about tolerant varieties. Tolerant tomatoes exist, but no fully resistant ones."
       ]
     },
     {

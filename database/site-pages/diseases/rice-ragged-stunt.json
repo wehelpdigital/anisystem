@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Rice ragged stunt comes from the Rice ragged stunt virus, and the [brown planthopper](/pests/brown-planthopper) carries it from plant to plant. IRRI says the infection is especially high in tropical areas where rice is planted all year round. That gives the insect a field of food at all times.\n\nIt often shows up alongside [rice grassy stunt](/diseases/rice-grassy-stunt), because the same insect carries both viruses. IRRI and SEARCA both note that neither disease can be cured. So the plan is to prevent them, starting with the seedbed."
+      "text": "Rice ragged stunt comes from the Rice ragged stunt virus, and the [brown planthopper](/pests/brown-planthopper) carries it from plant to plant. The infection is especially high in tropical areas where rice is planted all year round. That gives the insect a field of food at all times.\n\nIt often shows up alongside [rice grassy stunt](/diseases/rice-grassy-stunt), because the same insect carries both viruses. Neither disease can be cured. So the plan is to prevent them, starting with the seedbed."
     },
     {
       "type": "table",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI says rice ragged stunt cuts yield by causing panicles that come out only in part, unfilled grains and a loss of plant density. A sick plant can survive, but its yield falls sharply. We found no sourced yield loss percentage for the Philippines, so we give none.\n\nThe damage grows with the number of planthoppers. Young nymphs spread the virus most efficiently, so the seedbed and the first weeks matter most. The planthopper itself also burns whole patches of rice, a damage called hopperburn. In 2017, SEARCA reported a resurgence of the insect across 18 provinces, with the two viruses it carries having no cure."
+      "text": "This disease cuts yield by causing panicles that come out only in part, unfilled grains and a loss of plant density. A sick plant can survive, but its yield falls sharply. We found no sourced yield loss percentage for the Philippines, so we give none.\n\nThe damage grows with the number of planthoppers. Young nymphs spread the virus most efficiently, so the seedbed and the first weeks matter most. The planthopper itself also burns whole patches of rice, a damage called hopperburn. In 2017, the insect resurged across 18 provinces, and the two viruses it carries have no cure."
     },
     {
       "type": "heading",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "No spray cures a plant that has the virus, because infected plants cannot recover. A spray can only target the planthopper. IRRI and PhilRice advise against insecticide in the first 30 to 40 days after transplanting unless a pest is truly at outbreak level. Early sprays kill the spiders and wasps and then cause planthopper outbreaks. If an outbreak is real, ask your local agriculture office which FPA registered product suits your field, and follow the label."
+      "text": "No spray cures a plant that has the virus, because infected plants cannot recover. A spray can only target the planthopper. Do not use insecticide in the first 30 to 40 days after transplanting unless a pest is truly at outbreak level. Early sprays kill the spiders and wasps and then cause planthopper outbreaks. If an outbreak is real, ask your local agriculture office which FPA registered product suits your field, and follow the label."
     },
     {
       "type": "callout",
@@ -182,7 +182,7 @@
       "items": [
         {
           "q": "Can rice ragged stunt be cured?",
-          "a": "No. IRRI says infected plants cannot recover. The way to protect your crop is to control the brown planthopper and plant resistant varieties."
+          "a": "No. Infected plants cannot recover. The way to protect your crop is to control the brown planthopper and plant resistant varieties."
         },
         {
           "q": "Is ragged stunt the same as grassy stunt?",

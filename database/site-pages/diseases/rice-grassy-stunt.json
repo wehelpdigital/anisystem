@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Rice grassy stunt comes from the Rice grassy stunt virus. The [brown planthopper](/pests/brown-planthopper) spreads it, both as a young nymph and as an adult. IRRI says the disease is found where rice is grown continuously through the year, because that keeps both the virus and the insect alive in the field.\n\nThe virus cuts yield by stopping the plant from making panicles. Researchers in the Philippines also found a strain of the virus that causes tungro like symptoms and can attack varieties that carry resistance genes. So farmers should watch for the signs along with the planthoppers. A related planthopper virus is [rice ragged stunt](/diseases/rice-ragged-stunt)."
+      "text": "Rice grassy stunt comes from the Rice grassy stunt virus. The [brown planthopper](/pests/brown-planthopper) spreads it, both as a young nymph and as an adult. This disease is found where rice is grown continuously through the year, because that keeps both the virus and the insect alive in the field.\n\nThe virus cuts yield by stopping the plant from making panicles. Researchers in the Philippines also found a strain of the virus that causes tungro like symptoms and can attack varieties that carry resistance genes. So farmers should watch for the signs along with the planthoppers. A related planthopper virus is [rice ragged stunt](/diseases/rice-ragged-stunt)."
     },
     {
       "type": "table",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI says grassy stunt reduces yield by stopping panicle production, so a hit plant gives almost no grain. A plant infected at the seedling stage seldom reaches maturity. The tillering stage is the most open to infection. We did not find a sourced yield loss percentage for the Philippines, so we give none here.\n\nThe virus has no cure. A sick plant stays sick, and the planthoppers that fed on it carry the virus on to the next plant. Because of that, the fight begins with the insect. In 2017 the brown planthopper resurged across 18 provinces, and SEARCA reported that the two viruses it carries, ragged stunt and grassy stunt, have no cure."
+      "text": "Grassy stunt reduces yield by stopping panicle production, so a hit plant gives almost no grain. A plant infected at the seedling stage seldom reaches maturity. The tillering stage is the most open to infection. We did not find a sourced yield loss percentage for the Philippines, so we give none here.\n\nThe virus has no cure. A sick plant stays sick, and the planthoppers that fed on it carry the virus on to the next plant. Because of that, the fight begins with the insect. In 2017 the brown planthopper resurged across 18 provinces, and the two viruses it carries, ragged stunt and grassy stunt, have no cure."
     },
     {
       "type": "heading",
@@ -118,8 +118,8 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Plant a variety that resists the brown planthopper. IRRI sources say resistant varieties are the most reliable tool against planthoppers in the tropics.",
-        "Plant at the same time as your neighbors, so the insect does not move from older fields to young ones. IRRI lists synchronized crop establishment as a control.",
+        "Plant a variety that resists the brown planthopper. Resistant varieties are the most reliable tool against planthoppers in the tropics.",
+        "Plant at the same time as your neighbors, so the insect does not move from older fields to young ones. Synchronized crop establishment is one of the controls.",
         "Avoid close planting, and leave a wider gap in the field every few meters so you can scout and so air can move.",
         "Natural enemies keep planthoppers in check, such as spiders, mirid bugs, water striders and egg parasite wasps. Protect them by skipping early insecticide sprays.",
         "Pull out and bury sick plants early, and plow under infected stubble after harvest, because the virus lives on in stubble and volunteer rice.",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "No spray can treat the virus in a sick plant. Insecticides target only the planthopper that carries it. IRRI and PhilRice advise against spraying in the first 30 to 40 days after transplanting unless a pest is truly at outbreak level, because early sprays kill the spiders and wasps and cause planthopper outbreaks. If an outbreak is real, ask your local agriculture office which FPA registered product to use, and follow the label."
+      "text": "No spray can treat the virus in a sick plant. Insecticides target only the planthopper that carries it. Do not spray in the first 30 to 40 days after transplanting unless a pest is truly at outbreak level, because early sprays kill the spiders and wasps and cause planthopper outbreaks. If an outbreak is real, ask your local agriculture office which FPA registered product to use, and follow the label."
     },
     {
       "type": "callout",
@@ -182,11 +182,11 @@
       "items": [
         {
           "q": "Is there a cure for rice grassy stunt?",
-          "a": "No. IRRI says the disease cannot be cured. You can only control the brown planthopper, use resistant varieties and remove sick plants early."
+          "a": "No. The disease cannot be cured. You can only control the brown planthopper, use resistant varieties and remove sick plants early."
         },
         {
           "q": "How soon do the signs show after infection?",
-          "a": "IRRI says symptoms appear about 10 to 12 days after infection."
+          "a": "Symptoms appear about 10 to 12 days after infection."
         },
         {
           "q": "Should I spray right after transplanting?",

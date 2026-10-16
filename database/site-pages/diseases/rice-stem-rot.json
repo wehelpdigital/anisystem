@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "The fungus Sclerotium oryzae causes rice stem rot. It is also written Nakataea oryzae and, in older books, Magnaporthe salvinii. IRRI reports heavy losses in many rice countries, including India, Japan, the Philippines and Vietnam. The damage comes from decayed leaf sheaths, lodging and poor grain filling.\n\nThe fungus lives on what you leave behind. Its black sclerotia sit in the soil, the straw and the stubble. So a field that had stem rot last season is a risky field this season. Many farmers burn or plow in stubble in different ways. So the way you handle it after harvest is your best first defense. Our guide to [rice diseases](/diseases/rice-diseases) shows the other diseases to watch for in the same weeks."
+      "text": "The fungus Sclerotium oryzae causes rice stem rot. It is also written Nakataea oryzae and, in older books, Magnaporthe salvinii. It causes heavy losses in many rice countries, including India, Japan, the Philippines and Vietnam. The damage comes from decayed leaf sheaths, lodging and poor grain filling.\n\nThe fungus lives on what you leave behind. Its black sclerotia sit in the soil, the straw and the stubble. So a field that had stem rot last season is a risky field this season. Many farmers burn or plow in stubble in different ways. So the way you handle it after harvest is your best first defense. Our guide to [rice diseases](/diseases/rice-diseases) shows the other diseases to watch for in the same weeks."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI names stem rot as a cause of heavy losses in India, Japan, the Philippines and Vietnam. It reduces yield through dead tillers, poor grain filling and lodging before harvest. In California, where researchers measured the disease in field work, documented yield losses ran from 6 to 24 percent. Philippine loss figures vary by field and season, so no single number applies here.\n\nThere is no spray threshold in the sources we found, and sprays are often not worth the cost. Instead, the field history decides the plan. If last season had stem rot, treat the stubble and the fertilizer plan before you transplant. Stem borers and planthoppers also open the stem to the fungus, so read about the [rice stem borer](/pests/rice-stem-borer) and the [brown planthopper](/pests/brown-planthopper) too."
+      "text": "Stem rot causes heavy losses in India, Japan, the Philippines and Vietnam. It reduces yield through dead tillers, poor grain filling and lodging before harvest. In California, where researchers measured the disease in field work, documented yield losses ran from 6 to 24 percent. Philippine loss figures vary by field and season, so no single number applies here.\n\nThere is no spray threshold in the sources we found, and sprays are often not worth the cost. Instead, the field history decides the plan. If last season had stem rot, treat the stubble and the fertilizer plan before you transplant. Stem borers and planthoppers also open the stem to the fungus, so read about the [rice stem borer](/pests/rice-stem-borer) and the [brown planthopper](/pests/brown-planthopper) too."
     },
     {
       "type": "heading",
@@ -120,7 +120,7 @@
       "ordered": true,
       "items": [
         "Destroy the sclerotia after harvest. Burn the straw and stubble where it is allowed, or plow it deep so it decomposes, and let the field dry.",
-        "Plow the field often before planting. TNAU and the Pacific Pests fact sheet also advise lime, and TNAU adds that split doses of potash help.",
+        "Plow the field often before planting. Lime also helps, and so do split doses of potash.",
         "Balance your fertilizer. Too much nitrogen with too little potassium raises the disease, and potash lowers it on soils short of potassium. See [fertilizer for rice](/blog/fertilizer-for-rice) and our note on [potash fertilizer](/blog/potash-fertilizer).",
         "Drain the field now and then during the crop, because wet flooding spreads the floating sclerotia.",
         "Control the insects that wound the stem, such as planthoppers and armyworms.",
@@ -148,17 +148,17 @@
         [
           "Thiophanate methyl",
           "FRAC 1",
-          "named for stem rot at disease onset by TNAU and the Pacific Pests fact sheet"
+          "used for stem rot at disease onset"
         ],
         [
           "Validamycin A",
           "FRAC U18",
-          "named by TNAU for stem rot"
+          "used for stem rot"
         ],
         [
           "Azoxystrobin",
           "FRAC 11",
-          "applied at early heading, cut severity by about 20 to 30 percent in University of California trials"
+          "applied at early heading, cut severity by about 20 to 30 percent in California trials"
         ]
       ]
     },
