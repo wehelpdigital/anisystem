@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Schema;
  * the template and put it in the scheduled email with the 2nd priority").
  *
  * The news roundup (App\Services\NewsRoundup) writes a Latest in Agriculture
- * page every morning at 07:00 when the feeds have new stories. ensure() turns
+ * page every morning at 05:00 when the feeds have new stories. ensure() turns
  * today's page into a news email once: the page's photo on top, each story as
  * a card with what it means for the farm, and a button to the page. It joins
  * the line by itself (newsletter.news_auto, on unless switched off) and, like
@@ -165,7 +165,7 @@ final class NewsEmail
             'blocks' => $out,
         ];
 
-        return AsNlEmail::create([
+        $email = AsNlEmail::create([
             'priority' => 'news', 'position' => 0, 'kind' => 'builder',
             'title' => 'Farm news · ' . $day->format('M j'),
             'subject' => mb_substr('Balita sa bukid: ' . $page->title, 0, 250),
@@ -179,6 +179,19 @@ final class NewsEmail
             'createdBy' => 'News roundup',
             'deleteStatus' => 1,
         ]);
+        // Scored at once (2026-10-17, the owner: every email at a 0 spam score): above 0 it waits
+        // in the line for its fix (Planner::SPAM_MAX), and its note says why.
+        try {
+            $r = SpamCheck::forSaved($email);
+            if ($r['score'] !== null && (float) $r['score'] > Planner::SPAM_MAX) {
+                $rules = implode(', ', array_map(fn ($x) => $x['plain'] ?? $x['name'], $r['assassin']['rules'] ?? []));
+                $email->forceFill(['note' => mb_substr('Held: its spam score is ' . $r['score'] . ($rules !== '' ? ' (' . $rules . ')' : '') . '. Fix it in the builder and it goes.', 0, 500)])->save();
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return $email;
     }
 
     /**

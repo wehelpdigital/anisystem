@@ -6,7 +6,7 @@ use App\Services\NewsRoundup;
 use Illuminate\Console\Command;
 
 /**
- * The farm news roundup, asked by the scheduler every morning (7 AM Manila).
+ * The farm news roundup, asked by the scheduler every morning (5 AM Manila since 2026-10-17, an hour before the newsletter).
  * NewsRoundup decides: it writes only every few days (news.every_days) and
  * only when the feeds hold enough new stories, and logs each ask in
  * as_news_runs. --force writes one now, as the mother's "Write one now" does.

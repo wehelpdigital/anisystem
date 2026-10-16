@@ -44,6 +44,15 @@ final class Planner
     /** Acumbamail takes ten campaign calls a minute. */
     private const CALL_GAP_SECONDS = 7;
 
+    /** When the morning's farm news roundup asks (bootstrap/app.php news:roundup), an hour before the 6:00 send. */
+    public const NEWS_AT = '05:00';
+
+    /** A builder email goes only with a SpamAssassin score of 0 (2026-10-17, the owner: "0 spam score"). */
+    public const SPAM_MAX = 0.0;
+
+    /** How many emails at the head of the line get a fresh spam check before the day is dealt. */
+    private const SPAM_FRESH = 12;
+
     public static function now(): Carbon
     {
         return Carbon::now('Asia/Manila');
@@ -132,6 +141,15 @@ final class Planner
             $sent = $e->sent();
             $base = ['emailId' => $e->id, 'title' => $e->title, 'subject' => $e->subject, 'priority' => $e->priority, 'kind' => $e->kind];
 
+            // Only at a 0 spam score (2026-10-17, the owner): an email that scores higher waits for its fix,
+            // and the next one in the line takes its day. No score yet (the checker was down) does not hold it.
+            $spam = $e->kind === 'builder' ? SpamCheck::badge($e) : null;
+            if ($spam && $spam['score'] !== null && (float) $spam['score'] > self::SPAM_MAX) {
+                $waiting[] = $base + ['why' => 'Its spam score is ' . $spam['score'] . '. Open it in the builder: its badge shows what to change.'];
+
+                continue;
+            }
+
             if ($x['flags']) {
                 $flag = $x['flags'][0];
                 if (in_array($flag, $sent, true)) {
@@ -168,11 +186,16 @@ final class Planner
 
                 continue;
             }
+            // Everyone free gets it (2026-10-17, the owner: the news and the regular emails go to
+            // "Everyone"): one campaign to the Everyone list, not one per plan list. The cells still
+            // say which plan groups had their email today.
+            $everyone = ! array_diff(array_diff(Seg::TIERS, $empty), $take) && ! empty($lists[Seg::ALL]);
             $picks[] = $base + [
                 'cells' => $take, 'send' => $take,
-                'lists' => array_map(fn ($c) => (int) $lists[$c], $take),
-                'people' => array_sum(array_map(fn ($c) => (int) ($counts[$c] ?? 0), $take)),
+                'lists' => $everyone ? [(int) $lists[Seg::ALL]] : array_map(fn ($c) => (int) $lists[$c], $take),
+                'people' => $everyone && isset($counts[Seg::ALL]) ? (int) $counts[Seg::ALL] : array_sum(array_map(fn ($c) => (int) ($counts[$c] ?? 0), $take)),
                 'rest' => array_values(array_diff($targets, $take)),
+                'via' => $everyone ? Seg::ALL : null,
             ];
             foreach ($take as $c) {
                 $cells[$c] = ['emailId' => $e->id, 'title' => $e->title, 'priority' => $e->priority, 'via' => null];
@@ -271,8 +294,8 @@ final class Planner
         }
         $runs = DB::table('as_news_runs')->where('created_at', '>=', $now->copy()->startOfDay())->orderByDesc('id')->get(['status', 'created_at']);
         if ($runs->isEmpty()) {
-            // The roundup asks at 07:00: give it until half past before going without it.
-            return $now->gte($now->copy()->setTime(7, 30));
+            // The roundup asks at NEWS_AT: give it half an hour before going without it.
+            return $now->gte(Carbon::parse($now->toDateString() . ' ' . self::NEWS_AT, 'Asia/Manila')->addMinutes(30));
         }
         $last = $runs->first();
 
@@ -317,6 +340,7 @@ final class Planner
             try {
                 self::expire($now);
                 NewsEmail::ensure($now);
+                self::freshSpam($now);
                 $sync = Audience::sync(null, 90);
                 $counts = Audience::counts();
                 $plan = self::plan($now, null, $counts, self::takenToday());
@@ -414,7 +438,7 @@ final class Planner
     private static function campaign(int $runId, AsNlEmail $e, array $p, array $counts, Carbon $now, ?string $dateSend = null): array
     {
         $am = app(AcumbamailService::class);
-        $label = $p['send'] ? Seg::words($p['send']) : 'everyone';
+        $label = ($p['via'] ?? null) === Seg::ALL || ! $p['send'] ? 'everyone' : Seg::words($p['send']);
         $name = 'anee.io ' . $now->format('Y-m-d') . ' · ' . mb_substr($e->title, 0, 80) . ' · ' . $label;
         $subject = trim((string) $e->subject) !== '' ? $e->subject : $e->title;
 
@@ -440,6 +464,21 @@ final class Planner
         $e->save();
 
         return ['id' => $res['id']];
+    }
+
+    /** The emails at the head of today's line get a spam score for their current words before the day is dealt. */
+    private static function freshSpam(Carbon $now): void
+    {
+        foreach (self::line($now)->take(self::SPAM_FRESH) as $e) {
+            if ($e->kind !== 'builder' || SpamCheck::badge($e)) {
+                continue;
+            }
+            try {
+                SpamCheck::forSaved($e);
+            } catch (\Throwable $x) {
+                report($x);
+            }
+        }
     }
 
     private static function locked(string $key, \Closure $job): array

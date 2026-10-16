@@ -553,7 +553,7 @@ class NewsletterController extends Controller
     {
         $e = NewsEmail::ensure();
         if (! $e) {
-            throw new \RuntimeException('There is no farm news page from today yet. The news roundup writes one at 7:00 AM when the feeds have new stories.');
+            throw new \RuntimeException('There is no farm news page from today yet. The news roundup writes one at 5:00 AM when the feeds have new stories.');
         }
 
         return $this->ok(['email' => $this->row($e)], 'Today\'s news email is ready.');

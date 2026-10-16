@@ -16,7 +16,8 @@ use App\Models\AsSiteSetting;
  */
 final class NlSettings
 {
-    public const DEFAULT_SEND_TIME = '08:00';
+    /** 6 in the morning, Philippine time (2026-10-17, the owner); the farm news is written at 5 for it. */
+    public const DEFAULT_SEND_TIME = '06:00';
 
     public static function enabled(): bool
     {

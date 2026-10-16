@@ -86,7 +86,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // The farm news roundup asks every morning; it writes only every few
         // days and only when the feeds have new stories (App\Services\NewsRoundup).
         // In the background, so a slow AI answer never holds the next minute.
-        $schedule->command('news:roundup')->dailyAt('07:00')->timezone('Asia/Manila')
+        // At 5, an hour before the newsletter's 6:00 send (2026-10-17, the owner),
+        // so the day's news email is made and scored before the send.
+        $schedule->command('news:roundup')->dailyAt('05:00')->timezone('Asia/Manila')
             ->withoutOverlapping(180)->runInBackground();
         // "Write one now, from the scheduler": news.run_now on the settings
         // shelf makes the next minute's pass write one (forced) and clears it.
@@ -118,8 +120,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // Global Lots (2026-10-16): the bell asks to check a lot whose answers are six months old.
         $schedule->command('lots:remind')->dailyAt('08:30')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
         // The newsletter (2026-10-17): lists kept in step, timed emails at their
-        // hour, and the day's campaigns once, after the send time and the
-        // morning's news roundup (App\Support\Newsletter\Planner).
+        // hour, and the day's campaigns once, after the send time (6:00 in the
+        // morning, Philippine time, the owner) and the morning's news roundup
+        // (App\Support\Newsletter\Planner). The 6:00 pass of this ten minute
+        // clock is the one that sends.
         $schedule->command('newsletter:tick')->everyTenMinutes()->withoutOverlapping(30)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->monthlyOn(3, '04:30')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->dailyAt('04:45')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground()
