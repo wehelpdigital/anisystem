@@ -72,6 +72,14 @@ document.addEventListener('error', (e) => {
         return;
     }
 
+    // The upgrade sheet's ring: a photo that will not load becomes the gardener.
+    if (img.hasAttribute('data-au-photo')) {
+        img.removeAttribute('data-au-photo');
+        img.classList.add('is-gardener');
+        img.src = '/images/gardener.png';
+        return;
+    }
+
     if (img.hasAttribute('data-avatar-fallback')) {
         const holder = img.parentElement;
         const initials = img.getAttribute('data-initials') || '?';
@@ -2749,26 +2757,19 @@ function auWithPlan(tier) {
     return k === 'libreAnee' ? name : 'the ' + name + ' plan';
 }
 
-/* Anee's face on the sheet: the crying clip, the way the analysis loaders
-   wear hers -- silent, looping, no controls, in a ring. A reader who asked
-   the system for less motion gets the still. */
-const AU_FACE_VID = '/videos/anee/crying.mp4';
-const AU_FACE_POSTER = '/videos/anee/crying.jpg';
+/* The reader's own face heads the sheet, in a ring with the lock pinned to
+   its edge: their profile photo (window.AU_ME_PHOTO, from the layout), or
+   the gardener while they have none or it will not load (2026-10-18, the
+   owner). It used to be Anee's crying clip, which drew as an empty ring. */
+const AU_GARDENER = '/images/gardener.png';
 const auFace = () => {
-    const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    const media = still
-        ? '<img src="' + AU_FACE_POSTER + '" alt="">'
-        : '<video src="' + AU_FACE_VID + '" poster="' + AU_FACE_POSTER + '" muted autoplay loop playsinline preload="auto" disablepictureinpicture disableremoteplayback tabindex="-1" aria-hidden="true"></video>';
+    const photo = window.AU_ME_PHOTO || '';
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const media = photo
+        ? '<img src="' + esc(photo) + '" alt="" data-au-photo>'
+        : '<img src="' + AU_GARDENER + '" alt="" class="is-gardener">';
     return '<div class="au-face" aria-hidden="true"><span class="au-halo"></span><span class="au-ring">' + media + '</span>'
         + '<span class="au-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span></div>';
-};
-/* Muted as a PROPERTY too, then played: an innerHTML video's autoplay is
-   at the browser's mercy, and the sheet should never sit on a frozen face. */
-const auPlay = (box) => {
-    const v = box.querySelector('.au-face video');
-    if (!v) return;
-    v.muted = true;
-    v.play?.().catch(() => {});
 };
 
 window.aneeUpgrade = function aneeUpgrade(message, tier) {
@@ -2782,10 +2783,7 @@ window.aneeUpgrade = function aneeUpgrade(message, tier) {
         box = document.createElement('div');
         box.id = 'aneeUpgradeBox';
         document.body.appendChild(box);
-        const close = () => {
-            box.classList.remove('is-open');
-            box.querySelector('.au-face video')?.pause?.();
-        };
+        const close = () => box.classList.remove('is-open');
         box.addEventListener('click', (e) => {
             if (e.target === box || e.target.closest('[data-au-close]')) close();
         });
@@ -2814,7 +2812,6 @@ window.aneeUpgrade = function aneeUpgrade(message, tier) {
             + '<button type="button" class="btn btn-white" data-au-close>Close</button>'
             + '</div></div>';
         box.classList.add('is-open');
-        auPlay(box);
 
         return;
     }
@@ -2839,7 +2836,6 @@ window.aneeUpgrade = function aneeUpgrade(message, tier) {
         + '<button type="button" class="btn btn-white" data-au-close>Not now</button>'
         + '</div></div>';
     box.classList.add('is-open');
-    auPlay(box);
 };
 
 /* Locked doors, wired once for the whole app: any element carrying

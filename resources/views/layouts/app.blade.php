@@ -174,6 +174,8 @@
         <script>
             window.AU_IS_WORKER = {{ $__auGrant ? 'true' : 'false' }};
             window.AU_FARM_NAME = @json($__auGrant ? (optional($__auGrant->boss)->full_name ?: 'This farm') : '');
+            {{-- The upgrade sheet's ring wears this face; none means the gardener. --}}
+            window.AU_ME_PHOTO = @json(filled(auth()->user()->avatarPath) ? \App\Support\MediaStore::url(auth()->user()->avatarPath) : '');
         </script>
     @endauth
     {{-- Tagalog help flags: the little Philippine flag that explains a
