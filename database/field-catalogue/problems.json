@@ -1481,7 +1481,7 @@
    ],
    "signs": [],
    "local": "",
-   "hint": "Narrow red brown streaks run along the leaflets of the unopened spear leaf.",
+   "hint": "The still folded spear leaf shows thin red brown streaks along its leaflets.",
    "ai": [
     [
      "Pyrethrum",
@@ -5562,7 +5562,7 @@
     "yellowing"
    ],
    "local": "",
-   "hint": "Plants wilt even when the soil is moist.",
+   "hint": "Plants droop even though the soil is still wet.",
    "ai": [
     [
      "Fluazinam",
@@ -6172,7 +6172,7 @@
     "spots"
    ],
    "local": "",
-   "hint": "Leaves turn mottled with bright yellow and green patches, called a mosaic.",
+   "hint": "The leaves get a mottled mosaic of bright yellow and green.",
    "ai": [],
    "no": "Insecticide sprays rarely help. Aphids pass the virus on before a spray can kill them.",
    "sources": [],
@@ -6724,7 +6724,7 @@
     "blight"
    ],
    "local": "",
-   "hint": "Small orange to reddish brown pustules on the underside of the older leaves burst into a rusty powder.",
+   "hint": "Tiny orange to reddish brown pustules under the older leaves break open and shed a rusty powder.",
    "ai": [
     [
      "Oxycarboxin",
@@ -9594,7 +9594,7 @@
     "spots"
    ],
    "local": "",
-   "hint": "Many small pinkish to reddish brown spots with whitish centers on the leaves.",
+   "hint": "The leaves fill with tiny spots, pinkish to reddish brown, each with a pale whitish middle.",
    "ai": [
     [
      "Thiophanate methyl",
