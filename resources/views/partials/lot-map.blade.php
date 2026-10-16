@@ -3,8 +3,13 @@
     point by point, each in a full screen map.
 
     window.aneeLotMap.pin(lot)  -> Promise<the saved lot row, or null>
-        The map moves under a pin fixed at its middle; search a place, or use
-        "my location", then "Save the pin". The boundary shows, for reference.
+        Tap the lot and the pin drops there; drag it, or tap another spot, to
+        move it; search a place, or use "my location", to get there; then
+        "Save the pin". The boundary shows, for reference. The pin is the
+        Maps module's own place pin (images/map-pin.png, a Google Marker of
+        the same size and point, the lot's name on the same dark plate), so a
+        lot's pin looks and drags the way a pin on the drawing map does
+        (2026-10-17, the owner).
     window.aneeLotMap.draw(lot) -> Promise<the saved lot row, or null>
         Tap the map for each corner. Drag a point to move it; tap it to pick it,
         then Delete point. The small dots between two points add a point there,
@@ -22,6 +27,8 @@
         'key' => (string) config('services.google_maps.key'),
         'mapId' => (string) config('services.google_maps.map_id'),
         'urls' => ['lots' => url('/app/farm-lots'), 'find' => route('farmlots.find')],
+        // The Maps module's place pin (PIN_IMG in sm/partials/schedule-map): one artwork for both.
+        'pin' => asset('images/map-pin.png'),
     ];
 @endphp
 @push('head')
@@ -77,27 +84,27 @@
     .lm-btns .lm-main { margin-left: auto; }
     .lm-btns .lm-del { color: #b91c1c; }
     .lm-btns .btn[hidden] { display: none; }
-    /* The pin, fixed at the middle: the map moves under it. Its tip is the spot. */
-    .lm-cross { position: absolute; left: 50%; top: 50%; z-index: 1; width: 2.6rem; height: 3.5rem; translate: -50% -100%; pointer-events: none; filter: drop-shadow(0 6px 6px rgb(0 0 0 / .45)); transition: translate .2s cubic-bezier(.22,1,.36,1); }
-    .lm-cross[hidden] { display: none; }
-    .lm-cross.is-lift { translate: -50% -112%; }
-    .lm-dot { position: absolute; left: 50%; top: 50%; z-index: 1; width: .55rem; height: .55rem; margin: -.275rem 0 0 -.275rem; border-radius: 999px; background: rgb(0 0 0 / .45); pointer-events: none; }
-    .lm-dot[hidden] { display: none; }
+    /* The pin's name on a small dark plate above its head (2026-10-17, the owner): the twin of the
+       Maps module's .cmap-pin-name, dark in both themes because the ground under it is satellite as
+       often as road. It fades in once the pin has landed (.is-in, worn only for that, so Google
+       redrawing the label later never plays it again). */
+    .lm-pin-name { white-space: nowrap; border-radius: 999px; padding: .18rem .5rem; background: rgb(9 14 6 / .82);
+        box-shadow: 0 1px 6px rgb(0 0 0 / .45), inset 0 0 0 1px rgb(255 255 255 / .22); }
+    .lm-pin-name.is-in { animation: lmPlate .28s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes lmPlate { from { opacity: 0; scale: .9; } }
     .lm-refused { position: absolute; left: 1rem; right: 1rem; top: 50%; z-index: 3; max-width: 26rem; margin: 0 auto; translate: 0 -50%; padding: 1rem 1.1rem; border-radius: 1.1rem; font-size: .88rem; line-height: 1.5;
         color: var(--color-gray-700); background: var(--color-white); box-shadow: 0 14px 34px -14px rgb(0 0 0 / .6); }
     .lm-refused[hidden] { display: none; }
     .lm-refused b { display: block; margin-bottom: .2rem; color: var(--color-gray-900); }
     html.lm-lock { overflow: hidden; }
-    @media (prefers-reduced-motion: reduce) { dialog.lm[open], dialog.lm.is-closing, .lm-res { animation: none; } .lm-side button, .lm-cross, .lm-north svg { transition: none; } }
-    html.sm-still dialog.lm[open], html.sm-still .lm-res { animation: none; }
+    @media (prefers-reduced-motion: reduce) { dialog.lm[open], dialog.lm.is-closing, .lm-res, .lm-pin-name.is-in { animation: none; } .lm-side button, .lm-north svg { transition: none; } }
+    html.sm-still dialog.lm[open], html.sm-still .lm-res, html.sm-still .lm-pin-name.is-in { animation: none; }
 </style>
 @endpush
 
 @push('sheets')
 <dialog class="lm" id="lmView" aria-labelledby="lmTitle">
     <div class="lm-map" id="lmMap"></div>
-    <svg class="lm-cross" id="lmCross" viewBox="0 0 40 54" aria-hidden="true" hidden><path d="M20 53C20 53 37 31 37 19A17 17 0 0 0 3 19C3 31 20 53 20 53Z" fill="#dc2626" stroke="#fff" stroke-width="2.5"/><circle cx="20" cy="19" r="6.5" fill="#fff"/></svg>
-    <span class="lm-dot" id="lmDot" hidden></span>
     <div class="lm-top">
         <div class="lm-head">
             <button type="button" class="lm-x" id="lmClose" aria-label="Close the map"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
@@ -173,8 +180,8 @@
         map.addListener('heading_changed', paintNorth);
         // Vector or raster, as Google settled it (a raster map cannot turn): kept on the dialog for a look.
         map.addListener('renderingtype_changed', () => { $('lmView').dataset.render = String(map.getRenderingType() || ''); });
-        map.addListener('dragstart', () => { if (S && S.mode === 'pin') $('lmCross').classList.add('is-lift'); });
-        map.addListener('idle', () => { $('lmCross').classList.remove('is-lift'); if (S && S.mode === 'pin') say(); });
+        // Setting the pin: the line under it says to zoom in first while the map is still far out.
+        map.addListener('idle', () => { if (S && S.mode === 'pin') say(); });
         return map;
     }
     function paintNorth() {
@@ -185,7 +192,7 @@
     }
 
     /* ---- one opening: the pin, or the boundary ---- */
-    let S = null;   // { mode, lot, resolve, row, pts, hist, sel, marks, mids, poly, ctx, busy }
+    let S = null;   // { mode, lot, resolve, row, pts, hist, sel, marks, mids, poly, ctx, busy, pin, at }
     const LL = (p) => ({ lat: Number(p[0]), lng: Number(p[1]) });
     const AR = (ll) => [Math.round(ll.lat() * 1e7) / 1e7, Math.round(ll.lng() * 1e7) / 1e7];
     const MID = (a, b) => [(Number(a[0]) + Number(b[0])) / 2, (Number(a[1]) + Number(b[1])) / 2];
@@ -195,11 +202,12 @@
         return new Promise((resolve) => {
             if (S && S.resolve) S.resolve(null);
             const dlg = $('lmView');
-            S = { mode, lot, resolve, row: null, pts: mode === 'draw' ? JSON.parse(JSON.stringify(lot.boundary || [])) : [], hist: [], sel: -1, marks: [], mids: [], poly: null, ctx: [], busy: false };
+            // at: where the pin stands ([lat, lng]), the lot's saved one until it is dropped anew.
+            S = { mode, lot, resolve, row: null, pts: mode === 'draw' ? JSON.parse(JSON.stringify(lot.boundary || [])) : [], hist: [], sel: -1, marks: [], mids: [], poly: null, ctx: [], busy: false,
+                pin: null, at: mode === 'pin' && lot.pin ? [Number(lot.pin.lat), Number(lot.pin.lng)] : null };
             $('lmTitle').textContent = mode === 'pin' ? (lot.pin ? 'Move the pin' : 'Set the pin') : (lot.boundary ? 'Change the boundary' : 'Draw the boundary');
             $('lmSub').textContent = [lot.name, lot.place].filter(Boolean).join(' · ');
             $('lmQ').value = ''; $('lmRes').hidden = true; $('lmRefused').hidden = true;
-            $('lmCross').hidden = mode !== 'pin'; $('lmDot').hidden = mode !== 'pin';
             say(); paintBar();
             if (!dlg.open) dlg.showModal();
             dlg.classList.remove('is-closing');
@@ -219,6 +227,8 @@
         if (s.mode === 'draw') paintDraw();
         await frame();
         paintNorth();
+        // A lot already pinned: its pin drops onto the spot once the map is there.
+        if (S === s && s.resolve && s.mode === 'pin' && s.at) placePin(LL(s.at));
     }
     function close() {
         const dlg = $('lmView');
@@ -271,15 +281,64 @@
             S.ctx.push(new (G().Polygon)({ map, paths: lot.boundary.map(LL), strokeColor: '#f5c518', strokeWeight: 2, strokeOpacity: .9, fillColor: '#f5c518', fillOpacity: .1, clickable: false }));
         }
         if (S.mode === 'draw' && lot.pin) {
-            S.ctx.push(new (G().Marker)({ map, position: lot.pin, clickable: false, zIndex: 5,
-                icon: { path: 'M0 0C0 0 9-12 9-18A9 9 0 0 0-9-18C-9-12 0 0 0 0Z', fillColor: '#dc2626', fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5, scale: 1.1 } }));
+            S.ctx.push(new (G().Marker)({ map, position: LL([lot.pin.lat, lot.pin.lng]), clickable: false, zIndex: 5, icon: pinIcon() }));
         }
     }
     function clearShapes() {
         if (!S) return;
+        cancelAnimationFrame(glideRaf);
         [...S.marks, ...S.mids, ...S.ctx].forEach((m) => m.setMap(null));
         if (S.poly) S.poly.setMap(null);
-        S.marks = []; S.mids = []; S.ctx = []; S.poly = null;
+        if (S.pin) S.pin.setMap(null);
+        S.marks = []; S.mids = []; S.ctx = []; S.poly = null; S.pin = null;
+    }
+
+    /* ---- the pin: the Maps module's own place pin, dropped where you tap (2026-10-17, the owner) ----
+       The same artwork, size and point as the pin on the drawing map (PIN_IMG in sm/partials/schedule-map);
+       change the two together. Its point is the spot, so what you grab is exactly what you placed, and a
+       Google Marker lifts and settles when dragged exactly as that one does. */
+    const pinIcon = () => ({ url: D.pin, scaledSize: new (G().Size)(26, 33), anchor: new (G().Point)(13, 33), labelOrigin: new (G().Point)(13, -9) });
+    const pinName = (s) => { s = String(s || '').trim(); return s.length > 32 ? s.slice(0, 31).trim() + '…' : s; };
+    let glideRaf = 0;
+    function placePin(ll) {
+        if (!(ll instanceof G().LatLng)) ll = new (G().LatLng)(Number(ll.lat), Number(ll.lng));
+        S.at = AR(ll);
+        if (S.pin) { glide(S.pin, ll); say(); paintBar(); return; }
+        const still = reduce();
+        const m = new (G().Marker)({ map, position: ll, draggable: true, clickable: true, icon: pinIcon(), title: S.lot.name || 'Your lot', zIndex: 900,
+            animation: still ? null : G().Animation.DROP });
+        S.pin = m;
+        // The name plate comes once the pin has landed: a plate falling beside a pin reads as two things.
+        const name = pinName(S.lot.name);
+        let named = false;
+        const plate = (cls) => m.setLabel({ text: name, className: cls, color: '#ffffff', fontSize: '12px', fontWeight: '800' });
+        const nameIt = () => {
+            if (named || S.pin !== m || !name) return;
+            named = true;
+            if (still) { plate('lm-pin-name'); return; }
+            plate('lm-pin-name is-in');
+            setTimeout(() => { if (S && S.pin === m) plate('lm-pin-name'); }, 320);
+        };
+        if (still) nameIt();
+        else { m.addListener('animation_changed', () => { if (!m.getAnimation()) nameIt(); }); setTimeout(nameIt, 900); }
+        m.addListener('dragstart', () => cancelAnimationFrame(glideRaf));
+        m.addListener('drag', (e) => { S.at = AR(e.latLng); say(); });
+        m.addListener('dragend', (e) => { S.at = AR(e.latLng); say(); paintBar(); });
+        say(); paintBar();
+    }
+    /* Tap another spot and the pin glides there instead of jumping: the house easing,
+       cubic-bezier(.22,1,.36,1), is easeOutQuint. */
+    function glide(m, ll) {
+        cancelAnimationFrame(glideRaf);
+        const from = m.getPosition();
+        if (!from || reduce()) { m.setPosition(ll); return; }
+        const a = [from.lat(), from.lng()], b = [ll.lat(), ll.lng()], t0 = performance.now();
+        const step = (now) => {
+            const k = Math.min(1, (now - t0) / 280), e = 1 - Math.pow(1 - k, 5);
+            m.setPosition({ lat: a[0] + (b[0] - a[0]) * e, lng: a[1] + (b[1] - a[1]) * e });
+            if (k < 1) glideRaf = requestAnimationFrame(step);
+        };
+        glideRaf = requestAnimationFrame(step);
     }
 
     /* ---- the boundary, point by point ---- */
@@ -327,8 +386,8 @@
     }
     function onTap(ll) {
         if (!S || S.busy) return;
-        // Setting the pin: a tap brings that spot under the pin.
-        if (S.mode === 'pin') { map.panTo(ll); return; }
+        // Setting the pin: a tap drops it there, or brings it there once it is down.
+        if (S.mode === 'pin') { placePin(ll); return; }
         // A picked point is put down first; the next tap adds.
         if (S.sel >= 0) { select(-1); return; }
         if (S.pts.length >= 500) { window.toast?.('That is the most points a boundary can have.', 'error'); return; }
@@ -344,8 +403,10 @@
         const el = $('lmSay');
         if (!S) return;
         if (S.mode === 'pin') {
-            const c = map && map.getCenter();
-            el.innerHTML = '<b>Move the map until the pin sits on your lot</b><small>' + (c ? nf(c.lat(), 6) + ', ' + nf(c.lng(), 6) + ' · ' : '') + 'Search a place, or tap the target to go where you are.</small>';
+            const p = S.at;
+            if (p) { el.innerHTML = '<b>Drag the pin until its point sits on your lot</b><small>' + nf(p[0], 6) + ', ' + nf(p[1], 6) + ' · Or tap another spot to move it there.</small>'; return; }
+            const far = !map || (map.getZoom() || 0) < 15;
+            el.innerHTML = '<b>' + (far ? 'Zoom in to your lot, then tap it to drop the pin' : 'Tap your lot to drop the pin') + '</b><small>Search a place, or tap the target to go where you are.</small>';
             return;
         }
         const n = S.pts.length;
@@ -364,7 +425,7 @@
         const lot = S.lot, busy = S.busy ? ' disabled' : '';
         if (S.mode === 'pin') {
             b.innerHTML = (lot.pin ? '<button type="button" class="btn btn-white lm-del" data-lm="unpin"' + busy + '>Remove the pin</button>' : '')
-                + '<button type="button" class="btn btn-primary lm-main" data-lm="savepin"' + busy + '>' + (S.busy ? 'Saving…' : 'Save the pin') + '</button>';
+                + '<button type="button" class="btn btn-primary lm-main" data-lm="savepin"' + (S.at ? busy : ' disabled') + '>' + (S.busy ? 'Saving…' : 'Save the pin') + '</button>';
             return;
         }
         const n = S.pts.length;
@@ -382,9 +443,9 @@
         if (act === 'delpt') { if (S.sel >= 0) { snap(); S.pts.splice(S.sel, 1); S.sel = -1; paintDraw(); } return; }
         if (act === 'clear') { snap(); S.pts = []; S.sel = -1; paintDraw(); window.toast?.('Cleared. Undo brings it back.'); return; }
         if (act === 'savepin' || act === 'unpin') {
-            const c = map && map.getCenter();
-            if (act === 'savepin' && !c) return;
-            await send('pin', act === 'unpin' ? { lat: null, lng: null } : { lat: Math.round(c.lat() * 1e7) / 1e7, lng: Math.round(c.lng() * 1e7) / 1e7 });
+            const p = S.at;
+            if (act === 'savepin' && !p) return;
+            await send('pin', act === 'unpin' ? { lat: null, lng: null } : { lat: p[0], lng: p[1] });
             return;
         }
         if (act === 'savedraw') await send('boundary', { points: S.pts.length >= 3 ? S.pts : [] });
@@ -445,7 +506,9 @@
     $('lmFit').addEventListener('click', () => {
         if (!map || !S) return;
         const ring = S.mode === 'draw' && S.pts.length ? S.pts : (S.lot.boundary || null);
-        if (ring && ring.length) fit(ring); else if (S.lot.pin) { map.setCenter(S.lot.pin); map.setZoom(18); } else frame();
+        // Setting the pin, the pin where it stands now; else the lot's saved one.
+        const pin = S.mode === 'pin' && S.at ? LL(S.at) : S.lot.pin;
+        if (ring && ring.length) fit(ring); else if (pin) { map.setCenter(pin); map.setZoom(18); } else frame();
     });
     $('lmNorth').addEventListener('click', () => { if (map) { map.setHeading(0); map.setTilt(0); } });
 
