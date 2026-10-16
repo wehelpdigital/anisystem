@@ -107,7 +107,7 @@
             + '<div class="gl-prevhost" data-prev></div>'
             + '<p class="gl-meta">' + (l.stale ? 'Last checked ' + esc(l.updated) + '. Due for a check.' : 'Last checked ' + esc(l.updated) + '. Next check by ' + esc(l.staleOn) + '.') + '</p>'
             + onMap(l)
-            + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="answers" aria-expanded="false">See its answers</button><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
+            + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
             + '<button type="button" class="btn btn-white gl-map' + (l.pin ? ' is-set' : '') + '" data-act="pin">' + PIN + (l.pin ? 'Move the pin' : 'Set the pin location') + '</button>'
             + '<button type="button" class="btn btn-white gl-map' + (l.boundary ? ' is-set' : '') + '" data-act="draw">' + SHAPE + (l.boundary ? 'Change the boundary' : 'Draw the map boundary') + '</button>'
             + (l.stale ? '<button type="button" class="btn btn-white" data-act="fine">Still correct</button>' : '')
