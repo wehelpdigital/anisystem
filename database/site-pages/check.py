@@ -367,15 +367,17 @@ def check(path, urls, focus_seen):
         errs.append("no cta block")
     # An outbound source is welcome but no longer required: most were government
     # pages, and those may not show (2026-10-17). What may not be there is checked.
-    for b in page.get("blocks", []):
+    # The Stash shows the partners' own publications as theirs: it is left alone.
+    stash = sec == "features" and page.get("slug") == "the-stash"
+    for b in ([] if stash else page.get("blocks", [])):
         if b.get("type") == "sources":
             for i in b.get("items", []):
                 if is_gov(i.get("label", "")) or is_gov_url(i.get("url", "")):
                     errs.append("a source names a government body or research institute: %s" % (i.get("label") or i.get("url")))
-    for u in all_urls:
+    for u in ([] if stash else all_urls):
         if u.startswith("http") and is_gov_url(u):
             errs.append("an outbound link goes to a government body or research institute: %s" % u)
-    for _k, t in texts(page):
+    for _k, t in ([] if stash else texts(page)):
         m = GOV_SAID.search(plain(t))
         if m:
             errs.append("the words give a government body or research institute as the source: %r" % m.group(0))

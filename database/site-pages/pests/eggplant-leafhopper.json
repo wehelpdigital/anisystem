@@ -243,27 +243,6 @@
           "url": "/pests/integrated-pest-management"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "WorldVeg (AVRDC): Insect pests of eggplant pictorial guide",
-          "url": "https://assets.publishing.service.gov.uk/media/57a08d16ed915d3cfd0017e6/ipm_eggplant_insects.pdf"
-        },
-        {
-          "label": "UPLB: Management practices against the eggplant leafhopper",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5627"
-        },
-        {
-          "label": "UPLB: Efficacy of plant extracts and oil against leafhopper in organic eggplant",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4812"
-        },
-        {
-          "label": "PCAARRD: Eggplant varieties with increased resistance against insect pests",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/eggplant-varieties-with-increased-resistance-against-insect-pests-being-developed"
-        }
-      ]
     }
   ]
 }

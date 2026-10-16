@@ -229,35 +229,6 @@
           "url": "/blog/farm-words-in-tagalog"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA High Value Crops Development Program, Mangosteen Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 12, Durian Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
-        },
-        {
-          "label": "BPI via DA Northern Mindanao, Saba Banana Production Guide",
-          "url": "https://cagayandeoro.da.gov.ph/wp-content/uploads/2013/04/SABA-BANANA-PRODUCTION-GUIDE.pdf"
-        },
-        {
-          "label": "ATI Cordillera, A Guide to Simple Composting",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/a_guide_to_simple_composting.pdf"
-        },
-        {
-          "label": "PCA Davao Research Center and ATI Cagayan Valley, Common Salt Fertilization on Coconut",
-          "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Common%20Salt%20Fertlization%20on%20Coconuts%20FINAL.pdf"
-        },
-        {
-          "label": "DA Cordillera, Technoguide in Citrus Production (propagation)",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
-        }
-      ]
     }
   ]
 }

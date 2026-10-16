@@ -225,24 +225,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        },
-        {
           "label": "USDA FAS: Philippines Agricultural Biotechnology Annual 2024",
           "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Agricultural+Biotechnology+Annual_Manila_Philippines_RP2024-0039.pdf"
         },
         {
           "label": "Purdue University: The emergence process in corn",
           "url": "https://www.agry.purdue.edu/ext/corn/news/timeless/emergence.html"
-        },
-        {
-          "label": "UPLB Horizon: Achieving rice sufficiency with rice corn blend",
-          "url": "https://horizon.uplb.edu.ph/horizon-magazine-2018/achieving-rice-sufficiency-with-rice-corn-blend/"
-        },
-        {
-          "label": "Iowa State University Extension: The birds and bees of corn pollination",
-          "url": "https://crops.extension.iastate.edu/post/birds-and-bees-corn-pollination"
         }
       ]
     }

@@ -172,27 +172,6 @@
           "url": "/crops/pagtatanim-ng-puno"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PAGASA: Climatological data and normals",
-          "url": "https://www.pagasa.dost.gov.ph/climate/climate-data"
-        },
-        {
-          "label": "PAGASA: Seasonal forecast",
-          "url": "https://www.pagasa.dost.gov.ph/climate/climate-prediction/seasonal-forecast"
-        },
-        {
-          "label": "NOAA Climate Prediction Center: ENSO diagnostic discussion",
-          "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml"
-        },
-        {
-          "label": "ATI Central Visayas, Pechay Production Guide",
-          "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
-        }
-      ]
     }
   ]
 }

@@ -180,23 +180,6 @@
           "url": "/features/farm-weather-forecast"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FAO Soils Bulletin 39: Salt affected soils and their management, chapter 3 on saline soils",
-          "url": "https://www.fao.org/4/x5871e/x5871e04.htm"
-        },
-        {
-          "label": "PhilRice: Bicol farmers struggle with consecutive typhoons and saline prone soils (2025)",
-          "url": "https://www.philrice.gov.ph/bicol-farmers-struggle-with-consecutive-typhoons-and-saline-prone-soils/"
-        },
-        {
-          "label": "PhilRice: Ilonggo farmer gets a handsome yield using saline resistant rice varieties (2018)",
-          "url": "https://www.philrice.gov.ph/?p=7165"
-        }
-      ]
     }
   ]
 }

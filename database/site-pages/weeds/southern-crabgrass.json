@@ -280,23 +280,6 @@
           "url": "/weeds/weed-management-in-rice"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
-        },
-        {
-          "label": "FPA: Registered pesticide products",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        }
-      ]
     }
   ]
 }

@@ -56,9 +56,18 @@
       "type": "table",
       "caption": "When to drain the field before harvest, from PhilRice's PalayCheck System",
       "rows": [
-        ["Soil or season", "Drain or stop irrigating"],
-        ["Sandy or medium soil, or the dry season", "1 week before the expected harvest"],
-        ["Clay soil, or the wet season", "2 weeks before the expected harvest"]
+        [
+          "Soil or season",
+          "Drain or stop irrigating"
+        ],
+        [
+          "Sandy or medium soil, or the dry season",
+          "1 week before the expected harvest"
+        ],
+        [
+          "Clay soil, or the wet season",
+          "2 weeks before the expected harvest"
+        ]
       ]
     },
     {
@@ -78,9 +87,21 @@
       "type": "table",
       "caption": "Ripeness targets for Key Check 8 of PhilRice's PalayCheck System",
       "rows": [
-        ["Harvest method", "Cut when this share of grains is golden", "Then"],
-        ["Hand reaping", "85 to 90 percent", "Thresh within 1 day in the wet season, or 2 days in the dry season"],
-        ["Combine harvester", "90 to 95 percent", "Dry the grain within 12 to 24 hours"]
+        [
+          "Harvest method",
+          "Cut when this share of grains is golden",
+          "Then"
+        ],
+        [
+          "Hand reaping",
+          "85 to 90 percent",
+          "Thresh within 1 day in the wet season, or 2 days in the dry season"
+        ],
+        [
+          "Combine harvester",
+          "90 to 95 percent",
+          "Dry the grain within 12 to 24 hours"
+        ]
       ]
     },
     {
@@ -185,19 +206,30 @@
       "type": "links",
       "title": "Related palay guides",
       "items": [
-        { "label": "How to dry palay properly", "url": "/blog/palay-drying" },
-        { "label": "The PalayCheck key checks", "url": "/blog/palaycheck-key-checks" },
-        { "label": "Alternate wetting and drying", "url": "/blog/alternate-wetting-and-drying" },
-        { "label": "Cost of producing rice per hectare", "url": "/blog/cost-of-producing-rice-per-hectare" },
-        { "label": "Palay price in the Philippines", "url": "/blog/palay-price-philippines" },
-        { "label": "Harvest records in anee.io", "url": "/features/harvest-records" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Checks 6, 8 and 9)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "IRRI Rice Knowledge Bank: Harvesting", "url": "http://www.knowledgebank.irri.org/step-by-step-production/postharvest/harvesting" }
+        {
+          "label": "How to dry palay properly",
+          "url": "/blog/palay-drying"
+        },
+        {
+          "label": "The PalayCheck key checks",
+          "url": "/blog/palaycheck-key-checks"
+        },
+        {
+          "label": "Alternate wetting and drying",
+          "url": "/blog/alternate-wetting-and-drying"
+        },
+        {
+          "label": "Cost of producing rice per hectare",
+          "url": "/blog/cost-of-producing-rice-per-hectare"
+        },
+        {
+          "label": "Palay price in the Philippines",
+          "url": "/blog/palay-price-philippines"
+        },
+        {
+          "label": "Harvest records in anee.io",
+          "url": "/features/harvest-records"
+        }
       ]
     }
   ]

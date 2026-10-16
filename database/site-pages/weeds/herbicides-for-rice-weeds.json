@@ -336,28 +336,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Chemical weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/chemical-weed-control"
-        },
-        {
           "label": "HRAC Global: Herbicide mode of action classification",
           "url": "https://hracglobal.com/tools/2024-hrac-global-herbicide-moa-classification"
-        },
-        {
-          "label": "Baltazar, A. M. (2017). Herbicide resistant weeds in the Philippines: status and resistance mechanisms. Weed Biology and Management",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/1368"
-        },
-        {
-          "label": "Fertilizer and Pesticide Authority: Guidelines and manuals, including Gabay sa Tamang Paggamit ng Pestisidyo",
-          "url": "https://fpa.da.gov.ph/resources/publications/guidelines-manual/"
-        },
-        {
-          "label": "Fertilizer and Pesticide Authority: Empty pesticide container disposal and triple rinsing",
-          "url": "https://fpa.da.gov.ph/fpa-meets-with-denr-emb-and-da-to-discuss-empty-pesticide-container-disposal/"
         },
         {
           "label": "University of Arkansas Extension: Rainfall free periods for post emergence rice herbicides",

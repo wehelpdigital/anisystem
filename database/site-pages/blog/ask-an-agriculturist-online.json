@@ -228,31 +228,6 @@
           "url": "/pests/integrated-pest-management"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice (2018): New farmers' helpline launched",
-          "url": "https://www.philrice.gov.ph/new-farmers-helpline-launched/"
-        },
-        {
-          "label": "PhilRice: Infotxt and e info services",
-          "url": "https://www.philrice.gov.ph/services/infotxt-e-info/"
-        },
-        {
-          "label": "Agricultural Training Institute: e Extension program",
-          "url": "https://www.e-extension.gov.ph/home/"
-        },
-        {
-          "label": "ATI Caraga: Information services",
-          "url": "https://ati2.da.gov.ph/ati-13/content/information-services"
-        },
-        {
-          "label": "PhilRice (2024): PhilRice urges farmers to watch out for pest infestations",
-          "url": "https://www.philrice.gov.ph/philrice-urges-farmers-to-watch-out-for-pest-infestations/"
-        }
-      ]
     }
   ]
 }

@@ -83,13 +83,41 @@
       "type": "table",
       "caption": "Furrow and bed sizes from the DA Region 02 production guides",
       "rows": [
-        ["Crop", "Furrows or beds", "Other planting detail"],
-        ["Tomato", "Plow and harrow, then furrow", "Hills 50 cm apart, seedlings 25 to 30 days old"],
-        ["Eggplant", "Furrows 50 cm apart", "Plastic mulch holes 50 cm apart"],
-        ["Pepper", "Furrows 80 cm apart", "Double rows: 35 cm between the two rows, 75 cm between double rows"],
-        ["Okra", "Furrows 100 cm between rows", "Plow 15 to 20 cm deep"],
-        ["Cabbage", "Furrows 30 to 50 cm apart to form ridges, or raised beds about 100 cm wide", "Use raised beds where drainage is poor"],
-        ["Lettuce", "Raised beds 1 m wide, 0.75 m apart", "Hills 30 to 40 cm apart, 2 rows per bed for crisphead, 3 for loose leaf"]
+        [
+          "Crop",
+          "Furrows or beds",
+          "Other planting detail"
+        ],
+        [
+          "Tomato",
+          "Plow and harrow, then furrow",
+          "Hills 50 cm apart, seedlings 25 to 30 days old"
+        ],
+        [
+          "Eggplant",
+          "Furrows 50 cm apart",
+          "Plastic mulch holes 50 cm apart"
+        ],
+        [
+          "Pepper",
+          "Furrows 80 cm apart",
+          "Double rows: 35 cm between the two rows, 75 cm between double rows"
+        ],
+        [
+          "Okra",
+          "Furrows 100 cm between rows",
+          "Plow 15 to 20 cm deep"
+        ],
+        [
+          "Cabbage",
+          "Furrows 30 to 50 cm apart to form ridges, or raised beds about 100 cm wide",
+          "Use raised beds where drainage is poor"
+        ],
+        [
+          "Lettuce",
+          "Raised beds 1 m wide, 0.75 m apart",
+          "Hills 30 to 40 cm apart, 2 rows per bed for crisphead, 3 for loose leaf"
+        ]
       ]
     },
     {
@@ -209,23 +237,30 @@
       "type": "links",
       "title": "Read also",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Cucurbit land preparation", "url": "/land-preparation/cucurbit-land-preparation" },
-        { "label": "Onion and garlic land preparation", "url": "/land-preparation/onion-garlic-land-preparation" },
-        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
-        { "label": "Vegetables in the Philippines", "url": "/crops/vegetables-philippines" },
-        { "label": "Organic fertilizer examples", "url": "/blog/organic-fertilizer-examples" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "DA Region 02: Tomato Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf" },
-        { "label": "DA Region 02: Eggplant Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf" },
-        { "label": "DA Region 02: Pepper Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Pepper.pdf" },
-        { "label": "DA Region 02: Okra Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Okra.pdf" },
-        { "label": "DA Region 02: Cabbage Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf" },
-        { "label": "DA Region 02: Lettuce Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Lettuce.pdf" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Cucurbit land preparation",
+          "url": "/land-preparation/cucurbit-land-preparation"
+        },
+        {
+          "label": "Onion and garlic land preparation",
+          "url": "/land-preparation/onion-garlic-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Organic fertilizer examples",
+          "url": "/blog/organic-fertilizer-examples"
+        }
       ]
     }
   ]

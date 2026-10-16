@@ -274,23 +274,6 @@
           "url": "/blog/farm-record-keeping"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "Bureau of Plant Industry: Ampalaya Production Guide (cost and return per hectare)",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
-        },
-        {
-          "label": "PhilRice: Tarlac farmers showcase digital agri's potential in fertilizer use (RCMAS)",
-          "url": "https://www.philrice.gov.ph/tarlac-farmers-showcase-digital-agris-potential-in-fertilizer-use/"
-        }
-      ]
     }
   ]
 }

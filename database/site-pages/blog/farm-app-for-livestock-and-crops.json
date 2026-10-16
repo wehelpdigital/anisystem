@@ -264,35 +264,6 @@
           "url": "/blog/organic-fertilizer-examples"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "BAFS: Good Animal Husbandry Practices, PNS/BAFS 60:2008, illustrative guide (record keeping)",
-          "url": "https://bafs.da.gov.ph/wp-content/uploads/2025/04/GAHP_Illustrative-Guide_revise12.10.2020.pdf"
-        },
-        {
-          "label": "DA Bureau of Animal Industry: services, disease situation and price reports",
-          "url": "https://www.bai.gov.ph/"
-        },
-        {
-          "label": "DA Bureau of Animal Industry: BAI ADIR app on Google Play",
-          "url": "https://play.google.com/store/apps/details?id=gov.bai.adir"
-        },
-        {
-          "label": "DA: RSBSA frequently asked questions",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        },
-        {
-          "label": "PhilRice: Palayamanan Plus",
-          "url": "https://www.philrice.gov.ph/palayamanan-plus"
-        },
-        {
-          "label": "DA Philippine Carabao Center: KBGAN mobile apps for carabao farmers",
-          "url": "https://www.pcc.gov.ph/bohol-eps-join-forces-with-da-pcc-to-support-small-scale-farmers-via-kbgan-mobile-apps/"
-        }
-      ]
     }
   ]
 }

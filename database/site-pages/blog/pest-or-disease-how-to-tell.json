@@ -227,31 +227,6 @@
           "url": "/pests/integrated-pest-management"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Pests and diseases",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Blast (leaf and collar)",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Tungro",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Stem borer",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
-        }
-      ]
     }
   ]
 }

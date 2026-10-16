@@ -289,31 +289,6 @@
           "url": "/features/harvest-records"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System 2022, Annexes 19 to 21, measuring grain yield and yield components",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI: Yoshida, Fundamentals of Rice Crop Science, yield and yield components",
-          "url": "http://books.irri.org/9711040522_content.pdf"
-        },
-        {
-          "label": "FAO: Crop production, yield and harvested area (FAOSTAT dataset description)",
-          "url": "https://data.fao.org/catalog/iso/d24a448b-3b62-4c09-8c1d-4a39bb599876"
-        },
-        {
-          "label": "PhilRice: PRISM, Philippine Rice Information System",
-          "url": "https://prism.philrice.gov.ph/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Water management",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/water-management"
-        }
-      ]
     }
   ]
 }

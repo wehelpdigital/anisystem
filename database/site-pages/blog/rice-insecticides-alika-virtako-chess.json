@@ -240,24 +240,8 @@
           "url": "https://www.syngenta.com.ph/product/crop-protection/chess-50-wg"
         },
         {
-          "label": "FPA: Registered products (pesticide list as of August 31, 2026)",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
           "label": "IRAC: Mode of action classification",
           "url": "https://irac-online.org/mode-of-action/classification-online/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Planthopper",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice bug",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice leaffolder",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-leaffolder"
         },
         {
           "label": "NPIC: Lambda cyhalothrin general fact sheet",

@@ -284,18 +284,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Stem borer fact sheet (Lucid key)",
-          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Stem_borer.htm"
-        },
-        {
-          "label": "PhilRice: Major rice pest threats in early 2026",
-          "url": "https://www.philrice.gov.ph/philrice-warns-of-major-rice-pest-threats-in-early-2026/"
-        },
-        {
           "label": "Indian Journal of Plant Protection: Chlorantraniliprole against major pests of rice",
           "url": "https://epubs.icar.org.in/index.php/IJPP/article/view/106796"
         }

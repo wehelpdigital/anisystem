@@ -160,19 +160,6 @@
           "url": "/crops/pagtatanim-ng-palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
-          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
-        }
-      ]
     }
   ]
 }

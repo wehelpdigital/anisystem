@@ -237,31 +237,6 @@
           "url": "/blog/farm-planning-app-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: Tips on fertilizer use in seconds (MOET app, 2018)",
-          "url": "https://www.philrice.gov.ph/tips-fertilizer-use-seconds/"
-        },
-        {
-          "label": "PhilRice: Web tool to help raise rice yield, income (Rice Crop Manager, 2013)",
-          "url": "https://www.philrice.gov.ph/web-tool-to-help-raise-rice-yield-income/"
-        },
-        {
-          "label": "PhilRice: RCM application pilot tested (2022)",
-          "url": "https://www.philrice.gov.ph/rcm-application-pilot-tested/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: How to manage soil fertility",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Leaf Color Chart",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility/leaf-color-chart"
-        }
-      ]
     }
   ]
 }

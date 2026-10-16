@@ -254,14 +254,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "University of Florida IFAS: Papaya mealybug, Paracoccus marginatus",
-          "url": "https://ask.ifas.ufl.edu/publication/IN579"
-        },
-        {
-          "label": "University of Florida IFAS: Citrus mealybug, Planococcus citri",
-          "url": "https://ask.ifas.ufl.edu/in947"
-        },
-        {
           "label": "PestNet: Paracoccus marginatus, natural controls",
           "url": "https://www.pestnet.org/?p=6394"
         }

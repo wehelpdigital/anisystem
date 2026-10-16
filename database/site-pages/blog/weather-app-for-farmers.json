@@ -242,20 +242,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PAGASA: Farm Weather Forecast",
-          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
-        },
-        {
-          "label": "PAGASA: Tropical Cyclone Information",
-          "url": "https://www.pagasa.dost.gov.ph/climate/tropical-cyclone-information"
-        },
-        {
           "label": "Open Meteo: free weather API and its forecast models",
           "url": "https://open-meteo.com/"
-        },
-        {
-          "label": "Ohio State University Extension: Rainfastness of fungicides in wheat",
-          "url": "https://agcrops.osu.edu/newsletter/corn-newsletter/2016-11/rainfastness-fungicides-wheat"
         }
       ]
     }

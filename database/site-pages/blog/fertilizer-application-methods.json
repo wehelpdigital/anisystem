@@ -330,20 +330,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
-          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
-        },
-        {
           "label": "IFDC: Use Guti urea, save money, get more yield",
           "url": "https://ifdc.org/2011/06/27/use-guti-urea-save-money-get-more-yield/"
         },
         {
           "label": "University of Missouri IPM: Foliar Feeding Revisited",
           "url": "https://ipm.missouri.edu/MPG/2019/4/foliarFeeding/"
-        },
-        {
-          "label": "FPA: Weekly fertilizer prices",
-          "url": "https://fpa.da.gov.ph/weekly-prices/"
         }
       ]
     }

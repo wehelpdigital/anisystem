@@ -305,23 +305,6 @@
           "url": "/blog/ai-for-filipino-farmers"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PSA: 2024 Costs and Returns of Palay Production",
-          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022 Revised Edition (foreword on yield and cost targets)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "FAO: Climate change fans spread of pests and threatens plants and crops, 2021",
-          "url": "https://www.fao.org/newsroom/detail/Climate-change-fans-spread-of-pests-and-threatens-plants-and-crops-new-FAO-study/en"
-        }
-      ]
     }
   ]
 }

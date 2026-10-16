@@ -171,19 +171,6 @@
           "url": "/pests/rice-bug"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice bug",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
-        },
-        {
-          "label": "DA Cagayan Valley: Combating fall armyworm using biological control (May 2025)",
-          "url": "https://cagayanvalley.da.gov.ph/2025/05/19/combating-fall-armyworm-using-biological-control-see-the-increase-in-yields-and-income-through-ipm/"
-        }
-      ]
     }
   ]
 }

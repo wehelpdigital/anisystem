@@ -57,11 +57,36 @@
       "type": "table",
       "caption": "Four kinds of help for a sick plant",
       "rows": [
-        ["Kind", "How it works", "Good for", "Watch out for"],
-        ["Photo identification app", "AI names the likely disease from your photo", "A fast first guess on clear spots", "Mild signs, look alikes, crops it does not know"],
-        ["Symptom finder", "You pick the crop and signs, and it lists what fits", "Seeing every likely cause", "You must read the signs well"],
-        ["Assistant that knows your farm", "Reads your photo with your crop's age, weather and inputs", "Answers that fit your season", "Needs internet, often paid"],
-        ["Hotline or lab", "A person or a lab test checks it", "Viruses, bacteria, hard cases", "Office hours and days of waiting"]
+        [
+          "Kind",
+          "How it works",
+          "Good for",
+          "Watch out for"
+        ],
+        [
+          "Photo identification app",
+          "AI names the likely disease from your photo",
+          "A fast first guess on clear spots",
+          "Mild signs, look alikes, crops it does not know"
+        ],
+        [
+          "Symptom finder",
+          "You pick the crop and signs, and it lists what fits",
+          "Seeing every likely cause",
+          "You must read the signs well"
+        ],
+        [
+          "Assistant that knows your farm",
+          "Reads your photo with your crop's age, weather and inputs",
+          "Answers that fit your season",
+          "Needs internet, often paid"
+        ],
+        [
+          "Hotline or lab",
+          "A person or a lab test checks it",
+          "Viruses, bacteria, hard cases",
+          "Office hours and days of waiting"
+        ]
       ]
     },
     {
@@ -114,14 +139,38 @@
       "type": "table",
       "caption": "A checklist for any app to detect plant disease",
       "rows": [
-        ["What to look for", "Why it matters"],
-        ["It covers your crop, trees included", "It cannot name a disease on a crop it never learned"],
-        ["It asks for several photos", "Six leaves per plant gave Nuru better answers"],
-        ["It asks your crop's age, place and weather", "The same spot can mean different things at different stages"],
-        ["It tells you how to confirm", "Mild signs and look alikes fool a photo"],
-        ["It names active ingredients, not brands", "One ingredient sells under many brands, and the label sets the rate"],
-        ["It says when no spray helps", "No spray cures a virus"],
-        ["It speaks your language and fits your budget", "Advice you cannot read or pay for does not help"]
+        [
+          "What to look for",
+          "Why it matters"
+        ],
+        [
+          "It covers your crop, trees included",
+          "It cannot name a disease on a crop it never learned"
+        ],
+        [
+          "It asks for several photos",
+          "Six leaves per plant gave Nuru better answers"
+        ],
+        [
+          "It asks your crop's age, place and weather",
+          "The same spot can mean different things at different stages"
+        ],
+        [
+          "It tells you how to confirm",
+          "Mild signs and look alikes fool a photo"
+        ],
+        [
+          "It names active ingredients, not brands",
+          "One ingredient sells under many brands, and the label sets the rate"
+        ],
+        [
+          "It says when no spray helps",
+          "No spray cures a virus"
+        ],
+        [
+          "It speaks your language and fits your budget",
+          "Advice you cannot read or pay for does not help"
+        ]
       ]
     },
     {
@@ -137,10 +186,26 @@
       "type": "table",
       "caption": "What the anee.io tools for a sick plant cost",
       "rows": [
-        ["Option", "Cost", "What you get"],
-        ["Libre plan", "Free, with a few ads", "One active season, notes, photos and growth stages"],
-        ["Libre plus Anee", "PHP 70 a month or PHP 700 a year", "Chat with Anee and show her a photo, using credits, plus the field helpers"],
-        ["Solo Farmer or Farm Owner", "PHP 200 or PHP 600 a month", "Anee with 30 or 100 credits each renewal, the field helpers, no ads"]
+        [
+          "Option",
+          "Cost",
+          "What you get"
+        ],
+        [
+          "Libre plan",
+          "Free, with a few ads",
+          "One active season, notes, photos and growth stages"
+        ],
+        [
+          "Libre plus Anee",
+          "PHP 70 a month or PHP 700 a year",
+          "Chat with Anee and show her a photo, using credits, plus the field helpers"
+        ],
+        [
+          "Solo Farmer or Farm Owner",
+          "PHP 200 or PHP 600 a month",
+          "Anee with 30 or 100 credits each renewal, the field helpers, no ads"
+        ]
       ]
     },
     {
@@ -243,22 +308,47 @@
       "type": "links",
       "title": "Related guides",
       "items": [
-        { "label": "What is wrong with my plant?", "url": "/blog/app-to-identify-plant-problems" },
-        { "label": "Crop disease diagnosis apps", "url": "/blog/crop-disease-diagnosis-app" },
-        { "label": "Plant disease detection for fruit growers", "url": "/blog/plant-disease-detection-for-fruit-growers" },
-        { "label": "Pest or disease: how to tell", "url": "/blog/pest-or-disease-how-to-tell" },
-        { "label": "Identify rice pests from a photo", "url": "/blog/identify-rice-pests-from-a-photo" },
-        { "label": "Plant diseases in the Philippines", "url": "/diseases/plant-diseases-philippines" }
+        {
+          "label": "What is wrong with my plant?",
+          "url": "/blog/app-to-identify-plant-problems"
+        },
+        {
+          "label": "Crop disease diagnosis apps",
+          "url": "/blog/crop-disease-diagnosis-app"
+        },
+        {
+          "label": "Plant disease detection for fruit growers",
+          "url": "/blog/plant-disease-detection-for-fruit-growers"
+        },
+        {
+          "label": "Pest or disease: how to tell",
+          "url": "/blog/pest-or-disease-how-to-tell"
+        },
+        {
+          "label": "Identify rice pests from a photo",
+          "url": "/blog/identify-rice-pests-from-a-photo"
+        },
+        {
+          "label": "Plant diseases in the Philippines",
+          "url": "/diseases/plant-diseases-philippines"
+        }
       ]
     },
     {
       "type": "sources",
       "items": [
-        { "label": "Mrisho and others (2020), Accuracy of a smartphone based object detection model, PlantVillage Nuru, in identifying the foliar symptoms of the viral diseases of cassava, Frontiers in Plant Science", "url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.590889/full" },
-        { "label": "Siddiqua and others (2022), Evaluating plant disease detection mobile applications: quality and limitations, Agronomy", "url": "https://arxiv.org/abs/2208.02446" },
-        { "label": "Plantix: crop diagnosis app", "url": "https://plantix.net/en/" },
-        { "label": "DA Caraga: Citizen's Charter 2020, Regional Crop Protection Center plant diagnosis", "url": "https://caraga.da.gov.ph/wp-content/uploads/Services/laboratory/laboratory-7.pdf" },
-        { "label": "PhilRice: Text Center and info services", "url": "https://www.philrice.gov.ph/services/infotxt-e-info/" }
+        {
+          "label": "Mrisho and others (2020), Accuracy of a smartphone based object detection model, PlantVillage Nuru, in identifying the foliar symptoms of the viral diseases of cassava, Frontiers in Plant Science",
+          "url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.590889/full"
+        },
+        {
+          "label": "Siddiqua and others (2022), Evaluating plant disease detection mobile applications: quality and limitations, Agronomy",
+          "url": "https://arxiv.org/abs/2208.02446"
+        },
+        {
+          "label": "Plantix: crop diagnosis app",
+          "url": "https://plantix.net/en/"
+        }
       ]
     }
   ]

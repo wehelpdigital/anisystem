@@ -161,19 +161,6 @@
           "url": "/blog/fertilizer-and-pesticide-authority"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FPA: Registered products",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

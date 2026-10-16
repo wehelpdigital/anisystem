@@ -288,31 +288,6 @@
           "url": "/blog/farm-records-for-loans-and-insurance"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PAGASA: Tropical Cyclone Wind Signal",
-          "url": "https://www.pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 Revised Edition (Key Check 8, harvest management)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Give palay a second chance",
-          "url": "https://www.philrice.gov.ph/give-palay-a-second-chance/"
-        },
-        {
-          "label": "PhilRice: Managing crops after typhoon",
-          "url": "https://www.philrice.gov.ph/managing-crops-typhoon/"
-        },
-        {
-          "label": "DA: Agri department readies assistance to Habagat affected farmers",
-          "url": "https://www.da.gov.ph/agri-dept-readies-assistance-to-habagat-affected-farmers/"
-        }
-      ]
     }
   ]
 }

@@ -230,10 +230,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Rice hispa (Lucid key)",
-          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Hispa.htm"
-        },
-        {
           "label": "EPPO Global Database: Dicladispa armigera distribution",
           "url": "https://gd.eppo.int/taxon/HISPAR/distribution"
         }

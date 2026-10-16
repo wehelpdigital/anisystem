@@ -261,27 +261,6 @@
           "url": "/pests/golden-apple-snail"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "PAGASA: Climate of the Philippines",
-          "url": "https://www.pagasa.dost.gov.ph/information/climate-philippines"
-        },
-        {
-          "label": "Bureau of Plant Industry: Ampalaya Production Guide",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
-        }
-      ]
     }
   ]
 }

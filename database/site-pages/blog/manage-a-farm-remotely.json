@@ -264,27 +264,6 @@
           "url": "/blog/track-typhoons-near-my-farm"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PAGASA: Tropical Cyclone Wind Signal",
-          "url": "https://pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
-        },
-        {
-          "label": "National Wages and Productivity Commission: Daily minimum wage rates by region",
-          "url": "https://nwpc.dole.gov.ph/"
-        },
-        {
-          "label": "Department of Agriculture: Rice Crop Insurance, DA and PCIC",
-          "url": "https://ffedis.da.gov.ph/projects/6/view"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

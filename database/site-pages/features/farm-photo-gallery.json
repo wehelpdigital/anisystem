@@ -182,19 +182,6 @@
           "url": "/crops/palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
-          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Insect fact sheets",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects"
-        }
-      ]
     }
   ]
 }

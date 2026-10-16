@@ -281,27 +281,6 @@
           "url": "/blog/farm-profitability"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Agricultural Training Institute MIMAROPA: Mga Gulay sa Kapatagan (lowland vegetables)",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-12/lowland_vegetables.pdf"
-        },
-        {
-          "label": "ATI Cordillera: Pechay production for urban and home gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/pechay_production_for_urban_gardening_leaflet.pdf"
-        },
-        {
-          "label": "DA Region 3: National Urban and Peri Urban Agriculture Program",
-          "url": "https://rfo3.da.gov.ph/index.php/national-urban-and-peri-urban-agriculture-program/"
-        },
-        {
-          "label": "ACPC: Agri Negosyo Loan Program (ANYO)",
-          "url": "https://acpc.gov.ph/agri-negosyo-loan-program-anyo/"
-        }
-      ]
     }
   ]
 }

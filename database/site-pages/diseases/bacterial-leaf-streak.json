@@ -227,23 +227,6 @@
           "url": "/diseases/plant-diseases-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Bacterial leaf streak",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-leaf-streak"
-        },
-        {
-          "label": "Kerala Agricultural University: Bacterial leaf streak of rice",
-          "url": "https://celkau.in/crops/cereals/rice/leafstreak.php"
-        }
-      ]
     }
   ]
 }

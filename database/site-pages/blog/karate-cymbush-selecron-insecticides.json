@@ -247,24 +247,12 @@
           "url": "https://www.syngenta.com.ph/product/crop-protection/selecron-500-ec"
         },
         {
-          "label": "FPA: Registered products (pesticide list as of August 31, 2026)",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "FPA: Cagayan Valley training on label color bands",
-          "url": "https://fpa.da.gov.ph/fpa-cagayan-valley-trains-dealers-on-safe-handling-of-fertilizers-and-pesticides/"
-        },
-        {
           "label": "IRAC: Mode of action classification",
           "url": "https://irac-online.org/mode-of-action/classification-online/"
         },
         {
           "label": "NPIC: Lambda cyhalothrin general fact sheet",
           "url": "https://www.npic.orst.edu/factsheets/l_cyhalogen.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Planthopper",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
         }
       ]
     }

@@ -322,22 +322,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
-          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
-        },
-        {
-          "label": "PSA: Updated milling recovery rate of 63.0 percent from palay to rice",
-          "url": "https://psa.gov.ph/content/psa-board-approves-updated-milling-recovery-rate-630-percent-palay-rice"
-        },
-        {
-          "label": "FAO: Rice in human nutrition, grain structure",
-          "url": "https://www.fao.org/4/t0567e/t0567e07.htm"
-        },
-        {
           "label": "Agriculture Monthly: Seed certification and tag colors (2023)",
           "url": "https://agriculture.com.ph/2023/10/06/the-importance-of-seed-certification-in-ensuring-quality-rice-production/"
         },

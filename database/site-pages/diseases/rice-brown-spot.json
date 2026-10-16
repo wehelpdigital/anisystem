@@ -264,20 +264,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Brown spot",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot"
-        },
-        {
-          "label": "PhilRice: PhilRice alerts rice farmers of increased pest threats during rainy season",
-          "url": "https://www.philrice.gov.ph/philrice-alerts-rice-farmers-of-increased-pest-threats-during-rainy-season/"
-        },
-        {
           "label": "Macasero and others (2023), Influence of production situation on the incidence of brown spot of rice in the Philippines, Plant Pathology",
           "url": "https://cgspace.cgiar.org/items/45404ce5-798f-4921-a098-4fcfdab7b876"
-        },
-        {
-          "label": "FPA: Registered pesticide products (list as of August 31, 2026)",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
         }
       ]
     }

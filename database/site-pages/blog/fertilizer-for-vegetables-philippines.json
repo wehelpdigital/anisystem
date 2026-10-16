@@ -206,22 +206,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "DA Regional Field Office 2: Ampalaya Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2: Tomato Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2: Eggplant Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf"
-        },
-        {
-          "label": "ATI Cordillera: Tomato production for urban and home gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/tomato_production_guide_leaflet.pdf"
-        },
-        {
           "label": "University of Maryland Extension: Blossom end rot of vegetables",
           "url": "https://extension.umd.edu/resource/blossom-end-rot-vegetables"
         }

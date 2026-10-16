@@ -263,18 +263,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "WorldVeg (AVRDC): Insect pests of eggplant pictorial guide",
-          "url": "https://assets.publishing.service.gov.uk/media/57a08d16ed915d3cfd0017e6/ipm_eggplant_insects.pdf"
-        },
-        {
-          "label": "UPLB: Field performance of Bt eggplant against the fruit and shoot borer",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/1599"
-        },
-        {
-          "label": "UPLB: Non chemical methods for controlling the eggplant fruit and shoot borer",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4451"
-        },
-        {
           "label": "Journal of Pharmacognosy and Phytochemistry: Bio efficacy of insecticides against shoot and fruit borer in brinjal",
           "url": "https://phytojournal.com/archives/2018/vol7issue6/PartAD/7-6-69-346.pdf"
         }

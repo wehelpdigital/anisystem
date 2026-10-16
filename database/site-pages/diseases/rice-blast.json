@@ -264,31 +264,6 @@
           "url": "/diseases/plant-diseases-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Blast (leaf and collar)",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Blast (node and neck)",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-node-neck"
-        },
-        {
-          "label": "PhilRice: Pamamahala ng mata mata (Rice handout 2023)",
-          "url": "https://www.philrice.gov.ph/pamamahala-ng-mata-mata"
-        },
-        {
-          "label": "PhilRice: Major diseases of the rice plant in the Philippines",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Major-diseases-of-the-rice-plant-in-the-Philippines.pdf"
-        }
-      ]
     }
   ]
 }

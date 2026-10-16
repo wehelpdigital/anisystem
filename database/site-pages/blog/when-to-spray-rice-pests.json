@@ -50,15 +50,60 @@
       "type": "table",
       "caption": "Action thresholds for palay from PhilRice field advice, the PalayCheck System and IRRI. Always confirm with your local agriculturist.",
       "rows": [
-        ["Problem", "Leave it while", "Act when", "First step"],
-        ["Brown planthopper", "Fewer than 1 per tiller", "1 or more per tiller, or about 25 to 30 per hill", "Drain the field for about a week"],
-        ["Rice black bug", "5 or fewer per hill", "More than 5 per hill", "Metarhizium at low counts, deep water and a spray above 5"],
-        ["Leaffolder", "First 30 to 40 days, and while natural enemies keep up", "Rarely, and only on your technician's advice", "Trim shade trees, fertilize at the right rate"],
-        ["Stem borer", "Damage during tillering", "The jar test hatches more larvae than wasps", "Contact or stomach insecticide"],
-        ["Bacterial leaf blight", "Scattered infection", "About 30 percent or more of the field", "Drain, then copper fungicide if needed"],
-        ["Blast", "No blast before heading", "Leaf blast during tillering", "Fungicide at early heading and half heading"],
-        ["Golden apple snail", "Past tillering", "Snails feed on seedlings", "Saturated soil, then a matched molluscicide"],
-        ["Rats", "Never", "Any fresh burrow or cut tiller", "Community burrow work and sealed bait"]
+        [
+          "Problem",
+          "Leave it while",
+          "Act when",
+          "First step"
+        ],
+        [
+          "Brown planthopper",
+          "Fewer than 1 per tiller",
+          "1 or more per tiller, or about 25 to 30 per hill",
+          "Drain the field for about a week"
+        ],
+        [
+          "Rice black bug",
+          "5 or fewer per hill",
+          "More than 5 per hill",
+          "Metarhizium at low counts, deep water and a spray above 5"
+        ],
+        [
+          "Leaffolder",
+          "First 30 to 40 days, and while natural enemies keep up",
+          "Rarely, and only on your technician's advice",
+          "Trim shade trees, fertilize at the right rate"
+        ],
+        [
+          "Stem borer",
+          "Damage during tillering",
+          "The jar test hatches more larvae than wasps",
+          "Contact or stomach insecticide"
+        ],
+        [
+          "Bacterial leaf blight",
+          "Scattered infection",
+          "About 30 percent or more of the field",
+          "Drain, then copper fungicide if needed"
+        ],
+        [
+          "Blast",
+          "No blast before heading",
+          "Leaf blast during tillering",
+          "Fungicide at early heading and half heading"
+        ],
+        [
+          "Golden apple snail",
+          "Past tillering",
+          "Snails feed on seedlings",
+          "Saturated soil, then a matched molluscicide"
+        ],
+        [
+          "Rats",
+          "Never",
+          "Any fresh burrow or cut tiller",
+          "Community burrow work and sealed bait"
+        ]
       ]
     },
     {
@@ -185,25 +230,30 @@
       "type": "links",
       "title": "Related crop health guides",
       "items": [
-        { "label": "Integrated pest management", "url": "/pests/integrated-pest-management" },
-        { "label": "Rice insects", "url": "/pests/rice-insects" },
-        { "label": "Rice diseases", "url": "/diseases/rice-diseases" },
-        { "label": "Identify rice pests from a photo", "url": "/blog/identify-rice-pests-from-a-photo" },
-        { "label": "Avoid buying the wrong pesticide", "url": "/blog/avoid-buying-the-wrong-pesticide" },
-        { "label": "Pest and disease finders in anee.io", "url": "/features/pest-and-disease-finders" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 7, pest management, Tables 1 to 4)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "PhilRice: Check population to determine counter action against BPH, rice pest expert (September 2021)", "url": "https://www.philrice.gov.ph/check-population-to-determine-counter-action-against-bph-rice-pest-expert/" },
-        { "label": "PhilRice: Control rice black bugs the natural way (December 2013)", "url": "https://www.philrice.gov.ph/control-rice-black-bugs-the-natural-way/" },
-        { "label": "PhilRice: Controlled irrigation, most practical strategy vs kuhol (May 2019)", "url": "https://www.philrice.gov.ph/controlled-irrigation-most-practical-strategy-vs-kuhol/" },
-        { "label": "PhilRice: Use baits properly, rice farmers warned (January 2011)", "url": "https://www.philrice.gov.ph/use-baits-properly-rice-farmers-warned/" },
-        { "label": "PhilRice: Pamamahala ng mata mata (rice blast handout, 2023)", "url": "https://www.philrice.gov.ph/pamamahala-ng-mata-mata" },
-        { "label": "IRRI Rice Knowledge Bank: Planthopper", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper" },
-        { "label": "IRRI Rice Knowledge Bank: Bacterial blight", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight" }
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Rice insects",
+          "url": "/pests/rice-insects"
+        },
+        {
+          "label": "Rice diseases",
+          "url": "/diseases/rice-diseases"
+        },
+        {
+          "label": "Identify rice pests from a photo",
+          "url": "/blog/identify-rice-pests-from-a-photo"
+        },
+        {
+          "label": "Avoid buying the wrong pesticide",
+          "url": "/blog/avoid-buying-the-wrong-pesticide"
+        },
+        {
+          "label": "Pest and disease finders in anee.io",
+          "url": "/features/pest-and-disease-finders"
+        }
       ]
     }
   ]

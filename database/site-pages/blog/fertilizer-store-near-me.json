@@ -232,35 +232,6 @@
           "url": "/features/farm-contact-list"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FPA: Licensed handlers (fertilizer, pesticide and regional lists)",
-          "url": "https://fpa.da.gov.ph/resources/reports/licensed-handlers/"
-        },
-        {
-          "label": "FPA: Registered products, fertilizer list",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "FPA: Frequently asked questions (licensing, online sellers, complaints)",
-          "url": "https://fpa.da.gov.ph/faqs/"
-        },
-        {
-          "label": "FPA: Current average retail prices of major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K (Abonong Swak plans, April 8, 2022)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "DA: DA issues rules for fertilizer aid scheme (discount vouchers, March 10, 2022)",
-          "url": "https://www.da.gov.ph/?p=55765"
-        }
-      ]
     }
   ]
 }

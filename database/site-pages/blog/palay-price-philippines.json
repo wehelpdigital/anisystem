@@ -269,10 +269,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PSA: Farmgate prices of palay (dry)",
-          "url": "https://psa.gov.ph/farmgate-prices-palay"
-        },
-        {
           "label": "BusinessWorld: Palay farmgate prices jump 29.9 percent in August (14 September 2026)",
           "url": "https://bworldonline.com/editors-picks/2026/09/14/776648/palay-farmgate-prices-jump-29-9-in-august/"
         },
@@ -281,36 +277,12 @@
           "url": "https://bworldonline.com/economy/2026/07/13/763087/palay-farmgate-price-up-28-2-in-june/"
         },
         {
-          "label": "Philstar: NFA adopts purchase order system for palay (28 September 2026)",
-          "url": "https://www.philstar.com/business/2026/09/28/2559314/nfa-adopts-purchase-order-system-palay"
-        },
-        {
-          "label": "Philstar: NFA palay buying price to increase to P21 per kilo (17 July 2026)",
-          "url": "https://www.philstar.com/business/2026/07/17/2542611/nfa-palay-buying-price-increase-p21kilo"
-        },
-        {
-          "label": "PSA: Updated milling recovery rate of 63.0 percent from palay to rice",
-          "url": "https://psa.gov.ph/content/psa-board-approves-updated-milling-recovery-rate-630-percent-palay-rice"
-        },
-        {
           "label": "PCIJ: In Nueva Ecija, agents are getting bolder in setting palay prices (2025)",
           "url": "https://pcij.org/2025/02/17/philippines-rice-prices-nueva-ecija-agents-role/"
         },
         {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Truthful labelling of rice (2021)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2021/03/RS4DM_TruthfulLabelling_V2.pdf"
-        },
-        {
           "label": "Cavan (unit)",
           "url": "https://en.wikipedia.org/wiki/Cavan_(unit)"
-        },
-        {
-          "label": "Context.ph: Palay prices rebound as import ban holds, PSA data for late 2025 (14 January 2026)",
-          "url": "https://context.ph/2026/01/14/palay-prices-rebound-as-import-ban-holds/"
         }
       ]
     }

@@ -226,31 +226,6 @@
           "url": "/blog/reduce-crop-losses"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT for improved fertilizer application",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
-        },
-        {
-          "label": "PhilRice: Tips on fertilizer use in seconds (MOET app)",
-          "url": "https://www.philrice.gov.ph/tips-fertilizer-use-seconds/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: How to ensure seed quality",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/pre-planting/seed-quality"
-        },
-        {
-          "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)",
-          "url": "http://books.irri.org/9711040522_content.pdf"
-        }
-      ]
     }
   ]
 }

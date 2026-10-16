@@ -151,19 +151,6 @@
           "url": "/features/what-to-plant-analysis"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI: Steps to successful rice production",
-          "url": "http://knowledgebank.irri.org/images/docs/12-Steps-Required-for-Successful-Rice-Production.pdf"
-        }
-      ]
     }
   ]
 }

@@ -52,10 +52,26 @@
       "type": "table",
       "caption": "Tillage options for legumes after rice, from DA and Philippine trials",
       "rows": [
-        ["Option", "What you do", "What the sources say"],
-        ["Zero tillage", "Drain the paddy, make planting holes or shallow lines, mulch with rice straw", "DA says it can be practiced for mungbean after rice. Soybean and mungbean yielded well in a 1987 thesis"],
-        ["Minimum tillage", "Open furrows only, leave the rest of the soil", "Best mungbean result with 8 tons per hectare rice straw mulch"],
-        ["Conventional tillage", "Plow, then harrow at weekly intervals", "DA says to do this for upland fields. Needs the right soil moisture"]
+        [
+          "Option",
+          "What you do",
+          "What the sources say"
+        ],
+        [
+          "Zero tillage",
+          "Drain the paddy, make planting holes or shallow lines, mulch with rice straw",
+          "DA says it can be practiced for mungbean after rice. Soybean and mungbean yielded well in a 1987 thesis"
+        ],
+        [
+          "Minimum tillage",
+          "Open furrows only, leave the rest of the soil",
+          "Best mungbean result with 8 tons per hectare rice straw mulch"
+        ],
+        [
+          "Conventional tillage",
+          "Plow, then harrow at weekly intervals",
+          "DA says to do this for upland fields. Needs the right soil moisture"
+        ]
       ]
     },
     {
@@ -168,23 +184,39 @@
       "type": "links",
       "title": "Read also",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Onion and garlic land preparation", "url": "/land-preparation/onion-garlic-land-preparation" },
-        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
-        { "label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation" },
-        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
-        { "label": "Bean fly", "url": "/pests/bean-fly" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Onion and garlic land preparation",
+          "url": "/land-preparation/onion-garlic-land-preparation"
+        },
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Corn land preparation",
+          "url": "/land-preparation/corn-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Bean fly",
+          "url": "/pests/bean-fly"
+        }
       ]
     },
     {
       "type": "sources",
       "items": [
-        { "label": "DA High Value Crops Development Program: Mungbean Production Guide", "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf" },
-        { "label": "DA Region 02: Sitao Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf" },
-        { "label": "Kirchhof and others: Grain legumes after rainfed lowland rice, Soil and Tillage Research (ACIAR)", "url": "https://ei-ado.aciar.gov.au/sites/default/files/KirchhofEtAl%282000%29GrowthYieldResponseGrainLegumesDifferentSoilManagementPracticesRainfedLowlandRice.pdf" },
-        { "label": "FAO AGRIS: Management requirements of mungbean after paddy rice", "url": "https://agris.fao.org/search/en/records/6471eaef2a40512c710eb3e1" },
-        { "label": "FAO AGRIS: Soybean and mungbean after lowland rice, tillage and mulch, Philippines", "url": "https://agris.fao.org/search/zh/records/6471c83b2a40512c710e3f96" },
-        { "label": "FAO AGRIS: Upland crop production in rainfed lowland rice areas", "url": "https://agris.fao.org/search/en/records/64722b0577fd37171a735d8b" }
+        {
+          "label": "Kirchhof and others: Grain legumes after rainfed lowland rice, Soil and Tillage Research (ACIAR)",
+          "url": "https://ei-ado.aciar.gov.au/sites/default/files/KirchhofEtAl%282000%29GrowthYieldResponseGrainLegumesDifferentSoilManagementPracticesRainfedLowlandRice.pdf"
+        }
       ]
     }
   ]

@@ -254,27 +254,6 @@
           "url": "/features/expenses-report"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
-          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
-        },
-        {
-          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, fertilizer and production cost",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
-        },
-        {
-          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (costs of rice production)",
-          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App)",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
-        }
-      ]
     }
   ]
 }

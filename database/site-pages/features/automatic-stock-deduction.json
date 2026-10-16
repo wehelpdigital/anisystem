@@ -170,19 +170,6 @@
           "url": "/blog/fertilizer-calculation"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FPA: Weekly fertilizer prices",
-          "url": "https://fpa.da.gov.ph/weekly-prices/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022, Key Check 5, nutrient management",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

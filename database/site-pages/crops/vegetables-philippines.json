@@ -324,51 +324,6 @@
           "url": "/diseases/anthracnose"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Regional Field Office 2, Tomato Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2, Ampalaya Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf"
-        },
-        {
-          "label": "ATI Central Visayas, Pechay Production Guide",
-          "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
-        },
-        {
-          "label": "ATI Cordillera, Tomato Production for Urban and Home Gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/tomato_production_guide_leaflet.pdf"
-        },
-        {
-          "label": "ATI Cordillera, Organic Concoctions (fish amino acid)",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2023-01/MOTHER%20NATURES-ORGANIC%20CONCOCTIONS.pdf"
-        },
-        {
-          "label": "DA Cordillera, Technoguide on Organic Highland Vegetables",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-        },
-        {
-          "label": "DA Bicol, Organikong Pagtatanim ng Gulay",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/ORGANIKONG-PAGTATANIM-NG-GULAY-AT-PAGAALAGA-NG-BABOY_02102020_V1.pdf"
-        },
-        {
-          "label": "Benguet State University, Cost Structures of Benguet Highland Vegetables",
-          "url": "https://bsu.edu.ph/wp-content/uploads/IPP/2022-6.1-Production-and-Marketing-Cost-Structure-of-Benguet-Highland-Vegetables_-Guide-to-Prioritizing-Interventions.pdf"
-        },
-        {
-          "label": "PSA Cordillera, Crop Production: Cabbage, Carrot and Potato",
-          "url": "https://rssocar.psa.gov.ph/content/2016-crop-production-cabbage-carrot-and-potato"
-        },
-        {
-          "label": "CABI Compendium, Thrips palmi (melon thrips)",
-          "url": "https://www.cabidigitallibrary.org/doi/10.1079/cabicompendium.53745"
-        }
-      ]
     }
   ]
 }

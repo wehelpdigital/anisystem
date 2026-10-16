@@ -244,23 +244,6 @@
           "url": "/features/growth-stages-and-weather"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PAGASA: Farm weather forecast and advisories",
-          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
-        },
-        {
-          "label": "PhilRice (2012): Young rice plants can take care of themselves",
-          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
-        }
-      ]
     }
   ]
 }

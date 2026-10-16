@@ -427,32 +427,8 @@
           "url": "https://www.merriam-webster.com/thesaurus/fertilizer"
         },
         {
-          "label": "FAO (2019): The International Code of Conduct for the Sustainable Use and Management of Fertilizers",
-          "url": "https://www.fao.org/3/ca5253en/ca5253en.pdf"
-        },
-        {
-          "label": "Official Gazette: Presidential Decree No. 1144, s. 1977",
-          "url": "https://mirror.officialgazette.gov.ph/1977/05/30/presidential-decree-no-1144-s-1977/"
-        },
-        {
           "label": "University of Georgia Extension: Understand the numbers on a fertilizer bag",
           "url": "https://fieldreport.caes.uga.edu/news/understand-the-numbers-on-a-fertilizer-bag/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Phosphorus",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/phosphorus"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Potassium",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
-        },
-        {
-          "label": "FPA: Registered products, including the list of registered fertilizers as of September 15, 2026",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
         },
         {
           "label": "BAFS: PNS/BAFS 183:2023 Organic soil amendments and plant supplements",
@@ -465,10 +441,6 @@
         {
           "label": "Nobel Prize: The Nobel Prize in Chemistry 1918",
           "url": "https://www.nobelprize.org/prizes/chemistry/1918/summary/"
-        },
-        {
-          "label": "IRRI: Long term continuous cropping experiment",
-          "url": "https://lte.irri.org/ltcce"
         }
       ]
     }

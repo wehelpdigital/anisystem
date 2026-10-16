@@ -182,19 +182,6 @@
           "url": "/blog/fertilizer-brands-and-dealers"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FPA: Licensed handlers",
-          "url": "https://fpa.da.gov.ph/resources/reports/licensed-handlers/"
-        },
-        {
-          "label": "PSA: Farmgate prices of palay (dry)",
-          "url": "https://psa.gov.ph/farmgate-prices-palay"
-        }
-      ]
     }
   ]
 }

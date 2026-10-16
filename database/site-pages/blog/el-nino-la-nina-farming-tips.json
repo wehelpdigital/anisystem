@@ -239,31 +239,6 @@
           "url": "/crops/pagtatanim-ng-palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PAGASA: El Nino and La Nina monitoring, ENSO alert status",
-          "url": "https://www.pagasa.dost.gov.ph/climate/el-nino-la-nina/monitoring"
-        },
-        {
-          "label": "PhilRice: El Nino, La Nina at pagpapalayan (Q and A)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/Q_A-22-EN-LN-at-Pagpapalay-Dec.-2023.pdf"
-        },
-        {
-          "label": "PhilRice: Agencies link climate, rice data as El Nino intensifies (2026)",
-          "url": "https://www.philrice.gov.ph/agencies-link-climate-rice-data-as-el-nino-intensifies/"
-        },
-        {
-          "label": "PhilRice: Farmers weigh El Nino technology options in Nueva Ecija (2026)",
-          "url": "https://www.philrice.gov.ph/farmers-weigh-el-nino-technology-options-in-nueva-ecija/"
-        },
-        {
-          "label": "IRRI and PhilRice: The rice planting window in the Philippines (ISPRS Archives, 2019)",
-          "url": "https://isprs-archives.copernicus.org/articles/XLII-4-W19/241/2019/"
-        }
-      ]
     }
   ]
 }

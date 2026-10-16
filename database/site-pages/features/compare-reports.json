@@ -181,23 +181,6 @@
           "url": "/features/view-as-protocol"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Top popular rice varieties (NSIC Rc 216, Rc 222)",
-          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
-        },
-        {
-          "label": "PSA: Updates on palay and corn estimates",
-          "url": "https://psa.gov.ph/statistics/crops/palay-and-corn-estimates"
-        }
-      ]
     }
   ]
 }

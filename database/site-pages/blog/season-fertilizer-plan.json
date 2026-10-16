@@ -219,31 +219,6 @@
           "url": "/blog/fertilizer-calculator-app"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: How to manage soil fertility",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen (N)",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K (Abonong Swak recommendations)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
-        }
-      ]
     }
   ]
 }

@@ -234,16 +234,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "UPLB: Recommendations for the management of major arthropod pests of sugarcane and corn",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5812"
-        },
-        {
           "label": "Rice pest key: Root grubs",
           "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Root_grubs.htm"
-        },
-        {
-          "label": "FAO AGRIS: Current insect pest problems in corn and their management in the Philippines",
-          "url": "https://agris.fao.org/search/ar/records/6471c83a2a40512c710e3eed"
         }
       ]
     }

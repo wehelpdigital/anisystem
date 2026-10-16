@@ -231,10 +231,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Green leafhopper fact sheet (Lucid key)",
-          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Green_leafhopper.htm"
-        },
-        {
           "label": "Pacific Pests and Pathogens: Rice green leafhopper",
           "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/rice_green_leafhopper_417.htm"
         }

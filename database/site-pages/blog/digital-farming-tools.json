@@ -242,31 +242,6 @@
           "url": "/blog/farm-app-without-internet"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Department of Agriculture CAR: RSBSA frequently asked questions",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        },
-        {
-          "label": "PAGASA: Agri Weather",
-          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
-        },
-        {
-          "label": "PhilRice: Tarlac farmers showcase digital agri's potential in fertilizer use (RCMAS)",
-          "url": "https://www.philrice.gov.ph/tarlac-farmers-showcase-digital-agris-potential-in-fertilizer-use/"
-        },
-        {
-          "label": "PhilRice: Binhing Palay app features PH rice varieties",
-          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
-        },
-        {
-          "label": "Department of Agriculture: Price Monitoring",
-          "url": "https://www.da.gov.ph/price-monitoring/"
-        }
-      ]
     }
   ]
 }

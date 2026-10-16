@@ -41,10 +41,26 @@
       "type": "table",
       "caption": "Wet and dry direct seeding compared",
       "rows": [
-        ["", "Wet direct seeding", "Dry direct seeding"],
-        ["Seed", "Pre germinated seed", "Dry or pre germinated seed"],
-        ["Soil", "Puddled, leveled, wet mud", "Dry or moist soil, tilled or not tilled"],
-        ["Main land preparation", "PalayCheck Key Check 2, plus canals", "Dry tillage or no tillage, leveling, weed kill"]
+        [
+          "",
+          "Wet direct seeding",
+          "Dry direct seeding"
+        ],
+        [
+          "Seed",
+          "Pre germinated seed",
+          "Dry or pre germinated seed"
+        ],
+        [
+          "Soil",
+          "Puddled, leveled, wet mud",
+          "Dry or moist soil, tilled or not tilled"
+        ],
+        [
+          "Main land preparation",
+          "PalayCheck Key Check 2, plus canals",
+          "Dry tillage or no tillage, leveling, weed kill"
+        ]
       ]
     },
     {
@@ -234,21 +250,39 @@
       "type": "links",
       "title": "Read next",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
-        { "label": "Planting rice: the full guide", "url": "/crops/pagtatanim-ng-palay" },
-        { "label": "Weed management in rice", "url": "/weeds/weed-management-in-rice" },
-        { "label": "Weedy rice", "url": "/weeds/weedy-rice" },
-        { "label": "Golden apple snail", "url": "/pests/golden-apple-snail" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Planting rice: the full guide",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Golden apple snail",
+          "url": "/pests/golden-apple-snail"
+        }
       ]
     },
     {
       "type": "sources",
       "items": [
-        { "label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "PhilRice: Enabling the shift from transplanted to direct seeded rice systems in the Philippines", "url": "https://www.philrice.gov.ph/enabling-the-shift-from-transplanted-to-direct-seeded-rice-systems-in-the-philippines" },
-        { "label": "IRRI and CSISA: Guidelines for dry seeded rice in the Eastern Gangetic Plains of India", "url": "https://csisa.org/wp-content/uploads/sites/2/2013/10/DSR-EGP_English.pdf" },
-        { "label": "Frontiers in Sustainable Food Systems: Direct seeded rice adoption in the Philippines, 2025", "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2025.1696563/full" }
+        {
+          "label": "Frontiers in Sustainable Food Systems: Direct seeded rice adoption in the Philippines, 2025",
+          "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2025.1696563/full"
+        }
       ]
     }
   ]

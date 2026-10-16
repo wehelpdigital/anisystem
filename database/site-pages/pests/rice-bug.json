@@ -272,18 +272,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Rice bug",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
-        },
-        {
-          "label": "PhilRice: Field guide on harmful and useful organisms in Philippine rice fields, rice bug (atangya)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Harmful-and-useful-organisms-in-Philippine-rice-fields-Insects-and-Non-insects.pdf"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022, pest levels for the rice bug",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
           "label": "Syngenta Philippines: Karate 2.5 EC",
           "url": "https://www.syngenta.com.ph/product/crop-protection/karate-25-ec"
         },

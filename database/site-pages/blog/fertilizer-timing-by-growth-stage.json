@@ -205,31 +205,6 @@
           "url": "/blog/nutrient-deficiency-in-rice"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
-          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
-        },
-        {
-          "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)",
-          "url": "http://books.irri.org/9711040522_content.pdf"
-        },
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "DA, PhilRice, Nueva Ecija and IRRI: Quick guide for fertilizing transplanted rice during the wet season in Nueva Ecija",
-          "url": "http://www.knowledgebank.irri.org/pinoyrkb/QuickGuide/english/Region%203/Nueva%20Ecija/Quick%20guide%20for%20fertilizing%20transplanted%20rice%20during%20the%20wet%20season%20in%20Nueva%20Ecija.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2: Corn production techno guide, revised edition 2012",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        }
-      ]
     }
   ]
 }

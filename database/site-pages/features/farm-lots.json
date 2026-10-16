@@ -155,23 +155,6 @@
           "url": "/crops/pagtatanim-ng-palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        },
-        {
-          "label": "PAGASA: Seasonal forecast",
-          "url": "https://www.pagasa.dost.gov.ph/climate/climate-prediction/seasonal-forecast"
-        }
-      ]
     }
   ]
 }

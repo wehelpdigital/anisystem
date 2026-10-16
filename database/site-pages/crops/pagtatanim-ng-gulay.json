@@ -320,55 +320,6 @@
           "url": "/blog/farm-words-in-tagalog"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Bicol, Organikong Pagtatanim ng Gulay",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/ORGANIKONG-PAGTATANIM-NG-GULAY-AT-PAGAALAGA-NG-BABOY_02102020_V1.pdf"
-        },
-        {
-          "label": "DA Cordillera, Technoguide on Organic Highland Vegetables",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-        },
-        {
-          "label": "ATI Cordillera, Organic Concoctions (fish amino acid)",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2023-01/MOTHER%20NATURES-ORGANIC%20CONCOCTIONS.pdf"
-        },
-        {
-          "label": "ATI Cordillera, Calcium from Eggshell and Edible Shells",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/calcium-eggshell-and-edible-shells.jpg"
-        },
-        {
-          "label": "ATI Cordillera, A Guide to Simple Composting",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/a_guide_to_simple_composting.pdf"
-        },
-        {
-          "label": "ATI Cordillera, Tomato Production for Urban and Home Gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/tomato_production_guide_leaflet.pdf"
-        },
-        {
-          "label": "ATI Cordillera, Okra Production for Urban and Home Gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/okra_production_flyer_.pdf"
-        },
-        {
-          "label": "ATI Cordillera, Squash Production for Urban and Home Gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/squash_production_guide_leaflet.pdf"
-        },
-        {
-          "label": "ATI Central Visayas, Pechay Production Guide",
-          "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2, Ampalaya Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2, Tomato Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
-        }
-      ]
     }
   ]
 }

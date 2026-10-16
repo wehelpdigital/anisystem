@@ -287,31 +287,6 @@
           "url": "/features/protocol-builder"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Checks 1 to 9, Box 4)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Sistemang PalayCheck (Filipino edition)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Sistemang-PalayCheck.pdf"
-        },
-        {
-          "label": "PhilRice: Keep farm records, PhilRice OIC urges farmers (2011, eight key checks)",
-          "url": "https://www.philrice.gov.ph/keep-farm-records-philrice-oic-urges-farmers/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System's new version underway (August 2024)",
-          "url": "https://www.philrice.gov.ph/palaycheck-systems-new-version-underway/"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App, 2024)",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
-        }
-      ]
     }
   ]
 }

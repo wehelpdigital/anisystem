@@ -218,31 +218,6 @@
           "url": "/blog/micronutrients-for-rice"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen deficiency",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/nitrogen-deficiency"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Phosphorus deficiency",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/phosphorous-deficiency"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Potassium deficiency",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/potassium-deficiency"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Zinc deficiency",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency"
-        },
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

@@ -269,43 +269,6 @@
           "url": "/blog/fertilizer-application-methods"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System 2022, Key Check 5, nutrient management",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Phosphorus",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/phosphorus"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Potassium",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
-        },
-        {
-          "label": "IRRI: Steps to successful rice production",
-          "url": "http://knowledgebank.irri.org/images/docs/12-Steps-Required-for-Successful-Rice-Production.pdf"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, September 14 to 18, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
-        }
-      ]
     }
   ]
 }

@@ -226,31 +226,6 @@
           "url": "/blog/crop-disease-diagnosis-app"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Stem borer",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Planthopper",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Black bug",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/black-bug"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice bug",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022, Key Check 7, pest management",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

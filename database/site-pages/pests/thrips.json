@@ -244,10 +244,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank, Rice thrips",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-thrips"
-        },
-        {
           "label": "Reyes, Cayabyab and Copuyoc (2021), Diversity and abundance of thrips in a Carabao mango orchard at Piat, Cagayan, The Philippine Entomologist",
           "url": "https://thephilippineentomologist.org/wp-content/uploads/2022/05/1-TPE-35-2-July-December-2021-Reyes-et-al_Mango-thrips-Draft-2.pdf"
         },
@@ -258,10 +254,6 @@
         {
           "label": "UC IPM Pest Notes, Thrips",
           "url": "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7429.html"
-        },
-        {
-          "label": "University of Florida IFAS, Chili thrips",
-          "url": "https://mrec.ifas.ufl.edu/lsolab/thrips/chili-thrips/"
         },
         {
           "label": "Pacific Pests, Pathogens and Weeds, Melon thrips fact sheet",

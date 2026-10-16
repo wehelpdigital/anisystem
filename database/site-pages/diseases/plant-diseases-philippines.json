@@ -330,64 +330,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice (2021), Field Guide: Major Disorders of the Rice Plant, Diseases and Nutritional Deficiencies",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Major-Disorders-of-the-rice-plant-Diseases-and-Nutritional-Deficiencies.pdf"
-        },
-        {
-          "label": "PhilRice, Major diseases of the rice plant in the Philippines",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Major-diseases-of-the-rice-plant-in-the-Philippines.pdf"
-        },
-        {
-          "label": "PhilRice (2016), Preventing rice pests and diseases during the rainy season",
-          "url": "https://www.philrice.gov.ph/preventing-rice-pests-diseases-rainy-season/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Brown spot",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Bakanae",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bakanae"
-        },
-        {
-          "label": "DA Regional Field Office 2, Corn Production Techno Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2, Tomato Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
-        },
-        {
           "label": "Purdue University CAPS datasheet: Peronosclerospora philippinensis, Philippine downy mildew of corn",
           "url": "https://caps.ceris.purdue.edu/wp-content/uploads/2025/07/Peronosclerospora-philippinensis-corn-manual-datasheet.pdf"
-        },
-        {
-          "label": "PCAARRD (2012), IPB UPLB rallies against banana disease (bunchy top)",
-          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/ipb-uplb-rallies-against-banana-disease-gets-pcaarrd-support"
-        },
-        {
-          "label": "PCAARRD (2017), Management approaches against Fusarium wilt of Cavendish in Mindanao",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/s-t-management-approaches-against-fusarium-wilt-of-cavendish-in-mindanao-developed"
-        },
-        {
-          "label": "PCAARRD (2023), Projects to mitigate coconut cadang cadang disease launched",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/projects-to-mitigate-coconut-cadang-cadang-disease-launched"
-        },
-        {
-          "label": "PCAARRD (2016), Best practices address decline in mango production and quality",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/best-practices-address-decline-in-mango-production-and-quality"
-        },
-        {
-          "label": "PCAARRD (2023), LAMP based detection kit for tomato yellow leaf curl virus, Philippine strains",
-          "url": "https://ispweb.pcaarrd.dost.gov.ph/?p=14225"
-        },
-        {
-          "label": "Roettger, Verzola and Ramirez (1983), Plasmodiophora brassicae affecting crucifers in Benguet, Philippine Phytopathology",
-          "url": "https://agris.fao.org/search/ar/records/6471bd2077fd37171a6e02a9"
         },
         {
           "label": "Pacific Pests and Pathogens: Coconut bud rot",

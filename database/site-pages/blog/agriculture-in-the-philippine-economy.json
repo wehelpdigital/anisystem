@@ -216,32 +216,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "PSA: National Accounts of the Philippines, second quarter 2026",
-          "url": "https://psa.gov.ph/statistics/national-accounts"
-        },
-        {
-          "label": "PSA: Labor Force Survey, July 2026 results",
-          "url": "https://psa.gov.ph/statistics/labor-force-survey"
-        },
-        {
-          "label": "PSA: Value of Production in Philippine Agriculture and Fisheries, second quarter 2026",
-          "url": "https://psa.gov.ph/statistics/vop-main/national"
-        },
-        {
-          "label": "PSA: Updates on palay and corn estimates, July to September 2026",
-          "url": "https://psa.gov.ph/statistics/crops/palay-and-corn-estimates"
-        },
-        {
           "label": "Agriculture, forestry and fishing value added as a share of GDP, Philippines (data.worldbank.org)",
           "url": "https://data.worldbank.org/indicator/NV.AGR.TOTL.ZS?locations=PH"
         },
         {
           "label": "Republic Act 10915, Philippine Agricultural and Biosystems Engineering Act of 2016 (Lawphil)",
           "url": "https://lawphil.net/statutes/repacts/ra2016/ra_10915_2016.html"
-        },
-        {
-          "label": "DA Philippine Council for Agriculture and Fisheries: Philippine Rice Industry Roadmap 2025 to 2035 launched (2025)",
-          "url": "https://pcaf.da.gov.ph/index.php/2025/12/01/philippine-rice-industry-roadmap-2021-2035-launched-at-national-stakeholders-conference/"
         }
       ]
     }

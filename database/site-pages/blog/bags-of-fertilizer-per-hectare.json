@@ -275,27 +275,6 @@
           "url": "/blog/season-fertilizer-plan"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K (Abonong Swak recommendations)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "DA, PhilRice, Nueva Ecija and IRRI: Quick guide for fertilizing transplanted rice during the wet season in Nueva Ecija",
-          "url": "http://www.knowledgebank.irri.org/pinoyrkb/QuickGuide/english/Region%203/Nueva%20Ecija/Quick%20guide%20for%20fertilizing%20transplanted%20rice%20during%20the%20wet%20season%20in%20Nueva%20Ecija.pdf"
-        },
-        {
-          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT for improved fertilizer application",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
-        }
-      ]
     }
   ]
 }

@@ -441,23 +441,6 @@
           "url": "/blog/farm-words-in-tagalog"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI: Standard Evaluation System for Rice (SES), plant traits and growth stages",
-          "url": "http://www.knowledgebank.irri.org/images/docs/rice-standard-evaluation-system.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Morphology of the rice plant and rice grain",
-          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.1._Morphology_of_the_rice_plant.htm"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition (harvest at golden yellow, whitehead)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

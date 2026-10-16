@@ -47,12 +47,36 @@
       "type": "table",
       "caption": "Corn land preparation schedule based on the DA Region 2 guide",
       "rows": [
-        ["Timing", "Work", "Depth or spacing"],
-        ["About 2 to 3 weeks before planting", "Plow when the soil moisture is right", "15 to 20 cm, deeper is better for roots"],
-        ["Right after plowing", "First harrowing to break clods", "Two to three passes in total"],
-        ["One week later", "Next harrowing to start weeds and level", "One week between passes"],
-        ["Last harrowing", "Broadcast organic fertilizer if you use it", "Ten bags per hectare"],
-        ["A day before or on planting day", "Make furrows", "70 to 75 cm apart"]
+        [
+          "Timing",
+          "Work",
+          "Depth or spacing"
+        ],
+        [
+          "About 2 to 3 weeks before planting",
+          "Plow when the soil moisture is right",
+          "15 to 20 cm, deeper is better for roots"
+        ],
+        [
+          "Right after plowing",
+          "First harrowing to break clods",
+          "Two to three passes in total"
+        ],
+        [
+          "One week later",
+          "Next harrowing to start weeds and level",
+          "One week between passes"
+        ],
+        [
+          "Last harrowing",
+          "Broadcast organic fertilizer if you use it",
+          "Ten bags per hectare"
+        ],
+        [
+          "A day before or on planting day",
+          "Make furrows",
+          "70 to 75 cm apart"
+        ]
       ]
     },
     {
@@ -87,10 +111,38 @@
       "type": "table",
       "caption": "Lime requirement in metric tons per hectare, DA Region 2 corn guide",
       "rows": [
-        ["Soil pH", "Sandy", "Sandy loam", "Loam", "Silt and clay loam", "Clay"],
-        ["4.0 to 4.4", "3.0", "3.5", "4.5", "6.0", "7.5"],
-        ["4.5 to 4.9", "1.5", "2.5", "3.2", "4.2", "5.2"],
-        ["5.0 to 5.3", "1.0", "1.5", "2.0", "2.5", "3.0"]
+        [
+          "Soil pH",
+          "Sandy",
+          "Sandy loam",
+          "Loam",
+          "Silt and clay loam",
+          "Clay"
+        ],
+        [
+          "4.0 to 4.4",
+          "3.0",
+          "3.5",
+          "4.5",
+          "6.0",
+          "7.5"
+        ],
+        [
+          "4.5 to 4.9",
+          "1.5",
+          "2.5",
+          "3.2",
+          "4.2",
+          "5.2"
+        ],
+        [
+          "5.0 to 5.3",
+          "1.0",
+          "1.5",
+          "2.0",
+          "2.5",
+          "3.0"
+        ]
       ]
     },
     {
@@ -190,20 +242,39 @@
       "type": "links",
       "title": "Read next",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Acidic soil preparation", "url": "/land-preparation/acidic-soil-preparation" },
-        { "label": "Growing corn in the Philippines", "url": "/crops/pagtatanim-ng-mais" },
-        { "label": "Corn seeds", "url": "/crops/corn-seeds" },
-        { "label": "Asian corn borer", "url": "/pests/asian-corn-borer" },
-        { "label": "Fall armyworm", "url": "/pests/fall-armyworm" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Acidic soil preparation",
+          "url": "/land-preparation/acidic-soil-preparation"
+        },
+        {
+          "label": "Growing corn in the Philippines",
+          "url": "/crops/pagtatanim-ng-mais"
+        },
+        {
+          "label": "Corn seeds",
+          "url": "/crops/corn-seeds"
+        },
+        {
+          "label": "Asian corn borer",
+          "url": "/pests/asian-corn-borer"
+        },
+        {
+          "label": "Fall armyworm",
+          "url": "/pests/fall-armyworm"
+        }
       ]
     },
     {
       "type": "sources",
       "items": [
-        { "label": "DA Region 2: Corn techno guide, 2012 revised edition", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf" },
-        { "label": "AGRIS: Conservation tillage in corn using glyphosate plus ammonium sulphate, Bukidnon", "url": "https://agris.fao.org/search/ar/records/6471fa3277fd37171a72600e" },
-        { "label": "Asian Journal of Agriculture: Optimizing raised bed dimensions for maize", "url": "https://smujo.id/aja/article/view/19244" }
+        {
+          "label": "Asian Journal of Agriculture: Optimizing raised bed dimensions for maize",
+          "url": "https://smujo.id/aja/article/view/19244"
+        }
       ]
     }
   ]

@@ -252,27 +252,6 @@
           "url": "/pests/integrated-pest-management"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Golden apple snail management options",
-          "url": "https://applesnail.net/pestalert/management_guide/pest_management.htm"
-        },
-        {
-          "label": "PhilRice: Saturated soil keeps golden apple snails from rice",
-          "url": "https://www.philrice.gov.ph/?p=9934"
-        },
-        {
-          "label": "PhilRice: Golden apple snail facts",
-          "url": "https://www.philrice.gov.ph/?p=1199"
-        }
-      ]
     }
   ]
 }

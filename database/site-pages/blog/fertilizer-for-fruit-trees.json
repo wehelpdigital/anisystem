@@ -289,35 +289,6 @@
           "url": "/blog/plant-disease-detection-for-fruit-growers"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA BAFS: Code of Good Agricultural Practices for Mango, explanatory manual (PNS/BAFPS 45:2009)",
-          "url": "https://bafs.da.gov.ph/wp-content/uploads/2025/05/2025_EM-GAP-Mango_compressed.pdf"
-        },
-        {
-          "label": "DA High Value Crops Development Program: Mangosteen Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-        },
-        {
-          "label": "DA High Value Crops Development Program: Durian Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
-        },
-        {
-          "label": "ATI MIMAROPA: Calamansi production guide",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-12/calamansi_final.pdf"
-        },
-        {
-          "label": "DA High Value Crops Development Program: Banana Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-        },
-        {
-          "label": "PCA and ATI Cagayan Valley: Common Salt Fertilization on Coconut",
-          "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Common%20Salt%20Fertlization%20on%20Coconuts%20FINAL.pdf"
-        }
-      ]
     }
   ]
 }

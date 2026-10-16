@@ -259,27 +259,6 @@
           "url": "/blog/inorganic-fertilizer-examples"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FPA: Weekly fertilizer prices, September 14 to 18, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
-        },
-        {
-          "label": "FPA: Weekly prices archive",
-          "url": "https://fpa.da.gov.ph/weekly-prices/"
-        },
-        {
-          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
-          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
-        },
-        {
-          "label": "PhilRice: AI upgrades sharpen fertilizer advice",
-          "url": "https://www.philrice.gov.ph/ai-upgrades-sharpen-fertilizer-advice/"
-        }
-      ]
     }
   ]
 }

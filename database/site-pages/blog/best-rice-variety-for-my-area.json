@@ -225,31 +225,6 @@
           "url": "/pests/brown-planthopper"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Top 4 most popular rice varieties",
-          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
-        },
-        {
-          "label": "PhilRice: Recommended varieties, technologies for the rainy season",
-          "url": "https://www.philrice.gov.ph/recommended-varieties-technologies-rainy-season/"
-        },
-        {
-          "label": "PhilRice: El Nino, La Nina at pagpapalayan (Q and A)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/Q_A-22-EN-LN-at-Pagpapalay-Dec.-2023.pdf"
-        },
-        {
-          "label": "PhilRice: Binhing Palay app features PH rice varieties",
-          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
-        }
-      ]
     }
   ]
 }

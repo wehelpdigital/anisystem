@@ -237,32 +237,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "DA Regional Field Office 2: Tomato Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
-        },
-        {
-          "label": "ATI Cordillera: Tomato production for urban and home gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/tomato_production_guide_leaflet.pdf"
-        },
-        {
-          "label": "Magnaye and others (2019), Nutrient management practices of tomato farmers in the Ilocos provinces, Philippine Journal of Crop Science, via FAO AGRIS",
-          "url": "https://agris.fao.org/search/ar/records/647473a82d3f560f80ab9468"
-        },
-        {
           "label": "University of Maryland Extension: Tomato ripening problems and the role of potassium",
           "url": "https://extension.umd.edu/resource/tomato-ripening-problems-and-role-potassium-0"
-        },
-        {
-          "label": "Iowa State University Extension: Blossom end rot",
-          "url": "https://yardandgarden.extension.iastate.edu/encyclopedia/blossom-end-rot"
-        },
-        {
-          "label": "DA Regional Field Office 2: Eggplant Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2: White Potato Production Guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/White-Potato-Production-Guide.pdf"
         }
       ]
     }

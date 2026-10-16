@@ -292,27 +292,6 @@
           "url": "/blog/farm-expense-management-software"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
-          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
-        },
-        {
-          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (costs and returns guide)",
-          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
-        },
-        {
-          "label": "FPA: Average retail prices of major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (bag plan for 5 to 6 tons)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        }
-      ]
     }
   ]
 }

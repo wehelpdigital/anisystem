@@ -8,49 +8,152 @@
   "metaTitle": "Land Preparation Planner: Dated Steps for Every Lot",
   "metaDescription": "The land preparation planner in anee.io reads your soil, field history and weather, then dates every step for every lot around your crew.",
   "focusKeyword": "land preparation planner",
-  "keywords": ["land preparation planner", "land preparation", "paghahanda ng lupa", "rice land preparation", "when to plow", "land preparation schedule"],
+  "keywords": [
+    "land preparation planner",
+    "land preparation",
+    "paghahanda ng lupa",
+    "rice land preparation",
+    "when to plow",
+    "land preparation schedule"
+  ],
   "excerpt": "Most of a season's mistakes are made before the first seed goes in: a field plowed too late, seed soaked too long, or two lots needing one crew on the same day. The land preparation planner asks about your field, then Anee dates every step for every lot around the people you have.",
-  "heroImage": {"src": "/images/site/land/rice-land-preparation.webp", "alt": "A farmer puddles a flooded paddy with a hand tractor in Bulacan, one of the dated steps in the land preparation planner", "credit": ""},
+  "heroImage": {
+    "src": "/images/site/land/rice-land-preparation.webp",
+    "alt": "A farmer puddles a flooded paddy with a hand tractor in Bulacan, one of the dated steps in the land preparation planner",
+    "credit": ""
+  },
   "blocks": [
-    {"type": "heading", "level": 2, "text": "How the land preparation planner works"},
-    {"type": "steps", "items": [
-      {"title": "Pick the crop, the planting method and the variety", "text": "Transplanted by hand or by machine, wet or dry direct seeded, or for other crops sown, transplanted, from cuttings or from suckers. The method changes the whole plan."},
-      {"title": "Set the planting day and your lots", "text": "Type your lots or bring them in from a season, each with its area and, if you like, its own planting day."},
-      {"title": "Say who does the work", "text": "How many workers you have, whether you have a tractor or a hand tractor, and how many days a week the crew works."},
-      {"title": "Describe the soil and the field's history", "text": "How the soil feels and how fast water drains. White crust or a known pH. The last crop, weedy rice, snails and rats, and the last plowing."},
-      {"title": "Mark the place", "text": "Anee reads the forecast, the El Niño or La Niña outlook and the area's rain history for your planting window."}
-    ]},
-    {"type": "text", "text": "Anee then writes the plan. The base steps follow PhilRice practice for rice and Philippine extension practice for the other crops. Anee adds her own steps where your field needs them, each marked as her suggestion with the reason. A stale seedbed where weedy rice was bad. Salt flushed before planting. Plowing moved ahead of a wet week."},
-    {"type": "heading", "level": 2, "text": "Seed soaking that fits your variety"},
-    {"type": "text", "text": "Hybrid rice seed is soaked and incubated differently from brand to brand, and inbred seed has its own timing. Pick your variety and the plan dates the soaking, the water changes and the incubation by the hour. The seed sprouts on time. When a variety has no known instruction, the plan says so and tells you to follow the seed bag."},
-    {"type": "heading", "level": 2, "text": "Every lot dated, the crew never double booked"},
-    {"type": "text", "text": "With more than one lot, the planner staggers the plowing, harrowing and leveling. Your workers are never needed in two places on one day, and every lot is ready on its planting day. Open the plan for the whole farm, with a crew calendar, or one lot at a time."},
-    {"type": "list", "ordered": false, "items": [
-      "Rice: plowing three to four weeks ahead, harrowing in rounds, leveling under shallow water, and the seedbed dated so seedlings are the right age.",
-      "Corn and sorghum: clearing, plowing, harrowing and furrows, with drainage for the wet season.",
-      "Vegetables: the nursery dated so seedlings are ready, then raised beds, compost and mulch.",
-      "Root crops, onion and garlic, sugarcane, banana and fruit trees: deep plowing, ridges or beds, holes filled ahead, planting with the rains."
-    ]},
-    {"type": "callout", "tone": "tip", "title": "Problem soil comes first", "text": "Lime and gypsum need time to work. On acidic or sodic ground the soil test and the amendment come weeks before the first plowing. Read our guides to [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation)."},
-    {"type": "heading", "level": 2, "text": "From the plan to the season"},
-    {"type": "text", "text": "Every plan is saved on its own, so you can rename it and open it again from the field. Send it to the [Protocol Builder](/features/protocol-builder), into a protocol you have or a new one. The same planting day starts your [cropping calendar](/features/cropping-calendar)."},
-    {"type": "cta", "title": "Plan your next land preparation", "text": "The planner comes with Libre plus Anee and every plan above it. Each plan uses Anee credits.", "label": "Sign up", "url": "/signup"},
-    {"type": "heading", "level": 2, "text": "Questions about the land preparation planner"},
-    {"type": "faq", "items": [
-      {"q": "Which plans have the land preparation planner?", "a": "Libre plus Anee and every plan above it. Each plan Anee writes uses credits, and you see the price before she starts."},
-      {"q": "Can I plan several lots at once?", "a": "Yes. Add every lot with its area and planting day. The plan arranges the work so your crew is never in two places on one day."},
-      {"q": "Where do the steps come from?", "a": "The base follows Philippine extension practice: PhilRice for rice, and DA and state university guides for the other crops. Anee's additions are marked as her suggestions, with the reason for each."},
-      {"q": "Does it tell me how long to soak my seed?", "a": "Yes, by variety. Hybrid brands differ, so the plan uses each brand's own soaking and incubation where it is known. Where it is not, follow the seed bag."}
-    ]},
-    {"type": "links", "title": "Related pages", "items": [
-      {"label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines"},
-      {"label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation"},
-      {"label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation"},
-      {"label": "Cropping calendar", "url": "/features/cropping-calendar"}
-    ]},
-    {"type": "sources", "items": [
-      {"label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"},
-      {"label": "IRRI Rice Knowledge Bank: Land preparation", "url": "http://www.knowledgebank.irri.org/step-by-step-production/pre-planting/land-preparation"}
-    ]}
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How the land preparation planner works"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pick the crop, the planting method and the variety",
+          "text": "Transplanted by hand or by machine, wet or dry direct seeded, or for other crops sown, transplanted, from cuttings or from suckers. The method changes the whole plan."
+        },
+        {
+          "title": "Set the planting day and your lots",
+          "text": "Type your lots or bring them in from a season, each with its area and, if you like, its own planting day."
+        },
+        {
+          "title": "Say who does the work",
+          "text": "How many workers you have, whether you have a tractor or a hand tractor, and how many days a week the crew works."
+        },
+        {
+          "title": "Describe the soil and the field's history",
+          "text": "How the soil feels and how fast water drains. White crust or a known pH. The last crop, weedy rice, snails and rats, and the last plowing."
+        },
+        {
+          "title": "Mark the place",
+          "text": "Anee reads the forecast, the El Niño or La Niña outlook and the area's rain history for your planting window."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Anee then writes the plan. The base steps follow PhilRice practice for rice and Philippine extension practice for the other crops. Anee adds her own steps where your field needs them, each marked as her suggestion with the reason. A stale seedbed where weedy rice was bad. Salt flushed before planting. Plowing moved ahead of a wet week."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Seed soaking that fits your variety"
+    },
+    {
+      "type": "text",
+      "text": "Hybrid rice seed is soaked and incubated differently from brand to brand, and inbred seed has its own timing. Pick your variety and the plan dates the soaking, the water changes and the incubation by the hour. The seed sprouts on time. When a variety has no known instruction, the plan says so and tells you to follow the seed bag."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Every lot dated, the crew never double booked"
+    },
+    {
+      "type": "text",
+      "text": "With more than one lot, the planner staggers the plowing, harrowing and leveling. Your workers are never needed in two places on one day, and every lot is ready on its planting day. Open the plan for the whole farm, with a crew calendar, or one lot at a time."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Rice: plowing three to four weeks ahead, harrowing in rounds, leveling under shallow water, and the seedbed dated so seedlings are the right age.",
+        "Corn and sorghum: clearing, plowing, harrowing and furrows, with drainage for the wet season.",
+        "Vegetables: the nursery dated so seedlings are ready, then raised beds, compost and mulch.",
+        "Root crops, onion and garlic, sugarcane, banana and fruit trees: deep plowing, ridges or beds, holes filled ahead, planting with the rains."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Problem soil comes first",
+      "text": "Lime and gypsum need time to work. On acidic or sodic ground the soil test and the amendment come weeks before the first plowing. Read our guides to [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "From the plan to the season"
+    },
+    {
+      "type": "text",
+      "text": "Every plan is saved on its own, so you can rename it and open it again from the field. Send it to the [Protocol Builder](/features/protocol-builder), into a protocol you have or a new one. The same planting day starts your [cropping calendar](/features/cropping-calendar)."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next land preparation",
+      "text": "The planner comes with Libre plus Anee and every plan above it. Each plan uses Anee credits.",
+      "label": "Sign up",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the land preparation planner"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Which plans have the land preparation planner?",
+          "a": "Libre plus Anee and every plan above it. Each plan Anee writes uses credits, and you see the price before she starts."
+        },
+        {
+          "q": "Can I plan several lots at once?",
+          "a": "Yes. Add every lot with its area and planting day. The plan arranges the work so your crew is never in two places on one day."
+        },
+        {
+          "q": "Where do the steps come from?",
+          "a": "The base follows Philippine extension practice: PhilRice for rice, and DA and state university guides for the other crops. Anee's additions are marked as her suggestions, with the reason for each."
+        },
+        {
+          "q": "Does it tell me how long to soak my seed?",
+          "a": "Yes, by variety. Hybrid brands differ, so the plan uses each brand's own soaking and incubation where it is known. Where it is not, follow the seed bag."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Corn land preparation",
+          "url": "/land-preparation/corn-land-preparation"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        }
+      ]
+    }
   ]
 }

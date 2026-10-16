@@ -244,31 +244,6 @@
           "url": "/blog/satellite-crop-monitoring-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Agricultural Training Institute: e Extension program",
-          "url": "https://www.e-extension.gov.ph/home/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Saving water with alternate wetting drying",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/water-management/saving-water-alternate-wetting-drying-awd"
-        },
-        {
-          "label": "FAO: Global Farmer Field School Platform",
-          "url": "https://www.fao.org/farmer-field-schools/en/"
-        },
-        {
-          "label": "IRRI News: DA strengthens support for the nationwide deployment of Rice Crop Manager",
-          "url": "https://news.irri.org/2019/05/philippine-department-of-agriculture.html"
-        }
-      ]
     }
   ]
 }

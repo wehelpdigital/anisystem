@@ -364,64 +364,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "FAO: Integrated Pest Management",
-          "url": "https://www.fao.org/pest-and-pesticide-management/ipm/integrated-pest-management/en/"
-        },
-        {
           "label": "Memorandum Order No. 126, s. 1993: KASAKALIKASAN, the National Integrated Pest Management Program (Lawphil)",
           "url": "https://www.lawphil.net/executive/mo/mo1993/mo_126_1993.html"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: How to manage pests and diseases",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Insects",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/insects"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Planthopper",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice bug",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Black bug",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/black-bug"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Golden apple snail",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/golden-apple-snails"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rats",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/pests-and-diseases/rats-in-pest-and-diseases"
-        },
-        {
-          "label": "PhilRice: Young rice plants can take care of themselves (2012)",
-          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
-        },
-        {
-          "label": "PhilRice: Check population to determine counter action against BPH (2021)",
-          "url": "https://www.philrice.gov.ph/check-population-to-determine-counter-action-against-bph-rice-pest-expert/"
-        },
-        {
-          "label": "Cardona and others (1996): Field releases of Diadegma semiclausum in Benguet and Mountain Province, UPLB repository",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5970/"
-        },
-        {
-          "label": "Medina and others (2005): An IPM program for mango in Palawan, UPLB repository",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2919/"
-        },
-        {
-          "label": "Duca and others (2004): Management of the eggplant fruit and shoot borer, UPLB repository",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5621/"
-        },
-        {
-          "label": "UPLB repository: Predatory earwigs against the Asian corn borer",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2834/"
         },
         {
           "label": "IRAC: Mode of action classification online",
@@ -442,14 +386,6 @@
         {
           "label": "Pacific Pests, Pathogens, Weeds and Pesticides: Coconut rhinoceros beetle",
           "url": "https://apps.lucidcentral.org/pppw_v12/text/web_full/entities/coconut_rhinoceros_beetle__oryctes_108.htm"
-        },
-        {
-          "label": "FPA: Frequently asked questions",
-          "url": "https://fpa.da.gov.ph/faqs/"
-        },
-        {
-          "label": "FPA: History and mandate",
-          "url": "https://fpa.da.gov.ph/about-us/history/"
         }
       ]
     }

@@ -230,47 +230,6 @@
           "url": "/blog/ask-an-agriculturist-online"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Cordillera: RSBSA frequently asked questions (2024)",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        },
-        {
-          "label": "DA: DA issues rules for fertilizer aid scheme (from BusinessMirror, March 10, 2022)",
-          "url": "https://www.da.gov.ph/?p=55765"
-        },
-        {
-          "label": "DA Central Visayas: Agri CV distributes fertilizer vouchers for rice farmers (April 8, 2025 distribution)",
-          "url": "https://rfo7.da.gov.ph/?p=4828"
-        },
-        {
-          "label": "DA: New law extends RCEF until 2031, triples budget (December 9, 2024)",
-          "url": "https://da.gov.ph/?p=86219"
-        },
-        {
-          "label": "ATI: Rice Competitiveness Enhancement Fund, components and beneficiaries",
-          "url": "https://ati2.da.gov.ph/ati-9/content/rcef"
-        },
-        {
-          "label": "ATI: Information services (e Extension, Farmers' Contact Center, Rice Crop Manager)",
-          "url": "https://ati2.da.gov.ph/ati-main/content/information_services"
-        },
-        {
-          "label": "FPA: Registered products, fertilizer list",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Contact us (Text Center number)",
-          "url": "https://www.philrice.gov.ph/contact-us/"
-        }
-      ]
     }
   ]
 }

@@ -48,10 +48,26 @@
       "type": "table",
       "caption": "Nutrients and grain filling in rice, from PhilRice PalayCheck and Yoshida",
       "rows": [
-        ["Nutrient", "What it does for the grain", "When to give it"],
-        ["Nitrogen", "Raises spikelets per panicle, filled spikelets and grain protein, and keeps leaves green after heading", "Last dose within 5 to 7 days of panicle initiation, guided by the leaf color chart until early flowering"],
-        ["Potassium", "Raises grain size, weight and filled grains, and helps the crop resist lodging", "First dose at 0 to 14 days after transplanting, second within 5 to 7 days of panicle initiation"],
-        ["Phosphorus", "Supports early flowering and ripening", "All at basal, 0 to 14 days after transplanting"]
+        [
+          "Nutrient",
+          "What it does for the grain",
+          "When to give it"
+        ],
+        [
+          "Nitrogen",
+          "Raises spikelets per panicle, filled spikelets and grain protein, and keeps leaves green after heading",
+          "Last dose within 5 to 7 days of panicle initiation, guided by the leaf color chart until early flowering"
+        ],
+        [
+          "Potassium",
+          "Raises grain size, weight and filled grains, and helps the crop resist lodging",
+          "First dose at 0 to 14 days after transplanting, second within 5 to 7 days of panicle initiation"
+        ],
+        [
+          "Phosphorus",
+          "Supports early flowering and ripening",
+          "All at basal, 0 to 14 days after transplanting"
+        ]
       ]
     },
     {
@@ -179,22 +195,30 @@
       "type": "links",
       "title": "Related guides",
       "items": [
-        { "label": "Fertilizer timing by growth stage", "url": "/blog/fertilizer-timing-by-growth-stage" },
-        { "label": "Potash fertilizer", "url": "/blog/potash-fertilizer" },
-        { "label": "Palay drying", "url": "/blog/palay-drying" },
-        { "label": "Fertilizer for palay tillering", "url": "/blog/fertilizer-for-rice-tillering" },
-        { "label": "Sheath blight", "url": "/diseases/sheath-blight" },
-        { "label": "How to increase rice yield per hectare", "url": "/blog/increase-rice-yield-per-hectare" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)", "url": "http://books.irri.org/9711040522_content.pdf" },
-        { "label": "IRRI Rice Knowledge Bank: Potassium (K)", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k" },
-        { "label": "IRRI Rice Knowledge Bank: Sheath blight", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight" },
-        { "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT for improved fertilizer application (2022)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf" }
+        {
+          "label": "Fertilizer timing by growth stage",
+          "url": "/blog/fertilizer-timing-by-growth-stage"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        },
+        {
+          "label": "Palay drying",
+          "url": "/blog/palay-drying"
+        },
+        {
+          "label": "Fertilizer for palay tillering",
+          "url": "/blog/fertilizer-for-rice-tillering"
+        },
+        {
+          "label": "Sheath blight",
+          "url": "/diseases/sheath-blight"
+        },
+        {
+          "label": "How to increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
+        }
       ]
     }
   ]

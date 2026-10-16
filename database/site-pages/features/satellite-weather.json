@@ -171,10 +171,6 @@
           "url": "https://nasa-gibs.github.io/gibs-api-docs/"
         },
         {
-          "label": "PAGASA: Tropical cyclone bulletins",
-          "url": "https://www.pagasa.dost.gov.ph/tropical-cyclone/severe-weather-bulletin"
-        },
-        {
           "label": "Open Meteo: open weather data",
           "url": "https://open-meteo.com/"
         },

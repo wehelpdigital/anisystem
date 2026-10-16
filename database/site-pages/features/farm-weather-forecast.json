@@ -169,10 +169,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PAGASA: Farm Weather Forecast and agri weather products",
-          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
-        },
-        {
           "label": "Open Meteo: Free weather forecast API",
           "url": "https://open-meteo.com/"
         }

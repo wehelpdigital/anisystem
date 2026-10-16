@@ -232,14 +232,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "DOST PCAARRD: Viruses against soft rot causing bacteria",
-          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pcaarrd-initiative-to-use-viruses-against-soft-rot-causing-bacteria"
-        },
-        {
-          "label": "WorldVeg (the vegetable research center): Vegetable soft rot bacteria in the Philippines",
-          "url": "https://worldveg.tind.io/record/3764"
-        },
-        {
           "label": "Pacific Pests and Pathogens: Lettuce soft rot",
           "url": "https://apps.lucidcentral.org/pppw_v10/text/web_full/entities/lettuce_soft_rot_289.htm"
         },

@@ -311,31 +311,6 @@
           "url": "/crops/palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Checks 8 and 9)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Sun drying",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/postharvest/drying/traditional-drying-systems/sun-drying"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Drying (guidelines and safe storage moisture)",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/postharvest/drying"
-        },
-        {
-          "label": "PhilMech: Agricultural mechanical dryers pave the way to sustainable harvests (2023)",
-          "url": "https://www.philmech.gov.ph/?page=stories&action=storyFullView&recordID=20252335454PMcffba2e&storyCateg=RCEF&storyYear=2023&storyMonth=9"
-        },
-        {
-          "label": "Department of Agriculture: NFA loosens palay buying rules to aid farmers (February 2026)",
-          "url": "https://www.da.gov.ph/nfa-loosens-palay-buying-rules-to-aid-farmers/"
-        }
-      ]
     }
   ]
 }

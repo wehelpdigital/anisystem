@@ -250,22 +250,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "FPA: Weekly fertilizer prices, September 14 to 18, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
-        },
-        {
-          "label": "FPA: Weekly prices page",
-          "url": "https://fpa.da.gov.ph/weekly-prices/"
-        },
-        {
-          "label": "FPA: Registered products (fertilizer list as of September 15, 2026)",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "FPA: Licensed handlers",
-          "url": "https://fpa.da.gov.ph/resources/reports/licensed-handlers/"
-        },
-        {
           "label": "Yara Philippines: About Yara Philippines",
           "url": "https://www.yara.ph/about-yara/yara-philippines/"
         },
@@ -276,10 +260,6 @@
         {
           "label": "Atlas Fertilizer Corporation",
           "url": "https://atlasfertilizer.com/"
-        },
-        {
-          "label": "FPA: Frequently asked questions",
-          "url": "https://fpa.da.gov.ph/faqs/"
         }
       ]
     }

@@ -267,27 +267,6 @@
           "url": "/blog/tagalog-farm-app"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI News: DA strengthens support for the nationwide deployment of Rice Crop Manager",
-          "url": "https://news.irri.org/2019/05/philippine-department-of-agriculture.html"
-        },
-        {
-          "label": "PhilRice: Web tool to help raise rice yield and income",
-          "url": "https://www.philrice.gov.ph/web-tool-to-help-raise-rice-yield-income/"
-        },
-        {
-          "label": "PhilRice: Rice Apps download page",
-          "url": "https://www.philrice.gov.ph/rice-apps/"
-        },
-        {
-          "label": "FAO: Digital innovation project for farmers in Malawi, Rwanda and Zimbabwe",
-          "url": "https://www.fao.org/africa/news-stories/news-detail/fao-launches-digital-innovation-project-to-empower-farmers-in-malawi--rwanda-and-zimbabwe/en"
-        }
-      ]
     }
   ]
 }

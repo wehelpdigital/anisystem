@@ -224,19 +224,6 @@
           "url": "/pests/integrated-pest-management"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice whorl maggot (Lucid key)",
-          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Rice_whorl_maggot.htm"
-        },
-        {
-          "label": "FAO AGRIS: Effect of rice whorl maggot damage on the yield of a modern cultivar, Philippines",
-          "url": "https://agris.fao.org/search/ru/records/6471d3a82a40512c710e7782"
-        }
-      ]
     }
   ]
 }

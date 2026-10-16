@@ -248,31 +248,6 @@
           "url": "/crops/corn-seeds"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: El Nino, La Nina at pagpapalayan (Q and A)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/Q_A-22-EN-LN-at-Pagpapalay-Dec.-2023.pdf"
-        },
-        {
-          "label": "PAGASA: El Nino and La Nina monitoring, ENSO alert status",
-          "url": "https://www.pagasa.dost.gov.ph/climate/el-nino-la-nina/monitoring"
-        },
-        {
-          "label": "PhilRice: Farmers weigh El Nino technology options in Nueva Ecija (2026)",
-          "url": "https://www.philrice.gov.ph/farmers-weigh-el-nino-technology-options-in-nueva-ecija/"
-        },
-        {
-          "label": "Bureau of Plant Industry: Ampalaya Production Guide",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
-        },
-        {
-          "label": "Department of Agriculture: Price Monitoring",
-          "url": "https://www.da.gov.ph/price-monitoring/"
-        }
-      ]
     }
   ]
 }

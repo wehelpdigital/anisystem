@@ -182,27 +182,6 @@
           "url": "/blog/fertilizer-calculation"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PSA: 2024 Costs and Returns of Palay Production",
-          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
-        },
-        {
-          "label": "PSA: Updates on Fertilizer Prices",
-          "url": "https://psa.gov.ph/publication/updates-on-fertilizer-prices"
-        },
-        {
-          "label": "FPA: Weekly fertilizer prices",
-          "url": "https://fpa.da.gov.ph/weekly-prices/"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        }
-      ]
     }
   ]
 }

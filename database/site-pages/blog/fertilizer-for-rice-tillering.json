@@ -48,12 +48,36 @@
       "type": "table",
       "caption": "What drives productive tillers in transplanted rice, from PhilRice PalayCheck",
       "rows": [
-        ["Factor", "What PalayCheck advises", "Why it matters"],
-        ["Nitrogen", "About 30 percent of the total at basal, the rest split from tillering to panicle initiation", "Raises tiller number and panicles per hill"],
-        ["Phosphorus", "All of it at 0 to 14 days after transplanting", "Feeds roots and early tillering"],
-        ["Seedling age", "18 to 21 day old seedlings, 2 to 3 per hill, for manual transplanting", "Seedlings older than 25 days recover slowly and make fewer tillers"],
-        ["Spacing", "20 by 20 cm in the wet season, 20 by 15 cm in the dry season", "Close spacing shades the hills and cuts tillers"],
-        ["Water depth", "3 to 5 cm from early tillering", "Over 5 cm for a week or more can cut tillering below 10 per hill"]
+        [
+          "Factor",
+          "What PalayCheck advises",
+          "Why it matters"
+        ],
+        [
+          "Nitrogen",
+          "About 30 percent of the total at basal, the rest split from tillering to panicle initiation",
+          "Raises tiller number and panicles per hill"
+        ],
+        [
+          "Phosphorus",
+          "All of it at 0 to 14 days after transplanting",
+          "Feeds roots and early tillering"
+        ],
+        [
+          "Seedling age",
+          "18 to 21 day old seedlings, 2 to 3 per hill, for manual transplanting",
+          "Seedlings older than 25 days recover slowly and make fewer tillers"
+        ],
+        [
+          "Spacing",
+          "20 by 20 cm in the wet season, 20 by 15 cm in the dry season",
+          "Close spacing shades the hills and cuts tillers"
+        ],
+        [
+          "Water depth",
+          "3 to 5 cm from early tillering",
+          "Over 5 cm for a week or more can cut tillering below 10 per hill"
+        ]
       ]
     },
     {
@@ -192,21 +216,26 @@
       "type": "links",
       "title": "Related guides",
       "items": [
-        { "label": "Fertilizer timing by growth stage", "url": "/blog/fertilizer-timing-by-growth-stage" },
-        { "label": "Fertilizer for rice: a season plan by days", "url": "/blog/fertilizer-for-rice" },
-        { "label": "Urea fertilizer 46 0 0", "url": "/blog/urea-fertilizer" },
-        { "label": "Crop growth stage monitoring", "url": "/blog/crop-growth-stage-monitoring" },
-        { "label": "Fertilizer for palay grain filling", "url": "/blog/fertilizer-for-rice-grain-filling" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "IRRI: Fundamentals of Rice Crop Science (Yoshida, 1981)", "url": "http://books.irri.org/9711040522_content.pdf" },
-        { "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)", "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/" },
-        { "label": "IRRI Rice Knowledge Bank: Nitrogen (N)", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen" },
-        { "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant", "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm" }
+        {
+          "label": "Fertilizer timing by growth stage",
+          "url": "/blog/fertilizer-timing-by-growth-stage"
+        },
+        {
+          "label": "Fertilizer for rice: a season plan by days",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Crop growth stage monitoring",
+          "url": "/blog/crop-growth-stage-monitoring"
+        },
+        {
+          "label": "Fertilizer for palay grain filling",
+          "url": "/blog/fertilizer-for-rice-grain-filling"
+        }
       ]
     }
   ]

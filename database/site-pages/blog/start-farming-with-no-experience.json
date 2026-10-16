@@ -280,31 +280,6 @@
           "url": "/crops/pagtatanim-ng-palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Agricultural Training Institute: e Extension, e Learning and School on the Air",
-          "url": "https://www.e-extension.gov.ph/home/"
-        },
-        {
-          "label": "DA Cordillera: RSBSA frequently asked questions",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        },
-        {
-          "label": "ACPC: Kapital Access for Young Agripreneurs (KAYA)",
-          "url": "https://acpc.gov.ph/kapital-access-for-young-agripreneurs-kaya/"
-        },
-        {
-          "label": "ACPC: Agri Negosyo Loan Program (ANYO)",
-          "url": "https://acpc.gov.ph/agri-negosyo-loan-program-anyo/"
-        },
-        {
-          "label": "ATI Cordillera: Pechay production for urban and home gardening",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/pechay_production_for_urban_gardening_leaflet.pdf"
-        }
-      ]
     }
   ]
 }

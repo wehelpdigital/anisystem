@@ -291,28 +291,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "PCA Davao Research Center and ATI Cagayan Valley, Common Salt Fertilization on Coconut",
-          "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Common%20Salt%20Fertlization%20on%20Coconuts%20FINAL.pdf"
-        },
-        {
-          "label": "PCA, Common Salt Fertilization on Coconuts (Techno Guide)",
-          "url": "https://www.pca.gov.ph/pdf/cocoTech/fertilization/commonSaltFetilizationOnCocounuts.pdf"
-        },
-        {
-          "label": "PCA, Coconut and Banana Intercropping",
-          "url": "https://www.pca.gov.ph/pdf/cocoTech/intercropping/CoconutBananaIntercropping.pdf"
-        },
-        {
           "label": "Margate and others, Integrated Soil Fertility Management of Hybrid Coconut in the Philippines (CORD journal)",
           "url": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/306/269"
         },
         {
           "label": "Margate and others, Computerized Fertilizer Recommendations for Coconut Based on Foliar Analysis (CORD journal)",
           "url": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/256/219"
-        },
-        {
-          "label": "Province of Pangasinan, Agricultural Grade Salt Fertilizer for the PCA Coconut Fertilization Program",
-          "url": "https://www.pangasinan.gov.ph/pangasinan-to-supply-agricultural-grade-salt-fertilizer-agsf-for-pcas-coconut-fertilization-program/"
         }
       ]
     }

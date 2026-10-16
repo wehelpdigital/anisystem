@@ -198,23 +198,6 @@
           "url": "/blog/ani-meaning"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PSA: Updates on palay and corn estimates",
-          "url": "https://psa.gov.ph/statistics/crops/palay-and-corn-estimates"
-        },
-        {
-          "label": "PSA: 2024 Costs and Returns of Palay Production",
-          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
-        }
-      ]
     }
   ]
 }

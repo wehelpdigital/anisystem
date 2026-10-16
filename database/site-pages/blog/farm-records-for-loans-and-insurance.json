@@ -258,27 +258,6 @@
           "url": "/features/farm-documentation"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Cordillera: RSBSA frequently asked questions",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        },
-        {
-          "label": "DA FFEDIS: Rice Crop Insurance by PCIC",
-          "url": "https://ffedis.da.gov.ph/projects/6/view"
-        },
-        {
-          "label": "DA FFEDIS: Sikat Saka Program by PCIC",
-          "url": "https://ffedis.da.gov.ph/projects/2/view"
-        },
-        {
-          "label": "ACPC: Survival and Recovery (SURE) Program",
-          "url": "https://acpc.gov.ph/?p=12090"
-        }
-      ]
     }
   ]
 }

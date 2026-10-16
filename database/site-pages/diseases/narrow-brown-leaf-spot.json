@@ -248,14 +248,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Narrow brown spot",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/narrow-brown-spot"
-        },
-        {
-          "label": "Department of Agriculture, Sri Lanka: Narrow brown leaf spot in rice",
-          "url": "https://doa.gov.lk/?p=25430"
-        },
-        {
           "label": "University of Arkansas and LSU AgCenter: One pathogen, two diseases",
           "url": "https://www.lsuagcenter.com/articles/page1732640012604"
         }

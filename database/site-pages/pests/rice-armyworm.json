@@ -231,10 +231,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Armyworm (Lucid key)",
-          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Armyworm.htm"
-        },
-        {
           "label": "Pacific Pests and Pathogens: Rice and maize armyworm",
           "url": "https://apps.lucidcentral.org/pppw_v13/text/web_full/entities/rice_maize_armyworm_331.htm"
         }

@@ -310,24 +310,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: PalayCheck System 2022 Revised Edition (monitoring: observe, measure and record)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "FAO: Farm Management and Marketing Manual, Session 1, Keeping Farm Records",
-          "url": "https://www.fao.org/4/an732e/an732e00.pdf"
-        },
-        {
           "label": "University of Wisconsin Extension: Recordkeeping for your food or farm business",
           "url": "https://farms.extension.wisc.edu/articles/recordkeeping-for-your-food-or-farm-business"
-        },
-        {
-          "label": "PSA: 2024 Costs and Returns of Palay Production",
-          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App), 2024",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
         }
       ]
     }

@@ -298,34 +298,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Insect fact sheets",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Stem borer",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice whorl maggot",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-whorl-maggot"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice thrips",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-thrips"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Armyworm",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/armyworms"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Greenhorned caterpillar",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/greenhorned-caterpillar"
-        },
-        {
-          "label": "PhilRice: Field guide on harmful and useful organisms in Philippine rice fields",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Harmful-and-useful-organisms-in-Philippine-rice-fields-Insects-and-Non-insects.pdf"
-        },
-        {
           "label": "Wiktionary: alibangbang",
           "url": "https://en.wiktionary.org/wiki/alibangbang"
         },

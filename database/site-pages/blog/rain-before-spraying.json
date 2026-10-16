@@ -231,27 +231,6 @@
           "url": "/features/farm-weather-forecast"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FAO: Guidelines on Good Practice for Ground Application of Pesticides (2001)",
-          "url": "https://openknowledge.fao.org/3/y2767e/y2767e.pdf"
-        },
-        {
-          "label": "Ohio State University Extension: Rainfastness of fungicides in wheat",
-          "url": "https://agcrops.osu.edu/newsletter/corn-newsletter/2016-11/rainfastness-fungicides-wheat"
-        },
-        {
-          "label": "PAGASA: Farm Weather Forecast",
-          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
-        },
-        {
-          "label": "Fertilizer and Pesticide Authority: Registered products",
-          "url": "https://fpa.da.gov.ph/registered-products/"
-        }
-      ]
     }
   ]
 }

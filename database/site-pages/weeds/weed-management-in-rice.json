@@ -283,39 +283,6 @@
           "url": "/crops/pagtatanim-ng-palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Weeds",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Cultural weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/cultural-weed-control"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Manual weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/manual-weed-control"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Mechanical weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/mechanical-weed-control"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Chemical weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/chemical-weed-control"
-        },
-        {
-          "label": "Fertilizer and Pesticide Authority",
-          "url": "https://fpa.da.gov.ph"
-        }
-      ]
     }
   ]
 }

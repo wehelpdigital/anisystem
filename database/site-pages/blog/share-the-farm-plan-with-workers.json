@@ -235,19 +235,6 @@
           "url": "/features/morning-plan-email"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PTV News: PSA and DICT record spike in internet connected households (2024 NICTHS)",
-          "url": "https://ptvnews.ph/psa-dict-record-spike-in-internet-connected-households-increased-online-access-among-filipino-populace/"
-        },
-        {
-          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (labor and mechanization)",
-          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
-        }
-      ]
     }
   ]
 }

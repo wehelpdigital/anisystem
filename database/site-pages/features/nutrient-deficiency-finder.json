@@ -138,23 +138,6 @@
      "url": "/features/pest-and-disease-finders"
     }
    ]
-  },
-  {
-   "type": "sources",
-   "items": [
-    {
-     "label": "FPA: Registered fertilizer products",
-     "url": "https://fpa.da.gov.ph/"
-    },
-    {
-     "label": "PhilRice: PalayCheck System",
-     "url": "https://www.philrice.gov.ph/"
-    },
-    {
-     "label": "IRRI Rice Knowledge Bank: Nutrient management",
-     "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
-    }
-   ]
   }
  ]
 }

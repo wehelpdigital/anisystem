@@ -316,55 +316,6 @@
           "url": "/features/farm-inventory-and-expenses"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FPA: Weekly fertilizer prices",
-          "url": "https://fpa.da.gov.ph/weekly-prices/"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, September 14 to 18, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, January 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/04/WEEK2-WFP-JAN-5-9202620260121_14533156_Optimized.pdf"
-        },
-        {
-          "label": "PSA: Updates on Fertilizer Prices",
-          "url": "https://psa.gov.ph/publication/updates-on-fertilizer-prices"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022, Key Check 5, nutrient management",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
-        },
-        {
-          "label": "DA, PhilRice and IRRI: Quick guide for fertilizing transplanted rice in the wet season, Nueva Ecija",
-          "url": "http://www.knowledgebank.irri.org/pinoyrkb/QuickGuide/english/Region%203/Nueva%20Ecija/Quick%20guide%20for%20fertilizing%20transplanted%20rice%20during%20the%20wet%20season%20in%20Nueva%20Ecija.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "IRRI: Steps to successful rice production",
-          "url": "http://knowledgebank.irri.org/images/docs/12-Steps-Required-for-Successful-Rice-Production.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 2: Corn production techno guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        },
-        {
-          "label": "Utah State University Extension: Urea, a low cost nitrogen fertilizer with special management requirements",
-          "url": "https://extension.usu.edu/yardandgarden/research/urea-a-low-cost-nitrogen-fertilizer-with-special-management-requirements"
-        }
-      ]
     }
   ]
 }

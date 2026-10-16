@@ -270,24 +270,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Field guide to sampling insect pests and diseased plants in the rice field",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Sampling-insect-pests-damaged-and-diseased-plants-and-beneficial-organisms-in-the-rice-field-Devices-and-Techniques.pdf"
-        },
-        {
           "label": "ESA SentiWiki: Sentinel 2 mission",
           "url": "https://sentiwiki.copernicus.eu/web/s2-mission"
         },
         {
           "label": "NASA Earth Observatory: Measuring Vegetation (NDVI and EVI)",
           "url": "https://science.nasa.gov/earth/earth-observatory/measuring-vegetation-ndvi-evi"
-        },
-        {
-          "label": "Fertilizer and Pesticide Authority: Registered products, including pesticides for drone use",
-          "url": "https://fpa.da.gov.ph/registered-products/"
         }
       ]
     }

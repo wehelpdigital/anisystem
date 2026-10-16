@@ -253,24 +253,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PAGASA: Tropical Cyclone Wind Signal",
-          "url": "https://pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
-        },
-        {
-          "label": "PAGASA: Tropical Cyclone Information",
-          "url": "https://www.pagasa.dost.gov.ph/climate/tropical-cyclone-information"
-        },
-        {
-          "label": "PAGASA: About Tropical Cyclones",
-          "url": "https://www.pagasa.dost.gov.ph/information/about-tropical-cyclone"
-        },
-        {
           "label": "GDACS: Global Disaster Awareness and Coordination System",
           "url": "https://www.gdacs.org/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
         }
       ]
     }

@@ -297,40 +297,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: All season rice varieties for transplanting and direct wet seeding (2009 to 2015)",
-          "url": "https://dbmp.philrice.gov.ph/dms_records/docs/PhilRice_Issuances/13082CES.pdf"
-        },
-        {
-          "label": "PhilRice: Top popular rice varieties",
-          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
-        },
-        {
-          "label": "PhilRice: NSIC releases nine new PhilRice bred varieties (2016)",
-          "url": "https://www.philrice.gov.ph/nsic-releases-nine-new-philrice-bred-varieties/"
-        },
-        {
-          "label": "PhilRice seed database: NSIC Rc 402 variety characteristics",
-          "url": "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=205"
-        },
-        {
           "label": "SL Agritech: Hybrid rice seeds",
           "url": "http://sl-agritech.com/hybridriceseedssl/"
         },
         {
-          "label": "DA Bicol: New hybrid rice varieties showcased at the 2023 field day",
-          "url": "https://bicol.da.gov.ph/new-hybrid-rice-varieties-showcased-in-da-bicols-hybrid-rice-techno-demo-field-day-in-baao-and-tigaon-camsur/"
-        },
-        {
           "label": "Philstar: Jasponica holds own vs imported rice varieties (2011)",
           "url": "https://www.philstar.com/business/agriculture/2011/09/04/723102/jasponica-holds-own-vs-imported-rice-varieties"
-        },
-        {
-          "label": "PhilRice: Truthful labelling of rice (2021)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2021/03/RS4DM_TruthfulLabelling_V2.pdf"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
         }
       ]
     }

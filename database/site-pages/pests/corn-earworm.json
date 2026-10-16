@@ -272,16 +272,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "FAO AGRIS: Current insect pest problems in corn and their management in the Philippines",
-          "url": "https://agris.fao.org/search/ar/records/6471c83a2a40512c710e3eed"
-        },
-        {
           "label": "East West Seed Plant Doctor: Helicoverpa armigera (fruitworm)",
           "url": "https://plantdoctor.eastwestseed.com/node/550"
-        },
-        {
-          "label": "Philippine Journal of Science: On farm verification of IPM technologies against the corn earworm",
-          "url": "https://philjournalsci.dost.gov.ph/home-1/21-vol-134-no-1-march-2005/302-on-farm-verification-of-ipm-technologies-developed-for-asian-corn-borer-against-the-corn-earworm-helicoverpa-armigera-hubner-in-san-jose-occidental-mindoro"
         }
       ]
     }

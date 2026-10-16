@@ -253,23 +253,6 @@
           "url": "/pests/integrated-pest-management"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PCARRD: PCARRD leads fight against kurikong infestation",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/pcaarrd-leads-fight-against-kurikong-infestation"
-        },
-        {
-          "label": "UPLB: Notes on the bioecology of the cecid fly Procontarinia mangivora",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4814"
-        },
-        {
-          "label": "Department of Agriculture: Cecid fly, kurikong, on mango",
-          "url": "https://da.gov.ph/?p=56323"
-        }
-      ]
     }
   ]
 }

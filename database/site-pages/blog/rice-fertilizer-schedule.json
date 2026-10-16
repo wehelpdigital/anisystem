@@ -375,27 +375,6 @@
           "url": "/features/npk-plus-calculator"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 5, nutrient management)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K, experts (Abonong Swak, April 2022)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Leaf Color Chart",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility/leaf-color-chart"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Soil fertility",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility"
-        }
-      ]
     }
   ]
 }

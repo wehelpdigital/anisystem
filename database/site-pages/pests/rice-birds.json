@@ -231,19 +231,6 @@
           "url": "/pests/integrated-pest-management"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Today: Do not scare away the birds",
-          "url": "https://ricetoday.irri.org/dont-scare-away-the-birds/"
-        },
-        {
-          "label": "FAO: Birds as pests of grain stores",
-          "url": "https://www.fao.org/4/X5048E/x5048E0g.htm"
-        }
-      ]
     }
   ]
 }

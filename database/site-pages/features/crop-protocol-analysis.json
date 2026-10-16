@@ -170,31 +170,6 @@
           "url": "/blog/fertilizer-calculation"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
-          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022, Key Check 5, nutrient management",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "FPA: Registered products",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        }
-      ]
     }
   ]
 }

@@ -268,20 +268,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "DA AMIA: Use of blight tolerant potato varieties, Benguet technical brief",
-          "url": "https://amia.da.gov.ph/wp-content/uploads/2025/02/CRA-Technical-Brief_Benguet_CAR_Blight-Tolerant-Potato.pdf"
-        },
-        {
           "label": "Pacific Pests and Pathogens: Potato late blight",
           "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/potato_late_blight_265.htm"
         },
         {
           "label": "Pacific Pests and Pathogens: Tomato late blight",
           "url": "https://apps.lucidcentral.org/ppp/text/web_full/entities/tomato_late_blight_261.htm"
-        },
-        {
-          "label": "DA Regional Field Office 2: Tomato production guide",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
         }
       ]
     }

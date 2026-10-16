@@ -238,18 +238,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice leaffolder",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-leaffolder"
-        },
-        {
-          "label": "PhilRice: Field guide on harmful and useful organisms in Philippine rice fields, leaffolder (mambibilot, maniniklop)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Harmful-and-useful-organisms-in-Philippine-rice-fields-Insects-and-Non-insects.pdf"
-        },
-        {
           "label": "Litsinger and others (2006), Evaluation of action thresholds for chronic rice insect pests in the Philippines. III. Leaffolders",
           "url": "https://www.tandfonline.com/doi/abs/10.1080/09670870600664490"
         },

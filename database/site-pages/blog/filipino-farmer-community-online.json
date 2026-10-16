@@ -281,27 +281,6 @@
           "url": "/features/farmer-community"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Cordillera: RSBSA frequently asked questions",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        },
-        {
-          "label": "Cooperative Development Authority",
-          "url": "https://cda.gov.ph/"
-        },
-        {
-          "label": "DA: Agribusiness and Marketing Assistance",
-          "url": "https://www.da.gov.ph/services/agribusiness-and-marketing-assistance/"
-        },
-        {
-          "label": "Agricultural Training Institute: e Extension and the Farmers' Contact Center",
-          "url": "https://www.e-extension.gov.ph/home/"
-        }
-      ]
     }
   ]
 }

@@ -75,12 +75,36 @@
       "type": "table",
       "caption": "Land preparation compared by method",
       "rows": [
-        ["Step", "With tillage", "Zero tillage"],
-        ["Plowing and harrowing", "Twice or more, at seven days interval or less", "None. Clear straw and weeds by hand"],
-        ["Drainage", "Canals around the field", "Keep the paddy dikes open and drain the field before planting"],
-        ["Planting hole", "Dibble or planting stick after the beds are made", "Dibble with a pointed wooden stake"],
-        ["Mulch", "Optional, 3 to 5 cm after planting", "Rice straw, 3 to 5 cm, after planting"],
-        ["Main weed risk", "Weeds from the soil seed bank", "Purple nutsedge and volunteer rice"]
+        [
+          "Step",
+          "With tillage",
+          "Zero tillage"
+        ],
+        [
+          "Plowing and harrowing",
+          "Twice or more, at seven days interval or less",
+          "None. Clear straw and weeds by hand"
+        ],
+        [
+          "Drainage",
+          "Canals around the field",
+          "Keep the paddy dikes open and drain the field before planting"
+        ],
+        [
+          "Planting hole",
+          "Dibble or planting stick after the beds are made",
+          "Dibble with a pointed wooden stake"
+        ],
+        [
+          "Mulch",
+          "Optional, 3 to 5 cm after planting",
+          "Rice straw, 3 to 5 cm, after planting"
+        ],
+        [
+          "Main weed risk",
+          "Weeds from the soil seed bank",
+          "Purple nutsedge and volunteer rice"
+        ]
       ]
     },
     {
@@ -176,22 +200,30 @@
       "type": "links",
       "title": "Read also",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
-        { "label": "Vegetable land preparation", "url": "/land-preparation/vegetable-land-preparation" },
-        { "label": "Legume land preparation", "url": "/land-preparation/legume-land-preparation" },
-        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
-        { "label": "Purple nutsedge", "url": "/weeds/purple-nutsedge" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "DA Region 02: Garlic Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/garlic_production_guide_final.pdf" },
-        { "label": "DA AMIA: Rice onion crop rotation in Mindoro, climate resilient agriculture brief", "url": "https://amia.da.gov.ph/wp-content/uploads/2025/02/CRA-Technical-Brief_Mindoro_MIMAROPA_Rice-Onion-Crop-Rotation.pdf" },
-        { "label": "UPLB: Reducing herbicide use with agronomic practices in onion grown after rice", "url": "https://www.ukdr.uplb.edu.ph/journal-articles/3363" },
-        { "label": "FAO AGRIS: Weed control in onions grown under three tillage systems, Philippines", "url": "https://agris.fao.org/search/en/records/6471c83c2a40512c710e401b" },
-        { "label": "Bureau of Plant Industry leaflet: Cultural directions for onions", "url": "https://repository.mainlib.upd.edu.ph/omekas/files/original/afd85574989778dc0516f43bf70678554a84fea1.pdf" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Vegetable land preparation",
+          "url": "/land-preparation/vegetable-land-preparation"
+        },
+        {
+          "label": "Legume land preparation",
+          "url": "/land-preparation/legume-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Purple nutsedge",
+          "url": "/weeds/purple-nutsedge"
+        }
       ]
     }
   ]

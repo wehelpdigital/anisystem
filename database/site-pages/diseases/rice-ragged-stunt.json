@@ -232,10 +232,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Rice ragged stunt",
-          "url": "http://knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-ragged-stunt"
-        },
-        {
           "label": "Rice diseases key: Ragged stunt (Rice Ragged Stunt Virus)",
           "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Ragged_stunt_(Rice_Ragged_Stunt_Virus).htm"
         },

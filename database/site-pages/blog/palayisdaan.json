@@ -61,11 +61,31 @@
       "type": "table",
       "caption": "The parts of a palayisdaan field, from FAO and WorldFish, Culture of Fish in Rice Fields (2004)",
       "rows": [
-        ["Part", "What it does", "What FAO reports"],
-        ["Raised dikes", "Hold deeper water and keep fish in during floods", "Usually 40 to 50 cm high and about as wide"],
-        ["Screens on inlet and outlet", "Keep your fish in and outside predators out", "Bamboo slats, a basket or fish net"],
-        ["Refuge trench or pond", "Shelter when water drops, catch basin at harvest", "A refuge 50 cm below the field gives 65 to 70 cm of water. One Philippine model sets aside at least 500 square meters of pond per hectare."],
-        ["Standing water", "Room for fish to graze among the rice", "About 15 to 20 cm, from transplanting to about two weeks before harvest"]
+        [
+          "Part",
+          "What it does",
+          "What FAO reports"
+        ],
+        [
+          "Raised dikes",
+          "Hold deeper water and keep fish in during floods",
+          "Usually 40 to 50 cm high and about as wide"
+        ],
+        [
+          "Screens on inlet and outlet",
+          "Keep your fish in and outside predators out",
+          "Bamboo slats, a basket or fish net"
+        ],
+        [
+          "Refuge trench or pond",
+          "Shelter when water drops, catch basin at harvest",
+          "A refuge 50 cm below the field gives 65 to 70 cm of water. One Philippine model sets aside at least 500 square meters of pond per hectare."
+        ],
+        [
+          "Standing water",
+          "Room for fish to graze among the rice",
+          "About 15 to 20 cm, from transplanting to about two weeks before harvest"
+        ]
       ]
     },
     {
@@ -169,13 +189,41 @@
       "type": "table",
       "caption": "Cost lines and work in a palayisdaan season",
       "rows": [
-        ["Cost line", "When", "What to plan for"],
-        ["Dikes and trenches", "Around transplanting", "The heaviest labor, mostly in the first season"],
-        ["Screens and gates", "Before stocking", "Bamboo, net or pipe at every inlet and outlet"],
-        ["Fingerlings", "At or after transplanting", "From a hatchery or your own breeding pond"],
-        ["Feed", "During the season", "Rice bran or other feed, only as needed"],
-        ["Water", "All season", "More water held in the field, and fuel if you pump"],
-        ["Guarding and harvest", "As fish grow, then at the end", "Watching for poachers, then draining, catching and selling"]
+        [
+          "Cost line",
+          "When",
+          "What to plan for"
+        ],
+        [
+          "Dikes and trenches",
+          "Around transplanting",
+          "The heaviest labor, mostly in the first season"
+        ],
+        [
+          "Screens and gates",
+          "Before stocking",
+          "Bamboo, net or pipe at every inlet and outlet"
+        ],
+        [
+          "Fingerlings",
+          "At or after transplanting",
+          "From a hatchery or your own breeding pond"
+        ],
+        [
+          "Feed",
+          "During the season",
+          "Rice bran or other feed, only as needed"
+        ],
+        [
+          "Water",
+          "All season",
+          "More water held in the field, and fuel if you pump"
+        ],
+        [
+          "Guarding and harvest",
+          "As fish grow, then at the end",
+          "Watching for poachers, then draining, catching and selling"
+        ]
       ]
     },
     {
@@ -235,22 +283,30 @@
       "type": "links",
       "title": "Related guides",
       "items": [
-        { "label": "Palay: meaning, parts and growth stages", "url": "/crops/palay" },
-        { "label": "Golden apple snail", "url": "/pests/golden-apple-snail" },
-        { "label": "Integrated pest management", "url": "/pests/integrated-pest-management" },
-        { "label": "Multiple cropping", "url": "/blog/multiple-cropping" },
-        { "label": "Small farm ideas in the Philippines", "url": "/blog/small-farm-ideas-philippines" },
-        { "label": "Lots in anee.io", "url": "/features/farm-lots" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "FAO: Rural Aquaculture in the Philippines, section 8 (National Rice Fish Farming Program, Palay isdaan)", "url": "https://www.fao.org/3/x6943e/x6943e0c.htm" },
-        { "label": "FAO and WorldFish Center: Culture of Fish in Rice Fields (2004)", "url": "https://www.fao.org/3/a0823e/a0823e.pdf" },
-        { "label": "FAO: Integrated agriculture aquaculture primer, the case of rice fish farmer Mang Isko, Cavite", "url": "https://www.fao.org/4/y1187e/y1187e25.htm" },
-        { "label": "ATI Ilocos: Field extensionists trained in rice fish integration (2023)", "url": "https://ati2.da.gov.ph/ati-1/content/article/jacquelyn-r-rafanan-jeimelie-c-constantino/ati-ilocos-mobilizes-field-extensionists-rice" },
-        { "label": "BFAR Region 10: Alubijid fisherfolk harvest 188 kg of fresh tilapia", "url": "https://r10.bfar.da.gov.ph/%f0%9d%90%80%f0%9d%90%a5%f0%9d%90%ae%f0%9d%90%9b%f0%9d%90%a2%f0%9d%90%a3%f0%9d%90%a2%f0%9d%90%9d-%f0%9d%90%9f%f0%9d%90%a2%f0%9d%90%ac%f0%9d%90%a1%f0%9d%90%9e%f0%9d%90%ab%f0%9d%90%9f%f0%9d%90%a8/" }
+        {
+          "label": "Palay: meaning, parts and growth stages",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Golden apple snail",
+          "url": "/pests/golden-apple-snail"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Multiple cropping",
+          "url": "/blog/multiple-cropping"
+        },
+        {
+          "label": "Small farm ideas in the Philippines",
+          "url": "/blog/small-farm-ideas-philippines"
+        },
+        {
+          "label": "Lots in anee.io",
+          "url": "/features/farm-lots"
+        }
       ]
     }
   ]

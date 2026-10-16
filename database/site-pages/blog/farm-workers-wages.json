@@ -216,23 +216,6 @@
           "url": "/features/labor-report"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "NWPC: Summary of latest wage orders issued by the Regional Boards",
-          "url": "https://nwpc.dole.gov.ph/summary-of-latest-wage-orders-issued-by-the-regional-boards/"
-        },
-        {
-          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (labor and mechanization)",
-          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
-        },
-        {
-          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
-          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
-        }
-      ]
     }
   ]
 }

@@ -232,10 +232,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Rice grassy stunt",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-grassy-stunt"
-        },
-        {
           "label": "Rice diseases key: Grassy stunt (Rice Grassy Stunt Virus)",
           "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Grassy_stunt_(Rice_Grassy_Stunt_Virus).htm"
         },

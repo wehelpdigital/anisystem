@@ -214,20 +214,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "FAO Soils Bulletin 39: Salt affected soils and their management, chapter 4 on sodic soils",
-          "url": "https://www.fao.org/4/x5871e/x5871e05.htm"
-        },
-        {
-          "label": "Colorado State University Extension: Diagnosing saline and sodic soil problems",
-          "url": "https://extension.colostate.edu/resource/diagnosing-saline-and-sodic-soil-problems/"
-        },
-        {
           "label": "University of Minnesota Extension: Identifying and remediating saline and sodic soils",
           "url": "https://blog-nwcrops.extension.umn.edu/2021/04/poor-crop-growth-and-development.html"
-        },
-        {
-          "label": "DA Bureau of Soils and Water Management: 2021 Soil Day on soil salinization",
-          "url": "https://www.bswm.da.gov.ph/?p=8477"
         }
       ]
     }

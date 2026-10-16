@@ -317,31 +317,6 @@
           "url": "/crops/pagtatanim-ng-palay"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition (the nine Key Checks)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Rice Apps",
-          "url": "https://www.philrice.gov.ph/rice-apps/"
-        },
-        {
-          "label": "PhilRice: Tarlac farmers showcase digital agri's potential in fertilizer use (RCMAS), 2024",
-          "url": "https://www.philrice.gov.ph/tarlac-farmers-showcase-digital-agris-potential-in-fertilizer-use/"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App), 2024",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
-        },
-        {
-          "label": "Google Play: PalayCheck App by PhilRice",
-          "url": "https://play.google.com/store/apps/details?id=com.philrice.palaycheckapp"
-        }
-      ]
     }
   ]
 }

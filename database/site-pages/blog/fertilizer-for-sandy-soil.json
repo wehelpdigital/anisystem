@@ -258,32 +258,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "FAO: Wada, Managing sandy soils in Northeast Thailand, in Management of Tropical Sandy Soils for Sustainable Agriculture (2005)",
-          "url": "https://www.fao.org/4/ag125e/AG125E11.htm"
-        },
-        {
-          "label": "FAO: Hartemink and Huting, Sandy soils in Southern and Eastern Africa, extent, properties and management (2005)",
-          "url": "https://www.fao.org/4/ag125e/AG125E08.htm"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Potassium",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Phosphorus",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/phosphorus"
-        },
-        {
           "label": "Philstar (2025): Government deploys more mobile soil laboratories",
           "url": "https://www.philstar.com/business/2025/10/15/2479878/government-deploys-more-mobile-soil-laboratories"
-        },
-        {
-          "label": "DA BSWM: Soil Test Kit leaflet, via ATI",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-11/Soil-Test-Kit.pdf"
         }
       ]
     }

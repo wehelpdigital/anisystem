@@ -254,36 +254,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Balanced use of chemical and bio fertilizers, stimulants trim costs, yields higher (2022)",
-          "url": "https://www.philrice.gov.ph/balanced-use-of-chemical-and-bio-fertilizers-stimulants-trim-costs-yields-higher/"
-        },
-        {
           "label": "Li, Van Gerrewey and Geelen (2022): A meta analysis of biostimulant yield effectiveness in field trials, Frontiers in Plant Science",
           "url": "https://www.frontiersin.org/articles/10.3389/fpls.2022.836702/full"
-        },
-        {
-          "label": "FAO (2019): The International Code of Conduct for the Sustainable Use and Management of Fertilizers",
-          "url": "https://www.fao.org/3/ca5253en/ca5253en.pdf"
-        },
-        {
-          "label": "Official Gazette: Presidential Decree No. 1144, s. 1977",
-          "url": "https://mirror.officialgazette.gov.ph/1977/05/30/presidential-decree-no-1144-s-1977/"
-        },
-        {
-          "label": "FPA: Registered products",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Potassium",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
-        },
-        {
-          "label": "Banayo and others (2012): Evaluation of biofertilizers in irrigated rice, effects on grain yield at different fertilizer rates",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2316"
         }
       ]
     }

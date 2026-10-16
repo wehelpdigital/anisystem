@@ -46,12 +46,36 @@
       "type": "table",
       "caption": "Rice land preparation schedule based on the PalayCheck System",
       "rows": [
-        ["When", "Work", "Why"],
-        ["Right after harvest or at the first rains", "Shallow dry tillage, also called crack plowing", "PhilRice recommends it after harvest or at the onset of the rainy season"],
-        ["21 to 30 days before planting", "Plow or rotovate, clean and repair dikes and ditches", "Time for weeds and dropped seeds to sprout and for straw and stubble to decompose"],
-        ["About 7 days after plowing", "First harrowing, lengthwise along the plowing pattern", "Breaks clods and buries stubble"],
-        ["5 to 7 days after the first harrowing", "Second harrowing, crosswise, for initial leveling", "Weed seeds sprout again and the field starts to level"],
-        ["5 to 7 days after the second, just before planting", "Third and final harrowing, then leveling with a board under about 5 cm of water", "Gives a flat surface for even water depth"]
+        [
+          "When",
+          "Work",
+          "Why"
+        ],
+        [
+          "Right after harvest or at the first rains",
+          "Shallow dry tillage, also called crack plowing",
+          "PhilRice recommends it after harvest or at the onset of the rainy season"
+        ],
+        [
+          "21 to 30 days before planting",
+          "Plow or rotovate, clean and repair dikes and ditches",
+          "Time for weeds and dropped seeds to sprout and for straw and stubble to decompose"
+        ],
+        [
+          "About 7 days after plowing",
+          "First harrowing, lengthwise along the plowing pattern",
+          "Breaks clods and buries stubble"
+        ],
+        [
+          "5 to 7 days after the first harrowing",
+          "Second harrowing, crosswise, for initial leveling",
+          "Weed seeds sprout again and the field starts to level"
+        ],
+        [
+          "5 to 7 days after the second, just before planting",
+          "Third and final harrowing, then leveling with a board under about 5 cm of water",
+          "Gives a flat surface for even water depth"
+        ]
       ]
     },
     {
@@ -215,22 +239,30 @@
       "type": "links",
       "title": "Read next",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Direct seeded rice land preparation", "url": "/land-preparation/direct-seeded-rice-land-preparation" },
-        { "label": "Planting rice: the full guide", "url": "/crops/pagtatanim-ng-palay" },
-        { "label": "Weed management in rice", "url": "/weeds/weed-management-in-rice" },
-        { "label": "Golden apple snail", "url": "/pests/golden-apple-snail" },
-        { "label": "Fertilizer for rice", "url": "/blog/fertilizer-for-rice" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "PhilRice: Basics of land preparation", "url": "https://www.philrice.gov.ph/basics-land-preparation/" },
-        { "label": "PhilRice: Well leveled field lessens yield losses", "url": "https://www.philrice.gov.ph/well-levelled-field-lessens-yield-losses-philrice-expert/" },
-        { "label": "IRRI News: WateRice project demonstrated laser guided leveling", "url": "https://news.irri.org/2018/06/waterice-project-demonstrated-laser.html" },
-        { "label": "IRRI: Laser land leveling webinar summary", "url": "https://www.irri.org/node/1306" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Direct seeded rice land preparation",
+          "url": "/land-preparation/direct-seeded-rice-land-preparation"
+        },
+        {
+          "label": "Planting rice: the full guide",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        },
+        {
+          "label": "Golden apple snail",
+          "url": "/pests/golden-apple-snail"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        }
       ]
     }
   ]

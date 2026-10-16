@@ -325,28 +325,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Weeds",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Cultural weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/cultural-weed-control"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
-        },
-        {
           "label": "University of Illinois Extension: Telling apart grasses, sedges, rushes",
           "url": "https://extension.illinois.edu/blogs/grasses-glance/2023-04-17-telling-apart-grasses-sedges-rushes"
-        },
-        {
-          "label": "Fertilizer and Pesticide Authority",
-          "url": "https://fpa.da.gov.ph"
         }
       ]
     }

@@ -227,31 +227,6 @@
           "url": "/features/harvest-records"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FAO: Climate change fans spread of pests and threatens plants and crops (2021)",
-          "url": "https://www.fao.org/newsroom/detail/Climate-change-fans-spread-of-pests-and-threatens-plants-and-crops-new-FAO-study/en"
-        },
-        {
-          "label": "PhilRice: Handle rice with care (2019)",
-          "url": "https://www.philrice.gov.ph/handle-rice-with-care/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PAGASA: Tropical Cyclone Wind Signal",
-          "url": "https://pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
-        },
-        {
-          "label": "Department of Agriculture: Rice Crop Insurance, DA and PCIC",
-          "url": "https://ffedis.da.gov.ph/projects/6/view"
-        }
-      ]
     }
   ]
 }

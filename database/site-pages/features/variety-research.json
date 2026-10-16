@@ -9,7 +9,8 @@
   "metaDescription": "Variety Ranking by Anee: she searches the newest Philippine varieties and hybrids, compares yield, maturity and resistance, and ranks them for your field.",
   "focusKeyword": "variety ranking",
   "keywords": [
-    "variety ranking", "variety research",
+    "variety ranking",
+    "variety research",
     "rice variety",
     "rice hybrid",
     "rice seeds",
@@ -169,31 +170,6 @@
         {
           "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: NSIC releases nine new PhilRice bred varieties (2016)",
-          "url": "https://www.philrice.gov.ph/nsic-releases-nine-new-philrice-bred-varieties/"
-        },
-        {
-          "label": "PhilRice: Top popular rice varieties",
-          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
-        },
-        {
-          "label": "DA Bicol: New hybrid rice varieties showcased at the 2023 field day",
-          "url": "https://bicol.da.gov.ph/new-hybrid-rice-varieties-showcased-in-da-bicols-hybrid-rice-techno-demo-field-day-in-baao-and-tigaon-camsur/"
-        },
-        {
-          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        },
-        {
-          "label": "PAGASA: Seasonal forecast",
-          "url": "https://www.pagasa.dost.gov.ph/climate/climate-prediction/seasonal-forecast"
         }
       ]
     }

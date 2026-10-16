@@ -269,23 +269,6 @@
           "url": "/crops/pagtatanim-ng-mais"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "Iowa State University Extension: Corn Growth Stages",
-          "url": "https://crops.extension.iastate.edu/encyclopedia/corn-growth-stages"
-        },
-        {
-          "label": "PAGASA: Farm Weather Forecast",
-          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
-        }
-      ]
     }
   ]
 }

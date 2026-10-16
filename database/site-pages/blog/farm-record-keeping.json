@@ -253,31 +253,6 @@
           "url": "/features/farm-documentation"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: Keep farm records, PhilRice OIC urges farmers",
-          "url": "https://www.philrice.gov.ph/keep-farm-records-philrice-oic-urges-farmers/"
-        },
-        {
-          "label": "PhilRice: PhilRice Bicol trains farmers on agripreneurship",
-          "url": "https://www.philrice.gov.ph/philrice-bicol-trains-farmers-agripreneurship/"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App)",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
-        },
-        {
-          "label": "DA Cordillera: RSBSA frequently asked questions",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        },
-        {
-          "label": "DA FFEDIS: Rice Crop Insurance by PCIC",
-          "url": "https://ffedis.da.gov.ph/projects/6/view"
-        }
-      ]
     }
   ]
 }

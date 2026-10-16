@@ -40,9 +40,24 @@
       "type": "table",
       "caption": "Leaf color chart readings for one season, from PhilRice's PalayCheck System and its field guide to the chart",
       "rows": [
-        ["Crop", "First reading", "Then", "Last reading"],
-        ["Transplanted rice", "14 DAT, or 21 DAT if 14 14 14 with sulfur went on at 14 DAT", "Every 7 days", "First flowering"],
-        ["Direct wet seeded rice", "21 DAS", "Every 7 days", "First flowering"]
+        [
+          "Crop",
+          "First reading",
+          "Then",
+          "Last reading"
+        ],
+        [
+          "Transplanted rice",
+          "14 DAT, or 21 DAT if 14 14 14 with sulfur went on at 14 DAT",
+          "Every 7 days",
+          "First flowering"
+        ],
+        [
+          "Direct wet seeded rice",
+          "21 DAS",
+          "Every 7 days",
+          "First flowering"
+        ]
       ]
     },
     {
@@ -92,9 +107,24 @@
       "type": "table",
       "caption": "Nitrogen to add when 6 or more of 10 leaves read below the critical value, from PhilRice's leaf color chart guide. A 50 kg bag of urea holds 23 kg of nitrogen, and PhilRice rounds the dry season dose up to 1.5 bags.",
       "rows": [
-        ["Season", "Nitrogen per hectare", "Urea per hectare", "Urea for a quarter hectare"],
-        ["Dry season", "30 kg", "1.5 bags (75 kg)", "About 19 kg"],
-        ["Wet season", "23 kg", "1 bag (50 kg)", "About 12.5 kg"]
+        [
+          "Season",
+          "Nitrogen per hectare",
+          "Urea per hectare",
+          "Urea for a quarter hectare"
+        ],
+        [
+          "Dry season",
+          "30 kg",
+          "1.5 bags (75 kg)",
+          "About 19 kg"
+        ],
+        [
+          "Wet season",
+          "23 kg",
+          "1 bag (50 kg)",
+          "About 12.5 kg"
+        ]
       ]
     },
     {
@@ -221,20 +251,30 @@
       "type": "links",
       "title": "Related rice guides",
       "items": [
-        { "label": "Rice fertilizer schedule by target yield", "url": "/blog/rice-fertilizer-schedule" },
-        { "label": "Urea fertilizer 46 0 0", "url": "/blog/urea-fertilizer" },
-        { "label": "Yellow rice leaves", "url": "/blog/yellow-rice-leaves" },
-        { "label": "Fertilizer for rice tillering", "url": "/blog/fertilizer-for-rice-tillering" },
-        { "label": "The PalayCheck key checks", "url": "/blog/palaycheck-key-checks" },
-        { "label": "LCC Checker in anee.io", "url": "/features/lcc-checker" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 5, nutrient management)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "IRRI Rice Knowledge Bank: Leaf Color Chart", "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility/leaf-color-chart" },
-        { "label": "IRRI Rice Knowledge Bank: Soil fertility", "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/soil-fertility" }
+        {
+          "label": "Rice fertilizer schedule by target yield",
+          "url": "/blog/rice-fertilizer-schedule"
+        },
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Yellow rice leaves",
+          "url": "/blog/yellow-rice-leaves"
+        },
+        {
+          "label": "Fertilizer for rice tillering",
+          "url": "/blog/fertilizer-for-rice-tillering"
+        },
+        {
+          "label": "The PalayCheck key checks",
+          "url": "/blog/palaycheck-key-checks"
+        },
+        {
+          "label": "LCC Checker in anee.io",
+          "url": "/features/lcc-checker"
+        }
       ]
     }
   ]

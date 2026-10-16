@@ -224,31 +224,6 @@
           "url": "/blog/pest-or-disease-how-to-tell"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen deficiency",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/nitrogen-deficiency"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Zinc deficiency",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Tungro",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Planthopper",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022, Key Check 5, nutrient management",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

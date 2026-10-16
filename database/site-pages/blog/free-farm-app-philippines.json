@@ -289,27 +289,6 @@
           "url": "/pricing"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: Rice Apps download page",
-          "url": "https://www.philrice.gov.ph/rice-apps/"
-        },
-        {
-          "label": "PhilRice: Web tool to help raise rice yield and income (Rice Crop Manager)",
-          "url": "https://www.philrice.gov.ph/web-tool-to-help-raise-rice-yield-income/"
-        },
-        {
-          "label": "PhilRice: New app features PH rice varieties (Binhing Palay)",
-          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
-        },
-        {
-          "label": "Agricultural Training Institute: e Extension program",
-          "url": "https://www.e-extension.gov.ph/home/"
-        }
-      ]
     }
   ]
 }

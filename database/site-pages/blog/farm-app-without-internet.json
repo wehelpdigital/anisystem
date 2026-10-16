@@ -270,18 +270,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: New app features PH rice varieties (Binhing Palay works offline)",
-          "url": "https://www.philrice.gov.ph/new-app-features-ph-rice-varieties/"
-        },
-        {
-          "label": "Agricultural Training Institute: e Extension, School on the Air and the Farmers' Contact Center",
-          "url": "https://www.e-extension.gov.ph/home/"
-        },
-        {
-          "label": "PAGASA: Tropical Cyclone Wind Signal",
-          "url": "https://www.pagasa.dost.gov.ph/learning-tools/tropical-cyclone-wind-signal"
-        },
-        {
           "label": "MDN Web Docs: Service Worker API",
           "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API"
         }

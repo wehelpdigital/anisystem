@@ -25,8 +25,9 @@
     $trail = \App\Support\CropVarieties::trail($page->section, $page->slug) ?? [[$meta['crumb'], $sectionUrl]];
     // No agency or institute shown as our source (the owner, 2026-10-17): a page
     // edited in the mother app or written by Anee reads the same as the shipped
-    // files. The news roundups report the news as it is.
-    if (($page->kind ?? null) !== 'roundup') {
+    // files. The news roundups report the news as it is, and The Stash shows
+    // the partners' own publications as theirs.
+    if (($page->kind ?? null) !== 'roundup' && ! ($page->section === 'features' && $page->slug === 'the-stash')) {
         $blocks = \App\Support\GovSource::pageBlocks((array) $blocks);
     }
     // The members' gate (2026-10-14): a guest reads the opening of a field

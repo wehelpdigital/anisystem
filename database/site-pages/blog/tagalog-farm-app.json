@@ -292,27 +292,6 @@
           "url": "/blog/ai-for-filipino-farmers"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: Sistemang PalayCheck (Tagalog)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Sistemang-PalayCheck.pdf"
-        },
-        {
-          "label": "PhilRice: Rice Apps download page",
-          "url": "https://www.philrice.gov.ph/rice-apps/"
-        },
-        {
-          "label": "Agricultural Training Institute MIMAROPA: Mga Gulay sa Kapatagan (lowland vegetables)",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-12/lowland_vegetables.pdf"
-        },
-        {
-          "label": "Agricultural Training Institute: e Extension and the Farmers' Contact Center",
-          "url": "https://www.e-extension.gov.ph/home/"
-        }
-      ]
     }
   ]
 }

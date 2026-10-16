@@ -253,31 +253,6 @@
           "url": "/diseases/rice-tungro"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI and PhilRice: The rice planting window in the Philippines, an analysis using SAR imagery (ISPRS Archives, 2019)",
-          "url": "https://isprs-archives.copernicus.org/articles/XLII-4-W19/241/2019/"
-        },
-        {
-          "label": "PAGASA: Climate of the Philippines",
-          "url": "https://www.pagasa.dost.gov.ph/information/climate-philippines"
-        },
-        {
-          "label": "PAGASA: El Nino and La Nina monitoring, ENSO alert status",
-          "url": "https://www.pagasa.dost.gov.ph/climate/el-nino-la-nina/monitoring"
-        },
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: El Nino, La Nina at pagpapalayan (Q and A)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/Q_A-22-EN-LN-at-Pagpapalay-Dec.-2023.pdf"
-        }
-      ]
     }
   ]
 }

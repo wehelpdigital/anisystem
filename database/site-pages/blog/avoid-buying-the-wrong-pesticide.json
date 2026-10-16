@@ -224,24 +224,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "FPA: Registered products",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
-          "label": "FPA: Frequently asked questions",
-          "url": "https://fpa.da.gov.ph/faqs/"
-        },
-        {
           "label": "IRAC: Mode of action classification",
           "url": "https://irac-online.org/mode-of-action/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Tungro",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
-        },
-        {
-          "label": "PhilRice (2012): Young rice plants can take care of themselves",
-          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
         }
       ]
     }

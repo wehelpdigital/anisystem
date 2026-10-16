@@ -299,20 +299,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Keep farm records, PhilRice OIC urges farmers",
-          "url": "https://www.philrice.gov.ph/keep-farm-records-philrice-oic-urges-farmers/"
-        },
-        {
-          "label": "FAO: Farm Management and Marketing Manual, Session 1, Keeping Farm Records",
-          "url": "https://www.fao.org/4/an732e/an732e00.pdf"
-        },
-        {
           "label": "UW Madison Division of Extension: Recordkeeping for your food or farm business",
           "url": "https://farms.extension.wisc.edu/articles/recordkeeping-for-your-food-or-farm-business"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App), 2024",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
         }
       ]
     }

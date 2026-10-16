@@ -232,22 +232,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Sheath blight",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight"
-        },
-        {
-          "label": "PhilRice: Field guide on major disorders of the rice plant, sheath blight",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Major-Disorders-of-the-rice-plant-Diseases-and-Nutritional-Deficiencies.pdf"
-        },
-        {
-          "label": "PhilRice: Diseases of the rice plant in the Philippines, flash cards (sheath blight)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Diseases-of-the-rice-plant-in-the-Philippines-flash-cards.pdf"
-        },
-        {
-          "label": "PhilRice: Fungi found to control sheath blight",
-          "url": "https://www.philrice.gov.ph/fungi-found-to-control-sheath-blight/"
-        },
-        {
           "label": "Cumagun (2012), Managing plant diseases and promoting sustainability and productivity with Trichoderma, the Philippine experience, Journal of Agricultural Science and Technology",
           "url": "https://jast.modares.ac.ir/article_15113.html"
         },

@@ -229,10 +229,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Caseworm (Lucid key)",
-          "url": "https://keyserver.lucidcentral.org/key-server/data/0e090d01-0209-460e-810c-0d060708030c/media/Html/Caseworm.htm"
-        },
-        {
           "label": "Plantix: Rice case worm",
           "url": "https://plantix.net/en/library/plant-diseases/600109/rice-case-worm"
         }

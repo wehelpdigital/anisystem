@@ -73,12 +73,42 @@
       "type": "table",
       "caption": "Spacing and trellis sizes from the DA and ATI guides",
       "rows": [
-        ["Crop", "Furrows or beds", "Hills", "Trellis"],
-        ["Ampalaya", "2 m apart in the dry season, 3 m in the wet season", "1.5 to 2.5 m along the furrow", "2.5 to 3.0 m wide, 1.5 to 2 m high, posts every 3 m. Start when plants are 15 cm tall"],
-        ["Squash", "2.0 to 3.0 m apart", "1 m apart", "No trellis in the DA guide. Lay 5 to 6 cm of straw or rice hull under the fruits"],
-        ["Upo", "2 to 3 m apart", "1 m apart", "Overhead trellis 2 to 3 m wide and 2 m high"],
-        ["Patola", "2.5 to 3.0 m apart", "1.0 m apart", "Overhead trellis 2 to 3 m wide and 2 m high"],
-        ["Cucumber", "Beds 1 m wide with 0.5 m between", "0.5 m apart", "Posts 2 m high every 2 to 3 m, with wire and twine"]
+        [
+          "Crop",
+          "Furrows or beds",
+          "Hills",
+          "Trellis"
+        ],
+        [
+          "Ampalaya",
+          "2 m apart in the dry season, 3 m in the wet season",
+          "1.5 to 2.5 m along the furrow",
+          "2.5 to 3.0 m wide, 1.5 to 2 m high, posts every 3 m. Start when plants are 15 cm tall"
+        ],
+        [
+          "Squash",
+          "2.0 to 3.0 m apart",
+          "1 m apart",
+          "No trellis in the DA guide. Lay 5 to 6 cm of straw or rice hull under the fruits"
+        ],
+        [
+          "Upo",
+          "2 to 3 m apart",
+          "1 m apart",
+          "Overhead trellis 2 to 3 m wide and 2 m high"
+        ],
+        [
+          "Patola",
+          "2.5 to 3.0 m apart",
+          "1.0 m apart",
+          "Overhead trellis 2 to 3 m wide and 2 m high"
+        ],
+        [
+          "Cucumber",
+          "Beds 1 m wide with 0.5 m between",
+          "0.5 m apart",
+          "Posts 2 m high every 2 to 3 m, with wire and twine"
+        ]
       ]
     },
     {
@@ -195,22 +225,30 @@
       "type": "links",
       "title": "Read also",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Vegetable land preparation", "url": "/land-preparation/vegetable-land-preparation" },
-        { "label": "Root crop land preparation", "url": "/land-preparation/root-crop-land-preparation" },
-        { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
-        { "label": "Melon fly", "url": "/pests/melon-fly" },
-        { "label": "Squash beetle", "url": "/pests/squash-beetle" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "DA Region 02: Ampalaya Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf" },
-        { "label": "DA Region 02: Squash Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf" },
-        { "label": "DA Region 02: Upo Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Upo.pdf" },
-        { "label": "DA Region 02: Patola Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Patola.pdf" },
-        { "label": "ATI: Gabay sa Produksyon ng Pipino", "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2024-12/GABAY%20SA%20PRODUKSYON%20NG%20PIPINO.pdf" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Vegetable land preparation",
+          "url": "/land-preparation/vegetable-land-preparation"
+        },
+        {
+          "label": "Root crop land preparation",
+          "url": "/land-preparation/root-crop-land-preparation"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Melon fly",
+          "url": "/pests/melon-fly"
+        },
+        {
+          "label": "Squash beetle",
+          "url": "/pests/squash-beetle"
+        }
       ]
     }
   ]

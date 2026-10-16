@@ -222,23 +222,6 @@
           "url": "/features/farm-workers-and-payroll"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
-          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
-        },
-        {
-          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (labor and costs chapters)",
-          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App)",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
-        }
-      ]
     }
   ]
 }

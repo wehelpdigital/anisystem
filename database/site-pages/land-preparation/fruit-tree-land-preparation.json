@@ -232,35 +232,6 @@
           "url": "/pests/mango-leafhopper"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Agriculture and Fisheries Standards: Code of Good Agricultural Practices for Mango (2025)",
-          "url": "https://bafs.da.gov.ph/wp-content/uploads/2025/05/2025_EM-GAP-Mango_compressed.pdf"
-        },
-        {
-          "label": "DA Agricultural Training Institute: Coffee Technoguide",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-11/Coffee%20Technoguide%20w%20page%20numbers.pdf"
-        },
-        {
-          "label": "DA High Value Crops Development Program: Durian Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
-        },
-        {
-          "label": "DA Agricultural Training Institute: Calamansi production guide",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-12/calamansi_final.pdf"
-        },
-        {
-          "label": "DA ATI Region 2 and PCA: Coconut and cacao intercropping technology guide",
-          "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/3%20Coconut-Cacao%20Intercropping%20FINAL.pdf"
-        },
-        {
-          "label": "DA Agricultural Training Institute: Coconut farmers and extension workers training (10 m by 10 m layouts)",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/article/alexies-jane-ola/coconut-farmers-aews-enhance-skills-through-training-trainers"
-        }
-      ]
     }
   ]
 }

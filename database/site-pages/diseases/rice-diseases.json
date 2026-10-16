@@ -276,62 +276,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice (2021), Field Guide: Major Disorders of the Rice Plant, Diseases and Nutritional Deficiencies",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Field-Guide_-Major-Disorders-of-the-rice-plant-Diseases-and-Nutritional-Deficiencies.pdf"
-        },
-        {
-          "label": "PhilRice, Major diseases of the rice plant in the Philippines",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Major-diseases-of-the-rice-plant-in-the-Philippines.pdf"
-        },
-        {
-          "label": "PhilRice (2016), Preventing rice pests and diseases during the rainy season",
-          "url": "https://www.philrice.gov.ph/preventing-rice-pests-diseases-rainy-season/"
-        },
-        {
-          "label": "PhilRice (2012), New hybrid rice withstand pests",
-          "url": "https://www.philrice.gov.ph/new-hybrid-rice-withstand-pests/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Blast (leaf and collar)",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Blast (node and neck)",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-node-neck"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Tungro",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice grassy stunt",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-grassy-stunt"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Rice ragged stunt",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/rice-ragged-stunt"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Sheath blight",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Brown spot",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: False smut",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/false-smut"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Bakanae",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bakanae"
-        },
-        {
           "label": "FRAC Code List 2025, Fungicide Resistance Action Committee",
           "url": "https://www.frac.info/media/ljsi3qrv/frac-code-list-2025.pdf"
         }

@@ -251,31 +251,6 @@
           "url": "/blog/fertilizer-subsidy-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Memorandum Circular No. 20, Series of 2020: Adoption of the Adaptive Balanced Fertilization Management (FAOLEX copy)",
-          "url": "https://faolex.fao.org/docs/pdf/phi196922.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "DA: DA BSWM turns over results of pilot deployment of Mobile Soil Lab in Tarlac",
-          "url": "https://www.da.gov.ph/da-bswm-turns-over-results-of-pilot-deployment-of-mobile-soil-lab-in-tarlac/"
-        },
-        {
-          "label": "BSWM: Soil health initiatives through Mobile Soil Laboratory operations",
-          "url": "https://www.bswm.da.gov.ph/?p=19093"
-        }
-      ]
     }
   ]
 }

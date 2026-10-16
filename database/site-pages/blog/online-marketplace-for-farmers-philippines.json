@@ -282,27 +282,6 @@
           "url": "/features/farm-contact-list"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA: Agribusiness and Marketing Assistance",
-          "url": "https://www.da.gov.ph/services/agribusiness-and-marketing-assistance/"
-        },
-        {
-          "label": "DA Cordillera: Kadiwa Store launched in Kalinga, February 2026",
-          "url": "https://car.da.gov.ph/?p=7422"
-        },
-        {
-          "label": "DA Region 3: DA NFA Nueva Ecija heightens palay procurement",
-          "url": "https://rfo3.da.gov.ph/index.php/da-nfa-nueva-ecija-heightens-palay-procurement/"
-        },
-        {
-          "label": "DA Cordillera: RSBSA frequently asked questions",
-          "url": "https://car.da.gov.ph/wp-content/uploads/2024/02/RSBSA-FAQs.pdf"
-        }
-      ]
     }
   ]
 }

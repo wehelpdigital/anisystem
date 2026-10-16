@@ -163,23 +163,6 @@
           "url": "/blog/palay-price-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PSA: Farmgate prices of palay (dry)",
-          "url": "https://psa.gov.ph/farmgate-prices-palay"
-        },
-        {
-          "label": "PSA: 2024 Costs and Returns of Palay Production",
-          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
-        },
-        {
-          "label": "PSA: Updated milling recovery rate of 63.0 percent from palay to rice",
-          "url": "https://psa.gov.ph/content/psa-board-approves-updated-milling-recovery-rate-630-percent-palay-rice"
-        }
-      ]
     }
   ]
 }

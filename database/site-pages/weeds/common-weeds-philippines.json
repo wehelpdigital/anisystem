@@ -329,38 +329,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
-        },
-        {
-          "label": "IRRI: Rice weed fact sheet, Ischaemum rugosum (Catindig, Lubigan and Johnson)",
-          "url": "https://keyserver.lucidcentral.org/key-server/data/08050103-0a0e-4e01-8a03-040d0c020e0a/media/Html/Ischaemum_rugosum.htm"
-        },
-        {
-          "label": "PhilRice: Ancient weed goes to the lowland (mutha, Cyperus rotundus)",
-          "url": "https://www.philrice.gov.ph/ancient-weed-goes-lowland/"
-        },
-        {
-          "label": "ACIAR and PhilRice: Herbicide use strategies and weed management options, final report (2009)",
-          "url": "https://www.aciar.gov.au/sites/default/files/2022-09/SMCN-2003-011-final-report.pdf"
-        },
-        {
-          "label": "PhilRice: Pamamahala ng mga damo sa palayan, rice handout (2023)",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/12/weedhandout_2023_1q.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Chemical weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/chemical-weed-control"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Cultural weed control",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/cultural-weed-control"
-        },
-        {
           "label": "Syngenta Philippines: Sofit 300 EC product page",
           "url": "https://www.syngenta.com.ph/product/crop-protection/sofit-300-ec"
         }

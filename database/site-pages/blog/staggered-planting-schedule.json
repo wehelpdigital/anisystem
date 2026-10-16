@@ -273,31 +273,6 @@
           "url": "/blog/multiple-cropping"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: 5 tips to prevent farm pests launched (Oplan Iwas Peste)",
-          "url": "https://www.philrice.gov.ph/5-tips-prevent-farm-pests-launched/"
-        },
-        {
-          "label": "PhilRice: Recommended varieties, technologies for the rainy season",
-          "url": "https://www.philrice.gov.ph/recommended-varieties-technologies-rainy-season/"
-        },
-        {
-          "label": "IRRI and PhilRice: The rice planting window in the Philippines (ISPRS Archives, 2019)",
-          "url": "https://isprs-archives.copernicus.org/articles/XLII-4-W19/241/2019/"
-        },
-        {
-          "label": "Bureau of Plant Industry: Ampalaya Production Guide",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
-        }
-      ]
     }
   ]
 }

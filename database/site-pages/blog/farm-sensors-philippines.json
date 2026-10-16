@@ -253,27 +253,6 @@
           "url": "/blog/weather-app-for-farmers"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Water management, safe alternate wetting and drying",
-          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/water-management"
-        },
-        {
-          "label": "PhilRice: Sensing water levels made digital (AutoMonPH)",
-          "url": "https://www.philrice.gov.ph/sensing-water-levels-made-digital/"
-        },
-        {
-          "label": "DOST PCAARRD: Introducing SARAI's smart irrigation technology (WAISS)",
-          "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/wiser-with-waiss-introducing-sarai-s-smart-irrigation-technology"
-        },
-        {
-          "label": "DOST PCAARRD: Climate smart agricultural innovations, SARAI automatic weather station",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/dost-pcaarrd-brings-climate-smart-agricultural-innovations-closer-to-the-public-through-t2p-media-conference"
-        }
-      ]
     }
   ]
 }

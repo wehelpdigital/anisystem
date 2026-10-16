@@ -275,24 +275,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "DA Regional Field Office 12, Banana Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-        },
-        {
-          "label": "BPI via DA Northern Mindanao, Saba Banana Production Guide",
-          "url": "https://cagayandeoro.da.gov.ph/wp-content/uploads/2013/04/SABA-BANANA-PRODUCTION-GUIDE.pdf"
-        },
-        {
           "label": "Coordination as Management Response to the Spread of a Global Plant Disease (Frontiers in Plant Science, 2019)",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6728417"
-        },
-        {
-          "label": "PCAARRD, Management approaches against Fusarium wilt of Cavendish in Mindanao",
-          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/s-t-management-approaches-against-fusarium-wilt-of-cavendish-in-mindanao-developed"
-        },
-        {
-          "label": "PCA, Coconut and Banana Intercropping",
-          "url": "https://www.pca.gov.ph/pdf/cocoTech/intercropping/CoconutBananaIntercropping.pdf"
         }
       ]
     }

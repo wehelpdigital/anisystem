@@ -252,23 +252,6 @@
           "url": "/blog/staggered-planting-schedule"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Bureau of Plant Industry: Ampalaya Production Guide (cost and return per hectare)",
-          "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Ampalaya-Production-Guide.pdf"
-        },
-        {
-          "label": "Bureau of Plant Industry: Production guides for vegetables and other crops",
-          "url": "https://buplant.da.gov.ph/production-guide/"
-        },
-        {
-          "label": "Department of Agriculture: Price Monitoring",
-          "url": "https://www.da.gov.ph/price-monitoring/"
-        }
-      ]
     }
   ]
 }

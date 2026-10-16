@@ -271,32 +271,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "ATI Central Visayas: Pechay Production Guide",
-          "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
-        },
-        {
-          "label": "DA Cordillera: Technoguide in the production and management of organic highland vegetables",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-        },
-        {
-          "label": "ATI Cordillera: Organic concoctions (IMO, FFJ, FPJ, OHN, FAA) and vermicomposting",
-          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2023-01/MOTHER%20NATURES-ORGANIC%20CONCOCTIONS.pdf"
-        },
-        {
-          "label": "Iowa State University Extension: Using manure in the home garden",
-          "url": "https://yardandgarden.extension.iastate.edu/how-to/using-manure-home-garden"
-        },
-        {
           "label": "University of Hawaii CTAHR: Natural Farming, Fish Amino Acid",
           "url": "https://www.ctahr.hawaii.edu/oc/freepubs/pdf/sa-12.pdf"
         },
         {
           "label": "Vallejera and others (2014), Nutrient analysis, decomposition and nitrogen mineralization of organic amendments used for pechay production, Annals of Tropical Research",
           "url": "https://ejournals.ph/article.php?id=29022"
-        },
-        {
-          "label": "Ibanez and others (2025), Effects of different manures on the growth of pechay under Visayas State University condition",
-          "url": "https://ph02.tci-thaijo.org/index.php/tsujournal/article/view/255634"
         }
       ]
     }

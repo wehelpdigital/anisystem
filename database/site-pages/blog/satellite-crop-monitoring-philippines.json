@@ -260,10 +260,6 @@
           "url": "https://science.nasa.gov/earth/earth-observatory/measuring-vegetation-ndvi-evi"
         },
         {
-          "label": "PhilRice: Philippine Rice Information System (PRISM)",
-          "url": "https://prism.philrice.gov.ph/"
-        },
-        {
           "label": "Copernicus Data Space: free access to Sentinel data",
           "url": "https://dataspace.copernicus.eu/"
         }

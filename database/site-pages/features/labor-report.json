@@ -199,15 +199,6 @@
           "url": "/features/cropping-calendar"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "National Wages and Productivity Commission (DOLE): Daily minimum wage rates by region",
-          "url": "https://nwpc.dole.gov.ph/"
-        }
-      ]
     }
   ]
 }

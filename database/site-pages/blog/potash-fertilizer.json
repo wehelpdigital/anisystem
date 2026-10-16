@@ -225,22 +225,6 @@
       "type": "sources",
       "items": [
         {
-          "label": "IRRI Rice Knowledge Bank: Potassium",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022, Key Check 5, nutrient management",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
           "label": "Yara Philippines: How to increase banana yield",
           "url": "https://www.yara.ph/crop-nutrition/banana/how-to-increase-banana-yield/"
         },
@@ -251,18 +235,6 @@
         {
           "label": "Yara Philippines: YaraMila Winner",
           "url": "https://www.yara.ph/crop-nutrition/fertilizers/yaramila/yaramila-winner/"
-        },
-        {
-          "label": "FPA: Fertilizer product listing as of May 3, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/05/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-MAY-03-2026.pdf"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, September 14 to 18, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, January 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/04/WEEK2-WFP-JAN-5-9202620260121_14533156_Optimized.pdf"
         }
       ]
     }

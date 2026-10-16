@@ -276,44 +276,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs by P2 to 4K, experts (Abonong Swak, 2022)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        },
-        {
-          "label": "PhilRice: Azolla lessens fertilizer cost in rice production, study (2021)",
-          "url": "https://www.philrice.gov.ph/azolla-lessens-fertilizer-cost-in-rice-production-study/"
-        },
-        {
-          "label": "PhilRice: Azolla fertilized rice yields 5t/ha (2023)",
-          "url": "https://www.philrice.gov.ph/azolla-fertilized-rice-yields-5t-ha/"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Nitrogen",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Potassium",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
-        },
-        {
-          "label": "FPA: Prices of major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_.pdf"
-        },
-        {
           "label": "BAFS: PNS/BAFS 183:2023 Organic soil amendments and plant supplements",
           "url": "https://philippines.controlunion.com/wp-content/uploads/sites/55/2026/04/FL_20251210021315_PNSBAFS_183-2023_OSAPS_Product_Standard_Specifications.pdf"
-        },
-        {
-          "label": "Banayo and others (2012): Evaluation of biofertilizers in irrigated rice, effects on grain yield at different fertilizer rates",
-          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/2316"
-        },
-        {
-          "label": "UPLB BIOTECH: Azospirillum biofertilizer for rice, corn and vegetables (2022)",
-          "url": "https://biotech.uplb.edu.ph/news/uplb-biotechs-bio-n-may-help-ease-ph-farmers-fertilizer-woes/"
-        },
-        {
-          "label": "FAO AGRIS: Alam and Garrity (1991), Effect of pre rice legume and residue incorporation on rice yield in the Philippines",
-          "url": "https://agris.fao.org/search/ar/records/6471f3f677fd37171a71a2a4"
         }
       ]
     }

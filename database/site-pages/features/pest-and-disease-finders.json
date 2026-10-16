@@ -150,24 +150,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "FPA: Registered pesticide products",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        },
-        {
           "label": "IRAC: Mode of action classification online",
           "url": "https://irac-online.org/mode-of-action/classification-online/"
         },
         {
           "label": "FRAC Code List 2025, Fungicide Resistance Action Committee",
           "url": "https://www.frac.info/media/ljsi3qrv/frac-code-list-2025.pdf"
-        },
-        {
-          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
-        },
-        {
-          "label": "PhilRice: Young rice plants can take care of themselves",
-          "url": "https://www.philrice.gov.ph/young-rice-plants-can-take-care-of-themselves/"
         }
       ]
     }

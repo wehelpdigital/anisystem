@@ -222,31 +222,6 @@
           "url": "/features/farm-inventory-and-expenses"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FAO: Pesticide Storage and Stock Control Manual, stock planning and recording systems",
-          "url": "https://www.fao.org/4/V8966E/V8966e03.htm"
-        },
-        {
-          "label": "FAO: Pesticide Storage and Stock Control Manual, annexes on store management",
-          "url": "https://www.fao.org/4/V8966E/V8966e09.htm"
-        },
-        {
-          "label": "FPA: Proper safe use, handling and storage of pesticides for corn farmers",
-          "url": "https://fpa.da.gov.ph/?p=2673"
-        },
-        {
-          "label": "FPA: Average retail prices of major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_.pdf"
-        },
-        {
-          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (bag plan for 5 to 6 tons)",
-          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
-        }
-      ]
     }
   ]
 }

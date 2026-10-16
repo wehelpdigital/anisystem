@@ -88,9 +88,27 @@
       "type": "table",
       "caption": "How the observation well sits in each season, from PhilRice's field advice",
       "rows": [
-        ["Season", "Mark at soil level", "Tube above the soil", "Tube below the soil", "Irrigate up to"],
-        ["Wet season", "WS", "5 cm", "20 cm", "The top of the tube, about 5 cm of water"],
-        ["Dry season", "DS", "10 cm", "15 cm", "The WS mark, about 5 cm of water"]
+        [
+          "Season",
+          "Mark at soil level",
+          "Tube above the soil",
+          "Tube below the soil",
+          "Irrigate up to"
+        ],
+        [
+          "Wet season",
+          "WS",
+          "5 cm",
+          "20 cm",
+          "The top of the tube, about 5 cm of water"
+        ],
+        [
+          "Dry season",
+          "DS",
+          "10 cm",
+          "15 cm",
+          "The WS mark, about 5 cm of water"
+        ]
       ]
     },
     {
@@ -152,9 +170,18 @@
       "type": "table",
       "caption": "When to stop irrigating before harvest, from PhilRice's PalayCheck System",
       "rows": [
-        ["Soil or season", "Stop irrigating"],
-        ["Sandy or medium soil, or the dry season", "1 week before the expected harvest"],
-        ["Clay soil, or the wet season", "2 weeks before the expected harvest"]
+        [
+          "Soil or season",
+          "Stop irrigating"
+        ],
+        [
+          "Sandy or medium soil, or the dry season",
+          "1 week before the expected harvest"
+        ],
+        [
+          "Clay soil, or the wet season",
+          "2 weeks before the expected harvest"
+        ]
       ]
     },
     {
@@ -211,21 +238,30 @@
       "type": "links",
       "title": "Related palay guides",
       "items": [
-        { "label": "Rice fertilizer schedule by target yield", "url": "/blog/rice-fertilizer-schedule" },
-        { "label": "When to harvest rice", "url": "/blog/when-to-harvest-rice" },
-        { "label": "Weed management in rice", "url": "/weeds/weed-management-in-rice" },
-        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
-        { "label": "El Niño and La Niña farming tips", "url": "/blog/el-nino-la-nina-farming-tips" },
-        { "label": "Cropping calendar in anee.io", "url": "/features/cropping-calendar" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System, 2022 revised edition (Key Check 6, water management)", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "PhilRice: Save water, cut cost (alternate wetting and drying, October 2018)", "url": "https://www.philrice.gov.ph/save-water-cut-cost/" },
-        { "label": "IRRI Rice Knowledge Bank: Saving water with Alternate Wetting Drying (AWD)", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/water-management/saving-water-alternate-wetting-drying-awd" },
-        { "label": "IRRI Rice Knowledge Bank: Water management", "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/water-management" }
+        {
+          "label": "Rice fertilizer schedule by target yield",
+          "url": "/blog/rice-fertilizer-schedule"
+        },
+        {
+          "label": "When to harvest rice",
+          "url": "/blog/when-to-harvest-rice"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        },
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "El Niño and La Niña farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Cropping calendar in anee.io",
+          "url": "/features/cropping-calendar"
+        }
       ]
     }
   ]

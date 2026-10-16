@@ -181,23 +181,6 @@
           "url": "/pricing"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "NOAA Climate Prediction Center: ENSO diagnostic discussion",
-          "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml"
-        },
-        {
-          "label": "PAGASA: Philippine Atmospheric, Geophysical and Astronomical Services Administration",
-          "url": "https://www.pagasa.dost.gov.ph/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

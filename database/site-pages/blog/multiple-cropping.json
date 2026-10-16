@@ -295,31 +295,6 @@
           "url": "/crops/pagtatanim-ng-mais"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "FAO Soils Bulletin 72: Glossary (multiple, sequential, relay and ratoon cropping)",
-          "url": "https://www.fao.org/4/v9926e/v9926e0a.htm"
-        },
-        {
-          "label": "DA High Value Crops Development Program: Mungbean Production Guide",
-          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-        },
-        {
-          "label": "PhilRice: Palayamanan Plus",
-          "url": "https://www.philrice.gov.ph/palayamanan-plus"
-        },
-        {
-          "label": "PhilRice: PhilRice chief lauds Isabela farmers (munggo after rice in San Mateo)",
-          "url": "https://www.philrice.gov.ph/philrice-chief-lauds-isabela-farmers/"
-        },
-        {
-          "label": "PhilRice: Experts reveal ways to control rice damaging pest (fallow against planthoppers)",
-          "url": "https://www.philrice.gov.ph/philrice-experts-reveal-ways-control-rice-damaging-pest/"
-        }
-      ]
     }
   ]
 }

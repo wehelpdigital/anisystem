@@ -233,31 +233,6 @@
           "url": "/diseases/plant-diseases-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Bacterial blight",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight"
-        },
-        {
-          "label": "PhilRice: Major diseases of the rice plant in the Philippines",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Major-diseases-of-the-rice-plant-in-the-Philippines.pdf"
-        },
-        {
-          "label": "PhilRice: Preventing rice pests, diseases during rainy season",
-          "url": "https://www.philrice.gov.ph/preventing-rice-pests-diseases-rainy-season/"
-        },
-        {
-          "label": "PhilRice: PhilRice warns of major rice pest threats in early 2026",
-          "url": "https://www.philrice.gov.ph/philrice-warns-of-major-rice-pest-threats-in-early-2026/"
-        }
-      ]
     }
   ]
 }

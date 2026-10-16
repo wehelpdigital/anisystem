@@ -84,10 +84,26 @@
       "type": "table",
       "caption": "Power sources and the tillage tools they pull, from the UN CSAM review",
       "rows": [
-        ["Power", "Main tillage tools", "Common use"],
-        ["Carabao", "Native moldboard plow", "Rice and corn on small plots"],
-        ["Hand tractor (two wheel)", "Disk plow, single moldboard plow, rotary tiller", "Rice and corn"],
-        ["Four wheel tractor", "Moldboard plow, disk plow, disk harrow, rotavator", "Larger farms and sugarcane"]
+        [
+          "Power",
+          "Main tillage tools",
+          "Common use"
+        ],
+        [
+          "Carabao",
+          "Native moldboard plow",
+          "Rice and corn on small plots"
+        ],
+        [
+          "Hand tractor (two wheel)",
+          "Disk plow, single moldboard plow, rotary tiller",
+          "Rice and corn"
+        ],
+        [
+          "Four wheel tractor",
+          "Moldboard plow, disk plow, disk harrow, rotavator",
+          "Larger farms and sugarcane"
+        ]
       ]
     },
     {
@@ -107,12 +123,30 @@
       "type": "table",
       "caption": "A rice land preparation schedule, counted back from transplanting",
       "rows": [
-        ["Days before planting", "Work"],
-        ["After harvest or at first rains", "Crack plowing, clean dikes and ditches"],
-        ["30 to 21", "First plowing or rotovating, with water if the field is dry"],
-        ["About 14", "First harrowing along the plowing pattern"],
-        ["About 7", "Second harrowing, crosswise"],
-        ["Day of planting or the day before", "Final harrowing and leveling with 5 cm of water"]
+        [
+          "Days before planting",
+          "Work"
+        ],
+        [
+          "After harvest or at first rains",
+          "Crack plowing, clean dikes and ditches"
+        ],
+        [
+          "30 to 21",
+          "First plowing or rotovating, with water if the field is dry"
+        ],
+        [
+          "About 14",
+          "First harrowing along the plowing pattern"
+        ],
+        [
+          "About 7",
+          "Second harrowing, crosswise"
+        ],
+        [
+          "Day of planting or the day before",
+          "Final harrowing and leveling with 5 cm of water"
+        ]
       ]
     },
     {
@@ -155,18 +189,66 @@
       "type": "table",
       "caption": "Each crop has its own land preparation guide",
       "rows": [
-        ["Crop", "Main work", "Guide"],
-        ["Transplanted rice", "Plow, harrow weekly, puddle, level", "[Rice land preparation](/land-preparation/rice-land-preparation)"],
-        ["Direct seeded rice", "Level well, canals, stale seedbed", "[Direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation)"],
-        ["Corn", "Plow, harrow, furrows", "[Corn land preparation](/land-preparation/corn-land-preparation)"],
-        ["Vegetables", "Beds and drainage", "[Vegetable land preparation](/land-preparation/vegetable-land-preparation)"],
-        ["Onion and garlic", "Fine, raised beds", "[Onion and garlic land preparation](/land-preparation/onion-garlic-land-preparation)"],
-        ["Cucurbits", "Hills or rows", "[Cucurbit land preparation](/land-preparation/cucurbit-land-preparation)"],
-        ["Root crops", "Deep, loose soil", "[Root crop land preparation](/land-preparation/root-crop-land-preparation)"],
-        ["Legumes", "Fine seedbed", "[Legume land preparation](/land-preparation/legume-land-preparation)"],
-        ["Sugarcane", "Deep plowing, subsoiling, furrows", "[Sugarcane land preparation](/land-preparation/sugarcane-land-preparation)"],
-        ["Banana", "Holes and drainage", "[Banana land preparation](/land-preparation/banana-land-preparation)"],
-        ["Fruit trees", "Holes and spacing", "[Fruit tree land preparation](/land-preparation/fruit-tree-land-preparation)"]
+        [
+          "Crop",
+          "Main work",
+          "Guide"
+        ],
+        [
+          "Transplanted rice",
+          "Plow, harrow weekly, puddle, level",
+          "[Rice land preparation](/land-preparation/rice-land-preparation)"
+        ],
+        [
+          "Direct seeded rice",
+          "Level well, canals, stale seedbed",
+          "[Direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation)"
+        ],
+        [
+          "Corn",
+          "Plow, harrow, furrows",
+          "[Corn land preparation](/land-preparation/corn-land-preparation)"
+        ],
+        [
+          "Vegetables",
+          "Beds and drainage",
+          "[Vegetable land preparation](/land-preparation/vegetable-land-preparation)"
+        ],
+        [
+          "Onion and garlic",
+          "Fine, raised beds",
+          "[Onion and garlic land preparation](/land-preparation/onion-garlic-land-preparation)"
+        ],
+        [
+          "Cucurbits",
+          "Hills or rows",
+          "[Cucurbit land preparation](/land-preparation/cucurbit-land-preparation)"
+        ],
+        [
+          "Root crops",
+          "Deep, loose soil",
+          "[Root crop land preparation](/land-preparation/root-crop-land-preparation)"
+        ],
+        [
+          "Legumes",
+          "Fine seedbed",
+          "[Legume land preparation](/land-preparation/legume-land-preparation)"
+        ],
+        [
+          "Sugarcane",
+          "Deep plowing, subsoiling, furrows",
+          "[Sugarcane land preparation](/land-preparation/sugarcane-land-preparation)"
+        ],
+        [
+          "Banana",
+          "Holes and drainage",
+          "[Banana land preparation](/land-preparation/banana-land-preparation)"
+        ],
+        [
+          "Fruit trees",
+          "Holes and spacing",
+          "[Fruit tree land preparation](/land-preparation/fruit-tree-land-preparation)"
+        ]
       ]
     },
     {
@@ -219,26 +301,47 @@
       "type": "links",
       "title": "Read next",
       "items": [
-        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
-        { "label": "Direct seeded rice land preparation", "url": "/land-preparation/direct-seeded-rice-land-preparation" },
-        { "label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation" },
-        { "label": "Sugarcane land preparation", "url": "/land-preparation/sugarcane-land-preparation" },
-        { "label": "Planting rice: the full guide", "url": "/crops/pagtatanim-ng-palay" },
-        { "label": "Growing corn in the Philippines", "url": "/crops/pagtatanim-ng-mais" }
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Direct seeded rice land preparation",
+          "url": "/land-preparation/direct-seeded-rice-land-preparation"
+        },
+        {
+          "label": "Corn land preparation",
+          "url": "/land-preparation/corn-land-preparation"
+        },
+        {
+          "label": "Sugarcane land preparation",
+          "url": "/land-preparation/sugarcane-land-preparation"
+        },
+        {
+          "label": "Planting rice: the full guide",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Growing corn in the Philippines",
+          "url": "/crops/pagtatanim-ng-mais"
+        }
       ]
     },
     {
       "type": "sources",
       "items": [
-        { "label": "PhilRice: Basics of land preparation", "url": "https://www.philrice.gov.ph/basics-land-preparation/" },
-        { "label": "PhilRice: PalayCheck System, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "PhilRice: Well leveled field lessens yield losses", "url": "https://www.philrice.gov.ph/well-levelled-field-lessens-yield-losses-philrice-expert/" },
-        { "label": "PhilRice: Land preparation machines", "url": "https://www.philrice.gov.ph/category/products/machines/land-preparation/" },
-        { "label": "DA Region 2: Corn techno guide, 2012 revised edition", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf" },
-        { "label": "UN CSAM: Mechanizing Philippine agriculture for food sufficiency", "url": "https://un-csam.org/sites/default/files/2021-01/ph_0.pdf" },
-        { "label": "Tarlac Mill District Office: Cultural practices of sugarcane farming", "url": "https://tarlacmd.blogspot.com/2010/05/cultural-practices-of-sugarcane-farming.html" },
-        { "label": "AGRIS: Conservation tillage in corn using glyphosate plus ammonium sulphate", "url": "https://agris.fao.org/search/ar/records/6471fa3277fd37171a72600e" },
-        { "label": "The Manila Times: Leyte farmers receive farming machinery", "url": "https://manilatimes.net/2021/10/29/business/top-business/leyte-farmers-receive-farming-machinery/1820108" }
+        {
+          "label": "UN CSAM: Mechanizing Philippine agriculture for food sufficiency",
+          "url": "https://un-csam.org/sites/default/files/2021-01/ph_0.pdf"
+        },
+        {
+          "label": "Tarlac Mill District Office: Cultural practices of sugarcane farming",
+          "url": "https://tarlacmd.blogspot.com/2010/05/cultural-practices-of-sugarcane-farming.html"
+        },
+        {
+          "label": "The Manila Times: Leyte farmers receive farming machinery",
+          "url": "https://manilatimes.net/2021/10/29/business/top-business/leyte-farmers-receive-farming-machinery/1820108"
+        }
       ]
     }
   ]

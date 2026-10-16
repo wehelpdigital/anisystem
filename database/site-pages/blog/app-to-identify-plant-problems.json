@@ -67,12 +67,54 @@
       "type": "table",
       "caption": "One sign, many causes",
       "rows": [
-        ["What you see", "Water or weather", "Nutrients", "Pests", "Disease", "Weeds"],
-        ["Yellow leaves", "Flooded or dry soil", "Too little nitrogen, iron or zinc", "Sap feeders such as planthoppers", "Viruses such as tungro", "Thick weeds taking the nitrogen"],
-        ["Wilting", "Dry soil, heat, rotting roots", "Salt damage from too much fertilizer", "Borers or grubs in stems and roots", "Bacterial or Fusarium wilt", "Rarely the cause"],
-        ["Spots or burned edges", "Sunscald, sprays in the heat", "Potassium shortage at leaf edges", "Mites and thrips leave pale specks", "Fungal and bacterial leaf spots", "Herbicide drift from weed sprays"],
-        ["Stunted plants", "Compacted or flooded soil", "Too little phosphorus or zinc", "Nematodes on the roots", "Viruses such as grassy stunt", "Weeds crowding young plants"],
-        ["Holes or torn leaves", "Strong wind or heavy rain", "Not a nutrient sign", "Caterpillars, beetles, snails, rats", "Some leaf spots fall out as holes", "Not a weed sign"]
+        [
+          "What you see",
+          "Water or weather",
+          "Nutrients",
+          "Pests",
+          "Disease",
+          "Weeds"
+        ],
+        [
+          "Yellow leaves",
+          "Flooded or dry soil",
+          "Too little nitrogen, iron or zinc",
+          "Sap feeders such as planthoppers",
+          "Viruses such as tungro",
+          "Thick weeds taking the nitrogen"
+        ],
+        [
+          "Wilting",
+          "Dry soil, heat, rotting roots",
+          "Salt damage from too much fertilizer",
+          "Borers or grubs in stems and roots",
+          "Bacterial or Fusarium wilt",
+          "Rarely the cause"
+        ],
+        [
+          "Spots or burned edges",
+          "Sunscald, sprays in the heat",
+          "Potassium shortage at leaf edges",
+          "Mites and thrips leave pale specks",
+          "Fungal and bacterial leaf spots",
+          "Herbicide drift from weed sprays"
+        ],
+        [
+          "Stunted plants",
+          "Compacted or flooded soil",
+          "Too little phosphorus or zinc",
+          "Nematodes on the roots",
+          "Viruses such as grassy stunt",
+          "Weeds crowding young plants"
+        ],
+        [
+          "Holes or torn leaves",
+          "Strong wind or heavy rain",
+          "Not a nutrient sign",
+          "Caterpillars, beetles, snails, rats",
+          "Some leaf spots fall out as holes",
+          "Not a weed sign"
+        ]
       ]
     },
     {
@@ -227,21 +269,43 @@
       "type": "links",
       "title": "Related guides",
       "items": [
-        { "label": "Plant disease identification apps", "url": "/blog/plant-disease-identification-app" },
-        { "label": "Pest or disease: how to tell", "url": "/blog/pest-or-disease-how-to-tell" },
-        { "label": "Nutrient deficiency in rice", "url": "/blog/nutrient-deficiency-in-rice" },
-        { "label": "Yellow rice leaves", "url": "/blog/yellow-rice-leaves" },
-        { "label": "Types of weeds", "url": "/weeds/types-of-weeds" },
-        { "label": "Early pest detection", "url": "/blog/early-pest-detection" }
+        {
+          "label": "Plant disease identification apps",
+          "url": "/blog/plant-disease-identification-app"
+        },
+        {
+          "label": "Pest or disease: how to tell",
+          "url": "/blog/pest-or-disease-how-to-tell"
+        },
+        {
+          "label": "Nutrient deficiency in rice",
+          "url": "/blog/nutrient-deficiency-in-rice"
+        },
+        {
+          "label": "Yellow rice leaves",
+          "url": "/blog/yellow-rice-leaves"
+        },
+        {
+          "label": "Types of weeds",
+          "url": "/weeds/types-of-weeds"
+        },
+        {
+          "label": "Early pest detection",
+          "url": "/blog/early-pest-detection"
+        }
       ]
     },
     {
       "type": "sources",
       "items": [
-        { "label": "NC State Extension: North Carolina Extension Gardener Handbook, chapter 7, Diagnostics", "url": "https://content.ces.ncsu.edu/7-diagnostics" },
-        { "label": "Penn State Extension: Overview of plant diagnostics", "url": "https://extension.psu.edu/overview-of-plant-diagnostics" },
-        { "label": "Visayas State University: Plant Disease Diagnostic Laboratory", "url": "https://www.vsu.edu.ph/21-content-main/informational/373-plant-disease-diagnostic-laboratory" },
-        { "label": "PhilRice (2018): New farmers' helpline launched", "url": "https://www.philrice.gov.ph/new-farmers-helpline-launched/" }
+        {
+          "label": "NC State Extension: North Carolina Extension Gardener Handbook, chapter 7, Diagnostics",
+          "url": "https://content.ces.ncsu.edu/7-diagnostics"
+        },
+        {
+          "label": "Penn State Extension: Overview of plant diagnostics",
+          "url": "https://extension.psu.edu/overview-of-plant-diagnostics"
+        }
       ]
     }
   ]

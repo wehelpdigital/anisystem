@@ -69,12 +69,42 @@
       "type": "table",
       "caption": "Ridges, spacing and soil notes for four root crops",
       "rows": [
-        ["Crop", "Ridges or beds", "Planting and spacing", "Source"],
-        ["Kamote (sweet potato)", "Ridges 15 to 20 cm high, 75 to 100 cm apart. Not needed on sandy loam", "Cuttings 25 to 30 cm apart, 10 to 15 cm deep, on furrows in sandy loam and on ridges in clay loam", "DA Region 02"],
-        ["Kamote, other guidance", "Ridges 30 to 45 cm high, 90 to 120 cm apart, higher in wet areas", "Mounds suit farmers who use hand tools only", "Pacific sweet potato key"],
-        ["Ube (ubi)", "Flat or ridged beds. Ridges 1 m apart", "Setts on ridges 1.0 m apart, hills 0.5 to 0.6 m apart", "DA Region 02"],
-        ["Cassava", "Ridges or mounds where soil is wet or poorly drained", "Stakes on top of ridges in wet soil, on the flat in dry spells", "FAO"],
-        ["Gabi (taro)", "Furrows or flat beds in the upland, rice style puddling in the lowland", "Setts 100 to 120 g, 75 cm between rows, 50 cm between plants", "Gabi production guide copy"]
+        [
+          "Crop",
+          "Ridges or beds",
+          "Planting and spacing",
+          "Source"
+        ],
+        [
+          "Kamote (sweet potato)",
+          "Ridges 15 to 20 cm high, 75 to 100 cm apart. Not needed on sandy loam",
+          "Cuttings 25 to 30 cm apart, 10 to 15 cm deep, on furrows in sandy loam and on ridges in clay loam",
+          "DA Region 02"
+        ],
+        [
+          "Kamote, other guidance",
+          "Ridges 30 to 45 cm high, 90 to 120 cm apart, higher in wet areas",
+          "Mounds suit farmers who use hand tools only",
+          "Pacific sweet potato key"
+        ],
+        [
+          "Ube (ubi)",
+          "Flat or ridged beds. Ridges 1 m apart",
+          "Setts on ridges 1.0 m apart, hills 0.5 to 0.6 m apart",
+          "DA Region 02"
+        ],
+        [
+          "Cassava",
+          "Ridges or mounds where soil is wet or poorly drained",
+          "Stakes on top of ridges in wet soil, on the flat in dry spells",
+          "FAO"
+        ],
+        [
+          "Gabi (taro)",
+          "Furrows or flat beds in the upland, rice style puddling in the lowland",
+          "Setts 100 to 120 g, 75 cm between rows, 50 cm between plants",
+          "Gabi production guide copy"
+        ]
       ]
     },
     {
@@ -197,23 +227,39 @@
       "type": "links",
       "title": "Read also",
       "items": [
-        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
-        { "label": "Vegetable land preparation", "url": "/land-preparation/vegetable-land-preparation" },
-        { "label": "Legume land preparation", "url": "/land-preparation/legume-land-preparation" },
-        { "label": "Acidic soil preparation", "url": "/land-preparation/acidic-soil-preparation" },
-        { "label": "Crop pests in the Philippines", "url": "/pests/crop-pests-philippines" },
-        { "label": "Organic fertilizer examples", "url": "/blog/organic-fertilizer-examples" }
+        {
+          "label": "Land preparation in the Philippines",
+          "url": "/land-preparation/land-preparation-philippines"
+        },
+        {
+          "label": "Vegetable land preparation",
+          "url": "/land-preparation/vegetable-land-preparation"
+        },
+        {
+          "label": "Legume land preparation",
+          "url": "/land-preparation/legume-land-preparation"
+        },
+        {
+          "label": "Acidic soil preparation",
+          "url": "/land-preparation/acidic-soil-preparation"
+        },
+        {
+          "label": "Crop pests in the Philippines",
+          "url": "/pests/crop-pests-philippines"
+        },
+        {
+          "label": "Organic fertilizer examples",
+          "url": "/blog/organic-fertilizer-examples"
+        }
       ]
     },
     {
       "type": "sources",
       "items": [
-        { "label": "DA Region 02: Sweet Potato Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/sweet_potato.pdf" },
-        { "label": "Pacific Pests and Pathogens: Sweet potato land preparation and cultivation", "url": "https://keys.lucidcentral.org/keys/sweetpotato/key/Sweetpotato%20Diagnotes/Media/Html/TheCrop/CropManagement/Crop%20mgt%20Land%20prep.htm" },
-        { "label": "DA Region 02: Ubi Production Guide", "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/ube_production_guide.pdf" },
-        { "label": "FAO: Save and Grow Cassava", "url": "https://openknowledge.fao.org/server/api/core/bitstreams/4c82dcdb-2e82-4dd9-8c4f-617596ed8c12/content" },
-        { "label": "FAO AGRIS: Land preparation and postplanting tillage on weed control and cassava yield, Philippines", "url": "https://agris.fao.org/search/zh/records/6471c8362a40512c710e3cdb" },
-        { "label": "FAO AGRIS: Upland taro, population density and planting method, Philippines", "url": "https://agris.fao.org/search/en/records/64775109f2e6fe92b364869f" }
+        {
+          "label": "Pacific Pests and Pathogens: Sweet potato land preparation and cultivation",
+          "url": "https://keys.lucidcentral.org/keys/sweetpotato/key/Sweetpotato%20Diagnotes/Media/Html/TheCrop/CropManagement/Crop%20mgt%20Land%20prep.htm"
+        }
       ]
     }
   ]

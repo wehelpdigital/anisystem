@@ -219,23 +219,6 @@
           "url": "/features/profit-report"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Philstar: Farmers earned more in 2024 as palay costs rose (PSA data)",
-          "url": "https://www.philstar.com/business/2025/07/17/2458470/farmers-earned-more-2024-despite-higher-palay-cost-psa"
-        },
-        {
-          "label": "PhilRice and IRRI: Competitiveness of Philippine Rice in Asia (costs and profitability chapters)",
-          "url": "https://www.philrice.gov.ph/competitiveness-philippine-rice-asia"
-        },
-        {
-          "label": "PhilRice: PhilRice Bicol trains farmers on agripreneurship (record keeping)",
-          "url": "https://www.philrice.gov.ph/philrice-bicol-trains-farmers-agripreneurship/"
-        }
-      ]
     }
   ]
 }

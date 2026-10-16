@@ -304,28 +304,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "FPA: Weekly prices (fertilizer and pesticide lists by week)",
-          "url": "https://fpa.da.gov.ph/weekly-prices/"
-        },
-        {
-          "label": "FPA: Current average retail prices of major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
-        },
-        {
-          "label": "FPA: Current prices of major fertilizer grades, October 6 to 10, 2025",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2025/10/WFP-OCTOBER-06-10-2025.pdf"
-        },
-        {
-          "label": "FPA: Philippine fertilizer price outlook, a reality for farmers and fishers (Mula and Coronado)",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2024/06/Philippine-fertilizer-price-outlook-A-reality-for-farmers-and-fishers.pdf"
-        },
-        {
           "label": "Baffes and Temaj, WBG Data Blog: Fertilizer prices surge as Strait of Hormuz disruptions tighten supplies, May 14, 2026",
           "url": "https://blogs.worldbank.org/en/opendata/fertilizer-prices-surge-as-strait-of-hormuz-disruptions-tighten-"
-        },
-        {
-          "label": "FPA: Frequently asked questions (price setting)",
-          "url": "https://fpa.da.gov.ph/faqs/"
         }
       ]
     }

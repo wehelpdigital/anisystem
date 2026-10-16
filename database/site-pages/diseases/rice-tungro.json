@@ -254,27 +254,6 @@
           "url": "/diseases/plant-diseases-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "IRRI Rice Knowledge Bank: Tungro",
-          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro"
-        },
-        {
-          "label": "PhilRice: Diseases of the rice plant in the Philippines, flash cards",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/Diseases-of-the-rice-plant-in-the-Philippines-flash-cards.pdf"
-        },
-        {
-          "label": "PhilRice: Preventing rice pests, diseases during rainy season",
-          "url": "https://www.philrice.gov.ph/preventing-rice-pests-diseases-rainy-season/"
-        },
-        {
-          "label": "FPA: Registered pesticide products (list as of August 31, 2026)",
-          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
-        }
-      ]
     }
   ]
 }

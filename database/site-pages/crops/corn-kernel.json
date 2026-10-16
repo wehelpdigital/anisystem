@@ -306,23 +306,6 @@
           "url": "/features/growth-stages-and-weather"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        },
-        {
-          "label": "PSA OpenSTAT: Farmgate prices of cereals",
-          "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2M__NFG/0032M4AFN01.px/"
-        },
-        {
-          "label": "Iowa State University Extension: The birds and bees of corn pollination",
-          "url": "https://crops.extension.iastate.edu/post/birds-and-bees-corn-pollination"
-        }
-      ]
     }
   ]
 }

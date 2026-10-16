@@ -248,23 +248,6 @@
           "url": "/diseases/plant-diseases-philippines"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "University of Florida IFAS: Citrus huanglongbing (HLB)",
-          "url": "https://ask.ifas.ufl.edu/publication/PP328/pdf"
-        },
-        {
-          "label": "DOST PCAARRD: Quality planting materials for citrus established in Nueva Vizcaya",
-          "url": "https://pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/quality-planting-materials-for-citrus-established-in-nueva-vizcaya"
-        },
-        {
-          "label": "University of Florida IFAS: Asian citrus psyllid, Florida Citrus Production Guide",
-          "url": "https://ask.ifas.ufl.edu/publication/CG104/pdf"
-        }
-      ]
     }
   ]
 }

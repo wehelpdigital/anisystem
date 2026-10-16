@@ -48,11 +48,36 @@
       "type": "table",
       "caption": "Micronutrient and related problems in lowland rice, from IRRI fact sheets and PhilRice PalayCheck",
       "rows": [
-        ["Problem", "Signs in the field", "Where it happens", "What to do"],
-        ["Zinc deficiency", "Dusty brown spots on upper leaves of stunted plants 2 to 4 weeks after transplanting, pale midribs near the leaf base, patchy growth", "Neutral to alkaline, poorly drained or long flooded soils, and soils high in phosphorus", "One PalayCheck method, in the next table"],
-        ["Sulfur deficiency", "Young leaves turn yellow, fewer tillers, shorter panicles, later maturity", "Often alongside zinc deficiency, IRRI notes", "The sulfur in 14 14 14 with 12 percent S at basal usually covers it"],
-        ["Silicon shortage", "Soft, droopy leaves and stems, more blast and brown spot, lodging", "Old, degraded paddy soils", "Return straw and husks, add husk ash, avoid too much nitrogen"],
-        ["Iron toxicity", "Tiny brown spots from the tips of lower leaves, orange to purple brown leaves, black roots", "Fields flooded all season on poorly drained soil rich in iron and organic matter", "Balance NPK with enough potassium, and drain at mid tillering"]
+        [
+          "Problem",
+          "Signs in the field",
+          "Where it happens",
+          "What to do"
+        ],
+        [
+          "Zinc deficiency",
+          "Dusty brown spots on upper leaves of stunted plants 2 to 4 weeks after transplanting, pale midribs near the leaf base, patchy growth",
+          "Neutral to alkaline, poorly drained or long flooded soils, and soils high in phosphorus",
+          "One PalayCheck method, in the next table"
+        ],
+        [
+          "Sulfur deficiency",
+          "Young leaves turn yellow, fewer tillers, shorter panicles, later maturity",
+          "Often alongside zinc deficiency, IRRI notes",
+          "The sulfur in 14 14 14 with 12 percent S at basal usually covers it"
+        ],
+        [
+          "Silicon shortage",
+          "Soft, droopy leaves and stems, more blast and brown spot, lodging",
+          "Old, degraded paddy soils",
+          "Return straw and husks, add husk ash, avoid too much nitrogen"
+        ],
+        [
+          "Iron toxicity",
+          "Tiny brown spots from the tips of lower leaves, orange to purple brown leaves, black roots",
+          "Fields flooded all season on poorly drained soil rich in iron and organic matter",
+          "Balance NPK with enough potassium, and drain at mid tillering"
+        ]
       ]
     },
     {
@@ -72,12 +97,36 @@
       "type": "table",
       "caption": "PalayCheck methods for zinc deficiency. Choose only one.",
       "rows": [
-        ["Method", "Amount", "When"],
-        ["Seedling dip, transplanted rice", "2 percent zinc oxide mix, roots dipped for 15 to 30 minutes", "Before transplanting"],
-        ["Seedbed, transplanted rice", "0.5 kg zinc sulfate per 400 m2 seedbed if mild, 2 kg if severe", "7 to 10 days after sowing"],
-        ["Broadcast, transplanted rice", "25 kg zinc sulfate per hectare", "10 to 14 days after transplanting"],
-        ["Foliar spray, transplanted rice", "Follow the product label", "14 days after transplanting"],
-        ["Seed soak, direct wet seeded rice", "1 kg zinc sulfate per 40 kg of seed", "In the last change of soaking water before incubation"]
+        [
+          "Method",
+          "Amount",
+          "When"
+        ],
+        [
+          "Seedling dip, transplanted rice",
+          "2 percent zinc oxide mix, roots dipped for 15 to 30 minutes",
+          "Before transplanting"
+        ],
+        [
+          "Seedbed, transplanted rice",
+          "0.5 kg zinc sulfate per 400 m2 seedbed if mild, 2 kg if severe",
+          "7 to 10 days after sowing"
+        ],
+        [
+          "Broadcast, transplanted rice",
+          "25 kg zinc sulfate per hectare",
+          "10 to 14 days after transplanting"
+        ],
+        [
+          "Foliar spray, transplanted rice",
+          "Follow the product label",
+          "14 days after transplanting"
+        ],
+        [
+          "Seed soak, direct wet seeded rice",
+          "1 kg zinc sulfate per 40 kg of seed",
+          "In the last change of soaking water before incubation"
+        ]
       ]
     },
     {
@@ -167,22 +216,30 @@
       "type": "links",
       "title": "Related guides",
       "items": [
-        { "label": "Nutrient deficiency in rice", "url": "/blog/nutrient-deficiency-in-rice" },
-        { "label": "What to do when rice leaves turn yellow", "url": "/blog/yellow-rice-leaves" },
-        { "label": "Foliar fertilizer", "url": "/blog/foliar-fertilizer" },
-        { "label": "Rice growth enhancers", "url": "/blog/rice-growth-enhancers" },
-        { "label": "What is the best NPK ratio for rice?", "url": "/blog/npk-ratio-for-rice" },
-        { "label": "Rice brown spot", "url": "/diseases/rice-brown-spot" }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        { "label": "PhilRice: PalayCheck System for Irrigated Lowland Rice, 2022 revised edition", "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf" },
-        { "label": "IRRI Rice Knowledge Bank: Zinc deficiency", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency" },
-        { "label": "IRRI Rice Knowledge Bank: Silicon deficiency", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/silicon-deficiency" },
-        { "label": "IRRI Rice Knowledge Bank: Iron toxicity", "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/iron-toxicity" },
-        { "label": "PhilRice: Fertilizer recommendations by location, through MOET, to cut rice production cost", "url": "https://www.philrice.gov.ph/site-specific-fertilizer-recommendations-eyed-for-less-rice-production-cost/" }
+        {
+          "label": "Nutrient deficiency in rice",
+          "url": "/blog/nutrient-deficiency-in-rice"
+        },
+        {
+          "label": "What to do when rice leaves turn yellow",
+          "url": "/blog/yellow-rice-leaves"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        },
+        {
+          "label": "Rice growth enhancers",
+          "url": "/blog/rice-growth-enhancers"
+        },
+        {
+          "label": "What is the best NPK ratio for rice?",
+          "url": "/blog/npk-ratio-for-rice"
+        },
+        {
+          "label": "Rice brown spot",
+          "url": "/diseases/rice-brown-spot"
+        }
       ]
     }
   ]

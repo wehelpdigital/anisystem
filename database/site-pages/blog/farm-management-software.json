@@ -302,31 +302,6 @@
           "url": "/blog/anee-io-review"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "PSA: Highlights of the 2012 Census of Agriculture (number and area of farms)",
-          "url": "https://psa.gov.ph/statistics/caf/node/51722"
-        },
-        {
-          "label": "PhilRice: PhilRice launches new integrated farm management app (PalayCheck App), 2024",
-          "url": "https://www.philrice.gov.ph/philrice-launches-integrated-farm-management-app/"
-        },
-        {
-          "label": "PhilRice: PalayCheck App",
-          "url": "https://palaycheckapp.philrice.gov.ph/"
-        },
-        {
-          "label": "PhilRice: Digital rice farm tools upgraded to support LGU, 2026",
-          "url": "https://www.philrice.gov.ph/digital-rice-farm-tools-upgraded-to-support-lgu/"
-        },
-        {
-          "label": "PhilRice: PalayCheck System 2022 Revised Edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        }
-      ]
     }
   ]
 }

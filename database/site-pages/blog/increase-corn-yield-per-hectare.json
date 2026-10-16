@@ -217,23 +217,6 @@
           "url": "/blog/increase-rice-yield-per-hectare"
         }
       ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "DA Regional Field Office 2: Corn production techno guide, revised edition 2012",
-          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
-        },
-        {
-          "label": "DA Regional Field Office 1: Field day on hybrid yellow corn held (2022)",
-          "url": "https://ilocos.da.gov.ph/?p=18187"
-        },
-        {
-          "label": "FPA: Prices of 6 major fertilizer grades, October 5 to 9, 2026",
-          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/10/WFP-WK41-2026.sgd_-1.pdf"
-        }
-      ]
     }
   ]
 }

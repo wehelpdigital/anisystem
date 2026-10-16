@@ -186,24 +186,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "DA Bureau of Soils and Water Management: Soil Test Kit leaflet",
-          "url": "https://ati2.da.gov.ph/ati-4b/content/sites/default/files/2022-11/Soil-Test-Kit.pdf"
-        },
-        {
           "label": "NC State Extension: Soil acidity and liming for farmers and gardeners",
           "url": "https://content.ces.ncsu.edu/soil-acidity-and-liming-basic-information-for-farmers-and-gardeners"
-        },
-        {
-          "label": "Kansas State University Extension: Lime acidic soils after long term nitrogen applications",
-          "url": "https://extension.k-state.edu/news-and-publications/news/stories/2024/08/agriculture-lime-acidic-soils-after-long-term-nitrogen-applications.html"
-        },
-        {
-          "label": "Magbanua and others (1986): Lime management in upland rice and corn in acid soils of Claveria",
-          "url": "https://agris.fao.org/search/ar/records/6471c8382a40512c710e3e2f"
-        },
-        {
-          "label": "Daquiado and Martinez (1992): Lime and fertilizer for corn on acidic Bukidnon soils",
-          "url": "https://agris.fao.org/search/ar/records/6471eaf42a40512c710eb633"
         },
         {
           "label": "Naramabuye and Haynes (2006): Three animal manures, soil pH and aluminum",
