@@ -302,7 +302,6 @@
     .va-pm .is-plus li { list-style: '✓ '; color: #2d5016; }
     .va-pm .is-minus li { list-style: '✗ '; color: #92400e; }
     .wp-why { font-size: .8rem; color: var(--color-gray-600); line-height: 1.55; margin-top: .45rem; }
-    .va-src { font-size: .68rem; color: var(--color-gray-400); margin-top: .3rem; }
     /* Real harvests (2026-10-17, the owner: "we need real people data"): derbies and farmers. */
     .va-field { display: grid; gap: .3rem; margin: .1rem 0 .55rem; }
     .va-field > b { font-size: .7rem; font-weight: 800; letter-spacing: .02em; color: #2d5016; }
@@ -1395,13 +1394,13 @@
                                 ${list(x.weaknesses).length ? `<ul class="is-minus">${list(x.weaknesses).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
                             </div>` : ''}
                             ${(() => {
-                                // The derbies' and the farmers' own harvests of it (2026-10-17, the owner).
+                                // The derbies' and the farmers' own harvests of it (2026-10-17, the owner). No source on
+                // a harvest, a derby or a ranked variety (2026-10-18): only "Sources Anee read" lists them.
                                 const fr = (Array.isArray(x.fieldResults) ? x.fieldResults : []).filter((f) => f && String(f.yield || '').trim()).slice(0, 3);
-                                return fr.length ? `<div class="va-field"><b>🌾 Real harvests</b>${fr.map((f) => `<span class="va-fr is-${esc(f.kind || 'derby')}"><em>${esc(({ derby: 'Derby', farmer: 'Farmer', trial: 'Trial' })[f.kind] || 'Harvest')}</em>${esc(f.yield)}${f.where ? ' · ' + esc(f.where) : ''}${f.when ? ' · ' + esc(f.when) : ''}${f.source ? `<small>${esc(f.source)}</small>` : ''}</span>`).join('')}</div>` : '';
+                                return fr.length ? `<div class="va-field"><b>🌾 Real harvests</b>${fr.map((f) => `<span class="va-fr is-${esc(f.kind || 'derby')}"><em>${esc(({ derby: 'Derby', farmer: 'Farmer', trial: 'Trial' })[f.kind] || 'Harvest')}</em>${esc(f.yield)}${f.where ? ' · ' + esc(f.where) : ''}${f.when ? ' · ' + esc(f.when) : ''}</span>`).join('')}</div>` : '';
                             })()}
                             ${x.fitNotes ? `<p class="wp-why">${esc(sweep(x.fitNotes))}</p>` : ''}
                             ${x.record ? onFile(x.record) : ''}
-                            ${list(x.sources).length ? `<p class="va-src">Sources: ${esc(list(x.sources).join(' · '))}</p>` : ''}
                         </div>`;
                     }).join('')}
                 </div>`).join('');
@@ -1430,7 +1429,7 @@
                 <p class="va-group-sub">The newest field results Anee found, the nearest first. Real harvests count most in the yield score.</p>
                 ${ds.map((d) => `<div class="va-derby"><b>${esc(d.name || 'Variety derby')}</b><small>${esc([d.where, d.when, d.by].filter(Boolean).join(' · '))}</small>
                     <ol>${(d.results || []).slice(0, 8).map((x) => `<li><span>${esc(x.variety || '')}</span><b>${esc(x.yield || '')}</b></li>`).join('')}</ol>
-                    ${d.source ? `<p class="va-src">Source: ${esc(d.source)}</p>` : ''}</div>`).join('')}
+                    </div>`).join('')}
             </div>` : '';
             })()}
 
