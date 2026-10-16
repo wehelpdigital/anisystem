@@ -35,10 +35,11 @@
 <style>
     .fq { --fq-e: cubic-bezier(.22,1,.36,1); --fq-g: #4a7c2a; --fq-gd: #2d5016; --fq-gl: #e4efd4; --fq-gx: #f4f9ee; container-type: inline-size; min-width: 0; }
     .fq-page { min-width: 0; }
-    .fq-page.is-in { animation: fqIn .34s var(--fq-e) both; }
+    /* Pages fade, never slide (2026-10-16, the owner). */
+    .fq-page.is-in { animation: fqIn .26s ease .06s both; }
     .fq-page.is-back { animation-name: fqBack; }
-    @keyframes fqIn { from { opacity: 0; transform: translateX(22px); } }
-    @keyframes fqBack { from { opacity: 0; transform: translateX(-22px); } }
+    @keyframes fqIn { from { opacity: 0; } }
+    @keyframes fqBack { from { opacity: 0; } }
     @keyframes fqPop { from { opacity: 0; transform: translateY(8px); } }
 
     /* Whose page this is: the lot, and where in its pages. */

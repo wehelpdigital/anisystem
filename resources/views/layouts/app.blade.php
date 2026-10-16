@@ -140,6 +140,34 @@
             } catch (_) {}
             location.href = fallback || @json(route('app.dashboard'));
         };
+        /* A wizard's step change (2026-10-16, the owner: "combining the slide and scroll up is
+           dizzying"): the old step fades out where it stood (a copy of it, so nothing waits),
+           the new one fades in a breath later (its own CSS), and the page jumps to the top of
+           the wizard only when it is above the header, at once instead of gliding. */
+        window.aneeStepOut = (el) => {
+            try {
+                if (!el || !el.parentElement || matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('sm-still')) return;
+                const parent = el.parentElement;
+                if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+                const top = el.offsetTop, left = el.offsetLeft, w = el.offsetWidth;
+                const g = el.cloneNode(true);
+                g.removeAttribute('id');
+                g.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+                g.querySelectorAll('input, select, textarea, button').forEach((n) => { n.removeAttribute('name'); n.disabled = true; });
+                g.setAttribute('aria-hidden', 'true');
+                g.inert = true;
+                g.style.cssText += ';position:absolute;left:' + left + 'px;top:' + top + 'px;width:' + w + 'px;margin:0;pointer-events:none;animation:none;opacity:1;transition:opacity .16s ease';
+                parent.appendChild(g);
+                requestAnimationFrame(() => requestAnimationFrame(() => { g.style.opacity = '0'; }));
+                setTimeout(() => g.remove(), 260);
+            } catch (_) {}
+        };
+        window.aneeStepTop = (wiz, line) => {
+            if (!wiz) return;
+            const head = line ?? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-head')) || 64);
+            const top = wiz.getBoundingClientRect().top;
+            if (top < head) window.scrollTo({ top: Math.max(0, window.scrollY + top - head - 8), behavior: 'auto' });
+        };
     </script>
     @auth
         @php $__auGrant = \App\Support\WorkerContext::activeGrant(); @endphp

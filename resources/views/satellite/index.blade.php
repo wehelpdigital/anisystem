@@ -83,10 +83,11 @@
     html.dark .sat-lot-edit { background: #10150d; color: #a5c97e; border-color: #3d5a26; }
     html.dark .sat-lot-edit:hover { background: #1c2914; }
     .sat-step { display: none; }
-    .sat-step.is-on { display: block; animation: satIn .34s var(--sat-ease) both; }
+    /* Steps fade, never slide (2026-10-16, the owner). */
+    .sat-step.is-on { display: block; animation: satIn .26s ease .1s both; }
     .sat-step.is-back { animation-name: satInBack; }
-    @keyframes satIn { from { opacity: 0; transform: translateX(14px); } }
-    @keyframes satInBack { from { opacity: 0; transform: translateX(-14px); } }
+    @keyframes satIn { from { opacity: 0; } }
+    @keyframes satInBack { from { opacity: 0; } }
     .sat-step h3 { font-family: var(--font-heading); font-weight: 800; font-size: 1.08rem; color: var(--color-gray-900); }
     .sat-sub { margin: .25rem 0 .8rem; font-size: .84rem; line-height: 1.55; color: var(--color-gray-500); }
     .sat-label { display: block; margin: .9rem 0 .35rem; font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
@@ -762,6 +763,7 @@
         $('satStepNo').textContent = 'Step ' + (Math.max(0, L.indexOf(n)) + 1) + ' of ' + L.length;
     }
     const show = (n, back = false) => {
+        if (booted && n !== st.step) window.aneeStepOut?.(document.querySelector('.sat-step.is-on'));
         st.step = n;
         document.querySelectorAll('.sat-step').forEach((s) => {
             const on = Number(s.dataset.step) === n;
@@ -777,7 +779,7 @@
         // A step starts at its title: on a phone the last one may have left the page scrolled down.
         const wiz = $('satWiz');
         if (booted && wiz.getBoundingClientRect().top < (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-head')) || 60)) {
-            wiz.scrollIntoView({ block: 'start', behavior: reduce() ? 'auto' : 'smooth' });
+            wiz.scrollIntoView({ block: 'start', behavior: 'auto' });
         }
     };
     let booted = false;

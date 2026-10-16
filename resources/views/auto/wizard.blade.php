@@ -45,10 +45,11 @@
     @media (max-width: 639.98px) { .au-rail button span { display: none; } }
 
     .au-step { display: none; }
-    .au-step.is-on { display: block; animation: auIn .36s var(--au-ease) both; }
+    /* Steps fade, never slide (2026-10-16, the owner). */
+    .au-step.is-on { display: block; animation: auIn .26s ease .1s both; }
     .au-step.is-back { animation-name: auInBack; }
-    @keyframes auIn { from { opacity: 0; transform: translateX(16px); } }
-    @keyframes auInBack { from { opacity: 0; transform: translateX(-16px); } }
+    @keyframes auIn { from { opacity: 0; } }
+    @keyframes auInBack { from { opacity: 0; } }
     .au-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1.05rem 1.1rem; margin-bottom: .9rem; }
     .au-h { font-family: var(--font-heading); font-weight: 800; font-size: 1.12rem; color: var(--color-gray-900); }
     .au-sub { margin: .25rem 0 .9rem; font-size: .85rem; line-height: 1.55; color: var(--color-gray-500); }
@@ -540,13 +541,14 @@
         n = Math.max(0, Math.min(STEPS.length - 1, n));
         if (stepHidden(n)) n = back ? Math.max(0, prevOf(n)) : nextOf(n);
         await flush();
+        if (n !== step) window.aneeStepOut?.(document.querySelector('.au-step.is-on'));
         step = n;
         document.querySelectorAll('.au-step').forEach((el) => { const on = Number(el.dataset.step) === n; el.classList.toggle('is-on', on); el.classList.toggle('is-back', on && back); });
         navSay();
         $('auNavSay').textContent = '';
         if (n > (Number(S.step) || 0)) { S.step = n; put(U.answers, { step: n }).catch(() => {}); }
         paintStep(n);
-        window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'auto' });
     };
     $('auRail').addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b && !b.disabled) show(Number(b.dataset.go), Number(b.dataset.go) < step); });
     $('auBack').addEventListener('click', () => { const p = prevOf(step); if (p < 0) location.href = @json(route('auto.index')); else show(p, true); });

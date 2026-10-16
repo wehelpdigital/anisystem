@@ -65,10 +65,11 @@
     @keyframes anIn { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .an-in { animation: none; } .an-wait::before { animation: none; } }
     .wtp-step { display: none; }
-    .wtp-step.is-on { display: block; animation: wtpIn .32s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes wtpIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+    /* Steps fade, never slide (2026-10-16, the owner). */
+    .wtp-step.is-on { display: block; animation: wtpIn .26s ease .1s both; }
+    @keyframes wtpIn { from { opacity: 0; } to { opacity: 1; } }
     .wtp-step.is-back { animation-name: wtpBack; }
-    @keyframes wtpBack { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+    @keyframes wtpBack { from { opacity: 0; } to { opacity: 1; } }
     .wtp-dots { display: flex; gap: .3rem; justify-content: center; margin: 1rem 0 .2rem; flex-wrap: wrap; }
     .wtp-dot { width: .5rem; height: .5rem; border-radius: 999px; background: var(--color-gray-200);
         transition: all .28s cubic-bezier(.22,1,.36,1); }
@@ -1154,6 +1155,7 @@
 
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {
+        const was = document.querySelector('#cpWiz .wtp-step.is-on'), from = step;
         step = Math.max(0, Math.min(STEPS - 1, n));
         // Over the steps the lot answered whole (and the one that is gone).
         while (step > 0 && step < STEPS - 1 && skipped(step)) step += backwards ? -1 : 1;
@@ -1161,11 +1163,13 @@
            otherwise rides along into the next step (a button tap does not
            take focus on iOS, so the hidden field would keep it). */
         try { if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur(); } catch (_) { }
+        if (step !== from) window.aneeStepOut?.(was);
         document.querySelectorAll('#cpWiz .wtp-step').forEach((s) => {
             const on = Number(s.getAttribute('data-step')) === step;
             s.classList.toggle('is-on', on);
             s.classList.toggle('is-back', on && !!backwards);
         });
+        if (step !== from) window.aneeStepTop?.($id('cpWiz'));
         document.querySelectorAll('#cpDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-on', i <= step));
         $id('cpBack').disabled = false;   // on the first page it goes back where they came from
         $id('cpNext').style.display = step === STEPS - 1 ? 'none' : '';
@@ -1582,7 +1586,7 @@
         $id('cpReport').hidden = true;
         $id('cpReport').classList.remove('is-drawn');
         show(0);
-        $id('cpWiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        $id('cpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
     }
 
     /* ---------------- the report, drawn ---------------- */

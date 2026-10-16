@@ -60,10 +60,11 @@
 
     /* ---- steps slide in, forward from the right, back from the left ---- */
     .lc-step { display: none; }
-    .lc-step.is-on { display: block; animation: lcInF .34s cubic-bezier(.22,1,.36,1) both; }
+    /* Steps fade, never slide (2026-10-16, the owner). */
+    .lc-step.is-on { display: block; animation: lcInF .26s ease .1s both; }
     .lc-stage[data-dir="back"] .lc-step.is-on { animation-name: lcInB; }
-    @keyframes lcInF { from { opacity: 0; transform: translateX(22px); } }
-    @keyframes lcInB { from { opacity: 0; transform: translateX(-22px); } }
+    @keyframes lcInF { from { opacity: 0; } }
+    @keyframes lcInB { from { opacity: 0; } }
 
     /* ---- cards and fields ---- */
     .lc-card { padding: 1.1rem; border-radius: 1.3rem; background: #fff; border: 1px solid var(--color-gray-200); }
@@ -1276,6 +1277,7 @@
     const ORDER = { 1: 1, 2: 2, '3a': 3, '3b': 3 };
     function go(step) {
         if (step !== '1' && !st.date) { go('1'); openDate(); return; }
+        if (step !== st.step) window.aneeStepOut?.(document.querySelector('.lc-step.is-on'));
         $('lcStage').dataset.dir = ORDER[step] >= ORDER[st.step] ? 'fwd' : 'back';
         st.step = step;
         document.querySelectorAll('.lc-step').forEach((s) => s.classList.toggle('is-on', s.dataset.step === step));
@@ -1289,7 +1291,7 @@
         if (step === '3a') paintShots();
         if (step === '3b') paintChartState();
         const top = $('lcSteps').getBoundingClientRect().top + window.scrollY - 76;
-        if (window.scrollY > top) window.scrollTo({ top, behavior: reduce() ? 'auto' : 'smooth' });
+        if (window.scrollY > top) window.scrollTo({ top, behavior: 'auto' });
     }
     document.addEventListener('click', (e) => { const b = e.target.closest('.lc-wrap [data-go]'); if (b) go(b.dataset.go); });
 

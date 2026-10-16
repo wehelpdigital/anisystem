@@ -46,11 +46,12 @@
     .lp-bar { height: .32rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; margin-bottom: 1rem; }
     .lp-bar i { display: block; height: 100%; width: 10%; border-radius: 999px; background: linear-gradient(90deg, #86b556, var(--lp-g)); transition: width .45s var(--lp-e); }
     .lp-step { display: none; min-width: 0; }
-    .lp-step.is-on { display: block; animation: lpIn .34s var(--lp-e) both; }
+    /* Steps fade, never slide (2026-10-16, the owner). */
+    .lp-step.is-on { display: block; animation: lpIn .26s ease .1s both; }
     .lp-step.is-back { animation-name: lpBack; }
     .lp-step.is-still { animation: none; }
-    @keyframes lpIn { from { opacity: 0; transform: translateX(22px); } }
-    @keyframes lpBack { from { opacity: 0; transform: translateX(-22px); } }
+    @keyframes lpIn { from { opacity: 0; } }
+    @keyframes lpBack { from { opacity: 0; } }
     @keyframes lpPop { from { opacity: 0; transform: translateY(8px); } }
     .lp-q { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.25; color: var(--color-gray-900); }
     .lp-sub { margin: .3rem 0 1rem; font-size: .84rem; line-height: 1.5; color: var(--color-gray-500); }
@@ -1517,6 +1518,7 @@
         pos = Math.max(0, Math.min(FLOW.length - 1, n));
         const id = FLOW[pos], sc = screenOf(id);
         const same = screenOf(was) === sc && sc === 'lotq';
+        if (was !== undefined && screenOf(was) !== sc) window.aneeStepOut?.(document.querySelector('.lp-step.is-on'));
         // The notes ride on the place screen, or on the review when the lots' own place skips it.
         const notesAt = sc === 'review' && !FLOW.includes('place') ? $('lpNotesSlot') : $('lpNotesHome');
         if ($('lpNotesBox').parentNode !== notesAt) notesAt.appendChild($('lpNotesBox'));
@@ -1548,7 +1550,7 @@
         if (sc === 'place') paintPlace();
         if (sc === 'review') review();
         const top = $('lpWiz').getBoundingClientRect().top;
-        if (top < 0) $('lpWiz').scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' });
+        if (top < 0) $('lpWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
     }
     const goTo = (id, back) => { FLOW = flow(); const n = FLOW.indexOf(id); if (n >= 0) show(n, back); };
     let busy = false;

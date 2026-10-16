@@ -65,10 +65,11 @@
     @keyframes anIn { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .an-in { animation: none; } .an-wait::before { animation: none; } }
     .wtp-step { display: none; }
-    .wtp-step.is-on { display: block; animation: wtpIn .32s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes wtpIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+    /* Steps fade, never slide (2026-10-16, the owner). */
+    .wtp-step.is-on { display: block; animation: wtpIn .26s ease .1s both; }
+    @keyframes wtpIn { from { opacity: 0; } to { opacity: 1; } }
     .wtp-step.is-back { animation-name: wtpBack; }
-    @keyframes wtpBack { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+    @keyframes wtpBack { from { opacity: 0; } to { opacity: 1; } }
     .wtp-dots { display: flex; gap: .35rem; justify-content: center; margin: 1rem 0 .2rem; }
     .wtp-dot { width: .5rem; height: .5rem; border-radius: 999px; background: var(--color-gray-200);
         transition: all .28s cubic-bezier(.22,1,.36,1); }
@@ -884,14 +885,17 @@
 
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {
+        const was = document.querySelector('#vaWiz .wtp-step.is-on'), from = step;
         step = Math.max(0, Math.min(STEPS - 1, n));
         // Over a step the lot answered whole, the way the farmer is going.
         while (step > 0 && step < STEPS - 1 && skipped(step)) step += backwards ? -1 : 1;
+        if (step !== from) window.aneeStepOut?.(was);
         document.querySelectorAll('#vaWiz .wtp-step').forEach((s) => {
             const on = Number(s.getAttribute('data-step')) === step;
             s.classList.toggle('is-on', on);
             s.classList.toggle('is-back', on && !!backwards);
         });
+        if (step !== from) window.aneeStepTop?.($id('vaWiz'));
         document.querySelectorAll('#vaDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-on', i <= step));
         $id('vaBack').disabled = false;   // on the first page it goes back where they came from
         $id('vaNext').style.display = step === STEPS - 1 ? 'none' : '';
@@ -1273,7 +1277,7 @@
         $id('vaReport').hidden = true;
         $id('vaReport').classList.remove('is-drawn');
         show(0);
-        $id('vaWiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        $id('vaWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
     }
 
     /* ---------------- the report, drawn ---------------- */

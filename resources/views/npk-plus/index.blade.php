@@ -84,10 +84,11 @@
     html.dark .np-ws.is-done i { color: #a5c97e; background: #1c2c10; }
     .np-wbody { padding: 1rem 1.05rem .5rem; min-height: 15rem; }
     .np-wstep[hidden] { display: none; }
-    .np-wstep.go-next { animation: npNext .34s var(--np-ease) both; }
-    .np-wstep.go-back { animation: npBack .34s var(--np-ease) both; }
-    @keyframes npNext { from { opacity: 0; transform: translateX(22px); } }
-    @keyframes npBack { from { opacity: 0; transform: translateX(-22px); } }
+    .np-wstep.go-next { animation: npNext .26s ease .1s both; }
+    .np-wstep.go-back { animation: npBack .26s ease .1s both; }
+    /* Steps fade, never slide (2026-10-16, the owner). */
+    @keyframes npNext { from { opacity: 0; } }
+    @keyframes npBack { from { opacity: 0; } }
     .np-wq { font-family: var(--font-heading); font-weight: 800; font-size: 1.08rem; line-height: 1.3; color: var(--color-gray-900); }
     .np-wnav { display: flex; align-items: center; gap: .6rem; padding: .8rem 1.05rem 1rem; border-top: 1px solid var(--color-gray-100); }
     html.dark .np-wnav { border-color: #2b3a1c; }
@@ -1065,6 +1066,7 @@
     const go = (n) => {
         n = clamp(n, 0, STEPS - 1);
         const cls = n >= st.step ? 'go-next' : 'go-back';
+        if (n !== st.step) window.aneeStepOut?.([...document.querySelectorAll('.np-wstep')].find((s) => !s.hidden));
         document.querySelectorAll('.np-wstep').forEach((s, i) => {
             s.hidden = i !== n;
             s.classList.remove('go-next', 'go-back');
@@ -1076,7 +1078,7 @@
         $('npNext').textContent = n === STEPS - 1 ? 'See results' : 'Next';
         $('npStepOf').textContent = 'Step ' + (n + 1) + ' of ' + STEPS;
         st.step = n;
-        if ($('npWiz').getBoundingClientRect().top < 70) $('npWiz').scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' });
+        if ($('npWiz').getBoundingClientRect().top < 70) $('npWiz').scrollIntoView({ behavior: 'auto', block: 'start' });
     };
     $('npBack').addEventListener('click', () => (st.step === 0 ? window.aneeLeave() : go(st.step - 1)));
     $('npNext').addEventListener('click', () => {
