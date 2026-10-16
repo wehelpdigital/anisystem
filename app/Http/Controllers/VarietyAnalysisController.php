@@ -312,6 +312,14 @@ class VarietyAnalysisController extends Controller
 
             // The ranking honours the farmer's own order, whatever the model
             // felt: overall = the four scores weighed by that order.
+            // Learn once: the named varieties the research looked up are kept for every module after.
+            if ($unknown = self::toLookUp($p)) {
+                \App\Support\VarietyLearned::harvest((string) $p['crop'], $unknown, (string) ($result['researchText'] ?? ''),
+                    ['via' => 'variety', 'userId' => $payerId, 'searched' => (bool) ($result['searched'] ?? false), 'sources' => (array) ($result['sources'] ?? [])]);
+            }
+            foreach ((array) ($p['varieties'] ?? []) as $v) {
+                \App\Support\VarietyBook::used(\App\Support\VarietyBook::find((string) $p['crop'], (string) $v));
+            }
             $report = $this->weigh($report, $p['priorities']);
             $report = self::markNewest($report);
             $report['webSources'] = $result['sources'];
@@ -824,7 +832,12 @@ class VarietyAnalysisController extends Controller
     {
         $crop = CropCatalog::CROPS[$p['crop']];
         $year = now('Asia/Manila')->year;
-        $named = $p['varieties'] ? implode(', ', $p['varieties']) : 'none named — find the top-yielding released ones for these conditions';
+        // Learn once (2026-10-18): a named variety on the record or kept from an earlier lookup is known; only the rest are looked up, and their facts come back as a block the app keeps.
+        $unknown = self::toLookUp($p);
+        $named = $p['varieties']
+            ? implode(', ', array_map(fn ($v) => $v . (in_array($v, $unknown, true) ? '' : ' (known to anee.io, see 5 below)'), $p['varieties']))
+            : 'none named — find the top-yielding released ones for these conditions';
+        $block = $unknown ? \App\Support\VarietyLearned::askBlock($unknown, (string) $p['crop']) : '';
         $soil = self::SOILS[$p['soil']] ?? $p['soil'];
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
 
@@ -869,8 +882,25 @@ FIND, IN THIS ORDER
 4. Anything published about which of these varieties do well or poorly on this soil type, at this elevation, in this season and with these troubles — which are bred for the wet season and which for the dry, which stand the highland's cool nights or the lowland's heat.{$onFileLine}
 6. REAL HARVESTS, NOT ONLY BROCHURES (the most important part after the newest releases). Search for the MOST RECENT {$cropLabel} derbies in {$countryName}: variety derbies, techno demo farms, hybrid derbies, field days and yield contests run by {$derbyRunners}, newest first, in or near the farmer's province and region first, then anywhere in the country. For each: its name, the town and province, the season and year, the organizer, and EVERY variety's harvested yield as reported (t/ha, or cavans per hectare with the kilos per cavan). Then search for real farmers' own reported harvests with these varieties in the last two seasons: news reports, agriculture office reports, farmer cooperatives, farmers' field schools, farmer groups and seed company field posts naming the farmer or the place, each with the yield, the place, the season and the source. Real harvests weigh more than the seller's or the brochure's figure: say plainly where they differ.
 
-Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the headings, at most 1600 words, no JSON, no markdown tables.
+Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the headings, at most 1600 words, no JSON, no markdown tables.{$block}
 PROMPT;
+    }
+
+    /** The varieties the farmer named that neither the records nor an earlier lookup know (at most four are looked up as facts to keep). */
+    public static function toLookUp(array $p): array
+    {
+        if (! self::onRecord($p)) {
+            return [];
+        }
+        $out = [];
+        foreach ((array) ($p['varieties'] ?? []) as $v) {
+            $v = trim((string) $v);
+            if ($v !== '' && ! \App\Support\VarietyBook::find((string) $p['crop'], $v)) {
+                $out[] = $v;
+            }
+        }
+
+        return array_slice($out, 0, 4);
     }
 
     /** The question, spelled out so the answer is bounded, searched and honest. */

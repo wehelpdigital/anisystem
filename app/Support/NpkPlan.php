@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\DB;
  * application, whatever the pack size. A name that is plainly a fertilizer
  * but cannot be read is handed back as unread, so the page can say what it
  * left out instead of quietly counting less.
+ *
+ * Learn once (2026-10-18, the owner): a brand the shelf cannot read is
+ * looked up in the product book (App\Support\ProductLibrary: every
+ * fertilizer registered with the FPA, the companies' own labels, and the
+ * products Anee looked up online for an earlier farmer), so a registered
+ * product is counted from its guaranteed analysis instead of being left out.
  */
 final class NpkPlan
 {
@@ -47,6 +53,12 @@ final class NpkPlan
     private const LOOKS_LIKE = '/fertili[sz]er|abono|foliar|\bnpk\b|\d+\s*-\s*\d+\s*-\s*\d+|nitrogen|phosph|potas|calcium|magnes|zinc|boron|micronutri|manure|compost|organic|\blime\b|gypsum|anhydrite|sulfate|sulphate|nitrate|urea/i';
 
     private static ?array $shelf = null;
+
+    /** Book lookups by name, per request. */
+    private static array $book = [];
+
+    /** The product book's fertilizer types (App\Support\ProductLibrary::TYPES) a plan's material can be. */
+    private const BOOK_TYPES = ['granular', 'soluble', 'foliar', 'amendment', 'biostimulant', 'biological', 'chemical'];
 
     /** The shelf as NPK Plus draws it, the farmer's own products first. */
     public static function shelf(?int $userId = null): array
@@ -89,6 +101,11 @@ final class NpkPlan
                 return $p;
             }
         }
+        // A registered brand by its own name: a name that says more than the shelf's own words, agreeing with any grade written in it.
+        $book = self::brandy($low) ? self::fromBook($name, true) : null;
+        if ($book) {
+            return $book;
+        }
         if (preg_match('/(?<![\d.])(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)(?:\s*[-+]\s*(\d{1,2})\s*s)?(?![\d.])/i', $low, $m)) {
             [$n, $p2, $k] = [(float) $m[1], (float) $m[2], (float) $m[3]];
             $s = isset($m[4]) && $m[4] !== '' ? (float) $m[4] : null;
@@ -117,7 +134,63 @@ final class NpkPlan
             }
         }
 
-        return null;
+        // Last, anything else the product book holds by that name (a plain material, a product Anee looked up before).
+        return self::fromBook($name, false);
+    }
+
+    /** Whether a name says more than the shelf's own words and a grade ("Yara Mila Complete" does; "Complete 14-14-14" and "Urea" do not). */
+    private static function brandy(string $low): bool
+    {
+        $rest = (string) preg_replace('/\d+(?:\.\d+)?/', ' ', $low);
+        foreach (array_keys(self::WORDS) as $w) {
+            $rest = str_replace($w, ' ', $rest);
+        }
+        $rest = (string) preg_replace('/\b(fertili[sz]er|abono|granular|granules?|foliar|soluble|liquid|grade|plus|bags?|kg|sacks?|organic|inorganic|for|and|with|the)\b/', ' ', $rest);
+
+        return strlen((string) preg_replace('/[^a-z]+/', '', $rest)) >= 3;
+    }
+
+    /**
+     * A product of the book (App\Support\ProductLibrary::find) in the
+     * shelf's shape: its analysis as percentages (SiO2 counted as Si), a
+     * liquid in liters. Null when the book does not know the name, it is no
+     * fertilizer, or it carries no nutrient. `$brandsOnly`: only a company's
+     * product (not a plain material like urea, which the shelf reads), and
+     * only when a grade written in the name agrees with it.
+     */
+    public static function fromBook(string $name, bool $brandsOnly = false): ?array
+    {
+        $key = mb_strtolower(trim($name)) . '|' . (int) $brandsOnly;
+        if (array_key_exists($key, self::$book)) {
+            return self::$book[$key];
+        }
+        $p = null;
+        try {
+            $p = ProductLibrary::find($name);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+        $out = null;
+        if ($p && in_array($p['t'] ?? '', self::BOOK_TYPES, true) && ! ($brandsOnly && (str_starts_with((string) ($p['k'] ?? ''), 'mat-') || trim((string) ($p['c'] ?? '')) === ''))) {
+            $pct = [];
+            foreach ((array) ($p['n'] ?? []) as $el => $v) {
+                [$el, $v] = $el === 'SiO2' ? ['Si', (float) $v * 0.4674] : [$el, (float) $v];
+                if (in_array($el, self::NUTRIENTS, true) && $v > 0) {
+                    $pct[$el] = round($v, 4);
+                }
+            }
+            $grade = preg_match('/(?<![\d.])(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)\s*-\s*(\d{1,2}(?:\.\d)?)(?![\d.])/', $name, $m) ? [(float) $m[1], (float) $m[2], (float) $m[3]] : null;
+            $agrees = ! $grade || (abs(($pct['N'] ?? 0) - $grade[0]) < .01 && abs(($pct['P2O5'] ?? 0) - $grade[1]) < .01 && abs(($pct['K2O'] ?? 0) - $grade[2]) < .01);
+            if ($pct && $agrees) {
+                $form = mb_strtolower((string) ($p['f'] ?? ''));
+                $liquid = $form === 'liquid' || in_array(strtoupper($form), ['SL', 'SC', 'EC', 'LS', 'EW', 'ME', 'AL'], true);
+                $out = ['id' => 0, 'slug' => null, 'name' => (string) $p['b'], 'local' => null, 'category' => (string) $p['t'], 'unit' => $liquid ? 'L' : 'kg',
+                    'bagKg' => null, 'density' => $liquid ? 1.0 : null, 'own' => false, 'pct' => $pct, 'estimate' => null,
+                    'fromBook' => true, 'productId' => (int) ($p['id'] ?? 0), 'learned' => ($p['source'] ?? 'file') === 'anee'];
+            }
+        }
+
+        return self::$book[$key] = $out;
     }
 
     /** Whether an unread name is worth naming as left out. */

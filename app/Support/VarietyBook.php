@@ -237,7 +237,8 @@ class VarietyBook
     {
         $out = [];
         foreach ($named as $n) {
-            if (($m = self::match($cropKey, (string) $n)) && ! isset($out[$m['name']])) {
+            // A variety Anee looked up before is the farmer's too (learn once, 2026-10-18).
+            if (($m = self::find($cropKey, (string) $n)) && ! isset($out[$m['name']])) {
                 $out[$m['name']] = $m;
             }
         }

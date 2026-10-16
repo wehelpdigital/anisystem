@@ -1099,8 +1099,18 @@ class FarmReportController extends BaseScheduleController
         // The crops against their own clocks.
         $lots = $lot ? collect([$lot]) : $schedule->lots;
         $clock = [];
+        // Learn once (2026-10-18): a variety the records or Anee's earlier lookup know is given as facts, not left to her memory.
+        $varieties = [];
         foreach ($lots as $L) {
             if (! $L->crop) continue;
+            if ($L->variety && ! isset($varieties[$L->crop . '|' . $L->variety])) {
+                try {
+                    $rec = \App\Support\VarietyBook::find($L->crop, $L->variety);
+                } catch (\Throwable) {
+                    $rec = null;
+                }
+                $varieties[$L->crop . '|' . $L->variety] = $rec ? $L->variety . ' = ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') : null;
+            }
             $maturity = (int) ($L->daysToMaturity ?: (\App\Support\CropCatalog::CROPS[$L->crop]['maturity'] ?? 0));
             $line = $L->lotName . ': ' . (\App\Support\CropStages::label($L->crop) ?: $L->crop)
                 . ($L->variety ? ' (' . $L->variety . ')' : '')
@@ -1113,8 +1123,11 @@ class FarmReportController extends BaseScheduleController
             $clock[] = $line;
         }
         if ($clock) {
+            $known = array_values(array_filter($varieties));
+            $unknown = count($varieties) > count($known);
             $ctx[] = "THE CROPS' CLOCKS: " . implode(' | ', $clock)
-                . ' (Research what the named variety is known for — maturity, lodging, pest tolerance — and use it where it helps; say when you are unsure.)';
+                . ($known ? "\nTHE VARIETIES, AS KNOWN (use these facts; do not guess others): " . implode(' | ', $known) : '')
+                . ($unknown || ! $varieties ? ' (Research what the named variety is known for — maturity, lodging, pest tolerance — and use it where it helps; say when you are unsure.)' : '');
         }
 
         // Post-harvest observations, verbatim-ish.

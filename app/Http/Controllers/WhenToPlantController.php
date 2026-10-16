@@ -114,6 +114,7 @@ class WhenToPlantController extends Controller
             // The price by what is asked (App\Support\AiPricing): a named variety
             // adds Anee's own research on it, so it has its own price. The page
             // shows the one that applies and sends it back as `quote` on the run.
+            // Since 2026-10-18 (learn once) the variety price is only for a name Anee has to look up: one on the record or kept from an earlier lookup costs the plain price.
             'quoteFor' => $canUse ? ['plain' => AiPricing::credits('wtp'), 'variety' => AiPricing::credits('wtp', ['variety' => true])] : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
@@ -214,7 +215,8 @@ class WhenToPlantController extends Controller
         // A page that sends `quote` (the plain or the variety price it showed)
         // must match it; an older page is charged the plain price it showed.
         $balance = $this->credits->balance($payer->id);
-        $quote = AiPricing::quote('wtp', ['variety' => trim((string) $request->input('variety', '')) !== '']);
+        // Learn once (2026-10-18): only a named variety the book does not know is looked up, so only that is priced as a lookup.
+        $quote = AiPricing::quote('wtp', ['variety' => self::needsLookup($request)]);
         $estimate = AiPricing::agreed($request, $quote, (int) $this->quote($settings));
         if ($estimate === null) {
             return $this->json(false, 'This analysis now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
@@ -328,6 +330,14 @@ class WhenToPlantController extends Controller
             $report['webSources'] = (array) ($result['sources'] ?? []);
             $report['searched'] = (bool) ($result['searched'] ?? false);
             $report['researchNotes'] = mb_substr((string) ($result['researchText'] ?? ''), 0, 6000);
+            // Learn once: the variety the research looked up is kept for every module after.
+            if (! empty($p['varietyLookup'])) {
+                $kept = \App\Support\VarietyLearned::harvest((string) $p['crop'], [(string) $p['variety']], (string) ($result['researchText'] ?? ''),
+                    ['via' => 'wtp', 'userId' => $payerId, 'searched' => (bool) ($result['searched'] ?? false), 'sources' => (array) ($result['sources'] ?? [])]);
+                $report['varietyKept'] = (bool) ($kept[(string) $p['variety']] ?? false);
+            } elseif (! empty($p['varietyRecord']['learnedId'])) {
+                \App\Support\VarietyLearned::hit((int) $p['varietyRecord']['learnedId']);
+            }
             // What the record held and what this run added to it.
             $report['recordKept'] = ['place' => $rk['place'], 'years' => count(ClimateRecord::stored($rk['key'])), 'added' => $keptYears];
 
@@ -343,7 +353,7 @@ class WhenToPlantController extends Controller
             $note = AiUsage::record('wtp', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
                 mb_substr('When to Plant analysis: ' . $crop['label'] . ', ' . ($p['year'] ?? '') . $note, 0, 250));
-            AiPricing::audit('wtp', $result, $charged, ['variety' => trim((string) ($p['variety'] ?? '')) !== ''], $settings);
+            AiPricing::audit('wtp', $result, $charged, ['variety' => ! empty($p['varietyLookup'])], $settings);
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -609,21 +619,38 @@ class WhenToPlantController extends Controller
         if ($name === '' || $fc !== \App\Support\Region::HOME) {
             return null;
         }
-        $r = \App\Support\VarietyBook::match($crop, $name);
+        // The records first, then a variety Anee looked up before (learn once, 2026-10-18).
+        $r = \App\Support\VarietyBook::find($crop, $name);
         if (! $r) {
             return null;
         }
+        $l = $r['learned'] ?? null;
 
         return array_filter([
             'name' => $r['name'], 'alias' => $r['aliases'][0] ?? null, 'type' => $r['type'], 'days' => $r['days'], 'daysUnit' => $r['daysUnit'],
             'where' => $r['where'] ?: null, 'yieldAvg' => $r['yield'], 'yieldTop' => $r['yieldTop'] ?? null, 'year' => $r['year'],
-            'source' => $r['registered'] ? 'NSIC registry and PhilRice seed data' : 'the variety records',
+            'source' => $l ? 'Anee\'s own web research of ' . date('M Y', strtotime((string) $l['at'])) . ', kept by the app' : ($r['registered'] ? 'NSIC registry and PhilRice seed data' : 'the variety records'),
+            // A kept variety's other facts reach the prompt too.
+            'learnedId' => $l['id'] ?? null, 'facts' => $l ? ($r['learnedLine'] ?? null) : null,
         ], fn ($v) => $v !== null && $v !== '');
+    }
+
+    /** Whether a run must look the named variety up: one is named, and neither the records nor an earlier lookup know it. */
+    public static function needsLookup(Request $request): bool
+    {
+        $typed = trim((string) $request->input('variety', ''));
+
+        return $typed !== '' && self::varietyRecord((string) $request->input('crop'), $request->input('varietyRecord.name') ?: $typed, $request->input('country')) === null;
     }
 
     /** A variety record as one line of facts for a prompt. */
     private static function recordWords(array $v): string
     {
+        // A kept variety says everything Anee found about it (its ratings, tolerances, season), as hers.
+        if (! empty($v['facts'])) {
+            return $v['facts'];
+        }
+
         return $v['name'] . (! empty($v['alias']) ? ' (sold as ' . $v['alias'] . ')' : '')
             . ': ' . ($v['type'] ?? '') . (! empty($v['days']) ? ', ' . (int) round($v['days']) . ' ' . ($v['daysUnit'] ?? 'days') . ' to harvest' : '')
             . (! empty($v['where']) ? ', bred for ' . $v['where'] : '')
@@ -643,7 +670,9 @@ class WhenToPlantController extends Controller
             'toYear' => (int) $request->input('toYear'),
             'crop' => $request->input('crop'),
             'variety' => trim((string) $request->input('variety', '')),
-            'varietyRecord' => self::varietyRecord((string) $request->input('crop'), $request->input('varietyRecord.name'), $request->input('country')),
+            // The record of the variety picked, or of the name typed when the records or an earlier lookup know it (learn once).
+            'varietyRecord' => self::varietyRecord((string) $request->input('crop'), $request->input('varietyRecord.name') ?: $request->input('variety'), $request->input('country')),
+            'varietyLookup' => self::needsLookup($request),
             'location' => trim((string) $request->input('location')),
             'lotId' => $request->filled('lotId') ? (int) $request->input('lotId') : null,
             'lotName' => mb_substr(trim((string) $request->input('lotName', '')), 0, 120) ?: null,
@@ -702,6 +731,8 @@ class WhenToPlantController extends Controller
 4. Heat waves or hot dry spells that damaged crops or stressed them at flowering, with the months.{$frost}
 
 ASK . ClimateRecord::ask($rk['place'], $missing, $fieldPH) : '';
+        // The variety's facts come back as a block the app keeps (learn once, 2026-10-18).
+        $block = $varietyAsk !== '' ? \App\Support\VarietyLearned::askBlock([$variety], (string) $p['crop']) : '';
         $about = trim(($varietyAsk !== '' ? 'the variety the farmer named' : '') . ($varietyAsk !== '' && $missing ? ' and ' : '') . ($missing ? 'the climate RISK RECORD of one province in ' . $years : ''));
 
         return <<<PROMPT
@@ -712,7 +743,7 @@ THE PLACE
 
 FIND
 {$varietyAsk}{$record}
-Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop damage reports, and reputable news archives. Keep any prose short (at most 400 words); the year lines carry the record. No JSON, no markdown tables.
+Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop damage reports, and reputable news archives. Keep any prose short (at most 400 words); the year lines carry the record. No JSON, no markdown tables.{$block}
 PROMPT;
     }
 

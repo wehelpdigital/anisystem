@@ -3,6 +3,9 @@
      registry, the rest from the crop records, through VarietyPickController
      and App\Support\VarietyBook), with the ones suited to the area first
      where the place is known; or type a name that is not on record, as sold.
+     Since 2026-10-18 (learn once) the varieties Anee looked up before are on
+     the list too, and a typed name the records or an earlier lookup know
+     comes back with its record, so nothing is looked up (or paid for) again.
      Include it once on a page: @include('partials.variety-pick').
 
      JS (window.aneeVarietyPick):
@@ -128,7 +131,7 @@
     // One open sheet at a time: its options, its rows, its answer.
     const S = { o: null, key: '', rows: null, suited: [], q: '', type: '', shown: 60, resolve: null, answer: undefined };
 
-    const record = (r) => ({ name: r[0], alias: r[1] || null, type: r[2], days: r[3] || null, daysUnit: r[4] || 'days', avg: r[5] || null, top: r[6] || null, unit: r[7] || 't/ha', year: r[8] || null, where: r[10] || '' });
+    const record = (r) => ({ name: r[0], alias: r[1] || null, type: r[2], days: r[3] || null, daysUnit: r[4] || 'days', avg: r[5] || null, top: r[6] || null, unit: r[7] || 't/ha', year: r[8] || null, where: r[10] || '', learned: !!r[11] });
     const facts = (rec) => !rec ? '' : [rec.type === 'hybrid' ? 'Hybrid' : 'Not hybrid', rec.days ? Math.round(rec.days) + ' ' + (rec.daysUnit || 'days') : '', rec.year ? 'released ' + rec.year : ''].filter(Boolean).join(' · ');
     const yieldSay = (rec) => !rec ? '' : rec.top ? fmt(rec.top) + ' ' + rec.unit + ' at best in trials' + (rec.avg ? ', ' + fmt(rec.avg) + ' on average' : '') : rec.avg ? fmt(rec.avg) + ' ' + rec.unit + ' on average in trials' : '';
 
@@ -141,7 +144,7 @@
     function row(r, i, fit) {
         const cur = S.o && S.o.value && S.o.value.record ? S.o.value.record.name : null;
         const y = r[6] || r[5];
-        const sub = [r[2] === 'hybrid' ? 'Hybrid' : '', r[3] ? Math.round(r[3]) + ' ' + (r[4] || 'days') : '', r[8] ? 'Released ' + r[8] : ''].filter(Boolean).join(' · ');
+        const sub = [r[2] === 'hybrid' ? 'Hybrid' : '', r[3] ? Math.round(r[3]) + ' ' + (r[4] || 'days') : '', r[8] ? 'Released ' + r[8] : '', r[11] ? 'Anee looked it up before' : ''].filter(Boolean).join(' · ');
         return '<button type="button" class="vp-r' + (fit ? ' is-fit' : '') + '" data-i="' + i + '" aria-pressed="' + (cur === r[0]) + '"><span class="t"><b>' + esc(r[0]) + '</b>' + (r[1] ? '<small>' + esc(r[1]) + '</small>' : '')
             + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</span>' + (y ? '<span class="y"><b>' + esc(fmt(y)) + '</b>' + esc(r[7] || 't/ha') + '<br>' + (r[6] ? 'at best' : 'average') + '</span>' : '') + '</button>';
     }
@@ -241,10 +244,22 @@
             const name = r[1] && (r[0] + ' (' + r[1] + ')').length <= 80 ? r[0] + ' (' + r[1] + ')' : r[0];
             setTimeout(() => finish({ name, record: record(r) }), 160);
         });
-        const own = () => {
+        const own = async () => {
             const v = $('vpOwnIn').value.trim().replace(/\s{2,}/g, ' ');
             if (!v) { window.toast?.('Type the variety\'s name.', 'error'); return; }
-            finish({ name: v, record: null });
+            // A name the records or an earlier lookup know is that record (asked of the server, which decides the price the same way).
+            const o = S.o || {};
+            let rec = null;
+            if (o.crop && (!o.country || o.country === 'PH') && window.api) {
+                $('vpOwnOk').disabled = true;
+                try {
+                    const r = await window.api(URL_LIST + '?' + new URLSearchParams({ only: 'find', crop: o.crop, name: v, country: o.country || '' }).toString());
+                    if (r.data && r.data.found) rec = record(r.data.found);
+                } catch (_) { /* kept as typed */ }
+                $('vpOwnOk').disabled = false;
+            }
+            if (rec) window.toast?.(rec.learned ? 'Anee looked up ' + rec.name + ' before, so she uses what she found.' : v + ' is on record as ' + rec.name + '.');
+            finish({ name: v, record: rec });
         };
         $('vpOwnOk').addEventListener('click', own);
         $('vpOwnIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); own(); } });

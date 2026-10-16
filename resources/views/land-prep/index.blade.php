@@ -1976,13 +1976,13 @@
     $('lpVarAddUse').addEventListener('click', () => {
         const name = $('lpVarNew').value.trim().replace(/\s+/g, ' ');
         if (!name) { $('lpVarNewErr').hidden = false; shake($('lpVarNew')); return; }
-        const known = varRows.find((r) => norm(r.n) === norm(name) || norm(r.l) === norm(name));
+        const known = varRows.find((r) => norm(r.n) === norm(name) || norm(r.l) === norm(name) || String(r.t || '').split(',').some((t) => norm(t) === norm(name)));
         if (known) { S.variety = known.n; S.varRec = known; S.custom = false; S.seedType = rice() ? (known.h ? 'hybrid' : 'inbred') : ''; }
         else { S.variety = name; S.varRec = null; S.custom = true; S.seedType = newType; }
         sheetClose($('lpVarSheet'));
         bump($('lpVarTag'));
         paintVarTag(true);
-        if (known) window.toast?.(known.n + ' is on our list, so Anee uses its record.');
+        if (known) window.toast?.(known.x ? 'Anee looked up ' + known.n + ' before, so she uses what she found.' : known.n + ' is on our list, so Anee uses its record.');
     });
     $('lpVarNew').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $('lpVarAddUse').click(); } });
 
@@ -2187,7 +2187,7 @@
     const lotCropBody = (l) => (l.lc ? { crop: l.lc.crop, method: l.lc.method, variety: l.lc.variety || null, seedType: l.lc.seedType || null } : {});
     function checkBody(withAnswers) {
         return {
-            crop: S.crop, method: S.method, planting: S.planting, dateMode: S.lots.length > 1 ? S.dateMode : null,
+            crop: S.crop, method: S.method, variety: S.variety || null, planting: S.planting, dateMode: S.lots.length > 1 ? S.dateMode : null,
             lots: S.lots.map((l, i) => Object.assign({ name: l.name.trim() || 'Lot ' + (i + 1), area: numOk(l.area) ? num(l.area) : null, unit: l.unit, planting: lotDay(l, i) },
                 lotCropBody(l), withAnswers ? { profile: l.profile } : {})),
             crew: { workers: S.workers.map((w) => ({ name: w.name, days: w.days })), fleet: fleetList().map(({ type, own, hired }) => ({ type, own, hired })) },

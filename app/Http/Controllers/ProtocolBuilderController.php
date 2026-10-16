@@ -955,6 +955,25 @@ class ProtocolBuilderController extends Controller
                 . ($m['note'] !== '' ? ' · ' . preg_replace('/\s+/', ' ', $m['note']) : '');
         }
         $materialText = $this->joined($matLines, 'No list of materials.');
+        // Learn once (2026-10-18, the owner): what the product book knows of each product named (type, ingredients or analysis), so Anee need not remember it.
+        $named = [];
+        foreach ($tasks as $t) {
+            foreach ((array) ($t['groups'] ?? []) as $g) {
+                foreach ((array) ($g['items'] ?? []) as $it) {
+                    $named[] = trim((string) ($it['name'] ?? ''));
+                }
+            }
+        }
+        foreach ($materials as $m) {
+            $named[] = trim((string) ($m['name'] ?? ''));
+        }
+        $bookLines = [];
+        foreach (array_slice(array_values(array_unique(array_filter($named))), 0, 40) as $nm) {
+            if (count($bookLines) < 25 && ($f = \App\Support\ProductFacts::line($nm))) {
+                $bookLines[] = '- ' . $nm . ': ' . $f;
+            }
+        }
+        $bookText = $bookLines ? "\n\nWHAT THE PRODUCT BOOK SAYS of the products named (the registered label's type and active ingredients or analysis; use these, do not guess others)\n" . implode("\n", $bookLines) : '';
         $versionLine = $manyVersions && $versionName !== '' ? "
 Version: {$versionName} (one of several versions of this protocol)" : '';
         $stages = [];
@@ -1003,7 +1022,7 @@ THE TASKS, in the farmer's order (the code in [brackets] is the task's id — qu
 {$taskText}
 
 THE FARMER'S MATERIALS (what is on hand for the whole protocol, and what the tasks draw from it)
-{$materialText}
+{$materialText}{$bookText}
 
 THE APP'S OWN GROWTH STAGE TABLE for this crop ({$stageHead})
 {$stageText}

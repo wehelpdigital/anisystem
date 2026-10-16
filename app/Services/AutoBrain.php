@@ -15,6 +15,8 @@ use App\Support\FieldCatalogue;
 use App\Support\FieldContext;
 use App\Support\FieldProfile;
 use App\Support\SoilConditions;
+use App\Support\VarietyBook;
+use App\Support\VarietyLearned;
 use Illuminate\Support\Carbon;
 
 /**
@@ -52,6 +54,8 @@ class AutoBrain
                 continue;
             }
             $at = $this->planner->placeOf($lot);
+            // Learn once (2026-10-18): the variety's known facts, the record's or Anee's earlier lookup's, so nothing is looked up again.
+            $rec = $lot->variety ? self::varietyOf($lot->crop, $lot->variety) : null;
             $row = [
                 'lotId' => (int) $lot->id, 'name' => $lot->lotName, 'crop' => $lot->crop ? CropCatalog::label($lot->crop) : null, 'cropKey' => $lot->crop,
                 'variety' => $lot->variety ?: null, 'method' => $al->method, 'counter' => $al->method ? AutoBook::counterOf($al->method) : null,
@@ -59,8 +63,11 @@ class AutoBrain
                 'fieldDate' => $al->fieldDate?->toDateString(), 'sowDate' => $al->sowDate?->toDateString(), 'treeAgeMonths' => $al->treeMonths,
                 'place' => trim(implode(', ', array_filter([$lot->locBarangay, $lot->locTown, $lot->locProvince]))) ?: null,
                 'pin' => $lot->pinLat ? [round((float) $lot->pinLat, 5), round((float) $lot->pinLng, 5)] : null,
-                'maturityDays' => $lot->daysToMaturity ?: CropCatalog::maturity($lot->crop),
+                'maturityDays' => $lot->daysToMaturity ?: (! empty($rec['days']) ? (int) round($rec['days']) : CropCatalog::maturity($lot->crop)),
             ];
+            if ($rec) {
+                $row['varietyKnown'] = ltrim(VarietyBook::promptLines([$rec]), '- ');
+            }
             if ($at && $withWeather) {
                 $row['soilGrids'] = $this->soilGrids($at[0], $at[1]);
                 $row['forecast'] = $this->forecastWords($at[0], $at[1]);
@@ -146,14 +153,23 @@ class AutoBrain
         }
         $book = collect($f['lots'])->pluck('cropKey')->filter()->unique()->mapWithKeys(fn ($k) => [CropCatalog::label($k) => AutoBook::forPrompt($k)])->all();
         $json = json_encode($f, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        $varieties = collect($f['lots'])->map(fn ($l) => ($l['variety'] ?: 'no variety named') . ' (' . ($l['crop'] ?: 'crop not set') . ')')->unique()->implode('; ');
+        // Learn once (2026-10-18): a variety the records or an earlier lookup know is in THE FARM (varietyKnown) and is not looked up again.
+        $unknown = self::unknownVarieties($f['lots']);
+        $look = collect($f['lots'])->filter(fn ($l) => ! $l['variety'] || empty($l['varietyKnown']))
+            ->map(fn ($l) => ($l['variety'] ?: 'no variety named') . ' (' . ($l['crop'] ?: 'crop not set') . ')')->unique()->implode('; ');
+        $known = collect($f['lots'])->filter(fn ($l) => $l['variety'] && ! empty($l['varietyKnown']))->pluck('variety')->unique()->implode(', ');
+        $blocks = implode('', array_map(fn ($crop, $names) => VarietyLearned::askBlock($names, $crop), array_keys($unknown), $unknown));
+        $varietyAsk = $look !== ''
+            ? "1. THE VARIETIES FIRST: {$look}. For each named variety find: who bred or released it (NSIC, PhilRice, IRRI, a seed company), its maturity in days, yield potential and average yield in t/ha, the season it was bred for, its tolerances and weaknesses (lodging, blast, tungro, BLB, drought, submergence, salinity, heat), and anything a grower is warned about. Where no variety is named, say what the common hybrids and inbreds for that crop in the Philippines are."
+                . ($known !== '' ? " The app already knows {$known} (their facts are in THE FARM as varietyKnown): do not look those up." : '') . "\n"
+            : "1. THE VARIETIES are known to the app ({$known}; their facts are in THE FARM as varietyKnown): do not look them up.\n";
 
         $research = "You are Anee, a smart farm technician for Filipino farmers, researching before planning a whole season for a farmer. Use the web search tool. Write research NOTES (prose, not JSON) with the pages you read.\n\n"
-            . "1. THE VARIETIES FIRST: {$varieties}. For each named variety find: who bred or released it (NSIC, PhilRice, IRRI, a seed company), its maturity in days, yield potential and average yield in t/ha, the season it was bred for, its tolerances and weaknesses (lodging, blast, tungro, BLB, drought, submergence, salinity, heat), and anything a grower is warned about. Where no variety is named, say what the common hybrids and inbreds for that crop in the Philippines are.\n"
+            . $varietyAsk
             . "2. THE SEASON: what PAGASA's seasonal outlook expects for rain and typhoons in the months the crops will be in the field, for the provinces named (the farm's twenty year weather record and the ENSO state are in THE FARM below: do not look those up).\n"
             . "3. THE SOIL: what the farmer's soil signs and the place point to, and how that soil locks up or frees nutrients (for example: sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots and free some; gypsum brings calcium that pushes sodium out).\n"
             . "4. Each crop's critical moments for nutrients and water in Philippine guides (PhilRice PalayCheck, DA production guides).\n\n"
-            . "THE FARM:\n" . $json;
+            . "THE FARM:\n" . $json . $blocks;
 
         $doc = "You are Anee, a smart farm technician for Filipino farmers. You are reading a farm before planning its whole season. Return ONE JSON object, nothing else. Plain words a farmer understands. Never invent a number the facts or the research do not support; where you are unsure, say so in dataGaps.\n\n"
             . "THE FARM:\n" . $json . "\n\nTHE CROP BOOK (land preparation, seedbed, preventive sprays, safety):\n" . json_encode($book, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
@@ -166,6 +182,46 @@ class AutoBrain
             . '"water":"what their water means for the plan","workforce":"what their workers mean for the plan","confidence":"low|medium|high","dataGaps":[""]}';
 
         return [$research, $doc];
+    }
+
+    /** The record of a lot's variety: the curated one, or one Anee looked up before (learn once). Null when it must be looked up. */
+    public static function varietyOf(?string $crop, ?string $variety): ?array
+    {
+        try {
+            return VarietyBook::find((string) $crop, (string) $variety);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+    }
+
+    /** The named varieties no book knows, by crop: [cropKey => [names]], from facts() lots (or any rows with cropKey, variety and varietyKnown). */
+    public static function unknownVarieties(array $lots): array
+    {
+        $out = [];
+        foreach ($lots as $l) {
+            $v = trim((string) ($l['variety'] ?? ''));
+            if ($v !== '' && empty($l['varietyKnown']) && ! empty($l['cropKey']) && ! in_array($v, $out[$l['cropKey']] ?? [], true)) {
+                $out[$l['cropKey']][] = $v;
+            }
+        }
+
+        return $out;
+    }
+
+    /** The same from the season's lots, light (no weather, no soil): for keeping what the reading found. */
+    public static function unknownVarietiesOf(AsAutoSeason $auto): array
+    {
+        $lots = [];
+        foreach (AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get() as $al) {
+            $lot = AsScheduleLot::find($al->lotId);
+            if ($lot && (int) $lot->deleteStatus === 1 && $lot->variety) {
+                $lots[] = ['cropKey' => $lot->crop, 'variety' => $lot->variety, 'varietyKnown' => self::varietyOf($lot->crop, $lot->variety) ? 1 : null];
+            }
+        }
+
+        return self::unknownVarieties($lots);
     }
 
     public static function parseObject(string $text, string $must): ?array

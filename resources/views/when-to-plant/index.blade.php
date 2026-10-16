@@ -1044,10 +1044,12 @@
        variety adds Anee's own research on it, so it has its own price. This
        is the number shown, and the number sent back as `quote` on the run. */
     const named = () => !!String(state.variety || '').trim();
+    // A variety on record, or one Anee looked up before, is not looked up again (learn once, 2026-10-18): the plain price.
+    const lookup = () => named() && !state.varRecord;
     const priceNow = () => {
         const f = OPT && OPT.quoteFor;
         if (!f) return OPT ? OPT.quote : null;
-        return named() ? f.variety : f.plain;
+        return lookup() ? f.variety : f.plain;
     };
     let saidPrice = null;
     function sayPrice() {
@@ -1057,9 +1059,9 @@
         // A price that moved (a variety named or cleared) is said with a small lift, not swapped in silently.
         const lift = saidPrice !== null && saidPrice !== price ? ' class="is-new"' : '';
         saidPrice = price;
-        const lead = named()
-            ? `With a variety named, one analysis costs <b${lift}>${price} credits</b>.`
-            : `One analysis costs <b${lift}>${price} credits</b>` + (f.variety && f.variety > price ? `, or ${f.variety} when you name a variety, since Anee reads up on it too.` : '.');
+        const lead = lookup()
+            ? `With a variety Anee has to look up, one analysis costs <b${lift}>${price} credits</b>.`
+            : `One analysis costs <b${lift}>${price} credits</b>` + (f.variety && f.variety > price ? (named() ? `. Anee already knows this variety, so nothing more is looked up.` : `, or ${f.variety} when you name a variety she has to look up.`) : '.');
         $id('wtpQuoteCost').innerHTML = `${lead} You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         // The folded card still says the one number that matters.
         $id('wtpQuoteHint').textContent = `${price} credits`;
@@ -1214,7 +1216,7 @@
         const VP = window.aneeVarietyPick;
         box.classList.toggle('is-own', !rec);
         box.innerHTML = VAR_ICON + '<span>' + (rec
-            ? '<b>On record.</b> ' + esc([VP ? VP.facts(rec) : '', rec.where ? 'bred for ' + rec.where : ''].filter(Boolean).join(' · ')) + '. Anee times the crop by these days and does not have to guess them.'
+            ? (rec.learned ? '<b>Anee looked it up before.</b> ' : '<b>On record.</b> ') + esc([VP ? VP.facts(rec) : '', rec.where ? 'bred for ' + rec.where : ''].filter(Boolean).join(' · ')) + '. Anee times the crop by these days and does not have to look it up again.'
             : 'Your own name, not on record. Anee looks it up, and the report says plainly if nothing is found.') + '</span>';
         box.hidden = false;
     }
@@ -1343,8 +1345,8 @@
             // The price moved since the page loaded: the card says the new one, and the next press pays it.
             if (err.status === 409 && err.data && Number(err.data.quote) > 0) {
                 const fresh = Number(err.data.quote);
-                if (OPT.quoteFor) OPT.quoteFor[named() ? 'variety' : 'plain'] = fresh;
-                if (!named()) OPT.quote = fresh;
+                if (OPT.quoteFor) OPT.quoteFor[lookup() ? 'variety' : 'plain'] = fresh;
+                if (!lookup()) OPT.quote = fresh;
                 sayPrice();
             }
             toast(err.message, 'error');

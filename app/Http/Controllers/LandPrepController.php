@@ -22,6 +22,8 @@ use App\Support\LandPrepPlanner as LP;
 use App\Support\Region;
 use App\Support\RiceVarieties;
 use App\Support\Tier;
+use App\Support\VarietyBook;
+use App\Support\VarietyLearned;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -188,6 +190,21 @@ class LandPrepController extends Controller
                 }
             }
         }
+        // The varieties Anee looked up before (learn once, 2026-10-18): picked or typed, they are not looked up again.
+        try {
+            foreach (VarietyLearned::rowsOf(VarietyLearned::family($crop)) as $l) {
+                if ($l['aliasOf'] || VarietyLearned::isStale($l)) {
+                    continue;
+                }
+                $rows[] = array_filter([
+                    'n' => $l['name'], 't' => implode(', ', array_slice($l['aliases'], 0, 4)), 'd' => $l['maturityDays'],
+                    'h' => str_starts_with($crop, 'rice') ? ($l['type'] === 'hybrid' ? 1 : 0) : null, 'b' => $l['type'] === 'hybrid' ? $l['company'] : null,
+                    'k' => 'Anee looked it up before', 'x' => 1,
+                ], fn ($x) => $x !== null && $x !== '');
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         return $this->json(true, 'ok', ['crop' => $crop, 'rows' => $rows]);
     }
@@ -198,9 +215,12 @@ class LandPrepController extends Controller
         $crop = (string) $request->query('crop', 'rice');
         $method = (string) $request->query('method', '');
         $variety = trim((string) $request->query('variety', ''));
-        $prep = LP::seedPrep($crop, $method, $variety, (string) $request->query('type', ''));
+        $known = LP::knownVariety($crop, $variety);
+        // A variety kept from an earlier lookup shows its own seed hours before the run (learn once).
+        $kept = ! $known && $variety !== '' ? self::learnedResearch($crop, $variety) : null;
+        $prep = LP::seedPrep($crop, $method, $variety, (string) $request->query('type', ''), $kept);
 
-        return $this->json(true, 'ok', ['prep' => $prep, 'known' => LP::knownVariety($crop, $variety)]);
+        return $this->json(true, 'ok', ['prep' => $prep, 'known' => $known || $kept !== null, 'kept' => $kept !== null]);
     }
 
     /** The farmer's seasons and their lots, for "from your seasons". */
@@ -277,7 +297,7 @@ class LandPrepController extends Controller
         }
         $out = ['time' => LP::timeCheck($case), 'dayWord' => LP::dayWord($case['crop'], $case['method']),
             // This plan's price by its size (lots, and the variety lookup when the variety is not on our list).
-            'quote' => AiPricing::credits(self::KIND, ['lots' => max(1, count($case['lots'] ?? [])), 'research' => ! empty($case['varietyCustom'])])];
+            'quote' => AiPricing::credits(self::KIND, ['lots' => max(1, count($case['lots'] ?? [])), 'research' => self::needsLookup($case)])];
         if ($request->boolean('advise')) {
             $out['crew'] = LP::recommendCrew($case);
         }
@@ -307,7 +327,9 @@ class LandPrepController extends Controller
            one price (the options quote, one lot) and is charged it; a page
            that sends the quote for this plan's size (lots, variety lookup)
            is charged that, and a stale one is refused. */
-        $quote = AiPricing::quote(self::KIND, ['lots' => count($case['lots']), 'research' => ! empty($case['varietyCustom'])]);
+        // A variety kept from an earlier lookup is not looked up again, so it is not paid for again (learn once, 2026-10-18).
+        $case['lookup'] = self::needsLookup($case);
+        $quote = AiPricing::quote(self::KIND, ['lots' => count($case['lots']), 'research' => $case['lookup']]);
         $price = AiPricing::agreed($request, $quote, AiPricing::credits(self::KIND, ['lots' => 1]));
         if ($price === null) {
             return $this->json(false, 'This plan now costs ' . $quote['credits'] . ' credits. Please make it again.', ['quote' => $quote['credits']], 409);
@@ -319,7 +341,7 @@ class LandPrepController extends Controller
         $standing = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)
             ->where('status', 'pending')->where('deleteStatus', 1)->where('created_at', '>', now()->subMinutes(10))->orderByDesc('id')->first();
         if ($standing) {
-            return $this->json(true, 'Already working on it.', ['pending' => true, 'id' => $standing->id, 'research' => ! empty($case['varietyCustom'])]);
+            return $this->json(true, 'Already working on it.', ['pending' => true, 'id' => $standing->id, 'research' => $case['lookup']]);
         }
         // Each lot's answers are kept as a field profile, so the next analysis can offer them (2026-10-15);
         // a lot from the farm's lots keeps them in itself (2026-10-16).
@@ -335,7 +357,7 @@ class LandPrepController extends Controller
         if (function_exists('fastcgi_finish_request')) {
             ignore_user_abort(true);
             @set_time_limit(0);
-            response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $id, 'research' => ! empty($case['varietyCustom'])]])->send();
+            response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $id, 'research' => $case['lookup']]])->send();
             fastcgi_finish_request();
             $this->runJob($id, (int) $payer->id, $settings, $case, $price);
             exit;
@@ -628,7 +650,7 @@ class LandPrepController extends Controller
         try {
             $beat('start');
             $field = $settings->forField('PH');
-            $research = $this->research($case, $field, $beat);
+            $research = $this->research($case, $field, $beat, $payerId);
             if ($research) {
                 $case['research'] = $research;
             }
@@ -642,8 +664,10 @@ class LandPrepController extends Controller
                 if (in_array($k, $looked, true)) {
                     continue;
                 }
-                $looked[] = $k;
-                $more = $this->research(LP::forLot($case, $i), $field, $beat);
+                $more = $this->research(LP::forLot($case, $i), $field, $beat, $payerId);
+                if (empty($more['kept'])) {
+                    $looked[] = $k;
+                }
                 if ($more) {
                     $case['lots'][$i]['research'] = $more;
                     $research = $research ? array_merge($research, ['tokensIn' => (int) $research['tokensIn'] + (int) $more['tokensIn'], 'tokensOut' => (int) $research['tokensOut'] + (int) $more['tokensOut'],
@@ -673,7 +697,7 @@ class LandPrepController extends Controller
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             $this->credits->chargeAllowingNegative($payerId, (float) $price, mb_substr('Land Prep Planner: ' . $case['cropLabel'] . ', ' . count($case['lots']) . ' ' . (count($case['lots']) === 1 ? 'lot' : 'lots') . $note, 0, 250));
-            AiPricing::audit(self::KIND, $result, (float) $price, ['lots' => count($case['lots']), 'research' => ! empty($case['varietyCustom'])], $settings);
+            AiPricing::audit(self::KIND, $result, (float) $price, ['lots' => count($case['lots']), 'research' => ! empty($case['lookup'])], $settings);
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report), 'credits' => round($price, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now(),
             ]);
@@ -693,33 +717,29 @@ class LandPrepController extends Controller
      * the seed card and the plan goes on without it. Null when there is
      * nothing to look up.
      */
-    private function research(array $case, AiSetting $settings, callable $beat): ?array
+    private function research(array $case, AiSetting $settings, callable $beat, ?int $userId = null): ?array
     {
         if (empty($case['varietyCustom']) || $case['variety'] === '' || ($case['variety'] !== '' && LP::knownVariety($case['crop'], $case['variety']))) {
             return null;
+        }
+        // Learn once (2026-10-18, the owner): a variety Anee looked up before is read from the book, nothing is searched.
+        if ($kept = self::learnedResearch($case['crop'], $case['variety'])) {
+            return $kept;
         }
         $beat('research');
         $rice = str_starts_with($case['crop'], 'rice');
         $crop = FieldCatalogue::cropWord($case['crop']);
         $name = str_replace('"', '', $case['variety']);
         $said = in_array($case['seedType'], ['hybrid', 'inbred'], true) ? ' The farmer says it is ' . ($case['seedType'] === 'hybrid' ? 'a hybrid.' : 'an inbred.') : '';
+        // The facts come back as the shared block (App\Support\VarietyLearned), kept for every module after.
+        $block = VarietyLearned::askBlock([$name], $case['crop']);
         $prompt = <<<PROMPT
 A Filipino farmer will plant the {$crop} variety "{$name}" in the Philippines.{$said} It is not in our variety list, so look it up on the web now: search for it and read the pages of its seed company or breeder, PhilRice, DA, BPI or the NSIC list.
 
-Find:
-1. The days from sowing to harvest.
-2. Whether it is a hybrid or an inbred (or open pollinated), and its seed company or breeder.
-3. The seed company's own instructions for preparing the seed before sowing: how many hours to soak it, how often to change the soaking water, and how many hours to incubate (sprout) it.
+Find what is published about it: its days from sowing to harvest, whether it is a hybrid or an inbred (or open pollinated), its seed company or breeder, its yields and traits, and the seed company's own instructions for preparing the seed before sowing (how many hours to soak it, how often to change the soaking water, how many hours to incubate or sprout it).
 
-Write short plain notes of what the pages say, then end with exactly these lines, filled in. Write unknown when the pages do not say it. Never guess, and never fill in a general practice as if it were this variety's.
-FOUND: yes or no (yes only if you found this exact variety)
-MATURITY_DAYS: a number, or unknown
-TYPE: hybrid, inbred, open pollinated, or unknown
-COMPANY: the seed company or breeder, or unknown
-SOAK_HOURS: a number, or a range like 24 to 48, or unknown
-WATER_CHANGE_HOURS: a number, or unknown
-INCUBATE_HOURS: a number, or a range like 24 to 36, or unknown
-SEED_NOTES: one or two plain sentences of the company's own seed instructions, or unknown
+Write short plain notes of what the pages say (at most 250 words), then end with the block below.
+{$block}
 PROMPT;
         $doc = $settings->forDocument();
         $began = microtime(true);
@@ -776,9 +796,68 @@ PROMPT;
         $res['refresh'] = $rice && $refresh ? $refresh[0] : null;
         $res['incubate'] = $rice ? $range($get('INCUBATE_HOURS'), 6, 72) : null;
         $res['seedNotes'] = $clean($get('SEED_NOTES'), 320);
-        $res['notes'] = $clean((string) preg_replace('/^\W*FOUND\W*:.*$/msi', '', $text), 1400);
+        $res['notes'] = $clean((string) preg_replace(['/^\W*VARIETY\W*:.*$/msi', '/^\W*FOUND\W*:.*$/msi'], '', $text), 1400);
+        // Learn once: what was found is kept for every module after (App\Support\VarietyLearned rules: found, searched, a real name, a hard fact).
+        if ($res['found'] && $res['searched']) {
+            $kept = VarietyLearned::harvest($case['crop'], [$case['variety']], (string) $r['text'],
+                ['via' => 'landprep', 'userId' => $userId, 'searched' => true, 'sources' => (array) ($r['sources'] ?? [])]);
+            $k = $kept[$case['variety']] ?? null;
+            $res['learned'] = $k ? (isset($k['id']) ? 'kept' : 'record') : null;
+        }
 
         return $res;
+    }
+
+    /**
+     * A variety the book now knows although it is not on the planner's own
+     * list (learn once, 2026-10-18): one Anee looked up before, as the
+     * research it gave (its days, type, company and the seed hours, nothing
+     * spent), or a name an earlier lookup found to be a variety on the record,
+     * as that record. Null when it still has to be looked up.
+     */
+    private static function learnedResearch(string $crop, string $variety): ?array
+    {
+        try {
+            $rec = VarietyBook::find($crop, $variety);
+            if (! $rec) {
+                return null;
+            }
+            if (! empty($rec['learned']['id'])) {
+                $row = VarietyLearned::lookup($crop, $variety);
+
+                return $row ? VarietyLearned::asResearch($row) : null;
+            }
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+
+        return ['asked' => true, 'ok' => true, 'found' => true, 'searched' => false, 'kept' => true, 'tokensIn' => 0, 'tokensOut' => 0,
+            'days' => $rec['days'] ? (int) round($rec['days']) : null, 'type' => $rec['type'] === 'hybrid' ? 'hybrid' : ($rec['type'] === 'inbred' ? 'inbred' : ''),
+            'company' => null, 'soak' => null, 'refresh' => null, 'incubate' => null, 'seedNotes' => '', 'record' => $rec['name'],
+            'notes' => 'On the variety record as ' . ltrim(VarietyBook::promptLines([$rec]), '- ')];
+    }
+
+    /** Whether a run will look a variety up on the web: a variety (the plan's or a lot's) neither on the list nor kept from an earlier lookup. */
+    private static function needsLookup(array $case): bool
+    {
+        $names = [];
+        if (! empty($case['varietyCustom']) && ($case['variety'] ?? '') !== '' && ! LP::knownVariety($case['crop'], $case['variety'])) {
+            $names[] = [$case['crop'], $case['variety']];
+        }
+        foreach ((array) ($case['lots'] ?? []) as $l) {
+            if (! empty($l['varietyCustom']) && ($l['variety'] ?? '') !== '') {
+                $names[] = [$l['crop'] ?? $case['crop'], $l['variety']];
+            }
+        }
+        foreach ($names as [$c, $v]) {
+            if (! self::learnedResearch($c, $v)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /** The arithmetic before Anee: each lot's steps, rules, seed preparation, crew, bookings. */
@@ -900,7 +979,12 @@ PROMPT;
                 . match ($prep['confidence'] ?? '') { 'company' => 'from the seed company or PhilRice', 'research' => 'from Anee\'s own web research on this variety', default => 'general PhilRice practice, no brand instruction found' } . ')'
             : ($prep['say'] ?? 'not applicable');
         $r = $case['research'] ?? null;
-        $research = ! $r ? '' : "\nVARIETY RESEARCH (your own web search just now, not on our list): " . (! $r['ok'] ? 'the lookup failed. Tell the farmer to follow the seed bag.'
+        $head = match (true) {
+            ! empty($r['record']) => 'VARIETY ON RECORD (an earlier lookup found the name the farmer wrote is this registered variety)',
+            ! empty($r['kept']) => 'VARIETY FACTS (from your own earlier web research on it, kept by the app; it is not on our list)',
+            default => 'VARIETY RESEARCH (your own web search just now, not on our list)',
+        };
+        $research = ! $r ? '' : "\n" . $head . ': ' . (! $r['ok'] ? 'the lookup failed. Tell the farmer to follow the seed bag.'
             : (! $r['found'] ? 'this exact variety was not found. Tell the farmer to follow the seed bag.'
                 : implode(', ', array_filter([$r['days'] ? 'about ' . $r['days'] . ' days to harvest' : null, $r['type'] ?: null, $r['company'] ? 'by ' . $r['company'] : null])) . '. Notes: ' . mb_substr($r['notes'], 0, 700)));
         $fc = $weather['forecast'] ? implode(', ', array_map(fn ($d) => $d['date'] . ' ' . $d['text'] . (isset($d['pop']) ? ' rain ' . $d['pop'] . '%' : '') . (isset($d['max']) ? ' ' . $d['min'] . ' to ' . $d['max'] . ' C' : ''), $weather['forecast'])) : 'not available';

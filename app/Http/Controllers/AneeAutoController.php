@@ -684,10 +684,16 @@ class AneeAutoController extends Controller
         $settings = AiSetting::current()->forField('PH');
         try {
             $this->beat($auto, 'start');
+            $unknown = AutoBrain::unknownVarietiesOf($auto);
             [$research, $doc] = $this->brain->readingPrompts($auto);
             $result = $this->ai->researchThenJson($settings, $research, $doc, 9000, fn (string $t) => AutoBrain::parseObject($t, 'lots'), fn ($phase, $try = 1) => $this->beat($auto, $phase, (int) $try));
             if (! ($result['ok'] ?? false)) {
                 throw new \RuntimeException($result['error'] ?? 'Anee\'s reading could not be read. Please try again.');
+            }
+            // Learn once (2026-10-18): the varieties the reading looked up are kept for every module after.
+            foreach ($unknown as $crop => $names) {
+                \App\Support\VarietyLearned::harvest((string) $crop, $names, (string) ($result['researchText'] ?? ''),
+                    ['via' => 'auto', 'userId' => (int) $this->payer()->id, 'searched' => (bool) ($result['searched'] ?? false), 'sources' => (array) ($result['sources'] ?? [])]);
             }
             $data = $result['data'];
             $data['at'] = now('Asia/Manila')->format('M j, Y g:i A');

@@ -1639,7 +1639,8 @@ final class LandPrepPlanner
             return $base + ['research' => ['status' => 'failed'] + $facts, 'researchSay' => $miss];
         }
         $type = in_array($seedType, ['hybrid', 'inbred'], true) ? $seedType : (in_array($research['type'] ?? '', ['hybrid', 'inbred'], true) ? $research['type'] : '');
-        $base = self::seedPrepBase($crop, $method, $variety, $type);
+        // A name an earlier lookup found to be a registered variety reads that record's seed book (learn once, 2026-10-18).
+        $base = self::seedPrepBase($crop, $method, ! empty($research['record']) ? (string) $research['record'] : $variety, $type);
         $notes = trim((string) ($research['seedNotes'] ?? ''));
         if (! $rice || empty($base['applies'])) {
             return $base + ['research' => ['status' => 'found'] + $facts, 'researchSay' => $notes !== '' ? $notes : 'Anee found the variety but no seed instructions of its own. Follow the seed bag.'];
