@@ -13,7 +13,7 @@
     "harvest records",
     "farm inventory"
   ],
-  "excerpt": "The best value farm app for vegetable growers in the Philippines is the one that keeps track of many crops, many pickings and many small costs for the fewest pesos. anee.io, a farm app built for Filipino farmers, starts free, and its Solo Farmer plan costs PHP 1,800 a year. That is about 1.4 percent of the PHP 132,480 that the Bureau of Plant Industry lists as the cost of one hectare of ampalaya. Value still depends on you using the records to decide what to plant, buy and sell next.",
+  "excerpt": "The best value farm app for vegetable growers in the Philippines is the one that keeps track of many crops, many pickings and many small costs for the fewest pesos. anee.io, a farm app built for Filipino farmers, starts free, and its Solo Farmer plan costs PHP 1,800 a year. That is about 1.4 percent of PHP 132,480, the usual cost of one hectare of ampalaya. Value still depends on you using the records to decide what to plant, buy and sell next.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-app-for-vegetable-growers.webp",
     "alt": "Vegetable beds of different crops on a small farm in Santa Maria, Bulacan, the kind of farm a farm app for vegetable growers must track",
@@ -22,7 +22,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Gulay is not palay. A rice lot has one harvest, but a vine crop keeps giving. The BPI ampalaya guide says to harvest 2 to 3 times a week, for 2 to 3 months. Meanwhile the beds beside it hold other crops on other clocks. Every picking, spray and bag of fertilizer is a record, and it is easy to lose track by the second month."
+      "text": "Gulay is not palay. A rice lot has one harvest, but a vine crop keeps giving. Ampalaya is harvested 2 to 3 times a week, for 2 to 3 months. Meanwhile the beds beside it hold other crops on other clocks. Every picking, spray and bag of fertilizer is a record, and it is easy to lose track by the second month."
     },
     {
       "type": "heading",
@@ -46,7 +46,7 @@
     },
     {
       "type": "text",
-      "text": "The BPI ampalaya guide puts labor at PHP 34,500 and materials at PHP 80,700 for one hectare, before a 15 percent allowance for other costs. So a useful app must follow the money as closely as the crop."
+      "text": "One hectare of ampalaya takes about PHP 34,500 in labor and PHP 80,700 in materials, before a 15 percent allowance for other costs. So a useful app must follow the money as closely as the crop."
     },
     {
       "type": "table",
@@ -79,17 +79,17 @@
         ],
         [
           "Inputs in the shed",
-          "Materials cost more than labor in the BPI table",
+          "Materials cost more than labor on ampalaya",
           "Inventory that deducts stock when you tick a task done"
         ],
         [
           "Buyers and prices",
-          "The DA posts prices every week, and they move",
+          "Market prices are posted every week, and they move",
           "A Contact List of traders and buyers, with notes and tags"
         ],
         [
           "Pest and disease help",
-          "The BPI guide wraps ampalaya fruits against fruit flies",
+          "Ampalaya fruits are wrapped against fruit flies",
           "Pest Finder and Disease Finder, and Anee can read a photo"
         ]
       ]
@@ -194,7 +194,7 @@
         "Anee needs internet and uses credits. The board works offline, but her answers wait for a signal.",
         "Libre and Libre plus Anee allow one lot per season, so a farm with several crops needs Solo Farmer or Farm Owner.",
         "It keeps records of sales, but it does not sell your produce or take payment for it.",
-        "It does not replace a soil test. For fertilizer amounts, start from a soil analysis or the BPI production guides."
+        "It does not replace a soil test. For fertilizer amounts, start from a soil analysis or a crop production guide."
       ]
     },
     {

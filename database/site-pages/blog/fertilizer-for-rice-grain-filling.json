@@ -22,7 +22,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Grain filling is the stretch after flowering when each spikelet fills with starch, from milk to dough to hard grain. In the tropics, ripening takes about 30 days. Yoshida, in IRRI's Fundamentals of Rice Crop Science, measured an effective grain filling period of about 23 days for IR20 at Los Baños.\n\nMost of what fills the grain comes from the leaves during those weeks. Yoshida found that starch stored before heading supplies 0 to 40 percent of the grain in most conditions. The rest comes from photosynthesis after heading, so green, healthy upper leaves are the real grain fillers."
+      "text": "Grain filling is the stretch after flowering when each spikelet fills with starch, from milk to dough to hard grain. In the tropics, ripening takes about 30 days. Yoshida, in Fundamentals of Rice Crop Science, measured an effective grain filling period of about 23 days for IR20 at Los Baños.\n\nMost of what fills the grain comes from the leaves during those weeks. Yoshida found that starch stored before heading supplies 0 to 40 percent of the grain in most conditions. The rest comes from photosynthesis after heading, so green, healthy upper leaves are the real grain fillers."
     },
     {
       "type": "list",
@@ -46,7 +46,7 @@
     },
     {
       "type": "table",
-      "caption": "Nutrients and grain filling in rice, from PhilRice PalayCheck and Yoshida",
+      "caption": "Nutrients and grain filling in rice",
       "rows": [
         [
           "Nutrient",
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "A fertilizer with phosphorus and potassium, like 14 14 14, belongs at basal. The potassium you add near panicle initiation, usually as muriate of potash, is the one that works on the grain. PhilRice adds muriate of potash before or after panicle initiation in sunny areas such as Nueva Ecija, Bicol and Isabela, for bigger and heavier grains. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the grade."
+      "text": "A fertilizer with phosphorus and potassium, like 14 14 14, belongs at basal. The potassium you add near panicle initiation, usually as muriate of potash, is the one that works on the grain. In sunny areas such as Nueva Ecija, Bicol and Isabela, add muriate of potash before or after panicle initiation, for bigger and heavier grains. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the grade."
     },
     {
       "type": "heading",
@@ -81,7 +81,7 @@
     },
     {
       "type": "text",
-      "text": "Usually not. IRRI says potassium at flowering can raise resistance to lodging and diseases in dense, high yielding crops, but it may not raise yield. The split that counts is basal and early panicle initiation. IRRI divides it half and half when the total is over 30 kg of K2O per hectare."
+      "text": "Usually not. Potassium at flowering can raise resistance to lodging and diseases in dense, high yielding crops, but it may not raise yield. The split that counts is basal and early panicle initiation. Divide it half and half when the total is over 30 kg of K2O per hectare."
     },
     {
       "type": "heading",
@@ -99,13 +99,13 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck warns that too much nitrogen during panicle initiation and flowering makes rice prone to lodging and pests. It also raises the share of unfilled spikelets, and it costs money you will not get back.\n\nDisease follows heavy nitrogen as well. IRRI lists high nitrogen among the conditions that favor [sheath blight](/diseases/sheath-blight), along with a warm, humid canopy and close spacing. Sheath blight kills leaves in the canopy, the same leaves that should be filling the grain."
+      "text": "Too much nitrogen during panicle initiation and flowering makes rice prone to lodging and pests. It also raises the share of unfilled spikelets, and it costs money you will not get back.\n\nDisease follows heavy nitrogen as well. High nitrogen is among the conditions that favor [sheath blight](/diseases/sheath-blight), along with a warm, humid canopy and close spacing. Sheath blight kills leaves in the canopy, the same leaves that should be filling the grain."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "Yellow lower leaves during ripening are normal",
-      "text": "Yoshida describes ripening as a time of leaf senescence, while the plant moves food into the grain. Do not answer it with urea. PalayCheck stops reading the leaf color chart at early flowering."
+      "text": "Yoshida describes ripening as a time of leaf senescence, while the plant moves food into the grain. Do not answer it with urea. Stop reading the leaf color chart at early flowering."
     },
     {
       "type": "heading",
@@ -114,14 +114,14 @@
     },
     {
       "type": "text",
-      "text": "Once the panicles are out, water and timing do the rest. These steps follow PalayCheck from flowering to the drying floor."
+      "text": "Once the panicles are out, water and timing do the rest. These steps run from flowering to the drying floor."
     },
     {
       "type": "steps",
       "items": [
         {
           "title": "Keep water at flowering",
-          "text": "Hold 5 to 7 cm of water during flowering. PalayCheck says drought from panicle initiation to grain filling leaves many unfilled spikelets."
+          "text": "Hold 5 to 7 cm of water during flowering. Drought from panicle initiation to grain filling leaves many unfilled spikelets."
         },
         {
           "title": "Drain before harvest",
@@ -175,7 +175,7 @@
       "items": [
         {
           "q": "Can I spray fertilizer at milk stage to fill the grains?",
-          "a": "PalayCheck has no nitrogen dose after early flowering, and Yoshida shows most grain starch comes from photosynthesis after heading. Healthy leaves and enough water do more at that stage. If you still try a foliar product, follow its label and FPA registration."
+          "a": "The usual plan has no nitrogen dose after early flowering, and Yoshida shows most grain starch comes from photosynthesis after heading. Healthy leaves and enough water do more at that stage. If you still try a foliar product, follow its label and FPA registration."
         },
         {
           "q": "How long does grain filling take in palay?",

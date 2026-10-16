@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A rice season does not cost the same every week. Some weeks need almost nothing. Others need wages for a whole transplanting crew and several bags of fertilizer on the same day. If the cash is not ready, the work slips, and late fertilizer or a late spray can cost you yield.\n\nThe total is large. A hectare of palay cost PHP 59,695 to grow in 2024, based on PSA data reported by Philstar. Much of that goes out weeks or months before you sell a single kilo. PhilRice and IRRI, in their cost studies, count up to four months of interest on the cash a farmer spends before harvest."
+      "text": "A rice season does not cost the same every week. Some weeks need almost nothing. Others need wages for a whole transplanting crew and several bags of fertilizer on the same day. If the cash is not ready, the work slips, and late fertilizer or a late spray can cost you yield.\n\nThe total is large. A hectare of palay cost PHP 59,695 to grow in 2024. Much of that goes out weeks or months before you sell a single kilo. Rice cost studies count up to four months of interest on the cash a farmer spends before harvest."
     },
     {
       "type": "list",
@@ -45,11 +45,11 @@
     },
     {
       "type": "text",
-      "text": "Here is the usual rhythm for transplanted rice, using the PhilRice fertilizer plan for a 5 to 6 ton crop on a 111 to 120 day variety. The fertilizer amounts use FPA national average prices for October 5 to 9, 2026."
+      "text": "Here is the usual rhythm for transplanted rice, using the usual fertilizer plan for a 5 to 6 ton crop on a 111 to 120 day variety. The fertilizer amounts use FPA national average prices for October 5 to 9, 2026."
     },
     {
       "type": "table",
-      "caption": "When cash goes out in a rice season, per hectare. Fertilizer from the PhilRice plan at FPA national average prices. Other lines vary by farm.",
+      "caption": "When cash goes out in a rice season, per hectare. Fertilizer from the usual plan at FPA national average prices. Other lines vary by farm.",
       "rows": [
         [
           "When",
@@ -130,7 +130,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Share pay saves cash, not cost",
-      "text": "PhilRice and IRRI note that many farmers pay harvesters with a share of the palay to keep cash expenses low at harvest. It does ease your farm cash flow, but the share is still a cost. Put its peso value in your records, so your profit is not overstated."
+      "text": "Many farmers pay harvesters with a share of the palay to keep cash expenses low at harvest. It does ease your farm cash flow, but the share is still a cost. Put its peso value in your records, so your profit is not overstated."
     },
     {
       "type": "heading",
@@ -175,7 +175,7 @@
         },
         {
           "q": "How much cash do I need for fertilizer per hectare?",
-          "a": "On the PhilRice 5 to 6 ton plan, about PHP 9,151.72 per hectare at FPA national average prices for October 5 to 9, 2026. Prices change every week, so check the latest FPA list."
+          "a": "On the usual 5 to 6 ton plan, about PHP 9,151.72 per hectare at FPA national average prices for October 5 to 9, 2026. Prices change every week, so check the latest FPA list."
         },
         {
           "q": "Where can a small farmer borrow for the season?",

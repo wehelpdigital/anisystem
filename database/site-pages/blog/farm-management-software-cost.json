@@ -67,7 +67,7 @@
           "One time purchase",
           "Pay once in the app store",
           "Updates and support may stop later",
-          "PhilRice LCC App Pro, listed at PHP 90 on Google Play"
+          "LCC App Pro, listed at PHP 90 on Google Play"
         ],
         [
           "Monthly",
@@ -147,7 +147,7 @@
     },
     {
       "type": "text",
-      "text": "Offline mode comes with every plan. On Farm Owner, your workers log in under your plan and pay nothing themselves. The full list is on the [pricing page](/pricing).\n\nFor scale, the PSA puts the 2024 average cost of producing palay at PHP 59,695 per hectare. So a year of Solo Farmer comes to about 3 percent of one hectare's cost for one season. Our guide to [farm expense management software](/blog/farm-expense-management-software) works it out per crop."
+      "text": "Offline mode comes with every plan. On Farm Owner, your workers log in under your plan and pay nothing themselves. The full list is on the [pricing page](/pricing).\n\nFor scale, the 2024 average cost of producing palay was PHP 59,695 per hectare. So a year of Solo Farmer comes to about 3 percent of one hectare's cost for one season. Our guide to [farm expense management software](/blog/farm-expense-management-software) works it out per crop."
     },
     {
       "type": "heading",
@@ -277,7 +277,7 @@
       "items": [
         {
           "q": "Is there free farm management software?",
-          "a": "Yes. The Libre plan of anee.io is free with no end date and shows a few ads. PhilRice's PalayCheck App also shows a price of zero on Google Play, for rice. Our guide to [farm management software](/blog/farm-management-software) compares the free options."
+          "a": "Yes. The Libre plan of anee.io is free with no end date and shows a few ads. The PalayCheck App also shows a price of zero on Google Play, for rice. Our guide to [farm management software](/blog/farm-management-software) compares the free options."
         },
         {
           "q": "Does anee.io charge me automatically every month?",

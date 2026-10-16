@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The notebook is not the enemy. PhilRice's PalayCheck System tells farmers to use the forms provided or a field notebook, and not to rely on memory. What matters is that the record exists, written on the day.\n\nThe real difference shows after you write. A notebook holds the facts, but it does not add them up, warn you or keep a photo. An FAO farm management manual also notes that the number of records a farmer needs grows as the farm sells more. So the right tool depends on your farm, not on what is new. For what to record in the first place, start with our guide to [farm record keeping](/blog/farm-record-keeping)."
+      "text": "The notebook is not the enemy. Use a record form or a field notebook, and do not rely on memory. What matters is that the record exists, written on the day.\n\nThe real difference shows after you write. A notebook holds the facts, but it does not add them up, warn you or keep a photo. The number of records a farmer needs also grows as the farm sells more. So the right tool depends on your farm, not on what is new. For what to record in the first place, start with our guide to [farm record keeping](/blog/farm-record-keeping)."
     },
     {
       "type": "heading",
@@ -161,7 +161,7 @@
     },
     {
       "type": "text",
-      "text": "In anee.io, each task on the board carries its lot, date, workers and materials. When you tick it done, the labor cost adds itself up, and on Solo Farmer the shed also takes the fertilizer out of stock. The [labor report](/features/labor-report) comes with the free plan, and Solo Farmer adds the expenses and profit reports. All of them build from those ticks, so you never type a cost twice.\n\nThat sum matters more than it looks. The PSA puts the average cost of producing palay in 2024 at PHP 59,695 per hectare, or PHP 14.52 per kilogram. Your own records show if your farm spends more or less than that, and on what."
+      "text": "In anee.io, each task on the board carries its lot, date, workers and materials. When you tick it done, the labor cost adds itself up, and on Solo Farmer the shed also takes the fertilizer out of stock. The [labor report](/features/labor-report) comes with the free plan, and Solo Farmer adds the expenses and profit reports. All of them build from those ticks, so you never type a cost twice.\n\nThat sum matters more than it looks. The average cost of producing palay in 2024 was PHP 59,695 per hectare, or PHP 14.52 per kilogram. Your own records show if your farm spends more or less than that, and on what."
     },
     {
       "type": "heading",
@@ -260,7 +260,7 @@
         },
         {
           "q": "Is there free farm record keeping software?",
-          "a": "Yes. The Libre plan of anee.io is free, with the activities board, notes, tags, harvest observations and the labor report, and it works offline. The PalayCheck App from PhilRice is free on Google Play for rice farmers. A spreadsheet costs nothing if you already own a computer."
+          "a": "Yes. The Libre plan of anee.io is free, with the activities board, notes, tags, harvest observations and the labor report, and it works offline. The PalayCheck App is free on Google Play for rice farmers. A spreadsheet costs nothing if you already own a computer."
         },
         {
           "q": "What happens to my records if I lose my phone?",

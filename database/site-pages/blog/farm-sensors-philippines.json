@@ -6,13 +6,13 @@
   "category": "Farm Apps",
   "title": "Do Farm Apps Connect to Farm Sensors and Equipment in the Philippines?",
   "metaTitle": "Farm Sensors in the Philippines: What They Do, What Pays",
-  "metaDescription": "Farm sensors for Filipino farms: water level, soil moisture and weather stations, their upkeep, PhilRice and DOST projects, and which apps link to them.",
+  "metaDescription": "Farm sensors for Filipino farms: water level, soil moisture and weather stations, their upkeep, Philippine public projects, and which apps link to them.",
   "focusKeyword": "farm sensors",
   "keywords": [
     "farm sensors",
     "crop production tools"
   ],
-  "excerpt": "Some farm apps connect to farm sensors such as weather stations, soil moisture probes and water level meters, mostly on big farms. In the Philippines, public projects like PhilRice's AutoMonPH and UPLB's SARAI send their own text advisories instead. For a small rice farm, a plastic AWD tube and a good forecast do much of the same job. Built for Filipino farmers, the anee.io app does not connect to sensors or machines. It works from forecast weather, satellite pictures and your own field notes.",
+  "excerpt": "Some farm apps connect to farm sensors such as weather stations, soil moisture probes and water level meters, mostly on big farms. In the Philippines, public projects like AutoMonPH and SARAI send their own text advisories instead. For a small rice farm, a plastic AWD tube and a good forecast do much of the same job. Built for Filipino farmers, the anee.io app does not connect to sensors or machines. It works from forecast weather, satellite pictures and your own field notes.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-sensors-philippines.webp",
     "alt": "Weather station with farm sensors beside rice paddies at IRRI in Los Banos, Laguna",
@@ -33,8 +33,8 @@
       "ordered": false,
       "items": [
         "**Farm sensors measure one thing in one place**, like water depth, soil moisture or rainfall.",
-        "**The cheapest water sensor is a simple tube.** IRRI's field water tube shows when a paddy needs water under alternate wetting and drying (AWD).",
-        "**Philippine projects exist:** PhilRice's AutoMonPH water level sensor, and UPLB's SARAI weather stations and soil moisture system, funded by DOST PCAARRD.",
+        "**The cheapest water sensor is a simple tube.** A field water tube shows when a paddy needs water under alternate wetting and drying (AWD).",
+        "**Philippine projects exist:** the AutoMonPH water level sensor, and the SARAI weather stations and soil moisture system.",
         "**Sensors need batteries, signal and someone who acts on them.** They pay best when a group shares them.",
         "**anee.io does not connect to sensors or machines.** It uses forecasts, satellite pictures and your notes."
       ]
@@ -91,7 +91,7 @@
     },
     {
       "type": "text",
-      "text": "It is a field water tube for AWD, a water saving method from IRRI. The tube sits in the paddy so you can see the water level even below the soil surface. IRRI's Rice Knowledge Bank gives the rule."
+      "text": "It is a field water tube for AWD, a water saving method. The tube sits in the paddy so you can see the water level even below the soil surface. Here is the rule."
     },
     {
       "type": "steps",
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice describes AutoMonPH as an electronic device that measures paddy water level, based on AWD. It came from the WateRice project of PhilRice, IRRI, the National Irrigation Administration and the Bureau of Soils and Water Management. Farmers receive their field's water level and irrigation timing advice by SMS. Meanwhile, a central database tells the irrigators association which areas need water.\n\nIt started in 2016 with the Bantug Bakal Irrigators Association in the Science City of Munoz, Nueva Ecija. Later, PhilRice put two improved sensors on each member's farm, covering 252.85 hectares. The first battery lasted only four days, and a low battery gave wrong readings. The improved sensor reportedly runs more than 60 days."
+      "text": "AutoMonPH is an electronic device that measures paddy water level, based on AWD. It came from the WateRice project of PhilRice, IRRI, the National Irrigation Administration and the Bureau of Soils and Water Management. Farmers receive their field's water level and irrigation timing advice by SMS. Meanwhile, a central database tells the irrigators association which areas need water.\n\nIt started in 2016 with the Bantug Bakal Irrigators Association in the Science City of Munoz, Nueva Ecija. Later, PhilRice put two improved sensors on each member's farm, covering 252.85 hectares. The first battery lasted only four days, and a low battery gave wrong readings. The improved sensor reportedly runs more than 60 days."
     },
     {
       "type": "heading",
@@ -143,7 +143,7 @@
     },
     {
       "type": "text",
-      "text": "Project SARAI of UPLB, funded by DOST PCAARRD, began in 2013. Its automatic weather station measures rainfall, humidity, wind speed and direction, soil temperature and soil moisture. In August 2026, PCAARRD said SARAI is rolling out nationwide through its regional hub program, SARAI CeNTRO.\n\nSARAI also built WAISS, a water advisory system for irrigation scheduling. Its field unit has soil moisture sensors, a data logger that transmits, and a 5 volt solar panel. The logger sends readings to the software by text message."
+      "text": "Project SARAI of UPLB, funded by DOST PCAARRD, began in 2013. Its automatic weather station measures rainfall, humidity, wind speed and direction, soil temperature and soil moisture. As of August 2026, SARAI is rolling out nationwide through its regional hub program, SARAI CeNTRO.\n\nSARAI also built WAISS, a water advisory system for irrigation scheduling. Its field unit has soil moisture sensors, a data logger that transmits, and a 5 volt solar panel. The logger sends readings to the software by text message."
     },
     {
       "type": "callout",
@@ -212,11 +212,11 @@
         },
         {
           "q": "What is the cheapest sensor for a rice farm?",
-          "a": "A field water tube for AWD. It shows the water below the soil surface, and IRRI's rule is to flood again when it drops 15 cm."
+          "a": "A field water tube for AWD. It shows the water below the soil surface, and the rule is to flood again when it drops 15 cm."
         },
         {
           "q": "How long do sensor batteries last?",
-          "a": "It depends on the device. PhilRice's first AutoMonPH sensors lasted only four days on battery, while the improved ones reportedly run more than 60 days. Ask about battery life before you buy any sensor."
+          "a": "It depends on the device. The first AutoMonPH sensors lasted only four days on battery, while the improved ones reportedly run more than 60 days. Ask about battery life before you buy any sensor."
         },
         {
           "q": "Do I need a sensor to save irrigation water?",
@@ -224,7 +224,7 @@
         },
         {
           "q": "Can our irrigators association get water level sensors?",
-          "a": "PhilRice tested AutoMonPH with an irrigators association in Nueva Ecija. Ask PhilRice, your irrigation office or your municipal agriculture office about current pilots in your area."
+          "a": "AutoMonPH was tested with an irrigators association in Nueva Ecija. Ask PhilRice, your irrigation office or your municipal agriculture office about current pilots in your area."
         }
       ]
     },

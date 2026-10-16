@@ -16,7 +16,7 @@
     "leaf color chart",
     "wet season yield target"
   ],
-  "excerpt": "The best fertilizer for wet season rice is a smaller plan with sharper timing, because cloudy months cap the yield the crop can reach. PhilRice's general recommendation for irrigated lowland gives 97 kg of nitrogen per hectare in the wet season, against 139 kg in the dry season. A DA, PhilRice and IRRI quick guide for Nueva Ecija uses 2 to 4 bags of 14 14 14 at transplanting, then urea at active tillering and at panicle initiation, by yield target. anee.io, a farm app built for Filipino farmers, dates each dose from your transplanting day and shows the rain forecast beside it.",
+  "excerpt": "The best fertilizer for wet season rice is a smaller plan with sharper timing, because cloudy months cap the yield the crop can reach. The general recommendation for irrigated lowland gives 97 kg of nitrogen per hectare in the wet season, against 139 kg in the dry season. A quick guide for Nueva Ecija uses 2 to 4 bags of 14 14 14 at transplanting, then urea at active tillering and at panicle initiation, by yield target. anee.io, a farm app built for Filipino farmers, dates each dose from your transplanting day and shows the rain forecast beside it.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-wet-season-rice.webp",
     "alt": "Lush tillering palay beside an irrigation canal under a cloudy August sky at PhilRice in Muñoz, Nueva Ecija, a wet season rice crop",
@@ -25,13 +25,13 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The wet season crop grows under clouds. IRRI's Fundamentals of Rice Crop Science explains that the tropics get more sunlight in the dry season, so dry season yields are usually higher. Even so, the right variety and good management can still give about 5 to 6 tons per hectare in the wet season.\n\nThat changes the fertilizer plan in two ways. First, the target is lower, so the rate is lower. Second, rain can wash away a dose that lands on the wrong day, so timing matters more than ever."
+      "text": "The wet season crop grows under clouds. The tropics get more sunlight in the dry season, so dry season yields are usually higher. Even so, the right variety and good management can still give about 5 to 6 tons per hectare in the wet season.\n\nThat changes the fertilizer plan in two ways. First, the target is lower, so the rate is lower. Second, rain can wash away a dose that lands on the wrong day, so timing matters more than ever."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Feed for a wet season target.** PhilRice gives 97 kg of nitrogen per hectare in the wet season and 139 kg in the dry season.",
+        "**Feed for a wet season target.** The usual rate is 97 kg of nitrogen per hectare in the wet season and 139 kg in the dry season.",
         "**Put the basal dose into the soil** between transplanting and 14 days after, with all the phosphorus.",
         "**Split the urea** between active tillering and panicle initiation.",
         "**Top dress into shallow water,** 2 to 5 cm deep, late in the afternoon, with the bunds closed.",
@@ -45,11 +45,11 @@
     },
     {
       "type": "text",
-      "text": "Less sunlight means the crop can turn less fertilizer into grain. If you feed a wet season crop like a dry season one, the extra nitrogen tends to go into leaves rather than grain. PalayCheck warns that too much nitrogen during panicle initiation and flowering invites lodging and pests. It also raises the share of unfilled grains.\n\nWet months also bring strong winds and typhoons, and a tall, soft crop falls over first. So the wet season plan aims a little lower and keeps the stems firm."
+      "text": "Less sunlight means the crop can turn less fertilizer into grain. If you feed a wet season crop like a dry season one, the extra nitrogen tends to go into leaves rather than grain. Too much nitrogen during panicle initiation and flowering invites lodging and pests. It also raises the share of unfilled grains.\n\nWet months also bring strong winds and typhoons, and a tall, soft crop falls over first. So the wet season plan aims a little lower and keeps the stems firm."
     },
     {
       "type": "table",
-      "caption": "PhilRice modified general recommendation for irrigated lowland rice, kg per hectare, for farms without a soil test or decision tool.",
+      "caption": "Modified general recommendation for irrigated lowland rice, kg per hectare, for farms without a soil test or decision tool.",
       "rows": [
         [
           "Nutrient",
@@ -80,7 +80,7 @@
     },
     {
       "type": "text",
-      "text": "For transplanted rice in Nueva Ecija, DA, PhilRice, the provincial government and IRRI made a quick guide in bags per hectare. It counts one cavan as 56 kg of fresh palay from the thresher. The days follow your variety: early, medium early or medium maturing."
+      "text": "For transplanted rice in Nueva Ecija, there is a quick guide in bags per hectare. It counts one cavan as 56 kg of fresh palay from the thresher. The days follow your variety: early, medium early or medium maturing."
     },
     {
       "type": "table",
@@ -134,7 +134,7 @@
       "items": [
         {
           "title": "Mix the basal dose into the soil",
-          "text": "PalayCheck says to incorporate granular fertilizer into the soil, which cuts leaching and nitrogen loss to the air. Put only about 30 percent of the season's nitrogen in this first dose."
+          "text": "Incorporate granular fertilizer into the soil, which cuts leaching and nitrogen loss to the air. Put only about 30 percent of the season's nitrogen in this first dose."
         },
         {
           "title": "Check the forecast before each top dressing",
@@ -142,7 +142,7 @@
         },
         {
           "title": "Spread into shallow water, late in the day",
-          "text": "Top dress when the field holds 2 to 5 cm of water. PalayCheck advises the cooler hours, after 3 in the afternoon, to cut nitrogen loss."
+          "text": "Top dress when the field holds 2 to 5 cm of water. Choose the cooler hours, after 3 in the afternoon, to cut nitrogen loss."
         },
         {
           "title": "Read the leaves every week",
@@ -194,11 +194,11 @@
         },
         {
           "q": "Should I add potash in the wet season?",
-          "a": "PhilRice's general recommendation still gives 43 kg of potassium per hectare in the wet season. Potassium firms up stems and helps grains fill. Give the second dose 5 to 7 days before or after panicle initiation."
+          "a": "The general recommendation still gives 43 kg of potassium per hectare in the wet season. Potassium firms up stems and helps grains fill. Give the second dose 5 to 7 days before or after panicle initiation."
         },
         {
           "q": "What if it rains right after I top dress?",
-          "a": "PalayCheck advises top dressing into 2 to 5 cm of water to cut nitrogen loss and run off. The bigger loss comes when water spills over the dikes and carries dissolved fertilizer away. So check the forecast first and keep the outlets shut."
+          "a": "Top dress into 2 to 5 cm of water to cut nitrogen loss and run off. The bigger loss comes when water spills over the dikes and carries dissolved fertilizer away. So check the forecast first and keep the outlets shut."
         }
       ]
     },

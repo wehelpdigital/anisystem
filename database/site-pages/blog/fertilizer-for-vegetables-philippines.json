@@ -19,7 +19,7 @@
     "fertilizer for potatoes",
     "organic fertilizer for vegetables"
   ],
-  "excerpt": "The best fertilizer for vegetables like ampalaya, tomato and eggplant is a program, not a single bag. Work in compost or decomposed manure before planting, give complete fertilizer 14 14 14 at planting, then side dress small doses of urea and muriate of potash every few weeks through the harvest. The DA guides for Cagayan Valley, for example, give ampalaya 20 grams of 14 14 14 per hill and then 10 grams of urea per hill every two weeks. anee.io, a farm app built for Filipino farmers, dates every side dressing from each lot's own planting day.",
+  "excerpt": "The best fertilizer for vegetables like ampalaya, tomato and eggplant is a program, not a single bag. Work in compost or decomposed manure before planting, give complete fertilizer 14 14 14 at planting, then side dress small doses of urea and muriate of potash every few weeks through the harvest. Ampalaya, for example, gets 20 grams of 14 14 14 per hill and then 10 grams of urea per hill every two weeks. anee.io, a farm app built for Filipino farmers, dates every side dressing from each lot's own planting day.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-vegetables-philippines.webp",
     "alt": "Ampalaya vines climbing a trellis over plastic mulch in San Rafael, Bulacan, a vegetable crop that needs fertilizer through the harvest",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Ampalaya, tomato and eggplant do not stop at one harvest. They flower and set fruit for weeks, and every picking carries nutrients out of the field. So they need small, steady doses through the season, not one heavy dose at planting that the rain washes away.\n\nThe DA production guides for Cagayan Valley give a full program for each crop when you have no soil test. With a test, follow the laboratory's numbers instead."
+      "text": "Ampalaya, tomato and eggplant do not stop at one harvest. They flower and set fruit for weeks, and every picking carries nutrients out of the field. So they need small, steady doses through the season, not one heavy dose at planting that the rain washes away.\n\nBelow is a full program for each crop when you have no soil test. With a test, follow the laboratory's numbers instead."
     },
     {
       "type": "list",
@@ -48,11 +48,11 @@
     },
     {
       "type": "text",
-      "text": "Here are the three programs side by side. Rates are per plant, per hill or per 10 meters of row, because that is how the guides write them."
+      "text": "Here are the three programs side by side. Rates are per plant, per hill or per 10 meters of row, because that is how the programs are written."
     },
     {
       "type": "table",
-      "caption": "Fertilizer programs without a soil test, from the DA Regional Field Office 2 production guides and the ATI Cordillera tomato leaflet. DAT means days after transplanting, WAT weeks after transplanting.",
+      "caption": "Fertilizer programs without a soil test. DAT means days after transplanting, WAT weeks after transplanting.",
       "rows": [
         [
           "Crop",
@@ -87,7 +87,7 @@
     },
     {
       "type": "text",
-      "text": "The DA ampalaya guide plants hills 1.5 to 2.5 m apart in furrows 2 m apart in the dry season. At 2 m by 2 m, a hectare holds 2,500 hills. So the basal dose of 20 g per hill comes to 50 kg, or one bag. Each urea round of 10 g per hill comes to 25 kg.\n\nFor eggplant, count rows instead. A 100 meter row needs 4 kg of 16 20 0 and 5 kg of decomposed chicken manure at planting. The guides' own one hectare budgets differ from this arithmetic, so treat both as a guide. For ampalaya they list 3 bags of 14 14 14, 1 bag of urea and 20 bags of organic fertilizer. For eggplant, it is 3 bags of 14 14 14, 2 of urea and 20 of organic."
+      "text": "Ampalaya hills go 1.5 to 2.5 m apart in furrows 2 m apart in the dry season. At 2 m by 2 m, a hectare holds 2,500 hills. So the basal dose of 20 g per hill comes to 50 kg, or one bag. Each urea round of 10 g per hill comes to 25 kg.\n\nFor eggplant, count rows instead. A 100 meter row needs 4 kg of 16 20 0 and 5 kg of decomposed chicken manure at planting. The usual one hectare budgets differ from this arithmetic, so treat both as a guide. For ampalaya they list 3 bags of 14 14 14, 1 bag of urea and 20 bags of organic fertilizer. For eggplant, it is 3 bags of 14 14 14, 2 of urea and 20 of organic."
     },
     {
       "type": "heading",
@@ -96,7 +96,7 @@
     },
     {
       "type": "text",
-      "text": "Nitrogen builds vines and leaves, but fruit needs potassium as it fills. That is why the eggplant guide turns to muriate of potash at the fruiting stage. The tomato program also pairs potash with urea at each side dressing. Besides, the eggplant guide says to harvest all fruits from the plants to prolong the fruiting period.\n\nTomato needs extra care with water and nitrogen. The DA guide notes that tomato is very sensitive to flooding. The University of Maryland Extension explains that blossom end rot comes from a shortage of calcium in enlarging fruit, often with uneven watering. It advises against heavy nitrogen fertilizers such as urea.\n\nOur guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes) goes deeper on this crop, and it also covers fertilizer for potatoes."
+      "text": "Nitrogen builds vines and leaves, but fruit needs potassium as it fills. That is why the eggplant program turns to muriate of potash at the fruiting stage. The tomato program also pairs potash with urea at each side dressing. Besides, harvest all fruits from eggplant to prolong the fruiting period.\n\nTomato needs extra care with water and nitrogen. It is very sensitive to flooding. The University of Maryland Extension explains that blossom end rot comes from a shortage of calcium in enlarging fruit, often with uneven watering. It advises against heavy nitrogen fertilizers such as urea.\n\nOur guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes) goes deeper on this crop, and it also covers fertilizer for potatoes."
     },
     {
       "type": "callout",
@@ -114,7 +114,7 @@
       "items": [
         {
           "title": "Feed the seedlings lightly",
-          "text": "At 10 days after emergence, the eggplant guide drenches seedlings with a starter mix. Mix 2 tablespoons of 16 20 0 or 14 14 14 in 4 liters of water, then water again."
+          "text": "At 10 days after emergence, drench eggplant seedlings with a starter mix. Mix 2 tablespoons of 16 20 0 or 14 14 14 in 4 liters of water, then water again."
         },
         {
           "title": "Keep fertilizer away from the stem",
@@ -122,7 +122,7 @@
         },
         {
           "title": "Bury or cover each dose",
-          "text": "Cover ampalaya side dressings with fine soil. For tomato, ATI Cordillera buries urea and potash about 1 inch deep and 3 to 4 inches from the stem."
+          "text": "Cover ampalaya side dressings with fine soil. For tomato, bury urea and potash about 1 inch deep and 3 to 4 inches from the stem."
         },
         {
           "title": "Water right after",
@@ -156,7 +156,7 @@
       "items": [
         {
           "q": "How often should I fertilize eggplant?",
-          "a": "The DA Cagayan Valley guide, for plots without mulch, side dresses at 3, 6, 9, 12 and 15 weeks after transplanting. It alternates urea, muriate of potash and, at the last round, 14 14 14."
+          "a": "On plots without mulch, side dress at 3, 6, 9, 12 and 15 weeks after transplanting. Alternate urea, muriate of potash and, at the last round, 14 14 14."
         },
         {
           "q": "Is 14 14 14 enough for tomato?",
@@ -164,11 +164,11 @@
         },
         {
           "q": "Can I use only chicken manure on my vegetables?",
-          "a": "The DA guides use decomposed chicken manure or compost as a base and add inorganic fertilizer on top. Use only fully decomposed manure, and expect to add nitrogen and potash later for a long harvest. For an organic fertilizer for vegetables like pechay, see our guide to [organic fertilizer for pechay](/blog/organic-fertilizer-for-pechay)."
+          "a": "The usual programs use decomposed chicken manure or compost as a base and add inorganic fertilizer on top. Use only fully decomposed manure, and expect to add nitrogen and potash later for a long harvest. For an organic fertilizer for vegetables like pechay, see our guide to [organic fertilizer for pechay](/blog/organic-fertilizer-for-pechay)."
         },
         {
           "q": "What is the best fertilizer for ampalaya?",
-          "a": "The DA ampalaya guide uses 10 to 20 tons of compost or decomposed manure per hectare, then 20 g of 14 14 14 per hill at planting. Side dress 10 g of urea per hill from 3 to 4 weeks, every 2 weeks for 2 to 3 more rounds."
+          "a": "Use 10 to 20 tons of compost or decomposed manure per hectare, then 20 g of 14 14 14 per hill at planting. Side dress 10 g of urea per hill from 3 to 4 weeks, every 2 weeks for 2 to 3 more rounds."
         }
       ]
     },

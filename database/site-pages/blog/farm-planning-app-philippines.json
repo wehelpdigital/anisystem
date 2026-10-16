@@ -108,15 +108,15 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's PalayCheck System ties the work to days after transplanting. For example, it says to replant missing hills within 7 DAT and to control weeds from 0 to 45 DAT. A farm planning app that counts DAT for each lot turns those rules into real dates on your phone."
+      "text": "Good rice practice ties the work to days after transplanting. For example, replant missing hills within 7 DAT and control weeds from 0 to 45 DAT. A farm planning app that counts DAT for each lot turns those rules into real dates on your phone."
     },
     {
       "type": "table",
-      "caption": "Sample PalayCheck timings a farm planning app should date for you (transplanted rice)",
+      "caption": "Sample timings a farm planning app should date for you (transplanted rice)",
       "rows": [
         [
           "Task",
-          "When, according to PalayCheck"
+          "When"
         ],
         [
           "Transplant by hand",
@@ -178,7 +178,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Plan inside your irrigation schedule",
-      "text": "PalayCheck asks farmers to plant within 14 days before or after the regular schedule of their irrigation service area, after the field rests for at least 30 days. So put your area's schedule into the plan first, then build the season around it. A lot planted far from the others gives pests a longer meal."
+      "text": "Plant within 14 days before or after the regular schedule of your irrigation service area, after the field rests for at least 30 days. So put your area's schedule into the plan first, then build the season around it. A lot planted far from the others gives pests a longer meal."
     },
     {
       "type": "heading",
@@ -243,21 +243,21 @@
     },
     {
       "type": "text",
-      "text": "Some questions are better answered by free tools from the DA and PhilRice."
+      "text": "Some questions are better answered by free government tools."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Rice Crop Manager Advisory Service (RCMAS):** free crop and nutrient advice for your own field, developed by IRRI and PhilRice and run through DA offices and extension workers.",
-        "**Binhing Palay app:** PhilRice's catalogue of released rice varieties, filtered by location, environment and season. It works offline.",
+        "**Rice Crop Manager Advisory Service (RCMAS):** free crop and nutrient advice for your own field, run through DA offices and extension workers.",
+        "**Binhing Palay app:** a catalogue of released rice varieties, filtered by location, environment and season. It works offline.",
         "**MOET App:** works with the MOET kit to give the amount, combination and type of fertilizer.",
         "**PAGASA Agri Weather:** farm weather forecasts, ten day regional outlooks and tropical cyclone warnings for agriculture."
       ]
     },
     {
       "type": "text",
-      "text": "Then bring their answers into your plan. For example, put the RCMAS fertilizer rates into your Protocol Builder tasks, and type the variety you chose into the lot. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows the usual PhilRice timings, and [pagtatanim ng palay](/crops/pagtatanim-ng-palay) covers the whole crop."
+      "text": "Then bring their answers into your plan. For example, put the RCMAS fertilizer rates into your Protocol Builder tasks, and type the variety you chose into the lot. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) shows the usual timings, and [pagtatanim ng palay](/crops/pagtatanim-ng-palay) covers the whole crop."
     },
     {
       "type": "heading",

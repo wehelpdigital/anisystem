@@ -29,8 +29,8 @@
       "ordered": false,
       "items": [
         "Sand holds little nutrient or water, so nitrogen and potassium wash down quickly.",
-        "Split nitrogen into more, smaller doses, as FAO papers on tropical sandy soils advise.",
-        "Split potash into at least two doses on sandy, leaching soil, IRRI says.",
+        "Split nitrogen into more, smaller doses.",
+        "Split potash into at least two doses on sandy, leaching soil.",
         "Add organic matter every season: straw, compost or manure.",
         "Test first. BSWM mobile soil labs now serve all 17 regional field offices, free for farmers."
       ]
@@ -42,11 +42,11 @@
     },
     {
       "type": "text",
-      "text": "Soil holds nutrients on clay and organic matter, and sand has little of either. An FAO paper on the sandy rice soils of Northeast Thailand found that their low organic matter gives them a low cation exchange capacity, which is the soil's power to hold nutrients. It also found that much of the chemical nitrogen applied there is lost before the crop can use it.\n\nA second paper in the same FAO book adds that sandy soils need organic manures because they hold so little. But it warns that the manure breaks down fast in them, so one dose is never enough."
+      "text": "Soil holds nutrients on clay and organic matter, and sand has little of either. On the sandy rice soils of Northeast Thailand, low organic matter gives a low cation exchange capacity, which is the soil's power to hold nutrients. Much of the chemical nitrogen applied there is lost before the crop can use it.\n\nSo sandy soils need organic manures, because they hold so little. But the manure breaks down fast in them, so one dose is never enough."
     },
     {
       "type": "text",
-      "text": "IRRI lists what this means for rice. Nitrogen deficiency is common on coarse textured soils low in organic matter. Potassium is often short on sandy soils. Phosphorus is often short on sandy soils low in organic matter, too. So a palay crop on sand can run short of all three main nutrients."
+      "text": "Here is what this means for rice. Nitrogen deficiency is common on coarse textured soils low in organic matter. Potassium is often short on sandy soils. Phosphorus is often short on sandy soils low in organic matter, too. So a palay crop on sand can run short of all three main nutrients."
     },
     {
       "type": "heading",
@@ -64,7 +64,7 @@
     },
     {
       "type": "text",
-      "text": "The FAO paper on sandy soils puts it plainly: the best management uses frequent but small doses of inorganic fertilizer. For palay, keep the season total of urea the same, but divide it into one or two more top dressings than usual, between early tillering and panicle initiation. Each small dose gets used before the next heavy rain carries it down."
+      "text": "The rule on sandy soils is plain: the best management uses frequent but small doses of inorganic fertilizer. For palay, keep the season total of urea the same, but divide it into one or two more top dressings than usual, between early tillering and panicle initiation. Each small dose gets used before the next heavy rain carries it down."
     },
     {
       "type": "heading",
@@ -73,7 +73,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI advises splitting potassium into at least two doses where the soil is sandy and leaches. Its usual split, for rates above 30 kg of potash per hectare, is half at basal and half at early panicle initiation. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the sources."
+      "text": "Split potassium into at least two doses where the soil is sandy and leaches. The usual split, for rates above 30 kg of potash per hectare, is half at basal and half at early panicle initiation. Our guide to [potash fertilizer](/blog/potash-fertilizer) covers the sources."
     },
     {
       "type": "heading",
@@ -82,7 +82,7 @@
     },
     {
       "type": "text",
-      "text": "Organic matter is the sponge that sand lacks. Return the straw, add compost or decomposed manure, and grow azolla where the field holds water. In a long term paddy trial at Surin, Northeast Thailand, compost raised both the rice yield and the soil's organic matter, the FAO paper reports. Our page on [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) shows what each organic source supplies."
+      "text": "Organic matter is the sponge that sand lacks. Return the straw, add compost or decomposed manure, and grow azolla where the field holds water. In a long term paddy trial at Surin, Northeast Thailand, compost raised both the rice yield and the soil's organic matter. Our page on [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) shows what each organic source supplies."
     },
     {
       "type": "heading",
@@ -208,7 +208,7 @@
         },
         {
           "q": "Does organic fertilizer help sandy soil?",
-          "a": "Yes. Organic matter holds water and nutrients that sand cannot. In a long term trial on sandy paddy soil in Northeast Thailand, reported by FAO, compost raised both rice yield and soil organic matter."
+          "a": "Yes. Organic matter holds water and nutrients that sand cannot. In a long term trial on sandy paddy soil in Northeast Thailand, compost raised both rice yield and soil organic matter."
         },
         {
           "q": "How often should I apply urea on sandy soil?",

@@ -32,7 +32,7 @@
       "ordered": false,
       "items": [
         "**Value means cost per crop.** Solo Farmer at PHP 1,800 a year comes to about PHP 900 a crop if you plant twice a year.",
-        "**Labor is the big line.** In 2024 it took close to PHP 30,000 of the PHP 59,695 it cost to grow a hectare of palay (PSA data).",
+        "**Labor is the big line.** In 2024 it took close to PHP 30,000 of the PHP 59,695 it cost to grow a hectare of palay.",
         "**Record costs at the source.** The best tools log materials, wages and services on the task, then build the reports for you.",
         "**Count what you do not pay in cash.** Your own labor, your land and palay given as shares are costs too.",
         "**Check the limits.** Offline use, local payment, ads on free plans and AI credits all change the real value."
@@ -100,13 +100,13 @@
     },
     {
       "type": "text",
-      "text": "Many expense apps focus on inputs, but inputs are the smaller share on a rice farm. PhilRice found that in 2020, fertilizer took about 8 percent of total rice production cost. Seeds and pesticides took only 3 to 4 percent each.\n\nLabor and land weigh far more. The 2024 PSA figures reported by Philstar put labor close to PHP 30,000 per hectare and seed at PHP 4,316, out of PHP 59,695. PhilRice and IRRI also list land rent among the biggest parts of the cost of producing rice. So any farm labor management software you choose must handle crews, contracts and rent as well as fertilizer."
+      "text": "Many expense apps focus on inputs, but inputs are the smaller share on a rice farm. In 2020, fertilizer took about 8 percent of total rice production cost. Seeds and pesticides took only 3 to 4 percent each.\n\nLabor and land weigh far more. In 2024, labor came close to PHP 30,000 per hectare and seed to PHP 4,316, out of PHP 59,695. Land rent is also among the biggest parts of the cost of producing rice. So any farm labor management software you choose must handle crews, contracts and rent as well as fertilizer."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "Count the costs you never paid in cash",
-      "text": "PhilRice and IRRI value the farmer's own labor, family and exchange labor at the going wage, and value owned land at the local rent. If you leave these out, a season can look profitable when it only paid you a small wage for your own work. Write them in, even as an estimate."
+      "text": "Value the farmer's own labor, family and exchange labor at the going wage, and value owned land at the local rent. If you leave these out, a season can look profitable when it only paid you a small wage for your own work. Write them in, even as an estimate."
     },
     {
       "type": "heading",
@@ -197,7 +197,7 @@
     },
     {
       "type": "text",
-      "text": "A notebook and a calculator still work for a small farm. A spreadsheet adds up for you, but few farmers fill it in from the field. PhilRice's PalayCheck App, made for Android, tracks rice activities, expenses and harvest data and gives a season summary of production costs and estimated net income. General bookkeeping apps can handle the money side too, but they do not know your lots, stages or crew.\n\nNow the limits of anee.io. It is a farm records app, not a bookkeeping system for tax filing. Libre and Libre plus Anee show a few ads, and Libre keeps one active season. Anee, the smart farm technician, needs internet and uses credits for her chats and analyses. For the cost side in detail, see our guide to the [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare)."
+      "text": "A notebook and a calculator still work for a small farm. A spreadsheet adds up for you, but few farmers fill it in from the field. The PalayCheck App, made for Android, tracks rice activities, expenses and harvest data and gives a season summary of production costs and estimated net income. General bookkeeping apps can handle the money side too, but they do not know your lots, stages or crew.\n\nNow the limits of anee.io. It is a farm records app, not a bookkeeping system for tax filing. Libre and Libre plus Anee show a few ads, and Libre keeps one active season. Anee, the smart farm technician, needs internet and uses credits for her chats and analyses. For the cost side in detail, see our guide to the [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare)."
     },
     {
       "type": "heading",

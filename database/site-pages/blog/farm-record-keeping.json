@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "PhilRice has urged farmers for years to keep farm records. Records are tools for deciding, it says. They help you track field conditions, yield and what you learned from past practices. It asks farmers to log production costs, like fertilizer, and what they did at each crop stage.\n\nIn a PhilRice Bicol training, farmers learned to record expenses such as inputs and labor. They also learned to keep receipts, inventories and crop information. One participant said her records tell her if she failed or succeeded in a season. That is the whole point of farm record keeping."
+      "text": "Farmers have been urged for years to keep farm records. Records are tools for deciding. They help you track field conditions, yield and what you learned from past practices. Log your production costs, like fertilizer, and what you did at each crop stage.\n\nIn a Bicol training, farmers learned to record expenses such as inputs and labor. They also learned to keep receipts, inventories and crop information. One participant said her records tell her if she failed or succeeded in a season. That is the whole point of farm record keeping."
     },
     {
       "type": "list",
@@ -118,7 +118,7 @@
           "Needs a laptop, so it often gets filled in later from memory"
         ],
         [
-          "PalayCheck App from PhilRice",
+          "PalayCheck App",
           "Rice activities, expenses and harvest data, with a season summary of costs and net income",
           "Made for rice, on Android"
         ],
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "A notebook is a fine start, and it came up in the PhilRice Bicol training as a practical way to keep records. But once you hire a crew or farm more than one lot, the adding up takes hours. A phone app then saves time, as long as it works where you farm."
+      "text": "A notebook is a fine start, and it came up in the Bicol training as a practical way to keep records. But once you hire a crew or farm more than one lot, the adding up takes hours. A phone app then saves time, as long as it works where you farm."
     },
     {
       "type": "heading",
@@ -212,7 +212,7 @@
         },
         {
           "q": "Is a notebook good enough for farm records?",
-          "a": "Yes, for a small farm with few workers, as long as you write in it every day. A PhilRice Bicol training on record keeping pointed to the notebook as a practical start."
+          "a": "Yes, for a small farm with few workers, as long as you write in it every day. A Bicol training on record keeping pointed to the notebook as a practical start."
         },
         {
           "q": "Can I keep farm records on my phone without signal?",

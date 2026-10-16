@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A shed full of fertilizer is a shed full of cash. In the FPA's price survey for October 5 to 9, 2026, a 50 kg bag of granular urea averaged PHP 2,260.39 across the country. A bag of complete 14 14 14 averaged PHP 1,897.00. One bag that goes missing, or that you buy twice by mistake, costs more than a day's wage.\n\nThe FAO says the same about chemicals. Without a record of what comes in and goes out, people order too much, and the newest stock tends to leave the store first. Then older bottles sit until they expire."
+      "text": "A shed full of fertilizer is a shed full of cash. In the FPA's price survey for October 5 to 9, 2026, a 50 kg bag of granular urea averaged PHP 2,260.39 across the country. A bag of complete 14 14 14 averaged PHP 1,897.00. One bag that goes missing, or that you buy twice by mistake, costs more than a day's wage.\n\nThe same holds for chemicals. Without a record of what comes in and goes out, people order too much, and the newest stock tends to leave the store first. Then older bottles sit until they expire."
     },
     {
       "type": "list",
@@ -128,7 +128,7 @@
         },
         {
           "title": "Use the oldest stock first",
-          "text": "Put new deliveries behind the old ones. The FAO also advises checking the dates on labels every month."
+          "text": "Put new deliveries behind the old ones. Check the dates on labels every month too."
         },
         {
           "title": "Count again at each stage",
@@ -149,7 +149,7 @@
     },
     {
       "type": "text",
-      "text": "Work it out from your plan, then subtract what you already have. Take the PhilRice plan for a 5 to 6 ton palay crop. Per hectare, it uses 2 bags of complete, 2 bags of urea and half a bag of 0 0 60. For 3 hectares, you need 6 bags of complete, 6 of urea and 1.5 of potash.\n\nNow say the shed already holds 2 bags of complete and 4 of urea. You only need to buy 4 bags of complete, 2 of urea and 1.5 of 0 0 60. At the FPA national averages for October 5 to 9, 2026, that comes to about PHP 14,619.60. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains the plan, and [fertilizer calculation](/blog/fertilizer-calculation) shows how to scale it."
+      "text": "Work it out from your plan, then subtract what you already have. Take the usual plan for a 5 to 6 ton palay crop. Per hectare, it uses 2 bags of complete, 2 bags of urea and half a bag of 0 0 60. For 3 hectares, you need 6 bags of complete, 6 of urea and 1.5 of potash.\n\nNow say the shed already holds 2 bags of complete and 4 of urea. You only need to buy 4 bags of complete, 2 of urea and 1.5 of 0 0 60. At the FPA national averages for October 5 to 9, 2026, that comes to about PHP 14,619.60. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) explains the plan, and [fertilizer calculation](/blog/fertilizer-calculation) shows how to scale it."
     },
     {
       "type": "heading",

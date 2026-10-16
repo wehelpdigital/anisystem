@@ -22,13 +22,13 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Tillers are the side shoots that grow from the base of each hill. Each one that survives can carry a panicle, so tillers set how many panicles you harvest. In transplanted rice, IRRI's Fundamentals of Rice Crop Science says panicle number depends largely on tillering, settled by about 10 days after the peak tiller count.\n\nSo the goal is not the most tillers. It is the most tillers that turn into panicles."
+      "text": "Tillers are the side shoots that grow from the base of each hill. Each one that survives can carry a panicle, so tillers set how many panicles you harvest. In transplanted rice, panicle number depends largely on tillering, settled by about 10 days after the peak tiller count.\n\nSo the goal is not the most tillers. It is the most tillers that turn into panicles."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Nitrogen drives tillering.** PalayCheck says it raises tiller number, leaf size and panicles per hill.",
+        "**Nitrogen drives tillering.** It raises tiller number, leaf size and panicles per hill.",
         "**Phosphorus helps roots and tillers,** so all of it goes in the basal dose.",
         "**Timing beats amount.** Early tillers usually bear panicles, while late ones may not.",
         "**Seedlings, spacing and water count too.** Old seedlings, crowded hills and deep water all cut tillering.",
@@ -42,15 +42,15 @@
     },
     {
       "type": "text",
-      "text": "Nitrogen matters most. PalayCheck lists more tillers, taller plants, bigger leaves and more panicles per hill among its effects. IRRI's nitrogen fact sheet adds that nitrogen raises yield through higher tillering, leaf growth and grain filling.\n\nPhosphorus comes second. PalayCheck says it promotes vigorous roots and tillering, and a crop short of phosphorus shows greatly reduced tillering. Sulfur shortage also means fewer tillers, while zinc shortage leaves young plants stunted. Our guide to [micronutrients for rice](/blog/micronutrients-for-rice) covers both."
+      "text": "Nitrogen matters most. Its effects include more tillers, taller plants, bigger leaves and more panicles per hill. It also raises yield through higher tillering, leaf growth and grain filling.\n\nPhosphorus comes second. It promotes vigorous roots and tillering, and a crop short of phosphorus shows greatly reduced tillering. Sulfur shortage also means fewer tillers, while zinc shortage leaves young plants stunted. Our guide to [micronutrients for rice](/blog/micronutrients-for-rice) covers both."
     },
     {
       "type": "table",
-      "caption": "What drives productive tillers in transplanted rice, from PhilRice PalayCheck",
+      "caption": "What drives productive tillers in transplanted rice",
       "rows": [
         [
           "Factor",
-          "What PalayCheck advises",
+          "What to do",
           "Why it matters"
         ],
         [
@@ -87,7 +87,7 @@
     },
     {
       "type": "text",
-      "text": "Tillering may start once the main stem has 5 or 6 leaves, and it runs through the vegetative stage until panicle initiation. IRRI notes that a 110 day variety like IR64 has a vegetative stage of about 45 days, while longer varieties tiller for longer. So the doses follow your variety's maturity.\n\nPalayCheck puts the first dose, with all the phosphorus and about 30 percent of the nitrogen, at 0 to 14 days after transplanting (DAT). For direct wet seeded rice, it is 7 to 10 days after sowing (DAS). Varieties longer than 110 days get a second nitrogen dose at mid tillering. The PhilRice Abonong Swak plan for 5 to 6 tons times its first urea top dress by maturity."
+      "text": "Tillering may start once the main stem has 5 or 6 leaves, and it runs through the vegetative stage until panicle initiation. A 110 day variety like IR64 has a vegetative stage of about 45 days, while longer varieties tiller for longer. So the doses follow your variety's maturity.\n\nThe first dose, with all the phosphorus and about 30 percent of the nitrogen, goes on at 0 to 14 days after transplanting (DAT). For direct wet seeded rice, it is 7 to 10 days after sowing (DAS). Varieties longer than 110 days get a second nitrogen dose at mid tillering. The usual plan for 5 to 6 tons times its first urea top dress by maturity."
     },
     {
       "type": "list",
@@ -118,13 +118,13 @@
     },
     {
       "type": "text",
-      "text": "Not every tiller pays. Yoshida's Fundamentals of Rice Crop Science explains that tiller number peaks, then falls. Tillers that form early normally produce panicles, while those that form later may or may not.\n\nDirect seeded rice behaves differently. Yoshida notes that a direct seeded plant usually makes 2 to 5 tillers, against 10 to 30 for a transplanted one, so tillering matters much less there. Its panicle number depends mostly on seeding rate and emergence.\n\nLate, heavy nitrogen also feeds weak shoots and soft leaves. PalayCheck warns that too much nitrogen during panicle initiation and flowering makes rice prone to lodging and pests. It also raises the share of unfilled grains."
+      "text": "Not every tiller pays. Yoshida's Fundamentals of Rice Crop Science explains that tiller number peaks, then falls. Tillers that form early normally produce panicles, while those that form later may or may not.\n\nDirect seeded rice behaves differently. Yoshida notes that a direct seeded plant usually makes 2 to 5 tillers, against 10 to 30 for a transplanted one, so tillering matters much less there. Its panicle number depends mostly on seeding rate and emergence.\n\nLate, heavy nitrogen also feeds weak shoots and soft leaves. Too much nitrogen during panicle initiation and flowering makes rice prone to lodging and pests. It also raises the share of unfilled grains."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "More tillers is not always more rice",
-      "text": "Crowded hills shade each other, and an overfed crop lodges easily. Aim for the PalayCheck target instead: at least 300 panicles per square meter at dough stage in transplanted rice, or 350 in direct wet seeded rice."
+      "text": "Crowded hills shade each other, and an overfed crop lodges easily. Aim for this target instead: at least 300 panicles per square meter at dough stage in transplanted rice, or 350 in direct wet seeded rice."
     },
     {
       "type": "heading",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "Good fertilizer application for rice at tillering starts before the first bag opens. These steps follow PalayCheck for transplanted rice."
+      "text": "Good fertilizer application for rice at tillering starts before the first bag opens. These steps are for transplanted rice."
     },
     {
       "type": "steps",
@@ -196,7 +196,7 @@
       "items": [
         {
           "q": "How many days after transplanting does tillering start?",
-          "a": "Tillering may start once the main stem has 5 or 6 leaves. In practice, PhilRice times the first urea for tillering at 18 to 31 days after transplanting, depending on variety maturity."
+          "a": "Tillering may start once the main stem has 5 or 6 leaves. In practice, the first urea for tillering goes on at 18 to 31 days after transplanting, depending on variety maturity."
         },
         {
           "q": "Should I add more urea if my palay has few tillers?",
@@ -204,7 +204,7 @@
         },
         {
           "q": "Does direct seeded rice need a tillering dose?",
-          "a": "Yes, but tillering matters less there. Each direct seeded plant makes only 2 to 5 tillers, so the seeding rate counts more. PhilRice times the first urea at 24 to 40 days after sowing, by variety maturity."
+          "a": "Yes, but tillering matters less there. Each direct seeded plant makes only 2 to 5 tillers, so the seeding rate counts more. The first urea goes on at 24 to 40 days after sowing, by variety maturity."
         },
         {
           "q": "Is ammonium sulfate a better fertilizer for tillering than urea?",

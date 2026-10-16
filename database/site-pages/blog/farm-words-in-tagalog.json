@@ -33,7 +33,7 @@
     "palay at bigas",
     "ani ng palay in english"
   ],
-  "excerpt": "Weeds in Tagalog is damo, the same word Filipinos use for grass. So when a farmer says the field is full of damo, they mean the unwanted plants, not a lawn. This glossary gives the Tagalog farm words that matter in the field, checked against Tagalog.com, Wiktionary and PhilRice handouts, plus the local names of the bugs that attack palay.",
+  "excerpt": "Weeds in Tagalog is damo, the same word Filipinos use for grass. So when a farmer says the field is full of damo, they mean the unwanted plants, not a lawn. This glossary gives the Tagalog farm words that matter in the field, checked against Tagalog.com, Wiktionary and farmer handouts, plus the local names of the bugs that attack palay.",
   "heroImage": {
     "src": "/images/site/photos/inspect.jpg",
     "alt": "A smiling woman in a headscarf holding a phone while standing in a green rice field, seen from above",
@@ -47,7 +47,7 @@
     },
     {
       "type": "text",
-      "text": "Damo means both grass and weed. Tagalog.com and Wiktionary give both meanings, so the sentence tells you which one. For example, damo sa palayan is weeds in the rice field, while damuhan is a grassy place or a lawn. So weeds in Tagalog and grass in Tagalog are the same word, and only the setting tells them apart.\n\nPhilRice handouts use the same word. They call weeding pagdadamo, and they call herbicide pamatay damo or herbisidyo. If you want the weeds themselves, with names like mutha and gabi gabi, see our guide to [common weeds in the Philippines](/weeds/common-weeds-philippines)."
+      "text": "Damo means both grass and weed. Tagalog.com and Wiktionary give both meanings, so the sentence tells you which one. For example, damo sa palayan is weeds in the rice field, while damuhan is a grassy place or a lawn. So weeds in Tagalog and grass in Tagalog are the same word, and only the setting tells them apart.\n\nFarmer handouts use the same word. They call weeding pagdadamo, and they call herbicide pamatay damo or herbisidyo. If you want the weeds themselves, with names like mutha and gabi gabi, see our guide to [common weeds in the Philippines](/weeds/common-weeds-philippines)."
     },
     {
       "type": "table",
@@ -76,7 +76,7 @@
         [
           "herbicide",
           "pamatay damo, herbisidyo",
-          "Both appear in PhilRice farmer handouts."
+          "Both appear in farmer handouts."
         ]
       ]
     },
@@ -131,7 +131,7 @@
         [
           "golden apple snail",
           "kuhol",
-          "PhilRice lists it with weeds as a pest of palay."
+          "Counted with weeds as a pest of palay."
         ]
       ]
     },
@@ -215,7 +215,7 @@
         [
           "seed",
           "binhi",
-          "PhilRice urges clean, certified binhi."
+          "Use clean, certified binhi."
         ],
         [
           "seedling",
@@ -283,7 +283,7 @@
     },
     {
       "type": "text",
-      "text": "Two bugs share many names, so be careful. PhilRice gives atangya as the Tagalog name and dangaw as the Ilocano name of the rice bug, the slender bug that sucks milky grains. It calls the rice black bug, sometimes written black rice bug, itim na atangya. Syngenta Philippines adds tiyangaw for both.\n\nDictionaries mix them up further. Wiktionary lists atangya and alitangya for the rice black bug itself. Tayangaw appears in the SIL Masbatenyo dictionary as a pest of rice plants, glossed as rice weevil, with the example damo sin tayangaw an akon humay, or my rice plants are full of tayangaw. Because names change from town to town, trust the shape of the insect more than the name. Our pages on the [rice bug](/pests/rice-bug) and the [rice black bug](/pests/rice-black-bug) show both."
+      "text": "Two bugs share many names, so be careful. Atangya is the Tagalog name and dangaw the Ilocano name of the rice bug, the slender bug that sucks milky grains. The rice black bug, sometimes written black rice bug, is itim na atangya. Syngenta Philippines adds tiyangaw for both.\n\nDictionaries mix them up further. Wiktionary lists atangya and alitangya for the rice black bug itself. Tayangaw appears in the SIL Masbatenyo dictionary as a pest of rice plants, glossed as rice weevil, with the example damo sin tayangaw an akon humay, or my rice plants are full of tayangaw. Because names change from town to town, trust the shape of the insect more than the name. Our pages on the [rice bug](/pests/rice-bug) and the [rice black bug](/pests/rice-black-bug) show both."
     },
     {
       "type": "table",
@@ -299,13 +299,13 @@
           "Rice bug",
           "Leptocorisa oratorius, L. acuta",
           "atangya, dangaw, tiyangaw",
-          "PhilRice, Syngenta Philippines"
+          "Farmer handouts, Syngenta Philippines"
         ],
         [
           "Rice black bug",
           "Scotinophara coarctata",
           "itim na atangya, itim na dangaw, tiyangaw",
-          "PhilRice, Syngenta Philippines"
+          "Farmer handouts, Syngenta Philippines"
         ],
         [
           "Rice black bug",
@@ -378,7 +378,7 @@
         },
         {
           "q": "What is the local name of the black rice bug?",
-          "a": "PhilRice uses itim na atangya. Syngenta Philippines also lists itim na dangaw and tiyangaw, and Wiktionary lists alitangya."
+          "a": "Itim na atangya is the usual name. Syngenta Philippines also lists itim na dangaw and tiyangaw, and Wiktionary lists alitangya."
         }
       ]
     },

@@ -6,7 +6,7 @@
   "category": "Fertilizer",
   "title": "Fertilizer for Rice: A Season Plan for Irrigated and Rainfed Palay",
   "metaTitle": "Fertilizer for Rice: Season Plan, Timing and Computation",
-  "metaDescription": "Fertilizer for rice made simple: basal and top dressing by days after transplanting, PhilRice bag plans, a sample computation, and tips for rainfed palay.",
+  "metaDescription": "Fertilizer for rice made simple: basal and top dressing by days after transplanting, bag plans, a sample computation, and tips for rainfed palay.",
   "focusKeyword": "fertilizer for rice",
   "keywords": [
     "fertilizer for rice",
@@ -26,7 +26,7 @@
     "fertilizer applicator",
     "fertilizer calculation formula"
   ],
-  "excerpt": "The right fertilizer for rice depends on your soil, your variety and your season, but the plan always follows the same growth stages. This guide lays out a full palay season based on PhilRice recommendations. It covers the basal dose, when to top dress, how to compute the bags, and how rainfed fields differ from irrigated ones.",
+  "excerpt": "The right fertilizer for rice depends on your soil, your variety and your season, but the plan always follows the same growth stages. This guide lays out a full palay season based on the usual recommendations. It covers the basal dose, when to top dress, how to compute the bags, and how rainfed fields differ from irrigated ones.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-for-rice.webp",
     "alt": "Farmer broadcasting fertilizer for rice by hand over a young green paddy",
@@ -35,7 +35,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Fertilizer is money you bury in the mud, so it has to work. PhilRice found that in 2020, fertilizer took about 8 percent of the total cost of producing rice. Seeds and pesticides took only 3 to 4 percent each.\n\nPhilRice teaches the method through its PalayCheck System, which many farmers search as the palay check system. Key Check 5 asks for enough nutrients from tillering to early panicle initiation and flowering. At dough stage, aim for at least 300 panicles per square meter in transplanted rice, or 350 in direct seeded rice."
+      "text": "Fertilizer is money you bury in the mud, so it has to work. In 2020, fertilizer took about 8 percent of the total cost of producing rice. Seeds and pesticides took only 3 to 4 percent each.\n\nThe goal is simple to state. Give enough nutrients from tillering to early panicle initiation and flowering. At dough stage, aim for at least 300 panicles per square meter in transplanted rice, or 350 in direct seeded rice."
     },
     {
       "type": "heading",
@@ -44,7 +44,7 @@
     },
     {
       "type": "text",
-      "text": "Every harvest carries nutrients out of your field. IRRI counts what the crop takes up for each ton of grain. That is about 16 kg of nitrogen and 19 kg of potash. So a 5 ton harvest takes up about 80 kg of nitrogen and 95 kg of potash, most of the potash staying in the straw. Fertilizer fills the gap between that need and what the soil, water and straw supply.\n\nMany farmers leave part of that gap open. A PhilRice survey of irrigated farms in 2016 and 2017 found far less phosphorus and potassium than recommended. Short feeding means slow growth, fewer tillers and panicles, and lighter grain. Too much nitrogen is also bad, because it invites lodging and pests."
+      "text": "Every harvest carries nutrients out of your field. For each ton of grain, the crop takes up about 16 kg of nitrogen and 19 kg of potash. So a 5 ton harvest takes up about 80 kg of nitrogen and 95 kg of potash, most of the potash staying in the straw. Fertilizer fills the gap between that need and what the soil, water and straw supply.\n\nMany farmers leave part of that gap open. A survey of irrigated farms in 2016 and 2017 found far less phosphorus and potassium than recommended. Short feeding means slow growth, fewer tillers and panicles, and lighter grain. Too much nitrogen is also bad, because it invites lodging and pests."
     },
     {
       "type": "heading",
@@ -53,7 +53,7 @@
     },
     {
       "type": "text",
-      "text": "Before you buy, find out what your soil lacks. PalayCheck lists these tools."
+      "text": "Before you buy, find out what your soil lacks. These tools help."
     },
     {
       "type": "list",
@@ -62,12 +62,12 @@
         "**Soil analysis** at a soils laboratory. Ask your municipal agriculturist where to send samples.",
         "**MOET**, the Minus One Element Technique: rice grown in pots of your own soil, each pot missing one nutrient. An app turns the result into fertilizer amounts.",
         "**Leaf color chart**, a four color ruler that shows when the crop needs nitrogen.",
-        "**Rice Crop Manager**, an online tool that IRRI developed with PhilRice, now run by the DA and PhilRice, which gives a fertilizer guideline for your field."
+        "**Rice Crop Manager**, an online tool that gives a fertilizer guideline for your field."
       ]
     },
     {
       "type": "text",
-      "text": "No tool at hand? Use the modified general recommendation of PhilRice as a guide. For irrigated lowland rice, it lists 97 kg of nitrogen per hectare in the wet season and 139 kg in the dry season. A quarter of the nitrogen goes on at 7 to 14 days after transplanting (DAT). Another quarter goes at mid tillering, and half at maximum tillering or early panicle initiation. All the phosphorus goes on first. Potassium goes 70 percent at 7 to 14 DAT and 30 percent around panicle initiation."
+      "text": "No tool at hand? Use the modified general recommendation as a guide. For irrigated lowland rice, it lists 97 kg of nitrogen per hectare in the wet season and 139 kg in the dry season. A quarter of the nitrogen goes on at 7 to 14 days after transplanting (DAT). Another quarter goes at mid tillering, and half at maximum tillering or early panicle initiation. All the phosphorus goes on first. Potassium goes 70 percent at 7 to 14 DAT and 30 percent around panicle initiation."
     },
     {
       "type": "heading",
@@ -76,11 +76,11 @@
     },
     {
       "type": "text",
-      "text": "PhilRice turned those rules into bags per hectare for its Abonong Swak campaign of [balanced fertilization](/blog/balanced-fertilization-for-rice). Below is its plan for a target of 5 to 6 tons per hectare. Check the days to harvest on your seed bag, because the dates follow variety maturity."
+      "text": "Those rules turn into bags per hectare in a plan of [balanced fertilization](/blog/balanced-fertilization-for-rice). Below is the plan for a target of 5 to 6 tons per hectare. Check the days to harvest on your seed bag, because the dates follow variety maturity."
     },
     {
       "type": "table",
-      "caption": "PhilRice Abonong Swak plan per hectare for 5 to 6 tons. DAS in brackets is for direct seeded rice. Adjust it to your soil test.",
+      "caption": "Bag plan per hectare for 5 to 6 tons. DAS in brackets is for direct seeded rice. Adjust it to your soil test.",
       "rows": [
         [
           "Dose",
@@ -110,7 +110,7 @@
     },
     {
       "type": "text",
-      "text": "The plan also works organic matter into the field. It uses 5 to 6 tons of rice straw. At 14 DAT, it adds 10 bags of decomposed chicken manure, commercial organic fertilizer or vermicompost.\n\nFor a 3 to 4 ton target, PhilRice uses 1 bag of 14 14 14 at basal. Later comes 1 bag of urea with half a bag of 0 0 60. For 7 to 8 tons, it doubles the urea to 2 bags at each top dressing. Our guides to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) and [palay](/crops/palay) cover the rest of the crop."
+      "text": "The plan also works organic matter into the field. It uses 5 to 6 tons of rice straw. At 14 DAT, it adds 10 bags of decomposed chicken manure, commercial organic fertilizer or vermicompost.\n\nFor a 3 to 4 ton target, the plan uses 1 bag of 14 14 14 at basal. Later comes 1 bag of urea with half a bag of 0 0 60. For 7 to 8 tons, it doubles the urea to 2 bags at each top dressing. Our guides to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) and [palay](/crops/palay) cover the rest of the crop."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "Irrigated fields yield more in the dry season, and the PhilRice modified general recommendation feeds them more. It gives 139 kg of nitrogen in the dry season against 97 kg in the wet. Where the sun is strong, like Nueva Ecija, Bicol and Isabela, PhilRice also adds muriate of potash around panicle initiation. That raises grain size and weight.\n\nRainfed fields go through the same stages on a different rhythm. Fertilizer needs moisture to reach the roots, so time each dose to a wet field, not a fixed date. IRRI says broadcast direct seeded rice can take its basal 10 to 14 days after establishment. There must be water in the field. If your field usually gives 3 to 4 tons, follow the lighter PhilRice plan."
+      "text": "Irrigated fields yield more in the dry season, and the modified general recommendation feeds them more. It gives 139 kg of nitrogen in the dry season against 97 kg in the wet. Where the sun is strong, like Nueva Ecija, Bicol and Isabela, also add muriate of potash around panicle initiation. That raises grain size and weight.\n\nRainfed fields go through the same stages on a different rhythm. Fertilizer needs moisture to reach the roots, so time each dose to a wet field, not a fixed date. Broadcast direct seeded rice can take its basal 10 to 14 days after establishment. There must be water in the field. If your field usually gives 3 to 4 tons, follow the lighter plan."
     },
     {
       "type": "heading",
@@ -183,7 +183,7 @@
     },
     {
       "type": "text",
-      "text": "The method of fertilizer application matters as much as the amount. For the basal dose, IRRI advises spreading evenly and mixing it into the soil just before transplanting or seeding. In a puddled field, do it during the last harrowing.\n\nFor each top dressing, spread the nitrogen fertilizer evenly across the whole paddy. Then keep the bunds and outlets closed so the dissolved nutrients stay in your field. Our page on [fertilizer application methods](/blog/fertilizer-application-methods) compares broadcasting, banding and more."
+      "text": "The method of fertilizer application matters as much as the amount. For the basal dose, spread it evenly and mix it into the soil just before transplanting or seeding. In a puddled field, do it during the last harrowing.\n\nFor each top dressing, spread the nitrogen fertilizer evenly across the whole paddy. Then keep the bunds and outlets closed so the dissolved nutrients stay in your field. Our page on [fertilizer application methods](/blog/fertilizer-application-methods) compares broadcasting, banding and more."
     },
     {
       "type": "heading",
@@ -220,19 +220,19 @@
       "items": [
         {
           "q": "What is the best fertilizer for rice?",
-          "a": "There is no single best fertilizer for rice. PhilRice plans use 14 14 14 or 16 20 0 at basal and urea for top dressing. Muriate of potash goes on near panicle initiation. Adjust the amounts with a soil test, MOET or the Rice Crop Manager. Read more in our [best fertilizer for palay](/blog/best-fertilizer-for-palay) guide."
+          "a": "There is no single best fertilizer for rice. The usual plans use 14 14 14 or 16 20 0 at basal and urea for top dressing. Muriate of potash goes on near panicle initiation. Adjust the amounts with a soil test, MOET or the Rice Crop Manager. Read more in our [best fertilizer for palay](/blog/best-fertilizer-for-palay) guide."
         },
         {
           "q": "How many bags of fertilizer do I need per hectare of palay?",
-          "a": "For 5 to 6 tons, PhilRice uses 2 bags of complete or 16 20 0 and 2 bags of urea. It adds half a bag of 0 0 60, plus straw and manure."
+          "a": "For 5 to 6 tons, the usual plan uses 2 bags of complete or 16 20 0 and 2 bags of urea. It adds half a bag of 0 0 60, plus straw and manure."
         },
         {
           "q": "When is the last fertilizer application for rice?",
-          "a": "Around panicle initiation. PalayCheck puts the last nitrogen and potassium dose 5 to 7 days before or after it."
+          "a": "Around panicle initiation. The last nitrogen and potassium dose goes on 5 to 7 days before or after it."
         },
         {
           "q": "What is the PalayCheck System?",
-          "a": "It is the rice crop management system of PhilRice, with key checks from seed to harvest. Key Check 5 covers nutrients."
+          "a": "It is a rice crop management system with key checks from seed to harvest. Many farmers search for it as the palay check system. Key Check 5 covers nutrients."
         },
         {
           "q": "Can I use ammonium sulfate instead of urea?",

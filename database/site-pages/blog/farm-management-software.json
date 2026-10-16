@@ -19,7 +19,7 @@
     "farm management application",
     "best farm management app"
   ],
-  "excerpt": "The best farm management software for a small farm dates every task from planting and adds up costs, labor and harvest by itself, on an ordinary phone. You do not need costly precision tools to start. Built for Filipino farmers, anee.io has a free Libre plan for one season. For rice, PhilRice's PalayCheck App is also free.",
+  "excerpt": "The best farm management software for a small farm dates every task from planting and adds up costs, labor and harvest by itself, on an ordinary phone. You do not need costly precision tools to start. Built for Filipino farmers, anee.io has a free Libre plan for one season. For rice, the PalayCheck App is also free.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-management-software.webp",
     "alt": "A farmer works at a computer in the open air office of his farm as a utility vehicle crosses the field behind him, the daily setting of farm management software",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Farm management software is a wide label. It covers a simple digital farm diary, but it also covers platforms that read drone maps and steer tractors. Most of it was built for large farms abroad and priced in dollars per acre.\n\nA farm in the Philippines is usually far smaller. In its 2012 Census of Agriculture, the PSA counted 5.56 million farms with an average of 1.29 hectares. Three in every five were below 1 hectare. So the useful question is not which program has the most features. It is which one fits a farm of one or two hectares, run from a phone."
+      "text": "Farm management software is a wide label. It covers a simple digital farm diary, but it also covers platforms that read drone maps and steer tractors. Most of it was built for large farms abroad and priced in dollars per acre.\n\nA farm in the Philippines is usually far smaller. The 2012 Census of Agriculture counted 5.56 million farms with an average of 1.29 hectares. Three in every five were below 1 hectare. So the useful question is not which program has the most features. It is which one fits a farm of one or two hectares, run from a phone."
     },
     {
       "type": "heading",
@@ -52,7 +52,7 @@
     },
     {
       "type": "text",
-      "text": "At its core, the software keeps three things together: the plan, what really happened, and what it cost. A good farm management application also tells you what is due today. Then, after harvest, it turns the season into numbers you can set beside the next one.\n\nThat is the loop PhilRice teaches in its PalayCheck System: observe, measure and record, then compare the results and act next season. Software does not replace the walk through the field. It only makes the recording and comparing faster."
+      "text": "At its core, the software keeps three things together: the plan, what really happened, and what it cost. A good farm management application also tells you what is due today. Then, after harvest, it turns the season into numbers you can set beside the next one.\n\nThat is the basic loop of good farming: observe, measure and record, then compare the results and act next season. Software does not replace the walk through the field. It only makes the recording and comparing faster."
     },
     {
       "type": "heading",
@@ -180,13 +180,13 @@
       "ordered": false,
       "items": [
         "**A notebook or a spreadsheet.** Both cost nothing, but neither reminds you what is due. Our comparison of a [farm record keeping app and a notebook](/blog/farm-record-keeping-app) weighs them fairly.",
-        "**PalayCheck App from PhilRice.** Free on Google Play for Android. It builds a rice calendar from your variety, establishment method and nutrient option, records expenses and harvest, and sums up cost and net income at season end. It covers rice only.",
+        "**PalayCheck App.** Free on Google Play for Android. It builds a rice calendar from your variety, establishment method and nutrient option, records expenses and harvest, and sums up cost and net income at season end. It covers rice only.",
         "**anee.io Libre.** Free for good, with a few ads: one active season with one lot, the activities board, notes, tags, growth stages, harvest observations and the labor report, offline too."
       ]
     },
     {
       "type": "text",
-      "text": "PhilRice is upgrading its app to a PalayCheck App 2.0, with offline use among the planned changes. Our list of the [best free farm app for Filipino farmers](/blog/free-farm-app-philippines) compares the free tools in more detail."
+      "text": "A PalayCheck App 2.0 is on the way, with offline use among the planned changes. Our list of the [best free farm app for Filipino farmers](/blog/free-farm-app-philippines) compares the free tools in more detail."
     },
     {
       "type": "heading",
@@ -257,7 +257,7 @@
         },
         {
           "q": "Is any farm management software free?",
-          "a": "Yes. The PalayCheck App from PhilRice is free on Google Play for rice farmers. The Libre plan of anee.io is free too, with a few ads and one active season. A spreadsheet also costs nothing if you own a phone or computer."
+          "a": "Yes. The PalayCheck App is free on Google Play for rice farmers. The Libre plan of anee.io is free too, with a few ads and one active season. A spreadsheet also costs nothing if you own a phone or computer."
         },
         {
           "q": "What is the difference between crop management software and farm accounting software?",

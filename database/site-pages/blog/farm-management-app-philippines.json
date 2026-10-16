@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Managing a farm means managing four things: time, people, materials and money. A notebook can hold one of them. Once you hire workers, buy inputs in bulk and grow more than one lot, the notebook starts to lose track.\n\nPhilRice's PalayCheck System ends with a simple loop for farmers: observe, measure and record, then compare the results to find the problems, then act. A farm management app is a tool for that loop, nothing more. Here is what a good one should do, and how anee.io does it."
+      "text": "Managing a farm means managing four things: time, people, materials and money. A notebook can hold one of them. Once you hire workers, buy inputs in bulk and grow more than one lot, the notebook starts to lose track.\n\nGood farming ends with a simple loop: observe, measure and record, then compare the results to find the problems, then act. A farm management app is a tool for that loop, nothing more. Here is what a good one should do, and how anee.io does it."
     },
     {
       "type": "heading",
@@ -110,7 +110,7 @@
     },
     {
       "type": "text",
-      "text": "Costs pile up in many small lines. The BPI ampalaya guide, for example, lists twelve labor lines and a long list of materials for one hectare. A farm management app should catch each line as it happens, so the season's cost is a sum, not a guess. Records also show what free advice saves you. PhilRice reports that one Tarlac farmer who followed the Rice Crop Manager cut his fertilizer from 12 bags to 6. The [farm reports](/features/farm-reports) in anee.io do that sum from the board, the shed and the payroll."
+      "text": "Costs pile up in many small lines. One hectare of ampalaya, for example, has twelve labor lines and a long list of materials. A farm management app should catch each line as it happens, so the season's cost is a sum, not a guess. Records also show what free advice saves you. One Tarlac farmer who followed the Rice Crop Manager cut his fertilizer from 12 bags to 6. The [farm reports](/features/farm-reports) in anee.io do that sum from the board, the shed and the payroll."
     },
     {
       "type": "heading",

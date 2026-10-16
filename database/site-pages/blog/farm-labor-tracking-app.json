@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Labor is the biggest bill on most palay farms. In 2024, rice farmers spent close to PHP 30,000 per hectare on labor, paid in cash, paid in palay or counted for their own family's work. The whole crop cost PHP 59,695 per hectare on average, according to PSA data reported by Philstar. So labor took nearly half of every peso.\n\nPhilRice and IRRI saw the same pattern in their 2013 and 2014 benchmark study. Labor was the biggest share of the cost of producing rice in the Philippines, and about 85 percent of that labor cost went to hired workers. That is why the right farm cost tracking app starts with people, not just with fertilizer."
+      "text": "Labor is the biggest bill on most palay farms. In 2024, rice farmers spent close to PHP 30,000 per hectare on labor, paid in cash, paid in palay or counted for their own family's work. The whole crop cost PHP 59,695 per hectare on average. So labor took nearly half of every peso.\n\nA 2013 and 2014 benchmark study saw the same pattern. Labor was the biggest share of the cost of producing rice in the Philippines, and about 85 percent of that labor cost went to hired workers. That is why the right farm cost tracking app starts with people, not just with fertilizer."
     },
     {
       "type": "list",
@@ -104,13 +104,13 @@
     },
     {
       "type": "text",
-      "text": "The 2024 PSA figures put labor close to PHP 30,000 per hectare, up from PHP 28,378 in 2023. Your own number may be higher or lower, depending on your region, your wage rates and how much of the work a machine does.\n\nThe PhilRice and IRRI study also shows where the work goes. On Philippine farms, crop establishment, crop care and maintenance, and harvesting and threshing took the largest shares of labor. Hired hands did 76 to 79 percent of all labor, mostly for transplanting, harvesting and hand weeding. So those three stages are where a tracking app earns its keep."
+      "text": "In 2024, labor came close to PHP 30,000 per hectare, up from PHP 28,378 in 2023. Your own number may be higher or lower, depending on your region, your wage rates and how much of the work a machine does.\n\nThe benchmark study also shows where the work goes. On Philippine farms, crop establishment, crop care and maintenance, and harvesting and threshing took the largest shares of labor. Hired hands did 76 to 79 percent of all labor, mostly for transplanting, harvesting and hand weeding. So those three stages are where a tracking app earns its keep."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Put a peso value on harvest shares",
-      "text": "Harvesters paid in palay hide part of your labor cost, because no cash changes hands. PhilRice and IRRI found harvesters in the Philippines took 7 to 14 percent of the gross harvest, plus 6 to 7 percent for the thresher. Count the cavans you give away and record them in pesos at the price you sold at. If you skip this, your cost per hectare looks lower than it really is."
+      "text": "Harvesters paid in palay hide part of your labor cost, because no cash changes hands. Harvesters in the Philippines take 7 to 14 percent of the gross harvest, plus 6 to 7 percent for the thresher. Count the cavans you give away and record them in pesos at the price you sold at. If you skip this, your cost per hectare looks lower than it really is."
     },
     {
       "type": "heading",
@@ -156,7 +156,7 @@
     },
     {
       "type": "text",
-      "text": "For a small farm with two or three regular workers, a notebook can work. It costs nothing and needs no signal. But you add it up by hand, and it gets wet. It also cannot tell you which lot used the most labor unless you write that down every time.\n\nA spreadsheet adds up for you, yet most farmers fill it in at night from memory. Also consider the PalayCheck App from PhilRice, made for Android phones. It tracks your rice farming activities, expenses and harvest data, then gives a season summary of production costs and estimated net income. A full farm app makes sense when you run a crew, several lots or more than one crop."
+      "text": "For a small farm with two or three regular workers, a notebook can work. It costs nothing and needs no signal. But you add it up by hand, and it gets wet. It also cannot tell you which lot used the most labor unless you write that down every time.\n\nA spreadsheet adds up for you, yet most farmers fill it in at night from memory. Also consider the PalayCheck App, made for Android phones. It tracks your rice farming activities, expenses and harvest data, then gives a season summary of production costs and estimated net income. A full farm app makes sense when you run a crew, several lots or more than one crop."
     },
     {
       "type": "heading",
@@ -177,7 +177,7 @@
       "items": [
         {
           "q": "Is there a free farm labor tracking app?",
-          "a": "A notebook or spreadsheet costs nothing, and PhilRice offers its PalayCheck App for rice activities and expenses. In anee.io, the free Libre plan covers activities and notes, but the workers roster and payroll start with Solo Farmer at PHP 200 a month."
+          "a": "A notebook or spreadsheet costs nothing, and the free PalayCheck App covers rice activities and expenses. In anee.io, the free Libre plan covers activities and notes, but the workers roster and payroll start with Solo Farmer at PHP 200 a month."
         },
         {
           "q": "Does anee.io work without signal in the field?",
@@ -193,7 +193,7 @@
         },
         {
           "q": "What is a normal labor cost per hectare for rice?",
-          "a": "PSA data for 2024 put it close to PHP 30,000 per hectare, out of a total cost of PHP 59,695. Your own figure depends on your wage rates, your region and how much of the work machines do."
+          "a": "In 2024 it came close to PHP 30,000 per hectare, out of a total cost of PHP 59,695. Your own figure depends on your wage rates, your region and how much of the work machines do."
         }
       ]
     },

@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Hired hands do most of the work on a Philippine rice farm. In the PhilRice and IRRI benchmark study of 2013 and 2014, hired workers did 76 to 79 percent of all farm labor. They mostly did the transplanting, harvesting and hand weeding. Labor also costs the most: close to PHP 30,000 per hectare in 2024, based on PSA data reported by Philstar.\n\nSo fair farm workers' wages are not only right, they are good farming. A crew that trusts your count comes back next season. And a clear record keeps small mistakes from turning into big quarrels at harvest."
+      "text": "Hired hands do most of the work on a Philippine rice farm. In a benchmark study of 2013 and 2014, hired workers did 76 to 79 percent of all farm labor. They mostly did the transplanting, harvesting and hand weeding. Labor also costs the most: close to PHP 30,000 per hectare in 2024.\n\nSo fair farm workers' wages are not only right, they are good farming. A crew that trusts your count comes back next season. And a clear record keeps small mistakes from turning into big quarrels at harvest."
     },
     {
       "type": "list",
@@ -54,11 +54,11 @@
     },
     {
       "type": "text",
-      "text": "Each way of paying can be fair, if both sides agree on it first and you record it the same way every time. PhilRice and IRRI describe the arrangements common on Philippine rice farms."
+      "text": "Each way of paying can be fair, if both sides agree on it first and you record it the same way every time. Here are the arrangements common on Philippine rice farms."
     },
     {
       "type": "table",
-      "caption": "Common ways of paying farm workers on Philippine rice farms. Shares are from PhilRice and IRRI (Launio and others, 2015).",
+      "caption": "Common ways of paying farm workers on Philippine rice farms. Shares are from the 2013 and 2014 benchmark study (Launio and others, 2015).",
       "rows": [
         [
           "Arrangement",
@@ -183,7 +183,7 @@
         },
         {
           "q": "How do I count harvest shares in my labor cost?",
-          "a": "Multiply the kilos given as shares by your selling price, then add that to labor. PhilRice and IRRI found harvesters often take 7 to 14 percent of the gross harvest."
+          "a": "Multiply the kilos given as shares by your selling price, then add that to labor. Harvesters often take 7 to 14 percent of the gross harvest."
         },
         {
           "q": "Can my workers see their own days in anee.io?",
