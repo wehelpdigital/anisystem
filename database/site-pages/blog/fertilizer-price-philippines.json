@@ -13,7 +13,7 @@
     "fertilizer price",
     "fertilizer bag"
   ],
-  "excerpt": "Fertilizer prices Philippine farmers pay change every week, so check the latest Fertilizer and Pesticide Authority (FPA) list before you buy. For October 5 to 9, 2026, the FPA national average was PHP 2,241.41 for a 50 kg bag of prilled urea and PHP 1,897.00 for complete 14 14 14. Compare bags by the price per kilo of nutrient, not per bag. On anee.io, a farm app built for Filipino farmers, you record what you paid for each bag, so next season you know your real cost.",
+  "excerpt": "Fertilizer prices Philippine farmers pay change every week, so check the latest Fertilizer and Pesticide Authority (FPA) list before you buy. For October 5 to 9, 2026, the national average was PHP 2,241.41 for a 50 kg bag of prilled urea and PHP 1,897.00 for complete 14 14 14. Compare bags by the price per kilo of nutrient, not per bag. On anee.io, a farm app built for Filipino farmers, you record what you paid for each bag, so next season you know your real cost.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-price-philippines.webp",
     "alt": "Granules of a mineral complex fertilizer piled beside a small coin, the price per kilo a farmer pays",
@@ -28,7 +28,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Check the FPA weekly prices** on fpa.da.gov.ph before you buy.",
+        "**Check the weekly prices** on fpa.da.gov.ph before you buy.",
         "**Urea rose about 31 percent in a year,** from PHP 1,710.13 to PHP 2,241.41 a bag, comparing the national averages of October 2025 and October 2026.",
         "**Prices differ by region,** so compare with your own province.",
         "**Compare by the kilo of nutrient,** not by the bag."
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "Granular urea averaged PHP 2,260.39 a bag that week, and prilled urea PHP 2,241.41. Both are 46 0 0 with the same nitrogen, so buy whichever costs less.\n\nFor a whole hectare, the PhilRice Abonong Swak plan for 5 to 6 tons uses 2 bags of complete and 2 bags of urea. It adds half a bag of muriate of potash. At the October 2026 averages, that comes to PHP 9,113.76 per hectare, before labor and hauling."
+      "text": "Granular urea averaged PHP 2,260.39 a bag that week, and prilled urea PHP 2,241.41. Both are 46 0 0 with the same nitrogen, so buy whichever costs less.\n\nFor a whole hectare, the Abonong Swak plan for 5 to 6 tons uses 2 bags of complete and 2 bags of urea. It adds half a bag of muriate of potash. At the October 2026 averages, that comes to PHP 9,113.76 per hectare, before labor and hauling."
     },
     {
       "type": "heading",
@@ -119,7 +119,7 @@
       "type": "steps",
       "items": [
         {
-          "title": "Open the FPA weekly prices page",
+          "title": "Open the weekly prices page",
           "text": "Go to fpa.da.gov.ph and open the weekly prices page. Each week has its own PDF, listed by year under Fertilizer."
         },
         {
@@ -254,7 +254,7 @@
       "items": [
         {
           "q": "How much is a bag of urea in the Philippines today?",
-          "a": "It changes every week. For October 5 to 9, 2026, the FPA national average was PHP 2,241.41 for prilled urea and PHP 2,260.39 for granular urea, per 50 kg bag. Check the latest FPA list for your province before you buy."
+          "a": "It changes every week. For October 5 to 9, 2026, the national average was PHP 2,241.41 for prilled urea and PHP 2,260.39 for granular urea, per 50 kg bag. Check the latest FPA list for your province before you buy."
         },
         {
           "q": "Does the government set fertilizer prices?",

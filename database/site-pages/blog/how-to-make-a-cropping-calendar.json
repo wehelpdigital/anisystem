@@ -6,7 +6,7 @@
   "category": "Planning",
   "title": "What Is a Cropping Calendar? How to Make a Cropping Calendar for Your Farm",
   "metaTitle": "How to Make a Cropping Calendar for Rice and Vegetables",
-  "metaDescription": "Learn how to make a cropping calendar: set day zero, place each task by DAT or DAS, add weather, labor and cash, with a sample palay calendar from PhilRice.",
+  "metaDescription": "Learn how to make a cropping calendar: set day zero, place each task by DAT or DAS, add weather, labor and cash, with a sample palay calendar to follow.",
   "focusKeyword": "how to make a cropping calendar",
   "keywords": [
     "how to make a cropping calendar",
@@ -14,7 +14,7 @@
     "days after transplanting",
     "PalayCheck"
   ],
-  "excerpt": "A cropping calendar is your season written as dated tasks, from land preparation to harvest, counted from each lot's planting day. Here is how to make a cropping calendar: start with your variety's days to maturity and your transplanting or sowing date. Then place every task on its day after transplanting (DAT) or sowing (DAS), using PhilRice's PalayCheck timings for palay. With anee.io, a farm app built for Filipino farmers, you build this calendar once and it dates each lot on its own.",
+  "excerpt": "A cropping calendar is your season written as dated tasks, from land preparation to harvest, counted from each lot's planting day. Here is how to make a cropping calendar: start with your variety's days to maturity and your transplanting or sowing date. Then place every task on its day after transplanting (DAT) or sowing (DAS), using trusted timings for palay. With anee.io, a farm app built for Filipino farmers, you build this calendar once and it dates each lot on its own.",
   "heroImage": {
     "src": "/images/site/guides/blog-how-to-make-a-cropping-calendar.webp",
     "alt": "Two farmers transplanting rice seedlings in a muddy paddy, the day zero of a cropping calendar",
@@ -23,7 +23,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A calendar shows trouble before it arrives. You see the week when three tasks pile up, the day you need cash for urea, and whether harvest lands in a typhoon month. It also helps you plant with your neighbors and your irrigation release, which PhilRice counts as a key check for a good crop."
+      "text": "A calendar shows trouble before it arrives. You see the week when three tasks pile up, the day you need cash for urea, and whether harvest lands in a typhoon month. It also helps you plant with your neighbors and your irrigation release, a key check for a good crop."
     },
     {
       "type": "heading",
@@ -35,7 +35,7 @@
       "ordered": false,
       "items": [
         "Count every task from day zero, the transplanting or sowing date, not from the month.",
-        "Use trusted timings, like PalayCheck for palay or a BPI production guide for vegetables.",
+        "Use trusted timings for each crop, from palay to vegetables.",
         "Mark the danger months and the irrigation schedule first, then fit the crop between them.",
         "Add the inputs, workers and cash to each task, so the calendar is also a budget."
       ]
@@ -68,15 +68,15 @@
       "items": [
         {
           "title": "Pick the crop and variety",
-          "text": "Write down its days to maturity. For rice, this decides when each top dressing goes on, because PhilRice times them by maturity group."
+          "text": "Write down its days to maturity. For rice, this decides when each top dressing goes on, because each maturity group has its own dates."
         },
         {
           "title": "Set day zero for each lot",
-          "text": "Choose the transplanting or sowing date. For hand transplanted rice, sow the seedbed 18 to 21 days earlier, since PalayCheck wants seedlings of that age."
+          "text": "Choose the transplanting or sowing date. For hand transplanted rice, sow the seedbed 18 to 21 days earlier, since seedlings should be that age at transplanting."
         },
         {
           "title": "List the tasks by stage",
-          "text": "Follow the PalayCheck stages for palay: land preparation, crop establishment, nutrients, water, pests, harvest and postharvest."
+          "text": "For palay, follow these stages: land preparation, crop establishment, nutrients, water, pests, harvest and postharvest."
         },
         {
           "title": "Place each task on its day",
@@ -84,7 +84,7 @@
         },
         {
           "title": "Check the dates against the weather",
-          "text": "PAGASA's rainy season runs from June to November. If harvest falls in your worst typhoon weeks, move day zero or choose an earlier variety."
+          "text": "The rainy season runs from June to November. If harvest falls in your worst typhoon weeks, move day zero or choose an earlier variety."
         },
         {
           "title": "Add inputs, labor and cash",
@@ -103,7 +103,7 @@
     },
     {
       "type": "text",
-      "text": "This sample uses PhilRice's PalayCheck System and its Abonong Swak fertilizer plan for a 5 to 6 ton target. It assumes an inbred variety of 111 to 120 days, transplanted by hand."
+      "text": "This sample follows the usual palay timings and the Abonong Swak fertilizer plan for a 5 to 6 ton target. It assumes an inbred variety of 111 to 120 days, transplanted by hand."
     },
     {
       "type": "table",
@@ -139,7 +139,7 @@
         ],
         [
           "Up to 15 DAT",
-          "Keep the field saturated, a PalayCheck step against golden apple snails"
+          "Keep the field saturated, a step against golden apple snails"
         ],
         [
           "From 14 DAT, every 7 days",
@@ -173,7 +173,7 @@
     },
     {
       "type": "text",
-      "text": "Varieties that mature sooner or later shift the top dressings. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the PhilRice days for each maturity group. For the weeks before DAT 0, see [rice land preparation](/land-preparation/rice-land-preparation)."
+      "text": "Varieties that mature sooner or later shift the top dressings. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the days for each maturity group. For the weeks before DAT 0, see [rice land preparation](/land-preparation/rice-land-preparation)."
     },
     {
       "type": "heading",
@@ -182,7 +182,7 @@
     },
     {
       "type": "text",
-      "text": "The same method works for gulay. The BPI ampalaya guide, for example, transplants seedlings 7 to 10 days after germination. Flowering starts 45 to 55 days from sowing, and harvest begins 45 to 75 days from planting. After that, picking goes on 2 to 3 times a week for 2 to 3 months, so those weeks need workers and buyers lined up. See [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) for more crops."
+      "text": "The same method works for gulay. Ampalaya seedlings, for example, go to the field 7 to 10 days after germination. Flowering starts 45 to 55 days from sowing, and harvest begins 45 to 75 days from planting. After that, picking goes on 2 to 3 times a week for 2 to 3 months, so those weeks need workers and buyers lined up. See [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) for more crops."
     },
     {
       "type": "callout",
@@ -232,7 +232,7 @@
         },
         {
           "q": "Where can I get the right timings for my crop?",
-          "a": "Use PhilRice's PalayCheck System for palay. For vegetables and fruit, the Bureau of Plant Industry publishes production guides. Your Municipal Agriculture Office can also tell you the local planting schedule."
+          "a": "Use tested timings for palay, like the ones in the sample above. For vegetables and fruit, follow a production guide for your crop. Your Municipal Agriculture Office can also tell you the local planting schedule."
         }
       ]
     },

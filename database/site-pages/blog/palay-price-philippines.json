@@ -6,7 +6,7 @@
   "category": "Palay",
   "title": "Palay Price Today in the Philippines: Per Kilo, Per Cavan and NFA Rates",
   "metaTitle": "Palay Price Today: Per Kilo, Per Cavan and NFA Rates",
-  "metaDescription": "Palay price today: the latest PSA farmgate price per kilo, the NFA buying price for wet and dry palay, the price per cavan, and how moisture sets it.",
+  "metaDescription": "Palay price today: the latest farmgate price per kilo, the NFA buying price for wet and dry palay, the price per cavan, and how moisture sets it.",
   "focusKeyword": "palay price",
   "keywords": [
     "palay price",
@@ -24,7 +24,7 @@
     "rice brands in the philippines",
     "palay price per kilo today 2025"
   ],
-  "excerpt": "The palay price you get depends on the month, your province, the variety and how dry your grain is. Here is the latest PSA farmgate average and the NFA buying price. You will also see what those mean per cavan, and how to check a buyer's offer before you sell.",
+  "excerpt": "The palay price you get depends on the month, your province, the variety and how dry your grain is. Here is the latest national farmgate average and the NFA buying price. You will also see what those mean per cavan, and how to check a buyer's offer before you sell.",
   "heroImage": {
     "src": "/images/site/photos/sacks.jpg",
     "alt": "A farmer checking his notebook beside tall stacks of sacks in a farm shed",
@@ -37,20 +37,20 @@
     },
     {
       "type": "text",
-      "text": "A cavan, rice farmers' usual unit, holds about 50 kilos of palay. The rice palay price, Philippines wide, is reported each week by the PSA as the farmgate price per kilo."
+      "text": "A cavan, rice farmers' usual unit, holds about 50 kilos of palay. The rice palay price, Philippines wide, is reported each week as the farmgate price per kilo."
     },
     {
       "type": "heading",
       "level": 2,
-      "text": "Palay price today: the latest PSA farmgate average"
+      "text": "Palay price today: the latest farmgate average"
     },
     {
       "type": "text",
-      "text": "The Philippine Statistics Authority (PSA) tracks the farmgate price of dry palay every month. For August 2026, the latest month out when we wrote this, the national average was P22.16 per kilogram. That was 29.9 percent higher than in August 2025, but 1 percent lower than in July 2026. In June 2026 the average stood at P21.78.\n\nThe gap between places was wide. Central Visayas averaged P28.07 per kilo, while the Bangsamoro region stood at P20.61. Cavite posted the biggest monthly drop of any province, down 16.4 percent to P17.16, though that is still 47.9 percent above a year earlier."
+      "text": "The national farmgate price of dry palay comes out every month. For August 2026, the latest month out when we wrote this, the national average was P22.16 per kilogram. That was 29.9 percent higher than in August 2025, but 1 percent lower than in July 2026. In June 2026 the average stood at P21.78.\n\nThe gap between places was wide. Central Visayas averaged P28.07 per kilo, while the Bangsamoro region stood at P20.61. Cavite posted the biggest monthly drop of any province, down 16.4 percent to P17.16, though that is still 47.9 percent above a year earlier."
     },
     {
       "type": "table",
-      "caption": "Farmgate price of dry palay per kilo, August 2026 (PSA data as reported by BusinessWorld)",
+      "caption": "Farmgate price of dry palay per kilo, August 2026 (as reported by BusinessWorld)",
       "rows": [
         [
           "Area",
@@ -122,7 +122,7 @@
           "Per 50 kg cavan"
         ],
         [
-          "PSA national average, dry palay, August 2026",
+          "National average, dry palay, August 2026",
           "P22.16",
           "P1,108"
         ],
@@ -145,7 +145,7 @@
     },
     {
       "type": "text",
-      "text": "Don't mix up the two cavans, either. A cavan of milled rice also weighs 50 kg. But at the PSA milling rate of 63 percent, it takes about 79 kg of palay to fill it."
+      "text": "Don't mix up the two cavans, either. A cavan of milled rice also weighs 50 kg. But at the standard milling rate of 63 percent, it takes about 79 kg of palay to fill it."
     },
     {
       "type": "heading",
@@ -159,7 +159,7 @@
     },
     {
       "type": "text",
-      "text": "According to PalayCheck, fresh grain from the harvester carries 18 to 21 percent moisture in the dry season. In the wet season it carries 20 to 25 percent. Buyers aim for about 14 percent. So when you dry, only water leaves the sack.\n\nFor example, 100 kg of palay at 24 percent moisture holds 76 kg of dry matter. Dried to 14 percent, it weighs about 88 kg. At the NFA rates, that is P2,200 sold wet or about P2,386 sold dry, before your drying cost. So compare every offer on the same moisture basis."
+      "text": "Fresh grain from the harvester carries 18 to 21 percent moisture in the dry season. In the wet season it carries 20 to 25 percent. Buyers aim for about 14 percent. So when you dry, only water leaves the sack.\n\nFor example, 100 kg of palay at 24 percent moisture holds 76 kg of dry matter. Dried to 14 percent, it weighs about 88 kg. At the NFA rates, that is P2,200 sold wet or about P2,386 sold dry, before your drying cost. So compare every offer on the same moisture basis."
     },
     {
       "type": "heading",
@@ -168,7 +168,7 @@
     },
     {
       "type": "text",
-      "text": "Variety counts too. In Nueva Ecija, PSA data for 2024 averaged P24.69 per kilo for dry fancy palay and P23.33 for other dry palay, PCIJ reported. So see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) before you pick seed.\n\nClean grain sells better as well. PalayCheck advises removing chaff, straw and empty grains, because they hold moisture and cause hot spots in the sack. If a buyer is far away, a palay picture of a clean handful, taken in daylight, helps him judge your grain before he quotes. Finally, PCIJ found that agents in Nueva Ecija often add about 20 centavos per kilo to outbid each other. That is why it pays to ask more than one buyer."
+      "text": "Variety counts too. In Nueva Ecija, prices for 2024 averaged P24.69 per kilo for dry fancy palay and P23.33 for other dry palay, PCIJ reported. So see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) before you pick seed.\n\nClean grain sells better as well. Remove chaff, straw and empty grains, because they hold moisture and cause hot spots in the sack. If a buyer is far away, a palay picture of a clean handful, taken in daylight, helps him judge your grain before he quotes. Finally, PCIJ found that agents in Nueva Ecija often add about 20 centavos per kilo to outbid each other. That is why it pays to ask more than one buyer."
     },
     {
       "type": "callout",
@@ -183,7 +183,7 @@
     },
     {
       "type": "text",
-      "text": "Palay to rice conversion explains the gap between the two prices. At the PSA milling recovery rate of 63 percent, one kilo of milled rice needs about 1.59 kg of palay. At the August 2026 average of P22.16, that palay alone costs about P35 per kilo of rice. Drying, hauling, milling, packing and store margins come on top.\n\nSome palay ends up in packed rice brands in the Philippines. Jasponica rice, for instance, is a premium rice that SL Agritech Corporation sells under its Doña Maria brand. So when you follow the rice and palay price in the Philippines, remember they track different products at different steps."
+      "text": "Palay to rice conversion explains the gap between the two prices. At the standard milling recovery rate of 63 percent, one kilo of milled rice needs about 1.59 kg of palay. At the August 2026 average of P22.16, that palay alone costs about P35 per kilo of rice. Drying, hauling, milling, packing and store margins come on top.\n\nSome palay ends up in packed rice brands in the Philippines. Jasponica rice, for instance, is a premium rice that SL Agritech Corporation sells under its Doña Maria brand. So when you follow the rice and palay price in the Philippines, remember they track different products at different steps."
     },
     {
       "type": "heading",
@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "Prices usually dip at peak harvest, when everyone sells at once. Imports matter as well. For example, imports surged after the 2019 Rice Tariffication Law. Farmgate prices then fell sharply at the harvest peak of late 2019.\n\n2025 showed the same pull. Heavy rice imports early in the year weighed on farmgate prices, Context.ph reported from PSA data. Prices recovered only a little after the import ban that began in September, and December still stayed below December 2024. So if you checked the palay price per kilo today in 2025, you mostly saw weak offers.\n\nIn 2026 the trend ran the other way, with monthly averages close to 30 percent above 2025. So plan your sale, not just your harvest. Our [palay guide](/crops/palay) shows how proper drying keeps your grain sound while you wait. Also, our [pagtatanim ng palay guide](/crops/pagtatanim-ng-palay) covers the harvest timing that protects milling quality."
+      "text": "Prices usually dip at peak harvest, when everyone sells at once. Imports matter as well. For example, imports surged after the 2019 Rice Tariffication Law. Farmgate prices then fell sharply at the harvest peak of late 2019.\n\n2025 showed the same pull. Heavy rice imports early in the year weighed on farmgate prices, Context.ph reported. Prices recovered only a little after the import ban that began in September, and December still stayed below December 2024. So if you checked the palay price per kilo today in 2025, you mostly saw weak offers.\n\nIn 2026 the trend ran the other way, with monthly averages close to 30 percent above 2025. So plan your sale, not just your harvest. Our [palay guide](/crops/palay) shows how proper drying keeps your grain sound while you wait. Also, our [pagtatanim ng palay guide](/crops/pagtatanim-ng-palay) covers the harvest timing that protects milling quality."
     },
     {
       "type": "text",
@@ -215,7 +215,7 @@
       "items": [
         {
           "q": "What is the palay price today per kilo?",
-          "a": "The latest PSA national average for dry palay was P22.16 per kilo in August 2026. Your local price can be several pesos higher or lower, so check the PSA farmgate page and ask more than one buyer."
+          "a": "The latest national average for dry palay was P22.16 per kilo in August 2026. Your local price can be several pesos higher or lower, so check the latest farmgate figures and ask more than one buyer."
         },
         {
           "q": "How much is one cavan of palay?",
@@ -231,7 +231,7 @@
         },
         {
           "q": "How many kilos of palay make one kilo of rice?",
-          "a": "About 1.59 kg at the PSA milling recovery rate of 63 percent. Your mill and your grain quality can change that."
+          "a": "About 1.59 kg at the standard milling recovery rate of 63 percent. Your mill and your grain quality can change that."
         }
       ]
     },

@@ -16,7 +16,7 @@
     "price per kilo of nitrogen",
     "fertilizer discount voucher"
   ],
-  "excerpt": "You can lower fertilizer cost without lowering your harvest by cutting waste, not nutrients. Test the soil before you buy, return rice straw and manure to the field, let a leaf color chart decide each nitrogen dose and compare bags by the price per kilo of nutrient. PhilRice estimates that pairing inorganic fertilizer with organic sources can save PHP 2,000 to 4,000 per hectare. anee.io, a farm app built for Filipino farmers, helps you buy only what your plan needs and shows what each season really cost.",
+  "excerpt": "You can lower fertilizer cost without lowering your harvest by cutting waste, not nutrients. Test the soil before you buy, return rice straw and manure to the field, let a leaf color chart decide each nitrogen dose and compare bags by the price per kilo of nutrient. Pairing inorganic fertilizer with organic sources can save PHP 2,000 to 4,000 per hectare. anee.io, a farm app built for Filipino farmers, helps you buy only what your plan needs and shows what each season really cost.",
   "heroImage": {
     "src": "/images/site/guides/blog-lower-fertilizer-cost.webp",
     "alt": "Two farmers in Laguna spread rice straw back over a wet paddy, a free source of nutrients that helps lower fertilizer cost",
@@ -25,15 +25,15 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Fertilizer is the input you can least afford to waste. You cannot control the price of a bag. What you can control is how many kilos reach your crop. The rest washes away, escapes into the air or sits unused in the soil.\n\nThe ways below come from PhilRice, the PalayCheck System and the FPA's own weekly prices. None of them asks you to starve the crop."
+      "text": "Fertilizer is the input you can least afford to waste. You cannot control the price of a bag. What you can control is how many kilos reach your crop. The rest washes away, escapes into the air or sits unused in the soil.\n\nThe ways below use tested rice practice and the FPA's own weekly prices. None of them asks you to starve the crop."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
         "**Test before you buy,** so you stop paying for nutrients your soil already has.",
-        "**Return the straw.** PhilRice says straw from a 5 ton harvest supplies about 30 kg of nitrogen, worth about 1.3 bags of urea.",
-        "**Let the leaves decide.** A leaf color chart can save one to two sacks of nitrogen fertilizer per hectare, PhilRice reports.",
+        "**Return the straw.** Straw from a 5 ton harvest supplies about 30 kg of nitrogen, worth about 1.3 bags of urea.",
+        "**Let the leaves decide.** A leaf color chart can save one to two sacks of nitrogen fertilizer per hectare.",
         "**Compare by the kilo of nutrient,** not by the price of the bag.",
         "**Stop the losses** with good timing, shallow water and closed bunds."
       ]
@@ -45,7 +45,7 @@
     },
     {
       "type": "text",
-      "text": "The first leak is guessing. A plan copied from a neighbor can give too much of one nutrient and too little of another, and both cost you. The second leak is loss. Urea left on the surface turns to gas. Fertilizer spread before a rain that spills over the bunds leaves with the water.\n\nThe third leak is burning. Straw worked back into the soil returns nutrients for free, and PalayCheck counts on it, but fire throws that value away. Finally, many farmers compare bags by price alone, while the real question is what each kilo of nutrient costs."
+      "text": "The first leak is guessing. A plan copied from a neighbor can give too much of one nutrient and too little of another, and both cost you. The second leak is loss. Urea left on the surface turns to gas. Fertilizer spread before a rain that spills over the bunds leaves with the water.\n\nThe third leak is burning. Straw worked back into the soil returns nutrients for free, but fire throws that value away. Finally, many farmers compare bags by price alone, while the real question is what each kilo of nutrient costs."
     },
     {
       "type": "heading",
@@ -57,7 +57,7 @@
       "items": [
         {
           "title": "Test the soil, or use MOET",
-          "text": "A soil test or PhilRice's MOET kit shows which nutrients your field lacks. Your municipal agriculturist can tell you where to send samples."
+          "text": "A soil test or a MOET kit shows which nutrients your field lacks. Your municipal agriculturist can tell you where to send samples."
         },
         {
           "title": "Work the straw back in",
@@ -65,7 +65,7 @@
         },
         {
           "title": "Add organic fertilizer you can get cheaply",
-          "text": "PhilRice's Abonong Swak plan adds 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare. Our guide to [organic fertilizer examples](/blog/organic-fertilizer-examples) lists what works."
+          "text": "The Abonong Swak plan adds 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare. Our guide to [organic fertilizer examples](/blog/organic-fertilizer-examples) lists what works."
         },
         {
           "title": "Read the leaves before each nitrogen dose",
@@ -73,7 +73,7 @@
         },
         {
           "title": "Put every kilo where roots can use it",
-          "text": "PalayCheck says to mix granular fertilizer into the soil and to top dress into 2 to 5 cm of water after 3 in the afternoon. Keep the bunds closed afterward."
+          "text": "Mix granular fertilizer into the soil, and top dress into 2 to 5 cm of water after 3 in the afternoon. Keep the bunds closed afterward."
         },
         {
           "title": "Ask about government vouchers",
@@ -92,7 +92,7 @@
     },
     {
       "type": "table",
-      "caption": "Price per kilo of nutrient at FPA national average prices for October 5 to 9, 2026, our own arithmetic. Prices change every week.",
+      "caption": "Price per kilo of nutrient at national average prices for October 5 to 9, 2026, our own arithmetic. Prices change every week.",
       "rows": [
         [
           "Grade",
@@ -172,7 +172,7 @@
         },
         {
           "q": "How much can rice straw save me?",
-          "a": "PhilRice says the straw from a 5 ton harvest, worked back into the soil, supplies about 30 kg of nitrogen. That equals about 1.3 bags of urea, or roughly PHP 2,900 at the FPA average price in October 2026."
+          "a": "The straw from a 5 ton harvest, worked back into the soil, supplies about 30 kg of nitrogen. That equals about 1.3 bags of urea, or roughly PHP 2,900 at the FPA average price in October 2026."
         },
         {
           "q": "Can I get government help to buy fertilizer?",
@@ -180,7 +180,7 @@
         },
         {
           "q": "Will using less nitrogen lower my yield?",
-          "a": "Not if the leaves show the crop has enough. A leaf color chart tells you when the crop wants nitrogen. PhilRice reports it can save one to two sacks per hectare. Skipping a dose the crop needs, on the other hand, does cut the harvest."
+          "a": "Not if the leaves show the crop has enough. A leaf color chart tells you when the crop wants nitrogen, and it can save one to two sacks per hectare. Skipping a dose the crop needs, on the other hand, does cut the harvest."
         }
       ]
     },

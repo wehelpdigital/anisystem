@@ -16,7 +16,7 @@
     "PalayCheck",
     "free farming courses"
   ],
-  "excerpt": "The best way to learn modern farming techniques in the Philippines is to pair a free course with practice on your own field. Take an ATI online course or join a farmer field school, follow a proven system like PhilRice PalayCheck, then try one new technique per season on part of your lot and compare it with your old way. anee.io, a farm app built for Filipino farmers, makes that comparison easy, because it records what you did, on which day and what it cost, season after season.",
+  "excerpt": "The best way to learn modern farming techniques in the Philippines is to pair a free course with practice on your own field. Take an ATI online course or join a farmer field school, follow a proven system like PalayCheck, then try one new technique per season on part of your lot and compare it with your old way. anee.io, a farm app built for Filipino farmers, makes that comparison easy, because it records what you did, on which day and what it cost, season after season.",
   "heroImage": {
     "src": "/images/site/guides/blog-modern-farming-techniques.webp",
     "alt": "A drone sprays a rice field during an IRRI demonstration of modern farming techniques in Los Banos, Laguna",
@@ -58,17 +58,17 @@
         [
           "PalayCheck",
           "Compares your practices with the best ones, stage by stage, through key checks",
-          "The PhilRice PalayCheck guide, in English or Tagalog"
+          "The PalayCheck guide, in English or Tagalog"
         ],
         [
           "Alternate wetting and drying (AWD)",
-          "Cuts irrigation water in rice without lowering yield, says IRRI",
-          "IRRI Rice Knowledge Bank and your irrigators' association"
+          "Cuts irrigation water in rice without lowering yield",
+          "Your irrigators' association"
         ],
         [
           "Fertilizer by soil and leaf color",
           "Gives the crop what it lacks, not a fixed recipe",
-          "Rice Crop Manager and the PhilRice MOET and LCC apps"
+          "Rice Crop Manager and the MOET and LCC apps"
         ],
         [
           "Mechanization",
@@ -104,7 +104,7 @@
         "**School on the Air**: radio lessons on the full package of technology for rice, corn, high value crops, livestock and organic farming.",
         "**Farmers' Contact Center**: technical advice by voice call, text, email or online chat.",
         "**Agri Extension on Wheels**: a mobile hub that brings knowledge products closer to farming communities.",
-        "**PalayCheck**: the PhilRice rice system, free to download in English and in Tagalog."
+        "**PalayCheck**: a rice crop management system, free to download in English and in Tagalog."
       ]
     },
     {
@@ -118,7 +118,7 @@
     },
     {
       "type": "text",
-      "text": "Because you learn on a real field, with your neighbors, across a real season. FAO describes a farmer field school as a group that meets regularly during a production cycle. Members set up experiments and learn hands on, so they can adapt practices to their own conditions.\n\nPalayCheck works the same way. It presents the best practices as key checks, compares them with what farmers do, and learns through farmers' discussion groups. So ask your municipal agriculturist or the nearest ATI center if a field school or PalayCheck group runs in your area."
+      "text": "Because you learn on a real field, with your neighbors, across a real season. A farmer field school is a group that meets regularly during a production cycle. Members set up experiments and learn hands on, so they can adapt practices to their own conditions.\n\nPalayCheck works the same way. It presents the best practices as key checks, compares them with what farmers do, and learns through farmers' discussion groups. So ask your municipal agriculturist or the nearest ATI center if a field school or PalayCheck group runs in your area."
     },
     {
       "type": "heading",
@@ -162,7 +162,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "AWD needs the right field and the right timing",
-      "text": "IRRI advises starting AWD 1 to 2 weeks after transplanting, and waiting 2 to 3 weeks longer if many weeds are present. Irrigate again when the water in the field tube drops about 15 cm below the soil. Keep the field flooded from a week before flowering to a week after."
+      "text": "Start AWD 1 to 2 weeks after transplanting, and wait 2 to 3 weeks longer if many weeds are present. Irrigate again when the water in the field tube drops about 15 cm below the soil. Keep the field flooded from a week before flowering to a week after."
     },
     {
       "type": "heading",
@@ -171,7 +171,7 @@
     },
     {
       "type": "text",
-      "text": "Start with the ones that need knowledge, not big equipment. Fertilizer advice by field is a good example. IRRI reported that in a 2018 assessment, farmers who followed Rice Crop Manager advice harvested 640 kg more per hectare on average than farmers who did not. They also had about PHP 11,146 more net benefit per hectare.\n\nTiming pays too. PhilRice PalayCheck warns that palay cut too early can drop its milling recovery to as low as 53 percent. So the day you harvest is a technique in itself. Machines come next, and you can often hire them as a service instead of buying."
+      "text": "Start with the ones that need knowledge, not big equipment. Fertilizer advice by field is a good example. In a 2018 assessment, farmers who followed Rice Crop Manager advice harvested 640 kg more per hectare on average than farmers who did not. They also had about PHP 11,146 more net benefit per hectare.\n\nTiming pays too. Palay cut too early can drop its milling recovery to as low as 53 percent. So the day you harvest is a technique in itself. Machines come next, and you can often hire them as a service instead of buying."
     },
     {
       "type": "heading",
@@ -207,7 +207,7 @@
         },
         {
           "q": "What is alternate wetting and drying?",
-          "a": "It is a water saving technique for irrigated rice from IRRI. You let the water in the field drop to about 15 cm below the soil before you irrigate again, and keep the field flooded around flowering."
+          "a": "It is a water saving technique for irrigated rice. You let the water in the field drop to about 15 cm below the soil before you irrigate again, and keep the field flooded around flowering."
         },
         {
           "q": "Is it better to buy farm machines or hire them?",

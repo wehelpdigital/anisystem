@@ -6,14 +6,14 @@
   "category": "Yield and Fertilizer",
   "title": "Micronutrients for Rice: Does Palay Need Zinc, and Do They Help Against Pests?",
   "metaTitle": "Micronutrients for Rice: Zinc, Sulfur, Silicon and Pests",
-  "metaDescription": "Micronutrients for rice: when palay needs zinc, the signs and PhilRice rates, what sulfur and silicon do, and the honest answer on pest resistance.",
+  "metaDescription": "Micronutrients for rice: when palay needs zinc, the signs and the rates, what sulfur and silicon do, and the honest answer on pest resistance.",
   "focusKeyword": "micronutrients for rice",
   "keywords": [
     "micronutrients for rice",
     "fertilizer with zinc",
     "foliar fertilizer"
   ],
-  "excerpt": "Yes, rice needs micronutrients, and zinc is the one most often short. It shows 2 to 4 weeks after transplanting as dusty brown spots on stunted plants, mostly on alkaline, poorly drained or long flooded soils. PalayCheck fixes it with one method, such as 25 kg of zinc sulfate per hectare at 10 to 14 days after transplanting. But micronutrients for rice are not a pesticide. Fixing a real shortage and returning straw make plants tougher, while too much nitrogen invites pests. In anee.io, a farm app built for Filipino farmers, the NPK Plus calculator counts micronutrients too.",
+  "excerpt": "Yes, rice needs micronutrients, and zinc is the one most often short. It shows 2 to 4 weeks after transplanting as dusty brown spots on stunted plants, mostly on alkaline, poorly drained or long flooded soils. Fix it with one method, such as 25 kg of zinc sulfate per hectare at 10 to 14 days after transplanting. But micronutrients for rice are not a pesticide. Fixing a real shortage and returning straw make plants tougher, while too much nitrogen invites pests. In anee.io, a farm app built for Filipino farmers, the NPK Plus calculator counts micronutrients too.",
   "heroImage": {
     "src": "/images/site/guides/blog-micronutrients-for-rice.webp",
     "alt": "Bundles of rice seedlings with their roots, ready for transplanting, the stage when a zinc root dip can give micronutrients for rice",
@@ -22,14 +22,14 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Micronutrients are elements a crop needs in tiny amounts, like zinc, iron, boron and copper. Tiny does not mean optional. PalayCheck warns that on soils short of zinc, NPK fertilizer alone cannot give a good yield. You have to correct the zinc first.\n\nThis guide also covers sulfur and silicon. They are not micronutrients, but farmers ask about them in the same breath."
+      "text": "Micronutrients are elements a crop needs in tiny amounts, like zinc, iron, boron and copper. Tiny does not mean optional. On soils short of zinc, NPK fertilizer alone cannot give a good yield. You have to correct the zinc first.\n\nThis guide also covers sulfur and silicon. They are not micronutrients, but farmers ask about them in the same breath."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Zinc is the usual one.** IRRI calls zinc deficiency the most widespread micronutrient disorder in rice.",
-        "**PhilRice says fix micronutrient shortages first,** because they affect how well the plant takes up NPK.",
+        "**Zinc is the usual one.** Zinc deficiency is the most widespread micronutrient disorder in rice.",
+        "**Fix micronutrient shortages first,** because they affect how well the plant takes up NPK.",
         "**Pick one zinc method:** a seedling dip, a seedbed dose, a broadcast or a foliar spray.",
         "**Silicon comes free** from rice straw and husks, and it toughens leaves and stems.",
         "**No micronutrient kills pests.** Balanced feeding helps the plant cope, while too much nitrogen invites pests."
@@ -42,11 +42,11 @@
     },
     {
       "type": "text",
-      "text": "Rice needs zinc, iron, boron, copper and manganese in tiny amounts. PalayCheck gives a handy rule: shortages of these, and of sulfur, show first on the upper, younger leaves. Nitrogen, phosphorus and potassium show first on the lower, older leaves. These are the problems worth watching in a lowland paddy."
+      "text": "Rice needs zinc, iron, boron, copper and manganese in tiny amounts. Here is a handy rule: shortages of these, and of sulfur, show first on the upper, younger leaves. Nitrogen, phosphorus and potassium show first on the lower, older leaves. These are the problems worth watching in a lowland paddy."
     },
     {
       "type": "table",
-      "caption": "Micronutrient and related problems in lowland rice, from IRRI fact sheets and PhilRice PalayCheck",
+      "caption": "Micronutrient and related problems in lowland rice",
       "rows": [
         [
           "Problem",
@@ -58,12 +58,12 @@
           "Zinc deficiency",
           "Dusty brown spots on upper leaves of stunted plants 2 to 4 weeks after transplanting, pale midribs near the leaf base, patchy growth",
           "Neutral to alkaline, poorly drained or long flooded soils, and soils high in phosphorus",
-          "One PalayCheck method, in the next table"
+          "One method, from the next table"
         ],
         [
           "Sulfur deficiency",
           "Young leaves turn yellow, fewer tillers, shorter panicles, later maturity",
-          "Often alongside zinc deficiency, IRRI notes",
+          "Often alongside zinc deficiency",
           "The sulfur in 14 14 14 with 12 percent S at basal usually covers it"
         ],
         [
@@ -91,11 +91,11 @@
     },
     {
       "type": "text",
-      "text": "First, confirm it. IRRI notes that zinc deficiency looks like iron problems, grassy stunt and tungro, so it advises sending soil and plant samples to a laboratory. The PhilRice MOET kit also checks your soil for zinc. Then choose only one of the PalayCheck methods below."
+      "text": "First, confirm it. Zinc deficiency looks like iron problems, grassy stunt and tungro, so send soil and plant samples to a laboratory. A MOET kit also checks your soil for zinc. Then choose only one of the methods below."
     },
     {
       "type": "table",
-      "caption": "PalayCheck methods for zinc deficiency. Choose only one.",
+      "caption": "Methods for zinc deficiency. Choose only one.",
       "rows": [
         [
           "Method",
@@ -131,13 +131,13 @@
     },
     {
       "type": "text",
-      "text": "A fertilizer with zinc is only half the answer if the cause stays. IRRI suggests growing zinc efficient varieties and replacing some urea with [ammonium sulfate](/blog/ammonium-sulfate-21-0-0). It also suggests organic manure before planting, and letting fields that stay flooded all year drain and dry now and then."
+      "text": "A fertilizer with zinc is only half the answer if the cause stays. Grow zinc efficient varieties and replace some urea with [ammonium sulfate](/blog/ammonium-sulfate-21-0-0). Also add organic manure before planting, and let fields that stay flooded all year drain and dry now and then."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "One zinc method is enough",
-      "text": "PalayCheck says to choose only one method. A dip, a seedbed dose and a broadcast on the same crop pay three times for a problem you fix once."
+      "text": "Choose only one method. A dip, a seedbed dose and a broadcast on the same crop pay three times for a problem you fix once."
     },
     {
       "type": "heading",
@@ -146,7 +146,7 @@
     },
     {
       "type": "text",
-      "text": "Only if a test or clear signs show a shortage. The MOET kit checks for zinc, sulfur and copper along with N, P and K. PhilRice experts say to fix micronutrient shortages first, because they affect NPK uptake. If the test shows enough, extra micronutrients for rice add cost without fixing anything.\n\nA foliar fertilizer with zinc is one of the PalayCheck options, sprayed at 14 days after transplanting at the rate on its label. Our [foliar fertilizer](/blog/foliar-fertilizer) guide explains when sprays make sense and when soil feeding works better."
+      "text": "Only if a test or clear signs show a shortage. The MOET kit checks for zinc, sulfur and copper along with N, P and K. Fix micronutrient shortages first, because they affect NPK uptake. If the test shows enough, extra micronutrients for rice add cost without fixing anything.\n\nA foliar fertilizer with zinc is one of the options, sprayed at 14 days after transplanting at the rate on its label. Our [foliar fertilizer](/blog/foliar-fertilizer) guide explains when sprays make sense and when soil feeding works better."
     },
     {
       "type": "heading",
@@ -161,9 +161,9 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Silicon:** IRRI says plants short of silicon are more open to fungal and bacterial diseases, insects and mites, with more blast and brown spot. Straw holds 5 to 6 percent silicon and husks about 10 percent, so returning them fixes the shortage over time.",
-        "**Potassium:** PalayCheck says potassium improves tolerance to pests, diseases, drought and lodging. It is a major nutrient, not a micronutrient.",
-        "**Nitrogen:** PalayCheck warns that too much nitrogen makes rice prone to lodging and pests. IRRI also lists avoiding excess nitrogen among the ways to manage silicon shortage."
+        "**Silicon:** Plants short of silicon are more open to fungal and bacterial diseases, insects and mites, with more blast and brown spot. Straw holds 5 to 6 percent silicon and husks about 10 percent, so returning them fixes the shortage over time.",
+        "**Potassium:** This nutrient improves tolerance to pests, diseases, drought and lodging. It is a major nutrient, not a micronutrient.",
+        "**Nitrogen:** Too much nitrogen makes rice prone to lodging and pests. Avoiding excess nitrogen is also one of the ways to manage silicon shortage."
       ]
     },
     {
@@ -196,15 +196,15 @@
       "items": [
         {
           "q": "Is zinc sulfate the same as zinc oxide?",
-          "a": "No. PalayCheck uses zinc oxide for the seedling dip and zinc sulfate for the seedbed, broadcast and seed soak. Use the form and amount that each method names."
+          "a": "No. The seedling dip uses zinc oxide, while the seedbed, broadcast and seed soak use zinc sulfate. Use the form and amount that each method names."
         },
         {
           "q": "Why does my field show brown spots and black roots?",
-          "a": "That points to iron toxicity, common where fields stay flooded on poorly drained soil. IRRI advises balanced NPK with enough potassium, and draining the field for 7 to 10 days at mid tillering while keeping the soil moist."
+          "a": "That points to iron toxicity, common where fields stay flooded on poorly drained soil. Use balanced NPK with enough potassium, and drain the field for 7 to 10 days at mid tillering while keeping the soil moist."
         },
         {
           "q": "Does rice straw give back micronutrients?",
-          "a": "It gives back silicon. IRRI says straw holds 5 to 6 percent silicon and husks about 10 percent. Working them back in prevents silicon shortage over time."
+          "a": "It gives back silicon. Straw holds 5 to 6 percent silicon and husks about 10 percent. Working them back in prevents silicon shortage over time."
         },
         {
           "q": "Can micronutrients replace insecticide?",

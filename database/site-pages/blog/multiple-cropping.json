@@ -12,7 +12,7 @@
     "multiple cropping",
     "palay at mais"
   ],
-  "excerpt": "Multiple cropping means growing two or more crops on the same land in one year, one after another or side by side. In rice areas, PhilRice suggests planting munggo, mais or melon after the palay harvest. Plan it lot by lot: give each crop its own day zero, check the water for each window, and give rice pests a break. Built for Filipino farmers, the anee.io app keeps each lot's own crop and day count, so every task lands on the right date.",
+  "excerpt": "Multiple cropping means growing two or more crops on the same land in one year, one after another or side by side. In rice areas, munggo, mais or melon can follow the palay harvest. Plan it lot by lot: give each crop its own day zero, check the water for each window, and give rice pests a break. Built for Filipino farmers, the anee.io app keeps each lot's own crop and day count, so every task lands on the right date.",
   "heroImage": {
     "src": "/images/site/guides/blog-multiple-cropping.webp",
     "alt": "Munggo growing in rows beside dry harvested rice paddies in Candaba, Pampanga, an example of multiple cropping",
@@ -33,9 +33,9 @@
       "ordered": false,
       "items": [
         "**Multiple cropping** covers sequential cropping, relay cropping, intercropping and ratoon cropping.",
-        "**PhilRice's Palayamanan Plus** suggests munggo, mais or melon after the palay harvest, and vegetables on the dikes.",
-        "**Munggo fits well after rice.** The DA guide allows zero or minimum tillage after rice, with harvest 60 to 70 days after planting.",
-        "**A break from rice helps.** PhilRice advises synchronous planting with a 1 to 2 month fallow to break the brown planthopper's life cycle.",
+        "**Munggo, mais or melon** fit after the palay harvest, with vegetables on the dikes.",
+        "**Munggo fits well after rice.** Zero or minimum tillage works after rice, with harvest 60 to 70 days after planting.",
+        "**A break from rice helps.** Plant at the same time as your neighbors, after a 1 to 2 month fallow, to break the brown planthopper's life cycle.",
         "**Plan lot by lot**, each crop with its own day zero, water window and budget."
       ]
     },
@@ -46,11 +46,11 @@
     },
     {
       "type": "text",
-      "text": "Multiple cropping is the practice of growing more than one crop on the same land in one year. That is how the glossary of FAO Soils Bulletin 72 defines it. It then names the patterns below."
+      "text": "Multiple cropping is the practice of growing more than one crop on the same land in one year. It comes in the patterns below."
     },
     {
       "type": "table",
-      "caption": "Kinds of multiple cropping, from the FAO glossary, with Philippine examples",
+      "caption": "Kinds of multiple cropping, with Philippine examples",
       "rows": [
         [
           "Pattern",
@@ -65,7 +65,7 @@
         [
           "Relay cropping",
           "The next crop goes in after the first one flowers, before its harvest",
-          "Munggo, which the DA lists as a relay crop"
+          "Munggo, a common relay crop"
         ],
         [
           "Intercropping",
@@ -81,7 +81,7 @@
     },
     {
       "type": "text",
-      "text": "The same glossary gives a simple score, the multiple cropping index. Add up the areas planted to crops harvested during the year, then divide by the total cultivated area. One hectare of palay followed by one hectare of munggo scores 2."
+      "text": "There is also a simple score, the multiple cropping index. Add up the areas planted to crops harvested during the year, then divide by the total cultivated area. One hectare of palay followed by one hectare of munggo scores 2."
     },
     {
       "type": "heading",
@@ -92,16 +92,16 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**The soil moisture is already there.** The DA mungbean guide says munggo planted in September or October needs no extra irrigation if residual rain and soil moisture are enough. Planting from January to March, though, needs irrigation at the critical stages.",
-        "**The soil gains.** Munggo gets nitrogen through bacteria in its roots. PhilRice also reported that munggo after rice restores the natural fertility of the soil.",
-        "**Pests lose their food.** PhilRice advises synchronous planting with a 1 to 2 month fallow to break the planthopper's life cycle. A crop that is not rice keeps the field earning during that break.",
-        "**Diseases build up less.** The DA guide warns that growing one crop again and again lets pathogens multiply, and it advises rotating munggo with crops that are not legumes.",
-        "**Cash comes between rice harvests.** In 2014, PhilRice reported that 7,500 hectares of munggo after rice in San Mateo, Isabela, could earn 350 million pesos a year."
+        "**The soil moisture is already there.** Munggo planted in September or October needs no extra irrigation if residual rain and soil moisture are enough. Planting from January to March, though, needs irrigation at the critical stages.",
+        "**The soil gains.** Munggo gets nitrogen through bacteria in its roots. Munggo after rice also restores the natural fertility of the soil.",
+        "**Pests lose their food.** Planting at the same time as your neighbors, after a 1 to 2 month fallow, breaks the planthopper's life cycle. A crop that is not rice keeps the field earning during that break.",
+        "**Diseases build up less.** Growing one crop again and again lets pathogens multiply, so rotate munggo with crops that are not legumes.",
+        "**Cash comes between rice harvests.** In 2014, an estimate put the earnings of 7,500 hectares of munggo after rice in San Mateo, Isabela, at 350 million pesos a year."
       ]
     },
     {
       "type": "text",
-      "text": "Munggo residue also feeds animals, since the DA guide notes it can serve as fodder. So on a farm with a carabao or goats, one crop helps the next and the herd too."
+      "text": "Munggo residue also feeds animals, since it can serve as fodder. So on a farm with a carabao or goats, one crop helps the next and the herd too."
     },
     {
       "type": "heading",
@@ -139,7 +139,7 @@
     },
     {
       "type": "table",
-      "caption": "A sample year on one lowland lot, built from the DA and PhilRice guides",
+      "caption": "A sample year on one lowland lot",
       "rows": [
         [
           "Window",
@@ -164,7 +164,7 @@
         [
           "Before the next palay",
           "At least 1 to 2 months with no rice",
-          "PhilRice's break against planthoppers"
+          "A break against planthoppers"
         ]
       ]
     },
@@ -172,7 +172,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Keep munggo harvest out of the rain",
-      "text": "The DA guide warns that high humidity from continuous rain can severely reduce the quality of harvested munggo seed. Time the planting so picking falls in drier weeks."
+      "text": "High humidity from continuous rain can severely reduce the quality of harvested munggo seed. Time the planting so picking falls in drier weeks."
     },
     {
       "type": "heading",
@@ -254,19 +254,19 @@
         },
         {
           "q": "What can I plant after rice in the dry season?",
-          "a": "PhilRice's Palayamanan Plus names munggo, mais and melon. The DA mungbean guide says munggo grows best in rotation with rice or corn. Our guide on [what crop to plant this season](/blog/what-crop-to-plant-this-season) helps you choose."
+          "a": "Munggo, mais and melon all fit. Munggo grows best in rotation with rice or corn. Our guide on [what crop to plant this season](/blog/what-crop-to-plant-this-season) helps you choose."
         },
         {
           "q": "Do I need to plow before planting munggo after rice?",
-          "a": "Not always. The DA guide says zero or minimum tillage can work after rice. It also says to flood the paddy 1 to 2 days before planting, then drain it before broadcasting the seeds."
+          "a": "Not always. Zero or minimum tillage can work after rice. Flood the paddy 1 to 2 days before planting, then drain it before broadcasting the seeds."
         },
         {
           "q": "Can I grow palay at mais in the same year?",
-          "a": "Yes. Palay at mais, rice and corn, can share a year if the mais goes in after the palay harvest. PhilRice lists mais among the crops to plant after palay. See [pagtatanim ng mais](/crops/pagtatanim-ng-mais) for growing it."
+          "a": "Yes. Palay at mais, rice and corn, can share a year if the mais goes in after the palay harvest. Mais is one of the crops to plant after palay. See [pagtatanim ng mais](/crops/pagtatanim-ng-mais) for growing it."
         },
         {
           "q": "How long should a field rest between rice crops?",
-          "a": "PhilRice advises a 1 to 2 month fallow with synchronous planting to break the brown planthopper's life cycle. A crop that is not rice can use that time."
+          "a": "Leave a 1 to 2 month fallow, and plant at the same time as your neighbors, to break the brown planthopper's life cycle. A crop that is not rice can use that time."
         }
       ]
     },

@@ -16,7 +16,7 @@
     "fertilizer diy",
     "fertilizer ingredients"
   ],
-  "excerpt": "Neither one wins alone. In the organic vs inorganic fertilizer question, inorganic fertilizer feeds palay fast and costs the least per kilo of nitrogen. Organic fertilizer builds the soil but carries far less nutrient per sack, so PhilRice advises combining the two. anee.io, a farm app built for Filipino farmers, puts both on one calendar and shows what each one cost.",
+  "excerpt": "Neither one wins alone. In the organic vs inorganic fertilizer question, inorganic fertilizer feeds palay fast and costs the least per kilo of nitrogen. Organic fertilizer builds the soil but carries far less nutrient per sack, so the best plan combines the two. anee.io, a farm app built for Filipino farmers, puts both on one calendar and shows what each one cost.",
   "heroImage": {
     "src": "/images/site/guides/blog-organic-vs-inorganic-fertilizer.webp",
     "alt": "Azolla, a water fern used as organic fertilizer, covering the water of a rice paddy in Miagao, Iloilo",
@@ -33,9 +33,9 @@
       "items": [
         "**Inorganic fertilizer** is fast, and urea gives nitrogen at about PHP 97 a kilo.",
         "**Organic fertilizer** is slow and weak per sack, but it feeds soil life and holds water.",
-        "**Straw and azolla** can each supply about 30 kg of nitrogen per hectare, PhilRice says.",
+        "**Straw and azolla** can each supply about 30 kg of nitrogen per hectare.",
         "**Homemade fertilizer** is a supplement, since a hectare needs tons of it.",
-        "**Most farms do best with both**, which PhilRice calls balanced fertilization."
+        "**Most farms do best with both**, a practice known as balanced fertilization."
       ]
     },
     {
@@ -45,7 +45,7 @@
     },
     {
       "type": "text",
-      "text": "Figures come from the national standard for organic fertilizer, the FPA weekly price report and IRRI."
+      "text": "Figures come from the national standard for organic fertilizer and the weekly price report."
     },
     {
       "type": "table",
@@ -69,7 +69,7 @@
         [
           "Cost per kilo of nitrogen",
           "Usually higher if bought, since a 50 kg bag at 2 percent nitrogen holds only 1 kg",
-          "About PHP 97 from prilled urea, FPA national average for October 5 to 9, 2026"
+          "About PHP 97 from prilled urea, national average for October 5 to 9, 2026"
         ],
         [
           "Soil health",
@@ -90,7 +90,7 @@
     },
     {
       "type": "text",
-      "text": "A 50 kg bag of urea holds 23 kg of nitrogen. The FPA national average for prilled urea from October 5 to 9, 2026 was PHP 2,241.41 a bag. So each kilo of nitrogen cost about PHP 97.\n\nAn organic fertilizer needs only more than 1.5 percent nitrogen to pass the national standard. Say the label shows 2 percent. Then a 50 kg bag holds just 1 kg of nitrogen, and the whole bag price buys that one kilo. To match one bag of urea, you would need about 23 such bags.\n\nIRRI puts it plainly: bought inorganic nitrogen usually pays better than bought organic nitrogen. But manure and compost already on the farm can pay their way for part of the crop's need."
+      "text": "A 50 kg bag of urea holds 23 kg of nitrogen. The national average for prilled urea from October 5 to 9, 2026 was PHP 2,241.41 a bag. So each kilo of nitrogen cost about PHP 97.\n\nAn organic fertilizer needs only more than 1.5 percent nitrogen to pass the national standard. Say the label shows 2 percent. Then a 50 kg bag holds just 1 kg of nitrogen, and the whole bag price buys that one kilo. To match one bag of urea, you would need about 23 such bags.\n\nPut plainly, bought inorganic nitrogen usually pays better than bought organic nitrogen. But manure and compost already on the farm can pay their way for part of the crop's need."
     },
     {
       "type": "heading",
@@ -104,7 +104,7 @@
     },
     {
       "type": "text",
-      "text": "Straw is the cheapest fertilizer you own. PhilRice nutrient expert Wilfredo Collado notes that a 5 ton harvest, about 100 cavans, leaves about 5 tons of straw. Decomposed back in the field, it can supply about 30 kg of nitrogen, equal to 1.3 bags of urea. IRRI adds that each ton of straw holds about 16.8 kg of potash (K2O). So burning straw throws away nutrients you already grew."
+      "text": "Straw is the cheapest fertilizer you own. A 5 ton harvest, about 100 cavans, leaves about 5 tons of straw. Decomposed back in the field, it can supply about 30 kg of nitrogen, equal to 1.3 bags of urea. Each ton of straw also holds about 16.8 kg of potash (K2O). So burning straw throws away nutrients you already grew."
     },
     {
       "type": "heading",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "Azolla is a small water fern that floats on paddy water. A blue green alga in its leaves fixes nitrogen from the air. PhilRice researcher Cielo Luz Mondejar says a full azolla cover on one hectare can supply about 30 kg of nitrogen. That can replace at least half of the crop's inorganic nitrogen without lowering the yield. It needs standing water, so it suits irrigated fields."
+      "text": "Azolla is a small water fern that floats on paddy water. A blue green alga in its leaves fixes nitrogen from the air. A full azolla cover on one hectare can supply about 30 kg of nitrogen. That can replace at least half of the crop's inorganic nitrogen without lowering the yield. It needs standing water, so it suits irrigated fields."
     },
     {
       "type": "heading",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's Abonong Swak plans add 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare at 14 days after transplanting. That goes on top of the inorganic bags, not instead of them. Compost manure first, since fresh droppings can burn roots."
+      "text": "Abonong Swak plans add 10 bags of decomposed or air dried chicken manure, commercial organic fertilizer or vermicompost per hectare at 14 days after transplanting. That goes on top of the inorganic bags, not instead of them. Compost manure first, since fresh droppings can burn roots."
     },
     {
       "type": "heading",
@@ -140,13 +140,13 @@
     },
     {
       "type": "text",
-      "text": "Biofertilizers carry living microbes that fix nitrogen or free up soil nutrients. A common one for rice is an Azospirillum biofertilizer developed at UPLB BIOTECH.\n\nIn four seasons of Philippine trials reported by Banayo and others in 2012, the best biofertilizer raised irrigated rice yields by 5 to 18 percent a season. Yet the gain was usually below 0.5 ton per hectare. So it can trim the urea bill a little, but it cannot carry the crop alone. Buy only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority)."
+      "text": "Biofertilizers carry living microbes that fix nitrogen or free up soil nutrients. A common one for rice is a locally developed Azospirillum biofertilizer.\n\nIn four seasons of Philippine trials reported by Banayo and others in 2012, the best biofertilizer raised irrigated rice yields by 5 to 18 percent a season. Yet the gain was usually below 0.5 ton per hectare. So it can trim the urea bill a little, but it cannot carry the crop alone. Buy only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority)."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Count what the farm already gives",
-      "text": "Before you buy the second bag of urea, count what you already have. By PhilRice's estimates, 5 tons of decomposed straw give about 30 kg of nitrogen, and a full azolla cover gives about 30 kg more."
+      "text": "Before you buy the second bag of urea, count what you already have. As a rough guide, 5 tons of decomposed straw give about 30 kg of nitrogen, and a full azolla cover gives about 30 kg more."
     },
     {
       "type": "heading",
@@ -164,7 +164,7 @@
     },
     {
       "type": "text",
-      "text": "For most farms, the best practice is to combine them. At the 2022 Lakbay Palay, PhilRice and BSWM experts said farmers could save PHP 2,000 to 4,000 by adding organic sources to inorganic fertilizer. BSWM assistant director Gina Nilo added that organic fertilizer improves soil fertility over the long term. See [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) for the full program."
+      "text": "For most farms, the best practice is to combine them. Adding organic sources to inorganic fertilizer can save farmers PHP 2,000 to 4,000. Organic fertilizer also improves soil fertility over the long term. See [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) for the full program."
     },
     {
       "type": "steps",
@@ -198,7 +198,7 @@
     },
     {
       "type": "text",
-      "text": "It can, but expect a slow start. In a PhilRice study, rice fed only by azolla for three seasons reached 4 to 5.3 tons per hectare. Still, the big gain came only after the third crop. Organic fertilizer for farming at this scale has to come mostly from the farm itself, because buying it by the ton costs too much. Selling rice as certified organic has its own rules, covered in our [organic fertilizer examples](/blog/organic-fertilizer-examples) guide."
+      "text": "It can, but expect a slow start. In one study, rice fed only by azolla for three seasons reached 4 to 5.3 tons per hectare. Still, the big gain came only after the third crop. Organic fertilizer for farming at this scale has to come mostly from the farm itself, because buying it by the ton costs too much. Selling rice as certified organic has its own rules, covered in our [organic fertilizer examples](/blog/organic-fertilizer-examples) guide."
     },
     {
       "type": "heading",

@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Days after planting are a good guide, but crops do not read calendars. Variety, weather and water can move the same stage by several days. So use the day count to know when to start looking, and the plant itself to decide when to apply.\n\nRice gives the clearest example. IRRI's Rice Knowledge Bank explains that in the tropics the reproductive stage lasts about 35 days and ripening about 30 days. The difference between a short and a long variety lies mostly in the vegetative stage."
+      "text": "Days after planting are a good guide, but crops do not read calendars. Variety, weather and water can move the same stage by several days. So use the day count to know when to start looking, and the plant itself to decide when to apply.\n\nRice gives the clearest example. In the tropics, the reproductive stage lasts about 35 days and ripening about 30 days. The difference between a short and a long variety lies mostly in the vegetative stage."
     },
     {
       "type": "list",
@@ -33,7 +33,7 @@
       "items": [
         "**Count back from harvest.** Panicle initiation comes about 65 days before maturity in tropical rice.",
         "**Check the plant to confirm.** A young panicle about 1 mm long shows inside the stem at the stage agronomists call panicle initiation.",
-        "**Feed rice from tillering to panicle initiation.** That is when PalayCheck says the crop needs nutrients most.",
+        "**Feed rice from tillering to panicle initiation.** That is when the crop needs nutrients most.",
         "**Side dress corn by knee high,** and no later than about the eighth leaf.",
         "**Give fruiting vegetables potash** once they start to set fruit."
       ]
@@ -45,7 +45,7 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck's Key Check 5 asks for enough nutrients from tillering to early panicle initiation and flowering. The table follows the wet season quick guide for transplanted rice in Nueva Ecija, made by DA, PhilRice and IRRI."
+      "text": "Rice needs enough nutrients from tillering to early panicle initiation and flowering. The table follows the wet season quick guide for transplanted rice in Nueva Ecija."
     },
     {
       "type": "table",
@@ -93,31 +93,31 @@
       "items": [
         {
           "title": "Count back from the maturity on the seed bag",
-          "text": "Subtract about 65 days, for the reproductive and ripening stages together. IRRI's example is IR64: it matures in 110 days with a 45 day vegetative stage."
+          "text": "Subtract about 65 days, for the reproductive and ripening stages together. For example, IR64 matures in 110 days with a 45 day vegetative stage."
         },
         {
           "title": "Turn sowing days into transplanting days",
-          "text": "Your count from the seed bag runs from sowing. PalayCheck says to add the age of the seedlings at transplanting to move between days after sowing and days after transplanting."
+          "text": "Your count from the seed bag runs from sowing. Add the age of the seedlings at transplanting to move between days after sowing and days after transplanting."
         },
         {
           "title": "Start checking a week early",
-          "text": "Pull a few of the tallest main stems and split them lengthwise near the base. IRRI says you can see a young panicle about 1 mm long with the naked eye or a magnifying glass."
+          "text": "Pull a few of the tallest main stems and split them lengthwise near the base. You can see a young panicle about 1 mm long with the naked eye or a magnifying glass."
         },
         {
           "title": "Apply the panicle initiation dose",
-          "text": "PalayCheck puts the last nitrogen 5 to 7 days before panicle initiation for varieties under 110 days, and within 5 to 7 days either side for longer ones. The second potassium dose goes in the same window."
+          "text": "Put the last nitrogen 5 to 7 days before panicle initiation for varieties under 110 days, and within 5 to 7 days either side for longer ones. The second potassium dose goes in the same window."
         }
       ]
     },
     {
       "type": "text",
-      "text": "From panicle initiation, heading follows in about 23 to 25 days, IRRI's Fundamentals of Rice Crop Science says. PalayCheck warns that too much nitrogen during panicle initiation and flowering raises the share of unfilled grains. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the bag amounts for each dose. For a closer look at two stages, read [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering) and [fertilizer for rice grain filling](/blog/fertilizer-for-rice-grain-filling)."
+      "text": "From panicle initiation, heading follows in about 23 to 25 days. Too much nitrogen during panicle initiation and flowering raises the share of unfilled grains. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) gives the bag amounts for each dose. For a closer look at two stages, read [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering) and [fertilizer for rice grain filling](/blog/fertilizer-for-rice-grain-filling)."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Use the leaf color chart between the fixed doses",
-      "text": "PalayCheck reads the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4, or below 3 in direct wet seeded rice."
+      "text": "Read the chart every 7 days from 14 days after transplanting, or 21 days after sowing, until early flowering. Apply nitrogen when 6 or more of 10 leaves read below 4, or below 3 in direct wet seeded rice."
     },
     {
       "type": "heading",
@@ -126,7 +126,7 @@
     },
     {
       "type": "text",
-      "text": "The DA Cagayan Valley corn guide stages the plant by its fully opened leaves. All the phosphorus, all the potassium and half the nitrogen go in at planting, in a band beside and below the seed. The rest of the nitrogen goes on at four weeks, or when plants are knee high at 30 to 48 cm. Farmers usually do it with the hill up at 21 to 30 days.\n\nThe guide adds that you can still side dress nitrogen up to about the eighth leaf, if the soil is moist and you do not cut the roots. See our page on how to [increase corn yield](/blog/increase-corn-yield-per-hectare) for the full program. Fruiting vegetables run on weeks after transplanting instead, with potash once fruit sets. Our guide to [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines) lists the week by week doses for ampalaya, tomato and eggplant."
+      "text": "Count corn stages by the fully opened leaves. All the phosphorus, all the potassium and half the nitrogen go in at planting, in a band beside and below the seed. The rest of the nitrogen goes on at four weeks, or when plants are knee high at 30 to 48 cm. Farmers usually do it with the hill up at 21 to 30 days.\n\nYou can still side dress nitrogen up to about the eighth leaf, if the soil is moist and you do not cut the roots. See our page on how to [increase corn yield](/blog/increase-corn-yield-per-hectare) for the full program. Fruiting vegetables run on weeks after transplanting instead, with potash once fruit sets. Our guide to [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines) lists the week by week doses for ampalaya, tomato and eggplant."
     },
     {
       "type": "image",
@@ -164,15 +164,15 @@
         },
         {
           "q": "Can I apply urea at flowering?",
-          "a": "PalayCheck reads nitrogen needs only until early flowering. It also warns that too much nitrogen at this time invites lodging and pests and raises the share of unfilled grains."
+          "a": "You check nitrogen needs only until early flowering. Too much nitrogen at this time also invites lodging and pests and raises the share of unfilled grains."
         },
         {
           "q": "When is the last fertilizer for corn?",
-          "a": "The DA Cagayan Valley guide side dresses the second half of the nitrogen at about four weeks or knee high. It says you can still side dress nitrogen up to about the eighth leaf, if the soil is moist and you spare the roots."
+          "a": "Side dress the second half of the nitrogen at about four weeks or knee high. You can still side dress nitrogen up to about the eighth leaf, if the soil is moist and you spare the roots."
         },
         {
           "q": "Is the timing different for direct seeded rice?",
-          "a": "Yes. PalayCheck puts the first dose at 7 to 10 days after sowing for direct wet seeded rice. Leaf color chart readings start at 21 days after sowing. The panicle initiation dose follows the same rule as transplanted rice."
+          "a": "Yes. The first dose goes on at 7 to 10 days after sowing for direct wet seeded rice. Leaf color chart readings start at 21 days after sowing. The panicle initiation dose follows the same rule as transplanted rice."
         }
       ]
     },

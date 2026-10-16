@@ -5,7 +5,7 @@
   "lang": "en",
   "category": "Yield and Fertilizer",
   "title": "How Can I Increase Rice Yield per Hectare in the Philippines?",
-  "metaTitle": "Increase Rice Yield per Hectare: The Nine PalayCheck Checks",
+  "metaTitle": "Increase Rice Yield per Hectare: The Nine Key Checks",
   "metaDescription": "Increase rice yield per hectare by fixing your weakest link: good seed, a level field, enough panicles, fertilizer by stage, steady water, timely harvest.",
   "focusKeyword": "increase rice yield per hectare",
   "keywords": [
@@ -19,7 +19,7 @@
     "crop yield increase",
     "crop yield"
   ],
-  "excerpt": "To increase rice yield per hectare, find and fix the weakest link of your season instead of only adding fertilizer. PhilRice's PalayCheck System names nine key checks, from certified seed and a level field to steady water and a harvest on time. PhilRice trials that followed these practices reached about 7 tons per hectare in the dry season, while the national average stood near 4. anee.io, a farm app built for Filipino farmers, puts each check on a dated calendar for every lot and keeps the records that show which one held your yield back.",
+  "excerpt": "To increase rice yield per hectare, find and fix the weakest link of your season instead of only adding fertilizer. Nine key checks cover the season, from certified seed and a level field to steady water and a harvest on time. Trials that followed these practices reached about 7 tons per hectare in the dry season, while the national average stood near 4. anee.io, a farm app built for Filipino farmers, puts each check on a dated calendar for every lot and keeps the records that show which one held your yield back.",
   "heroImage": {
     "src": "/images/site/guides/blog-increase-rice-yield-per-hectare.webp",
     "alt": "A Filipino farmer holds heavy, ripening palay panicles in his palm, the start of a higher rice yield per hectare",
@@ -28,14 +28,14 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Your harvest comes from three numbers: how many panicles stand in each square meter, how many grains fill on each panicle and how heavy those grains are. Every good practice adds to one of them or protects it. So before you buy one more bag of urea, ask which of the three is short on your farm.\n\nThe checklist below follows the 2022 revised edition of PalayCheck, the rice crop management system of PhilRice. It works for a quarter hectare as well as for ten."
+      "text": "Your harvest comes from three numbers: how many panicles stand in each square meter, how many grains fill on each panicle and how heavy those grains are. Every good practice adds to one of them or protects it. So before you buy one more bag of urea, ask which of the three is short on your farm.\n\nThe checklist below covers the whole season, from seed to drying. It works for a quarter hectare as well as for ten."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Count panicles, not bags.** PalayCheck wants at least 300 panicles per square meter at dough stage for transplanted rice and 350 for direct seeded rice.",
-        "**Start with good seed.** IRRI says good quality seed alone can raise yield by 5 to 20 percent.",
+        "**Count panicles, not bags.** Aim for at least 300 panicles per square meter at dough stage for transplanted rice and 350 for direct seeded rice.",
+        "**Start with good seed.** Good quality seed alone can raise yield by 5 to 20 percent.",
         "**Feed by growth stage.** Nutrients matter most from tillering to early panicle initiation and flowering.",
         "**Harvest on time.** Cut when 85 to 90 percent of the grains turn golden yellow, then dry within a day.",
         "**Keep records per lot.** A yield you wrote down beats a yield you remember."
@@ -48,7 +48,7 @@
     },
     {
       "type": "text",
-      "text": "For most farms the gap is in management, not in the variety. In a PhilRice evaluation of rice integrated crop management, stations in Nueva Ecija, Isabela and Albay hit 7 tons per hectare in the dry season. That was far above the 4 ton national average PhilRice cited at the time.\n\nFeeding often falls short too. A PhilRice survey of irrigated farms in 2016 and 2017 found about 9 kg of phosphorus per hectare in the wet season. The general recommendation calls for 28 kg. Potassium was near 17 kg against 43 kg, and dry season nitrogen averaged 96 kg against 139 kg. Because cash runs short and habits are strong, many fields simply never get what the crop needs. So on most farms, a crop yield increase starts with closing these gaps, not with a new variety."
+      "text": "For most farms the gap is in management, not in the variety. In an evaluation of rice integrated crop management, stations in Nueva Ecija, Isabela and Albay hit 7 tons per hectare in the dry season. That was far above the 4 ton national average at the time.\n\nFeeding often falls short too. A survey of irrigated farms in 2016 and 2017 found about 9 kg of phosphorus per hectare in the wet season. The general recommendation calls for 28 kg. Potassium was near 17 kg against 43 kg, and dry season nitrogen averaged 96 kg against 139 kg. Because cash runs short and habits are strong, many fields simply never get what the crop needs. So on most farms, a crop yield increase starts with closing these gaps, not with a new variety."
     },
     {
       "type": "heading",
@@ -57,11 +57,11 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck turns good practice into nine checks you can see in the field. Each one has a target, so you know right away if you met it. Use the table as your season scorecard."
+      "text": "Good practice comes down to nine checks you can see in the field. Each one has a target, so you know right away if you met it. Use the table as your season scorecard."
     },
     {
       "type": "table",
-      "caption": "The nine PalayCheck key checks and how to know you met them. Source: PhilRice PalayCheck System, 2022 revised edition.",
+      "caption": "The nine key checks and how to know you met them.",
       "rows": [
         [
           "Key check",
@@ -121,7 +121,7 @@
     },
     {
       "type": "text",
-      "text": "Fertilizer works only on a healthy stand, and a bigger harvest carries more nutrients out of the field. Still, timing beats amount. Our pages on [fertilizer for rice](/blog/fertilizer-for-rice) and [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) show when each dose should land.\n\nThe MOET app turns a soil test done in pots into a fertilizer plan. In PhilRice trials, plots fed this way gave 9.04 tons per hectare in the 2015 dry season. Farmers' own plots gave 7.4 tons. After feeding, keep water steady through flowering and watch for [rice insects](/pests/rice-insects) before they spread."
+      "text": "Fertilizer works only on a healthy stand, and a bigger harvest carries more nutrients out of the field. Still, timing beats amount. Our pages on [fertilizer for rice](/blog/fertilizer-for-rice) and [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) show when each dose should land.\n\nThe MOET app turns a soil test done in pots into a fertilizer plan. In trials, plots fed this way gave 9.04 tons per hectare in the 2015 dry season. Farmers' own plots gave 7.4 tons. After feeding, keep water steady through flowering and watch for [rice insects](/pests/rice-insects) before they spread."
     },
     {
       "type": "callout",
@@ -181,15 +181,15 @@
       "items": [
         {
           "q": "What is a good palay yield per hectare in the Philippines?",
-          "a": "PhilRice put the national average near 4 tons per hectare in its 2022 policy brief. Its trials of integrated crop management reached 7 tons in the dry season at several stations. A yield above your own past average is the best first target."
+          "a": "The national average stood near 4 tons per hectare in 2022. Trials of integrated crop management reached 7 tons in the dry season at several stations. A yield above your own past average is the best first target."
         },
         {
           "q": "Does certified seed really make a difference?",
-          "a": "Yes. IRRI says good seed gives better emergence, a more even stand, less replanting and more vigorous early growth. Together these can raise yield by 5 to 20 percent."
+          "a": "Yes. Good seed gives better emergence, a more even stand, less replanting and more vigorous early growth. Together these can raise yield by 5 to 20 percent."
         },
         {
           "q": "Why is my wet season harvest lower than my dry season harvest?",
-          "a": "IRRI explains that the tropical dry season has more sunlight, so dry season yields are usually higher. Good management can still give about 5 to 6 tons in the wet season. Our guide to [fertilizer for wet season rice](/blog/fertilizer-for-wet-season-rice) covers the feeding side."
+          "a": "The tropical dry season has more sunlight, so dry season yields are usually higher. Good management can still give about 5 to 6 tons in the wet season. Our guide to [fertilizer for wet season rice](/blog/fertilizer-for-wet-season-rice) covers the feeding side."
         },
         {
           "q": "Will more fertilizer alone increase my yield?",
@@ -197,7 +197,7 @@
         },
         {
           "q": "When should I harvest to avoid losing grain?",
-          "a": "PalayCheck says to harvest by hand when 85 to 90 percent of grains turn golden yellow. For a combine, wait for 90 to 95 percent. Thresh within one day in the wet season and two in the dry season, then dry the grain within 12 to 24 hours."
+          "a": "Harvest by hand when 85 to 90 percent of grains turn golden yellow. For a combine, wait for 90 to 95 percent. Thresh within one day in the wet season and two in the dry season, then dry the grain within 12 to 24 hours."
         }
       ]
     },

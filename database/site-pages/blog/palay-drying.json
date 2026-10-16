@@ -14,7 +14,7 @@
     "palay harvester",
     "palay grains"
   ],
-  "excerpt": "Dry palay to 12 to 14 percent moisture within 12 to 24 hours after harvest or threshing, PhilRice's PalayCheck advises. Sun drying on a clean pavement or net costs little in good weather. A palay dryer at a cooperative or mill, though, keeps going through rain and at night. Built for Filipino farmers, anee.io shows the rain radar before you spread your grain and keeps each lot's harvest moisture and price on record.",
+  "excerpt": "Dry palay to 12 to 14 percent moisture within 12 to 24 hours after harvest or threshing. Sun drying on a clean pavement or net costs little in good weather. A palay dryer at a cooperative or mill, though, keeps going through rain and at night. Built for Filipino farmers, anee.io shows the rain radar before you spread your grain and keeps each lot's harvest moisture and price on record.",
   "heroImage": {
     "src": "/images/site/guides/blog-palay-drying.webp",
     "alt": "A tall mechanical palay dryer beside a flooded rice field in Cabaluay, Zamboanga City, with a heap of rice straw in front",
@@ -23,7 +23,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Fresh palay is wet. PalayCheck puts it at 18 to 21 percent moisture in the dry season and 20 to 25 percent in the wet. If a palay harvester cuts your crop, wait until 90 to 95 percent of the grains are golden. Left in a pile, wet grain heats up, turns yellow and mills badly. So drying is a race against the clock, and in the wet season against the rain too.\n\nBelow are the target, sun drying done right, how a dryer differs, where to find one, and storage."
+      "text": "Fresh palay is wet, at 18 to 21 percent moisture in the dry season and 20 to 25 percent in the wet. If a palay harvester cuts your crop, wait until 90 to 95 percent of the grains are golden. Left in a pile, wet grain heats up, turns yellow and mills badly. So drying is a race against the clock, and in the wet season against the rain too.\n\nBelow are the target, sun drying done right, how a dryer differs, where to find one, and storage."
     },
     {
       "type": "heading",
@@ -34,7 +34,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Aim for 14 percent moisture for milling and sale. PalayCheck sets 12 to 14 percent for storage.",
+        "Aim for 14 percent moisture for milling and sale, and 12 to 14 percent for storage.",
         "Start drying within 12 to 24 hours after harvest or threshing.",
         "Sun dry in thin layers of 2 to 4 cm and stir every 30 minutes.",
         "A palay dryer costs a fee but works in rain and at night, and PhilMech has placed many with farmer cooperatives.",
@@ -48,11 +48,11 @@
     },
     {
       "type": "text",
-      "text": "IRRI says to keep grain for milling or sale at 14 percent, so its weight and milling yield hold. The NFA buys dry palay at 11 to 14 percent moisture. It widened that range from 12 to 14 percent in February 2026. Drier grain keeps longer, as the table shows."
+      "text": "Keep grain for milling or sale at 14 percent, so its weight and milling yield hold. The NFA buys dry palay at 11 to 14 percent moisture. It widened that range from 12 to 14 percent in February 2026. Drier grain keeps longer, as the table shows."
     },
     {
       "type": "table",
-      "caption": "Safe moisture by storage time, from the IRRI Rice Knowledge Bank",
+      "caption": "Safe moisture by storage time",
       "rows": [
         [
           "How long you will store it",
@@ -102,7 +102,7 @@
         },
         {
           "title": "Stir every 30 minutes",
-          "text": "Turning the grain is the most important job on a good drying day, IRRI says. It keeps the moisture even."
+          "text": "Turning the grain is the most important job on a good drying day. It keeps the moisture even."
         },
         {
           "title": "Cover at midday and at the first drop",
@@ -121,7 +121,7 @@
     },
     {
       "type": "text",
-      "text": "A road is not a drying floor. PalayCheck lists contamination among the weak points of sun drying. On a road, the grain picks up dust, stones and oil, and tires crush it. It is also dangerous for passing motorcycles and cars. Use a proper pavement, a net or a dryer instead."
+      "text": "A road is not a drying floor. Contamination is one of the weak points of sun drying. On a road, the grain picks up dust, stones and oil, and tires crush it. It is also dangerous for passing motorcycles and cars. Use a proper pavement, a net or a dryer instead."
     },
     {
       "type": "heading",
@@ -130,11 +130,11 @@
     },
     {
       "type": "text",
-      "text": "A palay dryer blows heated air through the grain. So it works at night and in the rain, with less labor. PalayCheck weighs both methods fairly in the table below. Two kinds are common. A flatbed dryer holds the grain on a perforated floor with warm air pushed up through it. A recirculating batch dryer keeps the grain moving through a tall column."
+      "text": "A palay dryer blows heated air through the grain. So it works at night and in the rain, with less labor. The table below weighs both methods fairly. Two kinds are common. A flatbed dryer holds the grain on a perforated floor with warm air pushed up through it. A recirculating batch dryer keeps the grain moving through a tall column."
     },
     {
       "type": "table",
-      "caption": "Sun drying and mechanical drying compared, from PhilRice's PalayCheck System and PhilMech",
+      "caption": "Sun drying and mechanical drying compared",
       "rows": [
         [
           "Point",
@@ -175,7 +175,7 @@
     },
     {
       "type": "text",
-      "text": "If you run or hire a dryer, PalayCheck sets the rules. Keep the air no hotter than 50 to 70 degrees C, for 5 to 8 hours. With dripping wet palay, blow unheated air for the first 1 to 2 hours, or until about 18 percent. Near 15 percent, lower the heat to 40 to 45 degrees C for the last 2 hours. Then stop at 12 to 14 percent."
+      "text": "If you run or hire a dryer, follow these rules. Keep the air no hotter than 50 to 70 degrees C, for 5 to 8 hours. With dripping wet palay, blow unheated air for the first 1 to 2 hours, or until about 18 percent. Near 15 percent, lower the heat to 40 to 45 degrees C for the last 2 hours. Then stop at 12 to 14 percent."
     },
     {
       "type": "heading",
@@ -184,7 +184,7 @@
     },
     {
       "type": "text",
-      "text": "Start with your farmers' cooperative or irrigators' association. By September 2023, PhilMech had given qualified farmer groups 322 recirculating dryers of 6 tons per batch and 23 of 12 tons, under the Rice Competitiveness Enhancement Fund. It also gave six mobile grain dryers. These dryers can do custom drying for others too.\n\nAfter that, ask your municipal agriculturist and nearby rice mills. PhilMech admits these machines are often out of reach for small farmers alone, which is why they go to groups. Save the operators' numbers before harvest, not during it."
+      "text": "Start with your farmers' cooperative or irrigators' association. By September 2023, PhilMech had given qualified farmer groups 322 recirculating dryers of 6 tons per batch and 23 of 12 tons, under the Rice Competitiveness Enhancement Fund. It also gave six mobile grain dryers. These dryers can do custom drying for others too.\n\nAfter that, ask your municipal agriculturist and nearby rice mills. These machines are often out of reach for small farmers alone, which is why they go to groups. Save the operators' numbers before harvest, not during it."
     },
     {
       "type": "heading",
@@ -208,7 +208,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Typhoon season tip",
-      "text": "When a storm is coming at harvest, book the dryer the day you decide to cut. PalayCheck warns against leaving cut palay piled in the field for more than a day, because it heats up and discolors. Our guide to [typhoon preparation](/blog/typhoon-preparation-for-farmers) covers the rest of the farm."
+      "text": "When a storm is coming at harvest, book the dryer the day you decide to cut. Never leave cut palay piled in the field for more than a day, because it heats up and discolors. Our guide to [typhoon preparation](/blog/typhoon-preparation-for-farmers) covers the rest of the farm."
     },
     {
       "type": "heading",
@@ -217,7 +217,7 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck's Key Check 9 covers drying, cleaning and storing together. Our guide to the [PalayCheck key checks](/blog/palaycheck-key-checks) lists all nine. For storage, it asks for the following."
+      "text": "The last of the nine key checks covers drying, cleaning and storing together. Our guide to the [PalayCheck key checks](/blog/palaycheck-key-checks) lists all nine. For storage, follow these steps."
     },
     {
       "type": "list",
@@ -266,11 +266,11 @@
         },
         {
           "q": "What temperature should a palay dryer use?",
-          "a": "PalayCheck says no hotter than 50 to 70 degrees C for 5 to 8 hours. Start dripping wet grain with unheated air, then drop to 40 to 45 degrees C for the last 2 hours."
+          "a": "No hotter than 50 to 70 degrees C, for 5 to 8 hours. Start dripping wet grain with unheated air, then drop to 40 to 45 degrees C for the last 2 hours."
         },
         {
           "q": "Why do my palay grains crack?",
-          "a": "Usually from overheating, uneven layers or rewetting. IRRI says grain left too thick dries on top and stays wet below, then cracks when mixed. Rain on dried grain causes fissures that break in the mill."
+          "a": "Usually from overheating, uneven layers or rewetting. Grain left too thick dries on top and stays wet below, then cracks when mixed. Rain on dried grain causes fissures that break in the mill."
         },
         {
           "q": "Is a palay dryer worth the fee?",
@@ -278,7 +278,7 @@
         },
         {
           "q": "How soon after harvest should I dry palay?",
-          "a": "Within 12 to 24 hours after harvest or threshing, PalayCheck advises. Thresh hand harvested palay within 1 day in the wet season or 2 days in the dry season."
+          "a": "Within 12 to 24 hours after harvest or threshing. Thresh hand harvested palay within 1 day in the wet season or 2 days in the dry season."
         }
       ]
     },

@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A drone shows a field from above, and that view helps on big farms. But the decisions still come from the plants: the eggs under a leaf, the color of the youngest leaves, the water in the paddy. None of that needs a machine in the air.\n\nPhilRice teaches the same thing in its PalayCheck System. Walk through the plots, measure with a ruler, count or weigh, and do not guess. Then write it down, because memory fails by the end of the season."
+      "text": "A drone shows a field from above, and that view helps on big farms. But the decisions still come from the plants: the eggs under a leaf, the color of the youngest leaves, the water in the paddy. None of that needs a machine in the air.\n\nGood field practice says the same thing. Walk through the plots, measure with a ruler, count or weigh, and do not guess. Then write it down, because memory fails by the end of the season."
     },
     {
       "type": "heading",
@@ -37,7 +37,7 @@
       "ordered": false,
       "items": [
         "Your eyes and a notebook are the main tools. A drone or a satellite only shows where to look.",
-        "PalayCheck asks for regular field monitoring from the early stage of the crop onwards.",
+        "Monitor the field regularly from the early stage of the crop onwards.",
         "Cheap helpers do a lot: a leaf color chart, a ruler, sticky traps and your phone camera.",
         "Free Sentinel 2 satellite pictures show weak zones on bigger fields, about every five days when clouds allow.",
         "Records by lot and date turn single checks into a trend you can act on."
@@ -114,7 +114,7 @@
         },
         {
           "title": "Walk on a schedule",
-          "text": "PalayCheck asks for regular monitoring from the early stage onwards. Once a week fits, since the leaf color chart is read every 7 days anyway."
+          "text": "Monitor regularly from the early stage onwards. Once a week fits, since the leaf color chart is read every 7 days anyway."
         },
         {
           "title": "Check several spots",
@@ -122,11 +122,11 @@
         },
         {
           "title": "Read the leaf color chart",
-          "text": "For rice, PalayCheck says to read it every 7 days from 14 DAT or 21 DAS until early flowering. Apply nitrogen if 6 or more of 10 leaves read below 4 in transplanted rice."
+          "text": "For rice, read it every 7 days from 14 DAT or 21 DAS until early flowering. Apply nitrogen if 6 or more of 10 leaves read below 4 in transplanted rice."
         },
         {
           "title": "Compare with thresholds",
-          "text": "Use the PalayCheck levels in the table below to decide if the damage is worth acting on."
+          "text": "Use the levels in the table below to decide if the damage is worth acting on."
         },
         {
           "title": "Photograph and write",
@@ -140,7 +140,7 @@
     },
     {
       "type": "table",
-      "caption": "Levels that mean real yield loss in rice, from PhilRice PalayCheck Key Check 7",
+      "caption": "Levels that mean real yield loss in rice",
       "rows": [
         [
           "Problem",
@@ -168,7 +168,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Hold the spray on early leaf damage",
-      "text": "PalayCheck advises against spraying for leaf eating insects within 30 DAT or 40 DAS. An early spray also kills the spiders that feed on planthoppers, and PalayCheck warns that careless spraying upsets the balance between pests and their natural enemies."
+      "text": "Do not spray for leaf eating insects within 30 DAT or 40 DAS. An early spray also kills the spiders that feed on planthoppers, and careless spraying upsets the balance between pests and their natural enemies."
     },
     {
       "type": "heading",
@@ -177,7 +177,7 @@
     },
     {
       "type": "text",
-      "text": "A PhilRice field guide on pest sampling lists the simple traps farmers can use. Sticky traps and yellow pan traps are cheap and show insects moving in. Light traps help compare one season with another, and pheromone traps catch the males of one pest, which tells you when it arrives.\n\nBut the sticky, pan and light traps in that guide share one limit: they do not catch insects that cannot fly. So treat a trap as an early alarm, then walk the lot to see the nymphs, larvae and damage. Our guides to [early pest detection](/blog/early-pest-detection) and [integrated pest management](/pests/integrated-pest-management) go further."
+      "text": "Farmers can use a few simple traps. Sticky traps and yellow pan traps are cheap and show insects moving in. Light traps help compare one season with another, and pheromone traps catch the males of one pest, which tells you when it arrives.\n\nBut sticky, pan and light traps share one limit: they do not catch insects that cannot fly. So treat a trap as an early alarm, then walk the lot to see the nymphs, larvae and damage. Our guides to [early pest detection](/blog/early-pest-detection) and [integrated pest management](/pests/integrated-pest-management) go further."
     },
     {
       "type": "heading",
@@ -224,7 +224,7 @@
         },
         {
           "q": "How often should I walk my rice field?",
-          "a": "PalayCheck asks for regular monitoring from the early stage onwards, and once a week is a good rhythm. Read the leaf color chart every 7 days from 14 DAT or 21 DAS until early flowering. After a typhoon, a flood or a dry spell, walk again right away."
+          "a": "Monitor regularly from the early stage onwards, and once a week is a good rhythm. Read the leaf color chart every 7 days from 14 DAT or 21 DAS until early flowering. After a typhoon, a flood or a dry spell, walk again right away."
         },
         {
           "q": "Can I see my farm from a satellite for free?",
@@ -232,7 +232,7 @@
         },
         {
           "q": "What does a leaf color chart do?",
-          "a": "It compares the color of a rice leaf with color strips to show when the crop needs nitrogen. PalayCheck says to apply nitrogen when 6 or more of 10 leaves read below 4 in transplanted rice."
+          "a": "It compares the color of a rice leaf with color strips to show when the crop needs nitrogen. Apply nitrogen when 6 or more of 10 leaves read below 4 in transplanted rice."
         },
         {
           "q": "Can Anee tell what is wrong from a photo?",

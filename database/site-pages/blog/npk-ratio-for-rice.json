@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Yield and Fertilizer",
   "title": "What Is the Best NPK Ratio for Rice?",
-  "metaTitle": "NPK Ratio for Rice: What PhilRice Advises and How to Mix It",
-  "metaDescription": "The best NPK ratio for rice is about 3.5 to 4 parts nitrogen per part phosphate. See the PhilRice rates and how to build the ratio from bags you can buy.",
+  "metaTitle": "NPK Ratio for Rice: The Usual Rates and How to Mix Them",
+  "metaDescription": "The best NPK ratio for rice is about 3.5 to 4 parts nitrogen per part phosphate. See the usual rates and how to build the ratio from bags you can buy.",
   "focusKeyword": "npk ratio for rice",
   "keywords": [
     "npk ratio for rice",
@@ -18,7 +18,7 @@
     "fertilizer npk",
     "fertilizer components"
   ],
-  "excerpt": "There is no single best NPK ratio for rice, because the right amounts change with soil, season and yield target. As a guide, PhilRice rates for irrigated lowland rice come to about 3.5 parts nitrogen to 1 part phosphate and 1.5 parts potash in the wet season. In the dry season, it is about 4 to 1 to 1.4. You build that ratio by mixing urea, a phosphate grade and potash. anee.io, a farm app built for Filipino farmers, has an NPK Plus calculator that adds up the bags for you.",
+  "excerpt": "There is no single best NPK ratio for rice, because the right amounts change with soil, season and yield target. As a guide, the usual rates for irrigated lowland rice come to about 3.5 parts nitrogen to 1 part phosphate and 1.5 parts potash in the wet season. In the dry season, it is about 4 to 1 to 1.4. You build that ratio by mixing urea, a phosphate grade and potash. anee.io, a farm app built for Filipino farmers, has an NPK Plus calculator that adds up the bags for you.",
   "heroImage": {
     "src": "/images/site/guides/blog-npk-ratio-for-rice.webp",
     "alt": "Round brown granules of compound NPK fertilizer spilling from a bottle, the kind of bag a farmer reads before working out the NPK ratio for rice",
@@ -34,7 +34,7 @@
       "ordered": false,
       "items": [
         "**The numbers are percents.** 14 14 14 means 14 percent each of nitrogen (N), phosphate (P2O5) and potash (K2O).",
-        "**Rice wants far more nitrogen than phosphate,** about 3.5 to 4 times more in the PhilRice rates.",
+        "**Rice wants far more nitrogen than phosphate,** about 3.5 to 4 times more in the usual rates.",
         "**No single bag has that ratio,** so you mix urea, a phosphate grade and potash.",
         "**Soil, season and straw change it,** so a soil test or MOET beats a fixed formula.",
         "**Add it up** with the [NPK Plus calculator](/features/npk-plus-calculator)."
@@ -52,15 +52,15 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "What NPK ratio for rice do PhilRice and IRRI recommend?"
+      "text": "What is the recommended NPK ratio for rice?"
     },
     {
       "type": "text",
-      "text": "PhilRice gives general rates for irrigated lowland rice, for farmers without a soil test or decision tool. They come from its 2022 Rice Science for Decision Makers bulletin."
+      "text": "Farmers without a soil test or decision tool can use general rates for irrigated lowland rice. The table below shows them."
     },
     {
       "type": "table",
-      "caption": "PhilRice general recommendations for irrigated lowland rice, kg per hectare. PhilRice labels the columns N, P and K, and the figures match the P2O5 and K2O that bags supply, as the worked example below shows. The ratio sets phosphate at 1.",
+      "caption": "General recommendations for irrigated lowland rice, kg per hectare. The columns say N, P and K, and the figures match the P2O5 and K2O that bags supply, as the worked example below shows. The ratio sets phosphate at 1.",
       "rows": [
         [
           "Recommendation",
@@ -101,7 +101,7 @@
     },
     {
       "type": "text",
-      "text": "The modified plan adds potash. In sunny areas such as Nueva Ecija, Bicol and Isabela, PhilRice adds muriate of potash near panicle initiation for bigger, heavier grains. For when each part goes on, see [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage).\n\nIRRI looks at it from the crop's side. Rice takes up about 16 kg of nitrogen and 19 kg of K2O per ton of grain. But 16.8 kg of that potash stays in the straw. So returned straw brings most potash back, while nitrogen must come again every season."
+      "text": "The modified plan adds potash. In sunny areas such as Nueva Ecija, Bicol and Isabela, it adds muriate of potash near panicle initiation for bigger, heavier grains. For when each part goes on, see [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage).\n\nNow look at it from the crop's side. Rice takes up about 16 kg of nitrogen and 19 kg of K2O per ton of grain. But 16.8 kg of that potash stays in the straw. So returned straw brings most potash back, while nitrogen must come again every season."
     },
     {
       "type": "heading",
@@ -110,7 +110,7 @@
     },
     {
       "type": "text",
-      "text": "The PhilRice Abonong Swak plan for 3 to 4 tons uses 1 bag of 14 14 14, 1 bag of urea and half a bag of 0 0 60. It adds rice straw and 10 bags of organic fertilizer. That makes about 30 kg N, 7 kg P2O5 and 22 kg K2O, near 4 to 1 to 3.\n\nFor low input rainfed fields, IRRI starts a 2 ton crop on clay loam at about 20 kg N and 5 kg P per hectare. Sandy soil may need 10 to 15 kg of K more. Apply the basal only when there is water in the field."
+      "text": "The Abonong Swak plan for 3 to 4 tons uses 1 bag of 14 14 14, 1 bag of urea and half a bag of 0 0 60. It adds rice straw and 10 bags of organic fertilizer. That makes about 30 kg N, 7 kg P2O5 and 22 kg K2O, near 4 to 1 to 3.\n\nFor low input rainfed fields, a 2 ton crop on clay loam starts at about 20 kg N and 5 kg P per hectare. Sandy soil may need 10 to 15 kg of K more. Apply the basal only when there is water in the field."
     },
     {
       "type": "heading",
@@ -121,15 +121,15 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Season.** The dry season yields more, so its PhilRice rate carries about 40 kg more nitrogen.",
-        "**Soil.** IRRI says potassium runs short most on sandy, acid upland and degraded lowland soils, and where farmers apply N and P but little K.",
-        "**Straw.** PhilRice says straw from a 5 ton harvest, worked back in, gives about 30 kg of nitrogen.",
-        "**Yield target.** IRRI advises 40 to 50 kg of nitrogen for each extra ton of grain above what the field gives without it."
+        "**Season.** The dry season yields more, so its rate carries about 40 kg more nitrogen.",
+        "**Soil.** Potassium runs short most on sandy, acid upland and degraded lowland soils, and where farmers apply N and P but little K.",
+        "**Straw.** Straw from a 5 ton harvest, worked back in, gives about 30 kg of nitrogen.",
+        "**Yield target.** Plan 40 to 50 kg of nitrogen for each extra ton of grain above what the field gives without it."
       ]
     },
     {
       "type": "text",
-      "text": "That is why PhilRice points farmers to MOET, the leaf color chart and the Rice Crop Manager first. Our guide to [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) explains each tool."
+      "text": "That is why MOET, the leaf color chart and the Rice Crop Manager come first. Our guide to [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) explains each tool."
     },
     {
       "type": "heading",
@@ -176,7 +176,7 @@
     },
     {
       "type": "table",
-      "caption": "Common fertilizer grades for rice in the Philippines and what one 50 kg bag holds, from the grade and IRRI fact sheets",
+      "caption": "Common fertilizer grades for rice in the Philippines and what one 50 kg bag holds",
       "rows": [
         [
           "Grade",
@@ -230,7 +230,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "A 1 to 1 to 1 bag is not a full diet for rice",
-      "text": "Feeding only 14 14 14 gives as much phosphate as nitrogen. PhilRice rates call for 3.5 to 4 times more nitrogen, so complete fertilizer belongs at basal, with urea later."
+      "text": "Feeding only 14 14 14 gives as much phosphate as nitrogen. The usual rates call for 3.5 to 4 times more nitrogen, so complete fertilizer belongs at basal, with urea later."
     },
     {
       "type": "heading",
@@ -258,7 +258,7 @@
       "items": [
         {
           "q": "What is the best NPK ratio for a rice paddy?",
-          "a": "For irrigated lowland rice, PhilRice rates come to about 3.5 to 1 to 1.5 in the wet season and 4 to 1 to 1.4 in the dry season. Your soil test, straw use and yield target can shift it."
+          "a": "For irrigated lowland rice, the usual rates come to about 3.5 to 1 to 1.5 in the wet season and 4 to 1 to 1.4 in the dry season. Your soil test, straw use and yield target can shift it."
         },
         {
           "q": "Can I use only 14 14 14 for my palay?",
@@ -266,11 +266,11 @@
         },
         {
           "q": "Is 16 20 0 better than 14 14 14 at basal?",
-          "a": "Neither is better everywhere. 16 20 0 has more phosphate and no potash, so pair it with muriate of potash if your soil needs potassium. PhilRice Abonong Swak plans allow either one."
+          "a": "Neither is better everywhere. 16 20 0 has more phosphate and no potash, so pair it with muriate of potash if your soil needs potassium. Abonong Swak plans allow either one."
         },
         {
           "q": "How do I find out what my soil already has?",
-          "a": "Use the PhilRice MOET kit, send samples to a soils laboratory, or ask your municipal agriculturist about the Rice Crop Manager. Each one shows what your field lacks before you buy."
+          "a": "Use a MOET kit, send samples to a soils laboratory, or ask your municipal agriculturist about the Rice Crop Manager. Each one shows what your field lacks before you buy."
         }
       ]
     },

@@ -108,7 +108,7 @@
     },
     {
       "type": "table",
-      "caption": "Free rice tools from PhilRice, the DA and IRRI",
+      "caption": "Free rice tools",
       "rows": [
         [
           "Tool",
@@ -138,7 +138,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice lists these on its Rice Apps page, with Play Store and APK links. The Rice Crop Manager was built by IRRI with PhilRice and is free at its web address or as the RCM PH app. Use them for the questions they answer. Then keep the season itself, its dates, money and photos, in a farm app."
+      "text": "All of them sit on one Rice Apps page, with Play Store and APK links. The Rice Crop Manager is free at its web address or as the RCM PH app. Use them for the questions they answer. Then keep the season itself, its dates, money and photos, in a farm app."
     },
     {
       "type": "heading",
@@ -252,7 +252,7 @@
         },
         {
           "q": "Which free apps does PhilRice offer?",
-          "a": "PhilRice lists Binhing Palay, the PalayCheck app, the MOET app, the LCC app and the Rice Crop Manager on its Rice Apps page. The Rice Crop Manager gives fertilizer advice for your field and is free."
+          "a": "Binhing Palay, the PalayCheck app, the MOET app, the LCC app and the Rice Crop Manager, all on its Rice Apps page. The Rice Crop Manager gives fertilizer advice for your field and is free."
         },
         {
           "q": "Do I need a new phone for a farm app?",

@@ -55,7 +55,7 @@
     },
     {
       "type": "table",
-      "caption": "Fertilizer names list: common inorganic grades and the FPA national average price per 50 kg bag, September 14 to 18, 2026",
+      "caption": "Fertilizer names list: common inorganic grades and the national average price per 50 kg bag, September 14 to 18, 2026",
       "rows": [
         [
           "Common name",
@@ -142,7 +142,7 @@
     },
     {
       "type": "text",
-      "text": "Ammonium sulfate fertilizer gives less nitrogen than urea but adds sulfur, which PhilRice lists among the nutrients now short in many rice soils. It also makes soil more acid over time, so it suits neutral to alkaline soils better than very acid ones. See [ammonium sulfate 21 0 0](/blog/ammonium-sulfate-21-0-0) for details."
+      "text": "Ammonium sulfate fertilizer gives less nitrogen than urea but adds sulfur, a nutrient now short in many rice soils. It also makes soil more acid over time, so it suits neutral to alkaline soils better than very acid ones. See [ammonium sulfate 21 0 0](/blog/ammonium-sulfate-21-0-0) for details."
     },
     {
       "type": "heading",
@@ -151,7 +151,7 @@
     },
     {
       "type": "text",
-      "text": "Muriate of potash is potassium chloride, the main potash source for fruit fill, strong stems and grain weight. PhilRice suggests extra potash before or after panicle initiation in areas with high solar radiation, to increase grain size and weight. Our [potash fertilizer](/blog/potash-fertilizer) page covers the other potash sources."
+      "text": "Muriate of potash is potassium chloride, the main potash source for fruit fill, strong stems and grain weight. Add extra potash before or after panicle initiation in areas with high solar radiation, to increase grain size and weight. Our [potash fertilizer](/blog/potash-fertilizer) page covers the other potash sources."
     },
     {
       "type": "heading",
@@ -169,7 +169,7 @@
     },
     {
       "type": "text",
-      "text": "Most bags hold fertilizer granules, small hard balls a few millimeters wide that flow well from the hand or a spreader. Prilled urea comes as smaller, softer beads. Both dissolve quickly in moist soil.\n\nControlled release fertilizer works differently. Each granule wears a coating that lets nutrients out slowly, over weeks or months. Osmocote fertilizer is the best known example. A University of Florida IFAS guide lists Osmocote among the resin coated fertilizers, in grades such as 14 14 14. It notes that controlled release products can feed for 40 to 360 days, depending on the product. Release also runs faster in warm soil. That makes it handy for pots, nurseries and seedlings. But it costs more, so it suits small, high value plantings more than a hectare of palay."
+      "text": "Most bags hold fertilizer granules, small hard balls a few millimeters wide that flow well from the hand or a spreader. Prilled urea comes as smaller, softer beads. Both dissolve quickly in moist soil.\n\nControlled release fertilizer works differently. Each granule wears a coating that lets nutrients out slowly, over weeks or months. Osmocote fertilizer is the best known example. It is a resin coated fertilizer, in grades such as 14 14 14. Controlled release products can feed for 40 to 360 days, depending on the product. Release also runs faster in warm soil. That makes it handy for pots, nurseries and seedlings. But it costs more, so it suits small, high value plantings more than a hectare of palay."
     },
     {
       "type": "heading",

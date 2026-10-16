@@ -41,7 +41,7 @@
     },
     {
       "type": "text",
-      "text": "Start with the Registry System for Basic Sectors in Agriculture, the RSBSA. A DA regional FAQ calls it a registry of farmers, fisherfolk and farm laborers that the government uses to identify who receives its agriculture programs. Among those programs, it lists loans, crop insurance, seeds, fertilizers, farm inputs, technical assistance and soil analysis.\n\nThe same FAQ says registration is voluntary, has no fee and lasts a lifetime. It makes you eligible to apply for DA help. But it does not promise you any program or amount."
+      "text": "Start with the Registry System for Basic Sectors in Agriculture, the RSBSA. It is a registry of farmers, fisherfolk and farm laborers that the government uses to identify who receives its agriculture programs. Those programs include loans, crop insurance, seeds, fertilizers, farm inputs, technical assistance and soil analysis.\n\nRegistration is voluntary, has no fee and lasts a lifetime. It makes you eligible to apply for DA help. But it does not promise you any program or amount."
     },
     {
       "type": "heading",
@@ -76,11 +76,11 @@
     },
     {
       "type": "text",
-      "text": "These are the programs we confirmed on DA pages, with their years. They show how the help has worked, but none of them is a promise for this season."
+      "text": "These are the programs we could confirm, with their years. They show how the help has worked, but none of them is a promise for this season."
     },
     {
       "type": "table",
-      "caption": "Fertilizer help for rice farmers confirmed on official DA and ATI pages. Amounts and rules differ by program and year.",
+      "caption": "Fertilizer help for rice farmers that we could confirm. Amounts and rules differ by program and year.",
       "rows": [
         [
           "Year",
@@ -116,7 +116,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "No amount is guaranteed",
-      "text": "Programs, amounts and rules change with each year's budget, and many cover only selected towns. When we checked in October 2026, we could not find national fertilizer voucher rules for 2026 on DA pages. So ask your MAO what runs this season. RSBSA registration is free, so never pay anyone to put you on a list."
+      "text": "Programs, amounts and rules change with each year's budget, and many cover only selected towns. When we checked in October 2026, we could not find national fertilizer voucher rules for 2026. So ask your MAO what runs this season. RSBSA registration is free, so never pay anyone to put you on a list."
     },
     {
       "type": "heading",
@@ -130,11 +130,11 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "What does the DA recommend for fertilizing rice?"
+      "text": "What is the right way to fertilize rice?"
     },
     {
       "type": "text",
-      "text": "The DA rice institute, PhilRice, teaches nutrient management through its PalayCheck System. Its rule is Make EAT right: the right Element, Amount and Timing. PalayCheck bases the amount on MOET, the leaf color chart or the Rice Crop Manager Advisory Service, not on habit.\n\nThose tools tell you which nutrient your soil lacks, so a voucher or your own cash goes to the right bag. For the bag plans by growth stage, see the [best fertilizer for palay](/blog/best-fertilizer-for-palay) and [balanced fertilization for rice](/blog/balanced-fertilization-for-rice)."
+      "text": "Good nutrient management follows one rule, Make EAT right: the right Element, Amount and Timing. Base the amount on MOET, the leaf color chart or the Rice Crop Manager Advisory Service, not on habit.\n\nThose tools tell you which nutrient your soil lacks, so a voucher or your own cash goes to the right bag. For the bag plans by growth stage, see the [best fertilizer for palay](/blog/best-fertilizer-for-palay) and [balanced fertilization for rice](/blog/balanced-fertilization-for-rice)."
     },
     {
       "type": "heading",
@@ -146,8 +146,8 @@
       "ordered": false,
       "items": [
         "**Your MAO.** It handles RSBSA registration, and the RSBSA FAQ lists technical assistance and soil analysis among the services registered farmers can apply for.",
-        "**The Agricultural Training Institute (ATI).** It leads the extension part of RCEF, with training programs, farm schools and a training scholarship scheme.",
-        "**ATI online courses and helpdesk.** Its online learning portal has self paced courses on crops, and its Farmers' Contact Center takes calls, texts and emails.",
+        "**The Agricultural Training Institute.** It leads the extension part of RCEF, with training programs, farm schools and a training scholarship scheme.",
+        "**Its online courses and helpdesk.** The institute's online learning portal has self paced courses on crops, and its Farmers' Contact Center takes calls, texts and emails.",
         "**PhilRice Text Center.** Text your rice questions to 0917 111 7423."
       ]
     },
@@ -189,7 +189,7 @@
         },
         {
           "q": "Do I need to own my land to register in the RSBSA?",
-          "a": "No. The DA FAQ accepts proof of tenancy from tenants and proof of agreement from lessees, besides ownership papers from owners. Farm workers can also register."
+          "a": "No. Owners bring ownership papers, but tenants can bring proof of tenancy and lessees proof of agreement. Farm workers can also register."
         },
         {
           "q": "Does RCEF give free fertilizer?",

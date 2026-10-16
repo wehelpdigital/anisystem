@@ -16,7 +16,7 @@
     "urea top dressing",
     "nitrogen for rice"
   ],
-  "excerpt": "A leaf color chart is a plastic strip with four shades of green that tells you when palay needs nitrogen. You hold a rice leaf against it, match the color, and add urea only when most leaves read too pale. PhilRice and IRRI teach it as a cheap way to feed the crop by what it shows you, not by habit.",
+  "excerpt": "A leaf color chart is a plastic strip with four shades of green that tells you when palay needs nitrogen. You hold a rice leaf against it, match the color, and add urea only when most leaves read too pale. It is a cheap way to feed the crop by what it shows you, not by habit.",
   "heroImage": {
     "src": "/images/site/guides/blog-nutrient-deficiency-in-rice.webp",
     "alt": "A farmer stands on a bund in the middle of her green rice field in Bohol, the kind of crop you check with a leaf color chart",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Farmers call it the LCC. PhilRice describes it as a fast, handy field tool that measures how green a leaf is, and that greenness follows the plant's nitrogen. The panels run from number 2, a yellowish green, to number 5, a dark green. So a pale reading on enough leaves means the crop is running short, and a top dressing of [urea fertilizer](/blog/urea-fertilizer) will pay.\n\nThe chart does one job only. It reads nitrogen, not phosphorus, potassium or zinc. For the whole season, start from our [rice fertilizer schedule](/blog/rice-fertilizer-schedule), then let the chart fine tune each urea dose."
+      "text": "Farmers call it the LCC. It is a fast, handy field tool that measures how green a leaf is, and that greenness follows the plant's nitrogen. The panels run from number 2, a yellowish green, to number 5, a dark green. So a pale reading on enough leaves means the crop is running short, and a top dressing of [urea fertilizer](/blog/urea-fertilizer) will pay.\n\nThe chart does one job only. It reads nitrogen, not phosphorus, potassium or zinc. For the whole season, start from our [rice fertilizer schedule](/blog/rice-fertilizer-schedule), then let the chart fine tune each urea dose."
     },
     {
       "type": "heading",
@@ -34,11 +34,11 @@
     },
     {
       "type": "text",
-      "text": "Take the first reading 14 days after transplanting (DAT). In direct wet seeded rice, start at 21 days after sowing (DAS). If you put 14 14 14 with sulfur into the soil or as a top dressing at 14 DAT, PhilRice says to wait and begin at 21 DAT instead.\n\nAfter that, read the field every 7 days until the first flowers appear. IRRI's Rice Knowledge Bank gives a range of every 7 to 10 days, up to 5 to 10 days after panicle initiation. Both stop around flowering, because heavy nitrogen late in the season invites lodging, pests and unfilled grains, as PalayCheck warns."
+      "text": "Take the first reading 14 days after transplanting (DAT). In direct wet seeded rice, start at 21 days after sowing (DAS). If you put 14 14 14 with sulfur into the soil or as a top dressing at 14 DAT, wait and begin at 21 DAT instead.\n\nAfter that, read the field every 7 days until the first flowers appear. Some guides give a range of every 7 to 10 days, up to 5 to 10 days after panicle initiation. Both stop around flowering, because heavy nitrogen late in the season invites lodging, pests and unfilled grains."
     },
     {
       "type": "table",
-      "caption": "Leaf color chart readings for one season, from PhilRice's PalayCheck System and its field guide to the chart",
+      "caption": "Leaf color chart readings for one season",
       "rows": [
         [
           "Crop",
@@ -82,7 +82,7 @@
         },
         {
           "title": "Shade it with your body",
-          "text": "Stand with the sun at your back so your body shades both the leaf and the chart. Direct sunlight changes how the green looks. PhilRice advises reading between 8 and 10 in the morning."
+          "text": "Stand with the sun at your back so your body shades both the leaf and the chart. Direct sunlight changes how the green looks. The best time to read is between 8 and 10 in the morning."
         },
         {
           "title": "Same reader, same hour",
@@ -101,11 +101,11 @@
     },
     {
       "type": "text",
-      "text": "The critical value is the line between enough nitrogen and too little. PalayCheck sets it at 4 for transplanted rice, inbred or hybrid, and at 3 for direct wet seeded rice.\n\nThe rule itself is simple. If 6 or more of your 10 leaves read below the critical value, top dress nitrogen. If 5 or fewer fall below it, skip the urea this week and read again in 7 days. That one habit stops you from feeding a crop that is still green enough."
+      "text": "The critical value is the line between enough nitrogen and too little. It is 4 for transplanted rice, inbred or hybrid, and 3 for direct wet seeded rice.\n\nThe rule itself is simple. If 6 or more of your 10 leaves read below the critical value, top dress nitrogen. If 5 or fewer fall below it, skip the urea this week and read again in 7 days. That one habit stops you from feeding a crop that is still green enough."
     },
     {
       "type": "table",
-      "caption": "Nitrogen to add when 6 or more of 10 leaves read below the critical value, from PhilRice's leaf color chart guide. A 50 kg bag of urea holds 23 kg of nitrogen, and PhilRice rounds the dry season dose up to 1.5 bags.",
+      "caption": "Nitrogen to add when 6 or more of 10 leaves read below the critical value. A 50 kg bag of urea holds 23 kg of nitrogen, so the dry season dose rounds up to 1.5 bags.",
       "rows": [
         [
           "Season",
@@ -146,9 +146,9 @@
       "ordered": false,
       "items": [
         "Keep a shallow 2 to 3 cm of water in the paddy as you spread it, and close the outlets so the fertilizer stays in your field.",
-        "Spread it in the afternoon, after 3 PM, when cooler air means less nitrogen escapes as gas, as PalayCheck advises.",
+        "Spread it in the afternoon, after 3 PM, when cooler air means less nitrogen escapes as gas.",
         "Broadcast evenly so no corner gets a double dose.",
-        "Use urea for these doses. PhilRice's chart guide leaves out ammonium sulfate here, since the basal 14 14 14 with sulfur already gives the crop enough sulfur."
+        "Use urea for these doses. Leave out ammonium sulfate here, since the basal 14 14 14 with sulfur already gives the crop enough sulfur."
       ]
     },
     {
@@ -191,7 +191,7 @@
         "Reading 3 or 4 leaves instead of 10, so one odd plant decides the dose.",
         "Adding urea when only 4 or 5 leaves read low. The rule asks for 6 or more.",
         "Changing readers, or reading at noon one week and at 4 PM the next.",
-        "Reading on after flowering, when PalayCheck has already stopped.",
+        "Reading on after flowering, when the weekly checks should have ended.",
         "Expecting the chart to show phosphorus, potassium or zinc. It reads nitrogen only."
       ]
     },
@@ -239,11 +239,11 @@
         },
         {
           "q": "When should I stop reading the chart?",
-          "a": "Stop at first flowering. PalayCheck and PhilRice both end the weekly readings there."
+          "a": "Stop at first flowering. The weekly readings end there, since late nitrogen invites lodging, pests and unfilled grains."
         },
         {
           "q": "What if I have no leaf color chart?",
-          "a": "Ask your municipal agriculturist or the nearest PhilRice station, since their trainings use it. Until then, follow PhilRice's general plan that splits nitrogen by variety maturity, as our [rice fertilizer schedule](/blog/rice-fertilizer-schedule) shows, or let the LCC Checker in anee.io read your leaves from photos."
+          "a": "Ask your municipal agriculturist or the nearest PhilRice station, since their trainings use it. Until then, follow a general plan that splits nitrogen by variety maturity, as our [rice fertilizer schedule](/blog/rice-fertilizer-schedule) shows, or let the LCC Checker in anee.io read your leaves from photos."
         }
       ]
     },

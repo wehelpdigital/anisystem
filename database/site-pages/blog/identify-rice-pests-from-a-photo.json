@@ -25,14 +25,14 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Often, a photo of the damage helps more than a photo of the insect. Many rice pests hide at the base of the plant or fly off before you get close, but the damage stays. Also, many insects in a paddy are not pests at all. Spiders, dragonflies and many small wasps eat the pests, and a photo full of them is good news.\n\nIRRI also notes that different causes can leave the same mark. Deadhearts and whiteheads, for example, can come from stem borers, rats, neck blast or black bugs. So a good photo set shows three things: the insect, the damage and the pattern in the field."
+      "text": "Often, a photo of the damage helps more than a photo of the insect. Many rice pests hide at the base of the plant or fly off before you get close, but the damage stays. Also, many insects in a paddy are not pests at all. Spiders, dragonflies and many small wasps eat the pests, and a photo full of them is good news.\n\nDifferent causes can also leave the same mark. Deadhearts and whiteheads, for example, can come from stem borers, rats, neck blast or black bugs. So a good photo set shows three things: the insect, the damage and the pattern in the field."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
         "Take three photos: the insect up close, the damage, and the hill or patch around it.",
-        "Shoot in the early morning or late afternoon, the hours PalayCheck gives for monitoring insect pests.",
+        "Shoot in the early morning or late afternoon, the usual hours for monitoring insect pests.",
         "Match the damage, not just the bug, with the table below.",
         "Confirm with a field check, like pulling a tiller or tapping the base of the hill, before you spray.",
         "In anee.io, send the photo to Anee or match the damage in the Pest Finder."
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Go early or late",
-          "text": "Walk the field from 5 to 7 in the morning or late in the afternoon. PalayCheck gives these hours for monitoring insect pests, since many move or hide later in the day."
+          "text": "Walk the field from 5 to 7 in the morning or late in the afternoon. These are the hours for monitoring insect pests, since many move or hide later in the day."
         },
         {
           "title": "Shoot the insect",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Tap the base",
-          "text": "Grasp a hill, bend it over a little and tap it near the base, as IRRI advises for planthoppers. Then photograph what falls on the water."
+          "text": "Grasp a hill, bend it over a little and tap it near the base to check for planthoppers. Then photograph what falls on the water."
         },
         {
           "title": "Write it down",
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "Hopperburn and the bugburn of black bugs look alike from the bund. IRRI's check is simple: planthoppers leave honeydew and sooty mold at the base, while black bug damage has none. Also, you cannot pull out a plant hit by black bugs, but a stem borer deadheart comes out easily.\n\nRice bug damage can look like a nutrient problem or flower thrips, so look for the bugs themselves. Not sure it is an insect at all? Read [how to tell a pest from a disease](/blog/pest-or-disease-how-to-tell), and see our guide to the [golden apple snail](/pests/golden-apple-snail) for snail damage."
+      "text": "Hopperburn and the bugburn of black bugs look alike from the bund. The check is simple: planthoppers leave honeydew and sooty mold at the base, while black bug damage has none. Also, you cannot pull out a plant hit by black bugs, but a stem borer deadheart comes out easily.\n\nRice bug damage can look like a nutrient problem or flower thrips, so look for the bugs themselves. Not sure it is an insect at all? Read [how to tell a pest from a disease](/blog/pest-or-disease-how-to-tell), and see our guide to the [golden apple snail](/pests/golden-apple-snail) for snail damage."
     },
     {
       "type": "heading",
@@ -143,13 +143,13 @@
     },
     {
       "type": "text",
-      "text": "One insect in a photo is not a reason to spray. IRRI says that at 1 brown planthopper per stem or fewer, there is still time to act if the numbers rise. For rice bugs, IRRI says you may need direct control above 10 bugs per 20 hills. PalayCheck also sets levels for each growth stage, so count before you decide. Our guide to [early pest detection](/blog/early-pest-detection) has the full table."
+      "text": "One insect in a photo is not a reason to spray. At 1 brown planthopper per stem or fewer, there is still time to act if the numbers rise. For rice bugs, you may need direct control above 10 bugs per 20 hills. Each growth stage also has its own levels, so count before you decide. Our guide to [early pest detection](/blog/early-pest-detection) has the full table."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "Spraying early can make it worse",
-      "text": "IRRI notes that planthopper outbreaks follow pesticides that destroy their natural enemies. If you do spray, use a product registered with the FPA for rice and for that pest, and follow the label."
+      "text": "Planthopper outbreaks follow pesticides that destroy their natural enemies. If you do spray, use a product registered with the FPA for rice and for that pest, and follow the label."
     },
     {
       "type": "heading",

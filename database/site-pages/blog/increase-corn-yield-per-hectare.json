@@ -17,7 +17,7 @@
     "mais",
     "fertilizer application in corn"
   ],
-  "excerpt": "To increase corn yield, get three things right before you spend more on fertilizer: enough plants per hectare, nutrients matched to your soil test and a weed free first month. The DA corn guide for Cagayan Valley aims certified hybrid corn at 8 tons per hectare with at least 75,000 plants. It puts all the phosphorus and potassium at planting and the second half of the nitrogen when plants are knee high. anee.io, a farm app built for Filipino farmers, dates each of these tasks for every lot and keeps the harvest records that show what worked.",
+  "excerpt": "To increase corn yield, get three things right before you spend more on fertilizer: enough plants per hectare, nutrients matched to your soil test and a weed free first month. A good target for certified hybrid corn is 8 tons per hectare with at least 75,000 plants. Put all the phosphorus and potassium at planting and the second half of the nitrogen when plants are knee high. anee.io, a farm app built for Filipino farmers, dates each of these tasks for every lot and keeps the harvest records that show what worked.",
   "heroImage": {
     "src": "/images/site/guides/blog-increase-corn-yield-per-hectare.webp",
     "alt": "Corn plants with tassels, silks and young ears in a maize field in Bulacan, the stage that decides corn yield",
@@ -26,14 +26,14 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The gap between an ordinary and a good corn harvest is wide. Cagayan Valley grows about 21 percent of the country's corn. Yet its 2009 average was 4.02 tons per hectare for yellow corn and 2.57 tons for white corn. The same DA guide sets 8 tons as the target for certified hybrid seed.\n\nMost of that gap comes from a few habits in the field, not from the weather alone. Here is where to look first, in the order the season runs."
+      "text": "The gap between an ordinary and a good corn harvest is wide. Cagayan Valley grows about 21 percent of the country's corn. Yet its 2009 average was 4.02 tons per hectare for yellow corn and 2.57 tons for white corn. The target for certified hybrid seed is 8 tons.\n\nMost of that gap comes from a few habits in the field, not from the weather alone. Here is where to look first, in the order the season runs."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
         "**Plants per hectare come first.** Aim for 75,000 for hybrid corn and 50,000 for open pollinated varieties.",
-        "**Feed from a soil test.** The DA guide gives a rate for each soil level, and a test stays valid for up to three years.",
+        "**Feed from a soil test.** Each soil level has its own rate, and a test stays valid for up to three years.",
         "**Split the nitrogen.** Half at planting in a band, the rest at four weeks or when plants reach knee high.",
         "**Win the first 30 days against weeds.** That is when weeds hurt corn the most.",
         "**Protect moisture at silking.** Stress at this stage means poor pollination and poor seed set."
@@ -46,7 +46,7 @@
     },
     {
       "type": "text",
-      "text": "Start by counting plants. A hybrid needs 18 to 20 cm between hills and 70 cm between furrows to reach 75,000 plants per hectare. That takes 22 to 24 kg of seed. Every missing hill is a missing ear that no fertilizer can bring back.\n\nNext, check the soil. Corn grows best at pH 5.5 to 7.0, the DA guide says. Below pH 5.4, lime the soil before fertilizer can pay. After that come weeds in the first month, [fall armyworm](/pests/fall-armyworm) and [Asian corn borer](/pests/asian-corn-borer) damage, and dry spells at silking."
+      "text": "Start by counting plants. A hybrid needs 18 to 20 cm between hills and 70 cm between furrows to reach 75,000 plants per hectare. That takes 22 to 24 kg of seed. Every missing hill is a missing ear that no fertilizer can bring back.\n\nNext, check the soil. Corn grows best at pH 5.5 to 7.0. Below pH 5.4, lime the soil before fertilizer can pay. After that come weeds in the first month, [fall armyworm](/pests/fall-armyworm) and [Asian corn borer](/pests/asian-corn-borer) damage, and dry spells at silking."
     },
     {
       "type": "heading",
@@ -89,11 +89,11 @@
     },
     {
       "type": "text",
-      "text": "It depends on your soil test. The DA Cagayan Valley guide gives these rates in kilograms per hectare, as it prints them. Then it adds at least ten bags of organic fertilizer per hectare at the last harrowing, before furrowing. Fertilizer application in corn then follows the steps above: a band at planting and a side dress at knee high."
+      "text": "It depends on your soil test. The table gives the rates in kilograms per hectare. On top of that, add at least ten bags of organic fertilizer per hectare at the last harrowing, before furrowing. Fertilizer application in corn then follows the steps above: a band at planting and a side dress at knee high."
     },
     {
       "type": "table",
-      "caption": "Nutrient requirement for corn by soil test result, kg per hectare. Source: DA Regional Field Office 2 corn production techno guide, 2011 update.",
+      "caption": "Nutrient requirement for corn by soil test result, kg per hectare.",
       "rows": [
         [
           "Soil test result",
@@ -125,17 +125,17 @@
     {
       "type": "heading",
       "level": 3,
-      "text": "A worked example from a DA field day"
+      "text": "A worked example from a field day"
     },
     {
       "type": "text",
-      "text": "In 2022, DA Ilocos showed a hectare of hybrid yellow corn in Cabaritan Sur, Naguilian. Its fertilizer plan came from Nutrient Expert, a tool that fits the rates to one field. At planting it used 6.5 bags of 14 14 14 with half a bag each of urea and muriate of potash. Then came 2.5 bags of urea as side dress. Crop cuts projected about 8.2 tons per hectare, at a production cost of PHP 11.33 per kilo.\n\nAt the FPA national average prices for October 5 to 9, 2026, those bags cost about PHP 19,892 per hectare. The complete fertilizer comes to PHP 12,330.50. Three bags of prilled urea cost PHP 6,724.23, and the potash PHP 836.94. Our page on [fertilizer calculation](/blog/fertilizer-calculation) shows how to redo this sum for your own soil test."
+      "text": "In 2022, a field day in Cabaritan Sur, Naguilian showed a hectare of hybrid yellow corn. Its fertilizer plan came from Nutrient Expert, a tool that fits the rates to one field. At planting it used 6.5 bags of 14 14 14 with half a bag each of urea and muriate of potash. Then came 2.5 bags of urea as side dress. Crop cuts projected about 8.2 tons per hectare, at a production cost of PHP 11.33 per kilo.\n\nAt the national average prices for October 5 to 9, 2026, those bags cost about PHP 19,892 per hectare. The complete fertilizer comes to PHP 12,330.50. Three bags of prilled urea cost PHP 6,724.23, and the potash PHP 836.94. Our page on [fertilizer calculation](/blog/fertilizer-calculation) shows how to redo this sum for your own soil test."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "Keep fertilizer off the seed",
-      "text": "The DA guide warns that fertilizer placed too near the seed can burn the young plant with salt injury. Band it 5 cm to the side and 5 cm below. When you side dress, keep it at least 4 to 5 cm from the base of the plant and only in moist soil."
+      "text": "Fertilizer placed too near the seed can burn the young plant with salt injury. Band it 5 cm to the side and 5 cm below. When you side dress, keep it at least 4 to 5 cm from the base of the plant and only in moist soil."
     },
     {
       "type": "heading",
@@ -144,7 +144,7 @@
     },
     {
       "type": "text",
-      "text": "The DA guide follows corn leaf by leaf. Up to about the eighth leaf, you can still side dress nitrogen if the soil is moist and you do not cut the roots. From the tenth leaf, the plant takes up nitrogen, phosphorus and potassium fast.\n\nBetween the twelfth and sixteenth leaf, the plant sets how many kernels each ear can hold, so dry soil now shrinks the ear. At silking, stress means poor pollination. Later, at dough stage, short potassium leaves unfilled, shrunken kernels."
+      "text": "Track corn leaf by leaf. Up to about the eighth leaf, you can still side dress nitrogen if the soil is moist and you do not cut the roots. From the tenth leaf, the plant takes up nitrogen, phosphorus and potassium fast.\n\nBetween the twelfth and sixteenth leaf, the plant sets how many kernels each ear can hold, so dry soil now shrinks the ear. At silking, stress means poor pollination. Later, at dough stage, short potassium leaves unfilled, shrunken kernels."
     },
     {
       "type": "heading",
@@ -172,7 +172,7 @@
       "items": [
         {
           "q": "How many corn plants should I have per hectare?",
-          "a": "The DA Cagayan Valley guide aims for at least 75,000 plants per hectare for hybrid corn. That means 18 to 20 cm between hills and 70 cm between furrows. Open pollinated corn needs at least 50,000 plants, at 25 cm by 75 cm."
+          "a": "Aim for at least 75,000 plants per hectare for hybrid corn. That means 18 to 20 cm between hills and 70 cm between furrows. Open pollinated corn needs at least 50,000 plants, at 25 cm by 75 cm."
         },
         {
           "q": "When do I side dress urea on corn?",
@@ -180,7 +180,7 @@
         },
         {
           "q": "What if the dry season leaves little moisture after planting?",
-          "a": "The DA guide says to apply all the fertilizer at planting while the soil still holds moisture. If rain comes later and the leaves show nitrogen hunger, add one to two bags of urea. With irrigation, follow the usual split."
+          "a": "Apply all the fertilizer at planting while the soil still holds moisture. If rain comes later and the leaves show nitrogen hunger, add one to two bags of urea. With irrigation, follow the usual split."
         },
         {
           "q": "Can more urea alone increase corn yield?",
@@ -188,7 +188,7 @@
         },
         {
           "q": "When is corn ready to harvest?",
-          "a": "The DA guide puts maturity at about 40 to 45 days after silking. By then the husks and some leaves have dried, and grains hold 30 to 40 percent moisture. Waiting about a week more lets grains dry to around 20 to 25 percent."
+          "a": "Corn matures about 40 to 45 days after silking. By then the husks and some leaves have dried, and grains hold 30 to 40 percent moisture. Waiting about a week more lets grains dry to around 20 to 25 percent."
         }
       ]
     },

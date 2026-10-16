@@ -24,13 +24,13 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Pechay, or petsay, is one of the quickest crops on a Filipino farm. The ATI Central Visayas guide harvests it 3 to 4 weeks after transplanting. A DA Cordillera organic guide harvests it about 35 days after planting. So it has no time to wait for slow fertilizer.\n\nThat is the catch with organic fertilizer for pechay. Compost and manure release nitrogen slowly, as soil life breaks them down. So build a rich bed before planting, then top up with quick liquid feeds."
+      "text": "Pechay, or petsay, is one of the quickest crops on a Filipino farm. It is ready 3 to 4 weeks after transplanting, or about 35 days after planting. So it has no time to wait for slow fertilizer.\n\nThat is the catch with organic fertilizer for pechay. Compost and manure release nitrogen slowly, as soil life breaks them down. So build a rich bed before planting, then top up with quick liquid feeds."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
-        "**Base:** 2 to 4 kg of mature compost per square meter of bed, the rate in the DA Cordillera organic vegetable guide.",
+        "**Base:** 2 to 4 kg of mature compost per square meter of bed.",
         "**Chicken manure:** only fully decomposed, never raw, because pechay is eaten fresh and harvested within weeks.",
         "**Vermicast:** a strong choice for leafy growth, mixed into the bed with the compost.",
         "**Liquid top up:** fish amino acid sprayed weekly while the leaves grow.",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "Organic fertilizer for pechay, from DA, ATI and university sources",
+      "caption": "Organic fertilizer for pechay, compared",
       "rows": [
         [
           "Material",
@@ -64,8 +64,8 @@
         ],
         [
           "Decomposed chicken manure",
-          "The most phosphorus, potassium and calcium of four organic amendments in a VSU study",
-          "Worked into the bed before planting. ATI uses 1 sack per 20 meter bed",
+          "The most phosphorus, potassium and calcium of four organic amendments in one study",
+          "Worked into the bed before planting, about 1 sack per 20 meter bed",
           "Raw manure burns roots and carries germs"
         ],
         [
@@ -90,7 +90,7 @@
     },
     {
       "type": "text",
-      "text": "The VSU study, in the Annals of Tropical Research, compared swine manure, chicken dung, mudpress and vermicast for pechay. All of them raised nitrogen release and pechay growth. But the swine manure it tested carried high levels of lead, nickel, copper and zinc. Later, a 2025 trial under VSU conditions found vermicast stood out for leaf growth and fresh weight."
+      "text": "One study compared swine manure, chicken dung, mudpress and vermicast for pechay. All of them raised nitrogen release and pechay growth. But the swine manure it tested carried high levels of lead, nickel, copper and zinc. Later, a 2025 trial found vermicast stood out for leaf growth and fresh weight."
     },
     {
       "type": "heading",
@@ -99,7 +99,7 @@
     },
     {
       "type": "text",
-      "text": "The DA Cordillera organic vegetable guide applies 2 to 4 kg of compost per square meter as the base. A common 1 by 20 meter bed is 20 square meters, so it takes 40 to 80 kg. The guide allows only fully decomposed compost manure, and never manure from dogs, cats or people.\n\nFor chicken manure, the ATI Central Visayas guide puts one sack on each 20 meter bed, mixed in or covered with soil. But its program also adds 1 kg of 14 14 14 and 4 kg of urea per bed. A strictly organic bed leaves those out, so it needs the higher compost rate."
+      "text": "Apply 2 to 4 kg of compost per square meter as the base. A common 1 by 20 meter bed is 20 square meters, so it takes 40 to 80 kg. Use only fully decomposed compost manure, and never manure from dogs, cats or people.\n\nFor chicken manure, put one sack on each 20 meter bed, mixed in or covered with soil. But that rate comes from a program that also adds 1 kg of 14 14 14 and 4 kg of urea per bed. A strictly organic bed leaves those out, so it needs the higher compost rate."
     },
     {
       "type": "heading",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "Iowa State University Extension says raw manure should go on at least 120 days before you harvest vegetables that touch the soil. Leafy vegetables carry the greatest risk. Since pechay is harvested about five weeks after planting, raw manure cannot meet that gap.\n\nComposting fixes this. A pile that reaches 55 degrees Celsius kills many weed seeds and germs. It also cuts the ammonium that makes fresh poultry manure burn roots. But composting lowers the nitrogen the crop can use right away, so top up with liquids."
+      "text": "Raw manure should go on at least 120 days before you harvest vegetables that touch the soil. Leafy vegetables carry the greatest risk. Since pechay is harvested about five weeks after planting, raw manure cannot meet that gap.\n\nComposting fixes this. A pile that reaches 55 degrees Celsius kills many weed seeds and germs. It also cuts the ammonium that makes fresh poultry manure burn roots. But composting lowers the nitrogen the crop can use right away, so top up with liquids."
     },
     {
       "type": "heading",
@@ -117,7 +117,7 @@
     },
     {
       "type": "text",
-      "text": "Two homemade liquids from ATI Cordillera suit pechay, and worms can make a third input. Our list of [organic fertilizer examples](/blog/organic-fertilizer-examples) covers more."
+      "text": "Two homemade liquids suit pechay, and worms can make a third input. Our list of [organic fertilizer examples](/blog/organic-fertilizer-examples) covers more."
     },
     {
       "type": "heading",
@@ -126,7 +126,7 @@
     },
     {
       "type": "text",
-      "text": "Chop 1 kg of fish with its bones, gills and guts. Mix it with 1 kg of molasses or muscovado in a covered clay jar, kept in the shade. After 10 to 15 days, pour off the liquid into bottles, leaving a third of each bottle empty. ATI Cordillera sprays 2 tablespoons per liter of water every 7 days, from newly planted seedlings onward.\n\nThe University of Hawaii also calls FAA a nitrogen source for the leafy stage and sprays leafy vegetables weekly. But it dilutes it far more, at 1 part to 1,000 parts water. It also warns that spraying in full sun can burn the leaves."
+      "text": "Chop 1 kg of fish with its bones, gills and guts. Mix it with 1 kg of molasses or muscovado in a covered clay jar, kept in the shade. After 10 to 15 days, pour off the liquid into bottles, leaving a third of each bottle empty. A common rate is 2 tablespoons per liter of water every 7 days, from newly planted seedlings onward.\n\nFAA is also a nitrogen source for the leafy stage, sprayed on leafy vegetables weekly. But it dilutes it far more, at 1 part to 1,000 parts water. It also warns that spraying in full sun can burn the leaves."
     },
     {
       "type": "heading",
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "Chop 1 kg of young shoots, such as kangkong, kamote tops or alugbati, and mix in 1 kg of muscovado. Ferment for 7 to 10 days in a cool, dark place, then strain. ATI Cordillera sprays 2 tablespoons per liter every 3 to 7 days, before sunrise or late in the day. Think of FPJ as a tonic, not a main nitrogen source."
+      "text": "Chop 1 kg of young shoots, such as kangkong, kamote tops or alugbati, and mix in 1 kg of muscovado. Ferment for 7 to 10 days in a cool, dark place, then strain. Spray 2 tablespoons per liter every 3 to 7 days, before sunrise or late in the day. Think of FPJ as a tonic, not a main nitrogen source."
     },
     {
       "type": "heading",
@@ -144,13 +144,13 @@
     },
     {
       "type": "text",
-      "text": "Build a shaded bed of rice hull or sawdust, then add chopped crop residues and animal manure. Release about 1 kg of worms per square meter and keep it moist but not wet. ATI Cordillera harvests the vermicast 30 to 45 days later, when black granules show on top."
+      "text": "Build a shaded bed of rice hull or sawdust, then add chopped crop residues and animal manure. Release about 1 kg of worms per square meter and keep it moist but not wet. Harvest the vermicast 30 to 45 days later, when black granules show on top."
     },
     {
       "type": "callout",
       "tone": "warn",
       "title": "Two guides, two strengths",
-      "text": "ATI Cordillera mixes FAA at 2 tablespoons per liter, while the University of Hawaii uses 1 part in 1,000. If you are new to it, try the weaker mix on a few plants first. Spray only in the cool of the morning or late afternoon."
+      "text": "Local recipes mix FAA at 2 tablespoons per liter, while a milder recipe uses 1 part in 1,000. If you are new to it, try the weaker mix on a few plants first. Spray only in the cool of the morning or late afternoon."
     },
     {
       "type": "heading",
@@ -170,7 +170,7 @@
         },
         {
           "title": "Transplant at 2 to 3 weeks",
-          "text": "Set the seedlings 10 cm apart in rows 20 cm apart, as the ATI guide does. Water right after and then daily."
+          "text": "Set the seedlings 10 cm apart in rows 20 cm apart. Water right after and then daily."
         },
         {
           "title": "Top up every week",
@@ -189,7 +189,7 @@
     },
     {
       "type": "text",
-      "text": "It can be, if the bed is rich. If organic pechay stays pale and slow, add more mature compost to the next bed and keep up the weekly FAA. If you do not sell as certified organic, you can also mix the two, as the ATI program does. Our guide to [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) weighs both. For fruiting crops, see [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines).\n\nThe same compost and FAA also work as organic fertilizer for plants in pots. For the planting steps in Tagalog, read [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+      "text": "It can be, if the bed is rich. If organic pechay stays pale and slow, add more mature compost to the next bed and keep up the weekly FAA. If you do not sell as certified organic, you can also mix the two. Our guide to [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) weighs both. For fruiting crops, see [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines).\n\nThe same compost and FAA also work as organic fertilizer for plants in pots. For the planting steps in Tagalog, read [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
     },
     {
       "type": "heading",
@@ -217,19 +217,19 @@
       "items": [
         {
           "q": "Can I use fresh chicken manure on pechay?",
-          "a": "No. Iowa State University Extension says raw manure should go on at least 120 days before harvesting vegetables that touch the soil. Pechay is ready in about five weeks, and fresh poultry manure can burn roots. Compost it first."
+          "a": "No. Raw manure should go on at least 120 days before harvesting vegetables that touch the soil. Pechay is ready in about five weeks, and fresh poultry manure can burn roots. Compost it first."
         },
         {
           "q": "How often should I spray FAA on pechay?",
-          "a": "Once a week while the leaves grow. ATI Cordillera uses 2 tablespoons per liter of water, but the University of Hawaii uses a much weaker 1 to 1,000 mix. Spray in the cool of the day."
+          "a": "Once a week while the leaves grow. Local recipes use 2 tablespoons per liter of water, but a much weaker 1 to 1,000 mix also works. Spray in the cool of the day."
         },
         {
           "q": "How much compost does pechay need per square meter?",
-          "a": "The DA Cordillera organic guide uses 2 to 4 kg of compost per square meter as the base. That comes to 40 to 80 kg for a bed 1 meter wide and 20 meters long."
+          "a": "Use 2 to 4 kg of compost per square meter as the base. That comes to 40 to 80 kg for a bed 1 meter wide and 20 meters long."
         },
         {
           "q": "Is vermicast better than chicken manure for pechay?",
-          "a": "Each has its strength. A VSU study found chicken dung the richest in phosphorus, potassium and calcium of four organic amendments. A later pechay trial found vermicast best for leaf growth and fresh weight, so many growers use both."
+          "a": "Each has its strength. One study found chicken dung the richest in phosphorus, potassium and calcium of four organic amendments. A later pechay trial found vermicast best for leaf growth and fresh weight, so many growers use both."
         },
         {
           "q": "What is the best homemade fertilizer for pechay?",
