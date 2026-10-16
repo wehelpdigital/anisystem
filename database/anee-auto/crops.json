@@ -7,10 +7,7 @@
     21,
     30
    ],
-   "landPrepSource": {
-    "label": "PhilRice, The basics of land preparation (21 days: plow and harrow weekly, three times, then level)",
-    "url": "https://www.philrice.gov.ph/basics-land-preparation/"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     14,
     21
@@ -37,7 +34,7 @@
       "Niclosamide (molluscicide)",
       "Metaldehyde (molluscicide)"
      ],
-     "why": "Golden apple snails eat seedlings in the first two weeks; PalayCheck puts canals, screens, hand picking and shallow water first."
+     "why": "Golden apple snails eat seedlings in the first two weeks; canals, screens, hand picking and shallow water come first."
     },
     {
      "stage": "Early, standing water 2 to 3 cm",
@@ -50,7 +47,7 @@
       "Pretilachlor (HRAC 15)",
       "Butachlor (HRAC 15)"
      ],
-     "why": "PalayCheck asks for weed control within 0 to 45 DAT; an early residual stops the first grass and sedge flush."
+     "why": "Control weeds within 0 to 45 DAT; an early residual stops the first grass and sedge flush."
     },
     {
      "stage": "Early post emergence",
@@ -73,7 +70,7 @@
      ],
      "what": "no insecticide against leaf feeders",
      "activeIngredients": [],
-     "why": "PalayCheck: do not spray defoliators within 30 DAT; spiders and other natural enemies build up and the crop recovers the lost leaf area."
+     "why": "Do not spray defoliators within 30 DAT; spiders and other natural enemies build up and the crop recovers the lost leaf area."
     },
     {
      "stage": "Late booting to early heading, blast prone variety or area only",
@@ -89,20 +86,12 @@
    "safety": [
     "Do not apply propanil within 14 days before or after a carbamate (carbaryl) or organophosphate insecticide; the combination injures rice.",
     "Niclosamide and metaldehyde are toxic to fish; keep treated water in the field and out of fishponds and canals.",
-    "PalayCheck: do not spray against defoliators within 30 DAT; insecticide is a last resort after cultural and biological control.",
+    "Do not spray against defoliators within 30 DAT; insecticide is a last resort after cultural and biological control.",
     "Hold water 3 to 5 days after a pre emergence herbicide and do not drain it into the next field.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
-    {
-     "label": "PhilRice PalayCheck System for Irrigated Lowland Rice, 2022 revised edition (plow 21 to 30 days before planting, harrow every 7 days; seedlings 18 to 21 days manual, 14 to 18 days mechanical; no sprays on defoliators within 30 DAT or 40 DAS)",
-     "url": "https://www.philrice.gov.ph/"
-    },
-    {
-     "label": "PhilRice, The basics of land preparation (21 days: plow and harrow weekly, three times, then level)",
-     "url": "https://www.philrice.gov.ph/basics-land-preparation/"
-    },
     {
      "label": "Weed Science: interaction of propanil and selected insecticides on rice (carbaryl, methomyl, methyl parathion)",
      "url": "https://www.cambridge.org/core/journals/weed-science/article/abs/interaction-of-propanil-and-selected-insecticides-on-rice-oryza-sativa/08FB342EB8B858FF8BDDED6B24225C86"
@@ -114,10 +103,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ],
    "landPrepNote": "About three weeks: plow, then harrow weekly three times, then level."
@@ -127,10 +112,7 @@
     21,
     30
    ],
-   "landPrepSource": {
-    "label": "PhilRice PalayCheck System for Irrigated Lowland Rice, 2022 revised edition (plow 21 to 30 days before planting, harrow every 7 days; seedlings 18 to 21 days manual, 14 to 18 days mechanical; no sprays on defoliators within 30 DAT or 40 DAS)",
-    "url": "https://www.philrice.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -153,7 +135,7 @@
      "activeIngredients": [
       "Niclosamide (molluscicide)"
      ],
-     "why": "PalayCheck: for DWSR build 25 cm canals around and across the field so snails gather there and water drains."
+     "why": "For DWSR build 25 cm canals around and across the field so snails gather there and water drains."
     },
     {
      "stage": "Early pre emergence, soil saturated not flooded",
@@ -188,7 +170,7 @@
      ],
      "what": "no insecticide against leaf feeders",
      "activeIngredients": [],
-     "why": "PalayCheck: do not spray defoliators within 40 DAS."
+     "why": "Do not spray defoliators within 40 DAS."
     },
     {
      "stage": "Late booting to early heading, blast prone variety or area only",
@@ -204,20 +186,12 @@
    "safety": [
     "Do not apply propanil within 14 days before or after a carbamate (carbaryl) or organophosphate insecticide; the combination injures rice.",
     "Niclosamide and metaldehyde are toxic to fish; keep treated water in the field and out of fishponds and canals.",
-    "PalayCheck: keep the field saturated, not flooded, up to 25 DAS so snails stay inactive, and suspend irrigation 0 to 14 DAS for DWSR.",
+    "Keep the field saturated, not flooded, up to 25 DAS so snails stay inactive, and suspend irrigation 0 to 14 DAS for DWSR.",
     "Use only safened pretilachlor on wet seeded rice; the unsafened form is for transplanted rice.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
-    {
-     "label": "PhilRice PalayCheck System for Irrigated Lowland Rice, 2022 revised edition (plow 21 to 30 days before planting, harrow every 7 days; seedlings 18 to 21 days manual, 14 to 18 days mechanical; no sprays on defoliators within 30 DAT or 40 DAS)",
-     "url": "https://www.philrice.gov.ph/"
-    },
-    {
-     "label": "PhilRice, The basics of land preparation (21 days: plow and harrow weekly, three times, then level)",
-     "url": "https://www.philrice.gov.ph/basics-land-preparation/"
-    },
     {
      "label": "Weed Science: interaction of propanil and selected insecticides on rice (carbaryl, methomyl, methyl parathion)",
      "url": "https://www.cambridge.org/core/journals/weed-science/article/abs/interaction-of-propanil-and-selected-insecticides-on-rice-oryza-sativa/08FB342EB8B858FF8BDDED6B24225C86"
@@ -229,10 +203,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -241,10 +211,7 @@
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "PhilRice, The basics of land preparation (21 days: plow and harrow weekly, three times, then level)",
-    "url": "https://www.philrice.gov.ph/basics-land-preparation/"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -306,7 +273,7 @@
      ],
      "what": "no insecticide against leaf feeders",
      "activeIngredients": [],
-     "why": "PalayCheck: do not spray defoliators within 40 DAS."
+     "why": "Do not spray defoliators within 40 DAS."
     }
    ],
    "safety": [
@@ -318,32 +285,8 @@
    ],
    "sources": [
     {
-     "label": "PhilRice, The basics of land preparation (21 days: plow and harrow weekly, three times, then level)",
-     "url": "https://www.philrice.gov.ph/basics-land-preparation/"
-    },
-    {
-     "label": "PhilRice, Mechanized dry direct seeding using the multipurpose seeder",
-     "url": "https://www.philrice.gov.ph/mechanized-dry-direct-seeding-using-multipurpose-seeder"
-    },
-    {
-     "label": "Philippine Journal of Science 151(6A), 2022: weed control in dry direct seeded rice (pretilachlor pre emergence, bispyribac sodium post emergence)",
-     "url": "https://philjournalsci.dost.gov.ph/past-issues-1/116-vol-151-no-6a-december-2022-part-a/1736-influence-of-weed-control-techniques-on-weeds-yield-and-economics-of-dry-direct-seeded-drip-irrigated-rice-under-philippine-conditions"
-    },
-    {
-     "label": "Herbicide combinations for weed control in dry seeded wetland rice in the Philippines (oxadiazon, pendimethalin pre emergence)",
-     "url": "https://agris.fao.org/search/en/records/6471bafa77fd37171a6d9657"
-    },
-    {
-     "label": "PhilRice PalayCheck System for Irrigated Lowland Rice, 2022 revised edition (plow 21 to 30 days before planting, harrow every 7 days; seedlings 18 to 21 days manual, 14 to 18 days mechanical; no sprays on defoliators within 30 DAT or 40 DAS)",
-     "url": "https://www.philrice.gov.ph/"
-    },
-    {
      "label": "Weed Science: interaction of propanil and selected insecticides on rice (carbaryl, methomyl, methyl parathion)",
      "url": "https://www.cambridge.org/core/journals/weed-science/article/abs/interaction-of-propanil-and-selected-insecticides-on-rice-oryza-sativa/08FB342EB8B858FF8BDDED6B24225C86"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -352,10 +295,7 @@
     28,
     30
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-    "url": "https://cagayanvalley.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -365,7 +305,7 @@
      "activeIngredients": [
       "Metalaxyl (FRAC 4)"
      ],
-     "why": "The DA RFO 02 guide treats OPV seed with metalaxyl at 2 g ai per kg against Philippine downy mildew."
+     "why": "Treat OPV seed with metalaxyl at 2 g ai per kg against Philippine downy mildew."
     },
     {
      "stage": "Pre emergence, moist soil",
@@ -415,12 +355,12 @@
      ],
      "what": "biological control release",
      "activeIngredients": [],
-     "why": "Trichogramma cards at 28 to 30 and 35 to 37 DAP (DA RFO 02 guide) parasitize corn borer eggs before larvae bore into stalks."
+     "why": "Trichogramma cards at 28 to 30 and 35 to 37 DAP parasitize corn borer eggs before larvae bore into stalks."
     }
    ],
    "safety": [
-    "DA RFO 02: spray paraquat or other contact herbicides directly at weeds; do not let the solution touch corn leaves.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Spray paraquat or other contact herbicides directly at weeds; do not let the solution touch corn leaves.",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Atrazine persists; do not follow it with vegetables or legumes in the same season without checking the label replant interval.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
@@ -428,20 +368,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-     "url": "https://cagayanvalley.da.gov.ph/"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ],
    "landPrepNote": "About four weeks: plow, let the weeds sprout and rot, then harrow two to three times a week apart."
@@ -451,10 +383,7 @@
     28,
     30
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-    "url": "https://cagayanvalley.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -464,7 +393,7 @@
      "activeIngredients": [
       "Metalaxyl (FRAC 4)"
      ],
-     "why": "The DA RFO 02 guide treats OPV seed with metalaxyl at 2 g ai per kg against Philippine downy mildew."
+     "why": "Treat OPV seed with metalaxyl at 2 g ai per kg against Philippine downy mildew."
     },
     {
      "stage": "Pre emergence, moist soil",
@@ -514,7 +443,7 @@
      ],
      "what": "biological control release",
      "activeIngredients": [],
-     "why": "Trichogramma cards at 28 to 30 and 35 to 37 DAP (DA RFO 02 guide) parasitize corn borer eggs before larvae bore into stalks."
+     "why": "Trichogramma cards at 28 to 30 and 35 to 37 DAP parasitize corn borer eggs before larvae bore into stalks."
     },
     {
      "stage": "Silking to harvest",
@@ -528,8 +457,8 @@
     }
    ],
    "safety": [
-    "DA RFO 02: spray paraquat or other contact herbicides directly at weeds; do not let the solution touch corn leaves.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Spray paraquat or other contact herbicides directly at weeds; do not let the solution touch corn leaves.",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Atrazine persists; do not follow it with vegetables or legumes in the same season without checking the label replant interval.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
@@ -538,20 +467,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-     "url": "https://cagayanvalley.da.gov.ph/"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ],
    "landPrepNote": "About four weeks: plow, let the weeds sprout and rot, then harrow two to three times a week apart."
@@ -561,10 +482,7 @@
     28,
     30
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-    "url": "https://cagayanvalley.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -574,7 +492,7 @@
      "activeIngredients": [
       "Metalaxyl (FRAC 4)"
      ],
-     "why": "The DA RFO 02 guide treats OPV seed with metalaxyl at 2 g ai per kg against Philippine downy mildew."
+     "why": "Treat OPV seed with metalaxyl at 2 g ai per kg against Philippine downy mildew."
     },
     {
      "stage": "Pre emergence, moist soil",
@@ -624,7 +542,7 @@
      ],
      "what": "biological control release",
      "activeIngredients": [],
-     "why": "Trichogramma cards at 28 to 30 and 35 to 37 DAP (DA RFO 02 guide) parasitize corn borer eggs before larvae bore into stalks."
+     "why": "Trichogramma cards at 28 to 30 and 35 to 37 DAP parasitize corn borer eggs before larvae bore into stalks."
     },
     {
      "stage": "Silking to harvest",
@@ -638,8 +556,8 @@
     }
    ],
    "safety": [
-    "DA RFO 02: spray paraquat or other contact herbicides directly at weeds; do not let the solution touch corn leaves.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Spray paraquat or other contact herbicides directly at weeds; do not let the solution touch corn leaves.",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Atrazine persists; do not follow it with vegetables or legumes in the same season without checking the label replant interval.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
@@ -648,20 +566,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-     "url": "https://cagayanvalley.da.gov.ph/"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ],
    "landPrepNote": "About four weeks: plow, let the weeds sprout and rot, then harrow two to three times a week apart."
@@ -671,10 +581,7 @@
     14,
     28
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-    "url": "https://cagayanvalley.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -722,16 +629,12 @@
    ],
    "safety": [
     "Sorghum is more sensitive than corn to many herbicides (for example the acetanilides without safener); read the crop list on the label.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
-    {
-     "label": "DA RFO 02 Corn Production Guide, revised March 2012 (plow, then harrow 2 to 3 times a week apart; metalaxyl seed treatment for OPV; pre emergence herbicide on moist soil; Trichogramma at 28 to 30 and 35 to 37 DAP)",
-     "url": "https://cagayanvalley.da.gov.ph/"
-    },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
@@ -739,10 +642,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -751,10 +650,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -824,17 +720,13 @@
    "safety": [
     "Do not spray sulfur above 32 C or within 2 weeks of an oil spray (longer on citrus); hot sulfur and oil residues scorch leaves.",
     "Do not spray insecticides on open flowers while bees are foraging; spray late afternoon.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row.",
     "After rice, the HVCDP guide floods the paddy 1 to 2 days before planting and drains it; zero tillage then needs no plowing."
    ],
    "sources": [
-    {
-     "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-    },
     {
      "label": "US EPA sulfur fungicide label (do not apply above 90 F, about 32 C, or within 2 weeks of an oil spray)",
      "url": "https://www3.epa.gov/pesticides/chem_search/ppls/051036-00011-19860520.pdf"
@@ -846,10 +738,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -858,10 +746,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -917,16 +802,12 @@
    "safety": [
     "Stop cultivation once pegs enter the soil; hilling or hoeing then breaks pegs.",
     "Do not spray insecticides on open flowers while bees are foraging; spray late afternoon.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
-    {
-     "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-    },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
@@ -934,10 +815,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -946,10 +823,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1019,16 +893,12 @@
    "safety": [
     "Do not spray sulfur above 32 C or within 2 weeks of an oil spray (longer on citrus); hot sulfur and oil residues scorch leaves.",
     "Do not spray insecticides on open flowers while bees are foraging; spray late afternoon.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
-    {
-     "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-    },
     {
      "label": "US EPA sulfur fungicide label (do not apply above 90 F, about 32 C, or within 2 weeks of an oil spray)",
      "url": "https://www3.epa.gov/pesticides/chem_search/ppls/051036-00011-19860520.pdf"
@@ -1040,10 +910,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1052,10 +918,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1131,20 +994,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1153,10 +1008,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1226,20 +1078,12 @@
    "safety": [
     "Do not spray sulfur above 32 C or within 2 weeks of an oil spray (longer on citrus); hot sulfur and oil residues scorch leaves.",
     "Do not spray insecticides on open flowers while bees are foraging; spray late afternoon.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
-    {
-     "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-    },
-    {
-     "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-    },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
@@ -1247,10 +1091,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1259,10 +1099,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1325,24 +1162,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-    },
-    {
-     "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1351,10 +1176,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1417,20 +1239,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Sitao Production Guide (plow 2 to 3 times a week apart)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Sitao.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1439,10 +1253,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1498,16 +1309,12 @@
    ],
    "safety": [
     "Do not spray insecticides on open flowers while bees are foraging; spray late afternoon.",
-    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards (DA RFO 02 corn guide).",
+    "Apply pre emergence herbicides on moist soil and do not disturb the soil surface afterwards.",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
-    {
-     "label": "DA HVCDP Mungbean Production Guide (plowing alternated with harrowing at weekly intervals; fungicide seed treatment; post rice: flood 1 to 2 days before planting)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-    },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
@@ -1515,10 +1322,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1527,10 +1330,7 @@
     7,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Sweet Potato Production Guide (plow deep, harrow once or twice; dip cuttings in insecticide then fungicide; terminal cuttings)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/sweet_potato.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1540,7 +1340,7 @@
      "activeIngredients": [
       "Mancozeb (FRAC M3) for the fungicide dip"
      ],
-     "why": "The DA RFO 02 guide dips cuttings 3 minutes in insecticide and then in fungicide; use terminal cuttings, which rarely carry weevil eggs."
+     "why": "Dip cuttings 3 minutes in insecticide and then in fungicide; use terminal cuttings, which rarely carry weevil eggs."
     },
     {
      "stage": "Early growth",
@@ -1578,26 +1378,14 @@
     }
    ],
    "safety": [
-    "Do not reuse vines from weevil infested fields; recurrent use of the same vines raises infestation (DA RFO 02).",
+    "Do not reuse vines from weevil infested fields; recurrent use of the same vines raises infestation.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Sweet Potato Production Guide (plow deep, harrow once or twice; dip cuttings in insecticide then fungicide; terminal cuttings)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/sweet_potato.pdf"
-    },
-    {
-     "label": "VSU PhilRootcrops training programs, cassava and sweetpotato",
-     "url": "https://philrootcrops.vsu.edu.ph/23-extensions/25-training-programs"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1606,10 +1394,7 @@
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "VSU Annals of Tropical Research: land preparation and post planting tillage for cassava (off barring 2 weeks, hilling up 5 and 7 weeks)",
-    "url": "https://atr.vsu.edu.ph/article/view/660"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1619,7 +1404,7 @@
      "activeIngredients": [
       "Streptomycin 100 ppm, 6 hour soak (antibiotic)"
      ],
-     "why": "PCAARRD found the soak lowered mortality and raised germination and root yield where phytoplasma is present."
+     "why": "Trials found the soak lowered mortality and raised germination and root yield where phytoplasma is present."
     },
     {
      "stage": "Planting material, scale infested areas",
@@ -1628,7 +1413,7 @@
      "activeIngredients": [
       "Dioscorea hispida (nami) water extract, 5 percent"
      ],
-     "why": "Matched malathion and dimethoate in VSU linked trials without hurting germination."
+     "why": "Matched malathion and dimethoate in linked trials without hurting germination."
     },
     {
      "stage": "Pre emergence",
@@ -1651,41 +1436,21 @@
      ],
      "what": "off barring at 2 weeks, hilling up at 5 and 7 weeks",
      "activeIngredients": [],
-     "why": "The VSU trial found this post planting tillage gave the best yield and net return."
+     "why": "One trial found this post planting tillage gave the best yield and net return."
     }
    ],
    "safety": [
-    "Malathion treated cuttings germinated poorly in the VSU trial; do not soak cuttings in strong insecticide.",
+    "Malathion treated cuttings germinated poorly in one trial; do not soak cuttings in strong insecticide.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
-   "sources": [
-    {
-     "label": "VSU Annals of Tropical Research: land preparation and post planting tillage for cassava (off barring 2 weeks, hilling up 5 and 7 weeks)",
-     "url": "https://atr.vsu.edu.ph/article/view/660"
-    },
-    {
-     "label": "PCAARRD: cassava phytoplasma disease (cuttings soaked 6 hours in 100 ppm streptomycin before planting)",
-     "url": "https://newport.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/addressing-the-threats-of-cassava-phytoplasma-disease"
-    },
-    {
-     "label": "VSU PhilRootcrops training programs, cassava and sweetpotato",
-     "url": "https://philrootcrops.vsu.edu.ph/23-extensions/25-training-programs"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "taro": {
    "landPrepDays": [
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "VSU PhilRootcrops training programs, cassava and sweetpotato",
-    "url": "https://philrootcrops.vsu.edu.ph/23-extensions/25-training-programs"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1733,16 +1498,8 @@
    ],
    "sources": [
     {
-     "label": "VSU PhilRootcrops training programs, cassava and sweetpotato",
-     "url": "https://philrootcrops.vsu.edu.ph/23-extensions/25-training-programs"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1751,10 +1508,7 @@
     21,
     30
    ],
-   "landPrepSource": {
-    "label": "VSU PhilRootcrops training programs, cassava and sweetpotato",
-    "url": "https://philrootcrops.vsu.edu.ph/23-extensions/25-training-programs"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1796,16 +1550,8 @@
    ],
    "sources": [
     {
-     "label": "VSU PhilRootcrops training programs, cassava and sweetpotato",
-     "url": "https://philrootcrops.vsu.edu.ph/23-extensions/25-training-programs"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1814,10 +1560,7 @@
     21,
     30
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Potato Production Guide (plow and harrow twice; lime 30 days before planting)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/potato.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1828,7 +1571,7 @@
      ],
      "what": "lime where soil is acidic",
      "activeIngredients": [],
-     "why": "The DA RFO 02 guide applies lime 30 days before planting."
+     "why": "Apply lime 30 days before planting."
     },
     {
      "stage": "Planting material",
@@ -1872,7 +1615,7 @@
      "daysAfterPlanting": "1 to 2 weeks before harvest",
      "what": "stop irrigation and cut vines",
      "activeIngredients": [],
-     "why": "Hardens the tuber skin (DA RFO 02)."
+     "why": "Hardens the tuber skin."
     }
    ],
    "safety": [
@@ -1882,24 +1625,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Potato Production Guide (plow and harrow twice; lime 30 days before planting)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/potato.pdf"
-    },
-    {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1908,10 +1639,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Organic Highland Vegetables",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -1959,16 +1687,8 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -1977,10 +1697,7 @@
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Organic Highland Vegetables",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -2024,16 +1741,8 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2042,10 +1751,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Production and Management of Ginger (plow twice then harrow)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-GINGER.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -2084,16 +1790,8 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Production and Management of Ginger (plow twice then harrow)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-GINGER.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2102,10 +1800,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Production and Management of Ginger (plow twice then harrow)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-GINGER.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -2144,16 +1839,8 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Production and Management of Ginger (plow twice then harrow)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-GINGER.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2162,10 +1849,7 @@
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "DA RFU 7 and ATI 7 Pechay Production Guide (plow and harrow 2 to 3 times; harden seedlings one week before transplanting)",
-    "url": "https://ati2.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     14,
     21
@@ -2208,22 +1892,14 @@
     }
    ],
    "safety": [
-    "Harden seedlings one week before transplanting (DA RFU 7 guide).",
+    "Harden seedlings one week before transplanting.",
     "Pechay is picked within a month; avoid synthetic sprays in the last 2 weeks.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
    "sources": [
     {
-     "label": "DA RFU 7 and ATI 7 Pechay Production Guide (plow and harrow 2 to 3 times; harden seedlings one week before transplanting)",
-     "url": "https://ati2.da.gov.ph/"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2232,10 +1908,7 @@
     14,
     28
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Cabbage Production Guide (plow and harrow 2 to 3 times a week apart; transplant one month old seedlings)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     25,
     30
@@ -2259,7 +1932,7 @@
      ],
      "what": "lime acidic soil",
      "activeIngredients": [],
-     "why": "ATI CAR limes two weeks before transplanting; clubroot is worse in acid soil."
+     "why": "Lime two weeks before transplanting; clubroot is worse in acid soil."
     },
     {
      "stage": "From establishment",
@@ -2295,21 +1968,9 @@
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row.",
     "Do not tank mix copper fungicides with phosphonates (fosetyl aluminium, potassium phosphonate) or acidifying foliar fertilizers; free copper burns young leaves and fruit.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
-    "New ground: plow twice two weeks apart to tire out weeds (ATI CAR)."
+    "New ground: plow twice two weeks apart to tire out weeds."
    ],
    "sources": [
-    {
-     "label": "DA RFO 02 Cabbage Production Guide (plow and harrow 2 to 3 times a week apart; transplant one month old seedlings)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf"
-    },
-    {
-     "label": "ATI CAR Cabbage Production (new ground plowed twice two weeks apart; lime two weeks before transplanting)",
-     "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/Cabbage_Production.pdf"
-    },
-    {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
@@ -2317,10 +1978,6 @@
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2329,10 +1986,7 @@
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Lettuce Production Guide (plow and harrow twice, raised beds)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Lettuce.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     14,
     21
@@ -2382,28 +2036,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Lettuce Production Guide (plow and harrow twice, raised beds)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Lettuce.pdf"
-    },
-    {
-     "label": "BPI NCRDC Lettuce Production Guide (transplant 14 days after sowing)",
-     "url": "https://buplant.da.gov.ph/wp-content/uploads/2025/01/Lettuce-Production-Guide.pdf"
-    },
-    {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2412,10 +2050,7 @@
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -2456,26 +2091,14 @@
     "Do not spray kangkong grown in water that flows to fishponds.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
-   "sources": [
-    {
-     "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "mustard": {
    "landPrepDays": [
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "DA RFU 7 and ATI 7 Pechay Production Guide (plow and harrow 2 to 3 times; harden seedlings one week before transplanting)",
-    "url": "https://ati2.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     14,
     21
@@ -2523,16 +2146,8 @@
    ],
    "sources": [
     {
-     "label": "DA RFU 7 and ATI 7 Pechay Production Guide (plow and harrow 2 to 3 times; harden seedlings one week before transplanting)",
-     "url": "https://ati2.da.gov.ph/"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2541,10 +2156,7 @@
     14,
     28
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Cabbage Production Guide (plow and harrow 2 to 3 times a week apart; transplant one month old seedlings)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     25,
     35
@@ -2568,7 +2180,7 @@
      ],
      "what": "lime acidic soil",
      "activeIngredients": [],
-     "why": "ATI CAR limes two weeks before transplanting; clubroot is worse in acid soil."
+     "why": "Lime two weeks before transplanting; clubroot is worse in acid soil."
     },
     {
      "stage": "From establishment",
@@ -2607,28 +2219,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Cabbage Production Guide (plow and harrow 2 to 3 times a week apart; transplant one month old seedlings)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf"
-    },
-    {
-     "label": "ATI CAR Cabbage Production (new ground plowed twice two weeks apart; lime two weeks before transplanting)",
-     "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/Cabbage_Production.pdf"
-    },
-    {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
     },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2637,10 +2233,7 @@
     14,
     28
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Cabbage Production Guide (plow and harrow 2 to 3 times a week apart; transplant one month old seedlings)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     25,
     35
@@ -2664,7 +2257,7 @@
      ],
      "what": "lime acidic soil",
      "activeIngredients": [],
-     "why": "ATI CAR limes two weeks before transplanting; clubroot is worse in acid soil."
+     "why": "Lime two weeks before transplanting; clubroot is worse in acid soil."
     },
     {
      "stage": "From establishment",
@@ -2704,28 +2297,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Cabbage Production Guide (plow and harrow 2 to 3 times a week apart; transplant one month old seedlings)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Cabbage.pdf"
-    },
-    {
-     "label": "ATI CAR Cabbage Production (new ground plowed twice two weeks apart; lime two weeks before transplanting)",
-     "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/Cabbage_Production.pdf"
-    },
-    {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
     },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2734,10 +2311,7 @@
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -2773,16 +2347,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2791,10 +2357,7 @@
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -2844,26 +2407,14 @@
    "safety": [
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
-   "sources": [
-    {
-     "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "celery": {
    "landPrepDays": [
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Organic Highland Vegetables",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     45,
     60
@@ -2912,20 +2463,12 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -2934,10 +2477,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Tomato Production Guide, February 2017 (plow 2 to 3 times a week apart; transplant 25 to 30 day old seedlings)",
-    "url": "https://cagayanvalley.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     25,
     30
@@ -3013,20 +2553,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Tomato Production Guide, February 2017 (plow 2 to 3 times a week apart; transplant 25 to 30 day old seedlings)",
-     "url": "https://cagayanvalley.da.gov.ph/"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3035,10 +2567,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Eggplant Production Guide (plow 2 to 3 times a week apart; transplant 30 to 35 DAS)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     30,
     35
@@ -3127,20 +2656,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Eggplant Production Guide (plow 2 to 3 times a week apart; transplant 30 to 35 DAS)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3149,10 +2670,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Ampalaya Production Guide (plow and harrow 2 to 3 times at 7 day intervals)",
-    "url": "https://cagayanvalley.da.gov.ph/"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     12,
     15
@@ -3217,20 +2735,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Ampalaya Production Guide (plow and harrow 2 to 3 times at 7 day intervals)",
-     "url": "https://cagayanvalley.da.gov.ph/"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3239,10 +2749,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     12,
     15
@@ -3307,20 +2814,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3329,10 +2828,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -3395,20 +2891,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3417,10 +2905,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Okra Production Guide (plow 2 to 3 times a week apart)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Okra.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -3460,23 +2945,15 @@
     }
    ],
    "safety": [
-    "Pods are harvested every 2 to 3 days (DA RFO 02); pick first, then spray, and only with short PHI products.",
+    "Pods are harvested every 2 to 3 days; pick first, then spray, and only with short PHI products.",
     "Do not spray insecticides on open flowers while bees are foraging; spray late afternoon.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Okra Production Guide (plow 2 to 3 times a week apart)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Okra.pdf"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3485,10 +2962,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Pepper Production Guide (plow and harrow 2 to 3 times a week apart; transplant 30 to 40 DAS)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Pepper.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     30,
     40
@@ -3576,24 +3050,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Pepper Production Guide (plow and harrow 2 to 3 times a week apart; transplant 30 to 40 DAS)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Pepper.pdf"
-    },
-    {
-     "label": "BPI library Hot Pepper (Siling Maanghang) production guide (plow and harrow 2 to 3 times; furrows just before transplanting)",
-     "url": "https://library.buplant.da.gov.ph/images/1659331734Hot%20Pepper%20(Siling%20Maanghang).pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3602,10 +3064,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Pepper Production Guide (plow and harrow 2 to 3 times a week apart; transplant 30 to 40 DAS)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Pepper.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     30,
     40
@@ -3693,24 +3152,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Pepper Production Guide (plow and harrow 2 to 3 times a week apart; transplant 30 to 40 DAS)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Pepper.pdf"
-    },
-    {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3719,10 +3166,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Patola Production Guide (plow 2 to 3 times a week apart; transplant when true leaves show)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Patola.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     10,
     15
@@ -3787,20 +3231,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Patola Production Guide (plow 2 to 3 times a week apart; transplant when true leaves show)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Patola.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3809,10 +3245,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Upo Production Guide (plow 2 to 3 times a week apart so weeds sprout between passes)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Upo.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     10,
     15
@@ -3877,20 +3310,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Upo Production Guide (plow 2 to 3 times a week apart so weeds sprout between passes)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Upo.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3899,10 +3324,7 @@
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Organic Highland Vegetables",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -3962,20 +3384,12 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -3984,10 +3398,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     10,
     14
@@ -4063,20 +3474,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4085,10 +3488,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     10,
     14
@@ -4153,20 +3553,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Squash Production Guide (plow 2 to 3 times a week apart; transplant about 15 DAE)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4175,10 +3567,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "BPI Onion Production Guide (plow and harrow 2 to 3 times; manure 2 weeks and complete fertilizer 1 week before planting; transplants with 3 to 5 leaves)",
-    "url": "https://library.buplant.da.gov.ph/images/1641945744PRODUCTIONGUIDE-ONION.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     30,
     45
@@ -4205,7 +3594,7 @@
       "Oxyfluorfen (HRAC 14)",
       "Pendimethalin (HRAC 3)"
      ],
-     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch (BPI) is the other option."
+     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch is the other option."
     },
     {
      "stage": "Bulking, wet or foggy weather",
@@ -4240,13 +3629,9 @@
     "Add a sticker or spreader to sprays on onion and garlic leaves; the waxy leaves shed water.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
-    "Cut irrigation for about a week before lifting seedlings to harden them (BPI)."
+    "Cut irrigation for about a week before lifting seedlings to harden them."
    ],
    "sources": [
-    {
-     "label": "BPI Onion Production Guide (plow and harrow 2 to 3 times; manure 2 weeks and complete fertilizer 1 week before planting; transplants with 3 to 5 leaves)",
-     "url": "https://library.buplant.da.gov.ph/images/1641945744PRODUCTIONGUIDE-ONION.pdf"
-    },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
@@ -4254,10 +3639,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4266,10 +3647,7 @@
     7,
     14
    ],
-   "landPrepSource": {
-    "label": "BPI Onion Production Guide (plow and harrow 2 to 3 times; manure 2 weeks and complete fertilizer 1 week before planting; transplants with 3 to 5 leaves)",
-    "url": "https://library.buplant.da.gov.ph/images/1641945744PRODUCTIONGUIDE-ONION.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4283,7 +3661,7 @@
       "Oxyfluorfen (HRAC 14)",
       "Pendimethalin (HRAC 3)"
      ],
-     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch (BPI) is the other option."
+     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch is the other option."
     },
     {
      "stage": "Bulking, wet or foggy weather",
@@ -4322,20 +3700,12 @@
    ],
    "sources": [
     {
-     "label": "BPI Onion Production Guide (plow and harrow 2 to 3 times; manure 2 weeks and complete fertilizer 1 week before planting; transplants with 3 to 5 leaves)",
-     "url": "https://library.buplant.da.gov.ph/images/1641945744PRODUCTIONGUIDE-ONION.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4344,10 +3714,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Garlic Production Guide (plow and harrow twice or more)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/garlic_production_guide_final.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4370,7 +3737,7 @@
       "Oxyfluorfen (HRAC 14)",
       "Pendimethalin (HRAC 3)"
      ],
-     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch (BPI) is the other option."
+     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch is the other option."
     },
     {
      "stage": "Bulking, wet or foggy weather",
@@ -4409,20 +3776,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Garlic Production Guide (plow and harrow twice or more)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/garlic_production_guide_final.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4431,10 +3790,7 @@
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA RFO 02 Garlic Production Guide (plow and harrow twice or more)",
-    "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/garlic_production_guide_final.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4457,7 +3813,7 @@
       "Oxyfluorfen (HRAC 14)",
       "Pendimethalin (HRAC 3)"
      ],
-     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch (BPI) is the other option."
+     "why": "Alliums have thin leaves that never shade out weeds; plastic or straw mulch is the other option."
     },
     {
      "stage": "Bulking, wet or foggy weather",
@@ -4495,24 +3851,12 @@
    ],
    "sources": [
     {
-     "label": "DA RFO 02 Garlic Production Guide (plow and harrow twice or more)",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/garlic_production_guide_final.pdf"
-    },
-    {
-     "label": "BPI Onion Production Guide (plow and harrow 2 to 3 times; manure 2 weeks and complete fertilizer 1 week before planting; transplants with 3 to 5 leaves)",
-     "url": "https://library.buplant.da.gov.ph/images/1641945744PRODUCTIONGUIDE-ONION.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4584,10 +3928,6 @@
     {
      "label": "UP Diliman rare periodicals, Mechanizing Philippine agriculture (cane land plowed and harrowed 3 to 5 times, then furrowed)",
      "url": "https://repository.mainlib.upd.edu.ph/omekas/s/rare-periodicals/media/31241"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4596,10 +3936,7 @@
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "BPI Pineapple Production Guide (plow and harrow 2 to 3 times; suckers, slips and crowns)",
-    "url": "https://library.buplant.da.gov.ph/images/1641883999Pineapple%20%20Production%20Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4617,7 +3954,7 @@
      "daysAfterPlanting": "At planting",
      "what": "drainage canals; plant right after land preparation",
      "activeIngredients": [],
-     "why": "PCAARRD: pineapple does not grow well waterlogged and planting follows land preparation immediately."
+     "why": "Pineapple does not grow well waterlogged, and planting follows land preparation immediately."
     },
     {
      "stage": "Vegetative",
@@ -4649,20 +3986,8 @@
    ],
    "sources": [
     {
-     "label": "BPI Pineapple Production Guide (plow and harrow 2 to 3 times; suckers, slips and crowns)",
-     "url": "https://library.buplant.da.gov.ph/images/1641883999Pineapple%20%20Production%20Guide.pdf"
-    },
-    {
-     "label": "PCAARRD: Queen pineapple propagation and planting system (plant right after land preparation; drainage canals)",
-     "url": "https://pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/increased-queen-pineapple-production-eyed-with-propagation-protocol-and-planting-system"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4671,10 +3996,7 @@
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "NTA Technoguide for Virginia and Burley Tobacco 2023 to 2024 (transplant not later than 45 DAS, up to 60 DAS by stand; suckercide within 24 hours; PHI compliance required)",
-    "url": "https://www.nta.da.gov.ph/wp-content/uploads/2023/10/technoguide-Virginia-Burley-2023-2024-FINAL.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     40,
     60
@@ -4728,26 +4050,14 @@
     "Observe the re entry period and post the warning sign after spraying (NTA).",
     "Keep 2,4 D and other auxin herbicide drift away from vegetables, legumes, cotton and tobacco, and never reuse a herbicide sprayer on vegetables without triple washing."
    ],
-   "sources": [
-    {
-     "label": "NTA Technoguide for Virginia and Burley Tobacco 2023 to 2024 (transplant not later than 45 DAS, up to 60 DAS by stand; suckercide within 24 hours; PHI compliance required)",
-     "url": "https://www.nta.da.gov.ph/wp-content/uploads/2023/10/technoguide-Virginia-Burley-2023-2024-FINAL.pdf"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "cotton": {
    "landPrepDays": [
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "PhilFIDA cotton pests brochure and technoguide (flood 2 weeks before land preparation where sclerotia build up; fungicide seed treatment; scouting by DAP)",
-    "url": "https://philfida.da.gov.ph/images/Publications/cottonbrochures/Brochure-Cotton-Pests-updated-with-cotton-return-and-analysis.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4758,7 +4068,7 @@
      ],
      "what": "flood the field for two weeks",
      "activeIngredients": [],
-     "why": "The PhilFIDA guide floods for two weeks before land preparation to kill sclerotia of soil fungi."
+     "why": "Flood for two weeks before land preparation to kill sclerotia of soil fungi."
     },
     {
      "stage": "Seed",
@@ -4778,7 +4088,7 @@
      ],
      "what": "thin to one plant per hill",
      "activeIngredients": [],
-     "why": "PhilFIDA thins at 14 to 27 DAP."
+     "why": "Thin at 14 to 27 DAP."
     },
     {
      "stage": "Squaring to boll setting",
@@ -4803,16 +4113,8 @@
    ],
    "sources": [
     {
-     "label": "PhilFIDA cotton pests brochure and technoguide (flood 2 weeks before land preparation where sclerotia build up; fungicide seed treatment; scouting by DAP)",
-     "url": "https://philfida.da.gov.ph/images/Publications/cottonbrochures/Brochure-Cotton-Pests-updated-with-cotton-return-and-analysis.pdf"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4821,10 +4123,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Banana Production Manual (plow and harrow thoroughly; bag at bending stage; herbicide only from 6 months; tire dips against Fusarium wilt)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4855,26 +4154,14 @@
     "Kill aphids on a diseased mat before uprooting it so they do not fly to healthy plants.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
-   "sources": [
-    {
-     "label": "DA HVCDP Banana Production Manual (plow and harrow thoroughly; bag at bending stage; herbicide only from 6 months; tire dips against Fusarium wilt)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "rubber": {
    "landPrepDays": [
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Rubber Production Guide (plow twice before laying out; holes 24 x 30 cm)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Rubber-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4910,16 +4197,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Rubber Production Guide (plow twice before laying out; holes 24 x 30 cm)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Rubber-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -4928,10 +4207,7 @@
     30,
     90
    ],
-   "landPrepSource": {
-    "label": "PCA Zamboanga Research Center coconut planting notes as posted on Scribd (holes 50 x 50 cm dug at least 2 months before planting; 8 to 10 month old seedlings)",
-    "url": "https://www.scribd.com/doc/191936885/Mark"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -4961,30 +4237,14 @@
    "safety": [
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
-   "sources": [
-    {
-     "label": "PCA Zamboanga Research Center coconut planting notes as posted on Scribd (holes 50 x 50 cm dug at least 2 months before planting; 8 to 10 month old seedlings)",
-     "url": "https://www.scribd.com/doc/191936885/Mark"
-    },
-    {
-     "label": "PNA 2024: PCA 13 applies green muscardine fungus to coconut debris against rhinoceros beetle",
-     "url": "https://alpha.pna.gov.ph/articles/1230060"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "bamboo": {
    "landPrepDays": [
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Rubber Production Guide (plow twice before laying out; holes 24 x 30 cm)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Rubber-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5012,22 +4272,14 @@
    "safety": [
     "Bamboo shoots for food: do not spray herbicide around clumps being harvested."
    ],
-   "sources": [
-    {
-     "label": "DA HVCDP Rubber Production Guide (plow twice before laying out; holes 24 x 30 cm)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Rubber-Production-Guide.pdf"
-    }
-   ]
+   "sources": []
   },
   "banana": {
    "landPrepDays": [
     21,
     30
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Banana Production Manual (plow and harrow thoroughly; bag at bending stage; herbicide only from 6 months; tire dips against Fusarium wilt)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5072,16 +4324,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Banana Production Manual (plow and harrow thoroughly; bag at bending stage; herbicide only from 6 months; tire dips against Fusarium wilt)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5090,10 +4334,7 @@
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Banana Production Manual (plow and harrow thoroughly; bag at bending stage; herbicide only from 6 months; tire dips against Fusarium wilt)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     30,
     45
@@ -5144,20 +4385,12 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Banana Production Manual (plow and harrow thoroughly; bag at bending stage; herbicide only from 6 months; tire dips against Fusarium wilt)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5166,10 +4399,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5199,7 +4429,7 @@
       "Carbaryl (IRAC 1A)",
       "Lambda cyhalothrin (IRAC 3A)"
      ],
-     "why": "BPI: cecid fly (kurikong) attacks young fruit from 32 to 70 DAFI."
+     "why": "Cecid fly (kurikong) attacks young fruit from 32 to 70 DAFI."
     },
     {
      "stage": "Fruit development",
@@ -5209,7 +4439,7 @@
       "Mancozeb (FRAC M3)",
       "Azoxystrobin (FRAC 11)"
      ],
-     "why": "UPLB: mancozeb at least 4 times from 35 to 75 DAFI, or 1 to 3 azoxystrobin sprays at 35 to 45 DAFI, controls fruit rot."
+     "why": "Mancozeb at least 4 times from 35 to 75 DAFI, or 1 to 3 azoxystrobin sprays at 35 to 45 DAFI, controls fruit rot."
     },
     {
      "stage": "Fruit bagging",
@@ -5220,7 +4450,7 @@
     }
    ],
    "safety": [
-    "Spray cecid fly early in the morning or late afternoon and add a sticker if rain is likely (BPI).",
+    "Spray cecid fly early in the morning or late afternoon and add a sticker if rain is likely.",
     "BPI 2006 kept chlorpyrifos on mango to within 30 DAFI so residues stayed under export limits; check whether it is still registered before using it.",
     "Do not spray insecticides on open flowers while bees are foraging; spray late afternoon.",
     "Do not mix organophosphate, carbamate or pyrethroid insecticides with alkaline materials (lime, Bordeaux mixture, lime sulfur) or very hard alkaline water; they break down within hours.",
@@ -5229,32 +4459,12 @@
    ],
    "sources": [
     {
-     "label": "BPI CPMD pest sheet, Mango cecid fly (attacks 32 to 70 DAFI; carbaryl or lambda cyhalothrin with sticker)",
-     "url": "https://cpmd.buplant.da.gov.ph/assets/pest-info-pdf/cecidfly.pdf"
-    },
-    {
-     "label": "Philstar 2006: BPI allows chlorpyrifos on mango only within 30 days after flower induction (export residue limit)",
-     "url": "https://www.philstar.com/cebu-news/2006/07/26/349450/use-chlorpyrifos-mangoes-regulated/amp/"
-    },
-    {
-     "label": "UPLB: pre and post harvest control of mango anthracnose in the Philippines (mancozeb 35 to 75 DAFI, azoxystrobin 35 to 45 DAFI)",
-     "url": "https://www.ukdr.uplb.edu.ph/journal-articles/3667"
-    },
-    {
-     "label": "DA BAFS 2025 explanatory manual, Philippine GAP for mango",
-     "url": "https://bafs.da.gov.ph/wp-content/uploads/2025/05/2025_EM-GAP-Mango_compressed.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5263,10 +4473,7 @@
     60,
     90
    ],
-   "landPrepSource": {
-    "label": "PCA Zamboanga Research Center coconut planting notes as posted on Scribd (holes 50 x 50 cm dug at least 2 months before planting; 8 to 10 month old seedlings)",
-    "url": "https://www.scribd.com/doc/191936885/Mark"
-   },
+   "landPrepSource": null,
    "nurseryDays": [
     240,
     300
@@ -5277,7 +4484,7 @@
      "daysAfterPlanting": "At least 2 months before planting",
      "what": "dig 50 x 50 cm holes and add fertilizer at planting",
      "activeIngredients": [],
-     "why": "PCA Zamboanga notes; pest free 8 to 10 month seedlings."
+     "why": "Pest free 8 to 10 month seedlings."
     },
     {
      "stage": "Whole life",
@@ -5286,14 +4493,14 @@
      "activeIngredients": [
       "Metarhizium anisopliae (biological)"
      ],
-     "why": "PCA applies the fungus to decaying coconut debris where larvae breed."
+     "why": "Apply the fungus to decaying coconut debris where larvae breed."
     },
     {
      "stage": "Young palms",
      "daysAfterPlanting": "When leaf beetle appears",
      "what": "cut and burn infested young fronds; release earwigs",
      "activeIngredients": [],
-     "why": "PCA control for Brontispa; trunk injection only on infested trees under PCA guidance."
+     "why": "Control for Brontispa; trunk injection only on infested trees under PCA guidance."
     },
     {
      "stage": "Scale outbreak areas",
@@ -5311,20 +4518,8 @@
    ],
    "sources": [
     {
-     "label": "PCA Zamboanga Research Center coconut planting notes as posted on Scribd (holes 50 x 50 cm dug at least 2 months before planting; 8 to 10 month old seedlings)",
-     "url": "https://www.scribd.com/doc/191936885/Mark"
-    },
-    {
-     "label": "PNA 2024: PCA 13 applies green muscardine fungus to coconut debris against rhinoceros beetle",
-     "url": "https://alpha.pna.gov.ph/articles/1230060"
-    },
-    {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5333,10 +4528,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Citrus Production",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5344,7 +4536,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5385,10 +4577,6 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Citrus Production",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
-    },
-    {
      "label": "US EPA sulfur fungicide label (do not apply above 90 F, about 32 C, or within 2 weeks of an oil spray)",
      "url": "https://www3.epa.gov/pesticides/chem_search/ppls/051036-00011-19860520.pdf"
     },
@@ -5399,10 +4587,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5411,10 +4595,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Citrus Production",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5422,7 +4603,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5463,10 +4644,6 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Citrus Production",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
-    },
-    {
      "label": "US EPA sulfur fungicide label (do not apply above 90 F, about 32 C, or within 2 weeks of an oil spray)",
      "url": "https://www3.epa.gov/pesticides/chem_search/ppls/051036-00011-19860520.pdf"
     },
@@ -5477,10 +4654,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5489,10 +4662,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Citrus Production",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5500,7 +4670,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5538,10 +4708,6 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Citrus Production",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
-    },
-    {
      "label": "US EPA sulfur fungicide label (do not apply above 90 F, about 32 C, or within 2 weeks of an oil spray)",
      "url": "https://www3.epa.gov/pesticides/chem_search/ppls/051036-00011-19860520.pdf"
     },
@@ -5552,10 +4718,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5564,10 +4726,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5575,7 +4734,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5613,20 +4772,12 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5635,10 +4786,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5646,7 +4794,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5686,16 +4834,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5704,10 +4844,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5715,7 +4852,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5753,20 +4890,12 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5775,10 +4904,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5786,7 +4912,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5823,16 +4949,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5841,10 +4959,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Rambutan Production",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-RAMBUTAN-PRODUCTION.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5852,7 +4967,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5892,20 +5007,12 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Rambutan Production",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-RAMBUTAN-PRODUCTION.pdf"
-    },
-    {
      "label": "US EPA sulfur fungicide label (do not apply above 90 F, about 32 C, or within 2 weeks of an oil spray)",
      "url": "https://www3.epa.gov/pesticides/chem_search/ppls/051036-00011-19860520.pdf"
     },
     {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5914,10 +5021,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA Durian Production Guide, Koronadal (plow and harrow; holes 30 x 30 x 30 cm; harden grafts two weeks before field planting)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -5925,7 +5029,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -5972,20 +5076,12 @@
    ],
    "sources": [
     {
-     "label": "DA Durian Production Guide, Koronadal (plow and harrow; holes 30 x 30 x 30 cm; harden grafts two weeks before field planting)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -5994,10 +5090,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6005,7 +5098,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6042,16 +5135,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6060,10 +5145,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6071,7 +5153,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6108,16 +5190,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6126,10 +5200,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6137,7 +5208,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6175,16 +5246,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6193,10 +5256,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6204,7 +5264,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6243,20 +5303,12 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6265,10 +5317,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6276,7 +5325,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6313,16 +5362,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6331,10 +5372,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6342,7 +5380,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6379,16 +5417,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6397,10 +5427,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6408,7 +5435,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6435,26 +5462,14 @@
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable.",
     "Rotate IRAC and FRAC groups between sprays; do not spray the same group more than twice in a row."
    ],
-   "sources": [
-    {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "cashew": {
    "landPrepDays": [
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6462,7 +5477,7 @@
      "daysAfterPlanting": "Weeks before planting",
      "what": "dig holes, mix topsoil with compost",
      "activeIngredients": [],
-     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting (DA durian guide)."
+     "why": "Holes are dug and filled ahead so the soil settles; grafted plants are hardened 2 weeks before field planting."
     },
     {
      "stage": "Flushing",
@@ -6493,20 +5508,12 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
     },
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6515,10 +5522,7 @@
     14,
     30
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP orchard preparation, as written in its Mangosteen Production Guide and used here for any new orchard (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6555,16 +5559,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Mangosteen Production Guide (deep plowing once or twice, several harrowings; holes 0.6 m cube with manure)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6573,10 +5569,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Coffee Production Guide (Filipino)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Coffee-Production-guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6611,16 +5604,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Coffee Production Guide (Filipino)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Coffee-Production-guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6629,10 +5614,7 @@
     30,
     60
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Cacao Production Guide (holes 30 x 30 x 30 cm; pod sleeving; prune a month before the rains)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/CACAO-Production-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6673,16 +5655,8 @@
    ],
    "sources": [
     {
-     "label": "DA HVCDP Cacao Production Guide (holes 30 x 30 x 30 cm; pod sleeving; prune a month before the rains)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/CACAO-Production-Guide.pdf"
-    },
-    {
      "label": "FRAC Code List 2025",
      "url": "https://www.frac.info/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   },
@@ -6691,10 +5665,7 @@
     7,
     21
    ],
-   "landPrepSource": {
-    "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6734,26 +5705,14 @@
     "Leaves are eaten fresh and picked often; avoid synthetic sprays on harvest branches.",
     "Observe the preharvest interval printed on each FPA registered label; Philippine guides require it but leave the number to the label, and residues above limits make produce unsellable."
    ],
-   "sources": [
-    {
-     "label": "DA HVCDP Indigenous Vegetables Guide (Mga Katutubong Gulay)",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Indigenous-Vegetables-Guide.pdf"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
-    }
-   ]
+   "sources": []
   },
   "strawberry": {
    "landPrepDays": [
     14,
     21
    ],
-   "landPrepSource": {
-    "label": "DA CAR Technoguide in Organic Highland Vegetables",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-   },
+   "landPrepSource": null,
    "nurseryDays": null,
    "preventive": [
     {
@@ -6801,10 +5760,6 @@
    ],
    "sources": [
     {
-     "label": "DA CAR Technoguide in Organic Highland Vegetables",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
-    },
-    {
      "label": "US EPA sulfur fungicide label (do not apply above 90 F, about 32 C, or within 2 weeks of an oil spray)",
      "url": "https://www3.epa.gov/pesticides/chem_search/ppls/051036-00011-19860520.pdf"
     },
@@ -6815,10 +5770,6 @@
     {
      "label": "IRAC Mode of Action Classification",
      "url": "https://irac-online.org/"
-    },
-    {
-     "label": "Fertilizer and Pesticide Authority (use only FPA registered products, as labeled)",
-     "url": "https://fpa.da.gov.ph/"
     }
    ]
   }
