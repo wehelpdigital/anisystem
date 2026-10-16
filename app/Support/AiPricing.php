@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Credits that scale with the job and keep the house's margin (2026-10-15,
  * the owner: "some users might have really lots of lots ... we want a 6x to
- * 10x profit margin, always, in the credits").
+ * 10x profit margin, always, in the credits"). LOWERED 2026-10-16 (the owner:
+ * "let's lower the cost of the anee products ... what if we just make it 4-6x
+ * profit"): the target is 5x, the floor 4x and the ceiling 6x, and the
+ * engine now sets the price itself, under today's flat price too.
  *
  * WHAT A RUN COSTS THE HOUSE is modelled per kind at the 90th percentile
  * (p90), never the mean, so a heavy farm cannot drag a run under the floor:
@@ -30,10 +33,10 @@ use Illuminate\Support\Facades\Schema;
  * face is open (pesoPerCredit(), with an owner override). The margin has to
  * hold there, not at the list price of the starter pack.
  *
- * THE PRICE is max(today's flat price, friendly(target x cost / peso per
- * credit)). Today's flat price (App\Support\AiPrices) is the floor, so the
- * engine never lowers a price on its own; where the flat price already sits
- * above 10x the margin table says so and the owner decides.
+ * THE PRICE is friendly(target x cost / peso per credit). With flatFloor on
+ * (the rule until 2026-10-16) today's flat price (App\Support\AiPrices) is a
+ * floor under it and the engine never lowers a price; off, the flat price is
+ * used only for a kind with no cost model.
  *
  * Every number lives on the as_site_settings shelf under `ai.pricing`
  * (JSON), edited in the mother app (AniSystem AI > Pricing engine). The
@@ -42,7 +45,7 @@ use Illuminate\Support\Facades\Schema;
  * carries the same defaults and must be kept in step with this file.
  *
  * After a run, audit() compares what the run really cost with what it
- * charged and logs any run under the 6x floor, so the model can be tuned.
+ * charged and logs any run under the floor (4x), so the model can be tuned.
  */
 final class AiPricing
 {
@@ -69,9 +72,12 @@ final class AiPricing
     public const DEFAULTS = [
         // Off: every price is today's flat price (App\Support\AiPrices), as before.
         'on' => true,
-        'target' => 8.0,
-        'minMargin' => 6.0,
-        'maxMargin' => 10.0,
+        // 4x to 6x since 2026-10-16 (was 8x in 6x to 10x).
+        'target' => 5.0,
+        'minMargin' => 4.0,
+        'maxMargin' => 6.0,
+        // Today's flat prices as a floor under the engine (the rule until 2026-10-16). Off: the engine sets every price.
+        'flatFloor' => false,
         // Pesos per credit; null = the cheapest channel, computed (pesoPerCredit()).
         'pesoPerCredit' => null,
         'usdRate' => 58.0,
@@ -161,6 +167,9 @@ final class AiPricing
         if (is_array($set)) {
             if (array_key_exists('on', $set)) {
                 $out['on'] = (bool) $set['on'];
+            }
+            if (array_key_exists('flatFloor', $set)) {
+                $out['flatFloor'] = (bool) $set['flatFloor'];
             }
             foreach (['target', 'minMargin', 'maxMargin', 'usdRate'] as $k) {
                 if (isset($set[$k]) && is_numeric($set[$k]) && (float) $set[$k] > 0) {
@@ -421,7 +430,7 @@ final class AiPricing
         $flat = $flatOne * ($k['perUnitPrice'] ? $u : 1);
         $raw = $c['costPhp'] > 0 ? (int) ceil($s['target'] * $c['costPhp'] / $ppc - 1e-9) : 0;
         $engine = self::friendly($raw);
-        $credits = $s['on'] ? max($flat, $engine) : $flat;
+        $credits = ! $s['on'] ? $flat : ($s['flatFloor'] ? max($flat, $engine) : ($engine > 0 ? $engine : $flat));
         $margin = $c['costPhp'] > 0 ? round($credits * $ppc / $c['costPhp'], 2) : 0.0;
         $words = self::UNIT_WORDS[$k['unit']] ?? [$k['unit'], $k['unit'] . 's'];
         // The base: the same kind at its free size (one lot, one run, no crops named).
@@ -436,7 +445,8 @@ final class AiPricing
             . ($c['searches'] > 0 ? ', web search ₱' . number_format($c['searchPhp'], 2) : '')
             . ($c['thirdPhp'] > 0 ? ', other services ₱' . number_format($c['thirdPhp'], 2) : '') . ').'
             . ' A credit sells for as little as ₱' . number_format($ppc, 3) . ', so ' . rtrim(rtrim(number_format($s['target'], 1), '0'), '.') . 'x needs ' . $engine . ' credits.'
-            . ' Today\'s flat price is ' . $flat . '. ' . ($s['on'] ? ($credits > $flat ? 'Raised to ' . $credits . '.' : 'The flat price stands.') : 'The engine is off, so the flat price stands.')
+            . ' Today\'s flat price is ' . $flat . '. ' . (! $s['on'] ? 'The engine is off, so the flat price stands.'
+                : ($credits > $flat ? 'Raised to ' . $credits . '.' : ($credits < $flat ? 'Lowered to ' . $credits . '.' : 'The flat price stands.')))
             . ' Margin ' . number_format($margin, 1) . 'x.';
 
         return [
@@ -470,7 +480,9 @@ final class AiPricing
             $per = max($per, (int) ceil(self::quote($kind, ['units' => $n])['credits'] / $n));
         }
 
-        return max(AiPrices::of($kind), self::friendly($per));
+        $s = self::settings();
+
+        return $s['on'] && ! $s['flatFloor'] && $per > 0 ? self::friendly($per) : max(AiPrices::of($kind), self::friendly($per));
     }
 
     /** Fives under a hundred, tens under a thousand, fifties above. Always up. */
@@ -515,7 +527,7 @@ final class AiPricing
 
     /**
      * The guard after a run: what it cost against what it charged, at the
-     * cheapest credit. A run under the floor (6x) is logged so the model can
+     * cheapest credit. A run under the floor (4x) is logged so the model can
      * be tuned; the margin is handed back. Never throws.
      */
     public static function audit(string $kind, array $usageResult, float $charged, array $size = [], ?AiSetting $settings = null): ?float

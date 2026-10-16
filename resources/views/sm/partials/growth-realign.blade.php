@@ -17,7 +17,7 @@
 @php
     // Realign is Anee's: a farm whose plan has her (Libre + Anee and up) may run it.
     $grxLocked = ! \App\Support\Tier::scheduleCan($schedule, 'ai');
-    $grxPrice = \App\Support\AiPrices::of('realign');
+    $grxPrice = \App\Support\AiPricing::credits('realign');
     // Asking about a reading happens in the Anee chat: a plan with Anee,
     // and (for a worker) the Chat Anee module.
     $grxChat = ! $grxLocked && \App\Support\WorkerContext::canUseModule('ai');

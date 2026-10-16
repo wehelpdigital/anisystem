@@ -62,9 +62,9 @@ class GrowthRealignController extends BaseScheduleController
         $credits = app(AiCreditService::class);
 
         return $this->jsonOk('ok', ['data' => [
-            // What the sheet shows and charges (sm/partials/growth-realign renders the flat price);
-            // `quote` is the engine's figure (App\Support\AiPricing) for a sheet that sends it back.
-            'price' => AiPrices::of('realign'),
+            // What the sheet shows and charges: the engine's figure (App\Support\AiPricing, 4x to 6x
+            // since 2026-10-16); `quote` is the same, for a sheet that sends it back.
+            'price' => AiPricing::credits('realign'),
             'quote' => AiPricing::credits('realign'),
             'balance' => (float) $credits->balance($payer->id),
             'unlimited' => $credits->unlimited((int) $payer->id),
@@ -102,7 +102,7 @@ class GrowthRealignController extends BaseScheduleController
            today's flat price; a sheet that sends the engine's `quote` back is
            charged that, and a stale one is refused. */
         $quote = AiPricing::quote('realign');
-        $price = AiPricing::agreed($request, $quote, AiPrices::of('realign'));
+        $price = AiPricing::agreed($request, $quote, (int) $quote['credits']);
         if ($price === null) {
             return $this->jsonFail('Realign by Anee now costs ' . $quote['credits'] . ' credits. Please run it again.', 409, ['quote' => $quote['credits']]);
         }

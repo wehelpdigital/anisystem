@@ -1,6 +1,6 @@
 {{-- The field helpers pack offer (2026-10-14, the owner): the Weed Control
      Helper, the Pest Finder, the Disease Finder and the Variety Finder are
-     locked on the free plan and open for a year with a small add-on, or with
+     locked on the free plan and open for a month with a small add-on, or with
      any plan above Libre. Used as a sheet on the dashboard (any tile with
      [data-field-pack] opens it) and as the body of the locked tool page.
      $mode: 'sheet' (default) or 'page'. App\Support\FieldPack. --}}
@@ -72,7 +72,7 @@
             <?php if ($fpWorker): ?>
                 <p class="fp-or">The farm you work on does not have the field helpers yet. Ask the farm owner to open them.</p>
             <?php else: ?>
-                <div class="fp-price"><b><?= e($fpPrice) ?></b><span>for one year</span></div>
+                <div class="fp-price"><b><?= e($fpPrice) ?></b><span>for one month</span></div>
                 <p class="fp-day">That is <?= e(\App\Support\FieldPack::perDay()) ?>.</p>
                 <div class="fp-acts">
                     <a href="<?= e(route('checkout', ['item' => 'addon:' . \App\Support\FieldPack::KEY])) ?>" class="btn btn-primary btn-lg">Open them for <?= e($fpPrice) ?></a>

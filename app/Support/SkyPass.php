@@ -58,7 +58,10 @@ final class SkyPass
 
     public static function price(): int
     {
-        return max(AiPrices::of('skypass'), self::floor());
+        // The flat price is a floor only while the engine keeps flat floors (AiPricing flatFloor).
+        $s = AiPricing::settings();
+
+        return $s['on'] && ! $s['flatFloor'] ? self::floor() : max(AiPrices::of('skypass'), self::floor());
     }
 
     private static function ready(): bool

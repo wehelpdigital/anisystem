@@ -2,7 +2,8 @@
 
 @php
     $isSofar = ($kind ?? 'season') === 'sofar';
-    $price = \App\Support\AiPrices::of($isSofar ? 'sofar' : 'season');
+    // The engine's price for this season's size (App\Support\AiPricing): what a run of the whole season is charged.
+    $price = \App\Support\AiPricing::credits($isSofar ? 'sofar' : 'season', ['lots' => max(1, (int) $schedule->lots()->count())]);
     $aneeName = \App\Models\AiSetting::current()->assistantName;
     $pageName = $isSofar ? 'Analyze So Far' : 'Anee Season Report';
 @endphp

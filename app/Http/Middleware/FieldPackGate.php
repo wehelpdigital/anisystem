@@ -36,7 +36,7 @@ class FieldPackGate
 
         if ($request->expectsJson()) {
             return response()->json(['success' => false, 'packLock' => true,
-                'message' => 'The field helpers are a small add-on on the free plan. Open them for a year, or upgrade to Libre + Anee.'], 403);
+                'message' => 'The field helpers are a small add-on on the free plan. Open them for a month, or upgrade to Libre + Anee.'], 403);
         }
 
         $name = FieldHelperController::TOOLS[$tool][0] ?? 'Field helpers';

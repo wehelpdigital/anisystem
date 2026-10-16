@@ -166,7 +166,7 @@
                     @endif
                     @if (($item['credits'] ?? 0) > 0) Comes with {{ number_format($item['credits']) }} AI credits. @endif
                 @elseif ($isAddon)
-                    The Weed Control Helper, Pest Finder, Disease Finder and Variety Finder for one year. That is {{ \App\Support\FieldPack::perDay() }}.
+                    The Weed Control Helper, Pest Finder, Disease Finder and Variety Finder for one month. That is {{ \App\Support\FieldPack::perDay() }}.
                 @elseif ($item)
                     AI credits never expire.
                 @endif
@@ -202,7 +202,7 @@
                 @endforeach
             </div>
             <div class="co-lines">
-                <div><span>{{ $isPlan ? 'Plan' : ($isAddon ? 'Field helpers, 1 year' : 'Credits') }}</span><span>{{ $money($showPrice) }}</span></div>
+                <div><span>{{ $isPlan ? 'Plan' : ($isAddon ? 'Field helpers, 1 month' : 'Credits') }}</span><span>{{ $money($showPrice) }}</span></div>
                 <div id="coFeeLine" hidden><span>GCash processing fee</span><span>{{ $money($gcashFee) }}</span></div>
                 <div class="tot"><span>You pay</span><span id="coTotal">{{ $money($showPrice) }}</span></div>
             </div>

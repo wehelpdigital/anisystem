@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Schema;
 /**
  * The field helpers pack (2026-10-14, the owner): the Weed Control Helper,
  * the Pest Finder, the Disease Finder and the Variety Finder, locked on the
- * free plan (Libre) and opened for a year by a small add-on bought through
+ * free plan (Libre) and opened for a month by a small add-on bought through
  * the same hand paid checkout as the plans (/checkout?item=addon:fieldpack).
+ * ₱20 a month since 2026-10-16 (the owner); it was ₱50 a year.
  * Every plan above Libre has them, so upgrading opens them too.
  *
  * The add-on lives in as_user_addons (one row a purchase, startsAt and
@@ -30,17 +31,18 @@ final class FieldPack
 
     public const NAMES = ['Weed Control Helper', 'Pest Finder', 'Disease Finder', 'Variety Finder'];
 
-    public const DAYS = 365;
+    /** One purchase opens the pack for a month (a calendar month; DAYS is its length for the per day line). */
+    public const DAYS = 30;
 
-    /** The price for a year, in the buyer's currency (pesos at home). */
+    /** The price for a month, in the buyer's currency (pesos at home). */
     public static function price(): float
     {
         return Region::ph()
-            ? (float) AsSiteSetting::get('addons.fieldpack.php', 50)
-            : (float) AsSiteSetting::get('addons.fieldpack.usd', 1);
+            ? (float) AsSiteSetting::get('addons.fieldpack.php', 20)
+            : (float) AsSiteSetting::get('addons.fieldpack.usd', 0.5);
     }
 
-    /** "Less than 15 centavos a day": the price over a year, said plainly. */
+    /** "Less than 67 centavos a day": the price over a month, said plainly. */
     public static function perDay(): string
     {
         $day = self::price() / self::DAYS;
@@ -98,16 +100,16 @@ final class FieldPack
     {
         return [
             'key' => 'addon:' . self::KEY, 'kind' => 'addon',
-            'name' => 'Field helpers, one year',
+            'name' => 'Field helpers, one month',
             'short' => 'Field helpers',
-            'tier' => null, 'period' => 'year', 'days' => self::DAYS, 'months' => 12,
+            'tier' => null, 'period' => 'month', 'days' => self::DAYS, 'months' => 1,
             'packId' => null, 'credits' => 0,
             'price' => round(self::price(), 2), 'currency' => Region::currency(),
         ];
     }
 
     /**
-     * An approved order opens the pack for a year, starting where an earlier
+     * An approved order opens the pack for a month, starting where an earlier
      * purchase ends. Returns the order's effect (for revoke).
      */
     public static function grant(int $userId, string $orderNumber, float $price, string $currency): array
@@ -116,9 +118,9 @@ final class FieldPack
         $last = DB::table('as_user_addons')->where('userId', $userId)->where('addonKey', self::KEY)
             ->where('status', 'active')->where('expiresAt', '>', $now)->max('expiresAt');
         $start = $last ? Carbon::parse($last, 'Asia/Manila') : $now->copy();
-        $end = $start->copy()->addDays(self::DAYS);
+        $end = $start->copy()->addMonthNoOverflow();
         $id = DB::table('as_user_addons')->insertGetId([
-            'userId' => $userId, 'addonKey' => self::KEY, 'name' => 'Field helpers, one year',
+            'userId' => $userId, 'addonKey' => self::KEY, 'name' => 'Field helpers, one month',
             'price' => $price, 'currency' => $currency, 'startsAt' => $start, 'expiresAt' => $end,
             'orderNumber' => $orderNumber, 'status' => 'active', 'created_at' => now(), 'updated_at' => now(),
         ]);

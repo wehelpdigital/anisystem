@@ -604,9 +604,9 @@ class FarmReportController extends BaseScheduleController
 
         return $this->jsonOk('ok', ['data' => [
             'kind' => $kind,
-            // What the page shows and charges (sm/anee-report renders the flat price); `quote` is the
-            // engine's figure for this season's size (App\Support\AiPricing) for a page that sends it back.
-            'price' => AiPrices::of($kind),
+            // What the page shows and charges: the engine's figure for this season's size
+            // (App\Support\AiPricing, 4x to 6x since 2026-10-16); `quote` is the same, for a page that sends it back.
+            'price' => AiPricing::credits($kind, ['lots' => $this->aneeLots($schedule, (int) $request->query('lotId', 0))]),
             'quote' => AiPricing::credits($kind, ['lots' => $this->aneeLots($schedule, (int) $request->query('lotId', 0))]),
             'balance' => round($credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
@@ -673,10 +673,11 @@ class FarmReportController extends BaseScheduleController
         }
 
         /* The price said before the run is the price charged. The report page
-           shows today's flat price (sm/anee-report); a page that sends the
-           engine's `quote` back is charged that, and a stale one is refused. */
+           shows the engine's price for the whole season (sm/anee-report), and
+           one lot never costs more than the whole season; a page that sends
+           the `quote` back is charged that, and a stale one is refused. */
         $quote = AiPricing::quote($kind, ['lots' => $this->aneeLots($schedule, $lotId)]);
-        $price = AiPricing::agreed($request, $quote, AiPrices::of($kind));
+        $price = AiPricing::agreed($request, $quote, (int) $quote['credits']);
         if ($price === null) {
             return $this->jsonFail('This report now costs ' . $quote['credits'] . ' credits. Please run it again.', 409, ['quote' => $quote['credits']]);
         }
