@@ -52,6 +52,10 @@
     @media (hover: hover) { html.dark .tlx:hover::before { background-color: #2b3d20; box-shadow: inset 0 0 0 1px #5a8236; } }
     html.dark .tlx.is-open::before, html.dark .tlx:focus-visible::before { background-color: #6b9f3d; color: #10170b; box-shadow: inset 0 0 0 1.5px #f5c518; }
     .tlx-w { display: inline !important; margin: 0 !important; padding: 0 !important; border: 0 !important; background: none !important; }
+    /* Beside a chip: a little room after it too, and the chip's wrapper never shrinks or clips the pair. */
+    .tlx.tlx-out { margin-right: .3em !important; overflow: visible !important; }
+    .tlx-wc { flex: none !important; overflow: visible !important; white-space: nowrap !important; max-width: none !important; }
+    .tlx-wc > .tlx.tlx-out { margin-right: 0 !important; }
     /* Settings > Taglish help, off. */
     html.tlx-off .tlx { display: none !important; }
     @media print { html .tlx { display: none !important; } }
@@ -425,11 +429,24 @@
         while ((n = w.nextNode())) last = n;
         return last;
     }
+    /* The word sits in a chip (a small filled, rounded box like INSECT or
+       IRAC 9B): the tag goes beside the chip, never inside it, where it
+       spilled over the chip's edges (2026-10-17, the owner). Looked for from
+       the word up to the element that asked. */
+    const CLEAR = /^(transparent|rgba\([^)]*,\s*0\))$/;
+    function chipOf(box, el) {
+        for (let p = box; p && p.nodeType === 1; p = p.parentElement) {
+            const cs = getComputedStyle(p);
+            if ((cs.backgroundImage !== 'none' || !CLEAR.test(cs.backgroundColor)) && parseFloat(cs.borderTopLeftRadius) >= 6 && p.offsetHeight <= 30) return p;
+            if (p === el) break;
+        }
+        return null;
+    }
     function attach(el) {
         if (!el.isConnected || SKIP.test(el.tagName.toUpperCase())) return;
         const key = el.getAttribute('data-tl');
         const own = el.__tlx;
-        if (own && own.isConnected && el.contains(own) && own.getAttribute('data-tlk') === key) return;
+        if (own && own.isConnected && (el.contains(own) || own.previousSibling === el) && own.getAttribute('data-tlk') === key) return;
         if (own && own.isConnected) own.remove();
         el.__tlx = null;
         if (!key || !KEYS.has(key) || el.closest('[data-tl-off]')) return;
@@ -438,7 +455,24 @@
         tpl.innerHTML = flag(key, term);
         const f = tpl.firstChild;
         const t = lastText(el);
-        if (t) {
+        const chip = t ? chipOf(t.parentNode, el) : null;
+        if (chip) {
+            const box = chip.parentNode;
+            f.classList.add('tlx-out');
+            if (box.classList && box.classList.contains('tlx-wc')) {
+                box.appendChild(f);
+            } else if (/flex|grid/.test(getComputedStyle(box).display)) {
+                // In a flex row or column the tag would be an item of its own,
+                // a gap away or on a line below: one wrapper keeps the pair.
+                const w = document.createElement('span');
+                w.className = 'tlx-w tlx-wc';
+                box.insertBefore(w, chip);
+                w.appendChild(chip);
+                w.appendChild(f);
+            } else {
+                box.insertBefore(f, chip.nextSibling);
+            }
+        } else if (t) {
             const end = t.nodeValue.replace(/\s+$/, '').length;
             if (end < t.nodeValue.length) t.splitText(end);
             const box = t.parentNode;
@@ -479,6 +513,10 @@
             if (m.type === 'attributes') { queue(m.target); continue; }
             const host = m.target.nodeType === 1 ? m.target.closest('[data-tl]') : null;
             if (host) queue(host);
+            // A chip taken away alone leaves no tag beside it (moved into its wrapper is not taken away).
+            for (const n of m.removedNodes) {
+                if (n.nodeType === 1 && !n.isConnected && n.__tlx && n.__tlx.isConnected && !n.contains(n.__tlx)) n.__tlx.remove();
+            }
             for (const n of m.addedNodes) {
                 if (n.nodeType !== 1 || n.classList.contains('tlx')) continue;
                 if (n.hasAttribute('data-tl')) queue(n);
