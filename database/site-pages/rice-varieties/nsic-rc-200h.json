@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Arize Tej, or rice variety 200H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Arize Tej, or rice variety 200H, this is the one. Compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -46,11 +46,11 @@
     },
     {
       "type": "table",
-      "caption": "From PhilRice's catalogue of released varieties (t/ha means tonnes per hectare)",
+      "caption": "Key facts of NSIC Rc 200H (t/ha means tonnes per hectare)",
       "rows": [
         [
           "Trait",
-          "What PhilRice lists"
+          "Value"
         ],
         [
           "Year approved",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "On average it gives 6.5 tonnes per hectare. That is about 130 cavans of 50 kilograms of palay. It sits below the average of the 180 irrigated lowland hybrids in PhilRice's list, which is 6.9 tonnes. But the top yield, 10.6 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
+      "text": "On average it gives 6.5 tonnes per hectare. That is about 130 cavans of 50 kilograms of palay. It sits below the average of the 180 irrigated lowland hybrids on the list, which is 6.9 tonnes. But the top yield, 10.6 tonnes, came from a trial with good water, seed and care. So plan your costs on the average, then work toward the top with the habits in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)."
     },
     {
       "type": "heading",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "It takes about 111 days from sowing to harvest. IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "It takes about 111 days from sowing to harvest. Varieties of 100 to 120 days count as short duration and 120 to 140 days as medium, so this one counts as short duration. Then harvest when 85 to 90 percent of the grains turn golden yellow. Because the day count drives every task, anee.io counts it for you from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -131,11 +131,11 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in PhilRice's tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.",
+      "caption": "Reactions in trials: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets.",
       "rows": [
         [
           "Pest or disease",
-          "PhilRice rating",
+          "Rating",
           "What it means"
         ],
         [
@@ -186,7 +186,7 @@
     },
     {
       "type": "table",
-      "caption": "Grain quality in PhilRice's seed database",
+      "caption": "Grain quality of NSIC Rc 200H",
       "rows": [
         [
           "Measure",
@@ -232,7 +232,7 @@
     },
     {
       "type": "text",
-      "text": "Amylose decides how rice cooks. With intermediate amylose, expect rice that is soft but not sticky. In fact, PhilRice notes that Filipino taste moved from high to intermediate and low amylose rice, because people want it softer. Head rice is the share of whole grains after milling. So a higher number means fewer broken grains and a better price at the mill."
+      "text": "Amylose decides how rice cooks. With intermediate amylose, expect rice that is soft but not sticky. In fact, Filipino taste has moved from high to intermediate and low amylose rice, because people want it softer. Head rice is the share of whole grains after milling. So a higher number means fewer broken grains and a better price at the mill."
     },
     {
       "type": "heading",
@@ -241,7 +241,7 @@
     },
     {
       "type": "text",
-      "text": "It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, one of the PalayCheck key checks, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step. PhilRice recommends it for the dry season and the wet season. You can plant it dry direct seeded, transplanted or wet direct seeded. For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines)."
+      "text": "It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step. It is recommended for the dry season and the wet season. You can plant it dry direct seeded, transplanted or wet direct seeded. For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines)."
     },
     {
       "type": "cta",
@@ -274,7 +274,7 @@
       "items": [
         {
           "q": "Is Arize Tej the same as NSIC Rc 200H?",
-          "a": "Yes. Arize Tej is the name it is sold under, and NSIC Rc 200H is its registration with the National Seed Industry Council, where its local name is Mestiso 18. The numbers on this page are PhilRice's for NSIC Rc 200H."
+          "a": "Yes. Arize Tej is the name it is sold under, and NSIC Rc 200H is its registration with the National Seed Industry Council, where its local name is Mestiso 18. The numbers on this page are for NSIC Rc 200H."
         },
         {
           "q": "What is the local name of NSIC Rc 200H?",
@@ -286,11 +286,11 @@
         },
         {
           "q": "What is the average yield of NSIC Rc 200H?",
-          "a": "PhilRice lists 6.5 tonnes per hectare on average, about 130 cavans of 50 kilograms. The best trial reached 10.6 tonnes. Your own yield depends on water, seed, fertilizer and timing."
+          "a": "It averages 6.5 tonnes per hectare, about 130 cavans of 50 kilograms. The best trial reached 10.6 tonnes. Your own yield depends on water, seed, fertilizer and timing."
         },
         {
           "q": "In which season should I plant it?",
-          "a": "PhilRice recommends it for the dry season and the wet season. Then pick the month with our planting calendar guide and the forecast for your town."
+          "a": "It is recommended for the dry season and the wet season. Then pick the month with our planting calendar guide and the forecast for your town."
         },
         {
           "q": "Is this variety a hybrid?",
@@ -328,40 +328,12 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: Seed information on released rice varieties",
-          "url": "https://dbmp.philrice.gov.ph/seeds/"
-        },
-        {
           "label": "Where Arize Tej is named as NSIC Rc 200H",
           "url": "https://www.sbc.edu/live/files/2793-glover-et-al-2020-golden-rice-adoptionpdf"
         },
         {
           "label": "Where Arize Tej is named as NSIC Rc 200H",
           "url": "https://www.philstar.com/business/2013/04/08/928077/bayer-cropscience-launches-new-rice-variety"
-        },
-        {
-          "label": "PhilRice seed database: NSIC Rc 200H variety characteristics",
-          "url": "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=88"
-        },
-        {
-          "label": "BPI: NSIC registry of rice varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
-          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
-        },
-        {
-          "label": "FAO: Rice in human nutrition, amylose classes of milled rice",
-          "url": "https://www.fao.org/4/T0567E/T0567E0b.htm"
-        },
-        {
-          "label": "PhilRice: Rice in health and nutrition, by Dr Bienvenido O. Juliano (2013)",
-          "url": "https://www.philrice.gov.ph/rice-in-health-and-nutrition/"
         },
         {
           "label": "Wikipedia: Hybrid rice, and why its seed is bought each season",

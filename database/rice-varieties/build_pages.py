@@ -4,7 +4,10 @@ see build_data.py). The facts are PhilRice's: names, years, numbers, ratings,
 seasons and regions. Every sentence around them is anee.io's own: what the
 numbers mean for a farmer, how the variety compares with others of its kind,
 and which pests, diseases and guides matter for it. No picture from PhilRice
-is used; the heroes are anee.io's own farm photos. Pages follow
+is used; the heroes are anee.io's own farm photos. No page names PhilRice,
+the NSIC registry, IRRI or FAO as where its facts come from (the owner,
+2026-10-17): the numbers are said as our own, and the sources block keeps
+only a seller's or trade name's own pages. Pages follow
 database/site-pages/STYLE.md and pass check.py.
 
     python database/rice-varieties/build_pages.py
@@ -13,6 +16,7 @@ import json
 import os
 import re
 import statistics
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '..', 'site-pages', 'rice-varieties')
@@ -67,6 +71,10 @@ SRC_JULIANO = {'label': 'PhilRice: Rice in health and nutrition, by Dr Bienvenid
 SRC_PHILRICE = {'label': 'PhilRice: Seed information on released rice varieties', 'url': 'https://dbmp.philrice.gov.ph/seeds/'}
 SRC_NSIC = {'label': 'BPI: NSIC registry of rice varieties', 'url': 'https://nsic.buplant.da.gov.ph/registry.php'}
 SRC_HYBRID = {'label': 'Wikipedia: Hybrid rice, and why its seed is bought each season', 'url': 'https://en.wikipedia.org/wiki/Hybrid_rice'}
+# No agency or research institute is shown as the source (the owner, 2026-10-17): the facts stay, said as
+# our own, and the sources block keeps only the seller's and the trade name's pages (SRC_* above are no longer listed).
+sys.path.insert(0, os.path.join(HERE, '..', 'site-pages'))
+from check import is_gov, is_gov_url  # noqa: E402  (the checker's own list, so the two never disagree)
 
 
 REGION_NAMES = {'ILOCOS REGION': 'Ilocos', 'CAGAYAN VALLEY': 'Cagayan Valley', 'CENTRAL LUZON': 'Central Luzon', 'CALABARZON': 'Calabarzon',
@@ -179,7 +187,7 @@ def build(v, allv, stats):
     desc_opts = [] if not has else [
         '%s is %s %s rice for %s: about %d days and %s tonnes per hectare on average. See its pest ratings and grain quality.' % (n, article(kind_txt), kind_txt, env_short, mat, fmt(avg)),
         '%s is %s %s rice: about %d days and %s tonnes per hectare on average. See its pest ratings and grain quality.' % (n, article(kind_txt), kind_txt, mat, fmt(avg)),
-        '%s: about %d days to harvest and %s tonnes per hectare on average, with its pest ratings and grain quality from PhilRice.' % (n, mat, fmt(avg)),
+        '%s: about %d days to harvest and %s tonnes per hectare on average, with its pest ratings and grain quality in one place.' % (n, mat, fmt(avg)),
     ]
     if not has:
         desc_opts = [
@@ -201,7 +209,7 @@ def build(v, allv, stats):
         meta_desc = desc_opts[-1]
         while len(meta_desc) < 120:
             meta_desc = meta_desc[:-1] + ', in plain words.'
-    approved = ('The NSIC approved it in %s.' % yr if n.startswith('NSIC') else 'The Philippine Seed Board approved it in %s.' % yr if n.startswith('PSB') else 'PhilRice lists it from %s.' % yr)
+    approved = ('The NSIC approved it in %s.' % yr if n.startswith('NSIC') else 'The Philippine Seed Board approved it in %s.' % yr if n.startswith('PSB') else 'It was released in %s.' % yr)
     bred = ('It is a traditional variety. ' if v.get('traditional') or by == 'Traditional variety' else '%s bred it. ' % by)
     # Sold by another company under its own brand (Batari by Aljay, 2026-10-18, the owner:
     # "batari is different from arize"): say so, so the breeder's own brand is not assumed.
@@ -218,7 +226,7 @@ def build(v, allv, stats):
     if has:
         excerpt += 'It matures in about %d days and averages %s tonnes per hectare%s.' % (mat, fmt(avg), (', with a top yield of %s tonnes in trials' % fmt(top)) if top else '')
     else:
-        excerpt += 'PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.'
+        excerpt += 'Its days to harvest and trial yield are not published yet, but its pest ratings and grain quality are below.'
 
     blocks = []
     H = lambda t, lvl=2: blocks.append({'type': 'heading', 'level': lvl, 'text': t})
@@ -232,8 +240,7 @@ def build(v, allv, stats):
         search = 'If you came here looking for rice variety %s, or Rc %s, this is the one. ' % (num, num)
     else:
         search = ''
-    T(search + 'The facts below come from sources that include PhilRice and its public seed database. '
-      'So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. '
+    T(search + 'Compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. '
       'Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ.')
     pts = []
     if has:
@@ -254,7 +261,7 @@ def build(v, allv, stats):
 
     # ---- at a glance
     H('Key facts about %s' % n)
-    rows = [['Trait', 'What PhilRice lists']]
+    rows = [['Trait', 'Value']]
     rows.append(['Year approved', str(yr)])
     rows.append(['Bred by', by])
     if trades:
@@ -284,16 +291,16 @@ def build(v, allv, stats):
             rows.append(['Top yield in trials', '%s t/ha' % fmt(top)])
     if v.get('height'):
         rows.append(['Plant height', '%d cm' % int(v['height'])])
-    blocks.append({'type': 'table', 'caption': 'From PhilRice\'s catalogue of released varieties (t/ha means tonnes per hectare)', 'rows': rows})
+    blocks.append({'type': 'table', 'caption': 'Key facts of %s (t/ha means tonnes per hectare)' % n, 'rows': rows})
     if s2:
-        T('PhilRice lists a second set of results for this variety too: %d days and %s tonnes per hectare. '
+        T('A second set of trial results exists for this variety too: %d days and %s tonnes per hectare. '
           'So expect a range, because the season and the way you plant change both.' % (int(s2['maturity']), fmt(s2['yieldAvg'])))
 
-    # ---- yield and maturity, when PhilRice lists them
+    # ---- yield and maturity, when they are published
     if has:
         H('How much does %s yield?' % n)
         cmp_word = 'above' if avg > g['avg'] + 0.15 else 'below' if avg < g['avg'] - 0.15 else 'close to'
-        peers = '%s %s in PhilRice\'s list' % (g['count'], ('%s %ss' % (ENV[e][0] if e else 'Philippine', kind)) if g['count'] != 1 else kind)
+        peers = '%s %s on the list' % (g['count'], ('%s %ss' % (ENV[e][0] if e else 'Philippine', kind)) if g['count'] != 1 else kind)
         T(('On average it gives %s tonnes per hectare. That is about %d cavans of 50 kilograms of palay. '
            'It sits %s the average of the %s, which is %s tonnes. ') % (fmt(avg), cav, cmp_word, peers, fmt(round(g['avg'], 1)))
           + (('But the top yield, %s tonnes, came from a trial with good water, seed and care. ' % fmt(top)) if top else '')
@@ -302,13 +309,13 @@ def build(v, allv, stats):
         H('How many days does it take to mature?')
         grp = 'very early' if mat < 100 else 'short duration' if mat <= 120 else 'medium duration' if mat <= 140 else 'long duration'
         T(('It takes about %d days from sowing to harvest%s. ') % (mat, (', and about %d days if you seed it directly' % int(d['maturity'])) if d else '')
-          + ('IRRI groups varieties of 100 to 120 days as short duration and 120 to 140 days as medium, so this one counts as %s. ' % grp)
-          + 'Then harvest when 85 to 90 percent of the grains turn golden yellow, as PalayCheck advises. '
+          + ('Varieties of 100 to 120 days count as short duration and 120 to 140 days as medium, so this one counts as %s. ' % grp)
+          + 'Then harvest when 85 to 90 percent of the grains turn golden yellow. '
             'Because the day count drives every task, anee.io counts it for you from each lot\'s own planting day, with the '
             '[growth stages and weather](/features/growth-stages-and-weather) beside it.')
     else:
         H('How many days does it take, and how much does it yield?')
-        T('PhilRice has not published this variety\'s days to harvest and trial yields in its catalogue yet. '
+        T('This variety\'s days to harvest and trial yields are not published yet. '
           'So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. '
           'Once you know the day count, anee.io dates every task from each lot\'s own planting day, with the '
           '[growth stages and weather](/features/growth-stages-and-weather) beside it. '
@@ -317,21 +324,21 @@ def build(v, allv, stats):
     # ---- pests and diseases
     H('Is it resistant to pests and diseases?')
     if v['reactions']:
-        rrows = [['Pest or disease', 'PhilRice rating', 'What it means']]
+        rrows = [['Pest or disease', 'Rating', 'What it means']]
         for k, r in v['reactions'].items():
             c = code(r)
             label = RATING.get(c, ('Not rated', ''))
             rrows.append([PROBLEM[k][0], r if r.strip() != c else label[0], label[1].capitalize() if label[1] else 'No clear rating'])
-        blocks.append({'type': 'table', 'caption': 'Reactions in PhilRice\'s tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.', 'rows': rrows})
+        blocks.append({'type': 'table', 'caption': 'Reactions in trials: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets.', 'rows': rrows})
         if weak:
             links = ', '.join('[%s](%s)' % (PROBLEM[k][0].lower(), PROBLEM[k][1]) for k in weak)
             T('So scout early for %s. When you see the first signs, check the guide before you spray, because the right timing saves more than an extra dose. '
               'If you are not sure what you see, our [pest and disease finders](/features/pest-and-disease-finders) help you name it from the damage.' % links)
         else:
-            T('It showed no weak spot in the ratings PhilRice lists. Still, a resistant variety can break down when a new strain of a disease or a new pest population comes. '
+            T('It showed no weak spot in its ratings. Still, a resistant variety can break down when a new strain of a disease or a new pest population comes. '
               'So keep scouting, and use our [pest and disease finders](/features/pest-and-disease-finders) when something looks wrong.')
     else:
-        T('PhilRice\'s table gives no pest and disease ratings for this variety. So treat it as untested and scout every week, '
+        T('No pest and disease ratings are published for this variety. So treat it as untested and scout every week, '
           'above all for [rice blast](/diseases/rice-blast), [tungro](/diseases/rice-tungro) and the [brown planthopper](/pests/brown-planthopper). '
           'Our [pest and disease finders](/features/pest-and-disease-finders) help you name what you see.')
 
@@ -354,12 +361,12 @@ def build(v, allv, stats):
             grows.append(['Grain shape, length to width', fmt(gr['shape'][0]), (SHAPE.get(gr['shape'][1], '') or 'Not given').capitalize()])
         if gr.get('protein'):
             grows.append(['Protein', '%s percent' % fmt(gr['protein']), ''])
-        blocks.append({'type': 'table', 'caption': 'Grain quality in PhilRice\'s seed database', 'rows': grows})
+        blocks.append({'type': 'table', 'caption': 'Grain quality of %s' % n, 'rows': grows})
         words = []
         if am and AMYLOSE.get(am[1]):
             soft = {'VL': 'very soft and sticky', 'L': 'soft', 'l': 'soft', 'I': 'soft but not sticky', 'H': 'firm and dry, and it hardens as it cools'}[am[1]]
             words.append('Amylose decides how rice cooks. With %s amylose, expect rice that is %s. ' % (AMYLOSE[am[1]], soft)
-                         + 'In fact, PhilRice notes that Filipino taste moved from high to intermediate and low amylose rice, because people want it softer.')
+                         + 'In fact, Filipino taste has moved from high to intermediate and low amylose rice, because people want it softer.')
         if gr.get('head'):
             words.append('Head rice is the share of whole grains after milling. So a higher number means fewer broken grains and a better price at the mill.')
         if words:
@@ -388,7 +395,7 @@ def build(v, allv, stats):
     H('Where should you plant it?')
     if e:
         where = {
-            'irrigated': 'It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, one of the PalayCheck key checks, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step.',
+            'irrigated': 'It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step.',
             'rainfed-tpr': 'It suits rainfed lowland that depends on the rains. So wait until the rains settle before you sow the seedbed, then transplant into the puddled field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step.',
             'rainfed-dsr': 'It suits rainfed fields that are seeded directly. So prepare the field when the first rains come, and seed it once the soil holds moisture. Our guide to [land preparation for direct seeded rice](/land-preparation/direct-seeded-rice-land-preparation) shows how.',
             'upland': 'It suits upland fields, with no standing water. So sow at the start of the rains, and keep weeds down in the first weeks, because upland rice cannot drown them out. Our [rice variety finder](/rice-varieties) lists the other upland choices.',
@@ -399,14 +406,14 @@ def build(v, allv, stats):
         }[e]
         more = []
         if seasons:
-            more.append('PhilRice recommends it for the %s.' % ' and the '.join(seasons))
+            more.append('It is recommended for the %s.' % ' and the '.join(seasons))
         if est:
             more.append('You can plant it %s.' % (' or '.join(est) if len(est) < 3 else ', '.join(est[:-1]) + ' or ' + est[-1]))
         if regions:
             more.append('It was tested and found suitable in %s.' % (', '.join(regions[:-1]) + ' and ' + regions[-1] if len(regions) > 1 else regions[0]))
         T(where + ' ' + ' '.join(more) + (' ' if more else '') + 'For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines).')
     else:
-        T('PhilRice\'s table does not say which growing environment this variety is for. So ask your municipal agriculturist whether it does well in your town, '
+        T('The growing environment of this variety is not on record. So ask your municipal agriculturist whether it does well in your town, '
           'and read [how to pick the best rice variety for your area](/blog/best-rice-variety-for-my-area). For the right month, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines).')
 
     # ---- the way into the app
@@ -425,7 +432,7 @@ def build(v, allv, stats):
         sims = sorted([x for x in withdata if x['type'] == v['type']], key=near)[:4]
     if sims:
         H('Varieties like this one')
-        T('These come from the same kind of farm%s. So if seed of this one is hard to find, compare these first.' % (' and grow about as long' if has else ', and PhilRice lists their days and yields'))
+        T('These come from the same kind of farm%s. So if seed of this one is hard to find, compare these first.' % (' and grow about as long' if has else ', with their days and yields'))
         blocks.append({'type': 'list', 'ordered': False, 'items': [
             '[%s](/rice-varieties/%s): %d days, %s tonnes per hectare on average, %s' % (x['name'], x['slug'], int(x['maturity']), fmt(x['yieldAvg']), x['year'])
             for x in sims]})
@@ -434,7 +441,7 @@ def build(v, allv, stats):
     faq = []
     if trade:
         faq.append({'q': 'Is %s the same as %s?' % (trade, n),
-                    'a': 'Yes. %s is the name it is sold under, and %s is its registration with the National Seed Industry Council%s. The numbers on this page are PhilRice\'s for %s.' % (
+                    'a': 'Yes. %s is the name it is sold under, and %s is its registration with the National Seed Industry Council%s. The numbers on this page are for %s.' % (
                         trade, n, (', where its local name is %s' % local) if local else '', n)})
     if local:
         faq.append({'q': 'What is the local name of %s?' % n,
@@ -443,26 +450,26 @@ def build(v, allv, stats):
         faq.append({'q': 'How many days does %s take to harvest?' % n,
                     'a': 'About %d days after sowing%s. Then harvest when 85 to 90 percent of the grains are golden yellow.' % (mat, (' when transplanted, and about %d days when direct seeded' % int(d['maturity'])) if d else '')})
         faq.append({'q': 'What is the average yield of %s?' % n,
-                    'a': 'PhilRice lists %s tonnes per hectare on average, about %d cavans of 50 kilograms.%s Your own yield depends on water, seed, fertilizer and timing.' % (
+                    'a': 'It averages %s tonnes per hectare, about %d cavans of 50 kilograms.%s Your own yield depends on water, seed, fertilizer and timing.' % (
                         fmt(avg), cav, (' The best trial reached %s tonnes.' % fmt(top)) if top else '')})
     else:
         faq.append({'q': 'When was %s approved?' % n,
-                    'a': '%s %sPhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant.' % (approved, bred)})
+                    'a': '%s %sIts days to harvest and trial yield are not published yet, so ask for the regional trial figures before you plant.' % (approved, bred)})
     if seasons:
         faq.append({'q': 'In which season should I plant it?',
-                    'a': 'PhilRice recommends it for the %s. Then pick the month with our planting calendar guide and the forecast for your town.' % ' and the '.join(seasons)})
+                    'a': 'It is recommended for the %s. Then pick the month with our planting calendar guide and the forecast for your town.' % ' and the '.join(seasons)})
     if kind == 'hybrid':
         faq.append({'q': 'Is this variety a hybrid?', 'a': 'Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less.'})
     else:
-        faq.append({'q': 'Is this variety a hybrid?', 'a': 'No, it is an inbred. So the seed you buy grows true, but certified seed still gives the best start, as PalayCheck advises.'})
+        faq.append({'q': 'Is this variety a hybrid?', 'a': 'No, it is an inbred. So the seed you buy grows true, but certified seed still gives the best start.'})
     if weak:
         faq.append({'q': 'What should I watch for when I plant it?',
-                    'a': 'In PhilRice\'s tests it was weak against %s. So scout from the early weeks and act at the first signs.' % ', '.join(PROBLEM[k][0].lower() for k in weak)})
+                    'a': 'In trials it was weak against %s. So scout from the early weeks and act at the first signs.' % ', '.join(PROBLEM[k][0].lower() for k in weak)})
     if am and AMYLOSE.get(am[1]):
         faq.append({'q': 'Is it soft when cooked?',
                     'a': 'It has %s amylose, %s percent. %s' % (AMYLOSE[am[1]], fmt(am[0]), 'So it cooks soft.' if am[1] in ('VL', 'L', 'l') else 'So it cooks soft but not sticky.' if am[1] == 'I' else 'So it cooks firm and fluffy, and hardens as it cools.')})
     faq.append({'q': 'Where can I buy certified seed of this variety?',
-                'a': 'Ask accredited seed growers in your province, your municipal agriculturist or the nearest PhilRice station. Look for the certified seed tag on the sack before you pay.'})
+                'a': 'Ask accredited seed growers in your province or your municipal agriculturist. Look for the certified seed tag on the sack before you pay.'})
     blocks.append({'type': 'faq', 'items': faq[:6]})
 
     blocks.append({'type': 'links', 'title': 'Read next', 'items': [
@@ -472,20 +479,17 @@ def build(v, allv, stats):
         {'label': 'Pagtatanim ng palay', 'url': '/crops/pagtatanim-ng-palay'},
         {'label': 'Palay: growth stages and harvest', 'url': '/crops/palay'},
     ]})
-    sources = [SRC_PHILRICE]
+    sources = []
     sources += [{'label': 'Where %s is named as %s' % (trade, n), 'url': u} for u in (v.get('tradeSources') or [])[:2]] if trade else []
     # A seller that publishes on its own video channel (Aljay) gets "video", not "product page".
     sources += [{'label': '%s: %s, %s' % ((v.get('seller') or {}).get('company') or 'Seller', trade or n,
                                           'video' if re.search(r'youtube\.com|facebook\.com', u) else 'product page'), 'url': u}
                 for u in ((v.get('seller') or {}).get('sources') or [])[:2] if u not in (v.get('tradeSources') or [])[:2]]
-    sources += [{'label': ('PhilRice seed database: %s variety characteristics%s' % (n, ', second record' if i else '')) if 'dbmp' in u else 'NSIC registry of rice varieties: %s' % n, 'url': u}
-                for i, u in enumerate([x for x in v['sources'] if 'dbmp' in x][:2] + [x for x in v['sources'] if 'dbmp' not in x][:1])]
-    sources += [SRC_NSIC, SRC_PALAYCHECK, SRC_IRRI_STAGES]
-    if am:
-        sources += [SRC_FAO, SRC_JULIANO]
     if kind == 'hybrid':
         sources.append(SRC_HYBRID)
-    blocks.append({'type': 'sources', 'items': sources})
+    sources = [x for x in sources if not is_gov_url(x['url']) and not is_gov(x['label'])]
+    if sources:
+        blocks.append({'type': 'sources', 'items': sources})
 
     hero = HERO['hybrid'] if kind == 'hybrid' and e == 'irrigated' else HERO.get(e, HERO[None])
     kw = [n, 'rice variety %s' % num if num != n else n, 'rc %s' % num if num != n else n, '%s rice variety characteristics' % num if num != n else n] + ([local] if local else []) + trades

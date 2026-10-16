@@ -17,7 +17,7 @@
     "Mestiso 157",
     "DADI 1H"
   ],
-  "excerpt": "NSIC Rc 786H is a hybrid rice variety for irrigated lowland, sold as DADI 1H and known locally as Mestiso 157. The NSIC approved it in 2026. Philippine Dadi Agricultural Technology bred it. PhilRice has not listed its days to harvest and trial yield yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 786H is a hybrid rice variety for irrigated lowland, sold as DADI 1H and known locally as Mestiso 157. The NSIC approved it in 2026. Philippine Dadi Agricultural Technology bred it. Its days to harvest and trial yield are not published yet, but its pest ratings and grain quality are below.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 786H is bred to fill",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for DADI 1H, or rice variety 786H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for DADI 1H, or rice variety 786H, this is the one. Compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -44,11 +44,11 @@
     },
     {
       "type": "table",
-      "caption": "From PhilRice's catalogue of released varieties (t/ha means tonnes per hectare)",
+      "caption": "Key facts of NSIC Rc 786H (t/ha means tonnes per hectare)",
       "rows": [
         [
           "Trait",
-          "What PhilRice lists"
+          "Value"
         ],
         [
           "Year approved",
@@ -87,7 +87,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice has not published this variety's days to harvest and trial yields in its catalogue yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
+      "text": "This variety's days to harvest and trial yields are not published yet. So ask the seed seller or your municipal agriculturist for the figures from the trials in your region before you plan the season. Once you know the day count, anee.io dates every task from each lot's own planting day, with the [growth stages and weather](/features/growth-stages-and-weather) beside it. Meanwhile, our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) covers the habits that matter with any variety."
     },
     {
       "type": "heading",
@@ -96,11 +96,11 @@
     },
     {
       "type": "table",
-      "caption": "Reactions in PhilRice's tests: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets, as PhilRice lists them.",
+      "caption": "Reactions in trials: R resistant, MR moderately resistant, I intermediate, MS moderately susceptible, S susceptible. Some carry a second rating in brackets.",
       "rows": [
         [
           "Pest or disease",
-          "PhilRice rating",
+          "Rating",
           "What it means"
         ],
         [
@@ -151,7 +151,7 @@
     },
     {
       "type": "table",
-      "caption": "Grain quality in PhilRice's seed database",
+      "caption": "Grain quality of NSIC Rc 786H",
       "rows": [
         [
           "Measure",
@@ -167,7 +167,7 @@
     },
     {
       "type": "text",
-      "text": "Amylose decides how rice cooks. With low amylose, expect rice that is soft. In fact, PhilRice notes that Filipino taste moved from high to intermediate and low amylose rice, because people want it softer."
+      "text": "Amylose decides how rice cooks. With low amylose, expect rice that is soft. In fact, Filipino taste has moved from high to intermediate and low amylose rice, because people want it softer."
     },
     {
       "type": "heading",
@@ -176,7 +176,7 @@
     },
     {
       "type": "text",
-      "text": "It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, one of the PalayCheck key checks, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step. For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines)."
+      "text": "It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step. For the right month in your province, see [the best time to plant rice](/blog/best-time-to-plant-rice-philippines)."
     },
     {
       "type": "cta",
@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "These come from the same kind of farm, and PhilRice lists their days and yields. So if seed of this one is hard to find, compare these first."
+      "text": "These come from the same kind of farm, with their days and yields. So if seed of this one is hard to find, compare these first."
     },
     {
       "type": "list",
@@ -209,7 +209,7 @@
       "items": [
         {
           "q": "Is DADI 1H the same as NSIC Rc 786H?",
-          "a": "Yes. DADI 1H is the name it is sold under, and NSIC Rc 786H is its registration with the National Seed Industry Council, where its local name is Mestiso 157. The numbers on this page are PhilRice's for NSIC Rc 786H."
+          "a": "Yes. DADI 1H is the name it is sold under, and NSIC Rc 786H is its registration with the National Seed Industry Council, where its local name is Mestiso 157. The numbers on this page are for NSIC Rc 786H."
         },
         {
           "q": "What is the local name of NSIC Rc 786H?",
@@ -217,7 +217,7 @@
         },
         {
           "q": "When was NSIC Rc 786H approved?",
-          "a": "The NSIC approved it in 2026. Philippine Dadi Agricultural Technology bred it. PhilRice has not listed its days to harvest and trial yield yet, so ask for the regional trial figures before you plant."
+          "a": "The NSIC approved it in 2026. Philippine Dadi Agricultural Technology bred it. Its days to harvest and trial yield are not published yet, so ask for the regional trial figures before you plant."
         },
         {
           "q": "Is this variety a hybrid?",
@@ -225,7 +225,7 @@
         },
         {
           "q": "What should I watch for when I plant it?",
-          "a": "In PhilRice's tests it was weak against green leafhopper, brown planthopper, tungro. So scout from the early weeks and act at the first signs."
+          "a": "In trials it was weak against green leafhopper, brown planthopper, tungro. So scout from the early weeks and act at the first signs."
         },
         {
           "q": "Is it soft when cooked?",
@@ -262,38 +262,6 @@
     {
       "type": "sources",
       "items": [
-        {
-          "label": "PhilRice: Seed information on released rice varieties",
-          "url": "https://dbmp.philrice.gov.ph/seeds/"
-        },
-        {
-          "label": "Where DADI 1H is named as NSIC Rc 786H",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
-        },
-        {
-          "label": "NSIC registry of rice varieties: NSIC Rc 786H",
-          "url": "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx"
-        },
-        {
-          "label": "BPI: NSIC registry of rice varieties",
-          "url": "https://nsic.buplant.da.gov.ph/registry.php"
-        },
-        {
-          "label": "PhilRice: PalayCheck System, 2022 revised edition",
-          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
-        },
-        {
-          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
-          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
-        },
-        {
-          "label": "FAO: Rice in human nutrition, amylose classes of milled rice",
-          "url": "https://www.fao.org/4/T0567E/T0567E0b.htm"
-        },
-        {
-          "label": "PhilRice: Rice in health and nutrition, by Dr Bienvenido O. Juliano (2013)",
-          "url": "https://www.philrice.gov.ph/rice-in-health-and-nutrition/"
-        },
         {
           "label": "Wikipedia: Hybrid rice, and why its seed is bought each season",
           "url": "https://en.wikipedia.org/wiki/Hybrid_rice"
