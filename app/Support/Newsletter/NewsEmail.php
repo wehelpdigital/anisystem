@@ -3,8 +3,11 @@
 namespace App\Support\Newsletter;
 
 use App\Models\AsNlEmail;
+use App\Models\AiSetting;
 use App\Models\AsSiteSetting;
+use App\Services\AiClient;
 use App\Services\NewsRoundup;
+use App\Support\AiUsage;
 use App\Support\EmailSkin;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -80,10 +83,10 @@ final class NewsEmail
         $hero = json_decode((string) $page->heroImage, true) ?: [];
         $blocks = json_decode((string) $page->blocks, true) ?: [];
 
-        $out = [];
-        $stories = 0;
+        // The stories first, so their "what it means" can be put in Taglish in one ask.
+        $found = [];
         $n = count($blocks);
-        for ($i = 0; $i < $n && $stories < self::MAX_STORIES; $i++) {
+        for ($i = 0; $i < $n && count($found) < self::MAX_STORIES; $i++) {
             $b = $blocks[$i];
             if (($b['type'] ?? '') !== 'heading' || (int) ($b['level'] ?? 0) !== 3) {
                 continue;
@@ -116,11 +119,20 @@ final class NewsEmail
             if ($title === '') {
                 continue;
             }
-            $html = '<p>' . self::md(self::clip($text, 260)) . '</p>';
-            // What it means for the farmer rides in the story's own light green box (2026-10-17, the owner).
-            $out[] = ['id' => 'story' . $stories, 'type' => 'story', 'src' => '', 'title' => $title, 'html' => $html,
-                'meansTitle' => $means !== '' ? NewsRoundup::SO_WHAT : '', 'means' => $means !== '' ? '<p>' . self::md(self::clip($means, 300)) . '</p>' : '',
-                'source' => $source, 'url' => $url, 'label' => 'Basahin sa anee.io'];
+            $found[] = ['title' => $title, 'text' => $text, 'means' => $means, 'source' => $source];
+        }
+        $tl = self::taglish($found, (int) $page->id);
+
+        $out = [];
+        $stories = 0;
+        foreach ($found as $k => $s) {
+            $html = '<p>' . self::md(self::clip($s['text'], 260)) . '</p>';
+            // What it means for the farmer rides in the story's own light green box (2026-10-17, the owner),
+            // in Taglish "for easier understanding"; the page's English when Anee could not answer.
+            $means = $tl[$k] ?? ($s['means'] !== '' ? self::md(self::clip($s['means'], 300)) : '');
+            $out[] = ['id' => 'story' . $stories, 'type' => 'story', 'src' => '', 'title' => $s['title'], 'html' => $html,
+                'meansTitle' => $means !== '' ? NewsRoundup::SO_WHAT : '', 'means' => $means !== '' ? '<p>' . $means . '</p>' : '',
+                'source' => $s['source'], 'url' => $url, 'label' => 'Basahin sa anee.io'];
             $stories++;
             if ($stories < self::MAX_STORIES) {
                 $out[] = ['id' => 'div' . $stories, 'type' => 'divider', 'style' => 'line'];
@@ -164,6 +176,101 @@ final class NewsEmail
             'createdBy' => 'News roundup',
             'deleteStatus' => 1,
         ]);
+    }
+
+    /**
+     * Each story's "what it means" in Taglish (2026-10-17, the owner: "make
+     * that part taglish for easier understanding"): one ask to Flash (system
+     * written, like the roundup itself), Anee's voice, the story's own facts
+     * only. Returns [story index => escaped text]; a story Anee did not answer
+     * keeps the page's English.
+     *
+     * @param  list<array{title: string, text: string, means: string}>  $stories
+     * @return array<int, string>
+     */
+    public static function taglish(array $stories, int $refId = 0): array
+    {
+        $ask = array_filter($stories, fn ($s) => trim(strip_tags((string) ($s['means'] ?? ''))) !== '');
+        if (! $ask) {
+            return [];
+        }
+        $plain = fn (string $s) => trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(preg_replace('~\[([^\]]+)\]\([^)]*\)~', '$1', $s) ?? $s), ENT_QUOTES)) ?? '');
+        $lines = [];
+        foreach ($ask as $i => $s) {
+            $lines[] = 'i=' . $i . "\nTITLE: " . $plain($s['title']) . "\nSTORY: " . $plain($s['text']) . "\nWHAT IT MEANS: " . $plain($s['means']);
+        }
+        $prompt = "You are Anee of anee.io, writing today's farm news email for Filipino farmers.\n"
+            . "For each story below, write its WHAT IT MEANS part again in Taglish leaning Tagalog, so a farmer understands it at once:\n"
+            . "- The everyday words of a farmer in Nueva Ecija or Bukidnon. English only for words farmers already use (farmgate, fertilizer, harvest, presyo ng palay).\n"
+            . "- Talk to the farmer directly (ka, mo, natin), like a kapitbahay who reads the news. Two or three short sentences, at most 300 characters.\n"
+            . "- Keep every number, price, date, place, crop, company and agency name exactly as given. Add no fact that is not in the story.\n"
+            . "- No doses, no product brands, no dashes (use a comma), no emoji, no hashtags, no bold.\n\n"
+            . implode("\n\n", $lines) . "\n\n"
+            . 'Return ONLY this JSON, no fences: {"items": [{"i": 0, "tl": "..."}]}';
+        $parse = function (string $t): ?array {
+            $t = preg_replace('/^```(?:json)?\s*|\s*```$/i', '', trim($t));
+            $a = strpos((string) $t, '{');
+            $b = strrpos((string) $t, '}');
+            $d = $a === false || $b === false ? null : json_decode(substr((string) $t, $a, $b - $a + 1), true);
+
+            return is_array($d) && is_array($d['items'] ?? null) ? $d : null;
+        };
+        try {
+            $settings = AiSetting::current()->forField('PH')->fast();
+            $result = app(AiClient::class)->askForJson($settings, $prompt, 2500, $parse,
+                ['system' => 'You are Anee, the voice of anee.io, writing for Filipino farmers. You answer only with JSON.', 'timeout' => 90, 'retryAfterTimeout' => false]);
+            if ((int) ($result['tokensIn'] ?? 0) > 0) {
+                AiUsage::record('news-email', 0, 0, $refId ?: null, $settings, $result, 0);
+            }
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [];
+        }
+        $out = [];
+        foreach ((array) ($result['data']['items'] ?? []) as $it) {
+            $i = (int) ($it['i'] ?? -1);
+            $words = trim(str_replace(['**', '#'], '', (string) ($it['tl'] ?? '')));
+            // A dash between words is a pause: a comma (the house rule). Hyphens inside Tagalog words stay (nag-abono).
+            $words = preg_replace('/\s*[\x{2014}\x{2013}\x{2012}\x{2015}]\s*|\s+-{1,2}\s+/u', ', ', $words) ?? $words;
+            if (isset($ask[$i]) && mb_strlen($words) >= 20) {
+                $out[$i] = e(self::clip($words, 360));
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * An email already made, its green boxes put in Taglish and titled again
+     * (the owner: "do it for the existing pending email as well"). Not for a
+     * sent email. Returns how many boxes changed.
+     */
+    public static function retaglish(AsNlEmail $email): int
+    {
+        if ($email->status === 'sent') {
+            return 0;
+        }
+        $c = is_array($email->blocks) ? $email->blocks : (json_decode((string) $email->getRawOriginal('blocks'), true) ?: []);
+        $found = [];
+        foreach ((array) ($c['blocks'] ?? []) as $k => $b) {
+            if (($b['type'] ?? '') === 'story' && trim(strip_tags((string) ($b['means'] ?? ''))) !== '') {
+                $found[$k] = ['title' => (string) ($b['title'] ?? ''), 'text' => (string) ($b['html'] ?? ''), 'means' => (string) $b['means']];
+            }
+        }
+        $tl = self::taglish($found, (int) ($email->newsPageId ?? 0));
+        foreach ($found as $k => $s) {
+            $c['blocks'][$k]['meansTitle'] = NewsRoundup::SO_WHAT;
+            if (isset($tl[$k])) {
+                $c['blocks'][$k]['means'] = '<p>' . $tl[$k] . '</p>';
+            }
+        }
+        if ($found) {
+            $email->blocks = Renderer::clean($c);
+            $email->save();
+        }
+
+        return count($tl);
     }
 
     private static function month(Carbon $d): string

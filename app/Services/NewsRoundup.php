@@ -66,8 +66,8 @@ class NewsRoundup
     /** The days of posted stories the check compares the new ones with (news repeats within days; later it is a new turn). */
     public const POSTED_DAYS = 3;
 
-    /** The title over what a story means for the farmer, on the page, in the app and in the email (2026-10-17, the owner; was "What it means for your farm"). */
-    public const SO_WHAT = 'Anong epekto nito sayo';
+    /** The title over what a story means for the farmer, on the page, in the app and in the email (2026-10-17, the owner; was "What it means for your farm", then "Anong epekto nito sayo"). */
+    public const SO_WHAT = 'Anong epekto sayo o sa bukid mo';
 
     /** Stories Anee is given to write from, after the repeats are folded in. */
     public const WRITE_MAX = 30;

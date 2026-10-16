@@ -34,7 +34,7 @@ class TechBlog
     public const AUTHOR = 'anee.io Technicians';
 
     /** Bump when the drawing below changes, so every article is drawn again. */
-    private const VERSION = 7;
+    private const VERSION = 8;
 
     private const STAMP = 'tech-blog:synced';
 
