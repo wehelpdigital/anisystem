@@ -197,7 +197,9 @@
             try { const r = await window.api(U.one(g.id), { method: 'DELETE' }); window.toast?.(r.message, 'success'); await load(); } catch (err) { window.toast?.(err.message, 'error'); }
         }
     });
-    load();
+    // The page's own script runs before app.js (a module, run after parsing) has made window.api:
+    // asked too early, the list call threw and the roster showed empty (2026-10-18, the owner).
+    if (window.api) load(); else document.addEventListener('DOMContentLoaded', load, { once: true });
 })();
 </script>
 @endpush
