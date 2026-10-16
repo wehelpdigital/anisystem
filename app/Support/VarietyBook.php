@@ -315,6 +315,56 @@ class VarietyBook
         return null;
     }
 
+    /**
+     * The variety a written name means, looked up first by every module
+     * before any research (2026-10-18, the owner: learn once): the curated
+     * record (match()), else a variety Anee looked up before and the app kept
+     * (App\Support\VarietyLearned): a kept alias leads to its record, a kept
+     * variety comes back in the record shape with `learned` set (its id, the
+     * day it was learned, how sure, the company, ratings, seed hours) and
+     * `learnedLine` (its facts in one line for a prompt). Null when neither
+     * knows it, or the kept row is past its year (`$fresh`), so the module
+     * looks it up again.
+     */
+    public static function find(?string $cropKey, ?string $name, bool $fresh = true): ?array
+    {
+        $name = trim((string) $name);
+        if ($name === '') {
+            return null;
+        }
+        if ($m = self::match($cropKey, $name)) {
+            return $m;
+        }
+        try {
+            $l = VarietyLearned::lookup($cropKey, $name, $fresh);
+        } catch (\Throwable $e) {
+            report($e);
+            $l = null;
+        }
+        if (! $l) {
+            return null;
+        }
+        if ($l['aliasOf']) {
+            return self::match($cropKey, $l['aliasOf']);
+        }
+
+        return VarietyLearned::asRecord($l) + ['learnedLine' => VarietyLearned::words($l)];
+    }
+
+    /** Whether the name is known (on the record or kept from an earlier lookup), so no research is needed. */
+    public static function known(?string $cropKey, ?string $name): bool
+    {
+        return self::find($cropKey, $name) !== null;
+    }
+
+    /** A module used a kept variety instead of searching: counted (the mother app shows it). */
+    public static function used(?array $rec): void
+    {
+        if (! empty($rec['learned']['id'])) {
+            VarietyLearned::hit((int) $rec['learned']['id']);
+        }
+    }
+
     /** A record as the reports show it. */
     public static function brief(array $r): array
     {
@@ -344,6 +394,7 @@ class VarietyBook
             'where' => $r['where'],
             'registered' => $r['registered'],
             'url' => $r['url'],
+            'learned' => ! empty($r['learned']),
         ];
     }
 
@@ -351,6 +402,10 @@ class VarietyBook
     public static function promptLines(array $rows): string
     {
         return implode("\n", array_map(function ($r) {
+            // A variety Anee looked up before (App\Support\VarietyLearned): its kept facts, said as hers.
+            if (! empty($r['learnedLine'])) {
+                return '- ' . $r['learnedLine'];
+            }
             $bits = [$r['type'] === 'hybrid' ? 'hybrid' : ($r['kind'] ?: 'inbred')];
             if ($r['aliases']) {
                 $bits[] = 'also ' . implode(', ', array_slice($r['aliases'], 0, 3));
@@ -511,7 +566,13 @@ class VarietyBook
         return $cut(implode('; ', $bits), 360);
     }
 
-    /** The lookup keys a name gives: "NSIC Rc 222" -> nsicrc222, rc222; "Dekalb 8899S" -> dk8899s. */
+    /** The lookup keys of a name, for App\Support\VarietyLearned (the same keys the records are matched by). */
+    public static function nameKeys(string $n): array
+    {
+        return self::keys($n);
+    }
+
+    /** The lookup keys a name gives: "NSIC Rc 222" -> nsicrc222, rc222; "Dekalb 8899S" -> dk8899s; "NSIC 2019 Rc 600" also -> nsicrc600, rc600. */
     private static function keys(string $n): array
     {
         $f = self::flat(str_ireplace(['dekalb', 'pioneer'], ['dk', 'p'], $n));
@@ -522,6 +583,11 @@ class VarietyBook
         $out = [$f];
         if (preg_match('/^(nsic|psb|bpi|upl)(.+)$/', $f, $m)) {
             $out[] = $m[2];
+            // The registration year written in the number (2026-10-18, learn once): "NSIC 2019 Rc 600" is NSIC Rc 600.
+            if (preg_match('/^(?:19|20)\d\d([a-z].*)$/', $m[2], $y)) {
+                $out[] = $m[1] . $y[1];
+                $out[] = $y[1];
+            }
         }
 
         return array_values(array_unique($out));
