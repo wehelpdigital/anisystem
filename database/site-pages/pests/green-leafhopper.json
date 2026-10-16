@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Green leafhoppers are the most common leafhoppers in rice fields. Adults are 3 to 5 millimeters long, bright green with variable black marks, and they move sideways in a quick diagonal run. The nymphs are soft bodied and yellowish white. Two species spread tungro, Nephotettix malayanus and Nephotettix virescens, and N. virescens is the most efficient carrier.\n\nPhilRice counts the green leafhopper among the five major rice insect pests of the country. The sap feeding alone rarely ruins a crop. The virus it carries does the worse harm."
+      "text": "Green leafhoppers are the most common leafhoppers in rice fields. Adults are 3 to 5 millimeters long, bright green with variable black marks, and they move sideways in a quick diagonal run. The nymphs are soft bodied and yellowish white. Two species spread tungro, Nephotettix malayanus and Nephotettix virescens, and N. virescens is the most efficient carrier.\n\nAcross the country, the green leafhopper is one of the five major rice insect pests. The sap feeding alone rarely ruins a crop. The virus it carries does the worse harm."
     },
     {
       "type": "table",
@@ -118,7 +118,7 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Plant resistant varieties. IRRI lists leafhopper and tungro resistance as the first line of defense.",
+        "Plant resistant varieties. Leafhopper and tungro resistance is the first line of defense.",
         "Synchronize planting with your neighbors and avoid planting at the peak of leafhopper activity shown by past records.",
         "Reduce the number of rice crops per year, and rotate with a non rice crop where you can.",
         "Transplant older seedlings, more than three weeks old, and plant early.",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI advises against spraying in areas without a tungro source. Where tungro is present, an insecticide often cannot prevent infection. Leave the natural enemies alone and ask a technician before you decide."
+      "text": "Do not spray in areas without a tungro source. Where tungro is present, an insecticide often cannot prevent infection. Leave the natural enemies alone and ask a technician before you decide."
     },
     {
       "type": "callout",
@@ -185,7 +185,7 @@
         },
         {
           "q": "Will spraying stop tungro?",
-          "a": "Often not. IRRI says insecticides are often unable to prevent or reduce tungro infection. Resistant varieties and synchronous planting work better."
+          "a": "Often not. Insecticides are often unable to prevent or reduce tungro infection. Resistant varieties and synchronous planting work better."
         },
         {
           "q": "How do I tell it from a planthopper?",

@@ -120,7 +120,7 @@
       "items": [
         "Set up the seedbed far from weedy areas, and plow fallow land.",
         "Remove weeds in and around the field, especially grasses.",
-        "Flood the seedbed. IRRI calls flooding the seedbed the best defense.",
+        "Flood the seedbed. It is the best defense.",
         "Put ashes in trenches to stop the caterpillars from moving, and set branches around the field so you can hand collect them.",
         "Spare the natural enemies. Wasps, tachinid flies, spiders and birds feed on armyworms, so do not kill them with early sprays.",
         "Plow the field after harvest and keep a weekly check, so you see the first caterpillars while they are small."
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI advises sprays only at outbreak level, and calls insecticide the last resort for armyworm. The Pacific Pests fact sheet says synthetic pyrethroids are likely to be effective, but they also kill natural enemies. No source we opened names one ingredient for the Philippines, so ask your agriculture office which registered product to use. Never spray in the first 30 to 40 days after transplanting unless the outbreak is true."
+      "text": "Spray only at outbreak level, since insecticide is the last resort for armyworm. The Pacific Pests fact sheet says synthetic pyrethroids are likely to be effective, but they also kill natural enemies. No source we opened names one ingredient for the Philippines, so ask your agriculture office which registered product to use. Never spray in the first 30 to 40 days after transplanting unless the outbreak is true."
     },
     {
       "type": "callout",
@@ -185,11 +185,11 @@
         },
         {
           "q": "What is the best defense in the seedbed?",
-          "a": "IRRI says flooding the seedbed is the best defense."
+          "a": "Flooding the seedbed is the best defense."
         },
         {
           "q": "Should I spray right away?",
-          "a": "No. IRRI says insecticide is the last resort. Try the cultural steps first, and spray young caterpillars only if the attack keeps growing."
+          "a": "No. Insecticide is the last resort. Try the cultural steps first, and spray young caterpillars only if the attack keeps growing."
         }
       ]
     },

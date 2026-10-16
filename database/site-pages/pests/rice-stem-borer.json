@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Six stem borer species attack rice in Asia. The yellow stem borer (Scirpophaga incertulas) and the white stem borer (Scirpophaga innotata) are the best known. The striped stem borer (Chilo suppressalis), the gold fringed, the dark headed and the pink stem borer complete the list. All of them are moth larvae that live and feed inside the stem.\n\nPhilRice names stem borers among the five major rice insect pests of the country. Its 2026 warning expected heavy attacks in Bicol, Central Luzon and Northern Mindanao in the early months of that year. So every palay farmer should know the signs, because a borer can hurt the crop from seedling to maturity."
+      "text": "Six stem borer species attack rice in Asia. The yellow stem borer (Scirpophaga incertulas) and the white stem borer (Scirpophaga innotata) are the best known. The striped stem borer (Chilo suppressalis), the gold fringed, the dark headed and the pink stem borer complete the list. All of them are moth larvae that live and feed inside the stem.\n\nStem borers are among the five major rice insect pests of the country. A 2026 warning expected heavy attacks in Bicol, Central Luzon and Northern Mindanao in the early months of that year. So every palay farmer should know the signs, because a borer can hurt the crop from seedling to maturity."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "Stem borers can destroy rice at any growth stage, from seedling to maturity. Deadhearts take away tillers that would have carried grain. Whiteheads take away the panicle itself, so the grain is lost completely.\n\nWe found no official percent yield loss for the Philippines, so we do not state one. Timing still matters. PhilRice notes that rice hit during the vegetative and tillering stages can still recover, while a whitehead after flowering is lost for good. For the spray decision, use the light trap and the egg jar test below. Count the deadhearts and whiteheads in each lot every week, write them in your notes and compare season with season."
+      "text": "Stem borers can destroy rice at any growth stage, from seedling to maturity. Deadhearts take away tillers that would have carried grain. Whiteheads take away the panicle itself, so the grain is lost completely.\n\nWe found no official percent yield loss for the Philippines, so we do not state one. Timing still matters. Rice hit during the vegetative and tillering stages can still recover, while a whitehead after flowering is lost for good. For the spray decision, use the light trap and the egg jar test below. Count the deadhearts and whiteheads in each lot every week, write them in your notes and compare season with season."
     },
     {
       "type": "heading",
@@ -121,7 +121,7 @@
       "items": [
         "Prepare the land well. Plow and flood the field, and remove stubble and volunteer rice so the larvae have nowhere to wait.",
         "Plant at the same time as your neighbors. Synchronous planting with the right timing breaks the supply of tillers for the moths.",
-        "Check the seedlings before you pull them. If the leaves carry many egg masses, collect the eggs by hand before transplanting. Do not cut the leaf tops instead, because PhilRice warns that cut leaves let disease organisms in.",
+        "Check the seedlings before you pull them. If the leaves carry many egg masses, collect the eggs by hand before transplanting. Do not cut the leaf tops instead, because cut leaves let disease organisms in.",
         "Handpick and destroy egg masses in the seedbed and at transplanting. Raise the irrigation water now and then to drown eggs laid on the lower part of the plant.",
         "Split the nitrogen fertilizer into doses as recommended, and harvest at ground level so less stubble remains.",
         "Protect the natural enemies. Many wasps, lady beetles, ground beetles, earwigs, spiders and dragonflies feed on eggs and larvae, so avoid early spraying. See our guide on [integrated pest management](/pests/integrated-pest-management)."
@@ -145,11 +145,11 @@
         },
         {
           "title": "Read the jar",
-          "text": "If more borer larvae than tiny wasps come out, PhilRice says a contact or stomach insecticide is needed. If the wasps outnumber the larvae, the natural enemies are winning, so hold the spray."
+          "text": "If more borer larvae than tiny wasps come out, a contact or stomach insecticide is needed. If the wasps outnumber the larvae, the natural enemies are winning, so hold the spray."
         },
         {
           "title": "Help hit plants recover",
-          "text": "After deadhearts, keep the field free of drought stress and weeds. PhilRice also advises adding fertilizer so the crop recovers."
+          "text": "After deadhearts, keep the field free of drought stress and weeds. Add fertilizer too, so the crop recovers."
         }
       ]
     },
@@ -242,7 +242,7 @@
         },
         {
           "q": "What is the egg jar test for stem borer?",
-          "a": "Collect stem borer egg masses from the field, keep them in a covered jar and let them hatch. If more larvae than wasps come out, PhilRice says a spray is needed. If more wasps come out, the natural enemies have the borer in hand."
+          "a": "Collect stem borer egg masses from the field, keep them in a covered jar and let them hatch. If more larvae than wasps come out, a spray is needed. If more wasps come out, the natural enemies have the borer in hand."
         }
       ]
     },

@@ -13,7 +13,7 @@
     "rice insect",
     "virtako insecticide"
   ],
-  "excerpt": "The rice leaffolder, Cnaphalocrocis medinalis, is a small moth whose caterpillar folds a rice leaf into a tube and scrapes the green from the inside. PhilRice calls it mambibilot or maniniklop. The white streaks look alarming, but rice often recovers from damage in the early weeks, so knowing when it truly matters saves you money.",
+  "excerpt": "The rice leaffolder, Cnaphalocrocis medinalis, is a small moth whose caterpillar folds a rice leaf into a tube and scrapes the green from the inside. In Tagalog it is mambibilot or maniniklop. The white streaks look alarming, but rice often recovers from damage in the early weeks, so knowing when it truly matters saves you money.",
   "heroImage": {
     "src": "/images/site/guides/problems-rice-leaffolder.webp",
     "alt": "A rice leaffolder caterpillar inside a rice leaf that it has pulled shut with silk threads",
@@ -47,7 +47,7 @@
     },
     {
       "type": "text",
-      "text": "Leaffolders feed from the seedling stage to flowering. PhilRice says plants are at risk for up to about 10 weeks after transplanting."
+      "text": "Leaffolders feed from the seedling stage to flowering. Plants are at risk for up to about 10 weeks after transplanting."
     },
     {
       "type": "heading",
@@ -56,7 +56,7 @@
     },
     {
       "type": "text",
-      "text": "Not all white leaves cost you grain. IRRI explains that during the vegetative stage the crop can generally recover from leaffolder feeding. The damage becomes important in the reproductive stage, once it covers more than half of the flag leaf and the next two youngest leaves on each tiller. The flag leaf feeds the filling grain, so protect it most.\n\nPhilippine researchers have also tested action thresholds for leaffolders on rice (Litsinger and others, 2006, listed under Sources). So ask your technician for the local threshold instead of spraying because the leaves look bad.\n\nPhilRice field advice points the same way. An insecticide sprayed early hardly reaches a caterpillar sealed inside its folded leaf, so let the spiders, wasps and other friendly insects in the paddy deal with it. Keep every insecticide off the crop for the first 30 to 40 days. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) sets these limits side by side for the main rice pests."
+      "text": "Not all white leaves cost you grain. During the vegetative stage the crop can generally recover from leaffolder feeding. The damage becomes important in the reproductive stage, once it covers more than half of the flag leaf and the next two youngest leaves on each tiller. The flag leaf feeds the filling grain, so protect it most.\n\nPhilippine researchers have also tested action thresholds for leaffolders on rice (Litsinger and others, 2006, listed under Sources). So ask your technician for the local threshold instead of spraying because the leaves look bad.\n\nField advice points the same way. An insecticide sprayed early hardly reaches a caterpillar sealed inside its folded leaf, so let the spiders, wasps and other friendly insects in the paddy deal with it. Keep every insecticide off the crop for the first 30 to 40 days. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) sets these limits side by side for the main rice pests."
     },
     {
       "type": "heading",
@@ -93,7 +93,7 @@
         },
         {
           "title": "Focus on the flag leaf",
-          "text": "From booting on, check the flag leaf and the two leaves below it. IRRI calls the damage important when it affects more than half of the flag leaf and the next two youngest leaves on each tiller. Act only if yours is heading that way."
+          "text": "From booting on, check the flag leaf and the two leaves below it. The damage is important when it affects more than half of the flag leaf and the next two youngest leaves on each tiller. Act only if yours is heading that way."
         },
         {
           "title": "Count the helpers",
@@ -101,7 +101,7 @@
         },
         {
           "title": "Name the cause first",
-          "text": "If more than half of the leaves show damage, PhilRice says to find out what caused it before you act. Other pests, such as the [rice caseworm](/pests/rice-caseworm), also strip rice leaves."
+          "text": "If more than half of the leaves show damage, find out what caused it before you act. Other pests, such as the [rice caseworm](/pests/rice-caseworm), also strip rice leaves."
         }
       ]
     },
@@ -131,9 +131,9 @@
         "Follow rice with a different crop or a fallow period, and avoid ratooning.",
         "Flood and plow the field after harvest if you can.",
         "Remove grassy weeds from the field and the bunds.",
-        "Cut back tree branches that shade the paddy. PhilRice says shady edges give the leaffolder moths a place to settle.",
+        "Cut back tree branches that shade the paddy. Shady edges give the leaffolder moths a place to settle.",
         "Plant at a moderate density and use balanced fertilizer rates, as in our guide to [fertilizer for rice](/blog/fertilizer-for-rice).",
-        "Avoid insecticides in the early crop stages. IRRI notes that early sprays rarely pay back and can trigger outbreaks of the [brown planthopper](/pests/brown-planthopper)."
+        "Avoid insecticides in the early crop stages. Early sprays rarely pay back and can trigger outbreaks of the [brown planthopper](/pests/brown-planthopper)."
       ]
     },
     {
@@ -168,7 +168,7 @@
       "items": [
         {
           "q": "What is the leaffolder called in Tagalog?",
-          "a": "PhilRice uses mambibilot and maniniklop. Both names describe how the caterpillar rolls or folds the leaf."
+          "a": "It is mambibilot or maniniklop. Both names describe how the caterpillar rolls or folds the leaf."
         },
         {
           "q": "Does leaffolder damage reduce yield?",

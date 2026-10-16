@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "The diamondback moth attacks cabbage, cauliflower, Chinese cabbage, mustard and other crucifers. In the Philippines it is the key pest in highland and lowland vegetable areas. Before biological control, cabbage farmers used only synthetic pesticides, and the moth became resistant to nearly every potent one.\n\nIn 1989 and 1990 the country brought in two parasitic wasps, Diadegma semiclausum for the highlands above 800 meters and Cotesia plutellae for the lowlands. UPLB reports that releases cut larvae from 4 to 10 per plant down to 0.4 to 2.8 per plant."
+      "text": "The diamondback moth attacks cabbage, cauliflower, Chinese cabbage, mustard and other crucifers. In the Philippines it is the key pest in highland and lowland vegetable areas. Before biological control, cabbage farmers used only synthetic pesticides, and the moth became resistant to nearly every potent one.\n\nIn 1989 and 1990 the country brought in two parasitic wasps, Diadegma semiclausum for the highlands above 800 meters and Cotesia plutellae for the lowlands. The releases cut larvae from 4 to 10 per plant down to 0.4 to 2.8 per plant."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "The most serious damage comes when caterpillars attack the crown or growing point of young plants, which can stunt them. UPLB reports that the parasitoid approach raised yields by up to 75 percent in Philippine trials, cut production costs by 41 percent and cut pesticide sprays by 80 percent.\n\nThe moth has developed resistance to many insecticides. Even so, the Philippine populations tested still had a low level of resistance to Bacillus thuringiensis. We found no single national loss figure, so we give none."
+      "text": "The most serious damage comes when caterpillars attack the crown or growing point of young plants, which can stunt them. In Philippine trials, the parasitoid approach raised yields by up to 75 percent, cut production costs by 41 percent and cut pesticide sprays by 80 percent.\n\nThe moth has developed resistance to many insecticides. Even so, the Philippine populations tested still had a low level of resistance to Bacillus thuringiensis. We found no single national loss figure, so we give none."
     },
     {
       "type": "heading",
@@ -222,7 +222,7 @@
         },
         {
           "q": "What helped Philippine cabbage farmers most?",
-          "a": "The parasitoids Diadegma semiclausum and Cotesia plutellae. UPLB reports lower larva counts, higher yields and far fewer sprays."
+          "a": "The parasitoids Diadegma semiclausum and Cotesia plutellae. They bring lower larva counts, higher yields and far fewer sprays."
         },
         {
           "q": "Does Bt work?",

@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI says that when damage is severe, plants become less vigorous. The sources we read give no percent yield loss and no action threshold, so we state none. The best guide is your own field. Check the leaves each week in the vegetative stage and note how many hills show fresh streaks."
+      "text": "When damage is severe, plants become less vigorous. The sources we read give no percent yield loss and no action threshold, so we state none. The best guide is your own field. Check the leaves each week in the vegetative stage and note how many hills show fresh streaks."
     },
     {
       "type": "heading",
@@ -132,7 +132,7 @@
     },
     {
       "type": "text",
-      "text": "The sources we read name no insecticide for rice hispa in the Philippines, so we list no ingredient. EPPO gives no detail on how common the beetle is here. Ask a PhilRice or DA technician before you spray anything. Early sprays also kill the spiders and wasps that protect the crop."
+      "text": "The sources we read name no insecticide for rice hispa in the Philippines, so we list no ingredient. EPPO gives no detail on how common the beetle is here. Ask a DA technician before you spray anything. Early sprays also kill the spiders and wasps that protect the crop."
     },
     {
       "type": "callout",
@@ -188,7 +188,7 @@
         },
         {
           "q": "How do I keep it away?",
-          "a": "Avoid over fertilizing and close spacing, and remove grassy weeds. These are the steps IRRI lists."
+          "a": "Avoid over fertilizing and close spacing, and remove grassy weeds. These are the main steps."
         }
       ]
     },

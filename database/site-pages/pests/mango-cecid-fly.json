@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Kurikong is a small fly of the family Cecidomyiidae, and it looks like a mosquito. Three species affect Philippine mango. Procontarinia pustulata and Procontarinia robusta make galls on the leaves, and Procontarinia frugivora feeds on the fruit. The fly lays eggs on the fruit skin and on young leaves.\n\nThe pest was first documented in 1987, and it spread nationwide in 2010. It has come back in Central Luzon since then. PCARRD reports that farmers have seen losses of 70 to 100 percent of the yield in bad outbreaks. So timing is everything, and the care starts at flower induction."
+      "text": "Kurikong is a small fly of the family Cecidomyiidae, and it looks like a mosquito. Three species affect Philippine mango. Procontarinia pustulata and Procontarinia robusta make galls on the leaves, and Procontarinia frugivora feeds on the fruit. The fly lays eggs on the fruit skin and on young leaves.\n\nThe pest was first documented in 1987, and it spread nationwide in 2010. It has come back in Central Luzon since then. Farmers have seen losses of 70 to 100 percent of the yield in bad outbreaks. So timing is everything, and the care starts at flower induction."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "A UPLB study found that the fly infests fruit from 32 days after flower induction. The loss depends on how many fruits are marked. PCARRD reports that farmers saw 70 to 100 percent loss in bad outbreaks, and a mark on the skin also hurts the sale price.\n\nThe same study found that pruning and clearing the undergrowth alone did not stop the infestation. So sanitation helps, but it is not enough alone. Plan the bagging and the spray calendar around the days after flower induction, and talk to your neighbors. A mango farm also faces the [mango leafhopper](/pests/mango-leafhopper) at flowering."
+      "text": "A study found that the fly infests fruit from 32 days after flower induction. The loss depends on how many fruits are marked. Farmers saw 70 to 100 percent loss in bad outbreaks, and a mark on the skin also hurts the sale price.\n\nThe same study found that pruning and clearing the undergrowth alone did not stop the infestation. So sanitation helps, but it is not enough alone. Plan the bagging and the spray calendar around the days after flower induction, and talk to your neighbors. A mango farm also faces the [mango leafhopper](/pests/mango-leafhopper) at flowering."
     },
     {
       "type": "heading",
@@ -119,12 +119,12 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Prune crowded branches after every harvest and keep the orchard clean, as PCARRD advises.",
+        "Prune crowded branches after every harvest and keep the orchard clean.",
         "Mark the day of flower induction on your calendar. Count 32 days from that day, because the attack begins then.",
-        "Bag the fruit early. PCARRD advises 45 to 55 days after flower induction.",
+        "Bag the fruit early, at 45 to 55 days after flower induction.",
         "Check the fruit and young leaves each week for the first spots, and for adult flies.",
         "Remove and destroy badly marked and fallen fruit.",
-        "Work with the neighbors in your area. PCARRD and the DA stress that a united effort is needed, or the fly keeps coming back."
+        "Work with the neighbors in your area. A united effort is needed, or the fly keeps coming back."
       ]
     },
     {
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "If the first damage appears, a spray can help, but only as part of the whole plan. PCARRD named insecticide groups for kurikong. Always read the label and observe the pre harvest interval."
+      "text": "If the first damage appears, a spray can help, but only as part of the whole plan. The groups below are the ones used for kurikong. Always read the label and observe the pre harvest interval."
     },
     {
       "type": "table",
@@ -148,17 +148,17 @@
         [
           "Cartap",
           "IRAC 14",
-          "named by a PCARRD entomologist for kurikong"
+          "used against kurikong"
         ],
         [
           "Pyrethroids",
           "IRAC 3A",
-          "named by a PCARRD entomologist for kurikong"
+          "used against kurikong"
         ],
         [
           "Carbamates",
           "IRAC 1A",
-          "named by a PCARRD entomologist for kurikong"
+          "used against kurikong"
         ]
       ]
     },
@@ -212,11 +212,11 @@
         },
         {
           "q": "When should I bag my mango fruit?",
-          "a": "PCARRD says 45 to 55 days after flower induction. The fly starts at 32 days, so do not wait."
+          "a": "At 45 to 55 days after flower induction. The fly starts at 32 days, so do not wait."
         },
         {
           "q": "Does pruning alone stop it?",
-          "a": "No. A UPLB study found pruning and clearing the undergrowth were not enough on their own."
+          "a": "No. A study found pruning and clearing the undergrowth were not enough on their own."
         }
       ]
     },

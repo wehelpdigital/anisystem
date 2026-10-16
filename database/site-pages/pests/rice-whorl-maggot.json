@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "The rice whorl maggot (Hydrellia philippina) is a small fly of rice fields with standing water. Its larvae use hardened mouth hooks to rasp the tissue of unopened leaves and the growing points of new ones. As the leaves open, the damage shows.\n\nIt favors transplanted rice in irrigated paddies, and it does not occur in upland or direct seeded fields. Farmers often worry when they see the torn leaves, but IRRI notes that the rice plant can compensate for the damage."
+      "text": "The rice whorl maggot (Hydrellia philippina) is a small fly of rice fields with standing water. Its larvae use hardened mouth hooks to rasp the tissue of unopened leaves and the growing points of new ones. As the leaves open, the damage shows.\n\nIt favors transplanted rice in irrigated paddies, and it does not occur in upland or direct seeded fields. Farmers often worry when they see the torn leaves, but the rice plant can compensate for the damage."
     },
     {
       "type": "table",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI says the rice plant can compensate for whorl maggot damage and the symptoms disappear during the maximum tillering stage. The IRRI fact sheet gives no percent yield loss, so we state none.\n\nBecause the plant recovers, a spray is rarely worth the cost. No action threshold was found in the sources we read."
+      "text": "The rice plant can compensate for whorl maggot damage and the symptoms disappear during the maximum tillering stage. We found no percent yield loss for it, so we state none.\n\nBecause the plant recovers, a spray is rarely worth the cost. No action threshold was found in the sources we read."
     },
     {
       "type": "heading",
@@ -132,7 +132,7 @@
     },
     {
       "type": "text",
-      "text": "The sources we read give no insecticide for this pest. IRRI says there is no cultural control, and the plants usually recover, so we do not list any ingredient. Early sprays also kill the spiders and wasps that protect the crop."
+      "text": "The sources we read give no insecticide for this pest. There is no cultural control, and the plants usually recover, so we do not list any ingredient. Early sprays also kill the spiders and wasps that protect the crop."
     },
     {
       "type": "callout",
@@ -179,11 +179,11 @@
       "items": [
         {
           "q": "Will the rice whorl maggot ruin my crop?",
-          "a": "Usually not. IRRI says the plant can compensate and the symptoms disappear by the maximum tillering stage."
+          "a": "Usually not. The plant can compensate and the symptoms disappear by the maximum tillering stage."
         },
         {
           "q": "Does it attack direct seeded rice?",
-          "a": "IRRI says it does not occur in upland or direct seeded fields. It favors transplanted seedlings in standing water."
+          "a": "No. It does not occur in upland or direct seeded fields. It favors transplanted seedlings in standing water."
         },
         {
           "q": "Should I spray the damaged hills?",

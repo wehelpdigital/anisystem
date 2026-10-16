@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Leafminers are small flies of the genus Liriomyza. Two of them matter in Philippine vegetables: the vegetable leafminer (Liriomyza sativae) and the potato leafminer (Liriomyza huidobrensis). A third, the American serpentine leafminer (Liriomyza trifolii), attacks onion in Nueva Ecija, Nueva Vizcaya and Pangasinan, according to a UPLB study.\n\nThey feed on many crops. L. sativae prefers the legume, daisy and potato families, but it is also recorded on capsicum, carrot, cucumber, lettuce, melon, onion, tomato and zucchini. Heavy attacks cause leaf loss, so the fruits are exposed to sunscald and the plant tires."
+      "text": "Leafminers are small flies of the genus Liriomyza. Two of them matter in Philippine vegetables: the vegetable leafminer (Liriomyza sativae) and the potato leafminer (Liriomyza huidobrensis). A third, the American serpentine leafminer (Liriomyza trifolii), attacks onion in Nueva Ecija, Nueva Vizcaya and Pangasinan.\n\nThey feed on many crops. L. sativae prefers the legume, daisy and potato families, but it is also recorded on capsicum, carrot, cucumber, lettuce, melon, onion, tomato and zucchini. Heavy attacks cause leaf loss, so the fruits are exposed to sunscald and the plant tires."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "The Pacific Pests fact sheet says a heavy attack causes plant stress, water loss, leaf drop, sunscald on the fruit, and even the death of young plants. Mined produce can also be rejected by buyers.\n\nA UPLB study on onion in Nueva Ecija and Nueva Vizcaya showed why careless spraying backfires. Where farmers sprayed less, up to 41 percent of the larvae were parasitized by wasps, against up to 18.6 percent where they sprayed more. So the natural enemies already work for you, and strong sprays kill them. We found no Philippine action threshold in the sources we read."
+      "text": "The Pacific Pests fact sheet says a heavy attack causes plant stress, water loss, leaf drop, sunscald on the fruit, and even the death of young plants. Mined produce can also be rejected by buyers.\n\nA study on onion in Nueva Ecija and Nueva Vizcaya showed why careless spraying backfires. Where farmers sprayed less, up to 41 percent of the larvae were parasitized by wasps, against up to 18.6 percent where they sprayed more. So the natural enemies already work for you, and strong sprays kill them. We found no Philippine action threshold in the sources we read."
     },
     {
       "type": "heading",
@@ -123,7 +123,7 @@
         "Control weeds and plow the soil before planting, so the pupae in the soil are exposed. Avoid planting leafminer hosts one after another in the same plot.",
         "Handpick mined leaves, or crush the larva inside the tunnel, when the attack is light.",
         "After harvest, collect the crop remains and burn them or bury them deep. Mulch the soil in high value crops, as Pacific Pests advises.",
-        "Spare the parasitic wasps. Pacific Pests names Chrysocharis, Neochrysocharis and Diglyphus as helpful ones, and the UPLB onion study found wasps parasitized up to 41 percent of the larvae. See the [integrated pest management guide](/pests/integrated-pest-management).",
+        "Spare the parasitic wasps. Pacific Pests names Chrysocharis, Neochrysocharis and Diglyphus as helpful ones, and an onion study found wasps parasitized up to 41 percent of the larvae. See the [integrated pest management guide](/pests/integrated-pest-management).",
         "Use yellow sticky traps to watch the adult flies. Rotate with a crop that the fly does not like, such as corn."
       ]
     },
@@ -217,7 +217,7 @@
         },
         {
           "q": "Why does leafminer come back after I spray?",
-          "a": "Broad spectrum sprays kill the parasitic wasps that keep the flies down, while the larvae inside the leaf escape. The UPLB onion study found more parasitism where farmers sprayed less."
+          "a": "Broad spectrum sprays kill the parasitic wasps that keep the flies down, while the larvae inside the leaf escape. An onion study found more parasitism where farmers sprayed less."
         },
         {
           "q": "Which vegetables do leafminers attack?",

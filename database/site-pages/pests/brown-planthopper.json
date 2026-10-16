@@ -15,7 +15,7 @@
     "brown plant hopper symptoms",
     "chess insecticide"
   ],
-  "excerpt": "The brown planthopper, Nilaparvata lugens, is a tiny brown insect that sucks sap at the base of the rice plant. PhilRice calls it kayumangging ngusong kabayo. When its numbers explode, whole patches of palay dry up in a condition called hopperburn. In 2017 it damaged rice in 18 provinces.",
+  "excerpt": "The brown planthopper, Nilaparvata lugens, is a tiny brown insect that sucks sap at the base of the rice plant. In Tagalog it is kayumangging ngusong kabayo. When its numbers explode, whole patches of palay dry up in a condition called hopperburn. In 2017 it damaged rice in 18 provinces.",
   "heroImage": {
     "src": "/images/site/guides/problems-brown-planthopper.webp",
     "alt": "A long winged brown planthopper, Nilaparvata lugens, resting on a green leaf",
@@ -29,7 +29,7 @@
     },
     {
       "type": "text",
-      "text": "Planthoppers are small insects that suck plant sap. Two kinds attack rice: the brown planthopper, or BPH, and the whitebacked planthopper, Sogatella furcifera. You will also see the name written as brown plant hopper, in two words. PhilRice gives the Tagalog names kayumangging ngusong kabayo and kayumangging hanip, and the DA office in CALABARZON also calls it hanip sa palay. Farmers use hanip for other tiny pests as well, which our page on [hanip, mites and aphids](/pests/hanip-mites-and-aphids) covers.\n\nThe adult is only 2.5 to 3 millimeters long. Some adults have long wings and fly to lights, while others have short wings and stay on the plant. Females lay eggs in batches inside the leaf sheath and the midrib. The brown nymphs molt five times before they become adults."
+      "text": "Planthoppers are small insects that suck plant sap. Two kinds attack rice: the brown planthopper, or BPH, and the whitebacked planthopper, Sogatella furcifera. You will also see the name written as brown plant hopper, in two words. Its Tagalog names are kayumangging ngusong kabayo and kayumangging hanip, and it is also called hanip sa palay. Farmers use hanip for other tiny pests as well, which our page on [hanip, mites and aphids](/pests/hanip-mites-and-aphids) covers.\n\nThe adult is only 2.5 to 3 millimeters long. Some adults have long wings and fly to lights, while others have short wings and stay on the plant. Females lay eggs in batches inside the leaf sheath and the midrib. The brown nymphs molt five times before they become adults."
     },
     {
       "type": "heading",
@@ -38,7 +38,7 @@
     },
     {
       "type": "text",
-      "text": "BPH feeds at the base of the tillers, so look low. Often, the first sign is yellowing plants. As numbers climb, the leaves turn orange yellow, then brown and dry. Heavy infestation leaves round patches of dead, dried plants. That is hopperburn, and at that level IRRI says the crop loss can reach 100 percent. PhilRice puts the usual loss at 10 to 50 percent or more per hectare."
+      "text": "BPH feeds at the base of the tillers, so look low. Often, the first sign is yellowing plants. As numbers climb, the leaves turn orange yellow, then brown and dry. Heavy infestation leaves round patches of dead, dried plants. That is hopperburn, and at that level the crop loss can reach 100 percent. The usual loss is 10 to 50 percent or more per hectare."
     },
     {
       "type": "list",
@@ -52,7 +52,7 @@
     },
     {
       "type": "text",
-      "text": "Hopperburn looks a lot like the bugburn caused by the [rice black bug](/pests/rice-black-bug). The check IRRI gives is the sooty mold at the base of the plant, which planthopper attacks leave."
+      "text": "Hopperburn looks a lot like the bugburn caused by the [rice black bug](/pests/rice-black-bug). The check is the sooty mold at the base of the plant, which planthopper attacks leave."
     },
     {
       "type": "heading",
@@ -61,7 +61,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice puts it plainly: planthoppers are not pests until you apply insecticides carelessly. In a healthy field, spiders, mirid bugs, water striders, small wasps and other natural enemies keep BPH in check. Early or needless sprays kill these predators. Then the hopper eggs hatch unchecked and the population explodes. IRRI names this as a main cause of outbreaks, along with long winged hoppers that the wind carries in.\n\nA 1986 study in South Cotabato, reported by Agriculture Monthly, showed it in the field. After insecticide sprays against leaf eating caterpillars, the spiders dropped and BPH numbers climbed sharply."
+      "text": "Put plainly, planthoppers are not pests until you apply insecticides carelessly. In a healthy field, spiders, mirid bugs, water striders, small wasps and other natural enemies keep BPH in check. Early or needless sprays kill these predators. Then the hopper eggs hatch unchecked and the population explodes. This is a main cause of outbreaks, along with long winged hoppers that the wind carries in.\n\nA 1986 study in South Cotabato, reported by Agriculture Monthly, showed it in the field. After insecticide sprays against leaf eating caterpillars, the spiders dropped and BPH numbers climbed sharply."
     },
     {
       "type": "heading",
@@ -72,16 +72,16 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Too much nitrogen, such as extra [urea fertilizer](/blog/urea-fertilizer), which the DA says softens the plant",
+        "Too much nitrogen, such as extra [urea fertilizer](/blog/urea-fertilizer), which softens the plant",
         "Dense planting and a closed, humid canopy",
         "Staggered planting in neighboring fields",
         "Continuous standing water and shade",
-        "Direct seeded fields, which PhilRice says suffer more than transplanted ones"
+        "Direct seeded fields, which suffer more than transplanted ones"
       ]
     },
     {
       "type": "text",
-      "text": "According to PhilRice, BPH numbers peak toward harvest, usually March to April in the dry season and September to October in the wet season. The 2017 outbreak across 18 provinces caused an estimated 17.87 million pesos in damage."
+      "text": "BPH numbers peak toward harvest, usually March to April in the dry season and September to October in the wet season. The 2017 outbreak across 18 provinces caused an estimated 17.87 million pesos in damage."
     },
     {
       "type": "heading",
@@ -93,7 +93,7 @@
       "items": [
         {
           "title": "Check the seedbed daily",
-          "text": "IRRI advises daily checks in the seedbed and weekly checks in the field. Look along each side of the seedbed."
+          "text": "Make daily checks in the seedbed and weekly checks in the field. Look along each side of the seedbed."
         },
         {
           "title": "Tap the base",
@@ -105,17 +105,17 @@
         },
         {
           "title": "Count the helpers too",
-          "text": "Note the spiders and other predators. If natural enemies outnumber the hoppers, IRRI says the risk of hopperburn is low."
+          "text": "Note the spiders and other predators. If natural enemies outnumber the hoppers, the risk of hopperburn is low."
         },
         {
           "title": "Stop at the milk stage",
-          "text": "IRRI sees no need to scout for BPH after the milk stage."
+          "text": "There is no need to scout for BPH after the milk stage."
         }
       ]
     },
     {
       "type": "text",
-      "text": "At one BPH per stem or less, IRRI says you still have time to act if numbers rise. DA CALABARZON advises draining the field for three to four days once counts reach about 10 per hill, since BPH prefers cool, humid conditions at the base.\n\nA light trap near a light colored wall or over a pan of water can warn you. If hundreds of BPH land in it, check your seedbed and fields at once and scout daily for the next few weeks. Keep the lights away from seedbeds and fields.\n\nanee.io helps you keep that rhythm. Your [cropping calendar](/features/cropping-calendar) counts days after transplanting for every lot, so you can set a weekly hopper check from early tillering to the milk stage. The [growth stages](/features/growth-stages-and-weather) view shows when each lot enters its risky weeks. Snap a photo of the insects at the base and send it to Anee, the [smart farm technician](/features/ai-agricultural-technician), who helps you tell a planthopper from a leafhopper in Tagalog or English."
+      "text": "At one BPH per stem or less, you still have time to act if numbers rise. Drain the field for three to four days once counts reach about 10 per hill, since BPH prefers cool, humid conditions at the base.\n\nA light trap near a light colored wall or over a pan of water can warn you. If hundreds of BPH land in it, check your seedbed and fields at once and scout daily for the next few weeks. Keep the lights away from seedbeds and fields.\n\nanee.io helps you keep that rhythm. Your [cropping calendar](/features/cropping-calendar) counts days after transplanting for every lot, so you can set a weekly hopper check from early tillering to the milk stage. The [growth stages](/features/growth-stages-and-weather) view shows when each lot enters its risky weeks. Snap a photo of the insects at the base and send it to Anee, the [smart farm technician](/features/ai-agricultural-technician), who helps you tell a planthopper from a leafhopper in Tagalog or English."
     },
     {
       "type": "heading",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice lists these BPH resistant varieties: PSB Rc2, PSB Rc10, and NSIC Rc212, Rc222, Rc224, Rc226, Rc298, Rc300 and Rc308. Ask your Municipal Agriculture Office which ones suit your area, and see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines).\n\nResistance does not last forever. IR26, the first BPH resistant variety, lost its resistance in 1976 to 1977 when a new BPH biotype appeared. IR36, with a different resistance gene, held for 14 years. So combine resistant seed with the practices below."
+      "text": "These are BPH resistant varieties: PSB Rc2, PSB Rc10, and NSIC Rc212, Rc222, Rc224, Rc226, Rc298, Rc300 and Rc308. Ask your Municipal Agriculture Office which ones suit your area, and see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines).\n\nResistance does not last forever. IR26, the first BPH resistant variety, lost its resistance in 1976 to 1977 when a new BPH biotype appeared. IR36, with a different resistance gene, held for 14 years. So combine resistant seed with the practices below."
     },
     {
       "type": "heading",
@@ -140,15 +140,15 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Where BPH is attacking, plant a resistant variety and transplant. PhilRice advises against broadcasting the seed during an attack.",
+        "Where BPH is attacking, plant a resistant variety and transplant. Do not broadcast the seed during an attack.",
         "Plant together with your neighbors and leave a one to two month fallow between crops to break the BPH life cycle.",
         "Use 20 by 20 centimeter spacing, because dense planting raises planthopper numbers.",
         "Split nitrogen into three applications, as in our guide to [fertilizer for rice](/blog/fertilizer-for-rice).",
-        "Irrigate by alternate wetting and drying, or AWD. PhilRice lists it with split nitrogen against BPH. Start it 21 to 30 days after transplanting, and add water only when the observation well, a perforated bamboo or PVC tube set in the paddy, has run dry.",
-        "Keep potassium adequate. PhilRice notes that more [potash](/blog/potash-fertilizer) makes the plant less susceptible.",
+        "Irrigate by alternate wetting and drying, or AWD. It works with split nitrogen against BPH. Start it 21 to 30 days after transplanting, and add water only when the observation well, a perforated bamboo or PVC tube set in the paddy, has run dry.",
+        "Keep potassium adequate. More [potash](/blog/potash-fertilizer) makes the plant less susceptible.",
         "Keep seedbeds far from lights.",
         "Raise the water from time to time to drown eggs at the base, and alternate drying and flooding at the milk stage.",
-        "Flood the seedbed for a day so only the seedling tips show. IRRI says this controls BPH there.",
+        "Flood the seedbed for a day so only the seedling tips show. This controls BPH there.",
         "Plow under ratoons and volunteer rice after harvest."
       ]
     },
@@ -159,7 +159,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice advises no spraying in the first 30 days after transplanting or 40 days after seeding. The plants recover from early damage by making new leaves and tillers. Early sprays also stop friendly insects from settling in the field."
+      "text": "Do not spray in the first 30 days after transplanting or 40 days after seeding. The plants recover from early damage by making new leaves and tillers. Early sprays also stop friendly insects from settling in the field."
     },
     {
       "type": "heading",
@@ -168,7 +168,7 @@
     },
     {
       "type": "table",
-      "caption": "Brown planthopper counts and what PhilRice advises",
+      "caption": "Brown planthopper counts and what to do",
       "rows": [
         [
           "Count",
@@ -200,7 +200,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Hopperburn does not always mean spray",
-      "text": "IRRI advises against spraying even rice already hit by hopperburn if natural enemies outnumber the planthoppers. Count both before you mix anything."
+      "text": "Do not spray even rice already hit by hopperburn if natural enemies outnumber the planthoppers. Count both before you mix anything."
     },
     {
       "type": "heading",
@@ -209,7 +209,7 @@
     },
     {
       "type": "text",
-      "text": "Use insecticide only as a last resort, and choose a selective one if the infestation is very high. For seedbeds, IRRI allows a spray only when all three conditions hold: more than one planthopper per stem on average, more hoppers than natural enemies, and no way to flood the seedbed.\n\nPymetrozine is a common choice. It belongs to IRAC Group 9B, and it stops the hoppers from feeding. Chess insecticide (Chess 50 WG) from Syngenta contains pymetrozine, and its Philippine product page lists brown plant hopper on rice. Syngenta calls it highly selective for beneficial insects. DA CALABARZON also mentions insect growth regulators against the nymphs.\n\nTreat these as examples. Follow the label and the FPA registration, and never add a broad spectrum insecticide to the tank just to be sure. Our guide to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) compares these products."
+      "text": "Use insecticide only as a last resort, and choose a selective one if the infestation is very high. For seedbeds, spray only when all three conditions hold: more than one planthopper per stem on average, more hoppers than natural enemies, and no way to flood the seedbed.\n\nPymetrozine is a common choice. It belongs to IRAC Group 9B, and it stops the hoppers from feeding. Chess insecticide (Chess 50 WG) from Syngenta contains pymetrozine, and its Philippine product page lists brown plant hopper on rice. Syngenta calls it highly selective for beneficial insects. Insect growth regulators also work against the nymphs.\n\nTreat these as examples. Follow the label and the FPA registration, and never add a broad spectrum insecticide to the tank just to be sure. Our guide to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) compares these products."
     },
     {
       "type": "cta",
@@ -236,7 +236,7 @@
         },
         {
           "q": "Why did BPH attack after I sprayed?",
-          "a": "Broad spectrum sprays kill the spiders and other predators that eat planthoppers, so the hopper eggs hatch with nothing to stop them. IRRI and PhilRice both name this as a main trigger of outbreaks."
+          "a": "Broad spectrum sprays kill the spiders and other predators that eat planthoppers, so the hopper eggs hatch with nothing to stop them. This is a main trigger of outbreaks."
         },
         {
           "q": "Which insecticide is for the brown planthopper?",

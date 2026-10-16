@@ -117,9 +117,9 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Drain the field. IRRI lists this first among the cultural answers, and the pest is most likely in ill drained fields.",
+        "Drain the field. This comes first among the cultural answers, and the pest is most likely in ill drained fields.",
         "Plant early and use wider spacing. Sparse planting also reduces the damage.",
-        "Transplant older seedlings, as IRRI advises.",
+        "Transplant older seedlings.",
         "Apply fertilizer correctly, as recommended for your variety.",
         "Encourage the natural enemies. Snails feed on the eggs, water beetles feed on the larvae, and spiders, dragonflies and birds feed on the adults. Our guide on [rice insects](/pests/rice-insects) lists more."
       ]
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI advises foliar sprays of carbamate insecticides and says to avoid pyrethroids, because the pest has become tolerant to them. Draining the field usually does the job first. The sources we read name no single carbamate for the Philippines, so ask a technician which registered product to use. Do not spray early in the crop without a true outbreak."
+      "text": "Foliar sprays of carbamate insecticides work. Avoid pyrethroids, because the pest has become tolerant to them. Draining the field usually does the job first. The sources we read name no single carbamate for the Philippines, so ask a technician which registered product to use. Do not spray early in the crop without a true outbreak."
     },
     {
       "type": "callout",
@@ -183,11 +183,11 @@
         },
         {
           "q": "Does draining really help?",
-          "a": "Yes. IRRI lists draining the field as a cultural control, and the pest is most likely in fields with standing water."
+          "a": "Yes. Draining the field is a cultural control, and the pest is most likely in fields with standing water."
         },
         {
           "q": "Can I use any insecticide?",
-          "a": "IRRI says carbamates work and pyrethroids should be avoided. Ask a technician about a registered product, and follow the label."
+          "a": "Carbamates work and pyrethroids should be avoided. Ask a technician about a registered product, and follow the label."
         }
       ]
     },

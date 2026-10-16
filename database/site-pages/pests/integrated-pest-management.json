@@ -15,7 +15,7 @@
     "action threshold",
     "natural enemies"
   ],
-  "excerpt": "Integrated pest management, or IPM, means you count pests before you spray. You keep their natural enemies alive, and you use an insecticide only when the numbers say it pays. This guide shows how to scout, which thresholds PhilRice and IRRI give, and how to rotate and handle sprays safely.",
+  "excerpt": "Integrated pest management, or IPM, means you count pests before you spray. You keep their natural enemies alive, and you use an insecticide only when the numbers say it pays. This guide shows how to scout, which thresholds to use, and how to rotate and handle sprays safely.",
   "heroImage": {
     "src": "/images/site/guides/pests-integrated-pest-management.webp",
     "thumb": "/images/site/guides/pests-integrated-pest-management-480.webp",
@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "FAO describes IPM as weighing every way to control a pest and combining the right ones. Biological, cultural, physical and chemical tools all count. The goal is a healthy crop with as little pesticide as possible, because heavy spraying bred outbreaks and resistance.\n\nIn the Philippines, Memorandum Order 126 of 1993 launched KASAKALIKASAN, the national integrated pest management program for rice, corn and vegetables. It taught farmers in season long Farmer Field Schools."
+      "text": "IPM means weighing every way to control a pest and combining the right ones. Biological, cultural, physical and chemical tools all count. The goal is a healthy crop with as little pesticide as possible, because heavy spraying bred outbreaks and resistance.\n\nIn the Philippines, Memorandum Order 126 of 1993 launched KASAKALIKASAN, the national integrated pest management program for rice, corn and vegetables. It taught farmers in season long Farmer Field Schools."
     },
     {
       "type": "heading",
@@ -39,7 +39,7 @@
     },
     {
       "type": "text",
-      "text": "Scouting means walking your field on a schedule and counting. IRRI says to check for planthoppers weekly in the field and daily in the seedbed. For the [rice bug](/pests/rice-bug), scout daily from just before flowering to the hard dough stage. IRRI checks 10 to 20 hills, and PhilRice counts 10. Corn has its own walk, shown on the [fall armyworm](/pests/fall-armyworm) page."
+      "text": "Scouting means walking your field on a schedule and counting. Check for planthoppers weekly in the field and daily in the seedbed. For the [rice bug](/pests/rice-bug), scout daily from just before flowering to the hard dough stage. Check 10 to 20 hills each time. Corn has its own walk, shown on the [fall armyworm](/pests/fall-armyworm) page."
     },
     {
       "type": "steps",
@@ -54,7 +54,7 @@
         },
         {
           "title": "Count the friends too",
-          "text": "Count spiders and other natural enemies as well, since IRRI weighs the two numbers together."
+          "text": "Count spiders and other natural enemies as well, since the decision weighs the two numbers together."
         },
         {
           "title": "Write it down",
@@ -82,44 +82,39 @@
         [
           "Pest and crop",
           "How to count",
-          "Act when",
-          "Source"
+          "Act when"
         ],
         [
           "[Brown planthopper](/pests/brown-planthopper), rice field",
           "Adults and nymphs on 10 hills, tapped",
-          "1 or more per tiller, or 30 per hill",
-          "PhilRice"
+          "1 or more per tiller, or 30 per hill"
         ],
         [
           "Rice bug, flowering to hard dough",
           "20 hills on a diagonal, early or late in the day",
-          "More than 10 bugs in 20 hills",
-          "IRRI"
+          "More than 10 bugs in 20 hills"
         ],
         [
           "[Banana weevil](/pests/banana-weevil)",
           "50 cut stem discs per hectare, checked after 5 days",
-          "4 weevils per disc on average",
-          "Pacific Pests"
+          "4 weevils per disc on average"
         ],
         [
           "[Coconut rhinoceros beetle](/pests/coconut-rhinoceros-beetle)",
           "Beetles per hectare",
-          "3 to 5 in palms up to 2 years old, 15 to 20 after that",
-          "Pacific Pests"
+          "3 to 5 in palms up to 2 years old, 15 to 20 after that"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "IRRI adds a rule that saves many sprays. If natural enemies outnumber the planthoppers, do not spray, even where some hopperburn shows. Each page in our [pest catalogue](/pests) gives a count when a source has one."
+      "text": "One more rule saves many sprays. If natural enemies outnumber the planthoppers, do not spray, even where some hopperburn shows. Each page in our [pest catalogue](/pests) gives a count when a source has one."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "When to stop counting planthoppers",
-      "text": "IRRI says there is no need to scout for brown or whitebacked planthoppers beyond the milk stage."
+      "text": "There is no need to scout for brown or whitebacked planthoppers beyond the milk stage."
     },
     {
       "type": "heading",
@@ -128,7 +123,7 @@
     },
     {
       "type": "text",
-      "text": "In rice, spraying does the most harm in the first 30 to 40 days. IRRI does not recommend it from 0 to 40 days after planting, because the crop recovers from most early damage. Leaffolders, whorl maggots and armyworms look bad then, yet they rarely cut yield. PhilRice gives the same rule: no insecticide in the first 30 days after transplanting or 40 days after sowing.\n\nThe planthopper shows why. IRRI says its outbreaks come from pesticides that kill natural enemies. Then its eggs hatch unchecked and the survivors build up fast. In other words, an early spray against leaf eaters can buy you a planthopper problem later."
+      "text": "In rice, spraying does the most harm in the first 30 to 40 days. Do not spray from 0 to 40 days after planting, because the crop recovers from most early damage. Leaffolders, whorl maggots and armyworms look bad then, yet they rarely cut yield. Put another way, use no insecticide in the first 30 days after transplanting or 40 days after sowing.\n\nThe planthopper shows why. Its outbreaks come from pesticides that kill natural enemies. Then its eggs hatch unchecked and the survivors build up fast. In other words, an early spray against leaf eaters can buy you a planthopper problem later."
     },
     {
       "type": "heading",
@@ -140,11 +135,11 @@
       "ordered": false,
       "items": [
         "**Spiders, mirid bugs and water striders** eat planthoppers at the base of rice hills.",
-        "**Small wasps** lay their eggs inside pest eggs, and IRRI lists them among the enemies of the brown planthopper.",
-        "**Earwigs.** In UPLB trials, earwigs released against the [Asian corn borer](/pests/asian-corn-borer) gave green corn 45 percent more yield than untreated plots.",
-        "**Lady beetles** are on IRRI's list of enemies of the [rice black bug](/pests/rice-black-bug).",
+        "**Small wasps** lay their eggs inside pest eggs, and they are among the enemies of the brown planthopper.",
+        "**Earwigs.** In trials, earwigs released against the [Asian corn borer](/pests/asian-corn-borer) gave green corn 45 percent more yield than untreated plots.",
+        "**Lady beetles** are among the enemies of the [rice black bug](/pests/rice-black-bug).",
         "**Ducks** eat young [golden apple snails](/pests/golden-apple-snail) once rice is 30 to 35 days past transplanting.",
-        "**Flowers on the bunds.** IRRI says yellow and white flowers draw natural enemies in."
+        "**Flowers on the bunds.** Yellow and white flowers draw natural enemies in."
       ]
     },
     {
@@ -154,7 +149,7 @@
     },
     {
       "type": "text",
-      "text": "In Atok, Benguet, cabbage farmers released the Diadegma wasp against the [diamondback moth](/pests/diamondback-moth). A UPLB paper reports that their sprays fell from 32 to 8 in the dry season. In Palawan, a mango IPM program cut sprays from 24 to 7. Fruit hit by the [mango pulp weevil](/pests/mango-pulp-weevil) fell from 40 percent to zero. And against the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), a 2004 study got the most healthy fruit from weekly removal of damaged shoots and fruit."
+      "text": "In Atok, Benguet, cabbage farmers released the Diadegma wasp against the [diamondback moth](/pests/diamondback-moth). Their sprays fell from 32 to 8 in the dry season. In Palawan, a mango IPM program cut sprays from 24 to 7. Fruit hit by the [mango pulp weevil](/pests/mango-pulp-weevil) fell from 40 percent to zero. And against the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), a 2004 study got the most healthy fruit from weekly removal of damaged shoots and fruit."
     },
     {
       "type": "heading",
@@ -163,7 +158,7 @@
     },
     {
       "type": "text",
-      "text": "Most of IPM happens before any spray. IRRI gives these habits."
+      "text": "Most of IPM happens before any spray. These habits help."
     },
     {
       "type": "list",
@@ -255,7 +250,7 @@
     },
     {
       "type": "text",
-      "text": "Group choice also protects natural enemies. The Benguet farmers paired the wasp with selective sprays, Bt from group 11A and teflubenzuron from group 15. Against the brown planthopper, PhilRice advises a contact or stomach poison for adults and an insect growth regulator for nymphs.\n\nIn anee.io, the [farm inventory](/features/farm-inventory-and-expenses) records what every activity used, so you can see which groups already went on a lot."
+      "text": "Group choice also protects natural enemies. The Benguet farmers paired the wasp with selective sprays, Bt from group 11A and teflubenzuron from group 15. Against the brown planthopper, use a contact or stomach poison for adults and an insect growth regulator for nymphs.\n\nIn anee.io, the [farm inventory](/features/farm-inventory-and-expenses) records what every activity used, so you can see which groups already went on a lot."
     },
     {
       "type": "heading",
@@ -281,7 +276,7 @@
       "items": [
         "Buy only FPA registered products from licensed dealers, with your crop and pest on the label.",
         "Follow the label for rate, timing and the days to wait before harvest.",
-        "Wear protective gear when you mix and spray, as PhilRice advises.",
+        "Wear protective gear when you mix and spray.",
         "Keep rat poison in covered bait stations, away from children, pets and livestock.",
         "Use molluscicides only on rice under 30 days old, and only on low spots and canalettes.",
         "Check the [weather forecast](/features/farm-weather-forecast) in anee.io before you set a spray day."
@@ -314,7 +309,7 @@
         },
         {
           "q": "How often should I check my rice for pests?",
-          "a": "Weekly in the field and daily in the seedbed, says IRRI. For the rice bug, check daily from just before flowering to hard dough."
+          "a": "Weekly in the field and daily in the seedbed. For the rice bug, check daily from just before flowering to hard dough."
         },
         {
           "q": "Why should I not spray rice in the first 30 days?",

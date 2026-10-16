@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "The eggplant leafhopper (Amrasca biguttula biguttula) is found in the Philippines, India, Pakistan, Sri Lanka and Taiwan. It feeds on eggplant and on other crops, including okra. PCAARRD names it, together with the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), as a main reason that a large share of eggplant production cost goes to pesticides in the Philippines.\n\nBoth the adults and the nymphs feed on the underside of the leaves. They damage the phloem, and the leaf then shows burn like symptoms that can pass for a disease. Because the insects hop away fast when you disturb them, many farmers see the damage first and the pest later."
+      "text": "The eggplant leafhopper (Amrasca biguttula biguttula) is found in the Philippines, India, Pakistan, Sri Lanka and Taiwan. It feeds on eggplant and on other crops, including okra. Together with the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), it is a main reason that a large share of eggplant production cost goes to pesticides in the Philippines.\n\nBoth the adults and the nymphs feed on the underside of the leaves. They damage the phloem, and the leaf then shows burn like symptoms that can pass for a disease. Because the insects hop away fast when you disturb them, many farmers see the damage first and the pest later."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "AVRDC lists curled and burned leaves, small leaves and very low fruit set as the damage from this leafhopper. A heavy infestation weakens the plant, so it makes fewer and smaller fruits.\n\nWe found no Philippine action threshold in the sources we read. So the practical rule is to scout once a week from transplanting. Check the undersides of 10 leaves on 10 plants, and act when the insects keep building up and the first leaf edges curl."
+      "text": "The damage from this leafhopper is curled and burned leaves, small leaves and very low fruit set. A heavy infestation weakens the plant, so it makes fewer and smaller fruits.\n\nWe found no Philippine action threshold in the sources we read. So the practical rule is to scout once a week from transplanting. Check the undersides of 10 leaves on 10 plants, and act when the insects keep building up and the first leaf edges curl."
     },
     {
       "type": "heading",
@@ -120,10 +120,10 @@
       "ordered": true,
       "items": [
         "Scout every week. Turn over leaves from the lower and middle part of the plant and count the nymphs and adults.",
-        "Use mulch. In a UPLB trial, plastic mulch and fipronil gave the best return on investment, at 38.87 percent and 44.41 percent, while rice straw mulch gave 15.36 percent.",
-        "Choose varieties that resist the leafhopper where they are sold for your area. PCAARRD supports UPLB breeding of eggplant that resists the leafhopper and the borer.",
-        "Try botanical sprays first, especially in organic plots. In a UPLB study, weekly sprays of a 5 percent extract of chili pepper (Capsicum frutescens) or kakawate (Gliricidia sepium), starting 21 days after transplanting, gave the greatest drop in leafhopper numbers and higher marketable yield.",
-        "Do not rely on the fungus Metarhizium anisopliae. A UPLB trial found its isolates killed only about 10 percent of the insects.",
+        "Use mulch. In a trial, plastic mulch and fipronil gave the best return on investment, at 38.87 percent and 44.41 percent, while rice straw mulch gave 15.36 percent.",
+        "Choose varieties that resist the leafhopper where they are sold for your area. Breeders are working on eggplant that resists the leafhopper and the borer.",
+        "Try botanical sprays first, especially in organic plots. In a study, weekly sprays of a 5 percent extract of chili pepper (Capsicum frutescens) or kakawate (Gliricidia sepium), starting 21 days after transplanting, gave the greatest drop in leafhopper numbers and higher marketable yield.",
+        "Do not rely on the fungus Metarhizium anisopliae. A trial found its isolates killed only about 10 percent of the insects.",
         "Keep weeds and old okra or eggplant plants away from the field, so the hoppers do not move in from them. See the [integrated pest management guide](/pests/integrated-pest-management)."
       ]
     },
@@ -148,7 +148,7 @@
         [
           "Fipronil",
           "IRAC 2B",
-          "gave the highest drop in leafhopper numbers and the highest yield in a UPLB eggplant trial, though the gap was not statistically proven"
+          "gave the highest drop in leafhopper numbers and the highest yield in an eggplant trial, though the gap was not statistically proven"
         ]
       ]
     },
@@ -206,7 +206,7 @@
         },
         {
           "q": "Can I control it without synthetic insecticide?",
-          "a": "Yes, to a point. Plastic mulch and weekly sprays of botanical extracts such as chili or kakawate helped in UPLB studies. Check the fields weekly so you can add a spray only if the numbers keep rising."
+          "a": "Yes, to a point. Plastic mulch and weekly sprays of botanical extracts such as chili or kakawate helped in trials. Check the fields weekly so you can add a spray only if the numbers keep rising."
         }
       ]
     },

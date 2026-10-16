@@ -7,7 +7,7 @@
   "profile": true,
   "title": "Golden Apple Snail: How to Spot It and Stop It in Your Palay",
   "metaTitle": "Golden Apple Snail: Damage and Control in Rice",
-  "metaDescription": "The golden apple snail cuts young palay at the base overnight. Learn the signs, the critical days and the control steps PhilRice recommends.",
+  "metaDescription": "The golden apple snail cuts young palay at the base overnight. Learn the signs, the critical days and the control steps that work.",
   "focusKeyword": "golden apple snail",
   "keywords": [
     "golden apple snail",
@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "The golden apple snail is a freshwater snail from South America. Private farmers brought it to the Philippines in the early 1980s, hoping to export it as food. It escaped into rice fields and canals. Today it is a major pest of lowland rice, both transplanted and wet seeded.\n\nFarmers care because the snail eats young plants from the base, and a cut seedling does not grow back. PhilRice says it can reduce yield by up to 40 percent. Older rice is safe, because plants about 30 days old are thick enough to resist it. That is why the early days matter most."
+      "text": "The golden apple snail is a freshwater snail from South America. Private farmers brought it to the Philippines in the early 1980s, hoping to export it as food. It escaped into rice fields and canals. Today it is a major pest of lowland rice, both transplanted and wet seeded.\n\nFarmers care because the snail eats young plants from the base, and a cut seedling does not grow back. It can reduce yield by up to 40 percent. Older rice is safe, because plants about 30 days old are thick enough to resist it. That is why the early days matter most."
     },
     {
       "type": "table",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice reports that the snail can cut yield by up to 40 percent. It can eat a whole young paddy overnight. A PhilRice study found that one snail can damage up to 19 percent of the young plants in a square meter. The first 15 days after transplanting are the most dangerous.\n\nReplanting costs seed, labor and time, and a late stand misses the best weather. That is why prevention is cheaper than repair. Count the snails and egg masses in the paddy before you transplant, and write the numbers in a note for the lot."
+      "text": "The snail can cut yield by up to 40 percent. It can eat a whole young paddy overnight. A study found that one snail can damage up to 19 percent of the young plants in a square meter. The first 15 days after transplanting are the most dangerous.\n\nReplanting costs seed, labor and time, and a late stand misses the best weather. That is why prevention is cheaper than repair. Count the snails and egg masses in the paddy before you transplant, and write the numbers in a note for the lot."
     },
     {
       "type": "heading",
@@ -121,8 +121,8 @@
       "items": [
         "Prepare the land well and remove snails by hand in the morning and late afternoon. Hand picking works best for large adults, which ducks do not eat.",
         "Dig small, deep strips or canals along the paddy. Place leaves of gabi, papaya or banana, or gugo, sambong, calamansi or makabuhay, so snails gather there for collection.",
-        "Scrape off the pink egg masses from stems and pilapil and crush them, since they hatch in 7 to 14 days. PhilRice also lists screen tapping and staking among the physical methods.",
-        "Keep the water shallow, about 2 to 3 centimeters, starting 3 days after transplanting. Drain the field from time to time. PhilRice found that a saturated field, with no standing water, gave 99 percent seedling survival in transplanted rice. Snails cannot swim there.",
+        "Scrape off the pink egg masses from stems and pilapil and crush them, since they hatch in 7 to 14 days. Screen tapping and staking are physical methods too.",
+        "Keep the water shallow, about 2 to 3 centimeters, starting 3 days after transplanting. Drain the field from time to time. A saturated field, with no standing water, gave 99 percent seedling survival in transplanted rice. Snails cannot swim there.",
         "Herd ducks into the fields after harvest and until final land preparation. Ducks eat the young snails and the flesh of broken ones. Red ants and long horned grasshoppers also eat the eggs.",
         "Level the field well, so the water stays even and no deep pockets of water hold snails."
       ]
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "A molluscicide comes last, after hand picking and water control. PhilRice notes that controlled irrigation costs less than the P400 to P500 per hectare that farmers spend on synthetic molluscicide. If you still need one, use only a product registered with the FPA. Follow the label and the safety advice, since these chemicals can harm fish and ducks.\n\nPhilRice field advice sets the timing and the choice. Treat only where the snails will cause damage, and do it the day after transplanting, while the seedlings are smallest. Then pick the active ingredient by your water. Where irrigation runs strong and is hard to control, or sudden rain is likely, PhilRice points to metaldehyde. Where water is scarce and no rain is expected, it points to niclosamide. Apply either one only on a field with standing water, in the morning or the late afternoon. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) has the timing for the rest of the season."
+      "text": "A molluscicide comes last, after hand picking and water control. Controlled irrigation costs less than the P400 to P500 per hectare that farmers spend on synthetic molluscicide. If you still need one, use only a product registered with the FPA. Follow the label and the safety advice, since these chemicals can harm fish and ducks.\n\nThe timing and the choice both matter. Treat only where the snails will cause damage, and do it the day after transplanting, while the seedlings are smallest. Then pick the active ingredient by your water. Where irrigation runs strong and is hard to control, or sudden rain is likely, use metaldehyde. Where water is scarce and no rain is expected, use niclosamide. Apply either one only on a field with standing water, in the morning or the late afternoon. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) has the timing for the rest of the season."
     },
     {
       "type": "table",
@@ -148,12 +148,12 @@
         [
           "Niclosamide",
           "Molluscicide",
-          "PhilRice picks it where water is scarce and no rain is expected. Listed among the registered molluscicides in its snail guide"
+          "For fields where water is scarce and no rain is expected. One of the registered molluscicides"
         ],
         [
           "Metaldehyde",
           "Molluscicide",
-          "PhilRice picks it where irrigation is strong and hard to control, or sudden rain is likely. Sold as pellets and as a flowable"
+          "For fields where irrigation is strong and hard to control, or sudden rain is likely. Sold as pellets and as a flowable"
         ]
       ]
     },
@@ -203,15 +203,15 @@
       "items": [
         {
           "q": "How long does the golden apple snail threaten my rice?",
-          "a": "PhilRice says plants about 30 days old can resist it. The worst damage comes in the first 10 to 15 days after transplanting and in the first 21 days after wet seeding."
+          "a": "Plants about 30 days old can resist it. The worst damage comes in the first 10 to 15 days after transplanting and in the first 21 days after wet seeding."
         },
         {
           "q": "Does shallow water really stop the snail?",
-          "a": "It limits the snail. PhilRice advises 2 to 3 centimeters of water from 3 days after transplanting and a draining now and then. In a 2017 PhilRice study, saturated fields kept 99 percent of transplanted seedlings alive."
+          "a": "It limits the snail. Keep 2 to 3 centimeters of water from 3 days after transplanting, and drain now and then. In a 2017 study, saturated fields kept 99 percent of transplanted seedlings alive."
         },
         {
           "q": "Should I spray a molluscicide first?",
-          "a": "No. Hand picking, egg removal, ducks and water control come first. A molluscicide is the last step, and it must be FPA registered and used by the label. PhilRice times it for the day after transplanting, on a field with standing water."
+          "a": "No. Hand picking, egg removal, ducks and water control come first. A molluscicide is the last step, and it must be FPA registered and used by the label. Time it for the day after transplanting, on a field with standing water."
         },
         {
           "q": "Can I use the snails for something?",

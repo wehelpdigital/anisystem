@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "The onion armyworm is a moth caterpillar found in all the major onion areas of the Philippines. It also eats pepper, squash, bitter melon, cowpea, corn and many weeds, so it is hard to starve out. The BPI says it is a destructive pest that gets its name from its army like movement.\n\nIn 2016 an outbreak hit fourteen municipalities of Nueva Ecija, covering 5,330 hectares and 4,089 farmers, with an estimated loss above 1.6 billion pesos from February to April. Researchers linked it to a long distance migration, possibly triggered by El Nino. A later DA report found 366 hectares affected out of 10,217 hectares planted in Nueva Ecija and Tarlac."
+      "text": "The onion armyworm is a moth caterpillar found in all the major onion areas of the Philippines. It also eats pepper, squash, bitter melon, cowpea, corn and many weeds, so it is hard to starve out. It is a destructive pest that gets its name from its army like movement.\n\nIn 2016 an outbreak hit fourteen municipalities of Nueva Ecija, covering 5,330 hectares and 4,089 farmers, with an estimated loss above 1.6 billion pesos from February to April. Researchers linked it to a long distance migration, possibly triggered by El Nino. Later, 366 hectares were affected out of 10,217 hectares planted in Nueva Ecija and Tarlac."
     },
     {
       "type": "table",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "The larvae skeletonize the leaves, and the feeding reaches down to the bulbs, so yield falls. In 2016 the loss in Nueva Ecija was estimated at more than 1.6 billion pesos. In the 2024 DA report, 6.9 hectares were a total loss and 359.1 hectares had partial damage.\n\nBecause the pest has many other host plants and its moths migrate, one farmer cannot manage it alone. Scouting and joint action with neighbors count."
+      "text": "The larvae skeletonize the leaves, and the feeding reaches down to the bulbs, so yield falls. In 2016 the loss in Nueva Ecija was estimated at more than 1.6 billion pesos. In 2024, 6.9 hectares were a total loss and 359.1 hectares had partial damage.\n\nBecause the pest has many other host plants and its moths migrate, one farmer cannot manage it alone. Scouting and joint action with neighbors count."
     },
     {
       "type": "heading",
@@ -119,10 +119,10 @@
       "ordered": true,
       "items": [
         "Scout often. Look for egg masses and groups of young larvae, and crush them by hand when numbers are low. Handpicking is the first control measure.",
-        "Use sex pheromone traps to detect the first moths, so you can time your control. The BPI and DA gave out pheromone lures in Nueva Ecija.",
+        "Use sex pheromone traps to detect the first moths, so you can time your control. Pheromone lures were given out in Nueva Ecija.",
         "Remove weeds and crop residue, and rest the field from onion and other hosts for one or two seasons, so the pupae in the soil do not infest a new crop.",
         "Use light traps for mass trapping, or grow shallots under a net on small plots.",
-        "Protect natural enemies such as earwigs, spiders and predatory wasps, which the DA lists as the biological control.",
+        "Protect natural enemies such as earwigs, spiders and predatory wasps, which are the biological control.",
         "Use neem oil, a botanical spray, or Bacillus thuringiensis on young larvae before any synthetic spray."
       ]
     },
@@ -157,7 +157,7 @@
         [
           "Azadirachtin (neem)",
           "IRAC UN",
-          "neem oil sprays were given to Nueva Ecija onion growers by the DA"
+          "neem oil sprays were given out to Nueva Ecija onion growers"
         ]
       ]
     },

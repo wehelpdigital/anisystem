@@ -28,7 +28,7 @@
     },
     {
       "type": "text",
-      "text": "The fall armyworm is the larva of a night flying moth native to the Americas. It prefers corn, but it also feeds on rice, sorghum, sugarcane and some vegetables.\n\nIn the Philippines, the first suspected case came from a cornfield in Piat, Cagayan on June 20, 2019. Scientists at UPLB confirmed the species by DNA barcoding. Four months later the pest was in 83 towns and cities across 15 regions, according to the country report filed with the IPPC.\n\nThe Bureau of Plant Industry now leads a National Fall Armyworm Action Plan. It covers monitoring with pheromone traps, biological control, farmer training and research."
+      "text": "The fall armyworm is the larva of a night flying moth native to the Americas. It prefers corn, but it also feeds on rice, sorghum, sugarcane and some vegetables.\n\nIn the Philippines, the first suspected case came from a cornfield in Piat, Cagayan on June 20, 2019. Scientists confirmed the species by DNA barcoding. Four months later the pest was in 83 towns and cities across 15 regions, according to the country report filed with the IPPC.\n\nThe Bureau of Plant Industry now leads a National Fall Armyworm Action Plan. It covers monitoring with pheromone traps, biological control, farmer training and research."
     },
     {
       "type": "heading",
@@ -53,7 +53,7 @@
     },
     {
       "type": "text",
-      "text": "Damage builds fastest at the whorl stage. The larvae hide deep in the funnel of young leaves and eat them before they open. On seedlings, they can also cut the plant at the base.\n\nAfter that, they move to the tassels and bore into the ears. The USDA 2024 report on the Philippines says fall armyworm has severely hurt corn through stunting and damage to tassels and kernels, which cuts grain quality and yield.\n\nGood control pays. In a DA Cagayan Valley IPM demonstration reported in May 2025, the IPM plot yielded 7,781 kg per hectare in the dry season. The usual farmer practice next to it yielded 2,417 kg."
+      "text": "Damage builds fastest at the whorl stage. The larvae hide deep in the funnel of young leaves and eat them before they open. On seedlings, they can also cut the plant at the base.\n\nAfter that, they move to the tassels and bore into the ears. The USDA 2024 report on the Philippines says fall armyworm has severely hurt corn through stunting and damage to tassels and kernels, which cuts grain quality and yield.\n\nGood control pays. In a Cagayan Valley IPM demonstration reported in May 2025, the IPM plot yielded 7,781 kg per hectare in the dry season. The usual farmer practice next to it yielded 2,417 kg."
     },
     {
       "type": "heading",
@@ -81,7 +81,7 @@
         },
         {
           "title": "Decide",
-          "text": "In the DA Cagayan Valley IPM protocol, farmers used chemical insecticides only when infestation passed 10 percent."
+          "text": "In the Cagayan Valley IPM protocol, farmers used chemical insecticides only when infestation passed 10 percent."
         }
       ]
     },
@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "The DA Cagayan Valley IPM protocol starts biological control early. Earwigs (Euborellia) go out at about 10,000 per hectare within five days after planting. Trichogramma chilonis cards follow at 50 per hectare between days 5 and 10. After that, sprays of Metarhizium and Beauveria, two fungi that infect caterpillars, come at set intervals.\n\nBirds, ants, beetles and wild earwigs also eat larvae. So avoid broad spectrum sprays early in the season that would kill them too."
+      "text": "The Cagayan Valley IPM protocol starts biological control early. Earwigs (Euborellia) go out at about 10,000 per hectare within five days after planting. Trichogramma chilonis cards follow at 50 per hectare between days 5 and 10. After that, sprays of Metarhizium and Beauveria, two fungi that infect caterpillars, come at set intervals.\n\nBirds, ants, beetles and wild earwigs also eat larvae. So avoid broad spectrum sprays early in the season that would kill them too."
     },
     {
       "type": "heading",
@@ -129,7 +129,7 @@
     },
     {
       "type": "table",
-      "caption": "Label crops and pests from Syngenta Philippines product pages and the DA Cagayan Valley protocol, checked September 2026. Always read the label on the bottle you buy.",
+      "caption": "Label crops and pests from Syngenta Philippines product pages and the Cagayan Valley protocol, checked September 2026. Always read the label on the bottle you buy.",
       "rows": [
         [
           "Active ingredient (IRAC group)",
@@ -139,12 +139,12 @@
         [
           "Chlorantraniliprole (28)",
           "Virtako 40 WG, Prevathon 5SC",
-          "Labels list fall armyworm on corn. Also used in the DA Cagayan Valley IPM protocol"
+          "Labels list fall armyworm on corn. Also used in the Cagayan Valley IPM protocol"
         ],
         [
           "Spinetoram (5)",
           "Several brands",
-          "Also used in the same DA protocol"
+          "Also used in the same protocol"
         ],
         [
           "Emamectin benzoate (6)",
@@ -204,7 +204,7 @@
       "items": [
         {
           "q": "When did fall armyworm reach the Philippines?",
-          "a": "The first suspected case came from Piat, Cagayan on June 20, 2019. UPLB confirmed it by DNA barcoding, and by October 2019 it was in 15 regions."
+          "a": "The first suspected case came from Piat, Cagayan on June 20, 2019. Scientists confirmed it by DNA barcoding, and by October 2019 it was in 15 regions."
         },
         {
           "q": "Does Bt corn stop fall armyworm?",

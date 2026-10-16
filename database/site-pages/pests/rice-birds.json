@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "In the Philippines maya means four small birds: the Eurasian tree sparrow, Passer montanus, and three munias, the chestnut, the scaly breasted and the white bellied munia, all of the genus Lonchura. The tree sparrow is also called mayang simbahan.\n\nIRRI counted over 50 bird species in its experimental rice fields, and only these four feed on rice. The rest eat insects, frogs or rats, and many of them help the farmer. So blaming every bird for empty panicles can be wrong."
+      "text": "In the Philippines maya means four small birds: the Eurasian tree sparrow, Passer montanus, and three munias, the chestnut, the scaly breasted and the white bellied munia, all of the genus Lonchura. The tree sparrow is also called mayang simbahan.\n\nOver 50 bird species were counted in experimental rice fields, and only these four feed on rice. The rest eat insects, frogs or rats, and many of them help the farmer. So blaming every bird for empty panicles can be wrong."
     },
     {
       "type": "table",
@@ -83,7 +83,7 @@
     },
     {
       "type": "text",
-      "text": "Maya are small, 10 to 30 grams, and they come in noisy flocks. They squeeze the milk from the developing grain or hull the soft grains straight from the panicle. IRRI notes that they are most active around 5:30 to 6:30 in the morning. Empty panicles can also come from the [rice bug](/pests/rice-bug) or from [rice field rats](/pests/rice-field-rats), so look for the flocks before you decide."
+      "text": "Maya are small, 10 to 30 grams, and they come in noisy flocks. They squeeze the milk from the developing grain or hull the soft grains straight from the panicle. They are most active around 5:30 to 6:30 in the morning. Empty panicles can also come from the [rice bug](/pests/rice-bug) or from [rice field rats](/pests/rice-field-rats), so look for the flocks before you decide."
     },
     {
       "type": "list",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI says that how much damage the birds really cause is unknown. No standard method of measuring it exists and the birds move around. A study in the Philippines found that the highest panicle damage came from one munia species. The biggest weight loss came from another, so the effect differs by species.\n\nAn adult eats about 30 percent of its body weight each day, as FAO notes. That is around 3 grams for a munia and 6 grams for a tree sparrow. A big flock can still take a real share of a small field. Weigh your own losses before you spend money on a defense."
+      "text": "How much damage the birds really cause is unknown. No standard method of measuring it exists and the birds move around. A study in the Philippines found that the highest panicle damage came from one munia species. The biggest weight loss came from another, so the effect differs by species.\n\nAn adult eats about 30 percent of its body weight each day. That is around 3 grams for a munia and 6 grams for a tree sparrow. A big flock can still take a real share of a small field. Weigh your own losses before you spend money on a defense."
     },
     {
       "type": "heading",
@@ -120,10 +120,10 @@
       "ordered": true,
       "items": [
         "Plant at the same time as your neighbors. The ripening window is then short, and the flocks spread across many fields and not one.",
-        "Check first that birds are the cause. Watch the field at dawn and see whether the flock really feeds on the panicles, as IRRI advises.",
-        "Do not rely on flags, scarecrows or noise. IRRI reports that birds get used to them fast, and a flag only gives them a new perch.",
+        "Check first that birds are the cause. Watch the field at dawn and see whether the flock really feeds on the panicles.",
+        "Do not rely on flags, scarecrows or noise. Birds get used to them fast, and a flag only gives them a new perch.",
         "Guard the field at dawn and dusk during the milky to ripe stage. Use a farmer or a helper who changes the method often.",
-        "Use netting over a small plot or a seedbed where the crop is worth it. IRRI says only netting or a closed cover fully protects the crop. It costs money and also keeps out helpful birds.",
+        "Use netting over a small plot or a seedbed where the crop is worth it. Only netting or a closed cover fully protects the crop. It costs money and also keeps out helpful birds.",
         "Keep the useful birds. Egrets, herons, harriers and owls eat insects, frogs and rats, so do not shoot or net them."
       ]
     },
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "This page names no chemical. FAO lists avicides only as a last resort that needs close supervision, and they harm other birds and wildlife. Ask the DA before you consider any such product."
+      "text": "This page names no chemical. Avicides are only a last resort that needs close supervision, and they harm other birds and wildlife. Ask the DA before you consider any such product."
     },
     {
       "type": "callout",
@@ -182,19 +182,19 @@
       "items": [
         {
           "q": "Which birds are the maya?",
-          "a": "IRRI names four: the tree sparrow Passer montanus and three munias, the chestnut, the scaly breasted and the white bellied munia."
+          "a": "There are four: the tree sparrow Passer montanus and three munias, the chestnut, the scaly breasted and the white bellied munia."
         },
         {
           "q": "Are all birds in my rice field pests?",
-          "a": "No. IRRI found over 50 species in its fields and only four eat rice. Egrets, herons, harriers and owls help by eating pests."
+          "a": "No. Over 50 species were found in rice fields and only four eat rice. Egrets, herons, harriers and owls help by eating pests."
         },
         {
           "q": "Do scarecrows work?",
-          "a": "Not for long. IRRI reports that birds quickly get used to flags, noise and scarecrows."
+          "a": "Not for long. Birds quickly get used to flags, noise and scarecrows."
         },
         {
           "q": "What is the surest protection?",
-          "a": "Netting or a cover gives complete protection, according to IRRI, but it costs money and also keeps out the helpful birds."
+          "a": "Netting or a cover gives complete protection, but it costs money and also keeps out the helpful birds."
         }
       ]
     },
