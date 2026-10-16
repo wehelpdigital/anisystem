@@ -246,7 +246,8 @@ class AiClient
             }
             $doc = $this->askForJson($settings, $docOf(trim($kept['notes']), ['searched' => true, 'sources' => (array) $kept['sources'], 'shelf' => true]), $maxOut, $parse, ['onPhase' => $onPhase]);
             $doc['searched'] = true;
-            $doc['sources'] = (array) $kept['sources'];
+            // A brief kept before 2026-10-17 may still list an agency's page (GovSource).
+            $doc['sources'] = \App\Support\GovSource::keep((array) $kept['sources']);
             $doc['researchText'] = (string) $kept['notes'];
 
             return $doc + ['paidSearch' => false, 'shelf' => true, 'shelfId' => $kept['id']];
