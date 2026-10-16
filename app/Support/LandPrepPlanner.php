@@ -80,8 +80,9 @@ final class LandPrepPlanner
 
     /** Where a step's words come from, as the tag on screen says it. */
     public const TAGS = [
-        'philrice' => 'PhilRice practice',
-        'irri' => 'IRRI practice',
+        // Whose practice it is never shows (the owner, 2026-10-17): no agency or institute named.
+        'philrice' => 'Standard practice',
+        'irri' => 'Standard practice',
         'extension' => 'Extension practice',
         'anee' => 'Anee\'s suggestion',
     ];
@@ -994,9 +995,9 @@ final class LandPrepPlanner
                 $daysToSow = (int) now('Asia/Manila')->startOfDay()->diffInDays(Carbon::parse($first)->addDays($sowAt), false);
                 $rest = $ago === null ? null : $ago + $daysToSow;
                 if ($ago === null) {
-                    $note('warn', 'The last crop is not harvested yet. PhilRice asks for at least 30 days with no rice on the field before sowing: count from the harvest and move the planting day later if it falls short.', 'history');
+                    $note('warn', 'The last crop is not harvested yet. The field needs at least 30 days with no rice before sowing: count from the harvest and move the planting day later if it falls short.', 'history');
                 } elseif (str_starts_with((string) ($h['prevCrop'] ?? 'rice'), 'rice') && $rest < 30) {
-                    $note('warn', 'Your field gets only about ' . max(0, $rest) . ' days without rice before sowing. PhilRice asks for at least 30: plow the stubble and any ratoon under right away, or plant ' . (30 - max(0, $rest)) . ' days later.', 'history');
+                    $note('warn', 'Your field gets only about ' . max(0, $rest) . ' days without rice before sowing. It needs at least 30: plow the stubble and any ratoon under right away, or plant ' . (30 - max(0, $rest)) . ' days later.', 'history');
                     $addNote('rest', 'Short rest here: plow under the stubble and ratoon at once.');
                 }
             }
@@ -1313,7 +1314,7 @@ final class LandPrepPlanner
                     $steps[$k]['from'] = -$L;
                     $steps[$k]['to'] = max(-$L, (int) $s['to']);
                     $steps[$k]['squeezed'] = ['was' => $was, 'state' => 'moved', 'why' => match ($s['key']) {
-                        'rest' => 'The rest without rice is shorter than PhilRice advises. Plow the stubble and any ratoon under at once.',
+                        'rest' => 'The rest without rice is shorter than the 30 days it needs. Plow the stubble and any ratoon under at once.',
                         'soil_test' => 'Test now, with a soil test kit if you can. A laboratory result may come after plowing.',
                         default => 'Its usual time has passed, so do it as soon as you can.',
                     }];
@@ -1378,7 +1379,7 @@ final class LandPrepPlanner
             }
             $count++;
             $why = match (true) {
-                $s['key'] === 'rest' => 'The rest without rice is shorter than PhilRice advises. Plow the stubble and any ratoon under at once.',
+                $s['key'] === 'rest' => 'The rest without rice is shorter than the 30 days it needs. Plow the stubble and any ratoon under at once.',
                 $s['key'] === 'calendar' => 'The planting day is near, so check the area\'s schedule today.',
                 $s['key'] === 'soil_test' => 'Test now, with a soil test kit if you can. A laboratory result may come after plowing.',
                 $s['key'] === 'seed_test' => 'Little time to test the seed: sprout a small handful first and check that most come up, or use certified seed.',
@@ -1400,7 +1401,7 @@ final class LandPrepPlanner
             if ($age < $min) {
                 $notes[] = ['level' => 'warn', 'reason' => 'seed', 'text' => $age < 7
                     ? 'There is no time to raise seedlings before this day. Buy or borrow healthy seedlings, or ' . ($word === 'transplanting' ? 'transplant' : 'plant') . ' later.'
-                    : 'The seedlings will be only ' . $age . ' days old at ' . $word . ', and ' . ($method === 'tpr_manual' ? 'PhilRice advises 18 to 21 days' : ($method === 'tpr_mechanical' ? 'PhilRice advises 14 to 18 days' : 'the usual age is ' . (-$oldSow) . ' days'))
+                    : 'The seedlings will be only ' . $age . ' days old at ' . $word . ', and ' . ($method === 'tpr_manual' ? 'the usual age is 18 to 21 days' : ($method === 'tpr_mechanical' ? 'the usual age is 14 to 18 days' : 'the usual age is ' . (-$oldSow) . ' days'))
                         . '. Move the day a little later if you can, or get older seedlings from a neighbor\'s seedbed.'];
             }
         }
@@ -1554,12 +1555,60 @@ final class LandPrepPlanner
         return null;
     }
 
+    /** The planner's own words of before 2026-10-17 that named an agency or institute, and what it says now. */
+    private const OLD_WORDS = [
+        'PhilRice asks for at least 30 days with no rice on the field before sowing' => 'The field needs at least 30 days with no rice before sowing',
+        'days without rice before sowing. PhilRice asks for at least 30:' => 'days without rice before sowing. It needs at least 30:',
+        'The rest without rice is shorter than PhilRice advises.' => 'The rest without rice is shorter than the 30 days it needs.',
+        'PhilRice advises 18 to 21 days' => 'the usual age is 18 to 21 days',
+        'PhilRice advises 14 to 18 days' => 'the usual age is 14 to 18 days',
+        'In still water, PhilRice advises changing it every 6 hours.' => 'In still water, change it every 6 hours.',
+        'From PhilRice\'s own instructions for its hybrids.' => 'From the breeder\'s own instructions for the Mestiso hybrids.',
+        'the general PhilRice practice for hybrid seed' => 'the general practice for hybrid seed',
+        'PhilRice practice for inbred seed.' => 'The standard practice for inbred seed.',
+        'PhilRice advises changing still water every 6 hours.' => 'Change still water every 6 hours.',
+        'as PhilRice advises' => 'as is usually advised',
+        'the PhilRice hybrid steps' => 'the general hybrid steps',
+        'so later rain soaks in (PhilRice).' => 'so later rain soaks in.',
+        ' (IRRI).' => '.',
+        'PhilRice practice' => 'Standard practice',
+        'IRRI practice' => 'Standard practice',
+    ];
+
+    /**
+     * A saved plan as it is shown: the old words that named an agency or
+     * institute as the plan's source in today's words, and whatever else
+     * Anee wrote run through GovSource. Saved rows are not rewritten; a
+     * plan reads this way wherever it opens (the page, a port to a season).
+     */
+    public static function plainReport(array $report): array
+    {
+        $walk = function ($v, $key = null) use (&$walk) {
+            if (is_string($v)) {
+                if ($key === 'brand' && $v === 'PhilRice') {
+                    return 'Mestiso';
+                }
+
+                return strtr($v, self::OLD_WORDS);
+            }
+            if (is_array($v)) {
+                foreach ($v as $k => $x) {
+                    $v[$k] = $walk($x, is_string($k) ? $k : null);
+                }
+            }
+
+            return $v;
+        };
+
+        return GovSource::scrubAll($walk($report));
+    }
+
     /** "SL Agritech", "Longping": a seed company's short name. */
     public static function brandName(string $brand): string
     {
         $b = trim(preg_split('/\s*[(:]/', $brand)[0]);
 
-        return ['Longping Tropical Rice Development' => 'Longping', 'PhilRice public hybrids' => 'PhilRice', 'SeedWorks US Agriseeds' => 'SeedWorks',
+        return ['Longping Tropical Rice Development' => 'Longping', 'Public hybrids' => 'Mestiso', 'PhilRice public hybrids' => 'Mestiso', 'SeedWorks US Agriseeds' => 'SeedWorks',
             'Bayer Arize' => 'Bayer (Arize)', 'Pioneer' => 'Pioneer (Corteva)'][$b] ?? $b;
     }
 
@@ -1663,7 +1712,7 @@ final class LandPrepPlanner
             'brand' => ! empty($research['company']) ? (string) $research['company'] : ($base['brand'] ?? null),
             'soakHours' => (int) $soak[0], 'soakRange' => [(int) $soak[0], (int) $soak[1]],
             'refreshEveryHours' => $refresh ? (int) $refresh : null, 'refreshPlanHours' => $refresh ? (int) $refresh : 6,
-            'refreshNote' => $refresh ? null : 'No water change schedule was found for this variety. In still water, PhilRice advises changing it every 6 hours.',
+            'refreshNote' => $refresh ? null : 'No water change schedule was found for this variety. In still water, change it every 6 hours.',
             'incubateHours' => (int) $inc[0], 'incubateRange' => [(int) $inc[0], (int) $inc[1]],
             'say' => 'From Anee\'s research on this variety.' . ($notes !== '' ? ' ' . $notes : '') . ' The seed bag comes first if it says otherwise.',
             'research' => ['status' => 'found'] + $facts,
@@ -1713,7 +1762,7 @@ final class LandPrepPlanner
         $refresh = $src['refreshEveryHours'] ?? null;
         $refreshNote = null;
         if ($refresh === null) {
-            $refreshNote = 'The seed company gives no water change schedule. In still water, PhilRice advises changing it every 6 hours.';
+            $refreshNote = 'The seed company gives no water change schedule. In still water, change it every 6 hours.';
         }
         // Seed per hectare: PalayCheck's for inbred seed, the brand's own for a hybrid.
         $rates = (array) ($src['seedKgPerHa'] ?? []);
@@ -1727,11 +1776,11 @@ final class LandPrepPlanner
         };
         $name = $brand ? self::brandName((string) $brand['brand']) : null;
         $say = match (true) {
-            $source === 'brand' && ! $general && $name === 'PhilRice' => 'From PhilRice\'s own instructions for its hybrids.',
+            $source === 'brand' && ! $general && $name === 'Mestiso' => 'From the breeder\'s own instructions for the Mestiso hybrids.',
             $source === 'brand' && ! $general => 'From the seed company\'s own instructions (' . $name . ').',
-            $source === 'brand' => 'No instruction from ' . $name . ' was found, so this is the general PhilRice practice for hybrid seed. The instructions on your seed bag come first.',
-            $source === 'general' => 'This is the general PhilRice practice for hybrid seed. The instructions on your seed bag come first.',
-            default => 'PhilRice practice for inbred seed.',
+            $source === 'brand' => 'No instruction from ' . $name . ' was found, so this is the general practice for hybrid seed. The instructions on your seed bag come first.',
+            $source === 'general' => 'This is the general practice for hybrid seed. The instructions on your seed bag come first.',
+            default => 'The standard practice for inbred seed.',
         };
 
         return [
@@ -1771,7 +1820,7 @@ final class LandPrepPlanner
         $every = (int) ($prep['refreshPlanHours'] ?? 0);
         if ($every > 0) {
             for ($t = $soakStart->copy()->addHours($every); $t->lt($incStart); $t->addHours($every)) {
-                $ev[] = ['at' => $t->format('Y-m-d H:i'), 'kind' => 'water', 'what' => 'Change the water', 'how' => $prep['refreshEveryHours'] !== null ? 'Drain the old water and pour in clean water, every ' . $every . ' hours while the seed soaks. Flowing water needs no change.' : 'PhilRice advises changing still water every 6 hours. Flowing water needs no change.'];
+                $ev[] = ['at' => $t->format('Y-m-d H:i'), 'kind' => 'water', 'what' => 'Change the water', 'how' => $prep['refreshEveryHours'] !== null ? 'Drain the old water and pour in clean water, every ' . $every . ' hours while the seed soaks. Flowing water needs no change.' : 'Change still water every 6 hours. Flowing water needs no change.'];
             }
         }
         $ev[] = ['at' => $incStart->format('Y-m-d H:i'), 'kind' => 'incubate', 'what' => 'Drain and start incubating', 'how' => 'Lift the bags onto a raised pallet in the shade, never the bare floor, cover them and keep them damp and aired. Do not stack the bags.'];

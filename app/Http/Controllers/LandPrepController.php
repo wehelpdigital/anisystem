@@ -976,7 +976,7 @@ PROMPT;
         $prep = $plan['prep'];
         $seed = ! empty($prep['found']) && ! empty($prep['applies']) && isset($prep['soakHours'])
             ? ($prep['brand'] ?? '' ? $prep['brand'] . ' ' : '') . ($prep['type'] ?? '') . ' seed: soak ' . $prep['soakHours'] . ' h' . ($prep['refreshEveryHours'] ? ', change still water every ' . $prep['refreshEveryHours'] . ' h' : '') . ', incubate ' . $prep['incubateRange'][0] . ' to ' . $prep['incubateRange'][1] . ' h ('
-                . match ($prep['confidence'] ?? '') { 'company' => 'from the seed company or PhilRice', 'research' => 'from Anee\'s own web research on this variety', default => 'general PhilRice practice, no brand instruction found' } . ')'
+                . match ($prep['confidence'] ?? '') { 'company' => 'from the seed company or breeder', 'research' => 'from Anee\'s own web research on this variety', default => 'general practice, no brand instruction found' } . ')'
             : ($prep['say'] ?? 'not applicable');
         $r = $case['research'] ?? null;
         $head = match (true) {
@@ -1006,7 +1006,7 @@ PROMPT;
         $short = $plan['squeeze'] ? 'TIME IS SHORT for at least one lot (see TIME). In "shortTime", say plainly in 2 to 3 sentences what to do first, what to keep, and what can safely be shortened or skipped, with the lot names.' : 'There is enough time. Return "shortTime" as an empty string.';
 
         return <<<PROMPT
-You are Anee, the smart farm technician of anee.io, planning the LAND PREPARATION of a Filipino farmer's lots. The app has already worked out the base plan: for rice, PhilRice practice (the PalayCheck System); for other crops, DA and extension practice; plus rules from each lot's answers and a crew calendar. Your job: read it against the soil, each field's history, the weather forecast, the ENSO outlook and the area's climate history, and ADD your judgement: your own extra steps where they are needed, notes on the steps that need them, the risks, and a plain analysis of why. Do NOT rewrite or remove the base steps, and do NOT compute dates: give day offsets, the app does the dates.
+You are Anee, the smart farm technician of anee.io, planning the LAND PREPARATION of a Filipino farmer's lots. The app has already worked out the base plan: for rice, the standard practice for the planting method; for other crops, standard extension practice; plus rules from each lot's answers and a crew calendar. Your job: read it against the soil, each field's history, the weather forecast, the ENSO outlook and the area's climate history, and ADD your judgement: your own extra steps where they are needed, notes on the steps that need them, the risks, and a plain analysis of why. Do NOT rewrite or remove the base steps, and do NOT compute dates: give day offsets, the app does the dates.
 
 TODAY: {$today}
 CROP: {$case['cropLabel']}, {$method}. Variety: {$variety}. Seed: {$seedSource}. Day 0 is the {$word} day, negative days come before it.{$mixedLine}
@@ -1045,7 +1045,7 @@ RULES FOR YOUR ANSWER
 - Weather: say what the forecast and the history mean for plowing, soaking, puddling and the {$word} day (rain that delays plowing, a dry spell that leaves no water for soaking, a typhoon month). ENSO: say what the current outlook means for water during preparation. If the forecast does not reach the preparation window, say so and lean on the history.
 - Crew: if there are conflicts, say plainly what to do (hire more hands, a second machine, or stagger the lots), with numbers.
 - {$short}
-- Pesticides and herbicides: name active ingredients only, never brands and never rates. Name no app as a source. PhilRice, IRRI and DA may be named. Never give web links.
+- Pesticides and herbicides: name active ingredients only, never brands and never rates. Name no app, no agency and no institute as a source (the Sources rule above). Never give web links.
 - Plain, short words a farmer reads easily. No dashes between words, no semicolons, no markdown, no emoji. English with the odd Tagalog farm word where natural.
 
 Return ONLY one JSON object, no fences:
@@ -1296,7 +1296,8 @@ PROMPT;
     private function item(object $r): array
     {
         return ['id' => (int) $r->id, 'title' => $r->title, 'description' => $r->description, 'params' => json_decode((string) $r->params, true) ?: [],
-            'report' => json_decode((string) $r->report, true) ?: [], 'credits' => (float) $r->credits, 'at' => Carbon::parse($r->created_at)->format('M j, Y')];
+            // A plan saved before 2026-10-17 may still name an agency as its source: shown without it.
+            'report' => LP::plainReport(json_decode((string) $r->report, true) ?: []), 'credits' => (float) $r->credits, 'at' => Carbon::parse($r->created_at)->format('M j, Y')];
     }
 
     public function list(Request $request)
@@ -1391,7 +1392,7 @@ PROMPT;
         if (! $r) {
             return $this->json(false, 'That plan is gone.', [], 404);
         }
-        $report = json_decode((string) $r->report, true) ?: [];
+        $report = LP::plainReport(json_decode((string) $r->report, true) ?: []);
         $params = json_decode((string) $r->params, true) ?: [];
         $crop = (string) ($params['crop'] ?? '');
         $method = (string) ($params['method'] ?? '');
@@ -1478,7 +1479,7 @@ PROMPT;
         if (! $r) {
             return $this->json(false, 'That plan is gone.', [], 404);
         }
-        $report = json_decode((string) $r->report, true) ?: [];
+        $report = LP::plainReport(json_decode((string) $r->report, true) ?: []);
         $params = json_decode((string) $r->params, true) ?: [];
         $lots = array_values((array) ($report['lots'] ?? []));
         if (! $lots || empty($report['perLot'])) {

@@ -6,12 +6,12 @@
   "incubateHours": "Hours after draining to start checking for sprouts. incubateRange holds the earliest and latest the source allows, sowWhen says what ready looks like.",
   "seedKgPerHa": "Seed in kg per hectare as a low and high pair, by planting method.",
   "transplantAgeDays": "Seedling age at transplanting in days as a low and high pair.",
-  "confidence": "company means the seed company or breeder said it. general means no brand instruction was found and the PhilRice hybrid steps stand in."
+  "confidence": "company means the seed company or breeder said it. general means no brand instruction was found and the general hybrid steps stand in."
  },
  "howToMatch": "Compare whole names, ignoring case, spaces and dashes, never a substring (Mestiso 1 must not match Mestiso 117). Walk brands in order and take the first whose match list holds the record name, its NSIC number or a trade name. Fall back to brandWords, then breeders, then general.hybrid or general.inbred by the record type. The US 88 entry sits before the wider SeedWorks entry on purpose.",
  "general": {
   "inbred": {
-   "label": "Inbred certified seed (PhilRice PalayCheck and Pinoy Rice Knowledge Bank)",
+   "label": "Inbred certified seed (standard practice)",
    "soakHours": 24,
    "soakRange": [
     12,
@@ -54,11 +54,11 @@
     "Sow the sprouted seed right away so the roots do not tangle."
    ],
    "directSeeded": "Soak 24 hours and incubate 24 to 36 hours, then let the seed air dry a little so it spreads evenly. Use 40 to 60 kg per hectare with a drum seeder and 60 to 80 kg when broadcasting by hand.",
-   "notes": "In the cool dry season incubation can take up to 48 hours. Some PhilRice guides give 12 to 24 hours of soaking for inbred seed.",
+   "notes": "In the cool dry season incubation can take up to 48 hours. Some guides give 12 to 24 hours of soaking for inbred seed.",
    "confidence": "company"
   },
   "hybrid": {
-   "label": "Hybrid seed with no brand instruction (PhilRice hybrid guidance)",
+   "label": "Hybrid seed with no brand instruction (general hybrid practice)",
    "soakHours": 24,
    "soakRange": [
     12,
@@ -92,12 +92,12 @@
     "Incubate 24 to 36 hours until white roots show.",
     "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
    ],
-   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
-   "notes": "Older PhilRice guides give a shorter soak for hybrids: 10 to 12 hours in flowing water, or 12 hours with the water changed every 3 hours. Start checking for swollen seed at 12 hours.",
+   "directSeeded": "No general hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "Older guides give a shorter soak for hybrids: 10 to 12 hours in flowing water, or 12 hours with the water changed every 3 hours. Start checking for swollen seed at 12 hours.",
    "confidence": "general"
   },
   "irri": {
-   "label": "IRRI Rice Knowledge Bank pregermination",
+   "label": "Pregermination, the general way",
    "soakHours": 24,
    "soakRange": [
     12,
@@ -138,7 +138,7 @@
     "rule": "Sow when about 85 percent of the seed shows a white root. For direct seeding, sow before roots pass 5 mm."
    },
    {
-    "rule": "Cool weather slows everything. IRRI allows 36 to 48 hours of soaking in cold weather and PhilRice up to 48 hours of incubation in the dry season."
+    "rule": "Cool weather slows everything. Allow 36 to 48 hours of soaking in cold weather and up to 48 hours of incubation in the dry season."
    },
    {
     "rule": "A whole preparation takes about two to three days from first soak to sowing. Plan the seedbed or field to be ready on the day the seed is."
@@ -515,8 +515,8 @@
     "Incubate 24 to 36 hours until white roots show.",
     "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
    ],
-   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
-   "notes": "Batari is the brand of Aljay. Batari Indra 01 is NSIC Rc 406H and is not a Bayer Arize hybrid, so the Arize instructions do not apply. Batari AH44 is NSIC Rc 750H, a Long Ping hybrid, and follows Long Ping's instructions. No written seed preparation from Aljay was found, so these are the PhilRice hybrid steps. The instructions on the seed bag come first.",
+   "directSeeded": "No general hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "Batari is the brand of Aljay. Batari Indra 01 is NSIC Rc 406H and is not a Bayer Arize hybrid, so the Arize instructions do not apply. Batari AH44 is NSIC Rc 750H, a Long Ping hybrid, and follows Long Ping's instructions. No written seed preparation from Aljay was found, so these are the general hybrid steps. The instructions on the seed bag come first.",
    "confidence": "general"
   },
   {
@@ -778,7 +778,7 @@
     "Sow when white roots show."
    ],
    "directSeeded": "For drum seeding Pioneer used 15 to 20 kg of PHB71 per hectare, soaked 12 to 24 hours and incubated 12 to 36 hours.",
-   "notes": "The older Pioneer planting guide reprinted by ATI gives incubation of 12 to 36 hours. The newer Corteva film gives 24 to 36.",
+   "notes": "The older Pioneer planting guide gives incubation of 12 to 36 hours. The newer Corteva film gives 24 to 36.",
    "confidence": "company"
   },
   {
@@ -827,7 +827,7 @@
     "Sow the sprouted seed on the seedbed at one handful per square meter."
    ],
    "directSeeded": "For broadcasting use 25 to 30 kg per hectare, split into 3 portions of 8 to 10 kg so the field is covered evenly.",
-   "notes": "SeedWorks shows no water change schedule. Changing the water every 6 hours, as PhilRice advises for still water, is a safe addition over a soak this long.",
+   "notes": "SeedWorks shows no water change schedule. Changing still water every 6 hours, as is usually advised, is a safe addition over a soak this long.",
    "confidence": "company"
   },
   {
@@ -886,7 +886,7 @@
     "Sow the sprouted seed on the seedbed at one handful per square meter."
    ],
    "directSeeded": "For broadcasting use 25 to 30 kg per hectare, split into 3 portions of 8 to 10 kg.",
-   "notes": "SeedWorks shows no water change schedule. Change still water every 6 hours as PhilRice advises.",
+   "notes": "SeedWorks shows no water change schedule. Change still water every 6 hours, as is usually advised.",
    "confidence": "company"
   },
   {
@@ -952,8 +952,8 @@
     "Incubate 24 to 36 hours until white roots show.",
     "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
    ],
-   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
-   "notes": "No seed preparation instruction from Leads Agri was found online. These are the PhilRice hybrid steps. Jackpot 102 is NSIC Rc 666H.",
+   "directSeeded": "No general hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "No seed preparation instruction from Leads Agri was found online. These are the general hybrid steps. Jackpot 102 is NSIC Rc 666H.",
    "confidence": "general"
   },
   {
@@ -1091,8 +1091,8 @@
     "Incubate 24 to 36 hours until white roots show.",
     "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
    ],
-   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
-   "notes": "No seed preparation instruction from Syngenta Philippines was found. Its NK5017 page lists traits only. These are the PhilRice hybrid steps.",
+   "directSeeded": "No general hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "No seed preparation instruction from Syngenta Philippines was found. Its NK5017 page lists traits only. These are the general hybrid steps.",
    "confidence": "general"
   },
   {
@@ -1174,12 +1174,12 @@
     "Incubate 24 to 36 hours until white roots show.",
     "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
    ],
-   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
-   "notes": "No seed preparation instruction from Bioseed Research Philippines was found. These are the PhilRice hybrid steps. Bigante is a Bayer Arize hybrid, see that entry.",
+   "directSeeded": "No general hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "No seed preparation instruction from Bioseed Research Philippines was found. These are the general hybrid steps. Bigante is a Bayer Arize hybrid, see that entry.",
    "confidence": "general"
   },
   {
-   "brand": "PhilRice public hybrids (Mestiso)",
+   "brand": "Public hybrids (Mestiso)",
    "match": [
     "NSIC Rc 820H",
     "Rc 820H",
@@ -1284,7 +1284,7 @@
     "Incubate 24 to 36 hours until roots sprout.",
     "Do not worry if the seed looks darker, lighter, thinner or slightly open. That is normal for hybrid seed."
    ],
-   "directSeeded": "No PhilRice direct seeding rate for its hybrids was found.",
+   "directSeeded": "No direct seeding rate for these hybrids was found.",
    "notes": "Transplant 18 to 21 day seedlings, 1 to 2 per hill, only 2 to 3 cm deep. The word Mestiso alone is the NSIC local name of every registered hybrid, so match on the full name with its number, never the bare word.",
    "confidence": "company"
   }

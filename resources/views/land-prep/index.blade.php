@@ -1777,7 +1777,7 @@
         } else {
             q.className = 'lp-quote';
             q.innerHTML = (OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '')
-                + '<span>Anee plans every step of your land preparation, lot by lot, from PhilRice and extension practice, your soil, the weather and your crew. A plan costs <b>' + OPT.quote + ' credits' + tlf('credits') + ' a lot</b>, more when Anee has to look up your variety. You have '
+                + '<span>Anee plans every step of your land preparation, lot by lot, from standard practice, your soil, the weather and your crew. A plan costs <b>' + OPT.quote + ' credits' + tlf('credits') + ' a lot</b>, more when Anee has to look up your variety. You have '
                 + (window.creditCoin ? window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()) : '<b>' + esc(OPT.balance) + '</b>') + '. Nothing is charged until the plan is ready.</span>';
         }
         q.hidden = false;
@@ -1888,7 +1888,7 @@
         const card = (ico, val, label, line, tl) => '<div class="lp-hour"><span>' + ico + '</span><div><b>' + esc(val) + '</b><em' + tlAt(tl) + '>' + esc(label) + '</em><small>' + esc(line) + '</small></div></div>';
         return '<div class="lp-hours">'
             + card('💧', p.soakHours + ' hours', 'Soak', p.soakRange[0] !== p.soakRange[1] ? p.soakRange[0] + ' to ' + p.soakRange[1] + ' hours is fine' : 'In clean water', 'seed-soaking')
-            + card('🔁', 'Every ' + (p.refreshEveryHours || 6) + ' h', 'Change the water', p.refreshEveryHours ? 'While it soaks in still water' : 'PhilRice advice, none given')
+            + card('🔁', 'Every ' + (p.refreshEveryHours || 6) + ' h', 'Change the water', p.refreshEveryHours ? 'While it soaks in still water' : 'The usual advice, none given')
             + card('🧺', p.incubateRange[0] + ' to ' + p.incubateRange[1] + ' h', 'Incubate', 'Until a small white root shows', 'seed-incubation')
             + '</div>';
     }
@@ -1905,7 +1905,7 @@
             return;
         }
         const co = p.confidence === 'company';
-        box.innerHTML = '<div class="lp-seed-h"><b' + (p.brand && !S.custom ? '' : tlAt(p.type === 'inbred' ? 'inbred' : 'hybrid')) + '>' + (p.brand && !S.custom ? esc(p.brand) : (p.type === 'inbred' ? 'Inbred seed' : 'Hybrid seed')) + '</b><span class="lp-badge ' + (S.custom ? 'is-anee' : (co ? 'is-co' : 'is-gen')) + '">' + (S.custom ? 'Anee looks it up' : (co ? (p.source === 'brand' ? 'Seed company' : 'PhilRice') : 'General practice')) + '</span></div>'
+        box.innerHTML = '<div class="lp-seed-h"><b' + (p.brand && !S.custom ? '' : tlAt(p.type === 'inbred' ? 'inbred' : 'hybrid')) + '>' + (p.brand && !S.custom ? esc(p.brand) : (p.type === 'inbred' ? 'Inbred seed' : 'Hybrid seed')) + '</b><span class="lp-badge ' + (S.custom ? 'is-anee' : (co ? 'is-co' : 'is-gen')) + '">' + (S.custom ? 'Anee looks it up' : (co ? (p.source === 'brand' ? 'Seed company' : 'Standard practice') : 'General practice')) + '</span></div>'
             + hoursHtml(p) + research
             + (S.custom ? '' : '<p>' + esc(p.say) + (p.refreshNote ? ' ' + esc(p.refreshNote) : '') + (p.floatRule ? ' ' + esc(p.floatRule) : '') + ' The plan dates every soak, water change and sowing for each lot.</p>');
         box.hidden = false;
@@ -2217,7 +2217,7 @@
                 + '<div class="lp-tw-bar" aria-hidden="true"><i style="width:' + pct + '%"></i></div><div class="lp-tw-cap"><span>Today</span><span>' + (x.need - Math.max(0, x.left)) + ' days short</span></div>'
                 + (x.steps.length ? '<p class="lp-tw-h"' + sqAt + '>Squeezed to fit</p><ul class="lp-tw-list">' + x.steps.slice(0, 8).map((s) => '<li><span class="' + (s.state === 'missed' ? 'is-moved' : 'is-short') + '">' + (s.state === 'missed' ? 'Moved up' : 'Shortened') + '</span><em>' + esc(s.what) + '</em></li>').join('')
                     + (x.steps.length > 8 ? '<li><em>and ' + (x.steps.length - 8) + ' more</em></li>' : '') + '</ul>' : '')
-                + (x.rest ? '<p class="lp-tw-h" style="text-transform:none;letter-spacing:0;font-weight:700">The field also needs ' + x.rest + ' days of rest' + restFlag + ' without rice before sowing, as PhilRice advises.</p>' : '')
+                + (x.rest ? '<p class="lp-tw-h" style="text-transform:none;letter-spacing:0;font-weight:700">The field also needs ' + x.rest + ' days of rest' + restFlag + ' without rice before sowing.</p>' : '')
                 + (x.restNotYet ? '<p class="lp-tw-h" style="text-transform:none;letter-spacing:0;font-weight:700">The last crop is not harvested yet: count 30 days without rice from the harvest.</p>' : '')
                 + '</div>';
         }).join('') + '<div class="lp-tw-note"><span>🔎</span><span>Anee keeps the plowing, every harrowing and the leveling in order and shortens the waiting between them. Before you go on, walk the field and check it carefully: the dikes, the water and how hard the soil is. For every step at its own pace, ' + esc(dayWordOf()) + ' on or after ' + esc(day(short.map((x) => x.earliest).sort().pop() || TODAY)) + '.</span></div>';
@@ -2982,7 +2982,7 @@
         const phases = anyCustom()
             ? { start: { label: 'Getting started', lo: 2, hi: 6, tau: 10 }, research: { label: 'Looking up ' + (S.custom ? S.variety : 'your varieties'), lo: 6, hi: 34, tau: 70 }, document: { label: 'Writing your plan', lo: 34, hi: 93, tau: 80 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } }
             : { start: { label: 'Getting started', lo: 2, hi: 10, tau: 10 }, document: { label: 'Writing your plan', lo: 10, hi: 93, tau: 75 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } };
-        const lines = ['Laying out the ' + (rice() ? 'PhilRice' : 'extension') + ' steps for ' + (CROPS[S.crop] ? CROPS[S.crop].en.toLowerCase() : 'your crop') + '…', 'Reading every lot\'s soil and history…', 'Sharing the crew and the machines between your lots…', 'Reading the forecast and twenty years of weather…', 'Timing the seed soak to the hour…'];
+        const lines = ['Laying out the ' + (rice() ? 'rice' : 'field') + ' steps for ' + (CROPS[S.crop] ? CROPS[S.crop].en.toLowerCase() : 'your crop') + '…', 'Reading every lot\'s soil and history…', 'Sharing the crew and the machines between your lots…', 'Reading the forecast and twenty years of weather…', 'Timing the seed soak to the hour…'];
         if (S.custom) lines.unshift('Looking up ' + S.variety + ' on the web…');
         window.aneeWait.show({ title: 'Anee is planning your land preparation…', lines, sub: 'Usually one to three minutes. Stay on this page while Anee works.' });
         $('lpErr').hidden = true;
@@ -3077,7 +3077,7 @@
         one: (id) => @json(url('/app/land-prep/one')) + '/' + id, del: (id) => @json(url('/app/land-prep')) + '/' + id,
     };
     const { open: sheetOpen, close: sheetClose, lock: sheetLock } = window.lpSheet;
-    const TAG = { philrice: 'PhilRice practice', irri: 'IRRI practice', extension: 'Extension practice', anee: "Anee's suggestion" };
+    const TAG = { philrice: 'Standard practice', irri: 'Standard practice', extension: 'Extension practice', anee: "Anee's suggestion" };
     const REASON = { soil: 'For your soil', history: "For the field's history", weather: 'For the weather', enso: 'For the ENSO outlook', crew: 'For your crew', seed: 'For your seed', water: 'For your water', method: 'For how you plant' };
     const TOPIC = { weather: '🌧️', enso: '🌊', soil: '🟫', history: '📜', crew: '👷', seed: '🌾', water: '💧' };
     const SHORT = { plow: 'Plow', first_plow: 'First plow', crack_plow: 'Dry tillage', harrow1: 'Harrow 1', harrow2: 'Harrow 2', harrow: 'Harrow', harrow_level: 'Harrow, level', level: 'Level', extra_level: 'Extra level', rough_level: 'Rough level',
@@ -3245,8 +3245,8 @@
                 + ((n.lots || []).length && lots.length > 1 ? '<span>' + n.lots.map((i) => '<span class="lp-lotchip" style="--lc:' + lc(i) + '"><i></i>' + esc(lotName(r, i)) + '</span>').join('') + '</span>' : '') + '</div></li>').join('') + '</ul></div>';
         }
         h += '<div class="lp-c"><h3>🧭 Where this comes from</h3><p class="lp-fineprint">' + ((r.crop || {}).key === 'rice'
-            ? 'The base steps follow PhilRice practice, the PalayCheck System of PhilRice (2022 revised edition), and IRRI practice for dry seeded rice, in our own words.'
-            : 'The base steps follow DA and university extension practice, in our own words.')
+            ? 'The base steps follow the standard practice for each way of planting rice, in our own words.'
+            : 'The base steps follow standard extension practice, in our own words.')
             + " Steps marked Anee's suggestion are added for this field, each with its reason. The crew times are typical work rates, so treat them as a guide and adjust to your own pace."
             + ((a.dataGaps || []).length ? ' What would sharpen this plan: ' + esc(a.dataGaps.join(' ')) : '') + '</p></div>';
         return h;
@@ -3451,7 +3451,7 @@
         }
         const lots = r.lots || [];
         const co = p.confidence === 'company', rs = p.confidence === 'research';
-        let h = '<div class="lp-c"><h3><span>🌾 Seed preparation' + tlf('seed-prep') + '</span><em>' + (rs ? "Anee's research" : (co ? (p.source === 'brand' ? 'Seed company' : 'PhilRice') : 'General practice')) + '</em></h3>'
+        let h = '<div class="lp-c"><h3><span>🌾 Seed preparation' + tlf('seed-prep') + '</span><em>' + (rs ? "Anee's research" : (co ? (p.source === 'brand' ? 'Seed company' : 'Standard practice') : 'General practice')) + '</em></h3>'
             + '<div class="lp-seed" style="margin-top:0;border:0;padding:0;animation:none">' + window.lpHoursHtml(p) + '</div>' + researchBox
             + '<p class="lp-p" style="font-size:.84rem;margin-top:.7rem">' + esc(p.say) + (p.refreshNote ? ' ' + esc(p.refreshNote) : '') + (p.floatRule ? ' ' + esc(p.floatRule) : '') + '</p>';
         if ((p.amounts || []).length) h += '<p class="lp-p" style="font-size:.84rem;margin-top:.4rem"><b>Seed to buy:' + tlf('seeding-rate') + '</b> ' + p.amounts.map((x) => esc(lotName(r, x.lot)) + ' ' + (x.lo === x.hi ? x.lo : x.lo + ' to ' + x.hi) + ' kg').join(', ') + '.</p>';
