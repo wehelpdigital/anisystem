@@ -36,6 +36,13 @@
     // Each weed group's Tagalog help flag.
     $groupTl = ['grasses' => 'weed-grass', 'sedges' => 'weed-sedge', 'broadleaves' => 'weed-broadleaf'];
     $faces = collect(array_keys($W::GROUPS))->map(fn ($g) => collect($book['entries'])->first(fn ($e) => $e['kind'] === $g && $e['thumb']))->filter();
+    // Each photo's original page and licence, for the credit under it when a weed's photo is shown large
+    // (2026-10-17): known for the catalogue's own photos, not for a page's own picture.
+    $wcEntries = collect($book['entries'])->map(function ($e) use ($F) {
+        $ph = $e['photo'] ? $F::photo('weeds', $e['k']) : null;
+
+        return $ph && \App\Support\SitePages::img($ph['src']) === $e['photo'] ? $e + ['pg' => (string) ($ph['page'] ?? ''), 'lic' => (string) ($ph['license'] ?? '')] : $e;
+    })->all();
 @endphp
 @include('field-helpers.partials.kit')
 @once
@@ -135,7 +142,7 @@
     'groupIcons' => $groupIcons,
     'ingredients' => $F::ingredients(),
     'modes' => $W::MODES,
-    'entries' => $book['entries'],
+    'entries' => $wcEntries,
     'facets' => $book['facets'],
     'cropNames' => $book['cropNames'],
     // Only the products this page can show (FieldBook::weedProducts).

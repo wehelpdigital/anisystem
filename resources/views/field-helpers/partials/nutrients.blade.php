@@ -16,6 +16,12 @@
     if ($faces->count() < 3) {
         $faces = collect($book['entries'])->filter(fn ($e) => $e['thumb'])->unique('thumb')->take(3);
     }
+    // Each photo's original page and licence, for the credit under it when it is shown large (2026-10-17).
+    $ndEntries = collect($book['entries'])->map(function ($e) {
+        $ph = $e['photo'] ? \App\Support\DeficiencyCatalogue::photo($e['k'], $e['n']) : null;
+
+        return $ph ? $e + ['pg' => (string) ($ph['page'] ?? ''), 'lic' => (string) ($ph['license'] ?? '')] : $e;
+    })->all();
 @endphp
 @include('field-helpers.partials.kit')
 <style>
@@ -50,23 +56,17 @@
                 @include('public.site.partials.crop-pick', ['id' => 'ndCropSheet', 'crops' => $crops, 'current' => $ndCrop, 'title' => 'Which crop?', 'noun' => 'deficiencies'])
             </div>
         </div>
+        {{-- Steps two and three are tags that open their answers in a sheet
+             (FH.optTag, 2026-10-17, the owner): fourteen buttons ran long on a phone. --}}
         <div class="wc-q">
             <b><i>2</i>Where does it show first?</b>
             <small>Old leaves or young leaves is the best clue. Pick one, or leave it</small>
-            <div class="wc-opts" role="radiogroup" aria-label="Where does it show first?" id="ndWhere">
-                @foreach ($book['where'] as $k => $label)
-                    <button type="button" role="radio" aria-checked="false" data-where="{{ $k }}">{{ $label }}</button>
-                @endforeach
-            </div>
+            <div class="fh-otag-box" id="ndWhere"></div>
         </div>
         <div class="wc-q">
             <b><i>3</i>What does it look like?</b>
             <small>Pick the closest, or leave it</small>
-            <div class="wc-opts" role="radiogroup" aria-label="What does it look like?" id="ndSign">
-                @foreach ($book['signs'] as $k => $label)
-                    <button type="button" role="radio" aria-checked="false" data-sign="{{ $k }}">{{ $label }}</button>
-                @endforeach
-            </div>
+            <div class="fh-otag-box" id="ndSign"></div>
         </div>
         <button type="button" class="wc-go" id="ndGo" aria-controls="ndCard"><span>See the deficiencies</span>
             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></button>
@@ -90,7 +90,7 @@
 ])
 
 <script type="application/json" id="ndData">{!! json_encode([
-    'entries' => $book['entries'],
+    'entries' => $ndEntries,
     'crops' => collect($crops)->map(fn ($c) => $c[1]),
     'cropNames' => $book['cropNames'],
     'crop' => $ndCrop,
@@ -114,6 +114,16 @@
     const cropTag = document.querySelector('#ndCrop .cp-tag'), whereBox = document.getElementById('ndWhere'), signBox = document.getElementById('ndSign');
     const go = document.getElementById('ndGo'), goText = go?.querySelector('span');
     const st = { crop: D.crop, where: '', sign: '' };
+    // Where it shows and what it looks like: a tag each, the answers in a sheet (FH.optTag, 2026-10-17, the owner).
+    // The grey answers in a sheet are those this crop never shows; its note says so.
+    const greyed = { where: false, sign: false };
+    const grey = (key) => (greyed[key] ? ' The grey ones do not show on ' + String(D.crops[st.crop] || 'this crop').toLowerCase() + '.' : '');
+    const whereTag = FH.optTag({ box: whereBox, title: 'Where does it show first?', icon: I.pin, empty: 'Pick where it shows', opts: D.where,
+        note: () => 'Old leaves or young leaves is the best clue.' + grey('where'), all: 'Not sure', allSub: 'Leave this out of the answer',
+        onPick: (v) => { st.where = v; render(true); } });
+    const signTag = FH.optTag({ box: signBox, title: 'What does it look like?', icon: I.eye, empty: 'Pick what it looks like', opts: D.signs,
+        note: () => 'Pick the closest.' + grey('sign'), all: 'Not sure', allSub: 'Leave this out of the answer',
+        onPick: (v) => { st.sign = v; render(true); } });
     const P = D.products || {};
     Object.assign(FH.prodCards, P.cards || {});
     const NUT = D.nutrients || {};
@@ -134,12 +144,14 @@
 
     /* ---- One entry, in the catalogue's second pane ------------------- */
     const text = (icon, h, t) => (t ? FH.sec(icon, h, '<p>' + esc(t) + '</p>') : '');
+    // A stand in photo says so, under it and when it is shown large.
+    const standin = (i) => (i.standin ? 'The photo shows ' + String(i.kind).toLowerCase() + ' deficiency on another crop: no free photo of it on this crop was found.' : '');
     const detail = (i) => {
         const where = (i.where || []).map((k) => D.where[k]).filter(Boolean), signs = (i.signs || []).map((k) => D.signs[k]).filter(Boolean);
         const chips = (list) => '<ul class="fhd-chips">' + list.map((l) => '<li>' + esc(l) + '</li>').join('') + '</ul>';
         const ps = prods(i);
-        return '<article class="fhd" style="--g: ' + i.hue + '">' + FH.photo(i)
-            + (i.standin ? '<p class="nd-standin" style="padding:0 1rem">' + esc('The photo shows ' + String(i.kind).toLowerCase() + ' deficiency on another crop: no free photo of it on this crop was found.') + '</p>' : '')
+        return '<article class="fhd" style="--g: ' + i.hue + '">' + FH.photo(i, { note: standin(i) })
+            + (i.standin ? '<p class="nd-standin" style="padding:0 1rem">' + esc(standin(i)) + '</p>' : '')
             + '<div class="fhd-body">'
             + '<header class="fhd-head"><span class="fhd-pill">' + esc(i.sym) + ' ' + esc(i.kind) + '</span><h2>' + esc(i.name) + '</h2>'
             + (i.local ? '<p class="fhd-local"><b>In Tagalog:</b> ' + esc(i.local) + '</p>' : '') + '</header>'
@@ -174,9 +186,10 @@
         const open = opened.has(i.k), id = 'ndrc-' + String(i.k).replace(/[^a-z0-9_-]/gi, '');
         const ps = prods(i), full = best() && score(i) === best();
         const sum = '<i>' + (i.materials || []).length + ' to apply</i>' + (ps.length ? '<i>' + ps.length + ' sold here</i>' : '');
+        // The small photo shows it large (2026-10-17, the owner); the name folds the card.
         return '<article class="fh-rc' + (open ? ' is-open' : '') + '" style="--g: ' + i.hue + '" data-k="' + esc(i.k) + '">'
-            + '<div class="fh-rc-top"><button type="button" class="fh-rc-head" data-fold="' + esc(i.k) + '" aria-expanded="' + open + '" aria-controls="' + id + '">'
-            + (i.thumb ? '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : symOf(i))
+            + '<div class="fh-rc-top">' + FH.rcPhoto(i, symOf(i), ' data-fold="' + esc(i.k) + '"')
+            + '<button type="button" class="fh-rc-head" data-fold="' + esc(i.k) + '" aria-expanded="' + open + '" aria-controls="' + id + '">'
             + '<span class="fh-rc-t"><b>' + esc(i.name) + '</b><small><em>' + esc(i.sym + ', ' + i.kind) + '</em>' + (full ? '<span class="nd-match">Fits what you see</span>' : '') + '</small>'
             + '<span class="fh-rc-sum">' + sum + '</span></span></button>'
             + '<span class="fh-rc-acts">'
@@ -201,15 +214,16 @@
     const render = (swap) => {
         const rank = (i) => (i.ranks && i.ranks[st.crop] !== undefined ? i.ranks[st.crop] : 99);
         const forCrop = D.entries.filter((i) => i.crops.includes(st.crop));
-        // An answer nothing of this crop shows is greyed out.
-        const mark = (box, attr, key, list) => box.querySelectorAll('button').forEach((b) => {
-            const has = forCrop.some((i) => i[list].includes(b.dataset[attr]));
-            b.disabled = !has;
-            if (!has && st[key] === b.dataset[attr]) st[key] = '';
-            b.setAttribute('aria-checked', String(b.dataset[attr] === st[key]));
-        });
-        mark(whereBox, 'where', 'where', 'where');
-        mark(signBox, 'sign', 'sign', 'signs');
+        // How many of this crop's deficiencies show each answer: one none shows is greyed out in its sheet, and let go.
+        const mark = (tag, book, key, list) => {
+            const n = Object.fromEntries(Object.keys(book).map((k) => [k, forCrop.filter((i) => i[list].includes(k)).length]));
+            if (st[key] && !n[st[key]]) st[key] = '';
+            greyed[key] = Object.values(n).some((x) => !x);
+            tag.counts(n, forCrop.length);
+            tag.set(st[key], swap);
+        };
+        mark(whereTag, D.where, 'where', 'where');
+        mark(signTag, D.signs, 'sign', 'signs');
         const asked = best();
         let hits = forCrop.slice().sort((a, b) => score(b) - score(a) || rank(a) - rank(b));
         if (asked) hits = hits.filter((i) => score(i) > 0);
@@ -237,8 +251,6 @@
     });
     go?.addEventListener('click', () => card.closest('.wc-out').scrollIntoView({ behavior: FH.reduce() ? 'auto' : 'smooth', block: 'start' }));
     cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; render(true); });
-    whereBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-where]'); if (!b || b.disabled) return; st.where = st.where === b.dataset.where ? '' : b.dataset.where; render(true); });
-    signBox.addEventListener('click', (e) => { const b = e.target.closest('button[data-sign]'); if (!b || b.disabled) return; st.sign = st.sign === b.dataset.sign ? '' : b.dataset.sign; render(true); });
     render(false);
 })();
 </script>

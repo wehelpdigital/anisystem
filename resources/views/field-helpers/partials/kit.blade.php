@@ -14,6 +14,12 @@
        FH.prodStrip(cards, h)     the products a label names, as cards
        FH.productSheet(card)      one product in a small sheet (tap a chip)
        FH.pick({...})             an option sheet (a promise of the choice)
+       FH.optTag({...})           a question as a tag that opens that sheet
+                                  (a long list of answers, 2026-10-17)
+       FH.lightbox(items, at)     a photo large, its credit, a Download
+                                  button (any [data-fh-lb], FH.lbAttr)
+       FH.rcPhoto(i, ...)         a result card's small photo as a button
+                                  that opens it large
        FH.openModal / closeModal  a full screen sheet (dialog.fhm)
        FH.catalogue({...})        a whole catalogue in a full screen sheet:
                                   search, crop and kind tags, cards, details
@@ -255,14 +261,24 @@
     /* One pest or disease (2026-10-15, the owner): the head folds the card
        open and shut (folded by default, the chevron says which), and the
        round "i" opens everything about it in the catalogue sheet. */
-    .fh-rc-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .35rem; padding-right: .55rem; }
-    .fh-rc-head { width: 100%; min-width: 0; display: grid; grid-template-columns: 3.7rem minmax(0, 1fr); gap: .7rem; align-items: center; padding: .6rem 0 .6rem .6rem;
+    /* The small photo is a button of its own (2026-10-17, the owner): a tap
+       shows it large (FH.lightbox) and leaves the card as it was; the name
+       beside it still folds the card. No photo: a tile in its place. */
+    .fh-rc-top { display: grid; grid-template-columns: 3.7rem minmax(0, 1fr) auto; align-items: center; gap: .35rem; padding: 0 .55rem 0 .6rem; }
+    @media (min-width: 640px) { .fh-rc-top { grid-template-columns: 4.4rem minmax(0, 1fr) auto; } }
+    .fh-rc-head { width: 100%; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; padding: .6rem 0 .6rem .35rem;
         text-align: left; color: inherit; background: none; border: 0; cursor: pointer; }
-    @media (min-width: 640px) { .fh-rc-head { grid-template-columns: 4.4rem minmax(0, 1fr); } }
     .fh-rc-head:focus-visible, .fh-rc-btn:focus-visible { outline: 3px solid #f5c518; outline-offset: -3px; border-radius: 1rem; }
-    .fh-rc-head > img, .fh-rc-head > .none { width: 100%; aspect-ratio: 1; border-radius: .85rem; object-fit: cover; background: hsl(var(--g) 35% 88%); }
-    .fh-rc-head > .none { display: grid; place-items: center; color: hsl(var(--g) 40% 45%); }
-    .fh-rc-head > .none svg { width: 1.6rem; height: 1.6rem; }
+    .fh-rc-ph { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; margin: .6rem 0; padding: 0; border: 0; border-radius: .85rem; overflow: hidden;
+        color: hsl(var(--g) 40% 45%); background: hsl(var(--g) 35% 88%); }
+    .fh-rc-ph svg { width: 1.6rem; height: 1.6rem; }
+    button.fh-rc-ph { cursor: zoom-in; }
+    button.fh-rc-ph:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .fh-rc-ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    button.fh-rc-ph:hover img { transform: scale(1.06); }
+    /* The corner mark says the photo opens larger. */
+    .fh-rc-zoom { position: absolute; right: .25rem; bottom: .25rem; width: 1.3rem; height: 1.3rem; border-radius: 999px; display: grid; place-items: center; color: #fff; background: rgb(10 18 6 / .58); }
+    .fh-rc-ph .fh-rc-zoom svg { width: .72rem; height: .72rem; }
     .fh-rc-acts { display: flex; align-items: center; gap: .3rem; }
     /* A phone: the two buttons stack, so the name keeps the width, and the
        local names keep to one line (all of them are in the "i" sheet). */
@@ -311,7 +327,7 @@
     html.dark .fh-rc-info { background: #1e2a44; color: #9cc0ff; }
     html.dark .fh-rc-sum i { background: #26331d; color: #cfe0bb; }
     html.dark .fh-rc-sum i.is-warn { background: #3a2f12; color: #f5d98a; }
-    @media (prefers-reduced-motion: reduce) { .fh-rc, .fh-rc-btn, .fh-rc-btn svg, .fh-rc-fold, .fh-rc-fold > div > * { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .fh-rc, .fh-rc-btn, .fh-rc-btn svg, .fh-rc-fold, .fh-rc-fold > div > *, .fh-rc-ph img { transition: none; } }
 
     /* ---- A full screen sheet: the catalogues and the variety details ---- */
     .fhm { padding: 0; border: 0; margin: 0; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; overflow: hidden; color: #14210c; background: #f4f6f1; }
@@ -390,6 +406,13 @@
     .fhd { --g: 98; display: grid; gap: 1rem; }
     @media (min-width: 900px) { .fhd { grid-template-columns: minmax(0, 24rem) minmax(0, 1fr); gap: 1.6rem; align-items: start; } .fhd-ph { position: sticky; top: 0; } }
     .fhd-ph { margin: 0; }
+    /* An entry's photo opens large too (2026-10-17, the owner), to see it whole and save it. */
+    .fhd-ph-btn { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: 1.25rem; background: none; cursor: zoom-in; }
+    .fhd-ph-btn:focus-visible { outline: 3px solid #f5c518; outline-offset: 3px; }
+    .fhd-ph-zoom { position: absolute; right: .6rem; bottom: .6rem; display: inline-flex; align-items: center; gap: .3rem; padding: .32rem .65rem .32rem .5rem; border-radius: 999px;
+        font-size: .74rem; font-weight: 800; color: #fff; background: rgb(10 18 6 / .6); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .fhd-ph-btn:hover .fhd-ph-zoom { background: rgb(10 18 6 / .8); }
+    .fhd-ph-zoom svg { width: .85rem; height: .85rem; }
     .fhd-ph img, .fhd-ph .none { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 1.25rem; background: radial-gradient(circle at 30% 20%, hsl(var(--g) 45% 92%), hsl(var(--g) 35% 84%)); }
     .fhd-ph .none { display: grid; place-items: center; color: hsl(var(--g) 40% 55%); }
     .fhd-ph .none svg { width: 3.4rem; height: 3.4rem; }
@@ -440,6 +463,8 @@
     .fh-sheet.is-closing .cp-box { animation: cpUp .24s cubic-bezier(.22,1,.36,1) reverse forwards; }
     @media (min-width: 640px) { .fh-sheet.is-closing .cp-box { animation-name: cpPop; } }
     .fh-sheet .cp-row[disabled] { opacity: .4; cursor: not-allowed; }
+    /* A row a thumb finds (44px and more), with a picture or without. */
+    .fh-sheet .cp-row { min-height: 2.9rem; }
     .fh-sheet-note { margin: -.2rem 1.15rem .55rem; font-size: .8rem; line-height: 1.45; color: #6b7280; }
     .fh-sheet-foot { flex: none; display: flex; gap: .5rem; padding: .7rem 1rem calc(.8rem + env(safe-area-inset-bottom)); border-top: 1px solid #eef2e8; }
     .fh-sheet-foot button { flex: 1; min-height: 2.9rem; border-radius: .9rem; font-weight: 800; cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
@@ -470,6 +495,79 @@
     .fh-ftag.is-set i { color: #3b2f00; background: #f5c518; }
     .fh-ftag.is-bump i, .cp-tag.is-bump .cp-ico { animation: cpBump .42s cubic-bezier(.22,1,.36,1); }
 
+    /* ---- A question as a tag (2026-10-17, the owner) ---------------------
+       A question with a long list of answers ("Where does it show first?",
+       "What does it look like?") ran long on a phone. It is one tag now, in
+       the crop tag's looks just above it: the question's picture, the answer
+       picked or what to pick, and Change. The answers wait in the option
+       sheet (FH.optTag). The box keeps the tag's height before the script
+       draws it, so nothing under it jumps. */
+    .fh-otag-box { display: flow-root; min-height: 4.43rem; }
+    .fh-otag .cp-ico { color: #4a7c2a; transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .fh-otag .cp-ico svg { width: 1.25rem; height: 1.25rem; }
+    .fh-otag .cp-t b { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .fh-otag.is-empty .cp-t b { font-weight: 700; color: #6b7280; }
+    .fh-otag.is-set { background: #eef6e4; border-color: #a8cc7e; }
+    .fh-otag.is-set .cp-ico { color: #3b2f00; background: #f5c518; border-color: #f5c518; }
+    .fh-otag.is-set .cp-t b { color: #2d5016; }
+    .fh-otag.is-bump .cp-t b { animation: fhOtagIn .34s cubic-bezier(.22,1,.36,1); }
+    @keyframes fhOtagIn { from { opacity: 0; transform: translateY(5px); } }
+
+    /* ---- The photo, big (2026-10-17, the owner) -------------------------
+       A dark stage over everything: the name on top, the photo as large as
+       the screen allows, who took it and its licence under it, and a way to
+       save it. It comes up with a small scale and fades away. */
+    .fh-lb { padding: 0; border: 0; margin: 0; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; overflow: hidden; color: #eef3e8; background: transparent; }
+    .fh-lb[open] { display: flex; }
+    /* Solid: the page showing through behind the credit made it hard to read. */
+    .fh-lb::backdrop { background: #050803; animation: fhLbFade .28s cubic-bezier(.22,1,.36,1); }
+    .fh-lb.is-closing::backdrop { animation: fhLbFade .22s cubic-bezier(.22,1,.36,1) reverse forwards; }
+    .fh-lb-box { position: relative; flex: 1; display: flex; flex-direction: column; width: 100%; max-width: 72rem; min-height: 0; margin: 0 auto; outline: none; }
+    .fh-lb-bar { flex: none; display: flex; align-items: center; gap: .6rem; padding: .7rem 1rem .5rem; padding-top: max(.7rem, env(safe-area-inset-top)); }
+    .fh-lb-title { flex: 1; min-width: 0; }
+    .fh-lb-title b { display: block; font-family: var(--font-heading); font-weight: 800; font-size: 1.05rem; line-height: 1.25; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fh-lb-title small { display: block; margin-top: .05rem; font-size: .76rem; color: #b9caa8; }
+    .fh-lb-x { flex: none; width: 2.75rem; height: 2.75rem; border-radius: 999px; display: grid; place-items: center; color: #fff; background: rgb(255 255 255 / .12); cursor: pointer;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .fh-lb-x:hover { background: rgb(255 255 255 / .22); }
+    .fh-lb-x svg { width: 1.2rem; height: 1.2rem; }
+    .fh-lb-stage { position: relative; flex: 1; min-height: 0; touch-action: pan-y; }
+    .fh-lb-fig { position: absolute; inset: .25rem 1rem; margin: 0; display: flex; align-items: center; justify-content: center; }
+    .fh-lb-fig img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: .9rem; background: #1c2616; box-shadow: 0 30px 60px -30px rgb(0 0 0 / .85); user-select: none; -webkit-user-drag: none; }
+    .fh-lb-fig.is-in { animation: fhLbIn .34s cubic-bezier(.22,1,.36,1); }
+    .fh-lb-fig.is-next { animation: fhLbNext .32s cubic-bezier(.22,1,.36,1); }
+    .fh-lb-fig.is-prev { animation: fhLbPrev .32s cubic-bezier(.22,1,.36,1); }
+    .fh-lb-nav { position: absolute; top: 50%; z-index: 2; width: 2.9rem; height: 2.9rem; margin-top: -1.45rem; border-radius: 999px; display: grid; place-items: center; color: #fff;
+        background: rgb(10 18 6 / .6); border: 1px solid rgb(255 255 255 / .2); cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .fh-lb-nav:hover { background: rgb(10 18 6 / .85); transform: scale(1.06); }
+    .fh-lb-nav svg { width: 1.15rem; height: 1.15rem; }
+    .fh-lb-nav.is-prev { left: .5rem; }
+    .fh-lb-nav.is-next { right: .5rem; }
+    .fh-lb-nav[hidden] { display: none; }
+    .fh-lb-x:focus-visible, .fh-lb-nav:focus-visible, .fh-lb-dl:focus-visible, .fh-lb-cap a:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    .fh-lb-foot { flex: none; display: flex; flex-wrap: wrap; align-items: flex-end; gap: .7rem 1rem; padding: .7rem 1rem calc(.9rem + env(safe-area-inset-bottom)); }
+    .fh-lb-cap { flex: 1 1 16rem; min-width: 0; font-size: .8rem; line-height: 1.5; color: #d5e3c5; }
+    .fh-lb-cap p + p { margin-top: .3rem; }
+    .fh-lb-cap b { color: #fff; font-weight: 800; }
+    .fh-lb-cap a { color: #c5e09f; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+    .fh-lb-note { font-style: italic; color: #f3d9a4; }
+    .fh-lb-links { display: flex; flex-wrap: wrap; gap: .2rem 1rem; }
+    .fh-lb-links a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+    .fh-lb-dl { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; min-height: 2.9rem; padding: .6rem 1.15rem; border-radius: .95rem;
+        font-family: var(--font-heading); font-weight: 800; font-size: .95rem; color: #3b2f00; background: #f5c518; text-decoration: none; cursor: pointer;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .fh-lb-dl:hover { background: #ffd23f; }
+    .fh-lb-dl svg { width: 1.1rem; height: 1.1rem; }
+    .fh-lb-dl.is-busy { opacity: .65; pointer-events: none; }
+    @media (max-width: 479.98px) { .fh-lb-dl { width: 100%; } .fh-lb-links a { min-height: 2.5rem; } }
+    .fh-lb[open] .fh-lb-bar, .fh-lb[open] .fh-lb-foot { animation: fhLbFade .34s cubic-bezier(.22,1,.36,1); }
+    .fh-lb.is-closing .fh-lb-box { animation: fhLbOut .22s cubic-bezier(.22,1,.36,1) forwards; }
+    @keyframes fhLbFade { from { opacity: 0; } }
+    @keyframes fhLbIn { from { opacity: 0; transform: scale(.94); } }
+    @keyframes fhLbOut { to { opacity: 0; transform: scale(.97); } }
+    @keyframes fhLbNext { from { opacity: 0; transform: translateX(28px); } }
+    @keyframes fhLbPrev { from { opacity: 0; transform: translateX(-28px); } }
+
     /* The answer redraws: its parts come up, its height eases (FH.swap). */
     .wc-card.is-swap .fh-res > * { animation: wcIn .34s cubic-bezier(.22,1,.36,1) both; }
     .wc-card.is-swap .fh-res > *:nth-child(2) { animation-delay: .04s; } .wc-card.is-swap .fh-res > *:nth-child(3) { animation-delay: .08s; }
@@ -477,9 +575,12 @@
 
     @media (prefers-reduced-motion: reduce) {
         .fh-cat-open, .fh-cat-go, .fh-shop a, .fhm-back, .fhm-x, .fhm-pane, .fhm-detail, .fhm.is-detail .fhm-list, .fhm.is-detail .fhm-detail, .fhc-search input, .fhc-card, .fhc-ph img,
-        .fh-ftag, .fh-ftag i, .fh-sheet-foot button, .fhd-cta, .fh-prod, .fh-pcard { transition: none; }
+        .fh-ftag, .fh-ftag i, .fh-sheet-foot button, .fhd-cta, .fh-prod, .fh-pcard,
+        .fh-otag .cp-ico, .fh-otag .cp-t b, .fhd-ph-zoom, .fh-lb-x, .fh-lb-nav, .fh-lb-dl { transition: none; }
         .fhm[open], .fhm.is-closing, .fhc-card.is-in, .fhc-none, .fhm.is-detail .fhd-ph, .fhm.is-detail .fhd-body > *, .fh-sheet::backdrop, .fh-sheet.is-closing::backdrop,
-        .fh-sheet.is-closing .cp-box, .fh-ftag.is-bump i, .wc-card.is-swap .fh-res > * { animation: none; }
+        .fh-sheet.is-closing .cp-box, .fh-ftag.is-bump i, .wc-card.is-swap .fh-res > *, .fh-otag.is-bump .cp-t b,
+        .fh-lb::backdrop, .fh-lb.is-closing::backdrop, .fh-lb[open] .fh-lb-bar, .fh-lb[open] .fh-lb-foot, .fh-lb.is-closing .fh-lb-box,
+        .fh-lb-fig.is-in, .fh-lb-fig.is-next, .fh-lb-fig.is-prev { animation: none; }
     }
 
     /* ---- Night ---------------------------------------------------------- */
@@ -509,6 +610,11 @@
     html.dark .fh-ftag.is-set { background: #22301a; border-color: #4a7c2a; }
     html.dark .fh-ftag.is-set b { color: #cfe3b8; }
     html.dark .fh-ftag.is-set i { background: #f5c518; color: #3b2f00; }
+    html.dark .fh-otag .cp-ico { color: #a8cc7e; }
+    html.dark .fh-otag.is-empty .cp-t b { color: #b9caa8; }
+    html.dark .fh-otag.is-set { background: #22301a; border-color: #4a7c2a; }
+    html.dark .fh-otag.is-set .cp-ico { color: #3b2f00; background: #f5c518; border-color: #f5c518; }
+    html.dark .fh-otag.is-set .cp-t b { color: #cfe3b8; }
     html.dark .fh-sheet-foot { border-color: #2b3a1c; }
     html.dark .fh-sheet-clear { background: #1c2616; color: #d5e3c5; }
     html.dark .fh-sheet-done { background: #4a7c2a; }
@@ -528,7 +634,7 @@
     html.dark .fh-psheet .fhd-facts > div { background: #1c2616; }
     html.dark .fh-psheet .fh-pnote { background: #17220f; border-color: #2b3a1c; color: #d5e3c5; }
     /* Pictures still on their way: a dark face, not a pale one. */
-    html.dark .fhc-ph, html.dark .fhd-ph img, html.dark .fhd-ph .none, html.dark .fh-rc-head > img, html.dark .fh-rc-head > .none, html.dark .fh-faces img {
+    html.dark .fhc-ph, html.dark .fhd-ph img, html.dark .fhd-ph .none, html.dark .fh-rc-ph, html.dark .fh-faces img {
         background: radial-gradient(circle at 30% 20%, hsl(var(--g, 98) 22% 22%), hsl(var(--g, 98) 18% 14%)); }
 </style>
 @endpush
@@ -555,6 +661,8 @@
         book: svg('<path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5v-15zM4 20.5A2.5 2.5 0 006.5 23H20"/>'),
         search: svg('<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>', 2.2),
         sprout: svg('<path d="M12 21v-8m0 0c0-4-3-6.5-7-6.5 0 4 3 6.5 7 6.5zm0 0c0-3 2.5-5.5 6-5.5 0 3.2-2.6 5.5-6 5.5z"/>', 1.9),
+        zoom: svg('<path d="M14.5 3.5h6v6M9.5 20.5h-6v-6M20.5 3.5l-6.5 6.5M3.5 20.5l6.5-6.5"/>', 2.3),
+        dl: svg('<path d="M12 3.5v11.5m0 0l-4.6-4.6M12 15l4.6-4.6M4.5 20h15"/>', 2.4),
     };
 
     /* ---- Who sells it, and the spray list ------------------------------
@@ -769,13 +877,17 @@
 
     /* ---- The option sheet ----------------------------------------------- */
     let sheet = null, settle = null, sheetKind = '';
-    let sheetTok = 0;
+    let sheetTok = 0, sheetFrom = null;
+    // What opened the sheet (a tag, a product chip) takes the focus back once it has gone (2026-10-17).
+    const sheetBack = () => { const f = sheetFrom; sheetFrom = null; if (f && f.isConnected) { try { f.focus({ preventScroll: true }); } catch (_) { /* gone */ } } };
+    // from: the opener, when a tap may not have focused it (Safari leaves the focus on the page).
+    const sheetShow = (from) => { if (!sheet.open) { sheetFrom = from || document.activeElement; sheet.showModal(); FH.lock(true); } };
     const closeSheet = (v) => {
         if (!sheet || !sheet.open) return;
         window.unregisterOverlay?.('fh-sheet');
         // A sheet opened again while this one slides away keeps it open.
         const tok = ++sheetTok;
-        const done = () => { if (tok !== sheetTok) return; sheet.classList.remove('is-closing'); sheet.close(); FH.lock(false); };
+        const done = () => { if (tok !== sheetTok) return; sheet.classList.remove('is-closing'); sheet.close(); FH.lock(false); sheetBack(); };
         if (reduce()) done(); else { sheet.classList.add('is-closing'); setTimeout(done, 230); }
         const s = settle; settle = null; if (s) s(v);
     };
@@ -785,8 +897,9 @@
         sheet.querySelectorAll('.cp-row').forEach((r) => { const on = !q || r.dataset.q.includes(q); r.hidden = !on; any = any || on; });
         sheet.querySelector('.cp-none')?.classList.toggle('is-on', !any);
     };
-    // FH.pick({ title, note, opts: [{k, l, sub, n, icon}], value, multi, all, search, counts, tl }) resolves the choice, or null.
-    // tl: a Tagalog help flag's key for the title.
+    // FH.pick({ title, note, opts: [{k, l, sub, n, icon}], value, multi, all, allSub, allN, search, counts, tl, done, from }) resolves the choice, or null.
+    // tl: a Tagalog help flag's key for the title; all: the first row, for no choice (allSub its line, allN its count); done: the multi sheet's button;
+    // from: what takes the focus back when it closes (else whatever had it).
     // The one sheet, made the first time it is wanted.
     const ensureSheet = () => {
         if (!sheet) {
@@ -816,7 +929,7 @@
         settle = resolve;
         sheetKind = 'pick';
         const multi = !!cfg.multi, chosen = new Set(multi ? (cfg.value || []) : [cfg.value ?? '']);
-        const rows = (!multi && cfg.all ? [{ k: '', l: cfg.all }] : []).concat(cfg.opts || []);
+        const rows = (!multi && cfg.all ? [{ k: '', l: cfg.all, sub: cfg.allSub, n: cfg.allN }] : []).concat(cfg.opts || []);
         sheet._multi = multi;
         sheet.setAttribute('aria-label', cfg.title || 'Pick');
         sheet.innerHTML = '<div class="cp-box" tabindex="-1"><div class="cp-grip" aria-hidden="true"></div>'
@@ -831,11 +944,11 @@
                 + (cfg.counts !== false && o.n ? '<span class="cp-n">' + esc(o.n) + '</span>' : '')
                 + '<span class="cp-on" aria-hidden="true">' + FH.icon.check + '</span></button>').join('')
             + '<p class="cp-none">Nothing by that name.</p></div>'
-            + (multi ? '<div class="fh-sheet-foot"><button type="button" class="fh-sheet-clear">Clear</button><button type="button" class="fh-sheet-done">Show them</button></div>' : '')
+            + (multi ? '<div class="fh-sheet-foot"><button type="button" class="fh-sheet-clear">Clear</button><button type="button" class="fh-sheet-done">' + esc(cfg.done || 'Show them') + '</button></div>' : '')
             + '</div>';
         sheetTok++;
         sheet.classList.remove('is-closing');
-        if (!sheet.open) { sheet.showModal(); FH.lock(true); }
+        sheetShow(cfg.from);
         window.registerOverlay?.('fh-sheet', () => closeSheet(null));
         sheet.querySelector('.cp-row[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' });
         if (cfg.search && matchMedia('(pointer: fine)').matches) sheet.querySelector('.cp-find input').focus();
@@ -875,11 +988,248 @@
             + '<div class="fh-sheet-foot"><button type="button" class="fh-sheet-done">Close</button></div></div>';
         sheetTok++;
         sheet.classList.remove('is-closing');
-        if (!sheet.open) { sheet.showModal(); FH.lock(true); }
+        sheetShow();
         window.registerOverlay?.('fh-sheet', () => closeSheet(null));
         sheet.querySelector('.cp-box').focus({ preventScroll: true });
     };
     document.addEventListener('click', (e) => { const b = e.target.closest('[data-prod]'); if (b && FH.prodCards[b.dataset.prod]) FH.productSheet(FH.prodCards[b.dataset.prod]); });
+
+    /* ---- A question as a tag (2026-10-17, the owner) ----------------------
+       A question with a long list of answers is one tag (the crop tag's
+       looks): its picture, the answer picked or what to pick, and Change.
+       The tag opens the option sheet with the answer picked marked and the
+       answers the crop never shows greyed out; a pick closes the sheet, the
+       tag takes the new answer with a bump and onPick(value) redraws the
+       finder. Nothing else opens or scrolls by itself (no auto advance).
+       cfg: { box (the tag goes in it), title, note (words, or a function
+       read at each opening), tl, icon (an svg), empty (the words before a
+       pick), all and allSub (the first row, for no answer; one answer only),
+       opts ({k: label} or [{k, l, sub, icon}]), value, multi, done (the
+       multi sheet's button), onPick(value) }.
+       Returns { get(), set(value, animate), counts({k: how many} or null, total) }. */
+    FH.optTag = (cfg) => {
+        const multi = !!cfg.multi;
+        const opts = Array.isArray(cfg.opts) ? cfg.opts.slice() : Object.entries(cfg.opts || {}).map(([k, l]) => ({ k, l }));
+        let value = multi ? [].concat(cfg.value || []) : String(cfg.value || ''), n = null, total;
+        const tag = document.createElement('button');
+        tag.type = 'button';
+        tag.className = 'cp-tag fh-otag';
+        tag.setAttribute('aria-haspopup', 'dialog');
+        tag.setAttribute('aria-expanded', 'false');
+        tag.innerHTML = '<span class="cp-ico" aria-hidden="true">' + (cfg.icon || '') + '</span><span class="cp-t"><b></b></span>'
+            + '<span class="cp-chev" aria-hidden="true">Change' + FH.icon.chev + '</span>';
+        cfg.box.replaceChildren(tag);
+        const words = (k) => (opts.find((o) => o.k === k) || {}).l || '';
+        const key = (v) => (multi ? v.join('|') : v);
+        const paint = () => {
+            const t = multi ? value.map(words).filter(Boolean).join(', ') : words(value);
+            tag.querySelector('.cp-t b').textContent = t || cfg.empty || 'Pick one';
+            tag.classList.toggle('is-set', !!t);
+            tag.classList.toggle('is-empty', !t);
+            tag.setAttribute('aria-label', cfg.title + ' ' + (t || cfg.empty || 'Pick one'));
+        };
+        const api = {
+            get: () => (multi ? value.slice() : value),
+            set(v, animate) {
+                const was = key(value);
+                value = multi ? [].concat(v || []) : String(v || '');
+                paint();
+                if (animate && key(value) !== was) FH.bump(tag);
+            },
+            // How many of the crop's entries each answer fits: 0 greys it out in the sheet.
+            counts(map, all) { n = map || null; total = all; },
+        };
+        tag.addEventListener('click', async () => {
+            tag.setAttribute('aria-expanded', 'true');
+            const v = await FH.pick({
+                title: cfg.title, tl: cfg.tl, note: typeof cfg.note === 'function' ? cfg.note() : cfg.note, multi, done: cfg.done || 'Done', value: api.get(), from: tag,
+                all: multi ? null : cfg.all, allSub: cfg.allSub, allN: n ? total : undefined, counts: n ? undefined : false,
+                opts: opts.map((o) => ({ k: o.k, l: o.l, sub: o.sub, icon: o.icon, n: n ? (n[o.k] || 0) : undefined })),
+            });
+            tag.setAttribute('aria-expanded', 'false');
+            if (v === null) return;
+            const was = key(value);
+            api.set(v, true);
+            if (key(value) !== was) cfg.onPick?.(api.get());
+        });
+        paint();
+        return api;
+    };
+
+    /* ---- The photo, big (2026-10-17, the owner) ----------------------------
+       A tap on a result card's small photo (or on an entry's photo) shows it
+       large on a dark stage, without opening the entry: its name, the photo
+       (the small one at once, the large one when it has come), who took it
+       and its licence (with links to the original and to the licence when
+       they are known), a stand in said as one, and Download. Several photos
+       go by the arrows, the arrow keys or a swipe. Escape, the dark around
+       the photo and the phone's Back close it; the focus goes back to what
+       opened it. Any [data-fh-lb] (FH.lbAttr) opens it; built the first time. */
+    // One photo, from an entry: pg and lic are its original's page and licence (the page adds them when it knows them).
+    FH.lbItem = (i, note) => ({ src: i.photo || i.thumb || '', thumb: i.thumb || '', alt: i.alt || i.name || '', title: i.name || '', credit: i.credit || '', page: i.pg || '', lic: i.lic || '', note: note || '' });
+    FH.lbAttr = (items, at) => ' data-fh-lb="' + esc(JSON.stringify((items || []).filter((x) => x && x.src))) + '"' + (at ? ' data-fh-lb-at="' + Number(at) + '"' : '');
+    // A result card's small photo, a button of its own; with none, `fallback` (a leaf, a symbol) in a tile carrying `act` (' data-fold="…"').
+    FH.rcPhoto = (i, fallback, act, note) => (i.thumb
+        ? '<button type="button" class="fh-rc-ph"' + FH.lbAttr([FH.lbItem(i, note)]) + ' aria-haspopup="dialog" aria-label="' + esc('See the photo of ' + i.name + ' larger') + '">'
+            + '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer"><span class="fh-rc-zoom" aria-hidden="true">' + FH.icon.zoom + '</span></button>'
+        : '<span class="fh-rc-ph is-none"' + (act || '') + ' aria-hidden="true">' + (fallback || '') + '</span>');
+    // A Creative Commons licence said in words ("CC BY SA 4.0", "CC BY 3.0 au", "CC0 1.0") as the address of its deed; '' for any other.
+    const licUrl = (s) => {
+        const t = String(s || '');
+        if (/\bCC0\b/i.test(t)) return 'https://creativecommons.org/publicdomain/zero/1.0/';
+        const m = t.match(/\bCC[\s-]+BY((?:[\s-]+(?:NC|SA|ND))*)[\s-]+(\d\.\d)(?:[\s-]+([a-z]{2})\b)?/i);
+        if (!m) return '';
+        const parts = ['by'].concat(m[1].trim().split(/[\s-]+/).filter(Boolean).map((x) => x.toLowerCase()));
+        return 'https://creativecommons.org/licenses/' + parts.join('-') + '/' + m[2] + '/' + (m[3] ? m[3].toLowerCase() + '/' : '');
+    };
+    // The licence as the credit says it, when the page did not hand it over.
+    const licOf = (it) => it.lic || ((String(it.credit).match(/\bCC0(?:\s+\d\.\d)?|\bCC[\s-]+BY(?:[\s-]+(?:NC|SA|ND))*(?:[\s-]+\d\.\d(?:[\s-]+[a-z]{2}\b)?)?/i) || [''])[0]);
+    // A file name a person can read: the entry's name and the photo's own kind.
+    const fileName = (it) => {
+        const ext = ((String(it.src).split(/[?#]/)[0].match(/\.(webp|jpe?g|png|gif|avif)$/i) || [])[1] || 'jpg').toLowerCase();
+        return (String(it.title || 'Photo').replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() || 'Photo') + '.' + ext;
+    };
+    let lb = null, lbItems = [], lbAt = 0, lbFrom = null, lbTok = 0, lbShut = 0, lbDragged = false;
+    const lbClose = () => {
+        if (!lb || !lb.open || lb.classList.contains('is-closing')) return;
+        window.unregisterOverlay?.('fh-lb');
+        const tok = ++lbShut;
+        const done = () => {
+            if (tok !== lbShut) return;
+            lb.classList.remove('is-closing'); lb.close(); FH.lock(false);
+            const f = lbFrom; lbFrom = null;
+            if (f && f.isConnected) { try { f.focus({ preventScroll: true }); } catch (_) { /* gone */ } }
+        };
+        if (reduce()) done(); else { lb.classList.add('is-closing'); setTimeout(done, 220); }
+    };
+    // Draw the photo at lbAt; dir: 0 opening, 1 the next, -1 the one before.
+    const lbShow = (dir) => {
+        const it = lbItems[lbAt], fig = lb.querySelector('.fh-lb-fig'), img = fig.querySelector('img'), tok = ++lbTok, many = lbItems.length > 1;
+        const first = it.thumb || it.src;
+        img.alt = it.alt || it.title;
+        img.src = first;
+        if (it.src && it.src !== first) {
+            const big = new Image();
+            big.referrerPolicy = 'no-referrer';
+            big.onload = () => { if (tok === lbTok) img.src = it.src; };
+            big.src = it.src;
+        }
+        lb.querySelector('#fhLbTitle').textContent = it.title || 'Photo';
+        const count = lb.querySelector('[data-lb-n]');
+        count.hidden = !many;
+        count.textContent = 'Photo ' + (lbAt + 1) + ' of ' + lbItems.length;
+        lb.querySelectorAll('[data-lb-go]').forEach((b) => { b.hidden = !many; });
+        const lic = licOf(it), lu = licUrl(lic), out = (u, t) => '<a href="' + esc(u) + '" target="_blank" rel="noopener nofollow">' + esc(t) + '</a>';
+        lb.querySelector('[data-lb-credit]').innerHTML = it.credit ? '<b>Photo:</b> ' + esc(it.credit) : 'Who took this photo is not on record.';
+        const note = lb.querySelector('[data-lb-note]');
+        note.hidden = !it.note;
+        note.textContent = it.note || '';
+        const links = [it.page ? out(it.page, 'See the original photo') : '', lu ? out(lu, 'Licence: ' + lic) : ''].filter(Boolean);
+        const lw = lb.querySelector('[data-lb-links]');
+        lw.hidden = !links.length;
+        lw.innerHTML = links.join('');
+        const dl = lb.querySelector('[data-lb-dl]');
+        dl.href = it.src;
+        dl.setAttribute('download', fileName(it));
+        if (!reduce()) { fig.classList.remove('is-in', 'is-next', 'is-prev'); void fig.offsetWidth; fig.classList.add(dir > 0 ? 'is-next' : (dir < 0 ? 'is-prev' : 'is-in')); }
+    };
+    const lbGo = (d) => { if (lbItems.length < 2) return; lbAt = (lbAt + d + lbItems.length) % lbItems.length; lbShow(d); };
+    // Download: the link's own download on this site; a photo kept on another site comes as a blob, else opens in a new tab to be saved.
+    const lbSave = async (e) => {
+        const a = e.currentTarget, it = lbItems[lbAt];
+        if (!it) return;
+        let same = false;
+        try { same = new URL(it.src, location.href).origin === location.origin; } catch (_) { /* not a URL */ }
+        if (same) return;
+        e.preventDefault();
+        if (a.classList.contains('is-busy')) return;
+        a.classList.add('is-busy');
+        try {
+            const r = await fetch(it.src, { mode: 'cors', credentials: 'omit', referrerPolicy: 'no-referrer' });
+            if (!r.ok) throw new Error('not given');
+            const url = URL.createObjectURL(await r.blob());
+            // Inside the lightbox: everything outside a modal dialog is inert.
+            const t = document.createElement('a');
+            t.href = url; t.download = fileName(it); t.hidden = true;
+            lb.appendChild(t); t.click(); t.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 4000);
+        } catch (_) {
+            window.open(it.src, '_blank', 'noopener');
+        } finally { a.classList.remove('is-busy'); }
+    };
+    const lbBuild = () => {
+        if (lb) return lb;
+        lb = document.createElement('dialog');
+        lb.className = 'fh-lb';
+        lb.setAttribute('aria-labelledby', 'fhLbTitle');
+        lb.innerHTML = '<div class="fh-lb-box" tabindex="-1">'
+            + '<div class="fh-lb-bar"><div class="fh-lb-title"><b id="fhLbTitle">Photo</b><small data-lb-n hidden></small></div><button type="button" class="fh-lb-x" aria-label="Close">' + FH.icon.x + '</button></div>'
+            + '<div class="fh-lb-stage"><button type="button" class="fh-lb-nav is-prev" data-lb-go="-1" aria-label="The photo before" hidden>' + FH.icon.back + '</button>'
+            + '<figure class="fh-lb-fig is-in"><img alt="" referrerpolicy="no-referrer" draggable="false"></figure>'
+            + '<button type="button" class="fh-lb-nav is-next" data-lb-go="1" aria-label="The next photo" hidden>' + FH.icon.arrow + '</button></div>'
+            + '<div class="fh-lb-foot"><div class="fh-lb-cap"><p data-lb-credit></p><p class="fh-lb-note" data-lb-note hidden></p><p class="fh-lb-links" data-lb-links hidden></p></div>'
+            + '<a class="fh-lb-dl" data-lb-dl href="#" download>' + FH.icon.dl + '<span>Download</span></a></div></div>';
+        document.body.appendChild(lb);
+        const stage = lb.querySelector('.fh-lb-stage'), fig = lb.querySelector('.fh-lb-fig');
+        lb.addEventListener('click', (e) => {
+            if (lbDragged) { lbDragged = false; return; }
+            const g = e.target.closest('[data-lb-go]');
+            if (g) { lbGo(Number(g.dataset.lbGo)); return; }
+            // The close button, and the dark around the photo, as a backdrop.
+            if (e.target.closest('.fh-lb-x') || e.target === lb || e.target === stage || e.target === fig) lbClose();
+        });
+        lb.addEventListener('cancel', (e) => { e.preventDefault(); lbClose(); });
+        lb.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { if (lbItems.length < 2) return; e.preventDefault(); lbGo(e.key === 'ArrowRight' ? 1 : -1); }
+        });
+        lb.querySelector('[data-lb-dl]').addEventListener('click', lbSave);
+        // A swipe: the photo follows the finger a little, and far enough turns to the next one.
+        let x0 = null, y0 = 0, dx = 0, pid = null;
+        stage.addEventListener('pointerdown', (e) => {
+            lbDragged = false;
+            if (lbItems.length < 2 || e.pointerType === 'mouse' || e.target.closest('button')) return;
+            x0 = e.clientX; y0 = e.clientY; dx = 0; pid = e.pointerId;
+        });
+        stage.addEventListener('pointermove', (e) => {
+            if (x0 === null || e.pointerId !== pid) return;
+            dx = e.clientX - x0;
+            if (Math.abs(e.clientY - y0) > Math.abs(dx)) return;
+            if (!reduce()) fig.style.transform = 'translateX(' + Math.round(dx * .6) + 'px)';
+        });
+        const end = () => {
+            if (x0 === null) return;
+            x0 = null;
+            if (Math.abs(dx) > 8) lbDragged = true;
+            if (!reduce()) { fig.style.transition = 'transform .28s cubic-bezier(.22,1,.36,1)'; setTimeout(() => { fig.style.transition = ''; }, 300); }
+            fig.style.transform = '';
+            if (Math.abs(dx) > 56) lbGo(dx < 0 ? 1 : -1);
+        };
+        stage.addEventListener('pointerup', end);
+        stage.addEventListener('pointercancel', end);
+        return lb;
+    };
+    // FH.lightbox(items, at, from): items [{src, thumb, alt, title, credit, page, lic, note}], the one to show first, what takes the focus back.
+    FH.lightbox = (items, at, from) => {
+        const list = (items || []).filter((x) => x && x.src);
+        if (!list.length) return;
+        lbBuild();
+        lbItems = list;
+        lbAt = Math.max(0, Math.min(Number(at) || 0, list.length - 1));
+        lbShut++;                                          // a close still on its way is called off
+        lb.classList.remove('is-closing');
+        if (!lb.open) { lbFrom = from || document.activeElement; lb.showModal(); FH.lock(true); }
+        window.registerOverlay?.('fh-lb', lbClose);
+        lbShow(0);
+        lb.querySelector('.fh-lb-box').focus({ preventScroll: true });
+    };
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-fh-lb]');
+        if (!b) return;
+        e.preventDefault();
+        let items = [];
+        try { items = JSON.parse(b.dataset.fhLb || '[]'); } catch (_) { return; }
+        FH.lightbox(items, b.dataset.fhLbAt, b);
+    });
 
     /* ---- The explainer: systemic, translaminar, contact ------------------
        A sheet of its own (dialog#fhMobHelp, the option sheet's looks), so it
@@ -1155,7 +1505,8 @@
         b.parentElement.remove();
     });
     // An entry's photo, with its credit (most are shared under a licence that asks for one).
-    FH.photo = (i) => {
+    // A tap shows it large, to save it (2026-10-17, the owner); o.note goes with it there (a stand in's).
+    FH.photo = (i, o) => {
         const first = i.thumb || i.photo;
         if (first && i.photo && i.photo !== first) {
             const big = new Image();
@@ -1163,7 +1514,11 @@
             big.onload = () => document.querySelectorAll('img[data-big="' + CSS.escape(i.photo) + '"]').forEach((im) => { im.src = i.photo; });
             big.src = i.photo;
         }
-        return '<figure class="fhd-ph">' + (first ? '<img src="' + esc(first) + '" data-big="' + esc(i.photo || '') + '" alt="' + esc(i.alt || i.name) + '" referrerpolicy="no-referrer">' : '<span class="none">' + FH.icon.leaf + '</span>')
+        const img = '<img src="' + esc(first) + '" data-big="' + esc(i.photo || '') + '" alt="' + esc(i.alt || i.name) + '" referrerpolicy="no-referrer">';
+        return '<figure class="fhd-ph">' + (first
+            ? '<button type="button" class="fhd-ph-btn"' + FH.lbAttr([FH.lbItem(i, o && o.note)]) + ' aria-haspopup="dialog" aria-label="' + esc('See the photo of ' + i.name + ' larger') + '">'
+                + img + '<span class="fhd-ph-zoom" aria-hidden="true">' + FH.icon.zoom + 'Larger</span></button>'
+            : '<span class="none">' + FH.icon.leaf + '</span>')
             + (i.credit ? '<figcaption>Photo: ' + esc(i.credit) + '</figcaption>' : '') + '</figure>';
     };
     // tl: a Tagalog help flag's key for the heading (optional).

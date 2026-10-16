@@ -19,6 +19,13 @@
     if ($faces->count() < 3) {
         $faces = collect($book['entries'])->filter(fn ($e) => $e['thumb'])->take(3);
     }
+    // Each photo's original page and licence, for the credit under it when it is shown large
+    // (2026-10-17): known for the catalogue's own photos, not for a page's own picture.
+    $fdEntries = collect($book['entries'])->map(function ($e) use ($F, $book) {
+        $ph = $e['photo'] ? $F::photo($book['section'], $e['k']) : null;
+
+        return $ph && \App\Support\SitePages::img($ph['src']) === $e['photo'] ? $e + ['pg' => (string) ($ph['page'] ?? ''), 'lic' => (string) ($ph['license'] ?? '')] : $e;
+    })->all();
 @endphp
 @include('field-helpers.partials.kit')
 
@@ -37,14 +44,11 @@
                 @include('public.site.partials.crop-pick', ['id' => 'fhCropSheet', 'crops' => $crops, 'current' => $fdCrop, 'title' => 'Which crop?', 'noun' => $w['nouns']])
             </div>
         </div>
+        {{-- Step two is a tag that opens its answers in a sheet (FH.optTag, 2026-10-17, the owner). --}}
         <div class="wc-q">
             <b><i>2</i>{{ $w['askWhere'] }}</b>
             <small>Pick one, or leave it to see all</small>
-            <div class="wc-opts" role="radiogroup" aria-label="{{ $w['askWhere'] }}" id="fhWhere">
-                @foreach ($book['askOpts'] as $k => $label)
-                    <button type="button" role="radio" aria-checked="false" data-where="{{ $k }}">{{ $label }}</button>
-                @endforeach
-            </div>
+            <div class="fh-otag-box" id="fhWhere"></div>
         </div>
         {{-- Below two columns the answer is under these questions: this says what waits there. --}}
         <button type="button" class="wc-go" id="fhGo" aria-controls="fhCard"><span>See the {{ $w['nouns'] }}</span>
@@ -69,11 +73,12 @@
 ])
 
 <script type="application/json" id="fhData">{!! json_encode([
-    'entries' => $book['entries'],
+    'entries' => $fdEntries,
     'crops' => collect($crops)->map(fn ($c) => $c[1]),
     'cropNames' => $book['cropNames'],
     'crop' => $fdCrop,
     'where' => $book['askOpts'],
+    'ask' => $w['askWhere'],
     'parts' => $book['parts'],
     'signs' => $book['signs'],
     'facets' => $book['facets'],
@@ -96,6 +101,11 @@
     const cropTag = document.querySelector('#fhCrop .cp-tag'), whereBox = document.getElementById('fhWhere');
     const go = document.getElementById('fhGo'), goText = go?.querySelector('span');
     const st = { crop: D.crop, where: '' };
+    // Step two: a tag, its answers in a sheet (FH.optTag, 2026-10-17, the owner); the grey ones are those this crop never shows.
+    let greyed = false;
+    const whereTag = FH.optTag({ box: whereBox, title: D.ask, icon: D.pests ? I.pin : I.eye, empty: D.pests ? 'Pick where you see it' : 'Pick what you see', opts: D.where,
+        note: () => (greyed ? 'The grey ones do not show on ' + String(D.crops[st.crop] || 'this crop').toLowerCase() + '.' : ''),
+        all: 'Not sure', allSub: 'Show every ' + D.noun + ' of the crop', onPick: (v) => { st.where = v; render(true); } });
     const KIND_ICON = Object.fromEntries(D.facets.map((f) => [f[0], f[2]]));
     const P = D.products || {};
     Object.assign(FH.prodCards, P.cards || {});
@@ -158,11 +168,12 @@
             : (i.no ? '<i class="is-warn">Read before you spray</i>' : '');
         const body = nAi ? '<div class="fh-rc-spray"><span class="fh-spray-h" data-tl="what-to-spray">' + I.drop + 'What to spray</span>' + sprayOf(i, st.crop) + '</div>'
             : (i.no ? '<div class="fh-rc-spray">' + noSpray(i) + '</div>' : '');
+        // The small photo shows it large (2026-10-17, the owner); the name folds the card (or opens it, with nothing to fold).
+        const act = body ? ' data-fold="' + esc(i.k) + '"' : ' data-open="' + esc(i.k) + '"';
         return '<article class="fh-rc' + (open ? ' is-open' : '') + '" style="--g: ' + i.hue + '" data-k="' + esc(i.k) + '">'
-            + '<div class="fh-rc-top">'
+            + '<div class="fh-rc-top">' + FH.rcPhoto(i, I.leaf, act)
             + (body ? '<button type="button" class="fh-rc-head" data-fold="' + esc(i.k) + '" aria-expanded="' + open + '" aria-controls="' + id + '">'
                 : '<button type="button" class="fh-rc-head" data-open="' + esc(i.k) + '">')
-            + (i.thumb ? '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' : '<span class="none">' + I.leaf + '</span>')
             + '<span class="fh-rc-t"><b>' + esc(i.name) + '</b><small><em' + (kindFlag || '') + '>' + esc(i.kind) + '</em>' + (loc ? '<span>' + esc(loc) + '</span>' : '') + '</small>'
             + (sum && body ? '<span class="fh-rc-sum">' + sum + '</span>' : '') + '</span></button>'
             + '<span class="fh-rc-acts">'
@@ -190,12 +201,12 @@
         // IRRI and PhilRice: no insecticide on young palay unless a pest is at outbreak level.
         const early = D.pests && st.crop === 'rice'
             ? '<p class="wc-note">Palay younger than 30 to 40 days after transplanting: hold the insecticide unless a pest is at outbreak level. Early sprays kill the spiders and wasps that protect your crop.</p>' : '';
-        whereBox.querySelectorAll('button').forEach((b) => {
-            const has = forCrop.some((i) => i.where.includes(b.dataset.where));
-            b.disabled = !has;
-            if (!has && st.where === b.dataset.where) st.where = '';
-            b.setAttribute('aria-checked', String(b.dataset.where === st.where));
-        });
+        // How many of this crop's show each answer: one none shows is greyed out in the sheet, and let go.
+        const n = Object.fromEntries(Object.keys(D.where).map((k) => [k, forCrop.filter((i) => i.where.includes(k)).length]));
+        if (st.where && !n[st.where]) st.where = '';
+        greyed = Object.values(n).some((x) => !x);
+        whereTag.counts(n, forCrop.length);
+        whereTag.set(st.where, swap);
         const hits = st.where ? forCrop.filter((i) => i.where.includes(st.where)) : forCrop;
         const head = st.where ? D.where[st.where] : 'Every ' + D.noun + ' we cover';
         const kinds = new Set();
@@ -226,12 +237,6 @@
     });
     go?.addEventListener('click', () => card.closest('.wc-out').scrollIntoView({ behavior: FH.reduce() ? 'auto' : 'smooth', block: 'start' }));
     cropTag?.addEventListener('croppick', (e) => { st.crop = e.detail.crop; render(true); });
-    whereBox.addEventListener('click', (e) => {
-        const b = e.target.closest('button[data-where]');
-        if (!b || b.disabled) return;
-        st.where = st.where === b.dataset.where ? '' : b.dataset.where;
-        render(true);
-    });
     render(false);
 })();
 </script>
