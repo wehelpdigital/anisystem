@@ -15,6 +15,7 @@ use App\Support\Newsletter\Planner;
 use App\Support\Newsletter\Renderer;
 use App\Support\Newsletter\Seg;
 use App\Support\Newsletter\SequenceImport;
+use App\Support\Newsletter\SpamCheck;
 use App\Support\Newsletter\MergeTags;
 use App\Support\Newsletter\Theme;
 use App\Support\Newsletter\Voice;
@@ -91,6 +92,7 @@ class NewsletterController extends Controller
                 $m === 'POST' && (bool) preg_match('~^email/(\d+)/(delete|duplicate|status|move|test)$~', $path, $x) => $this->act($request, (int) $x[1], $x[2], $who, $whoEmail),
                 $m === 'POST' && $path === 'reorder' => $this->reorder($request),
                 $m === 'POST' && $path === 'preview' => $this->preview($request),
+                $m === 'POST' && $path === 'spamcheck' => $this->spamcheck($request),
                 $m === 'GET' && $path === 'plan' => $this->ok($this->planData()),
                 $m === 'GET' && $path === 'runs' => $this->runs($request),
                 $m === 'POST' && $path === 'theme' => $this->ok(['theme' => Theme::save((array) $request->input('theme', []))], 'Theme saved. Every email not sent yet wears it.'),
@@ -188,6 +190,7 @@ class NewsletterController extends Controller
             'note' => $e->note, 'acumbaTemplateId' => $e->acumbaTemplateId,
             'acumbaName' => $e->meta['acumbaName'] ?? null, 'demo' => (bool) ($e->meta['demo'] ?? false),
             'updatedAt' => optional($e->updated_at)->format('Y-m-d H:i'), 'updatedBy' => $e->updatedBy ?: $e->createdBy,
+            'spam' => SpamCheck::badge($e),
         ];
     }
 
@@ -336,6 +339,13 @@ class NewsletterController extends Controller
                 : (int) AsNlEmail::active()->where('priority', $priority)->max('position') + 10;
         }
         $e->save();
+        // The list's spam badge follows the words just saved (SpamAssassin's answer is
+        // usually kept already from the builder's live check, so this is quick).
+        try {
+            SpamCheck::forSaved($e->fresh());
+        } catch (\Throwable $x) {
+            // A check that cannot run never stops a save; the list checks it later.
+        }
 
         return $this->ok(['email' => $this->row($e->fresh()) + ['content' => Renderer::clean($e->blocks ?? [])]], $status === 'draft' ? 'Saved as a draft.' : 'Saved. It is in the line.');
     }
@@ -483,6 +493,28 @@ class NewsletterController extends Controller
         ], $theme, $request->input('mode') === 'test' ? 'test' : 'preview', '', (string) $request->input('scheme', 'light'));
 
         return $this->ok(['html' => $html, 'text' => $request->boolean('withText') ? Renderer::text($html) : null]);
+    }
+
+    /**
+     * The spam check (SpamCheck): of the builder's unsaved words when they come
+     * with the call, or of a saved email by its id (its badge is kept on it).
+     */
+    private function spamcheck(Request $request)
+    {
+        if ($request->filled('id') && ! $request->has('email')) {
+            $e = AsNlEmail::active()->findOrFail((int) $request->input('id'));
+            $report = SpamCheck::forSaved($e);
+
+            return $this->ok(['report' => $report, 'badge' => SpamCheck::badge($e->fresh())]);
+        }
+        $in = (array) $request->input('email', []);
+
+        return $this->ok(['report' => SpamCheck::check([
+            'subject' => mb_substr(trim(strip_tags((string) ($in['subject'] ?? ''))), 0, 250),
+            'preheader' => mb_substr(trim(strip_tags((string) ($in['preheader'] ?? ''))), 0, 250),
+            'content' => $in['content'] ?? [],
+            'kind' => ($in['kind'] ?? '') === 'acumba' ? 'acumba' : 'builder',
+        ])]);
     }
 
     private function settings(Request $request)

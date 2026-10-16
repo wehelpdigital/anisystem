@@ -138,6 +138,7 @@
         sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
         moon: '<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',
         field: '<path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 3-2 3 1 0 2 1.5 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.5 1 3 2 3-1 0-2 1.5-2 3v2c0 2-1 3-3 3"/>',
+        shield: '<path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
     };
     const ic = (name, cls) => '<svg' + (cls ? ' class="' + cls + '"' : '') + ' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (I[name] || '') + '</svg>';
 
@@ -149,6 +150,7 @@
         regular: { name: 'Regular', short: 'Regular', line: 'One a day, in the order you set' },
     };
     const STATUS = { draft: 'Draft', queued: 'In line', partial: 'Partly sent', sent: 'Sent', expired: 'Expired' };
+    const SPAM_WORDS = { good: 'Looks good', fair: 'Worth a look', poor: 'Likely spam' };
     const SEG_COLOR = { all: '#64748b', nonusers: '#94a3b8', free: '#87B84C', libreplus: '#E8BE1C', solo: '#3d6b22', owner: '#2B3A1C', paid: '#7c3aed', credits: '#0891b2' };
     const TIERS = ['nonusers', 'free', 'libreplus', 'solo', 'owner'];
     const segName = (k) => ((S.boot && S.boot.segments.find((s) => s.key === k)) || { name: k }).name;
@@ -344,6 +346,7 @@
             row.classList.add('nlk-rise');
             wireRow(row);
         });
+        checkRowsForSpam();
         if (S.scope === 'line' && !S.q) {
             loadSortable().then((Sortable) => {
                 if (list._sortable) list._sortable.destroy();
@@ -360,6 +363,7 @@
         const live = ['queued', 'partial'].indexOf(r.status) >= 0;
         const meta = [];
         meta.push('<span class="nlk-pill st-' + r.status + '">' + STATUS[r.status] + '</span>');
+        meta.push(spamPill(r));
         if (r.kind === 'acumba') meta.push('<span class="nlk-pill is-acumba" title="' + h(r.acumbaName || '') + '">Acumbamail template</span>');
         if (r.demo) meta.push('<span class="nlk-pill is-demo">Sample</span>');
         r.audience.forEach((k) => meta.push('<span class="nlk-pill">' + dot(k) + h(segName(k)) + '</span>'));
@@ -405,6 +409,86 @@
         });
         $('[data-test]', row).addEventListener('click', () => testDialog(r()));
         $('[data-menu]', row).addEventListener('click', (e) => rowMenu(e.currentTarget, r()));
+        wireSpamPill($('[data-spam-pill]', row), id);
+    }
+
+    /* ============================================================ spam check
+       Every email gets a spam check (the API's SpamCheck: Apache SpamAssassin's
+       own score, Gmail's and Yahoo's rules for bulk senders, CAN-SPAM). The list
+       shows each email's badge; emails not checked yet are checked one after
+       another in the background, and the builder checks its words as they change. */
+
+    function spamPill(r) {
+        if (r.kind === 'acumba' && !r.spam) return '';
+        if (!r.spam) return '<span class="nlk-pill sp-wait" data-spam-pill title="Checking this email for spam signs">' + ic('shield') + 'Checking</span>';
+        const sc = r.spam.score == null ? '–' : (+r.spam.score).toFixed(1);
+        return '<button type="button" class="nlk-pill sp-' + r.spam.level + '" data-spam-pill title="SpamAssassin score ' + sc + ' (5 or more is spam). Tap for the full check.">' + ic('shield') + 'Spam ' + sc + ' · ' + SPAM_WORDS[r.spam.level] + '</button>';
+    }
+
+    function wireSpamPill(pill, id) {
+        if (!pill || pill.tagName !== 'BUTTON') return;
+        pill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const r = S.rows.find((x) => x.id === id);
+            busy(pill, async () => {
+                const res = await call('spamcheck', { body: { id } });
+                if (r) r.spam = res.data.badge;
+                spamSheet(res.data.report, r ? r.title : '');
+            });
+        });
+    }
+
+    /* The first dozen rows without a badge are checked from here, so a new or
+       changed email shows its badge soon; the newsletter's clock fills the rest. */
+    let spamRun = 0;
+    async function checkRowsForSpam() {
+        const run = ++spamRun;
+        const todo = S.rows.filter((r) => !r.spam && r.kind !== 'acumba').slice(0, 12).map((r) => r.id);
+        for (const id of todo) {
+            if (run !== spamRun) return; // a newer list took over
+            let badge = null;
+            try {
+                badge = (await call('spamcheck', { body: { id } })).data.badge;
+            } catch (e) {
+                // The check is out of reach for now: say so instead of "Checking" forever.
+                $$('[data-spam-pill].sp-wait').forEach((p) => { p.classList.replace('sp-wait', 'sp-off'); p.lastChild.textContent = 'Not checked'; p.title = e.message; });
+                return;
+            }
+            if (run !== spamRun) return;
+            const r = S.rows.find((x) => x.id === id);
+            const old = $('.nlk-row[data-id="' + id + '"] [data-spam-pill]');
+            if (!r || !badge || !old) continue;
+            r.spam = badge;
+            const pill = el(spamPill(r));
+            old.replaceWith(pill);
+            wireSpamPill(pill, id);
+        }
+    }
+
+    function spamSheet(rep, title) {
+        const sc = rep.score == null ? '–' : (+rep.score).toFixed(1);
+        const top = rep.spamAt * 1.6;
+        const fill = rep.score == null ? 0 : Math.min(100, Math.max(2, rep.score / top * 100));
+        const mark = { ok: '&#10003;', warn: '!', fail: '&#10005;', info: 'i' };
+        const row = (c) => '<div class="nlk-sc-row is-' + c.status + '"><span class="nlk-sc-ic" aria-hidden="true">' + mark[c.status] + '</span><div><b>' + h(c.label) + '</b><p>' + h(c.detail) + '</p><small>' + h(c.source) + '</small></div></div>';
+        const A = rep.assassin;
+        const rules = A.available
+            ? (A.rules.length ? A.rules.map((x) => '<div class="nlk-sc-rule"><span class="nlk-sc-pts' + (x.points < 0 ? ' is-neg' : '') + '">' + (x.points > 0 ? '+' : '') + (+x.points).toFixed(1) + '</span><div><b>' + h(x.plain || x.says) + '</b>' + (x.fix ? '<p>' + h(x.fix) + '</p>' : '') + '<small>' + h(x.name) + (x.plain ? ' · ' + h(x.says) : '') + '</small></div></div>').join('')
+                : '<div class="nlk-sc-none">No SpamAssassin rule added points to this email.</div>')
+            : '<div class="nlk-sc-none">' + h(A.error || 'SpamAssassin could not be reached just now.') + '</div>';
+        const toFix = rep.sender.filter((c) => c.status !== 'ok').length;
+        const L = sheet('Spam check' + (title ? ': ' + title : ''),
+            '<div class="nlk-sc-head is-' + rep.level + '"><div class="nlk-sc-score"><b>' + sc + '</b><small>of ' + rep.spamAt + '</small></div>' +
+            '<div class="nlk-grow"><div class="nlk-sc-verdict">' + h(rep.levelWords) + '</div>' +
+            '<div class="nlk-sc-gauge" title="SpamAssassin points"><i style="width:' + fill + '%"></i><span style="left:' + (rep.spamAt / top * 100) + '%"></span></div>' +
+            '<small>SpamAssassin points; 5 or more is spam by its default. Checked ' + h(rep.checkedAt) + ' as sent from ' + h(rep.from) + '.</small></div></div>' +
+            '<div class="nlk-box"><h4>SpamAssassin rules</h4>' + rules + '</div>' +
+            '<div class="nlk-box"><h4>This email</h4>' + rep.content.map(row).join('') + '</div>' +
+            '<div class="nlk-box"><h4>Sender setup, the same for every email' + (toFix ? ' · ' + toFix + ' to fix' : '') + '</h4>' + rep.sender.map(row).join('') + '</div>' +
+            '<small class="nlk-hint" style="margin:0">How it is checked: the email, as an inbox receives it, is scored by Apache SpamAssassin through Postmark\'s free checker (its network blocklist lookups do not run there). The sender setup is read from the domain\'s DNS and held to Gmail\'s and Yahoo\'s rules for bulk senders (2024). The postal address is the US CAN-SPAM Act\'s rule.</small>',
+            '<button type="button" class="nlk-btn" data-x2>Close</button>');
+        $('[data-x2]', L).addEventListener('click', () => L._close());
+        return L;
     }
 
     async function saveOrder() {
@@ -681,6 +765,7 @@
             '  </aside>' +
             '  <main class="nlk-bld-view">' +
             '    <div class="nlk-view-bar"><span class="nlk-grow" data-viewnote>Live preview: tap a part of the email to edit it.</span>' +
+            '      <button type="button" class="nlk-spam is-wait" data-spam title="Spam check: tap for the full report"><span class="nlk-spam-ic">' + ic('shield') + '</span><b data-spam-score>…</b><span data-spam-words>Checking</span></button>' +
             '      <div class="nlk-seg" data-dev><button type="button" data-v="desk" class="is-on" title="Desktop">' + ic('desk', '') + '</button><button type="button" data-v="phone" title="Phone">' + ic('phone') + '</button></div>' +
             '      <div class="nlk-seg" data-sch><button type="button" data-v="light"' + (scheme === 'light' ? ' class="is-on"' : '') + ' title="A light inbox">' + ic('sun') + '</button><button type="button" data-v="dark"' + (scheme === 'dark' ? ' class="is-on"' : '') + ' title="A dark inbox (phones in dark mode)">' + ic('moon') + '</button></div>' +
             '      <div class="nlk-seg" data-tv><button type="button" data-v="html" class="is-on">Email</button><button type="button" data-v="text">Text</button></div>' +
@@ -704,9 +789,40 @@
         };
         sub();
 
+        /* ------------------------------------------------ spam check */
+        let sv = 0;
+        let spamRep = null;
+        const spamChip = $('[data-spam]', L);
+        const spamLive = debounce(async () => {
+            const my = ++sv;
+            spamChip.classList.add('is-wait');
+            try {
+                const r = await call('spamcheck', { body: { email: { subject: E.subject, preheader: E.preheader, content: E.content, kind: E.kind } } });
+                if (my !== sv) return;
+                spamRep = r.data.report;
+                spamChip.dataset.level = spamRep.level;
+                $('[data-spam-score]', spamChip).textContent = spamRep.score == null ? '–' : (+spamRep.score).toFixed(1);
+                $('[data-spam-words]', spamChip).textContent = SPAM_WORDS[spamRep.level];
+            } catch (e) {
+                if (my !== sv) return;
+                spamRep = null;
+                spamChip.dataset.level = 'off';
+                $('[data-spam-score]', spamChip).textContent = '–';
+                $('[data-spam-words]', spamChip).textContent = 'Not checked';
+                spamChip.title = e.message;
+            } finally {
+                if (my === sv) spamChip.classList.remove('is-wait');
+            }
+        }, 1800);
+        spamChip.addEventListener('click', () => {
+            if (spamRep) spamSheet(spamRep, E.title);
+            else toast(spamChip.classList.contains('is-wait') ? 'Still checking. A moment.' : (spamChip.title || 'The spam check could not run.'), !spamChip.classList.contains('is-wait'));
+        });
+
         /* ------------------------------------------------ preview */
         let pv = 0;
         const preview = debounce(async () => {
+            spamLive();
             if (isAcumba) return;
             const my = ++pv;
             try {

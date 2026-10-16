@@ -6,6 +6,7 @@ use App\Models\AsSiteSetting;
 use App\Support\Newsletter\Audience;
 use App\Support\Newsletter\NewsEmail;
 use App\Support\Newsletter\Planner;
+use App\Support\Newsletter\SpamCheck;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Schema;
 
@@ -17,7 +18,9 @@ use Illuminate\Support\Facades\Schema;
  *   4. reads one list's unsubscribes and spreads them to the other lists;
  *   5. sends any high priority email whose exact time has come;
  *   6. after the send time and the morning's news, makes the day's
- *      campaigns, once a day (Planner::runDaily).
+ *      campaigns, once a day (Planner::runDaily);
+ *   7. gives a few emails without a current spam check their score
+ *      (SpamCheck), so the list's badges fill in by themselves.
  * With the switch off (newsletter.enabled), step 6 writes the day's plan
  * as a dry run and nothing is sent.
  */
@@ -55,6 +58,7 @@ class NewsletterTick extends Command
 
             return $r['status'] . (isset($r['reason']) ? ': ' . $r['reason'] : '') . (isset($r['campaigns']) ? ', ' . $r['campaigns'] . ' campaigns' : '');
         });
+        $this->step('spam', fn () => SpamCheck::fillBadges(8) . ' checked');
 
         return self::SUCCESS;
     }

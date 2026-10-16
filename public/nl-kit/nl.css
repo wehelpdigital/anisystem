@@ -12,6 +12,7 @@
   --gbg: #2B3A1C; --card2: #fbfcf9; --soft: #eef2e8; --chip: #f1f3ee; --input: #ffffff; --view: #e9eee2; --switch: #d6dccd; --grip: #b7c2aa;
   --date-soft: #eef4ff; --date-ink: #2a4f8f; --acu-soft: #f5efff; --acu-ink: #6b3fb5; --demo-soft: #fff3c4; --demo-ink: #7a5b00;
   --exp-soft: #f3eeee; --exp-ink: #8d6b6b; --draft-ink: #77776d; --note-ink: #7a5b00; --part-ink: #8a6a00; --skel2: #f8faf5;
+  --ok-soft: #e8f4dc; --ok-ink: #2f6a17; --warn-soft: #fff4d6; --warn-ink: #7a5900; --bad-soft: #fde7e4; --bad-ink: #a3241a;
   --ease: cubic-bezier(.22,1,.36,1); --t: .28s;
   --r: 16px; --r-sm: 11px;
   --shadow: 0 1px 2px rgba(31,42,23,.06), 0 6px 20px rgba(31,42,23,.06);
@@ -372,6 +373,7 @@ html.dark .nlk, [data-bs-theme="dark"] .nlk {
   --red: #ff8f80; --red-soft: #3b1d19;
   --date-soft: #172438; --date-ink: #9fc2ff; --acu-soft: #281e3a; --acu-ink: #c8a9ff; --demo-soft: #3a3110; --demo-ink: #f3d46e;
   --exp-soft: #33221f; --exp-ink: #d9aba4; --draft-ink: #b2b8a7; --note-ink: #f0d27c; --part-ink: #f0d27c;
+  --ok-soft: #1f3317; --ok-ink: #a9d672; --warn-soft: #3a3110; --warn-ink: #f3d46e; --bad-soft: #3b1d19; --bad-ink: #ff9c8f;
   --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 20px rgba(0,0,0,.3); --shadow-lg: 0 18px 50px rgba(0,0,0,.55);
 }
 html.dark .nlk .nlk-layer, [data-bs-theme="dark"] .nlk .nlk-layer { background: rgba(0,0,0,.55); }
@@ -414,4 +416,58 @@ html.dark .nlk input[type=date], html.dark .nlk input[type=time], html.dark .nlk
 }
 @media (prefers-reduced-motion: reduce) {
   .nlk *, .nlk *::before, .nlk *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* ------------------------------------------------------------ spam check
+   The badge on each email, the live chip in the builder, and the report. */
+.nlk .nlk-pill svg { width: 12px; height: 12px; flex: none; }
+.nlk .nlk-pill.sp-good { background: var(--ok-soft); color: var(--ok-ink); }
+.nlk .nlk-pill.sp-fair { background: var(--warn-soft); color: var(--warn-ink); }
+.nlk .nlk-pill.sp-poor { background: var(--bad-soft); color: var(--bad-ink); }
+.nlk .nlk-pill.sp-wait, .nlk .nlk-pill.sp-off { background: var(--chip); color: var(--faint); }
+.nlk .nlk-pill.sp-wait svg { animation: nlk-pulse 1.2s ease-in-out infinite; }
+.nlk button.nlk-pill { border: 0; cursor: pointer; transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease); }
+.nlk button.nlk-pill:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.nlk button.nlk-pill.is-busy { opacity: .7; pointer-events: none; }
+@keyframes nlk-pulse { 50% { opacity: .35; } }
+
+.nlk .nlk-spam { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px 0 8px; border-radius: 999px; border: 1.5px solid var(--line2);
+  background: var(--card); font-size: 12.5px; font-weight: 800; color: var(--muted); transition: background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease); }
+.nlk .nlk-spam:hover { border-color: var(--leaf); }
+.nlk .nlk-spam .nlk-spam-ic { display: grid; place-items: center; width: 20px; height: 20px; }
+.nlk .nlk-spam .nlk-spam-ic svg { width: 16px; height: 16px; }
+.nlk .nlk-spam b { font-size: 13.5px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.nlk .nlk-spam.is-wait .nlk-spam-ic { animation: nlk-pulse 1.2s ease-in-out infinite; }
+.nlk .nlk-spam[data-level="good"] { background: var(--ok-soft); border-color: transparent; color: var(--ok-ink); }
+.nlk .nlk-spam[data-level="fair"] { background: var(--warn-soft); border-color: transparent; color: var(--warn-ink); }
+.nlk .nlk-spam[data-level="poor"] { background: var(--bad-soft); border-color: transparent; color: var(--bad-ink); }
+
+.nlk .nlk-sc-head { display: flex; gap: 16px; align-items: center; padding: 16px; border-radius: var(--r); background: var(--chip); }
+.nlk .nlk-sc-head.is-good { background: var(--ok-soft); color: var(--ok-ink); }
+.nlk .nlk-sc-head.is-fair { background: var(--warn-soft); color: var(--warn-ink); }
+.nlk .nlk-sc-head.is-poor { background: var(--bad-soft); color: var(--bad-ink); }
+.nlk .nlk-sc-head small { display: block; font-size: 12px; opacity: .85; margin-top: 6px; }
+.nlk .nlk-sc-score { text-align: center; min-width: 70px; }
+.nlk .nlk-sc-score b { display: block; font-size: 34px; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+.nlk .nlk-sc-score small { margin-top: 2px; font-weight: 800; }
+.nlk .nlk-sc-verdict { font-size: 17px; font-weight: 900; }
+.nlk .nlk-sc-gauge { position: relative; height: 8px; border-radius: 999px; background: rgba(0,0,0,.08); margin-top: 8px; }
+.nlk .nlk-sc-gauge i { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: currentColor; transition: width .6s var(--ease); }
+.nlk .nlk-sc-gauge span { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--bad-ink); border-radius: 2px; }
+.nlk .nlk-sc-rule, .nlk .nlk-sc-row { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-top: 1px solid var(--line); }
+.nlk .nlk-box > h4 + .nlk-sc-rule, .nlk .nlk-box > h4 + .nlk-sc-row { border-top: 0; padding-top: 0; }
+.nlk .nlk-sc-rule b, .nlk .nlk-sc-row b { display: block; font-size: 13.5px; color: var(--ink); }
+.nlk .nlk-sc-rule p, .nlk .nlk-sc-row p { font-size: 13px; color: var(--ink); opacity: .85; margin-top: 1px; }
+.nlk .nlk-sc-rule small, .nlk .nlk-sc-row small { display: block; font-size: 11.5px; color: var(--faint); margin-top: 2px; }
+.nlk .nlk-sc-pts { flex: none; min-width: 44px; text-align: center; padding: 2px 6px; border-radius: 8px; font-weight: 900; font-size: 12.5px;
+  background: var(--bad-soft); color: var(--bad-ink); font-variant-numeric: tabular-nums; }
+.nlk .nlk-sc-pts.is-neg { background: var(--ok-soft); color: var(--ok-ink); }
+.nlk .nlk-sc-ic { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 900; }
+.nlk .nlk-sc-row.is-ok .nlk-sc-ic { background: var(--ok-soft); color: var(--ok-ink); }
+.nlk .nlk-sc-row.is-warn .nlk-sc-ic { background: var(--warn-soft); color: var(--warn-ink); }
+.nlk .nlk-sc-row.is-fail .nlk-sc-ic { background: var(--bad-soft); color: var(--bad-ink); }
+.nlk .nlk-sc-row.is-info .nlk-sc-ic { background: var(--chip); color: var(--muted); }
+.nlk .nlk-sc-none { font-size: 13px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  .nlk .nlk-pill.sp-wait svg, .nlk .nlk-spam.is-wait .nlk-spam-ic { animation: none; }
 }
