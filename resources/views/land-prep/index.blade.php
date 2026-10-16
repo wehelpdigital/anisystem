@@ -307,17 +307,46 @@
     .lp-hire .lp-unit2 { background: #fdf0d5; }
     .lp-hire .lp-money { border-color: #f6dca6; }
     .lp-hire-note { font-size: .7rem; line-height: 1.4; color: #a16207; }
-    /* The stagger choice, shown on three lots. */
-    .lp-ex { margin-top: .65rem; padding: .75rem .8rem; border-radius: 1rem; background: #f8faf6; border: 1px solid var(--color-gray-200); min-width: 0; }
-    .lp-ex > p { font-size: .78rem; line-height: 1.5; color: var(--color-gray-600); }
-    .lp-ex-rows { display: grid; gap: .35rem; margin-top: .55rem; }
-    .lp-ex-row { display: grid; grid-template-columns: 3.3rem minmax(0, 1fr); align-items: center; gap: .5rem; font-size: .76rem; animation: lpPop .3s var(--lp-e) both; }
-    .lp-ex-row > b { font-weight: 800; color: var(--color-gray-700); }
-    .lp-ex-row > span { min-width: 0; padding: .4rem .55rem; border-radius: .6rem; font-weight: 700; line-height: 1.35; }
-    .lp-ex-row .is-ok { color: #2d5016; background: #e9f3dd; }
-    .lp-ex-row .is-late { color: #991b1b; background: #fde8e8; }
-    .lp-ex-row .is-moved { color: #5b21b6; background: #efe9fd; }
-    .lp-ex-sum { margin-top: .55rem; font-size: .76rem; font-weight: 700; line-height: 1.45; color: var(--color-gray-700); }
+    /* The days of many lots (2026-10-16, the owner): the first lot's and Anee times the others, or each lot's own. */
+    #lpDateMode { margin-bottom: 1rem; }
+    .lp-dfor { display: flex; align-items: center; gap: .45rem; margin: 0 0 .45rem; font-size: .86rem; font-weight: 900; color: var(--color-gray-800); min-width: 0; }
+    .lp-dfor i { flex: none; width: .7rem; height: .7rem; border-radius: 999px; background: var(--lc); }
+    .lp-dfor small { font-weight: 700; color: var(--color-gray-500); }
+    .lp-dlots { display: grid; gap: .55rem; margin-top: .8rem; }
+    .lp-dlot { padding: .7rem .75rem; border-radius: 1rem; background: #fbfcfa; border: 1px solid var(--color-gray-200); border-left: 4px solid var(--lc); animation: lpPop .3s var(--lp-e) both; min-width: 0; }
+    .lp-dlot-h { display: flex; align-items: baseline; gap: .45rem; margin-bottom: .45rem; min-width: 0; }
+    .lp-dlot-h i { flex: none; align-self: center; width: .65rem; height: .65rem; border-radius: 999px; background: var(--lc); }
+    .lp-dlot-h b { min-width: 0; font-size: .86rem; font-weight: 900; color: var(--color-gray-800); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lp-dlot-h small { flex: none; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
+    .lp-dlot-t { margin-top: .45rem; font-size: .76rem; font-weight: 700; line-height: 1.4; color: #92400e; }
+    .lp-dauto { display: flex; gap: .65rem; margin-top: .8rem; padding: .75rem .8rem; border-radius: 1rem; background: #f5f3ff; border: 1px solid #e4dcfd; animation: lpPop .3s var(--lp-e) both; min-width: 0; }
+    .lp-dauto > span:first-child { flex: none; font-size: 1.15rem; }
+    .lp-dauto > span + span { flex: 1; min-width: 0; }
+    .lp-dauto b { display: block; font-size: .86rem; font-weight: 800; color: #4c1d95; }
+    .lp-dauto small { display: block; margin-top: .15rem; font-size: .76rem; line-height: 1.45; color: #5b21b6; }
+    .lp-dclose { margin-top: .7rem; }
+    /* Will every lot be ready on its day? (the Workers step and the review) */
+    .lp-cast { margin-top: 1rem; transition: opacity .2s ease; }
+    .lp-cast:empty { margin: 0; }
+    .lp-cast.is-busy { opacity: .55; }
+    .lp-cast-c { padding: .8rem .85rem; border-radius: 1.05rem; background: #f8faf6; border: 1px solid #dfe8d4; min-width: 0; animation: lpPop .3s var(--lp-e) both; }
+    .lp-cast-c.is-warn { background: #fffdf5; border-color: #fde68a; }
+    .lp-cast-h { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+    .lp-cast-h > span { flex: none; font-size: 1.1rem; }
+    .lp-cast-h b { min-width: 0; font-size: .92rem; font-weight: 800; line-height: 1.3; color: var(--color-gray-900); }
+    .lp-cast-c > p { margin-top: .2rem; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    .lp-cast-rows { display: grid; gap: .35rem; margin-top: .6rem; }
+    .lp-cast-row { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .5rem; font-size: .78rem; animation: lpPop .3s var(--lp-e) both; }
+    .lp-cast-row > b { display: flex; align-items: center; gap: .35rem; padding-top: .42rem; font-weight: 800; color: var(--color-gray-700); white-space: nowrap; }
+    .lp-cast-row > b i { width: .6rem; height: .6rem; border-radius: 999px; background: var(--lc); }
+    .lp-cast-row > span { min-width: 0; padding: .4rem .55rem; border-radius: .6rem; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+    .lp-cast-row > span small { display: block; margin-top: .12rem; font-size: .72rem; font-weight: 600; }
+    .lp-cast-row .is-ok { color: #2d5016; background: #e9f3dd; }
+    .lp-cast-row .is-late { color: #991b1b; background: #fde8e8; }
+    .lp-cast-row .is-moved { color: #5b21b6; background: #efe9fd; }
+    .lp-cast-do { display: grid; gap: .4rem; margin-top: .7rem; }
+    .lp-cast-do p { font-size: .78rem; font-weight: 700; line-height: 1.45; color: var(--color-gray-700); }
+    .lp-cast-do .btn { justify-self: start; min-height: 2.5rem; padding: .3rem .95rem; font-size: .84rem; }
     html.dark .lp-wk.is-roster { background: #18210f; border-color: #2f4220; }
     html.dark .lp-money { background: #12170f; border-color: #2b3a1c; }
     html.dark .lp-money input { color: #e8efe1; }
@@ -331,12 +360,20 @@
     html.dark .lp-hchip b { color: #fde68a; }
     html.dark .lp-hire .lp-unit2 { background: #3a2a0c; }
     html.dark .lp-hire .lp-money { border-color: #5c4413; }
-    html.dark .lp-ex { background: #12170f; border-color: #2b3a1c; }
-    html.dark .lp-ex > p, html.dark .lp-ex-row > b, html.dark .lp-ex-sum { color: #d5e3c5; }
-    html.dark .lp-ex-row .is-ok { color: #cfe6b8; background: #22301a; }
-    html.dark .lp-ex-row .is-late { color: #fca5a5; background: #3a1414; }
-    html.dark .lp-ex-row .is-moved { color: #d8ccfb; background: #2a1f45; }
-    @media (prefers-reduced-motion: reduce) { .lp-hire, .lp-ex-row, .lp-hchip, .lp-savenew { transition: none !important; animation: none !important; } }
+    html.dark .lp-dfor, html.dark .lp-dlot-h b { color: #e8efe1; }
+    html.dark .lp-dlot { background: #12170f; border-color: #2b3a1c; border-left-color: var(--lc); }
+    html.dark .lp-dlot-t { color: #fcd34d; }
+    html.dark .lp-dauto { background: #1f1836; border-color: #3b2e66; }
+    html.dark .lp-dauto b { color: #e4dcfd; }
+    html.dark .lp-dauto small { color: #c9bdf5; }
+    html.dark .lp-cast-c { background: #12170f; border-color: #2b3a1c; }
+    html.dark .lp-cast-c.is-warn { background: #2a210a; border-color: #4d3a0d; }
+    html.dark .lp-cast-h b, html.dark .lp-cast-row > b, html.dark .lp-cast-do p { color: #e8efe1; }
+    html.dark .lp-cast-c > p { color: #b7c2ad; }
+    html.dark .lp-cast-row .is-ok { color: #cfe6b8; background: #22301a; }
+    html.dark .lp-cast-row .is-late { color: #fca5a5; background: #3a1414; }
+    html.dark .lp-cast-row .is-moved { color: #d8ccfb; background: #2a1f45; }
+    @media (prefers-reduced-motion: reduce) { .lp-hire, .lp-hchip, .lp-savenew, .lp-dlot, .lp-dauto, .lp-cast, .lp-cast-c, .lp-cast-row { transition: none !important; animation: none !important; } }
 
     /* The lot pages host the shared field profile. */
     .lp-fqhost { min-height: 10rem; }
@@ -1012,7 +1049,14 @@
             {{-- The planting day --}}
             <section class="lp-step" data-screen="date">
                 <p class="lp-q" id="lpDateQ" data-tl="planting-day">When will you plant?</p>
-                <p class="lp-sub">Everything is dated back from this day. Lots can have their own day on the next screen.</p>
+                <p class="lp-sub" id="lpDateSub">Everything is dated back from this day.</p>
+                {{-- Many lots (2026-10-16, the owner): only the first lot's day and Anee times the
+                     others, or a day for each lot with warnings where the crew or the days fall short. --}}
+                <div class="lp-choices" id="lpDateMode" hidden>
+                    <button type="button" class="lp-choice is-on" data-dmode="first" aria-pressed="true"><span class="ce">📅</span><span class="ct"><b>Only the first lot's day</b><small>You pick the day of the first lot. Anee times the others: each goes in as soon as your crew can have it ready.</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                    <button type="button" class="lp-choice" data-dmode="each" aria-pressed="false"><span class="ce">🗓️</span><span class="ct"><b>A day for each lot</b><small>Every lot keeps the day you pick. Anee warns you where your workers or the days look too few.</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                </div>
+                <p class="lp-dfor" id="lpDateFor" hidden></p>
                 <button type="button" class="lp-tag is-big is-none" id="lpDateTag" aria-haspopup="dialog">
                     <span class="ti" aria-hidden="true"><i id="lpDateMon">Day</i><em id="lpDateDay">?</em></span>
                     <span class="tt"><b id="lpDateText">Pick the day</b><small id="lpDateLine">Opens a calendar</small></span>
@@ -1020,6 +1064,7 @@
                 </button>
                 <p class="lp-ferr" id="lpDateErr" hidden>Pick the day first.</p>
                 <div class="lp-hint" id="lpDateHint" hidden></div>
+                <div id="lpDateLots" aria-live="polite"></div>
             </section>
 
             {{-- The lots --}}
@@ -1061,13 +1106,9 @@
                 <div class="lp-same" id="lpSameDays"><button type="button" data-same="days">Same days for all</button><button type="button" data-same="pay">Same pay for all</button></div>
                 <label class="lp-savenew" id="lpSaveNew" hidden><input type="checkbox" id="lpSaveNewOn" checked><span><b>Add the new names to My workers</b><small>Next season you pick them instead of typing them again.</small></span></label>
                 <p class="lp-ferr" id="lpWErr" hidden>Give at least one worker a work day.</p>
-                {{-- Said plainly (2026-10-16, the owner: "me myself is confused"), with three lots to show it. --}}
-                <span class="lp-label">When your crew is too small to finish a lot before its planting day</span>
-                <div class="lp-choices" id="lpStagger">
-                    <button type="button" class="lp-choice is-on" data-stagger="0"><span class="ce">📅</span><span class="ct"><b>Keep my planting days</b><small>Every lot is planted on the day you set. Work that cannot be done by then is marked late, and Anee says how to catch up: another worker, a hired machine, or starting sooner.</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                    <button type="button" class="lp-choice" data-stagger="1"><span class="ce">🔀</span><span class="ct"><b>Let Anee move planting days{{ \App\Support\Tagalog::flag('stagger') }}</b><small>A lot your crew cannot get ready in time is planted a few days later, only as many days as the crew needs. Lots that can be ready keep their day.</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                </div>
-                <div class="lp-ex" id="lpStagEx" aria-live="polite"></div>
+                {{-- Will every lot be ready on its day with this crew? The days themselves are set on the
+                     planting day step (2026-10-16, the owner), so this only warns. --}}
+                <div class="lp-cast" id="lpCast" aria-live="polite"></div>
             </section>
 
             {{-- Every lot's soil, water and history: the shared field profile --}}
@@ -1104,6 +1145,7 @@
                 <div class="lp-rev" id="lpReview"></div>
                 <div id="lpNotesSlot"></div>
                 <div id="lpTimeCard"></div>
+                <div class="lp-cast" id="lpCastRev" aria-live="polite"></div>
                 <div class="lp-err" id="lpErr" role="alert" hidden><b>The plan did not finish</b><p id="lpErrText"></p></div>
                 <button type="button" class="lp-run" id="lpRun"><span id="lpRunFace"></span><span id="lpRunSays">Make my plan</span></button>
                 <p class="lp-fine" id="lpRunFine"></p>
@@ -1467,7 +1509,7 @@
     let uid = 0;
     const S = {
         crop: 'rice', method: null, variety: '', varRec: null, custom: false, seedType: '', seedSource: '', planting: null,
-        lots: [], fleet: {}, handOnly: false, workers: [], stagger: false,
+        lots: [], fleet: {}, handOnly: false, workers: [], dateMode: 'first',
         loc: { province: '', town: '', place: '', lat: null, lng: null }, notes: '',
     };
     /* A lot of the plan. One from the farm's lots (2026-10-16, the owner) keeps
@@ -1549,7 +1591,8 @@
     function flow() {
         const f = ['crop', 'method', 'variety'];
         if (rice() && S.method !== 'dsr_dry') f.push('seed');
-        f.push('date', 'lots', 'equip', 'workers');
+        // The lots come before their days (2026-10-16, the owner: a day for the first lot or for each).
+        f.push('lots', 'date', 'equip', 'workers');
         // A lot from the farm's lots is asked only the pages it has not answered yet.
         S.lots.forEach((l, i) => askedPages(l).forEach((p) => f.push('lot:' + i + ':' + p)));
         // The place is asked only when no lot of the farm's brings one.
@@ -1595,7 +1638,7 @@
         if (sc === 'date') paintDate();
         if (sc === 'lots') paintLots();
         if (sc === 'equip') { paintEquip(); loadPeople(); }
-        if (sc === 'workers') { paintWorkers(); recommend(); paintStagEx(false); loadPeople().then(paintRosterBtn); }
+        if (sc === 'workers') { paintWorkers(); recommend(); castSoon(true); loadPeople().then(paintRosterBtn); }
         if (sc === 'place') paintPlace();
         if (sc === 'review') review();
         const top = $('lpWiz').getBoundingClientRect().top;
@@ -1868,38 +1911,128 @@
         $('lpSeedSrc').querySelectorAll('[data-src]').forEach((c) => c.classList.toggle('is-on', c.dataset.src === S.seedSource));
     });
 
-    /* ---------------- the planting day (and a lot's own) ---------------- */
-    const leadDays = () => (OPT && OPT.lead[S.crop + ':' + S.method]) || 30;
+    /* ---------------- the planting day: one lot's, the first lot's, or each lot's own ----------------
+       Many lots (2026-10-16, the owner): "first", the farmer picks the first
+       lot's day and Anee times the others by what the crew can do (the plan
+       staggers them and the first lot keeps its day); "each", every lot keeps
+       the day the farmer picks, and the Workers step and the review warn
+       where the crew or the days fall short. The first lot's day is
+       S.planting; a later lot's own day is its planting. */
+    const leadOf = (c) => (OPT && OPT.lead[c.crop + ':' + c.method]) || 30;
     const MAX_DATE = ds(dn(TODAY) + 400);
-    function paintDate() {
-        $('lpDateQ').textContent = 'When will you ' + dayWordOf() + '?';
+    const capW = (w) => String(w).replace(/^\w/, (c) => c.toUpperCase());
+    const lotLabel = (l, i) => 'Lot ' + (i + 1) + (l && String(l.name || '').trim() ? ', ' + String(l.name).trim() : '');
+    const eachDay = () => S.lots.length > 1 && S.dateMode === 'each';
+    // The day a lot sends (null: the first lot's), and the day it has.
+    const lotDay = (l, i) => (i > 0 && eachDay() ? l.planting || null : null);
+    const dayOf = (l, i) => lotDay(l, i) || S.planting;
+    const daysN = (n) => n + (n === 1 ? ' day' : ' days');
+    // Content that changes fades out and in (nothing snaps).
+    function fadeSwap(el, html) {
+        if (el._html === html) return;
+        const had = el._html;
+        el._html = html;
+        if (reduce() || !had) { el.innerHTML = html; return; }
+        el.style.transition = 'opacity .16s ease';
+        el.style.opacity = '0';
+        setTimeout(() => { if (el._html === html) el.innerHTML = html; el.style.opacity = '1'; }, 160);
+    }
+    function paintDate(swap) {
+        const many = S.lots.length > 1, each = eachDay();
+        // The lots changed and a lot with a day of its own is now the first: its day is the first lot's.
+        if (S.lots[0] && S.lots[0].planting) { if (each || !S.planting) S.planting = S.lots[0].planting; S.lots[0].planting = null; }
+        const c0 = lcOf(S.lots[0]), w0 = dayWordFor(c0.method);
+        const words = new Set(S.lots.map((l) => dayWordFor(lcOf(l).method)));
+        $('lpDateQ').textContent = !many ? 'When will you ' + w0 + '?' : 'When will you ' + (words.size === 1 ? w0 : 'plant') + ' your lots?';
+        $('lpDateSub').textContent = !many ? 'Everything is dated back from this day.'
+            : (each ? 'Pick a day for every lot. Each lot\'s work is dated back from its own day.' : 'Pick the day of the first lot. Everything is dated back from it.');
+        const mode = $('lpDateMode');
+        mode.hidden = !many;
+        mode.querySelectorAll('[data-dmode]').forEach((b) => { const on = b.dataset.dmode === S.dateMode; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
+        const fl = $('lpDateFor');
+        fl.hidden = !many;
+        if (many) fl.innerHTML = '<i style="--lc:' + lc(0) + '"></i>' + esc(lotLabel(S.lots[0], 0)) + ' <small>' + esc(capW(w0)) + 'ing day</small>';
         const t = $('lpDateTag');
         t.classList.toggle('is-none', !S.planting);
         $('lpDateMon').textContent = S.planting ? fmt(S.planting, { month: 'short' }) : 'Day';
         $('lpDateDay').textContent = S.planting ? fmt(S.planting, { day: 'numeric' }) : '?';
         $('lpDateText').textContent = S.planting ? fmt(S.planting, { weekday: 'short', month: 'short', day: 'numeric' }) : 'Pick the day';
         $('lpDateLine').textContent = S.planting ? fmt(S.planting, { year: 'numeric' }) + ', ' + inDays(S.planting) : 'Opens a calendar';
-        const lead = leadDays();
+        const lead = leadOf(c0);
         const earliest = ds(dn(TODAY) + lead);
         const h = $('lpDateHint');
-        if (!S.method) { h.hidden = true; return; }
-        if (S.planting && S.planting < earliest) {
-            h.className = 'lp-hint is-warn';
-            h.innerHTML = 'The full preparation starts about <b>' + lead + ' days</b> before. This day leaves <b>' + (dn(S.planting) - dn(TODAY)) + '</b>, so Anee squeezes the plan to fit. For every step at its own pace, ' + dayWordOf() + ' on or after <b>' + esc(day(earliest)) + '</b>.';
-        } else {
-            h.className = 'lp-hint';
-            h.innerHTML = 'The full preparation starts about <b>' + lead + ' days</b> before the ' + dayWordOf() + ' day. To follow every step from today, ' + dayWordOf() + ' on or after <b>' + esc(day(earliest)) + '</b>.';
+        if (!S.method) h.hidden = true;
+        else {
+            if (S.planting && S.planting < earliest) {
+                h.className = 'lp-hint is-warn';
+                h.innerHTML = 'The full preparation starts about <b>' + lead + ' days</b> before. This day leaves <b>' + (dn(S.planting) - dn(TODAY)) + '</b>, so Anee squeezes the plan to fit. For every step at its own pace, ' + w0 + ' on or after <b>' + esc(day(earliest)) + '</b>.';
+            } else {
+                h.className = 'lp-hint';
+                h.innerHTML = 'The full preparation starts about <b>' + lead + ' days</b> before the ' + w0 + ' day. To follow every step from today, ' + w0 + ' on or after <b>' + esc(day(earliest)) + '</b>.';
+            }
+            h.hidden = false;
         }
-        h.hidden = false;
+        paintDateLots(swap);
     }
-    const DS = { month: TODAY.slice(0, 7), sel: null, target: null };
+    // Under the first lot's day: Anee timing the others, or every other lot with its own day.
+    function paintDateLots(swap) {
+        const many = S.lots.length > 1, each = eachDay();
+        let html = '';
+        if (many && !each) {
+            const rest = S.lots.slice(1);
+            html = '<div class="lp-dauto"><span aria-hidden="true">🔀</span><span><b>Anee times ' + esc(rest.length === 1 ? lotLabel(rest[0], 1) : 'the other ' + rest.length + ' lots') + '</b><small>'
+                + (rest.length > 1 ? esc(rest.map((l, k) => lotLabel(l, k + 1)).join(' · ')) + '. ' : '')
+                + 'Each goes in as soon as your crew can have it ready' + (S.planting ? ', from ' + esc(day(S.planting)) + ' on' : '') + '. You see their days when you add your workers.</small></span></div>';
+        } else if (each) {
+            html = '<div class="lp-dlots">' + S.lots.slice(1).map((l, k) => {
+                const i = k + 1, c = lcOf(l), d = dayOf(l, i), lead = leadOf(c), left = d ? dn(d) - dn(TODAY) : null;
+                return '<div class="lp-dlot" style="--lc:' + lc(i) + ';animation-delay:' + Math.min(k, 8) * 40 + 'ms"><div class="lp-dlot-h"><i></i><b>' + esc(lotLabel(l, i)) + '</b><small>' + esc(capW(dayWordFor(c.method))) + 'ing day</small></div>'
+                    + '<div class="lp-own"><button type="button" data-lot-date="' + l.uid + '">📅 ' + (d ? esc(day(d)) : 'Pick the day') + '</button>'
+                    + (l.planting ? '<button type="button" class="is-x" data-lot-same="' + l.uid + '">Use Lot 1\'s day</button>' : (d ? '<span class="lp-same-day">Same as Lot 1</span>' : '')) + '</div>'
+                    + (d && left < lead ? '<p class="lp-dlot-t">⏳ ' + daysN(Math.max(0, left)) + ' left, and the full preparation needs about ' + lead + '. Anee squeezes it to fit.</p>' : '')
+                    + '</div>';
+            }).join('') + '</div>' + closeHtml();
+        }
+        const box = $('lpDateLots');
+        if (swap) fadeSwap(box, html); else { box._html = html; box.innerHTML = html; }
+    }
+    // Lots that go in close together are prepared at the same time: said now, the crew is checked on the Workers step.
+    function closeHtml() {
+        if (!S.planting) return '';
+        const at = S.lots.map((l, i) => ({ i, d: dn(dayOf(l, i)), ha: numOk(l.area) ? toHa(l.area, l.unit) : 0 })).sort((a, b) => a.d - b.d || a.i - b.i);
+        const groups = [];
+        at.forEach((x) => { const g = groups[groups.length - 1]; if (g && x.d - g[g.length - 1].d <= 3) g.push(x); else groups.push([x]); });
+        const close = groups.filter((g) => g.length > 1);
+        if (!close.length) return '';
+        const names = (g) => { const n = g.map((x) => x.i).sort((a, b) => a - b).map((i) => 'Lot ' + (i + 1)); return n.length === 2 ? n.join(' and ') : n.slice(0, -1).join(', ') + ' and ' + n[n.length - 1]; };
+        return '<div class="lp-hint is-warn lp-dclose">' + close.map((g) => '<b>' + esc(names(g)) + '</b> ' + (g.every((x) => x.d === g[0].d) ? 'go in on the same day' : 'go in within ' + daysN(g[g.length - 1].d - g[0].d) + ' of each other')
+            + (g.some((x) => x.ha > 0) ? ', ' + esc(ha(g.reduce((s2, x) => s2 + x.ha, 0))) + ' in all' : '') + '.').join(' ')
+            + ' Your crew prepares them at the same time. When you add your workers, Anee checks they are enough for these days.</div>';
+    }
+    $('lpDateMode').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-dmode]');
+        if (!b || b.dataset.dmode === S.dateMode) return;
+        S.dateMode = b.dataset.dmode;
+        paintDate(true);
+    });
+    $('lpDateLots').addEventListener('click', (e) => {
+        const d = e.target.closest('[data-lot-date]');
+        if (d) { openDate(Number(d.dataset.lotDate)); return; }
+        const s2 = e.target.closest('[data-lot-same]');
+        if (s2) { const l = S.lots.find((x) => String(x.uid) === s2.dataset.lotSame); if (l) { l.planting = null; paintDateLots(true); } }
+    });
+    const DS = { month: TODAY.slice(0, 7), sel: null, target: null, lead: 30 };
     function openDate(target) {
         DS.target = target || null;
         const lot = target ? S.lots.find((l) => l.uid === target) : null;
+        const i = lot ? S.lots.indexOf(lot) : 0;
+        const c = lcOf(lot || S.lots[0]);
         const cur = lot ? lot.planting || S.planting : S.planting;
+        DS.lead = leadOf(c);
         DS.sel = cur;
-        DS.month = (cur || ds(dn(TODAY) + leadDays())).slice(0, 7);
-        $('lpDateTitle').textContent = lot ? 'Own ' + dayWordOf() + 'ing day for ' + (lot.name.trim() || 'Lot ' + (S.lots.indexOf(lot) + 1)) : 'The ' + dayWordOf() + 'ing day';
+        DS.month = (cur || ds(dn(TODAY) + DS.lead)).slice(0, 7);
+        const w = dayWordFor(c.method);
+        $('lpDateTitle').textContent = S.lots.length > 1 ? capW(w) + 'ing day of ' + lotLabel(S.lots[i], i) : 'The ' + w + 'ing day';
         paintMonth(0); paintPick();
         sheetOpen($('lpDateSheet'));
     }
@@ -1908,7 +2041,7 @@
         const first = Date.UTC(y, m - 1, 1) / 864e5;
         const count = new Date(Date.UTC(y, m, 0)).getUTCDate();
         const lead = new Date(first * 864e5).getUTCDay();
-        const ok = ds(dn(TODAY) + leadDays());
+        const ok = ds(dn(TODAY) + DS.lead);
         $('lpMonName').textContent = new Date(first * 864e5).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', year: 'numeric' });
         let h = '';
         for (let i = 0; i < lead; i++) h += '<span aria-hidden="true"></span>';
@@ -1926,7 +2059,7 @@
     function paintPick() {
         if (!DS.sel) { $('lpPickDate').textContent = 'Tap a day'; $('lpPickLine').textContent = 'Days before today are off'; $('lpDateUse').disabled = true; return; }
         $('lpPickDate').textContent = fmt(DS.sel, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-        const early = DS.sel < ds(dn(TODAY) + leadDays());
+        const early = DS.sel < ds(dn(TODAY) + DS.lead);
         $('lpPickLine').textContent = inDays(DS.sel) + (early ? ', the plan is squeezed' : ', time for every step');
         $('lpDateUse').disabled = false;
     }
@@ -1949,11 +2082,11 @@
         if (DS.target) {
             const l = S.lots.find((x) => x.uid === DS.target);
             if (l) l.planting = DS.sel;
-            paintLots();
+            paintDateLots(true);
         } else {
             S.planting = DS.sel;
             $('lpDateErr').hidden = true;
-            paintDate();
+            paintDate(true);
             bump($('lpDateTag'));
         }
         sheetClose($('lpDateSheet'));
@@ -1964,20 +2097,21 @@
     const lotCropBody = (l) => (l.lc ? { crop: l.lc.crop, method: l.lc.method, variety: l.lc.variety || null, seedType: l.lc.seedType || null } : {});
     function checkBody(withAnswers) {
         return {
-            crop: S.crop, method: S.method, planting: S.planting,
-            lots: S.lots.map((l, i) => Object.assign({ name: l.name.trim() || 'Lot ' + (i + 1), area: numOk(l.area) ? num(l.area) : null, unit: l.unit, planting: l.planting },
+            crop: S.crop, method: S.method, planting: S.planting, dateMode: S.lots.length > 1 ? S.dateMode : null,
+            lots: S.lots.map((l, i) => Object.assign({ name: l.name.trim() || 'Lot ' + (i + 1), area: numOk(l.area) ? num(l.area) : null, unit: l.unit, planting: lotDay(l, i) },
                 lotCropBody(l), withAnswers ? { profile: l.profile } : {})),
             crew: { workers: S.workers.map((w) => ({ name: w.name, days: w.days })), fleet: fleetList().map(({ type, own, hired }) => ({ type, own, hired })) },
         };
     }
-    async function timeCheck(withAnswers) {
+    async function checkNow(withAnswers, extra) {
         try {
-            const d = (await window.api(U.check, { method: 'POST', body: checkBody(withAnswers) })).data;
+            const d = (await window.api(U.check, { method: 'POST', body: Object.assign(checkBody(withAnswers), extra || {}) })).data;
             // The server's price for this very plan (it knows which varieties need a lookup).
             if (withAnswers && Number(d.quote) > 0) QUOTE_NOW[quoteKey()] = Number(d.quote);
-            return d.time || [];
+            return d;
         } catch (_) { return null; }
     }
+    async function timeCheck(withAnswers) { const d = await checkNow(withAnswers); return d ? d.time || [] : null; }
     const ACK = { date: null, review: null };
     function timeHtml(t) {
         const short = t.filter((x) => x.short);
@@ -2061,9 +2195,6 @@
             + '<div class="lp-field"><span class="lp-fl">Crop on this lot</span><div class="lp-own">' + (l.lc
                 ? '<button type="button" data-lot-crop="' + l.uid + '">' + esc(cropLine(l.lc)) + '</button><button type="button" class="is-x" data-lot-crop-same="' + l.uid + '">Same crop as the plan</button>'
                 : '<span class="lp-same-day">' + esc(cropLine(lcOf(null))) + ', the plan\'s</span><button type="button" data-lot-crop="' + l.uid + '">Another crop</button>') + '</div></div>'
-            + '<div class="lp-field"><span class="lp-fl">' + esc(dayWordFor(lcOf(l).method).replace(/^\w/, (c) => c.toUpperCase())) + 'ing day</span><div class="lp-own">' + (l.planting
-                ? '<button type="button" data-lot-date="' + l.uid + '">📅 ' + esc(day(l.planting)) + '</button><button type="button" class="is-x" data-lot-same="' + l.uid + '">Same day as the others</button>'
-                : '<span class="lp-same-day">📅 ' + (S.planting ? esc(day(S.planting)) + ', same as the others' : 'Same as the others') + '</span><button type="button" data-lot-date="' + l.uid + '">Pick its own day</button>') + '</div></div>'
             + '</div>').join('');
         total();
         paintLotPlace();
@@ -2229,10 +2360,6 @@
             sheetOpen($('lpUnitSheet'));
             return;
         }
-        const d = e.target.closest('[data-lot-date]');
-        if (d) { openDate(Number(d.dataset.lotDate)); return; }
-        const s = e.target.closest('[data-lot-same]');
-        if (s) { const l = S.lots.find((x2) => String(x2.uid) === s.dataset.lotSame); if (l) l.planting = null; paintLots(); }
     });
     $('lpUnitList').addEventListener('click', (e) => {
         const b = e.target.closest('[data-u]');
@@ -2485,6 +2612,7 @@
             + '<div class="lp-unit2" role="group" aria-label="The pay is for">' + [['day', 'a day'], ['half', 'half a day']].map(([u, t]) => '<button type="button" data-wunit="' + u + '" class="' + (w.payUnit === u ? 'is-on' : '') + '" aria-pressed="' + (w.payUnit === u) + '">' + t + '</button>').join('') + '</div></div></div>').join('');
         $('lpSameDays').hidden = S.workers.length < 2;
         paintSaveNew();
+        castSoon();
     }
     // New names may join the roster (the Workers module's plan gate decides, LandPrepController::people).
     const paintSaveNew = () => {
@@ -2597,25 +2725,6 @@
         }
         const d = first.days.slice(); S.workers.forEach((w) => { w.days = d.slice(); }); paintWorkers(); window.toast?.('Every worker now works ' + (d.length === 7 ? 'every day' : d.map((x) => DAYN[x]).join(', ')) + '.');
     });
-    $('lpStagger').addEventListener('click', (e) => { const b = e.target.closest('[data-stagger]'); if (!b) return; S.stagger = b.dataset.stagger === '1'; $('lpStagger').querySelectorAll('.lp-choice').forEach((c) => c.classList.toggle('is-on', c === b)); paintStagEx(true); });
-    /* The choice on three lots planted the same day by a crew that readies one lot a week. */
-    function paintStagEx(swap) {
-        const base = S.planting || TODAY;
-        const d = (n) => fmt(ds(dn(base) + n), { month: 'short', day: 'numeric' });
-        const rows = S.stagger
-            ? [['Lot 1', 'is-ok', 'Planted ' + d(0), ' as you set'], ['Lot 2', 'is-moved', 'Planted ' + d(7), ', a week later'], ['Lot 3', 'is-moved', 'Planted ' + d(14), ', two weeks later']]
-            : [['Lot 1', 'is-ok', 'Ready, planted ' + d(0), ''], ['Lot 2', 'is-late', 'Planted ' + d(0) + ',', ' its harrowing a week late'], ['Lot 3', 'is-late', 'Planted ' + d(0) + ',', ' its work two weeks late']];
-        const box = $('lpStagEx');
-        const draw = () => {
-            box.innerHTML = '<p><b>For example:</b> three lots to be planted on ' + esc(d(0)) + ', and a crew that can get one lot ready a week.</p><div class="lp-ex-rows">'
-                + rows.map(([l, c, a, b], i) => '<div class="lp-ex-row" style="animation-delay:' + i * 60 + 'ms"><b>' + l + '</b><span class="' + c + '">' + esc(a) + esc(b) + '</span></div>').join('') + '</div>'
-                + '<p class="lp-ex-sum">' + (S.stagger ? 'Every lot is planted on well prepared ground, a little later. Anee says which lots moved and by how many days.' : 'Every lot is planted on your day. The plan shows the late work in red, so you can add hands or hire a machine for it.') + '</p>';
-        };
-        if (!swap || reduce()) { draw(); return; }
-        box.style.transition = 'opacity .16s';
-        box.style.opacity = '0';
-        setTimeout(() => { draw(); box.style.opacity = '1'; }, 160);
-    }
     let recAsk = 0;
     async function recommend() {
         const box = $('lpRec');
@@ -2626,10 +2735,90 @@
         try { r = (await window.api(U.check, { method: 'POST', body: Object.assign(checkBody(false), { advise: 1 }) })).data.crew; } catch (_) { r = null; }
         if (ask !== recAsk) return;
         if (!r) { box.innerHTML = ''; return; }
-        box.innerHTML = '<div class="lp-rec">' + face + '<div><b>' + (r.workers ? 'Recommended: about ' + r.workers + (r.workers === 1 ? ' worker' : ' workers') : 'This needs more than a crew') + '</b><p>' + esc(r.reason) + '</p>'
+        // Anee times the lots after the first: no crew is too small, it only spaces them further apart.
+        const timed = S.lots.length > 1 && S.dateMode === 'first';
+        if (timed && !r.workers) {
+            box.innerHTML = '<div class="lp-rec">' + face + '<div><b>Anee spaces your lots</b><p>With these machines your lots cannot all go in on the first lot\'s day, so each gets its own day, as soon as your crew can have it ready. Below, Anee shows the days for the crew you set.</p></div></div>';
+            return;
+        }
+        box.innerHTML = '<div class="lp-rec">' + face + '<div><b>' + (r.workers ? 'Recommended: about ' + r.workers + (r.workers === 1 ? ' worker' : ' workers') : 'This needs more than a crew') + '</b><p>' + esc(r.reason) + (timed ? ' That gets every lot ready on the first lot\'s day. With fewer, Anee spaces the lots further apart.' : '') + '</p>'
             + (r.workers && r.workers !== S.workers.length ? '<button type="button" class="btn btn-primary" data-userec="' + r.workers + '">Use ' + r.workers + (r.workers === 1 ? ' worker' : ' workers') + '</button>' : '') + '</div></div>';
     }
     $('lpRec').addEventListener('click', (e) => { const b = e.target.closest('[data-userec]'); if (!b) return; setWorkers(Number(b.dataset.userec)); b.remove(); window.toast?.('Set to ' + S.workers.length + ' workers. Give each their own days below.'); });
+
+    /* ---------------- will every lot be ready on its day? (2026-10-16, the owner) ----------------
+       The crew calendar without Anee (LandPrepPlanner::forecast), counted
+       from today: on the Workers step while the crew is set, and on the
+       review with every lot's answers. A warning only: nothing is stopped. */
+    let castSig = '', castT = null, castAsk = 0;
+    const castKey = (b) => JSON.stringify([b.crop, b.method, b.planting, b.dateMode, b.lots.map((l) => [l.area, l.unit, l.planting, l.crop, l.method]), b.crew.workers.map((w) => w.days), b.crew.fleet]);
+    function castSoon(now) { clearTimeout(castT); castT = setTimeout(paintCast, now ? 0 : 450); }
+    async function paintCast() {
+        const box = $('lpCast');
+        if (!S.planting || !S.lots.length || screenOf(FLOW[pos]) !== 'workers') return;
+        const body = Object.assign(checkBody(false), { forecast: 1 });
+        const key = castKey(body);
+        if (key === castSig) return;
+        castSig = key;
+        const ask = ++castAsk;
+        box.classList.add('is-busy');
+        let fc = null;
+        try { fc = (await window.api(U.check, { method: 'POST', body })).data.forecast || null; } catch (_) { fc = null; }
+        if (ask !== castAsk) return;
+        box.classList.remove('is-busy');
+        if (!fc) castSig = '';
+        fadeSwap(box, fc ? castHtml(fc, 'workers') : '');
+    }
+    function castHtml(fc, where) {
+        const many = fc.lots.length > 1, first = fc.mode === 'first', onReview = where === 'review';
+        const late = fc.lots.filter((l) => l.late.length), moved = fc.lots.filter((l) => l.shift > 0);
+        const short = onReview ? [] : fc.lots.filter((l) => l.short);
+        const head = late.length ? (many ? (late.length === 1 ? 'One lot is not ready on its day' : late.length + ' lots are not ready on their days') : 'Not ready on your day')
+            : (short.length ? 'Ready, with little time' : (many ? (first && moved.length ? 'Every lot ready, on the days Anee gives them' : 'Every lot ready on its day') : 'Ready on your day'));
+        const rows = fc.lots.map((l) => {
+            const i = l.lot, cls = l.late.length ? 'is-late' : (l.shift > 0 ? 'is-moved' : 'is-ok');
+            const nm = many && l.name && l.name !== 'Lot ' + (i + 1) ? l.name + ' · ' : '';
+            const when = day(l.planting) + (first && i > 0 ? (l.shift > 0 ? ', ' + daysN(l.shift) + ' after Lot 1' : ', the same day as Lot 1') : (first && i === 0 ? ', your day' : ''));
+            const main = l.late.length ? (l.shift > 0 ? when + ', and still not ready' : 'Not ready by ' + day(l.planting)) : when + ', ready';
+            const x = l.late[0];
+            const det = (x ? x.what + ' runs ' + (x.days ? daysN(x.days) : 'well') + ' late' + (l.lateCount > 1 ? ', and ' + (l.lateCount - 1) + ' more ' + (l.lateCount === 2 ? 'step' : 'steps') : '') + '.' : '')
+                + (l.readyBy ? ' Ready by ' + day(l.readyBy) + ' with this crew.' : '')
+                + (l.short && !onReview ? (x ? ' ' : '') + '⏳ ' + daysN(Math.max(0, l.short.left)) + ' left, and the full preparation needs about ' + l.short.needed + ': squeezed to fit.' : '');
+            return '<div class="lp-cast-row"><b><i style="--lc:' + lc(i) + '"></i>' + (many ? 'Lot ' + (i + 1) : 'Your lot') + '</b><span class="' + cls + '">' + esc(nm + main) + (det ? '<small>' + esc(det.trim()) + '</small>' : '') + '</span></div>';
+        }).join('');
+        const tips = [];
+        const total = fc.more ? fc.workers + fc.more : 0;
+        const use = (n) => (onReview ? '<button type="button" class="btn btn-white" data-jump="workers">Change the workers</button>' : '<button type="button" class="btn btn-primary" data-castuse="' + n + '">Use ' + n + ' workers</button>');
+        if (late.length) {
+            if (fc.more) tips.push(['With ' + total + ' workers working Monday to Saturday, ' + fc.more + ' more than now, ' + (many ? (first ? 'every lot is ready on the day Anee gives it.' : 'every lot is ready on its day.') : 'it is ready on your day.'), use(total)]);
+            // A day falls on a Sunday nobody works (a Monday planting puts the leveling there).
+            else if (fc.everyDay != null) tips.push([(fc.everyDay ? 'With ' + (fc.workers + fc.everyDay) + ' workers working every day, Sundays too, ' : 'With your workers working Sundays too, ') + (many ? 'every lot is ready on its day.' : 'it is ready on your day.'), '']);
+            else if (fc.machines) tips.push(['More workers do not fix it: the machines hold the work up. Add a machine, or hire one.', '<button type="button" class="btn btn-white" data-jump="equip">Change the machines</button>']);
+            else tips.push(['Even 20 more workers do not get it ready in time.', '']);
+            const rb = fc.lots.filter((l) => l.readyBy);
+            if (rb.length) tips.push(['Or move ' + (many ? rb.map((l) => 'Lot ' + (l.lot + 1) + ' to ' + day(l.readyBy)).join(', ') : 'the day to ' + day(rb[0].readyBy)) + ', ' + (rb.length === 1 ? 'a day' : 'days') + ' this crew can make.', '<button type="button" class="btn btn-white" data-jump="date">Change the days</button>']);
+        } else if (first && moved.length && fc.closer) {
+            const tc = fc.workers + fc.closer;
+            tips.push(['Want them closer together? With ' + tc + ' workers working Monday to Saturday, every lot is ready on ' + day(fc.lots[0].planting) + '.', use(tc)]);
+        } else if (first && moved.length) {
+            tips.push(['More workers alone do not get every lot ready by ' + day(fc.lots[0].planting) + '. Another machine can bring them closer together.', '<button type="button" class="btn btn-white" data-jump="equip">Change the machines</button>']);
+        }
+        if (short.length && !late.length) tips.push(['For every step at its own pace, give ' + (many ? short.map((l) => 'Lot ' + (l.lot + 1)).join(', ') : 'your lot') + ' a later day.', '<button type="button" class="btn btn-white" data-jump="date">Change the days</button>']);
+        const warn = late.length || short.length;
+        return '<div class="lp-cast-c' + (warn ? ' is-warn' : '') + '"><div class="lp-cast-h"><span aria-hidden="true">' + (late.length ? '⚠️' : (short.length ? '⏳' : '✅')) + '</span><b>' + esc(head) + '</b></div>'
+            + '<p>' + esc('Counted from today, with your ' + fc.workers + (fc.workers === 1 ? ' worker' : ' workers') + ' and the machines you picked' + (onReview ? ', and every lot\'s answers.' : '.')) + '</p>'
+            + '<div class="lp-cast-rows">' + rows + '</div>'
+            + (tips.length ? '<div class="lp-cast-do">' + tips.map(([t2, b]) => '<p>' + esc(t2) + '</p>' + b).join('') + '</div>' : '') + '</div>';
+    }
+    $('lpCast').addEventListener('click', (e) => {
+        const u = e.target.closest('[data-castuse]');
+        if (u) { setWorkers(Number(u.dataset.castuse)); window.toast?.('Set to ' + S.workers.length + ' workers. Check their days above.'); return; }
+        const j = e.target.closest('[data-jump]');
+        if (j) goTo(j.dataset.jump, true);
+    });
+    $('lpCastRev').addEventListener('click', (e) => { const j = e.target.closest('[data-jump]'); if (j) goTo(j.dataset.jump, true); });
+    // Any change to the crew asks again, after a pause (the same crew is not asked twice).
+    document.querySelector('.lp-step[data-screen="workers"]').addEventListener('click', (e) => { if (!e.target.closest('#lpCast')) castSoon(); });
 
     /* ---------------- the place ---------------- */
     let PHL = null;
@@ -2677,7 +2866,6 @@
         S.notes = $('lpNotes').value.trim();
         const m = (OPT.methods[S.crop] || {})[S.method] || [];
         const a = S.lots.reduce((s, l) => s + toHa(l.area, l.unit), 0);
-        const own = S.lots.filter((l) => l.planting).length;
         const items = OPT.equipment, fleet = fleetNow();
         const machines = Object.entries(fleet).map(([k, f]) => [f.own ? f.own + ' ' + items[k].name.toLowerCase() : '', f.hired ? f.hired + ' hired ' + items[k].name.toLowerCase() : ''].filter(Boolean).join(', ')).join(', ');
         const pages = window.aneeFieldProfile.pagesFor(S.crop);
@@ -2687,11 +2875,16 @@
             ['variety', '🏷️', 'Variety', (S.variety || "Don't know yet") + (S.custom ? ', Anee looks it up' : '') + (S.seedType && !(S.varRec && S.varRec.n) ? ', ' + S.seedType : '')],
         ];
         if (FLOW.includes('seed')) rows.push(['seed', '🌾', 'Seed', S.seedSource ? OPT.seedQ.o[S.seedSource][0] : 'Not said']);
-        rows.push(['date', '📅', 'Planting day', S.planting ? day(S.planting) + (own ? ', ' + own + ' with their own day' : '') : 'Not chosen'],
-            ['lots', '🟩', 'Lots', S.lots.length + (S.lots.length === 1 ? ' lot' : ' lots') + (a ? ', ' + ha(a) : '')],
+        const many = S.lots.length > 1;
+        const days = S.lots.map((l, i) => dayOf(l, i)).filter(Boolean).sort();
+        const dateWords = !S.planting ? 'Not chosen' : (!many ? day(S.planting)
+            : (S.dateMode === 'first' ? 'Lot 1 on ' + day(S.planting) + ', Anee times ' + (S.lots.length === 2 ? 'Lot 2' : 'the other ' + (S.lots.length - 1))
+                : (days[0] === days[days.length - 1] ? 'Every lot on ' + day(days[0]) : 'A day for each lot, ' + day(days[0]) + ' to ' + day(days[days.length - 1]))));
+        rows.push(['lots', '🟩', 'Lots', S.lots.length + (S.lots.length === 1 ? ' lot' : ' lots') + (a ? ', ' + ha(a) : '')],
+            ['date', '📅', many ? 'Planting days' : 'Planting day', dateWords],
             ['equip', '🚜', 'Machines', machines || (S.handOnly ? 'By hand only' : 'None picked')],
             ['workers', '👷', 'Workers', S.workers.length + (S.workers.length === 1 ? ' worker' : ' workers')
-                + (S.workers.some((w) => num(w.pay) > 0) ? ', pay set for ' + S.workers.filter((w) => num(w.pay) > 0).length : '') + (S.stagger ? ', planting days may move' : '')]);
+                + (S.workers.some((w) => num(w.pay) > 0) ? ', pay set for ' + S.workers.filter((w) => num(w.pay) > 0).length : '')]);
         S.lots.forEach((l, i) => {
             const n = window.aneeFieldProfile.count(l.profile);
             // A farm lot says where its answers came from, and opens its own sheet.
@@ -2712,11 +2905,15 @@
         $('lpReview').innerHTML = rows.map(([id, e, k, v, c]) => '<button type="button" data-jump="' + esc(id) + '"><span class="re">' + (String(e).startsWith('<i') ? e : esc(e)) + '</span><span class="rt"><small>' + esc(k) + '</small><b>' + esc(v) + '</b></span><span class="rc">' + esc(c || 'Change') + '</span></button>').join('');
         $('lpRunFace').innerHTML = OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '';
         paintRun();
-        // The time, again, with every lot's answers (lime, a salt flush or a rest can add weeks).
+        // The time, again, with every lot's answers (lime, a salt flush or a rest can add weeks), and the crew against the days.
         $('lpTimeCard').innerHTML = '';
-        const t = await timeCheck(true);
+        const cr = $('lpCastRev');
+        cr._html = ''; cr.innerHTML = '';
+        const d = await checkNow(true, { forecast: 1 });
+        const t = d ? d.time || [] : null;
         if (screenOf(FLOW[pos]) === 'review') paintRun();
         if (screenOf(FLOW[pos]) !== 'review' || !t) return;
+        if (d.forecast) fadeSwap(cr, castHtml(d.forecast, 'review'));
         const sh = t.filter((x) => x.short);
         if (sh.length) {
             $('lpTimeCard').innerHTML = '<div class="lp-twarn"><span>⏳</span><span><b data-tl="short-on-time">Little time for the full preparation.</b> ' + sh.map((x) => (S.lots.length > 1 ? esc(x.name) + ': ' : '') + Math.max(0, x.left) + ' days left, ' + x.need + ' needed').join('. ') + '. Anee squeezes the plan to fit.<br><button type="button" id="lpTimeMore">See what gets squeezed</button></span></div>';
@@ -2753,9 +2950,10 @@
         const lp = lotPlace();
         const body = {
             crop: S.crop, method: S.method, variety: S.variety, seedType: S.seedType || null, seedSource: rice() ? (S.seedSource || null) : null, planting: S.planting,
-            lots: S.lots.map((l) => Object.assign({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: l.planting, sourceLotId: l.sourceLotId, farmLotId: l.farmLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile }, lotCropBody(l))),
+            dateMode: S.lots.length > 1 ? S.dateMode : null,
+            lots: S.lots.map((l, i) => Object.assign({ name: l.name.trim(), area: num(l.area), unit: l.unit, planting: lotDay(l, i), sourceLotId: l.sourceLotId, farmLotId: l.farmLotId, copiedFrom: l.copiedFrom, edited: !!l.edited, profile: l.profile }, lotCropBody(l))),
             crew: { workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days, pay: num(w.pay) > 0 ? num(w.pay) : null, payUnit: w.payUnit, globalId: w.globalId || null })),
-                fleet: fleetList(), stagger: S.stagger, saveNew: !!(S.saveNew && PEOPLE && PEOPLE.canSave) },
+                fleet: fleetList(), stagger: S.lots.length > 1 && S.dateMode === 'first', saveNew: !!(S.saveNew && PEOPLE && PEOPLE.canSave) },
             // The first farm lot's place when the lots have one, else the place screen's.
             location: lp ? { province: lp.province, town: townName(lp.town), place: '', lat: null, lng: null }
                 : { province: S.loc.province, town: townName(S.loc.town), place: S.loc.place, lat: S.loc.lat, lng: S.loc.lng }, notes: S.notes,
@@ -2937,7 +3135,7 @@
             + '<span>👷 ' + esc((crew.workers || '') + ((crew.workers === 1) ? ' worker' : ' workers')) + (crew.fleet ? (nMach ? ', ' + nMach + (nMach === 1 ? ' machine' : ' machines') : ', by hand') : (crew.equipmentLabel ? ', ' + esc(String(crew.equipmentLabel).toLowerCase()) : '')) + '</span>'
             + (major.length ? '<span class="is-warn">⚠ ' + major.length + (major.length === 1 ? ' step runs late' : ' steps run late') + '</span>' : '<span class="is-ok">✓ Every lot ready on time</span>')
             + (squeezed.length ? '<span class="is-warn" data-tl="squeezed-steps">⏳ Squeezed to fit the time</span>' : '')
-            + (moved.length ? '<span data-tl="stagger">🔀 ' + moved.length + (moved.length === 1 ? ' lot staggered' : ' lots staggered') + '</span>' : '')
+            + (moved.length ? '<span data-tl="stagger">🔀 ' + moved.length + ((crew.dateMode === 'first' ? (moved.length === 1 ? ' lot timed by Anee' : ' lots timed by Anee') : (moved.length === 1 ? ' lot staggered' : ' lots staggered'))) + '</span>' : '')
             + (r.variety ? '<span>🏷️ ' + esc(r.variety) + '</span>' : '') + (it.credits ? '<span>' + esc(it.credits) + ' credits</span>' : '') + '</div></div>'
             + '<div class="lp-seg" id="lpSeg"><i></i><button type="button" class="' + (VIEW.tab === 'farm' ? 'is-on' : '') + '" data-tab="farm">Whole farm</button><button type="button" class="' + (VIEW.tab === 'lot' ? 'is-on' : '') + '" data-tab="lot">Per lot</button></div>'
             + '<div class="lp-pane" id="lpFarm"' + (VIEW.tab === 'farm' ? '' : ' hidden') + '>' + farmHtml(r, r.anee || {}) + '</div>'
@@ -2967,8 +3165,12 @@
         const late = (r.conflicts || []).filter((c) => c.major !== false);
         const moved = lots.map((l, i) => [l, i]).filter(([l]) => l.shift > 0);
         if (late.length || moved.length) {
-            h += '<div class="lp-c lp-warnc"><h3>⚠ The crew and your dates</h3><ul>'
-                + moved.map(([l, i]) => '<li style="--lc:' + lc(i) + '"><i></i><span>Anee moved <b>' + esc(l.name) + '</b> from ' + esc(day(l.asked)) + ' to <b>' + esc(day(l.planting)) + '</b>, ' + l.shift + (l.shift === 1 ? ' day' : ' days') + ' later, so the crew can finish it.</span></li>').join('')
+            // The farmer set only the first lot's day: the others' are Anee's, said as such (2026-10-16).
+            const timed = (r.crew || {}).dateMode === 'first';
+            h += '<div class="lp-c lp-warnc"><h3>' + (timed && !late.length ? '🔀 The days Anee gives your lots' : '⚠ The crew and your dates') + '</h3><ul>'
+                + moved.map(([l, i]) => '<li style="--lc:' + lc(i) + '"><i></i><span>' + (timed
+                    ? 'Anee times <b>' + esc(l.name) + '</b> for <b>' + esc(day(l.planting)) + '</b>, ' + l.shift + (l.shift === 1 ? ' day' : ' days') + ' after the first lot, when the crew can have it ready.'
+                    : 'Anee moved <b>' + esc(l.name) + '</b> from ' + esc(day(l.asked)) + ' to <b>' + esc(day(l.planting)) + '</b>, ' + l.shift + (l.shift === 1 ? ' day' : ' days') + ' later, so the crew can finish it.') + '</span></li>').join('')
                 + late.map((c) => '<li style="--lc:' + lc(c.lot) + '"><i></i><span><b>' + esc(lotName(r, c.lot)) + ':</b> ' + esc(stepOf(r, c.key, c.lot).what) + ' ' + (c.why === 'past' ? 'should have started already' : 'runs ' + (c.late ? c.late + (c.late === 1 ? ' day' : ' days') : 'well') + ' late') + '.</span></li>').join('')
                 + '</ul></div>';
         }
@@ -3254,7 +3456,9 @@
         const own = (r.rules || []).filter((n) => (n.lots || []).includes(i) && lots.length > 1);
         h += '<div class="lp-c"><div class="lp-lothead" style="--lc:' + lc(i) + '"><i>' + esc(lcrop.icon || '🌱') + '</i><div><b>' + esc(lot.name || '') + '</b><small>' + (lot.crop ? esc(String(lot.crop.label).replace(/\s*,.*$/, '') + (lot.method && lot.method.label ? ', ' + String(lot.method.label).toLowerCase() : '') + (lot.variety ? ', ' + lot.variety : '')) + ' · ' : '') + esc(sizeOf(lot)) + ' · ' + esc(word) + ' ' + esc(lot.planting ? fmt(lot.planting, { weekday: 'long', month: 'long', day: 'numeric' }) : '') + (amt ? ' · seed ' + (amt.lo === amt.hi ? amt.lo : amt.lo + ' to ' + amt.hi) + ' kg' : '') + '</small></div></div>'
             + (lot.copiedFrom != null && lots[lot.copiedFrom] ? '<span class="lp-copytag">⧉ ' + (lot.edited ? 'Started from the answers of ' : 'Same answers as ') + esc(lots[lot.copiedFrom].name) + '</span>' : '')
-            + (lot.shift ? '<p class="lp-moved">Anee moved this lot ' + lot.shift + (lot.shift === 1 ? ' day' : ' days') + ' later than the ' + esc(day(lot.asked)) + ' you asked, so the crew can finish it in time.</p>' : '')
+            + (lot.shift ? '<p class="lp-moved">' + ((r.crew || {}).dateMode === 'first'
+                ? 'Anee times this lot for ' + esc(day(lot.planting)) + ', ' + lot.shift + (lot.shift === 1 ? ' day' : ' days') + ' after the first lot, when the crew can have it ready.'
+                : 'Anee moved this lot ' + lot.shift + (lot.shift === 1 ? ' day' : ' days') + ' later than the ' + esc(day(lot.asked)) + ' you asked, so the crew can finish it in time.') + '</p>' : '')
             + (lot.squeeze ? '<p class="lp-moved">⏳ ' + lot.squeeze.left + ' days left, the full preparation needs ' + lot.squeeze.needed + '. ' + lot.squeeze.count + ' steps were squeezed to fit, each marked below.</p>' : '')
             + (() => { const cc = r.costs, p = cc && cc.priced && (cc.perLot || [])[i]; return p && p.total > 0 ? '<p class="lp-moved">💰 This lot costs about <b>' + esc((cc.currency || '₱') + Math.round(p.total).toLocaleString('en-US')) + '</b>' + (p.hired > 0 && p.labor + p.planting > 0 ? ': workers ' + esc((cc.currency || '₱') + Math.round(p.labor + p.planting).toLocaleString('en-US')) + ', hired ' + esc((cc.currency || '₱') + Math.round(p.hired).toLocaleString('en-US')) : '') + '.</p>' : ''; })()
             + ((lot.answers || []).length ? '<div class="lp-ans">' + lot.answers.map((x) => '<span><b' + tlAt(ANS_TL[x[0]]) + '>' + esc(x[0]) + '</b>' + esc(x[1]) + '</span>').join('') + '</div>' : '')

@@ -1410,8 +1410,11 @@ final class LandPrepPlanner
 
     /**
      * The crew a case needs: the fewest workers (working Monday to Saturday,
-     * with the machines chosen) who get every lot ready on time with the
-     * whole window still ahead, and the reason in plain words.
+     * with the machines chosen) who get every lot ready on the day asked,
+     * and the reason in plain words. Counted from today on the plan as it
+     * will run, squeezed when the days are few (2026-10-16: it used to
+     * pretend the whole window was still ahead, so it could say a crew was
+     * enough that the forecast then showed late).
      */
     public static function recommendCrew(array $case): array
     {
@@ -1425,14 +1428,7 @@ final class LandPrepPlanner
             [$lotSteps[$i]] = self::lotSteps($case, $i);
             $lots[$i]['idx'] = $i;
         }
-        $plantings = array_map(fn ($l) => (string) $l['planting'], $lots);
-        // The whole window ahead: today is the day before the earliest step of any lot.
-        $first = null;
-        foreach ($lots as $i => $l) {
-            $from = $lotSteps[$i] ? min(array_column($lotSteps[$i], 'from')) : -30;
-            $d = Carbon::parse($l['planting'], 'UTC')->addDays((int) $from - 1)->toDateString();
-            $first = $first === null || $d < $first ? $d : $first;
-        }
+        $built = self::build(array_merge($case, ['crew' => array_merge($case['crew'], ['stagger' => false])]));
         $units = self::units($case['crew']['fleet']);
         $owned = count(array_filter($units, fn ($u) => ! $u['hired']));
         $best = null;
@@ -1442,8 +1438,9 @@ final class LandPrepPlanner
             }
             $crew = $case['crew'];
             $crew['workers'] = array_fill(0, $n, ['name' => 'Worker', 'days' => [1, 2, 3, 4, 5, 6]]);
-            $r = self::simulate($lotSteps, $lots, $plantings, $crew, $case, $first);
-            if (array_sum($r['late']) === 0) {
+            $crew['stagger'] = false;
+            $r = self::schedule($built['lotSteps'], $built['case']['lots'], $crew, $built['case']);
+            if (! array_filter($r['conflicts'], fn ($c) => $c['why'] === 'crew' && $c['major'] !== false)) {
                 $best = $n;
                 break;
             }
@@ -1497,7 +1494,7 @@ final class LandPrepPlanner
         $named = array_slice($named, 0, 2);
         $jobs = $named ? implode(', ', $named) . ' and the other hand work' : 'the hand work';
         $reason = $best === null
-            ? 'Even 100 workers cannot finish ' . $ha . ' ha in time with these machines. Add a machine, hire a service, or let Anee stagger the lots.'
+            ? 'Even 100 workers cannot finish ' . $ha . ' ha in time with these machines. Add a machine, hire a service, or give the lots later days.'
             : 'About ' . $best . ' ' . ($best === 1 ? 'worker' : 'workers') . ' for ' . $ha . ' ha: ' . $jobs . ' come to about ' . (int) round($hand) . ' person days in the ' . $weeks . ' ' . ($weeks === 1 ? 'week' : 'weeks') . ' before ' . $word
                 . ($owned ? ', and each of your own machines needs a driver' : '')
                 . ($byHand ? ', and with no machine for some of the field work it is done by hand' : '') . '.'
@@ -1853,26 +1850,44 @@ final class LandPrepPlanner
         /* Staggering, when the farmer allows it: lot by lot in planting
            order, each takes the smallest move (never more than 45 days)
            that lets the crew finish it and every lot before it on time, or
-           the move that leaves the least lateness when none does. */
+           the move that leaves the least lateness when none does. A move
+           found between two of the steps is narrowed to the very day.
+           When the farmer set only the first lot's day and let Anee time
+           the others (dateMode "first", 2026-10-16, the owner), that lot
+           keeps its day: work it cannot finish is shown late instead. */
         if (! empty($crew['stagger']) && count($lots) > 0) {
             $order = array_keys($lots);
             usort($order, fn ($a, $b) => [$asked[$a], $a] <=> [$asked[$b], $b]);
+            $pinned = ($case['dateMode'] ?? null) === 'first' ? $order[0] : null;
             $placed = [];
             foreach ($order as $i) {
                 $placed[] = $i;
-                $best = 0;
-                $bestLate = null;
-                foreach ([0, 1, 2, 3, 4, 5, 7, 10, 14, 21, 30, 45] as $by) {
+                $lateBy = function (int $by) use (&$plantings, $asked, $i, $placed, $run): int {
                     $try = $plantings;
                     $try[$i] = Carbon::parse($asked[$i])->addDays($by)->toDateString();
-                    $late = array_sum($run($try, $placed)['late']);
+
+                    return array_sum($run($try, $placed)['late']);
+                };
+                $best = 0;
+                $bestLate = null;
+                $prev = 0;
+                foreach ($i === $pinned ? [0] : [0, 1, 2, 3, 4, 5, 7, 10, 14, 21, 30, 45] as $by) {
+                    $late = $lateBy($by);
                     if ($bestLate === null || $late < $bestLate) {
                         $best = $by;
                         $bestLate = $late;
                     }
                     if ($late === 0) {
+                        // The first day in between that also works.
+                        for ($d = $prev + 1; $d < $by; $d++) {
+                            if ($lateBy($d) === 0) {
+                                $best = $d;
+                                break;
+                            }
+                        }
                         break;
                     }
+                    $prev = $by;
                 }
                 $plantings[$i] = Carbon::parse($asked[$i])->addDays($best)->toDateString();
                 $shift[$i] = $best;
@@ -2187,6 +2202,136 @@ final class LandPrepPlanner
             'hiredFirst' => array_map(fn ($x) => ['day' => $iso($x['day']), 'lot' => $x['lot'], 'key' => $x['key']], $firstHired),
             'hiredUse' => $hiredUse,
             'late' => $late + array_fill(0, count($lots), 0)];
+    }
+
+    /**
+     * WILL EVERY LOT BE READY ON ITS DAY? (2026-10-16, the owner: "show
+     * warnings if there might be issues on the # of workers later on based
+     * on what was chosen, or the # of days of the preparation, especially if
+     * user chooses the specific day per lot".) The crew calendar run without
+     * Anee, as the plan will run it. For each lot: the day it was asked, the
+     * day it gets (Anee's, for the lots after the first when the farmer set
+     * only the first lot's day), the work that ends after that day, and the
+     * days it is short of the full preparation.
+     *
+     * When work runs late: `more`, the fewest workers (Monday to Saturday)
+     * to add for nothing to run late, the days set the farmer's way; when no
+     * count is enough, `everyDay`, the workers to add when the whole crew
+     * also works Sundays (0: the crew as it is); whether machines hold the
+     * work up (more hands do not help then); and, for a lot that keeps a day
+     * it cannot make, `readyBy`, the day this crew could have it ready
+     * instead. When Anee spaced the lots and nothing is late, `closer`, the
+     * workers to add for every lot to go in on the first lot's day.
+     */
+    public static function forecast(array $case, ?string $today = null): array
+    {
+        $f = self::build($case);
+        $case = $f['case'];
+        $sched = $f['sched'];
+        $lotSteps = $f['lotSteps'];
+        $n = count($case['lots']);
+        $mode = $n < 2 ? 'one' : (($case['dateMode'] ?? null) === 'first' ? 'first' : 'each');
+        // The work that ends after the day, by the crew (not the work whose time has already passed).
+        $lateOf = function (array $sched): array {
+            $out = [];
+            foreach ($sched['conflicts'] as $c) {
+                if ($c['why'] === 'crew' && $c['major'] !== false) {
+                    $out[$c['lot']][] = $c;
+                }
+            }
+
+            return $out;
+        };
+        $late = $lateOf($sched);
+        $what = [];
+        foreach ($lotSteps as $i => $steps) {
+            foreach ($steps as $s) {
+                $what[$i][$s['key']] = $s['what'];
+            }
+        }
+        $machine = [];
+        foreach ($sched['perLot'] as $pl) {
+            foreach ($pl['steps'] as $r) {
+                if (($r['crew'] ?? null) === 'machine') {
+                    $machine[$pl['lot']][$r['key']] = true;
+                }
+            }
+        }
+        // A lot that keeps a day it cannot make: the day the crew could have it ready.
+        $readyBy = [];
+        $keeps = array_filter(array_keys($late), fn ($i) => $mode !== 'first' || (int) $sched['shift'][$i] === 0);
+        if ($keeps) {
+            $alt = self::schedule($lotSteps, $case['lots'], array_merge($case['crew'], ['stagger' => true]), array_merge($case, ['dateMode' => null]), $today);
+            $altLate = $lateOf($alt);
+            foreach ($keeps as $i) {
+                if ((int) $alt['shift'][$i] > 0 && empty($altLate[$i])) {
+                    $readyBy[$i] = $alt['plantings'][$i];
+                }
+            }
+        }
+        // The fewest workers to add (from the list) for which the crew calendar has nothing late, found by
+        // halving (a first lot day plan staggers on every try, so each try costs a full stagger).
+        $onTime = fn (array $crew): bool => ! $lateOf(self::schedule($lotSteps, $case['lots'], $crew, $case, $today));
+        $fewest = function (array $list, callable $crewFor) use ($onTime): ?int {
+            if (! $onTime($crewFor(end($list)))) {
+                return null;
+            }
+            [$lo, $hi] = [0, count($list) - 1];
+            while ($lo < $hi) {
+                $mid = intdiv($lo + $hi, 2);
+                $onTime($crewFor($list[$mid])) ? $hi = $mid : $lo = $mid + 1;
+            }
+
+            return $list[$hi];
+        };
+        $added = function (int $k, bool $everyDay = false) use ($case): array {
+            $crew = $case['crew'];
+            if ($everyDay) {
+                foreach ($crew['workers'] as $w => $x) {
+                    $crew['workers'][$w]['days'] = [0, 1, 2, 3, 4, 5, 6];
+                }
+            }
+            for ($w = 1; $w <= $k; $w++) {
+                $crew['workers'][] = ['name' => 'Added ' . $w, 'days' => $everyDay ? [0, 1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 5, 6]];
+            }
+
+            return $crew;
+        };
+        // Workers to add, Monday to Saturday, for nothing to run late with the days set the farmer's way
+        // (Anee still times the lots after the first when the farmer let her).
+        $more = $late ? $fewest([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], fn ($k) => $added($k)) : null;
+        // No count of Monday to Saturday hands is enough: is it the Sunday? (A Monday planting puts the leveling on one.)
+        $everyDay = $late && $more === null ? $fewest([0, 2, 4, 6, 10, 20], fn ($k) => $added($k, true)) : null;
+        // Anee spaced the lots: the workers that would let every lot go in on the first lot's day.
+        $closer = $mode === 'first' && ! $late && array_filter($sched['shift'])
+            ? $fewest([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], fn ($k) => array_merge($added($k), ['stagger' => false])) : null;
+        $lots = [];
+        foreach ($case['lots'] as $i => $l) {
+            $rows = $late[$i] ?? [];
+            usort($rows, fn ($a, $b) => ($b['late'] ?? 999) <=> ($a['late'] ?? 999));
+            $sq = $f['squeeze'][$i] ?? null;
+            $lots[] = [
+                'lot' => $i, 'name' => $l['name'], 'dayWord' => $l['dayWord'] ?? self::dayWord($case['crop'], $case['method']),
+                'asked' => $sched['asked'][$i], 'planting' => $sched['plantings'][$i], 'shift' => (int) $sched['shift'][$i],
+                'late' => array_map(fn ($c) => ['key' => $c['key'], 'what' => $what[$i][$c['key']] ?? $c['key'], 'days' => $c['late'], 'machine' => ! empty($machine[$i][$c['key']])], array_slice($rows, 0, 3)),
+                'lateCount' => count($rows),
+                'short' => $sq ? ['left' => (int) $sq['left'], 'needed' => (int) $sq['needed']] : null,
+                'readyBy' => $readyBy[$i] ?? null,
+            ];
+        }
+        $anyMachine = (bool) array_filter($lots, fn ($l) => array_filter($l['late'], fn ($x) => $x['machine']));
+
+        return [
+            'mode' => $mode,
+            'ok' => ! $late && ! array_filter($lots, fn ($l) => $l['short']),
+            'late' => (bool) $late,
+            'workers' => count($case['crew']['workers']),
+            'more' => $more,
+            'everyDay' => $everyDay,
+            'closer' => $closer,
+            'machines' => $anyMachine && $more === null && $everyDay === null,
+            'lots' => $lots,
+        ];
     }
 
     /**

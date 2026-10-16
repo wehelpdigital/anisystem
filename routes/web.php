@@ -152,6 +152,12 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'noAutoNext' => ! str_contains((string) @file_get_contents(resource_path('views/when-to-plant/index.blade.php')), 'setTimeout(() => show(3), 220)'),
             'lpClock' => str_contains((string) @file_get_contents(app_path('Http/Controllers/LandPrepController.php')), 'private const AI_TIMEOUT = 330;')
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
+            // 2026-10-16: each lot its own crop, the two ways to set the days with the crew forecast,
+            // What to Plant's twenty, and the variety step without the records' picks.
+            'lpLotCrop' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpLcSheet"'),
+            'lpDateMode' => method_exists(\App\Support\LandPrepPlanner::class, 'forecast'),
+            'wtpTwenty' => str_contains((string) @file_get_contents(app_path('Http/Controllers/WhatToPlantController.php')), 'TWENTY crops'),
+            'vaNoPicks' => ! str_contains((string) @file_get_contents(resource_path('views/variety-analysis/index.blade.php')), 'id="vaBook"'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.

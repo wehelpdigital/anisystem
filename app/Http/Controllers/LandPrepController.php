@@ -281,6 +281,10 @@ class LandPrepController extends Controller
         if ($request->boolean('advise')) {
             $out['crew'] = LP::recommendCrew($case);
         }
+        // Will every lot be ready on its day with this crew? (the workers step and the review)
+        if ($request->boolean('forecast')) {
+            $out['forecast'] = LP::forecast($case);
+        }
 
         return $this->json(true, 'ok', $out);
     }
@@ -396,6 +400,9 @@ class LandPrepController extends Controller
             'crew.fleet.*.hire.name' => 'nullable|string|max:120',
             'crew.fleet.*.hire.phone' => 'nullable|string|max:60',
             'crew.stagger' => 'nullable|boolean',
+            // Many lots (2026-10-16, the owner): "first", the first lot's day and Anee times the
+            // others (staggered, the first lot pinned); "each", every lot keeps its own day.
+            'dateMode' => 'nullable|in:first,each',
             'soil' => 'nullable|array',
             'history' => 'nullable|array',
             'location.province' => 'nullable|string|max:120',
@@ -427,8 +434,13 @@ class LandPrepController extends Controller
         if (! $given && $lenient) {
             $given = [['name' => 'Lot 1', 'area' => 1, 'unit' => 'ha']];
         }
+        // Only the first lot's day: the others start from it and Anee times them, so no lot brings its own.
+        $dateMode = count($given) > 1 ? (string) $request->input('dateMode', '') : '';
         foreach ($given as $i => $l) {
             $name = mb_substr(trim((string) ($l['name'] ?? '')), 0, 60) ?: 'Lot ' . ($i + 1);
+            if ($dateMode === 'first') {
+                $l['planting'] = null;
+            }
             $p = ! empty($l['planting']) ? Carbon::parse($l['planting'], 'Asia/Manila') : $main;
             if ($p->lt($today) || $p->gt($today->copy()->addDays(400))) {
                 return 'The planting day of ' . $name . ' must be from today to a year ahead.';
@@ -477,6 +489,10 @@ class LandPrepController extends Controller
         if (! isset($c['workers'])) {
             $c['workers'] = [['name' => 'Worker 1', 'days' => [1, 2, 3, 4, 5, 6]]];
         }
+        // The way the days were set decides whether they may move (a page from before sends crew.stagger).
+        if ($dateMode !== '') {
+            $c['stagger'] = $dateMode === 'first';
+        }
         $crew = LP::crew($c);
         if (! $lenient && ! array_filter((array) ($c['workers'] ?? []), fn ($w) => ! empty($w['days']))) {
             return 'Give at least one worker a work day.';
@@ -493,6 +509,7 @@ class LandPrepController extends Controller
             'seedType' => (string) $request->input('seedType', ''),
             'seedSource' => $rice ? (string) $request->input('seedSource', '') : '',
             'planting' => $main->toDateString(),
+            'dateMode' => $dateMode !== '' ? $dateMode : null,
             'lots' => $lots,
             'crew' => $crew,
             'location' => array_filter([
@@ -844,7 +861,9 @@ PROMPT;
             return ', ITS OWN CROP: ' . $l['cropLabel'] . ', ' . lcfirst($m) . ($l['variety'] !== '' ? ', variety ' . $l['variety'] : '') . ' (day 0 is its ' . ($l['dayWord'] ?? 'planting') . ' day)';
         };
         $lots = implode("\n", array_map(fn ($l, $i) => '- ' . $l['name'] . ': ' . $l['area'] . ' ha' . $ownCrop($l) . ', ' . ($l['dayWord'] ?? $word) . ' ' . Carbon::parse($sched['plantings'][$i])->format('D M j, Y')
-            . ($sched['shift'][$i] ? ' (moved ' . $sched['shift'][$i] . ($sched['shift'][$i] === 1 ? ' day' : ' days') . ' later than asked so the crew can finish)' : ''), $case['lots'], array_keys($case['lots'])));
+            . ($sched['shift'][$i] ? (($case['dateMode'] ?? null) === 'first'
+                ? ' (timed by the plan ' . $sched['shift'][$i] . ($sched['shift'][$i] === 1 ? ' day' : ' days') . ' after the first lot, when the crew can have it ready)'
+                : ' (moved ' . $sched['shift'][$i] . ($sched['shift'][$i] === 1 ? ' day' : ' days') . ' later than asked so the crew can finish)') : ''), $case['lots'], array_keys($case['lots'])));
         // Lots with the same answers are told once.
         $groups = [];
         foreach ($case['lots'] as $i => $l) {
@@ -857,7 +876,11 @@ PROMPT;
             . ($g['words'] ? '- ' . implode("\n- ", array_map(fn ($w) => $w[0] . ': ' . $w[1], $g['words'])) : '- nothing given'), $groups));
         $crew = $case['crew'];
         $cw = LP::crewWords($crew);
-        $crewLine = $cw['workers'] . ' (' . $cw['days'] . '), ' . $cw['machines'] . '.' . ($crew['stagger'] ? ' Planting days may be staggered.' : '');
+        $crewLine = $cw['workers'] . ' (' . $cw['days'] . '), ' . $cw['machines'] . '.' . match ($case['dateMode'] ?? null) {
+            'first' => ' The farmer set only the first lot\'s day and let the plan time the other lots by what the crew can do.',
+            'each' => ' The farmer set every lot\'s own day: keep the days, and where the crew cannot make one, say plainly what it takes (more hands, a machine, or a later day).',
+            default => $crew['stagger'] ? ' Planting days may be staggered.' : '',
+        };
         $steps = implode("\n", array_map(fn ($s) => '- ' . $s['key'] . ' [' . $s['from'] . ' to ' . $s['to'] . '] ' . $s['what'] . ' (' . (LP::TAGS[$s['tag']] ?? $s['tag']) . ')'
             . (! empty($s['lotsWords']) ? ' ' . $s['lotsWords'] . '.' : '') . (! empty($s['rule']) ? ' Note: ' . $s['rule'] : '')
             . (! empty($s['squeezed']) ? ' SQUEEZED, was [' . $s['squeezed']['was'][0] . ' to ' . $s['squeezed']['was'][1] . ']' : ''), $plan['steps']));
@@ -1106,7 +1129,7 @@ PROMPT;
             ] : []), $full['lots'], array_keys($full['lots'])),
             'mixed' => LP::mixed($full),
             'crew' => [
-                'workers' => count($crew['workers']), 'workerList' => $crew['workers'], 'stagger' => $crew['stagger'],
+                'workers' => count($crew['workers']), 'workerList' => $crew['workers'], 'stagger' => $crew['stagger'], 'dateMode' => $full['dateMode'] ?? null,
                 'fleet' => array_map(fn ($f) => $f + ['name' => $items[$f['type']]['name'] ?? $f['type'], 'local' => $items[$f['type']]['local'] ?? '',
                     'photo' => ! empty($items[$f['type']]['photo']['file']) ? asset(ltrim($items[$f['type']]['photo']['file'], '/')) : null], $crew['fleet']),
                 'equipmentLabel' => $cw['machines'], 'days' => $cw['days'],
