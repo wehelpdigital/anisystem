@@ -9,11 +9,16 @@
     $ask = route('ask.page');
     $face = asset('images/anee/avatar-160.jpg');
     $faceLg = asset('images/anee/avatar-512.jpg');
-    $feature = fn ($slug) => $ph ? \App\Support\SitePages::url('features', $slug) : route('features');
     $arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
-    // The app as it is today (2026-10-13): How It Works' own steps, Anee Auto first.
+    // The app as it is today: How It Works' own steps, Anee Auto first.
     $abSteps = collect(\App\Support\HowItWorks::stages())->sortBy(fn ($st) => $st['key'] === 'auto' ? 0 : 1)->values()->all();
     $abTools = collect($abSteps)->sum(fn ($st) => count($st['items']));
+    $pic = fn ($base, $ext = 'jpg') => [
+        'src' => asset('images/site/photos/' . $base . '.' . $ext),
+        'set' => file_exists(public_path('images/site/photos/' . $base . '-800.webp'))
+            ? asset('images/site/photos/' . $base . '-480.webp') . ' 480w, ' . asset('images/site/photos/' . $base . '-800.webp') . ' 800w'
+            : null,
+    ];
 @endphp
 
 @section('title', $ph ? 'About anee.io: Named After Ani, the Palay Harvest' : 'About anee.io: Named After the Harvest')
@@ -21,113 +26,138 @@
     ? 'anee.io takes its name from ani, the harvest. A farm app built by agronomists for Filipino palay, mais and gulay farmers, from pagtatanim to the last sack.'
     : 'anee.io takes its name from ani, the Filipino word for harvest. A farm app built by agronomists to plan every cropping season, from sowing to the last sack.')
 
-{{-- ABOUT (rebuilt 2026-10-06 in the homepage's look, hp- styles from
-     public.partials.hp-base): who we are, then the story in the order a
-     reader asks it (2026-10-07 audit): how the app came out of our own
-     field work (the hero promises it, so it comes first), where the name
-     comes from, the mission, why it is built for Philippine farms, what it
-     does, what we stand for, and a way to start under every section, never
-     the same button twice in a row. Plain words, no dashes, no invented
-     numbers. --}}
+{{-- ABOUT (rebuilt 2026-10-18, the owner: "it looks really bad"). The
+     story in the order a reader asks it: who we are (a split hero with the
+     farm photos), how the app came out of our own field work (three photo
+     chapters), where the name comes from (a dictionary entry), the mission
+     (one dark band with the quote), why it is built for Philippine farms,
+     what it does (the season as one rail of steps), what we stand for, and
+     the last call. One yellow button per screen at most; the rest are quiet
+     links. Plain words, no dashes, no invented numbers, no byline. --}}
 @section('content')
 
     {{-- ================= HERO ================= --}}
     <section class="ab-hero">
-        <img src="{{ asset('images/site/fields-aerial.jpg') }}" alt="{{ $ph ? 'Rice fields in the Philippines seen from above' : 'Rice fields seen from above' }}" class="ab-hero-bg" loading="eager" fetchpriority="high">
-        <div class="ab-hero-shade" aria-hidden="true"></div>
-        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 ab-hero-in text-center on-dark" style="z-index:1">
-            <span class="ab-chip animate-fade-up">About anee.io</span>
-            <h1 class="ab-h1 animate-fade-up" style="animation-delay:.06s">
-                Built by Farmers, for
-                <span class="hp-mark"><span class="hp-shimmer">{{ $ph ? 'Filipino Farmers.' : 'Every Farmer.' }}</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M6 13 Q 150 27, 294 5"/></svg></span>
-            </h1>
-            <p class="ab-lede animate-fade-up" style="animation-delay:.12s">
-                anee.io started as the system our own agronomists and technicians use on client farms. Now it is open
-                to every farmer, with one goal: a higher yield and a better income from the same land.
-            </p>
-            <div class="hp-cta-row animate-fade-up" style="animation-delay:.18s; margin-top: 2rem">
-                <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
-                <a href="{{ route('how') }}" class="hp-alt is-glass">See how it works</a>
+        <span class="ab-blob is-a" aria-hidden="true"></span>
+        <span class="ab-blob is-b" aria-hidden="true"></span>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 ab-hero-grid">
+            <div class="ab-hero-copy">
+                <span class="ab-chip animate-fade-up"><span class="ab-chip-dot"></span>About anee.io</span>
+                <h1 class="ab-h1 animate-fade-up" style="animation-delay:.06s">
+                    Built by Farmers, for
+                    <span class="hp-mark"><span class="hp-shimmer">{{ $ph ? 'Filipino Farmers.' : 'Every Farmer.' }}</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M6 13 Q 150 27, 294 5"/></svg></span>
+                </h1>
+                <p class="ab-lede animate-fade-up" style="animation-delay:.12s">
+                    anee.io started as the system our own agronomists and technicians use on client farms. Now it is open
+                    to every farmer, with one goal: a higher yield and a better income from the same land.
+                </p>
+                <div class="ab-ctas animate-fade-up" style="animation-delay:.18s">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
+                    <a href="{{ route('how') }}" class="hp-alt">See how it works</a>
+                </div>
+                <ul class="ab-ticks animate-fade-up" style="animation-delay:.24s">
+                    <li>Free forever on Libre</li>
+                    <li>No card needed</li>
+                    <li>Works on any phone</li>
+                </ul>
+            </div>
+            <div class="ab-hero-art animate-fade-up" style="animation-delay:.1s">
+                @php $p1 = $pic('powered-by'); $p2 = $pic('palay-phone'); @endphp
+                <figure class="ab-ph is-main">
+                    <img src="{{ $p1['src'] }}" alt="{{ $ph ? 'A farming family in their palayan with a Powered by anee.io sign' : 'A farming family in their rice field with a Powered by anee.io sign' }}" loading="eager" fetchpriority="high" width="1600" height="1195">
+                </figure>
+                <figure class="ab-ph is-small">
+                    <img src="{{ $p2['src'] }}" @if ($p2['set']) srcset="{{ $p2['set'] }}" sizes="(min-width: 1024px) 15rem, 40vw" @endif alt="A farmer checking his phone among ripe rice" loading="eager" width="1600" height="1195">
+                </figure>
+                <div class="ab-float is-anee">
+                    <img src="{{ $face }}" alt="">
+                    <span><b>Anee</b><small>Your smart farm technician</small></span>
+                </div>
+                <div class="ab-float is-ani" aria-hidden="true">
+                    <b>ani</b><small>harvest</small>
+                </div>
             </div>
         </div>
-        <div class="ab-facts animate-fade-up" style="animation-delay:.24s">
-            <div><b>{{ $abTools }}</b><small>tools for one season</small></div>
-            <div><b>{{ $ph ? '85' : '100' }}</b><small>crops it knows by stage</small></div>
-            <div><b>{{ count($abSteps) }}</b><small>steps from plan to harvest</small></div>
-            <div><b>Free</b><small>to start, on any phone</small></div>
+        <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
+            <dl class="ab-facts animate-fade-up" style="animation-delay:.3s">
+                <div><dt>{{ $abTools }}</dt><dd>tools for one season</dd></div>
+                <div><dt>{{ $ph ? '85' : '100' }}</dt><dd>crops it knows by stage</dd></div>
+                <div><dt>{{ count($abSteps) }}</dt><dd>steps from plan to harvest</dd></div>
+                <div><dt>{{ \App\Support\Region::money(0, 0) }}</dt><dd>to start, on Libre</dd></div>
+            </dl>
         </div>
-        <a href="#ab-story" class="ab-down" aria-label="Scroll to read more">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
-        </a>
     </section>
 
     {{-- ================= FROM OUR FIELDS TO YOURS ================= --}}
-    <section class="hp-sec bg-brand-mesh bg-drift" id="ab-story">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">Our story</p>
-                <h2 class="hp-h2">From Our Fields <em>to Yours.</em></h2>
-                <p class="hp-p">anee.io was not made in an office. It grew out of years of work on real farms.</p>
+    <section class="hp-sec bg-white" id="ab-story">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="ab-head-split reveal">
+                <div>
+                    <p class="hp-kick">Our story</p>
+                    <h2 class="hp-h2">From Our Fields <em>to Yours.</em></h2>
+                </div>
+                <p class="hp-p">anee.io was not made in an office. It grew out of years of work on real farms, one season at a time.</p>
             </div>
-            <ol class="ab-path">
+            <ol class="ab-chapters">
                 @foreach ([
-                    ['Years in the field', 'Our team has helped farmers grow bigger harvests of ' . \App\Support\Region::t('rice') . ', ' . \App\Support\Region::t('corn') . ' and more through research, technician support, fertilization and farm management, with results recognized here and abroad.', 'images/icons/soil-restoration.png'],
-                    ['The system behind the results', 'To run client farms well, our technicians built a cropping schedule manager: every task counted from day zero, every cost written down, every season kept on record.', 'images/icons/calendar.png'],
-                    ['Now in your hands', 'anee.io puts that same system on your phone, with Anee, the smart farm technician, to answer when a technician cannot be there.', 'images/icons/technician-support.png'],
-                ] as $i => [$t, $p, $img])
-                    <li class="ab-step reveal" style="--reveal-delay: {{ $i * 0.12 }}s">
-                        <span class="ab-step-n">{{ $i + 1 }}</span>
-                        <div class="ab-step-card">
-                            <img src="{{ asset($img) }}" alt="" loading="lazy">
-                            <div>
-                                <h3>{{ $t }}</h3>
-                                <p>{{ $p }}</p>
-                            </div>
+                    ['Years in the field', 'Our team has helped farmers grow bigger harvests of ' . \App\Support\Region::t('rice') . ', ' . \App\Support\Region::t('corn') . ' and more through research, technician support, fertilization and farm management, with results recognized here and abroad.', 'team-thumbs', 'Two farmers giving a thumbs up beside their rice field'],
+                    ['The system behind the results', 'To run client farms well, our technicians built a cropping schedule manager: every task counted from day zero, every cost written down, every season kept on record.', 'transplant', 'A farmer following his plan on a phone at transplanting time'],
+                    ['Now in your hands', 'anee.io puts that same system on your phone, with Anee, the smart farm technician, to answer when a technician cannot be there.', 'anee-chat-hand', 'A hand holding a phone with Anee answering in the middle of a rice field'],
+                ] as $i => [$t, $p, $img, $alt])
+                    @php $ch = $pic($img); @endphp
+                    <li class="ab-chapter reveal" style="--reveal-delay: {{ $i * 0.12 }}s">
+                        <figure class="ab-chapter-pic">
+                            <img src="{{ $ch['src'] }}" @if ($ch['set']) srcset="{{ $ch['set'] }}" sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw" @endif alt="{{ $alt }}" loading="lazy">
+                            <span class="ab-chapter-n">{{ sprintf('%02d', $i + 1) }}</span>
+                        </figure>
+                        <div class="ab-chapter-body">
+                            <h3>{{ $t }}</h3>
+                            <p>{{ $p }}</p>
                         </div>
                     </li>
                 @endforeach
             </ol>
-            {{-- The hero right above already offers "See how it works". --}}
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Use the same system, free {!! $arrow !!}</a>
-                </div>
-            </div>
         </div>
     </section>
 
     {{-- ================= THE NAME ================= --}}
-    <section class="hp-sec bg-white" id="ab-name">
+    <section class="hp-sec ab-name-sec" id="ab-name">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 ab-two">
-            <div class="ab-pics reveal">
-                <img src="{{ asset('images/palay-08.jpg') }}" alt="{{ $ph ? 'Ripe palay in a palayan, ready for the ani' : 'A ripe rice field ready for harvest' }}" class="ab-pic-a" loading="lazy">
-                <div class="ab-namecard">
-                    <img src="{{ $faceLg }}" alt="Anee, the anee.io farm technician">
-                    <div>
-                        <b>ani <span>(ah nee)</span></b>
-                        <small>Filipino for harvest</small>
-                    </div>
+            <div class="ab-dict reveal">
+                <div class="ab-dict-word">
+                    <b>ani</b>
+                    <span class="ab-dict-say">(ah nee)</span>
+                </div>
+                <p class="ab-dict-kind">noun · Filipino</p>
+                <ol class="ab-dict-means">
+                    <li>The harvest: the crop that comes off the field at the end of a season.</li>
+                    <li>The one score every farmer keeps.</li>
+                </ol>
+                @if ($ph)
+                    <p class="ab-dict-eg"><i>“Kumusta ang ani?”</i> How was the harvest? How many cavans of palay came off the field?</p>
+                @endif
+                <div class="ab-dict-anee">
+                    <img src="{{ $faceLg }}" alt="Anee, the anee.io smart farm technician">
+                    <span><b>anee.io</b> and <b>Anee</b> both take their name from it.</span>
                 </div>
             </div>
-            <div class="reveal">
+            <div class="reveal" style="--reveal-delay:.1s">
                 <p class="hp-kick">Our name</p>
                 <h2 class="hp-h2">Our Name Comes From <em>Ani, the Harvest.</em></h2>
                 <p class="hp-p">
-                    <b>Ani</b> means harvest. It is the whole point of a season, and the one score every farmer keeps.
+                    <b>Ani</b> is the whole point of a season. Every plan, every spray and every sack of fertilizer is
+                    there for one day: the day the crop comes in.
                     @if ($ph)
-                        When a neighbor asks <em>kumusta ang ani?</em>, they mean how many cavans of palay came off the
-                        field. Our page on the <a href="{{ url('/blog/ani-meaning') }}" class="ab-link">ani meaning</a> tells the rest.
+                        Our page on the <a href="{{ url('/blog/ani-meaning') }}" class="ab-link">ani meaning</a> tells the rest.
                     @endif
                 </p>
                 <p class="hp-p">
                     Ani also gives its name to the smart farm technician inside the app. Ask <b>Anee</b> about your crop, send a photo
-                    of a leaf, and she answers{{ $ph ? ' in Filipino or English' : '' }}, any time.
+                    of a leaf, and she answers{{ $ph ? ' in Filipino or English' : '' }}, any time of the day.
                 </p>
-                <div class="hp-cta is-left">
-                    <div class="hp-cta-row">
-                        <a href="{{ $ask }}" class="btn btn-accent btn-lg hp-go">Ask Anee a free question {!! $arrow !!}</a>
-                    </div>
-                    <p class="hp-cta-note">No account needed. One free question a week.</p>
+                <div class="ab-inline-cta">
+                    <a href="{{ $ask }}" class="btn btn-accent btn-lg hp-go"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee a free question {!! $arrow !!}</a>
+                    <span>No account needed. One free question a week.</span>
                 </div>
             </div>
         </div>
@@ -135,84 +165,83 @@
 
     {{-- ================= THE MISSION ================= --}}
     <section class="hp-sec ab-mission spark-field on-dark">
-        <div class="relative max-w-6xl mx-auto px-4 sm:px-6" style="z-index:1">
-            <div class="hp-head reveal">
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 ab-mission-grid" style="z-index:1">
+            <div class="reveal">
                 <p class="hp-kick">Our mission</p>
                 <h2 class="hp-h2">Help Every {{ $ph ? 'Filipino ' : '' }}Farmer Grow <em>More From the Same Land.</em></h2>
                 <p class="hp-p">
-                    Fertilizer and fuel cost more every year, and the price at harvest does not keep up. We believe the
-                    answer is not another product to buy. It is better farm management, made simple enough to follow
-                    from a phone in the middle of the field.
+                    Fertilizer and fuel cost more every year, and the price at harvest does not keep up.
                 </p>
+                <blockquote class="ab-quote">
+                    The answer is not another product to buy. It is better farm management, made simple enough to follow
+                    from a phone in the middle of the field.
+                </blockquote>
+                <div class="ab-inline-cta is-dark">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and grow more {!! $arrow !!}</a>
+                    <span>Free forever on Libre. No card needed.</span>
+                </div>
             </div>
-            <div class="ab-pillars">
+            <ul class="ab-pillars">
                 @foreach ([
                     ['A higher yield', 'Every task on its right day, counted from each lot\'s own day zero, so the crop gets what it needs when it needs it.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5"/>'],
                     ['A lower cost', 'Every ' . ($ph ? 'peso' : 'dollar') . ' written down as it is spent, so nothing is wasted and nothing is forgotten.', '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                     ['A smarter next season', 'Every season leaves a record, so the next one starts from what worked on your own farm.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.1 15a7.5 7.5 0 0013.4 1.5M18.9 9A7.5 7.5 0 005.5 7.5"/>'],
                 ] as $i => [$t, $p, $ico])
-                    <div class="ab-pillar reveal" style="--reveal-delay: {{ $i * 0.1 }}s">
+                    <li class="ab-pillar reveal" style="--reveal-delay: {{ 0.1 + $i * 0.1 }}s">
                         <span class="ab-pillar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">{!! $ico !!}</svg></span>
-                        <h3>{{ $t }}</h3>
-                        <p>{{ $p }}</p>
-                    </div>
+                        <span>
+                            <h3>{{ $t }}</h3>
+                            <p>{{ $p }}</p>
+                        </span>
+                    </li>
                 @endforeach
-            </div>
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and grow more {!! $arrow !!}</a>
-                </div>
-                <p class="hp-cta-note">Free forever on Libre. No card needed.</p>
-            </div>
+            </ul>
         </div>
     </section>
 
     @if ($ph)
     {{-- ================= BUILT FOR PHILIPPINE FARMS ================= --}}
     <section class="hp-sec bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 ab-two is-top">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 ab-two is-flip">
             <div class="reveal">
                 <p class="hp-kick">Why we built it</p>
                 <h2 class="hp-h2">Made for Farms <em>in the Philippines.</em></h2>
                 <p class="hp-p">
                     Farming still employs about one in five working Filipinos, and most farms here are small. Our guide to
                     <a href="{{ url('/blog/agriculture-in-the-philippine-economy') }}" class="ab-link">agriculture in the Philippine economy</a>
-                    has the numbers. A small farm has no room for a missed fertilizer day or a pest found a week late, so
-                    the plan has to be simple enough to follow in the field.
+                    has the numbers. A small farm has no room for a missed fertilizer day or a pest found a week late.
                 </p>
                 <p class="hp-p">
-                    That is why anee.io counts every task from each lot's own day zero, the way agronomists do: days after
-                    sowing, after transplanting or after planting. It works for
+                    So anee.io counts every task from each lot's own day zero, the way agronomists do. It works for
                     <a href="{{ url('/crops/pagtatanim-ng-palay') }}" class="ab-link">pagtatanim ng palay</a> in a Nueva Ecija
                     palayan, for mais in Isabela and Mindanao, and for gulay on the
                     <a href="{{ url('/crops/vegetables-philippines') }}" class="ab-link">vegetable farms of the Philippines</a>.
+                    And Anee reads your season before she answers, in Filipino or English.
                 </p>
-                <p class="hp-p">
-                    And because advice only helps when it comes on time, Anee reads your season before she answers. Ask
-                    her in Filipino or English about a rice bug, a fertilizer like urea or complete 14 14 14, or a leaf that
-                    looks wrong.
-                </p>
-                <div class="hp-cta is-left">
-                    <div class="hp-cta-row">
-                        <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Plan your crop free {!! $arrow !!}</a>
-                    </div>
-                </div>
-            </div>
-            <div class="reveal">
                 <p class="ab-guides-k">Guides from our team</p>
                 <div class="ab-guides">
                     @foreach ([
-                        ['/crops/palay', 'Palay', 'Palay in English, its growth stages, and how palay becomes rice.'],
-                        ['/crops/corn-kernel', 'Corn kernel and mais', 'Parts of the corn plant, corn types and the corn kernel price.'],
-                        ['/blog/urea-fertilizer', 'Fertilizer urea and 14 14 14', 'What each fertilizer does and when it goes in.'],
-                        ['/pests/rice-bug', 'Rice bug and thrips', 'Signs, thresholds and control of the pests that hit hardest.'],
+                        ['/crops/palay', 'Palay', 'Growth stages, and how palay becomes rice.'],
+                        ['/crops/corn-kernel', 'Corn and mais', 'Parts of the plant, corn types and the kernel price.'],
+                        ['/blog/urea-fertilizer', 'Urea and 14 14 14', 'What each fertilizer does and when it goes in.'],
+                        ['/pests/rice-bug', 'Rice bug and thrips', 'Signs, thresholds and control of the worst pests.'],
                         ['/blog/fertilizer-and-pesticide-authority', 'Fertilizer and Pesticide Authority', 'How to check that a product is registered before you buy.'],
                     ] as $i => [$href, $name, $line])
-                        <a href="{{ url($href) }}" class="ab-guide reveal" style="--reveal-delay: {{ $i * 0.06 }}s">
-                            <span class="ab-guide-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg></span>
+                        <a href="{{ url($href) }}" class="ab-guide">
                             <span class="ab-guide-t"><b>{{ $name }}</b><small>{{ $line }}</small></span>
                             <span class="ab-guide-go">{!! $arrow !!}</span>
                         </a>
+                    @endforeach
+                </div>
+            </div>
+            <div class="ab-ph-farm reveal" style="--reveal-delay:.1s">
+                @php $pf = $pic('inspect'); @endphp
+                <figure class="ab-ph is-farm">
+                    <img src="{{ $pf['src'] }}" @if ($pf['set']) srcset="{{ $pf['set'] }}" sizes="(min-width: 1024px) 34rem, 92vw" @endif alt="A farmer checking her rice crop with her phone" loading="lazy">
+                </figure>
+                <div class="ab-crops">
+                    @foreach ([['palay', 'Palay'], ['mais', 'Mais'], ['gulay', 'Gulay'], ['puno', 'Puno']] as [$img, $label])
+                        <span class="ab-crop"><img src="{{ asset('images/site/home-crops/' . $img . '.webp') }}" alt="" loading="lazy">{{ $label }}</span>
                     @endforeach
                 </div>
             </div>
@@ -221,74 +250,68 @@
     @endif
 
     {{-- ================= WHAT IT DOES ================= --}}
-    <section class="hp-sec bg-gray-50">
+    <section class="hp-sec ab-season-sec">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">The app</p>
-                <h2 class="hp-h2">What anee.io <em>Does for You.</em></h2>
-                <p class="hp-p">{{ $abTools }} tools in one app, step by step through the season. Or let Anee run the whole season for you with Anee Auto.</p>
-            </div>
-            <div class="ab-does">
-                @foreach ($abSteps as $i => $st)
-                    <a href="{{ route('features') }}#step-{{ $st['key'] }}" class="ab-do {{ $st['key'] === 'auto' ? 'is-auto' : '' }} reveal" style="--reveal-delay: {{ ($i % 4) * 0.06 }}s">
-                        <span class="ab-do-top">
-                            <span class="ab-do-n">{{ $i + 1 }}</span>
-                            <span class="ab-do-count">{{ count($st['items']) }} {{ \Illuminate\Support\Str::plural('tool', count($st['items'])) }}</span>
-                        </span>
-                        <h3>{{ $st['title'] }}</h3>
-                        <p>{{ $st['lede'] }}</p>
-                        <span class="ab-do-icons" aria-hidden="true">
-                            @foreach (array_slice($st['items'], 0, 6) as $it)<img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy" class="{{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}" title="{{ $it['name'] }}">@endforeach
-                            @if (count($st['items']) > 6)<i>+{{ count($st['items']) - 6 }}</i>@endif
-                        </span>
-                        <span class="ab-do-more">See the tools {!! $arrow !!}</span>
-                    </a>
-                @endforeach
-            </div>
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Try it on your own farm, free {!! $arrow !!}</a>
-                    <a href="{{ route('features') }}" class="hp-alt">See every feature</a>
+            <div class="ab-head-split reveal">
+                <div>
+                    <p class="hp-kick">The app</p>
+                    <h2 class="hp-h2">One App for <em>the Whole Season.</em></h2>
                 </div>
+                <p class="hp-p">{{ $abTools }} tools, step by step from the first plan to the last sack. Or let Anee run the whole season for you with Anee Auto.</p>
+            </div>
+            <ol class="ab-rail">
+                @foreach ($abSteps as $i => $st)
+                    <li class="reveal" style="--reveal-delay: {{ ($i % 4) * 0.06 }}s">
+                        <a href="{{ route('features') }}#step-{{ $st['key'] }}" class="ab-stop {{ $st['key'] === 'auto' ? 'is-auto' : '' }}">
+                            <span class="ab-stop-n">{{ $i + 1 }}</span>
+                            <span class="ab-stop-t">
+                                <b>{{ $st['title'] }}</b>
+                                <small>{{ count($st['items']) }} {{ \Illuminate\Support\Str::plural('tool', count($st['items'])) }}</small>
+                            </span>
+                            <span class="ab-stop-icons" aria-hidden="true">
+                                @foreach (array_slice($st['items'], 0, 4) as $it)<img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy" class="{{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}">@endforeach
+                            </span>
+                        </a>
+                    </li>
+                @endforeach
+            </ol>
+            <div class="ab-links reveal">
+                <a href="{{ route('how') }}" class="hp-alt">See how it works</a>
+                <a href="{{ route('features') }}" class="ab-textlink">Every feature, one by one {!! $arrow !!}</a>
             </div>
         </div>
     </section>
 
     {{-- ================= VALUES ================= --}}
     <section class="hp-sec bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 ab-values-grid">
+            <div class="ab-values-head reveal">
                 <p class="hp-kick">What we stand for</p>
                 <h2 class="hp-h2">The Values <em>Behind Every Tool.</em></h2>
+                <p class="hp-p">Four rules we hold every new tool to before it goes into the app.</p>
+                <a href="{{ route('contact') }}" class="ab-textlink">Talk to us. A real person reads every message {!! $arrow !!}</a>
             </div>
             <div class="ab-values">
                 @foreach ([
-                    ['Farmer first', 'Everything we build starts with the real life of ' . ($ph ? 'Filipino farms' : 'working farms') . ': the budget, the weather and the labor.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>'],
-                    ['Backed by science', 'Our schedules and protocols come from research and years of field results, not guesswork.', '<path stroke-linecap="round" stroke-linejoin="round" d="M9 3h6m-5 0v5.3L4.7 17a2 2 0 001.7 3h11.2a2 2 0 001.7-3L14 8.3V3"/>'],
-                    ['Income and the land', 'Yield matters, and so does the soil. We plan for this season and the many seasons after it.', '<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>'],
-                    ['Simple on a phone', 'If it does not work on a phone in the middle of a ' . ($ph ? 'palayan' : 'rice field') . ', it does not go into the app.', '<path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>'],
-                ] as $i => [$t, $p, $ico])
+                    ['Farmer first', 'Everything we build starts with the real life of ' . ($ph ? 'Filipino farms' : 'working farms') . ': the budget, the weather and the labor.'],
+                    ['Backed by science', 'Our schedules and protocols come from research and years of field results, not guesswork.'],
+                    ['Income and the land', 'Yield matters, and so does the soil. We plan for this season and the many seasons after it.'],
+                    ['Simple on a phone', 'If it does not work on a phone in the middle of a ' . ($ph ? 'palayan' : 'rice field') . ', it does not go into the app.'],
+                ] as $i => [$t, $p])
                     <div class="ab-value reveal" style="--reveal-delay: {{ $i * 0.07 }}s">
-                        <span class="ab-value-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">{!! $ico !!}</svg></span>
+                        <span class="ab-value-n">{{ sprintf('%02d', $i + 1) }}</span>
                         <h3>{{ $t }}</h3>
                         <p>{{ $p }}</p>
                     </div>
                 @endforeach
-            </div>
-            {{-- The last call right under this one carries the sign up, so
-                 this section's door is the people behind the values. --}}
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ route('contact') }}" class="hp-alt">Talk to us</a>
-                </div>
-                <p class="hp-cta-note">A real person on our team reads every message.</p>
             </div>
         </div>
     </section>
 
     {{-- ================= LAST CALL ================= --}}
     <section class="ab-final">
-        <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field" class="ab-final-bg" loading="lazy">
+        @php $pl = $pic('palay-heads'); @endphp
+        <img src="{{ $pl['src'] }}" @if ($pl['set']) srcset="{{ $pl['set'] }}, {{ $pl['src'] }} 1600w" sizes="100vw" @endif alt="" class="ab-final-bg" loading="lazy">
         <div class="ab-final-shade" aria-hidden="true"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
             <img src="{{ $faceLg }}" alt="" class="ab-final-face">
@@ -297,7 +320,7 @@
             <div class="hp-cta">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
-                    <a href="{{ $ask }}" class="hp-alt"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee a free question</a>
+                    <a href="{{ $ask }}" class="hp-alt is-glass"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee a free question</a>
                 </div>
                 <p class="hp-cta-note">Free forever on Libre. No card needed.</p>
             </div>
@@ -308,141 +331,205 @@
 
 @push('head')
 <style>
-    /* ===================== ABOUT ===================== */
-    .ab-hero { position: relative; isolation: isolate; overflow: hidden; color: #fff; }
-    .ab-hero-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover;
-        animation: hpKenAb 24s ease-in-out infinite alternate; }
-    @keyframes hpKenAb { from { transform: scale(1.05); } to { transform: scale(1.14) translate3d(1.5%, -1%, 0); } }
-    .ab-hero-shade { position: absolute; inset: 0; z-index: -1;
-        background: radial-gradient(80% 90% at 50% 40%, rgb(16 28 10 / .55), rgb(10 18 6 / .9)); }
-    .ab-hero-in { padding-top: 6rem; padding-bottom: 7.5rem; }
-    @media (min-width: 1024px) { .ab-hero-in { padding-top: 8rem; padding-bottom: 8.5rem; } }
-    .ab-hero { padding-bottom: 4.5rem; }
-    .ab-chip { display: inline-flex; align-items: center; padding: .4rem 1rem; border-radius: 999px; font-size: .78rem; font-weight: 800;
-        letter-spacing: .1em; text-transform: uppercase; color: #f4d778; background: rgb(255 255 255 / .1);
-        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .22); backdrop-filter: blur(8px); }
-    .ab-h1 { margin-top: 1.4rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.02em; line-height: 1.04;
-        font-size: clamp(2.4rem, 6.4vw, 4.3rem); text-wrap: balance; }
-    .ab-lede { margin: 1.6rem auto 0; max-width: 40rem; font-size: clamp(1.02rem, 1.7vw, 1.2rem); line-height: 1.7; color: #dde6d4; text-wrap: pretty; }
-    .ab-down { position: absolute; left: 50%; bottom: 1.4rem; transform: translateX(-50%); width: 2.6rem; height: 2.6rem; display: grid; place-items: center;
-        border-radius: 999px; color: #fff; background: rgb(255 255 255 / .1); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25);
-        animation: abNudge 2.4s var(--hp-ease) infinite; }
-    .ab-down svg { width: 1.2rem; height: 1.2rem; }
-    @keyframes abNudge { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
+    /* ===================== ABOUT (2026-10-18) ===================== */
     .ab-link { font-weight: 800; color: var(--hp-green); text-decoration: underline; text-decoration-color: rgb(74 124 42 / .35); text-underline-offset: 3px;
         transition: text-decoration-color .28s var(--hp-ease); }
     .ab-link:hover { text-decoration-color: var(--hp-green); }
+    .ab-textlink { display: inline-flex; align-items: center; gap: .4rem; font-weight: 800; color: var(--hp-deep); text-decoration: none; }
+    .ab-textlink svg { width: 1.05rem; height: 1.05rem; flex: none; transition: transform .28s var(--hp-ease); }
+    .ab-textlink:hover svg { transform: translateX(4px); }
 
-    .ab-two { display: grid; gap: 3rem; align-items: center; }
-    .ab-two.is-top { align-items: start; }
-    @media (min-width: 1024px) { .ab-two { grid-template-columns: 1fr 1fr; gap: 4rem; } }
-    .ab-pics { position: relative; padding-bottom: 3rem; }
-    .ab-pic-a { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 1.6rem; box-shadow: 0 30px 60px -36px rgb(20 33 12 / .7); }
-    .ab-namecard { position: absolute; right: -.5rem; bottom: 0; display: flex; align-items: center; gap: .9rem; padding: .9rem 1.2rem .9rem .9rem;
-        border-radius: 1.3rem; background: #fff; box-shadow: 0 24px 48px -24px rgb(20 33 12 / .6); animation: hpBobAb 6s ease-in-out infinite; }
-    @media (max-width: 639.98px) { .ab-namecard { right: .5rem; } }
-    .ab-namecard img { width: 3.6rem; height: 3.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 3px var(--hp-sun); }
-    .ab-namecard b { display: block; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--hp-ink); line-height: 1; }
-    .ab-namecard b span { font-size: .85rem; font-weight: 700; color: #6b7280; }
-    .ab-namecard small { display: block; margin-top: .3rem; font-size: .85rem; font-weight: 700; color: var(--hp-green); }
-    @keyframes hpBobAb { 0%, 100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+    /* Hero: words on the left, the farm on the right, the facts across the foot. */
+    .ab-hero { position: relative; isolation: isolate; overflow: hidden; padding: 3.25rem 0 3.5rem;
+        background: linear-gradient(175deg, #fbf8ee 0%, #f3f7ea 55%, #fff 100%); }
+    @media (min-width: 1024px) { .ab-hero { padding: 4.5rem 0 4.5rem; } }
+    .ab-blob { position: absolute; z-index: -1; border-radius: 999px; filter: blur(60px); opacity: .55; pointer-events: none; }
+    .ab-blob.is-a { width: 28rem; height: 28rem; top: -10rem; right: -8rem; background: #d9ebc2; }
+    .ab-blob.is-b { width: 22rem; height: 22rem; bottom: -8rem; left: -8rem; background: #fbe7a4; opacity: .45; }
+    .ab-hero-grid { display: grid; gap: 2.75rem; align-items: center; }
+    @media (min-width: 1024px) { .ab-hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 3.5rem; } }
+    .ab-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .95rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
+        letter-spacing: .1em; text-transform: uppercase; color: var(--hp-deep); background: #fff; box-shadow: inset 0 0 0 1px #dfe9d2, 0 6px 16px -10px rgb(20 33 12 / .35); }
+    .ab-chip-dot { width: .5rem; height: .5rem; border-radius: 999px; background: var(--hp-sun); box-shadow: 0 0 0 3px rgb(245 197 24 / .25); }
+    .ab-h1 { margin-top: 1.25rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.025em; line-height: 1.04; color: var(--hp-ink);
+        font-size: clamp(2.35rem, 5.6vw, 4rem); text-wrap: balance; }
+    .ab-lede { margin-top: 1.75rem; max-width: 34rem; font-size: clamp(1.02rem, 1.6vw, 1.16rem); line-height: 1.7; color: #4b5563; text-wrap: pretty; }
+    .ab-ctas { margin-top: 1.9rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+    .ab-ticks { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .45rem 1.2rem; font-size: .88rem; font-weight: 700; color: #4b5563; }
+    .ab-ticks li { display: inline-flex; align-items: center; gap: .4rem; }
+    .ab-ticks li::before { content: ''; width: 1.05rem; height: 1.05rem; flex: none; border-radius: 999px; background: #e3f0d3
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232f5219' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / .68rem no-repeat; }
+    @media (max-width: 639.98px) { .ab-ctas > * { width: 100%; } }
 
+    .ab-hero-art { position: relative; padding: 0 0 3.2rem 0; }
+    @media (min-width: 640px) { .ab-hero-art { padding: 0 0 3.5rem 3rem; } }
+    .ab-ph { margin: 0; overflow: hidden; border-radius: 1.6rem; background: #e6efda; box-shadow: 0 34px 70px -40px rgb(20 33 12 / .75); }
+    .ab-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ab-ph.is-main { aspect-ratio: 4 / 3.3; }
+    .ab-ph.is-small { position: absolute; left: 0; bottom: 0; width: 44%; aspect-ratio: 1; border-radius: 1.3rem;
+        box-shadow: 0 0 0 6px #fff, 0 26px 50px -28px rgb(20 33 12 / .8); }
+    @media (max-width: 639.98px) { .ab-ph.is-small { left: .75rem; width: 40%; } }
+    .ab-float { position: absolute; display: flex; align-items: center; gap: .65rem; padding: .6rem .9rem .6rem .6rem; border-radius: 1.1rem;
+        background: #fff; box-shadow: 0 20px 40px -22px rgb(20 33 12 / .6); animation: abBob 6s ease-in-out infinite; }
+    .ab-float.is-anee { right: .75rem; bottom: .5rem; }
+    .ab-float.is-anee img { width: 2.6rem; height: 2.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 3px var(--hp-sun); }
+    .ab-float.is-anee b { display: block; font-family: var(--font-heading); font-weight: 800; color: var(--hp-ink); line-height: 1.1; }
+    .ab-float.is-anee small { display: block; font-size: .74rem; font-weight: 700; color: var(--hp-green); }
+    .ab-float.is-ani { top: 1rem; right: 1rem; flex-direction: column; align-items: flex-start; gap: 0; padding: .55rem .85rem;
+        background: var(--hp-ink); animation-delay: -3s; }
+    .ab-float.is-ani b { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--hp-sun); line-height: 1; }
+    .ab-float.is-ani small { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #dbe7cd; }
+    @keyframes abBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+
+    .ab-facts { margin-top: 3rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 1.4rem; overflow: hidden;
+        background: #fff; border: 1px solid #e4ecda; box-shadow: 0 26px 50px -38px rgb(20 33 12 / .55); }
+    @media (min-width: 768px) { .ab-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .ab-facts div { padding: 1.15rem .9rem; text-align: center; }
+    .ab-facts div + div { border-left: 1px solid #edf2e6; }
+    @media (max-width: 767.98px) { .ab-facts div:nth-child(3) { border-left: 0; } .ab-facts div:nth-child(n + 3) { border-top: 1px solid #edf2e6; } }
+    .ab-facts dt { font-family: var(--font-heading); font-size: clamp(1.7rem, 3.4vw, 2.2rem); font-weight: 800; line-height: 1; color: var(--hp-deep); }
+    .ab-facts dd { margin-top: .4rem; font-size: .8rem; font-weight: 700; color: #6b7280; }
+
+    /* A section head with its words to the side on a wide screen. */
+    .ab-head-split { display: grid; gap: .6rem; }
+    @media (min-width: 1024px) { .ab-head-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: end; }
+        .ab-head-split .hp-p { margin-top: 0; padding-bottom: .35rem; } }
+
+    /* Story: three chapters, each with its photo. */
+    .ab-chapters { margin-top: 2.6rem; display: grid; gap: 1.25rem; }
+    @media (min-width: 640px) { .ab-chapters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .ab-chapters { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; } }
+    .ab-chapter { display: flex; flex-direction: column; border-radius: 1.5rem; overflow: hidden; background: #fff; border: 1px solid #e6ede0;
+        box-shadow: 0 24px 48px -40px rgb(20 33 12 / .6); transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .ab-chapter:hover { transform: translateY(-4px); box-shadow: 0 30px 56px -38px rgb(20 33 12 / .65); }
+    .ab-chapter-pic { position: relative; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; background: #e6efda; }
+    .ab-chapter-pic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--hp-ease); }
+    .ab-chapter:hover .ab-chapter-pic img { transform: scale(1.04); }
+    .ab-chapter-n { position: absolute; left: 1rem; top: 1rem; padding: .3rem .7rem; border-radius: 999px; font-family: var(--font-heading);
+        font-size: .85rem; font-weight: 800; color: var(--hp-ink); background: var(--hp-sun); box-shadow: 0 8px 18px -8px rgb(0 0 0 / .45); }
+    .ab-chapter-body { padding: 1.25rem 1.35rem 1.45rem; }
+    .ab-chapter-body h3 { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: var(--hp-ink); }
+    .ab-chapter-body p { margin-top: .45rem; font-size: .95rem; line-height: 1.65; color: #4b5563; }
+    @media (min-width: 640px) and (max-width: 1023.98px) { .ab-chapter:last-child { grid-column: 1 / -1; flex-direction: row; }
+        .ab-chapter:last-child .ab-chapter-pic { width: 45%; flex: none; aspect-ratio: auto; } .ab-chapter:last-child .ab-chapter-body { align-self: center; } }
+
+    /* The name, as a dictionary has it. */
+    .ab-name-sec { background: linear-gradient(180deg, #f4f8ee, #fbfcf8); }
+    .ab-two { display: grid; gap: 2.75rem; align-items: center; }
+    @media (min-width: 1024px) { .ab-two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4.5rem; }
+        .ab-two.is-flip { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: start; } }
+    .ab-dict { position: relative; padding: 2rem 1.6rem 1.6rem; border-radius: 1.6rem; background: #fff; border: 1px solid #e3ebd8;
+        box-shadow: 0 34px 64px -44px rgb(20 33 12 / .65); }
+    @media (min-width: 640px) { .ab-dict { padding: 2.4rem 2.3rem 2rem; } }
+    .ab-dict::before { content: ''; position: absolute; left: 0; top: 2rem; bottom: 2rem; width: 5px; border-radius: 0 5px 5px 0;
+        background: linear-gradient(180deg, var(--hp-sun), var(--hp-green)); }
+    .ab-dict-word { display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem .9rem; }
+    .ab-dict-word b { font-family: var(--font-heading); font-size: clamp(3.6rem, 9vw, 5.2rem); font-weight: 800; letter-spacing: -.03em; line-height: .95; color: var(--hp-ink); }
+    .ab-dict-say { font-size: 1.05rem; font-weight: 700; color: #6b7280; }
+    .ab-dict-kind { margin-top: .6rem; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--hp-green); }
+    .ab-dict-means { margin-top: 1.1rem; display: grid; gap: .55rem; counter-reset: m; }
+    .ab-dict-means li { position: relative; padding-left: 2rem; font-size: 1.02rem; line-height: 1.6; color: #374151; counter-increment: m; }
+    .ab-dict-means li::before { content: counter(m); position: absolute; left: 0; top: .1rem; width: 1.4rem; height: 1.4rem; border-radius: 999px;
+        display: grid; place-items: center; font-size: .75rem; font-weight: 800; color: var(--hp-deep); background: #e8f2dc; }
+    .ab-dict-eg { margin-top: 1rem; padding: .85rem 1rem; border-radius: .9rem; background: #fbf7e6; font-size: .93rem; line-height: 1.6; color: #4b5563; }
+    .ab-dict-eg i { font-weight: 800; color: var(--hp-ink); }
+    .ab-dict-anee { margin-top: 1.3rem; padding-top: 1.1rem; border-top: 1px dashed #dfe8d3; display: flex; align-items: center; gap: .8rem;
+        font-size: .92rem; color: #4b5563; }
+    .ab-dict-anee img { width: 3rem; height: 3rem; flex: none; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 3px var(--hp-sun); }
+    .ab-dict-anee b { color: var(--hp-ink); }
+    .ab-inline-cta { margin-top: 1.8rem; display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1rem; }
+    .ab-inline-cta > span { font-size: .86rem; color: #6b7280; }
+    .ab-inline-cta.is-dark > span { color: #b9c8aa; }
+    .ab-inline-cta .hp-face { margin-left: -.2rem; }
+    @media (max-width: 639.98px) { .ab-inline-cta .btn { width: 100%; } }
+
+    /* Mission: the quote on one side, the three promises on the other. */
     .ab-mission { position: relative; overflow: hidden;
         background: radial-gradient(90% 120% at 15% 0%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
-    .ab-pillars { margin-top: 3rem; display: grid; gap: 1.1rem; }
-    @media (min-width: 768px) { .ab-pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.3rem; } }
-    .ab-pillar { padding: 1.5rem; border-radius: 1.4rem; background: rgb(255 255 255 / .07); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14);
-        backdrop-filter: blur(10px); transition: transform .28s var(--hp-ease), background-color .28s var(--hp-ease); }
-    .ab-pillar:hover { transform: translateY(-4px); background: rgb(255 255 255 / .1); }
-    .ab-pillar-ico { width: 3rem; height: 3rem; border-radius: 1rem; display: grid; place-items: center; color: var(--hp-ink); background: var(--hp-sun); }
-    .ab-pillar-ico svg { width: 1.5rem; height: 1.5rem; }
-    .ab-pillar h3 { margin-top: 1rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #fff; }
-    .ab-pillar p { margin-top: .5rem; font-size: .95rem; line-height: 1.6; color: #c9d5bd; }
+    .ab-mission-grid { display: grid; gap: 2.5rem; align-items: center; }
+    @media (min-width: 1024px) { .ab-mission-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 4rem; } }
+    .ab-mission .hp-p { color: #c9d5bd; }
+    .ab-quote { margin-top: 1.4rem; padding-left: 1.2rem; border-left: 4px solid var(--hp-sun); font-family: var(--font-heading);
+        font-size: clamp(1.25rem, 2.3vw, 1.6rem); font-weight: 700; line-height: 1.4; color: #fff; text-wrap: pretty; }
+    .ab-pillars { display: grid; gap: .9rem; }
+    .ab-pillar { display: flex; gap: 1rem; align-items: flex-start; padding: 1.25rem 1.3rem; border-radius: 1.3rem; background: rgb(255 255 255 / .06);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); transition: background-color .28s var(--hp-ease), transform .28s var(--hp-ease); }
+    .ab-pillar:hover { background: rgb(255 255 255 / .1); transform: translateX(4px); }
+    .ab-pillar-ico { flex: none; width: 2.8rem; height: 2.8rem; border-radius: .95rem; display: grid; place-items: center; color: var(--hp-ink); background: var(--hp-sun); }
+    .ab-pillar-ico svg { width: 1.4rem; height: 1.4rem; }
+    .ab-pillar h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #fff; }
+    .ab-pillar p { margin-top: .3rem; font-size: .93rem; line-height: 1.6; color: #c9d5bd; }
 
-    .ab-path { position: relative; margin-top: 3rem; display: grid; gap: 1.4rem; counter-reset: s; }
-    .ab-path::before { content: ''; position: absolute; left: 1.35rem; top: 1.5rem; bottom: 1.5rem; width: 3px; border-radius: 3px;
-        background: linear-gradient(180deg, var(--hp-sun), var(--hp-green)); opacity: .6; }
-    .ab-step { position: relative; display: flex; gap: 1.1rem; align-items: flex-start; }
-    .ab-step-n { position: relative; z-index: 1; flex: none; width: 2.8rem; height: 2.8rem; border-radius: 999px; display: grid; place-items: center;
-        font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; color: var(--hp-ink); background: var(--hp-sun);
-        box-shadow: 0 0 0 6px #f3f8ec; }
-    .ab-step-card { flex: 1 1 auto; min-width: 0; display: flex; gap: 1rem; align-items: flex-start; padding: 1.2rem 1.3rem; border-radius: 1.3rem;
-        background: #fff; border: 1px solid #e1ead6; box-shadow: 0 20px 40px -32px rgb(20 33 12 / .55);
-        transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
-    .ab-step-card:hover { transform: translateX(4px); box-shadow: 0 24px 44px -30px rgb(20 33 12 / .6); }
-    .ab-step-card img { flex: none; width: 3rem; height: 3rem; object-fit: contain; }
-    .ab-step-card h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--hp-ink); }
-    .ab-step-card p { margin-top: .35rem; font-size: .95rem; line-height: 1.6; color: #4b5563; }
-    @media (max-width: 639.98px) { .ab-step-card { flex-direction: column; } }
-
-    .ab-guides-k { font-size: .76rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
-    .ab-guides { margin-top: 1rem; display: grid; gap: .7rem; }
-    .ab-guide { display: flex; align-items: center; gap: .9rem; padding: .95rem 1rem; border-radius: 1.1rem; background: #fff; border: 1px solid #e5ebdf;
-        text-decoration: none; transition: border-color .28s var(--hp-ease), transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
-    .ab-guide:hover { border-color: #b9d69a; transform: translateX(4px); box-shadow: 0 16px 30px -24px rgb(20 33 12 / .55); }
-    .ab-guide-ico { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .85rem; display: grid; place-items: center; color: var(--hp-green); background: #eef5e5; }
-    .ab-guide-ico svg { width: 1.1rem; height: 1.1rem; }
+    /* Philippine farms: the words and guides, then the photo with its crops. */
+    .ab-guides-k { margin-top: 2rem; font-size: .76rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
+    .ab-guides { margin-top: .8rem; display: grid; gap: .55rem; }
+    @media (min-width: 640px) { .ab-guides { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ab-guide:last-child { grid-column: 1 / -1; } }
+    .ab-guide { display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; border-radius: 1rem; background: #f7faf3; border: 1px solid #e5ecdc;
+        text-decoration: none; transition: border-color .28s var(--hp-ease), background-color .28s var(--hp-ease), transform .28s var(--hp-ease); }
+    .ab-guide:hover { border-color: #b9d69a; background: #fff; transform: translateY(-2px); }
     .ab-guide-t { flex: 1 1 auto; min-width: 0; }
-    .ab-guide-t b { display: block; font-family: var(--font-heading); font-weight: 800; color: var(--hp-ink); }
-    .ab-guide-t small { display: block; margin-top: .15rem; font-size: .86rem; color: #6b7280; line-height: 1.45; }
+    .ab-guide-t b { display: block; font-family: var(--font-heading); font-weight: 800; font-size: .96rem; color: var(--hp-ink); }
+    .ab-guide-t small { display: block; margin-top: .1rem; font-size: .82rem; color: #6b7280; line-height: 1.45; }
     .ab-guide-go { flex: none; color: #9ca3af; transition: color .28s var(--hp-ease), transform .28s var(--hp-ease); }
-    .ab-guide-go svg { width: 1.1rem; height: 1.1rem; }
+    .ab-guide-go svg { width: 1.05rem; height: 1.05rem; }
     .ab-guide:hover .ab-guide-go { color: var(--hp-green); transform: translateX(3px); }
+    .ab-ph-farm { position: relative; padding-bottom: 1.6rem; }
+    @media (min-width: 1024px) { .ab-ph-farm { position: sticky; top: 6rem; } }
+    .ab-ph.is-farm { aspect-ratio: 4 / 4.6; }
+    @media (max-width: 1023.98px) { .ab-ph.is-farm { aspect-ratio: 4 / 3.2; } }
+    .ab-crops { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); display: flex; gap: .4rem; padding: .45rem; border-radius: 999px;
+        background: #fff; box-shadow: 0 20px 40px -22px rgb(20 33 12 / .6); white-space: nowrap; width: max-content; }
+    .ab-crop { flex: none; display: inline-flex; align-items: center; gap: .4rem; padding: .3rem .7rem .3rem .3rem; border-radius: 999px; background: #f3f8ec;
+        font-size: .84rem; font-weight: 800; color: var(--hp-deep); }
+    .ab-crop img { width: 1.7rem; height: 1.7rem; border-radius: 999px; object-fit: cover; }
+    @media (max-width: 379.98px) { .ab-crop { padding-right: .5rem; font-size: .76rem; } .ab-crop img { width: 1.4rem; height: 1.4rem; } }
 
-    .ab-does { margin-top: 3rem; display: grid; gap: 1rem; }
-    @media (min-width: 640px) { .ab-does { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (min-width: 1024px) { .ab-does { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; } }
-    .ab-do-top { display: flex; align-items: center; justify-content: space-between; }
-    .ab-do-n { width: 2.4rem; height: 2.4rem; border-radius: 999px; display: grid; place-items: center; font-family: var(--font-heading); font-weight: 800; color: #fff; background: #2d5016;
-        box-shadow: 0 0 0 4px #e6f0dc; }
-    .ab-do.is-auto { border-color: #f0dc95; background: linear-gradient(160deg, #fff8e1, #fff 60%); }
-    .ab-do.is-auto .ab-do-n { color: #2b3a1c; background: #f5c518; box-shadow: 0 0 0 4px #fff1bf; }
-    .ab-do-count { padding: .2rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #2f5219; background: #eef6e6; }
-    .ab-do-icons { margin-top: .9rem; display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
-    .ab-do-icons img { width: 1.9rem; height: 1.9rem; padding: .25rem; border-radius: .6rem; object-fit: contain; background: #f3f8ec; box-shadow: inset 0 0 0 1px #dcead0; }
-    .ab-do-icons img.is-face { padding: 0; object-fit: cover; }
-    .ab-do-icons i { font-style: normal; font-size: .76rem; font-weight: 800; color: #4a7c2a; padding-left: .15rem; }
-    /* The facts strip on the hero's lower edge. */
-    .ab-facts { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; max-width: 54rem; margin: -4.5rem auto 0;
-        border-radius: 1.3rem; overflow: hidden; background: rgb(255 255 255 / .16); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .8); backdrop-filter: blur(10px); }
-    @media (min-width: 768px) { .ab-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    .ab-facts div { padding: 1rem .9rem; text-align: center; background: rgb(14 24 9 / .55); }
-    .ab-facts b { display: block; font-family: var(--font-heading); font-size: 1.9rem; font-weight: 800; line-height: 1; color: #f5c518; }
-    .ab-facts small { display: block; margin-top: .35rem; font-size: .78rem; font-weight: 700; color: #dce8cf; }
-    @media (max-width: 767.98px) { .ab-facts { margin: -3.5rem 1rem 0; } }
-    .ab-do { display: flex; flex-direction: column; padding: 1.5rem; border-radius: 1.4rem; background: #fff; border: 1px solid #e5ebdf; text-decoration: none;
-        transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease), border-color .28s var(--hp-ease); }
-    .ab-do:hover { transform: translateY(-4px); border-color: #b9d69a; box-shadow: 0 24px 44px -30px rgb(20 33 12 / .6); }
-    .ab-do-ico { width: 3.4rem; height: 3.4rem; border-radius: 1rem; display: grid; place-items: center; background: #f3f8ec; box-shadow: inset 0 0 0 1px #dcead0;
-        transition: transform .28s var(--hp-ease); }
-    .ab-do:hover .ab-do-ico { transform: scale(1.06) rotate(-3deg); }
-    .ab-do-ico img { width: 2.1rem; height: 2.1rem; object-fit: contain; }
-    .ab-do h3 { margin-top: 1rem; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--hp-ink); }
-    .ab-do p { margin-top: .45rem; font-size: .93rem; line-height: 1.6; color: #4b5563; flex: 1 1 auto; }
-    .ab-do-more { margin-top: 1rem; display: inline-flex; align-items: center; gap: .3rem; font-size: .88rem; font-weight: 800; color: var(--hp-green); }
-    .ab-do-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
-    .ab-do:hover .ab-do-more svg { transform: translateX(3px); }
+    /* The season, as one rail of numbered stops. */
+    .ab-season-sec { background: #f6f8f3; }
+    .ab-rail { margin-top: 2.6rem; display: grid; gap: .75rem; }
+    @media (min-width: 640px) { .ab-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .ab-rail { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; } }
+    .ab-stop { height: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "n t" "n i"; column-gap: .9rem; row-gap: .7rem;
+        align-items: center; padding: 1rem 1.1rem; border-radius: 1.2rem; background: #fff; border: 1px solid #e3eada; text-decoration: none;
+        transition: transform .28s var(--hp-ease), border-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .ab-stop:hover { transform: translateY(-3px); border-color: #b9d69a; box-shadow: 0 22px 40px -32px rgb(20 33 12 / .6); }
+    .ab-stop-n { grid-area: n; align-self: start; width: 2.5rem; height: 2.5rem; border-radius: 999px; display: grid; place-items: center;
+        font-family: var(--font-heading); font-weight: 800; color: #fff; background: var(--hp-deep); box-shadow: 0 0 0 4px #e6f0dc; }
+    .ab-stop.is-auto { border-color: #f0dc95; background: linear-gradient(160deg, #fff8e1, #fff 70%); }
+    .ab-stop.is-auto .ab-stop-n { color: var(--hp-ink); background: var(--hp-sun); box-shadow: 0 0 0 4px #fff1bf; }
+    .ab-stop-t { grid-area: t; min-width: 0; }
+    .ab-stop-t b { display: block; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
+    .ab-stop-t small { display: block; margin-top: .15rem; font-size: .78rem; font-weight: 700; color: var(--hp-green); }
+    .ab-stop-icons { grid-area: i; display: flex; gap: .3rem; }
+    .ab-stop-icons img { width: 1.75rem; height: 1.75rem; padding: .22rem; border-radius: .55rem; object-fit: contain; background: #f3f8ec; box-shadow: inset 0 0 0 1px #dcead0; }
+    .ab-stop-icons img.is-face { padding: 0; object-fit: cover; }
+    .ab-links { margin-top: 2.2rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .9rem 1.6rem; }
 
-    .ab-values { margin-top: 3rem; display: grid; gap: 1.1rem; }
+    /* Values: the head on the left, four numbered rules on the right. */
+    .ab-values-grid { display: grid; gap: 2.4rem; }
+    @media (min-width: 1024px) { .ab-values-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 4rem; align-items: start; }
+        .ab-values-head { position: sticky; top: 6rem; } }
+    .ab-values-head .ab-textlink { margin-top: 1.5rem; }
+    .ab-values { display: grid; gap: 1rem; }
     @media (min-width: 640px) { .ab-values { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (min-width: 1024px) { .ab-values { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    .ab-value { padding: 1.4rem; border-radius: 1.3rem; background: linear-gradient(170deg, #f6faf1, #fff); border: 1px solid #e4ecdb;
+    .ab-value { padding: 1.4rem 1.4rem 1.5rem; border-radius: 1.3rem; background: linear-gradient(170deg, #f6faf1, #fff); border: 1px solid #e4ecdb;
         transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
     .ab-value:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -30px rgb(20 33 12 / .55); }
-    .ab-value-ico { width: 2.8rem; height: 2.8rem; border-radius: .9rem; display: grid; place-items: center; color: var(--hp-green); background: #e4f0d6; }
-    .ab-value-ico svg { width: 1.4rem; height: 1.4rem; }
-    .ab-value h3 { margin-top: .9rem; font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: var(--hp-ink); }
-    .ab-value p { margin-top: .4rem; font-size: .92rem; line-height: 1.6; color: #4b5563; }
+    .ab-value-n { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; line-height: 1; color: transparent;
+        -webkit-text-stroke: 1.5px var(--hp-green); }
+    .ab-value h3 { margin-top: .8rem; font-family: var(--font-heading); font-size: 1.12rem; font-weight: 800; color: var(--hp-ink); }
+    .ab-value p { margin-top: .4rem; font-size: .93rem; line-height: 1.6; color: #4b5563; }
 
+    /* Last call over the ripe palay. */
     .ab-final { position: relative; isolation: isolate; overflow: hidden; }
     .ab-final-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-    .ab-final-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(160deg, rgb(20 36 12 / .93), rgb(29 51 15 / .82) 55%, rgb(47 82 25 / .78)); }
+    .ab-final-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(160deg, rgb(20 36 12 / .92), rgb(29 51 15 / .82) 55%, rgb(47 82 25 / .74)); }
     .ab-final-face { width: 5rem; height: 5rem; margin: 0 auto 1rem; border-radius: 999px; object-fit: cover;
-        box-shadow: 0 0 0 4px var(--hp-sun), 0 0 0 12px rgb(245 197 24 / .18); animation: hpBobAb 5s ease-in-out infinite; }
+        box-shadow: 0 0 0 4px var(--hp-sun), 0 0 0 12px rgb(245 197 24 / .18); animation: abBob 5s ease-in-out infinite; }
 
     @media (prefers-reduced-motion: reduce) {
-        .ab-hero-bg, .ab-down, .ab-namecard, .ab-final-face { animation: none !important; }
-        .ab-pillar, .ab-step-card, .ab-guide, .ab-guide-go, .ab-do, .ab-do-ico, .ab-value, .ab-link { transition: none !important; }
+        .ab-float, .ab-final-face { animation: none !important; }
+        .ab-chapter, .ab-chapter-pic img, .ab-pillar, .ab-guide, .ab-guide-go, .ab-stop, .ab-value, .ab-link, .ab-textlink svg { transition: none !important; }
     }
 </style>
 @endpush
