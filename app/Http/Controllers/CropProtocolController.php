@@ -15,6 +15,8 @@ use App\Support\FieldProfile;
 use App\Support\NpkModel;
 use App\Support\NpkNeed;
 use App\Support\NpkPlan;
+use App\Support\ProtocolCare;
+use App\Support\ProtocolCrew;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
@@ -43,11 +45,49 @@ use Illuminate\Support\Facades\Validator;
  *
  * Same shelf (as_plant_analyses, kind 'protocol'), same job walk, same
  * honest ledger as its sisters.
+ *
+ * SEVERAL LOTS (2026-10-18, the owner: "just like the land prep module, you
+ * can select multiple lots and for each lot you select what crop to plant,
+ * the variety, month to plant, and how will you plant it, as well as the goal
+ * and yield ... add a question on how many workers you have ... auto adjust
+ * schedule if there's conflicting or warn if # of workers is lacking"). The
+ * walk starts from the farm's lots (Global Lots); each lot brings its place,
+ * size and field answers (its soil test too, so phosphorus and potassium are
+ * never asked), and picks its own crop, way in, variety, month (a day if
+ * known), goal and target. The report (format 4) is the whole farm and every
+ * lot:
+ *  - the need of each lot is NPK Plus's (App\Support\NpkNeed), every program
+ *    checked against it, and what still falls short closed by the app
+ *    (App\Support\ProtocolCare: straight fertilizer for N, P and K, the usual
+ *    source or a spray for each secondary and micro element);
+ *  - protection by stage for each crop from our field catalogue, Anee choosing
+ *    what to watch and when it pays to act, the products from our product
+ *    book, with the farmer's own call said plainly (ProtocolCare::DISCLAIMER);
+ *  - one work calendar across every lot (App\Support\ProtocolCrew): the farm's
+ *    workers by their own days, Anee moving jobs inside their safe windows, or
+ *    the farmer's dates kept with the short days named.
+ * Anee writes in several asks, each small enough for a slow day: the research
+ * per crop (kept on the shelf), the farm (the background, each crop's stages
+ * and protection), then each lot's fertilizer and nutrition. The price grows
+ * with the lots and the crops (App\Support\AiPricing, kind protocol).
  */
 class CropProtocolController extends Controller
 {
     /** The house's flat price for one protocol, in credits. */
     public const PRICE = AiPrices::DEFAULTS['protocol'];
+
+    /** The most lots one protocol plans. */
+    public const MAX_LOTS = 8;
+
+    /** How long one of Anee's asks may take (a slow day's Pro wrote 6,000 tokens in 211 s). */
+    private const AI_TIMEOUT = 300;
+
+    /** The longest a whole run may stand pending before it is called stopped (eight lots on a slow day). */
+    private const MAX_MINUTES = 40;
+
+    /** A lot's last crop, from its field answers, as the protocol reads it: [prevCrop, residue]. */
+    private const PREV_OF = ['rice_straw' => ['rice', 'incorporated'], 'rice_no_straw' => ['rice', 'unsure'], 'corn' => ['corn', 'unsure'], 'legume' => ['legume', 'unsure'],
+        'vegetable' => ['vegetables', 'unsure'], 'fallow' => ['fallow', 'unsure'], 'new_land' => ['fallow', 'unsure']];
 
     public const SOILS = WhatToPlantController::SOILS;
 
@@ -254,6 +294,16 @@ class CropProtocolController extends Controller
             $cursor = $cursor->addMonth();
         }
 
+        // The price by the size of the run: lots, and the crops or varieties Anee reads up on.
+        $quoteFor = [];
+        if ($canUse) {
+            for ($n = 1; $n <= self::MAX_LOTS; $n++) {
+                for ($c = 0; $c < min($n, 4); $c++) {
+                    $quoteFor[$n][$c] = AiPricing::credits('protocol', ['lots' => $n, 'cases' => $c]);
+                }
+            }
+        }
+
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
             'crops' => collect(CropCatalog::visible())->map(fn ($c, $key) => [
                 'key' => $key,
@@ -266,7 +316,15 @@ class CropProtocolController extends Controller
                 // NPK Plus's row for it (its seeding rate, its need), and how it is usually planted.
                 'npk' => NpkNeed::cropKey($key),
                 'seedUnit' => NpkNeed::seedUnitFor(NpkNeed::cropKey($key)),
+                // The field questions' crop (partials/field-profile), and the catalogue's.
+                'fq' => \App\Support\FieldCatalogue::cropKey($key),
             ])->values(),
+            'lotMax' => self::MAX_LOTS,
+            'today' => now('Asia/Manila')->toDateString(),
+            'quoteFor' => $quoteFor,
+            'prices' => ['base' => AiPrices::of('protocol'), 'lot' => AiPrices::of('protocolLot'), 'case' => AiPrices::of('protocolCase')],
+            'people' => \Illuminate\Support\Facades\Route::has('landprep.people') ? route('landprep.people') : null,
+            'ph' => \App\Support\Region::ph(),
             // The planting step, as NPK Plus asks it: how much goes in, by what unit, against the usual.
             'seedUnits' => NpkNeed::SEED_UNITS,
             'seeding' => collect(NpkModel::SEEDING)->map(fn ($s) => ['w' => $s['w'], 'n' => $s['n'], 'countWord' => $s['countWord'], 'note' => $s['note']])->all(),
@@ -318,6 +376,10 @@ class CropProtocolController extends Controller
     public function need(Request $request)
     {
         $this->guardTier();
+        // The whole farm (2026-10-18): every lot's need, the work calendar with this crew, and the price.
+        if ($request->has('lots')) {
+            return $this->check($request);
+        }
         $v = Validator::make($request->all(), [
             'crop' => 'required|in:' . implode(',', array_keys(CropCatalog::CROPS)),
             'method' => 'nullable|string|max:24',
@@ -479,7 +541,10 @@ class CropProtocolController extends Controller
         return ['seed' => $seed, 'goal' => $goal, 'need' => $need];
     }
 
-    /** Run the analysis — the sisters' job walk, the question swapped. */
+    /**
+     * Run the protocol for the farm's lots (2026-10-18): each lot's need,
+     * the work calendar, Anee's asks off the request's clock, the charge.
+     */
     public function generate(Request $request)
     {
         $this->guardTier();
@@ -490,50 +555,14 @@ class CropProtocolController extends Controller
                 ? 'Anee is not switched on yet. Please check back soon.'
                 : Tier::aneeNeeds($payer, 'The analysis'), [], 403);
         }
-
-        $v = Validator::make($request->all(), [
-            'location' => 'required|string|max:160',
-            'crop' => 'required|in:' . implode(',', array_keys(CropCatalog::CROPS)),
-            'variety' => 'nullable|string|max:80',
-            'month' => 'required|date_format:Y-m',
-            'method' => 'required|in:' . implode(',', array_keys(self::METHODS)),
-            'priority' => 'required|in:' . implode(',', array_keys(self::PRIORITIES)),
-            'targetYield' => 'nullable|numeric|min:0|max:100000',
-            'yieldUnit' => 'nullable|in:' . implode(',', array_keys(self::yieldUnits())),
-            'area' => 'required|numeric|min:0.01|max:10000',
-            'soil' => 'required|in:' . implode(',', array_keys(self::SOILS)),
-            'water' => 'required|in:' . implode(',', array_keys(self::WATERS)),
-            'problems' => 'nullable|array',
-            'problems.*' => 'string|in:' . implode(',', array_keys(self::PROBLEMS)),
-            'notes' => 'nullable|string|max:400',
-            // The ground, closer — every one optional.
-            'soilCondition' => 'nullable|in:' . implode(',', array_keys(self::SOIL_CONDITIONS)),
-            'soilConditions' => 'nullable|array|max:7',
-            'soilConditions.*' => 'string|in:' . implode(',', array_keys(self::SOIL_CONDITIONS)),
-            'testP' => 'nullable|in:' . implode(',', array_keys(self::TEST_LEVELS)),
-            'testK' => 'nullable|in:' . implode(',', array_keys(self::TEST_LEVELS)),
-            'prevCrop' => 'nullable|in:' . implode(',', array_keys(self::PREV_CROPS)),
-            'residue' => 'nullable|in:' . implode(',', array_keys(self::RESIDUES)),
-            'granulars' => 'nullable|array',
-            'granulars.*' => 'string|max:24',
-            'fertHistory' => 'nullable|string|max:200',
-            // The field in detail (App\Support\FieldProfile), optional.
-            'fieldProfile' => 'nullable|array',
-            'fieldProfileFrom' => 'nullable|integer',
-            'lotId' => 'nullable|integer',
-            'lotName' => 'nullable|string|max:120',
-        ] + self::NEED_RULES);
-        if ($v->fails()) {
-            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
+        $case = $this->caseFrom($request);
+        if (is_string($case)) {
+            return $this->json(false, $case, [], 422);
         }
-        /* The method must be one this crop actually uses -- the page only
-           offers those, but the door checks too. */
-        if (! in_array($request->input('method'), self::methodsFor($request->input('crop')), true)) {
-            return $this->json(false, 'That is not a way this crop is planted.', ['errors' => ['method' => ['Pick a method that suits the crop.']]], 422);
-        }
+        $size = self::sizeOf($case);
 
         // The price the page showed is the price charged (a page that sends `quote` must match it).
-        $quote = AiPricing::quote('protocol');
+        $quote = AiPricing::quote('protocol', $size);
         $price = AiPricing::agreed($request, $quote, $quote['credits']);
         if ($price === null) {
             return $this->json(false, 'This protocol now costs ' . $quote['credits'] . ' credits. Please run it again.', ['quote' => $quote['credits']], 409);
@@ -545,29 +574,29 @@ class CropProtocolController extends Controller
                 ['outOfCredits' => true], 402);
         }
 
-        // One in flight at a time — a double press must not buy two. A row
+        // One in flight at a time: a double press must not buy two. A row
         // whose heart has stopped is not in flight; it is failed here so it
         // cannot block the next run.
         $standing = DB::table('as_plant_analyses')->where('userId', Auth::id())
             ->where('kind', 'protocol')
             ->where('status', 'pending')->where('deleteStatus', 1)
-            ->where('created_at', '>', now()->subMinutes(15))
+            ->where('created_at', '>', now()->subMinutes(45))
             ->orderByDesc('id')->first();
         if ($standing && ! $this->dead($standing)) {
             return $this->json(true, 'Already working on it.', ['pending' => true, 'id' => $standing->id]);
         }
 
-        $p = $this->params($request);
-        // The need, counted as NPK Plus counts it, before Anee writes a bag.
-        $p['npkNeed'] = self::needFor($p);
-        $crop = CropCatalog::CROPS[$p['crop']];
-        $when = \Illuminate\Support\Carbon::parse($p['month'] . '-01')->format('M Y');
-        $title = 'Protocol · ' . $crop['label'] . ($p['variety'] !== '' ? ' (' . $p['variety'] . ')' : '') . ' · ' . $when . ' · ' . ($p['lotName'] !== '' ? $p['lotName'] . ', ' : '') . $p['location'];
+        // Each lot's need, counted as NPK Plus counts it, before Anee writes a bag.
+        foreach ($case['lots'] as $i => $l) {
+            $case['lots'][$i]['p']['npkNeed'] = self::needFor($l['p']);
+        }
+        // What only the request can read (the climate shelf as kept, the forecast): read now.
+        $ctx = $this->context($case);
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'kind' => 'protocol',
-            'title' => mb_substr($title, 0, 190),
-            'params' => json_encode($p),
+            'title' => mb_substr(self::titleOf($case), 0, 190),
+            'params' => json_encode(self::paramsOf($case, $size, (int) $price)),
             'report' => json_encode(new \stdClass),
             'credits' => 0,
             'status' => 'pending',
@@ -575,13 +604,14 @@ class CropProtocolController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
-        $prompt = $this->prompt($p);
-        // The field in detail is kept for the next analysis, named after the place.
-        FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $p['crop'], $request->input('fieldProfileFrom'));
+        // The answers given on the lots' pages go back into the lots; new names onto the roster.
+        $this->rememberLots((int) $payer->id, $case['lots']);
+        if (! empty($case['crew']['saveNew'])) {
+            $this->rememberWorkers($case['crew']['workers']);
+        }
 
         /* Should PHP itself be cut off mid-run, the row must not stay
-         * "pending" -- that blocks every next run for ten minutes. */
+         * "pending" -- that blocks every next run. */
         register_shutdown_function(function () use ($id) {
             try {
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
@@ -598,58 +628,621 @@ class CropProtocolController extends Controller
             ignore_user_abort(true);
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => [
-                'pending' => true, 'id' => $id,
+                'pending' => true, 'id' => $id, 'lots' => count($case['lots']), 'cases' => $size['cases'] + 1,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $price);
+            $this->runJob($id, (int) $payer->id, $settings, $case, $ctx, $price, $size);
             exit;
         }
 
-        @set_time_limit(900);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p, $price);
+        @set_time_limit(2400);
+        $this->runJob($id, (int) $payer->id, $settings, $case, $ctx, $price, $size);
 
         return $this->jobState($id);
     }
 
-    /** The research, the document, and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p, int $price): void
+    /**
+     * Before the run (the workers step and the review): every lot's need, the
+     * work calendar this crew gives with the usual fertilizer days, and the
+     * price for this size. No AI, nothing charged, nothing kept.
+     */
+    private function check(Request $request)
+    {
+        $case = $this->caseFrom($request, true);
+        if (is_string($case)) {
+            return $this->json(false, $case, [], 422);
+        }
+        $lots = [];
+        $sched = [];
+        foreach ($case['lots'] as $l) {
+            $rec = self::recordOf($l);
+            $frame = ProtocolCrew::frame(['crop' => $l['crop'], 'method' => $l['method'], 'days' => $l['days'] ?: ($rec['days'] ?? null), 'areaHa' => $l['areaHa']]);
+            $sched[] = ['i' => $l['i'], 'name' => $l['name'], 'month' => $l['month'], 'asked' => $l['day'],
+                'tasks' => ProtocolCrew::tasks($frame, ProtocolCrew::skeleton($frame), [], ['weedy' => self::weedy($l['profile'])])];
+            $n = $request->boolean('needs', true) ? self::needFor($l['p']) : null;
+            $lots[] = ['i' => $l['i'], 'name' => $l['name'], 'harvestDays' => $frame['harvest'], 'seedAge' => $frame['seedAge'],
+                'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed'])) : null];
+        }
+        $s = ProtocolCrew::schedule($sched, $case['crew'], $case['mode']);
+        $size = self::sizeOf($case);
+
+        return $this->json(true, 'ok', ['lots' => $lots, 'schedule' => self::scheduleBrief($s, $case), 'size' => $size,
+            'quote' => AiPricing::credits('protocol', $size)]);
+    }
+
+    /** The calendar in a few lines for the wizard: each lot's day, the short days and late jobs by name, what would fix them. */
+    private static function scheduleBrief(array $s, array $case): array
+    {
+        $title = [];
+        foreach ($s['tasks'] as $t) {
+            $title[$t['lot'] . '|' . $t['key']] = $t['title'];
+        }
+        $name = fn (int $i) => $case['lots'][$i]['name'] ?? ('Lot ' . ($i + 1));
+        $items = fn (array $d) => array_values(array_map(fn ($x) => ['lot' => $x['lot'], 'name' => $name($x['lot']), 'title' => $title[$x['lot'] . '|' . $x['key']] ?? $x['key'],
+            'workers' => round($x['pd'], 1), 'hired' => $x['hired']], $d['items']));
+        $days = collect($s['days']);
+        $short = $days->filter(fn ($d) => in_array($d['date'], $s['short'], true))->take(8)->map(fn ($d) => ['date' => $d['date'], 'need' => $d['workers'], 'cap' => $d['cap'],
+            'over' => $d['over'], 'sprayOver' => $d['sprayOver'], 'items' => $items($d)])->values()->all();
+        $busy = $days->sortByDesc('need')->take(5)->map(fn ($d) => ['date' => $d['date'], 'need' => $d['workers'], 'cap' => $d['cap'], 'items' => $items($d)])->values()->all();
+
+        return [
+            'mode' => $s['mode'], 'ok' => $s['ok'], 'crew' => $s['crew'], 'start' => $s['start'], 'end' => $s['end'], 'peak' => $s['peak'],
+            'lots' => array_values(array_map(fn ($l) => array_merge($l, ['name' => $name($l['i']),
+                'why' => $l['why'] ? $l['why'] + ['names' => array_map(fn ($b) => $name($b['lot']) . ': ' . mb_strtolower($title[$b['lot'] . '|' . $b['key']] ?? ''), $l['why']['by'])] : null]), $s['lots'])),
+            'short' => $short, 'shortCount' => count($s['short']),
+            'late' => array_slice(array_map(fn ($t) => ['lot' => $t['lot'], 'name' => $name($t['lot']), 'title' => $t['title'], 'left' => $t['left'], 'hi' => $t['hi'], 'to' => $t['to']], $s['late']), 0, 8),
+            'lateCount' => count($s['late']),
+            'busy' => $busy, 'more' => $s['more'], 'moreSprayers' => $s['moreSprayers'], 'workDays' => $days->count(),
+        ];
+    }
+
+    /** The size the price is read for: the lots, and every crop or variety beyond the first (each is read up on). */
+    public static function sizeOf(array $case): array
+    {
+        return ['lots' => count($case['lots']), 'cases' => max(0, count(self::cases($case)) - 1)];
+    }
+
+    /**
+     * The wizard's answers, checked and made plain, or the first problem in
+     * words. A page from before the lots (one crop, flat answers) is read as
+     * one lot. `$lenient` (the check before the run) lets a lot's crop, month
+     * or size be missing: a lot with no crop is left out.
+     */
+    private function caseFrom(Request $request, bool $lenient = false): array|string
+    {
+        $in = $request->all();
+        if (! isset($in['lots']) && isset($in['crop'])) {
+            $in['lots'] = [[
+                'name' => $in['lotName'] ?? null, 'farmLotId' => $in['lotId'] ?? null, 'areaHa' => $in['area'] ?? null, 'place' => $in['location'] ?? null,
+                'profile' => $in['fieldProfile'] ?? null, 'crop' => $in['crop'], 'method' => $in['method'] ?? null, 'variety' => $in['variety'] ?? null,
+                'month' => $in['month'] ?? null, 'priority' => $in['priority'] ?? null, 'targetYield' => $in['targetYield'] ?? null, 'yieldUnit' => $in['yieldUnit'] ?? null,
+                'potential' => $in['potential'] ?? null, 'seedAmount' => $in['seedAmount'] ?? null, 'seedUnit' => $in['seedUnit'] ?? null, 'germination' => $in['germination'] ?? null,
+            ]];
+        }
+        $req = $lenient ? 'nullable' : 'required';
+        $v = Validator::make($in, [
+            'lots' => 'required|array|min:1|max:' . self::MAX_LOTS,
+            'lots.*.name' => 'nullable|string|max:120',
+            'lots.*.farmLotId' => 'nullable|integer',
+            'lots.*.areaHa' => $req . '|numeric|min:0.001|max:500',
+            'lots.*.place' => 'nullable|string|max:160',
+            'lots.*.province' => 'nullable|string|max:120',
+            'lots.*.town' => 'nullable|string|max:120',
+            'lots.*.profile' => 'nullable|array',
+            'lots.*.crop' => $req . '|in:' . implode(',', array_keys(CropCatalog::CROPS)),
+            'lots.*.method' => 'nullable|in:' . implode(',', array_keys(self::METHODS)),
+            'lots.*.variety' => 'nullable|string|max:80',
+            'lots.*.days' => 'nullable|numeric|min:0|max:2000',
+            'lots.*.month' => $req . '|date_format:Y-m',
+            'lots.*.day' => 'nullable|date_format:Y-m-d',
+            'lots.*.priority' => 'nullable|in:' . implode(',', array_keys(self::PRIORITIES)),
+            'lots.*.targetYield' => 'nullable|numeric|min:0|max:100000',
+            'lots.*.yieldUnit' => 'nullable|string|max:12',
+            'lots.*.potential' => 'nullable|numeric|min:0|max:100000',
+            'lots.*.seedAmount' => 'nullable|numeric|min:0|max:100000000',
+            'lots.*.seedUnit' => 'nullable|in:' . implode(',', array_keys(NpkNeed::SEED_UNITS)),
+            'lots.*.germination' => 'nullable|numeric|min:1|max:100',
+            'crew' => 'nullable|array',
+            'crew.workers' => 'nullable|array|max:100',
+            'crew.workers.*.name' => 'nullable|string|max:40',
+            'crew.workers.*.days' => 'nullable|array|max:7',
+            'crew.workers.*.days.*' => 'integer|min:0|max:6',
+            'crew.workers.*.globalId' => 'nullable|integer',
+            'crew.sprayers' => 'nullable|integer|min:0|max:50',
+            'crew.plantBy' => 'nullable|in:own,hired',
+            'crew.saveNew' => 'nullable|boolean',
+            'mode' => 'nullable|in:auto,keep',
+            'granulars' => 'nullable|array|max:20',
+            'granulars.*' => 'string|max:24',
+            'notes' => 'nullable|string|max:500',
+            'location' => 'nullable|string|max:160',
+        ], [], ['lots.*.areaHa' => 'lot size', 'lots.*.crop' => 'crop', 'lots.*.month' => 'planting month', 'lots.*.name' => 'lot name']);
+        if ($v->fails()) {
+            return $v->errors()->first();
+        }
+        $granulars = WhatToPlantController::picks(self::GRANULARS, $in['granulars'] ?? []);
+        $notes = trim((string) preg_replace('/\s+/', ' ', (string) ($in['notes'] ?? '')));
+        $units = self::yieldUnits();
+        $tomorrow = now('Asia/Manila')->startOfDay()->addDay();
+        $num = fn ($x, $min = 0) => is_numeric($x) && (float) $x > $min ? (float) $x : null;
+        $lots = [];
+        foreach (array_values((array) $in['lots']) as $k => $l) {
+            $name = mb_substr(trim((string) ($l['name'] ?? '')), 0, 120) ?: 'Lot ' . ($k + 1);
+            $crop = (string) ($l['crop'] ?? '');
+            if ($crop === '' || ! isset(CropCatalog::CROPS[$crop])) {
+                if ($lenient) {
+                    continue;
+                }
+
+                return 'Pick the crop for ' . $name . '.';
+            }
+            $methods = self::methodsFor($crop);
+            $method = (string) ($l['method'] ?? '');
+            if (! in_array($method, $methods, true)) {
+                if (count($methods) === 1 || $lenient) {
+                    $method = $methods[0];
+                } else {
+                    return 'Pick how ' . self::cropWord($crop) . ' goes in on ' . $name . '.';
+                }
+            }
+            $month = (string) ($l['month'] ?? '');
+            if ($month === '') {
+                if (! $lenient) {
+                    return 'Pick the planting month of ' . $name . '.';
+                }
+                $month = $tomorrow->copy()->addMonth()->format('Y-m');
+            }
+            // A day only inside its month, from tomorrow on; a day already gone leaves the month to Anee.
+            $day = ! empty($l['day']) && str_starts_with((string) $l['day'], $month) && ! \Illuminate\Support\Carbon::parse((string) $l['day'], 'Asia/Manila')->lt($tomorrow) ? (string) $l['day'] : null;
+            $area = $num($l['areaHa'] ?? null) ?? ($lenient ? 1.0 : 0.0);
+            if ($area < 0.001) {
+                return 'Type the size of ' . $name . '.';
+            }
+            $place = trim((string) ($l['place'] ?? '')) ?: trim(implode(', ', array_filter([trim((string) ($l['town'] ?? '')), trim((string) ($l['province'] ?? ''))])));
+            $lot = [
+                'i' => count($lots), 'name' => $name,
+                'farmLotId' => isset($l['farmLotId']) && (int) $l['farmLotId'] > 0 ? (int) $l['farmLotId'] : null,
+                'areaHa' => round($area, 4), 'place' => $place,
+                'crop' => $crop, 'method' => $method, 'variety' => mb_substr(trim((string) ($l['variety'] ?? '')), 0, 80),
+                'days' => $num($l['days'] ?? null, 20),
+                'month' => $month, 'day' => $day,
+                'priority' => isset(self::PRIORITIES[$l['priority'] ?? '']) ? (string) $l['priority'] : 'balanced',
+                'targetYield' => $num($l['targetYield'] ?? null), 'yieldUnit' => isset($units[$l['yieldUnit'] ?? '']) ? (string) $l['yieldUnit'] : array_key_first($units),
+                'potential' => $num($l['potential'] ?? null),
+                'seedAmount' => $num($l['seedAmount'] ?? null), 'seedUnit' => isset(NpkNeed::SEED_UNITS[$l['seedUnit'] ?? '']) ? (string) $l['seedUnit'] : NpkNeed::seedUnitFor(NpkNeed::cropKey($crop)),
+                'germination' => $num($l['germination'] ?? null) !== null ? max(1.0, min(100.0, (float) $l['germination'])) : null,
+                'profile' => FieldProfile::fromInput($l['profile'] ?? null, $crop),
+            ];
+            $lots[] = $lot;
+        }
+        if (! $lots) {
+            return 'Add a lot first, and pick what it will grow.';
+        }
+        // Where the weather is read: the lots' own place (the first lot's), else what was typed.
+        $location = '';
+        foreach ($lots as $l) {
+            if ($l['place'] !== '') {
+                $location = $l['place'];
+                break;
+            }
+        }
+        $location = $location ?: trim((string) ($in['location'] ?? ''));
+        if ($location === '' && ! $lenient) {
+            return 'Say where the lots are, so Anee reads the right weather.';
+        }
+        foreach ($lots as $i => $l) {
+            if ($l['place'] === '') {
+                $lots[$i]['place'] = $location;
+            }
+            $lots[$i]['p'] = self::lotParams($lots[$i], $granulars, $notes);
+        }
+        $crew = ProtocolCrew::crewOf((array) ($in['crew'] ?? []));
+        $crew['saveNew'] = ! empty($in['crew']['saveNew']);
+
+        return [
+            'lots' => $lots,
+            'crew' => $crew,
+            'mode' => ($in['mode'] ?? 'auto') === 'keep' ? 'keep' : 'auto',
+            'granulars' => $granulars,
+            'notes' => $notes,
+            'location' => $location,
+        ];
+    }
+
+    /** A crop in a sentence: "rice", "yellow corn". */
+    private static function cropWord(string $crop): string
+    {
+        return mb_strtolower(self::cropName($crop));
+    }
+
+    /** A crop's name without the local name or a dash: "Rice, transplanted". */
+    public static function cropName(string $crop): string
+    {
+        $l = CropCatalog::label($crop);
+
+        return trim((string) preg_replace('/\s*\([^)]*\)\s*$/', '', str_replace([' — ', ' / '], [', ', ' or '], $l)));
+    }
+
+    /**
+     * One lot as the need model, the checks and the prompt read a protocol's
+     * answers (the shape of a one lot protocol before 2026-10-18): the lot's
+     * soil, water, soil condition, pH, troubles and last crop read from its
+     * own field answers (FieldProfile::legacy), its soil test read by
+     * testsFor(), so phosphorus and potassium are never asked.
+     */
+    public static function lotParams(array $lot, array $granulars, string $notes): array
+    {
+        $profile = (array) ($lot['profile'] ?? []);
+        $L = $profile ? FieldProfile::legacy($profile) : [];
+        $prev = self::PREV_OF[(string) ($profile['prevCrop'] ?? '')] ?? ['unsure', 'unsure'];
+
+        return [
+            'location' => (string) $lot['place'], 'crop' => (string) $lot['crop'], 'variety' => (string) $lot['variety'], 'month' => (string) $lot['month'],
+            'method' => (string) $lot['method'], 'priority' => (string) $lot['priority'],
+            'targetYield' => $lot['targetYield'], 'yieldUnit' => (string) $lot['yieldUnit'], 'area' => (float) $lot['areaHa'],
+            'soil' => isset(self::SOILS[$L['soil'] ?? '']) ? (string) $L['soil'] : 'unsure',
+            'water' => isset(self::WATERS[$L['water'] ?? '']) ? (string) $L['water'] : 'unsure',
+            'problems' => array_values(array_filter((array) ($L['problemsVariety'] ?? []), fn ($k) => isset(self::PROBLEMS[$k]))),
+            'notes' => $notes, 'lotId' => $lot['farmLotId'], 'lotName' => (string) $lot['name'],
+            'soilConditions' => self::soilConditions($L['soilConditions'] ?? []),
+            'testP' => 'unsure', 'testK' => 'unsure',
+            'prevCrop' => $prev[0], 'residue' => $prev[1],
+            'granulars' => $granulars, 'fertHistory' => '',
+            'potential' => $lot['potential'], 'seedAmount' => $lot['seedAmount'], 'seedUnit' => (string) $lot['seedUnit'], 'germination' => $lot['germination'],
+            'ph' => $L['phValue'] ?? null,
+        ] + FieldProfile::forParams($profile, (string) $lot['crop']);
+    }
+
+    /** Whether a lot was weedy last season: true, false (few or none), null (not said). */
+    private static function weedy(array $profile): ?bool
+    {
+        $w = (array) ($profile['weeds'] ?? []);
+        if (! $w) {
+            return null;
+        }
+
+        return (bool) array_intersect($w, ['many', 'tough', 'sedges', 'weedy_rice']);
+    }
+
+    /** The variety a lot names, as the books (or an earlier lookup) know it. */
+    private static function recordOf(array $l): ?array
+    {
+        if (($l['variety'] ?? '') === '') {
+            return null;
+        }
+        try {
+            return \App\Support\VarietyBook::find($l['crop'], $l['variety']);
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    /**
+     * The crops of a run: lots growing the same crop, the same way, from the
+     * same variety are one case (read up on once, their stages and their
+     * protection written once).
+     */
+    private static function cases(array $case): array
+    {
+        $out = [];
+        foreach ($case['lots'] as $l) {
+            $k = $l['crop'] . '|' . $l['method'] . '|' . mb_strtolower((string) preg_replace('/\s+/', ' ', trim((string) $l['variety'])));
+            $out[$k] ??= ['key' => 'c' . (count($out) + 1), 'crop' => $l['crop'], 'method' => $l['method'], 'variety' => $l['variety'], 'lots' => [], 'months' => []];
+            $out[$k]['lots'][] = $l['i'];
+            $out[$k]['months'][] = $l['month'];
+        }
+        foreach ($out as &$c) {
+            $c['months'] = array_values(array_unique($c['months']));
+            sort($c['months']);
+        }
+        unset($c);
+
+        return array_values($out);
+    }
+
+    /** The case a lot belongs to. */
+    private static function caseOf(array $cases, int $i): array
+    {
+        foreach ($cases as $c) {
+            if (in_array($i, $c['lots'], true)) {
+                return $c;
+            }
+        }
+
+        return $cases[0];
+    }
+
+    /**
+     * Everything the asks read that is not the farmer's answers, read while
+     * the request is still open (the climate shelf with fetch=false, the
+     * forecast): each lot's calendar frame, each crop's catalogue troubles and
+     * weed windows, the sky.
+     */
+    private function context(array $case): array
+    {
+        $ctx = ['frames' => [], 'records' => [], 'threats' => [], 'weeds' => [], 'history' => [], 'cases' => self::cases($case)];
+        foreach ($case['lots'] as $l) {
+            $rec = self::recordOf($l);
+            $ctx['records'][$l['i']] = $rec;
+            $ctx['frames'][$l['i']] = ProtocolCrew::frame(['crop' => $l['crop'], 'method' => $l['method'], 'days' => $l['days'] ?: ($rec['days'] ?? null), 'areaHa' => $l['areaHa']]);
+        }
+        foreach ($ctx['cases'] as $c) {
+            $had = [];
+            foreach ($c['lots'] as $i) {
+                foreach ((array) ($case['lots'][$i]['profile']['outbreaks'] ?? []) as $k) {
+                    $had[(string) $k][] = $case['lots'][$i]['name'];
+                }
+            }
+            try {
+                $ctx['threats'][$c['key']] = ProtocolCare::threats($c['crop'], $had);
+                $ctx['weeds'][$c['key']] = ProtocolCare::weeds($c['crop'], $c['method'], $ctx['frames'][$c['lots'][0]]['harvest']);
+            } catch (\Throwable $e) {
+                report($e);
+                $ctx['threats'][$c['key']] = ['pests' => [], 'diseases' => []];
+                $ctx['weeds'][$c['key']] = null;
+            }
+        }
+        $ctx['forecast'] = $this->forecastLines($case['location']);
+        $ctx['enso'] = \App\Support\EnsoOutlook::forPrompt();
+        // Twenty years of each place (up to three), for the months its lots stand in the field.
+        $places = [];
+        foreach ($case['lots'] as $l) {
+            $f = $ctx['frames'][$l['i']];
+            $start = (int) substr($l['month'], 5, 2);
+            $span = (int) ceil(max(30, (int) ($f['harvest'] ?? 120) + (int) ($f['seedAge'] ?? 0)) / 30);
+            for ($m = 0; $m <= min(11, $span); $m++) {
+                $places[$l['place']][($start - 1 + $m) % 12 + 1] = true;
+            }
+        }
+        foreach (array_slice($places, 0, 3, true) as $place => $months) {
+            $focus = array_keys($months);
+            sort($focus);
+            try {
+                $ctx['history'][$place] = \App\Support\ClimateStore::wordsFor((string) $place, null, null, $focus, true, false);
+            } catch (\Throwable $e) {
+                $ctx['history'][$place] = '';
+            }
+        }
+
+        return $ctx;
+    }
+
+    /** What the row keeps of the run: the lots as answered, the crew, the choice, the size and the price. */
+    private static function paramsOf(array $case, array $size, int $price): array
+    {
+        $first = $case['lots'][0];
+
+        return [
+            'format' => 4, 'crop' => $first['crop'], 'month' => $first['month'], 'location' => $case['location'], 'mode' => $case['mode'],
+            'crew' => array_diff_key($case['crew'], ['saveNew' => 1]), 'granulars' => $case['granulars'], 'notes' => $case['notes'], 'size' => $size, 'price' => $price,
+            'lots' => array_map(fn ($l) => array_diff_key($l, ['p' => 1]) + ['p' => array_diff_key($l['p'], ['fieldProfileSaid' => 1])], $case['lots']),
+            // The first lot's answers where a protocol of one lot kept them.
+            'area' => (float) $first['areaHa'], 'method' => $first['method'], 'variety' => $first['variety'], 'priority' => $first['priority'],
+            'targetYield' => $first['targetYield'], 'yieldUnit' => $first['yieldUnit'], 'lotName' => $first['name'],
+        ];
+    }
+
+    /** "Protocol · Rice, transplanted (NSIC Rc 222) · Nov 2026 · North field, Muñoz, Nueva Ecija", or for several lots their count and crops. */
+    private static function titleOf(array $case): string
+    {
+        $lots = $case['lots'];
+        $months = array_values(array_unique(array_map(fn ($l) => $l['month'], $lots)));
+        sort($months);
+        $m = fn (string $ym) => \Illuminate\Support\Carbon::parse($ym . '-01')->format('M Y');
+        $when = $m($months[0]) . (count($months) > 1 ? ' to ' . $m(end($months)) : '');
+        if (count($lots) === 1) {
+            $l = $lots[0];
+
+            return 'Protocol · ' . self::cropName($l['crop']) . ($l['variety'] !== '' ? ' (' . $l['variety'] . ')' : '') . ' · ' . $when . ' · ' . $l['name'] . ($l['place'] !== '' ? ', ' . $l['place'] : '');
+        }
+        $crops = array_values(array_unique(array_map(fn ($l) => preg_replace('/,.*$/', '', self::cropName($l['crop'])), $lots)));
+        $place = \App\Support\ClimateRecord::placeKey((string) $case['location'])['place'] ?: $case['location'];
+
+        return 'Protocol · ' . count($lots) . ' lots · ' . implode(', ', $crops) . ' · ' . $when . ($place !== '' ? ' · ' . $place : '');
+    }
+
+    /**
+     * Keep every lot's answers for the next analysis: a lot from the farm's
+     * lots gets the answers given on this walk's pages added to its own (and
+     * its size, when it had none), so it is updated, never copied. Best effort.
+     */
+    private function rememberLots(int $ownerId, array $lots): void
+    {
+        if (! \App\Support\FarmLots::ready()) {
+            return;
+        }
+        foreach ($lots as $l) {
+            $farmId = (int) ($l['farmLotId'] ?? 0);
+            if ($farmId < 1 || ! $l['profile']) {
+                continue;
+            }
+            try {
+                $had = \App\Support\FarmLots::one($ownerId, $farmId);
+                if (! $had) {
+                    continue;
+                }
+                $old = (array) ($had['answers'] ?? []);
+                $data = [];
+                if (array_replace($old, $l['profile']) != $old) {
+                    $data['answers'] = array_replace($old, $l['profile']);
+                }
+                if (empty($had['areaHa']) && (float) $l['areaHa'] > 0) {
+                    $data['areaHa'] = (float) $l['areaHa'];
+                }
+                if ($data) {
+                    \App\Support\FarmLots::save($ownerId, $data, $farmId);
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+    }
+
+    /**
+     * The workers onto the farm's roster: a named worker typed here joins
+     * Global Workers with their weekdays off, unless the same person is there
+     * already. Only the owner, only where the plan has Workers, best effort.
+     */
+    private function rememberWorkers(array $workers): void
+    {
+        if (WorkerContext::inWorkerContext() || ! Tier::can('workers')) {
+            return;
+        }
+        $me = (int) Auth::id();
+        try {
+            foreach ($workers as $w) {
+                if (! empty($w['globalId'])) {
+                    continue;
+                }
+                $name = trim((string) $w['name']);
+                if ($name === '' || preg_match('/^Worker \d+$/', $name)) {
+                    continue;
+                }
+                $key = \App\Models\AsGlobalWorker::personKey($name, null, null);
+                if (\App\Models\AsGlobalWorker::where('userId', $me)->where('deleteStatus', 1)->where(fn ($q) => $q->where('personKey', $key)->orWhere('workerName', $name))->exists()) {
+                    continue;
+                }
+                $off = array_values(array_diff([0, 1, 2, 3, 4, 5, 6], array_map('intval', (array) $w['days'])));
+                \App\Models\AsGlobalWorker::create(['userId' => $me, 'workerName' => mb_substr($name, 0, 255), 'costPerHalfDay' => 0, 'offWeekdays' => $off ?: null,
+                    'notes' => 'Added from the Crop Protocol Analysis.', 'personKey' => $key, 'deleteStatus' => 1]);
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+    }
+
+    /**
+     * The research for one crop, with the web open, kept on the shelf: the
+     * same case (crop, variety, way in, province, months) reads the kept
+     * notes and pays no search. Mirrors AiClient::researchThenJson's research
+     * step: asked again when it answered from memory, stopped after two stalls.
+     */
+    private function research(AiSetting $settings, string $brief, string $scope, callable $onPhase): array
+    {
+        $none = ['text' => '', 'sources' => [], 'searched' => false, 'paid' => false, 'shelf' => false, 'tokensIn' => 0, 'tokensOut' => 0];
+        if (trim($brief) === '') {
+            return $none;
+        }
+        $kept = \App\Support\ResearchShelf::get('protocol', $brief);
+        if ($kept) {
+            $onPhase(1);
+
+            return ['text' => trim((string) $kept['notes']), 'sources' => (array) $kept['sources'], 'searched' => true, 'paid' => false, 'shelf' => true, 'tokensIn' => 0, 'tokensOut' => 0];
+        }
+        $s = $settings->forDocument();
+        $best = null;
+        $spent = ['tokensIn' => 0, 'tokensOut' => 0];
+        $stalls = 0;
+        for ($try = 0; $try < 3; $try++) {
+            $onPhase($try + 1);
+            $ask = $try === 0 ? $brief : "IMPORTANT: the previous attempt answered from memory without using the search tool. You MUST use the web search tool now: run the searches, read the pages, and write the notes from what they say.\n\n" . $brief;
+            $got = $this->ai->ask($s, [], $ask, null, 3200, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED]);
+            $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
+            $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
+            if (($got['ok'] ?? false) && trim((string) $got['text']) !== '') {
+                $best = $got;
+                if ($got['searched'] ?? false) {
+                    break;
+                }
+            } elseif (++$stalls >= 2) {
+                break;
+            }
+        }
+        if (! $best) {
+            return ['paid' => $spent['tokensIn'] > 0] + $spent + $none;
+        }
+        if ($best['searched'] ?? false) {
+            \App\Support\ResearchShelf::put('protocol', $brief, $scope, array_merge($best, $spent));
+        }
+
+        return ['text' => trim((string) $best['text']), 'sources' => (array) ($best['sources'] ?? []), 'searched' => (bool) ($best['searched'] ?? false),
+            'paid' => true, 'shelf' => false] + $spent;
+    }
+
+    /** The research, the farm, every lot, the calendar and the charge, off the request's clock. */
+    private function runJob(int $id, int $payerId, AiSetting $settings, array $case, array $ctx, int $price, array $size): void
     {
         /* The heartbeat: before every call to the model the row says which
-         * phase it is in and touches updated_at. No single call may run
-         * longer than the document timeout, so a row that has not beaten
-         * for longer than that was killed under it (a deploy, a restart,
-         * the process manager) and jobState can say so instead of leaving
-         * the farmer waiting. */
+         * phase it is in and touches updated_at, so jobState can tell a slow
+         * ask from a run killed under it (a deploy, a restart). */
         $beat = function (string $phase, int $try = 1) use ($id): void {
             DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                 'report' => json_encode(['phase' => $phase, 'try' => $try]),
                 'updated_at' => now(),
             ]);
         };
+        $usage = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'paidSearch' => false, 'searchCalls' => 0, 'shelf' => false];
+        $fold = function (array $r) use (&$usage): void {
+            $usage['tokensIn'] += (int) ($r['tokensIn'] ?? 0);
+            $usage['tokensOut'] += (int) ($r['tokensOut'] ?? 0);
+        };
         try {
-            // The brief is the case's, not the field's: its notes are kept for the next protocol of the same case (2026-10-18).
-            $shelf = ['kind' => 'protocol', 'scope' => implode(' · ', array_filter([CropCatalog::label($p['crop']), $p['variety'] ?: null, $p['method'],
-                \App\Support\ClimateRecord::placeKey((string) $p['location'])['place'], $p['month']]))];
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 10000, fn (string $t) => $this->parseReport($t), $beat, 3000, $shelf);
-            $report = $result['data'];
-            if ($report === null) {
-                \Illuminate\Support\Facades\Log::warning('crop-protocol: unparsable answer', [
-                    'head' => mb_substr((string) $result['text'], 0, 400),
-                ]);
-                throw new \RuntimeException($result['error'] ?? 'The protocol could not be read. Nothing was charged. Please try again.');
+            $cases = $ctx['cases'];
+            // 1. Each crop read up on (or its kept notes read).
+            $notes = [];
+            $sources = [];
+            foreach ($cases as $ci => $c) {
+                $brief = $this->caseResearch($c, $case, $ctx);
+                $r = $this->research($settings, $brief['text'], $brief['scope'], fn (int $t) => $beat($ci ? 'research' . ($ci + 1) : 'research', $t));
+                $fold($r);
+                $usage['searched'] = $usage['searched'] || $r['searched'];
+                $usage['shelf'] = $usage['shelf'] || $r['shelf'];
+                if ($r['paid']) {
+                    $usage['paidSearch'] = true;
+                    $usage['searchCalls']++;
+                }
+                $notes[$c['key']] = $r['text'];
+                foreach ($r['sources'] as $src) {
+                    if (! in_array($src, $sources, true)) {
+                        $sources[] = $src;
+                    }
+                }
+                // Learn once: a variety Anee found is kept, so the next run reads it instead of searching.
+                if ($brief['asked'] && $r['searched'] && $r['sources']) {
+                    try {
+                        \App\Support\VarietyLearned::harvest($c['crop'], $brief['asked'], $r['text'], ['via' => 'protocol', 'userId' => $payerId, 'searched' => true, 'sources' => $r['sources']]);
+                    } catch (\Throwable $e) {
+                        report($e);
+                    }
+                } elseif (! empty($brief['record']['learned'])) {
+                    \App\Support\VarietyBook::used($brief['record']);
+                }
             }
-            $report = $this->tidy($report, $p);
-            $report['webSources'] = $result['sources'];
-            $report['searched'] = (bool) $result['searched'];
+            // 2. The farm: the background, every crop's stages and protection.
+            $farm = $this->ai->askForJson($settings, $this->farmPrompt($case, $ctx, $notes), min(16000, 6000 + 3500 * count($cases)), fn (string $t) => $this->parseFarm($t, $cases),
+                ['onPhase' => fn ($ph, $t = 1) => $beat('farm', $ph === 'document' ? (int) $t : 1), 'timeout' => self::AI_TIMEOUT, 'retryAfterTimeout' => false]);
+            $fold($farm);
+            if (! ($farm['ok'] ?? false) || ! is_array($farm['data'] ?? null)) {
+                \Illuminate\Support\Facades\Log::warning('crop-protocol: the farm part could not be read', ['head' => mb_substr((string) ($farm['text'] ?? ''), 0, 400)]);
+                throw new \RuntimeException(! empty($farm['timedOut']) ? 'Anee took too long on the farm part today. Nothing was charged. Please try again in a while.'
+                    : ($farm['error'] ?? 'The protocol could not be read. Nothing was charged. Please try again.'));
+            }
+            // 3. Each lot's fertilizer and nutrition, one ask a lot.
+            $lotOut = [];
+            foreach ($case['lots'] as $l) {
+                $c = self::caseOf($cases, $l['i']);
+                $r = $this->ai->askForJson($settings, $this->lotPrompt($case, $l, $c, $ctx, $notes[$c['key']] ?? ''), 9000, fn (string $t) => $this->parseLot($t),
+                    ['onPhase' => fn ($ph, $t = 1) => $beat('lot' . ($l['i'] + 1), $ph === 'document' ? (int) $t : 1), 'timeout' => self::AI_TIMEOUT, 'retryAfterTimeout' => false]);
+                $fold($r);
+                if (! ($r['ok'] ?? false) || ! is_array($r['data'] ?? null)) {
+                    \Illuminate\Support\Facades\Log::warning('crop-protocol: a lot could not be read', ['lot' => $l['i'], 'head' => mb_substr((string) ($r['text'] ?? ''), 0, 400)]);
+                    throw new \RuntimeException('Anee could not finish the plan for ' . $l['name'] . (! empty($r['timedOut']) ? ' in time' : '') . '. Nothing was charged. Please try again.');
+                }
+                $lotOut[$l['i']] = $r['data'];
+            }
+            $beat('compose');
+            $report = $this->compose($case, $ctx, $farm['data'], $lotOut);
+            $report['webSources'] = $sources;
+            $report['searched'] = $usage['searched'];
 
             // The price agreed when the run began.
             $charged = (float) $price;
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
-            $crop = CropCatalog::CROPS[$p['crop']] ?? ['label' => 'Crop'];
-            $note = AiUsage::record('protocol', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
+            $note = AiUsage::record('protocol', (int) $row->userId, $payerId, $id, $settings, $usage, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                mb_substr('Crop Protocol Analysis: ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
-            AiPricing::audit('protocol', $result, $charged, [], $settings);
+                mb_substr('Crop Protocol Analysis: ' . count($case['lots']) . (count($case['lots']) === 1 ? ' lot, ' : ' lots, ') . $case['location'] . $note, 0, 250));
+            AiPricing::audit('protocol', $usage, $charged, $size, $settings);
+            $report['usage'] = ['tokensIn' => $usage['tokensIn'], 'tokensOut' => $usage['tokensOut'], 'searchCalls' => $usage['searchCalls'], 'kept' => $usage['shelf']];
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -666,6 +1259,514 @@ class CropProtocolController extends Controller
                 'updated_at' => now(),
             ]);
         }
+    }
+
+    /** A stage's days on its count: "DAT 7 to 20", the land preparation "before DAT 0", the last "DAT 90 on". */
+    private static function daysLabel(array $frame, array $s): string
+    {
+        $c = $frame['counter'];
+        if (! empty($s['prep'])) {
+            return 'before ' . $c . ' 0';
+        }
+
+        return $c . ' ' . $s['from'] . ($s['to'] !== null && $s['to'] > $s['from'] ? ' to ' . $s['to'] : ' on');
+    }
+
+    /** A lot's stages as the prompt lists them. */
+    private static function stageList(array $frame): string
+    {
+        return implode('; ', array_map(fn ($s) => $s['name'] . ' (' . self::daysLabel($frame, $s) . ')', $frame['stages']));
+    }
+
+    /**
+     * The research brief for one crop: what is not the farmer's own (the
+     * crop, the variety, the way in, the province, the months), so the notes
+     * are kept and shared by the next run of the same case. A variety the
+     * books know is given, not searched; one they do not know asks for the
+     * learn once block (App\Support\VarietyLearned).
+     *
+     * @return array{text:string, scope:string, asked:list<string>, record:?array}
+     */
+    private function caseResearch(array $c, array $case, array $ctx): array
+    {
+        $l0 = $case['lots'][$c['lots'][0]];
+        $rCountry = \App\Support\Region::name();
+        $rNutrient = \App\Support\Region::agency('nutrient');
+        $rMet = \App\Support\Region::agency('met');
+        $rSources = \App\Support\Region::agency('sources');
+        $rRegion = \App\Support\Region::promptBlock();
+        $province = \App\Support\ClimateRecord::placeKey((string) $l0['place'])['place'];
+        $months = implode(' and ', array_map(fn ($m) => \Illuminate\Support\Carbon::parse($m . '-01')->format('F Y'), $c['months']));
+        $label = CropCatalog::label($c['crop']);
+        $method = self::METHODS[$c['method']]['label'] ?? $c['method'];
+        $rec = $ctx['records'][$l0['i']] ?? null;
+        $known = ! empty($case['lots'][$l0['i']]['p']['npkNeed']['known']) || ! empty(NpkNeed::crop(NpkNeed::cropKey($c['crop'], $c['method'])));
+        $asked = [];
+        if ($c['variety'] === '') {
+            $variety = '1. THE VARIETY: none is named. Name the two or three most widely grown, well documented varieties of this crop for this season and province, with their days to maturity, yield potential and main strengths, and say which you would assume.';
+        } elseif ($rec) {
+            $variety = '1. THE VARIETY IS KNOWN: ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ')
+                . ' Take these as known and do not search for them again. Search only for what adds to them: regional trial results near the farmer, its known weaknesses in the field, and any warning about it.';
+        } else {
+            $variety = '1. THE VARIETY FIRST: its published specifications: days to maturity, yield potential and typical farm yields, plant height and lodging, the season and method it is bred for, resistance and tolerance ratings (pests, diseases, drought, flooding, salinity, heat), known weaknesses, who released it and when. Prefer the registry, the breeder\'s or seed company\'s own page, and extension notes. If the variety cannot be found, say so plainly and describe the widely grown variety you would assume instead.';
+            $asked = [$c['variety']];
+        }
+        $nutrients = $known
+            ? "2. The official guide in {$rCountry} for this crop's fertilizer by growth stage in this region and season ({$rNutrient}): the SPLIT TIMING (which stage gets which share) and the inorganic products sold there. The kilograms of N, P2O5 and K2O per hectare are already counted by the app from the official guide: do not look them up."
+            : "2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, and the common inorganic products.";
+        $text = <<<PROMPT
+You are a research assistant for agronomy in {$rCountry} with web search. {$rRegion} SEARCH THE WEB NOW and write research notes for a season protocol. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+
+THE CASE
+- Crop: {$label}; variety: {$this->varietyWord($c['variety'])}
+- Planting: {$months}, {$method}, in the province of {$province}
+
+FIND, IN THIS ORDER
+{$variety}
+{$nutrients}
+3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds in plain counts, the recommended controls (cultural, biological, chemical with active ingredients and their IRAC, FRAC or HRAC group), and any current outbreak advisories.
+4. Irrigation and water management by growth stage for this crop and method, and what to change under drought or flooding.
+5. The seasonal climate OUTLOOK from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe weather expected). Only the outlook: the app keeps the area's twenty year weather record and reads the ENSO state itself.
+6. REAL HARVESTS: the most recent derbies, techno demo farms and yield contests with this variety, or this crop when the variety has none, in or near this province first, then anywhere in {$rCountry}: the event, the place, the season and year, the yield (t/ha, or cavans per hectare with the kilos per cavan) and the fertilizer program used where reported. Then real farmers' own reported harvests with it in the last two seasons, each with the yield, the place, the season and the source.
+
+Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,100 words, no JSON, no markdown tables.
+PROMPT;
+        if ($asked) {
+            try {
+                $text .= \App\Support\VarietyLearned::askBlock($asked, $c['crop']);
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+        $scope = implode(' · ', array_filter([CropCatalog::label($c['crop']), $c['variety'] ?: null, $c['method'], $province, implode(', ', $c['months'])]));
+
+        return ['text' => $text, 'scope' => $scope, 'asked' => $asked, 'record' => $rec];
+    }
+
+    private function varietyWord(string $v): string
+    {
+        return $v !== '' ? $v : 'not named';
+    }
+
+    /** One lot's field, in the words the prompts use. */
+    private function lotField(array $l): array
+    {
+        $f = $this->facts($l['p']);
+        $test = \App\Support\FieldProfile::testLatest((array) ($l['profile']['tests'] ?? []));
+
+        return [
+            'soil' => $l['p']['soil'] !== 'unsure' ? $f['soil'] : 'not stated in the lot',
+            'water' => isset(self::WATERS[$l['p']['water']]) ? $f['water'] : 'not stated in the lot',
+            'cond' => $f['soilCondition'], 'guide' => $f['soilGuide'],
+            'test' => $test ? \App\Support\FieldProfile::testWords($test) : 'none logged',
+            'prev' => $f['prevCrop'], 'residue' => $f['residue'], 'problems' => $f['problems'],
+            'detail' => $l['profile'] ? \App\Support\FieldProfile::words($l['profile'], $l['crop']) : 'no answers in the lot yet',
+            'f' => $f,
+        ];
+    }
+
+    /** The farm part: the background, then each crop's stage guide and its protection, watch first. */
+    private function farmPrompt(array $case, array $ctx, array $notes): string
+    {
+        $country = \App\Support\Region::name();
+        $region = \App\Support\Region::promptBlock();
+        $lots = '';
+        foreach ($case['lots'] as $l) {
+            $fd = $this->lotField($l);
+            $when = $l['day'] ? \Illuminate\Support\Carbon::parse($l['day'])->format('F j, Y') : \Illuminate\Support\Carbon::parse($l['month'] . '-01')->format('F Y');
+            $lots .= '- ' . $l['name'] . ' (' . $l['place'] . '): ' . rtrim(rtrim(number_format($l['areaHa'], 2), '0'), '.') . ' ha of ' . self::cropName($l['crop'])
+                . ($l['variety'] !== '' ? ', ' . $l['variety'] : '') . ', ' . mb_strtolower(self::METHODS[$l['method']]['label'] ?? $l['method']) . ', planting ' . $when
+                . '. Field: soil ' . $fd['soil'] . '; water ' . $fd['water'] . '; troubles last season: ' . $fd['problems'] . ".\n";
+        }
+        $hist = '';
+        foreach ($ctx['history'] as $place => $w) {
+            $hist .= $w !== '' ? '- The area\'s weather record at ' . $place . ":\n" . $w . "\n" : '';
+        }
+        $crops = '';
+        foreach ($ctx['cases'] as $c) {
+            $l0 = $case['lots'][$c['lots'][0]];
+            $frame = $ctx['frames'][$l0['i']];
+            $rec = $ctx['records'][$l0['i']] ?? null;
+            $names = implode(', ', array_map(fn ($i) => $case['lots'][$i]['name'], $c['lots']));
+            $crops .= 'CROP ' . $c['key'] . ': ' . CropCatalog::label($c['crop']) . '; variety ' . $this->varietyWord($c['variety'])
+                . ($rec ? ' (' . (! empty($rec['learned']) ? 'known from an earlier lookup' : 'on record') . ': ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . ')' : '')
+                . '; ' . (self::METHODS[$c['method']]['label'] ?? $c['method']) . '; counted in ' . $frame['counter'] . ".\n"
+                . '- Its stages, in order (use these names exactly): ' . self::stageList($frame) . "\n"
+                . '- Lots growing it: ' . $names . "\n"
+                . ProtocolCare::promptLines($ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null)
+                . '- Research notes for this crop:' . "\n" . (trim($notes[$c['key']] ?? '') !== '' ? trim($notes[$c['key']]) : 'none found; rely on established agronomy and say so in dataGaps') . "\n\n";
+        }
+        $shape = '{"headline":"","background":{"place":"","weather":{"outlook":"","enso":"","risks":[""]},"history":""},"crops":[{"key":"c1","variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""},"stages":[{"stage":"","signs":"","observe":"","intervene":""}],"protection":{"intro":"","threats":[{"name":"","kind":"insect","stages":[""],"sign":"","threshold":"","cultural":"","ai":[""],"rotate":"","weather":""}]}}],"workTips":[""],"summary":"","confidence":"moderate","dataGaps":[""]}';
+        $enso = $ctx['enso'] !== '' ? '- ENSO: ' . $ctx['enso'] . "\n" : '';
+
+        return <<<PROMPT
+You are an agronomic decision-support analyst for farming in {$country}. A farmer is planting the lots below this season. Write the FARM PART of their crop protocol: the background, then for every crop its growth stages and its protection plan. Each lot's fertilizer plan is written separately: no fertilizer amounts here.
+
+THE FARM
+- {$region}
+{$lots}- Weather now: {$ctx['forecast']}
+{$enso}{$hist}
+THE CROPS
+{$crops}GROUND RULES
+- EASY TO READ: short plain sentences a farmer reads on a phone; a plain word beside any technical one; ranges written with "to", never a dash. Every word limit is a ceiling, not a target.
+- THE VARIETY comes from the notes and the record: name, breeder, maturity, yield potential, the season it is bred for, strengths and weaknesses. Where it could not be found, found false and name the variety you assumed.
+- STAGES: every stage of every crop, in the order given, named exactly as given: signs at most 18 words (what the farmer sees at that stage), observe at most 22 words (what to check, and how often), intervene at most 26 words (only if it is seen: the threshold, then the step). Leave observe and intervene empty at a stage with nothing to watch.
+- PROTECTION, WATCH FIRST, NEVER BY THE CALENDAR: for every crop 5 to 8 threats, the most likely here this season first: the lots' troubles of last season, then what this season's weather (the outlook, ENSO, the twenty year record of these months) favours, then the crop's worst. For each threat: kind (insect, disease, weed or other); stages = the stage names it strikes; sign at most 16 words; threshold at most 24 words = when the numbers make acting worth it (an economic threshold from the notes or established IPM in plain counts, like "2 egg masses a square meter" or "1 in 10 hills hit"; where none exists, how to judge the spread); cultural at most 30 words = what to do first without a spray (resistant variety, clean seed, water, timing, natural enemies, removing sick plants); ai = the active ingredients to use only once the threshold is reached, CHOSEN ONLY FROM THAT THREAT'S LIST ABOVE and written exactly as listed (an empty list where the list is empty or no spray helps); rotate at most 18 words = the group to switch to for a second spray, never the same group twice in a row; weather at most 16 words = when this season's weather raises the risk ("" when it does not matter). Weeds are one threat per crop with ingredients only from its weed windows. No brand names, no product names, no rates or doses: the farmer decides whether to spray from what the field shows.
+- protection.intro at most 40 words: how to scout this crop this season (how often, where in the field).
+- background.place at most 40 words; weather.outlook at most 55 words for the months the crops stand; enso at most 30 words; risks 2 to 4 items of at most 12 words; history at most 45 words = what the area's twenty years say about these months (the wettest weeks, the typhoon months, the dry spells, and how El Nino or La Nina years differed).
+- workTips: 2 to 4 lines of at most 22 words on running the work across the lots (when the busy weeks fall, staggering, hiring a crew), from the lots' sizes and planting months.
+- headline at most 14 words. summary at most 70 words, plain and warm but factual, ending with the reminder that the crop's stage is the clock, not the calendar. confidence low, moderate or high. dataGaps at most four.
+- Plain text only: no markdown, no emoji shortcodes.
+
+Return ONLY a valid JSON object, no code fences, no commentary, in exactly this shape, with one entry in crops for every crop above (its key as given):
+{$shape}
+PROMPT;
+    }
+
+    /** One lot's fertilizer and nutrition plan, held to NPK Plus's need. */
+    private function lotPrompt(array $case, array $l, array $c, array $ctx, string $notes): string
+    {
+        $p = $l['p'];
+        $frame = $ctx['frames'][$l['i']];
+        $rec = $ctx['records'][$l['i']] ?? null;
+        $fd = $this->lotField($l);
+        $f = $fd['f'];
+        $country = \App\Support\Region::name();
+        $region = \App\Support\Region::promptBlock();
+        $unitWord = self::yieldUnits()[$p['yieldUnit']] ?? array_values(self::yieldUnits())[0];
+        $known = ! empty($p['npkNeed']['known']);
+        $when = $l['day'] ? \Illuminate\Support\Carbon::parse($l['day'])->format('F j, Y') : \Illuminate\Support\Carbon::parse($l['month'] . '-01')->format('F Y') . ' (the day is set by the farm\'s work calendar)';
+        $aimRule = $known
+            ? 'bend the products and the splits to the aim, the soil and the troubles, while the recommended program meets THE NUTRIENT NEED above (the aim is already in it through the yield goal)'
+            : 'bend them to the aim (highest yield = the fuller recommended rate; lower cost = the lean end; in the middle = the standard recommendation) and to the soil and troubles';
+        $programRule = $known
+            ? 'The recommended program must deliver THE NUTRIENT NEED above, within about a tenth either way; the other two say in their "for" line how they differ (a lean one that falls short says so). The app checks every program against that need and shows the farmer each gap'
+            : 'Every program must add up to the need for its own aim; the app checks each one';
+        $history = $ctx['history'][$l['place']] ?? '';
+        $weather = ($ctx['enso'] !== '' ? 'ENSO: ' . $ctx['enso'] . ' ' : '') . ($history !== '' ? 'The area\'s record for these months: ' . mb_substr(preg_replace('/\s+/', ' ', $history), 0, 1600) : '');
+        $recLine = $rec ? '- The variety ' . (! empty($rec['learned']) ? 'from an earlier lookup' : 'on record') . ': ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . "\n" : '';
+        $shape = '{"intro":"","granulars":{"soilLogic":"","timingLogic":"","rejected":[{"what":"","why":""}],"cautions":[""]},"programs":[{"name":"","for":"","applications":[{"stage":"","day":0,"product":"","bagsPerHa":0,"kgPerHa":0,"purpose":""}]}],"npk":{"note":""},"deficiencies":[{"nutrient":"","why":"","signs":"","when":"","action":""}],"foliars":[{"stage":"","product":"","why":""}],"water":{"plan":"","ifDry":"","ifWet":""},"yield":{"target":"","realistic":"","note":""},"watch":[""]}';
+        $notesText = trim($notes) !== '' ? trim($notes) : 'none found; rely on established agronomy and say so';
+
+        return <<<PROMPT
+You are an agronomic decision-support analyst for farming in {$country}. Write the FERTILIZER AND NUTRITION PLAN of ONE LOT for this season, by growth stage, for a farmer who reads it on a phone. The farm's background, stage guide and protection are written separately: only fertilizer, nutrition, water and yield here.
+
+THE LOT
+- {$region}
+- Lot: {$l['name']}, {$l['place']}; {$f['area']} hectare(s)
+- Crop: {$f['cropLabel']}; variety: {$f['variety']}
+{$recLine}- Planting: {$when}; method: {$f['method']}; counted in {$frame['counter']}
+- Its stages (name each application's stage exactly as here, and give its day on this count inside that stage): {$this->stageListFor($frame)}
+- Soil, from the lot's own answers: {$fd['soil']}; water: {$fd['water']}
+- Soil condition (pH, sodium, salt, acid sulfate), reasoned as a combination where more than one is true: {$fd['cond']}
+{$fd['guide']}
+- The lot's newest soil test: {$fd['test']}{$f['ph']}
+- The previous crop: {$fd['prev']}; its residue: {$fd['residue']}
+- Field troubles: {$fd['problems']}
+- Field in detail (the farmer's answers about this lot): {$fd['detail']}
+- Fertilizers sold near the farmer: {$f['granulars']}
+- The farmer's aim: {$f['priority']}
+- The variety's yield potential: {$f['potential']}
+- Target yield: {$f['target']}
+{$f['seed']}{$f['goal']}{$f['need']}- The farmer's own notes: {$f['notes']}
+- The weather this season: {$weather}
+
+RESEARCH NOTES for this crop (rely on them first; where they and memory disagree, the notes win):
+{$notesText}
+
+GROUND RULES
+- EASY TO READ: short plain sentences; a plain word beside any technical one; ranges with "to", never a dash. Word limits are ceilings.
+- Every quantity is per hectare (bagsPerHa, a 50 kg bag) and the app scales it to the lot; {$aimRule}. Each application carries its PURPOSE in a few words.
+- GRANULARS, THOUGHT THROUGH: choose each product for the soil condition and the water. A sodic or saline soil does not want a chloride load (muriate of potash only where potassium is truly short, late and light; sulfate of potash where it can be bought); ammonium sulfate is the nitrogen that also acidifies an alkaline or sodic soil and feeds sulfur; an acid soil wants its phosphorus placed at planting; flooded rice loses broadcast urea to the air and the water, so small splits into shallow water; a sandy soil leaks nitrogen and potassium, so smaller and more frequent doses; a heavy clay holds them, so fewer and fuller. Where the soil test or history says phosphorus or potassium is already high, do not buy it again. Use what the farmer can buy; where a better product is not on the list, say so in cautions. soilLogic and timingLogic reason in the open, mechanism by mechanism; rejected names the 2 to 3 things a farmer here would reasonably have done instead and why each fails on THIS ground.
+- CRITICALITY BY STAGE: size every application to what the crop can take up then. The basal is a starter; the bulk of nitrogen goes where the crop builds yield (tillering and panicle initiation in rice; V6 to V8 and before tasselling in corn; branching and fruit set in vegetables); potassium where straw strength and grain fill are decided. Keep any single nitrogen dressing within the safe range (rice about 1 to 2 bags of urea a hectare a split, corn about 2 to 3) and say the ceiling in timingLogic. Credit what a legume or ploughed in residue left.
+- SECONDARY AND MICRO ELEMENTS ARE PART OF THE PROGRAM: the recommended program carries what the main fertilizers bring (ammonium sulfate 24 percent S, solophos 12 percent S and 20 percent Ca, gypsum 23 percent Ca and 18 percent S, dolomite 21 percent Ca and 12 percent Mg) and adds a soil product for an element in THE SECONDARY AND MICRO ELEMENT NEED only where this soil truly calls for it (zinc sulfate on flooded or alkaline rice, borax for fruiting crops on sandy ground), as kgPerHa and never past the need (boron burns crops just above it). The app adds what is still short after the recommended program, by the kilo or as a spray, and shows it: do not pile products on to be safe.
+- THREE PROGRAMS, honest about what each is for: the first is your recommendation; the second a lean low cost program; the third a genuinely different strategy that makes sense HERE (soil first, one simple product, LCC guided, a fuller push). {$programRule}. Each: name at most 4 words; for at most 22 words; applications 3 to 9 = {stage exactly as listed, day on the count inside that stage, product with its grade in the name ("Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60", "Zinc sulfate"), bagsPerHa (decimals allowed) or kgPerHa for a product used by the kilo, purpose at most 14 words}.
+- NO ORGANIC FERTILIZER (no compost, manure, vermicast or biofertilizer) and NO PRICES anywhere.
+- npk.note at most 30 words: the one check in the field that could change the need (the leaf color chart for rice, a soil test, a thin stand), never a different number.
+- DEFICIENCIES BY SOIL: 2 to 4, most likely first, starting from the elements flagged in THE SECONDARY AND MICRO ELEMENT NEED: nutrient; why at most 26 words (this soil, this crop); signs at most 22 words; when = the stage; action at most 26 words in plain words, no amounts and no product names.
+- FOLIARS: 0 to 3, only where they pay here, each the stage, the product named by its nutrient only ("Zinc spray", "Boron spray", never a salt, a chemical or a strength) and why at most 16 words.
+- WATER: plan at most 55 words for this lot's water source; ifDry and ifWet at most 22 words each.
+- YIELD: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, the same unit, resting first on the REAL HARVESTS in the notes; note at most 36 words naming the harvest it rests on.
+- watch: 0 to 3 lines of at most 22 words on what this lot's own answers warn of (its troubles last season, floods, salt, a thin stand) and what to do.
+- intro at most 70 words: the approach for this lot and the one or two things that matter most.
+- granulars: soilLogic 70 to 130 words; timingLogic 70 to 130 words; rejected 2 to 3 items (what at most 12 words, why at most 40); cautions 2 to 3 items of at most 18 words.
+- Plain text only: no markdown, no emoji shortcodes.
+
+Return ONLY a valid JSON object, no code fences, no commentary, in exactly this shape, with EXACTLY THREE programs:
+{$shape}
+PROMPT;
+    }
+
+    private function stageListFor(array $frame): string
+    {
+        return self::stageList($frame);
+    }
+
+    /** A JSON object from the model's text, its shortcodes swept. Null when it cannot be read. */
+    private function readJson(string $text): ?array
+    {
+        $text = trim((string) preg_replace('/^```(?:json)?\s*|\s*```$/m', '', trim($text)));
+        $from = strpos($text, '{');
+        $to = strrpos($text, '}');
+        if ($from === false || $to === false || $to <= $from) {
+            return null;
+        }
+        $json = json_decode(substr($text, $from, $to - $from + 1), true);
+        if (! is_array($json)) {
+            return null;
+        }
+        array_walk_recursive($json, function (&$v) {
+            if (is_string($v)) {
+                $v = trim((string) preg_replace('/:[a-z0-9_-]+:/i', '', $v));
+            }
+        });
+
+        return $json;
+    }
+
+    /** The farm part, with an entry for every crop (a crop the model left out keeps the app's own stages and catalogue). */
+    private function parseFarm(string $text, array $cases): ?array
+    {
+        $j = $this->readJson($text);
+        if (! $j || ! isset($j['crops']) || ! is_array($j['crops']) || ! isset($j['summary'])) {
+            return null;
+        }
+        $by = [];
+        foreach ($j['crops'] as $k => $c) {
+            if (is_array($c)) {
+                $by[(string) ($c['key'] ?? ('c' . ($k + 1)))] = $c;
+            }
+        }
+        if (! array_intersect(array_keys($by), array_column($cases, 'key'))) {
+            return null;
+        }
+        $j['crops'] = $by;
+
+        return $j;
+    }
+
+    /** One lot's plan: at least one program with applications. */
+    private function parseLot(string $text): ?array
+    {
+        $j = $this->readJson($text);
+        if (! $j || ! is_array($j['programs'] ?? null)) {
+            return null;
+        }
+        $j['programs'] = array_values(array_filter($j['programs'], fn ($pg) => is_array($pg) && ! empty($pg['applications']) && is_array($pg['applications'])));
+
+        return $j['programs'] ? $j : null;
+    }
+
+    /**
+     * The report, format 4: the farm (background, crops with their stages and
+     * protection, the work calendar, what to buy) and every lot (its need, its
+     * programs checked like NPK Plus, what closes the gaps, its jobs by date).
+     */
+    private function compose(array $case, array $ctx, array $farm, array $lotOut): array
+    {
+        $cases = $ctx['cases'];
+        $crops = [];
+        foreach ($cases as $c) {
+            $l0 = $case['lots'][$c['lots'][0]];
+            $frame = $ctx['frames'][$l0['i']];
+            $words = (array) ($farm['crops'][$c['key']] ?? []);
+            $stageWords = [];
+            foreach ((array) ($words['stages'] ?? []) as $s) {
+                $i = is_array($s) ? ProtocolCrew::stageIndex($frame, (string) ($s['stage'] ?? '')) : -1;
+                if ($i >= 0 && ! isset($stageWords[$i])) {
+                    $stageWords[$i] = $s;
+                }
+            }
+            $stages = [];
+            foreach ($frame['stages'] as $i => $s) {
+                $stages[] = ['name' => $s['name'], 'from' => $s['from'], 'to' => $s['to'], 'days' => self::daysLabel($frame, $s), 'what' => $s['what'], 'needs' => $s['needs'], 'prep' => ! empty($s['prep']),
+                    'signs' => (string) ($stageWords[$i]['signs'] ?? ''), 'observe' => (string) ($stageWords[$i]['observe'] ?? ''), 'intervene' => (string) ($stageWords[$i]['intervene'] ?? '')];
+            }
+            $crops[$c['key']] = [
+                'key' => $c['key'], 'crop' => $c['crop'], 'cropLabel' => self::cropName($c['crop']), 'icon' => CropCatalog::CROPS[$c['crop']]['icon'] ?? '🌱',
+                'method' => $c['method'], 'methodLabel' => self::METHODS[$c['method']]['label'] ?? $c['method'], 'variety' => $c['variety'], 'counter' => $frame['counter'],
+                'varietyInfo' => (array) ($words['variety'] ?? []), 'record' => ! empty($ctx['records'][$l0['i']]) ? \App\Support\VarietyBook::brief($ctx['records'][$l0['i']]) : null,
+                'stages' => $stages,
+                'protection' => ProtocolCare::attach((array) ($words['protection'] ?? []), $ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null, $c['crop'], $frame),
+                'weeds' => ProtocolCare::weedsForReport($ctx['weeds'][$c['key']] ?? null, $c['crop']),
+                'lots' => $c['lots'],
+            ];
+        }
+
+        $lots = [];
+        $schedLots = [];
+        foreach ($case['lots'] as $l) {
+            $c = self::caseOf($cases, $l['i']);
+            $frame = $ctx['frames'][$l['i']];
+            $out = $lotOut[$l['i']];
+            $p = $l['p'];
+            $area = (float) $p['area'];
+            $fake = ['recommendation' => [
+                'stages' => array_map(fn ($s) => ['stage' => $s['name'], 'days' => self::daysLabel($frame, $s)], $frame['stages']),
+                'programs' => array_slice($out['programs'], 0, 3),
+                'foliars' => array_values(array_filter((array) ($out['foliars'] ?? []), 'is_array')),
+                'npk' => ['need' => [], 'note' => (string) ($out['npk']['note'] ?? '')],
+            ]];
+            $rec = $this->tidy($fake, $p)['recommendation'];
+            $main = $rec['programs'][0] ?? null;
+            $conds = self::soilConditions($p['soilConditions'] ?? []);
+            $micro = $main ? ProtocolCare::micro((array) ($main['elements'] ?? []), $frame, $conds, $area) : [];
+            $fixes = $main ? ProtocolCare::fixes((array) ($main['check'] ?? []), (array) ($main['byStage'] ?? []), $frame, $conds, $area, (array) $p['granulars']) : [];
+
+            // The jobs: the recommended program by its days, the soil top ups with the first application, the sprays.
+            $apps = [];
+            foreach ((array) ($out['programs'][0]['applications'] ?? []) as $a) {
+                if (! is_array($a) || trim((string) ($a['product'] ?? '')) === '') {
+                    continue;
+                }
+                $bags = max(0, (float) ($a['bagsPerHa'] ?? 0));
+                $kg = max(0, (float) ($a['kgPerHa'] ?? 0));
+                $amt = $bags > 0 ? self::bagWords($bags * $area) : ProtocolCare::amount($kg * $area);
+                $apps[] = ['stage' => (string) ($a['stage'] ?? ''), 'day' => $a['day'] ?? null, 'products' => [$amt . ' ' . trim((string) $a['product'])]];
+            }
+            if (! $apps) {
+                $apps = ProtocolCrew::skeleton($frame);
+            }
+            // What closes a gap goes on with the application already at that stage (one trip), else on its own.
+            $join = function (string $stage, ?int $day, string $words) use (&$apps, $frame) {
+                $si = ProtocolCrew::stageIndex($frame, $stage);
+                foreach ($apps as &$ap) {
+                    $ai = ProtocolCrew::stageIndex($frame, (string) ($ap['stage'] ?? ''));
+                    if (($si >= 0 && $ai === $si) || ($day !== null && $day <= 3 && ProtocolCrew::dayFor($frame, (string) ($ap['stage'] ?? ''), $ap['day'] ?? null) <= 3)) {
+                        $ap['products'][] = $words;
+
+                        return;
+                    }
+                }
+                unset($ap);
+                $apps[] = ['stage' => $stage, 'day' => $day, 'products' => [$words]];
+            };
+            foreach ($fixes as $fx) {
+                $join($fx['stage'], null, self::bagWords((float) $fx['bags']) . ' ' . $fx['product'] . ' (to meet the need)');
+            }
+            foreach ($micro as $m) {
+                if ($m['pick'] === 'soil' && $m['soil']) {
+                    $join($frame['stages'][0]['name'], -1, ProtocolCare::amount((float) $m['soil']['totalKg']) . ' ' . $m['soil']['product']);
+                }
+            }
+            // The sprays, one trip a stage ("Zinc and boron spray").
+            $byStage = [];
+            $addSpray = function (string $stage, string $nutrient, string $what) use (&$byStage, $frame) {
+                $si = max(0, ProtocolCrew::stageIndex($frame, $stage));
+                $byStage[$si] ??= ['stage' => $frame['stages'][$si]['name'], 'names' => [], 'what' => []];
+                if (! in_array($nutrient, $byStage[$si]['names'], true)) {
+                    $byStage[$si]['names'][] = $nutrient;
+                }
+                if ($what !== '') {
+                    $byStage[$si]['what'][] = $what;
+                }
+            };
+            foreach ($micro as $m) {
+                if ($m['pick'] === 'spray' && $m['spray'] && $m['state'] !== 'spray') {
+                    $addSpray((string) $m['spray']['stage'], (string) $m['name'], $m['name'] . ' is short on this lot.');
+                }
+            }
+            foreach ((array) ($rec['foliars'] ?? []) as $fo) {
+                $t = trim((string) preg_replace('/\s*spray$/i', '', (string) ($fo['product'] ?? '')));
+                if ($t !== '') {
+                    $addSpray((string) ($fo['stage'] ?? ''), $t, (string) ($fo['why'] ?? ''));
+                }
+            }
+            ksort($byStage);
+            $sprays = array_map(function ($s) {
+                $n = $s['names'];
+                $head = count($n) > 1 ? implode(', ', array_slice($n, 0, -1)) . ' and ' . mb_strtolower((string) end($n)) : ($n[0] ?? 'Foliar');
+
+                return ['stage' => $s['stage'], 'title' => ucfirst(mb_strtolower($head)) . ' spray', 'what' => implode(' ', array_unique($s['what']))];
+            }, array_values($byStage));
+            $schedLots[] = ['i' => $l['i'], 'name' => $l['name'], 'month' => $l['month'], 'asked' => $l['day'],
+                'tasks' => ProtocolCrew::tasks($frame, $apps, array_slice($sprays, 0, 4), ['weedy' => self::weedy($l['profile'])])];
+
+            $lots[$l['i']] = [
+                'i' => $l['i'], 'name' => $l['name'], 'place' => $l['place'], 'areaHa' => $area, 'farmLotId' => $l['farmLotId'],
+                'crop' => $l['crop'], 'cropLabel' => self::cropName($l['crop']), 'icon' => CropCatalog::CROPS[$l['crop']]['icon'] ?? '🌱',
+                'method' => $l['method'], 'methodLabel' => self::METHODS[$l['method']]['label'] ?? $l['method'], 'variety' => $l['variety'], 'case' => $c['key'],
+                'counter' => $frame['counter'], 'month' => $l['month'], 'asked' => $l['day'], 'seedAge' => $frame['seedAge'], 'harvestDays' => $frame['harvest'],
+                'priority' => $l['priority'], 'priorityLabel' => self::PRIORITIES[$l['priority']]['label'] ?? '', 'targetYield' => $l['targetYield'], 'yieldUnit' => $l['yieldUnit'],
+                'yieldWord' => preg_replace('/ per hectare$/', '', (string) (self::yieldUnits()[$l['yieldUnit']] ?? 'tons')), 'potential' => $l['potential'],
+                'field' => \App\Support\FieldProfile::pairs((array) $l['profile'], $l['crop']), 'soilConditions' => $conds,
+                'need' => $p['npkNeed'] ?? null,
+                'rec' => $rec,
+                'intro' => (string) ($out['intro'] ?? ''), 'granulars' => (array) ($out['granulars'] ?? []),
+                'deficiencies' => array_values(array_filter((array) ($out['deficiencies'] ?? []), 'is_array')),
+                'water' => (array) ($out['water'] ?? []), 'yield' => (array) ($out['yield'] ?? []),
+                'watch' => array_values(array_filter(array_map('strval', (array) ($out['watch'] ?? [])))),
+                'micro' => $micro, 'fixes' => $fixes,
+            ];
+        }
+
+        $sched = ProtocolCrew::schedule($schedLots, $case['crew'], $case['mode']);
+        foreach ($lots as $i => &$L) {
+            $L['planting'] = $sched['lots'][$i] ?? null;
+            $L['tasks'] = array_values(array_filter($sched['tasks'], fn ($t) => $t['lot'] === $i));
+            $h = collect($L['tasks'])->firstWhere('kind', 'harvest');
+            $L['harvest'] = $h ? ['from' => $h['from'], 'to' => $h['to'], 'usual' => $h['usual']] : null;
+        }
+        unset($L);
+
+        // What to buy for the whole farm: the recommended programs, what meets the need, and the top ups.
+        $buy = [];
+        $addBuy = function (string $name, float $kg, int $lot) use (&$buy) {
+            if ($kg <= 0) {
+                return;
+            }
+            $k = mb_strtolower(trim($name));
+            $buy[$k] ??= ['product' => trim($name), 'kg' => 0.0, 'lots' => []];
+            $buy[$k]['kg'] += $kg;
+            $buy[$k]['lots'][$lot] = true;
+        };
+        foreach ($lots as $i => $L) {
+            foreach ((array) ($L['rec']['totals'] ?? []) as $t) {
+                $addBuy((string) $t['product'], (float) $t['bags'] * 50, $i);
+            }
+            foreach ($L['fixes'] as $fx) {
+                $addBuy($fx['product'], (float) $fx['bags'] * 50, $i);
+            }
+            foreach ($L['micro'] as $m) {
+                if ($m['pick'] === 'soil' && $m['soil']) {
+                    $addBuy($m['soil']['product'], (float) $m['soil']['totalKg'], $i);
+                }
+            }
+        }
+        $buy = array_values(array_map(fn ($b) => ['product' => $b['product'], 'kg' => round($b['kg'], 2), 'bags' => round($b['kg'] / 50, 2), 'lots' => array_keys($b['lots'])], $buy));
+        usort($buy, fn ($a, $b) => $b['kg'] <=> $a['kg']);
+
+        $names = array_map(fn ($l) => $l['name'], $case['lots']);
+
+        return [
+            'format' => 4,
+            'headline' => (string) ($farm['headline'] ?? ''),
+            'summary' => (string) ($farm['summary'] ?? ''),
+            'confidence' => in_array($farm['confidence'] ?? '', ['low', 'moderate', 'high'], true) ? $farm['confidence'] : 'moderate',
+            'dataGaps' => array_values(array_slice(array_filter(array_map('strval', (array) ($farm['dataGaps'] ?? []))), 0, 5)),
+            'background' => (array) ($farm['background'] ?? []),
+            'workTips' => array_values(array_slice(array_filter(array_map('strval', (array) ($farm['workTips'] ?? []))), 0, 4)),
+            'farm' => ['lots' => count($lots), 'areaHa' => round(array_sum(array_column($lots, 'areaHa')), 4), 'mode' => $case['mode'], 'location' => $case['location'],
+                'crew' => ['workers' => array_map(fn ($w) => ['name' => $w['name'], 'days' => $w['days'], 'roster' => ! empty($w['globalId'])], $case['crew']['workers']),
+                    'sprayers' => $case['crew']['sprayers'], 'plantBy' => $case['crew']['plantBy']],
+                'granulars' => array_map(fn ($k) => self::GRANULARS[$k] ?? $k, $case['granulars']), 'notes' => $case['notes']],
+            'crops' => array_values($crops),
+            'lots' => array_values($lots),
+            'schedule' => $sched + ['words' => ProtocolCrew::words($sched, $names)],
+            'buy' => $buy,
+            'disclaimer' => ProtocolCare::DISCLAIMER,
+        ];
+    }
+
+    /** "2 bags", "1.5 bags", "20 kg" (under a bag). */
+    private static function bagWords(float $bags): string
+    {
+        if ($bags < 1) {
+            return ProtocolCare::amount($bags * 50);
+        }
+        $n = rtrim(rtrim(number_format($bags, 1, '.', ''), '0'), '.');
+
+        return $n . ($n === '1' ? ' bag' : ' bags');
     }
 
     /**
@@ -1053,10 +2154,11 @@ class CropProtocolController extends Controller
     private function dead(object $r): bool
     {
         $beatAt = \Illuminate\Support\Carbon::parse($r->updated_at ?: $r->created_at);
-        $quiet = AiClient::TIMEOUT_DOCUMENT + 60;
+        // One ask may run AI_TIMEOUT (a research ask TIMEOUT_SEARCHED); a run of eight lots is a dozen asks.
+        $quiet = max(AiClient::TIMEOUT_DOCUMENT, self::AI_TIMEOUT) + 90;
 
         return $beatAt->lt(now()->subSeconds($quiet))
-            || \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15));
+            || \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(self::MAX_MINUTES));
     }
 
     /** Where a job stands — polled by the page until ready or failed. */
@@ -1069,7 +2171,7 @@ class CropProtocolController extends Controller
         }
         if ($r->status === 'pending') {
             if ($this->dead($r)) {
-                $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15))
+                $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(self::MAX_MINUTES))
                     ? 'The protocol took too long and was stopped. Nothing was charged. Please try again.'
                     : 'The protocol was stopped halfway because the server restarted. Nothing was charged. Please run it again.';
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
@@ -1153,6 +2255,9 @@ class CropProtocolController extends Controller
         }
         $report = json_decode($r->report, true) ?: [];
         $params = json_decode($r->params, true) ?: [];
+        if ((int) ($report['format'] ?? 0) === 4) {
+            return ['title' => $r->title, 'text' => self::contextV4($r->title, $report)];
+        }
         $rec = $report['recommendation'] ?? null;
         if (is_array($rec)) {
             // The two-part protocol (2026-09-18).
@@ -1208,6 +2313,39 @@ class CropProtocolController extends Controller
             . "\n--- END OF ATTACHED PROTOCOL ---\n";
 
         return ['title' => $r->title, 'text' => $text];
+    }
+
+    /** A farm protocol (format 4) as the chat reads it: the farm, then every lot. */
+    private static function contextV4(string $title, array $r): string
+    {
+        $bg = (array) ($r['background'] ?? []);
+        $s = (array) ($r['schedule'] ?? []);
+        $t = "\n\n--- ATTACHED: Crop Protocol Analysis for a farm (the farmer generated this earlier; treat it as shared context) ---\n"
+            . 'Case: ' . $title . "\n"
+            . 'Headline: ' . ($r['headline'] ?? '') . "\n"
+            . 'Place: ' . ($bg['place'] ?? '') . ' Weather ahead: ' . ($bg['weather']['outlook'] ?? '') . (! empty($bg['weather']['enso']) ? ' ENSO: ' . $bg['weather']['enso'] : '') . "\n"
+            . 'Work calendar (' . (($s['mode'] ?? '') === 'keep' ? 'the farmer kept the dates' : 'Anee moved jobs inside their safe windows') . '): ' . implode(' ', (array) ($s['words'] ?? [])) . "\n";
+        foreach ((array) ($r['crops'] ?? []) as $c) {
+            $threats = collect($c['protection']['threats'] ?? [])->map(fn ($x) => ($x['name'] ?? '') . ' at ' . implode(', ', array_column($x['stages'] ?? [], 'name'))
+                . (! empty($x['threshold']) ? ' (act when ' . $x['threshold'] . ')' : '') . (! empty($x['ai']) ? ': ' . implode(', ', array_map(fn ($a) => $a['name'] . ($a['group'] ? ' ' . $a['group'] : ''), $x['ai'])) : ''))->implode(' | ');
+            $t .= 'Crop ' . ($c['cropLabel'] ?? '') . ($c['variety'] ? ' (' . $c['variety'] . ')' : '') . ', ' . ($c['methodLabel'] ?? '') . '. Protection to watch: ' . $threats . "\n";
+        }
+        foreach ((array) ($r['lots'] ?? []) as $l) {
+            $rec = (array) ($l['rec'] ?? []);
+            $fert = collect($rec['stages'] ?? [])->filter(fn ($st) => ! empty($st['fertilizer']))->map(fn ($st) => ($st['stage'] ?? '') . ': '
+                . collect($st['fertilizer'])->map(fn ($x) => ($x['totalBags'] ?? '') . ' bags ' . ($x['product'] ?? ''))->implode(', '))->implode(' | ');
+            $check = collect($rec['npk']['check'] ?? [])->map(fn ($c) => $c['label'] . ' ' . $c['have'] . ($c['need'] !== null ? ' of ' . $c['need'] . ' kg (' . $c['verdict'] . ')' : ''))->implode('; ');
+            $micro = collect($l['micro'] ?? [])->map(fn ($m) => $m['name'] . ': ' . ($m['pick'] === 'soil' && $m['soil'] ? $m['soil']['say'] : ($m['spray']['name'] ?? '') . ' at ' . ($m['spray']['stage'] ?? '')))->implode('; ');
+            $t .= '- ' . $l['name'] . ' (' . $l['place'] . ', ' . $l['areaHa'] . ' ha): ' . $l['cropLabel'] . ($l['variety'] ? ' ' . $l['variety'] : '') . ', planted ' . ($l['planting']['planting'] ?? $l['month'])
+                . (! empty($l['harvest']['usual']) ? ', harvest about ' . $l['harvest']['usual'] : '') . ".\n"
+                . '  Fertilizer by stage: ' . $fert . "\n"
+                . '  Nutrients per hectare (program gives of the need): ' . $check . "\n"
+                . ($micro !== '' ? '  Secondary and micro elements to add: ' . $micro . "\n" : '')
+                . (! empty($l['fixes']) ? '  To meet the need: ' . collect($l['fixes'])->map(fn ($f) => $f['bags'] . ' bags ' . $f['product'] . ' at ' . $f['stage'])->implode('; ') . "\n" : '')
+                . (! empty($l['yield']['realistic']) ? '  Yield: target ' . ($l['yield']['target'] ?? '') . ', realistic ' . $l['yield']['realistic'] . "\n" : '');
+        }
+
+        return $t . 'Summary: ' . ($r['summary'] ?? '') . "\n" . 'Note: applying any pesticide is the farmer\'s own decision from what the field shows.' . "\n--- END OF ATTACHED PROTOCOL ---\n";
     }
 
     public function destroy(int $id)
@@ -1403,188 +2541,6 @@ class CropProtocolController extends Controller
         }
 
         return in_array($own, ['DAT', 'AGE'], true) ? 'DAP' : $own;
-    }
-
-    /**
-     * The research brief: what to look up, with the web open, before the
-     * protocol is written. Prose, not JSON -- asked for JSON the model
-     * does not search (see AiClient::researchThenJson).
-     *
-     * Since 2026-10-18 it is written from what is not the farmer's own (the
-     * crop, the variety, the way in, the province, the month), so the notes
-     * are kept (App\Support\ResearchShelf, 30 days) and the next protocol with
-     * the same case reads them instead of searching again; the field's soil,
-     * water, troubles and aim are the document's. It no longer asks for
-     * what the app already holds: the kilograms per hectare (NPK Plus's need
-     * model counts them), a variety on record (its facts are given), the
-     * place's weather history and the ENSO state (the climate shelf).
-     */
-    private function researchPrompt(array $p): string
-    {
-        $f = $this->facts($p);
-        $rCountry = \App\Support\Region::name();
-        $rNutrient = \App\Support\Region::agency('nutrient');
-        $rMet = \App\Support\Region::agency('met');
-        $rSources = \App\Support\Region::agency('sources');
-        $rRegion = \App\Support\Region::promptBlock();
-        $province = \App\Support\ClimateRecord::placeKey((string) $p['location'])['place'];
-        $known = ! empty($p['npkNeed']['known']);
-        try {
-            $rec = ($p['variety'] ?? '') !== '' ? \App\Support\VarietyBook::match($p['crop'], $p['variety']) : null;
-        } catch (\Throwable) {
-            $rec = null;
-        }
-        $variety = $rec
-            ? '1. THE VARIETY IS ON RECORD: ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . ' Take these as known and do not search for them again. Search only for what adds to them: regional trial results near the farmer, its known weaknesses in the field, and any warning about it.'
-            : '1. THE VARIETY FIRST: its published specifications — days to maturity, yield potential and typical farm yields, plant height and lodging, the season and method it is bred for, resistance and tolerance ratings (pests, diseases, drought, flooding, salinity, heat), known weaknesses, who released it and when. Prefer the registry, the breeder\'s or seed company\'s own page, and extension notes. If the variety cannot be found, say so plainly and describe the widely grown variety you would assume instead.';
-        $nutrients = $known
-            ? "2. The official guide in {$rCountry} for this crop's fertilizer by growth stage in this region and season ({$rNutrient}): the SPLIT TIMING (which stage gets which share) and the inorganic products sold there (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, ammonium sulfate and the like). The kilograms of N, P2O5 and K2O per hectare are already counted by the app from the official guide: do not look them up."
-            : "2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, and the common inorganic products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash).";
-
-        return <<<PROMPT
-You are a research assistant for agronomy in {$rCountry} with web search. {$rRegion} SEARCH THE WEB NOW and write research notes for a season protocol. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
-
-THE CASE
-- Crop: {$f['cropLabel']}; variety: {$f['variety']}
-- Planting: {$f['when']}, {$f['method']}, in the province of {$province}
-
-FIND, IN THIS ORDER
-{$variety}
-{$nutrients}
-3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds, the recommended controls (cultural, biological, chemical with active ingredients), and any current outbreak advisories.
-4. Irrigation and water management by growth stage for this crop and method (e.g. alternate wetting and drying for rice), and what to change under drought or flooding.
-5. The seasonal climate OUTLOOK from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe weather expected). Only the outlook: the app keeps the field's twenty year weather record and reads the ENSO state itself.
-6. REAL HARVESTS (2026-10-17, the owner: "we need real people data"): the most recent derbies, techno demo farms and yield contests with this variety, or this crop when the variety has none, in or near this province first, then anywhere in {$rCountry}: the event, the place, the season and year, the yield harvested (t/ha, or cavans per hectare with the kilos per cavan) and the fertilizer program used where reported. Then real farmers' own reported harvests with it in the last two seasons (news, agriculture office and cooperative reports, farmer field schools), each with the yield, the place, the season and the source.
-
-Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,100 words, no JSON, no markdown tables.
-PROMPT;
-    }
-
-    /** The question, spelled out so the answer is bounded, stage-based and honest. */
-    private function prompt(array $p): string
-    {
-        $f = $this->facts($p);
-        $enso = \App\Support\EnsoOutlook::forPrompt();
-        $ensoBlock = $enso !== '' ? '- ENSO: ' . $enso . "\n" : '';
-        $forecast = $this->forecastLines($p['location']);
-        // The field's measured weather history for the months the crop stands in the field (the climate shelf, 2026-10-18).
-        $start = (int) substr((string) $p['month'], 5, 2);
-        $focus = [];
-        for ($i = 0; $start > 0 && $i <= min(11, (int) ceil(((int) CropCatalog::maturity($p['crop'])) / 30)); $i++) {
-            $focus[] = ($start - 1 + $i) % 12 + 1;
-        }
-        // Built while the farmer's request waits: what the shelf keeps, no lookup.
-        $history = \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, $focus, true, false);
-        $unitWord = self::yieldUnits()[$p['yieldUnit']] ?? array_values(self::yieldUnits())[0];
-        $countryName = \App\Support\Region::name();
-        $regionBlock = \App\Support\Region::promptBlock();
-        // The need is the app's (NPK Plus's count) when the crop has its numbers; else the model's own reading.
-        $known = ! empty($p['npkNeed']['known']);
-        $aimRule = $known
-            ? 'bend the products and the splits to the aim and to the soil and troubles, while the recommended program meets THE NUTRIENT NEED above (the aim is already in it through the yield goal: highest yield = the target held to the variety, lower cost = the cheapest products and fewest trips that still meet it, in the middle = the standard products)'
-            : 'bend them to the aim (highest yield = the fuller recommended rate with a top-up; lower cost = the lean end, dropping what pays least; in the middle = the standard recommendation) and to the soil and troubles';
-        $programRule = $known
-            ? 'The recommended program must deliver THE NUTRIENT NEED above, within about a tenth either way; each other program says in its "for" line how it differs (a lean program that falls short says so; a push program may go up to a fifth over). The app checks every program against that need and shows the farmer the gap'
-            : 'Every program must add up to the need for its own aim (the app checks each one against the need of the target and shows the shortfall)';
-        $needRule = $known
-            ? 'recommendation.npk.need: copy THE NUTRIENT NEED above exactly (n, p as P2O5, k as K2O, kg per hectare); do not recount it. The app totals the nutrients of each program from the analysis of each product and checks them against it. note ≤ 30 words: the one thing that could change the need in the field (the LCC or MOET check if rice, a soil test, a thin stand), never a different number.'
-            : 'recommendation.npk.need: the kg N, P2O5 and K2O per hectare this variety needs to reach the TARGET yield on this ground (the official recommendation for the region and season, bent to the soil and the aim; where the target is unrealistic, the need for the realistic yield instead) — and the fertilizer program above MUST add up to it: the app totals the nutrients of the program from the analysis of each product and shows the farmer where it falls short. note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).';
-
-        return <<<PROMPT
-You are an agronomic decision-support analyst for farming in {$countryName}. Write a SEASON PROTOCOL for one field in TWO PARTS a farmer reads in five minutes: first the BACKGROUND (the place, the weather ahead, the variety as published), then the RECOMMENDATION (an introduction, then what to apply at each growth stage and why, what to observe and when to step in, the totals to use, the threats to check). Hung on the crop's GROWTH STAGES — never on day counts: the farmer acts when the crop reaches a stage, as their own eyes tell them.
-
-FACTS GIVEN
-- {$regionBlock}
-- Location as the farmer wrote it: {$p['location']}
-- Crop: {$f['cropLabel']}; variety: {$f['variety']}
-{$f['record']}- Planting: {$f['when']}; method: {$f['method']}
-- The count this crop is managed by: {$f['counter']} (days after transplanting / sowing / planting). The app's own stage table for it: {$f['stageTable']}
-- Field size: {$f['area']} hectare(s)
-- Soil, as the farmer describes it: {$f['soil']}; water: {$f['water']}
-- Soil condition (pH / sodium / salt / acid sulfate), as far as the farmer knows — more than one can be true at once, and a combination (an alkaline sodic soil, a saline alkaline soil) is to be reasoned about AS a combination: {$f['soilCondition']}
-{$f['soilGuide']}
-- Soil test or history, phosphorus: {$f['testP']}; potassium: {$f['testK']}{$f['ph']}
-- The previous crop: {$f['prevCrop']}; its residue was: {$f['residue']}
-- What the field got last season, in the farmer's words: {$f['fertHistory']}
-- Granulars the farmer can buy locally: {$f['granulars']}
-- Field troubles the farmer reports: {$f['problems']}
-{$f['fieldLine']}- The farmer's aim this season: {$f['priority']}
-- The variety's yield potential: {$f['potential']}
-- Target yield: {$f['target']}
-{$f['seed']}{$f['goal']}{$f['need']}- The farmer's own notes: {$f['notes']}
-- Weather now: {$forecast}
-{$ensoBlock}{$history}
-WHAT TO READ FROM
-Research notes gathered from the web follow at the end of this brief (the variety, the official guide's split timing and products, the pest recommendations for this crop and region, water management, the seasonal outlook, real harvests). Rely on them first, over memory; where they and memory disagree, the notes win; where a thing is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it. The field's weather record above is measured history kept by the app: weigh it for weather.risks and the water plan, and its El Niño and La Niña shares against the ENSO state.
-
-GROUND RULES
-- EASY TO READ. Short plain sentences a farmer reads easily; no jargon without a plain word beside it; nothing repeated between the two parts. Every word limit below is a ceiling, not a target.
-- THE VARIETY comes from the notes: name, breeder, maturity, yield potential, the season it is bred for, its strengths and weaknesses. Where the farmer's variety could not be found, say so (found false) and name the variety you assumed for the numbers.
-- Every quantity is for THIS field: give fertilizer per hectare (bagsPerHa, a 50-kg bag) and the app scales it to the field size; be specific with products and rates, and {$aimRule}. Each application carries its PURPOSE in a few words (what the plant does with it at that stage, and why THIS product).
-- GRANULARS, THOUGHT THROUGH. Which bag, not just how many: choose each product for the soil condition and the water regime, and say why in the purpose and in granulars.soilLogic. A sodic or saline soil does not want a chloride load — muriate of potash (0-0-60) only where potassium is truly short and then late and light, sulfate of potash where it can be bought; ammonium sulfate is the nitrogen that also acidifies an alkaline or sodic soil and supplies sulfur, and gypsum-type sulfate helps sodium leach; an acid soil wants its phosphorus placed (ammophos 16-20-0 or DAP 18-46-0 at planting) because it is fixed fast, and less ammonium sulfate; flooded rice loses urea nitrogen to the air and the water, so it is applied in small splits into shallow water or incorporated, never broadcast onto a full flood; a sandy soil leaks nitrogen and potassium, so smaller, more frequent doses; a heavy clay holds them, so fewer, fuller ones; complete 14-14-14 is a convenience, not a prescription — where the soil test or history says phosphorus or potassium is already high, do not buy it again. Use the granulars the farmer can buy; where a better product is not on that list, say so in cautions and build the program from what is. REASON IN THE OPEN: soilLogic and timingLogic are the agronomist thinking aloud, mechanism by mechanism — what the sodium does to the clay and what chloride does on top of it, what happens to urea broadcast on a flood, why phosphorus placed at planting beats phosphorus broadcast on this ground, what the burned straw or the legume left behind and how that changed the first dressing. Then granulars.rejected: the two to four things a farmer here would reasonably have done instead — the product on the shelf (complete 14-14-14 alone, muriate of potash), the big early dressing, potassium all up front, urea onto standing water — each named in `what` and answered in `why` with the mechanism that goes wrong on THIS ground, not a generality.
-- CRITICALITY BY STAGE. Size every application to what the crop can take up THEN. Do not dump: a young crop with a small root system cannot use eight bags of anything, and nitrogen it cannot use leaches, volatilises or burns. Basal at planting is a starter — phosphorus and a little nitrogen and potassium where the roots will be — and the bulk of nitrogen goes where the crop builds yield (tillering and panicle initiation in rice; V6–V8 and before tasselling in corn; branching and fruit set in vegetables). Potassium goes where straw strength and grain fill are decided (panicle initiation, pre-tasselling, fruit set), not all up front, and on a sodic soil not before the crop can drink it. Keep any single nitrogen dressing within the safe range for the crop (rice about 1–2 bags of urea per hectare per split, corn about 2–3), and say the ceiling in timingLogic. Where the previous crop was a legume or the residue was ploughed in, credit the nitrogen it left and cut the first dressing; where the residue was burned, potassium came back but nitrogen did not.
-- SECONDARY AND MICRO ELEMENTS ARE PART OF THE PROGRAM (the owner, 2026-10-17: "consider the micronutrients and not only npk"). The recommended program delivers EVERY element in THE SECONDARY AND MICRO ELEMENT NEED above (not the beneficial ones), within about a tenth, from soil applied products sold in {$countryName}: sulfur from ammonium sulfate, gypsum or another sulfate; calcium from gypsum, or agricultural lime or dolomite on acid soil; magnesium from dolomite on acid soil, or kieserite or magnesium sulfate; zinc from zinc sulfate; boron from borax or boric acid; iron from ferrous sulfate; manganese from manganese sulfate; copper from copper sulfate; molybdenum from sodium molybdate. First count what the main fertilizers already carry (ammonium sulfate is 24 percent S, solophos 12 percent S and 20 percent Ca, gypsum 23 percent Ca and 18 percent S, dolomite 21 percent Ca and 12 percent Mg, zinc sulfate 35 percent Zn and 17 percent S, borax 11 percent B) and add a product only for what is still short; never pile one on past the need (boron burns crops just above it). A product used by the kilo (zinc sulfate, borax, boric acid, ferrous, manganese and copper sulfate, sodium molybdate) is given as kgPerHa instead of bagsPerHa. A trace element under one kilo that this crop takes better as a foliar may be given by a foliar instead: name it in foliars, and the app counts it as given by spray. The other programs either do the same or say in their "for" line what they leave out. The app totals every element of every program from each product's own analysis, the way NPK Plus does, and shows the farmer each one beside its need.
-- FIVE PROGRAMS. Give the farmer five fertilizer programs to choose between, each a complete season of applications for the same stages, each honest about what it is for: the first is your recommendation (the one the stages above carry); the others are genuinely different strategies — e.g. a soil-first program (sulfate nitrogen and placed phosphorus for this soil condition), a lean low-cost program, a highest-yield program with the top-up, a simple program from complete alone for a farmer who wants one product, an LCC / soil-test-guided program, a locally-available-only program — pick the five that make sense HERE. {$programRule}. Every program names its products from the farmer's list where given, and carry a one-line "for" that says who should choose it.
-- Stage names must be the crop's real stages in order, following the app's stage table above (split or merge a stage only where the crop truly needs it, keeping the numbers consistent; for corn say the V-stages too, e.g. "Early vegetative (V4–V6)"). EVERY stage carries its day count in `days`: the count and the range, e.g. "DAT 35–49", "DAS 0–7", "DAP 45–54", the last stage "DAT 90+", and land preparation "before DAT 0" — always the numbers, never weeks alone. Adjust the ranges to the variety's own maturity where the notes give it. Timing in words is the stage and a plain sign of it; the days are the second clock.
-- OBSERVE AND INTERVENE: at each stage say in one line what to look for, and in one line what to do only if it is seen (the threshold, then the class or active ingredient) — never spray by calendar. Leave both empty at a stage with nothing to watch.
-- NO PRICES ANYWHERE. Totals are quantities only.
-- NO ORGANIC FERTILIZER: the program is inorganic products only (urea, complete, ammonium sulfate, ammonium phosphate, muriate of potash and the like). Do not recommend organic fertilizer, compost, manure, vermicast or biofertilizer at any stage, and do not list them among the supplies.
-- Water: one short plan for the season with THIS water source, and what changes if the sky turns dry or wet.
-- Yield: say plainly whether the target is realistic for this variety, place and season, and what realistic is. Realistic rests first on the REAL HARVESTS in the notes (the derbies and farmers near the field, the newest first), then the national trials, and least on a seller's or brochure figure; name the real harvest it rests on in the note.
-- PRODUCTS, NAMED. Where a spray, drench or foliar is called for, name a product the farmer can ask for: a registered product sold in {$countryName} with its active ingredient or content in brackets, ending with the words "or equivalent" (e.g. "Padan 50 SP (cartap hydrochloride) or equivalent", "Sofit 300 EC (pretilachlor) or equivalent"). Prefer the products the notes name; where none is named, give the active ingredient and still say "or equivalent". This is a name to ask for, not a recommendation to buy a brand — no marketing tone. FOLIARS ARE THE EXCEPTION: a foliar is named by its nutrient only — "Zinc spray", "Boron spray", "Calcium spray", "Magnesium spray", "Zinc and boron spray" — never the salt, the chemical or the strength (no "zinc sulfate", no "heptahydrate", no "solubor", no "chelate", no percentages): the farmer asks the store for a zinc foliar and the store knows.
-- DEFICIENCIES BY SOIL: start from the elements flagged in THE SECONDARY AND MICRO ELEMENT NEED (the same reasons), then analyse deeply which other nutrient deficiencies THIS soil type is prone to for THIS crop — the heavy clay that locks zinc under flooding, the sandy ground that leaks nitrogen, potassium and magnesium, the acid soil that starves phosphorus and calcium and frees aluminium, the alkaline or limed soil that hides iron, zinc and manganese, the drained or saline ground with its own hunger — and for each: the nutrient by name, WHY this soil and this crop invite it, the SIGN the farmer sees on the plant, WHEN in the season it shows, and what to do about it in plain words. No amounts, no rates and no product or chemical names here — the nutrient, the reason and the sign are the point.
-- NO AMOUNTS FOR SPRAYS: for insecticides, fungicides, herbicides, molluscicides and foliars name the product (as above) and the moment, never a rate, a dose, a litre or a kilo — the dose is the label's and the farmer's own. The only quantities in this protocol are the soil applied fertilizers: bags, and kilos for the micro products.
-- FOLIARS: only where they pay for this crop, soil and aim — a micronutrient the soil or crop is known to lack (zinc on flooded or alkaline rice, boron and calcium on fruiting vegetables, magnesium on sandy ground) or a growth foliar the official guides accept — with the stage, the product and why. None when none pays.
-- Weeds are threats too: where weeds matter for this crop and method, one threat is the weed pressure, with the herbicide to use (pre- or post-emergence) named as above.
-- Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
-
-Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"headline":"","background":{"place":"","field":"","weather":{"outlook":"","enso":"","risks":[""]},"variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""}},"recommendation":{"intro":"","granulars":{"soilLogic":"","timingLogic":"","rejected":[{"what":"","why":""}],"cautions":[""]},"stages":[{"stage":"","days":"","signs":"","fertilizer":[{"product":"","bagsPerHa":0,"kgPerHa":0,"purpose":""}],"observe":"","intervene":""}],"programs":[{"name":"","for":"","applications":[{"stage":"","product":"","bagsPerHa":0,"kgPerHa":0,"purpose":""}]}],"npk":{"need":{"n":0,"p":0,"k":0},"note":""},"deficiencies":[{"nutrient":"","why":"","signs":"","when":"","action":""}],"water":{"plan":"","ifDry":"","ifWet":""},"foliars":[{"stage":"","product":"","why":""}],"threats":[{"threat":"","stage":"","sign":"","action":"","product":""}],"yield":{"target":"","realistic":"","note":""}},"confidence":"moderate","dataGaps":[""],"summary":""}
-Rules for the shape:
-- headline: one line, ≤ 14 words, the season in a breath.
-- background.place: ≤ 40 words — the location, its climate zone and the season this planting falls in. background.field: ≤ 30 words — the soil, the water and the troubles in one breath, and what they ask of the protocol.
-- background.weather: outlook ≤ 55 words for the months from planting to harvest; enso ≤ 30 words; risks 2–4 items of ≤ 12 words.
-- background.variety: found true only when the notes carry real published specifications; name as published; by = breeder / company / institution; released = year or ""; maturityDays a number (0 when unknown); yieldPotential in words with the unit (e.g. "6–8 t/ha; farms average 4.5"); season = the season it is bred for; traits ≤ 55 words (strengths and weaknesses that matter here); caution ≤ 25 words (its known weakness on this ground, or ""); source = the registry, breeder or agency the notes cite. When nothing was found: found false, name = the variety assumed, traits says why it was assumed.
-- recommendation.granulars: soilLogic 90–160 words — why THESE products for this soil condition, water and history, mechanism by mechanism (chloride, sodium, pH, fixation, leaching, volatilisation, what the previous crop and its residue left); timingLogic 90–160 words — why the splits are sized and timed this way (what the root system can take up at each stage and what a bigger dose would do instead — leach, burn, volatilise, lock out; the safe ceiling per dressing in bags; when potassium is wanted and why not sooner); rejected 2–4 items — `what` ≤ 12 words naming the road not taken, `why` ≤ 45 words with the mechanism that fails on this ground; cautions 2–4 items ≤ 18 words (the things that go wrong with granulars on this ground — burning, lockout, leaching, a product that should not be bought).
-- recommendation.programs: EXACTLY FIVE, in order, the first being the recommended program whose applications equal the stages' fertilizer above. Each: name ≤ 4 words (e.g. "Soil-first sulfate", "Lean and cheap", "Full yield push", "Complete only", "LCC-guided"), for ≤ 22 words, applications = every application of the season as {stage (exactly one of the stage names above), product, bagsPerHa, purpose ≤ 14 words}, 3–10 applications each.
-- recommendation.intro: ≤ 80 words — the approach for this field and aim, and the one or two things that matter most this season.
-- recommendation.stages: SIX to TEN stages in order; days = the count and range as defined above (always given); signs ≤ 20 words; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "" (the product and the moment, no rate).
-- {$needRule}
-- recommendation.deficiencies: 2–5 items, the deficiencies this soil type and crop are prone to, most likely first: nutrient (e.g. "Zinc"), why ≤ 30 words (this soil, this crop), signs ≤ 25 words (what the plant shows), when = the stage or stages it shows, action ≤ 30 words in plain words with no amounts and no product names.
-- recommendation.water: plan ≤ 60 words; ifDry ≤ 25 words; ifWet ≤ 25 words.
-- recommendation.foliars: 0–4 items, each with the stage, the product as the nutrient only ("Zinc spray", "Boron spray", "Calcium spray" — no chemical, no salt, no strength) and why ≤ 16 words; [] when none pays.
-- recommendation.threats: 4–7 items — the insects, diseases and weeds most likely to hurt here, each with the stage it strikes, the sign to act on (≤ 14 words), the action (≤ 18 words) and product = the spray or herbicide to use for it, named as above ending "or equivalent" ("" only for a threat that no product answers, like heat).
-- recommendation.yield: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, same unit, from the real harvests first; note ≤ 40 words, naming the derby or the farmers' harvest it rests on (place, season, yield) when the notes have one.
-- confidence "low"/"moderate"/"high"; dataGaps at most four; summary ≤ 70 words, plain and warm but factual, ending with the reminder that the calendar is only a hint and the crop's stage is the clock.
-PROMPT;
-    }
-
-    /** The model's JSON, taken carefully. Null when it cannot be trusted. */
-    private function parseReport(string $text): ?array
-    {
-        $text = trim($text);
-        $text = preg_replace('/^```(?:json)?\s*|\s*```$/m', '', $text);
-        $from = strpos($text, '{');
-        $to = strrpos($text, '}');
-        if ($from === false || $to === false || $to <= $from) {
-            return null;
-        }
-        $json = json_decode(substr($text, $from, $to - $from + 1), true);
-        if (! is_array($json) || ! isset($json['background'], $json['recommendation'], $json['summary'])) {
-            return null;
-        }
-        $stages = $json['recommendation']['stages'] ?? null;
-        if (! is_array($stages) || count($stages) < 3) {
-            return null;
-        }
-
-        // The persona's shortcodes have no renderer here.
-        $sweep = fn ($v) => is_string($v) ? trim(preg_replace('/:[a-z0-9_-]+:/i', '', $v)) : $v;
-        array_walk_recursive($json, function (&$v) use ($sweep) {
-            $v = $sweep($v);
-        });
-
-        return $json;
     }
 
     private function json(bool $ok, string $message, array $data = [], int $status = 200)

@@ -116,7 +116,11 @@ final class AiPricing
             'what' => ['unit' => 'crop', 'min' => 0, 'free' => 0, 'units' => 3, 'max' => 16, 'baseIn' => 10500, 'baseOut' => 15300, 'unitIn' => 20, 'unitOut' => 230, 'outCap' => 26048, 'search' => 1],
             // Ten ranked with the derbies' and farmers' harvests (2026-10-17): longer notes and a longer answer.
             'variety' => ['unit' => 'variety', 'free' => 3, 'units' => 3, 'max' => 8, 'baseIn' => 12500, 'baseOut' => 16000, 'unitIn' => 250, 'unitOut' => 120, 'search' => 1, 'om' => 1],
-            'protocol' => ['unit' => '', 'baseIn' => 16000, 'baseOut' => 16000, 'search' => 1, 'om' => 1],
+            // Several lots since 2026-10-18: one research ask a crop or variety (`cases` beyond the first), the farm ask, one ask a lot.
+            // The flat list price is protocol for the first lot, plus protocolLot a lot and protocolCase a crop or variety beyond it.
+            'protocol' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 8, 'unitPrice' => 'protocolLot', 'optPrices' => ['cases' => 'protocolCase'],
+                'baseIn' => 22000, 'baseOut' => 18000, 'unitIn' => 9000, 'unitOut' => 7500, 'search' => 1, 'om' => 2,
+                'opts' => ['cases' => ['in' => 6000, 'out' => 6000, 'search' => 1]]],
             'season' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 200, 'baseIn' => 9000, 'baseOut' => 6000, 'unitIn' => 250, 'unitOut' => 80, 'outCap' => 10048, 'om' => 10],
             'sofar' => ['unit' => 'lot', 'free' => 1, 'units' => 2, 'max' => 200, 'baseIn' => 11500, 'baseOut' => 5000, 'unitIn' => 250, 'unitOut' => 80, 'outCap' => 10048, 'om' => 10],
             'compare' => ['unit' => '', 'baseIn' => 7000, 'baseOut' => 3200],
@@ -199,7 +203,7 @@ final class AiPricing
                     continue;
                 }
                 foreach ($row as $k => $v) {
-                    if ($k === 'opts' || $k === 'unit' || $k === 'perUnitPrice') {
+                    if (in_array($k, ['opts', 'unit', 'perUnitPrice', 'unitPrice', 'optPrices'], true)) {
                         continue;
                     }
                     if (is_numeric($v) && (float) $v >= 0) {
@@ -234,7 +238,52 @@ final class AiPricing
 
         return $k + ['unit' => '', 'min' => 1, 'free' => 1, 'units' => 1, 'max' => 1, 'perUnitPrice' => false, 'baseIn' => 0, 'baseOut' => 0, 'unitIn' => 0, 'unitOut' => 0,
             'outCap' => 0, 'search' => 0, 'om' => 0, 'omUnit' => 0, 'maps' => 0, 'mapsUnit' => 0, 'mail' => 0, 'ee' => 0, 'usd' => 0, 'unitUsd' => 0,
-            'useObserve' => 0, 'useAsk' => 0, 'opts' => []];
+            'useObserve' => 0, 'useAsk' => 0, 'opts' => [], 'unitPrice' => null, 'optPrices' => []];
+    }
+
+    /**
+     * How many times a job option counts: a flag counts once (Land Prep's
+     * variety lookup), a number that many times (2026-10-18: the Crop
+     * Protocol's crops and varieties beyond the first, each read up on).
+     */
+    public static function times(array $size, string $opt): float
+    {
+        $v = $size[$opt] ?? null;
+        if (is_bool($v) || $v === null || $v === '') {
+            return ! empty($v) ? 1.0 : 0.0;
+        }
+
+        return is_numeric($v) ? max(0.0, (float) $v) : (! empty($v) ? 1.0 : 0.0);
+    }
+
+    /**
+     * The flat list price of a run of this size: the kind's own price (per
+     * unit where perUnitPrice says so), plus a list price for every unit
+     * beyond the free ones (unitPrice) and for every counted option
+     * (optPrices). The Crop Protocol: protocol, then protocolLot a lot after
+     * the first and protocolCase a crop or variety after the first.
+     */
+    public static function flat(string $kind, int $units, array $size = []): int
+    {
+        $k = self::kind($kind);
+        $flatOne = AiPrices::of($kind);
+        foreach (self::OPT_PRICES[$kind] ?? [] as $opt => $key) {
+            if (! empty($size[$opt])) {
+                $flatOne = max($flatOne, AiPrices::of($key));
+            }
+        }
+        if (! $k) {
+            return $flatOne;
+        }
+        $flat = $flatOne * ($k['perUnitPrice'] ? $units : 1);
+        if (! empty($k['unitPrice'])) {
+            $flat += AiPrices::of((string) $k['unitPrice']) * max(0, $units - max((int) $k['min'], (int) $k['free']));
+        }
+        foreach ((array) $k['optPrices'] as $opt => $key) {
+            $flat += (int) round(AiPrices::of((string) $key) * self::times($size, (string) $opt));
+        }
+
+        return (int) $flat;
     }
 
     /* ============================================================ unit prices */
@@ -386,10 +435,11 @@ final class AiPricing
         }
         $search = (float) $k['search'];
         foreach ((array) $k['opts'] as $opt => $add) {
-            if (! empty($size[$opt])) {
-                $in += (float) ($add['in'] ?? 0);
-                $out += (float) ($add['out'] ?? 0);
-                $search += (float) ($add['search'] ?? 0);
+            $n = self::times($size, (string) $opt);
+            if ($n > 0) {
+                $in += (float) ($add['in'] ?? 0) * $n;
+                $out += (float) ($add['out'] ?? 0) * $n;
+                $search += (float) ($add['search'] ?? 0) * $n;
             }
         }
         // Anee Auto: the season's Observe and Ask, per lot, at their own cost.
@@ -442,7 +492,7 @@ final class AiPricing
         $c = self::cost($kind, $size, $settings);
         $u = $c['units'];
         $ppc = self::pesoPerCredit();
-        $flat = $flatOne * ($k['perUnitPrice'] ? $u : 1);
+        $flat = self::flat($kind, $u, $size);
         $raw = $c['costPhp'] > 0 ? (int) ceil($s['target'] * $c['costPhp'] / $ppc - 1e-9) : 0;
         $engine = self::friendly($raw);
         $credits = ! $s['on'] ? $flat : ($s['flatFloor'] ? max($flat, $engine) : ($engine > 0 ? $engine : $flat));

@@ -32,6 +32,10 @@ final class AiPrices
         'what' => 50,
         'variety' => 100,
         'protocol' => 150,
+        // 2026-10-18, the Crop Protocol for several lots: the first lot is `protocol`, each
+        // more lot adds `protocolLot`, each more crop or variety (read up on) `protocolCase`.
+        'protocolLot' => 40,
+        'protocolCase' => 70,
         'season' => 100,
         'sofar' => 50,
         'compare' => 30,
@@ -63,7 +67,9 @@ final class AiPrices
         'wtpVariety' => 'When to Plant analysis with a named variety',
         'what' => 'What to Plant analysis',
         'variety' => 'Variety Ranking (searches the web)',
-        'protocol' => 'Crop Protocol Analysis (season plan by growth stage, searches the web)',
+        'protocol' => 'Crop Protocol Analysis, one lot (season plan by growth stage, searches the web)',
+        'protocolLot' => 'Crop Protocol Analysis, each lot after the first',
+        'protocolCase' => 'Crop Protocol Analysis, each more crop or variety Anee reads up on',
         'season' => 'Anee Season Report',
         'sofar' => 'Analyze So Far report',
         'compare' => 'Comparison analysis',

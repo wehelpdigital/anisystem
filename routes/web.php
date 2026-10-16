@@ -185,6 +185,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-18: the Compatibility Checker asks spray or granules first (true once the book is synced with each material's uses).
             'compatModes' => method_exists(\App\Support\ProductLibrary::class, 'fits')
                 && rescue(fn () => \Illuminate\Support\Facades\DB::table('migrations')->where('migration', '2026_10_18_100000_product_book_spray_or_granules')->exists(), false, false),
+            // 2026-10-18: the Crop Protocol for several lots, with the work calendar and the price by lots and crops.
+            'protoLots' => class_exists(\App\Support\ProtocolCrew::class) && method_exists(\App\Http\Controllers\CropProtocolController::class, 'lotParams')
+                && \App\Support\AiPrices::of('protocolLot') > 0,
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
