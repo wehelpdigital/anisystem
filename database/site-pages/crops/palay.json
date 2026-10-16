@@ -68,7 +68,7 @@
     },
     {
       "type": "text",
-      "text": "Palay in English is paddy, rough rice or unhusked rice. So if someone asks for the English ng palay, any of the three works. PhilRice and the PSA write it as palay (unhusked rice) in their reports. In daily talk, though, the palay meaning goes wider. Farmers say palay for the growing plant, the ripe heads and the sacks of dried grain.\n\nA related word is palayan, the rice field itself. Central Luzon has some of the widest palayan in the country. Nueva Ecija even named its capital after the word, as our story on [Palayan, Nueva Ecija](/blog/palayan-nueva-ecija) explains.\n\nMany farm towns also celebrate the crop. For example, Narra in Palawan, known as the rice granary of that province, holds a Palay Festival, usually in October. The old stories live on too. Our page on the [alamat ng palay](/blog/alamat-ng-palay) retells the legend and gives a short buod and banghay for students."
+      "text": "Palay in English is paddy, rough rice or unhusked rice. So if someone asks for the English ng palay, any of the three works. In print it often appears as palay (unhusked rice). In daily talk, though, the palay meaning goes wider. Farmers say palay for the growing plant, the ripe heads and the sacks of dried grain.\n\nA related word is palayan, the rice field itself. Central Luzon has some of the widest palayan in the country. Nueva Ecija even named its capital after the word, as our story on [Palayan, Nueva Ecija](/blog/palayan-nueva-ecija) explains.\n\nMany farm towns also celebrate the crop. For example, Narra in Palawan, known as the rice granary of that province, holds a Palay Festival, usually in October. The old stories live on too. Our page on the [alamat ng palay](/blog/alamat-ng-palay) retells the legend and gives a short buod and banghay for students."
     },
     {
       "type": "heading",
@@ -83,7 +83,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Hull or husk (ipa).** The hard outer cover. FAO puts it at about 20 percent of the weight of palay, with a range of 16 to 28 percent.",
+        "**Hull or husk (ipa).** The hard outer cover. It makes up about 20 percent of the weight of palay, with a range of 16 to 28 percent.",
         "**Bran (darak).** The thin brown layers under the hull. The mill takes it off with the germ.",
         "**Germ or embryo.** The small living part at one end. It sprouts when you sow the seed.",
         "**Endosperm.** The white, starchy core. This is the bigas you cook."
@@ -100,7 +100,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI splits the life of the rice plant into three phases. In the tropics the reproductive phase takes about 35 days and ripening about 30 days. So the vegetative phase decides whether a variety is early or late. For example, IR64 matures in 110 days with a 45 day vegetative phase, while IR8 needs 130 days with a 65 day vegetative phase."
+      "text": "The life of the rice plant has three phases. In the tropics the reproductive phase takes about 35 days and ripening about 30 days. So the vegetative phase decides whether a variety is early or late. For example, IR64 matures in 110 days with a 45 day vegetative phase, while IR8 needs 130 days with a 65 day vegetative phase."
     },
     {
       "type": "heading",
@@ -118,7 +118,7 @@
     },
     {
       "type": "text",
-      "text": "Inside the stem a tiny panicle forms. Next the stem grows longer, the flag leaf appears and the leaf sheath swells, which farmers call booting. After that the head pushes out and the flowers open. PalayCheck warns that drought from panicle initiation to grain filling leaves many empty grains."
+      "text": "Inside the stem a tiny panicle forms. Next the stem grows longer, the flag leaf appears and the leaf sheath swells, which farmers call booting. After that the head pushes out and the flowers open. Drought from panicle initiation to grain filling leaves many empty grains."
     },
     {
       "type": "heading",
@@ -127,7 +127,7 @@
     },
     {
       "type": "text",
-      "text": "At first the grain fills with a milky liquid. Then it turns into soft dough, then hard dough, while the heads bend and turn golden. PalayCheck advises you to harvest by hand when 85 to 90 percent of the grains turn golden yellow. With a combine, wait for 90 to 95 percent.\n\nYou do not need to count the days by hand. The [growth stages and weather](/features/growth-stages-and-weather) tool in anee.io shows each lot's stage on any date you pick, what to do and what to watch for."
+      "text": "At first the grain fills with a milky liquid. Then it turns into soft dough, then hard dough, while the heads bend and turn golden. Harvest by hand when 85 to 90 percent of the grains turn golden yellow. With a combine, wait for 90 to 95 percent.\n\nYou do not need to count the days by hand. The [growth stages and weather](/features/growth-stages-and-weather) tool in anee.io shows each lot's stage on any date you pick, what to do and what to watch for."
     },
     {
       "type": "heading",
@@ -136,11 +136,11 @@
     },
     {
       "type": "text",
-      "text": "Palay to rice takes three steps: drying, hulling and polishing. First [dry the grain](/blog/palay-drying) to 12 to 14 percent moisture within 12 to 24 hours after threshing, as PalayCheck advises. Wet grain left in a pile heats up, turns yellow and mills badly.\n\nThen the mill removes the hull, and a polisher strips off the bran. The share of milled rice you get back is the milling recovery. In November 2024 the PSA Board approved 63.0 percent as the official rate, effective from 2025. Before that, the rate was 65.4 percent."
+      "text": "Palay to rice takes three steps: drying, hulling and polishing. First [dry the grain](/blog/palay-drying) to 12 to 14 percent moisture within 12 to 24 hours after threshing. Wet grain left in a pile heats up, turns yellow and mills badly.\n\nThen the mill removes the hull, and a polisher strips off the bran. The share of milled rice you get back is the milling recovery. In November 2024 the official rate moved to 63.0 percent, effective from 2025. Before that, the rate was 65.4 percent."
     },
     {
       "type": "table",
-      "caption": "What 1,000 kg of dry palay gives at the PSA milling recovery rate of 63 percent",
+      "caption": "What 1,000 kg of dry palay gives at the official milling recovery rate of 63 percent",
       "rows": [
         [
           "Item",
@@ -162,7 +162,7 @@
     },
     {
       "type": "text",
-      "text": "So one cavan, about 50 kg of palay, gives about 31.5 kg of milled rice at that rate. Timing counts as well. PalayCheck notes that harvesting too early can drop milling recovery to as low as 53 percent.\n\nFor the palay price today and the palay price per kilo today, read our [palay price guide](/blog/palay-price-philippines). It gives the latest PSA farmgate average and the NFA buying price. It also explains why rice costs more, so you can compare the palay price with the rice price in the Philippines before you accept an offer."
+      "text": "So one cavan, about 50 kg of palay, gives about 31.5 kg of milled rice at that rate. Timing counts as well. Harvesting too early can drop milling recovery to as low as 53 percent.\n\nFor the palay price today and the palay price per kilo today, read our [palay price guide](/blog/palay-price-philippines). It gives the latest national farmgate average and the NFA buying price. It also explains why rice costs more, so you can compare the palay price with the rice price in the Philippines before you accept an offer."
     },
     {
       "type": "heading",
@@ -171,11 +171,11 @@
     },
     {
       "type": "text",
-      "text": "Seed is one of the cheapest ways to protect your yield. According to PalayCheck, high quality seed with at least 85 percent germination can raise yield by 10 percent or more. In the Philippines the Bureau of Plant Industry's National Seed Quality Control Services (BPI NSQCS) tests seed lots and tags them. The tag color tells you the class."
+      "text": "Seed is one of the cheapest ways to protect your yield. High quality seed with at least 85 percent germination can raise yield by 10 percent or more. In the Philippines seed inspectors test seed lots and tag them. The tag color tells you the class."
     },
     {
       "type": "table",
-      "caption": "Rice seed classes and NSQCS tag colors",
+      "caption": "Rice seed classes and tag colors",
       "rows": [
         [
           "Seed class",
@@ -206,7 +206,7 @@
     },
     {
       "type": "text",
-      "text": "Buy certified seed from accredited seed growers and check that the tag is valid. If you keep your own seed from last season's crop, run a germination test before sowing, as PalayCheck recommends.\n\nEach new rice variety in the Philippines, or rice breed as some people say, gets a code from the National Seed Industry Council, such as NSIC Rc 222. PhilRice's Binhing Palay app lists registered varieties and their traits. For the Philippine rice variety list, with inbred and rice hybrid picks side by side, see our [rice varieties guide](/crops/rice-varieties-philippines). It also covers Jackpot rice variety maturity and the rice variety characteristics of NSIC Rc 402, two questions farmers often ask."
+      "text": "Buy certified seed from accredited seed growers and check that the tag is valid. If you keep your own seed from last season's crop, run a germination test before sowing.\n\nEach new rice variety in the Philippines, or rice breed as some people say, gets a code from the National Seed Industry Council, such as NSIC Rc 222. The Binhing Palay app lists registered varieties and their traits. For the Philippine rice variety list, with inbred and rice hybrid picks side by side, see our [rice varieties guide](/crops/rice-varieties-philippines). It also covers Jackpot rice variety maturity and the rice variety characteristics of NSIC Rc 402, two questions farmers often ask."
     },
     {
       "type": "heading",
@@ -236,7 +236,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Dry before you sell",
-      "text": "Fresh grain from the harvester carries 20 to 25 percent moisture in the wet season, PalayCheck notes. Buyers pay less for wet grain because part of what you sell is water. So dry it to 14 percent if you can store it safely."
+      "text": "Fresh grain from the harvester carries 20 to 25 percent moisture in the wet season. Buyers pay less for wet grain because part of what you sell is water. So dry it to 14 percent if you can store it safely."
     },
     {
       "type": "heading",
@@ -245,7 +245,7 @@
     },
     {
       "type": "text",
-      "text": "Our Filipino guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through every step, from punla to pag aani ng palay. It covers the seedbed, direct seeding with tools like the palatak palay seeder, water, abono timing and the treser ng palay at harvest. To score your season, use the nine [PalayCheck key checks](/blog/palaycheck-key-checks).\n\nWeeds and pests can eat into your yield if you let them. PalayCheck says to control weeds in the first 45 days, so watch for grasses, broadleaves and any sedge weed such as Cyperus iria. After that, watch for the [rice insects](/pests/rice-insects) that come with each stage. For nutrients, start with our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
+      "text": "Our Filipino guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through every step, from punla to pag aani ng palay. It covers the seedbed, direct seeding with tools like the palatak palay seeder, water, abono timing and the treser ng palay at harvest. To score your season, use the nine [PalayCheck key checks](/blog/palaycheck-key-checks).\n\nWeeds and pests can eat into your yield if you let them. Control weeds in the first 45 days, and watch for grasses, broadleaves and any sedge weed such as Cyperus iria. After that, watch for the [rice insects](/pests/rice-insects) that come with each stage. For nutrients, start with our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
     },
     {
       "type": "cta",
@@ -272,19 +272,19 @@
         },
         {
           "q": "What is the difference between palay and rice?",
-          "a": "Palay still has its hull. Rice, or bigas, is the grain after the mill removes the hull and the bran. At the PSA rate of 63 percent, 100 kg of dry palay gives about 63 kg of milled rice."
+          "a": "Palay still has its hull. Rice, or bigas, is the grain after the mill removes the hull and the bran. At the official rate of 63 percent, 100 kg of dry palay gives about 63 kg of milled rice."
         },
         {
           "q": "How many days does palay take to grow?",
-          "a": "IRRI groups short duration varieties at 100 to 120 days and medium ones at 120 to 140 days. Popular inbreds such as NSIC Rc 216 at 112 days and Rc 222 at 114 days after sowing are short duration."
+          "a": "Short duration varieties take 100 to 120 days and medium ones 120 to 140 days. Popular inbreds such as NSIC Rc 216 at 112 days and Rc 222 at 114 days after sowing are short duration."
         },
         {
           "q": "How do I know if rice seeds are certified?",
-          "a": "Look for a valid blue BPI NSQCS tag on the sack, and buy from accredited seed growers or through your DA office."
+          "a": "Look for a valid blue certified seed tag on the sack, and buy from accredited seed growers or through your DA office."
         },
         {
           "q": "How much rice does one cavan of palay make?",
-          "a": "A cavan of palay weighs about 50 kg. At the PSA milling recovery rate of 63 percent, that gives about 31.5 kg of milled rice. Your mill, the variety and the dryness of the grain change the result."
+          "a": "A cavan of palay weighs about 50 kg. At the official milling recovery rate of 63 percent, that gives about 31.5 kg of milled rice. Your mill, the variety and the dryness of the grain change the result."
         }
       ]
     },

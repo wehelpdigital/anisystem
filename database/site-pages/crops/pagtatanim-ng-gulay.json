@@ -6,7 +6,7 @@
   "category": "Vegetables",
   "title": "Pagtatanim ng Gulay: Hakbang Hakbang na Gabay Mula Punla Hanggang Ani",
   "metaTitle": "Pagtatanim ng Gulay: Gabay sa Bakuran at Bukid",
-  "metaDescription": "Gabay sa pagtatanim ng gulay sa bakuran at bukid: pagpili ng gulay, plots, punla, abono, dilig, peste at pag ani, batay sa mga gabay ng DA at ATI.",
+  "metaDescription": "Gabay sa pagtatanim ng gulay sa bakuran at bukid: pagpili ng gulay, plots, punla, abono, dilig, peste at pag ani, hakbang hakbang para sa baguhan.",
   "focusKeyword": "pagtatanim ng gulay",
   "keywords": [
     "pagtatanim ng gulay",
@@ -23,7 +23,7 @@
     "mais na gulay",
     "vegetables in the philippines"
   ],
-  "excerpt": "Mabilis ang balik ng pagtatanim ng gulay. Ang petsay ay puwede nang anihin lima hanggang pitong linggo mula sa paghahasik, sa bakuran man o sa bukid. Narito ang sunod sunod na hakbang, mula sa pagpili ng gulay at paghahanda ng kama hanggang sa abono, dilig, peste at pag ani, batay sa mga gabay ng Department of Agriculture (DA) at Agricultural Training Institute (ATI).",
+  "excerpt": "Mabilis ang balik ng pagtatanim ng gulay. Ang petsay ay puwede nang anihin lima hanggang pitong linggo mula sa paghahasik, sa bakuran man o sa bukid. Narito ang sunod sunod na hakbang, mula sa pagpili ng gulay at paghahanda ng kama hanggang sa abono, dilig, peste at pag ani.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-gulay.webp",
     "alt": "Magsasakang nagdidilig ng mga kama ng gulay sa Pulilan, Bulacan, isang halimbawa ng pagtatanim ng gulay sa bakuran",
@@ -32,7 +32,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Iisa ang simula ng lahat ng pagtatanim ng halaman: malusog na lupa, tamang binhi at tamang oras. Sa pagtatanim ng gulay, maikli ang siklo kaya mabilis mong makikita kung tama ang ginagawa mo. Puwede ang bakanteng lupa sa likod ng bahay o parte ng bukid na pahinga sa palay.\n\nAng mga dami dito ay galing sa mga gabay ng DA at ATI para sa lupang walang soil test. Kaya kung maaari, ipasuri ang lupa sa soils laboratory ng probinsya."
+      "text": "Iisa ang simula ng lahat ng pagtatanim ng halaman: malusog na lupa, tamang binhi at tamang oras. Sa pagtatanim ng gulay, maikli ang siklo kaya mabilis mong makikita kung tama ang ginagawa mo. Puwede ang bakanteng lupa sa likod ng bahay o parte ng bukid na pahinga sa palay.\n\nAng mga dami dito ay para sa lupang walang soil test. Kaya kung maaari, ipasuri ang lupa sa soils laboratory ng probinsya."
     },
     {
       "type": "heading",
@@ -41,7 +41,7 @@
     },
     {
       "type": "text",
-      "text": "Ayon sa gabay ng DA Bicol, piliin ang gulay na kinakain ng pamilya, bagay sa panahon, at matibay sa peste, tagtuyot at baha. Isama ang mga katutubong gulay tulad ng alugbati, saluyot, talinum at malunggay, dahil madali silang palaguin kahit walang kemikal."
+      "text": "Piliin ang gulay na kinakain ng pamilya, bagay sa panahon, at matibay sa peste, tagtuyot at baha. Isama ang mga katutubong gulay tulad ng alugbati, saluyot, talinum at malunggay, dahil madali silang palaguin kahit walang kemikal."
     },
     {
       "type": "list",
@@ -72,11 +72,11 @@
         },
         {
           "title": "Gumawa ng kama",
-          "text": "Ang karaniwang plot ay 1 metro ang lapad at kahit gaano kahaba. Sa petsay, ang gabay ng ATI Central Visayas ay gumagamit ng kamang 1 metro por 20 metro."
+          "text": "Ang karaniwang plot ay 1 metro ang lapad at kahit gaano kahaba. Sa petsay, karaniwan ang kamang 1 metro por 20 metro."
         },
         {
           "title": "Maglagay ng compost",
-          "text": "Ihalo ang 2 hanggang 4 na kilo ng compost bawat metro kwadrado ng kama, ayon sa gabay ng DA Cordillera sa organikong gulay."
+          "text": "Ihalo ang 2 hanggang 4 na kilo ng compost bawat metro kwadrado ng kama."
         },
         {
           "title": "Itaas ang kama kapag tag ulan",
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "Sa bakuran na walang lupa, puwede ang paso o container. Ang halo na gamit ng ATI Cordillera ay 1 parte garden soil, 1 parte ipa o carbonized rice hull, at 1 parte compost."
+      "text": "Sa bakuran na walang lupa, puwede ang paso o container. Ang karaniwang halo ay 1 parte garden soil, 1 parte ipa o carbonized rice hull, at 1 parte compost."
     },
     {
       "type": "heading",
@@ -104,7 +104,7 @@
     },
     {
       "type": "text",
-      "text": "Ang karaniwang pattern ng fertilizer for vegetables sa mga gabay ng DA ay tatlong bahagi. Una, organikong abono sa lupa bago magtanim. Pangalawa, complete fertilizer sa butas sa araw ng pagtatanim. Pangatlo, urea at potash habang lumalaki ang halaman."
+      "text": "Ang karaniwang pattern ng fertilizer for vegetables ay tatlong bahagi. Una, organikong abono sa lupa bago magtanim. Pangalawa, complete fertilizer sa butas sa araw ng pagtatanim. Pangatlo, urea at potash habang lumalaki ang halaman."
     },
     {
       "type": "heading",
@@ -113,11 +113,11 @@
     },
     {
       "type": "text",
-      "text": "Ang pinakasimpleng example of organic fertilizer ay compost. Ayon sa ATI Cordillera, tadtarin ang damo at tira ng gulay, itambak nang 1 metro ang lapad at 1 metro ang taas, baliktarin, at bantayan ang pagkabasa. Puwede na itong gamitin pagkalipas ng 2 hanggang 4 na linggo. Mahusay din ang vermicast at binulok na dumi ng manok, basta bulok na bulok na. Para sa iba pang halimbawa, basahin ang [organic fertilizer examples](/blog/organic-fertilizer-examples)."
+      "text": "Ang pinakasimpleng example of organic fertilizer ay compost. Tadtarin ang damo at tira ng gulay, itambak nang 1 metro ang lapad at 1 metro ang taas, baliktarin, at bantayan ang pagkabasa. Puwede na itong gamitin pagkalipas ng 2 hanggang 4 na linggo. Mahusay din ang vermicast at binulok na dumi ng manok, basta bulok na bulok na. Para sa iba pang halimbawa, basahin ang [organic fertilizer examples](/blog/organic-fertilizer-examples)."
     },
     {
       "type": "text",
-      "text": "**Fish amino acid fertilizer (FAA).** Mayaman ito sa nitrogen. Sa resipe ng ATI Cordillera, tadtarin ang 1 kilong isda kasama ang buto, hasang at lamang loob, at ilagay sa banga. Lagyan ng 1 kilong molasses o muscovado, takpan, at itabi sa malilim. Kunin ang katas pagkalipas ng 10 hanggang 15 araw at ilagay sa bote na may isang katlong puwang. Gamitin ang 2 kutsara bawat litro ng tubig at iispray tuwing 7 araw mula sa bagong tanim hanggang mamunga.\n\n**Eggshell as fertilizer.** Pinagkukunan ng calcium ang balat ng itlog para sa pamumulaklak at pamumunga. Sa resipe ng ATI Cordillera, durugin nang pino ang balat ng itlog at isangag hanggang mamula mulang kayumanggi, saka palamigin. Ilagay ang 2 hanggang 3 kutsara nito sa 1 litrong suka ng niyog o tubo, hintaying mawala ang maliliit na bula, takpan, at hayaang mag ferment nang 30 araw sa malamig at madilim na lugar. Salain, at gamitin ang 2 kutsara bawat litro ng tubig, tuwing 3 hanggang 7 araw habang namumunga."
+      "text": "**Fish amino acid fertilizer (FAA).** Mayaman ito sa nitrogen. Tadtarin ang 1 kilong isda kasama ang buto, hasang at lamang loob, at ilagay sa banga. Lagyan ng 1 kilong molasses o muscovado, takpan, at itabi sa malilim. Kunin ang katas pagkalipas ng 10 hanggang 15 araw at ilagay sa bote na may isang katlong puwang. Gamitin ang 2 kutsara bawat litro ng tubig at iispray tuwing 7 araw mula sa bagong tanim hanggang mamunga.\n\n**Eggshell as fertilizer.** Pinagkukunan ng calcium ang balat ng itlog para sa pamumulaklak at pamumunga. Durugin nang pino ang balat ng itlog at isangag hanggang mamula mulang kayumanggi, saka palamigin. Ilagay ang 2 hanggang 3 kutsara nito sa 1 litrong suka ng niyog o tubo, hintaying mawala ang maliliit na bula, takpan, at hayaang mag ferment nang 30 araw sa malamig at madilim na lugar. Salain, at gamitin ang 2 kutsara bawat litro ng tubig, tuwing 3 hanggang 7 araw habang namumunga."
     },
     {
       "type": "heading",
@@ -126,11 +126,11 @@
     },
     {
       "type": "text",
-      "text": "Kung gagamit ng inorganic, ang complete fertilizer 14 14 14 ang karaniwang basal. Ganito ang dami sa mga gabay ng DA at ATI:"
+      "text": "Kung gagamit ng inorganic, ang complete fertilizer 14 14 14 ang karaniwang basal. Ganito ang karaniwang dami:"
     },
     {
       "type": "table",
-      "caption": "Dami ng abono bawat gulay mula sa mga gabay ng DA at ATI",
+      "caption": "Dami ng abono bawat gulay",
       "rows": [
         [
           "Gulay",
@@ -160,7 +160,7 @@
         [
           "Petsay",
           "1 sakong dumi ng manok, 1 kilong 14 14 14 at 4 na kilong urea bawat kamang 20 metro",
-          "Ilagay lahat bilang basal at tabunan ng lupa, ayon sa ATI Central Visayas"
+          "Ilagay lahat bilang basal at tabunan ng lupa"
         ]
       ]
     },
@@ -178,9 +178,9 @@
       "ordered": false,
       "items": [
         "**Basal:** ihalo sa lupa bago magtanim o ilagay sa butas, saka tabunan ng kaunting compost o lupa para hindi dumikit sa ugat.",
-        "**Side dress:** ibaon ang abono nang 1 pulgada ang lalim, 3 hanggang 4 na pulgada mula sa puno ng halaman, gaya ng turo ng ATI Cordillera.",
+        "**Side dress:** ibaon ang abono nang 1 pulgada ang lalim, 3 hanggang 4 na pulgada mula sa puno ng halaman.",
         "**Foliar:** iispray sa dahon, gaya ng FAA na 2 kutsara bawat litro. Pandagdag lang ito sa abono sa lupa.",
-        "**Drench:** ibuhos ang timpla sa paanan ng halaman, halimbawa ang urea na tinunaw sa tubig, na 150 ml bawat butas sa gabay ng ATI para sa petsay."
+        "**Drench:** ibuhos ang timpla sa paanan ng halaman, halimbawa ang urea na tinunaw sa tubig, na 150 ml bawat butas para sa petsay."
       ]
     },
     {
@@ -194,7 +194,7 @@
     },
     {
       "type": "text",
-      "text": "Diligan agad ang bagong lipat na punla. Ayon sa ATI, ang okra at kalabasa ay dinidilig tuwing ikalawang araw at tuwing mag aabono. Sensitibo sa sobrang tubig ang kamatis, kaya basain lang ang paligid ng ugat.\n\nMaglagay ng mulch o kilib, gaya ng dayami o plastic mulch. Ayon sa DA Bicol, pinipigil nito ang damo at nakakatipid ng tubig."
+      "text": "Diligan agad ang bagong lipat na punla. Ang okra at kalabasa ay dinidilig tuwing ikalawang araw at tuwing mag aabono. Sensitibo sa sobrang tubig ang kamatis, kaya basain lang ang paligid ng ugat.\n\nMaglagay ng mulch o kilib, gaya ng dayami o plastic mulch. Pinipigil nito ang damo at nakakatipid ng tubig."
     },
     {
       "type": "heading",
@@ -203,7 +203,7 @@
     },
     {
       "type": "text",
-      "text": "Ang cutworm ay uod na nagtatago sa lupa sa araw at kumakain sa gabi, at madalas nitong pinuputol ang batang punla. Ang payo ng DA Bicol: hanapin at tirisin, mag spray ng botanical, at takpan ng net ang punla. Tingnan ang aming pahina sa [cutworm](/pests/cutworm).\n\nPara sa aphids, magtanim ng luya, marigold, basil o tanglad bilang pantaboy at gumamit ng yellow sticky trap. Sa langaw ng bunga ng ampalaya, balutin ng diyaryo ang batang bunga. Kung gagamit ng kemikal, siguraduhing rehistrado sa FPA at sundin ang label."
+      "text": "Ang cutworm ay uod na nagtatago sa lupa sa araw at kumakain sa gabi, at madalas nitong pinuputol ang batang punla. Ang lunas: hanapin at tirisin, mag spray ng botanical, at takpan ng net ang punla. Tingnan ang aming pahina sa [cutworm](/pests/cutworm).\n\nPara sa aphids, magtanim ng luya, marigold, basil o tanglad bilang pantaboy at gumamit ng yellow sticky trap. Sa langaw ng bunga ng ampalaya, balutin ng diyaryo ang batang bunga. Kung gagamit ng kemikal, siguraduhing rehistrado sa FPA at sundin ang label."
     },
     {
       "type": "callout",
@@ -218,7 +218,7 @@
     },
     {
       "type": "table",
-      "caption": "Kailan aanihin ang karaniwang gulay, mula sa mga gabay ng DA at ATI",
+      "caption": "Kailan aanihin ang karaniwang gulay",
       "rows": [
         [
           "Gulay",
@@ -275,11 +275,11 @@
       "items": [
         {
           "q": "Anong gulay ang pinakamadali para sa baguhan?",
-          "a": "Petsay, kangkong at okra ay mabilis at madali. Ayon sa DA Bicol, madali ring palaguin nang organiko ang alugbati, saluyot, talinum, malunggay, kalabasa at sayote."
+          "a": "Petsay, kangkong at okra ay mabilis at madali. Madali ring palaguin nang organiko ang alugbati, saluyot, talinum, malunggay, kalabasa at sayote."
         },
         {
           "q": "Gaano karaming complete fertilizer 14 14 14 bawat halaman?",
-          "a": "Mga 1 kutsara bawat butas sa kamatis, okra at kalabasa, ayon sa ATI Cordillera. Sa ampalaya, 20 gramo o 2 kutsara bawat butas ayon sa DA."
+          "a": "Mga 1 kutsara bawat butas sa kamatis, okra at kalabasa. Sa ampalaya, 20 gramo o 2 kutsara bawat butas."
         },
         {
           "q": "Paano gumawa ng fish amino acid fertilizer?",

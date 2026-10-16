@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Mais rice is not rice at all. It is the hard, starchy part of white corn kernels, cracked into pieces close to the size of rice grains. Cooks steam or boil it like rice and serve it with ulam.\n\nMarkets sell it under several names: mais rice, corn rice, corn grits, bigas mais, and bugas mais in Cebuano. Sellers sort the grits by size, so the grind can run from coarse to fine.\n\nWhite corn is a staple in parts of the Visayas and Mindanao. The DA Cagayan Valley corn guide also names northern Isabela and southern Cagayan as places where white corn is the daily food."
+      "text": "Mais rice is not rice at all. It is the hard, starchy part of white corn kernels, cracked into pieces close to the size of rice grains. Cooks steam or boil it like rice and serve it with ulam.\n\nMarkets sell it under several names: mais rice, corn rice, corn grits, bigas mais, and bugas mais in Cebuano. Sellers sort the grits by size, so the grind can run from coarse to fine.\n\nWhite corn is a staple in parts of the Visayas and Mindanao. In northern Isabela and southern Cagayan, white corn is also the daily food."
     },
     {
       "type": "heading",
@@ -46,11 +46,11 @@
         },
         {
           "title": "Harvest and dry",
-          "text": "Harvest at maturity and dry the ears to 18 to 20 percent moisture before shelling. Then dry the grain to 14 percent or lower for safe storage, as the DA guide advises."
+          "text": "Harvest at maturity and dry the ears to 18 to 20 percent moisture before shelling. Then dry the grain to 14 percent or lower for safe storage."
         },
         {
           "title": "Clean the grain",
-          "text": "Remove stones, dirt, broken and moldy kernels. Moldy corn can carry aflatoxin, and the DA guide sets 20 ppb as the limit for food corn."
+          "text": "Remove stones, dirt, broken and moldy kernels. Moldy corn can carry aflatoxin, and the limit for food corn is 20 ppb."
         },
         {
           "title": "Mill",
@@ -81,14 +81,14 @@
       "items": [
         "**More fiber.** In a Philippine study published in the Journal of Nutrition and Metabolism in 2010, pure quality protein maize (QPM) grits had 6.0 percent dietary fiber. Milled rice had 0.54 percent.",
         "**Lower blood sugar response.** The same study measured a glycemic index of about 80 for pure QPM grits, 93 for a rice and grits mix, and 120 for milled rice, with white bread set at 100. It was a small study of ten healthy women, so treat it as a good sign, not a cure.",
-        "**Better protein quality.** IPB Var 6, the white QPM variety UPLB promotes for grits, has more lysine and tryptophan than regular white corn.",
-        "**Gluten free.** Corn grits contain no gluten, as the National Nutrition Council points out.",
-        "**Cheaper than rice, by how much depends on the source.** In 2018, UPLB put good rice at about PHP 60 a kilo, pure corn grits at about PHP 33 and its 70 to 30 blend at about PHP 47. PhilRice reported a much smaller saving, about PHP 2 a kilo in some regions. Prices have moved since, so check your own market."
+        "**Better protein quality.** IPB Var 6, a white QPM variety used for grits, has more lysine and tryptophan than regular white corn.",
+        "**Gluten free.** Corn grits contain no gluten.",
+        "**Cheaper than rice, but the saving varies.** In 2018, good rice sold at about PHP 60 a kilo, pure corn grits at about PHP 33 and a 70 to 30 rice and grits blend at about PHP 47. Another report found a much smaller saving, about PHP 2 a kilo in some regions. Prices have moved since, so check your own market."
       ]
     },
     {
       "type": "text",
-      "text": "Portion still matters. The NNC reminds readers that eating too much of any staple, rice or corn, can lead to weight gain. If you have diabetes, ask your doctor or a registered nutritionist dietitian before you change your staple."
+      "text": "Portion still matters. Eating too much of any staple, rice or corn, can lead to weight gain. If you have diabetes, ask your doctor or a registered nutritionist dietitian before you change your staple."
     },
     {
       "type": "callout",
@@ -173,7 +173,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Start with a blend.** UPLB promotes a rice and corn blend called RiCo, with 70 parts rice to 30 parts corn grits. A PhilRice report also mentions 50 to 50 blends in a cooking demonstration.",
+        "**Start with a blend.** One rice and corn blend, called RiCo, uses 70 parts rice to 30 parts corn grits. Some cooking demonstrations also use 50 to 50 blends.",
         "**Cook them together.** Rinse the grits, mix them with the rice and cook them in the same pot.",
         "**Store it dry.** Keep the grits sealed and dry so they do not turn moldy or weevily."
       ]
@@ -207,11 +207,11 @@
         },
         {
           "q": "Can I mix corn grits with white rice?",
-          "a": "Yes. UPLB's RiCo blend uses 70 parts rice to 30 parts corn grits."
+          "a": "Yes. The RiCo blend uses 70 parts rice to 30 parts corn grits."
         },
         {
           "q": "Which corn makes the best grits?",
-          "a": "Hard white flint corn. IPB Var 6 is one variety that UPLB promotes for grits."
+          "a": "Hard white flint corn. IPB Var 6 is one variety grown for grits."
         }
       ]
     },

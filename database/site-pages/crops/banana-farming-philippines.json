@@ -15,7 +15,7 @@
     "fusarium wilt",
     "fertilizer for coconut"
   ],
-  "excerpt": "Banana farming in the Philippines runs from export Cavendish plantations in Davao to a few mats of saba behind the house. Bananas fruit all year and sell fresh, cooked or as chips. But the crop also faces one of the most damaging banana diseases, Fusarium wilt TR4. Here is how to choose a variety, plant it, feed it and protect it, based on DA, BPI, PCA and PCAARRD guidance.",
+  "excerpt": "Banana farming in the Philippines runs from export Cavendish plantations in Davao to a few mats of saba behind the house. Bananas fruit all year and sell fresh, cooked or as chips. But the crop also faces one of the most damaging banana diseases, Fusarium wilt TR4. Here is how to choose a variety, plant it, feed it and protect it.",
   "heroImage": {
     "src": "/images/site/guides/crops-banana-farming-philippines.webp",
     "alt": "Banana plants with bagged bunches on both sides of a farm road in Panabo City, with two men cycling down it",
@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Mindanao grows most of the country's bananas. DA figures for the third quarter of 2017 gave Davao Region 38.6 percent of national production, followed by Northern Mindanao at 21.5 percent and SOCCSKSARGEN at 12.2 percent. Cavendish made up 51.7 percent of all bananas, saba 28.0 percent and lakatan 10.5 percent.\n\nBut banana farming in the Philippines is not only for plantations. Saba and lakatan grow well on small farms, under coconuts and along farm boundaries."
+      "text": "Mindanao grows most of the country's bananas. In the third quarter of 2017, Davao Region had 38.6 percent of national production, followed by Northern Mindanao at 21.5 percent and SOCCSKSARGEN at 12.2 percent. Cavendish made up 51.7 percent of all bananas, saba 28.0 percent and lakatan 10.5 percent.\n\nBut banana farming in the Philippines is not only for plantations. Saba and lakatan grow well on small farms, under coconuts and along farm boundaries."
     },
     {
       "type": "text",
@@ -37,7 +37,7 @@
     },
     {
       "type": "table",
-      "caption": "Main commercial bananas and their maturity for the local market, from the DA banana production manual",
+      "caption": "Main commercial bananas and their maturity for the local market",
       "rows": [
         [
           "Variety",
@@ -73,7 +73,7 @@
     },
     {
       "type": "text",
-      "text": "Choose by market. Cavendish needs packing houses and buyers who export, so it suits contract growers. Lakatan is the premium dessert banana in local markets. Saba is the hardy one. The DA manual notes it resists the major leaf diseases, but it is prone to bugtok."
+      "text": "Choose by market. Cavendish needs packing houses and buyers who export, so it suits contract growers. Lakatan is the premium dessert banana in local markets. Saba is the hardy one. It resists the major leaf diseases, but it is prone to bugtok."
     },
     {
       "type": "heading",
@@ -82,11 +82,11 @@
     },
     {
       "type": "text",
-      "text": "Start clean, because most banana diseases arrive with the planting material. The DA recommends disease free tissue culture plantlets or sword leaf suckers. For saba, the BPI guide uses suckers 3 to 4 feet tall from healthy clumps. Their roots should be free of nematode knots and borer damage.\n\nDig holes 50 to 60 cm across and 60 to 80 cm deep. Plant at the start of the rainy season if your area has a distinct dry season. The DA also suggests east to west rows so every row gets even sunlight. Avoid spots hit often by strong winds, because banana plants are sensitive to them and need windbreaks where storms are common."
+      "text": "Start clean, because most banana diseases arrive with the planting material. Use disease free tissue culture plantlets or sword leaf suckers. For saba, use suckers 3 to 4 feet tall from healthy clumps. Their roots should be free of nematode knots and borer damage.\n\nDig holes 50 to 60 cm across and 60 to 80 cm deep. Plant at the start of the rainy season if your area has a distinct dry season. Lay out the rows east to west so every row gets even sunlight. Avoid spots hit often by strong winds, because banana plants are sensitive to them and need windbreaks where storms are common."
     },
     {
       "type": "table",
-      "caption": "Planting distance for bananas, from the DA banana manual and the BPI saba guide",
+      "caption": "Planting distance for bananas",
       "rows": [
         [
           "Variety",
@@ -117,7 +117,7 @@
     },
     {
       "type": "text",
-      "text": "After the first harvest, remove the excess suckers, as the DA advises. That keeps the plant population right and stops the mother and her suckers from fighting for water and food."
+      "text": "After the first harvest, remove the excess suckers. That keeps the plant population right and stops the mother and her suckers from fighting for water and food."
     },
     {
       "type": "heading",
@@ -126,12 +126,12 @@
     },
     {
       "type": "text",
-      "text": "Bananas take out far more potassium than any other nutrient. According to the DA manual, a field that yields 30 tons per hectare removes 175 to 225 kg of potassium (as K2O), but only 50 to 75 kg of nitrogen and 15 to 20 kg of phosphorus. That is why the key input is a fertilizer with high potassium.\n\nThe usual choice is muriate of potash, 0 0 60, the most common potash fertilizer in farm stores. Without a soil test, the DA general rate is 90 30 120 of nitrogen, phosphorus and potassium, so potassium gets the biggest share. The DA says monthly application gives the crop steady nutrition. Apply on moist soil, and on the uphill side of the plant in rolling areas."
+      "text": "Bananas take out far more potassium than any other nutrient. A field that yields 30 tons per hectare removes 175 to 225 kg of potassium (as K2O), but only 50 to 75 kg of nitrogen and 15 to 20 kg of phosphorus. That is why the key input is a fertilizer with high potassium.\n\nThe usual choice is muriate of potash, 0 0 60, the most common potash fertilizer in farm stores. Without a soil test, the general rate is 90 30 120 of nitrogen, phosphorus and potassium, so potassium gets the biggest share. Monthly application gives the crop steady nutrition. Apply on moist soil, and on the uphill side of the plant in rolling areas."
     },
     {
       "type": "callout",
       "tone": "info",
-      "title": "The BPI program for saba",
+      "title": "A fertilizer program for saba",
       "text": "For one hectare of saba in its first year, mix 3.5 bags of complete fertilizer (14 14 14), 3 bags of urea and 10 bags of muriate of potash. Apply 440 grams of the mix per hill every 4 months, and double the rate from the second year. Read more about [potash fertilizer](/blog/potash-fertilizer)."
     },
     {
@@ -141,7 +141,7 @@
     },
     {
       "type": "text",
-      "text": "PCA promotes bananas as an intercrop under coconuts one to three years old, and under old palms of 25 years and above. Its guide spaces lakatan and latundan at 3 by 3 meters and saba at 5 by 5 meters. The coconut palms get their own fertilizer for coconut, ammonium sulfate and salt, on a schedule separate from the bananas. See our [coconut fertilizer guide](/crops/coconut-fertilizer) for those rates."
+      "text": "Bananas make a good intercrop under coconuts one to three years old, and under old palms of 25 years and above. Space lakatan and latundan at 3 by 3 meters and saba at 5 by 5 meters. The coconut palms get their own fertilizer for coconut, ammonium sulfate and salt, on a schedule separate from the bananas. See our [coconut fertilizer guide](/crops/coconut-fertilizer) for those rates."
     },
     {
       "type": "heading",
@@ -150,7 +150,7 @@
     },
     {
       "type": "text",
-      "text": "A soil fungus, Fusarium oxysporum f. sp. cubense, causes Fusarium wilt. Researchers have found its Tropical Race 4 strain, TR4, in Mindanao since 2009. A 2019 study found it on about 15,500 hectares in Davao Region by 2015, 32 percent of the Cavendish area there. The DA also records the wilt on latundan, lakatan and pitogo.\n\nWatch for these signs from the DA manual: dead leaves hanging down the trunk like a skirt, a dying heart leaf, and a pseudostem split near the ground. Cut the corm and you see yellow, red or brown streaks in the vascular strands."
+      "text": "A soil fungus, Fusarium oxysporum f. sp. cubense, causes Fusarium wilt. Researchers have found its Tropical Race 4 strain, TR4, in Mindanao since 2009. A 2019 study found it on about 15,500 hectares in Davao Region by 2015, 32 percent of the Cavendish area there. The wilt also strikes latundan, lakatan and pitogo.\n\nWatch for these signs: dead leaves hanging down the trunk like a skirt, a dying heart leaf, and a pseudostem split near the ground. Cut the corm and you see yellow, red or brown streaks in the vascular strands."
     },
     {
       "type": "text",
@@ -164,13 +164,13 @@
         "Put foot baths with disinfectant at the farm gate and tire dips at vehicle entrances.",
         "Clean every tool and machine that comes from another farm.",
         "If you suspect TR4, call your DA or municipal agriculture office right away.",
-        "The DA manual says to remove the sick plant and the mats within 2.5 meters of it within 24 hours of confirmation, then burn them with rice hull.",
+        "Remove the sick plant and the mats within 2.5 meters of it within 24 hours of confirmation, then burn them with rice hull.",
         "Fence the spot, fallow it for 6 months, and replant with clean, preferably tolerant, plantlets."
       ]
     },
     {
       "type": "text",
-      "text": "Research is moving. PCAARRD reports that two Cavendish somaclones, GCTCV 218 and GCTCV 219, did well against TR4 in Mindanao trials. GCTCV 219 was highly resistant but formed poor hands, while GCTCV 218 gave better bunches. The DA also formed a Task Force Fusarium with banana companies and local governments."
+      "text": "Research is moving. Two Cavendish somaclones, GCTCV 218 and GCTCV 219, did well against TR4 in Mindanao trials. GCTCV 219 was highly resistant but formed poor hands, while GCTCV 218 gave better bunches. The DA also formed a Task Force Fusarium with banana companies and local governments."
     },
     {
       "type": "heading",
@@ -184,7 +184,7 @@
     },
     {
       "type": "text",
-      "text": "Sigatoka (Mycosphaerella musicola) and the stronger black leaf streak (Mycosphaerella fijiensis) start as small streaks on the third or fourth leaf. Later they kill whole leaves. The DA advises removing diseased leaves, draining waterlogged spots and feeding the plant well. When needed, the DA manual sprays a contact or systemic [fungicide](/blog/fungicides) on the candle leaf and open leaves every 10 to 15 days. Use only a product registered with the FPA for banana, and follow its label for rate and interval. The manual also says to keep 8 to 15 working leaves per plant."
+      "text": "Sigatoka (Mycosphaerella musicola) and the stronger black leaf streak (Mycosphaerella fijiensis) start as small streaks on the third or fourth leaf. Later they kill whole leaves. Remove diseased leaves, drain waterlogged spots and feed the plant well. When needed, spray a contact or systemic [fungicide](/blog/fungicides) on the candle leaf and open leaves every 10 to 15 days. Use only a product registered with the FPA for banana, and follow its label for rate and interval. Keep 8 to 15 working leaves per plant."
     },
     {
       "type": "heading",
@@ -193,7 +193,7 @@
     },
     {
       "type": "text",
-      "text": "Banana bunchy top is a virus spread by the banana aphid, Pentalonia nigronervosa. Early signs are dark green dashes at the base of new leaves. Later the leaves bunch into a rosette at the top and the plant stops growing. There is no cure. The DA method is to spray the aphids on plants within 6 meters first, then dig out and chop the sick plant. Replant with clean material 3 to 5 days later. See our page on [aphids](/pests/hanip-mites-and-aphids)."
+      "text": "Banana bunchy top is a virus spread by the banana aphid, Pentalonia nigronervosa. Early signs are dark green dashes at the base of new leaves. Later the leaves bunch into a rosette at the top and the plant stops growing. There is no cure. First spray the aphids on plants within 6 meters, then dig out and chop the sick plant. Replant with clean material 3 to 5 days later. See our page on [aphids](/pests/hanip-mites-and-aphids)."
     },
     {
       "type": "heading",
@@ -211,7 +211,7 @@
     },
     {
       "type": "text",
-      "text": "Count the weeks from shooting, when the bunch comes out, using the table above. The fingers also turn from angular to rounded as they fill. Chip makers want saba green mature, at least 118 to 125 days after the male bud comes off.\n\nHarvest with two people. One cuts the pseudostem partway so the bunch comes down slowly, while the other catches it on his shoulder. Then the DA manual says to leave 2 to 3 meters of the trunk standing to feed the growing suckers."
+      "text": "Count the weeks from shooting, when the bunch comes out, using the table above. The fingers also turn from angular to rounded as they fill. Chip makers want saba green mature, at least 118 to 125 days after the male bud comes off.\n\nHarvest with two people. One cuts the pseudostem partway so the bunch comes down slowly, while the other catches it on his shoulder. Then leave 2 to 3 meters of the trunk standing to feed the growing suckers."
     },
     {
       "type": "cta",
@@ -229,7 +229,7 @@
       "items": [
         {
           "q": "How far apart should I plant lakatan?",
-          "a": "The DA manual gives 2.0 by 2.5 meters, about 2,000 mats per hectare, or a wider 3 by 3 meters, about 1,111 mats per hectare."
+          "a": "Plant them 2.0 by 2.5 meters apart, about 2,000 mats per hectare, or a wider 3 by 3 meters, about 1,111 mats per hectare."
         },
         {
           "q": "What is the best fertilizer for bananas?",
@@ -241,7 +241,7 @@
         },
         {
           "q": "Can I plant bananas under coconut?",
-          "a": "Yes. PCA recommends bananas under coconuts one to three years old or 25 years and older. Space lakatan at 3 by 3 meters and saba at 5 by 5 meters."
+          "a": "Yes. Bananas grow well under coconuts one to three years old or 25 years and older. Space lakatan at 3 by 3 meters and saba at 5 by 5 meters."
         }
       ]
     },

@@ -6,7 +6,7 @@
   "category": "Mais",
   "title": "Corn Kernel: Parts of the Corn Plant, Kinds, Uses and Price",
   "metaTitle": "Corn Kernel: Parts, Kinds, Uses and Price in the Philippines",
-  "metaDescription": "What is a corn kernel? See the parts of the corn plant and ear, how each kernel forms, the kinds of mais, their uses and the June 2026 PSA corn prices.",
+  "metaDescription": "What is a corn kernel? See the parts of the corn plant and ear, how each kernel forms, the kinds of mais, their uses and the June 2026 corn prices.",
   "focusKeyword": "corn kernel",
   "keywords": [
     "corn kernel",
@@ -28,7 +28,7 @@
     "corn breed",
     "corn seed grow a garden roblox"
   ],
-  "excerpt": "A corn kernel is both the seed and the grain of the corn plant. Farmers plant it, feed mills buy it and families cook it as mais. This guide explains the parts of the corn plant and ear and how each kernel forms. It also covers the kinds grown in the Philippines, their uses from feeds to corn flakes, and the latest corn kernel price from the PSA.",
+  "excerpt": "A corn kernel is both the seed and the grain of the corn plant. Farmers plant it, feed mills buy it and families cook it as mais. This guide explains the parts of the corn plant and ear and how each kernel forms. It also covers the kinds grown in the Philippines, their uses from feeds to corn flakes, and the latest corn kernel price.",
   "heroImage": {
     "src": "/images/site/guides/crops-corn-kernel.webp",
     "alt": "An ear of white corn with the husk pulled back to show rows of corn kernels and the silk at the tip",
@@ -106,7 +106,7 @@
     },
     {
       "type": "text",
-      "text": "In Tagalog the corn husk is balat ng mais, the silk is buhok ng mais and the cob is busal. The husk also tells you when to harvest. When the husk and some leaves turn from green to dry, and a black layer forms at the base of the kernels, the grain has reached maturity, according to the DA Cagayan Valley corn techno guide.\n\nAfter harvest, husks still have uses. Cooks in Bukidnon and Bogo, Cebu wrap binaki, a steamed sweet corn cake, in corn husks. Dry husks also go to cattle and goats, into compost, or into handicrafts."
+      "text": "In Tagalog the corn husk is balat ng mais, the silk is buhok ng mais and the cob is busal. The husk also tells you when to harvest. When the husk and some leaves turn from green to dry, and a black layer forms at the base of the kernels, the grain has reached maturity.\n\nAfter harvest, husks still have uses. Cooks in Bukidnon and Bogo, Cebu wrap binaki, a steamed sweet corn cake, in corn husks. Dry husks also go to cattle and goats, into compost, or into handicrafts."
     },
     {
       "type": "heading",
@@ -115,7 +115,7 @@
     },
     {
       "type": "text",
-      "text": "Corn flowers only once, and those few days decide how full each cob will be. Fertilization occurs when a grain of pollen from the tassel lands on a fresh silk. The pollen grows a tube down the silk to its ovule, and fertilization follows within about 24 hours, based on Iowa State University extension.\n\nEvery ovule on the ear has its own silk. So one silk that catches pollen gives one corn kernel, while a silk that misses leaves a gap on the cob. Silks stay receptive for about ten days, and a whole field sheds pollen over roughly 10 to 14 days.\n\nDrought or poor nutrition at this stage delays silking more than pollen shed, so the ear ends up with poor seed set. That is why the DA guide names the reproductive stage as the time to give supplemental water. On anee.io, the [growth stages](/features/growth-stages-and-weather) view shows which lots are near tasseling and silking on any date you pick, along with the weather forecast for each lot."
+      "text": "Corn flowers only once, and those few days decide how full each cob will be. Fertilization occurs when a grain of pollen from the tassel lands on a fresh silk. The pollen grows a tube down the silk to its ovule, and fertilization follows within about 24 hours.\n\nEvery ovule on the ear has its own silk. So one silk that catches pollen gives one corn kernel, while a silk that misses leaves a gap on the cob. Silks stay receptive for about ten days, and a whole field sheds pollen over roughly 10 to 14 days.\n\nDrought or poor nutrition at this stage delays silking more than pollen shed, so the ear ends up with poor seed set. That is why the reproductive stage is the time to give supplemental water. On anee.io, the [growth stages](/features/growth-stages-and-weather) view shows which lots are near tasseling and silking on any date you pick, along with the weather forecast for each lot."
     },
     {
       "type": "heading",
@@ -184,7 +184,7 @@
     },
     {
       "type": "text",
-      "text": "Gulay na mais, also said mais na gulay, means corn picked green and cooked as a vegetable. Glutinous and sweet corn fill this market. The DA Cagayan Valley guide notes that green glutinous corn, boiled or roasted, is a popular snack and also goes into soups and vegetable dishes.\n\nAt home that means nilagang mais, sinabawang mais with malunggay, and ginataang mais. For a bigger green ear, the same guide suggests a wider spacing of 30 by 75 centimeters."
+      "text": "Gulay na mais, also said mais na gulay, means corn picked green and cooked as a vegetable. Glutinous and sweet corn fill this market. Green glutinous corn, boiled or roasted, is a popular snack and also goes into soups and vegetable dishes.\n\nAt home that means nilagang mais, sinabawang mais with malunggay, and ginataang mais. For a bigger green ear, use a wider spacing of 30 by 75 centimeters."
     },
     {
       "type": "heading",
@@ -193,11 +193,11 @@
     },
     {
       "type": "text",
-      "text": "Buyers quote corn per kilo of shelled grain, and the price moves with the season. Below are national farmgate averages from the Philippine Statistics Authority (PSA) OpenSTAT table. June 2026 was the latest month listed when we checked, and June 2025 sits beside it for comparison. Open the table for newer months."
+      "text": "Buyers quote corn per kilo of shelled grain, and the price moves with the season. Below are national farmgate averages. June 2026 was the latest month when we checked, and June 2025 sits beside it for comparison."
     },
     {
       "type": "table",
-      "caption": "National average farmgate prices, PSA OpenSTAT cereals table, June 2025 and June 2026",
+      "caption": "National average farmgate prices, June 2025 and June 2026",
       "rows": [
         [
           "Commodity",
@@ -223,7 +223,7 @@
     },
     {
       "type": "text",
-      "text": "Your own corn kernel price can sit far from these averages. Buyers pay less for wet grain, broken kernels, dirt and moldy corn. The DA guide recommends drying grain to 14 percent moisture or lower for safe storage. It also gives aflatoxin limits of 20 ppb for food corn and 50 ppb for feeds. Distance to the buyer matters too, and prices often dip when every maisan in the area harvests at once.\n\nOn the paid plans of anee.io, the [farm reports](/features/farm-reports) keep each buyer, price and yield per season, so next year you can compare. For rice prices, see our [palay price guide](/blog/palay-price-philippines)."
+      "text": "Your own corn kernel price can sit far from these averages. Buyers pay less for wet grain, broken kernels, dirt and moldy corn. Dry the grain to 14 percent moisture or lower for safe storage. The aflatoxin limits are 20 ppb for food corn and 50 ppb for feeds. Distance to the buyer matters too, and prices often dip when every maisan in the area harvests at once.\n\nOn the paid plans of anee.io, the [farm reports](/features/farm-reports) keep each buyer, price and yield per season, so next year you can compare. For rice prices, see our [palay price guide](/blog/palay-price-philippines)."
     },
     {
       "type": "callout",

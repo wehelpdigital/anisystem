@@ -6,7 +6,7 @@
   "category": "Mais",
   "title": "Corn Seeds: How to Choose, Plant and Grow an Even Stand",
   "metaTitle": "Corn Seeds: Choosing Varieties, Seeding Rate and Spacing",
-  "metaDescription": "Choose corn seeds that fit your field and buyer: hybrid, OPV or GM, yellow or white. Get DA seeding rates, spacing and tips for strong corn seedlings.",
+  "metaDescription": "Choose corn seeds that fit your field and buyer: hybrid, OPV or GM, yellow or white. Get seeding rates, spacing and tips for strong corn seedlings.",
   "focusKeyword": "corn seeds",
   "keywords": [
     "corn seeds",
@@ -19,7 +19,7 @@
     "when fertilization occurs",
     "corn seed grow a garden roblox"
   ],
-  "excerpt": "The corn seeds you plant limit how well the crop can do, whatever you spend on fertilizer later. This guide covers the kinds of seed sold in the Philippines. It shows how to pick a variety of corn for your field and your buyer. It also gives the seeding rate and spacing from the DA, and the care that turns seed into an even stand of corn seedlings.",
+  "excerpt": "The corn seeds you plant limit how well the crop can do, whatever you spend on fertilizer later. This guide covers the kinds of seed sold in the Philippines. It shows how to pick a variety of corn for your field and your buyer. It also gives the usual seeding rate and spacing, and the care that turns seed into an even stand of corn seedlings.",
   "heroImage": {
     "src": "/images/site/corn-rows.jpg",
     "alt": "Even rows of young corn plants grown from corn seeds in a freshly weeded field",
@@ -46,7 +46,7 @@
     },
     {
       "type": "text",
-      "text": "Most yellow corn planted for feeds is hybrid. Hybrids come as single cross or three way cross seed, and they pay back good soil, fertilizer and water with higher yields. The DA Cagayan Valley techno guide lists hybrids with yield potentials of about 5 to 13 tons per hectare. Its open pollinated varieties range from about 4 to 6 tons.\n\nThe catch is that you must buy new seed every season. Seed saved from a hybrid does not breed true, so the next crop comes out uneven and yields less."
+      "text": "Most yellow corn planted for feeds is hybrid. Hybrids come as single cross or three way cross seed, and they pay back good soil, fertilizer and water with higher yields. Common hybrids have yield potentials of about 5 to 13 tons per hectare. Open pollinated varieties range from about 4 to 6 tons.\n\nThe catch is that you must buy new seed every season. Seed saved from a hybrid does not breed true, so the next crop comes out uneven and yields less."
     },
     {
       "type": "heading",
@@ -55,7 +55,7 @@
     },
     {
       "type": "text",
-      "text": "OPVs are the usual choice for white corn, glutinous corn and many upland farms. Yields are lower, but seed costs less and you can keep your own seed if you select good ears and plant away from other corn. One example is IPB Var 6, a white quality protein maize from the Institute of Plant Breeding at UPLB. It has more lysine and tryptophan than regular white corn, and UPLB promotes it for grits."
+      "text": "OPVs are the usual choice for white corn, glutinous corn and many upland farms. Yields are lower, but seed costs less and you can keep your own seed if you select good ears and plant away from other corn. One example is IPB Var 6, a white quality protein maize. It has more lysine and tryptophan than regular white corn, and it is a good pick for grits."
     },
     {
       "type": "heading",
@@ -64,7 +64,7 @@
     },
     {
       "type": "text",
-      "text": "The Philippines approved genetically modified corn for planting in 2002, the first country in Asia to approve a GM crop for food and feed. Two traits matter in the field. Bt protects the plant from the Asiatic corn borer, while herbicide tolerance lets you control weeds with one broad spectrum herbicide.\n\nGM corn covered about 709,000 hectares by February 2024, based on the USDA 2024 biotechnology report. That is around 85 percent of the country's corn area. Nearly all of it carries both traits stacked. The Bureau of Plant Industry keeps the official list of GM corn events approved for planting."
+      "text": "The Philippines approved genetically modified corn for planting in 2002, the first country in Asia to approve a GM crop for food and feed. Two traits matter in the field. Bt protects the plant from the Asiatic corn borer, while herbicide tolerance lets you control weeds with one broad spectrum herbicide.\n\nGM corn covered about 709,000 hectares by February 2024. That is around 85 percent of the country's corn area. Nearly all of it carries both traits stacked. The Bureau of Plant Industry keeps the official list of GM corn events approved for planting."
     },
     {
       "type": "heading",
@@ -77,8 +77,8 @@
       "items": [
         "**Start with your buyer.** Feed mills and traders want yellow corn. Grits millers want white flint corn. Green corn buyers want sweet or glutinous ears, so plant what someone near you will buy.",
         "**Match the season.** Corn matures in about 95 to 120 days after planting, depending on variety, season and location. A shorter maturing variety fits a tight dry season window better.",
-        "**Read the resistance.** Seed tags and DA variety lists rate resistance to corn borer, earworm and leaf diseases. Pick resistance to the problems your area already has.",
-        "**Buy certified seed.** The DA guide recommends certified seeds. Buy sealed bags from an accredited dealer or through your municipal agriculture office, and check the variety name and lot number on the tag.",
+        "**Read the resistance.** Seed tags and variety lists rate resistance to corn borer, earworm and leaf diseases. Pick resistance to the problems your area already has.",
+        "**Buy certified seed.** Get sealed bags from an accredited dealer or through your municipal agriculture office, and check the variety name and lot number on the tag.",
         "**Ask what worked next door.** Farmers often say corn breed when they mean variety. One that did well on your neighbor's soil, in your weather, is a safer bet than a new name you have never seen grow."
       ]
     },
@@ -93,11 +93,11 @@
     },
     {
       "type": "text",
-      "text": "The seeding rate depends on the seed type and the plant population you want. These figures come from the DA Regional Field Office 2 corn techno guide. If the seed company gives different numbers on the bag, follow the bag for that hybrid."
+      "text": "The seeding rate depends on the seed type and the plant population you want. If the seed company gives different numbers on the bag, follow the bag for that hybrid."
     },
     {
       "type": "table",
-      "caption": "Seeding rate and spacing from the DA Cagayan Valley corn techno guide (revised 2012)",
+      "caption": "Seeding rate and spacing by seed type",
       "rows": [
         [
           "Seed type",
@@ -124,7 +124,7 @@
     },
     {
       "type": "text",
-      "text": "Plant one seed per hill after setting the furrows, and cover it with about 3.5 cm of soil. If you grow green corn and want bigger ears, the same guide suggests a wider 30 by 75 cm spacing.\n\nAlso try to plant at the same time as the farms around you. Synchronous planting is the first control the DA lists against the corn borer."
+      "text": "Plant one seed per hill after setting the furrows, and cover it with about 3.5 cm of soil. If you grow green corn and want bigger ears, use a wider 30 by 75 cm spacing.\n\nAlso try to plant at the same time as the farms around you. Synchronous planting is the first control against the corn borer."
     },
     {
       "type": "heading",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "In warm soil a corn seedling can break the surface in as little as four days after planting, according to Purdue University. Crusted, cloddy or compacted soil slows or stops emergence, so prepare a fine, even seedbed before you plant.\n\nAbout a week after planting, walk the rows and count missing hills. Then replant the gaps quickly so the whole stand grows and ripens together."
+      "text": "In warm soil a corn seedling can break the surface in as little as four days after planting. Crusted, cloddy or compacted soil slows or stops emergence, so prepare a fine, even seedbed before you plant.\n\nAbout a week after planting, walk the rows and count missing hills. Then replant the gaps quickly so the whole stand grows and ripens together."
     },
     {
       "type": "list",
@@ -175,7 +175,7 @@
       "items": [
         {
           "q": "How many kilos of corn seeds do I need per hectare?",
-          "a": "The DA Cagayan Valley guide lists 22 to 24 kg of hybrid seed or about 20 kg of OPV seed per hectare. Also check the seed bag, because companies set spacing for their own hybrids."
+          "a": "The usual rate is 22 to 24 kg of hybrid seed or about 20 kg of OPV seed per hectare. Also check the seed bag, because companies set spacing for their own hybrids."
         },
         {
           "q": "Can I plant seeds from my hybrid corn harvest?",
@@ -183,7 +183,7 @@
         },
         {
           "q": "Which variety of corn is best for mais rice?",
-          "a": "Hard white flint corn. UPLB promotes IPB Var 6, a white quality protein maize, for grits. See our [mais rice](/crops/mais-rice) page."
+          "a": "Hard white flint corn. IPB Var 6, a white quality protein maize, is a good pick for grits. See our [mais rice](/crops/mais-rice) page."
         },
         {
           "q": "Is this about the corn seed in Grow a Garden on Roblox?",

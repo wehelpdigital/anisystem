@@ -6,7 +6,7 @@
   "category": "Palay",
   "title": "Pagtatanim ng Palay: Gabay Mula Punla Hanggang Pag Aani",
   "metaTitle": "Pagtatanim ng Palay: Step by Step na Gabay sa Bukid",
-  "metaDescription": "Gabay sa pagtatanim ng palay: lupa, punla, lipat tanim o sabog, tubig, abono, damo, peste, pag aani at treser ayon sa PalayCheck System ng PhilRice.",
+  "metaDescription": "Gabay sa pagtatanim ng palay: lupa, punla, lipat tanim o sabog, tubig, abono, damo, peste, pag aani at treser, hakbang hakbang sa bukid.",
   "focusKeyword": "pagtatanim ng palay",
   "keywords": [
     "pagtatanim ng palay",
@@ -30,7 +30,7 @@
     "palay farming",
     "pang ani ng palay"
   ],
-  "excerpt": "Ang pagtatanim ng palay ay hindi lang pagbaon ng punla sa putik. Sunod sunod na desisyon ito mula sa binhi hanggang sa pag aani, at bawat mali ay bawas sa ani. Heto ang buong proseso, hakbang hakbang, batay sa PalayCheck System ng PhilRice.",
+  "excerpt": "Ang pagtatanim ng palay ay hindi lang pagbaon ng punla sa putik. Sunod sunod na desisyon ito mula sa binhi hanggang sa pag aani, at bawat mali ay bawas sa ani. Heto ang buong proseso, hakbang hakbang.",
   "heroImage": {
     "src": "/images/site/photos/transplant.jpg",
     "alt": "Pagtatanim ng palay: isang magsasakang may hawak na cellphone sa binahang bukid, kung saan naglilipat ng punla ang ibang manggagawa",
@@ -39,7 +39,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Galing sa PalayCheck 2022 revised edition ng PhilRice at sa IRRI ang mga numero dito. Iba iba ang lupa at tubig sa bawat bayan, kaya gamitin ito bilang gabay sa pagtatanim ng palay (palay farming), pero itanong pa rin sa inyong municipal agriculturist kung ano ang bagay sa lugar ninyo."
+      "text": "Iba iba ang lupa at tubig sa bawat bayan, kaya gamitin ito bilang gabay sa pagtatanim ng palay (palay farming), pero itanong pa rin sa inyong municipal agriculturist kung ano ang bagay sa lugar ninyo."
     },
     {
       "type": "heading",
@@ -48,7 +48,7 @@
     },
     {
       "type": "text",
-      "text": "Dito nagsisimula ang ani. Ayon sa PalayCheck, ang dekalidad na binhi na may germination na 85 percent pataas ay puwedeng magdagdag ng 10 percent o higit pa sa ani. Kaya bumili ng certified rice seed na may valid na blue tag ng BPI NSQCS mula sa accredited seed grower.\n\nSa pagpili ng rice variety, tingnan kung bagay ito sa inyong bukid (irrigated o rainfed), sa season at sa problema sa lugar gaya ng bagyo o baha. Halimbawa, ang rice variety na NSIC Rc 216 (Tubigan 17) ay nahihinog sa 112 araw mula sa pagpupunla kapag lipat tanim, ayon sa PhilRice. Ang NSIC Rc 222 naman ang inirerekomenda ng PalayCheck sa Central Luzon para sa dry at wet season.\n\nPara makita ang bawat variety of rice in the Philippines na may maturity at yield, basahin ang aming [gabay sa rice varieties](/crops/rice-varieties-philippines)."
+      "text": "Dito nagsisimula ang ani. Ang dekalidad na binhi na may germination na 85 percent pataas ay puwedeng magdagdag ng 10 percent o higit pa sa ani. Kaya bumili ng certified rice seed na may valid na blue tag mula sa accredited seed grower.\n\nSa pagpili ng rice variety, tingnan kung bagay ito sa inyong bukid (irrigated o rainfed), sa season at sa problema sa lugar gaya ng bagyo o baha. Halimbawa, ang rice variety na NSIC Rc 216 (Tubigan 17) ay nahihinog sa 112 araw mula sa pagpupunla kapag lipat tanim. Ang NSIC Rc 222 naman ay inirerekomenda sa Central Luzon para sa dry at wet season.\n\nPara makita ang bawat variety of rice in the Philippines na may maturity at yield, basahin ang aming [gabay sa rice varieties](/crops/rice-varieties-philippines)."
     },
     {
       "type": "heading",
@@ -57,7 +57,7 @@
     },
     {
       "type": "text",
-      "text": "Ang pantay na lupa ang pundasyon ng lahat. Mas madali ang patubig, mas kaunti ang damo at kuhol, at sabay ang hinog ng palay. Ayon sa PalayCheck, puwedeng bumaba ng 5 percent ang ani kapag hindi maayos ang paghahanda."
+      "text": "Ang pantay na lupa ang pundasyon ng lahat. Mas madali ang patubig, mas kaunti ang damo at kuhol, at sabay ang hinog ng palay. Puwedeng bumaba ng 5 percent ang ani kapag hindi maayos ang paghahanda."
     },
     {
       "type": "list",
@@ -76,11 +76,11 @@
     },
     {
       "type": "text",
-      "text": "Para sa manual na lipat tanim, 20 hanggang 40 kg na binhi bawat hectare ang rekomendasyon ng PalayCheck, sa punlaan na 400 square meters. Ilipat ang palay seedlings sa edad na 18 hanggang 21 araw, 2 hanggang 3 punla bawat butas o hill."
+      "text": "Para sa manual na lipat tanim, 20 hanggang 40 kg na binhi bawat hectare ang karaniwang rekomendasyon, sa punlaan na 400 square meters. Ilipat ang palay seedlings sa edad na 18 hanggang 21 araw, 2 hanggang 3 punla bawat butas o hill."
     },
     {
       "type": "table",
-      "caption": "Rekomendasyon ng PalayCheck para sa lipat tanim",
+      "caption": "Rekomendasyon para sa lipat tanim",
       "rows": [
         [
           "Paraan",
@@ -112,7 +112,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Huwag gupitin ang dulo ng dahon ng punla bago ilipat. Ayon sa PalayCheck, dito pumapasok ang sakit.",
+        "Huwag gupitin ang dulo ng dahon ng punla bago ilipat. Dito pumapasok ang sakit.",
         "Ang punla na lampas 25 araw ay mabagal makabawi at kaunti ang suwi o tillers.",
         "Tapalan ang mga butas na walang punla sa loob ng 7 araw pagkatapos ilipat, gamit ang punla mula sa parehong punlaan."
       ]
@@ -124,7 +124,7 @@
     },
     {
       "type": "text",
-      "text": "Sa direct wet seeding, binhing pinatubo na ang direktang inihahasik sa putik. Mas tipid ito sa trabaho, pero mas mabigat ang laban sa damo, kuhol at ibon. Ayon sa PalayCheck, 40 hanggang 60 kg bawat hectare ang binhi kung row seeding, at 60 hanggang 80 kg kung sabog.\n\nKung row seeding ang gusto mo, may drum seeder at may bago ring gawang Pinoy, ang palatak palay seeder. Gawa ito ni Engr. Delfin Cuevas Jr. ng Farmwell Agricultural Machinery Manufacturing sa Bongabong, Oriental Mindoro, sa tulong ng DOST MIMAROPA. Ayon sa DOST, 89.09 percent ang field efficiency nito sa testing at puwede itong makatipid ng hanggang P9,000 bawat hectare. Nanalo ito sa 2025 Presidential Filipinnovation Awards."
+      "text": "Sa direct wet seeding, binhing pinatubo na ang direktang inihahasik sa putik. Mas tipid ito sa trabaho, pero mas mabigat ang laban sa damo, kuhol at ibon. Karaniwang 40 hanggang 60 kg bawat hectare ang binhi kung row seeding, at 60 hanggang 80 kg kung sabog.\n\nKung row seeding ang gusto mo, may drum seeder at may bago ring gawang Pinoy, ang palatak palay seeder. Gawa ito ni Engr. Delfin Cuevas Jr. ng Farmwell Agricultural Machinery Manufacturing sa Bongabong, Oriental Mindoro, sa tulong ng DOST MIMAROPA. Sa testing, 89.09 percent ang field efficiency nito at puwede itong makatipid ng hanggang P9,000 bawat hectare. Nanalo ito sa 2025 Presidential Filipinnovation Awards."
     },
     {
       "type": "heading",
@@ -149,11 +149,11 @@
     },
     {
       "type": "text",
-      "text": "Sa PalayCheck, tatlo ang tanong: anong Element, gaano karami (Amount) at kailan (Timing). Pinakamainam na batayan ang Leaf Color Chart (LCC), ang MOET kit o ang Rice Crop Manager. Kapag may LCC, sukatin ang dahon tuwing pitong araw mula 14 DAT o 21 DAS hanggang early flowering.\n\nKung walang LCC, ito ang oras ng nitrogen ayon sa PalayCheck:"
+      "text": "Tatlo ang tanong sa abono: anong Element, gaano karami (Amount) at kailan (Timing). Pinakamainam na batayan ang Leaf Color Chart (LCC), ang MOET kit o ang Rice Crop Manager. Kapag may LCC, sukatin ang dahon tuwing pitong araw mula 14 DAT o 21 DAS hanggang early flowering.\n\nKung walang LCC, ito ang karaniwang oras ng nitrogen:"
     },
     {
       "type": "table",
-      "caption": "Oras ng paglalagay ng nitrogen kung walang LCC (PalayCheck)",
+      "caption": "Oras ng paglalagay ng nitrogen kung walang LCC",
       "rows": [
         [
           "Maturity ng variety",
@@ -186,7 +186,7 @@
     },
     {
       "type": "text",
-      "text": "Tatlong grupo ng weeds ang karaniwan sa palayan: sedges, grasses at broadleaves. Sa listahan ng IRRI ng 12 pinakamahirap na damo ng palay sa Asya, kabilang ang Echinochloa colona, Cyperus iria at Fimbristylis miliacea. Ayon sa PalayCheck, kontrolin ang damo sa unang 45 araw. Unahin ang maayos na paghahanda ng lupa, malinis na binhi at tamang tubig, saka ang pagbubunot. Herbicide ang huling opsyon.\n\nHalimbawa ng pre emergent herbicide ang Sofit 300 EC ng Syngenta, na may pretilachlor (Group K3). Ayon sa label, inilalagay ito 0 hanggang 4 na araw pagkatapos maghasik o maglipat. Sundin ang rate sa label at bumili lang ng produktong rehistrado sa FPA. Para makilala ang common weeds in the Philippines, tingnan ang aming [gabay sa damo](/weeds/common-weeds-philippines)."
+      "text": "Tatlong grupo ng weeds ang karaniwan sa palayan: sedges, grasses at broadleaves. Kabilang sa 12 pinakamahirap na damo ng palay sa Asya ang Echinochloa colona, Cyperus iria at Fimbristylis miliacea. Kontrolin ang damo sa unang 45 araw. Unahin ang maayos na paghahanda ng lupa, malinis na binhi at tamang tubig, saka ang pagbubunot. Herbicide ang huling opsyon.\n\nHalimbawa ng pre emergent herbicide ang Sofit 300 EC ng Syngenta, na may pretilachlor (Group K3). Ayon sa label, inilalagay ito 0 hanggang 4 na araw pagkatapos maghasik o maglipat. Sundin ang rate sa label at bumili lang ng produktong rehistrado sa FPA. Para makilala ang common weeds in the Philippines, tingnan ang aming [gabay sa damo](/weeds/common-weeds-philippines)."
     },
     {
       "type": "heading",
@@ -195,7 +195,7 @@
     },
     {
       "type": "text",
-      "text": "Ang unang depensa ay resistant na variety at sabay sabay na pagtatanim pagkatapos ng 30 araw na pahinga ng bukid. Sa pahingang iyon, nawawalan ng pagkain ang karamihan sa insekto. Maglibot din sa bukid bawat linggo.\n\nBabala ng PalayCheck: huwag mag spray laban sa mga kumakain ng dahon sa loob ng 30 DAT o 40 DAS. Pinapatay ng maagang spray ang mga kaibigang insekto, gaya ng gagamba na kumakain ng planthopper. Kilalanin ang mga kalaban sa [rice insects](/pests/rice-insects) at [brown planthopper](/pests/brown-planthopper)."
+      "text": "Ang unang depensa ay resistant na variety at sabay sabay na pagtatanim pagkatapos ng 30 araw na pahinga ng bukid. Sa pahingang iyon, nawawalan ng pagkain ang karamihan sa insekto. Maglibot din sa bukid bawat linggo.\n\nBabala: huwag mag spray laban sa mga kumakain ng dahon sa loob ng 30 DAT o 40 DAS. Pinapatay ng maagang spray ang mga kaibigang insekto, gaya ng gagamba na kumakain ng planthopper. Kilalanin ang mga kalaban sa [rice insects](/pests/rice-insects) at [brown planthopper](/pests/brown-planthopper)."
     },
     {
       "type": "callout",
@@ -210,7 +210,7 @@
     },
     {
       "type": "text",
-      "text": "Patuyuin ang bukid 1 hanggang 2 linggo bago ang takdang ani. Anihin kapag 85 hanggang 90 percent ng butil ay kulay ginto kung kamay ang gagapas, o 90 hanggang 95 percent kung combine harvester. Ayon sa IRRI, ang karaniwang pang ani ng palay ay karit, reaper, o combine harvester na gumagapas at gumigiik nang sabay.\n\nKapag masyadong maaga, hilaw ang butil at puwedeng bumaba sa 53 percent ang milling recovery. Kapag masyadong huli, lalagas ang butil. Karaniwang moisture ng bagong aning palay ay 18 hanggang 21 percent sa dry season at 20 hanggang 25 percent sa wet season."
+      "text": "Patuyuin ang bukid 1 hanggang 2 linggo bago ang takdang ani. Anihin kapag 85 hanggang 90 percent ng butil ay kulay ginto kung kamay ang gagapas, o 90 hanggang 95 percent kung combine harvester. Ang karaniwang pang ani ng palay ay karit, reaper, o combine harvester na gumagapas at gumigiik nang sabay.\n\nKapag masyadong maaga, hilaw ang butil at puwedeng bumaba sa 53 percent ang milling recovery. Kapag masyadong huli, lalagas ang butil. Karaniwang moisture ng bagong aning palay ay 18 hanggang 21 percent sa dry season at 20 hanggang 25 percent sa wet season."
     },
     {
       "type": "heading",
@@ -233,11 +233,11 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "Ano ang PalayCheck System ng PhilRice?"
+      "text": "Ano ang PalayCheck System?"
     },
     {
       "type": "text",
-      "text": "Ang PalayCheck System, na hinahanap din bilang Palay Check System, ay rice integrated crop management system ng PhilRice para sa pagtatanim ng palay. Sa halip na hiwa hiwalay na payo, pinagsasama nito ang binhi, lupa, tubig, abono, peste, ani at postharvest. Learning, checking and sharing ang tawag dito ng PhilRice: ikinukumpara mo ang gawi mo sa pinakamainam na gawi, sinusukat ang resulta, at ibinabahagi sa kapwa magsasaka.\n\nSa 2022 revised edition, may siyam na [Key Checks](/blog/palaycheck-key-checks):"
+      "text": "Ang PalayCheck System, na hinahanap din bilang Palay Check System, ay rice integrated crop management system para sa pagtatanim ng palay. Sa halip na hiwa hiwalay na payo, pinagsasama nito ang binhi, lupa, tubig, abono, peste, ani at postharvest. Learning, checking and sharing ang tawag dito: ikinukumpara mo ang gawi mo sa pinakamainam na gawi, sinusukat ang resulta, at ibinabahagi sa kapwa magsasaka.\n\nSa 2022 revised edition, may siyam na [Key Checks](/blog/palaycheck-key-checks):"
     },
     {
       "type": "list",
@@ -283,11 +283,11 @@
         },
         {
           "q": "Ano ang Palay Check System?",
-          "a": "Ito ang PalayCheck System ng PhilRice, isang rice integrated crop management system na may siyam na Key Checks mula binhi hanggang pag iimbak."
+          "a": "Ito ang PalayCheck System, isang rice integrated crop management system na may siyam na Key Checks mula binhi hanggang pag iimbak."
         },
         {
           "q": "Ano ang palatak palay seeder?",
-          "a": "Seeder ito para sa direct seeding na gawa ni Engr. Delfin Cuevas Jr. sa Oriental Mindoro, sa tulong ng DOST MIMAROPA. Ayon sa DOST, puwede itong makatipid ng hanggang P9,000 bawat hectare."
+          "a": "Seeder ito para sa direct seeding na gawa ni Engr. Delfin Cuevas Jr. sa Oriental Mindoro, sa tulong ng DOST MIMAROPA. Puwede itong makatipid ng hanggang P9,000 bawat hectare."
         }
       ]
     },

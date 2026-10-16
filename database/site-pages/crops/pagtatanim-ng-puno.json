@@ -6,7 +6,7 @@
   "category": "Fruit and tree crops",
   "title": "Pagtatanim ng Puno: Paano Magtanim ng Punong Prutas at Punong Kahoy",
   "metaTitle": "Pagtatanim ng Puno: Punla, Hukay, Dilig at Abono",
-  "metaDescription": "Paano ang tamang pagtatanim ng puno: pagpili ng punla, laki ng hukay, pagtatanim, dilig, natural na abono at pag aalaga, batay sa gabay ng DA at PCA.",
+  "metaDescription": "Paano ang tamang pagtatanim ng puno: pagpili ng punla, laki ng hukay, pagtatanim, dilig, natural na abono at pag aalaga hanggang mamunga.",
   "focusKeyword": "pagtatanim ng puno",
   "keywords": [
     "pagtatanim ng puno",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Sa lahat ng pagtatanim ng halaman, ang puno ang pinakamatagal bago magbunga. Ayon sa DA, karaniwang namumulaklak ang mangosteen sa 10 hanggang 15 taon, pero 8 hanggang 9 na taon lang kung asexually propagated at maayos ang alaga. Ang durian naman ay puwedeng mamunga nang mga limang taon pa lang kapag maayos ang alaga. Kaya bawat pagkakamali sa pagtatanim ay ilang taon mong dadalhin.\n\nAng mga sukat dito ay galing sa mga production guide ng DA para sa mangosteen, durian at saging, at sa Philippine Coconut Authority (PCA) para sa niyog. Iba iba ang bawat puno, kaya tingnan din ang gabay para sa mismong puno na itatanim mo."
+      "text": "Sa lahat ng pagtatanim ng halaman, ang puno ang pinakamatagal bago magbunga. Karaniwang namumulaklak ang mangosteen sa 10 hanggang 15 taon, pero 8 hanggang 9 na taon lang kung asexually propagated at maayos ang alaga. Ang durian naman ay puwedeng mamunga nang mga limang taon pa lang kapag maayos ang alaga. Kaya bawat pagkakamali sa pagtatanim ay ilang taon mong dadalhin.\n\nIba iba ang bawat puno, kaya tingnan din ang gabay para sa mismong puno na itatanim mo."
     },
     {
       "type": "heading",
@@ -35,7 +35,7 @@
     },
     {
       "type": "text",
-      "text": "Isa ang punla sa pinakamahalagang desisyon sa pagtatanim ng puno. Para sa punong prutas, mas mabuti ang grafted o marcotted na punla dahil mas maagang mamunga at pareho ang bunga sa inang puno. Bumili sa kilalang nursery na may malusog na mga punla: berde at buo ang dahon, walang peste, at matibay ang tangkay.\n\nSa durian, mas mabuti ang malalaking punla. Ang gabay ng DA ay gumagamit ng large planting materials, mga punlang inalagaan sa nursery nang higit isa o dalawang taon. Ang mangosteen naman ay inililipat sa bukid sa edad na dalawang taon, kapag mga 25 hanggang 30 sentimetro na ang taas."
+      "text": "Isa ang punla sa pinakamahalagang desisyon sa pagtatanim ng puno. Para sa punong prutas, mas mabuti ang grafted o marcotted na punla dahil mas maagang mamunga at pareho ang bunga sa inang puno. Bumili sa kilalang nursery na may malusog na mga punla: berde at buo ang dahon, walang peste, at matibay ang tangkay.\n\nSa durian, mas mabuti ang malalaking punla. Gumamit ng large planting materials, mga punlang inalagaan sa nursery nang higit isa o dalawang taon. Ang mangosteen naman ay inililipat sa bukid sa edad na dalawang taon, kapag mga 25 hanggang 30 sentimetro na ang taas."
     },
     {
       "type": "heading",
@@ -48,7 +48,7 @@
     },
     {
       "type": "table",
-      "caption": "Layo at laki ng hukay para sa ilang puno, mula sa mga gabay ng DA",
+      "caption": "Layo at laki ng hukay para sa ilang puno",
       "rows": [
         [
           "Puno",
@@ -82,15 +82,15 @@
       "items": [
         {
           "title": "Pumili ng tamang buwan",
-          "text": "Magtanim sa simula ng tag ulan. Ito ang payo ng DA para sa durian at mangosteen, dahil tuloy tuloy ang basa ng lupa habang kumakapit ang ugat."
+          "text": "Magtanim sa simula ng tag ulan. Ito ang karaniwang payo para sa durian at mangosteen, dahil tuloy tuloy ang basa ng lupa habang kumakapit ang ugat."
         },
         {
           "title": "Maglagay ng abono sa butas",
-          "text": "Sa durian, 50 gramo o mga 5 kutsarang complete fertilizer. Sa mangosteen, 200 hanggang 250 gramo, 3 pulgada sa ilalim ng ugat at 5 pulgada sa gilid ng punla. Sa niyog, 100 gramong asin ayon sa PCA."
+          "text": "Sa durian, 50 gramo o mga 5 kutsarang complete fertilizer. Sa mangosteen, 200 hanggang 250 gramo, 3 pulgada sa ilalim ng ugat at 5 pulgada sa gilid ng punla. Sa niyog, 100 gramong asin."
         },
         {
           "title": "Alisin ang plastic nang buo ang lupa",
-          "text": "Hubarin ang polyethylene bag nang hindi nababasag ang bola ng lupa sa ugat. Sa durian, itinatanim ang punla nang mga isang pulgada mula sa dating linya ng lupa nito, ayon sa DA. Huwag ibaon nang malalim ang tangkay."
+          "text": "Hubarin ang polyethylene bag nang hindi nababasag ang bola ng lupa sa ugat. Sa durian, itinatanim ang punla nang mga isang pulgada mula sa dating linya ng lupa nito. Huwag ibaon nang malalim ang tangkay."
         },
         {
           "title": "Tabunan at diinan",
@@ -98,7 +98,7 @@
         },
         {
           "title": "Liliman ang bagong tanim",
-          "text": "Ayon sa gabay ng DA sa durian, liliman ang bagong tanim nang dalawang linggo hanggang ilang buwan, depende sa panahon, para makabawi sa paglipat at hindi masunog sa araw."
+          "text": "Sa durian, liliman ang bagong tanim nang dalawang linggo hanggang ilang buwan, depende sa panahon, para makabawi sa paglipat at hindi masunog sa araw."
         }
       ]
     },
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "Diligan agad pagkatanim, at ituloy tuwing kulang ang ulan para laging basa ang lupa. Pero ingat sa sobra. Ayon sa gabay ng DA sa mangosteen, puwedeng mamatay agad ang punla kapag may nakatayong tubig sa ugat.\n\nSa tag araw, ang payo ng DA para sa durian ay diligan at lagyan ng mulch ang paligid ng puno. Puwedeng gamitin ang tuyong dayami, dahon, pinutol na damo, bunot ng niyog o tinadtad na katawan ng saging."
+      "text": "Diligan agad pagkatanim, at ituloy tuwing kulang ang ulan para laging basa ang lupa. Pero ingat sa sobra. Sa mangosteen, puwedeng mamatay agad ang punla kapag may nakatayong tubig sa ugat.\n\nSa tag araw, diligan ang durian at lagyan ng mulch ang paligid ng puno. Puwedeng gamitin ang tuyong dayami, dahon, pinutol na damo, bunot ng niyog o tinadtad na katawan ng saging."
     },
     {
       "type": "heading",
@@ -123,7 +123,7 @@
     },
     {
       "type": "text",
-      "text": "Ang pinakamurang natural fertilizer for plants ay ang compost na gawa mo mismo. Ayon sa ATI Cordillera, binubulok ng mabubuting bacteria at fungi ang damo, dahon at dumi ng hayop hanggang maging humus, isang maitim at masustansyang materyal na parang lupa. Kaya kapag may nagtanong kung ano ang humus fertilizer, ito iyon: compost na hinog na, na nagpapabuhaghag sa lupa at tumutulong humawak ng tubig.\n\nMaganda ang tugon ng mangosteen sa dumi ng hayop, ayon sa gabay ng DA, kaya pinupuno ng dumi ng hayop ang hukay bago magtanim. Para sa iba pang halimbawa, basahin ang [organic fertilizer examples](/blog/organic-fertilizer-examples)."
+      "text": "Ang pinakamurang natural fertilizer for plants ay ang compost na gawa mo mismo. Binubulok ng mabubuting bacteria at fungi ang damo, dahon at dumi ng hayop hanggang maging humus, isang maitim at masustansyang materyal na parang lupa. Kaya kapag may nagtanong kung ano ang humus fertilizer, ito iyon: compost na hinog na, na nagpapabuhaghag sa lupa at tumutulong humawak ng tubig.\n\nMaganda ang tugon ng mangosteen sa dumi ng hayop, kaya pinupuno ng dumi ng hayop ang hukay bago magtanim. Para sa iba pang halimbawa, basahin ang [organic fertilizer examples](/blog/organic-fertilizer-examples)."
     },
     {
       "type": "heading",
@@ -132,13 +132,13 @@
     },
     {
       "type": "text",
-      "text": "Sa batang mangosteen, ang gabay ng DA ay 300 hanggang 500 gramong 14 14 14 o 12 24 12 bawat puno, kasama ang 200 hanggang 300 gramong urea. Hatiin ito sa dalawa: ang una sa simula ng tag ulan, ang pangalawa sa dulo ng tag ulan. Dagdagan ang dami taon taon habang lumalaki ang puno.\n\nSa paglalagay, gumawa ng 4 hanggang 6 na butas sa lupa na paikot sa gilid ng lilim ng puno. Ilagay ang abono sa mga butas at tabunan, para hindi sumingaw at hindi anurin ng ulan. Basahin ang aming gabay sa [fertilizer for plants](/blog/fertilizer-for-plants) para sa iba pang pananim."
+      "text": "Sa batang mangosteen, ang karaniwang abono ay 300 hanggang 500 gramong 14 14 14 o 12 24 12 bawat puno, kasama ang 200 hanggang 300 gramong urea. Hatiin ito sa dalawa: ang una sa simula ng tag ulan, ang pangalawa sa dulo ng tag ulan. Dagdagan ang dami taon taon habang lumalaki ang puno.\n\nSa paglalagay, gumawa ng 4 hanggang 6 na butas sa lupa na paikot sa gilid ng lilim ng puno. Ilagay ang abono sa mga butas at tabunan, para hindi sumingaw at hindi anurin ng ulan. Basahin ang aming gabay sa [fertilizer for plants](/blog/fertilizer-for-plants) para sa iba pang pananim."
     },
     {
       "type": "callout",
       "tone": "info",
       "title": "Iba ang abono ng niyog",
-      "text": "Ang niyog ay nangangailangan ng chlorine, kaya asin at ammonium sulfate ang pangunahing abono ayon sa PCA. Nasa aming gabay sa [fertilizer for coconut tree in the Philippines](/crops/coconut-fertilizer) ang dami bawat edad ng puno."
+      "text": "Ang niyog ay nangangailangan ng chlorine, kaya asin at ammonium sulfate ang pangunahing abono. Nasa aming gabay sa [fertilizer for coconut tree in the Philippines](/crops/coconut-fertilizer) ang dami bawat edad ng puno."
     },
     {
       "type": "heading",
@@ -151,7 +151,7 @@
       "items": [
         "**Ring weeding:** linisin ang damo sa paligid ng puno, mga 1 metro ang radius para sa mangosteen, at laging bago mag abono.",
         "**Pruning:** putulin ang patay, bali o may sakit na sanga, pati ang water sprouts, para maganda ang hugis ng puno.",
-        "**Intercrop:** habang hindi pa namumunga ang puno, magtanim ng pananim na pangkabuhayan sa pagitan ng hanay. Sa durian, iminumungkahi ng DA ang saging na lakatan, na itinatanim nang mas maaga para magbigay ng lilim.",
+        "**Intercrop:** habang hindi pa namumunga ang puno, magtanim ng pananim na pangkabuhayan sa pagitan ng hanay. Sa durian, bagay ang saging na lakatan, na itinatanim nang mas maaga para magbigay ng lilim.",
         "**Bantay peste:** tingnan ang dahon at sanga linggo linggo, lalo na sa tag ulan."
       ]
     },
@@ -184,11 +184,11 @@
       "items": [
         {
           "q": "Kailan ang pinakamagandang panahon ng pagtatanim ng puno?",
-          "a": "Sa simula ng tag ulan. Ito ang payo ng DA para sa durian at mangosteen, dahil may sapat na basa ang lupa habang kumakapit ang ugat."
+          "a": "Sa simula ng tag ulan. Ito ang karaniwang payo para sa durian at mangosteen, dahil may sapat na basa ang lupa habang kumakapit ang ugat."
         },
         {
           "q": "Gaano kalaki dapat ang hukay?",
-          "a": "Depende sa puno. Sa gabay ng DA, 60 por 60 por 60 sentimetro para sa mangosteen, at 30 sentimetro ang lapad at lalim para sa durian."
+          "a": "Depende sa puno. Karaniwang 60 por 60 por 60 sentimetro para sa mangosteen, at 30 sentimetro ang lapad at lalim para sa durian."
         },
         {
           "q": "Ano ang puwedeng natural fertilizer for plants na puno?",
@@ -200,7 +200,7 @@
         },
         {
           "q": "Ilang taon bago mamunga ang puno?",
-          "a": "Iba iba. Ayon sa DA, ang durian ay puwedeng mamunga sa limang taon, at ang mangosteen na asexually propagated, gaya ng grafted, sa 8 hanggang 9 na taon."
+          "a": "Iba iba. Ang durian ay puwedeng mamunga sa limang taon, at ang mangosteen na asexually propagated, gaya ng grafted, sa 8 hanggang 9 na taon."
         }
       ]
     },

@@ -5,7 +5,7 @@
   "lang": "en",
   "category": "Palay",
   "title": "Rice Varieties in the Philippines: Inbreds, Hybrids and Special Rice",
-  "metaTitle": "Rice Varieties in the Philippines: NSIC List and Hybrids",
+  "metaTitle": "Rice Varieties in the Philippines: Inbreds and Hybrids",
   "metaDescription": "Compare rice varieties in the Philippines: NSIC Rc 216, Rc 222 and Rc 402, hybrids like SL 8H and Jackpot 102, Jasponica rice and the store brands.",
   "focusKeyword": "rice varieties in the Philippines",
   "keywords": [
@@ -33,7 +33,7 @@
     "palay seeds",
     "palay"
   ],
-  "excerpt": "The NSIC has approved a long list of rice varieties in the Philippines, but most farms plant only a handful. This guide compares the popular NSIC inbreds, the main hybrids, special rice like Jasponica and the store brands you see at the market. Maturity and yield figures come from PhilRice and the seed companies.",
+  "excerpt": "The NSIC has approved a long list of rice varieties in the Philippines, but most farms plant only a handful. This guide compares the popular NSIC inbreds, the main hybrids, special rice like Jasponica and the store brands you see at the market. Maturity and yield figures come from field trials and the seed companies.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "Palay heads filling out in a green rice field",
@@ -46,7 +46,7 @@
     },
     {
       "type": "text",
-      "text": "The rice varieties Philippines farmers plant most are NSIC inbreds from PhilRice and a handful of hybrids. Choosing a rice variety, Philippines wide, starts with three questions: irrigated or rainfed, wet or dry season, and how fast you need the harvest."
+      "text": "The rice varieties Philippines farmers plant most are NSIC inbreds and a handful of hybrids. Choosing a rice variety, Philippines wide, starts with three questions: irrigated or rainfed, wet or dry season, and how fast you need the harvest."
     },
     {
       "type": "text",
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice also gives its inbreds local names by environment. For example, Tubigan varieties suit irrigated lowland, while Sahod Ulan varieties suit rainfed lowland. Its Binhing Palay app lets you search registered varieties and their traits, so it works as a Philippine rice variety list in your pocket. To compare every NSIC variety side by side, with its days, yield and pest ratings, open our [rice variety finder](/rice-varieties)."
+      "text": "Inbreds also carry local names by environment. For example, Tubigan varieties suit irrigated lowland, while Sahod Ulan varieties suit rainfed lowland. The Binhing Palay app lets you search registered varieties and their traits, so it works as a Philippine rice variety list in your pocket. To compare every registered variety side by side, with its days, yield and pest ratings, open our [rice variety finder](/rice-varieties)."
     },
     {
       "type": "heading",
@@ -81,11 +81,11 @@
     },
     {
       "type": "text",
-      "text": "These are the inbreds farmers ask about most. The figures come from PhilRice trials across many sites, so your own field may do better or worse."
+      "text": "These are the inbreds farmers ask about most. The figures come from trials across many sites, so your own field may do better or worse."
     },
     {
       "type": "table",
-      "caption": "Popular NSIC inbreds from PhilRice data (t/ha means tonnes per hectare)",
+      "caption": "Popular NSIC inbreds (t/ha means tonnes per hectare)",
       "rows": [
         [
           "Variety",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice calls Rc 216 early maturing, at 112 days transplanted and 104 days direct seeded. In PhilRice trials it averaged 6.0 t/ha transplanted, with a top yield of 9.7 t/ha. It is moderately resistant to brown planthopper, green leafhopper and yellow stem borer. Still, PhilRice rates it susceptible to blast, so scout for blast closely. Its full numbers are on the [NSIC Rc 216 page](/rice-varieties/nsic-rc-216)."
+      "text": "Rc 216 is early maturing, at 112 days transplanted and 104 days direct seeded. In trials it averaged 6.0 t/ha transplanted, with a top yield of 9.7 t/ha. It is moderately resistant to brown planthopper, green leafhopper and yellow stem borer. Still, it is susceptible to blast, so scout for blast closely. Its full numbers are on the [NSIC Rc 216 page](/rice-varieties/nsic-rc-216)."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "Rc 222 was bred by IRRI and is now one of the most planted inbreds. It matures in 114 days transplanted and 106 days direct seeded. It averaged 6.1 t/ha transplanted, up to 10.0 t/ha. PhilRice notes a yield edge in the wet season and good adaptation to both irrigated and rainfed fields. That is why PalayCheck recommends it for both seasons in Central Luzon. Its full numbers are on the [NSIC Rc 222 page](/rice-varieties/nsic-rc-222)."
+      "text": "Rc 222 is now one of the most planted inbreds. It matures in 114 days transplanted and 106 days direct seeded. It averaged 6.1 t/ha transplanted, up to 10.0 t/ha. In the wet season it has a yield edge, and it adapts well to both irrigated and rainfed fields. That is why it is the usual pick for both seasons in Central Luzon. Its full numbers are on the [NSIC Rc 222 page](/rice-varieties/nsic-rc-222)."
     },
     {
       "type": "heading",
@@ -149,7 +149,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice released Rc 402 in 2015 and recommends it for direct seeding in Luzon. It averages 5.5 t/ha and matures in 107 days direct seeded, or 114 days transplanted. The plant stands about 95 cm tall. Its grain is long and slender, and milling recovery reached 70.3 percent in trials, a grade PhilRice rates premium. Its full numbers are on the [NSIC Rc 402 page](/rice-varieties/nsic-rc-402)."
+      "text": "Rc 402 came out in 2015 as a variety for direct seeding in Luzon. It averages 5.5 t/ha and matures in 107 days direct seeded, or 114 days transplanted. The plant stands about 95 cm tall. Its grain is long and slender, and milling recovery reached 70.3 percent in trials, a premium grade. Its full numbers are on the [NSIC Rc 402 page](/rice-varieties/nsic-rc-402)."
     },
     {
       "type": "heading",
@@ -158,7 +158,7 @@
     },
     {
       "type": "text",
-      "text": "A rice hybrid costs more per kilo of seed, but you plant less of it. PalayCheck even advises a lower seeding rate for hybrids in mechanical transplanting because the seed is expensive.\n\nAt a 2023 DA Bicol field day, nine seed companies showed their hybrids to farmers. With good weather, management and fertilizer, they said, these can reach up to 14 tonnes per hectare. Maturity ranged from 104 to 118 days after sowing. Those are best case numbers, so compare them with your own records."
+      "text": "A rice hybrid costs more per kilo of seed, but you plant less of it. The usual seeding rate for hybrids in mechanical transplanting is lower because the seed is expensive.\n\nAt a 2023 field day in Bicol, nine seed companies showed their hybrids to farmers. With good weather, management and fertilizer, they said, these can reach up to 14 tonnes per hectare. Maturity ranged from 104 to 118 days after sowing. Those are best case numbers, so compare them with your own records."
     },
     {
       "type": "heading",
@@ -176,13 +176,13 @@
     },
     {
       "type": "text",
-      "text": "Jackpot 102, registered as NSIC Rc 666H, comes from Leads Agri Ventures, which calls it its first hybrid seed, introduced in 2019. We found no official figure for the Jackpot rice variety maturity. The DA Bicol report gives one range, 104 to 118 days after sowing, for all the hybrids shown at the field day, so it is not a number for Jackpot alone. Read the days to maturity on the seed bag, or ask your dealer, before you date your season.\n\nOther hybrids at the same field day included Bigante Plus and Habilis Plus from Bayer and TH82 from SeedWorks. There were also NK 5017 from Syngenta, LP 2096 from LongPing and Mestizo 30 from Allied Botanical."
+      "text": "Jackpot 102, registered as NSIC Rc 666H, comes from Leads Agri Ventures, which calls it its first hybrid seed, introduced in 2019. We found no official figure for the Jackpot rice variety maturity. The field day gave one range, 104 to 118 days after sowing, for all the hybrids shown, so it is not a number for Jackpot alone. Read the days to maturity on the seed bag, or ask your dealer, before you date your season.\n\nOther hybrids at the same field day included Bigante Plus and Habilis Plus from Bayer and TH82 from SeedWorks. There were also NK 5017 from Syngenta, LP 2096 from LongPing and Mestizo 30 from Allied Botanical."
     },
     {
       "type": "callout",
       "tone": "info",
       "title": "Brochure yields versus farm averages",
-      "text": "Seed company yields usually describe best case fields. For scale, the PSA put the national average palay yield at 4.14 tonnes per hectare in 2025. So compare any new variety with your own last seasons, not with a brochure."
+      "text": "Seed company yields usually describe best case fields. For scale, the national average palay yield was 4.14 tonnes per hectare in 2025. So compare any new variety with your own last seasons, not with a brochure."
     },
     {
       "type": "heading",
@@ -191,7 +191,7 @@
     },
     {
       "type": "text",
-      "text": "Jasponica rice comes from SL Agritech, which describes it as a cross of Thai jasmine rice and Japanese rice. It is sold as premium milled rice under the Doña Maria brand, named after the mother of chairman Henry Lim. A 2011 Philstar report described the cooked grain as soft, sticky and chewy, with an aroma. Treat that as the company's description, since we found no PhilRice trial data for it.\n\nFor a true japonica, PhilRice announced NSIC Rc 414, named Japonica 4, in 2016. Aromatic and glutinous types, like the malagkit used for kakanin, also belong to special rice."
+      "text": "Jasponica rice comes from SL Agritech, which describes it as a cross of Thai jasmine rice and Japanese rice. It is sold as premium milled rice under the Doña Maria brand, named after the mother of chairman Henry Lim. A 2011 Philstar report described the cooked grain as soft, sticky and chewy, with an aroma. Treat that as the company's description, since we found no trial data for it.\n\nFor a true japonica, look at NSIC Rc 414, named Japonica 4, which came out in 2016. Aromatic and glutinous types, like the malagkit used for kakanin, also belong to special rice."
     },
     {
       "type": "heading",
@@ -200,7 +200,7 @@
     },
     {
       "type": "text",
-      "text": "Walk into any public market and you will see names like Sinandomeng or Dinorado on the rice box. PhilRice calls these popular rice brands. In 2018 the NFA limited local rice labels to four classes: regular milled, well milled, premium and special rice. The rule replaced brand names like Sinandomeng and Dinorado, although a 2021 PhilRice brief found some retailers still use them.\n\nCompany brands, such as Doña Maria from SL Agritech Corporation, are a different thing. They tell you who packed the rice. But the seed you plant should carry an NSIC name on a certified tag, so when a buyer asks what you planted, answer with the variety."
+      "text": "Walk into any public market and you will see names like Sinandomeng or Dinorado on the rice box. These are popular rice brands. In 2018 the NFA limited local rice labels to four classes: regular milled, well milled, premium and special rice. The rule replaced brand names like Sinandomeng and Dinorado, although some retailers still used them in 2021.\n\nCompany brands, such as Doña Maria from SL Agritech Corporation, are a different thing. They tell you who packed the rice. But the seed you plant should carry an NSIC name on a certified tag, so when a buyer asks what you planted, answer with the variety."
     },
     {
       "type": "heading",
@@ -209,7 +209,7 @@
     },
     {
       "type": "text",
-      "text": "PalayCheck gives four tests for choosing a rice variety in the Philippines, plus one habit."
+      "text": "Use four tests to choose a rice variety in the Philippines, plus one habit."
     },
     {
       "type": "list",
@@ -217,9 +217,9 @@
       "items": [
         "It suits your environment and season: irrigated or rainfed, dry or wet season.",
         "It answers your local problem. In typhoon areas, pick a maturity that lets the crop escape the worst months.",
-        "It did well in at least two seasons of adaptability trials by PhilRice or your DA office.",
+        "It did well in at least two seasons of adaptability trials in your area.",
         "Your buyer or miller wants it.",
-        "Rotate varieties every 2 to 4 croppings, which PalayCheck advises as part of pest management."
+        "Rotate varieties every 2 to 4 croppings as part of pest management."
       ]
     },
     {
@@ -243,15 +243,15 @@
       "items": [
         {
           "q": "What is the best rice variety in the Philippines?",
-          "a": "There is no single best one. PalayCheck advises a variety that suits your environment and season, answers your local problem, did well in two seasons of local trials and sells well. In Central Luzon, for example, PalayCheck recommends NSIC Rc 222 for both seasons."
+          "a": "There is no single best one. Pick a variety that suits your environment and season, answers your local problem, did well in two seasons of local trials and sells well. In Central Luzon, for example, NSIC Rc 222 is the usual pick for both seasons."
         },
         {
           "q": "How many days is NSIC Rc 216?",
-          "a": "PhilRice lists 112 days after sowing when transplanted and 104 days when direct seeded. It averaged 6.0 t/ha transplanted in PhilRice trials."
+          "a": "It takes 112 days after sowing when transplanted and 104 days when direct seeded. It averaged 6.0 t/ha transplanted in trials."
         },
         {
           "q": "How many days is Jackpot 102?",
-          "a": "We found no official maturity figure for Jackpot 102. A DA Bicol report on the 2023 field day gave one range, 104 to 118 days after sowing, for all the hybrids shown, Jackpot 102 among them. Check the seed bag or ask your dealer."
+          "a": "We found no official maturity figure for Jackpot 102. The 2023 field day in Bicol gave one range, 104 to 118 days after sowing, for all the hybrids shown, Jackpot 102 among them. Check the seed bag or ask your dealer."
         },
         {
           "q": "Can I save seed from a hybrid crop?",

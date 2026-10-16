@@ -47,7 +47,7 @@
     },
     {
       "type": "text",
-      "text": "A [leaf color chart](/blog/leaf-color-chart-rice) is a strip of four green panels that PhilRice and IRRI give rice farmers to time their nitrogen. The leaf tells you how much nitrogen the plant holds right now, so you feed it when it needs it instead of on a fixed day. The LCC checker keeps that rule and does the counting for you."
+      "text": "A [leaf color chart](/blog/leaf-color-chart-rice) is a strip of four green panels that rice farmers use to time their nitrogen. The leaf tells you how much nitrogen the plant holds right now, so you feed it when it needs it instead of on a fixed day. The LCC checker keeps that rule and does the counting for you."
     },
     {
       "type": "heading",
@@ -75,7 +75,7 @@
     },
     {
       "type": "text",
-      "text": "When nitrogen is due, the checker follows the PhilRice rates: about 23 kg of nitrogen per hectare in the wet season and 30 kg in the dry season, when the crop can use more. That is about 50 kg or 65 kg of urea per hectare. Type your area and the checker gives the kilos for your own field, so you buy and carry only what you need."
+      "text": "When nitrogen is due, the checker follows the usual rates: about 23 kg of nitrogen per hectare in the wet season and 30 kg in the dry season, when the crop can use more. That is about 50 kg or 65 kg of urea per hectare. Type your area and the checker gives the kilos for your own field, so you buy and carry only what you need."
     },
     {
       "type": "list",
