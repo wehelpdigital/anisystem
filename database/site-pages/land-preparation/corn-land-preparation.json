@@ -32,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "The DA Regional Field Office 2 corn guide, written for Cagayan Valley, the top corn region of the country, puts the goal this way: prepare the land thoroughly for uniform seedling emergence and good root development. The same rules apply to yellow corn for feeds and white corn for food.\n\nSo you want soil that is loose to the depth of the roots, free of clods and weeds, and able to drain after rain. Corn does not tolerate standing water, so drainage is part of the plan, not an extra.\n\nFor the general picture, see [land preparation in the Philippines](/land-preparation/land-preparation-philippines). To plan the crop itself, read about [growing corn](/crops/pagtatanim-ng-mais)."
+      "text": "The goal is simple: prepare the land thoroughly for uniform seedling emergence and good root development. The same rules apply to yellow corn for feeds and white corn for food.\n\nSo you want soil that is loose to the depth of the roots, free of clods and weeds, and able to drain after rain. Corn does not tolerate standing water, so drainage is part of the plan, not an extra.\n\nFor the general picture, see [land preparation in the Philippines](/land-preparation/land-preparation-philippines). To plan the crop itself, read about [growing corn](/crops/pagtatanim-ng-mais)."
     },
     {
       "type": "heading",
@@ -41,11 +41,11 @@
     },
     {
       "type": "text",
-      "text": "The DA guide sets the depth: plow at 15 to 20 cm when the soil moisture is right. It adds that deeper plowing is better for root development. Then harrow right after plowing, preferably two to three times, with an interval of one week between passes for effective weed control.\n\nIf you use a four wheel drive tractor with a trailing harrow, one to two passes at one week intervals is enough before furrowing and planting. In areas with continuous farm mechanization, the guide recommends deep plowing with a chisel plow or a subsoiler every 2 to 3 years to break the hard pan."
+      "text": "Plow at 15 to 20 cm when the soil moisture is right. Deeper plowing is better for root development. Then harrow right after plowing, preferably two to three times, with an interval of one week between passes for effective weed control.\n\nIf you use a four wheel drive tractor with a trailing harrow, one to two passes at one week intervals is enough before furrowing and planting. In areas with continuous farm mechanization, plow deep with a chisel plow or a subsoiler every 2 to 3 years to break the hard pan."
     },
     {
       "type": "table",
-      "caption": "Corn land preparation schedule based on the DA Region 2 guide",
+      "caption": "Corn land preparation schedule",
       "rows": [
         [
           "Timing",
@@ -81,7 +81,7 @@
     },
     {
       "type": "text",
-      "text": "The \"about 2 to 3 weeks\" in the first row is our reading of two to three harrowing passes at one week gaps. It is not a number from the guide, so adjust it to your soil and machine."
+      "text": "The \"about 2 to 3 weeks\" in the first row is our reading of two to three harrowing passes at one week gaps. It is an estimate, so adjust it to your soil and machine."
     },
     {
       "type": "heading",
@@ -90,13 +90,13 @@
     },
     {
       "type": "text",
-      "text": "Furrows are the planting rows. The DA guide uses a furrow spacing of 70 cm for hybrid corn, with 18 to 20 cm between hills, and 75 cm for open pollinated varieties (OPV), with 25 cm between hills. For a bigger green corn ear, it suggests a wider 30 cm by 75 cm spacing.\n\nThe guide says to plant one seed per hill after setting the furrows, and to cover the seed with 3.5 cm of soil. It also says a hybrid planted this way needs 22 to 24 kg of seed per hectare to reach a population of at least 75,000 plants."
+      "text": "Furrows are the planting rows. Use a furrow spacing of 70 cm for hybrid corn, with 18 to 20 cm between hills, and 75 cm for open pollinated varieties (OPV), with 25 cm between hills. For a bigger green corn ear, use a wider 30 cm by 75 cm spacing.\n\nPlant one seed per hill after setting the furrows, and cover the seed with 3.5 cm of soil. A hybrid planted this way needs 22 to 24 kg of seed per hectare to reach a population of at least 75,000 plants."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Fertilizer goes in the same pass",
-      "text": "The DA guide says to broadcast ten bags of organic fertilizer per hectare during the last harrowing before furrowing. For the inorganic fertilizer, it places all the P and K and half the N in a band 5 cm to the side and 5 cm below the seed at planting."
+      "text": "Broadcast ten bags of organic fertilizer per hectare during the last harrowing before furrowing. For the inorganic fertilizer, place all the P and K and half the N in a band 5 cm to the side and 5 cm below the seed at planting."
     },
     {
       "type": "heading",
@@ -105,11 +105,11 @@
     },
     {
       "type": "text",
-      "text": "The DA guide says the best pH range for corn is from slightly acidic to neutral, 6.0 to 7.0. It sets 5.4 as the critical pH, so acidic soil below that needs lime. The amount depends on the soil type and pH. A soil test tells you where you stand."
+      "text": "Corn grows best in slightly acidic to neutral soil, pH 6.0 to 7.0. The critical pH is 5.4, so acidic soil below that needs lime. The amount depends on the soil type and pH. A soil test tells you where you stand."
     },
     {
       "type": "table",
-      "caption": "Lime requirement in metric tons per hectare, DA Region 2 corn guide",
+      "caption": "Lime requirement for corn in metric tons per hectare",
       "rows": [
         [
           "Soil pH",
@@ -156,7 +156,7 @@
     },
     {
       "type": "text",
-      "text": "You can plant corn with less tillage. The DA Region 2 guide lists zero to minimum tillage among the soil conservation practices for hilly corn areas, with the Sloping Agricultural Land Technology (SALT) and contour farming.\n\nA Bukidnon trial from 1995 compared zero tillage, minimum tillage and the usual farmer practice. It used glyphosate plus ammonium sulphate to kill the weeds. Corn yield matched or beat the conventional method, and the system saved cost and time. That trial was on upland corn, not on a rice field, so test it on a small plot first.\n\nIn a zero tillage system, you spray the standing weeds and stubble with a non selective herbicide such as glyphosate, then plant through the residue. Follow the FPA label for the rate and the safety steps."
+      "text": "You can plant corn with less tillage. Zero to minimum tillage is one of the soil conservation practices for hilly corn areas, with the Sloping Agricultural Land Technology (SALT) and contour farming.\n\nA Bukidnon trial from 1995 compared zero tillage, minimum tillage and the usual farmer practice. It used glyphosate plus ammonium sulphate to kill the weeds. Corn yield matched or beat the conventional method, and the system saved cost and time. That trial was on upland corn, not on a rice field, so test it on a small plot first.\n\nIn a zero tillage system, you spray the standing weeds and stubble with a non selective herbicide such as glyphosate, then plant through the residue. Follow the FPA label for the rate and the safety steps."
     },
     {
       "type": "heading",
@@ -165,7 +165,7 @@
     },
     {
       "type": "text",
-      "text": "After rice, you start with rice stubble and weeds. The two options are the usual plowing and harrowing, or the zero tillage method above. Zero tillage saves the most time and fuel. Plowing and harrowing gives a finer seedbed.\n\nIn fields with a compacted layer, the DA guide's answer is deep tillage with a chisel plow or a subsoiler every 2 to 3 years. Our guide does not give a rice to corn tillage schedule, so ask your municipal agriculturist what works on your soil."
+      "text": "After rice, you start with rice stubble and weeds. The two options are the usual plowing and harrowing, or the zero tillage method above. Zero tillage saves the most time and fuel. Plowing and harrowing gives a finer seedbed.\n\nIn fields with a compacted layer, the answer is deep tillage with a chisel plow or a subsoiler every 2 to 3 years. There is no set rice to corn tillage schedule, so ask your municipal agriculturist what works on your soil."
     },
     {
       "type": "heading",
@@ -218,7 +218,7 @@
       "items": [
         {
           "q": "How deep should I plow for corn?",
-          "a": "The DA Region 2 guide says to plow 15 to 20 cm deep when the soil moisture is right. Deeper plowing is better for root development."
+          "a": "Plow 15 to 20 cm deep when the soil moisture is right. Deeper plowing is better for root development."
         },
         {
           "q": "How many times should I harrow?",
@@ -226,7 +226,7 @@
         },
         {
           "q": "How far apart should the furrows be?",
-          "a": "The DA guide uses 70 cm for hybrid corn and 75 cm for open pollinated varieties."
+          "a": "Use 70 cm for hybrid corn and 75 cm for open pollinated varieties."
         },
         {
           "q": "Can I plant corn without plowing?",
@@ -234,7 +234,7 @@
         },
         {
           "q": "When does corn need lime?",
-          "a": "When the soil pH is below the critical level of 5.4, according to the DA guide. The target is 6.0 to 7.0."
+          "a": "When the soil pH is below the critical level of 5.4. The target is 6.0 to 7.0."
         }
       ]
     },

@@ -15,7 +15,7 @@
     "gypsum for soil",
     "high pH soil"
   ],
-  "excerpt": "Sodic and alkaline soil preparation starts with a diagnosis, because a hard crust and slow drainage do not always mean the same problem. A sodic soil holds too much sodium, which makes the clay fall apart, seal the surface and block water. This guide follows the FAO bulletin on salt affected soils and two university extension papers. It shows what to test, what to add and how to plan the field.",
+  "excerpt": "Sodic and alkaline soil preparation starts with a diagnosis, because a hard crust and slow drainage do not always mean the same problem. A sodic soil holds too much sodium, which makes the clay fall apart, seal the surface and block water. This guide shows what to test, what to add and how to plan the field.",
   "heroImage": {
     "src": "/images/site/land/sodic-alkaline-soil-preparation.webp",
     "alt": "Hard plowed clods under a white salt crust, the kind of field that needs sodic and alkaline soil preparation",
@@ -33,11 +33,11 @@
     },
     {
       "type": "text",
-      "text": "The FAO Soils Bulletin 39 describes sodic soils this way. Too much sodium sits on the clay, and the soil loses its structure. It then disperses, which means the soil crumbs break apart. A dense, hard crust forms on top and keeps seedlings from coming up. Water soaks in slowly and the field stays wet for a long time.\n\nColorado State University Extension adds a sign you can see. A brownish black crust sometimes forms on the surface, because the soil organic matter disperses. White salt crust points to a saline soil instead."
+      "text": "Here is what happens in a sodic soil. Too much sodium sits on the clay, and the soil loses its structure. It then disperses, which means the soil crumbs break apart. A dense, hard crust forms on top and keeps seedlings from coming up. Water soaks in slowly and the field stays wet for a long time.\n\nThere is also a sign you can see. A brownish black crust sometimes forms on the surface, because the soil organic matter disperses. White salt crust points to a saline soil instead."
     },
     {
       "type": "table",
-      "caption": "Laboratory limits used by extension services (saturated paste)",
+      "caption": "Laboratory limits for salt affected soils (saturated paste)",
       "rows": [
         [
           "Soil",
@@ -67,7 +67,7 @@
     },
     {
       "type": "text",
-      "text": "The FAO bulletin says a sodic soil has a saturated paste pH of 8.2 or more, and in extreme cases above 10.5. It treats an exchangeable sodium percentage of 15 as the usual limit. It also notes that a high pH does not harm the plant directly. Instead, it lowers the supply of calcium, magnesium and some other nutrients. For salty fields near the sea, read our [saline soil guide](/land-preparation/saline-soil-preparation)."
+      "text": "A sodic soil has a saturated paste pH of 8.2 or more, and in extreme cases above 10.5. An exchangeable sodium percentage of 15 is the usual limit. A high pH does not harm the plant directly. Instead, it lowers the supply of calcium, magnesium and some other nutrients. For salty fields near the sea, read our [saline soil guide](/land-preparation/saline-soil-preparation)."
     },
     {
       "type": "heading",
@@ -79,27 +79,27 @@
       "items": [
         {
           "title": "Test first",
-          "text": "Get the pH, the salt level and the sodium level from a laboratory. The FAO bulletin also describes a gypsum requirement test, which tells you how much gypsum the soil needs per 30 cm of depth."
+          "text": "Get the pH, the salt level and the sodium level from a laboratory. Ask for a gypsum requirement test too, which tells you how much gypsum the soil needs per 30 cm of depth."
         },
         {
           "title": "Replace the sodium with calcium",
-          "text": "According to the FAO bulletin, reclaiming a sodic soil means removing much of the exchangeable sodium and replacing it with calcium in the root zone. Gypsum is the usual amendment, because it supplies soluble calcium. The bulletin calls gypsum the most widely used amendment, because it is cheap and easy to get."
+          "text": "Reclaiming a sodic soil means removing much of the exchangeable sodium and replacing it with calcium in the root zone. Gypsum is the usual amendment, because it supplies soluble calcium. It is also the most widely used one, because it is cheap and easy to get."
         },
         {
           "title": "Mix the gypsum into the top layer",
-          "text": "The FAO bulletin says gypsum is normally broadcast and then worked in by disking or plowing. It cites a trial where gypsum mixed into the top 15 cm worked better than gypsum left on the surface. It also says shallower mixing beats deeper mixing, which dilutes the gypsum."
+          "text": "Gypsum is normally broadcast and then worked in by disking or plowing. In one trial, gypsum mixed into the top 15 cm worked better than gypsum left on the surface. Shallower mixing beats deeper mixing, which dilutes the gypsum."
         },
         {
           "title": "Leach with good water",
-          "text": "Fast results need the amendment followed by leaching, which means flushing water through the soil to carry the replaced sodium away. Use water with low salt. The bulletin notes that one irrigation before the amendment helps wash out soluble carbonates."
+          "text": "Fast results need the amendment followed by leaching, which means flushing water through the soil to carry the replaced sodium away. Use water with low salt. One irrigation before the amendment helps wash out soluble carbonates."
         },
         {
           "title": "Add organic matter",
-          "text": "Straw, farm manure and green manure help too, but slowly. The bulletin says decomposition and root action dissolve calcium already in the soil. Colorado State and Minnesota extension both list organic matter, cover crops and manure for sodic soils."
+          "text": "Straw, farm manure and green manure help too, but slowly. Decomposition and root action dissolve calcium already in the soil. Cover crops and manure are good choices for sodic soils as well."
         },
         {
           "title": "Open the hard layer where one exists",
-          "text": "The FAO bulletin reports that deep plowing, up to 100 cm, helped soils with hardpans or dense clay subsoil in trials. It worked by mixing in calcareous or gypsiferous subsoil. Ask a technician before you try it, because it needs the right subsoil."
+          "text": "In trials, deep plowing up to 100 cm helped soils with hardpans or dense clay subsoil. It worked by mixing in calcareous or gypsiferous subsoil. Ask a technician before you try it, because it needs the right subsoil."
         }
       ]
     },
@@ -107,7 +107,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Drain after you fix the soil",
-      "text": "Minnesota extension warns that installing drainage tile on sodic soil before remediating the sodicity gives less than ideal results. Fix the sodium first, then drain. Test both the salt and the sodium before you dig any canal."
+      "text": "Installing drainage tile on sodic soil before remediating the sodicity gives less than ideal results. Fix the sodium first, then drain. Test both the salt and the sodium before you dig any canal."
     },
     {
       "type": "heading",
@@ -116,11 +116,11 @@
     },
     {
       "type": "text",
-      "text": "Rice is a good fit for sodic land. For the field work itself, see our [rice land preparation guide](/land-preparation/rice-land-preparation). The FAO bulletin says its high tolerance comes from its ability to stand a layer of water through the season. Flooding also lowers the pH. In one cited study, the pH fell from 8.8 to 7 twelve weeks after flooding. The bulletin calls rice an ideal crop during reclamation. It says rice and dhaincha are tolerant, wheat is only moderately tolerant and legumes like lentil are sensitive.\n\nThe bulletin also reports that older rice seedlings tolerate sodicity better. It suggests transplanting seedlings 35 to 40 days old instead of the usual 30 days. Mulch helps as well. In one cited trial, rice husk mulch 3 to 8 cm thick pushed salts deeper. The next rice crop then yielded more. Do not leave the land fallow, because the bulletin says fallowing pulls salts back up. Keep it cropped."
+      "text": "Rice is a good fit for sodic land. For the field work itself, see our [rice land preparation guide](/land-preparation/rice-land-preparation). Its high tolerance comes from its ability to stand a layer of water through the season. Flooding also lowers the pH. In one study, the pH fell from 8.8 to 7 twelve weeks after flooding. That makes rice an ideal crop during reclamation. Rice and dhaincha are tolerant, wheat is only moderately tolerant and legumes like lentil are sensitive.\n\nOlder rice seedlings tolerate sodicity better. Transplant seedlings 35 to 40 days old instead of the usual 30 days. Mulch helps as well. In one trial, rice husk mulch 3 to 8 cm thick pushed salts deeper. The next rice crop then yielded more. Do not leave the land fallow, because fallowing pulls salts back up. Keep it cropped."
     },
     {
       "type": "text",
-      "text": "The FAO bulletin says sodic soils are low in organic matter, so they are usually short of nitrogen. Poor aeration also wastes some of it, so let soil tests and a technician set the fertilizer rate. The same bulletin says acids or acid forming materials, such as sulphur, can also work. They act slowly, because they must first turn into sulphuric acid in the soil."
+      "text": "Sodic soils are low in organic matter, so they are usually short of nitrogen. Poor aeration also wastes some of it, so let soil tests and a technician set the fertilizer rate. Acids or acid forming materials, such as sulphur, can also work. They act slowly, because they must first turn into sulphuric acid in the soil."
     },
     {
       "type": "cta",
@@ -136,7 +136,7 @@
     },
     {
       "type": "text",
-      "text": "For trees, the FAO bulletin describes pits 90 cm deep and 90 cm wide, filled with soil amended with gypsum and manure. It also describes auger holes 15 cm wide and 150 cm deep. These were filled with original soil, 2 kg of gypsum and 7 to 8 kg of manure. In those trials the roots mostly bypassed the sodic layer. The bulletin also shows a bed and ridge method that stores rain water and grows trees on sodic soil. Compare it with our [fruit tree land preparation guide](/land-preparation/fruit-tree-land-preparation)."
+      "text": "For trees, dig pits 90 cm deep and 90 cm wide, filled with soil amended with gypsum and manure. Auger holes 15 cm wide and 150 cm deep also work. In trials, these were filled with original soil, 2 kg of gypsum and 7 to 8 kg of manure, and the roots mostly bypassed the sodic layer. A bed and ridge method that stores rain water and grows trees on sodic soil. Compare it with our [fruit tree land preparation guide](/land-preparation/fruit-tree-land-preparation)."
     },
     {
       "type": "heading",
@@ -164,19 +164,19 @@
       "items": [
         {
           "q": "What is the difference between sodic and saline soil?",
-          "a": "Saline soil has too much salt, often with a white crust, and a pH below 8.5. Sodic soil has too much sodium on the clay, a pH above 8.5, poor drainage and a hard crust, according to Colorado State University Extension."
+          "a": "Saline soil has too much salt, often with a white crust, and a pH below 8.5. Sodic soil has too much sodium on the clay, a pH above 8.5, poor drainage and a hard crust."
         },
         {
           "q": "What does gypsum do in sodic soil?",
-          "a": "Gypsum supplies calcium that replaces sodium on the clay, and leaching then removes the sodium. The FAO bulletin does not describe gypsum as a pH lowering product. It calls it the most widely used amendment for sodic soils."
+          "a": "Gypsum supplies calcium that replaces sodium on the clay, and leaching then removes the sodium. Do not think of gypsum as a pH lowering product. It is the most widely used amendment for sodic soils."
         },
         {
           "q": "Can I plant rice on sodic soil?",
-          "a": "Yes. The FAO bulletin calls rice an ideal crop during reclamation, because it tolerates sodium and the flooding lowers pH."
+          "a": "Yes. Rice is an ideal crop during reclamation, because it tolerates sodium and the flooding lowers pH."
         },
         {
           "q": "Should I fix drainage first?",
-          "a": "No. Minnesota extension says drain tile on sodic soil before remediation gives less than ideal results, so treat the sodium first."
+          "a": "No. Drain tile on sodic soil before remediation gives less than ideal results, so treat the sodium first."
         }
       ]
     },

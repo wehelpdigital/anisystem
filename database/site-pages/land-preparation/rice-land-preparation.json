@@ -4,9 +4,9 @@
   "sortOrder": 20,
   "lang": "en",
   "category": "Land preparation",
-  "title": "Rice Land Preparation: The PalayCheck Way",
-  "metaTitle": "Rice Land Preparation: PalayCheck Steps and Timing",
-  "metaDescription": "Rice land preparation step by step: the PalayCheck 21 day plan for plowing, harrowing, leveling and puddling, plus pilapil repair and the seedbed.",
+  "title": "Rice Land Preparation: The 21 Day Plan",
+  "metaTitle": "Rice Land Preparation: 21 Day Steps and Timing",
+  "metaDescription": "Rice land preparation step by step: the 21 day plan for plowing, harrowing, leveling and puddling, plus pilapil repair and the seedbed.",
   "focusKeyword": "rice land preparation",
   "keywords": [
     "rice land preparation",
@@ -17,7 +17,7 @@
     "rice seedbed",
     "well leveled field"
   ],
-  "excerpt": "Rice land preparation starts weeks before the first seedling goes in. PhilRice puts it as Key Check 2 of its PalayCheck System: a well leveled field. This guide walks through the plan for transplanted lowland rice, day by day, and shows how to fix the usual mistakes.",
+  "excerpt": "Rice land preparation starts weeks before the first seedling goes in. The goal is a well leveled field. This guide walks through the plan for transplanted lowland rice, day by day, and shows how to fix the usual mistakes.",
   "heroImage": {
     "src": "/images/site/land/rice-land-preparation.webp",
     "alt": "A farmer puddles a flooded paddy with a hand tractor in Bulacan during rice land preparation",
@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice says a well leveled field is a prerequisite to good crop growth and management. It helps water management, weed control, snail control, nutrient use and uniform maturity. It also lets farm machines work well.\n\nThe cost of skipping it is clear. According to PalayCheck, a poorly prepared field could yield 5 percent less. On a farm aiming for 100 sacks per hectare, that is about 5 sacks gone before the first seed.\n\nThis page covers transplanted lowland rice. If you sow the seed directly, read our guide on [direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation). For the big picture, see [land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
+      "text": "A well leveled field is a prerequisite to good crop growth and management. It helps water management, weed control, snail control, nutrient use and uniform maturity. It also lets farm machines work well.\n\nThe cost of skipping it is clear. A poorly prepared field could yield 5 percent less. On a farm aiming for 100 sacks per hectare, that is about 5 sacks gone before the first seed.\n\nThis page covers transplanted lowland rice. If you sow the seed directly, read our guide on [direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation). For the big picture, see [land preparation in the Philippines](/land-preparation/land-preparation-philippines)."
     },
     {
       "type": "heading",
@@ -40,11 +40,11 @@
     },
     {
       "type": "text",
-      "text": "PhilRice recommends preparing the field over 21 to 30 days. You plow once and let the soil rest for about a week. Then you harrow three times, 5 to 7 days apart: lengthwise, crosswise, then a final pass with the leveling. The gap between passes is on purpose, because it lets weeds and dropped seeds sprout so that the next pass buries them. Take the longer gap when many weeds or much straw must rot."
+      "text": "Prepare the field over 21 to 30 days. You plow once and let the soil rest for about a week. Then you harrow three times, 5 to 7 days apart: lengthwise, crosswise, then a final pass with the leveling. The gap between passes is on purpose, because it lets weeds and dropped seeds sprout so that the next pass buries them. Take the longer gap when many weeds or much straw must rot."
     },
     {
       "type": "table",
-      "caption": "Rice land preparation schedule based on the PalayCheck System",
+      "caption": "Rice land preparation schedule",
       "rows": [
         [
           "When",
@@ -54,7 +54,7 @@
         [
           "Right after harvest or at the first rains",
           "Shallow dry tillage, also called crack plowing",
-          "PhilRice recommends it after harvest or at the onset of the rainy season"
+          "Best done after harvest or at the onset of the rainy season"
         ],
         [
           "21 to 30 days before planting",
@@ -85,7 +85,7 @@
     },
     {
       "type": "text",
-      "text": "Do this first, before the water comes in. PalayCheck says clean dikes help prevent or reduce pest infestation, and compacted dikes stop seepage. It also advises a dike height of 15 cm and a width of 20 cm, which discourages rats from burrowing. Clean ditches keep water moving and help the field drain."
+      "text": "Do this first, before the water comes in. Clean dikes help prevent or reduce pest infestation, and compacted dikes stop seepage. Build the dikes 15 cm high and 20 cm wide, which discourages rats from burrowing. Clean ditches keep water moving and help the field drain."
     },
     {
       "type": "heading",
@@ -94,7 +94,7 @@
     },
     {
       "type": "text",
-      "text": "Plowing works the weeds, straw and stubble into the soil and gives them time to decompose. PalayCheck warns that if plant residues do not fully decompose, the soil turns acidic and some nutrients become less available. So you can apply organic fertilizer at this stage to help the soil life break the residue down.\n\nThen leave the field for about 7 days, so the soil dries a little and softens and the buried weeds start to rot.\n\nPhilRice lists the moldboard plow, disc plow, rotavator and floating tiller as primary tillage tools. A farm tractor, a hand tractor or an animal can pull them."
+      "text": "Plowing works the weeds, straw and stubble into the soil and gives them time to decompose. If plant residues do not fully decompose, the soil turns acidic and some nutrients become less available. So you can apply organic fertilizer at this stage to help the soil life break the residue down.\n\nThen leave the field for about 7 days, so the soil dries a little and softens and the buried weeds start to rot.\n\nThe moldboard plow, disc plow, rotavator and floating tiller are the primary tillage tools. A farm tractor, a hand tractor or an animal can pull them."
     },
     {
       "type": "heading",
@@ -103,7 +103,7 @@
     },
     {
       "type": "text",
-      "text": "The first harrowing follows the plowing pattern. The second goes crosswise, and it also acts as the first leveling. Finally, the third pass comes just before planting, with the leveling. PalayCheck says harrowing breaks clods, buries stubble, lets weed seeds sprout, helps reduce the starting pest population and maintains the soil's hard pan.\n\nThat last point matters. A firm layer under the mud holds the water and carries the weight of the machines and the people who work the field."
+      "text": "The first harrowing follows the plowing pattern. The second goes crosswise, and it also acts as the first leveling. Finally, the third pass comes just before planting, with the leveling. Harrowing breaks clods, buries stubble, lets weed seeds sprout, helps reduce the starting pest population and maintains the soil's hard pan.\n\nThat last point matters. A firm layer under the mud holds the water and carries the weight of the machines and the people who work the field."
     },
     {
       "type": "heading",
@@ -112,13 +112,13 @@
     },
     {
       "type": "text",
-      "text": "Puddling means working the soil under water until it turns into soft mud. PhilRice says a field is well leveled when weeds, rice straw and stubble are fully decomposed and the land is well puddled.\n\nFor the final harrowing and leveling, use a wooden plank pulled by a carabao or a hand tractor, or a tiller attached leveler. Keep the water at 5 cm, about a thumb length, to make the leveling easier."
+      "text": "Puddling means working the soil under water until it turns into soft mud. A field is well leveled when weeds, rice straw and stubble are fully decomposed and the land is well puddled.\n\nFor the final harrowing and leveling, use a wooden plank pulled by a carabao or a hand tractor, or a tiller attached leveler. Keep the water at 5 cm, about a thumb length, to make the leveling easier."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "The 5 cm water test",
-      "text": "After the final leveling, no part of the field should have water deeper than 5 cm, and no mound of soil should show above the 5 cm water surface. If you see high or low spots, level again. This is the PalayCheck way of checking Key Check 2."
+      "text": "After the final leveling, no part of the field should have water deeper than 5 cm, and no mound of soil should show above the 5 cm water surface. If you see high or low spots, level again. This is the simplest way to check for a well leveled field."
     },
     {
       "type": "heading",
@@ -127,7 +127,7 @@
     },
     {
       "type": "text",
-      "text": "Water leveling is the method above. You let the water show where the field is high or low, then you drag a plank to fix it.\n\nLaser guided leveling is the machine option. IRRI reports that it raises rice yield by an average of 8 percent in one report and 15 percent in another, so the gain varies by field. IRRI also says the Department of Agriculture regional offices provide laser leveling services in the Philippines. Since the machine is costly, most farmers use it as a hired service."
+      "text": "Water leveling is the method above. You let the water show where the field is high or low, then you drag a plank to fix it.\n\nLaser guided leveling is the machine option. It raises rice yield by an average of 8 percent in one report and 15 percent in another, so the gain varies by field. In the Philippines, Department of Agriculture regional offices provide laser leveling services. Since the machine is costly, most farmers use it as a hired service."
     },
     {
       "type": "heading",
@@ -136,7 +136,7 @@
     },
     {
       "type": "text",
-      "text": "Transplanting needs seedlings, so the seedbed gets its own preparation. PalayCheck advises a manual transplanting seedbed area of 400 square meters per hectare and a seeding rate of 20 to 40 kg per hectare. It also says a bed 20 m long and 1 m wide gives the seedlings enough space. Plan on 40 kg of inbred or 20 kg of hybrid seed per hectare.\n\nBefore leveling the seedbed, apply organic fertilizer or carbonized rice hull, which loosens the soil and makes pulling the seedlings easier with less root damage. On fine textured soil, PalayCheck gives a rate of 3 to 4 bags of commercial organic fertilizer. On medium textured soil, it says you do not need to add any."
+      "text": "Transplanting needs seedlings, so the seedbed gets its own preparation. For manual transplanting, use a seedbed area of 400 square meters per hectare and a seeding rate of 20 to 40 kg per hectare. A bed 20 m long and 1 m wide gives the seedlings enough space. Plan on 40 kg of inbred or 20 kg of hybrid seed per hectare.\n\nBefore leveling the seedbed, apply organic fertilizer or carbonized rice hull, which loosens the soil and makes pulling the seedlings easier with less root damage. On fine textured soil, use 3 to 4 bags of commercial organic fertilizer. On medium textured soil, you do not need to add any."
     },
     {
       "type": "heading",
@@ -154,7 +154,7 @@
     },
     {
       "type": "text",
-      "text": "Pull the seedlings at 18 to 21 days for hand transplanting, or at 14 to 18 days for a mechanical transplanter. A 12 day seedling can go in if it already stands 15 cm tall. Plant straight rows at 20 by 20 cm in the wet season or 20 by 15 cm in the dry season. Put 2 to 3 seedlings in each hill for inbred rice, or 1 to 2 for hybrids.\n\nLeave the leaf tips uncut, because PhilRice says the cuts let disease organisms in. Then keep the spare seedlings by the field to replant missing hills within 3 to 5 days, so the crop ripens together."
+      "text": "Pull the seedlings at 18 to 21 days for hand transplanting, or at 14 to 18 days for a mechanical transplanter. A 12 day seedling can go in if it already stands 15 cm tall. Plant straight rows at 20 by 20 cm in the wet season or 20 by 15 cm in the dry season. Put 2 to 3 seedlings in each hill for inbred rice, or 1 to 2 for hybrids.\n\nLeave the leaf tips uncut, because the cuts let disease organisms in. Then keep the spare seedlings by the field to replant missing hills within 3 to 5 days, so the crop ripens together."
     },
     {
       "type": "heading",
@@ -210,7 +210,7 @@
         "Leveling with no standing water, so you cannot see the low spots.",
         "Leaving old stubble and straw undecomposed, which turns the soil acidic.",
         "Ignoring the dikes, which leaves seepage and rat burrows.",
-        "Pulling or transplanting seedlings older than 25 days. PalayCheck says seedlings older than 25 days recover slowly and make fewer tillers."
+        "Pulling or transplanting seedlings older than 25 days. Seedlings older than 25 days recover slowly and make fewer tillers."
       ]
     },
     {
@@ -223,15 +223,15 @@
       "items": [
         {
           "q": "How long does land preparation for rice take?",
-          "a": "PhilRice recommends 21 to 30 days. You plow first, rest the field for about a week, then harrow three times, 5 to 7 days apart, ending with the final leveling."
+          "a": "About 21 to 30 days. You plow first, rest the field for about a week, then harrow three times, 5 to 7 days apart, ending with the final leveling."
         },
         {
           "q": "Is laser leveling worth it?",
-          "a": "IRRI reports yield gains of 8 percent on average in one report and 15 percent in another. It is a hired service for most farmers, so compare the fee with your expected gain."
+          "a": "Yield gains run 8 percent on average in one report and 15 percent in another. It is a hired service for most farmers, so compare the fee with your expected gain."
         },
         {
           "q": "How old should seedlings be at transplanting?",
-          "a": "PhilRice says 18 to 21 days by hand, or 14 to 18 days for a mechanical transplanter. A 12 day seedling can go in if it already stands 15 cm tall."
+          "a": "At 18 to 21 days by hand, or 14 to 18 days for a mechanical transplanter. A 12 day seedling can go in if it already stands 15 cm tall."
         }
       ]
     },

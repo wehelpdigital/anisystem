@@ -6,7 +6,7 @@
   "category": "Land preparation",
   "title": "Acidic Soil Preparation: Testing pH and Liming Before Planting",
   "metaTitle": "Acidic Soil Preparation: Test pH, Lime and Dolomite",
-  "metaDescription": "Acidic soil preparation made simple: test your pH with the BSWM soil test kit, choose agricultural lime or dolomite, and apply it weeks before planting.",
+  "metaDescription": "Acidic soil preparation made simple: test your pH with a soil test kit, choose agricultural lime or dolomite, and apply it weeks before planting.",
   "focusKeyword": "acidic soil preparation",
   "keywords": [
     "acidic soil preparation",
@@ -33,7 +33,7 @@
     },
     {
       "type": "text",
-      "text": "North Carolina State University Extension explains it this way. When soil gets too acidic, hydrogen and aluminum crowd the clay and push out the nutrients plants need. Roots meet more aluminum, which can harm them. Liming lets plants grow healthier roots because they meet less of that aluminum.\n\nKansas State University Extension adds that heavy use of nitrogen fertilizer speeds up acidification. It also warns against overdoing the lime. Too much lime raises the pH too high and cuts the supply of micronutrients such as zinc."
+      "text": "When soil gets too acidic, hydrogen and aluminum crowd the clay and push out the nutrients plants need. Roots meet more aluminum, which can harm them. Liming lets plants grow healthier roots because they meet less of that aluminum.\n\nHeavy use of nitrogen fertilizer speeds up acidification. Do not overdo the lime either. Too much lime raises the pH too high and cuts the supply of micronutrients such as zinc."
     },
     {
       "type": "heading",
@@ -42,13 +42,13 @@
     },
     {
       "type": "text",
-      "text": "The Bureau of Soils and Water Management (BSWM) sells the Soil Test Kit for farmers and field technicians. Per the BSWM leaflet, the kit shows the nitrogen, phosphorus and potassium level of the soil. It also shows the pH, which tells you how acidic or alkaline the soil is. You read the result from the color that appears in the test tube.\n\nThe kit sells at the BSWM Laboratory Services Division in Diliman, Quezon City, and at soils laboratories. The leaflet asks you to consult field or soils laboratory technicians, because your field may have another problem too."
+      "text": "The Soil Test Kit is made for farmers and field technicians. It shows the nitrogen, phosphorus and potassium level of the soil. It also shows the pH, which tells you how acidic or alkaline the soil is. You read the result from the color that appears in the test tube.\n\nThe kit sells at the BSWM Laboratory Services Division in Diliman, Quezon City, and at soils laboratories. Consult field or soils laboratory technicians as well, because your field may have another problem too."
     },
     {
       "type": "callout",
       "tone": "info",
       "title": "A pH reading is not a lime recommendation",
-      "text": "NC State Extension notes that portable test kits read pH quickly, but you cannot make an accurate lime recommendation from the pH alone. A laboratory lime requirement test also looks at how much acidity the soil holds in reserve. Use the kit to find the problem, then ask a laboratory or technician for the rate."
+      "text": "Portable test kits read pH quickly, but you cannot make an accurate lime recommendation from the pH alone. A laboratory lime requirement test also looks at how much acidity the soil holds in reserve. Use the kit to find the problem, then ask a laboratory or technician for the rate."
     },
     {
       "type": "heading",
@@ -64,15 +64,15 @@
         },
         {
           "title": "Choose the liming material",
-          "text": "Agricultural lime is crushed limestone. NC State says calcitic lime holds calcium only, while dolomite holds a lot of magnesium as well. Use dolomite if the soil is low in magnesium. Otherwise calcitic lime will do. Check the material and its fineness on the label."
+          "text": "Agricultural lime is crushed limestone. Calcitic lime holds calcium only, while dolomite holds a lot of magnesium as well. Use dolomite if the soil is low in magnesium. Otherwise calcitic lime will do. Check the material and its fineness on the label."
         },
         {
           "title": "Spread weeks before planting",
-          "text": "Kansas State advises liming at least 4 to 6 weeks before the planting season, since the lime needs time and moisture to react. That advice is for Kansas wheat. Philippine studies below show how crops respond, but they do not give one waiting time, so ask your technician."
+          "text": "Lime at least 4 to 6 weeks before the planting season, since the lime needs time and moisture to react. That timing was set for wheat in Kansas. Philippine studies below show how crops respond, but they do not give one waiting time, so ask your technician."
         },
         {
           "title": "Mix it in",
-          "text": "Spread the lime evenly and work it into the soil. Kansas State says tillage gives a more uniform reaction in the soil, and lime left on the surface reacts only in the top 3 inches. NC State says a heavy rotary tiller that mixes the whole root zone beats disking alone."
+          "text": "Spread the lime evenly and work it into the soil. Tillage gives a more uniform reaction in the soil, and lime left on the surface reacts only in the top 3 inches. A heavy rotary tiller that mixes the whole root zone beats disking alone."
         },
         {
           "title": "Add compost or manure",
@@ -80,7 +80,7 @@
         },
         {
           "title": "Retest after the season",
-          "text": "Test again after a crop, then adjust. NC State warns that over liming causes manganese deficiency in many soils."
+          "text": "Test again after a crop, then adjust. Over liming causes manganese deficiency in many soils."
         }
       ]
     },
@@ -91,7 +91,7 @@
     },
     {
       "type": "text",
-      "text": "At Claveria in Misamis Oriental, Magbanua and colleagues tested lime at 0, 3 and 6 tons per hectare. The trial ran in an upland rice and corn sequence. The rice yield rose in a straight line as the lime rate went up. Where 3 tons of lime went in with a tractor plow, the pH rose more than where animal plowing mixed it. The authors add that small amounts of lime should go into the surface layer.\n\nIn Bukidnon, researchers at Central Mindanao University tested corn on acidic soils. Three tons of lime per hectare, with 60 kg of nitrogen and 30 kg of phosphate, gave the best return. These are results from those soils, not rates for every farm. For the field work after liming, see our [corn land preparation guide](/land-preparation/corn-land-preparation)."
+      "text": "At Claveria in Misamis Oriental, Magbanua and colleagues tested lime at 0, 3 and 6 tons per hectare. The trial ran in an upland rice and corn sequence. The rice yield rose in a straight line as the lime rate went up. Where 3 tons of lime went in with a tractor plow, the pH rose more than where animal plowing mixed it. The authors add that small amounts of lime should go into the surface layer.\n\nIn Bukidnon, researchers tested corn on acidic soils. Three tons of lime per hectare, with 60 kg of nitrogen and 30 kg of phosphate, gave the best return. These are results from those soils, not rates for every farm. For the field work after liming, see our [corn land preparation guide](/land-preparation/corn-land-preparation)."
     },
     {
       "type": "cta",
@@ -122,7 +122,7 @@
         "Using the pH reading alone to set the lime rate.",
         "Leaving the lime on the surface instead of working it in.",
         "Spreading it on the day you plant.",
-        "Piling on nitrogen fertilizer without checking the pH, because Kansas State says it makes soil more acidic.",
+        "Piling on nitrogen fertilizer without checking the pH, because it makes soil more acidic.",
         "Putting lime on alkaline soil. Read the [sodic and alkaline soil guide](/land-preparation/sodic-alkaline-soil-preparation) for that case."
       ]
     },
@@ -135,16 +135,16 @@
       "type": "faq",
       "items": [
         {
-          "q": "What does the BSWM soil test kit measure?",
-          "a": "The BSWM leaflet says it shows whether the soil has enough nitrogen, phosphorus and potassium, and it measures the pH. You read the result from the color in the test tube."
+          "q": "What does the soil test kit measure?",
+          "a": "It shows whether the soil has enough nitrogen, phosphorus and potassium, and it measures the pH. You read the result from the color in the test tube."
         },
         {
           "q": "What is the difference between lime and dolomite?",
-          "a": "Calcitic lime has calcium only. Dolomite also has a good amount of magnesium. NC State says to use dolomite when the soil is low in magnesium."
+          "a": "Calcitic lime has calcium only. Dolomite also has a good amount of magnesium. Use dolomite when the soil is low in magnesium."
         },
         {
           "q": "How long before planting should I lime?",
-          "a": "Kansas State advises at least 4 to 6 weeks before planting, but it wrote that for Kansas wheat. Ask your technician for your crop and soil."
+          "a": "The usual advice is at least 4 to 6 weeks before planting, but that timing was set for wheat in Kansas. Ask your technician for your crop and soil."
         },
         {
           "q": "Can I use only compost on acidic soil?",

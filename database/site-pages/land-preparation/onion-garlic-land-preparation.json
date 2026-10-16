@@ -6,7 +6,7 @@
   "category": "Land preparation",
   "title": "Land Preparation for Onion and Garlic After Rice",
   "metaTitle": "Land Preparation for Onion and Garlic After Rice",
-  "metaDescription": "Land preparation for onion and garlic after rice: fine seedbed, raised beds, zero tillage with rice straw mulch and drainage, from DA and BPI sources.",
+  "metaDescription": "Land preparation for onion and garlic after rice: fine seedbed, raised beds, zero tillage with rice straw mulch and drainage, for Filipino farms.",
   "focusKeyword": "land preparation for onion and garlic",
   "keywords": [
     "land preparation for onion and garlic",
@@ -18,7 +18,7 @@
     "seedbed",
     "rice onion rotation"
   ],
-  "excerpt": "Land preparation for onion and garlic usually begins in a rice field that has just been harvested. The soil is wet, hard and full of stubble, but both crops need loose, fine and well drained ground. Here is how Filipino farmers prepare it, with tillage or with zero tillage, based on Department of Agriculture (DA) and Bureau of Plant Industry (BPI) sources.",
+  "excerpt": "Land preparation for onion and garlic usually begins in a rice field that has just been harvested. The soil is wet, hard and full of stubble, but both crops need loose, fine and well drained ground. Here is how Filipino farmers prepare it, with tillage or with zero tillage.",
   "heroImage": {
     "src": "/images/site/land/onion-garlic-land-preparation.webp",
     "alt": "Onion plants in beds separated by grassy paths on a Philippine farm after land preparation for onion and garlic",
@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The DA calls this rice onion rotation. In its Mindoro brief, the DA says farmers plant rice in the first season and onion in the next. Onion suits that field because it grows in friable, well drained soil and needs little water. The two crops also mature in time for the cropping seasons.\n\nGarlic follows the same pattern in places such as Batanes. So the job is the same for both: turn a paddy into a dry field and keep water away from the bulbs."
+      "text": "This is called rice onion rotation. In Mindoro, farmers plant rice in the first season and onion in the next. Onion suits that field because it grows in friable, well drained soil and needs little water. The two crops also mature in time for the cropping seasons.\n\nGarlic follows the same pattern in places such as Batanes. So the job is the same for both: turn a paddy into a dry field and keep water away from the bulbs."
     },
     {
       "type": "heading",
@@ -36,7 +36,7 @@
     },
     {
       "type": "text",
-      "text": "The DA Region 02 garlic guide names two methods, with tillage and without tillage, or zero tillage. Onion farmers use both too. Pick the one that matches your soil moisture, your machines and the time left before planting."
+      "text": "Garlic land preparation has two methods, with tillage and without tillage, or zero tillage. Onion farmers use both too. Pick the one that matches your soil moisture, your machines and the time left before planting."
     },
     {
       "type": "heading",
@@ -45,7 +45,7 @@
     },
     {
       "type": "text",
-      "text": "This method is like the work for corn, soybean and other upland crops. The DA says to plow and harrow the field twice or more, at seven days interval or less. A tractor mounted rotavator can also do the job. Then dig canals around the area for drainage.\n\nThe seven day gap does two things. First, the stubble starts to rot. Next, weed seeds sprout, and the following pass buries them. The UPLB and FAO records on onion after rice back this up. One study in Nueva Ecija tested tillage, mulching and burning rice hull before planting, and found that mulching and burning rice hull on the field before planting held weeds down."
+      "text": "This method is like the work for corn, soybean and other upland crops. Plow and harrow the field twice or more, at seven days interval or less. A tractor mounted rotavator can also do the job. Then dig canals around the area for drainage.\n\nThe seven day gap does two things. First, the stubble starts to rot. Next, weed seeds sprout, and the following pass buries them. Trials on onion after rice back this up. One study in Nueva Ecija tested tillage, mulching and burning rice hull before planting, and found that mulching and burning rice hull on the field before planting held weeds down."
     },
     {
       "type": "heading",
@@ -54,7 +54,7 @@
     },
     {
       "type": "text",
-      "text": "The DA garlic guide says zero tillage is usually done in Itbayat, Batanes after the palay harvest. Farmers remove the rice straw and the weeds and use them as mulch. They then plant by dibbling, which means pushing a pointed wooden stake into the soil to make each hole.\n\nThe mulch goes on after planting, in an even layer 3 to 5 cm thick. In Batanes, rice straw and cogon are the usual mulch. The DA also lists rice hull, sawdust, grasses and plastic sheet. Mulch controls soil moisture and weeds."
+      "text": "Zero tillage is usually done in Itbayat, Batanes after the palay harvest. Farmers remove the rice straw and the weeds and use them as mulch. They then plant by dibbling, which means pushing a pointed wooden stake into the soil to make each hole.\n\nThe mulch goes on after planting, in an even layer 3 to 5 cm thick. In Batanes, rice straw and cogon are the usual mulch. Rice hull, sawdust, grasses and plastic sheet also work. Mulch controls soil moisture and weeds."
     },
     {
       "type": "callout",
@@ -69,7 +69,7 @@
     },
     {
       "type": "text",
-      "text": "A BPI leaflet on onion culture says to keep the seedbed rich and the field weed free and in fine tilth. It describes raised beds about one meter wide, of any length, as practical for all purposes. In a meter wide bed, set three or four rows with seedlings 10 cm apart in the rows. The leaflet says seedlings spend four to six weeks in the seedbed, or four weeks if the bed is rich.\n\nThe leaflet is old, so check bed size and spacing against your variety and your municipal agriculturist. Still, the idea holds: a raised bed lifts the roots above standing water, and the one meter width lets you weed from both sides."
+      "text": "Keep the seedbed rich and the field weed free and in fine tilth. Raised beds about one meter wide, of any length, are practical for all purposes. In a meter wide bed, set three or four rows with seedlings 10 cm apart in the rows. Seedlings spend four to six weeks in the seedbed, or four weeks if the bed is rich.\n\nThese are old figures, so check bed size and spacing against your variety and your municipal agriculturist. Still, the idea holds: a raised bed lifts the roots above standing water, and the one meter width lets you weed from both sides."
     },
     {
       "type": "table",
@@ -114,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "The DA says garlic grows in sandy, silt and clay loam that is fertile, rich in organic matter, well drained and able to hold moisture. Garlic does not grow well where rain is excessive, and it grows best on gently sloping land. Onion likes the same friable, well drained soil.\n\nBecause palay fields are flat and often heavy, drainage is the first fix. Cut canals around the field, open the dikes and shape the beds so water runs off. The DA guide also warns about Fusarium bulb rot, a soil borne disease that rots roots and bulbs."
+      "text": "Garlic grows in sandy, silt and clay loam that is fertile, rich in organic matter, well drained and able to hold moisture. Garlic does not grow well where rain is excessive, and it grows best on gently sloping land. Onion likes the same friable, well drained soil.\n\nBecause palay fields are flat and often heavy, drainage is the first fix. Cut canals around the field, open the dikes and shape the beds so water runs off. Watch for Fusarium bulb rot too, a soil borne disease that rots roots and bulbs."
     },
     {
       "type": "heading",
@@ -123,7 +123,7 @@
     },
     {
       "type": "text",
-      "text": "The DA says organic fertilizer works well for garlic. It recommends 1 kg per square meter, or 200 bags per hectare, which is a high rate. It also tells farmers to test the soil before planting. Hand kits that measure soil fertility and pH are available from local DA offices.\n\nBefore planting, irrigate the field a day or two earlier if the soil is dry. Then plant the cloves. The DA gives a spacing of 15 to 20 cm by 10 to 25 cm, with each clove pushed two thirds of its length into the soil, about 2 to 3 cm deep, and needs 400 to 700 kg of seed cloves per hectare."
+      "text": "Organic fertilizer works well for garlic. The rate is 1 kg per square meter, or 200 bags per hectare, which is a high rate. Test the soil before planting too. Hand kits that measure soil fertility and pH are available from local DA offices.\n\nBefore planting, irrigate the field a day or two earlier if the soil is dry. Then plant the cloves. Use a spacing of 15 to 20 cm by 10 to 25 cm, with each clove pushed two thirds of its length into the soil, about 2 to 3 cm deep. A hectare needs 400 to 700 kg of seed cloves."
     },
     {
       "type": "cta",
@@ -139,7 +139,7 @@
     },
     {
       "type": "text",
-      "text": "Weeds cost onion growers heavily. The 1987 study found that high yielding onion varieties lost more yield to weeds than lower yielding ones. The authors suggest letting flushes of weeds grow for a while before cultivating again. Farmers call this a stale seedbed.\n\nA herbicide is an option, not a must. The UPLB study found that one herbicide plus one hand weeding controlled weeds and gave a comparable yield to heavier schedules. The 1987 trial used oxyfluorfen as the active ingredient. Do not copy a trial rate. Follow the Fertilizer and Pesticide Authority (FPA) registered label for any product, and read our [weed guide](/weeds/common-weeds-philippines) first."
+      "text": "Weeds cost onion growers heavily. The 1987 study found that high yielding onion varieties lost more yield to weeds than lower yielding ones. The authors suggest letting flushes of weeds grow for a while before cultivating again. Farmers call this a stale seedbed.\n\nA herbicide is an option, not a must. One study found that one herbicide plus one hand weeding controlled weeds and gave a comparable yield to heavier schedules. The 1987 trial used oxyfluorfen as the active ingredient. Do not copy a trial rate. Follow the Fertilizer and Pesticide Authority (FPA) registered label for any product, and read our [weed guide](/weeds/common-weeds-philippines) first."
     },
     {
       "type": "heading",
@@ -148,7 +148,7 @@
     },
     {
       "type": "text",
-      "text": "Both crops are dry season crops in the Philippines. The DA says farmers usually plant garlic from September to November. December planting tends to give smaller bulbs, because thrips and mites attack late and early rain can hit the crop. Batanes plants in October and November, and Nueva Vizcaya plants in November and December.\n\nThat timing means the rice crop must come off early. If the paddy dries late, prepare the field in two or three passes instead of one, and finish drainage before the first rain."
+      "text": "Both crops are dry season crops in the Philippines. Farmers usually plant garlic from September to November. December planting tends to give smaller bulbs, because thrips and mites attack late and early rain can hit the crop. Batanes plants in October and November, and Nueva Vizcaya plants in November and December.\n\nThat timing means the rice crop must come off early. If the paddy dries late, prepare the field in two or three passes instead of one, and finish drainage before the first rain."
     },
     {
       "type": "heading",
@@ -163,7 +163,7 @@
         "Skipping canals around the field.",
         "Using zero tillage on a field full of nutsedge.",
         "Leaving rice straw thicker than 5 cm, so it smothers young shoots.",
-        "Planting garlic on the same field year after year. The DA advises rotating at least every four years and fallowing one season if Fusarium bulb rot appears."
+        "Planting garlic on the same field year after year. Rotate at least every four years and fallow one season if Fusarium bulb rot appears."
       ]
     },
     {
@@ -180,7 +180,7 @@
       "items": [
         {
           "q": "Can I plant onion or garlic right after rice?",
-          "a": "Yes. The DA describes rice onion rotation in Mindoro and zero tillage garlic after palay in Batanes. Drain the field first, because both crops need well drained soil."
+          "a": "Yes. Farmers in Mindoro rotate rice and onion, and Batanes farmers grow zero tillage garlic after palay. Drain the field first, because both crops need well drained soil."
         },
         {
           "q": "What is zero tillage for garlic?",
@@ -188,11 +188,11 @@
         },
         {
           "q": "How wide should an onion bed be?",
-          "a": "An old BPI leaflet describes raised beds about one meter wide, with three or four rows and seedlings 10 cm apart. Check with your municipal agriculturist for your variety."
+          "a": "Raised beds about one meter wide work well, with three or four rows and seedlings 10 cm apart. Check with your municipal agriculturist for your variety."
         },
         {
           "q": "How much organic fertilizer does garlic need?",
-          "a": "The DA recommends 1 kg per square meter, or 200 bags per hectare. A soil test tells you more for your field."
+          "a": "About 1 kg per square meter, or 200 bags per hectare. A soil test tells you more for your field."
         }
       ]
     },

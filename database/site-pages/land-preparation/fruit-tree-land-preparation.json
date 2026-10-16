@@ -15,7 +15,7 @@
     "coffee planting distance",
     "shade trees for cacao"
   ],
-  "excerpt": "Fruit tree land preparation is a one time job, because a mango, durian or cacao tree stays in its hole for decades. So clear the land, plow, harrow and stake the layout. Then dig the holes and plan the shade and windbreak before the rains come. This guide gives the sizes and distances that Department of Agriculture guides and technoguides print for each crop.",
+  "excerpt": "Fruit tree land preparation is a one time job, because a mango, durian or cacao tree stays in its hole for decades. So clear the land, plow, harrow and stake the layout. Then dig the holes and plan the shade and windbreak before the rains come. This guide gives the usual sizes and distances for each crop.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young mango trees planted in straight rows on cleared red soil, the goal of fruit tree land preparation",
@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Every number here comes from a DA guide or a bureau technoguide that we opened. Where we could not open a good source for a crop, the page says so. In that case, ask your DA or PCA office instead of guessing."
+      "text": "Where we have no good figure for a crop, the page says so. In that case, ask your DA or PCA office instead of guessing."
     },
     {
       "type": "heading",
@@ -36,15 +36,15 @@
       "items": [
         {
           "title": "Clear the site",
-          "text": "Remove weeds, big stones and stumps. The DA Good Agricultural Practices code for mango says clearing can be done by hand on slopes and with a tractor on flat land. For coffee, the DA technoguide says to clear a newly opened area intensively, but to keep trees that can serve as windbreaks or shade."
+          "text": "Remove weeds, big stones and stumps. For mango, clear by hand on slopes and with a tractor on flat land. For coffee, clear a newly opened area intensively, but keep trees that can serve as windbreaks or shade."
         },
         {
           "title": "Plow and harrow where the land is flat",
-          "text": "For flat to rolling land, the mango code says to plow at least once and harrow twice. The durian guide also says to plow and harrow thoroughly. On steep land the mango code advises minimum tillage instead, which means clearing about 2 square meters around each tree and digging a hole there."
+          "text": "On flat to rolling land, plow mango ground at least once and harrow twice. Durian land also needs thorough plowing and harrowing. On steep land, use minimum tillage instead, which means clearing about 2 square meters around each tree and digging a hole there."
         },
         {
           "title": "Plan the shade and the windbreak first",
-          "text": "The coffee technoguide says shade trees must be well established before the coffee goes in, and it plants them one year earlier. The mango code advises windbreaker trees on the edge of the orchard. Plant these before the fruit trees."
+          "text": "Shade trees must be well established before the coffee goes in, so plant them one year earlier. A mango orchard needs windbreaker trees on its edge. Plant these before the fruit trees."
         },
         {
           "title": "Stake the layout",
@@ -52,11 +52,11 @@
         },
         {
           "title": "Dig the holes and backfill with topsoil",
-          "text": "Dig each hole and keep the topsoil apart from the subsoil. The durian guide covers the hole with topsoil after planting. The coffee technoguide says to backfill with topsoil and add compost. The calamansi guide puts the dug soil back mixed with compost."
+          "text": "Dig each hole and keep the topsoil apart from the subsoil. Durian gets its hole covered with topsoil after planting. For coffee, backfill with topsoil and add compost. Calamansi gets the dug soil back mixed with compost."
         },
         {
           "title": "Plant at the start of the rains",
-          "text": "The durian and calamansi guides plant at the start of the rainy season. The mango code says land preparation is best finished before the rains begin. Where water is dependable all year, preparation can happen at any time."
+          "text": "Plant durian and calamansi at the start of the rainy season. For mango, land preparation is best finished before the rains begin. Where water is dependable all year, preparation can happen at any time."
         }
       ]
     },
@@ -67,7 +67,7 @@
     },
     {
       "type": "table",
-      "caption": "Distances and hole sizes printed in DA and bureau guides",
+      "caption": "Planting distances and hole sizes by crop",
       "rows": [
         [
           "Crop",
@@ -97,18 +97,18 @@
         [
           "Cacao",
           "3 m by 3 m triangular, which is 1,241 plants per hectare",
-          "Not stated in the guide we opened. Ask your DA office"
+          "No figure here. Ask your DA office"
         ],
         [
           "Coconut",
-          "10 m by 10 m in the square and triangle layouts taught in an ATI training",
-          "Not stated in the source we opened. Ask the PCA"
+          "10 m by 10 m in the square and triangle layouts",
+          "No figure here. Ask the PCA"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "We could not open a DA guide with the lanzones layout or hole size, so we give no figure for it here. Check with the DA regional field office. Meanwhile, the durian guide has a hint for mixed farms. Durian can go under coconut only when the palms are 20 years old or more. Then use 10 m by 10 m or wider."
+      "text": "We give no layout or hole size for lanzones here. Check with the DA regional field office. Meanwhile, here is a hint for mixed farms. Durian can go under coconut only when the palms are 20 years old or more. Then use 10 m by 10 m or wider."
     },
     {
       "type": "heading",
@@ -117,13 +117,13 @@
     },
     {
       "type": "text",
-      "text": "On flat or gently rolling land, the mango code recommends east to west rows for the most sunlight. Another direction is fine if prevailing winds hurt yields. It names two designs. In the square design, one tree sits at each corner of a square. In the quincunx design, one more tree sits at the center, which nearly doubles the number of trees at first. The code adds that the square design is easier to maintain and to count.\n\nOn highly sloping land, plant along the contour. The code explains that contour planting shortens the slope length and slows runoff, so the soil absorbs more rainwater. Per hectare, the same code lists 100 mango trees at 10 m by 10 m and 69 at 12 m by 12 m. It also lists 44 at 15 m by 15 m and 22 at 20 m by 20 m."
+      "text": "On flat or gently rolling land, run mango rows east to west for the most sunlight. Another direction is fine if prevailing winds hurt yields. There are two designs. In the square design, one tree sits at each corner of a square. In the quincunx design, one more tree sits at the center, which nearly doubles the number of trees at first. The square design is easier to maintain and to count.\n\nOn highly sloping land, plant along the contour. Contour planting shortens the slope length and slows runoff, so the soil absorbs more rainwater. A hectare holds 100 mango trees at 10 m by 10 m and 69 at 12 m by 12 m. It holds 44 at 15 m by 15 m and 22 at 20 m by 20 m."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Tag every tree",
-      "text": "The mango code suggests a unique tag on each tree for records. Do the same for every fruit tree, then note the date and the variety in your records."
+      "text": "Give each mango tree a unique tag for records. Do the same for every fruit tree, then note the date and the variety in your records."
     },
     {
       "type": "heading",
@@ -132,7 +132,7 @@
     },
     {
       "type": "text",
-      "text": "Cacao and coffee grow under shade. For cacao, the ATI and PCA coconut cacao guide calls the shade of nurse crops desirable in the first years. Examples are coconut, Gliricidia, Leucaena and Erythrina. Prune the shade trees later. These are shade trees for cacao that you plant ahead of the seedlings.\n\nYoung durian needs shade too. The DA guide suggests planting Lakatan banana ahead of the durian so it shades the young trees. It also shades seedlings for two weeks to a few months after planting. Read our [banana land preparation guide](/land-preparation/banana-land-preparation) for the banana rows."
+      "text": "Cacao and coffee grow under shade. For cacao, the shade of nurse crops is desirable in the first years. Examples are coconut, Gliricidia, Leucaena and Erythrina. Prune the shade trees later. These are shade trees for cacao that you plant ahead of the seedlings.\n\nYoung durian needs shade too. Plant Lakatan banana ahead of the durian so it shades the young trees. Shade the seedlings for two weeks to a few months after planting as well. Read our [banana land preparation guide](/land-preparation/banana-land-preparation) for the banana rows."
     },
     {
       "type": "cta",
@@ -150,11 +150,11 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "Well drained soil: the best start. The mango code asks for well drained soil with a pH of 5.5 to 7.5, because mango roots rot in waterlogged ground. The durian guide prefers deep sandy loam rich in organic matter.",
+        "Well drained soil: the best start. Mango needs well drained soil with a pH of 5.5 to 7.5, because its roots rot in waterlogged ground. Durian prefers deep sandy loam rich in organic matter.",
         "Wet or heavy soil: calamansi does not tolerate waterlogged areas, so drain before you plant. Dig drainage canals at the same time as the layout.",
         "Acidic soil: test the pH first and follow the [acidic soil guide](/land-preparation/acidic-soil-preparation).",
         "Salty, sodic or alkaline soil: a pH above the mango range or a salty field needs reclaiming first. See the [saline soil guide](/land-preparation/saline-soil-preparation) and the [sodic and alkaline soil guide](/land-preparation/sodic-alkaline-soil-preparation).",
-        "Steep land: use minimum tillage and plant on the contour, as the mango code advises."
+        "Steep land: use minimum tillage and plant on the contour."
       ]
     },
     {
@@ -183,23 +183,23 @@
       "items": [
         {
           "q": "What is the mango planting distance in the Philippines?",
-          "a": "The DA Good Agricultural Practices code for mango recommends 12 m by 12 m up to 20 m by 20 m for Carabao, depending on soil fertility and intercropping. Closer spacing can work with proper care."
+          "a": "For Carabao mango, use 12 m by 12 m up to 20 m by 20 m, depending on soil fertility and intercropping. Closer spacing can work with proper care."
         },
         {
           "q": "How big should the coffee planting hole be?",
-          "a": "The DA coffee technoguide says to dig holes of around 40 cm by 40 cm by 40 cm, then backfill with topsoil and add compost."
+          "a": "Dig holes of around 40 cm by 40 cm by 40 cm, then backfill with topsoil and add compost."
         },
         {
           "q": "When should shade trees go in?",
-          "a": "Before the crop. The coffee technoguide plants shade trees one year before the coffee. The coconut cacao guide calls for nurse crop shade in the first years."
+          "a": "Before the crop. Plant shade trees one year before the coffee. Cacao needs nurse crop shade in the first years."
         },
         {
           "q": "What is the planting distance for durian?",
-          "a": "The DA durian guide stakes 8 m by 8 m, or 6 m by 6 m for high density planting. Under coconut, use 10 m by 10 m or wider."
+          "a": "Stake durian at 8 m by 8 m, or 6 m by 6 m for high density planting. Under coconut, use 10 m by 10 m or wider."
         },
         {
           "q": "Can I plant on a slope?",
-          "a": "Yes. The mango code says to plant along the contour on highly sloping land and to use minimum tillage, clearing about 2 square meters per tree."
+          "a": "Yes. Plant along the contour on highly sloping land and use minimum tillage, clearing about 2 square meters per tree."
         }
       ]
     },

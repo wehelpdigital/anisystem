@@ -21,7 +21,7 @@
     "lettuce",
     "cabbage"
   ],
-  "excerpt": "Good vegetable land preparation decides how well your tomato, eggplant, pepper, okra or lettuce roots grow. The Department of Agriculture (DA) guides agree on the basics: plow early, plow and harrow two to three times, and shape the field so water drains away. Here is the full order of work, with the numbers from the DA field offices.",
+  "excerpt": "Good vegetable land preparation decides how well your tomato, eggplant, pepper, okra or lettuce roots grow. The basics are simple: plow early, plow and harrow two to three times, and shape the field so water drains away. Here is the full order of work, with the numbers for each crop.",
   "heroImage": {
     "src": "/images/site/land/vegetable-land-preparation.webp",
     "alt": "Rows of young eggplant on furrowed beds in Norzagaray, Bulacan, the result of good vegetable land preparation",
@@ -30,7 +30,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Every number below comes from the DA Regional Field Office 02 production guides for each crop. Your town may differ in soil and rain, so treat the numbers as a starting point and ask your municipal agriculturist when your field is unusual.\n\nVegetables are shallow rooted and fussy about water. That is why the work before planting matters more here than for many other crops. A soft, level, well drained soil with plenty of organic matter gives the seedlings a fast start."
+      "text": "Your town may differ in soil and rain, so treat the numbers below as a starting point and ask your municipal agriculturist when your field is unusual.\n\nVegetables are shallow rooted and fussy about water. That is why the work before planting matters more here than for many other crops. A soft, level, well drained soil with plenty of organic matter gives the seedlings a fast start."
     },
     {
       "type": "heading",
@@ -39,7 +39,7 @@
     },
     {
       "type": "text",
-      "text": "Start early. The DA tomato and eggplant guides tell farmers to prepare the field as early as possible, so the weeds and stubble of the last crop have time to rot. Then follow these steps."
+      "text": "Start early. Prepare the field as early as possible, so the weeds and stubble of the last crop have time to rot. Then follow these steps."
     },
     {
       "type": "steps",
@@ -50,7 +50,7 @@
         },
         {
           "title": "Plow 15 to 20 cm deep",
-          "text": "The DA guides for tomato, eggplant, okra, upo and squash all give a plowing depth of 15 to 20 cm. Use a carabao, a hand tractor or a tractor, whichever you have."
+          "text": "Tomato, eggplant, okra, upo and squash all take a plowing depth of 15 to 20 cm. Use a carabao, a hand tractor or a tractor, whichever you have."
         },
         {
           "title": "Plow two to three times, one week apart",
@@ -58,11 +58,11 @@
         },
         {
           "title": "Pulverize and level",
-          "text": "The DA says well pulverized soil gives good aeration and helps roots form. A level field also stops water from pooling in low spots."
+          "text": "Well pulverized soil gives good aeration and helps roots form. A level field also stops water from pooling in low spots."
         },
         {
           "title": "Add organic matter",
-          "text": "Spread decomposed manure or compost before the last harrowing so it mixes into the soil. The DA tomato guide gives 20 bags per hectare when no soil test is available."
+          "text": "Spread decomposed manure or compost before the last harrowing so it mixes into the soil. For tomato, use 20 bags per hectare when no soil test is available."
         },
         {
           "title": "Form furrows or beds",
@@ -77,11 +77,11 @@
     },
     {
       "type": "text",
-      "text": "Fruiting vegetables usually go on furrows or ridges, while leafy vegetables go on raised beds. Cabbage can go either way. For example, the DA says to use furrows 30 to 50 cm apart for commercial cabbage, but raised beds about 100 cm wide in backyards or where drainage is poor."
+      "text": "Fruiting vegetables usually go on furrows or ridges, while leafy vegetables go on raised beds. Cabbage can go either way. For example, use furrows 30 to 50 cm apart for commercial cabbage, but raised beds about 100 cm wide in backyards or where drainage is poor."
     },
     {
       "type": "table",
-      "caption": "Furrow and bed sizes from the DA Region 02 production guides",
+      "caption": "Furrow and bed sizes by crop",
       "rows": [
         [
           "Crop",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "Pepper deserves a note. Double rows shade the developing fruits, so the DA says they have better protection against sunburn."
+      "text": "Pepper deserves a note. Double rows shade the developing fruits, so they have better protection against sunburn."
     },
     {
       "type": "heading",
@@ -131,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "Plastic mulch keeps weeds down, holds soil moisture and reduces fertilizer loss. The DA eggplant guide also says the silver colour reflects sunlight and repels insects hiding under the leaves.\n\nPut the plastic on before transplanting. First, stretch it over the bed with the silver side up. Next, fasten the edges with bamboo slats 6 to 8 cm long, spaced 30 cm apart, or cover the edges with soil. Then punch holes 50 cm apart, about 10 cm from the edge on both sides. Finally, water the beds two days before transplanting to cool the soil under the plastic.\n\nIf you do not use plastic, spread rice straw, rice hull or coconut coir dust 3 to 5 cm thick after hilling up. For lettuce, the DA also names rice straw or a mulching film."
+      "text": "Plastic mulch keeps weeds down, holds soil moisture and reduces fertilizer loss. The silver colour also reflects sunlight and repels insects hiding under the leaves.\n\nPut the plastic on before transplanting. First, stretch it over the bed with the silver side up. Next, fasten the edges with bamboo slats 6 to 8 cm long, spaced 30 cm apart, or cover the edges with soil. Then punch holes 50 cm apart, about 10 cm from the edge on both sides. Finally, water the beds two days before transplanting to cool the soil under the plastic.\n\nIf you do not use plastic, spread rice straw, rice hull or coconut coir dust 3 to 5 cm thick after hilling up. For lettuce, rice straw or a mulching film also works."
     },
     {
       "type": "heading",
@@ -140,13 +140,13 @@
     },
     {
       "type": "text",
-      "text": "Tomato likes well drained soil rich in organic matter. During the wet season, the DA says to choose a slightly elevated area to avoid waterlogging. During the dry season, dig a catchment canal at the field edge to drain excess water after irrigation.\n\nThe same idea holds for the other crops. Eggplant is moderately sensitive to flooding, especially at flowering and fruit development. So in the rainy months, make beds higher, cut canals between them and keep the outlet open before the first typhoon rains arrive."
+      "text": "Tomato likes well drained soil rich in organic matter. During the wet season, choose a slightly elevated area to avoid waterlogging. During the dry season, dig a catchment canal at the field edge to drain excess water after irrigation.\n\nThe same idea holds for the other crops. Eggplant is moderately sensitive to flooding, especially at flowering and fruit development. So in the rainy months, make beds higher, cut canals between them and keep the outlet open before the first typhoon rains arrive."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Test the soil first",
-      "text": "The DA guides set fertilizer rates by soil analysis. They give fallback rates only for farmers without a test. Ask your DA regional laboratory or municipal agriculturist about a soil test before you buy fertilizer."
+      "text": "Fertilizer rates are best set by soil analysis. The rates here are fallbacks for farmers without a test. Ask your DA regional laboratory or municipal agriculturist about a soil test before you buy fertilizer."
     },
     {
       "type": "heading",
@@ -155,7 +155,7 @@
     },
     {
       "type": "text",
-      "text": "Most vegetables start in a nursery, so prepare that bed with the same care as the field. The DA tomato guide describes two ways."
+      "text": "Most vegetables start in a nursery, so prepare that bed with the same care as the field. For tomato, there are two ways."
     },
     {
       "type": "list",
@@ -181,7 +181,7 @@
     },
     {
       "type": "text",
-      "text": "The DA guides name sandy loam and clay loam as the best soils for tomato and eggplant. Soil pH matters too: tomato accepts 5.5 to 8.0 and eggplant 5.5 to 6.8 in the DA guides.\n\nHeavy clay holds water, so lean on raised beds and canals, as the cabbage guide advises for poorly drained fields. Sandy soil dries fast, so add more compost and keep mulch on the bed. If your soil is acidic, read our guide to [acidic soil preparation](/land-preparation/acidic-soil-preparation). For salty or alkaline fields, see [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation)."
+      "text": "Sandy loam and clay loam are the best soils for tomato and eggplant. Soil pH matters too: tomato accepts 5.5 to 8.0 and eggplant 5.5 to 6.8.\n\nHeavy clay holds water, so lean on raised beds and canals, as with cabbage in poorly drained fields. Sandy soil dries fast, so add more compost and keep mulch on the bed. If your soil is acidic, read our guide to [acidic soil preparation](/land-preparation/acidic-soil-preparation). For salty or alkaline fields, see [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation)."
     },
     {
       "type": "heading",
@@ -213,19 +213,19 @@
       "items": [
         {
           "q": "How deep should I plow for vegetables?",
-          "a": "The DA production guides for tomato, eggplant, okra, upo and squash give 15 to 20 cm. Plow two to three times, one week apart, and harrow after each pass."
+          "a": "For tomato, eggplant, okra, upo and squash, plow 15 to 20 cm deep. Plow two to three times, one week apart, and harrow after each pass."
         },
         {
           "q": "How wide should a raised bed be?",
-          "a": "For lettuce, the DA says 1 m wide with 0.75 m between beds. For cabbage in backyards or poorly drained fields, it says about 100 cm wide."
+          "a": "For lettuce, make it 1 m wide with 0.75 m between beds. For cabbage in backyards or poorly drained fields, make it about 100 cm wide."
         },
         {
           "q": "Is plastic mulch worth it for eggplant?",
-          "a": "The DA eggplant guide says mulch controls weeds, conserves moisture and prevents leaching of fertilizer. Silver plastic also reflects sunlight and repels some insects. Cost and labor vary, so compare with rice straw mulch for your farm."
+          "a": "Mulch controls weeds, conserves moisture and prevents leaching of fertilizer. Silver plastic also reflects sunlight and repels some insects. Cost and labor vary, so compare with rice straw mulch for your farm."
         },
         {
           "q": "How big is a vegetable seedbed?",
-          "a": "The DA tomato guide uses five seedbeds of 1 m by 10 m, 15 cm high, enough for 150 to 200 grams of seed, which plants one hectare."
+          "a": "For tomato, use five seedbeds of 1 m by 10 m, 15 cm high, enough for 150 to 200 grams of seed, which plants one hectare."
         },
         {
           "q": "What do I do for drainage in the wet season?",

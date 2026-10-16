@@ -19,7 +19,7 @@
     "rice straw mulch",
     "furrows"
   ],
-  "excerpt": "Legume land preparation is mostly about timing and water. Mungbean, peanut, soybean and sitao often follow rice, when the paddy soil is wet, packed and poor in structure. The Department of Agriculture (DA) and Philippine trials show you can plant with zero or minimum tillage, but only if the soil is drained and the sowing date is right.",
+  "excerpt": "Legume land preparation is mostly about timing and water. Mungbean, peanut, soybean and sitao often follow rice, when the paddy soil is wet, packed and poor in structure. Philippine trials show you can plant with zero or minimum tillage, but only if the soil is drained and the sowing date is right.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, after legume land preparation",
@@ -28,7 +28,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The firmest numbers below are for mungbean and sitao, because the DA has published guides for them. For peanut and soybean we found Philippine trials, not a full DA guide, so those parts are shorter. Treat every number as a starting point and ask your municipal agriculturist before you plant.\n\nLegumes also fix nitrogen, so they follow rice well. But they need the opposite of what rice likes. Rice grows in puddled, flooded soil. Legumes need loose, aerobic soil that drains."
+      "text": "The firmest numbers below are for mungbean and sitao. For peanut and soybean the numbers come from Philippine trials, so those parts are shorter. Treat every number as a starting point and ask your municipal agriculturist before you plant.\n\nLegumes also fix nitrogen, so they follow rice well. But they need the opposite of what rice likes. Rice grows in puddled, flooded soil. Legumes need loose, aerobic soil that drains."
     },
     {
       "type": "heading",
@@ -46,21 +46,21 @@
     },
     {
       "type": "text",
-      "text": "The DA mungbean guide says that for post rice culture, zero or minimum tillage can be practiced. Philippine research supports this. In one study, a minimum tilled plot with 8 tons per hectare of rice straw mulch and 400,000 plants per hectare gave the best mungbean yield. Zero tillage matched it for seed yield but grew less. A 1987 thesis on soybean and mungbean after rice found zero tillage gave higher grain yield, seeds per pod and pods per plant than conventional tillage, and mulch added soil moisture.\n\nHowever, weeds were worse in the minimum tilled plots, and the rice straw mulch held them back. So mulch is part of the method, not an extra."
+      "text": "For post rice culture, mungbean can be grown with zero or minimum tillage. Philippine research supports this. In one study, a minimum tilled plot with 8 tons per hectare of rice straw mulch and 400,000 plants per hectare gave the best mungbean yield. Zero tillage matched it for seed yield but grew less. A 1987 thesis on soybean and mungbean after rice found zero tillage gave higher grain yield, seeds per pod and pods per plant than conventional tillage, and mulch added soil moisture.\n\nHowever, weeds were worse in the minimum tilled plots, and the rice straw mulch held them back. So mulch is part of the method, not an extra."
     },
     {
       "type": "table",
-      "caption": "Tillage options for legumes after rice, from DA and Philippine trials",
+      "caption": "Tillage options for legumes after rice",
       "rows": [
         [
           "Option",
           "What you do",
-          "What the sources say"
+          "Notes"
         ],
         [
           "Zero tillage",
           "Drain the paddy, make planting holes or shallow lines, mulch with rice straw",
-          "DA says it can be practiced for mungbean after rice. Soybean and mungbean yielded well in a 1987 thesis"
+          "Works for mungbean after rice. Soybean and mungbean yielded well in a 1987 thesis"
         ],
         [
           "Minimum tillage",
@@ -70,7 +70,7 @@
         [
           "Conventional tillage",
           "Plow, then harrow at weekly intervals",
-          "DA says to do this for upland fields. Needs the right soil moisture"
+          "The method for upland fields. Needs the right soil moisture"
         ]
       ]
     },
@@ -81,13 +81,13 @@
     },
     {
       "type": "text",
-      "text": "For upland fields, the DA says to plow alternated with harrowing at weekly intervals so seeds germinate evenly and compete with weeds. Drill the seeds in shallow furrows 60 cm apart. Twenty kg of seed is enough for a hectare.\n\nFor post rice culture, the DA gives a clear trick. Flood the paddy one to two days before planting, then drain the water before you broadcast the seeds. That gives the moisture seeds need without leaving the field wet.\n\nSoil pH should be 5.8 to 6.5. In the wet season the soil must be well drained, because mungbean is sensitive to extended waterlogging. The DA says heavy soils suit only dry season planting."
+      "text": "For upland fields, plow alternated with harrowing at weekly intervals so seeds germinate evenly and compete with weeds. Drill the seeds in shallow furrows 60 cm apart. Twenty kg of seed is enough for a hectare.\n\nFor post rice culture, there is a clear trick. Flood the paddy one to two days before planting, then drain the water before you broadcast the seeds. That gives the moisture seeds need without leaving the field wet.\n\nSoil pH should be 5.8 to 6.5. In the wet season the soil must be well drained, because mungbean is sensitive to extended waterlogging. Heavy soils suit only dry season planting."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Inoculant, only if you can get it",
-      "text": "The DA says to coat seeds with an appropriate Rhizobia inoculant if it is available, right before planting, and to keep coated seeds out of direct sun. With inoculant, it advises only 20 kg per hectare of nitrogen. If you cannot source inoculant, skip it and use the basal rate below."
+      "text": "Coat seeds with an appropriate Rhizobia inoculant if it is available, right before planting, and keep coated seeds out of direct sun. With inoculant, only 20 kg per hectare of nitrogen is needed. If you cannot source inoculant, skip it and use the basal rate below."
     },
     {
       "type": "heading",
@@ -96,7 +96,7 @@
     },
     {
       "type": "text",
-      "text": "**Sitao.** The DA Region 02 guide wants fertile, friable, well drained soil high in organic matter, with pH 5.5 to 6.6. Plow 15 to 20 cm deep two to three times, a week apart, and harrow after each pass. Then set furrows 2.5 to 3.0 m apart. Without a soil test, it gives 3 bags of 14 14 14 complete fertilizer and 20 bags of organic fertilizer or compost per hectare. Pole sitao needs stakes 1.5 to 2 m long by 25 days after emergence at the latest. Corn can serve as a living trellis, planted at 100 cm between furrows and 30 cm between hills.\n\n**Soybean.** Philippine trials found zero tillage after lowland rice gave higher grain yield than conventional tillage. Mulch raised soil moisture. We did not find a DA soybean guide with furrow sizes, so check the DA office in your region.\n\n**Peanut.** In the post rice trials, peanut reached 2.3 megagrams per hectare, which is 2.3 tons. The trial authors cite earlier work saying intensive tillage is not needed before sowing peanut on light soils. A 1995 study at UPLB and in Bulacan also grew peanut after wetland rice. We did not find a Philippine DA guide with peanut furrow sizes."
+      "text": "**Sitao.** It wants fertile, friable, well drained soil high in organic matter, with pH 5.5 to 6.6. Plow 15 to 20 cm deep two to three times, a week apart, and harrow after each pass. Then set furrows 2.5 to 3.0 m apart. Without a soil test, apply 3 bags of 14 14 14 complete fertilizer and 20 bags of organic fertilizer or compost per hectare. Pole sitao needs stakes 1.5 to 2 m long by 25 days after emergence at the latest. Corn can serve as a living trellis, planted at 100 cm between furrows and 30 cm between hills.\n\n**Soybean.** Philippine trials found zero tillage after lowland rice gave higher grain yield than conventional tillage. Mulch raised soil moisture. We give no furrow sizes for soybean here, so check the DA office in your region.\n\n**Peanut.** In the post rice trials, peanut reached 2.3 megagrams per hectare, which is 2.3 tons. Intensive tillage is not needed before sowing peanut on light soils. A 1995 study also grew peanut after wetland rice, with one site in Bulacan. Ask your municipal agriculturist for peanut furrow sizes."
     },
     {
       "type": "cta",
@@ -112,7 +112,7 @@
     },
     {
       "type": "text",
-      "text": "In the trial across the Philippines and Indonesia, mulch tended to raise yields in drier areas because it saves water. In wetter areas mulch was not needed and could even cut yield when conditions were too wet. So use straw mulch where the dry season is real, and thin it where it rains often.\n\nIf you have no soil test, the DA gives a basal rate for dry season mungbean: 150 kg of 14 14 14 per hectare on heavy soils such as loam to clay loam, and 200 kg on light soils such as sandy to sandy loam. In the same trial set, residual fertilizer from the rice crop mattered in wetter areas. Put the fertilizer in the furrows and cover it with a thin layer of fine soil before seeding. Read our [fertilizer application methods](/blog/fertilizer-application-methods) guide for more."
+      "text": "In the trial across the Philippines and Indonesia, mulch tended to raise yields in drier areas because it saves water. In wetter areas mulch was not needed and could even cut yield when conditions were too wet. So use straw mulch where the dry season is real, and thin it where it rains often.\n\nIf you have no soil test, use this basal rate for dry season mungbean: 150 kg of 14 14 14 per hectare on heavy soils such as loam to clay loam, and 200 kg on light soils such as sandy to sandy loam. In the same trial set, residual fertilizer from the rice crop mattered in wetter areas. Put the fertilizer in the furrows and cover it with a thin layer of fine soil before seeding. Read our [fertilizer application methods](/blog/fertilizer-application-methods) guide for more."
     },
     {
       "type": "heading",
@@ -123,11 +123,11 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Heavy clay.** Use it only in the dry season, says the DA for mungbean. Open drain furrows before planting.",
+        "**Heavy clay.** For mungbean, use it only in the dry season. Open drain furrows before planting.",
         "**Sandy loam.** Mungbean is fairly well adapted. Use the higher basal rate of 200 kg of 14 14 14.",
         "**Acidic soil.** Mungbean wants pH 5.8 to 6.5 and sitao 5.5 to 6.6. If your test is lower, read [acidic soil preparation](/land-preparation/acidic-soil-preparation).",
         "**Salty or alkaline soil.** See [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation).",
-        "**Seasons.** The DA lists mungbean planting in May to June, September to October and February to March. Humid weather from continuous rain can reduce seed quality."
+        "**Seasons.** Mungbean is planted in May to June, September to October and February to March. Humid weather from continuous rain can reduce seed quality."
       ]
     },
     {
@@ -148,7 +148,7 @@
     },
     {
       "type": "text",
-      "text": "After planting, the DA says to off bar 15 days after planting, hand weed, then hill up with a carabao drawn plow. For legume pests such as the [bean fly](/pests/bean-fly) and [legume pod borer](/pests/legume-pod-borer), see our pest pages. Anee, the [smart farm technician](/features/ai-agricultural-technician), can also read a photo of a damaged leaf."
+      "text": "Off bar 15 days after planting, hand weed, then hill up with a carabao drawn plow. For legume pests such as the [bean fly](/pests/bean-fly) and [legume pod borer](/pests/legume-pod-borer), see our pest pages. Anee, the [smart farm technician](/features/ai-agricultural-technician), can also read a photo of a damaged leaf."
     },
     {
       "type": "heading",
@@ -160,11 +160,11 @@
       "items": [
         {
           "q": "Can I plant mungbean right after rice without plowing?",
-          "a": "Yes. The DA says zero or minimum tillage can be practiced for mungbean after rice. Flood the paddy one to two days before planting, then drain it before sowing."
+          "a": "Yes. Zero or minimum tillage works for mungbean after rice. Flood the paddy one to two days before planting, then drain it before sowing."
         },
         {
           "q": "How far apart are mungbean furrows?",
-          "a": "The DA says shallow furrows 60 cm apart, with 20 kg of seed per hectare."
+          "a": "Use shallow furrows 60 cm apart, with 20 kg of seed per hectare."
         },
         {
           "q": "Do I need rice straw mulch?",
@@ -172,7 +172,7 @@
         },
         {
           "q": "Do legumes need inoculant?",
-          "a": "The DA recommends it when it is available. If you cannot get it, use the basal fertilizer rate from the guide or your soil test."
+          "a": "Use it when it is available. If you cannot get it, use the basal fertilizer rate above or your soil test."
         },
         {
           "q": "What is the best time to sow after rice?",

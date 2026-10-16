@@ -15,7 +15,7 @@
     "salt tolerant rice",
     "leaching"
   ],
-  "excerpt": "Saline soil preparation is a race against the sea and the dry season, because salt that sits in the root zone stops seeds from sprouting and burns the leaves. PhilRice counts 500,000 to 600,000 hectares of coastal saline prone land in the Philippines. Also, salt water enters low lying fields at high tide. This guide covers how to spot salt damage, flush it out with fresh water, drain the field and shape the beds.",
+  "excerpt": "Saline soil preparation is a race against the sea and the dry season, because salt that sits in the root zone stops seeds from sprouting and burns the leaves. The Philippines has 500,000 to 600,000 hectares of coastal saline prone land. Also, salt water enters low lying fields at high tide. This guide covers how to spot salt damage, flush it out with fresh water, drain the field and shape the beds.",
   "heroImage": {
     "src": "/images/site/land/saline-soil-preparation.webp",
     "alt": "A rice paddy in Japan whitened by salt after a tsunami, the starting point for saline soil preparation",
@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "The facts below come from the FAO Soils Bulletin 39 on salt affected soils and from PhilRice stories about saline fields in Bicol and Iloilo. A salty field needs a salt test, so ask the BSWM or your DA regional office where to have the soil tested."
+      "text": "A salty field needs a salt test, so ask the BSWM or your DA regional office where to have the soil tested."
     },
     {
       "type": "heading",
@@ -33,7 +33,7 @@
     },
     {
       "type": "text",
-      "text": "The FAO bulletin defines a saline soil as one with an electrical conductivity above 4 dS/m in the saturated extract. It adds that the Soil Science Society of America lowered the line to 2 dS/m. Chloride and sulfate salts of sodium, calcium and magnesium are the usual ones. The pH stays below 8.2, often close to neutral.\n\nIn the field, look for spotty growth and white salt crusts on the surface. Mild salt often gives plants a blue green tinge. Barren spots and stunted plants may show up too. The size of the bare spots hints at how much salt is in the soil. The FAO bulletin says salt stress can look like drought stress. PhilRice describes rice leaves that turn yellowish or look burned."
+      "text": "A saline soil has an electrical conductivity above 4 dS/m in the saturated extract. The Soil Science Society of America lowered the line to 2 dS/m. Chloride and sulfate salts of sodium, calcium and magnesium are the usual ones. The pH stays below 8.2, often close to neutral.\n\nIn the field, look for spotty growth and white salt crusts on the surface. Mild salt often gives plants a blue green tinge. Barren spots and stunted plants may show up too. The size of the bare spots hints at how much salt is in the soil. Salt stress can look like drought stress. Rice leaves turn yellowish or look burned."
     },
     {
       "type": "callout",
@@ -51,19 +51,19 @@
       "items": [
         {
           "title": "Stop the salt water at the source",
-          "text": "PhilRice says salt water enters fields in Canaman, Camarines Sur at high tide and in the dry season, when the river and sea push inland. PhilRice says the timing of planting should follow the tides and the rainfall pattern, so check the tide table before you plant."
+          "text": "Salt water enters fields in Canaman, Camarines Sur at high tide and in the dry season, when the river and sea push inland. The timing of planting should follow the tides and the rainfall pattern, so check the tide table before you plant."
         },
         {
           "title": "Leach with fresh water",
-          "text": "The FAO bulletin calls leaching by far the most effective way to remove salts from the root zone. You pond fresh water on the soil and let it soak in. PhilRice also says fresh water flushing remains the best answer, and that even tolerant varieties cannot survive on salt water irrigation alone."
+          "text": "Leaching is by far the most effective way to remove salts from the root zone. You pond fresh water on the soil and let it soak in. Fresh water flushing remains the best answer, and even tolerant varieties cannot survive on salt water irrigation alone."
         },
         {
           "title": "Estimate how much water to use",
-          "text": "The bulletin gives a rule of thumb. A depth of water removes about 80 percent of the salts from the same depth of soil. So 30 cm of water passing through takes out about 80 percent of the salt in the top 30 cm. To cut the top 60 cm to about 20 percent of the salt, pass about 60 cm of water through. A small leaching test on your own soil is more reliable."
+          "text": "Here is a rule of thumb. A depth of water removes about 80 percent of the salts from the same depth of soil. So 30 cm of water passing through takes out about 80 percent of the salt in the top 30 cm. To cut the top 60 cm to about 20 percent of the salt, pass about 60 cm of water through. A small leaching test on your own soil is more reliable."
         },
         {
           "title": "Drain the leachate away",
-          "text": "Leaching works when the salty water drains out of the field and does not lift the water table. The bulletin says to dig ditches for surface drainage, and it warns that a high groundwater table makes salinity return. Its critical depth ranges from 1.5 to 3.0 meters, depending on the soil and climate."
+          "text": "Leaching works when the salty water drains out of the field and does not lift the water table. Dig ditches for surface drainage, because a high groundwater table makes salinity return. The critical depth ranges from 1.5 to 3.0 meters, depending on the soil and climate."
         },
         {
           "title": "Shape the beds",
@@ -71,7 +71,7 @@
         },
         {
           "title": "Reduce evaporation",
-          "text": "Between irrigations and during fallow, leached salts tend to rise back to the surface. The bulletin says to reduce evaporation from the soil surface, with mulch for one, because evaporation pulls salt up."
+          "text": "Between irrigations and during fallow, leached salts tend to rise back to the surface. Reduce evaporation from the soil surface, with mulch for one, because evaporation pulls salt up."
         }
       ]
     },
@@ -82,7 +82,7 @@
     },
     {
       "type": "text",
-      "text": "The bulletin notes that leaching is best done when the soil is dry and the water table is deep. Summer leaching loses a lot of water to evaporation. Scraping and surface flushing have only limited success, so do not rely on them."
+      "text": "Leaching is best done when the soil is dry and the water table is deep. Summer leaching loses a lot of water to evaporation. Scraping and surface flushing have only limited success, so do not rely on them."
     },
     {
       "type": "heading",
@@ -91,7 +91,7 @@
     },
     {
       "type": "text",
-      "text": "A surge leaves salt on the field. The first step is the same: flush with fresh water and drain. Test the soil before you replant. In Bicol, PhilRice reports that farmers struggling with consecutive typhoons and salty soils avoid planting when the water is salty. Do not seed or transplant into a field that still holds salt water."
+      "text": "A surge leaves salt on the field. The first step is the same: flush with fresh water and drain. Test the soil before you replant. In Bicol, farmers struggling with consecutive typhoons and salty soils avoid planting when the water is salty. Do not seed or transplant into a field that still holds salt water."
     },
     {
       "type": "cta",
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice names NSIC Rc 480 as a saline resilient variety, and it introduced the variety in a 2022 demonstration in Bicol. The same story says salt tolerant varieties handle 4 to 8 dS/m. Varieties that are not tolerant stop at about 2 dS/m. PhilRice also describes a farm near Anilao in Iloilo with soil salinity of 3.4 to 5.4 dS/m. There, farmers trialed NSIC Rc 392 and NSIC Rc 480. They reported 90 to 120 sacks of 42 kg per cropping season, up from 35 to 45 sacks before.\n\nA tolerant variety is a help, not a cure. Combine it with leaching, drainage and good timing. For the full field routine, read our [rice land preparation guide](/land-preparation/rice-land-preparation) and the [rice varieties guide](/crops/rice-varieties-philippines)."
+      "text": "NSIC Rc 480 is a saline resilient variety, shown in a 2022 demonstration in Bicol. Salt tolerant varieties handle 4 to 8 dS/m. Varieties that are not tolerant stop at about 2 dS/m. One farm near Anilao in Iloilo had soil salinity of 3.4 to 5.4 dS/m. There, farmers trialed NSIC Rc 392 and NSIC Rc 480. They reported 90 to 120 sacks of 42 kg per cropping season, up from 35 to 45 sacks before.\n\nA tolerant variety is a help, not a cure. Combine it with leaching, drainage and good timing. For the full field routine, read our [rice land preparation guide](/land-preparation/rice-land-preparation) and the [rice varieties guide](/crops/rice-varieties-philippines)."
     },
     {
       "type": "heading",
@@ -135,19 +135,19 @@
       "items": [
         {
           "q": "How do I know my soil is saline?",
-          "a": "Look for spotty growth, white salt crusts and leaves that turn yellowish or burned. The FAO bulletin counts a soil as saline above 4 dS/m, so a test confirms it."
+          "a": "Look for spotty growth, white salt crusts and leaves that turn yellowish or burned. A soil counts as saline above 4 dS/m, so a test confirms it."
         },
         {
           "q": "How much water does it take to leach salt?",
-          "a": "The FAO bulletin's rule of thumb is that 30 cm of water removes about 80 percent of the salt in the top 30 cm. A test on a small area gives a better number."
+          "a": "The rule of thumb is that 30 cm of water removes about 80 percent of the salt in the top 30 cm. A test on a small area gives a better number."
         },
         {
           "q": "Which rice varieties tolerate salt?",
-          "a": "PhilRice names NSIC Rc 480 and NSIC Rc 392 in its saline farm stories. Ask the PhilRice station near you which variety fits your site."
+          "a": "NSIC Rc 480 and NSIC Rc 392 have done well on saline farms. Ask the PhilRice station near you which variety fits your site."
         },
         {
           "q": "Can I plant after saltwater intrusion?",
-          "a": "Flush the field with fresh water first. PhilRice says farmers avoid planting while the water is still salty."
+          "a": "Flush the field with fresh water first. Avoid planting while the water is still salty."
         }
       ]
     },
