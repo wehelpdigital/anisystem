@@ -1102,7 +1102,7 @@
     }
 
     /* ---- 6. Anee reads the farm ---- */
-    const READS = [['🌾', 'Your varieties, looked up on the web: maturity, yield, weak points'], ['🌏', 'ENSO and the season ahead, with PAGASA\'s outlook'], ['🌦️', 'Sixteen days of weather at each lot'], ['🧪', 'Your soil from its signs and the soil model at the spot'], ['🐛', 'Your past troubles, to get ahead of them']];
+    const READS = [['🌾', 'Your varieties, looked up on the web: maturity, yield, weak points'], ['🌏', 'ENSO and the season ahead, with the seasonal outlook'], ['🌦️', 'Sixteen days of weather at each lot'], ['🧪', 'Your soil from its signs and the soil model at the spot'], ['🐛', 'Your past troubles, to get ahead of them']];
     const paintReading = () => {
         const A = S.analysis;
         if (!A) {

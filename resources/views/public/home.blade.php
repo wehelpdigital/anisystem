@@ -319,7 +319,7 @@
             </div>
 
             <p class="hp-loss-src reveal">
-                Percent ranges come from FAO crop loss and {{ $ph ? 'Philippine rice' : 'published crop' }} research estimates{{ $ph ? '. Peso ranges assume a palay hectare that earns ₱60,000 to ₱100,000 before costs' : '' }}. Your own numbers will be different.
+                Percent ranges come from published crop loss estimates{{ $ph ? ' for Philippine rice' : '' }}{{ $ph ? '. Peso ranges assume a palay hectare that earns ₱60,000 to ₱100,000 before costs' : '' }}. Your own numbers will be different.
             </p>
 
             <div class="hp-cta reveal">
@@ -1782,7 +1782,7 @@
                 'Pechay, tomato, eggplant and ampalaya, the vegetables in the Philippines that farms grow most, on one calendar with foliar fertilizer days and thrips and anthracnose checks.',
                 [['/crops/vegetables-philippines', 'Vegetables guide'], ['/crops/pagtatanim-ng-gulay', 'Pagtatanim ng gulay'], ['/pests/thrips', 'Thrips']]],
             ['Niyog, saging at puno', 'M12 21v-8m0 0c-3 0-6-2-7-5 3 0 5 1 7 3m0 2c3 0 6-2 7-5-3 0-5 1-7 3m0-3V3', 30, ['puno.webp', 'Banana trees along a farm road'],
-                'Coconut, banana and fruit trees count their age in months, with fertilizer plans that follow the PCA and DA guides.',
+                'Coconut, banana and fruit trees count their age in months, with fertilizer plans by tree age.',
                 [['/crops/coconut-fertilizer', 'Coconut fertilizer'], ['/crops/banana-farming-philippines', 'Banana farming'], ['/crops/pagtatanim-ng-puno', 'Pagtatanim ng puno']]],
         ];
     @endphp

@@ -61,7 +61,7 @@
             stay: 'Please keep this page open. Your answer opens here when it is ready.',
             lines: [
                 'Reading your question once more…',
-                'Checking what PhilRice and the DA recommend…',
+                'Checking the usual recommendations…',
                 'Looking for the right numbers for your farm…',
                 'Writing it in plain words…',
                 'Adding the sources I used…',

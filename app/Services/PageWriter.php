@@ -263,8 +263,8 @@ class PageWriter
         return "\n--- Voice ---\n"
             . ($lang === 'tl'
                 ? "Write in natural Filipino as a Filipino farm writer would, with the English terms farmers really use (fertilizer, urea, insecticide, hectare). Not stiff textbook Tagalog.\n"
-                : "Write in English as a Filipino agriculturist talking to farmers: plain words, short sentences, real field detail (cavans, hectares, the DA, PhilRice, wet and dry seasons, typhoons, local names). Common Filipino farm words (palay, mais, abono, punla, ani) are fine, each explained once.\n")
-            . "Write as the anee.io agriculture team (\"we\"), not as a chat: no greetings, no emoji, no :anee: codes. Be exact: numbers, names, active ingredients and dates must be true (use the research notes when given). When a value varies, give the range and the source. Never invent a statistic, a study, a product claim or a quote. Pesticides: name the active ingredient and the group, and tell the reader to follow the product label and its FPA registration. Never give a spray rate you did not verify. No fluff opening, no hype, no filler conclusion.\n"
+                : "Write in English as a Filipino agriculturist talking to farmers: plain words, short sentences, real field detail (cavans, hectares, wet and dry seasons, typhoons, local names). Common Filipino farm words (palay, mais, abono, punla, ani) are fine, each explained once.\n")
+            . "Write as the anee.io agriculture team (\"we\"), not as a chat: no greetings, no emoji, no :anee: codes. Be exact: numbers, names, active ingredients and dates must be true (use the research notes when given). When a value varies, give the range. " . \App\Support\GovSource::RULE . " Never invent a statistic, a study, a product claim or a quote. Pesticides: name the active ingredient and the group, and tell the reader to follow the product label and its FPA registration. Never give a spray rate you did not verify. No fluff opening, no hype, no filler conclusion.\n"
             . "\n--- Forbidden words ---\nNever use: " . implode(', ', array_keys(ArticleStyle::SWAPS)) . ".\n"
             . "No dashes of any kind in the text (no em dash, en dash or hyphen: write \"well drained soil\", \"14 14 14\", \"day 30 after transplanting\"). No semicolons, no ampersands, no ellipses, no arrows, no emoji, no % sign (write \"percent\"), straight quotes only.\n";
     }
@@ -281,13 +281,13 @@ class PageWriter
             . ($keywords ? "\nKeywords from our keyword research, with monthly searches:\n- " . implode("\n- ", $keywords) . "\n"
                 . "MAIN KEYWORDS: choose 1 or 2 of these, the highest search volume ones that truly fit this topic, and use each one at least 2 times in the content (the excerpt, an H2, the paragraphs), naturally. Return them as mainKeywords.\n"
                 . "Secondary keywords: weave in the others that fit the topic, at least three if they fit. Never force one: a keyword that does not belong to this topic is left out.\n"
-                . "Every keyword reads naturally and in proper case: rewrite the word order (\"fertilizer urea\" becomes \"urea fertilizer\", \"fertilizer yara\" becomes \"Yara fertilizer\"), capitalize names of brands, agencies and varieties (Atlas, Yara, Fertilizer and Pesticide Authority, PhilRice, NSIC Rc 222), and use a farmer's own word where a keyword would sound odd (binhi or seed, not \"corn kernel\", when seeds are meant).\n" : '');
+                . "Every keyword reads naturally and in proper case: rewrite the word order (\"fertilizer urea\" becomes \"urea fertilizer\", \"fertilizer yara\" becomes \"Yara fertilizer\"), capitalize names of brands and varieties (Atlas, Yara, NSIC Rc 222), and use a farmer's own word where a keyword would sound odd (binhi or seed, not \"corn kernel\", when seeds are meant).\n" : '');
     }
 
     public static function linkRules(): string
     {
         return "\n--- Links ---\nAt least 3 internal links inside the body text as [label](/path), using ONLY these pages:\n" . self::urlMap() . "\n"
-            . "At least 1 outbound link to an authoritative source, in a sources block (full https addresses from the research notes).\n";
+            . "An outbound link goes only in a sources block, and only to a manufacturer's own label or product page or another page that is not a government body, a university or a research institute (full https addresses from the research notes). No such page, no sources block.\n";
     }
 
     public static function honestRules(): string
@@ -354,7 +354,8 @@ class PageWriter
                 }
             }
             if ($blk['type'] === 'sources') {
-                $blk['items'] = array_values(array_filter((array) ($blk['items'] ?? []), fn ($i) => is_array($i) && preg_match('#^https://#i', (string) ($i['url'] ?? ''))));
+                // Never a government body, a university or a research institute (GovSource, the owner 2026-10-17).
+                $blk['items'] = \App\Support\GovSource::keep(array_values(array_filter((array) ($blk['items'] ?? []), fn ($i) => is_array($i) && preg_match('#^https://#i', (string) ($i['url'] ?? '')))));
                 if (! $blk['items']) {
                     continue;
                 }
@@ -382,7 +383,7 @@ class PageWriter
             $items = [];
             foreach ($sources as $s) {
                 $url = (string) ($s['url'] ?? '');
-                if (preg_match('#^https://#', $url) && ! str_contains($url, 'grounding-api-redirect')) {
+                if (preg_match('#^https://#', $url) && ! str_contains($url, 'grounding-api-redirect') && ! \App\Support\GovSource::isGov((string) ($s['title'] ?? '')) && ! \App\Support\GovSource::isGovUrl($url)) {
                     $items[] = ['label' => (string) ($s['title'] ?? parse_url($url, PHP_URL_HOST)), 'url' => $url];
                 }
             }
