@@ -118,10 +118,12 @@ TRADE_FIX = {
                                              'https://www.leadsfarmex.com/products']),
     # Nasiglat is Rc 750H (Mestiso 144, line LP 777): Pro Agri Seed, Long
     # Ping's distributor, sells it under that number. Not LAV 777 (Rc 656H).
-    # Not Batari either (checked 2026-10-17, the owner asked): the NSIC 2023
-    # catalogue gives LP 777 as its commercial name and Long Ping as breeder,
-    # and no source ties Batari or Aljay to this number.
-    'NSIC Rc 750H': (['Nasiglat', 'LP 777', 'Longping Nasiglat'], ['https://proagriseed.com/voucher/', 'https://proagriseed.com/about-us-2/',
+    # The NSIC 2023 catalogue gives LP 777 as its commercial name and Long
+    # Ping as breeder. It is also sold as Batari AH44 (2026-10-18, the owner:
+    # "batari ah44 which is nsic 2023 rc 750h"), Aljay's Batari brand on this
+    # Long Ping hybrid; no web page names it yet, so it rests on the owner's
+    # word. Batari Indra 01 is a different hybrid, Rc 406H, below.
+    'NSIC Rc 750H': (['Nasiglat', 'Batari AH44', 'LP 777', 'Longping Nasiglat'], ['https://proagriseed.com/voucher/', 'https://proagriseed.com/about-us-2/',
                                                                  'https://nsic.buplant.da.gov.ph/downloadables/catalogue2023.pdf']),
     # Batari Indra 01 is Rc 406H (2026-10-17): IRRI's Green Super Rice news
     # and MMSU name it so, with the registry's own trial figures for Rc 406H
@@ -129,7 +131,9 @@ TRADE_FIX = {
     # Bayer as the breeder (line INH10002); Aljay (Aljay Agro-Industrial Solutions)
     # of Santiago, Isabela, sells it under its Batari brand (its seller file
     # is sellers_aljay.json in the trade names folder).
-    'NSIC Rc 406H': (['Batari Indra 01', 'Batari'], ['https://gsr.irri.org/presidents-farm-feature-newly-released-and-high-yielding-rice-varieties/',
+    # The bare word "Batari" is no longer a name of it (2026-10-18): Aljay
+    # sells two Batari hybrids, Indra 01 (this one) and AH44 (Rc 750H).
+    'NSIC Rc 406H': (['Batari Indra 01', 'Batari Indra'], ['https://gsr.irri.org/presidents-farm-feature-newly-released-and-high-yielding-rice-varieties/',
                                                      'https://www.mmsu.edu.ph/news/presidents-farm-highlights-agri-technologies',
                                                      'https://www.youtube.com/watch?v=6PtyYBclgDc']),
 }

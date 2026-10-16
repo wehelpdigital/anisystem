@@ -16,10 +16,11 @@
     "750H rice variety characteristics",
     "Mestiso 144",
     "Nasiglat",
+    "Batari AH44",
     "LP 777",
     "Longping Nasiglat"
   ],
-  "excerpt": "NSIC Rc 750H is a hybrid rice variety for irrigated lowland, sold as Nasiglat or LP 777 and known locally as Mestiso 144. The NSIC approved it in 2023. Long Ping bred it. It matures in about 112 days and averages 8.4 tonnes per hectare, with a top yield of 9.2 tonnes in trials.",
+  "excerpt": "NSIC Rc 750H is a hybrid rice variety for irrigated lowland, sold as Nasiglat or Batari AH44 and known locally as Mestiso 144. The NSIC approved it in 2023. Long Ping bred it. It matures in about 112 days and averages 8.4 tonnes per hectare, with a top yield of 9.2 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 750H is bred to fill",
@@ -28,7 +29,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Nasiglat or LP 777, or rice variety 750H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Nasiglat or Batari AH44, or rice variety 750H, this is the one. The facts below come from sources that include PhilRice and its public seed database. So you can compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -64,7 +65,7 @@
         ],
         [
           "Sold as",
-          "Nasiglat, LP 777, Longping Nasiglat"
+          "Nasiglat, Batari AH44, LP 777, Longping Nasiglat"
         ],
         [
           "Local name",
