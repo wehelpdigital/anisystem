@@ -19,7 +19,7 @@
    "hint": "Lower leaves turn pale yellow green first and the whole field looks light green and short.",
    "symptoms": "The oldest leaves turn yellowish green first, starting at the tip, while the young leaves stay greener. Leaves become narrow, short and stand very upright. Plants stay short with few tillers, and in a bad case the whole field looks yellow. Fewer grains form and the harvest drops.",
    "stage": "Tillering up to panicle initiation, when the crop takes up the most nitrogen.",
-   "causes": "Too little fertilizer for a modern variety, or nitrogen given at the wrong time or in the wrong way. Soils very low in organic matter, acid sulfate, saline, poorly drained and calcareous soils supply little nitrogen or lose it fast.",
+   "causes": "A modern variety fed too little, or nitrogen that went on too early, too late or by a poor method. Soils very low in organic matter, acid sulfate, saline, poorly drained and calcareous soils supply little nitrogen or lose it fast.",
    "confuse": "Sulfur deficiency looks almost the same, but it yellows the young leaves first. Iron deficiency starts on the newest leaf, with yellow between green veins. Nitrogen deficiency always starts on the old leaves and spreads evenly over the field.",
    "confirm": "Use the leaf color chart every 7 days from 14 days after transplanting (or 21 days after seeding) until early flowering. If more than 5 of 10 leaves read below 4, the crop needs nitrogen. A MOET kit or a lab test of soil and leaves confirms it.",
    "fix": "When the leaf color chart reads below 4, use 1.5 bags of Urea 46 0 0 per hectare in the dry season or 1 bag in the wet season. If the crop also shows sulfur deficiency, use Ammonium sulfate 21 0 0 instead: 3.5 bags in the dry season or 2 bags in the wet season. Keep water in the field after applying, but do not let it spill over the bunds right away.",
@@ -269,7 +269,7 @@
     "poor_fill"
    ],
    "hint": "Tips of the youngest leaves turn white and roll, and plants are short.",
-   "symptoms": "The tips of the young leaves turn white and roll, and plants stay short. In severe cases the growing point dies, though new tillers keep coming. If it strikes at panicle initiation the plant may not form panicles at all.",
+   "symptoms": "The tips of the young leaves turn white and roll, and plants stay short. When it gets bad the growing point dies, yet the plant keeps sending up new tillers. If it strikes at panicle initiation the plant may not form panicles at all.",
    "stage": "Vegetative growth up to panicle initiation.",
    "causes": "Rare, especially in irrigated rice. Highly weathered acid soils, sandy soils, acid soils from igneous rock, and fields where water drains through the soil fast.",
    "confuse": "Calcium deficiency gives the same white rolled leaf tips. Only a leaf or soil test tells them apart.",
@@ -543,7 +543,7 @@
     "spots"
    ],
    "hint": "Lower leaves get yellow to white stripes between the veins, later turning reddish purple.",
-   "symptoms": "Yellow to white stripes appear between the veins of the lower leaves, sometimes with small dead spots that look like a string of beads. The old leaves then turn reddish purple, and the tips and edges may die. Growth stays normal unless it is severe.",
+   "symptoms": "Yellow to white stripes appear between the veins of the lower leaves, sometimes with small dead spots that look like a string of beads. Later the old leaves take on a reddish purple color and can die back at the tips and margins. Growth stays normal unless it is severe.",
    "stage": "Early growth to the middle of the season.",
    "causes": "Very acid, sandy soils in rainy areas, fields that were never limed, and heavy potash on soils already low in magnesium.",
    "confuse": "Iron and manganese deficiency give similar stripes but on the young leaves. Zinc gives a band near the base of young leaves. Phosphorus gives purple without stripes.",
@@ -646,7 +646,7 @@
     "dieback"
    ],
    "hint": "The youngest leaves come out yellow, and their tips brown, roll and break.",
-   "symptoms": "The youngest leaves are yellow as they come out of the whorl, and their tips turn brown, roll and break. Leaves can get streaks like iron deficiency, the stalk is soft and limp, and the edges of older leaves may die.",
+   "symptoms": "New leaves already look yellow when they unroll from the whorl, then their tips brown, curl and snap off. Striping much like an iron shortage can show, the stalk goes soft and floppy, and older leaves may die along their margins.",
    "stage": "Early growth.",
    "causes": "Rare. Seen on peat and other high organic matter soils and soils above pH 7.5. Some Cagayan corn farms were found short of copper.",
    "confuse": "Iron deficiency gives similar streaks. Nitrogen plus sulfur shortage in cool weather can look like mild copper deficiency.",
@@ -904,7 +904,7 @@
     "spots"
    ],
    "hint": "Lower leaves get yellow to white stripes between the veins, later turning reddish purple.",
-   "symptoms": "Yellow to white stripes appear between the veins of the lower leaves, sometimes with small dead spots that look like a string of beads. The old leaves then turn reddish purple, and the tips and edges may die. Growth stays normal unless it is severe.",
+   "symptoms": "Yellow to white stripes appear between the veins of the lower leaves, sometimes with small dead spots that look like a string of beads. Later the old leaves take on a reddish purple color and can die back at the tips and margins. Growth stays normal unless it is severe.",
    "stage": "Early growth to the middle of the season.",
    "causes": "Very acid, sandy soils in rainy areas, fields that were never limed, and heavy potash on soils already low in magnesium.",
    "confuse": "Iron and manganese deficiency give similar stripes but on the young leaves. Zinc gives a band near the base of young leaves. Phosphorus gives purple without stripes.",
@@ -1189,7 +1189,7 @@
     "spots"
    ],
    "hint": "Lower leaves get yellow to white stripes between the veins, later turning reddish purple.",
-   "symptoms": "Yellow to white stripes appear between the veins of the lower leaves, sometimes with small dead spots that look like a string of beads. The old leaves then turn reddish purple, and the tips and edges may die. Growth stays normal unless it is severe.",
+   "symptoms": "Yellow to white stripes appear between the veins of the lower leaves, sometimes with small dead spots that look like a string of beads. Later the old leaves take on a reddish purple color and can die back at the tips and margins. Growth stays normal unless it is severe.",
    "stage": "Early growth to the middle of the season.",
    "causes": "Very acid, sandy soils in rainy areas, fields that were never limed, and heavy potash on soils already low in magnesium.",
    "confuse": "Iron and manganese deficiency give similar stripes but on the young leaves. Zinc gives a band near the base of young leaves. Phosphorus gives purple without stripes.",
@@ -1402,7 +1402,7 @@
    "symptoms": "The newest leaves turn pale yellow between the veins, which stay green, so the leaf looks striped along its whole length. In bad cases the leaves turn yellow to white and the crop looks bleached and dries. It shows in uneven patches that follow the soil, and it delays maturity.",
    "stage": "The first 30 to 60 days. Plants often grow out of it in good weather.",
    "causes": "Sorghum is very prone to it on high pH, calcareous soils with free lime and low organic matter, worse in drought or waterlogging.",
-   "confuse": "Zinc deficiency gives bands in the lower half of the leaf, not full length stripes. Sulfur deficiency is an even pale yellow with no green veins standing out.",
+   "confuse": "A zinc shortage puts its pale bands on the lower half of the blade only. While these iron stripes run its full length. Sulfur deficiency is an even pale yellow with no green veins standing out.",
    "confirm": "Soil pH test and a check for lime (fizzing with vinegar is a field hint). A leaf test for iron.",
    "fix": "Give a 1 percent ferrous sulfate spray (10 g per liter) every week until new leaves are green, or 20 to 25 kg ferrous sulfate per hectare to the soil. In Kansas trials a chelated iron product (Fe EDDHA) placed in the furrow at about 3.4 kg product per hectare (3 pounds per acre), or split at planting and 2 weeks later, cut the yellowing and raised yield.",
    "prevent": "Choose tolerant hybrids for limey fields, add manure, and treat the first 30 days, which are the critical period.",
@@ -2565,7 +2565,7 @@
     "brown_edges",
     "yellow"
    ],
-   "hint": "Tips and edges of the older leaflets turn yellow, then brown, and the leaves drop.",
+   "hint": "Older leaflets yellow at the tips and margins, go brown, then fall.",
    "symptoms": "The tips and edges of older leaflets turn yellow, and the yellow moves slowly toward the center and base. The leaf edges then die and brown, and the leaves fall.",
    "stage": "Flowering and pod filling.",
    "causes": "Sandy soils and soils cropped for years without potash.",
@@ -2839,7 +2839,7 @@
     "dieback"
    ],
    "hint": "Growing tips and roots fail to develop on very acid soil.",
-   "symptoms": "Terminal buds and roots fail to develop, so the vine tips stall and roots stay short. Added calcium raised nitrogen fixation in winged bean trials.",
+   "symptoms": "The buds at the vine ends and the root tips stop growing, so the vines stall and the roots stay short. Added calcium raised nitrogen fixation in winged bean trials.",
    "stage": "Early growth.",
    "causes": "Very acid soils, usually below pH 5, low in organic matter.",
    "confuse": "Boron deficiency also kills growing tips but crinkles young leaves.",
@@ -3874,7 +3874,7 @@
    "hint": "Older leaf blades yellow first, then all of them, with stunted plants and few suckers.",
    "symptoms": "Roots, main shoot and suckers stay stunted. Yellowing starts on the oldest leaf blades and, as it gets worse, all the blades turn yellow. Old leaves die early, so fewer leaves are working and the corm yield drops.",
    "stage": "From 2 months after planting through corm bulking.",
-   "causes": "Flooded (wetland) taro loses nitrogen to the air when the soil has no oxygen. Taro grows best when soil nitrogen is mostly in the nitrate form.",
+   "causes": "Flooded (wetland) taro loses nitrogen to the air when the soil has no oxygen. Taro does best when most of the nitrogen in the soil is nitrate.",
    "confuse": "Sulfur deficiency yellows the young leaves evenly. Magnesium deficiency yellows between the veins of old leaves.",
    "confirm": "Leaf test of leaf number 2 (the second fully opened leaf below the newest one): below 4.0 percent nitrogen is deficient (CTAHR).",
    "fix": "Apply nitrogen following the soil test, for example Urea 46 0 0 or Complete 14 14 14 in split doses. You can also give a urea spray of 10 g per liter every 15 days. Do not overdo it: too much nitrogen promotes taro leaf blight (CTAHR).",
@@ -3979,7 +3979,7 @@
     "dieback"
    ],
    "hint": "The youngest leaf yellows between the veins and cups, with brown edges, and roots die back.",
-   "symptoms": "Root and shoot growth drop and roots look stunted. The youngest leaf blade first yellows between the veins. In severe cases blades cup, with brown edges, then fail to unfurl and the shoot dies. Dying roots let soil diseases in.",
+   "symptoms": "Root and shoot growth drop and roots look stunted. The newest blade yellows between the veins first. When it is bad, blades cup and brown at the margins, never open fully, and the shoot dies. Dying roots let soil diseases in.",
    "stage": "Early growth, on acid upland soils.",
    "causes": "Very acid soils. At pH 4 aluminum also poisons the roots (CTAHR).",
    "confuse": "Manganese toxicity in older leaves can look like calcium deficiency with cupped blades. Calcium deficiency starts on the youngest leaf.",
@@ -4190,7 +4190,7 @@
    "stage": "Tuber filling.",
    "causes": "Sandy soils, leached soils, and gardens cropped with root crops for many years. In Papua New Guinea surveys, potassium deficiency was the most common and severe problem of yam.",
    "confuse": "Magnesium deficiency also yellows between veins but with a light brown stain on old leaves. Nitrogen deficiency makes the whole crop dull green with small leaves.",
-   "confirm": "Leaf test of blades from the fifth and sixth youngest nodes (2.1 to 3.9 percent potassium is the critical range for ubi, ACIAR) and a soil test.",
+   "confirm": "A soil test, and a leaf test of blades picked at the 5th and 6th nodes counted from the tip (for ubi the critical range is 2.1 to 3.9 percent potassium).",
    "fix": "Apply 80 to 200 kg potassium per hectare, mostly as Muriate of potash 0 0 60. On sandy soils put half in the planting hole and broadcast half during rapid vine growth. On clay soils one dose at planting is enough (ACIAR).",
    "prevent": "Mulch with plant material and return crop waste. Do not overdo potash, which can cause magnesium and calcium shortage.",
    "materials": [
@@ -4357,8 +4357,8 @@
     "yellow_between",
     "yellow"
    ],
-   "hint": "Young leaves turn pale with a fine network of green veins, then bleach white, on coral or limey soil.",
-   "symptoms": "Young leaves turn yellowish green with darker veins. Young mature leaves show a fine network of green veins on a pale blade. In severe cases young leaves bleach white and die from the edges, while the stem stays alive.",
+   "hint": "On coral or limey ground the young leaves go pale while thin green veins stay visible like a net, then they bleach white.",
+   "symptoms": "Young leaves turn yellowish green with darker veins. Leaves that have just matured keep a fine mesh of green veins across a pale blade. In severe cases young leaves bleach white and die from the edges, while the stem stays alive.",
    "stage": "Vine growth.",
    "causes": "High pH soils on coral or limestone, heavy lime or phosphorus, and sandy or organic soils. Often found together with manganese, copper and zinc shortage.",
    "confuse": "Manganese deficiency gives sunken spots. Nitrogen deficiency pales the whole vine.",
@@ -4902,7 +4902,7 @@
    "causes": "Sandy soils, heavy rain and too little fertilizer. Repeated crops on the same beds run low.",
    "confuse": "Sulfur deficiency yellows young leaves first. Manganese deficiency gives a general yellowing midway through the season on high pH soils.",
    "confirm": "Check that the oldest leaves yellowed first. Test the soil.",
-   "fix": "Michigan State gives about 45 kg of nitrogen per hectare (40 pounds per acre) before the first crop of the season. For a standing crop give a 1 percent urea spray (10 g per liter). Too much nitrogen and potash makes radish brittle and prone to cracking.",
+   "fix": "Put down about 45 kg of nitrogen per hectare (40 pounds per acre) ahead of the season's first planting. For a standing crop give a 1 percent urea spray (10 g per liter). Too much nitrogen and potash makes radish brittle and prone to cracking.",
    "prevent": "Add compost and feed the beds again before the last crop of the year.",
    "materials": [
     "Urea 46 0 0",
@@ -4962,7 +4962,7 @@
    "causes": "Sandy soils and beds cropped many times a year without potash.",
    "confuse": "Nitrogen deficiency yellows old leaves without scorch.",
    "confirm": "Soil test for potassium.",
-   "fix": "Michigan State gives about 85 to 140 kg K2O per hectare (75 to 125 pounds per acre) before the first crop of the season, depending on the soil test. Give a 1 percent potassium chloride spray (10 g per liter). Do not overdo potash, which can make roots crack.",
+   "fix": "Ahead of the season's first planting, put down about 85 to 140 kg K2O per hectare (75 to 125 pounds per acre), the amount the soil test sets. Give a 1 percent potassium chloride spray (10 g per liter). Do not overdo potash, which can make roots crack.",
    "prevent": "Feed potash once for the season and add wood ash or compost.",
    "materials": [
     "Muriate of potash 0 0 60",
@@ -5080,7 +5080,7 @@
     "small"
    ],
    "hint": "Growing tips of leaves and roots brown and die, and leaf stalks collapse.",
-   "symptoms": "The growing tips of roots and leaves brown and die. Internodes shorten into a rosette, leaf edges turn ragged and brittle, and leaf stalks collapse so the leaves wither.",
+   "symptoms": "Root tips and leaf tips, where the plant grows, turn brown and die back. Internodes shorten into a rosette, leaf edges turn ragged and brittle, and leaf stalks collapse so the leaves wither.",
    "stage": "Early growth.",
    "causes": "Very acid soils, high phosphorus and boron shortage.",
    "confuse": "Boron deficiency also kills the growing point, with cracked roots and orange old leaves.",
@@ -5412,7 +5412,7 @@
     "yellow"
    ],
    "hint": "Young leaves yellow between the veins, fast spreading over the whole leaf until it is white.",
-   "symptoms": "Young leaves show yellow between the veins first, and it spreads quickly over the whole leaf. In severe cases the leaves turn completely white.",
+   "symptoms": "The yellowing begins between the veins of young leaves and soon covers the whole blade. A bad case leaves them fully white.",
    "stage": "From the third month.",
    "causes": "High pH soils, waterlogging and low potassium.",
    "confuse": "Manganese deficiency gives a mottled light green look rather than full bleaching.",
@@ -5735,7 +5735,7 @@
     "dieback"
    ],
    "hint": "New centre leaves come out small, thick and crinkled, and stalks may crack.",
-   "symptoms": "Young leaves stay small, curl and become deformed and brittle, with yellow mottling along the edges. Stalks and midribs can crack or turn corky, and in severe cases the growing point dies. Plants stay stunted and open.",
+   "symptoms": "Young leaves stay small, curl and become deformed and brittle, with yellow mottling along the edges. Stalks and midribs may split or go corky, and a bad case kills the growing tip. Plants stay stunted and open.",
    "stage": "Mid growth, after dry spells or on limed beds.",
    "causes": "Sandy soils where boron leaches, alkaline or overlimed soils, low organic matter, high nitrogen and drought. Crucifers need more boron than most crops.",
    "confuse": "Calcium tip burn kills leaf edges but does not make leaves thick and crinkled. Aphid feeding also curls young leaves. Look for insects under the leaves.",
@@ -6157,7 +6157,7 @@
    "symptoms": "Brown or grey dead lesions appear first on the edges and tips of young leaves (tip burn). The leaves can look wavy and darker green. The damage spreads inward and later to older leaves, and brown veins may show near the burnt areas. Early, severe shortage stunts plants so they do not head. Roots are short, bushy and brown, with blackened tips.",
    "stage": "Rapid growth and heading, especially in hot weather. Tip burn occurs at high temperatures.",
    "causes": "Too little calcium reaching fast growing inner leaves because of heat, dry soil or uneven watering, plus acid sandy soils and high nitrogen or potassium.",
-   "confuse": "Boron shortage also starts on the youngest leaves, but stays at the growing point and does not spread as edge lesions. Bacterial leaf spot makes angular spots, not burnt edges.",
+   "confuse": "Boron shortage hits the newest leaves too. But it stays in the heart of the plant and never spreads as burnt leaf edges. Bacterial leaf spot makes angular spots, not burnt edges.",
    "confirm": "Check the inner leaves for brown edges after hot spells. Soil test for calcium and pH.",
    "fix": "Give enough water and keep enough calcium in the soil. Water evenly, shade or plant in cooler months in the lowlands, lime acid soil based on the test, and use tolerant varieties.",
    "prevent": "Grow head lettuce in cool months or highlands, lime acid soil to pH 6 to 6.8, and avoid heavy nitrogen.",
@@ -6727,7 +6727,7 @@
     "dieback"
    ],
    "hint": "New leaves come out small, crinkled and brittle, and stalks may crack.",
-   "symptoms": "Young leaves stay small, curl and become deformed, with yellow mottling along the edges. Leaf stalks and midribs can crack or turn corky, and in severe cases the growing point dies.",
+   "symptoms": "Young leaves stay small, curl and become deformed, with yellow mottling along the edges. Leaf stalks and midribs may split or go corky, and a bad case kills the growing tip.",
    "stage": "Mid growth.",
    "causes": "Sandy soils, overlimed or alkaline soils, low organic matter and drought. Brassicas need more boron than most crops.",
    "confuse": "Aphids also curl young leaves. Look for insects. Calcium tip burn only kills leaf edges.",
@@ -7018,7 +7018,7 @@
     "stunted"
    ],
    "hint": "Older leaves get a mottled yellow look between green veins, from the edges inward.",
-   "symptoms": "Yellowing starts on older leaves and spreads between the veins from the edges inward. While the veins stay green and the leaf looks mottled. Severe cases get dead spots between the veins and along the edges, and growth is stunted.",
+   "symptoms": "Yellowing starts on older leaves and spreads between the veins from the edges inward. While the veins stay green and the leaf looks mottled. When it is bad, dead patches show up in the tissue between veins and around the leaf rim, and the plant stays small.",
    "stage": "Head formation.",
    "causes": "Excess potassium, ammonium or calcium, sandy or acid soils, heavy potash fertilizer, and cold wet periods.",
    "confuse": "Potassium shortage can look similar. Magnesium usually yellows the whole area between veins before dead spots appear. A leaf test settles it.",
@@ -7090,7 +7090,7 @@
     "yellow"
    ],
    "hint": "On acid soil, narrow, cupped young leaves with yellow, scorched edges in patches of the field.",
-   "symptoms": "Leaves stay pale and the plant is stunted, with yellow green color between the veins and along the edges. Young leaves are narrow and distorted with edges that cup up or scorch, similar to whiptail in cauliflower. Affected plants usually come in patches.",
+   "symptoms": "The plant is stunted and its leaves stay pale, yellow green between the veins and out at the margins. Young leaves are narrow and distorted with edges that cup up or scorch, similar to whiptail in cauliflower. Affected plants usually come in patches.",
    "stage": "Seedling and young plant stage.",
    "causes": "Acid soils, mostly pH 5.5 or lower, and low organic matter.",
    "confuse": "Boron shortage also distorts young leaves. Nitrogen shortage gives pale plants without distorted leaves.",
@@ -7172,7 +7172,7 @@
     "dieback"
    ],
    "hint": "Brown or pink patches on the curd and a hollow, water soaked stem.",
-   "symptoms": "After the curd forms, water soaked areas appear on the stem and curd. The stem becomes hollow, with water soaked tissue inside that later turns brown or black. Brown or pink patches form on the curd surface (brown rot or browning), and the curd tastes bitter. Young leaves stay small, stiff and light green with reddish or brown edges, and in severe cases the growing point dies.",
+   "symptoms": "Once the curd has formed, wet looking patches show on the stem and the curd. The stem goes hollow, and the soggy tissue inside later darkens to brown or black. Brown or pink patches form on the curd surface (brown rot or browning), and the curd tastes bitter. Young leaves stay small, stiff and light green with reddish or brown margins, and a bad case kills the growing tip.",
    "stage": "Curd formation and development.",
    "causes": "High soil pH and alkaline or overlimed soils, sandy soils where boron leaches, low organic matter, high nitrogen or calcium. Dry or cold wet spells. Cauliflower is the most sensitive of the cole crops.",
    "confuse": "Hollow stem from fast growth or too much nitrogen stays bright inside. Boron hollow stem browns. Molybdenum shortage gives strap like leaves rather than brown curds.",
@@ -7335,7 +7335,7 @@
    "hint": "Older leaves turn dull bluish green with purple color and red undersides.",
    "symptoms": "Older leaves turn a pale bluish green with purple color, especially along the veins, and the undersides often turn red. Plants are stunted with short, thin shoots, and vigour and yield drop.",
    "stage": "Seedling and early growth, in cold or wet soil.",
-   "causes": "Acid or calcareous soils, iron rich soils, low organic matter, cold or wet weather and weak roots.",
+   "causes": "Soils that are acid, calcareous or rich in iron, little organic matter, cold or wet spells, and a weak root system.",
    "confuse": "Nitrogen shortage can also redden leaves, but those leaves stay light green, not bluish.",
    "confirm": "Soil test for available phosphorus and pH.",
    "fix": "Apply phosphorus near the roots based on the soil test. Use single superphosphate for a quick correction and rock phosphate or bone meal for the long term. Uptake is best near pH 6.2 to 7.0.",
@@ -7404,7 +7404,7 @@
     "stunted"
    ],
    "hint": "Young leaves turn evenly pale, stiff and reddish, with thin leaf stalks.",
-   "symptoms": "Yellowing starts in the young leaves and moves to older ones. Leaves turn uniformly light green or yellow and feel stiff, may show red color, and later curl inward. Often only thin leaf stalks form, and in severe cases seedlings die.",
+   "symptoms": "Yellowing starts in the young leaves and moves to older ones. The whole leaf goes an even light green or yellow and feels stiff, can show some red, and later curls inward. Often only thin leaf stalks form, and in severe cases seedlings die.",
    "stage": "Early growth.",
    "causes": "Acid or sandy soils where sulfate leaches, low organic matter, waterlogged soils, and no sulfur in the fertilizer.",
    "confuse": "Nitrogen shortage starts on old leaves.",
@@ -7882,7 +7882,7 @@
    "causes": "Low soil boron, sandy or overlimed soils, dry spells. Celery is prone to both boron shortage and boron excess, and some varieties are more sensitive.",
    "confuse": "Growth cracks from sudden heavy watering are fewer and clean. Boron cracks are many and browned. Too much boron burns leaf edges instead.",
    "confirm": "Soil test for boron and a leaf tissue test.",
-   "fix": "Teagasc advises a couple of foliar boron sprays after planting on top of a boron containing basal fertilizer. Follow the product label for the rate, and do not overdo it, because celery is also hurt by excess boron.",
+   "fix": "On top of a basal fertilizer that carries boron, give two or so boron leaf sprays once the crop is planted. Follow the product label for the rate, and do not overdo it, because celery is also hurt by excess boron.",
    "prevent": "Use a basal fertilizer that contains boron on sandy or limed fields and choose less sensitive varieties.",
    "materials": [
     "Solubor (sodium borate)",
@@ -8545,7 +8545,7 @@
     "dieback"
    ],
    "hint": "Brown to black leathery spots at the bottom end of the fruit and curled, hard young leaves.",
-   "symptoms": "Young leaves are affected first: they crinkle, curl upward and feel hard, and growing tips can die back. The classic sign is blossom end rot, with brown to black leathery spots on the underside or tip of the fruit.",
+   "symptoms": "Young leaves are affected first: they crinkle, curl upward and feel hard, and growing tips can die back. The sign to look for is blossom end rot: tough, leathery patches, brown to black, at the bottom or tip of the fruit.",
    "stage": "Fruit development, especially in dry spells or with uneven watering.",
    "causes": "Uneven or too little watering, fast growth, acid soils low in calcium, high phosphorus. Boron shortage, which the plant needs to use calcium.",
    "confuse": "Fruit rots from disease spread fast and grow mould. Blossom end rot starts as a dry, firm patch at the blossom end.",
@@ -8680,7 +8680,7 @@
     "poor_fill"
    ],
    "hint": "Lower leaves turn pale yellow and drop, and fruits come small, pale and thick.",
-   "symptoms": "Older leaves turn pale green to yellow and may die and drop. Vines are stunted, and fruits are pale, small and thick.",
+   "symptoms": "The oldest leaves fade to light green, then yellow, and can die and fall. Vines are stunted, and fruits are pale, small and thick.",
    "stage": "Vine growth and the long harvest period.",
    "causes": "Sandy soils, heavy rain, low organic matter, and missed side dressings. Side dress every two weeks in the rainy season, because nitrogen washes out faster.",
    "confuse": "Magnesium shortage keeps the veins green on old leaves. Downy mildew gives angular yellow patches between veins.",
@@ -9186,7 +9186,7 @@
     "poor_fill"
    ],
    "hint": "Old leaf edges yellow and scorch to dry paper, and fruits stay thin at the stem end.",
-   "symptoms": "The edges of older leaves turn yellow and scorch. The damage moves in between the veins until the leaf is dry and papery. Leaves curl, dead spots form along the midrib, stems weaken and plants wilt easily. Fewer female flowers form, and fruits can be brown or spotted and fail to fill out at the stem end.",
+   "symptoms": "The edges of older leaves turn yellow and scorch. The browning works inward between the veins until the whole leaf is as dry and brittle as paper. Leaves curl, dead spots form along the midrib, stems weaken and plants wilt easily. Fewer female flowers form, and fruits can be brown or spotted and fail to fill out at the stem end.",
    "stage": "Fruiting and harvest.",
    "causes": "Sandy or acid soils, heavy rain or irrigation, and long harvests without potash side dressing.",
    "confuse": "Magnesium shortage yellows between the veins with a green band along the veins. Potassium burns the edges first. Gummy stem blight lesions start at the edges too, but they are wedge shaped and spread fast in wet weather.",
@@ -9483,7 +9483,7 @@
    "causes": "Acid or iron rich soils, low organic matter, and no phosphorus at planting. Phosphorus is best taken up near pH 6.2 to 7.0.",
    "confuse": "Root knot nematodes also stunt okra. Check roots for galls.",
    "confirm": "Soil test for available phosphorus and pH.",
-   "fix": "Apply the recommended phosphorus fertilizer on schedule based on the soil test. Use single superphosphate for a quick correction and bone meal or rock phosphate for the long term.",
+   "fix": "Give the phosphorus fertilizer the soil test calls for, on time. For a fast fix use single superphosphate, and for the long run use bone meal or rock phosphate.",
    "prevent": "Use complete fertilizer or 16 20 0 at planting and lime very acid soil.",
    "materials": [
     "Complete 14 14 14",
@@ -9914,7 +9914,7 @@
     "spots"
    ],
    "hint": "Young leaves are mottled yellow with a fine net of green veins and dark spots along the veins.",
-   "symptoms": "Leaves that are nearly full size show mottled yellowing between the veins, leaving a fine net of green veins on a light green leaf. Young leaves yellow at the edges and dark dead areas form along the veins. Fruits may show raised dark brown to black spots.",
+   "symptoms": "Leaves that are nearly full size show mottled yellowing between the veins. So a thin net of green veins stands out on the pale green blade. Young leaves yellow at the edges and dark dead areas form along the veins. Fruits may show raised dark brown to black spots.",
    "stage": "Vegetative growth and fruiting.",
    "causes": "High pH or overlimed soils, sandy soils, and cold wet spells.",
    "confuse": "Magnesium shortage starts on old leaves. Iron shortage gives a clean yellow without dark spots.",
@@ -9986,7 +9986,7 @@
     "curl"
    ],
    "hint": "Large sunken, water soaked patches near the bottom of the fruit that turn black and leathery.",
-   "symptoms": "Large sunken, water soaked spots form near the blossom end of the fruit. They start soft, then dry, harden and turn black, and mould may grow on them. Several spots can form on one fruit, and on young fruit the whole end may rot and the fruit drop. Upper leaves may yellow between the veins with dark brown dead spots on the edges of the youngest leaves.",
+   "symptoms": "Big, sunken, wet looking spots appear at the bottom (blossom) end of the fruit. They start soft, then dry, harden and turn black, and mould may grow on them. Several spots can form on one fruit, and on young fruit the whole end may rot and the fruit drop. Upper leaves may yellow between the veins with dark brown dead spots on the edges of the youngest leaves.",
    "stage": "Early fruit growth. It can appear suddenly and spread over a field in hot dry weather.",
    "causes": "Too little calcium reaching the fruit, usually because of uneven watering or dry soil. Acid sandy soils, salty soil, high nitrogen or potassium, and large fruits raise the risk.",
    "confuse": "Sunscald makes pale, papery patches on the side facing the sun. Bacterial soft rot is wet and smelly from the start.",
@@ -11629,7 +11629,7 @@
     "poor_fill"
    ],
    "hint": "Pale, stiff, upright leaves that yellow and die back from the tips, and small bulbs.",
-   "symptoms": "Plants stay short with pale green to yellow leaves that stand stiff and upright and die back from the tips, starting on the older leaves. Bulbs stay small and mature early, and the neck tissue above the bulb turns soft at maturity.",
+   "symptoms": "Plants stay short. Their leaves fade from pale green to yellow, stand stiff and upright, and die back from the tips, the older leaves first. Bulbs stay small and mature early, and the neck tissue above the bulb turns soft at maturity.",
    "stage": "From transplanting to the start of bulbing.",
    "causes": "Sandy soils, heavy rain or irrigation that washes nitrogen out, and too little fertilizer.",
    "confuse": "Sulfur deficiency yellows the young leaves first. Potassium deficiency first makes leaves darker, with wilting tips.",
@@ -11968,7 +11968,7 @@
     "small"
    ],
    "hint": "Thin, pale tops whose older leaves yellow from the tips. Stalks stay short.",
-   "symptoms": "Leaves turn pale green to yellow, starting at the tips of the older leaves, and plants stay short and thin. For a crop sold as green leaves, this costs the harvest directly.",
+   "symptoms": "The leaves fade to pale green and then yellow, beginning at the tips of the oldest ones. The plants stay short and thin. For a crop sold as green leaves, this costs the harvest directly.",
    "stage": "Whole crop. The harvest comes in about 60 to 70 days.",
    "causes": "Sandy soils, heavy rain or watering that washes nitrogen out, and close planting with little fertilizer.",
    "confuse": "Sulfur deficiency yellows the young leaves first. Overwatering and root rot also yellow tips. Check the roots.",
@@ -12179,7 +12179,7 @@
     "poor_fill"
    ],
    "hint": "Older leaves turn pale to yellow, plants stay thin, and bulbs are small.",
-   "symptoms": "Older leaves turn pale green to yellow, growth slows, and plants are thin and stunted. Bulbs stay small and yield drops.",
+   "symptoms": "The oldest leaves fade to light green and then yellow, growth slows, and plants stay thin and stunted. Bulbs stay small and yield drops.",
    "stage": "From emergence to the start of bulbing.",
    "causes": "Sandy soils low in organic matter, such as many fields that follow rice, and too little nitrogen.",
    "confuse": "Sulfur deficiency yellows the young leaves first. Viruses give yellow stripes along the leaves, not even yellowing.",
@@ -12333,7 +12333,7 @@
     "cracks"
    ],
    "hint": "Young leaves distorted, the growing point dies, and bulbs crack or are misshapen.",
-   "symptoms": "Young leaves become distorted, and in severe cases the growing point dies. Bulbs crack or grow misshapen.",
+   "symptoms": "Young leaves grow twisted, and a bad case kills the growing tip. Bulbs crack or grow misshapen.",
    "stage": "Bulbing.",
    "causes": "Sandy soils low in organic matter, alkaline soils and dry spells.",
    "confuse": "Calcium deficiency kills young leaf tips and softens bulbs.",
@@ -12871,10 +12871,10 @@
     "stunted"
    ],
    "hint": "Young leaves show a broad yellow band across the middle of the blade, while the midrib and edges stay green.",
-   "symptoms": "Young, newly opened leaves turn light green to yellow in broad bands. While the midrib and leaf edges stay green until it is severe. The yellow tissue can get red spots, then dries and collapses between the veins. Leaves are shorter and wider at the middle, internodes are short and the cane is stunted.",
+   "symptoms": "Young, newly opened leaves turn light green to yellow in broad bands. While the midrib and leaf edges stay green until it is severe. The yellow tissue can get red spots, then dries and collapses between the veins. Leaves come out shorter and broader in their middle part, the internodes stay short and the cane is stunted.",
    "stage": "Young cane and early tillering.",
    "causes": "Liming that raises the soil pH, land leveling that exposes low zinc subsoil, sandy soils, and heavy phosphate use.",
-   "confuse": "Iron deficiency stripes the whole length of the leaf from base to tip and can bleach it white. Manganese stripes start in the middle of the leaf and run to the tip, and the blades split in the wind. Zinc keeps the edges and midrib green with a yellow band between them.",
+   "confuse": "Iron deficiency stripes the whole length of the leaf from base to tip and can bleach it white. Manganese stripes begin halfway along the blade and reach to the tip, and the blades tear in the wind. Zinc keeps the edges and midrib green with a yellow band between them.",
    "confirm": "Send the top visible dewlap leaf blade to a lab: below 15 mg/kg Zn is deficient and 17 to 32 mg/kg is the target. Test soil zinc and pH. Spray zinc sulfate on a few stools and watch whether the new leaves come out green.",
    "fix": "Spray Zinc sulfate at 0.5 percent (5 g per liter of water) on the leaves. Repeat if new leaves still show bands. For the next planting, mix Zinc sulfate into the soil. Give about 20 kg per hectare (8 kg per acre). Do not put zinc in the same application as phosphate fertilizer.",
    "prevent": "Lime only to the soil test, and add zinc sulfate at planting on fields that showed bands before.",
@@ -12980,7 +12980,7 @@
    "symptoms": "The youngest leaves show pale yellow stripes between the veins that run the full length of the leaf, from base to tip. In bad cases the whole leaf, even the veins and midrib, turns white. Roots stay short and the cane is stunted with short internodes. It often shows in patches beside healthy cane, and young plants may grow out of it as roots go deeper.",
    "stage": "Young cane and ratoon regrowth.",
    "causes": "High pH soils, limestone and other calcareous soils, and over liming. It is rare on the usual acid sugarcane soils.",
-   "confuse": "Manganese deficiency stripes start in the middle of the leaf and run to the tip, not from the base. Grassy shoot disease also gives white leaves, but the stool throws many thin, grassy tillers.",
+   "confuse": "Manganese shortage stripes begin halfway along the blade and reach the tip, never from the base. Grassy shoot disease also gives white leaves, but the stool throws many thin, grassy tillers.",
    "confirm": "Check soil pH first, since iron shortage is mostly a high pH problem. Below 50 mg/kg Fe in the top visible dewlap leaf is low. A test spray on a few stools that turns the new leaves green confirms it.",
    "fix": "Spray Ferrous sulfate at 2.5 to 5 g per liter (250 to 500 g per 100 liters), or 5 kg ferrous sulfate plus 2.5 kg urea in 500 liters per hectare. Repeat every 7 to 10 days until new leaves are green. You can also give 25 kg ferrous sulfate per hectare to the soil, or 100 kg mixed with 12.5 tons of farm manure. Stop liming the field.",
    "prevent": "Lime only to the soil test and add manure or mill mud on calcareous fields.",
@@ -13012,10 +13012,10 @@
     "curl"
    ],
    "hint": "Pale stripes on the young leaves start in the middle of the blade and run to the tip. The leaves split in the wind.",
-   "symptoms": "Young leaves show pale stripes between the veins that begin in the middle of the leaf and run toward the tip. The blades may split and fray in the wind, and the edges can curl upward. In severe cases the whole leaf bleaches and a grey purplish shine shows on the upper surface.",
+   "symptoms": "Young leaves get pale stripes between the veins, starting halfway along the blade and heading for the tip. The blades may split and fray in the wind, and the edges can curl upward. In severe cases the whole leaf bleaches and a grey purplish shine shows on the upper surface.",
    "stage": "Young cane and early grand growth.",
    "causes": "High pH or over limed soils, and some very weathered tropical soils.",
-   "confuse": "Iron deficiency stripes run from the base to the tip of the leaf. Zinc deficiency gives a broad yellow band with green edges and midrib.",
+   "confuse": "Iron shortage stripes cover the whole blade, base to tip. Zinc deficiency gives a broad yellow band with green edges and midrib.",
    "confirm": "Send the top visible dewlap leaf blade to a lab: below 16 mg/kg Mn is deficient and 20 to 100 mg/kg is the target. Check soil pH. Spray a few stools and watch the new leaves.",
    "fix": "Spray Manganese sulfate on the leaves. Give 1 to 2 percent (10 to 20 g per liter), or a milder 5 g per liter. So start with the lower rate on a few stools to check for leaf burn. Stop liming until the pH comes down.",
    "prevent": "Lime only to the rate the soil test gives.",
@@ -13097,7 +13097,7 @@
     "poor_fill"
    ],
    "hint": "Old leaves get yellow to orange spots and dry tips while young leaves stay dark green. The fruit is small and sour.",
-   "symptoms": "Older, lower leaves get white, yellow or orange spots and streaks that spread in from the tips and edges, and the tips die. The upper leaf surface turns reddish purple while the young leaves stay dark green. Leaves curl down and lose their firmness. Fruits are small and low in sugar, and the flesh can turn brown.",
+   "symptoms": "Older, lower leaves get white, yellow or orange spots and streaks that spread in from the tips and edges, and the tips die. The upper leaf surface turns reddish purple while the young leaves stay dark green. The leaves bend downward and go limp. Fruits are small and low in sugar, and the flesh can turn brown.",
    "stage": "Grand growth and fruit filling, when potassium need is highest.",
    "causes": "Sandy, acid soils low in exchangeable potassium and too little potash in the schedule. Pineapple takes up more potassium than nitrogen.",
    "confuse": "Mealybug wilt also reddens the leaves, but it starts about halfway up the plant, turns pink and wilts, and the roots rot. Magnesium shortage yellows the old leaves between the veins without the orange spotting and dead tips.",
@@ -13280,7 +13280,7 @@
     "poor_fill"
    ],
    "hint": "Leaves stay small and narrow with a purple or bronze color, and the plant barely grows.",
-   "symptoms": "Leaves are small and narrow with a purplish or bronze color. Older leaves develop dead patches and drop. New leaves can turn reddish purple and fruits get a reddish skin. Plants are stunted with weak roots, and badly starved plants may bear no fruit at all.",
+   "symptoms": "Leaves stay small and thin and turn purplish or bronze. Older leaves develop dead patches and drop. New leaves can turn reddish purple and fruits get a reddish skin. Plants are stunted with weak roots, and badly starved plants may bear no fruit at all.",
    "stage": "Early growth, from planting to about 6 months.",
    "causes": "Acid soils that lock up phosphorus and no phosphate at planting.",
    "confuse": "Strong sun and drought also redden pineapple leaves, but the plant keeps growing. Phosphorus shortage comes with small, narrow leaves and poor growth. Mealybug wilt turns leaves red then pink, with wilting and rotten roots.",
@@ -13419,7 +13419,7 @@
     "stunted"
    ],
    "hint": "Young leaves fold up into a narrow gutter shape and their tips droop, then die.",
-   "symptoms": "Young leaves are narrow, with the edges folded up so the leaf looks like the letter U in cross section. The leaf tip droops, then dies back. The underside looks waxy because it lacks its normal powdery bloom. Badly affected plants are stunted, with short heart leaves and dead older leaves.",
+   "symptoms": "Young leaves are narrow, their margins folded upward so that a cut across the leaf would show a U shape. The leaf tip droops, then dies back. The underside looks waxy because it lacks its normal powdery bloom. Badly affected plants are stunted, with short heart leaves and dead older leaves.",
    "stage": "From about a year after planting, on poor soils.",
    "causes": "Very acid, sandy soils and fields that never got copper.",
    "confuse": "Zinc deficiency bends the whole heart over (crookneck), while copper folds each young leaf into a U with a drooping tip. Mealybug wilt makes leaves curl down and turn red to pink.",
@@ -13461,7 +13461,7 @@
    "symptoms": "The lower leaves turn paler than the upper ones and then yellow and dry up early, which growers call burning up. The yellowing moves up the stalk as nitrogen moves from old leaves to the new growth. Plants stay short with small, thin leaves, and the cured leaf comes out pale and slick, so both yield and grade drop.",
    "stage": "From two to five weeks after transplanting, when the crop grows fastest, up to topping.",
    "causes": "Nitrogen washes out of sandy soils quickly after heavy rain or heavy irrigation. Skipping or delaying the sidedress after off barring brings it on.",
-   "confuse": "Sulfur shortage looks almost the same, but it starts at the bud and the top leaves pale first. While the lower leaves do not burn up. NC State warns that adding more nitrogen to a sulfur short crop will not green it. Leaves that yellow evenly at harvest time are simply ripening, which is normal for tobacco.",
+   "confuse": "Sulfur shortage looks much alike, but it begins at the bud, the top leaves go pale first. The bottom leaves are spared the scorching that nitrogen shortage brings. NC State warns that adding more nitrogen to a sulfur short crop will not green it. Leaves that yellow evenly at harvest time are simply ripening, which is normal for tobacco.",
    "confirm": "NC State notes that a soil test does not tell how much nitrogen tobacco needs, because nitrogen leaches. Compare the field with the rate and timing your NTA program gives. Send a leaf sample to a lab if you are unsure whether it is nitrogen or sulfur.",
    "fix": "Sidedress with Ammonium sulfate 21 0 0 along the row as soon as you see it, then hill up. In the NTA 2025 manual, Virginia neutral flavor tobacco gets 4 bags of 10 18 24 at transplanting, then 4 bags of Ammonium sulfate 21 0 0 at 21 to 28 days after transplanting. Native tobacco programs use Urea 46 0 0 as the sidedress. Do not overdo it: NC State warns that too much nitrogen delays ripening, makes curing harder and feeds suckers, hornworms and aphids.",
    "prevent": "Follow the NTA rate for your tobacco type and split it between transplanting and the sidedress. NTA advises using only 75 percent of the rate on moderately to highly fertile soils.",
@@ -13793,8 +13793,8 @@
    "stage": "From first bloom to boll filling. About 70 percent of potash uptake comes after first bloom, as Yara notes.",
    "causes": "Sandy soils that hold little potash, dry soil (potash moves to roots through soil water), acid soil, hardpans or nematodes that limit roots, and soils high in magnesium. High yielding, early varieties are more prone.",
    "confuse": "Leafhopper damage also yellows and reddens leaf edges and makes them curl down. But you will find the small green insects under the leaves. Alternaria and other leaf spots get worse on potash short plants, so check for both. Magnesium shortage reddens old leaves while the veins stay green.",
-   "confirm": "Use a petiole test at early bloom from the fourth or fifth fully developed leaf from the top. A soil test before planting.",
-   "fix": "Apply Muriate of potash 0 0 60 by soil test, split: try a third at planting and two thirds at squaring to early bloom on sandy soils. For quick help, give two leaf sprays of 5.6 to 11 kg of potash per hectare (5 to 10 pounds per acre) during peak bloom, with potassium nitrate as the usual spray. Spray Sulfate of potash at 10 grams per liter, or 1 percent potassium chloride.",
+   "confirm": "At early bloom, send petioles for testing, taken from the 4th or 5th fully grown leaf below the top. Test the soil before planting.",
+   "fix": "Apply Muriate of potash 0 0 60 as the soil test says, in two parts on sandy soils: one third at planting and the other two thirds between squaring and early bloom. For quick help, give two leaf sprays of 5.6 to 11 kg of potash per hectare (5 to 10 pounds per acre) during peak bloom, with potassium nitrate as the usual spray. Spray Sulfate of potash at 10 grams per liter, or 1 percent potassium chloride.",
    "prevent": "Keep soil pH above 6 with lime or Dolomite, give potash in splits. Keep the soil moist through boll filling.",
    "materials": [
     "Muriate of potash 0 0 60",
@@ -14309,7 +14309,7 @@
     "spots"
    ],
    "hint": "Bronzing under part of the leaf, often on one half and at the far end, with dying leaf tips and early leaf fall.",
-   "symptoms": "A bronze color shows on part of the underside of the leaf and is hard to see from the top. It is often limited to one half of the leaf and starts at the far end of the blade. The leaf tip often dies back. It shows first on leaves in the middle and upper storeys, and many leaves can fall.",
+   "symptoms": "A bronze color shows on part of the underside of the leaf and is hard to see from the top. It is often limited to one half of the leaf and starts at the far end of the blade. The leaf tip often dies back. The middle and upper layers of the canopy show it first, and many leaves can drop.",
    "stage": "Young trees on poor soils.",
    "causes": "Old, weathered acid soils that hold phosphorus tightly, and no phosphate at planting. The Rubber Research Institute of Sri Lanka lists phosphorus among the nutrients short in most of its rubber soils.",
    "confuse": "Mites and thrips can also bronze the leaf underside, so check with a hand lens. Potash and magnesium shortage start on the lower, older storeys, not the middle and upper ones.",
@@ -14553,7 +14553,7 @@
     "small"
    ],
    "hint": "The clump turns pale yellow green, older leaves yellow first, and new shoots come few and thin.",
-   "symptoms": "No bamboo particular description of this shortage was found, so this follows general plant signs for grasses and leafy plants. Older leaves turn pale green to yellow first, then the whole clump looks light green. Few new shoots come up, and the culms that form are thin and short. Bamboo needs nitrogen in larger amounts than phosphorus or potash.",
+   "symptoms": "No bamboo particular description of this shortage was found, so this follows general plant signs for grasses and leafy plants. The oldest leaves fade to light green and then yellow first, then the whole clump looks pale. Few new shoots come up, and the culms that form are thin and short. Bamboo needs nitrogen in larger amounts than phosphorus or potash.",
    "stage": "Young plantings and old clumps that are cut every year without feeding.",
    "causes": "Yearly harvests of shoots and poles carry nitrogen away, and most clumps are never fertilized. Eroded slopes and sandy riverbanks low in organic matter make it worse.",
    "confuse": "Bamboo also drops old leaves in the dry season and while new shoots grow, which is normal. Spider mites leave fine yellow to white specks and webbing under the leaves, and rust leaves orange to brown powdery spots underneath. Gregarious flowering also turns a whole clump yellow, but the clump fills with flower heads and then dies.",
@@ -15204,7 +15204,7 @@
     "poor_fill"
    ],
    "hint": "Old leaves get lemon yellow edges that die brown, purplish brown patches show at the base of leaf stalks, and fruit come out misshapen.",
-   "symptoms": "The older, lower leaves show pale to lemon yellow edges first. The leaf tips and edges then die and turn brown, and new leaves come smaller. Purplish brown patches appear at the base of the leaf stalks. The whole tree can yellow early and grow much less, and the fruit are misshapen, poorly filled and hard to sell.",
+   "symptoms": "The older, lower leaves show pale to lemon yellow edges first. The leaf tips and edges then die and turn brown, and new leaves come smaller. The lower ends of the leaf stalks get purplish brown patches. The whole tree can yellow early and grow much less, and the fruit are misshapen, poorly filled and hard to sell.",
    "stage": "Mostly in bearing trees, since the fruit pull a lot of potash out of the leaves.",
    "causes": "Bearing trees need a steady supply of potash for the fruit. Sandy soils, acid soils below pH 6 (potash is taken up best above pH 6), heavy rain and feeding nitrogen without potash bring it on.",
    "confuse": "Magnesium shortage also hits old leaves, but the yellow runs between the veins and leaves green bands along the edge and midrib. While potash shortage scorches the edge itself. Salt or fertilizer burn also browns leaf edges, but it follows a heavy dose and hits leaves of all ages. Dry spells can scorch edges too, so check soil moisture.",
@@ -15410,7 +15410,7 @@
    "causes": "Trees that get little or no fertilizer, sandy soils low in organic matter, and heavy rain that washes nitrogen down. Thick grass and weeds under the canopy also compete for it.",
    "confuse": "Magnesium deficiency also starts on old leaves. But the veins stay dark green in a fishbone pattern while the tissue between them yellows. Iron deficiency starts on the newest leaves, with a net of green veins. Waterlogged soil and root rot can also make the whole tree pale, so check drainage and the roots.",
    "confirm": "Take a leaf test before flower induction: the youngest fully expanded, hardened leaf of a flush (about eight weeks old), four or five leaves per tree from ten trees, as the Australian mango industry guide describes. A soil test taken at the same time helps read the leaf result. A Philippine baseline survey of fruit farms gives local normal leaf levels for mango that labs can compare against.",
-   "fix": "Feed nitrogen in a ring under the edge of the canopy and cover it with soil. The give Complete 14 14 14 by tree age, for example 500 g to 1 kg per tree at 5 to 6 years, 2 kg at 7 to 8 years, 3 kg at 9 to 10 years and 5 kg at 11 to 15 years, half at the start and half at the end of the rainy season. For quick greening, give a Urea spray of 10 grams per liter every 15 days. Give 80 kg of nitrogen per hectare as its soil rate.",
+   "fix": "Feed nitrogen in a ring under the edge of the canopy and cover it with soil. The give Complete 14 14 14 by tree age, for example 500 g to 1 kg per tree at 5 to 6 years, 2 kg at 7 to 8 years, 3 kg at 9 to 10 years and 5 kg at 11 to 15 years, one half when the rains begin and the other half as they end. For quick greening, give a Urea spray of 10 grams per liter every 15 days. Give 80 kg of nitrogen per hectare as its soil rate.",
    "prevent": "Fertilize every year in two splits and add compost or manure. Do not overdo nitrogen on bearing trees: too much nitrogen makes soft nose and internal breakdown of the fruit worse.",
    "materials": [
     "Urea 46 0 0",
@@ -15545,7 +15545,7 @@
     "dieback"
    ],
    "hint": "Ripening fruit go soft and watery at the tip (soft nose) or brown and jelly like inside near the seed.",
-   "symptoms": "The fruit shows it first, from the inside. The flesh turns brown and breaks down (internal breakdown). At ripening the blossom end goes soft and water soaked while the shoulders are still firm (soft nose). Other forms are a hollow at the stem end, over ripe flesh around the seed (jelly seed), or spongy greyish black patches. On the tree, young leaves may yellow, wilt and curl down near the bud, and root and shoot tips brown and die.",
+   "symptoms": "The fruit shows it first, from the inside. The flesh browns and falls apart inside (internal breakdown). As the fruit ripens, its blossom end turns soft and watery while the shoulders stay firm (soft nose). Other forms are a hollow at the stem end, over ripe flesh around the seed (jelly seed), or spongy greyish black patches. On the tree, young leaves may yellow, wilt and curl down near the bud, and root and shoot tips brown and die.",
    "stage": "Fruit ripening, worse in fruit left to ripen on the tree.",
    "causes": "Acid and sandy soils low in calcium, soils high in sodium or aluminium, drought, and too much nitrogen or potash. High phosphorus and a shortage of boron also cut calcium use.",
    "confuse": "Fruit fly maggots also rot the flesh, but you will find sting marks on the skin and larvae inside. Stem end rot and anthracnose start as dark patches on the skin. Boron shortage browns the flesh too, but usually with cracks.",
@@ -15686,7 +15686,7 @@
     "spots"
    ],
    "hint": "Leaves just reaching full size turn yellowish green with a fine net of green veins and grey specks.",
-   "symptoms": "It shows on leaves that are just reaching full size, in the middle of the canopy. They turn yellowish green between the veins with a fine network of green veins on the upper side. Mature leaves become thicker and blunt, and light grey to greyish brown specks appear. In severe cases the leaves brown and growth slows.",
+   "symptoms": "It shows on leaves that are just reaching full size, in the middle of the canopy. Between the veins they go yellowish green, and on the upper surface a fine mesh of green veins stays. Mature leaves become thicker and blunt, and light grey to greyish brown specks appear. In severe cases the leaves brown and growth slows.",
    "stage": "New and maturing flushes. Leaf signs appear late.",
    "causes": "High pH and limestone soils, and sandy soils. In Florida it is part of mango decline together with iron shortage.",
    "confuse": "Iron deficiency shows on the very newest leaves and bleaches them paler, often to white. Zinc deficiency makes leaves small and crowded. Magnesium deficiency starts on old leaves.",
@@ -16155,7 +16155,7 @@
     "spots"
    ],
    "hint": "Young full size leaves pale between the veins with broad dark green bands along the veins. Leaf size stays normal.",
-   "symptoms": "Young leaves show a fine network of green veins on a lighter green background, less sharp than with zinc or iron. By full size the pattern is clear: dark green bands along the midrib and main veins with light green areas between. In bad cases white spots form between the veins, leaves drop early and the tree looks weak. Leaves keep their normal size and shape.",
+   "symptoms": "On young leaves a fine mesh of green veins shows against paler green, softer than the zinc or iron pattern. Once the leaf is full size the pattern is plain: the midrib and main veins carry dark green bands. The tissue between them is light green. In bad cases white spots form between the veins, leaves drop early and the tree looks weak. Leaves keep their normal size and shape.",
    "stage": "On young and newly matured flushes. Mild signs on new shoots may fade as the flush hardens.",
    "causes": "It happens on both acid soils, where manganese leaches, and on limey or overlimed soils, where it is locked up. Sandy and organic soils and cold, wet periods add to it. It often comes together with zinc shortage.",
    "confuse": "Zinc deficiency makes the leaves small, narrow and pointed. Iron deficiency is paler, with a finer net, on the newest leaves. Citrus greening also mottles leaves. Use the pen test. Boron toxicity can also look like it.",
@@ -16263,7 +16263,7 @@
     "dieback",
     "curl"
    ],
-   "hint": "Extra large, dark green leaves on long, soft, S shaped shoots, gum blisters at the nodes and twig dieback.",
+   "hint": "Oversized dark green leaves on long, soft shoots that bend like an S, blisters of gum at the nodes, and twigs dying back.",
    "symptoms": "The first sign is unusually large, dark green leaves with the midrib bowed up, on long, soft, angular shoots that droop in an S shape. Small blisters of clear gum form at the nodes, and reddish brown gum breaks out on older twigs. Twigs then die back from the tip and push out a bunch of weak buds. Fruit can show brown gum stains and split.",
    "stage": "Young trees in new plantings, and trees pushed with heavy nitrogen.",
    "causes": "New plantings on sandy or organic soils never farmed before, limey soils, and heavy nitrogen feeding. It is rare where copper fungicides are sprayed.",
@@ -16450,7 +16450,7 @@
    "hint": "Small, hard, lumpy fruit with gum pockets in the white peel. Many fruit drop. Shoot tips die and branch out.",
    "symptoms": "Fruit show it most: small, hard and misshapen with a lumpy surface, with gum pockets and dark spots in the white inner peel (albedo) near the rind and sometimes in the core, and gum on the skin. Many fruit drop, peel can crease, and fruit rot more after harvest. The growing tip dies and the shoot sends out many side shoots. Young leaves wilt early, show water soaked spots, curl, and the veins split and turn corky.",
    "stage": "Flowering to fruit growth, often after a long dry spell.",
-   "causes": "Sandy and alkaline soils low in organic matter, high nitrogen or calcium, cold wet weather and drought. Programs that use only high analysis fertilizers without micronutrients. Poor boron also cuts calcium uptake in the peel.",
+   "causes": "Sandy and alkaline soils low in organic matter, high nitrogen or calcium, cold wet weather and drought. Feeding with only high analysis fertilizers that carry no micronutrients. Poor boron also cuts calcium uptake in the peel.",
    "confuse": "Citrus greening also gives corky veins and small, lopsided fruit that color unevenly. Check leaves with the pen test. Potassium shortage also creases the peel, but without gum pockets. Boron toxicity yellows and mottles leaf tips and leaves gum spots under the leaf.",
    "confirm": "Leaf test and soil test for boron. Cut open a few fruit to look for gum and dark spots in the albedo.",
    "fix": "Give a Borax spray at 0.5 percent (5 grams per liter). Use boron each year where needed, on the soil or as a spray but never both, since citrus is easily burned by excess boron.",
@@ -16483,7 +16483,7 @@
     "poor_fill"
    ],
    "hint": "Young and medium leaves light green between dark green vein bands. Leaves keep their size. Fruit pale and soft.",
-   "symptoms": "Young leaves show a fine net of green veins on a lighter green background. By full size there are dark green bands along the midrib and main veins with light green to yellow areas between. In bad cases white or grey spots form between the veins and leaves drop early, but leaf size and shape stay normal. The crop is smaller, and fruit are smaller, softer and paler in color. With zinc shortage it forms marl chlorosis: dark veins with dull white and green between.",
+   "symptoms": "On young leaves a fine mesh of green veins shows against paler green. Once the leaf is full size, dark green bands follow the midrib and main veins, with light green to yellow tissue between them. In bad cases white or grey spots form between the veins and leaves drop early, but leaf size and shape stay normal. The crop is smaller, and fruit are smaller, softer and paler in color. With zinc shortage it forms marl chlorosis: dark veins with dull white and green between.",
    "stage": "Young and newly matured flushes. Mild signs can fade as leaves harden.",
    "causes": "Acid soils, where manganese leaches, and limey or overlimed soils, where it is locked up. Sandy and organic soils and cold, wet periods add to it.",
    "confuse": "Zinc deficiency makes leaves small, narrow and pointed. Iron deficiency is paler, with a finer net, on the newest leaves. Citrus greening and boron toxicity can look alike. Use the pen test for HLB.",
@@ -16632,7 +16632,7 @@
    "causes": "Trees fed little or irregularly, sandy or leached soils, heavy rain, waterlogging. Raw straw or manure that ties nitrogen up as it rots.",
    "confuse": "Magnesium deficiency also yellows older leaves but leaves a green V at the leaf base and is worst next to the fruit. Sulfur deficiency starts on young leaves. Citrus greening (HLB) gives yellow shoots and blotches that do not match on the two sides of the midrib.",
    "confirm": "Leaf test: the Mekong Delta study sampled the third and fourth leaves from 3 month old branches. Use 4 to 6 month old leaves from twigs without fruit. Get a soil analysis to set the rates.",
-   "fix": "Apply nitrogen in the weeded ring, split into two equal doses: at the start of the rainy season to build vigour before flowering. Toward the end of the rainy season. The guide budgets urea, complete fertilizer, muriate of potash and chicken dung every year, with the amount based on the soil analysis. For quick greening, give a Urea spray at 2 percent (20 grams per liter) every 15 days for citrus.",
+   "fix": "Apply nitrogen in the weeded ring, split into two equal doses: when the rains begin, to build vigour before flowering. Again as the rainy months draw to a close. The guide budgets urea, complete fertilizer, muriate of potash and chicken dung every year, with the amount based on the soil analysis. For quick greening, give a Urea spray at 2 percent (20 grams per liter) every 15 days for citrus.",
    "prevent": "Fertilize every year by the soil test, ring weed before each dose and mulch. Do not overdo ammonium fertilizers: in Chinese pomelo orchards, decades of heavy ammonium nitrogen dropped the soil pH from 5.7 to 4.3 and brought magnesium shortage.",
    "materials": [
     "Urea 46 0 0",
@@ -16866,7 +16866,7 @@
    "causes": "In the Philippines jackfruit is seldom fertilized, so many trees run short. Sandy or eroded soils low in organic matter, heavy rain that washes nitrogen away. Weeds or grass competing under the canopy make it worse.",
    "confuse": "Magnesium deficiency also starts on old leaves, but the yellow sits between the veins while the veins stay green. Jackfruit does not tolerate wet soil, and two or three days of standing water can yellow and kill a tree. Check drainage and the roots before blaming nitrogen.",
    "confirm": "Send a sample of recently matured leaves for a leaf test and a soil sample for a soil test. A clear greening of new leaves within a few weeks after a nitrogen dose confirms it.",
-   "fix": "For young trees, the Philippine practice described by Coronel gives 100 to 150 grams of Ammonium sulfate 21 0 0 per tree one month after planting and the same again six months later. For fruiting trees it gives 0.5 to 1 kg of Complete 14 14 14 per tree at the start of the rainy season and the same near its end. At least 2 to 3 kg per dose for full grown trees of 15 to 20 years. Spread it in a ring under the canopy edge and water it in.",
+   "fix": "For young trees, the Philippine practice described by Coronel gives 100 to 150 grams of Ammonium sulfate 21 0 0 per tree one month after planting and the same again six months later. Fruiting trees take 0.5 to 1 kg of Complete 14 14 14 each when the rains begin and the same amount again as they end. At least 2 to 3 kg per dose for full grown trees of 15 to 20 years. Spread it in a ring under the canopy edge and water it in.",
    "prevent": "Fertilize every year in two splits, raise the amount as the tree grows. Keep a mulch or compost ring under the canopy.",
    "materials": [
     "Ammonium sulfate 21 0 0",
@@ -17108,7 +17108,7 @@
    "stage": "Young trees, and bearing trees after several years of fruiting with no fertilizer.",
    "causes": "Many Philippine avocado trees are grown with no fertilizer at all, which a review links to the fall in yield and quality after a few years of bearing. Heavy rain on sandy or eroded soils washes nitrogen away.",
    "confuse": "Phytophthora root rot also gives small, pale green or yellowish leaves and a thin canopy. But the leaves wilt even when the soil is wet, leaf tips brown, branches die back, and the small feeder roots are black, brittle and dead. Dig and check the roots. Sulfur shortage hits the young leaves first, while nitrogen shortage fades the whole tree.",
-   "confirm": "Leaf test: University of California advises taking the most recently expanded and matured leaves near the shoot tips, from the last main flush, about 5 to 7 months old. Check roots and drainage. Trees that green up after ammonium sulfate or urea confirm it.",
+   "confirm": "Leaf test: pick leaves near the shoot tips from the last main flush, ones that have just finished growing and hardened, about 5 to 7 months old. Check roots and drainage. Trees that green up after ammonium sulfate or urea confirm it.",
    "fix": "Apply Ammonium sulfate 21 0 0 or Urea 46 0 0 in a ring under the canopy at the start and end of the rainy season. Philippine growers give young, non bearing trees 100 to 200 grams of Ammonium sulfate or 50 to 100 grams of Urea per tree twice a year. Bearing trees about 500 grams of Complete 14 14 14 twice a year. Full bearing trees about 2 kg of complete fertilizer a year. Add manure or compost.",
    "prevent": "Fertilize every year in two splits and keep a mulch of leaves or compost under the canopy, away from the trunk.",
    "materials": [
@@ -17326,7 +17326,7 @@
     "yellow_between",
     "yellow"
    ],
-   "hint": "Young leaves yellow with narrow dark green strips along the veins. Later the veins pale too and leaves drop.",
+   "hint": "Young leaves go yellow, leaving thin dark green lines on each vein. Later the veins pale too and leaves drop.",
    "symptoms": "Young leaves turn yellow between the veins while narrow strips along the veins stay dark green. Later the veins yellow as well and the leaves may fall. Leaves keep a normal size and shape.",
    "stage": "New flushes, on limestone soils and after waterlogging.",
    "causes": "Alkaline, high pH soils such as limestone soils, overliming, and waterlogged soils. University of Florida notes that wet, poorly drained soils bring on nutrient deficiency signs and dieback in avocado.",
@@ -17813,7 +17813,7 @@
    "stage": "After harvest, when the tree should flush, and in young trees.",
    "causes": "Rambutan removes a lot of nitrogen with its fruit and the twigs cut at harvest. Trees fed only organic matter or nothing at all, sandy soils and heavy rain show it most.",
    "confuse": "Glyphosate sprayed under the canopy edge causes severe yellowing and drop of lower leaves, as the ICRAF tree database warns. Ask what was sprayed. Magnesium deficiency yellows old leaves between green veins. Waterlogged roots also yellow the canopy.",
-   "confirm": "Leaf test of the last fully mature leaflets on branch tips, taken before flowering. Queensland researchers suggest 2.0 to 2.5 percent nitrogen as the target range.",
+   "confirm": "Leaf test of the newest leaflets that have fully matured at the branch ends, taken before flowering. Queensland researchers suggest 2.0 to 2.5 percent nitrogen as the target range.",
    "fix": "For young trees in the third and fourth year, give 1 to 2 kg of complete fertilizer per tree with 300 grams of Muriate of potash. For bearing trees it gives 25 kg of organic fertilizer per tree after ring weeding, then 2 to 3 kg of Complete 14 14 14 or 16 20 0 one to two months later. The ICRAF tree database gives about 200 grams of nitrogen per tree for each year of age, up to 12 years, with half of the yearly amount right after harvest. Too much nitrogen can delay flowering and make fruit drop.",
    "prevent": "Feed the tree right after harvest to push a good flush, and return pruned twigs and leaves as mulch.",
    "materials": [
@@ -17858,7 +17858,7 @@
    "stage": "Fruit growth, when the crop pulls the most potash.",
    "causes": "Rambutan removes a lot of potassium with its fruit. Leached, sandy soils under heavy rain, and trees fed mostly nitrogen, show it most.",
    "confuse": "Rambutan is very sensitive to chloride. Queensland researchers link leaf edge burn and leaf drop mostly to too much chloride, for example from Muriate of potash. So a scorch after potash may mean chloride burn, not potash shortage. Dry winds also brown leaf margins.",
-   "confirm": "Leaf test of the last fully mature leaflets on branch tips before flowering, for both potassium and chloride. Queensland researchers suggest 0.7 to 0.9 percent potassium and chloride below 0.2 percent.",
+   "confirm": "Leaf test of the newest leaflets that have fully matured at the branch ends before flowering, for both potassium and chloride. Queensland researchers suggest 0.7 to 0.9 percent potassium and chloride below 0.2 percent.",
    "fix": "The give 300 grams of Muriate of potash with the complete fertilizer before flowering. A second potash dose in water during fruit growth for bigger, sweeter fruit. Because rambutan dislikes chloride, Queensland researchers advise Sulfate of potash or potassium nitrate instead. Switch to those where leaf edges burn. The ICRAF tree database gives about 130 grams of potash per tree for each year of age for fruiting trees, up to 12 years.",
    "prevent": "Split potash between before flowering and fruit growth, and choose a chloride free source on trees that show edge burn.",
    "materials": [
@@ -17897,7 +17897,7 @@
    "stage": "Young trees, and the weeks before flowering in bearing trees.",
    "causes": "Very acid soils that hold phosphorus tightly, and soils low in organic matter. Rambutan needs less phosphorus than nitrogen and potash, but leaf surveys in Queensland still found some trees below the suggested range.",
    "confuse": "Drought, cold and root damage can also slow growth and tint leaves. Nitrogen deficiency gives pale yellow, not purple, old leaves.",
-   "confirm": "Leaf test of the last fully mature leaflets on branch tips before flowering. Queensland researchers suggest 0.2 to 0.3 percent phosphorus. A soil test for available phosphorus and pH.",
+   "confirm": "Leaf test of the newest leaflets that have fully matured at the branch ends before flowering. Queensland researchers suggest 0.2 to 0.3 percent phosphorus. A soil test for available phosphorus and pH.",
    "fix": "The use Complete 14 14 14 or 16 20 0 before flowering, which supply phosphorus. In a Thai trial, a leaf spray of monopotassium phosphate at 5 grams per liter, three times a week apart once the last flush matured, followed by a 7 13 34 foliar feed with zinc, gave the most flowering, about 10 days earlier than unsprayed trees. Follow the soil test and lime very acid soils.",
    "prevent": "Put phosphorus and compost in the planting hole and keep some in the yearly program.",
    "materials": [
@@ -17934,7 +17934,7 @@
    "stage": "The last flush before flowering, and flowering.",
    "causes": "Sandy or eroded soils, high pH or overlimed soils, and heavy phosphate fertilizer. Queensland leaf surveys found some orchards below the suggested zinc range.",
    "confuse": "Iron and manganese deficiency also yellow young leaves between the veins, but the leaves keep their size. Mites and thrips can stunt and curl new leaves.",
-   "confirm": "Leaf test of the last fully mature leaflets on branch tips before flowering. Queensland researchers suggest 30 to 35 ppm zinc. Spray a few branches and compare the next flush.",
+   "confirm": "Leaf test of the newest leaflets that have fully matured at the branch ends before flowering. Queensland researchers suggest 30 to 35 ppm zinc. Spray a few branches and compare the next flush.",
    "fix": "Spray zinc on the mature last flush before flowering. In the Thai trial, a 7 13 34 foliar fertilizer containing zinc, at 1.5 grams of product per liter and sprayed three times a week apart, gave the biggest panicles. Zinc sulfate also works. Sprays for other fruit trees use 3 to 5 grams Zinc sulfate per liter. Follow the label.",
    "prevent": "Avoid very heavy phosphate and overliming, and check leaf zinc every few years.",
    "materials": [
@@ -17971,7 +17971,7 @@
    "stage": "Bearing trees, often during and after fruit growth.",
    "causes": "Acid, leached soils and heavy potash fertilizer, which competes with magnesium. Queensland leaf surveys found some orchards below the suggested magnesium range.",
    "confuse": "Potassium shortage or chloride burn scorches the leaf edges brown rather than yellowing between the veins. Nitrogen deficiency yellows the whole old leaf, veins included.",
-   "confirm": "Leaf test of the last fully mature leaflets on branch tips before flowering. Queensland researchers suggest 0.25 to 0.35 percent magnesium. A soil test for magnesium, potassium and calcium.",
+   "confirm": "Leaf test of the newest leaflets that have fully matured at the branch ends before flowering. Queensland researchers suggest 0.25 to 0.35 percent magnesium. A soil test for magnesium, potassium and calcium.",
    "fix": "The ICRAF tree database gives Dolomite at 0.4 kg per tree for each year of age, up to 10 years, applied in the slow growing months. Where the soil pH is already fine, use Magnesium sulfate or Kieserite, following the soil test.",
    "prevent": "Use Dolomite when liming and keep potash and magnesium in balance.",
    "materials": [
@@ -18458,7 +18458,7 @@
    "causes": "Trees that get no fertilizer or manure, sandy or eroded soils low in organic matter, and heavy rain that washes nitrogen down. Grass and weeds under the canopy compete for it.",
    "confuse": "New chico leaves are normally pinkish when they first open. So judge by the mature leaves: in nitrogen shortage they stay small and yellow green. Young chico trees also drop leaves in drought, so check soil moisture first. Potassium shortage leaves brown specks and dead patches between the veins instead of an even pale color.",
    "confirm": "A leaf test of mature leaves from recent growth shows low nitrogen. A soil test shows organic matter. New flushes that come out green and full sized after urea confirm it.",
-   "fix": "For a quick lift, spray Urea 46 0 0 at 2 percent (20 grams per liter). This spray works, and 250 grams of nitrogen per tree raised fruit weight and yield in trials. Then feed the soil: give 0.2 kg of nitrogen per tree in the first year, rising by 0.2 kg each year to 1 kg from the sixth year, with farm manure. While PROSEA gives 1.5 kg of nitrogen or more per year for mature trees. One kg of nitrogen is about 2.2 kg of Urea 46 0 0. Spread it in a ring under the drip line at the start of the rainy season and again before the rains end.",
+   "fix": "For a quick lift, spray Urea 46 0 0 at 2 percent (20 grams per liter). This spray works, and 250 grams of nitrogen per tree raised fruit weight and yield in trials. Then feed the soil: give 0.2 kg of nitrogen per tree in the first year, rising by 0.2 kg each year to 1 kg from the sixth year, with farm manure. While PROSEA gives 1.5 kg of nitrogen or more per year for mature trees. One kg of nitrogen is about 2.2 kg of Urea 46 0 0. Spread it in a ring under the drip line when the rains begin and once more before they stop.",
    "prevent": "Feed every year in a ring under the canopy edge, add compost or manure, and keep grass away from the trunk. In 25 years of trials at Gujarat Agricultural University, nitrogen alone raised chico yield by about 70 percent over unfed trees.",
    "materials": [
     "Urea 46 0 0",
@@ -18659,7 +18659,7 @@
     "dieback"
    ],
    "hint": "Pale yellow between the veins with wide green bands along the veins, light spots and early leaf drop.",
-   "symptoms": "Light colored spots appear on the leaves and some turn into dead spots. Green bands of varying width run along the midrib and veins, with yellow areas between them. Leaves drop early and the shoot tips can die back. These are the signs on sapota (chico). In fruit trees in general the signs start on the younger leaves.",
+   "symptoms": "Light colored spots appear on the leaves and some turn into dead spots. The midrib and veins keep green bands, some wide and some narrow, with yellow tissue between them. Leaves drop early and the shoot tips can die back. These are the signs on sapota (chico). In fruit trees in general the signs start on the younger leaves.",
    "stage": "New flushes, mostly on high pH or overlimed soils.",
    "causes": "High pH and limestone soils, and overliming of light, sandy soils, which locks up manganese. Acid soils, which most fruit orchards are planted on, usually hold plenty of manganese. So this is less common than the other troubles.",
    "confuse": "Iron shortage yellows young leaves more evenly between fine green veins, without the wide green bands. Zinc shortage makes young leaves clearly small. Magnesium shortage starts on old leaves.",
@@ -19363,7 +19363,7 @@
    "causes": "Trees that are never fed (Morton notes most kaimito trees in tropical America never get fertilizer), sandy or limestone soils low in organic matter. Heavy rain that washes nitrogen down.",
    "confuse": "In a long dry season kaimito sheds many leaves and its fruits shrivel (PROSEA), which is drought, not hunger. The underside of a kaimito leaf is normally golden brown, so judge the color on the upper side. Red algae (Cephaleuros) attack leaves, stems and limbs and cause twig and limb dieback.",
    "confirm": "A leaf test of mature leaves from recent growth shows low nitrogen. New leaves that come out deep green after a nitrogen dose confirm it.",
-   "fix": "PROSEA gives 150 to 200 grams of Ammonium sulfate 21 0 0 per tree twice a year for young trees not yet bearing. At the start of fruiting, 500 grams of complete fertilizer go on twice a year. Full grown trees may need 3 kg or more of complete fertilizer a year. Apply at the start of the rainy season and again near its end, in a ring or in shallow holes under the canopy.",
+   "fix": "PROSEA gives 150 to 200 grams of Ammonium sulfate 21 0 0 per tree twice a year for young trees not yet bearing. At the start of fruiting, 500 grams of complete fertilizer go on twice a year. Full grown trees may need 3 kg or more of complete fertilizer a year. Put it on when the rains begin and again as they end, spread in a ring or dropped into shallow holes under the canopy.",
    "prevent": "Feed every year and mulch the root zone. Morton notes that a complete, well balanced fertilizer greatly improves kaimito on limestone and other poor soils.",
    "materials": [
     "Ammonium sulfate 21 0 0",
@@ -20421,10 +20421,10 @@
    ],
    "hint": "Small, evenly soft yellow green leaves on a slow tree. New leaves come out almost white.",
    "symptoms": "Growth slows and the leaves harden early, so they stay small. Full grown leaves turn an even soft yellow green, and the oldest leaves of each flush die back from the tip. New leaves come out yellow to almost white. Internodes are short and the leaf stalks stand at a sharp angle to the stem. Fewer flushes mean fewer flowers and pods.",
-   "stage": "Young trees in the first years after planting, bearing trees that get no fertilizer, and trees grown without shade. Nitrogen is most needed at the start of the rainy season and three months later.",
+   "stage": "Young trees in the first years after planting, bearing trees that get no fertilizer, and trees grown without shade. Nitrogen is needed most when the rains begin and again three months after.",
    "causes": "Trees that get little or no fertilizer, cacao grown in full sun (proper shade lowers the nutrient need), low organic matter, and leaching rains. In a leaf survey of 63 cocoa farms in Papua New Guinea, a nearby growing area with similar smallholder farming, 95 percent of farms were below the critical nitrogen level.",
    "confuse": "Vascular streak dieback also yellows leaves, but it shows scattered green spots on a yellow leaf on one or two leaves about a meter behind the shoot tip, the leaves drop. Three small dark dots show in the leaf scar with a brown streak inside the twig. Nitrogen shortage is an even pale color over the whole tree with no streak. Sulfur shortage is rare and yellows only the newest leaves.",
-   "confirm": "Leaf test: take the second or third leaf of the last flush that is just maturing, four or five leaves from around the canopy of at least 10 trees, skipping damaged leaves, as Yara advises. A soil test for organic matter helps. New flushes that come out green after ammonium sulfate confirm it.",
+   "confirm": "Leaf test: from the newest flush that is just hardening, pick its 2nd or 3rd leaf, four or five leaves from all around the canopy of at least 10 trees, leaving out damaged ones. A soil test for organic matter helps. New flushes that come out green after ammonium sulfate confirm it.",
    "fix": "Apply Ammonium sulfate 21 0 0 or Urea 46 0 0 in a ring under the canopy after weeding, in two splits at the start and end of the rainy season. A mature planting of 1,241 trees per hectare yielding 1 tonne of dry beans needs about 108 grams of Ammonium sulfate per tree per year. Some schedules give much more, 100 grams of nitrogen per tree per year, doubled for trees bearing over 50 pods. Use the soil and leaf test to choose.",
    "prevent": "Fertilize every year in splits, mulch with prunings and composted pod husks. Follow the usual schedule of Complete 14 14 14 for young trees.",
    "materials": [
@@ -20472,10 +20472,10 @@
    ],
    "hint": "Old leaves blotchy pale between the veins, then die back from the tip with a sharp edge. New leaves small and narrow.",
    "symptoms": "Growth slows early. New leaves keep a normal color but come out smaller and narrower. Older leaves of the previous flush lose color between the veins in blotches, then die from the tip toward the base, with a sharp line between dead and living tissue. Some leaves turn greyish purple before the dead patch forms. Badly hit leaves fall, and flowering and pod setting drop.",
-   "stage": "Young trees after planting, and bearing trees at the start of the rainy season, when phosphorus is most needed for flowering.",
+   "stage": "Young trees after planting, and bearing trees as the rains begin, when phosphorus matters most for flowering.",
    "causes": "Acid soils low in organic matter. A study of eight cacao farms in Davao de Oro found phosphorus generally deficient, on moderately to slightly acid soils with low organic matter.",
    "confuse": "Potassium deficiency starts the same way, but at the advanced stage the dead patch has a wavy, zigzag yellow border instead of a sharp edge. Magnesium deficiency shows small blackish pinpoints with yellow halos first.",
-   "confirm": "Soil test for available phosphorus and pH, and a leaf test of the second or third leaf of the last maturing flush.",
+   "confirm": "Soil test for available phosphorus and pH. A leaf test of the 2nd or 3rd leaf of the newest flush that is hardening.",
    "fix": "Apply a phosphorus fertilizer in the ring under the canopy, following the soil test. The give about 49 grams of Solophos superphosphate per mature tree per year for a 1 tonne per hectare crop. Complete 14 14 14 for young trees. Yara notes that on low phosphorus soils, rates up to 200 kg P2O5 per hectare raised yields. That the response is best when nitrogen is also enough.",
    "prevent": "Put phosphorus in the planting hole, add compost or composted pod husks every year, and lime very acid soils.",
    "materials": [
@@ -20522,7 +20522,7 @@
    "stage": "Bearing trees under heavy pod loads. Potash is most needed before flowering and while pods grow.",
    "causes": "Every harvest carries potash away, mostly in the pod husks: about 72 kg of potassium leaves the farm per tonne of dry beans, 63 kg of it in the husks. Sandy, leached soils and husks that are never returned bring it on.",
    "confuse": "Phosphorus deficiency looks the same at first, but its dead patches have a sharp edge. Magnesium deficiency begins with blackish pinpoints between the veins. Vascular streak dieback gives green spots on a yellow leaf near the shoot tip, leaf fall and a brown streak inside the twig.",
-   "confirm": "Leaf test of the second or third leaf of the last maturing flush, from at least 10 trees, plus a soil test for potash, calcium and magnesium.",
+   "confirm": "Leaf test of the 2nd or 3rd leaf of the newest flush that is hardening, from at least 10 trees, plus a soil test for potash, calcium and magnesium.",
    "fix": "Apply Muriate of potash 0 0 60 in the ring in two splits. The give about 86 grams per mature tree per year for a 1 tonne per hectare crop. Yara puts 70 to 100 kg K2O per hectare as enough for yields under 1 tonne of beans. Give 140 grams of K2O per tree per year, doubled for trees bearing over 50 pods.",
    "prevent": "Return composted pod husks to the trees, give potash every year in splits, and keep potash and magnesium in balance.",
    "materials": [
@@ -20567,7 +20567,7 @@
    "stage": "Young trees in the field and new flushes, often after a drought.",
    "causes": "Old, leached, sandy soils low in zinc, high pH, heavy phosphate. Roots damaged by drought or waterlogging, which take up less zinc.",
    "confuse": "Boron deficiency can also give sickle leaves. But it also brings brittle leaves with dead tips, a dying top and cracks on the trunk. Iron deficiency gives yellow leaves with green veins and a bumpy surface, but normal shaped leaves.",
-   "confirm": "Leaf test of the second or third leaf of the last maturing flush. Spray zinc on a few trees: leaves that have already hardened stay misshapen, but the next flush comes out normal.",
+   "confirm": "Leaf test of the 2nd or 3rd leaf of the newest flush that is hardening. Spray zinc on a few trees: leaves that have already hardened stay misshapen, but the next flush comes out normal.",
    "fix": "Give a foliar spray of Zinc sulfate at 0.3 to 0.5 percent (3 to 5 grams per liter) every two weeks, three times. In a field trial in New Guinea, young trees sprayed with zinc sulfate every ten days had almost fully recovered after seven months, while unsprayed trees stayed sick.",
    "prevent": "Avoid overliming and heavy phosphate, mulch to protect roots in the dry season, and include zinc where leaf tests run low.",
    "materials": [
@@ -20603,10 +20603,10 @@
    ],
    "hint": "Old leaves get tiny black pinpoints with yellow halos between the veins, then a marbled dead edge.",
    "symptoms": "Older leaves first show a faint yellowing between the side veins with small blackish pinpoints. Yellow spots form around the pinpoints, join toward the tip and edge, and the tissue dies, giving a blotchy, marbled leaf. A bright yellow zone borders the dead parts. In bad cases the dead tissue turns almost white with the green veins standing out like ribs, and leaves fall early.",
-   "stage": "Bearing trees, after years of potash without magnesium. Calcium and magnesium are most needed at the start of the rainy season.",
+   "stage": "Bearing trees, after years of potash without magnesium. Calcium and magnesium are needed most as the rains begin.",
    "causes": "Acid, leached soils and heavy potash. In the Papua New Guinea survey most farms had enough magnesium, but in one province 64 percent were short.",
    "confuse": "Potassium deficiency also kills old leaf edges, but without the black pinpoints, and with a wavy yellow border. Calcium deficiency shows white spots, seen against the light, on the newest full grown leaves.",
-   "confirm": "Leaf test of the second or third leaf of the last maturing flush. A soil test for magnesium, potash and calcium together.",
+   "confirm": "Leaf test of the 2nd or 3rd leaf of the newest flush that is hardening. A soil test for magnesium, potash and calcium together.",
    "fix": "Give Dolomite at 100 grams per tree per year from the third year after planting. The use about 40 grams of Dolomite per mature tree for a 1 tonne per hectare crop. Where soil pH is fine, use Magnesium sulfate or Kieserite, following the soil test. Do not put magnesium and potash down on the same day.",
    "prevent": "Lime with Dolomite instead of plain lime and keep potash and magnesium in balance.",
    "materials": [
@@ -20648,7 +20648,7 @@
    "stage": "New flushes and flowering, often after a dry spell.",
    "causes": "Drought and shallow roots. U.S. Borax notes that fast growing, high yielding trees show it more readily.",
    "confuse": "Zinc deficiency also gives sickle leaves, but without brittle dead tipped leaves, a dying top or trunk cracks. Sucking bugs can also deform pods, so check the leaves and shoots too. Vascular streak dieback also kills shoots, but it shows green spots on a yellow leaf and a brown streak inside the twig.",
-   "confirm": "Leaf test of the second or third leaf of the last maturing flush, and a soil test for boron.",
+   "confirm": "Leaf test of the 2nd or 3rd leaf of the newest flush that is hardening, and a soil test for boron.",
    "fix": "No cacao particular rate was found in the sources. Yara notes that boron applied with calcium helps flower set and cuts pod drop. Spray Solubor or apply Borax to the soil at the label rate, then retest. Boron is toxic in excess.",
    "prevent": "Mulch and keep the soil moist in the dry season. Keep a small boron dose in the program on soils that tested low.",
    "materials": [
@@ -20689,10 +20689,10 @@
    ],
    "hint": "Small yellow green leaves with tiny white spots seen against the light, and dead tips and edges.",
    "symptoms": "Growth nearly stops and leaves stay small and strong yellow green. Full grown leaves of the last flush show many small white spots near the tip and edge when held against the light, and the tip dies. The spots turn reddish yellow, join, and the tip and edge die further, sometimes leaving an oak leaf shape of green tissue. Dead patches near the edge that join into a dead margin on older leaves.",
-   "stage": "Young trees on acid soils. Calcium and magnesium are most needed at the start of the rainy season.",
+   "stage": "Young trees on acid soils. Calcium and magnesium are needed most as the rains begin.",
    "causes": "Acid, leached soils and heavy potash. Most cacao soils in the Davao de Oro study were moderately to slightly acid, below pH 6.5.",
    "confuse": "Magnesium deficiency also kills leaf edges, but it starts with blackish pinpoints on older leaves. Potassium deficiency gives reddish yellow patches with a wavy border.",
-   "confirm": "Soil test for pH and calcium, and a leaf test of the second or third leaf of the last maturing flush.",
+   "confirm": "Soil test for pH and calcium, and a leaf test of the 2nd or 3rd leaf of the newest flush that is hardening.",
    "fix": "Give Dolomite at 100 grams per tree per year from the third year. On very acid soils apply Agricultural lime or Dolomite following the soil test. On soils that are not acid use Gypsum. Superphosphate also supplies calcium.",
    "prevent": "Lime acid soils based on a soil test and keep potash in balance.",
    "materials": [
@@ -20769,7 +20769,7 @@
    "stage": "Young trees, after a long time without any sulfur source.",
    "causes": "Soils low in organic matter and fertilizer programs that use only urea and muriate of potash.",
    "confuse": "Nitrogen deficiency also yellows leaves evenly, but it hits the whole tree and the old leaves die back from the tip. Iron deficiency keeps the veins sharply green.",
-   "confirm": "Leaf test of the second or third leaf of the last maturing flush for sulfur. Trees that green up after ammonium sulfate confirm it.",
+   "confirm": "Leaf test of the 2nd or 3rd leaf of the newest flush that is hardening for sulfur. Trees that green up after ammonium sulfate confirm it.",
    "fix": "Use Ammonium sulfate 21 0 0 as the nitrogen source, or add Gypsum, following the soil test.",
    "prevent": "Keep a sulfur source in the yearly program and build organic matter.",
    "materials": [
