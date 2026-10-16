@@ -180,7 +180,7 @@
     {
       "type": "cta",
       "title": "Let Anee rank the crops for your land",
-      "text": "Tell her your town, soil, water, budget and market. She ranks ten crops for your field and month, with the reasons for each.",
+      "text": "Tell her your town, soil, water, budget and market. She ranks twenty crops for your field and month, with the reasons for each.",
       "label": "See What to Plant Analysis",
       "url": "/features/what-to-plant-analysis"
     },
@@ -219,7 +219,7 @@
         },
         {
           "q": "Can an app tell me what crop to plant?",
-          "a": "An app can narrow the choice. In anee.io, the What to Plant Analysis ranks ten crops for your field and month. It gives the reasons and the risk in the harvest month. You still make the final call, ideally with your local agriculturist."
+          "a": "An app can narrow the choice. In anee.io, the What to Plant Analysis ranks twenty crops for your field and month. It gives the reasons and the risk in the harvest month. You still make the final call, ideally with your local agriculturist."
         }
       ]
     },

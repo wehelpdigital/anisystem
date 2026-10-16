@@ -397,9 +397,11 @@ class WhatToPlantController extends Controller
             ]);
         };
         try {
-            // Up to ten picks plus the farmer's own, each with its harvest and
-            // six fits, and twelve months of risk: a longer answer than before.
-            $result = $this->ai->askForJson($settings, $prompt, 14000, fn (string $t) => $this->parseReport($t), ['onPhase' => $beat]);
+            // Up to twenty picks plus the farmer's own (twenty since 2026-10-16, the
+            // owner; ten before), each with its harvest and six fits, and twelve
+            // months of risk. Ten took 5,000 to 8,700 tokens out with the thinking;
+            // ten more add about 2,300, and each crop the farmer names about 230.
+            $result = $this->ai->askForJson($settings, $prompt, 18000, fn (string $t) => $this->parseReport($t), ['onPhase' => $beat]);
             $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('what-to-plant: unparsable answer', [
@@ -909,7 +911,7 @@ Return ONLY a valid JSON object — no code fences, no commentary — in exactly
 {"topPick":{"crop":"","category":"","why":"","window":"","daysToHarvest":0,"harvestWindow":"","harvestRisk":{"score":0,"kind":"none","note":""}},"recommendations":[{"rank":1,"crop":"","category":"","score":0,"farmerAsked":false,"window":"","plantMonth":0,"daysToHarvest":0,"harvestWindow":"","harvestMonth":0,"harvestRisk":{"score":0,"kind":"none","note":""},"fit":{"profit":0,"survival":0,"ease":0,"speed":0,"market":0,"food":0},"why":"","watch":""}],"monthRisk":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0}],"surprises":[{"crop":"","category":"","why":"","window":"","plantMonth":0,"daysToHarvest":0,"harvestWindow":"","harvestMonth":0,"harvestRisk":{"score":0,"kind":"none","note":""}}],"avoid":[{"crop":"","why":""}],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - surprises: zero to three, as defined above, each with the same harvest fields as a recommendation and a why of at most 45 words; [] when none.
-- recommendations: TEN crops of your own choosing — the best ten, even where the tenth is only a modest fit, the score says how modest — plus every crop the farmer had in mind (so 10 + those), all in ONE ranking by score, best first, each with: category (one of "Grain", "Vegetable", "Root crop", "Legume", "Fruit / tree"), score 0-100 (the priority-weighted fit for THIS ground and start month), farmerAsked (true only for the farmer's own crops), window (when to plant it, specific — e.g. "mid May – early June"), plantMonth, daysToHarvest, harvestWindow, harvestMonth and harvestRisk as defined above, fit with all six numbers, why (≤ 35 words, grounded in the facts), watch (the one thing to watch for on this ground, ≤ 15 words). Fewer than ten of your own only when the pool truly has no more crops that could be grown on this ground at all.
+- recommendations: TWENTY crops of your own choosing — the best twenty, even where the twentieth is only a modest fit, the score says how modest — plus every crop the farmer had in mind (so 20 + those), all in ONE ranking by score, best first, each with: category (one of "Grain", "Vegetable", "Root crop", "Legume", "Fruit / tree"), score 0-100 (the priority-weighted fit for THIS ground and start month), farmerAsked (true only for the farmer's own crops), window (when to plant it, specific — e.g. "mid May – early June"), plantMonth, daysToHarvest, harvestWindow, harvestMonth and harvestRisk as defined above, fit with all six numbers, why (≤ 35 words, grounded in the facts), watch (the one thing to watch for on this ground, ≤ 15 words). Fewer than twenty of your own only when the pool truly has no more crops that could be grown on this ground at all.
 - topPick repeats the rank-1 crop with a fuller why (≤ 60 words), its window, daysToHarvest, harvestWindow and harvestRisk.
 - monthRisk: exactly twelve rows, month 1 to 12.
 - avoid: two to four crops a farmer in this region might otherwise try — crops that DO grow in {$countryName} but that this ground, water, season or market argues against — each with the plain reason. Never fill it with crops from another climate that no farmer there would plant anyway.

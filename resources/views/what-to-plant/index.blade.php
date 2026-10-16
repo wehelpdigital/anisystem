@@ -1400,7 +1400,7 @@
                 ${prio.length ? `<p class="wp-prio-line">Scored by what matters to you: ${prio.map((k, i) => `${i ? ' › ' : ''}<b>${PRIO_E[k] || ''} ${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</b>`).join('')}</p>` : ''}
                 ${Array.isArray(p.exclude) && p.exclude.length ? `<p class="wp-left-out">You left out: ${esc(p.exclude.map((k) => shortOf((OPT && OPT.families && OPT.families[k]) || k)).join(', '))}.</p>` : ''}
                 ${(r.recommendations || []).map((x, i) => `
-                    <div class="wp-rec" style="transition-delay:${i * 70}ms">
+                    <div class="wp-rec" style="transition-delay:${Math.min(i, 10) * 70}ms">
                         <div class="wp-rec-top">
                             <span class="wp-rank">${esc(String(x.rank || i + 1))}</span>
                             <b>${esc(CAT_E[x.category] || '🌱')} ${esc(x.crop || '')}</b>
@@ -1408,7 +1408,7 @@
                             ${x.farmerAsked ? `<span class="wp-ask">You asked</span>` : ''}
                             ${x.window ? `<span class="wp-win">${esc(x.window)}</span>` : ''}
                         </div>
-                        <div class="wp-track"><span class="wp-fill" style="width:${Math.max(4, Math.min(100, Number(x.score) || 0))}%;transition-delay:${120 + i * 70}ms"></span></div>
+                        <div class="wp-track"><span class="wp-fill" style="width:${Math.max(4, Math.min(100, Number(x.score) || 0))}%;transition-delay:${120 + Math.min(i, 10) * 70}ms"></span></div>
                         <p class="wp-why">${esc(sweep(x.why))}</p>
                         ${x.watch ? `<p class="wp-watch">⚠️ ${esc(x.watch)}</p>` : ''}
                         ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) ? `
