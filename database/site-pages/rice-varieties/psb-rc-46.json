@@ -16,7 +16,7 @@
     "46 rice variety characteristics",
     "Sumadel"
   ],
-  "excerpt": "PSB Rc 46 is an inbred rice variety for cool, elevated areas, known locally as Sumadel. The Philippine Seed Board approved it in 1995. IRRI bred it. It matures in about 135 days and averages 4.3 tonnes per hectare, with a top yield of 5.8 tonnes in trials.",
+  "excerpt": "PSB Rc 46 is an inbred rice variety for cool, elevated areas, known locally as Sumadel. The Philippine Seed Board approved it in 1995. It matures in about 135 days and averages 4.3 tonnes per hectare, with a top yield of 5.8 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/hero-terraces.jpg",
     "alt": "Rice terraces in the cool highlands, where PSB Rc 46 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1995"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "62 rice variety characteristics",
     "Naguilian"
   ],
-  "excerpt": "PSB Rc 62 is an inbred rice variety for rainfed lowland, known locally as Naguilian. The Philippine Seed Board approved it in 1997. PhilRice bred it. It matures in about 117 days and averages 3.7 tonnes per hectare, with a top yield of 4.7 tonnes in trials.",
+  "excerpt": "PSB Rc 62 is an inbred rice variety for rainfed lowland, known locally as Naguilian. The Philippine Seed Board approved it in 1997. It matures in about 117 days and averages 3.7 tonnes per hectare, with a top yield of 4.7 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm PSB Rc 62 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1997"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

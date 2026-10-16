@@ -16,7 +16,7 @@
     "438 rice variety characteristics",
     "Tubigan 38"
   ],
-  "excerpt": "NSIC Rc 438 is an inbred rice variety for irrigated lowland, known locally as Tubigan 38. The NSIC approved it in 2016. PhilRice bred it. It matures in about 106 days and averages 5.4 tonnes per hectare, with a top yield of 10.3 tonnes in trials.",
+  "excerpt": "NSIC Rc 438 is an inbred rice variety for irrigated lowland, known locally as Tubigan 38. The NSIC approved it in 2016. It matures in about 106 days and averages 5.4 tonnes per hectare, with a top yield of 10.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 438 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2016"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

@@ -7,7 +7,7 @@
   "profile": true,
   "title": "Sinta papaya (NSIC Pp 01): Fruit and Tree Characteristics",
   "metaTitle": "Sinta papaya: Fruit and Tree Characteristics",
-  "metaDescription": "Sinta papaya is a papaya variety from IPB UPLB. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Sinta papaya is a papaya variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "Sinta papaya",
   "keywords": [
     "Sinta papaya",
@@ -17,7 +17,7 @@
     "papaya variety philippines",
     "NSIC 1996 Pp 01"
   ],
-  "excerpt": "Sinta is a registered papaya variety, also sold or known as NSIC Pp 01. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Pp 01. IPB UPLB bred it. Its record notes a yield of 45 to 50t/ha.",
+  "excerpt": "Sinta is a registered papaya variety, also sold or known as NSIC Pp 01. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Pp 01. Its record notes a yield of 45 to 50t/ha.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Sinta papaya is grown",
@@ -55,10 +55,6 @@
         [
           "Year approved",
           "1996"
-        ],
-        [
-          "Breeder or owner",
-          "IPB UPLB"
         ],
         [
           "Also known as",

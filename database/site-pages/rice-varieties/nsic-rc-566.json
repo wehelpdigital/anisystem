@@ -16,7 +16,7 @@
     "566 rice variety characteristics",
     "Cordillera 4"
   ],
-  "excerpt": "NSIC Rc 566 is an inbred rice variety for cool, elevated areas, known locally as Cordillera 4. The NSIC approved it in 2019. IRRI bred it. It matures in about 145 days and averages 2.5 tonnes per hectare, with a top yield of 4 tonnes in trials.",
+  "excerpt": "NSIC Rc 566 is an inbred rice variety for cool, elevated areas, known locally as Cordillera 4. The NSIC approved it in 2019. It matures in about 145 days and averages 2.5 tonnes per hectare, with a top yield of 4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/hero-terraces.jpg",
     "alt": "Rice terraces in the cool highlands, where NSIC Rc 566 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "2019"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "20 rice variety characteristics",
     "Chico"
   ],
-  "excerpt": "PSB Rc 20 is an inbred rice variety for irrigated lowland, known locally as Chico. The Philippine Seed Board approved it in 1994. IRRI bred it. It matures in about 111 days and averages 4.9 tonnes per hectare, with a top yield of 7.1 tonnes in trials.",
+  "excerpt": "PSB Rc 20 is an inbred rice variety for irrigated lowland, known locally as Chico. The Philippine Seed Board approved it in 1994. It matures in about 111 days and averages 4.9 tonnes per hectare, with a top yield of 7.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 20 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "1994"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

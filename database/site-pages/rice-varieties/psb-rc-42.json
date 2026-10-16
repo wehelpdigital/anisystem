@@ -16,7 +16,7 @@
     "42 rice variety characteristics",
     "Baliwag"
   ],
-  "excerpt": "PSB Rc 42 is an inbred rice variety for rainfed lowland, known locally as Baliwag. The Philippine Seed Board approved it in 1995. PhilRice bred it. It matures in about 114 days and averages 3.2 tonnes per hectare, with a top yield of 4.9 tonnes in trials.",
+  "excerpt": "PSB Rc 42 is an inbred rice variety for rainfed lowland, known locally as Baliwag. The Philippine Seed Board approved it in 1995. It matures in about 114 days and averages 3.2 tonnes per hectare, with a top yield of 4.9 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm PSB Rc 42 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1995"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

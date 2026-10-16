@@ -16,7 +16,7 @@
     "134 rice variety characteristics",
     "Tubigan 4"
   ],
-  "excerpt": "NSIC Rc 134 is an inbred rice variety for irrigated lowland, known locally as Tubigan 4. The NSIC approved it in 2005. PhilRice bred it. It matures in about 107 days and averages 5.4 tonnes per hectare, with a top yield of 9.8 tonnes in trials.",
+  "excerpt": "NSIC Rc 134 is an inbred rice variety for irrigated lowland, known locally as Tubigan 4. The NSIC approved it in 2005. It matures in about 107 days and averages 5.4 tonnes per hectare, with a top yield of 9.8 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 134 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2005"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

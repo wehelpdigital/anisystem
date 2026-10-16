@@ -16,7 +16,7 @@
     "2 rice variety characteristics",
     "Nahalin"
   ],
-  "excerpt": "PSB Rc 2 is an inbred rice variety for irrigated lowland, known locally as Nahalin. The Philippine Seed Board approved it in 1991. IRRI bred it. It matures in about 123 days and averages 5.1 tonnes per hectare, with a top yield of 7.1 tonnes in trials.",
+  "excerpt": "PSB Rc 2 is an inbred rice variety for irrigated lowland, known locally as Nahalin. The Philippine Seed Board approved it in 1991. It matures in about 123 days and averages 5.1 tonnes per hectare, with a top yield of 7.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 2 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1991"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

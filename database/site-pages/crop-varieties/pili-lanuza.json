@@ -7,7 +7,7 @@
   "profile": true,
   "title": "Lanuza pili: Fruit and Tree Characteristics",
   "metaTitle": "Lanuza pili: Fruit and Tree Characteristics",
-  "metaDescription": "Lanuza pili is a pili variety from DA ROS AES. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Lanuza pili is a pili variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "Lanuza pili",
   "keywords": [
     "Lanuza pili",
@@ -16,7 +16,7 @@
     "pili variety philippines",
     "NSIC 2000 Pl 04"
   ],
-  "excerpt": "Lanuza is a registered pili variety. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Pl 04. DA ROS AES bred it.",
+  "excerpt": "Lanuza is a registered pili variety. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Pl 04.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Lanuza pili is grown",
@@ -47,10 +47,6 @@
         [
           "Year approved",
           "2000"
-        ],
-        [
-          "Breeder or owner",
-          "DA ROS AES"
         ],
         [
           "Tree height (m)",

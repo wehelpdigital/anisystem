@@ -16,7 +16,7 @@
     "510 rice variety characteristics",
     "Tubigan 43"
   ],
-  "excerpt": "NSIC Rc 510 is an inbred rice variety for irrigated lowland, known locally as Tubigan 43. The NSIC approved it in 2018. UPLB bred it. It matures in about 110 days and averages 5.7 tonnes per hectare, with a top yield of 10.3 tonnes in trials.",
+  "excerpt": "NSIC Rc 510 is an inbred rice variety for irrigated lowland, known locally as Tubigan 43. The NSIC approved it in 2018. It matures in about 110 days and averages 5.7 tonnes per hectare, with a top yield of 10.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 510 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2018"
-        ],
-        [
-          "Bred by",
-          "UPLB"
         ],
         [
           "Local name",

@@ -7,7 +7,7 @@
   "profile": true,
   "title": "USMARC 1191 corn: Yield, Maturity and Characteristics",
   "metaTitle": "USMARC 1191 corn: Yield, Maturity and Characteristics",
-  "metaDescription": "USMARC 1191 corn is a yellow open pollinated corn variety from USMARC USM. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "USMARC 1191 corn is a yellow open pollinated corn variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "USMARC 1191 corn",
   "keywords": [
     "USMARC 1191 corn",
@@ -16,7 +16,7 @@
     "corn variety philippines",
     "NSIC 1994 Cn 51"
   ],
-  "excerpt": "USMARC 1191 corn is a yellow open pollinated corn variety. It was registered with the National Seed Industry Council in 1994 as NSIC 1994 Cn 51. USMARC USM bred it. Its record notes 6.25 tonnes per hectare on average in the trials.",
+  "excerpt": "USMARC 1191 corn is a yellow open pollinated corn variety. It was registered with the National Seed Industry Council in 1994 as NSIC 1994 Cn 51. Its record notes 6.25 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
     "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest, the kind of farm where USMARC 1191 corn is grown",
@@ -56,10 +56,6 @@
         [
           "Year approved",
           "1994"
-        ],
-        [
-          "Breeder or owner",
-          "USMARC USM"
         ],
         [
           "Type",

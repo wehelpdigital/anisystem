@@ -16,7 +16,7 @@
     "624 rice variety characteristics",
     "Tubigan 49"
   ],
-  "excerpt": "NSIC Rc 624 is an inbred rice variety for irrigated lowland, known locally as Tubigan 49. The NSIC approved it in 2021. PhilRice bred it. It matures in about 103 days and averages 5.6 tonnes per hectare, with a top yield of 9.3 tonnes in trials.",
+  "excerpt": "NSIC Rc 624 is an inbred rice variety for irrigated lowland, known locally as Tubigan 49. The NSIC approved it in 2021. It matures in about 103 days and averages 5.6 tonnes per hectare, with a top yield of 9.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 624 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2021"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

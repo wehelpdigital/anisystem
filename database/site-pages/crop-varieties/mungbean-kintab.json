@@ -7,7 +7,7 @@
   "profile": true,
   "title": "Kintab mungbean: Yield, Maturity and Characteristics",
   "metaTitle": "Kintab mungbean: Yield, Maturity and Characteristics",
-  "metaDescription": "Kintab mungbean is a mungbean variety from BPI NCRDC Los Baños, Laguna. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Kintab mungbean is a mungbean variety. About 58 days to harvest, 1.2 t/ha in trials. See its ratings and traits. Compare it with others.",
   "focusKeyword": "Kintab mungbean",
   "keywords": [
     "Kintab mungbean",
@@ -16,7 +16,7 @@
     "mungbean variety philippines",
     "NSIC 2001 Mg 11"
   ],
-  "excerpt": "Kintab is a registered mungbean variety. It was registered with the National Seed Industry Council in 2001 as NSIC 2001 Mg 11. BPI NCRDC Los Baños, Laguna bred it. It takes about 58 days from sowing to harvest, with 1.18 tonnes per hectare on average in the trials.",
+  "excerpt": "Kintab is a registered mungbean variety. It was registered with the National Seed Industry Council in 2001 as NSIC 2001 Mg 11. It takes about 58 days from sowing to harvest, with 1.18 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Kintab mungbean is grown",
@@ -57,10 +57,6 @@
         [
           "Year approved",
           "2001"
-        ],
-        [
-          "Breeder or owner",
-          "BPI NCRDC Los Baños, Laguna"
         ],
         [
           "Days to harvest",

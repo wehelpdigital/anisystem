@@ -16,7 +16,7 @@
     "18 rice variety characteristics",
     "Ala"
   ],
-  "excerpt": "PSB Rc 18 is an inbred rice variety for irrigated lowland, known locally as Ala. The Philippine Seed Board approved it in 1994. IRRI bred it. It matures in about 123 days and averages 5.1 tonnes per hectare, with a top yield of 8.1 tonnes in trials.",
+  "excerpt": "PSB Rc 18 is an inbred rice variety for irrigated lowland, known locally as Ala. The Philippine Seed Board approved it in 1994. It matures in about 123 days and averages 5.1 tonnes per hectare, with a top yield of 8.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 18 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1994"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

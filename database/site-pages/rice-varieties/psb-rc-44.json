@@ -16,7 +16,7 @@
     "44 rice variety characteristics",
     "Gohang"
   ],
-  "excerpt": "PSB Rc 44 is an inbred rice variety for cool, elevated areas, known locally as Gohang. The Philippine Seed Board approved it in 1995. IRRI bred it. It matures in about 144 days and averages 4.1 tonnes per hectare, with a top yield of 5.7 tonnes in trials.",
+  "excerpt": "PSB Rc 44 is an inbred rice variety for cool, elevated areas, known locally as Gohang. The Philippine Seed Board approved it in 1995. It matures in about 144 days and averages 4.1 tonnes per hectare, with a top yield of 5.7 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/hero-terraces.jpg",
     "alt": "Rice terraces in the cool highlands, where PSB Rc 44 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1995"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

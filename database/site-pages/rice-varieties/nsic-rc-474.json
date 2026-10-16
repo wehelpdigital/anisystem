@@ -16,7 +16,7 @@
     "474 rice variety characteristics",
     "Sahod Ulan 23"
   ],
-  "excerpt": "NSIC Rc 474 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 23. The NSIC approved it in 2016. IRRI bred it. It matures in about 116 days and averages 3.2 tonnes per hectare, with a top yield of 4.5 tonnes in trials.",
+  "excerpt": "NSIC Rc 474 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 23. The NSIC approved it in 2016. It matures in about 116 days and averages 3.2 tonnes per hectare, with a top yield of 4.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm NSIC Rc 474 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2016"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

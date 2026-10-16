@@ -7,7 +7,7 @@
   "profile": true,
   "title": "UPL Pn 4 peanut: Yield, Maturity and Characteristics",
   "metaTitle": "UPL Pn 4 peanut: Yield, Maturity and Characteristics",
-  "metaDescription": "UPL Pn 4 peanut is a peanut variety from UPLB. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "UPL Pn 4 peanut is a peanut variety. 105 to 110 days to harvest, 2.2 t/ha in trials. See its ratings and traits. Compare it with others.",
   "focusKeyword": "UPL Pn 4 peanut",
   "keywords": [
     "UPL Pn 4 peanut",
@@ -16,7 +16,7 @@
     "peanut variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "UPL Pn 4 is a registered peanut variety. The Philippine Seed Board approved it in 1978. UPLB bred it. It takes 105 to 110 days from sowing to harvest, with 2.25 tonnes per hectare on average in the trials.",
+  "excerpt": "UPL Pn 4 is a registered peanut variety. The Philippine Seed Board approved it in 1978. It takes 105 to 110 days from sowing to harvest, with 2.25 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where UPL Pn 4 peanut is grown",
@@ -55,10 +55,6 @@
         [
           "Year approved",
           "1978"
-        ],
-        [
-          "Breeder or owner",
-          "UPLB"
         ],
         [
           "Days to harvest",

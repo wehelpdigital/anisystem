@@ -17,7 +17,7 @@
     "GSR 8",
     "Green Super Rice"
   ],
-  "excerpt": "NSIC Rc 480 is an inbred rice variety for rainfed lowland, sold as Green Super Rice and known locally as GSR 8. The NSIC approved it in 2016. IRRI bred it. It matures in about 107 days and averages 3.2 tonnes per hectare, with a top yield of 4.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 480 is an inbred rice variety for rainfed lowland, sold as Green Super Rice and known locally as GSR 8. The NSIC approved it in 2016. It matures in about 107 days and averages 3.2 tonnes per hectare, with a top yield of 4.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm NSIC Rc 480 is meant for",
@@ -55,10 +55,6 @@
         [
           "Year approved",
           "2016"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Sold as",

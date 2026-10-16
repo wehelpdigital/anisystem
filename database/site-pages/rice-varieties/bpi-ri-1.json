@@ -16,7 +16,7 @@
     "1 rice variety characteristics",
     "BPI Ri1"
   ],
-  "excerpt": "BPI Ri 1 is a glutinous inbred rice variety for irrigated lowland, known locally as BPI Ri1. It was released in 1979. BPI bred it. It matures in about 120 days and averages 4.3 tonnes per hectare.",
+  "excerpt": "BPI Ri 1 is a glutinous inbred rice variety for irrigated lowland, known locally as BPI Ri1. It was released in 1979. It matures in about 120 days and averages 4.3 tonnes per hectare.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where BPI Ri 1 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "1979"
-        ],
-        [
-          "Bred by",
-          "BPI"
         ],
         [
           "Local name",

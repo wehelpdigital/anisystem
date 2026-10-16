@@ -7,7 +7,7 @@
   "profile": true,
   "title": "RLV cowpea (RLV paayap): Yield, Maturity and Characteristics",
   "metaTitle": "RLV cowpea: Yield, Maturity and Characteristics",
-  "metaDescription": "RLV cowpea is a cowpea variety from IPB UPLB. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "RLV cowpea is a cowpea variety. 45 to 47 days to harvest, 8.4 t/ha in trials. See its ratings and traits. Compare it with others.",
   "focusKeyword": "RLV cowpea",
   "keywords": [
     "RLV cowpea",
@@ -17,7 +17,7 @@
     "cowpea variety philippines",
     "NSIC 1995 Cp 07"
   ],
-  "excerpt": "RLV is a registered cowpea variety, also sold or known as RLV paayap. It was registered with the National Seed Industry Council in 1995 as NSIC 1995 Cp 07. IPB UPLB, Laguna bred it. It takes 45 to 47 days from sowing to the first harvest, with 8.38 tonnes per hectare on average in the trials.",
+  "excerpt": "RLV is a registered cowpea variety, also sold or known as RLV paayap. It was registered with the National Seed Industry Council in 1995 as NSIC 1995 Cp 07. It takes 45 to 47 days from sowing to the first harvest, with 8.38 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where RLV cowpea is grown",
@@ -57,10 +57,6 @@
         [
           "Year approved",
           "1995"
-        ],
-        [
-          "Breeder or owner",
-          "IPB UPLB, Laguna"
         ],
         [
           "Also known as",

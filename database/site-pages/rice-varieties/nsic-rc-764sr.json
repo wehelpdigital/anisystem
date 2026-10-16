@@ -16,7 +16,7 @@
     "764SR rice variety characteristics",
     "Zinc Rice 6"
   ],
-  "excerpt": "NSIC Rc 764SR is a special inbred rice variety for irrigated lowland, known locally as Zinc Rice 6. The NSIC approved it in 2024. IRRI and PhilRice bred it. It matures in about 111 days and averages 6.1 tonnes per hectare, with a top yield of 6.7 tonnes in trials.",
+  "excerpt": "NSIC Rc 764SR is a special inbred rice variety for irrigated lowland, known locally as Zinc Rice 6. The NSIC approved it in 2024. It matures in about 111 days and averages 6.1 tonnes per hectare, with a top yield of 6.7 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 764SR is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2024"
-        ],
-        [
-          "Bred by",
-          "IRRI and PhilRice"
         ],
         [
           "Local name",

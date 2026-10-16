@@ -16,7 +16,7 @@
     "648 rice variety characteristics",
     "Zinc Rice 2"
   ],
-  "excerpt": "NSIC Rc 648 is a special inbred rice variety for irrigated lowland, known locally as Zinc Rice 2. The NSIC approved it in 2021. IRRI bred it. It matures in about 122 days and averages 4 tonnes per hectare, with a top yield of 7.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 648 is a special inbred rice variety for irrigated lowland, known locally as Zinc Rice 2. The NSIC approved it in 2021. It matures in about 122 days and averages 4 tonnes per hectare, with a top yield of 7.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 648 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2021"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "70 rice variety characteristics",
     "Bamban"
   ],
-  "excerpt": "PSB Rc 70 is an inbred rice variety for rainfed lowland, known locally as Bamban. The Philippine Seed Board approved it in 1997. IRRI bred it. It matures in about 114 days and averages 3.2 tonnes per hectare, with a top yield of 4.5 tonnes in trials.",
+  "excerpt": "PSB Rc 70 is an inbred rice variety for rainfed lowland, known locally as Bamban. The Philippine Seed Board approved it in 1997. It matures in about 114 days and averages 3.2 tonnes per hectare, with a top yield of 4.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm PSB Rc 70 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1997"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

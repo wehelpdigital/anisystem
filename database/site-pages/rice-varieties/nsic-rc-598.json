@@ -16,7 +16,7 @@
     "598 rice variety characteristics",
     "Sahod Ulan 35"
   ],
-  "excerpt": "NSIC Rc 598 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 35. The NSIC approved it in 2020. IRRI bred it. It matures in about 118 days and averages 3.1 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 598 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 35. The NSIC approved it in 2020. It matures in about 118 days and averages 3.1 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm NSIC Rc 598 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2020"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

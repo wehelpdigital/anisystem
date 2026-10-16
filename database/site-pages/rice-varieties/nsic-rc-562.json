@@ -16,7 +16,7 @@
     "562 rice variety characteristics",
     "Cordillera 2"
   ],
-  "excerpt": "NSIC Rc 562 is an inbred rice variety for cool, elevated areas, known locally as Cordillera 2. The NSIC approved it in 2019. PhilRice bred it. It matures in about 143 days and averages 4.3 tonnes per hectare, with a top yield of 6.9 tonnes in trials.",
+  "excerpt": "NSIC Rc 562 is an inbred rice variety for cool, elevated areas, known locally as Cordillera 2. The NSIC approved it in 2019. It matures in about 143 days and averages 4.3 tonnes per hectare, with a top yield of 6.9 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/hero-terraces.jpg",
     "alt": "Rice terraces in the cool highlands, where NSIC Rc 562 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "2019"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

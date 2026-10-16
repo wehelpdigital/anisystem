@@ -16,7 +16,7 @@
     "740 rice variety characteristics",
     "Tubigan 63"
   ],
-  "excerpt": "NSIC Rc 740 is an inbred rice variety for irrigated lowland, known locally as Tubigan 63. The NSIC approved it in 2023. PhilRice bred it. It matures in about 110 days and averages 5.9 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 740 is an inbred rice variety for irrigated lowland, known locally as Tubigan 63. The NSIC approved it in 2023. It matures in about 110 days and averages 5.9 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 740 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2023"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

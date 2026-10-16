@@ -7,7 +7,7 @@
   "profile": true,
   "title": "VC 5 cassava: Characteristics",
   "metaTitle": "VC 5 cassava: Characteristics",
-  "metaDescription": "VC 5 cassava is an industrial cassava variety from ViSCA (now VSU). See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "VC 5 cassava is an industrial cassava variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "VC 5 cassava",
   "keywords": [
     "VC 5 cassava",
@@ -15,7 +15,7 @@
     "VC 5 cassava variety",
     "cassava variety philippines"
   ],
-  "excerpt": "VC 5 cassava is an industrial cassava variety. It is not on the NSIC registry, so the facts here come from its seller and farm sources. It comes from ViSCA (now VSU).",
+  "excerpt": "VC 5 cassava is an industrial cassava variety. It is not on the NSIC registry, so the facts here come from its seller and farm sources.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where VC 5 cassava is grown",
@@ -45,10 +45,6 @@
         [
           "Trait",
           "What the record shows"
-        ],
-        [
-          "Breeder or owner",
-          "ViSCA (now VSU)"
         ],
         [
           "Type",

@@ -16,7 +16,7 @@
     "sorghum variety philippines",
     "NSIC 1994 Sg 02"
   ],
-  "excerpt": "USMARC 212 is a registered sorghum variety. It was registered with the National Seed Industry Council in 1994 as NSIC 1994 Sg 02. USM bred it. It takes about 118 days from planting to harvest, with 4.4 tonnes per hectare on average in the trials.",
+  "excerpt": "USMARC 212 is a registered sorghum variety. It was registered with the National Seed Industry Council in 1994 as NSIC 1994 Sg 02. It takes about 118 days from planting to harvest, with 4.4 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/corn-land-preparation.webp",
     "alt": "Young corn seedlings in rows on freshly plowed ground in Bulacan, the kind of farm where USMARC 212 sorghum is grown",
@@ -57,10 +57,6 @@
         [
           "Year approved",
           "1994"
-        ],
-        [
-          "Breeder or owner",
-          "USM"
         ],
         [
           "Days to harvest",

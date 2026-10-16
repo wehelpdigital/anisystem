@@ -7,7 +7,7 @@
   "profile": true,
   "title": "Mabunga mungbean: Yield, Maturity and Characteristics",
   "metaTitle": "Mabunga mungbean: Yield, Maturity and Characteristics",
-  "metaDescription": "Mabunga mungbean is a mungbean variety from BPI NCRDC Los Baños, Laguna. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Mabunga mungbean is a mungbean variety. About 62 days to harvest, 1.2 t/ha in trials. See its ratings and traits. Compare it with others.",
   "focusKeyword": "Mabunga mungbean",
   "keywords": [
     "Mabunga mungbean",
@@ -16,7 +16,7 @@
     "mungbean variety philippines",
     "NSIC 1996 Mg 02"
   ],
-  "excerpt": "Mabunga is a registered mungbean variety. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Mg 02. BPI NCRDC Los Baños, Laguna bred it. It takes about 62 days from sowing to harvest, with 1.23 tonnes per hectare on average in the trials.",
+  "excerpt": "Mabunga is a registered mungbean variety. It was registered with the National Seed Industry Council in 1996 as NSIC 1996 Mg 02. It takes about 62 days from sowing to harvest, with 1.23 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where Mabunga mungbean is grown",
@@ -57,10 +57,6 @@
         [
           "Year approved",
           "1996"
-        ],
-        [
-          "Breeder or owner",
-          "BPI NCRDC Los Baños, Laguna"
         ],
         [
           "Days to harvest",

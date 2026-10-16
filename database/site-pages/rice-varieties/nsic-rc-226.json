@@ -16,7 +16,7 @@
     "226 rice variety characteristics",
     "Tubigan 20"
   ],
-  "excerpt": "NSIC Rc 226 is an inbred rice variety for irrigated lowland, known locally as Tubigan 20. The NSIC approved it in 2010. PhilRice bred it. It matures in about 112 days and averages 6.2 tonnes per hectare, with a top yield of 9.8 tonnes in trials.",
+  "excerpt": "NSIC Rc 226 is an inbred rice variety for irrigated lowland, known locally as Tubigan 20. The NSIC approved it in 2010. It matures in about 112 days and averages 6.2 tonnes per hectare, with a top yield of 9.8 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 226 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2010"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

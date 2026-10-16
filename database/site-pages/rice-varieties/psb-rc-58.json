@@ -16,7 +16,7 @@
     "58 rice variety characteristics",
     "Mayapa"
   ],
-  "excerpt": "PSB Rc 58 is an inbred rice variety for irrigated lowland, known locally as Mayapa. The Philippine Seed Board approved it in 1997. UPLB bred it. It matures in about 124 days and averages 4.9 tonnes per hectare, with a top yield of 7.3 tonnes in trials.",
+  "excerpt": "PSB Rc 58 is an inbred rice variety for irrigated lowland, known locally as Mayapa. The Philippine Seed Board approved it in 1997. It matures in about 124 days and averages 4.9 tonnes per hectare, with a top yield of 7.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 58 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1997"
-        ],
-        [
-          "Bred by",
-          "UPLB"
         ],
         [
           "Local name",

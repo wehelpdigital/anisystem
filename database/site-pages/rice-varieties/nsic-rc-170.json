@@ -16,7 +16,7 @@
     "170 rice variety characteristics",
     "MS 11"
   ],
-  "excerpt": "NSIC Rc 170 is an inbred rice variety for irrigated lowland, known locally as MS 11. The NSIC approved it in 2008. IRRI bred it. It matures in about 112 days and averages 4.5 tonnes per hectare, with a top yield of 6.7 tonnes in trials.",
+  "excerpt": "NSIC Rc 170 is an inbred rice variety for irrigated lowland, known locally as MS 11. The NSIC approved it in 2008. It matures in about 112 days and averages 4.5 tonnes per hectare, with a top yield of 6.7 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 170 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2008"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

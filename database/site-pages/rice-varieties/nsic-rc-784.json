@@ -16,7 +16,7 @@
     "784 rice variety characteristics",
     "Tubigan 64"
   ],
-  "excerpt": "NSIC Rc 784 is an inbred rice variety for irrigated lowland, known locally as Tubigan 64. The NSIC approved it in 2026. IRRI and PhilRice and UPLB bred it. It matures in about 114 days and averages 6.1 tonnes per hectare, with a top yield of 6.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 784 is an inbred rice variety for irrigated lowland, known locally as Tubigan 64. The NSIC approved it in 2026. It matures in about 114 days and averages 6.1 tonnes per hectare, with a top yield of 6.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 784 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2026"
-        ],
-        [
-          "Bred by",
-          "IRRI and PhilRice and UPLB"
         ],
         [
           "Local name",

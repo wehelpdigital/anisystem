@@ -16,7 +16,7 @@
     "684 rice variety characteristics",
     "Zinc Rice 3"
   ],
-  "excerpt": "NSIC Rc 684 is an inbred rice variety for irrigated lowland, known locally as Zinc Rice 3. The NSIC approved it in 2022. IRRI and PhilRice bred it. It matures in about 114 days and averages 5.4 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 684 is an inbred rice variety for irrigated lowland, known locally as Zinc Rice 3. The NSIC approved it in 2022. It matures in about 114 days and averages 5.4 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 684 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2022"
-        ],
-        [
-          "Bred by",
-          "IRRI and PhilRice"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "300 rice variety characteristics",
     "Tubigan 24"
   ],
-  "excerpt": "NSIC Rc 300 is an inbred rice variety for irrigated lowland, known locally as Tubigan 24. The NSIC approved it in 2012. PhilRice bred it. It matures in about 115 days and averages 5.7 tonnes per hectare, with a top yield of 10.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 300 is an inbred rice variety for irrigated lowland, known locally as Tubigan 24. The NSIC approved it in 2012. It matures in about 115 days and averages 5.7 tonnes per hectare, with a top yield of 10.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 300 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2012"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

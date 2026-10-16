@@ -16,7 +16,7 @@
     "12 rice variety characteristics",
     "Caliraya"
   ],
-  "excerpt": "PSB Rc 12 is an inbred rice variety for rainfed lowland, known locally as Caliraya. The Philippine Seed Board approved it in 1992. UPLB bred it. It matures in about 109 days and averages 3.5 tonnes per hectare, with a top yield of 6 tonnes in trials.",
+  "excerpt": "PSB Rc 12 is an inbred rice variety for rainfed lowland, known locally as Caliraya. The Philippine Seed Board approved it in 1992. It matures in about 109 days and averages 3.5 tonnes per hectare, with a top yield of 6 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm PSB Rc 12 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1992"
-        ],
-        [
-          "Bred by",
-          "UPLB"
         ],
         [
           "Local name",

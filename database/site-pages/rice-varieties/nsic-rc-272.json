@@ -16,7 +16,7 @@
     "272 rice variety characteristics",
     "Sahod Ulan 2"
   ],
-  "excerpt": "NSIC Rc 272 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 2. The NSIC approved it in 2011. PhilRice bred it. It matures in about 110 days and averages 3 tonnes per hectare, with a top yield of 6.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 272 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 2. The NSIC approved it in 2011. It matures in about 110 days and averages 3 tonnes per hectare, with a top yield of 6.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm NSIC Rc 272 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2011"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

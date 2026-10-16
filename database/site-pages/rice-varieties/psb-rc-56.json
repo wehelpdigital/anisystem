@@ -16,7 +16,7 @@
     "56 rice variety characteristics",
     "Dapitan"
   ],
-  "excerpt": "PSB Rc 56 is an inbred rice variety for irrigated lowland, known locally as Dapitan. The Philippine Seed Board approved it in 1997. PhilRice bred it. It matures in about 114 days and averages 5.3 tonnes per hectare, with a top yield of 7.5 tonnes in trials.",
+  "excerpt": "PSB Rc 56 is an inbred rice variety for irrigated lowland, known locally as Dapitan. The Philippine Seed Board approved it in 1997. It matures in about 114 days and averages 5.3 tonnes per hectare, with a top yield of 7.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 56 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "1997"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

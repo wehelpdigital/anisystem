@@ -16,7 +16,7 @@
     "436 rice variety characteristics",
     "Tubigan 37"
   ],
-  "excerpt": "NSIC Rc 436 is an inbred rice variety for irrigated lowland, known locally as Tubigan 37. The NSIC approved it in 2016. IRRI bred it. It matures in about 107 days and averages 5.7 tonnes per hectare, with a top yield of 10 tonnes in trials.",
+  "excerpt": "NSIC Rc 436 is an inbred rice variety for irrigated lowland, known locally as Tubigan 37. The NSIC approved it in 2016. It matures in about 107 days and averages 5.7 tonnes per hectare, with a top yield of 10 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 436 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2016"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

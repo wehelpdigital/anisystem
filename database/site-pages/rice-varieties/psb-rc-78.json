@@ -16,7 +16,7 @@
     "78 rice variety characteristics",
     "Pampanga"
   ],
-  "excerpt": "PSB Rc 78 is an inbred rice variety for irrigated lowland, known locally as Pampanga. The Philippine Seed Board approved it in 2000. PhilRice bred it. It matures in about 111 days and averages 5 tonnes per hectare, with a top yield of 9.5 tonnes in trials.",
+  "excerpt": "PSB Rc 78 is an inbred rice variety for irrigated lowland, known locally as Pampanga. The Philippine Seed Board approved it in 2000. It matures in about 111 days and averages 5 tonnes per hectare, with a top yield of 9.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 78 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2000"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

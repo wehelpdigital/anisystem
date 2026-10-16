@@ -16,7 +16,7 @@
     "64 rice variety characteristics",
     "Kabacan"
   ],
-  "excerpt": "PSB Rc 64 is an inbred rice variety for irrigated lowland, known locally as Kabacan. The Philippine Seed Board approved it in 1997. IRRI bred it. It matures in about 124 days and averages 5 tonnes per hectare, with a top yield of 8.9 tonnes in trials.",
+  "excerpt": "PSB Rc 64 is an inbred rice variety for irrigated lowland, known locally as Kabacan. The Philippine Seed Board approved it in 1997. It matures in about 124 days and averages 5 tonnes per hectare, with a top yield of 8.9 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 64 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "1997"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

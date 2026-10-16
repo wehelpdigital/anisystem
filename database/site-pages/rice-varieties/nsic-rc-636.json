@@ -16,7 +16,7 @@
     "636 rice variety characteristics",
     "Tubigan 55"
   ],
-  "excerpt": "NSIC Rc 636 is an inbred rice variety for irrigated lowland, known locally as Tubigan 55. The NSIC approved it in 2021. IRRI bred it. It matures in about 107 days and averages 5.1 tonnes per hectare, with a top yield of 9.5 tonnes in trials.",
+  "excerpt": "NSIC Rc 636 is an inbred rice variety for irrigated lowland, known locally as Tubigan 55. The NSIC approved it in 2021. It matures in about 107 days and averages 5.1 tonnes per hectare, with a top yield of 9.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 636 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2021"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "17 rice variety characteristics",
     "Malagkit 3"
   ],
-  "excerpt": "NSIC Rc 17 is a glutinous inbred rice variety for irrigated lowland, known locally as Malagkit 3. The NSIC approved it in 2004. PhilRice bred it. It matures in about 117 days and averages 4.2 tonnes per hectare, with a top yield of 8.3 tonnes in trials.",
+  "excerpt": "NSIC Rc 17 is a glutinous inbred rice variety for irrigated lowland, known locally as Malagkit 3. The NSIC approved it in 2004. It matures in about 117 days and averages 4.2 tonnes per hectare, with a top yield of 8.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 17 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2004"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

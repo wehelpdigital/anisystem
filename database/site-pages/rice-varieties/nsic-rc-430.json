@@ -16,7 +16,7 @@
     "430 rice variety characteristics",
     "Sahod Ulan 20"
   ],
-  "excerpt": "NSIC Rc 430 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 20. The NSIC approved it in 2015. PhilRice bred it. It matures in about 111 days and averages 3.5 tonnes per hectare, with a top yield of 5.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 430 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 20. The NSIC approved it in 2015. It matures in about 111 days and averages 3.5 tonnes per hectare, with a top yield of 5.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm NSIC Rc 430 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2015"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

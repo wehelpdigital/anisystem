@@ -16,7 +16,7 @@
     "202H rice variety characteristics",
     "Mestiso 19"
   ],
-  "excerpt": "NSIC Rc 202H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 19. The NSIC approved it in 2009. PhilRice and UPLB bred it. It matures in about 110 days and averages 6.7 tonnes per hectare, with a top yield of 10.7 tonnes in trials.",
+  "excerpt": "NSIC Rc 202H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 19. The NSIC approved it in 2009. It matures in about 110 days and averages 6.7 tonnes per hectare, with a top yield of 10.7 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 202H is bred to fill",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2009"
-        ],
-        [
-          "Bred by",
-          "PhilRice and UPLB"
         ],
         [
           "Local name",

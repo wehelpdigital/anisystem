@@ -16,7 +16,7 @@
     "144 rice variety characteristics",
     "Tubigan 8"
   ],
-  "excerpt": "NSIC Rc 144 is an inbred rice variety for irrigated lowland, known locally as Tubigan 8. The NSIC approved it in 2006. UPLB bred it. It matures in about 107 days and averages 5.3 tonnes per hectare, with a top yield of 7.9 tonnes in trials.",
+  "excerpt": "NSIC Rc 144 is an inbred rice variety for irrigated lowland, known locally as Tubigan 8. The NSIC approved it in 2006. It matures in about 107 days and averages 5.3 tonnes per hectare, with a top yield of 7.9 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 144 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2006"
-        ],
-        [
-          "Bred by",
-          "UPLB"
         ],
         [
           "Local name",

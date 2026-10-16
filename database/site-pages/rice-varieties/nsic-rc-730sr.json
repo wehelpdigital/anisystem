@@ -16,7 +16,7 @@
     "730SR rice variety characteristics",
     "Pigmented 6"
   ],
-  "excerpt": "NSIC Rc 730SR is a special inbred rice variety for Philippine rice farms, known locally as Pigmented 6. The NSIC approved it in 2023. PhilRice bred it. It matures in about 114 days and averages 6.8 tonnes per hectare, with a top yield of 7.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 730SR is a special inbred rice variety for Philippine rice farms, known locally as Pigmented 6. The NSIC approved it in 2023. It matures in about 114 days and averages 6.8 tonnes per hectare, with a top yield of 7.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/hero-planting.jpg",
     "alt": "Farmers planting rice by hand, the start of a season of NSIC Rc 730SR",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2023"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

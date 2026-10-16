@@ -16,7 +16,7 @@
     "414SR rice variety characteristics",
     "Japonica 4"
   ],
-  "excerpt": "NSIC Rc 414SR is a special inbred rice variety for irrigated lowland, known locally as Japonica 4. The NSIC approved it in 2015. PhilRice bred it. It matures in about 119 days and averages 3.7 tonnes per hectare, with a top yield of 5.3 tonnes in trials.",
+  "excerpt": "NSIC Rc 414SR is a special inbred rice variety for irrigated lowland, known locally as Japonica 4. The NSIC approved it in 2015. It matures in about 119 days and averages 3.7 tonnes per hectare, with a top yield of 5.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 414SR is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2015"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

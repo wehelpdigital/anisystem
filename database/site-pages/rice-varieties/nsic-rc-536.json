@@ -16,7 +16,7 @@
     "536 rice variety characteristics",
     "Salinas 30"
   ],
-  "excerpt": "NSIC Rc 536 is an inbred rice variety for saline prone fields, known locally as Salinas 30. The NSIC approved it in 2018. PhilRice bred it. It matures in about 133 days and averages 2.7 tonnes per hectare, with a top yield of 4.8 tonnes in trials.",
+  "excerpt": "NSIC Rc 536 is an inbred rice variety for saline prone fields, known locally as Salinas 30. The NSIC approved it in 2018. It matures in about 133 days and averages 2.7 tonnes per hectare, with a top yield of 4.8 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/transplant.jpg",
     "alt": "Farmers transplanting rice, as on the saline prone fields NSIC Rc 536 is bred for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2018"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

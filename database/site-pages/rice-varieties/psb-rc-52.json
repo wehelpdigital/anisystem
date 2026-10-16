@@ -16,7 +16,7 @@
     "52 rice variety characteristics",
     "Gandara"
   ],
-  "excerpt": "PSB Rc 52 is an inbred rice variety for irrigated lowland, known locally as Gandara. The Philippine Seed Board approved it in 1997. IRRI bred it. It matures in about 115 days and averages 5.3 tonnes per hectare, with a top yield of 5.3 tonnes in trials.",
+  "excerpt": "PSB Rc 52 is an inbred rice variety for irrigated lowland, known locally as Gandara. The Philippine Seed Board approved it in 1997. It matures in about 115 days and averages 5.3 tonnes per hectare, with a top yield of 5.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 52 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "1997"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "632 rice variety characteristics",
     "Tubigan 53"
   ],
-  "excerpt": "NSIC Rc 632 is an inbred rice variety for irrigated lowland, known locally as Tubigan 53. The NSIC approved it in 2021. IRRI bred it. It matures in about 106 days and averages 5.4 tonnes per hectare, with a top yield of 9.6 tonnes in trials.",
+  "excerpt": "NSIC Rc 632 is an inbred rice variety for irrigated lowland, known locally as Tubigan 53. The NSIC approved it in 2021. It matures in about 106 days and averages 5.4 tonnes per hectare, with a top yield of 9.6 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 632 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2021"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

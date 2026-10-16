@@ -16,7 +16,7 @@
     "146 rice variety characteristics",
     "PJ7"
   ],
-  "excerpt": "NSIC Rc 146 is an inbred rice variety for irrigated lowland, known locally as PJ7. The NSIC approved it in 2006. PhilRice bred it. It matures in about 110 days and averages 4.6 tonnes per hectare, with a top yield of 6.9 tonnes in trials.",
+  "excerpt": "NSIC Rc 146 is an inbred rice variety for irrigated lowland, known locally as PJ7. The NSIC approved it in 2006. It matures in about 110 days and averages 4.6 tonnes per hectare, with a top yield of 6.9 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 146 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2006"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

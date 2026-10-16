@@ -16,7 +16,7 @@
     "ICSV 93046 sorghum variety",
     "sorghum variety philippines"
   ],
-  "excerpt": "ICSV 93046 sorghum is a sweet sorghum OPV variety, also sold or known as ICSV 93 46. It is not on the NSIC registry, so the facts here come from its seller and farm sources. It comes from ICRISAT (India), tested in PH by MMSU, DA BAR, UPLB.",
+  "excerpt": "ICSV 93046 sorghum is a sweet sorghum OPV variety, also sold or known as ICSV 93 46. It is not on the NSIC registry, so the facts here come from its seller and farm sources.",
   "heroImage": {
     "src": "/images/site/land/corn-land-preparation.webp",
     "alt": "Young corn seedlings in rows on freshly plowed ground in Bulacan, the kind of farm where ICSV 93046 sorghum is grown",
@@ -46,10 +46,6 @@
         [
           "Trait",
           "What the record shows"
-        ],
-        [
-          "Breeder or owner",
-          "ICRISAT (India), tested in PH by MMSU, DA BAR, UPLB"
         ],
         [
           "Also known as",

@@ -16,7 +16,7 @@
     "584SR rice variety characteristics",
     "Japonica 7"
   ],
-  "excerpt": "NSIC Rc 584SR is a special inbred rice variety for irrigated lowland, known locally as Japonica 7. The NSIC approved it in 2019. IRRI bred it. It matures in about 112 days and averages 3.3 tonnes per hectare, with a top yield of 4.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 584SR is a special inbred rice variety for irrigated lowland, known locally as Japonica 7. The NSIC approved it in 2019. It matures in about 112 days and averages 3.3 tonnes per hectare, with a top yield of 4.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 584SR is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "2019"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

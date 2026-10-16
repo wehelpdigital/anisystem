@@ -16,7 +16,7 @@
     "212 rice variety characteristics",
     "Tubigan 15"
   ],
-  "excerpt": "NSIC Rc 212 is an inbred rice variety for irrigated lowland, known locally as Tubigan 15. The NSIC approved it in 2009. IRRI bred it. It matures in about 115 days and averages 6 tonnes per hectare, with a top yield of 10 tonnes in trials.",
+  "excerpt": "NSIC Rc 212 is an inbred rice variety for irrigated lowland, known locally as Tubigan 15. The NSIC approved it in 2009. It matures in about 115 days and averages 6 tonnes per hectare, with a top yield of 10 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 212 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2009"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

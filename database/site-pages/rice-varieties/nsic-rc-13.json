@@ -16,7 +16,7 @@
     "13 rice variety characteristics",
     "Malagkit 1"
   ],
-  "excerpt": "NSIC Rc 13 is a glutinous inbred rice variety for irrigated lowland, known locally as Malagkit 1. The NSIC approved it in 2004. UPLB bred it. It matures in about 120 days and averages 4.7 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 13 is a glutinous inbred rice variety for irrigated lowland, known locally as Malagkit 1. The NSIC approved it in 2004. It matures in about 120 days and averages 4.7 tonnes per hectare, with a top yield of 6.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 13 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2004"
-        ],
-        [
-          "Bred by",
-          "UPLB"
         ],
         [
           "Local name",

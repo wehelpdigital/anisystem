@@ -16,7 +16,7 @@
     "642SR rice variety characteristics",
     "Pigmented 3"
   ],
-  "excerpt": "NSIC Rc 642SR is a special inbred rice variety for irrigated lowland, known locally as Pigmented 3. The NSIC approved it in 2021. PhilRice bred it. It matures in about 118 days and averages 4.8 tonnes per hectare, with a top yield of 9.1 tonnes in trials.",
+  "excerpt": "NSIC Rc 642SR is a special inbred rice variety for irrigated lowland, known locally as Pigmented 3. The NSIC approved it in 2021. It matures in about 118 days and averages 4.8 tonnes per hectare, with a top yield of 9.1 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 642SR is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2021"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "196H rice variety characteristics",
     "Mestiso 16"
   ],
-  "excerpt": "NSIC Rc 196H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 16. The NSIC approved it in 2009. PhilRice bred it. It matures in about 103 days and averages 6.2 tonnes per hectare, with a top yield of 10.4 tonnes in trials.",
+  "excerpt": "NSIC Rc 196H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 16. The NSIC approved it in 2009. It matures in about 103 days and averages 6.2 tonnes per hectare, with a top yield of 10.4 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 196H is bred to fill",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2009"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

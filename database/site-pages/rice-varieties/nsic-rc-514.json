@@ -16,7 +16,7 @@
     "514 rice variety characteristics",
     "Tubigan 45"
   ],
-  "excerpt": "NSIC Rc 514 is an inbred rice variety for irrigated lowland, known locally as Tubigan 45. The NSIC approved it in 2018. IRRI bred it. It matures in about 112 days and averages 6 tonnes per hectare, with a top yield of 9.9 tonnes in trials.",
+  "excerpt": "NSIC Rc 514 is an inbred rice variety for irrigated lowland, known locally as Tubigan 45. The NSIC approved it in 2018. It matures in about 112 days and averages 6 tonnes per hectare, with a top yield of 9.9 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 514 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2018"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

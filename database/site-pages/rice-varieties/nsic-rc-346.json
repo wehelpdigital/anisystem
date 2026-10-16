@@ -16,7 +16,7 @@
     "346 rice variety characteristics",
     "Sahod Ulan 11"
   ],
-  "excerpt": "NSIC Rc 346 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 11. The NSIC approved it in 2013. PhilRice bred it. It matures in about 105 days and averages 3.3 tonnes per hectare, with a top yield of 6.2 tonnes in trials.",
+  "excerpt": "NSIC Rc 346 is an inbred rice variety for rainfed lowland, known locally as Sahod Ulan 11. The NSIC approved it in 2013. It matures in about 105 days and averages 3.3 tonnes per hectare, with a top yield of 6.2 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm NSIC Rc 346 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2013"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

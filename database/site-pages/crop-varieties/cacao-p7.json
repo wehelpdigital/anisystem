@@ -7,7 +7,7 @@
   "profile": true,
   "title": "P7 cacao: Characteristics",
   "metaTitle": "P7 cacao: Characteristics",
-  "metaDescription": "P7 cacao is a cacao variety from UPLB. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
+  "metaDescription": "P7 cacao is a cacao variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "P7 cacao",
   "keywords": [
     "P7 cacao",
@@ -16,7 +16,7 @@
     "cacao variety philippines",
     "NSIC 1999 Cc 04"
   ],
-  "excerpt": "P7 is a registered cacao variety. It was registered with the National Seed Industry Council in 1966 as NSIC 1999 Cc 04. UPLB bred it.",
+  "excerpt": "P7 is a registered cacao variety. It was registered with the National Seed Industry Council in 1966 as NSIC 1999 Cc 04.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where P7 cacao is grown",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1966"
-        ],
-        [
-          "Breeder or owner",
-          "UPLB"
         ],
         [
           "Plant height",

@@ -16,7 +16,7 @@
     "130 rice variety characteristics",
     "Tubigan 3"
   ],
-  "excerpt": "NSIC Rc 130 is an inbred rice variety for irrigated lowland, known locally as Tubigan 3. The NSIC approved it in 2004. PhilRice bred it. It matures in about 108 days and averages 4.9 tonnes per hectare, with a top yield of 7.6 tonnes in trials.",
+  "excerpt": "NSIC Rc 130 is an inbred rice variety for irrigated lowland, known locally as Tubigan 3. The NSIC approved it in 2004. It matures in about 108 days and averages 4.9 tonnes per hectare, with a top yield of 7.6 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 130 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2004"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

@@ -13,7 +13,7 @@
     "NSIC 2103 Rc 342SR",
     "Mabango 4"
   ],
-  "excerpt": "NSIC 2103 Rc 342SR is a special inbred rice variety for irrigated lowland, known locally as Mabango 4. The NSIC approved it in 2013. PhilRice bred it. It matures in about 114 days and averages 4.3 tonnes per hectare, with a top yield of 4.8 tonnes in trials.",
+  "excerpt": "NSIC 2103 Rc 342SR is a special inbred rice variety for irrigated lowland, known locally as Mabango 4. The NSIC approved it in 2013. It matures in about 114 days and averages 4.3 tonnes per hectare, with a top yield of 4.8 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC 2103 Rc 342SR is meant to grow",
@@ -51,10 +51,6 @@
         [
           "Year approved",
           "2013"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

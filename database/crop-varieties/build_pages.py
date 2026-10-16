@@ -459,6 +459,11 @@ def build(v, allv, st):
     kind = kind_of(v)
     research = v.get('research') or {}
     company = safe(research.get('company') or '') or v.get('owner')
+    # A public breeder or owner (a bureau, a state university, a research body) is not named to the reader
+    # (the owner, 2026-10-18); a private seed company stays.
+    if company and is_gov(company):
+        company = None
+    owner_shown = v.get('owner') if v.get('owner') and not is_gov(v['owner']) else None
     # Other names, minus the ones that only add the crop word ("Lakatan banana").
     flat = lambda x: re.sub(r'[\s-]', '', x.lower())
     taken = {flat(n), flat('%s %s' % (n, cw)), flat('%s %s' % (cw, n)), flat('%s %s' % (n, crop_slug(key)))}
@@ -510,7 +515,7 @@ def build(v, allv, st):
         meta_desc = meta_desc[:156]
 
     regt = reg_text(v)
-    who = ('%s bred it. ' % v['owner']) if v.get('owner') and v.get('reg') else \
+    who = ('%s bred it. ' % owner_shown) if owner_shown and v.get('reg') else \
         ('It comes from %s. ' % company if company and not re.search(r'(?i)public|traditional|native|farmer|unknown|various|landrace', company) else '')
     lead = fk if kind else n
     fkword = crop_slug(key).replace('-', ' ')
@@ -567,8 +572,8 @@ def build(v, allv, st):
         rows.append(['Registration', safe(v['reg'])])
     if v.get('year'):
         rows.append(['Year approved', str(v['year'])])
-    if v.get('owner'):
-        rows.append(['Breeder or owner', safe(v['owner'])])
+    if owner_shown:
+        rows.append(['Breeder or owner', safe(owner_shown)])
     elif company:
         rows.append(['Seller', company])
     if aliases:

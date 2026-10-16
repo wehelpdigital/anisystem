@@ -16,7 +16,7 @@
     "544H rice variety characteristics",
     "Mestiso 99"
   ],
-  "excerpt": "NSIC Rc 544H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 99. The NSIC approved it in 2018. PhilRice and UPLB bred it. It matures in about 115 days and averages 6.6 tonnes per hectare, with a top yield of 10.6 tonnes in trials.",
+  "excerpt": "NSIC Rc 544H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 99. The NSIC approved it in 2018. It matures in about 115 days and averages 6.6 tonnes per hectare, with a top yield of 10.6 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 544H is bred to fill",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "2018"
-        ],
-        [
-          "Bred by",
-          "PhilRice and UPLB"
         ],
         [
           "Local name",

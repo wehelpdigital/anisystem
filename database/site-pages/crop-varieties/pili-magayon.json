@@ -7,7 +7,7 @@
   "profile": true,
   "title": "Magayon pili: Fruit and Tree Characteristics",
   "metaTitle": "Magayon pili: Fruit and Tree Characteristics",
-  "metaDescription": "Magayon pili is a pili variety from DA ROS AES. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "Magayon pili is a pili variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "Magayon pili",
   "keywords": [
     "Magayon pili",
@@ -16,7 +16,7 @@
     "pili variety philippines",
     "NSIC 2000 Pl 05"
   ],
-  "excerpt": "Magayon is a registered pili variety. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Pl 05. DA ROS AES bred it.",
+  "excerpt": "Magayon is a registered pili variety. It was registered with the National Seed Industry Council in 2000 as NSIC 2000 Pl 05.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where Magayon pili is grown",
@@ -47,10 +47,6 @@
         [
           "Year approved",
           "2000"
-        ],
-        [
-          "Breeder or owner",
-          "DA ROS AES"
         ],
         [
           "Tree height (m)",

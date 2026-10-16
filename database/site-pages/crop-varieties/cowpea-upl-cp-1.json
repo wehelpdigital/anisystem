@@ -7,7 +7,7 @@
   "profile": true,
   "title": "UPL Cp 1 cowpea: Yield, Maturity and Characteristics",
   "metaTitle": "UPL Cp 1 cowpea: Yield, Maturity and Characteristics",
-  "metaDescription": "UPL Cp 1 cowpea is a cowpea variety from UPLB, Laguna. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "UPL Cp 1 cowpea is a cowpea variety. About 60 days to harvest, 1.1 t/ha in trials. See its ratings and traits. Compare it with others.",
   "focusKeyword": "UPL Cp 1 cowpea",
   "keywords": [
     "UPL Cp 1 cowpea",
@@ -16,7 +16,7 @@
     "cowpea variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "UPL Cp 1 is a registered cowpea variety. The Philippine Seed Board approved it in 1976. UPLB, Laguna bred it. It takes about 60 days from sowing to the first harvest, with 1.09 tonnes per hectare on average in the trials.",
+  "excerpt": "UPL Cp 1 is a registered cowpea variety. The Philippine Seed Board approved it in 1976. It takes about 60 days from sowing to the first harvest, with 1.09 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/legume-land-preparation.webp",
     "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga, the kind of farm where UPL Cp 1 cowpea is grown",
@@ -55,10 +55,6 @@
         [
           "Year approved",
           "1976"
-        ],
-        [
-          "Breeder or owner",
-          "UPLB, Laguna"
         ],
         [
           "Days to harvest",

@@ -16,7 +16,7 @@
     "98 rice variety characteristics",
     "Lian"
   ],
-  "excerpt": "PSB Rc 98 is an inbred rice variety for rainfed lowland, known locally as Lian. The Philippine Seed Board approved it in 2001. UPLB bred it. It matures in about 116 days and averages 2.6 tonnes per hectare, with a top yield of 4.5 tonnes in trials.",
+  "excerpt": "PSB Rc 98 is an inbred rice variety for rainfed lowland, known locally as Lian. The Philippine Seed Board approved it in 2001. It matures in about 116 days and averages 2.6 tonnes per hectare, with a top yield of 4.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
     "alt": "Rainfed rice fields from the air, the kind of farm PSB Rc 98 is meant for",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2001"
-        ],
-        [
-          "Bred by",
-          "UPLB"
         ],
         [
           "Local name",

@@ -16,7 +16,7 @@
     "19 rice variety characteristics",
     "Malagkit 4"
   ],
-  "excerpt": "NSIC Rc 19 is a glutinous inbred rice variety for irrigated lowland, known locally as Malagkit 4. The NSIC approved it in 2005. PhilRice bred it. It matures in about 125 days and averages 4.5 tonnes per hectare, with a top yield of 5.6 tonnes in trials.",
+  "excerpt": "NSIC Rc 19 is a glutinous inbred rice variety for irrigated lowland, known locally as Malagkit 4. The NSIC approved it in 2005. It matures in about 125 days and averages 4.5 tonnes per hectare, with a top yield of 5.6 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 19 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2005"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

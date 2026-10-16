@@ -16,7 +16,7 @@
     "66 rice variety characteristics",
     "Agusan"
   ],
-  "excerpt": "PSB Rc 66 is an inbred rice variety for irrigated lowland, known locally as Agusan. The Philippine Seed Board approved it in 1997. PhilRice bred it. It matures in about 123 days and averages 5.2 tonnes per hectare, with a top yield of 10.2 tonnes in trials.",
+  "excerpt": "PSB Rc 66 is an inbred rice variety for irrigated lowland, known locally as Agusan. The Philippine Seed Board approved it in 1997. It matures in about 123 days and averages 5.2 tonnes per hectare, with a top yield of 10.2 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where PSB Rc 66 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "1997"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

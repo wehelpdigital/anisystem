@@ -16,7 +16,7 @@
     "172SR rice variety characteristics",
     "MS 13"
   ],
-  "excerpt": "NSIC Rc 172SR is a special inbred rice variety for irrigated lowland, known locally as MS 13. The NSIC approved it in 2008. IRRI bred it. It matures in about 114 days and averages 4.8 tonnes per hectare, with a top yield of 5.5 tonnes in trials.",
+  "excerpt": "NSIC Rc 172SR is a special inbred rice variety for irrigated lowland, known locally as MS 13. The NSIC approved it in 2008. It matures in about 114 days and averages 4.8 tonnes per hectare, with a top yield of 5.5 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 172SR is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "2008"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",

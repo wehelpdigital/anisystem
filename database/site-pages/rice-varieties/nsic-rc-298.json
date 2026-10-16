@@ -16,7 +16,7 @@
     "298 rice variety characteristics",
     "Tubigan 23"
   ],
-  "excerpt": "NSIC Rc 298 is an inbred rice variety for irrigated lowland, known locally as Tubigan 23. The NSIC approved it in 2012. PhilRice bred it. Its days to harvest and trial yield are not published yet, but its pest ratings and grain quality are below.",
+  "excerpt": "NSIC Rc 298 is an inbred rice variety for irrigated lowland, known locally as Tubigan 23. The NSIC approved it in 2012. Its days to harvest and trial yield are not published yet, but its pest ratings and grain quality are below.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 298 is meant to grow",
@@ -53,10 +53,6 @@
         [
           "Year approved",
           "2012"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",
@@ -247,7 +243,7 @@
         },
         {
           "q": "When was NSIC Rc 298 approved?",
-          "a": "The NSIC approved it in 2012. PhilRice bred it. Its days to harvest and trial yield are not published yet, so ask for the regional trial figures before you plant."
+          "a": "The NSIC approved it in 2012. Its days to harvest and trial yield are not published yet, so ask for the regional trial figures before you plant."
         },
         {
           "q": "In which season should I plant it?",

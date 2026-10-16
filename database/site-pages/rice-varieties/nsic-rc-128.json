@@ -16,7 +16,7 @@
     "128 rice variety characteristics",
     "Mabango 1"
   ],
-  "excerpt": "NSIC Rc 128 is an inbred rice variety for irrigated lowland, known locally as Mabango 1. The NSIC approved it in 2004. PhilRice bred it. It matures in about 118 days and averages 5.5 tonnes per hectare, with a top yield of 6.2 tonnes in trials.",
+  "excerpt": "NSIC Rc 128 is an inbred rice variety for irrigated lowland, known locally as Mabango 1. The NSIC approved it in 2004. It matures in about 118 days and averages 5.5 tonnes per hectare, with a top yield of 6.2 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where NSIC Rc 128 is meant to grow",
@@ -54,10 +54,6 @@
         [
           "Year approved",
           "2004"
-        ],
-        [
-          "Bred by",
-          "PhilRice"
         ],
         [
           "Local name",

@@ -12,7 +12,7 @@
   "keywords": [
     "IR65"
   ],
-  "excerpt": "IR65 is a glutinous inbred rice variety for irrigated lowland, known locally as IR65. It was released in 1985. IRRI bred it. It matures in about 115 days and averages 4.7 tonnes per hectare.",
+  "excerpt": "IR65 is a glutinous inbred rice variety for irrigated lowland, known locally as IR65. It was released in 1985. It matures in about 115 days and averages 4.7 tonnes per hectare.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
     "alt": "An irrigated palay field in the Philippines, where IR65 is meant to grow",
@@ -50,10 +50,6 @@
         [
           "Year approved",
           "1985"
-        ],
-        [
-          "Bred by",
-          "IRRI"
         ],
         [
           "Local name",
