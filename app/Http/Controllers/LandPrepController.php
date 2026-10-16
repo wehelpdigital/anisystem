@@ -42,7 +42,7 @@ use Illuminate\Support\Facades\Validator;
  * each lot's answers trigger, the seed preparation of the chosen variety,
  * and the crew laid on the calendar so nobody is in two places at once. A
  * variety not on our list is looked up on the web first. Anee reads the
- * plan against the forecast, the ENSO outlook and ten years of the area's
+ * plan against the forecast, the ENSO outlook and twenty years of the area's
  * weather, and adds her own steps (tagged as hers, each with its reason),
  * notes and the why. Too little time is a warning, never a refusal: the
  * plan is squeezed to fit and Anee says what comes first.
@@ -787,7 +787,7 @@ PROMPT;
         return LP::build($case, $extra);
     }
 
-    /** The place, its forecast, ten years of its weather over the prep window, ENSO. All best effort. */
+    /** The place, its forecast, twenty years of its weather over the prep window, ENSO. All best effort. */
     private function weather(array $case, array $plan): array
     {
         $out = ['place' => null, 'forecast' => [], 'history' => null, 'plowWindow' => null, 'plantWeek' => null, 'enso' => null, 'ensoText' => ''];

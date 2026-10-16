@@ -1137,7 +1137,7 @@
             {{-- The place --}}
             <section class="lp-step" data-screen="place">
                 <p class="lp-q">Where are the lots?</p>
-                <p class="lp-sub">Anee reads the forecast, the ENSO outlook{{ \App\Support\Tagalog::flag('enso-outlook') }} and ten years of the area's weather there.</p>
+                <p class="lp-sub">Anee reads the forecast, the ENSO outlook{{ \App\Support\Tagalog::flag('enso-outlook') }} and twenty years of the area's weather there.</p>
                 <div id="lpPlacePh">
                     <span class="lp-label">Province</span>
                     <button type="button" class="lp-tag is-none" id="lpProv" aria-haspopup="dialog"><span class="ti" aria-hidden="true">🗺️</span><span class="tt"><b>Choose the province</b></span><span class="tc">Pick{!! $chev !!}</span></button>
@@ -2982,7 +2982,7 @@
         const phases = anyCustom()
             ? { start: { label: 'Getting started', lo: 2, hi: 6, tau: 10 }, research: { label: 'Looking up ' + (S.custom ? S.variety : 'your varieties'), lo: 6, hi: 34, tau: 70 }, document: { label: 'Writing your plan', lo: 34, hi: 93, tau: 80 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } }
             : { start: { label: 'Getting started', lo: 2, hi: 10, tau: 10 }, document: { label: 'Writing your plan', lo: 10, hi: 93, tau: 75 }, 'document-json': { label: 'Tidying the plan', lo: 93, hi: 97, tau: 25 } };
-        const lines = ['Laying out the ' + (rice() ? 'PhilRice' : 'extension') + ' steps for ' + (CROPS[S.crop] ? CROPS[S.crop].en.toLowerCase() : 'your crop') + '…', 'Reading every lot\'s soil and history…', 'Sharing the crew and the machines between your lots…', 'Reading the forecast and ten years of weather…', 'Timing the seed soak to the hour…'];
+        const lines = ['Laying out the ' + (rice() ? 'PhilRice' : 'extension') + ' steps for ' + (CROPS[S.crop] ? CROPS[S.crop].en.toLowerCase() : 'your crop') + '…', 'Reading every lot\'s soil and history…', 'Sharing the crew and the machines between your lots…', 'Reading the forecast and twenty years of weather…', 'Timing the seed soak to the hour…'];
         if (S.custom) lines.unshift('Looking up ' + S.variety + ' on the web…');
         window.aneeWait.show({ title: 'Anee is planning your land preparation…', lines, sub: 'Usually one to three minutes. Stay on this page while Anee works.' });
         $('lpErr').hidden = true;
