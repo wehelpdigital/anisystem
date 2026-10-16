@@ -26,7 +26,7 @@ class FieldPackGate
         $tool = (string) ($request->route('tool') ?? $request->route('section') ?? '');
         if ($tool === '') {
             // A catalogue or detail route without a {tool}: read the path.
-            if (preg_match('#^app/field-helpers/(?:[a-z-]+/)?(weeds|pests|diseases|nutrients|varieties)\b#', $request->path(), $m)) {
+            if (preg_match('#^app/field-helpers/(?:[a-z-]+/)?(weeds|pests|diseases|nutrients|varieties|compat)\b#', $request->path(), $m)) {
                 $tool = $m[1];
             }
         }
@@ -36,7 +36,7 @@ class FieldPackGate
 
         if ($request->expectsJson()) {
             return response()->json(['success' => false, 'packLock' => true,
-                'message' => 'The field helpers are a small add-on on the free plan. Open them for a month, or upgrade to Libre + Anee.'], 403);
+                'message' => 'The field helpers are part of Libre + Anee and every plan above it. Upgrade to open them.'], 403);
         }
 
         $name = FieldHelperController::TOOLS[$tool][0] ?? 'Field helpers';

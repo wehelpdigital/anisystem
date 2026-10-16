@@ -112,9 +112,9 @@ class ManualPay
      */
     public static function item(string $key): ?array
     {
-        // An add-on bought apart from a plan (2026-10-14): the field helpers pack.
+        // The field helpers add-on is no longer sold (2026-10-18, the owner): they come with Libre + Anee.
         if ($key === 'addon:' . FieldPack::KEY) {
-            return FieldPack::price() > 0 ? FieldPack::item() : null;
+            return null;
         }
         if (preg_match('/^pack:([a-z0-9_-]{1,40})$/', $key, $m)) {
             $pack = DB::table('anisystem_ai_credit_packs')->where('packKey', $m[1])->where('isActive', 1)->where('deleteStatus', 1)->first();

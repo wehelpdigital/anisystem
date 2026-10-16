@@ -1,13 +1,16 @@
-{{-- The field helpers pack offer (2026-10-14, the owner): the Weed Control
+{{-- The field helpers offer (2026-10-14, the owner): the Weed Control
      Helper, the Pest Finder, the Disease Finder, the Nutrient Deficiency
-     Finder (2026-10-16) and the Variety Finder are
-     locked on the free plan and open for a month with a small add-on, or with
-     any plan above Libre. Used as a sheet on the dashboard (any tile with
-     [data-field-pack] opens it) and as the body of the locked tool page.
-     $mode: 'sheet' (default) or 'page'. App\Support\FieldPack. --}}
+     Finder (2026-10-16) and the Variety Finder are locked on the free plan
+     and open on Libre + Anee and every plan above it. No add-on since
+     2026-10-18 (the owner: "they need to purchase libre plus to have access
+     to these tools"): the sheet sells the plan. Used as a sheet on the
+     dashboard (any tile with [data-field-pack] opens it) and as the body of
+     the locked tool page. $mode: 'sheet' (default) or 'page'. App\Support\FieldPack. --}}
 @php
     $fpMode = $mode ?? 'sheet';
-    $fpPrice = \App\Support\Region::money(\App\Support\FieldPack::price(), 0);
+    $fpPlanItem = \App\Support\ManualPay::item(\App\Support\FieldPack::PLAN . ':month');
+    $fpPrice = $fpPlanItem ? \App\Support\Region::money($fpPlanItem['price'], 0) : null;
+    $fpPlanName = \App\Support\Tier::planName(\App\Support\FieldPack::PLAN);
     $fpTools = [
         ['weed', 'Weed Control Helper', 'What to do first and what to spray at your crop\'s age'],
         ['pest', 'Pest Finder', 'From the damage you see to the pest and what controls it'],
@@ -40,6 +43,14 @@
     .fp-day { margin-top: -.55rem; text-align: center; font-size: .78rem; font-weight: 700; color: #6b7f5a; }
     .fp-acts { display: grid; gap: .5rem; }
     .fp-acts .btn { justify-content: center; width: 100%; text-align: center; text-wrap: balance; line-height: 1.25; }
+    /* The important call to action is yellow (2026-10-17, the owner), its arrow nudging. */
+    .fp-go { display: inline-flex; align-items: center; gap: .5rem; color: #3b2f00 !important; background: #f5c518 !important; border: 0 !important; font-weight: 800;
+        box-shadow: 0 12px 24px -14px rgb(180 140 0 / .95), inset 0 -2px 0 rgb(0 0 0 / .08); transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .fp-go:hover { background: #ffd23f !important; }
+    .fp-go:active { transform: scale(.98); }
+    .fp-go svg { flex: none; width: 1.05rem; height: 1.05rem; animation: fpNudge 1.4s cubic-bezier(.22,1,.36,1) infinite; }
+    @keyframes fpNudge { 0%, 100% { transform: translateX(-2px); } 50% { transform: translateX(4px); } }
+    @media (prefers-reduced-motion: reduce) { .fp-go svg { animation: none; } }
     .fp-or { text-align: center; font-size: .78rem; line-height: 1.5; color: var(--color-gray-500); }
     .fp-or a { font-weight: 800; color: var(--color-brand-700, #3d6823); text-decoration: underline; text-underline-offset: 3px; }
     html.dark .fp-card { background: #141a10; } html.dark .fp-tool { background: #1a2114; border-color: #2b3a1c; } html.dark .fp-tool b { color: #eef3e8; } html.dark .fp-tool img { background: #22301a; }
@@ -57,13 +68,13 @@
 </style>
 @endonce
 @php
-    $fpInner = function () use ($fpPrice, $fpTools, $fpWorker, $fpMode) {
+    $fpInner = function () use ($fpPrice, $fpPlanName, $fpPlanItem, $fpTools, $fpWorker, $fpMode) {
         ob_start(); ?>
         <div class="fp-top">
             <?php if ($fpMode === 'sheet'): ?><button type="button" class="fp-x" data-fp-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button><?php endif; ?>
             <span class="fp-kick">Field helpers</span>
             <h3>Know what is in your field, and what to do about it</h3>
-            <p>Four helpers in one pack, for every crop you grow.</p>
+            <p>The field helpers come with <?= e($fpPlanName) ?>, for every crop you grow.</p>
         </div>
         <div class="fp-body">
             <div class="fp-tools">
@@ -72,14 +83,15 @@
                 <?php endforeach; ?>
             </div>
             <?php if ($fpWorker): ?>
-                <p class="fp-or">The farm you work on does not have the field helpers yet. Ask the farm owner to open them.</p>
+                <p class="fp-or">The farm you work on does not have the field helpers yet. Ask the farm owner to upgrade to <?= e($fpPlanName) ?>.</p>
             <?php else: ?>
-                <div class="fp-price"><b><?= e($fpPrice) ?></b><span>for one month</span></div>
-                <p class="fp-day">That is <?= e(\App\Support\FieldPack::perDay()) ?>.</p>
+                <?php if ($fpPrice): ?>
+                    <div class="fp-price"><b><?= e($fpPrice) ?></b><span>a month, with Anee too</span></div>
+                <?php endif; ?>
                 <div class="fp-acts">
-                    <a href="<?= e(route('checkout', ['item' => 'addon:' . \App\Support\FieldPack::KEY])) ?>" class="btn btn-primary btn-lg">Open them for <?= e($fpPrice) ?></a>
+                    <a href="<?= e($fpPlanItem ? route('checkout', ['item' => \App\Support\FieldPack::PLAN . ':month']) : route('account.subscription')) ?>" class="btn btn-lg fp-go">Upgrade to <?= e($fpPlanName) ?><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 </div>
-                <p class="fp-or">Or <a href="<?= e(route('account.subscription')) ?>">upgrade to Libre + Anee</a>, which has the field helpers and Anee too.</p>
+                <p class="fp-or"><?= e($fpPlanName) ?> keeps everything you have on Libre and adds the field helpers and Anee. <a href="<?= e(route('account.subscription')) ?>">See every plan</a></p>
             <?php endif; ?>
         </div>
         <?php return ob_get_clean();

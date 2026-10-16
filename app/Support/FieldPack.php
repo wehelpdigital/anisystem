@@ -10,26 +10,31 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * The field helpers pack (2026-10-14, the owner): the Weed Control Helper,
- * the Pest Finder, the Disease Finder and the Variety Finder, locked on the
- * free plan (Libre) and opened for a month by a small add-on bought through
- * the same hand paid checkout as the plans (/checkout?item=addon:fieldpack).
- * ₱20 a month since 2026-10-16 (the owner); it was ₱50 a year.
- * Every plan above Libre has them, so upgrading opens them too.
+ * The field helpers (2026-10-14, the owner): the Weed Control Helper, the
+ * Pest Finder, the Disease Finder, the Nutrient Deficiency Finder, the
+ * Variety Finder and the Compatibility Checker, locked on the free plan
+ * (Libre) and open on Libre + Anee and every plan above it
+ * (config/tiers.php fieldHelpers).
  *
- * The add-on lives in as_user_addons (one row a purchase, startsAt and
- * expiresAt, a new purchase starting where the last one ends). Whose pack
- * counts: the farm's, the same as every farm module (a worker standing in
- * somebody's farm has what that farm has).
+ * No add-on any more (2026-10-18, the owner: "remove that and instead just
+ * put it all in the libre plus"): ManualPay no longer sells addon:fieldpack.
+ * It was ₱20 a month (₱50 a year before 2026-10-16); nobody bought it. The
+ * as_user_addons rows, grant() and revoke() stay only so an old order can
+ * still be read or taken back. Whose plan counts: the farm's, the same as
+ * every farm module (a worker standing in somebody's farm has what that
+ * farm has).
  */
 final class FieldPack
 {
     public const KEY = 'fieldpack';
 
     /** The field helpers in the pack (FieldHelperController::TOOLS keys). */
-    public const TOOLS = ['weeds', 'pests', 'diseases', 'nutrients', 'varieties'];
+    public const TOOLS = ['weeds', 'pests', 'diseases', 'nutrients', 'varieties', 'compat'];
 
-    public const NAMES = ['Weed Control Helper', 'Pest Finder', 'Disease Finder', 'Nutrient Deficiency Finder', 'Variety Finder'];
+    public const NAMES = ['Weed Control Helper', 'Pest Finder', 'Disease Finder', 'Nutrient Deficiency Finder', 'Variety Finder', 'Compatibility Checker'];
+
+    /** The plan that opens them (the first one above Libre). */
+    public const PLAN = 'libreAnee';
 
     /** One purchase opens the pack for a month (a calendar month; DAYS is its length for the per day line). */
     public const DAYS = 30;

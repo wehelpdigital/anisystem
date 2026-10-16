@@ -38,7 +38,7 @@ return [
         'maps'              => false,   // the Maps module: Libre + Anee and up (2026-10-12)
         'workersPerSchedule' => 0,      // the Workers module is the Solo Farmer plan's (2026-09-19)
         'workers'           => false,
-        'fieldHelpers'      => false,   // Weed, Pest, Disease and Variety Finders; Libre buys them as a yearly add-on (2026-10-14, App\Support\FieldPack)
+        'fieldHelpers'      => false,   // the field helpers (App\Support\FieldPack): locked on Libre, open from Libre + Anee up; no add-on since 2026-10-18
         'inventory'         => false,   // and so is the shed
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -73,6 +73,7 @@ return [
         ],
         'excludes' => [
             'Anee: AI chat, analyses and credits (Libre + Anee)',
+            'Field helpers: the weed, pest, disease, nutrient and variety finders (Libre + Anee)',
             'Workers and inventory (Solo Farmer)',
             'Video recording, worker logins, Collab Room',
             'Full weather, all reports, document uploads',
@@ -125,6 +126,7 @@ return [
             'Anee AI chat: ask anything, show a photo',
             'All AI analyses: What to Plant, When to Plant, Variety Ranking, Crop Protocol',
             'Realign by Anee on your growth stages',
+            'Field helpers: the weed, pest, disease, nutrient and variety finders',
             'Maps: draw and measure up to 3 fields',
             'Buy AI credit packs whenever you need more',
             'Shows a few ads',
