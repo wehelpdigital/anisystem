@@ -193,7 +193,7 @@
         <div class="blog-hero-mark">📰</div>
         <div class="min-w-0">
             <h1>Technician's Blog</h1>
-            <p>Guides and advice from the anee.io team.</p>
+            <p>Guides, farm news and advice for your farm.</p>
         </div>
     </div>
     @if ($posts->total())

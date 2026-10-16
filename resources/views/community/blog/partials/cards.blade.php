@@ -27,7 +27,6 @@
             @if ($post->excerpt)<span class="blog-excerpt">{{ \Illuminate\Support\Str::limit($post->excerpt, 160) }}</span>@endif
             <span class="blog-more">Read More</span>
             <span class="blog-meta">
-                @if ($post->authorName)<span>✍️ {{ $post->authorName }}</span>@endif
                 @if ($post->publishedAt)<span>{{ $post->publishedAt->format('M j, Y') }}</span>@endif
                 <span>💬 {{ $post->comments_count }}</span>
             </span>

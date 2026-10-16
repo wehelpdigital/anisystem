@@ -33,13 +33,11 @@
            the app bar's back arrow and title do not. */
         .bc { display:none; }
     }
-    /* Who wrote it, with a face: the wall's way of introducing an author. */
+    /* The date and the reads under the standfirst (no author shown). */
     .article-byline { display:flex; align-items:center; gap:.6rem; margin-top:.85rem;
         padding-top:.8rem; border-top:1px solid var(--color-gray-100); }
     html.dark .article-byline { border-top-color:rgb(255 255 255 / .08); }
-    .article-byline .avatar { width:2.1rem; height:2.1rem; font-size:.7rem; flex:none; }
-    .article-byline b { display:block; font-size:.82rem; font-weight:800; color:var(--color-gray-800); line-height:1.25; }
-    .article-byline i { display:block; font-style:normal; font-size:.72rem; color:var(--color-gray-400); }
+    .article-byline i { display:block; font-style:normal; font-size:.76rem; color:var(--color-gray-400); }
     .article-cover { position:relative; border-radius:1rem; overflow:hidden; margin-bottom:1rem; background:var(--color-brand-50); }
     .article-cover img { width:100%; height:auto; display:block; max-height:22rem; object-fit:cover;
         opacity:0; transition:opacity .28s ease; }
@@ -134,11 +132,6 @@
         <span class="cur">{{ $post->title }}</span>
     </nav>
 
-    @php
-        $byline = trim((string) $post->authorName) ?: 'anee.io Team';
-        $bylineInitials = \Illuminate\Support\Str::of($byline)->explode(' ')
-            ->filter()->take(2)->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
-    @endphp
     <div class="article-hero plaza-accent">
         @if ($post->coverUrl())
             <div class="article-cover"><img src="{{ $post->coverUrl() }}" alt=""
@@ -149,15 +142,12 @@
             @if ($post->excerpt)
                 <p class="article-standfirst">{{ $post->excerpt }}</p>
             @endif
+            {{-- No byline in the app: who wrote it is not shown (the owner, 2026-10-18). --}}
             <div class="article-byline">
-                <span class="avatar {{ \App\Support\CommunityAvatar::hue($byline) }}">{{ $bylineInitials }}</span>
-                <span class="min-w-0">
-                    <b>{{ $byline }}</b>
-                    <i>
-                        @if ($post->publishedAt){{ $post->publishedAt->format('F j, Y') }} · @endif
-                        {{ number_format($post->viewCount) }} {{ \Illuminate\Support\Str::plural('read', $post->viewCount) }}
-                    </i>
-                </span>
+                <i>
+                    @if ($post->publishedAt){{ $post->publishedAt->format('F j, Y') }} · @endif
+                    {{ number_format($post->viewCount) }} {{ \Illuminate\Support\Str::plural('read', $post->viewCount) }}
+                </i>
             </div>
         </div>
     </div>
