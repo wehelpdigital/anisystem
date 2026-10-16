@@ -533,16 +533,6 @@
                  agencies a Filipino farmer leans on and the newsrooms the
                  Latest in Agriculture roundups read. --}}
             @php
-                $ftGov = [
-                    ['Department of Agriculture', 'https://www.da.gov.ph'],
-                    ['PhilRice', 'https://www.philrice.gov.ph'],
-                    ['PAGASA weather', 'https://www.pagasa.dost.gov.ph'],
-                    ['Bureau of Plant Industry', 'https://www.bpi.da.gov.ph'],
-                    ['Fertilizer and Pesticide Authority', 'https://fpa.da.gov.ph'],
-                    ['Agricultural Training Institute', 'https://ati.da.gov.ph'],
-                    ['Philippine Statistics Authority', 'https://psa.gov.ph'],
-                    ['IRRI', 'https://www.irri.org'],
-                ];
                 $ftNews = [
                     ['Philippine News Agency', 'https://www.pna.gov.ph'],
                     ['Inquirer', 'https://www.inquirer.net'],
@@ -564,21 +554,14 @@
                     </ul>
                 </div>
                 @if (\App\Support\Region::ph())
-                    <div class="fo-two">
-                        <div>
-                            <h2 class="fo-h">Government and research</h2>
-                            <ul class="fo-list">
-                                @foreach ($ftGov as [$ftName, $ftUrl])<li><a href="{{ $ftUrl }}" target="_blank" rel="noopener">{{ $ftName }}</a></li>@endforeach
-                            </ul>
-                        </div>
-                        <div>
-                            <h2 class="fo-h">Our news sources</h2>
-                            <ul class="fo-list">
-                                @foreach ($ftNews as [$ftName, $ftUrl])<li><a href="{{ $ftUrl }}" target="_blank" rel="noopener">{{ $ftName }}</a></li>@endforeach
-                            </ul>
-                        </div>
+                    {{-- No agency or research institute listed as what anee.io reads (the owner, 2026-10-17). --}}
+                    <div>
+                        <h2 class="fo-h">Our news sources</h2>
+                        <ul class="fo-list">
+                            @foreach ($ftNews as [$ftName, $ftUrl])<li><a href="{{ $ftUrl }}" target="_blank" rel="noopener">{{ $ftName }}</a></li>@endforeach
+                        </ul>
                     </div>
-                    <p class="fo-note">Links to the agencies and newsrooms anee.io reads. They are not partners and do not endorse anee.io.</p>
+                    <p class="fo-note">Links to the newsrooms anee.io reads. They are not partners and do not endorse anee.io.</p>
                 @endif
             </div>
         </div>

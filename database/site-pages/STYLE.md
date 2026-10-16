@@ -17,8 +17,18 @@ machine wrote them.
   urea, insecticide, hectare). Not stiff textbook Tagalog, not word for word
   translation.
 - Be exact. Numbers, names, active ingredients and dates must be true. When a
-  value varies (prices, rates) say so and give the range and the source. Never
-  invent a statistic, a study, a product claim or a quote.
+  value varies (prices, rates) say so and give the range. Never invent a
+  statistic, a study, a product claim or a quote.
+- Never name a government body, a state university or a research institute as
+  where a fact comes from (the owner, 2026-10-17): no PhilRice, DA, BPI, BSWM,
+  ATI, PCA, PAGASA, NSIC registry, PCAARRD, UPLB, IRRI, FAO, CIMMYT, World
+  Vegetable Center, CABI, Rice Knowledge Bank, TNAU, UF IFAS and the like, not
+  in the words ("according to", "(PhilRice)", "PhilRice recommends"), not in a
+  sources block, not as a link. Say the fact as our own ("the usual rate",
+  "in trials"). A variety's own name (NSIC Rc 222, BPI Ri 1, IR64), the FPA
+  safety line and registration numbers, and where to get a soil test (the
+  Municipal Agriculture Office, a DA soil laboratory) stay. check.py fails a
+  page that breaks this.
 - Pesticides: name the active ingredient and the group, say what it is used
   on, and always tell the reader to follow the product label and the FPA
   registration. Never give a spray rate you did not verify on a label or an
@@ -91,9 +101,9 @@ cover, reveal, supports.
 - Never three sentences in a row starting with the same word.
 - At least 3 internal links to other pages of this site in the body text (from
   the URL map below), at least 1 link to an anee.io feature page or /signup
-  or /pricing, and at least 1 outbound link to an authoritative source
-  (PhilRice, DA, BPI, FPA, IRRI, PSA, a university, a manufacturer's own
-  label page) inside a "sources" block.
+  or /pricing. An outbound link in a "sources" block is welcome when it is a
+  manufacturer's own label or product page, a seed company's page or another
+  source that is not one of the bodies above; it is no longer required.
 - Every image has alt text that describes the picture (use the keyphrase in
   the alt of the first image where it is natural).
 - Keywords must read naturally and be grammatically correct in the sentence.
@@ -148,7 +158,7 @@ Blocks (the builder in the mother app edits exactly these):
 
 A good page shape: excerpt, 2 to 3 text paragraphs, H2 sections with text,
 lists, tables or steps as the content needs, a callout, a mid page cta, an
-faq block, a links block to 3 to 6 related pages, a sources block last.
+faq block, a links block to 3 to 6 related pages, and a sources block last when it has a source that may show.
 
 Images: use a site image from the list in section 6, or propose one Wikimedia
 Commons photo in `heroImage` as `{ "src": "commons:File:Exact_file_name.jpg",

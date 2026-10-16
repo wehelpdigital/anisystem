@@ -78,6 +78,14 @@ final class GovSource
         return (bool) (preg_match(self::WORDS, $t) || preg_match(self::CAPS, $t));
     }
 
+    /** An address is judged by its host: a newspaper story about the DA is not the DA. */
+    public static function isGovUrl(?string $url): bool
+    {
+        $host = parse_url(trim((string) $url), PHP_URL_HOST);
+
+        return self::isGov(is_string($host) && $host !== '' ? $host : (string) $url);
+    }
+
     /**
      * A sources list without their entries: plain strings, or arrays with
      * any of label / title / name / publisher / url / uri.
@@ -98,7 +106,7 @@ final class GovSource
             }
             $gov = false;
             foreach (['label', 'title', 'name', 'publisher', 'source', 'url', 'uri', 'href'] as $f) {
-                if (isset($s[$f]) && is_string($s[$f]) && self::isGov($s[$f])) {
+                if (isset($s[$f]) && is_string($s[$f]) && (in_array($f, ['url', 'uri', 'href'], true) ? self::isGovUrl($s[$f]) : self::isGov($s[$f]))) {
                     $gov = true;
                     break;
                 }
@@ -143,7 +151,7 @@ final class GovSource
             return $text;
         }
         // A link to one of their pages keeps its words and loses the address.
-        $text = preg_replace_callback('/\[([^\]\n]+)\]\(([^)\s]+)\)/u', fn ($m) => self::isGov($m[2]) ? $m[1] : $m[0], $text);
+        $text = preg_replace_callback('/\[([^\]\n]+)\]\(([^)\s]+)\)/u', fn ($m) => self::isGovUrl($m[2]) ? $m[1] : $m[0], $text);
         // Keep the other addresses as they are.
         $keep = [];
         $text = preg_replace_callback('/\]\([^)\s]+\)|https?:\/\/[^\s"\'<>)\]]+/u', function ($m) use (&$keep) {
@@ -227,6 +235,36 @@ final class GovSource
     private static function unkeep(string $p): string
     {
         return preg_replace("/\x02\d+\x03/", ' link ', $p);
+    }
+
+    /**
+     * A site page's blocks as they are shown: a sources block keeps only the
+     * sources that may show (and goes when none is left), every other block
+     * is scrubbed. For a page edited in the mother app or written by Anee;
+     * the shipped files are already clean. Never for the news roundups.
+     */
+    public static function pageBlocks(array $blocks): array
+    {
+        $out = [];
+        foreach ($blocks as $b) {
+            if (! is_array($b)) {
+                $out[] = $b;
+
+                continue;
+            }
+            if (($b['type'] ?? '') === 'sources') {
+                $b['items'] = self::keep((array) ($b['items'] ?? []));
+                if (! $b['items']) {
+                    continue;
+                }
+                $out[] = $b;
+
+                continue;
+            }
+            $out[] = self::scrubAll($b);
+        }
+
+        return $out;
     }
 
     /**

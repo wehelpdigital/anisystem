@@ -73,6 +73,44 @@ def url_map():
 LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
 
+# No government body, state university or research institute is shown as the
+# source of a page (the owner, 2026-10-17): not in a sources block, not as an
+# outbound link, not as "according to ..." in the words. The twin of
+# App\Support\GovSource::isGov. A variety's own name (NSIC Rc 222, BPI Ri 1,
+# IR64), the FPA safety line and where to get a soil test may stay.
+GOV_WORDS = re.compile(r"philrice|phil\s+rice\b|philippine rice research|bswm|bureau\s+of\s+(?:soils|plant\s+industry|agricultural|animal\s+industry|fisheries)"
+                       r"|pagasa|philmech|philfida|pcaarrd|pcarrd|agricultural\s+training\s+institute|national\s+irrigation\s+admin|philippine\s+coconut\s+authority"
+                       r"|fertilizer\s+and\s+pesticide\s+authority|sugar\s+regulatory|national\s+seed\s+industry\s+council|nsic\s+registry|philippine\s+statistics\s+authority"
+                       r"|university\s+of\s+the\s+philippines|state\s+university|regional\s+field\s+office|ndrrmc|\.gov\.ph\b|\bgov\.ph\b"
+                       r"|\b(?:uplb|up|clsu|vsu|cmu|isu|bsu|mmsu|usm|cvsu|cbsua|wvsu|nvsu|bpsu|tau|ssu|dmmmsu|cagsu)\.edu\.ph\b"
+                       r"|buplant|\bda\.gov|\bdost\b|variety\s+registry|seed\s+registry"
+                       r"|international\s+rice\s+research|irri\.org|\birri\b|food\s+and\s+agriculture\s+organi[sz]ation|\bfao\b|fao\.org|cimmyt|avrdc"
+                       r"|world\s*veg|vegetable\s+center|\bcabi\b|cabi\.org|plantwise|rice\s+knowledge\s+bank|knowledgebank|rice\s+crop\s+manager|nutrient\s+manager"
+                       r"|\btnau\b|tnau\.ac\.in|kerala\s+agricultural\s+university|\bkau\.in|uf\s+ifas|\bifas\b|ufl\.edu|phivolcs|\bnoaa\b|noaa\.gov|\bjtwc\b|jma\.go\.jp", re.I)
+GOV_CAPS = re.compile(r"\b(?:DA|BPI(?!\s*Ri)|ATI|NIA|PCA|FPA|SRA|NFA|PSA|BFAR|DOST|NSIC(?!\s*(?:\d{4}\s*)?(?:Rc|Rice|Cn|Mn|Pn|Sg|Sc|Hy|Rg|Pk|Bn|Ct|Tm|Eg|Ok|Cb))|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|RFO|TNAU|KAU|OCD|JMA|JTWC|NOAA|PHIVOLCS|NDRRMC)\b")
+GOV_ABROAD = re.compile(r"u\.\s?s\.|united\s+states|usda|florida|thailand|australia|india|malaysia|indonesia|vietnam|california|texas|hawai", re.I)
+GOV_NAMES = (r"PhilRice|BSWM|Bureau of Soils|Bureau of Plant Industry|Department of Agriculture|the DA|DA|BPI|ATI|PAGASA|PhilMech|PhilFIDA|PCAARRD|PCA|UPLB|"
+             r"IRRI|FAO|CIMMYT|World ?Veg|AVRDC|CABI|Rice Knowledge Bank|TNAU|UF IFAS|NOAA|NDRRMC|PHIVOLCS|JTWC|JMA|the NSIC registry|the variety registry")
+GOV_SAID = re.compile(r"\b(?:according\s+to|as\s+per|based\s+on|ayon\s+sa|sources?:)\s+(?:the\s+)?(?:" + GOV_NAMES + r")\b"
+                      r"|\((?:" + GOV_NAMES + r")(?:[ ,]+\w+){0,3}\)"
+                      r"|\b(?:" + GOV_NAMES + r")(?:'s)?\s+(?:recommends?|advises?|suggests?|says|lists|gives|notes|warns|recommendation|practice|catalogue|data|figures|guide)\b")
+
+
+def is_gov_url(url):
+    """An address is judged by its host: a newspaper story about the DA is not the DA."""
+    m = re.match(r"^[a-z]+://([^/?#]+)", (url or "").strip(), re.I)
+    return is_gov(m.group(1)) if m else is_gov(url)
+
+
+def is_gov(text):
+    t = (text or "").strip()
+    if not t:
+        return False
+    if re.search(r"department\s+of\s+agriculture", t, re.I) and not GOV_ABROAD.search(t):
+        return True
+    return bool(GOV_WORDS.search(t) or GOV_CAPS.search(t))
+
+
 def plain(s):
     s = LINK.sub(lambda m: m.group(1), s or "")
     return s.replace("**", "")
@@ -327,8 +365,20 @@ def check(path, urls, focus_seen):
         errs.append("no link to an anee.io feature, /signup or /pricing")
     if not any(b.get("type") == "cta" for b in page.get("blocks", [])):
         errs.append("no cta block")
-    if outbound < 1 and sec != "features":
-        errs.append("no outbound source link")
+    # An outbound source is welcome but no longer required: most were government
+    # pages, and those may not show (2026-10-17). What may not be there is checked.
+    for b in page.get("blocks", []):
+        if b.get("type") == "sources":
+            for i in b.get("items", []):
+                if is_gov(i.get("label", "")) or is_gov_url(i.get("url", "")):
+                    errs.append("a source names a government body or research institute: %s" % (i.get("label") or i.get("url")))
+    for u in all_urls:
+        if u.startswith("http") and is_gov_url(u):
+            errs.append("an outbound link goes to a government body or research institute: %s" % u)
+    for _k, t in texts(page):
+        m = GOV_SAID.search(plain(t))
+        if m:
+            errs.append("the words give a government body or research institute as the source: %r" % m.group(0))
     if not any(b.get("type") == "faq" for b in page.get("blocks", [])):
         warns.append("no faq block")
     hero = page.get("heroImage") or {}

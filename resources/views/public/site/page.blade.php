@@ -23,6 +23,12 @@
     // A variety, rice or any other crop, sits under Crop varieties and its
     // crop's finder (2026-10-14); every other page under its section.
     $trail = \App\Support\CropVarieties::trail($page->section, $page->slug) ?? [[$meta['crumb'], $sectionUrl]];
+    // No agency or institute shown as our source (the owner, 2026-10-17): a page
+    // edited in the mother app or written by Anee reads the same as the shipped
+    // files. The news roundups report the news as it is.
+    if (($page->kind ?? null) !== 'roundup') {
+        $blocks = \App\Support\GovSource::pageBlocks((array) $blocks);
+    }
     // The members' gate (2026-10-14): a guest reads the opening of a field
     // guide; the rest is in the page for search engines, blurred for them.
     $gateSplit = (! ($preview ?? false) && \App\Support\ContentGate::applies($page->section)) ? \App\Support\ContentGate::split($blocks) : null;
