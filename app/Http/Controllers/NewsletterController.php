@@ -15,6 +15,7 @@ use App\Support\Newsletter\Planner;
 use App\Support\Newsletter\Renderer;
 use App\Support\Newsletter\Seg;
 use App\Support\Newsletter\SequenceImport;
+use App\Support\Newsletter\MergeTags;
 use App\Support\Newsletter\Theme;
 use App\Support\Newsletter\Voice;
 use Carbon\Carbon;
@@ -135,6 +136,7 @@ class NewsletterController extends Controller
             'fonts' => array_map(fn ($f) => $f[0], Theme::FONTS),
             'faces' => Renderer::FACES,
             'voice' => Voice::forKit(),
+            'mergeTags' => MergeTags::forKit(),
             'faceBase' => 'https://anee.io/images/anee/emoji/',
             'segments' => $segs,
             'tabs' => $tabs,
@@ -383,20 +385,23 @@ class NewsletterController extends Controller
 
                 return $this->ok(['email' => $this->row($e)], 'Moved, as a draft: check it and put it in the line.');
             case 'test':
-                return $this->test($e, (string) $request->input('to', ''), $whoEmail, $request->input('content'));
+                return $this->test($e, (string) $request->input('to', ''), $whoEmail, $request->input('content'), $who);
         }
 
         return $this->fail('No such thing here.', 404);
     }
 
     /** A test send of one email to one address: Resend for the builder's, Acumbamail's test list for its own templates. */
-    private function test(AsNlEmail $e, string $to, string $whoEmail, $content = null)
+    private function test(AsNlEmail $e, string $to, string $whoEmail, $content = null, string $who = '')
     {
         $to = trim($to) ?: (NlSettings::testTo() ?: $whoEmail);
         if (! filter_var($to, FILTER_VALIDATE_EMAIL)) {
             throw new \RuntimeException('Type the address the test should go to.');
         }
-        $subject = '[Test] ' . (trim((string) $e->subject) ?: $e->title);
+        // The merge fields as this tester would see them: their own first name, their address.
+        $first = trim((string) strtok(trim(preg_replace('~^mother:\s*~', '', $who) ?? ''), ' ')) ?: 'Juan';
+        $sample = ['NAME' => $first, 'GREET' => $first, 'EMAIL' => $to];
+        $subject = '[Test] ' . MergeTags::fillText(trim((string) $e->subject) ?: $e->title, $sample);
 
         if ($e->kind === 'acumba') {
             $am = app(AcumbamailService::class);
@@ -409,7 +414,7 @@ class NewsletterController extends Controller
             return $this->ok(['to' => $to], 'Test sent through Acumbamail to ' . $to . '. It can take a few minutes.');
         }
 
-        $html = Renderer::html(['subject' => $subject, 'preheader' => $e->preheader, 'content' => $content !== null ? $content : $e->blocks], Theme::get(), 'test');
+        $html = Renderer::html(['subject' => $subject, 'preheader' => MergeTags::fillText((string) $e->preheader, $sample), 'content' => $content !== null ? $content : $e->blocks], Theme::get(), 'test', '', 'auto', $sample);
         $mailer = app(ResendMailer::class);
         if (! $mailer->send($to, '', $subject, $html)) {
             throw new \RuntimeException('The test did not go: ' . ($mailer->lastError() ?: 'the mail service refused it.'));

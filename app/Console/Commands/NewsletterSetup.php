@@ -21,7 +21,7 @@ use Illuminate\Console\Command;
  */
 class NewsletterSetup extends Command
 {
-    protected $signature = 'newsletter:setup {--fields} {--sync} {--pull} {--import} {--dry} {--demo} {--refresh : with --demo, write the samples again} {--archive= : the owner archive folder (emails.json and content), into our own library}';
+    protected $signature = 'newsletter:setup {--fields} {--sync} {--pull} {--import} {--dry} {--demo} {--refresh : with --demo, write the samples again} {--archive= : the owner archive folder (emails.json and content), into our own library} {--push-fields : write everyone\'s name and greeting onto their lists}';
 
     protected $description = 'One-off newsletter jobs: list fields, the first sync, the sequence import, the samples';
 
@@ -29,9 +29,12 @@ class NewsletterSetup extends Command
     {
         if ($this->option('fields')) {
             foreach (Seg::lists() as $key => $id) {
-                $ok = $am->addListField($id, 'name', 'text');
-                $this->line(str_pad($key, 10) . ($ok ? 'name field added' : 'not added: ' . $am->lastError()));
-                sleep(7);
+                // name (*|NAME|*) and greet (*|GREET|*: the first name, or "kaibigan" when we do not know it).
+                foreach (['name', 'greet'] as $field) {
+                    $ok = $am->addListField($id, $field, 'text');
+                    $this->line(str_pad($key, 10) . ($ok ? $field . ' field added' : $field . ' not added: ' . $am->lastError()));
+                    sleep(7);
+                }
             }
         }
         if ($this->option('sync')) {
@@ -63,6 +66,11 @@ class NewsletterSetup extends Command
                 if ($row['status'] === 'draft' || $row['sendOn'] || $row['audience'] !== [Seg::ALL]) {
                     $this->line(str_pad(substr($row['name'], 5, 9), 10) . str_pad($row['status'], 7) . str_pad((string) $row['sendOn'], 11) . mb_substr((string) $row['note'], 0, 110));
                 }
+            }
+        }
+        if ($this->option('push-fields')) {
+            foreach (Audience::pushFields() as $cell => $said) {
+                $this->line(str_pad($cell, 10) . $said);
             }
         }
         if ($this->option('archive')) {

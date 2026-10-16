@@ -229,10 +229,10 @@ final class Audience
                 }
                 $rows = [];
                 foreach ($chunk as $email => $name) {
-                    $rows[] = ['email' => $email, 'name' => self::firstName($name)];
+                    $rows[] = self::fieldsFor($email, $name);
                 }
                 $res = count($rows) === 1
-                    ? ($am->listAdd($listId, $rows[0]['email'], $rows[0]['name']) ? [$rows[0]['email'] => ''] : null)
+                    ? ($am->listAdd($listId, $rows[0]['email'], $rows[0]['name'], $rows[0]['greet']) ? [$rows[0]['email'] => ''] : null)
                     : $am->listBatchAdd($listId, $rows);
                 if ($res === null) {
                     $why = $am->lastError() ?: 'Acumbamail refused.';
@@ -427,6 +427,59 @@ final class Audience
                     $out[$c]++;
                 }
             }
+        }
+
+        return $out;
+    }
+
+    /** A subscriber's list fields: *|NAME|* the first name, *|GREET|* the same or "kaibigan" (MergeTags). */
+    public static function fieldsFor(string $email, string $name): array
+    {
+        $first = self::firstName($name);
+
+        return ['email' => $email, 'name' => $first, 'greet' => $first !== '' ? $first : MergeTags::GREET_FALLBACK];
+    }
+
+    /**
+     * Write every reachable person's name and greeting onto each list they
+     * are on (after a field is added, or names changed): a batch per list.
+     * Each list's unsubscribes are read first, so nobody who left is written
+     * back, and a pause between lists keeps under Acumbamail's call limit.
+     *
+     * @return array<string, string>  segment => what happened
+     */
+    public static function pushFields(int $pause = 20): array
+    {
+        $am = app(AcumbamailService::class);
+        $want = self::desired();
+        $out = [];
+        $first = true;
+        foreach (Seg::lists() as $cell => $listId) {
+            if (! $first && $pause > 0) {
+                sleep($pause);
+            }
+            $first = false;
+            $pulled = self::pullUnsubscribes($cell);
+            if ($pulled['error']) {
+                $out[$cell] = 'skipped, its unsubscribes could not be read: ' . $pulled['error'];
+
+                continue;
+            }
+            $rows = [];
+            foreach (DB::table('as_nl_audience')->where('unsubscribed', 0)->where('cells', 'like', '%"' . $cell . '"%')->get(['email', 'name']) as $r) {
+                $rows[] = self::fieldsFor($r->email, (string) ($want[$r->email]['name'] ?? $r->name));
+            }
+            if (! $rows) {
+                $out[$cell] = 'nobody on it';
+
+                continue;
+            }
+            $bad = 0;
+            foreach (array_chunk($rows, 1000) as $chunk) {
+                $res = $am->listBatchAdd((int) $listId, $chunk);
+                $bad += $res === null ? count($chunk) : count(array_filter($res));
+            }
+            $out[$cell] = count($rows) . ' updated' . ($bad ? ', ' . $bad . ' refused: ' . $am->lastError() : '');
         }
 
         return $out;

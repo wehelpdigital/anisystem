@@ -38,6 +38,9 @@ final class Renderer
     /** The preview's inbox: light, dark, or (a real send) whatever the reader's phone says. */
     private string $scheme = 'auto';
 
+    /** What a test or a preview shows for each merge field (MergeTags), over the samples. */
+    private array $sample = [];
+
     private function __construct(array $theme, string $mode, string $utm)
     {
         $this->t = $theme;
@@ -51,9 +54,10 @@ final class Renderer
      *
      * @param  array{subject?: string, preheader?: string|null, content?: array|null}  $email
      */
-    public static function html(array $email, ?array $theme = null, string $mode = 'live', string $utm = '', string $scheme = 'auto'): string
+    public static function html(array $email, ?array $theme = null, string $mode = 'live', string $utm = '', string $scheme = 'auto', array $sample = []): string
     {
         $r = new self($theme ?? Theme::get(), $mode, $utm);
+        $r->sample = $sample;
         // Only the builder's preview picks: a sent email follows the reader's inbox.
         $r->scheme = $mode === 'preview' && in_array($scheme, ['light', 'dark'], true) ? $scheme : 'auto';
 
@@ -198,9 +202,9 @@ final class Renderer
         $foot = $this->footer();
         $mark = EmailSkin::asset('images/logo-mark.png');
         $r = (int) $t['radius'];
-        $title = e($email['subject'] ?? 'anee.io');
+        $title = e($this->mode === 'live' ? ($email['subject'] ?? 'anee.io') : MergeTags::fillText((string) ($email['subject'] ?? 'anee.io'), $this->sample));
 
-        return <<<HTML
+        $html = <<<HTML
 <!doctype html>
 <html lang="tl" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -279,6 +283,9 @@ img{-ms-interpolation-mode:bicubic;border:0;outline:none;text-decoration:none;}
 </body>
 </html>
 HTML;
+
+        // A live send leaves *|NAME|* and its kind for Acumbamail; a test or a preview fills them.
+        return $this->mode === 'live' ? $html : MergeTags::fill($html, $this->mode === 'preview', $this->sample);
     }
 
     private function head(array $c): string
@@ -630,6 +637,8 @@ HTML;
         if (str_starts_with($u, '/')) {
             $u = 'https://anee.io' . $u;
         }
+        // A merge field link a browser wrote down encoded (*%7CUNSUBSCRIBE_URL%7C*) is the same field.
+        $u = preg_replace('~^\*%7C([A-Z_]+)%7C\*$~i', '*|$1|*', $u) ?? $u;
 
         return preg_match('~^(https?://|mailto:|\*\|[A-Z_]+\|\*$)~i', $u) ? mb_substr($u, 0, 1000) : '';
     }

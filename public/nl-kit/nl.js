@@ -137,6 +137,7 @@
         cal: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>',
         sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
         moon: '<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',
+        field: '<path d="M8 4c-2 0-3 1-3 3v2c0 1.5-1 3-2 3 1 0 2 1.5 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1.5 1 3 2 3-1 0-2 1.5-2 3v2c0 2-1 3-3 3"/>',
     };
     const ic = (name, cls) => '<svg' + (cls ? ' class="' + cls + '"' : '') + ' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (I[name] || '') + '</svg>';
 
@@ -165,6 +166,12 @@
             portal = document.createElement('div');
             portal.className = 'nlk nlk-portal';
             document.body.appendChild(portal);
+        }
+        // Link fields suggest Acumbamail's own links (filled once the boot answers).
+        if (!document.getElementById('nlkLinkTags')) {
+            const dl = document.createElement('datalist');
+            dl.id = 'nlkLinkTags';
+            portal.appendChild(dl);
         }
         if (C.framed) root.classList.add('nlk-framed');
         root.innerHTML = shell();
@@ -236,6 +243,8 @@
         try {
             const r = await call('boot');
             S.boot = r.data;
+            const dl = document.getElementById('nlkLinkTags');
+            if (dl) dl.innerHTML = (S.boot.mergeTags || []).filter((t) => t.kind === 'link').map((t) => '<option value="' + h(t.tag) + '">' + h(t.label) + '</option>').join('');
             paintTop();
             paintToday();
             if (withList) loadList();
@@ -441,6 +450,22 @@
         setTimeout(() => document.addEventListener('click', closeMenu, { once: true }), 0);
         NLK._menu = m;
     }
+    /* Merge fields (MergeTags): Acumbamail fills *|NAME|* and its kind in for
+       each person when it sends; the preview and a test show a sample. */
+    const LINK_WORDS = { '*|UNSUBSCRIBE_URL|*': 'Mag-unsubscribe', '*|BROWSER_VIEW|*': 'Buksan sa browser', '*|MODIFY_SUB_URL|*': 'I-update ang detalye mo' };
+    function fieldMenu(anchor, kinds, onPick) {
+        const tags = ((S.boot && S.boot.mergeTags) || []).filter((t) => kinds.indexOf(t.kind) >= 0);
+        menu(anchor, [{ label: 'Acumbamail fills these in' }].concat(tags.map((t) => ({ text: t.label + '  ' + t.tag, icon: t.kind === 'link' ? 'link' : 'field', run: () => onPick(t) }))));
+    }
+    /** A field into a plain input at the cursor (the subject, the preview line). */
+    function insertAt(input, text) {
+        const a = input.selectionStart == null ? input.value.length : input.selectionStart;
+        const b = input.selectionEnd == null ? a : input.selectionEnd;
+        input.setRangeText(text, a, b, 'end');
+        input.focus();
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
     function closeMenu() { if (NLK._menu) { const m = NLK._menu; NLK._menu = null; m.classList.remove('is-open'); setTimeout(() => m.remove(), 200); } }
 
     function rowMenu(anchor, r) {
@@ -842,7 +867,8 @@
             (FORMS[b.type] || []).forEach((f) => {
                 const [kind, key, label, extra] = f;
                 if (kind === 'text') {
-                    const w = el('<label class="nlk-field"><span>' + h(label) + '</span><input class="nlk-in" value="' + h(b[key] || '') + '" placeholder="' + h(extra || '') + '"></label>');
+                    const linky = key === 'url' || key === 'link';
+                    const w = el('<label class="nlk-field"><span>' + h(label) + '</span><input class="nlk-in" value="' + h(b[key] || '') + '" placeholder="' + h(extra || '') + '"' + (linky ? ' list="nlkLinkTags"' : '') + '></label>');
                     $('input', w).addEventListener('input', (e) => { b[key] = e.target.value; changed(); });
                     grid.appendChild(w);
                 } else if (kind === 'seg') {
@@ -922,8 +948,9 @@
             const chip = (s, on) => '<button type="button" class="nlk-chipb' + (on ? ' is-on' : '') + '" data-seg="' + s.key + '" title="' + h(s.line) + '">' + dot(s.key) + h(s.name) + ' <small>' + s.count + '</small></button>';
             setPane.innerHTML =
                 '<div class="nlk-box"><h4>The inbox line</h4>' +
-                '  <label class="nlk-field"><span>Subject <em data-cnt></em></span><input class="nlk-in" data-f="subject" value="' + h(E.subject) + '" placeholder="What the inbox shows first"></label>' +
-                '  <label class="nlk-field"><span>Preview line <em>(the grey words after the subject)</em></span><input class="nlk-in" data-f="preheader" value="' + h(E.preheader || '') + '" placeholder="One more sentence to make them open it"></label>' +
+                '  <div class="nlk-field"><span>Subject <em data-cnt></em></span><div class="nlk-line"><input class="nlk-in nlk-grow" data-f="subject" value="' + h(E.subject) + '" placeholder="What the inbox shows first"><button type="button" class="nlk-btn is-sm" data-ins="subject" title="Insert a field Acumbamail fills in">' + ic('field') + 'Field</button></div></div>' +
+                '  <div class="nlk-field"><span>Preview line <em>(the grey words after the subject)</em></span><div class="nlk-line"><input class="nlk-in nlk-grow" data-f="preheader" value="' + h(E.preheader || '') + '" placeholder="One more sentence to make them open it"><button type="button" class="nlk-btn is-sm" data-ins="preheader" title="Insert a field Acumbamail fills in">' + ic('field') + 'Field</button></div></div>' +
+                '  <small class="nlk-hint" style="margin:0">A field like <b>*|GREET|*</b> becomes each person\'s first name (or "kaibigan") when Acumbamail sends. The preview and tests show a sample.</small>' +
                 '</div>' +
                 '<div class="nlk-box"><h4>Priority</h4><div class="nlk-seg" data-pri style="justify-self:start">' + ['high', 'news', 'regular'].map((p) => '<button type="button" data-v="' + p + '"' + (E.priority === p ? ' class="is-on"' : '') + '>' + PRI[p].short + '</button>').join('') + '</div><small class="nlk-hint" style="margin:0" data-prihint></small></div>' +
                 '<div class="nlk-box"><h4>Who gets it</h4>' +
@@ -936,6 +963,10 @@
                 (E.id && E.campaigns && E.campaigns.length ? '<div class="nlk-box"><h4>Campaigns made</h4><div class="nlk-camps">' + E.campaigns.map((c) => '<div><span class="nlk-pill ' + (c.status === 'created' ? 'st-queued' : 'st-expired') + '">' + (c.status === 'created' ? 'Made' : 'Failed') + '</span><b>' + h(dayWords(c.at, true)) + '</b> ' + h(c.cells) + (c.campaignId ? ' · Acumbamail #' + c.campaignId : '') + (c.error ? ' · ' + h(c.error) : '') + '</div>').join('') + '</div></div>' : '') +
                 (E.id ? '<div class="nlk-box"><h4>Remove</h4><button type="button" class="nlk-btn is-danger" data-del style="justify-self:start">' + ic('trash') + 'Remove this email</button></div>' : '');
 
+            $$('[data-ins]', setPane).forEach((b) => b.addEventListener('click', () => {
+                const input = $('[data-f="' + b.dataset.ins + '"]', setPane);
+                fieldMenu(b, ['text'], (t) => insertAt(input, t.tag));
+            }));
             const cnt = () => { $('[data-cnt]', setPane).textContent = '(' + (E.subject || '').length + ' letters' + ((E.subject || '').length > 60 ? ', long for a phone' : '') + ')'; };
             cnt();
             $$('[data-f]', setPane).forEach((i) => i.addEventListener('input', () => { E[i.dataset.f] = i.value; if (i.dataset.f === 'subject') cnt(); mark(); if (i.dataset.f !== 'note') preview(); }));
@@ -1098,6 +1129,7 @@
             '<button type="button" data-c="link" title="Link">' + ic('link') + '</button>' +
             (inline ? '' : '<button type="button" data-c="insertUnorderedList" title="Bullets">&bull;</button><button type="button" data-c="insertOrderedList" title="Numbers">1.</button>') +
             '<button type="button" data-c="removeFormat" title="Plain">&times;</button>' +
+            '<button type="button" data-c="field" title="Insert a field Acumbamail fills in (a first name, a link)">' + ic('field') + '</button>' +
             '</div><div class="nlk-rt-ed' + (inline ? ' is-one' : '') + '" contenteditable="true" data-ph="Type here"></div></div>');
         const ed = $('.nlk-rt-ed', w);
         ed.innerHTML = html || '';
@@ -1121,6 +1153,26 @@
             b.addEventListener('click', async () => {
                 ed.focus();
                 const c = b.dataset.c;
+                if (c === 'field') {
+                    // Where the cursor was in this editor (or its end), since the menu takes the focus.
+                    const sel0 = window.getSelection();
+                    const range = sel0.rangeCount && ed.contains(sel0.getRangeAt(0).commonAncestorContainer) ? sel0.getRangeAt(0).cloneRange() : null;
+                    fieldMenu(b, ['text', 'link'], (t) => {
+                        ed.focus();
+                        const sel = window.getSelection();
+                        sel.removeAllRanges();
+                        if (range) sel.addRange(range);
+                        else { const r = document.createRange(); r.selectNodeContents(ed); r.collapse(false); sel.addRange(r); }
+                        if (t.kind === 'link') {
+                            if (range && !range.collapsed) document.execCommand('createLink', false, t.tag);
+                            else document.execCommand('insertHTML', false, '<a href="' + t.tag + '">' + h(LINK_WORDS[t.tag] || t.label) + '</a>');
+                        } else {
+                            document.execCommand('insertText', false, t.tag);
+                        }
+                        emit();
+                    });
+                    return;
+                }
                 if (c === 'link') {
                     const range = window.getSelection().rangeCount ? window.getSelection().getRangeAt(0).cloneRange() : null;
                     const url = await askText('Add a link', 'The address', 'https://', 'https://anee.io/...');

@@ -217,12 +217,15 @@ class AcumbamailService
      * to say, and these only carry it out.
      * ------------------------------------------------------------------ */
 
-    /** One address onto one list, kept up to date if it is there already. */
-    public function listAdd(int $listId, string $email, string $name = ''): bool
+    /** One address onto one list, kept up to date if it is there already (name and greet are list fields). */
+    public function listAdd(int $listId, string $email, string $name = '', string $greet = ''): bool
     {
         $merge = ['email' => $email];
         if ($name !== '') {
             $merge['name'] = $name;
+        }
+        if ($greet !== '') {
+            $merge['greet'] = $greet;
         }
 
         return $this->call('addSubscriber', [
@@ -245,8 +248,10 @@ class AcumbamailService
         $data = [];
         foreach (array_slice($rows, 0, 1000) as $r) {
             $one = ['email' => (string) $r['email']];
-            if (($r['name'] ?? '') !== '') {
-                $one['name'] = (string) $r['name'];
+            foreach (['name', 'greet'] as $f) {
+                if (($r[$f] ?? '') !== '') {
+                    $one[$f] = (string) $r[$f];
+                }
             }
             $data[] = $one;
         }
