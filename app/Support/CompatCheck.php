@@ -31,7 +31,10 @@ final class CompatCheck
     public const UNITS = ['mL' => ['mL', 1], 'L' => ['mL', 1000], 'tbsp' => ['mL', 15], 'tsp' => ['mL', 5], 'g' => ['g', 1], 'kg' => ['g', 1000], 'bag' => ['g', 50000]];
 
     /** What one dose is for: a tank of its own size, a hectare, or a plant. */
-    public const PERS = ['tank' => null, '16L' => 16, '20L' => 20, '200L' => 200, '1L' => 1, 'ha' => 'ha', 'plant' => 'plant'];
+    public const PERS = ['tank' => null, '16L' => 16, '20L' => 20, '200L' => 200, '1L' => 1, 'ha' => 'ha', 'lot' => 'lot', 'plant' => 'plant'];
+
+    /** Where granules go (the granular mode's question). */
+    public const PLACES = ['broadcast' => 'broadcast or top dressed', 'incorporated' => 'worked into the soil', 'band' => 'in a band beside the row', 'hole' => 'in the planting hole or with the seed'];
 
     private array $rules;
 
@@ -46,7 +49,9 @@ final class CompatCheck
     public function __construct(array $ctx)
     {
         $this->rules = CompatBook::rules();
-        $this->ctx = $ctx + ['crop' => null, 'stage' => '', 'water' => '', 'weather' => '', 'tankL' => 16.0, 'waterHa' => 200.0];
+        $this->ctx = $ctx + ['mode' => 'spray', 'crop' => null, 'stage' => '', 'water' => '', 'weather' => '', 'tankL' => 16.0, 'waterHa' => 200.0,
+            'waterPh' => null, 'soil' => '', 'place' => '', 'waterSoon' => '', 'lotHa' => null];
+        $this->ctx['mode'] = $this->ctx['mode'] === 'granular' ? 'granular' : 'spray';
         $this->ctx['tankL'] = max(1.0, min(1000.0, (float) $this->ctx['tankL']));
         $this->ctx['waterHa'] = max(20.0, min(2000.0, (float) $this->ctx['waterHa']));
     }
@@ -62,7 +67,7 @@ final class CompatCheck
         $cropShelf = $crop && isset($crops[$crop]) ? $crops[$crop][3] : null;
         foreach (array_values($items) as $i => $it) {
             $p = (array) $it['product'];
-            $applied = in_array($it['applied'] ?? '', ['spray', 'soil'], true) ? $it['applied'] : (ProductLibrary::applied($p) === 'soil' ? 'soil' : 'spray');
+            $applied = $this->ctx['mode'] === 'granular' ? 'soil' : 'spray';
             if (in_array($p['applied'] ?? '', ['bait', 'seed'], true)) {
                 $applied = $p['applied'];
             }
@@ -93,6 +98,7 @@ final class CompatCheck
         $strength = $this->strength($sprays, $cropName);
         $this->tankChecks($sprays, $soils, $strength, $cropName);
         $order = $this->order($sprays);
+        $salt = $this->salt($soils, $cropName);
         $trips = $this->trips($sprays, $pairs, 'tank');
         $spreads = $this->trips($soils, $pairs, 'blend');
         $unknownItems = array_values(array_map(fn ($x) => $x['i'], array_filter($this->items, fn ($x) => ! $x['tr']['fact'])));
@@ -121,6 +127,9 @@ final class CompatCheck
             'strength' => $strength,
             'order' => $order,
             'jar' => $this->jar($sprays),
+            'mode' => $this->ctx['mode'],
+            'salt' => $salt,
+            'spread' => $this->ctx['mode'] === 'granular' ? $this->spreadSteps($soils) : [],
             'trips' => $trips,
             'spreads' => $spreads,
             'unknown' => ['items' => $unknownItems, 'pairs' => $unknownPairs],
@@ -159,7 +168,9 @@ final class CompatCheck
             $out['perHa'] = $perL * $this->ctx['waterHa'];
         } else {
             if ($per === 'ha') {
-                $out['kgHa'] = $base === 'g' ? $qty / 1000 : $qty / 1000;
+                $out['kgHa'] = $qty / 1000;
+            } elseif ($per === 'lot' && (float) $this->ctx['lotHa'] > 0) {
+                $out['kgHa'] = $qty / 1000 / (float) $this->ctx['lotHa'];
             } elseif ($per === 'plant') {
                 $out['perPlant'] = $qty;
             }
@@ -307,9 +318,19 @@ final class CompatCheck
                     $pair = [(string) $x['p']['mat'], (string) $y['p']['mat']];
                     sort($pair);
                     $c = $this->rules['blendChart'][implode('|', $pair)] ?? null;
-                    if ($c && ! ($c[0] === 'ok' && $hits)) {
-                        $hits[] = ['id' => 'blend_chart', 'level' => $c[0], 'why' => $c[1] ?: ($c[0] === 'ok' ? 'These two blend well in one bag.' : ''),
-                            'fix' => $c[0] === 'no' ? 'Spread them separately.' : ($c[0] === 'care' ? 'Mix only what you spread right away, in dry weather.' : ''), 'gap' => null];
+                    $chartFix = $c ? ($c[0] === 'no' ? 'Spread them separately.' : ($c[0] === 'care' ? 'Mix only what you spread right away, in dry weather.' : '')) : '';
+                    $worst = null;
+                    foreach ($hits as $k => $h) {
+                        if ($h['level'] !== 'ok' && ($worst === null || self::RANK[$h['level']] > self::RANK[$hits[$worst]['level']])) {
+                            $worst = $k;
+                        }
+                    }
+                    if ($c && $worst === null && ! ($c[0] === 'ok' && $hits)) {
+                        $hits[] = ['id' => 'blend_chart', 'level' => $c[0], 'why' => $c[1] ?: ($c[0] === 'ok' ? 'These two blend well in one bag.' : ''), 'fix' => $chartFix, 'gap' => null];
+                    } elseif ($c && $worst !== null && self::RANK[$c[0]] > self::RANK[$hits[$worst]['level']]) {
+                        // A rule already says why; the chart is stricter: one reason, at the chart's level, with its advice.
+                        $hits[$worst]['level'] = $c[0];
+                        $hits[$worst]['fix'] = $chartFix;
                     }
                 }
                 $known = $x['tr']['fact'] && $y['tr']['fact'];
@@ -380,12 +401,21 @@ final class CompatCheck
         $weather = $this->ctx['weather'];
         $stage = $this->ctx['stage'];
         $crop = $this->ctx['crop'];
+        $granular = $this->ctx['mode'] === 'granular';
         foreach ($this->items as $x) {
             if ($x['applied'] === 'bait') {
-                $this->note('bait_in_tank', 'no', [$x]);
+                $this->note($granular ? 'bait_in_blend' : 'bait_in_tank', 'no', [$x]);
             }
             if ($x['applied'] === 'seed') {
-                $this->note('seed_in_tank', 'care', [$x]);
+                $this->note($granular ? 'seed_in_blend' : 'seed_in_tank', 'care', [$x]);
+            }
+            // Made for the other pass: granules in a sprayer, a spray in a dry blend.
+            if ($x['tr']['fact'] && ! in_array($x['applied'], ['bait', 'seed'], true) && ! ProductLibrary::fits($x['p'], $this->ctx['mode'])) {
+                if ($granular) {
+                    $this->note('not_granule', 'care', [$x]);
+                } else {
+                    $this->note($x['tr']['isPest'] ? 'not_spray_pest' : 'not_spray', $x['tr']['isPest'] ? 'no' : 'care', [$x]);
+                }
             }
             foreach ($x['restrict'] as $r) {
                 $this->tank[] = ['id' => 'fpa_' . $r['level'], 'level' => $r['level'] === 'banned' ? 'no' : 'care', 'items' => [$x['i']],
@@ -420,10 +450,24 @@ final class CompatCheck
                 $this->tips[] = 'Use clear water for ' . $muddy[0]['name'] . '. Clay in muddy water takes it out of the spray.';
             }
             $alkFast = $this->with($sprays, ['alk_fast']);
-            if ($alkFast && $water === 'hard') {
+            $ph = is_numeric($this->ctx['waterPh']) ? (float) $this->ctx['waterPh'] : null;
+            if ($ph !== null) {
+                $slow = $this->with($sprays, ['alk_slow', 'op', 'carb']);
+                if ($ph > 7 && ($alkFast || $slow)) {
+                    $this->note('ph_high', $ph >= 8 && $alkFast ? 'no' : 'care', $alkFast ?: $slow, ['ph' => ProductLibrary::num($ph)]);
+                }
+                if ($ph < 6.5 && ($cu = $this->with($sprays, ['copper']))) {
+                    $this->note('ph_low_copper', 'no', $cu, ['ph' => ProductLibrary::num($ph)]);
+                }
+                if ($ph < 6 && ($su = $this->with($sprays, ['acid_sens']))) {
+                    $this->note('ph_low_su', 'care', $su, ['ph' => ProductLibrary::num($ph)]);
+                }
+            }
+            if ($alkFast && $water === 'hard' && $ph === null) {
                 $this->note('alk_water', 'care', $alkFast);
             } elseif ($alkFast || $this->with($sprays, ['alk_slow'])) {
-                $this->tips[] = 'Spray within an hour or two of mixing and never leave the tank overnight: ' . implode(', ', array_map(fn ($x) => $x['name'], $alkFast ?: $this->with($sprays, ['alk_slow']))) . ' break down standing in the water.';
+                $soft = $alkFast ?: $this->with($sprays, ['alk_slow']);
+                $this->tips[] = 'Spray within an hour or two of mixing and never leave the tank overnight: ' . implode(', ', array_map(fn ($x) => $x['name'], $soft)) . (count($soft) === 1 ? ' breaks' : ' break') . ' down standing in the water.';
             }
             $alkSens = $this->with($sprays, ['alk_fast', 'alk_slow']);
             $acidSens = $this->with($sprays, ['acid_sens']);
@@ -517,7 +561,98 @@ final class CompatCheck
             if ($grans && $stage !== 'preplant' && $crop && ! in_array($crop, ['rice', 'sugarcane', 'corn_yellow', 'corn_glutinous', 'sorghum'], true)) {
                 $this->tips[] = 'Spread the granules when the leaves are dry and brush or wash off any that stay on the plants: they burn spots where they sit.';
             }
+            $place = $this->ctx['place'];
+            $nk = 0.0;
+            foreach ($soils as $x) {
+                if (! empty($x['dose']['kgHa'])) {
+                    $nk += $x['dose']['kgHa'] * ((float) ($x['p']['n']['N'] ?? 0) + (float) ($x['p']['n']['K2O'] ?? 0)) / 100;
+                }
+            }
+            if (in_array($place, ['hole', 'band'], true) && $nk > 11 && in_array($stage, ['preplant', 'seedling', ''], true)) {
+                // The seed note says it with the amount: the general seedling note goes.
+                $this->tank = array_values(array_filter($this->tank, fn ($t) => $t['id'] !== 'salt_seedling'));
+                $this->note('salt_seed', $place === 'hole' && $nk > 22 ? 'no' : 'care', $this->with($soils, ['fert_salt']) ?: $soils, ['nk' => ProductLibrary::num(round($nk, 1))]);
+            }
+            $nitro = $this->with($soils, ['fe_urea', 'fe_ammonium']);
+            if ($nitro && $this->ctx['soil'] === 'dry' && $place !== 'incorporated' && $this->ctx['waterSoon'] !== 'soon') {
+                $this->note('urea_dry_surface', 'care', $nitro);
+            }
+            if ($this->ctx['soil'] === 'flooded' && ($nit = $this->with($soils, ['fe_nitrate']))) {
+                $this->note('nitrate_flooded', 'care', $nit);
+            }
+            if (count($soils) >= 2) {
+                $this->tips[] = 'A blend takes up water from the air faster than each fertilizer alone: mix only what you spread today, on a dry floor in the shade, and keep the bag closed.';
+            }
         }
+    }
+
+    /* ================================================================ the granular pass */
+
+    /**
+     * The salt the granules bring, per hectare: kilograms times the salt
+     * index (sodium nitrate is 100). A plain material carries its own index;
+     * a branded fertilizer's is worked out from its analysis (about).
+     */
+    private function salt(array $soils, ?string $cropName): ?array
+    {
+        if (! $soils) {
+            return null;
+        }
+        $load = 0.0;
+        $nk = 0.0;
+        $rows = [];
+        $missing = [];
+        foreach ($soils as $x) {
+            $kg = $x['dose']['kgHa'] ?? null;
+            if (! $kg) {
+                if (isset($x['flags']['fert'])) {
+                    $missing[] = $x['name'];
+                }
+
+                continue;
+            }
+            $n = (array) ($x['p']['n'] ?? []);
+            $si = isset($x['p']['chem']['si']) ? (float) $x['p']['chem']['si'] : null;
+            $est = false;
+            if ($si === null && $n) {
+                $f = $x['flags'];
+                $si = (float) ($n['N'] ?? 0) * (isset($f['fe_urea']) ? 1.62 : (isset($f['fe_nitrate']) ? 3.0 : 3.25))
+                    + (float) ($n['P2O5'] ?? 0) * 0.45 + (float) ($n['K2O'] ?? 0) * (isset($f['fe_chloride']) ? 1.94 : 0.85) + (float) ($n['Mg'] ?? 0) * 1.2;
+                $est = true;
+            }
+            // No salt index and nothing salty in the analysis (a lime with no index): nothing to show.
+            if ($si === null || ($est && $si < 1)) {
+                continue;
+            }
+            $load += $kg * $si / 100;
+            $nk += $kg * ((float) ($n['N'] ?? 0) + (float) ($n['K2O'] ?? 0)) / 100;
+            $rows[] = ['i' => $x['i'], 'kgHa' => round($kg, 1), 'si' => round($si), 'est' => $est];
+        }
+
+        return ['load' => round($load, 1), 'nk' => round($nk, 1), 'rows' => $rows, 'missing' => $missing, 'place' => $this->ctx['place'],
+            'placeWord' => self::PLACES[$this->ctx['place']] ?? '', 'limitSeed' => 11];
+    }
+
+    /** How to spread what goes on together, for where it goes. */
+    private function spreadSteps(array $soils): array
+    {
+        $words = (array) ($this->rules['spread'] ?? []);
+        $place = $this->ctx['place'] ?: 'broadcast';
+        $out = [];
+        foreach ((array) ($words['all'] ?? []) as $w) {
+            $out[] = $w;
+        }
+        foreach ((array) ($words[$place] ?? []) as $w) {
+            $out[] = $w;
+        }
+        if ($this->with($soils, ['pest_gran'])) {
+            $out[] = (string) ($words['pesticide'] ?? '');
+        }
+        foreach ((array) ($words['after'] ?? []) as $w) {
+            $out[] = $w;
+        }
+
+        return array_values(array_filter($out));
     }
 
     /* ================================================================ strength */
@@ -721,6 +856,22 @@ final class CompatCheck
         $no = count(array_filter($pairs, fn ($p) => $p['level'] === 'no'));
         $n = count($this->items);
         $sprayTrips = count($trips);
+
+        if ($this->ctx['mode'] === 'granular') {
+            $passes = count(array_filter($this->trips(array_values(array_filter($this->items, fn ($x) => $x['applied'] === 'soil')), $pairs, 'blend'), fn ($t) => $t));
+            $more = $unknownItems ? ' We do not know ' . (count($unknownItems) === 1 ? 'one of them' : count($unknownItems) . ' of them') . ' well enough yet.' : '';
+
+            return match ($worst) {
+                // Only a note says no (too close to the seed, a spray in the blend): they share a bag, the way they go on must change.
+                'no' => $no ? ['t' => 'Spread them separately', 's' => $no . ' ' . ($no === 1 ? 'pair' : 'pairs') . ' must not go in one bag. '
+                    . ($passes > 1 ? 'Split it into ' . $passes . ' passes, as shown below.' : 'Read what to do instead below.') . $more]
+                    : ['t' => 'Not this way', 's' => 'Nothing here clashes in the bag, but how you put it on must change. Read what to do instead below.' . $more],
+                'care' => ['t' => 'Spread together with care', 's' => 'These can go on together, if you follow the notes below.' . $more],
+                'unknown' => ['t' => 'We cannot check all of it', 's' => 'We do not know ' . (count($unknownItems) === 1 ? 'one of these' : count($unknownItems) . ' of these') . ' well enough. What we know spreads well together.'],
+                default => ['t' => $n < 2 ? 'Nothing to blend with yet' : 'Spread together', 's' => $n < 2 ? 'Add one more product to check them together.'
+                    : 'No known clash between these. Mix only what you spread today, and follow each label.'],
+            };
+        }
 
         return match ($worst) {
             'no' => ['t' => 'Do not mix all of these', 's' => ($no ? $no . ' ' . ($no === 1 ? 'pair' : 'pairs') . ' must not go together. ' : '')

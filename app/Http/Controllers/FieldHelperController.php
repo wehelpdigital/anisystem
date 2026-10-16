@@ -29,7 +29,7 @@ class FieldHelperController extends Controller
         // Every crop's nutrient deficiencies, with photos and the fertilizers sold here (2026-10-16, App\Support\DeficiencyCatalogue).
         'nutrients' => ['Nutrient Deficiency Finder', 'Find the missing nutrient from the leaves you see on any crop, and what fertilizer fixes it', 'nutrient'],
         // Can these go on together (2026-10-18, App\Http\Controllers\CompatController): sprays and fertilizers, by crop, with the product book of everything registered here.
-        'compat' => ['Compatibility Checker', 'Can these sprays and fertilizers go on together? The mixing order, the strength for your crop, and what to watch', 'compat'],
+        'compat' => ['Compatibility Checker', 'Can these sprays share one tank, or these fertilizers one pass? What clashes, the mixing order, and what to watch', 'compat'],
         'varieties' => ['Variety Finder', 'Every registered variety of rice, corn, vegetables, root crops and fruit trees, with days to harvest, yield and resistance', 'rice-variety'],
         // Every land preparation step, dated back from the planting day (2026-10-14, App\Support\LandPrep).
         'landprep' => ['Land Prep Planner', 'Every step of getting your field ready, dated back from your planting day', 'land-prep'],

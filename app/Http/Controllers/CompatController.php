@@ -80,10 +80,11 @@ class CompatController extends Controller
         $q = trim((string) $request->query('q', ''));
         $crop = FieldCatalogue::cropKey((string) $request->query('crop', '')) ?: null;
         $shelf = (string) $request->query('shelf', '');
+        $mode = in_array($request->query('mode'), ['spray', 'granular'], true) ? (string) $request->query('mode') : null;
         if (mb_strlen($q) < 2) {
             return $this->json(true, 'ok', ['items' => [], 'mine' => []]);
         }
-        $rows = ProductLibrary::search($q, $shelf ?: null, $crop, 30);
+        $rows = ProductLibrary::search($q, $shelf ?: null, $crop, 30, $mode);
         $mine = array_values(array_filter(self::mineList(), fn ($m) => str_contains(ProductLibrary::norm($m['b'] . ' ' . implode(' ', $m['ai'])), ProductLibrary::norm($q))));
 
         return $this->json(true, 'ok', ['items' => array_map(fn ($p) => ProductLibrary::card($p, $crop), $rows), 'mine' => array_slice($mine, 0, 10)]);
@@ -129,12 +130,18 @@ class CompatController extends Controller
     private function readCase(Request $request): array
     {
         $v = Validator::make($request->all(), [
+            'mode' => 'nullable|in:spray,granular',
             'crop' => 'nullable|string|max:40',
             'stage' => 'nullable|in:,' . implode(',', array_keys(CompatCheck::STAGES)),
             'water' => 'nullable|in:,' . implode(',', array_keys(self::WATER)),
             'weather' => 'nullable|in:,' . implode(',', array_keys(self::WEATHER)),
             'tankL' => 'nullable|numeric|min:1|max:1000',
             'waterHa' => 'nullable|numeric|min:20|max:2000',
+            'waterPh' => 'nullable|numeric|min:2|max:12',
+            'soil' => 'nullable|in:,moist,dry,flooded',
+            'waterSoon' => 'nullable|in:,soon,later',
+            'place' => 'nullable|in:,' . implode(',', array_keys(CompatCheck::PLACES)),
+            'lotHa' => 'nullable|numeric|min:0|max:100000',
             'items' => 'required|array|min:1|max:10',
             'items.*.ref' => 'required|string|max:40',
             'items.*.name' => 'nullable|string|max:120',
@@ -147,8 +154,13 @@ class CompatController extends Controller
             return [null, null, $this->json(false, $v->errors()->first(), [], 422)];
         }
         $crop = FieldCatalogue::cropKey((string) $request->input('crop', '')) ?: null;
-        $ctx = ['crop' => isset(FieldCatalogue::crops()[$crop]) ? $crop : null, 'stage' => (string) $request->input('stage', ''), 'water' => (string) $request->input('water', ''),
-            'weather' => (string) $request->input('weather', ''), 'tankL' => (float) ($request->input('tankL') ?: 16), 'waterHa' => (float) ($request->input('waterHa') ?: 200)];
+        $granular = $request->input('mode') === 'granular';
+        $ctx = ['mode' => $granular ? 'granular' : 'spray', 'crop' => isset(FieldCatalogue::crops()[$crop]) ? $crop : null, 'stage' => (string) $request->input('stage', ''),
+            'water' => $granular ? '' : (string) $request->input('water', ''), 'weather' => (string) $request->input('weather', ''),
+            'tankL' => (float) ($request->input('tankL') ?: 16), 'waterHa' => (float) ($request->input('waterHa') ?: 200),
+            'waterPh' => ! $granular && is_numeric($request->input('waterPh')) ? (float) $request->input('waterPh') : null,
+            'soil' => $granular ? (string) $request->input('soil', '') : '', 'waterSoon' => $granular ? (string) $request->input('waterSoon', '') : '',
+            'place' => $granular ? (string) $request->input('place', '') : '', 'lotHa' => $granular && (float) $request->input('lotHa') > 0 ? (float) $request->input('lotHa') : null];
         $raw = array_values((array) $request->input('items', []));
         $pids = [];
         $mids = [];
@@ -227,6 +239,7 @@ class CompatController extends Controller
             return ['id' => (int) $r->id, 'ref' => 'm:' . $r->id, 'b' => $p['b'], 'c' => 'Your own', 't' => $p['t'], 'type' => ProductLibrary::TYPES[$p['t']] ?? 'Product',
                 'f' => $p['f'] ?: $p['form'], 'applied' => $p['applied'], 'ai' => array_map(fn ($a) => trim(($a['n'] ?? '') . (isset($a['a']) ? ' ' . ProductLibrary::num((float) $a['a']) . ' ' . ($a['u'] ?? '') : '')), $p['ai']),
                 'nut' => $p['n'] ?: null, 'rate' => $r->rateAmount !== null ? ['amount' => (float) $r->rateAmount, 'unit' => $r->rateUnit, 'per' => $r->ratePer] : null,
+                'fit' => ['spray' => $p['applied'] !== 'soil', 'granular' => $p['applied'] === 'soil'],
                 'raw' => ['type' => $p['t'], 'form' => (string) $r->form, 'applied' => $p['applied'], 'ai' => json_decode((string) $r->ai, true) ?: [], 'n' => json_decode((string) $r->nutrients, true) ?: (object) [], 'notes' => (string) $r->notes]];
         })->all();
     }
@@ -452,7 +465,8 @@ class CompatController extends Controller
                 . ($p['reasons'] ? ' (' . implode(' ', array_column($p['reasons'], 'why')) . ')' : '');
         }
 
-        return "You are Anee, the smart farm technician of anee.io, helping a Filipino farmer check whether products can be applied together (one tank, or spread together). "
+        return "You are Anee, the smart farm technician of anee.io, helping a Filipino farmer check whether products can be applied together ("
+            . (($before['mode'] ?? 'spray') === 'granular' ? 'dry granules blended and spread or broadcast in one pass' : 'mixed in one spray tank') . '). '
             . 'Crop: ' . ($before['cropName'] ?? 'not given') . ($before['stageWord'] ? ', ' . $before['stageWord'] : '') . ".\n\nTHE ITEMS:\n" . implode("\n", $items)
             . "\n\nWHAT OUR RULES ALREADY SAY ABOUT EACH PAIR (unknown = our book could not tell):\n" . ($pairs ? implode("\n", $pairs) : '- none')
             . "\n\nLOOK UP: " . implode(', ', array_column($look, 'name')) . "\n\n"

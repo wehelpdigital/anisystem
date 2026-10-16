@@ -38,6 +38,39 @@
     .cx-lead { display: flex; flex-wrap: wrap; gap: .35rem; margin: -.2rem 0 .1rem 2.15rem; }
     .cx-lead span { padding: .14rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800; color: #2d5016; background: #eef5e6; }
 
+    /* ---- A spray or granules: two cards and a highlight that slides --------- */
+    .cx-modes { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-top: .6rem; padding: .3rem; border-radius: 1.15rem; background: #f1f5ec; border: 1px solid #e3ead9; }
+    .cx-modes::before { content: ''; position: absolute; top: .3rem; bottom: .3rem; left: .3rem; width: calc(50% - .525rem); border-radius: .9rem; background: #fff; border: 1.5px solid #a8cc7e;
+        box-shadow: 0 10px 22px -16px rgb(20 33 12 / .7); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .cx-modes[data-on="granular"]::before { transform: translateX(calc(100% + .45rem)); }
+    .cx-modes button { position: relative; z-index: 1; display: flex; align-items: center; gap: .55rem; min-height: 3.6rem; padding: .5rem .6rem; border-radius: .9rem; text-align: left; color: #3d4b33; background: none; cursor: pointer; }
+    .cx-modes button:focus-visible { outline: 3px solid #f5c518; outline-offset: 1px; }
+    .cx-mode-ico { flex: none; width: 2.3rem; height: 2.3rem; border-radius: .75rem; display: grid; place-items: center; color: #4a7c2a; background: #e4efd4; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .cx-mode-ico svg { width: 1.3rem; height: 1.3rem; }
+    .cx-modes button[aria-pressed="true"] .cx-mode-ico { color: #3b2f00; background: #f5c518; }
+    .cx-mode-t { min-width: 0; display: grid; }
+    .cx-mode-t b { font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: #14210c; }
+    .cx-mode-t small { font-size: .7rem; line-height: 1.3; color: #6b7280; }
+    .cx-aside { margin-top: .55rem; padding: .55rem .7rem; border-radius: .85rem; font-size: .8rem; line-height: 1.45; color: #6b4a00; background: #fff8e6; border: 1px solid #f5d98a; }
+    .cx-aside.is-in { animation: cxIn .34s cubic-bezier(.22,1,.36,1) both; }
+    .cx-for.is-in { animation: cxIn .34s cubic-bezier(.22,1,.36,1) both; }
+    .cx-for { display: grid; gap: 1rem; }
+    .cx-for[hidden] { display: none; }
+    .cx-inline { display: grid; gap: .25rem; }
+    .cx-inline > span { font-size: .72rem; font-weight: 800; color: #3d6823; }
+    .cx-inline input { width: 100%; min-height: 2.9rem; padding: .5rem .75rem; border-radius: .9rem; border: 1px solid #dfe8d4; background: #f6f8f3; font-size: 1rem; font-weight: 700; color: #14210c;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .cx-inline input:focus { outline: none; border-color: #86b556; box-shadow: 0 0 0 4px rgb(134 181 86 / .18); }
+    html.dark .cx-modes { background: #1c2616; border-color: #2b3a1c; }
+    html.dark .cx-modes::before { background: #22301a; border-color: #4a7c2a; box-shadow: none; }
+    html.dark .cx-mode-t b { color: #e8efe1; }
+    html.dark .cx-mode-t small { color: #b9caa8; }
+    html.dark .cx-mode-ico { background: #2b3a1c; color: #cfe3b8; }
+    html.dark .cx-aside { background: #241d10; border-color: #5c4a24; color: #f3d9a4; }
+    html.dark .cx-inline > span { color: #a8cc7e; }
+    html.dark .cx-inline input { background: #0f150c; border-color: #2b3a1c; color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .cx-modes::before, .cx-mode-ico { transition: none; } .cx-aside.is-in, .cx-for.is-in { animation: none; } }
+
     /* ---- What will you apply: one card per product ----------------------- */
     .cx-items { display: grid; gap: .6rem; }
     .cx-empty { display: grid; place-items: center; gap: .35rem; padding: 1.4rem 1rem; border-radius: 1.1rem; text-align: center; color: #4b5563; background: #f8faf5; border: 1.5px dashed #d4e3c1; }
@@ -204,6 +237,20 @@
     .cx-meter { position: relative; height: .9rem; margin: .4rem 0 .5rem; border-radius: 999px; background: linear-gradient(90deg, #bbf7d0 0%, #bbf7d0 60%, #fde68a 60%, #fde68a 80%, #fecaca 80%); overflow: hidden; }
     .cx-meter i { position: absolute; top: -.15rem; bottom: -.15rem; width: .3rem; border-radius: 999px; background: #14210c; box-shadow: 0 0 0 2px #fff; transition: left .6s cubic-bezier(.22,1,.36,1); }
     .cx-meter-l { display: flex; justify-content: space-between; font-size: .72rem; color: #6b7280; }
+    .cx-salt { display: grid; gap: .55rem; }
+    .cx-salt > div { display: grid; gap: .2rem; }
+    .cx-salt b { min-width: 0; font-size: .86rem; color: #14210c; overflow-wrap: anywhere; }
+    .cx-salt small { font-size: .72rem; color: #6b7280; }
+    .cx-salt-bar { height: .5rem; border-radius: 999px; background: #eef2e8; overflow: hidden; }
+    .cx-salt-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #86b556, #e5b100 65%, #dc2626); transform-origin: left; animation: cxGrow .6s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes cxGrow { from { transform: scaleX(0); } }
+    .cx-aside button { margin-left: .35rem; padding: 0; font: inherit; font-weight: 800; color: inherit; text-decoration: underline; background: none; cursor: pointer; }
+    .cx-row-off { color: #8a5a00 !important; font-weight: 700; }
+    html.dark .cx-salt b { color: #e8efe1; }
+    html.dark .cx-salt small { color: #b9caa8; }
+    html.dark .cx-salt-bar { background: #22301a; }
+    html.dark .cx-row-off { color: #f3d9a4 !important; }
+    @media (prefers-reduced-motion: reduce) { .cx-salt-bar i { animation: none; } }
     .cx-strong { font-size: .9rem; line-height: 1.55; color: #1f2937; }
     .cx-strong b { font-family: var(--font-heading); font-size: 1.1rem; }
     .cx-steps { display: grid; gap: .45rem; counter-reset: cx; }
@@ -305,16 +352,25 @@
 </style>
 
 <div class="cx" id="cxApp">
-    <section class="cx-box cx-field" aria-label="Your crop">
+    <section class="cx-box cx-field" aria-label="What and your crop">
         <div class="cx-q">
-            <b><i>1</i>Which crop?</b>
+            <b><i>1</i>What goes on together?</b>
+            <small>A tank mix you spray, or granules you spread in one pass. The checks follow your choice</small>
+            <div class="cx-modes" role="group" aria-label="A spray or granules" id="cxModes" data-on="spray">
+                <button type="button" data-mode="spray" aria-pressed="true"><span class="cx-mode-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8 7h8a2 2 0 012 2v10a2 2 0 01-2 2H8a2 2 0 01-2-2V9a2 2 0 012-2zM10 7V4h4v3M6 12h12M18 9l3-2"/></svg></span><span class="cx-mode-t"><b>A spray</b><small>In one knapsack or drum</small></span></button>
+                <button type="button" data-mode="granular" aria-pressed="false"><span class="cx-mode-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8zm3 0V6.5a3 3 0 016 0V8"/><circle cx="10" cy="14" r=".8"/><circle cx="14" cy="15.5" r=".8"/><circle cx="12" cy="12" r=".8"/></svg></span><span class="cx-mode-t"><b>Granules</b><small>Spread or broadcast together</small></span></button>
+            </div>
+            <p class="cx-aside" id="cxAside" hidden></p>
+        </div>
+        <div class="cx-q">
+            <b><i>2</i>Which crop?</b>
             <small>The crop decides how strong a spray it can take and which labels name it</small>
             <div id="cxCrop">
                 @include('public.site.partials.crop-pick', ['id' => 'cxCropSheet', 'crops' => $crops, 'current' => $cxCrop, 'title' => 'Which crop?', 'noun' => null])
             </div>
         </div>
         <div class="cx-q">
-            <b><i>2</i>How old is it?</b>
+            <b><i>3</i>How old is it?</b>
             <small>Young plants and flowers burn more easily</small>
             <div class="fh-otag-box" id="cxStage"></div>
         </div>
@@ -322,8 +378,8 @@
 
     <section class="cx-box cx-mix" aria-label="What you will apply">
         <div class="cx-q">
-            <b><i>3</i>What will you apply together?{{ $TL('tank-mix') }}</b>
-            <small>Add each spray, fertilizer or spray helper, with how much you use</small>
+            <b><i>4</i><span id="cxItemsHead">What will you spray together?</span><span id="cxItemsTl">{{ $TL('tank-mix') }}</span></b>
+            <small id="cxItemsSub">Add each spray, foliar fertilizer or spray helper, with how much you use</small>
         </div>
         @if ($nAll)
             <div class="cx-lead"><span>{{ number_format($nSprays) }} sprays</span><span>{{ number_format($nFerts) }} fertilizers</span><span>{{ number_format($nAll - $nSprays - $nFerts) }} helpers and plain chemicals</span></div>
@@ -335,25 +391,46 @@
         </div>
         <button type="button" class="cx-go" id="cxGo" disabled><span>Check the mix</span><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h13m-5-6l6 6-6 6"/></svg></button>
         <p class="cx-fine"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
-            <span>The product label always wins. When a mix is new to you, test a small jar first{{ $TL('jar-test') }} and spray a few plants before the field.</span></p>
+            <span id="cxFine">The product label always wins. When a mix is new to you, test a small jar first{{ $TL('jar-test') }} and spray a few plants before the field.</span></p>
     </section>
 
-    <section class="cx-box cx-more" aria-label="Your water, weather and sprayer">
+    <section class="cx-box cx-more" aria-label="Your water, soil and weather">
+        <div class="cx-for" data-for-mode="spray">
         <div class="cx-q">
-            <b><i>4</i>Your water and the weather</b>
+            <b><i>5</i>Your water and the weather</b>
             <small>Hard or muddy water and the heat change what mixes well. Leave them if you are not sure</small>
             <div class="cx-tags2">
                 <div class="fh-otag-box" id="cxWater"></div>
+                <label class="cx-inline"><span>Water pH, if you tested it{{ $TL('ph') }}</span><input type="number" inputmode="decimal" step="0.1" min="2" max="12" id="cxWaterPh" placeholder="Like 7.5"></label>
                 <div class="fh-otag-box" id="cxWeather"></div>
             </div>
         </div>
         <div class="cx-q">
-            <b><i>5</i>Your sprayer</b>
+            <b><i>6</i>Your sprayer</b>
             <small>For the amounts in the tank and the strength of the spray</small>
             <div class="cx-tags2">
                 <div class="fh-otag-box" id="cxTank"></div>
                 <div class="fh-otag-box" id="cxWaterHa"></div>
             </div>
+        </div>
+        </div>
+        <div class="cx-for" data-for-mode="granular" hidden>
+        <div class="cx-q">
+            <b><i>5</i>Your soil and the water</b>
+            <small>Dry soil and no water soon lose nitrogen to the air; a flooded field changes which fertilizer works</small>
+            <div class="cx-tags2">
+                <div class="fh-otag-box" id="cxSoil"></div>
+                <div class="fh-otag-box" id="cxWaterSoon"></div>
+            </div>
+        </div>
+        <div class="cx-q">
+            <b><i>6</i>Where it goes</b>
+            <small>Close to the seed or young roots, strong fertilizer burns. The lot size turns a rate per lot into a rate per hectare</small>
+            <div class="cx-tags2">
+                <div class="fh-otag-box" id="cxPlace"></div>
+                <label class="cx-inline"><span>Lot size, hectares</span><input type="number" inputmode="decimal" step="0.01" min="0" id="cxLotHa" placeholder="Like 0.5 for half a hectare"></label>
+            </div>
+        </div>
         </div>
     </section>
 </div>
@@ -489,26 +566,35 @@
 
     /* ---- The units and what an amount is for ------------------------------ */
     const UNIT = { mL: 'mL', L: 'L', tbsp: 'tbsp', tsp: 'tsp', g: 'g', kg: 'kg', bag: 'bag (50 kg)' };
-    const perWord = (p) => ({ tank: 'per tank (' + st.tankL + ' L)', '16L': 'per 16 L knapsack', '20L': 'per 20 L knapsack', '200L': 'per 200 L drum', '1L': 'per liter of water', ha: 'per hectare', plant: 'per plant or hill' }[p] || p);
-    const perShort = (p) => ({ tank: 'per tank', '16L': 'per 16 L', '20L': 'per 20 L', '200L': 'per drum', '1L': 'per liter', ha: 'per hectare', plant: 'per plant' }[p] || p);
+    const perWord = (p) => ({ tank: 'per tank (' + st.tankL + ' L)', '16L': 'per 16 L knapsack', '20L': 'per 20 L knapsack', '200L': 'per 200 L drum', '1L': 'per liter of water', ha: 'per hectare',
+        lot: 'per lot' + (Number(st.lotHa) > 0 ? ' (' + st.lotHa + ' ha)' : ''), plant: 'per plant or hill' }[p] || p);
+    const perShort = (p) => ({ tank: 'per tank', '16L': 'per 16 L', '20L': 'per 20 L', '200L': 'per drum', '1L': 'per liter', ha: 'per ha', lot: 'per lot', plant: 'per plant' }[p] || p);
     const PERS_SPRAY = ['16L', '20L', '200L', '1L', 'tank', 'ha'];
-    const PERS_SOIL = ['ha', 'plant'];
+    const PERS_SOIL = ['ha', 'lot', 'plant'];
+    const PERS_OWN_SOIL = ['ha', 'plant'];
     const UNITS_SPRAY = ['tbsp', 'tsp', 'mL', 'L', 'g', 'kg'];
     const UNITS_SOIL = ['kg', 'bag', 'g'];
 
     /* ---- The state, kept on this phone -------------------------------------- */
     const KEY = 'anee.compat.mix';
     let uid = 1;
-    const st = { crop: D.crop, stage: '', water: '', weather: '', tankL: 16, waterHa: 200, items: [] };
+    // mode: a spray (one tank) or granules (spread in one pass). Items that do not fit the mode wait in `aside`.
+    const st = { mode: 'spray', crop: D.crop, stage: '', water: '', weather: '', waterPh: '', tankL: 16, waterHa: 200, soil: '', waterSoon: '', place: '', lotHa: '', items: [], aside: [] };
+    const one = (v, list) => (list.includes(v) ? v : '');
     try {
         const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
         if (saved && Array.isArray(saved.items)) {
-            Object.assign(st, { stage: saved.stage || '', water: saved.water || '', weather: saved.weather || '', tankL: Number(saved.tankL) || 16, waterHa: Number(saved.waterHa) || 200 });
+            Object.assign(st, { mode: saved.mode === 'granular' ? 'granular' : 'spray', stage: saved.stage || '', water: saved.water || '', weather: saved.weather || '', tankL: Number(saved.tankL) || 16, waterHa: Number(saved.waterHa) || 200,
+                waterPh: Number(saved.waterPh) >= 2 && Number(saved.waterPh) <= 12 ? String(saved.waterPh) : '', soil: one(saved.soil, ['moist', 'dry', 'flooded']), waterSoon: one(saved.waterSoon, ['soon', 'later']),
+                place: one(saved.place, ['broadcast', 'incorporated', 'band', 'hole']), lotHa: Number(saved.lotHa) > 0 ? String(saved.lotHa) : '' });
             if (saved.crop && D.crops[saved.crop] && !new URLSearchParams(location.search).get('crop')) st.crop = saved.crop;
             st.items = saved.items.slice(0, 10).map((x) => ({ ...x, uid: uid++ }));
+            st.aside = (Array.isArray(saved.aside) ? saved.aside : []).slice(0, 10).map((x) => ({ ...x, uid: uid++ }));
         }
     } catch (_) { /* nothing kept */ }
-    const keep = () => { try { localStorage.setItem(KEY, JSON.stringify({ ...st, items: st.items.map(({ uid: _u, ...x }) => x) })); } catch (_) { /* not kept */ } };
+    const bare = (list) => list.map(({ uid: _u, ...x }) => x);
+    const keep = () => { try { localStorage.setItem(KEY, JSON.stringify({ ...st, items: bare(st.items), aside: bare(st.aside) })); } catch (_) { /* not kept */ } };
+    const granular = () => st.mode === 'granular';
 
     /* ---- The field's tags ----------------------------------------------------- */
     const cropTag = document.querySelector('#cxCrop .cp-tag');
@@ -531,6 +617,84 @@
     const waterHaTag = FH.optTag({ box: $('cxWaterHa'), title: 'Water per hectare', note: 'Used only for a rate written per hectare: it says how much goes in each tank.', icon: I.drop, value: String(st.waterHa),
         opts: [160, 200, 300, 400, 500].map((n) => ({ k: String(n), l: n + ' L per hectare', sub: 'About ' + Math.round(n / 16) + ' knapsacks of 16 L' })),
         onPick: (v) => { st.waterHa = Number(v) || 200; keep(); } });
+    FH.optTag({ box: $('cxSoil'), title: 'The soil today', icon: svg('<path d="M3 17h18M5 13c2-2 4-2 7 0s5 2 7 0M8 21h8"/>'), empty: 'The soil: not sure', value: st.soil, all: 'Not sure', allSub: 'We will say what to watch',
+        opts: [{ k: 'moist', l: 'Moist', sub: 'After rain or irrigation' }, { k: 'dry', l: 'Dry', sub: 'No rain for days, the topsoil is dusty' }, { k: 'flooded', l: 'Flooded', sub: 'A paddy with standing water' }],
+        onPick: (v) => { st.soil = v; keep(); } });
+    FH.optTag({ box: $('cxWaterSoon'), title: 'Rain or irrigation after', icon: I.drop, empty: 'Water after: not sure', value: st.waterSoon, all: 'Not sure', allSub: 'We will say what to watch',
+        opts: [{ k: 'soon', l: 'Within two days', sub: 'Rain is coming, or you will irrigate or flood soon' }, { k: 'later', l: 'Not for a week or more', sub: 'No water coming soon' }],
+        onPick: (v) => { st.waterSoon = v; keep(); } });
+    FH.optTag({ box: $('cxPlace'), title: 'Where the granules go', icon: svg('<path d="M12 21v-7m0 0c-3 0-5-2-5-5 3 0 5 2 5 5zm0 0c3 0 5-2 5-5-3 0-5 2-5 5zM4 21h16"/>'), empty: 'Where it goes: not sure', value: st.place, all: 'Not sure', allSub: 'Read as broadcast',
+        opts: [{ k: 'broadcast', l: 'Broadcast or top dress', sub: 'Spread over the field or between the rows' }, { k: 'incorporated', l: 'Worked into the soil', sub: 'Before planting, then harrowed or raked in' },
+            { k: 'band', l: 'In a band beside the row', sub: 'A furrow a hand width from the plants' }, { k: 'hole', l: 'In the hole, with the seed', sub: 'At planting, under the seed or seedling' }],
+        onPick: (v) => { st.place = v; keep(); } });
+    const phIn = $('cxWaterPh'), lotIn = $('cxLotHa');
+    phIn.value = st.waterPh;
+    lotIn.value = st.lotHa;
+    phIn.addEventListener('input', () => { const v = Number(phIn.value.replace(',', '.')); st.waterPh = phIn.value.trim() !== '' && v >= 2 && v <= 12 ? String(v) : ''; keep(); });
+    lotIn.addEventListener('input', () => { const v = Number(lotIn.value.replace(',', '.')); st.lotHa = v > 0 ? String(v) : ''; keep(); });
+
+    /* ---- A spray or granules -------------------------------------------------- */
+    const modes = $('cxModes'), asideP = $('cxAside');
+    const fineSpray = $('cxFine').innerHTML;
+    // What an item fits: the book card says (fit), the farmer's own goes by how it is applied, a typed name fits both.
+    const natOf = (c) => c.fit || (c.ref && c.ref.startsWith('m:') ? { spray: c.applied !== 'soil', granular: c.applied === 'soil' } : (c.ref === 'x' ? { spray: true, granular: true } : null));
+    const fitsMode = (x, m) => !x.fit || x.fit[m] !== false;
+    const fixUnits = (x) => {
+        const was = x.unit + '|' + x.per;
+        x.applied = granular() ? 'soil' : 'spray';
+        if (granular()) { if (!UNITS_SOIL.includes(x.unit)) x.unit = 'kg'; if (!PERS_SOIL.includes(x.per)) x.per = 'ha'; }
+        else { if (!UNITS_SPRAY.includes(x.unit)) x.unit = SPRAY_LIQ.includes(x.f) ? 'tbsp' : 'g'; if (!PERS_SPRAY.includes(x.per)) x.per = st.tankL === 16 ? '16L' : 'tank'; }
+        if (was !== x.unit + '|' + x.per) x.amount = null;
+    };
+    const names = (list) => list.map((x) => '<b>' + esc(x.name) + '</b>').join(', ');
+    const paintAside = (out, back) => {
+        let h = '';
+        if (back.length) h += 'Back in the mix: ' + names(back) + '. ';
+        if (st.aside.length) h += (out.length ? 'Set aside for now, since ' + (out.length === 1 ? 'it goes' : 'they go') + (granular() ? ' on in water: ' : ' on the soil: ') : 'Waiting for ' + (granular() ? 'a spray: ' : 'granules: '))
+            + names(st.aside) + '. ' + (st.aside.length === 1 ? 'It comes' : 'They come') + ' back when you choose ' + (granular() ? 'A spray' : 'Granules') + '.<button type="button" data-aside-clear>Forget ' + (st.aside.length === 1 ? 'it' : 'them') + '</button>';
+        asideP.innerHTML = h;
+        const show = h !== '';
+        if (show && (out.length || back.length || asideP.hidden) && !reduce()) { asideP.classList.remove('is-in'); void asideP.offsetWidth; asideP.classList.add('is-in'); }
+        asideP.hidden = !show;
+    };
+    asideP.addEventListener('click', (e) => {
+        if (!e.target.closest('[data-aside-clear]')) return;
+        st.aside = []; keep();
+        const done = () => { asideP.hidden = true; asideP.style.opacity = ''; asideP.style.transition = ''; };
+        if (reduce()) done(); else { asideP.style.transition = 'opacity .28s cubic-bezier(.22,1,.36,1)'; asideP.style.opacity = '0'; setTimeout(done, 280); }
+    });
+    const paintMode = (animate) => {
+        const g = granular();
+        modes.dataset.on = st.mode;
+        modes.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === st.mode)));
+        document.querySelectorAll('#cxApp .cx-for[data-for-mode]').forEach((box) => {
+            const on = box.dataset.forMode === st.mode;
+            if (on && box.hidden && animate && !reduce()) { box.classList.remove('is-in'); void box.offsetWidth; box.classList.add('is-in'); }
+            box.hidden = !on;
+        });
+        $('cxItemsHead').textContent = g ? 'What will you spread together?' : 'What will you spray together?';
+        $('cxItemsSub').textContent = g ? 'Add each granular fertilizer, lime or pesticide granule, with how much you use' : 'Add each spray, foliar fertilizer or spray helper, with how much you use';
+        // The Taglish pill follows the words (the page's own pill stays until the glossary script is up).
+        const flag = tl(g ? 'fertilizer-blend' : 'tank-mix');
+        if (flag || window.aneeTl) $('cxItemsTl').innerHTML = flag;
+        $('cxFine').innerHTML = g ? 'The product label always wins. When a blend is new to you, mix a handful of each in a bowl first: if it turns wet or sticky within an hour, spread them on different days.' : fineSpray;
+        if (animate) FH.bump?.($('cxItemsHead'));
+    };
+    modes.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-mode]');
+        if (!b || b.dataset.mode === st.mode) return;
+        st.mode = b.dataset.mode === 'granular' ? 'granular' : 'spray';
+        const out = st.items.filter((x) => !fitsMode(x, st.mode));
+        const back = st.aside.filter((x) => fitsMode(x, st.mode));
+        const stay = st.items.filter((x) => fitsMode(x, st.mode)).concat(back);
+        st.items = stay.slice(0, 10);
+        st.aside = st.aside.filter((x) => !fitsMode(x, st.mode)).concat(out, stay.slice(10)).slice(-10);
+        st.items.forEach(fixUnits);
+        keep();
+        paintMode(true);
+        paintAside(out, back);
+        paintItems(true);
+    });
 
     /* ---- The items ------------------------------------------------------------ */
     const box = $('cxItems'), go = $('cxGo');
@@ -538,7 +702,7 @@
     const labelLine = (x) => {
         const r = x.rate;
         if (!r || !r.text) return '';
-        const can = r.parsed && fromParsed(r.parsed, x);
+        const can = r.parsed && fitRate(fromParsed(r.parsed, x));
         return '<p class="cx-label"><span><b>Label for ' + esc(String(cropName()).toLowerCase()) + ':</b> ' + esc(r.text) + (r.phi ? '. Last spray ' + esc(r.phi) + ' before harvest' : '') + '</span>'
             + (can ? '<button type="button" class="cx-use" data-use="' + x.uid + '">Use the label rate</button>' : '') + '</p>';
     };
@@ -552,6 +716,11 @@
         if (!['16L', '20L', '200L', '1L', 'ha', 'plant'].includes(per)) return null;
         return { amount: Math.round(lo * 1000) / 1000, unit, per };
     }
+    // A rate the mode's pickers can show (a label rate per knapsack is no use for granules).
+    function fitRate(r) {
+        if (!r) return null;
+        return granular() ? (UNITS_SOIL.includes(r.unit) && PERS_SOIL.includes(r.per) ? r : null) : (UNITS_SPRAY.includes(r.unit) && PERS_SPRAY.includes(r.per) ? r : null);
+    }
     const itemHtml = (x) => {
         const chips = [];
         if (x.typeWord) chips.push('<span class="cx-chip">' + esc(x.typeWord) + '</span>');
@@ -561,15 +730,13 @@
         if (x.onCrop === false && !isFert(x.t)) chips.push('<span class="cx-chip is-warn">' + svg('<path d="M12 9v4m0 4h.01"/>', 2.6) + 'Label does not name ' + esc(String(cropName()).toLowerCase()) + '</span>');
         if (x.onCrop === true) chips.push('<span class="cx-chip is-good">' + svg('<path d="M5 13l4 4L19 7"/>', 3) + 'Labelled for ' + esc(String(cropName()).toLowerCase()) + '</span>');
         if (x.anee) chips.push('<span class="cx-chip is-warn">Found by Anee</span>');
-        const spray = x.applied !== 'soil';
-        const showHow = isFert(x.t) || x.t === 'chemical' || x.t === 'other';
+        if (x.nat && x.nat[st.mode] === false) chips.push('<span class="cx-chip is-warn">' + svg('<path d="M12 9v4m0 4h.01"/>', 2.6) + (granular() ? 'Made to go on in water' : 'Made to spread on the soil') + '</span>');
         return '<article class="cx-it" data-uid="' + x.uid + '"' + tint(x.t) + '>'
             + '<div class="cx-it-top">' + icoHtml(x.t)
             + '<button type="button" class="cx-it-n" data-info="' + x.uid + '"' + (x.id || x.ref.startsWith('m:') ? '' : ' disabled') + '><b>' + esc(x.name) + '</b>'
             + '<small>' + esc([x.company, (x.ai || []).join(', ')].filter(Boolean).join(' · ') || (x.ref === 'x' ? 'We will check what we can' : '')) + '</small></button>'
             + '<button type="button" class="cx-x" data-rm="' + x.uid + '" aria-label="Take ' + esc(x.name) + ' out of the mix">' + I.x + '</button></div>'
             + '<div class="cx-chips">' + chips.join('') + '</div>'
-            + (showHow ? '<div class="cx-how" role="group" aria-label="How it goes on"><button type="button" data-how="spray" data-for="' + x.uid + '" aria-pressed="' + spray + '">Sprayed</button><button type="button" data-how="soil" data-for="' + x.uid + '" aria-pressed="' + !spray + '">On the soil</button></div>' : '')
             + '<div class="cx-rate"><input inputmode="decimal" data-amt="' + x.uid + '" value="' + (x.amount ?? '') + '" placeholder="How much" aria-label="Amount of ' + esc(x.name) + '">'
             + '<button type="button" class="cx-pick" data-unit="' + x.uid + '" aria-label="Unit"><span>' + esc(UNIT[x.unit] || x.unit) + '</span>' + I.chev + '</button>'
             + '<button type="button" class="cx-pick is-per" data-per="' + x.uid + '" aria-label="' + esc('The amount is ' + perWord(x.per)) + '"><span>' + esc(perShort(x.per)) + '</span>' + I.chev + '</button></div>'
@@ -579,12 +746,13 @@
         const draw = () => {
             box.innerHTML = st.items.length ? st.items.map(itemHtml).join('')
                 : '<div class="cx-empty">' + svg('<path d="M8 6h8a2 2 0 012 2v11a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2zM10 6V4h4v2M6 11h12"/>', 1.8)
-                    + '<b>Nothing in the mix yet</b><small>Add the sprays and fertilizers you want to put on together, with how much of each.</small></div>';
+                    + '<b>Nothing in the mix yet</b><small>' + (granular() ? 'Add the fertilizers and granules you want to spread in one pass, with how much of each.' : 'Add the sprays and foliar fertilizers you want in one tank, with how much of each.') + '</small></div>';
             if (added && !reduce()) box.querySelector('.cx-it[data-uid="' + added + '"]')?.classList.add('is-in');
         };
         if (animate) FH.swap(box, draw); else draw();
         go.disabled = st.items.length < 1;
-        go.querySelector('span').textContent = st.items.length >= 2 ? 'Check the mix of ' + st.items.length : (st.items.length ? 'Check this product' : 'Check the mix');
+        const what = granular() ? 'blend' : 'mix';
+        go.querySelector('span').textContent = st.items.length >= 2 ? 'Check the ' + what + ' of ' + st.items.length : (st.items.length ? 'Check this product' : 'Check the ' + what);
     };
     const byUid = (u) => st.items.find((x) => String(x.uid) === String(u));
     box.addEventListener('input', (e) => {
@@ -603,20 +771,10 @@
             if (reduce()) done(); else { art.classList.add('is-out'); setTimeout(done, 230); }
             return;
         }
-        const how = e.target.closest('[data-how][data-for]');
-        if (how) {
-            const x = byUid(how.dataset.for);
-            if (x.applied === how.dataset.how) return;
-            x.applied = how.dataset.how;
-            if (x.applied === 'soil') { if (!UNITS_SOIL.includes(x.unit)) x.unit = 'kg'; if (!PERS_SOIL.includes(x.per)) x.per = 'ha'; }
-            else { if (!UNITS_SPRAY.includes(x.unit)) x.unit = 'g'; if (!PERS_SPRAY.includes(x.per)) x.per = '16L'; }
-            keep(); paintItems(true);
-            return;
-        }
         const un = e.target.closest('[data-unit]');
         if (un) {
             const x = byUid(un.dataset.unit);
-            const list = x.applied === 'soil' ? UNITS_SOIL : UNITS_SPRAY;
+            const list = granular() ? UNITS_SOIL : UNITS_SPRAY;
             const v = await FH.pick({ title: 'Unit for ' + x.name, value: x.unit, counts: false, from: un, opts: list.map((k) => ({ k, l: UNIT[k], sub: { tbsp: 'A tablespoon, 15 mL', tsp: 'A teaspoon, 5 mL', bag: 'A 50 kg bag' }[k] || '' })) });
             if (v) { x.unit = v; keep(); paintItems(false); FH.bump(box.querySelector('[data-unit="' + x.uid + '"]')); }
             return;
@@ -624,14 +782,14 @@
         const pe = e.target.closest('[data-per]');
         if (pe) {
             const x = byUid(pe.dataset.per);
-            const list = x.applied === 'soil' ? PERS_SOIL : PERS_SPRAY;
-            const v = await FH.pick({ title: 'The amount is for', value: x.per, counts: false, from: pe, opts: list.map((k) => ({ k, l: perWord(k) })) });
+            const list = granular() ? PERS_SOIL : PERS_SPRAY;
+            const v = await FH.pick({ title: 'The amount is for', value: x.per, counts: false, from: pe, opts: list.map((k) => ({ k, l: perWord(k), sub: k === 'lot' && !(Number(st.lotHa) > 0) ? 'Write the lot size under Where it goes' : '' })) });
             if (v) { x.per = v; keep(); paintItems(false); }
             return;
         }
         const use = e.target.closest('[data-use]');
         if (use) {
-            const x = byUid(use.dataset.use), r = x.rate && x.rate.parsed && fromParsed(x.rate.parsed, x);
+            const x = byUid(use.dataset.use), r = x.rate && x.rate.parsed && fitRate(fromParsed(x.rate.parsed, x));
             if (r) { Object.assign(x, r); keep(); paintItems(false); FH.bump(box.querySelector('[data-amt="' + x.uid + '"]')); }
             return;
         }
@@ -643,13 +801,16 @@
     const add = (c) => {
         if (st.items.length >= 10) { say('Ten products is the most one check takes.', 'error'); return; }
         if (c.ref && st.items.some((x) => x.ref === c.ref)) { say(c.b + ' is already in the mix.'); return; }
-        const applied = c.applied === 'soil' ? 'soil' : 'spray';
+        const applied = granular() ? 'soil' : 'spray';
         const liquid = SPRAY_LIQ.includes(c.f) || c.form === 'liquid';
-        const x = { uid: uid++, ref: c.ref || (c.id ? 'p:' + c.id : 'x'), id: c.id || null, name: c.b, company: c.c || '', t: c.t || 'other', typeWord: c.type || TYPEW[c.t] || '', f: c.f || '',
-            grade: c.grade || '', ai: c.ai || [], onCrop: c.onCrop ?? null, rate: c.rate || null, anee: !!c.anee, applied,
+        const ref = c.ref || (c.id ? 'p:' + c.id : 'x');
+        // Put in on purpose, it stays in this mode; what it is made for shows as a chip when that differs.
+        const nat = natOf({ ...c, ref });
+        const x = { uid: uid++, ref, id: c.id || null, name: c.b, company: c.c || '', t: c.t || 'other', typeWord: c.type || TYPEW[c.t] || '', f: c.f || '',
+            grade: c.grade || '', ai: c.ai || [], onCrop: c.onCrop ?? null, rate: c.rate || null, anee: !!c.anee, applied, nat, fit: { ...(nat || { spray: true, granular: true }), [st.mode]: true },
             amount: null, unit: applied === 'soil' ? 'kg' : (liquid ? 'tbsp' : 'g'), per: applied === 'soil' ? 'ha' : (st.tankL === 16 ? '16L' : 'tank') };
-        if (c.rate && c.rate.parsed) { const r = fromParsed(c.rate.parsed, x); if (r) Object.assign(x, r); }
-        if (c.ownRate) Object.assign(x, c.ownRate);
+        if (c.rate && c.rate.parsed) { const r = fitRate(fromParsed(c.rate.parsed, x)); if (r) Object.assign(x, r); }
+        if (c.ownRate && fitRate(c.ownRate)) Object.assign(x, c.ownRate);
         st.items.push(x);
         keep();
         paintItems(true, x.uid);
@@ -658,17 +819,21 @@
     /* ---- The add sheet ---------------------------------------------------------- */
     const addDlg = $('cxAdd'), q = $('cxQ'), results = $('cxResults');
     let shelf = '', qt = 0, seq = 0, found = [];
-    const QUICK = ['Urea', 'Ammonium sulfate', 'Muriate of potash', 'Complete 14-14-14', 'Calcium nitrate', 'Potassium nitrate', 'Borax', 'Zinc sulfate', 'Epsom salt', 'Potassium silicate', 'Spreader sticker', 'Mancozeb', 'Cypermethrin', 'Glyphosate'];
+    const QUICK = {
+        spray: ['Urea', 'Calcium nitrate', 'Potassium nitrate', 'Borax', 'Zinc sulfate', 'Epsom salt', 'Potassium silicate', 'Spreader sticker', 'Spray oil', 'Mancozeb', 'Cypermethrin', 'Glyphosate'],
+        granular: ['Urea', 'Ammonium sulfate', 'Muriate of potash', 'Complete 14-14-14', 'Ammophos 16-20-0', 'Solophos', 'Diammonium phosphate', 'Top dress 17-0-17', 'Agricultural lime', 'Dolomite', 'Gypsum', 'Zinc sulfate'],
+    };
     const rowHtml = (c, i) => '<button type="button" class="cx-row" data-pick="' + i + '"' + tint(c.t) + '>' + icoHtml(c.t)
         + '<span class="cx-row-t"><b>' + esc(c.b) + '</b><small>' + esc([c.c, c.type || TYPEW[c.t], c.f || c.grade].filter(Boolean).join(' · ')) + '</small>'
-        + (c.ai && c.ai.length ? '<small>' + esc(c.ai.join(', ')) + '</small>' : '') + (c.onCrop ? '<small style="color:#2d6a1f;font-weight:700">Labelled for ' + esc(String(cropName()).toLowerCase()) + '</small>' : '') + '</span>'
+        + (c.ai && c.ai.length ? '<small>' + esc(c.ai.join(', ')) + '</small>' : '') + (c.onCrop ? '<small style="color:#2d6a1f;font-weight:700">Labelled for ' + esc(String(cropName()).toLowerCase()) + '</small>' : '')
+        + ((natOf(c) || {})[st.mode] === false ? '<small class="cx-row-off">' + (granular() ? 'Made to go on in water, not in a dry blend' : 'Made to spread on the soil, not to spray') + '</small>' : '') + '</span>'
         + '<span class="cx-row-plus" aria-hidden="true">' + svg('<path d="M12 5v14M5 12h14"/>', 3) + '</span></button>';
     const drawFind = (list, mine, text) => {
         found = list.concat(mine);
         const anim = !reduce();
         let h = '';
         if (!text) {
-            h = (shelf === 'mine' ? '' : '<p class="cx-sh">Plain fertilizers and chemicals</p><div class="cx-quick">' + QUICK.map((w) => '<button type="button" data-quick="' + esc(w) + '">' + esc(w) + '</button>').join('') + '</div>')
+            h = (shelf === 'mine' ? '' : '<p class="cx-sh">Plain fertilizers and chemicals</p><div class="cx-quick">' + QUICK[st.mode].map((w) => '<button type="button" data-quick="' + esc(w) + '">' + esc(w) + '</button>').join('') + '</div>')
                 + (D.mine.length ? '<p class="cx-sh">Your own products</p>' + D.mine.map((c, i) => rowHtml(c, list.length + i)).join('') : (shelf === 'mine' ? '<div class="cx-hint">You have no products of your own yet. <b>Add your own</b> with its ingredients and rate, and it waits here next time.<button type="button" class="cx-add is-ghost" data-own>Add your own</button></div>' : ''));
             found = list.concat(D.mine);
         } else if (!found.length) {
@@ -692,7 +857,7 @@
         }
         if (text.length < 2) { drawFind([], [], ''); return; }
         try {
-            const r = await window.api(D.urls.find + '?q=' + encodeURIComponent(text) + '&crop=' + encodeURIComponent(st.crop || '') + (shelf ? '&shelf=' + shelf : ''));
+            const r = await window.api(D.urls.find + '?q=' + encodeURIComponent(text) + '&crop=' + encodeURIComponent(st.crop || '') + '&mode=' + st.mode + (shelf ? '&shelf=' + shelf : ''));
             if (my !== seq) return;
             drawFind((r.data || {}).items || [], shelf ? [] : (r.data || {}).mine || [], text);
         } catch (err) { if (my === seq) results.innerHTML = '<div class="cx-hint">' + esc(err.message || 'Could not connect. Please try again.') + '</div>'; }
@@ -751,9 +916,10 @@
         const raw = m ? m.raw : null;
         own.type = raw ? raw.type : 'insecticide';
         own.form = raw ? raw.form : '';
-        own.applied = raw ? raw.applied : 'spray';
-        own.unit = m && m.rate ? m.rate.unit || 'tbsp' : 'tbsp';
-        own.per = m && m.rate ? m.rate.per || '16L' : '16L';
+        own.applied = raw ? raw.applied : (granular() ? 'soil' : 'spray');
+        own.unit = m && m.rate ? m.rate.unit || 'tbsp' : (own.applied === 'soil' ? 'kg' : 'tbsp');
+        own.per = m && m.rate ? m.rate.per || '16L' : (own.applied === 'soil' ? 'ha' : '16L');
+        if (!raw && granular()) own.type = 'granular';
         ownForm.elements.name.value = m ? m.b : (name || '');
         ownForm.elements.notes.value = raw ? raw.notes || '' : '';
         $('cxOwnAmt').value = m && m.rate ? m.rate.amount : '';
@@ -778,7 +944,7 @@
         if (v) { own.unit = v; paintOwn(); }
     });
     $('cxOwnPer').addEventListener('click', async (e) => {
-        const v = await FH.pick({ title: 'The amount is for', value: own.per, counts: false, from: e.currentTarget, opts: (own.applied === 'soil' ? PERS_SOIL : PERS_SPRAY).map((k) => ({ k, l: perWord(k) })) });
+        const v = await FH.pick({ title: 'The amount is for', value: own.per, counts: false, from: e.currentTarget, opts: (own.applied === 'soil' ? PERS_OWN_SOIL : PERS_SPRAY).map((k) => ({ k, l: perWord(k) })) });
         if (v) { own.per = v; paintOwn(); }
     });
     $('cxOwnAiAdd').addEventListener('click', () => { if ($('cxOwnAi').children.length < 6) $('cxOwnAi').insertAdjacentHTML('beforeend', aiRow({})); });
@@ -807,7 +973,7 @@
             await FH.closeModal(ownDlg);
             if (it) {
                 const inMix = st.items.find((x) => x.ref === it.ref);
-                if (inMix) { Object.assign(inMix, { name: it.b, t: it.t, typeWord: it.type, f: it.f, ai: it.ai, applied: it.applied }); keep(); paintItems(true); }
+                if (inMix) { Object.assign(inMix, { name: it.b, t: it.t, typeWord: it.type, f: it.f, ai: it.ai, nat: natOf(it) || inMix.nat }); keep(); paintItems(true); }
                 else if (!was) add({ ...it, ownRate: it.rate || null, rate: null });
             }
             say('Saved for your farm.', 'success');
@@ -861,14 +1027,20 @@
 
     /* ---- The reading -------------------------------------------------------------------- */
     const resDlg = $('cxRes'), resBody = $('cxResBody');
-    const LV = { ok: 'Mixes fine', care: 'Jar test first', no: 'Do not mix', unknown: 'Not in our book' };
+    const LVS = { spray: { ok: 'Mixes fine', care: 'Jar test first', no: 'Do not mix', unknown: 'Not in our book' }, granular: { ok: 'Blends fine', care: 'With care', no: 'Do not blend', unknown: 'Not in our book' } };
+    const num = (n) => String(Math.round(Number(n) * 10) / 10);
     const VICO = { ok: '<path d="M5 13l4 4L19 7"/>', care: '<path d="M9 3h6M10 3v5l-5 9a2 2 0 001.8 3h10.4a2 2 0 001.8-3l-5-9V3"/>', no: '<path d="M6 6l12 12M18 6L6 18"/>', unknown: '<path d="M9.5 9a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 4M12 17h.01"/>' };
     let last = null, lastBody = null, aneeOpt = null;
-    const caseBody = () => ({ crop: st.crop, stage: st.stage, water: st.water, weather: st.weather, tankL: st.tankL, waterHa: st.waterHa,
-        items: st.items.map((x) => ({ ref: x.ref, name: x.name, applied: x.applied, amount: x.amount, unit: x.unit, per: x.per })) });
+    const caseBody = () => {
+        const g = granular();
+        return { mode: st.mode, crop: st.crop, stage: st.stage, water: g ? '' : st.water, weather: g ? '' : st.weather, waterPh: !g && st.waterPh !== '' ? Number(st.waterPh) : null, tankL: st.tankL, waterHa: st.waterHa,
+            soil: g ? st.soil : '', waterSoon: g ? st.waterSoon : '', place: g ? st.place : '', lotHa: g && Number(st.lotHa) > 0 ? Number(st.lotHa) : null,
+            items: st.items.map((x) => ({ ref: x.ref, name: x.name, applied: g ? 'soil' : 'spray', amount: x.amount, unit: x.unit, per: x.per })) };
+    };
     const nm = (r, i) => esc((r.items[i] || {}).name || '');
     function drawResult(r) {
         last = r;
+        const g = r.mode === 'granular', LV = LVS[g ? 'granular' : 'spray'];
         const worstOf = (i) => r.pairs.filter((p) => p.a === i || p.b === i).reduce((w, p) => ({ ok: 0, unknown: 1, care: 2, no: 3 }[p.level] > { ok: 0, unknown: 1, care: 2, no: 3 }[w] ? p.level : w), r.items[i].known ? 'ok' : 'unknown');
         const out = [];
         out.push('<section class="cx-verdict is-' + r.verdict + '"><span class="cx-vico" aria-hidden="true">' + svg(VICO[r.verdict], 3) + '</span><div><h3>' + esc(r.headline.t) + '</h3><p>' + esc(r.headline.s) + '</p></div>'
@@ -889,10 +1061,11 @@
             out.push('<section class="cx-sec"><h3 data-tl="tank-mix">' + svg('<path d="M8 7h8M8 12h8M8 17h5"/>') + 'Pair by pair</h3><div class="cx-pairs">'
                 + bad.map((p) => '<article class="cx-pair is-' + p.level + '"><div class="cx-pair-h"><b>' + nm(r, p.a) + ' <em>+</em> ' + nm(r, p.b) + '</b><span class="cx-lvl">' + LV[p.level] + '</span></div>'
                     + (p.reasons.length ? p.reasons.map((x) => '<p class="cx-why">' + esc(x.why) + (x.anee ? '<span class="cx-anee">Anee checked</span>' : '') + '</p>' + (x.fix ? '<p class="cx-fix"><b>Do instead:</b> ' + esc(x.fix) + '</p>' : '')).join('')
-                        : '<p class="cx-why">' + (p.level === 'unknown' ? 'We do not know ' + esc(r.items[p.a].known ? r.items[p.b].name : r.items[p.a].name) + ' well enough to say. Do a jar test, or ask Anee to check online.' : '') + '</p>')
+                        : '<p class="cx-why">' + (p.level === 'unknown' ? 'We do not know ' + esc(r.items[p.a].known ? r.items[p.b].name : r.items[p.a].name) + ' well enough to say. '
+                            + (g ? 'Mix a handful of each in a bowl and watch it for an hour, or ask Anee to check online.' : 'Do a jar test, or ask Anee to check online.') : '') + '</p>')
                     + (p.gap ? '<span class="cx-gap">' + svg('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>', 2.2) + 'Keep ' + p.gap + ' days apart</span>' : '')
-                    + (p.mode !== 'tank' && p.level !== 'unknown' ? '<p class="cx-label">' + (p.mode === 'blend' ? 'Mixed in one bag and spread together.' : 'One sprayed, one on the soil, on the same field.') + '</p>' : '') + '</article>').join('')
-                + (fine.length ? '<div><p class="cx-label" style="margin-bottom:.35rem"><b>These pairs mix fine as far as we know:</b></p><div class="cx-fine-ok">'
+                    + '</article>').join('')
+                + (fine.length ? '<div><p class="cx-label" style="margin-bottom:.35rem"><b>These pairs ' + (g ? 'blend' : 'mix') + ' fine as far as we know:</b></p><div class="cx-fine-ok">'
                     + fine.map((p) => '<span>' + nm(r, p.a) + ' + ' + nm(r, p.b) + (p.good ? ', a common mix' : '') + '</span>').join('') + '</div></div>' : '')
                 + '</div></section>');
         }
@@ -901,8 +1074,32 @@
             out.push('<section class="cx-sec"><h3>' + I.warn + 'Watch out</h3><div class="cx-notes">' + r.tank.map((n) => '<div class="cx-note' + (n.level === 'no' ? ' is-no' : '') + '">' + I.warn
                 + '<div><p>' + esc(n.why) + '</p>' + (n.fix ? '<p><b>Do instead:</b> ' + esc(n.fix) + '</p>' : '') + '</div></div>').join('') + '</div></section>');
         }
+        // Granules: how salty for the roots, and how to spread them.
+        const sa = r.salt;
+        if (g && sa && (sa.rows.length || sa.missing.length)) {
+            const near = sa.place === 'hole' || sa.place === 'band';
+            let h = '<section class="cx-sec"><h3 data-tl="salt-index">' + svg('<path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M12 21a6 6 0 006-6c0-3-3-6-6-9-3 3-6 6-6 9a6 6 0 006 6z"/>') + 'How salty for the roots</h3>';
+            if (sa.rows.length) {
+                h += '<div class="cx-salt">' + sa.rows.map((w) => '<div><b>' + nm(r, w.i) + '</b><span class="cx-salt-bar"><i style="width:' + Math.max(4, Math.min(100, w.si / 1.2)).toFixed(1) + '%"></i></span>'
+                    + '<small>' + num(w.kgHa) + ' kg a hectare. Salt index ' + (w.est ? 'about ' : '') + w.si + ', where sodium nitrate is 100</small></div>').join('') + '</div>';
+                if (near) {
+                    const mx = Math.max(sa.limitSeed * 1.8, sa.nk * 1.1), at = Math.min(100, sa.nk / mx * 100), lim = sa.limitSeed / mx * 100;
+                    h += '<p class="cx-strong" style="margin-top:.7rem">Close to the seed or young roots: about <b>' + num(sa.nk) + ' kg</b> of nitrogen and potash a hectare. Keep it under about ' + sa.limitSeed + ' kg there.</p>'
+                        + '<div class="cx-meter" style="background:linear-gradient(90deg,#bbf7d0 0%,#bbf7d0 ' + (lim * 0.75).toFixed(1) + '%,#fde68a ' + (lim * 0.75).toFixed(1) + '%,#fde68a ' + lim.toFixed(1) + '%,#fecaca ' + lim.toFixed(1) + '%)"><i style="left:calc(' + at.toFixed(1) + '% - .15rem)"></i></div>'
+                        + '<div class="cx-meter-l"><span>Safe</span><span>The limit</span><span>Burns</span></div>';
+                } else {
+                    h += '<p class="cx-label" style="margin-top:.6rem">Spread over the field, the salt is thin. It matters close to the seed or young roots: in the hole or a band, keep the nitrogen and potash there under about ' + sa.limitSeed + ' kg a hectare.</p>';
+                }
+            }
+            if (sa.missing.length) h += '<p class="cx-label">Add how much ' + esc(sa.missing.join(', ')) + ' you use per hectare or per lot to see how salty the blend is.</p>';
+            out.push(h + '</section>');
+        }
+        if (g && (r.spread || []).length) {
+            out.push('<section class="cx-sec"><h3 data-tl="fertilizer-blend">' + svg('<path d="M6 8h12l-1 12H7L6 8zm3 0V6.5a3 3 0 016 0V8"/>') + 'How to spread them together</h3><ol class="cx-steps">'
+                + r.spread.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol></section>');
+        }
         // How strong.
-        if (r.strength) {
+        if (!g && r.strength) {
             const s = r.strength, max = Math.max(s.limit * 1.6, s.pct * 1.1, 0.1), at = Math.min(100, s.pct / max * 100), limAt = s.limit / max * 100;
             out.push('<section class="cx-sec"><h3 data-tl="foliar-strength">' + I.drop + 'How strong is the spray</h3>'
                 + (s.gl > 0 ? '<p class="cx-strong">The fertilizer in the spray: <b>' + s.pct + '%</b>, about ' + s.gl + ' g in a liter. The limit for ' + esc(String(r.cropName || 'this crop').toLowerCase()) + (r.stageWord ? ' ' + esc(r.stageWord) : '') + ' is about ' + s.limit + '%.</p>'
@@ -912,7 +1109,7 @@
                 + '</section>');
         }
         // How to mix, and the jar test.
-        if (r.order.length > 2) {
+        if (!g && r.order.length > 2) {
             out.push('<section class="cx-sec"><h3 data-tl="mixing-order">' + svg('<path d="M4 6h16M4 12h10M4 18h6"/>') + 'How to mix, in this order</h3><ol class="cx-steps">'
                 + r.order.map((s) => '<li>' + esc(s.say) + '</li>').join('') + '</ol></section>');
             const jar = r.jar.filter((j) => j.amount);
@@ -922,25 +1119,26 @@
                     : '<p class="cx-label">Add the amounts to see how much of each goes into the jar.</p>') + '</section>');
         }
         // Split the work.
-        const trips = r.trips.filter((t) => t.length);
-        if (trips.length > 1 || r.gaps.length || r.spreads.length > 1) {
-            out.push('<section class="cx-sec"><h3>' + svg('<path d="M7 7h10M7 12h10M7 17h10"/>') + 'Split the work</h3><div class="cx-trips">'
-                + trips.map((t, k) => '<div class="cx-trip"><b>Spray ' + (k + 1) + '</b><ul>' + t.map((i) => '<li>' + nm(r, i) + '</li>').join('') + '</ul></div>').join('')
-                + (r.spreads.length > 1 ? r.spreads.map((t, k) => '<div class="cx-trip"><b>Spread ' + (k + 1) + '</b><ul>' + t.map((i) => '<li>' + nm(r, i) + '</li>').join('') + '</ul></div>').join('') : '')
+        const trips = r.trips.filter((t) => t.length), passes = r.spreads.filter((t) => t.length);
+        if (trips.length > 1 || r.gaps.length || passes.length > 1) {
+            out.push('<section class="cx-sec"><h3>' + svg('<path d="M7 7h10M7 12h10M7 17h10"/>') + (g ? 'Split the trip' : 'Split the work') + '</h3><div class="cx-trips">'
+                + (trips.length > 1 ? trips.map((t, k) => '<div class="cx-trip"><b>Spray ' + (k + 1) + '</b><ul>' + t.map((i) => '<li>' + nm(r, i) + '</li>').join('') + '</ul></div>').join('') : '')
+                + (passes.length > 1 ? passes.map((t, k) => '<div class="cx-trip"><b>Pass ' + (k + 1) + '</b><ul>' + t.map((i) => '<li>' + nm(r, i) + '</li>').join('') + '</ul></div>').join('') : '')
                 + '</div>' + (r.gaps.length ? '<ul class="cx-tips" style="margin-top:.6rem">' + r.gaps.map((g) => '<li>Keep ' + g.days + ' days between ' + nm(r, g.a) + ' and ' + nm(r, g.b) + '.</li>').join('') + '</ul>' : '') + '</section>');
         }
         // Before harvest, and the labels' own words.
         const phi = r.items.filter((x) => x.phi);
-        if (phi.length) out.push('<section class="cx-sec"><h3>' + svg('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>') + 'Last spray before harvest</h3><div class="cx-phi">'
+        if (phi.length) out.push('<section class="cx-sec"><h3>' + svg('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>') + (g ? 'Last application before harvest' : 'Last spray before harvest') + '</h3><div class="cx-phi">'
             + phi.map((x) => '<div><b>' + esc(x.name) + '</b><span>' + esc(x.phi) + '</span></div>').join('') + '</div></section>');
         const mix = r.items.filter((x) => (x.mix || []).length);
-        if (mix.length) out.push('<section class="cx-sec"><h3>' + I.book + 'What the labels say about mixing</h3>' + mix.map((x) => '<p class="cx-label" style="margin-top:.4rem"><b>' + esc(x.name) + '</b></p><ul class="cx-tips">'
+        if (mix.length) out.push('<section class="cx-sec"><h3>' + I.book + (mix.some((x) => x.company) ? 'What the labels say about mixing' : 'What to know about mixing them') + '</h3>' + mix.map((x) => '<p class="cx-label" style="margin-top:.4rem"><b>' + esc(x.name) + '</b></p><ul class="cx-tips">'
             + x.mix.map((m) => '<li>' + esc(m) + '</li>').join('') + '</ul>').join('') + '</section>');
         if (r.tips.length) out.push('<section class="cx-sec"><h3>' + I.info + 'Good to know</h3><ul class="cx-tips">' + r.tips.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ul></section>');
         if (r.anee && (r.anee.summary || (r.anee.notes || []).length)) out.push('<section class="cx-sec"><h3>' + I.search + 'What Anee found online</h3>' + (r.anee.summary ? '<p class="cx-strong">' + esc(r.anee.summary) + '</p>' : '')
             + ((r.anee.notes || []).length ? '<ul class="cx-tips" style="margin-top:.5rem">' + r.anee.notes.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ul>' : '') + '</section>');
-        out.push('<p class="cx-fine">' + I.warn + '<span>The product label always wins over this check. Wear gloves and a mask, and never mix concentrates together before the water.</span></p>');
-        out.push('<div class="cx-foot"><button type="button" data-fhm-close>Change the mix</button><button type="button" id="cxAgain">Check again</button></div>');
+        out.push('<p class="cx-fine">' + I.warn + '<span>' + (g ? 'The product label always wins over this check. Wear gloves and a mask when you mix fertilizer, and wash your hands after.'
+            : 'The product label always wins over this check. Wear gloves and a mask, and never mix concentrates together before the water.') + '</span></p>');
+        out.push('<div class="cx-foot"><button type="button" data-fhm-close>Change the ' + (g ? 'blend' : 'mix') + '</button><button type="button" id="cxAgain">Check again</button></div>');
         resBody.innerHTML = out.join('');
         $('cxResSub').textContent = [r.cropName, r.stageWord].filter(Boolean).join(', ') + ' · ' + r.items.length + ' ' + (r.items.length === 1 ? 'product' : 'products');
         $('cxResPane').scrollTop = 0;
@@ -949,6 +1147,12 @@
     }
     async function check() {
         if (!st.items.length) return;
+        if (granular() && !(Number(st.lotHa) > 0) && st.items.some((x) => x.per === 'lot' && x.amount)) {
+            say('Write the lot size under Where it goes: a rate per lot needs it.', 'error');
+            lotIn.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'center' });
+            setTimeout(() => { lotIn.focus({ preventScroll: true }); FH.bump?.(lotIn); }, reduce() ? 0 : 320);
+            return;
+        }
         const btn = go;
         btn.disabled = true; btn.classList.add('is-busy');
         try {
@@ -1004,6 +1208,9 @@
     }
 
     window.CX_JAR = @json(\App\Support\CompatBook::rules()['jar'] ?? []);
+    st.items.forEach((x) => { if (!x.fit) { x.nat = natOf(x) || null; x.fit = { spray: true, granular: true }; } fixUnits(x); });
+    paintMode(false);
+    paintAside([], []);
     paintItems(false);
 })();
 </script>

@@ -148,9 +148,15 @@ final class CompatBook
                 $groups[] = $ing['grp'];
             }
         }
-        // Flags Anee found for an ingredient the book lacks (kept on the product row).
-        foreach ((array) ($p['aiFlags'] ?? []) as $f) {
-            $flags[(string) $f] = true;
+        // Flags Anee found, kept on the product row: only for an ingredient the dictionary does not know
+        // (the dictionary's own reading of a known ingredient wins over hers).
+        if ($unknown || ! $known) {
+            foreach ((array) ($p['aiFlags'] ?? []) as $f) {
+                $flags[(string) $f] = true;
+            }
+            if ($unknown && ! empty($p['aiFlags'])) {
+                $unknown = [];
+            }
         }
         foreach ((array) ($p['flags'] ?? []) as $f) {
             $flags[(string) $f] = true;

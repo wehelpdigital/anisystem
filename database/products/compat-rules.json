@@ -1470,7 +1470,7 @@
    ],
    "level": "care",
    "a": [
-    "fe_calcium"
+    "fe_calcium&fe_nitrate"
    ],
    "b": [
     "fert_gran"
@@ -1728,10 +1728,90 @@
    "fix": "Keep it a hand width away from the seedlings and water it in. Split the dose into two applications.",
    "src": []
   },
+  "ph_high": {
+   "level": "care",
+   "why": "Your water is pH {ph}, alkaline, and {a} breaks down in alkaline water.",
+   "fix": "Spray within an hour of mixing. A spray buffer brings the water to about pH 6, unless the tank has copper, a sulfonylurea or soap.",
+   "src": [
+    "https://edis.ifas.ufl.edu/publication/PI193",
+    "https://bookstore.ksre.ksu.edu/download/effect-of-water-and-spray-solution-ph-on-pesticide-activity_MF3272",
+    "https://www.umass.edu/agriculture-food-environment/greenhouse-floriculture/fact-sheets/effects-of-ph-on-pesticides-growth-regulators",
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/Reports/114.htm",
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/Reports/196.htm"
+   ]
+  },
+  "ph_low_copper": {
+   "level": "no",
+   "why": "Your water is pH {ph}. Copper in acid water turns into free ions that burn leaves.",
+   "fix": "Spray {a} in water at pH 6.5 or more, and never add an acidifier to it.",
+   "src": [
+    "https://www.greenbook.net/api/products/64438/documents/34287/download",
+    "https://www.greenbook.net/api/products/60616/documents/5404/download",
+    "https://edis.ifas.ufl.edu/publication/PI193"
+   ]
+  },
+  "ph_low_su": {
+   "level": "care",
+   "why": "Your water is pH {ph}, and {a} breaks down faster in acid water.",
+   "fix": "Do not add an acidifier. Spray it at once after mixing.",
+   "src": [
+    "https://www.extension.purdue.edu/extmedia/PPP/PPP-86.pdf",
+    "https://pubs.ext.vt.edu/BSE/bse-352/bse-352.html",
+    "https://extension.unh.edu/resource/water-ph-pesticide-mixing-quick-reference-new-hampshire-applicators"
+   ]
+  },
+  "salt_seed": {
+   "level": "care",
+   "why": "About {nk} kg of nitrogen and potash per hectare would sit right with the seed or young roots. More than about 11 kg there can burn them.",
+   "fix": "Keep most of it a hand width away from the seed or the row, or split it: a little at planting and the rest later as top dress.",
+   "src": []
+  },
+  "urea_dry_surface": {
+   "level": "care",
+   "why": "Urea and ammonium left on dry soil turn into ammonia gas, and much of the nitrogen is lost to the air.",
+   "fix": "Spread them on moist soil just before rain or irrigation, water them in within a day or two, or work them into the soil.",
+   "src": []
+  },
+  "nitrate_flooded": {
+   "level": "care",
+   "why": "Nitrate fertilizer in flooded soil is soon lost as gas or washed down, before the roots take it up.",
+   "fix": "In a flooded field use urea or ammonium fertilizers, and keep nitrate for upland crops or drained soil.",
+   "src": []
+  },
   "urea_wet_leaves": {
    "level": "care",
    "why": "Granules that stay on wet leaves burn spots in them.",
    "fix": "Spread when the leaves are dry and shake or wash the granules off the plants.",
+   "src": []
+  },
+  "not_spray": {
+   "level": "care",
+   "why": "{a} is made to spread on the soil, not to spray. Granules dissolve slowly, and the filler in them settles and clogs the nozzle.",
+   "fix": "Use a soluble or foliar grade instead, or leave it out of the tank and spread it.",
+   "src": []
+  },
+  "not_spray_pest": {
+   "level": "no",
+   "why": "{a} is a granule pesticide, made to spread as it is. Its label does not tell you to mix it in water.",
+   "fix": "Spread it on its own as its label says, and leave it out of the tank.",
+   "src": []
+  },
+  "not_granule": {
+   "level": "care",
+   "why": "{a} goes on in water, by spray or drench. Spread dry with granules, it does not reach where it works.",
+   "fix": "Leave it out of the blend and spray it on its own trip, or choose A spray above to check it with your other sprays.",
+   "src": []
+  },
+  "bait_in_blend": {
+   "level": "no",
+   "why": "{a} is a bait that goes on as it is. It is not blended with fertilizer.",
+   "fix": "Put it out as its label says, on its own.",
+   "src": []
+  },
+  "seed_in_blend": {
+   "level": "care",
+   "why": "{a} is a seed treatment. It goes on the seed before planting, not in a fertilizer blend.",
+   "fix": "Treat the seed with it as its label says.",
    "src": []
   }
  },
@@ -1939,10 +2019,32 @@
   "lettuce",
   "strawberry"
  ],
+ "spread": {
+  "all": [
+   "Weigh each fertilizer for the area you will cover, then mix them on a dry tarp or floor in the shade, only what you spread today.",
+   "Wear gloves and keep the dust off your face. Close the bags right away: blends take up water from the air."
+  ],
+  "broadcast": [
+   "Spread evenly by hand or with a spreader, half going one way across the field and half the other way, so no spot gets a double dose."
+  ],
+  "incorporated": [
+   "Spread it evenly, then work it into the top few centimeters of soil the same day with a rake, a harrow or the last plowing."
+  ],
+  "band": [
+   "Put it in a shallow furrow a hand width beside the row, then cover it with soil."
+  ],
+  "hole": [
+   "Put it in the bottom of the hole, cover it with a little soil, then plant on top, so the seed or roots do not touch the fertilizer."
+  ],
+  "pesticide": "Apply the pesticide granules as their label says. Mix them into fertilizer only if both labels allow it, wearing gloves.",
+  "after": [
+   "Water it in, or let the rain or the irrigation carry it into the soil. In a paddy, keep the water in for a few days after."
+  ]
+ },
  "blendChart": {
   "ammonium_nitrate|ammonium_sulfate": [
    "care",
-   "Safety: ammonium nitrate mixed with ammonium sulfate can become easier to detonate and may fall under legal limits; free acid or organic dirt adds to the risk. Pacific Fertiliser rates it fine."
+   "Safety: ammonium nitrate mixed with ammonium sulfate can become easier to detonate and may fall under legal limits; free acid or organic dirt adds to the risk."
   ],
   "ammonium_nitrate|calcium_nitrate": [
    "care",
@@ -1954,7 +2056,7 @@
   ],
   "ammonium_nitrate|can": [
    "care",
-   "ICL tests rate it limited: blending possible with care. Fertilizers Europe (2018 table) rates it fine."
+   "They can be blended with care: mix only what you spread right away."
   ],
   "ammonium_nitrate|dap": [
    "ok",
@@ -1966,7 +2068,7 @@
   ],
   "ammonium_nitrate|elemental_sulfur": [
    "no",
-   "Sulfur burns and can react with nitrates; a fire risk. Pacific Fertiliser rates it fine."
+   "Sulfur burns and can react with nitrates; a fire risk."
   ],
   "ammonium_nitrate|gypsum": [
    "ok",
@@ -1994,7 +2096,7 @@
   ],
   "ammonium_nitrate|mop": [
    "care",
-   "Safety: the blend can start a slow, self sustaining breakdown that smoulders; keep oil coating low. Pacific Fertiliser rates it fine."
+   "Safety: the blend can start a slow, self sustaining breakdown that smoulders; keep oil coating low."
   ],
   "ammonium_nitrate|potassium_nitrate": [
    "ok",
@@ -2014,11 +2116,11 @@
   ],
   "ammonium_nitrate|tsp": [
    "care",
-   "Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags. Pacific Fertiliser rates it fine."
+   "Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags."
   ],
   "ammonium_nitrate|urea": [
    "no",
-   "Together they pull water from the air so fast that the mix turns to slush or liquid; there may be safety risks too. TVA advises keeping urea and ammonium nitrate well apart even in storage; a mix of the two takes up water at about 18% humid"
+   "Together they pull water from the air so fast that the mix turns to slush or liquid; there may be safety risks too."
   ],
   "ammonium_sulfate|calcium_nitrate": [
    "care",
@@ -2030,7 +2132,7 @@
   ],
   "ammonium_sulfate|can": [
    "care",
-   "Safety: ammonium nitrate mixed with ammonium sulfate can become easier to detonate and may fall under legal limits. Pacific Fertiliser rates it fine."
+   "Safety: ammonium nitrate mixed with ammonium sulfate can become easier to detonate and may fall under legal limits."
   ],
   "ammonium_sulfate|dap": [
    "ok",
@@ -2038,7 +2140,7 @@
   ],
   "ammonium_sulfate|dolomite": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "ammonium_sulfate|elemental_sulfur": [
    "ok",
@@ -2054,7 +2156,7 @@
   ],
   "ammonium_sulfate|lime": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "ammonium_sulfate|map": [
    "ok",
@@ -2086,7 +2188,7 @@
   ],
   "ammonium_sulfate|ssp": [
    "care",
-   "Pacific Fertiliser rates it limited: spread soon after mixing and do not store, or it reacts and sets hard. Fertilizers Europe (2018 table) rates it fine."
+   "Spread soon after mixing and do not store, or it reacts and sets hard."
   ],
   "ammonium_sulfate|tsp": [
    "ok",
@@ -2106,19 +2208,19 @@
   ],
   "calcium_nitrate|complete_14_14_14": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
   ],
   "calcium_nitrate_gg|complete_14_14_14": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry."
   ],
   "calcium_nitrate|dap": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate_gg|dap": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate|dolomite": [
    "ok",
@@ -2162,19 +2264,19 @@
   ],
   "calcium_nitrate|map": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate|map_tech": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate_gg|map": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate_gg|map_tech": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate|mkp": [
    "care",
@@ -2218,19 +2320,19 @@
   ],
   "calcium_nitrate|ssp": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate_gg|ssp": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate|tsp": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate_gg|tsp": [
    "care",
-   "Calcium nitrate pulls water from the air; blend only when the air is dry. FAO advises not mixing calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
+   "Calcium nitrate pulls water from the air; blend only when the air is dry. Do not mix calcium fertilizers with water soluble phosphate, since the calcium turns the phosphate insoluble."
   ],
   "calcium_nitrate|urea": [
    "care",
@@ -2246,7 +2348,7 @@
   ],
   "can|dolomite": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "can|elemental_sulfur": [
    "no",
@@ -2262,7 +2364,7 @@
   ],
   "can|lime": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "can|map": [
    "ok",
@@ -2294,11 +2396,11 @@
   ],
   "can|ssp": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe (2018 table) rates it limited."
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "can|tsp": [
    "care",
-   "Works only if the superphosphate is dry; moisture in it causes trouble. Pacific Fertiliser rates it fine."
+   "Works only if the superphosphate is dry; moisture in it causes trouble."
   ],
   "can|urea": [
    "no",
@@ -2306,59 +2408,59 @@
   ],
   "complete_14_14_14|dap": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|dolomite": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|gypsum": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|kieserite": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|lime": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|map": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|map_tech": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|mkp": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|potassium_nitrate": [
    "care",
-   "With an ammonium nitrate based compound: Safety: adds extra nitrate to an ammonium nitrate compound; check safety and legal limits. With a urea based compound: The nitrate, or the ammonium phosphate in the compound, can react with the urea"
+   "Extra nitrate can react with the urea or ammonium phosphate in a compound fertilizer, and the blend takes up water: mix only what you spread right away."
   ],
   "complete_14_14_14|sodium_nitrate": [
    "care",
-   "With an ammonium nitrate based compound: Safety: adds extra nitrate to an ammonium nitrate compound; check safety and legal limits. With a urea based compound: The nitrate, or the ammonium phosphate in the compound, can react with the urea"
+   "Extra nitrate can react with the urea or ammonium phosphate in a compound fertilizer, and the blend takes up water: mix only what you spread right away."
   ],
   "complete_14_14_14|sop": [
    "ok",
-   "No problem expected when blended. Rated the same for ammonium nitrate based and urea based NPK compounds."
+   "No problem expected when blended."
   ],
   "complete_14_14_14|ssp": [
    "care",
-   "With an ammonium nitrate based compound: Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags. With a urea based compound: If the superphosphate carries free acid, the urea can break down and give"
+   "Free acid in the superphosphate can react with the urea or ammonium in the compound and turn the blend wet: mix only what you spread right away."
   ],
   "complete_14_14_14|tsp": [
    "care",
-   "With an ammonium nitrate based compound: Any free acid in the superphosphate slowly breaks down ammonium nitrate and can damage the bags. With a urea based compound: If the superphosphate carries free acid, the urea can break down and give"
+   "Free acid in the superphosphate can react with the urea or ammonium in the compound and turn the blend wet: mix only what you spread right away."
   ],
   "dap|dolomite": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "dap|elemental_sulfur": [
    "ok",
@@ -2374,7 +2476,7 @@
   ],
   "dap|lime": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "dap|map": [
    "ok",
@@ -2406,11 +2508,11 @@
   ],
   "dap|ssp": [
    "care",
-   "If the superphosphate carries free acid, it reacts with the ammonia in DAP. IFDC and FAO advise avoiding DAP with superphosphate: it can cake or change how soluble the phosphate is."
+   "If the superphosphate carries free acid, it reacts with the ammonia in DAP. Avoid DAP with superphosphate: it can cake or change how soluble the phosphate is."
   ],
   "dap|tsp": [
    "care",
-   "If the superphosphate carries free acid, it reacts with the ammonia in DAP. Pacific Fertiliser rates it fine. IFDC and FAO advise avoiding DAP with superphosphate: it can cake or change how soluble the phosphate is."
+   "If the superphosphate carries free acid, it reacts with the ammonia in DAP. Avoid DAP with superphosphate: it can cake or change how soluble the phosphate is."
   ],
   "dap|urea": [
    "ok",
@@ -2422,7 +2524,7 @@
   ],
   "dolomite|gypsum": [
    "ok",
-   "Compatible on the Pacific Fertiliser chart."
+   "No problem expected when blended."
   ],
   "dolomite|kieserite": [
    "ok",
@@ -2430,15 +2532,15 @@
   ],
   "dolomite|lime": [
    "ok",
-   "Compatible on the Pacific Fertiliser chart."
+   "No problem expected when blended."
   ],
   "dolomite|map": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "dolomite|map_tech": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "dolomite|mkp": [
    "ok",
@@ -2462,15 +2564,15 @@
   ],
   "dolomite|ssp": [
    "care",
-   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. Pacific Fertiliser rates it fine. The 2014 Fertilizers Europe guidance rated it compatible."
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite."
   ],
   "dolomite|tsp": [
    "care",
-   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. Pacific Fertiliser rates it fine. The 2014 Fertilizers Europe guidance rated it compatible."
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite."
   ],
   "dolomite|urea": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. Pacific lists a separate limestone and dolomite lin"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "elemental_sulfur|gypsum": [
    "ok",
@@ -2530,7 +2632,7 @@
   ],
   "gypsum|lime": [
    "ok",
-   "Compatible on the Pacific Fertiliser chart."
+   "No problem expected when blended."
   ],
   "gypsum|map": [
    "ok",
@@ -2562,11 +2664,11 @@
   ],
   "gypsum|ssp": [
    "care",
-   "Fertilizers Europe groups gypsum with limestone and dolomite and rates this limited, as free acid in the superphosphate can react. The 2014 Fertilizers Europe guidance rated it compatible."
+   "These two can react or take up water when they sit mixed: blend only what you spread right away."
   ],
   "gypsum|tsp": [
    "care",
-   "Fertilizers Europe groups gypsum with limestone and dolomite and rates this limited, as free acid in the superphosphate can react. Pacific Fertiliser rates it fine. The 2014 Fertilizers Europe guidance rated it compatible."
+   "These two can react or take up water when they sit mixed: blend only what you spread right away."
   ],
   "gypsum|urea": [
    "ok",
@@ -2614,11 +2716,11 @@
   ],
   "lime|map": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "lime|map_tech": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. FAO notes that ammonium fertilizers mixed with lime"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "lime|mkp": [
    "ok",
@@ -2642,15 +2744,15 @@
   ],
   "lime|ssp": [
    "care",
-   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. The 2014 Fertilizers Europe guidance rated it compatible."
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite."
   ],
   "lime|tsp": [
    "care",
-   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite. The 2014 Fertilizers Europe guidance rated it compatible."
+   "If the superphosphate carries free acid, it attacks the carbonate in lime or dolomite."
   ],
   "lime|urea": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix can give off gas (ammonia or sulfur), turn wet, or heat up. Fertilizers Europe rates mined limestone or dolomite fine for blend storage. Pacific lists a separate limestone and dolomite lin"
+   "The mix can give off gas (ammonia or sulfur), turn wet, or heat up."
   ],
   "map|mkp": [
    "ok",
@@ -2694,11 +2796,11 @@
   ],
   "map|ssp": [
    "care",
-   "Pacific Fertiliser rates it limited: spread soon after mixing and do not store, or it reacts and sets hard. Fertilizers Europe (2018 table) rates it fine."
+   "Spread soon after mixing and do not store, or it reacts and sets hard."
   ],
   "map_tech|ssp": [
    "care",
-   "Pacific Fertiliser rates it limited: spread soon after mixing and do not store, or it reacts and sets hard. Fertilizers Europe (2018 table) rates it fine."
+   "Spread soon after mixing and do not store, or it reacts and sets hard."
   ],
   "map|tsp": [
    "ok",
@@ -2766,7 +2868,7 @@
   ],
   "mop|urea": [
    "care",
-   "Can cake when it takes up moisture; keep it dry. ICL rates it fine. Pacific Fertiliser rates it fine. IFDC also calls urea and MOP partly compatible."
+   "Can cake when it takes up moisture; keep it dry."
   ],
   "potassium_nitrate|sop": [
    "ok",
@@ -2814,31 +2916,31 @@
   ],
   "ssp|tsp": [
    "ok",
-   "Compatible on the Pacific Fertiliser chart."
+   "No problem expected when blended."
   ],
   "ssp|urea": [
    "no",
-   "Pacific Fertiliser rates it not compatible: the mix takes up water and turns wet, or heats up. Fertilizers Europe (2018 table) rates it limited. TVA found such mixes are usually fine if taken straight to the field and spread at once, but ba"
+   "The mix takes up water and turns wet, or heats up."
   ],
   "ssp|zinc_sulfate_hepta": [
    "care",
-   "Pacific Fertiliser lists single superphosphate with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+   "The blend takes up water easily and can set hard in storage, sometimes within hours."
   ],
   "ssp|zinc_sulfate_mono": [
    "care",
-   "Pacific Fertiliser lists single superphosphate with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+   "The blend takes up water easily and can set hard in storage, sometimes within hours."
   ],
   "tsp|urea": [
    "no",
-   "ICL tests rate it incompatible: do not blend. Fertilizers Europe (2018 table) rates it limited. Pacific Fertiliser rates it limited. TVA found such mixes are usually fine if taken straight to the field and spread at once, but bagging them c"
+   "These two react when they sit mixed: the blend turns wet, gives off gas or heats up."
   ],
   "urea|zinc_sulfate_hepta": [
    "care",
-   "Pacific Fertiliser lists urea with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+   "The blend takes up water easily and can set hard in storage, sometimes within hours."
   ],
   "urea|zinc_sulfate_mono": [
    "care",
-   "Pacific Fertiliser lists urea with zinc sulfate monohydrate as limited: the blend takes up water easily and can set hard in storage, sometimes within hours."
+   "The blend takes up water easily and can set hard in storage, sometimes within hours."
   ]
  }
 }

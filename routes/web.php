@@ -182,6 +182,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'compatChecker' => class_exists(\App\Support\CompatCheck::class) && is_file(resource_path('views/field-helpers/partials/compat.blade.php')) && is_file(database_path('products/materials.json')),
             // 2026-10-18: learn once, a variety or product Anee looked up is read from the book next time (true once the table is there).
             'learnOnce' => class_exists(\App\Support\VarietyLearned::class) && method_exists(\App\Support\NpkPlan::class, 'fromBook') && \App\Support\VarietyLearned::ready(),
+            // 2026-10-18: the Compatibility Checker asks spray or granules first (true once the book is synced with each material's uses).
+            'compatModes' => method_exists(\App\Support\ProductLibrary::class, 'fits')
+                && rescue(fn () => \Illuminate\Support\Facades\DB::table('migrations')->where('migration', '2026_10_18_100000_product_book_spray_or_granules')->exists(), false, false),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.

@@ -291,7 +291,9 @@ final class ProductLibrary
             return null;
         }
         try {
-            $r = self::db()->table(self::TABLE)->where('brandKey', mb_substr($k, 0, 190))->where('status', 1)->orderByRaw("source = 'file' desc")->orderBy('id')->first();
+            // The book's own rows first, and the plain material before a brand of the same name.
+            $r = self::db()->table(self::TABLE)->where('brandKey', mb_substr($k, 0, 190))->where('status', 1)
+                ->orderByRaw("source = 'file' desc")->orderByRaw("company = '' desc")->orderBy('id')->first();
             if ($r) {
                 return self::fromRow($r);
             }
@@ -469,12 +471,51 @@ final class ProductLibrary
     }
 
     /**
+     * Whether a product belongs in a spray (a tank mix) or in a granular pass
+     * (spread or broadcast together). Sprays: every product that goes on in
+     * water (liquids, WP, WG, SC, EC, foliar and soluble fertilizers, spray
+     * helpers), and a plain fertilizer that is also sprayed (urea). Granulars:
+     * granular fertilizers, soil conditioners (lime, dolomite, gypsum) and
+     * pesticide granules, and a soluble powder also put on the soil (borax,
+     * zinc sulfate). A liquid is never a granule; a drip only acid is no spray.
+     * A bait or a seed treatment is neither: it goes on alone.
+     */
+    public static function fits(array $p, string $mode): bool
+    {
+        $applied = $p['applied'] ?? self::applied($p);
+        if (in_array($applied, ['bait', 'seed'], true)) {
+            return false;
+        }
+        $use = (array) ($p['use'] ?? []);
+        if ($mode === 'granular') {
+            // A plain material says how it is used; the form column holds "liquid" for a row with no formulation code.
+            $form = strtolower((string) (($p['form'] ?? '') ?: ($p['f'] ?? '')));
+            if ($form === 'liquid' || in_array(CompatBook::FORM_GROUP[strtoupper((string) ($p['f'] ?? ''))] ?? '', ['ec', 'flow', 'sl'], true)) {
+                return false;
+            }
+            if ($use) {
+                return in_array('soil', $use, true);
+            }
+
+            // A soluble powder or crystal (zinc sulfate, borax) also goes on the soil.
+            return $applied === 'soil' || in_array($p['t'] ?? '', ['granular', 'amendment', 'soluble'], true);
+        }
+        if ($use) {
+            return in_array('foliar', $use, true);
+        }
+
+        return $applied === 'spray';
+    }
+
+    /**
      * Products whose brand, company or ingredients hold every word asked,
      * the brand's own matches first, and products a learned alias points at.
      * $shelf narrows to sprays, fertilizers or helpers; $crop puts products
-     * labelled for it first.
+     * labelled for it first; $mode (spray or granular) puts the products
+     * that fit it first.
      */
-    public static function search(string $q, ?string $shelf = null, ?string $crop = null, int $limit = 30): array
+
+    public static function search(string $q, ?string $shelf = null, ?string $crop = null, int $limit = 30, ?string $mode = null): array
     {
         $words = array_values(array_filter(explode(' ', self::norm($q)), fn ($w) => mb_strlen($w) >= 1));
         if (! $words || ! self::ready()) {
@@ -504,11 +545,11 @@ final class ProductLibrary
         $list = $rows->map(fn ($r) => self::fromRow($r))->all();
         // The brand that starts with the word first, a plain material before a branded one, then a product labelled for the crop.
         $phrase = self::norm($q);
-        $rank = function (array $p) use ($first, $crop, $phrase): array {
+        $rank = function (array $p) use ($first, $crop, $phrase, $mode): array {
             $b = self::norm($p['b']);
             $starts = str_starts_with($b, $phrase) ? 0 : (str_contains($b, $phrase) ? 1 : (str_starts_with($b, $first) ? 2 : (str_contains($b, ' ' . $first) ? 3 : 4)));
 
-            return [$starts, ($p['source'] ?? '') === 'file' && ($p['c'] ?? '') === '' ? 0 : 1, $crop && in_array($crop, (array) $p['crops'], true) ? 0 : 1, $b];
+            return [$mode && ! self::fits($p, $mode) ? 1 : 0, $starts, ($p['source'] ?? '') === 'file' && ($p['c'] ?? '') === '' ? 0 : 1, $crop && in_array($crop, (array) $p['crops'], true) ? 0 : 1, $b];
         };
         usort($list, fn ($a, $b) => $rank($a) <=> $rank($b));
 
@@ -540,6 +581,7 @@ final class ProductLibrary
             'nut' => $nut ? array_map(fn ($v) => round((float) $v, 3), $nut) : null, 'onCrop' => $crop ? in_array($crop, (array) ($p['crops'] ?? []), true) : null,
             'rate' => $use ? ['text' => $use[2] ?? '', 'parsed' => $use[3] ?? null, 'phi' => $use[4] ?? '', 'for' => $use[1] ?? ''] : null,
             'anee' => ($p['source'] ?? 'file') === 'anee',
+            'fit' => ['spray' => self::fits($p, 'spray'), 'granular' => self::fits($p, 'granular')],
         ];
     }
 
