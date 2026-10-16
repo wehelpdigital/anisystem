@@ -101,7 +101,18 @@ class AiClient
             return $this->fail('The AI could not be reached. Please try again in a moment.');
         }
 
-        return $r + ['searched' => false, 'sources' => []];
+        $r += ['searched' => false, 'sources' => []];
+        /* Anee's own words never give a government body as her source (the
+         * owner, 2026-10-17): the prompt says so (GovSource::RULE), and what
+         * slips through is taken out here, with the pages she read. A job
+         * with its own system prompt (a receipt, a news sort) is left alone,
+         * and so is one that reports the news ('keepAgencies'). */
+        if ($this->system === null && empty($opts['keepAgencies']) && ($r['ok'] ?? false)) {
+            $r['text'] = \App\Support\GovSource::scrub((string) ($r['text'] ?? ''));
+            $r['sources'] = \App\Support\GovSource::keep((array) $r['sources']);
+        }
+
+        return $r;
     }
 
     /**
@@ -176,7 +187,7 @@ class AiClient
             $retry = $this->ask($settings, [
                 ['role' => 'user', 'text' => $prompt],
                 ['role' => 'assistant', 'text' => (string) $result['text']],
-            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut, ['timeout' => $opts['timeout']]);
+            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut, ['timeout' => $opts['timeout'], 'keepAgencies' => ! empty($opts['keepAgencies'])]);
             $fold($retry);
             if ($retry['ok'] ?? false) {
                 $data = $parse((string) $retry['text']);

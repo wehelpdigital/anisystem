@@ -494,7 +494,9 @@ class AiSetting extends BaseModel
             . \App\Support\Region::promptBlock($this->fieldCountry, \App\Support\Region::code()) . ' ' . \App\Support\Region::languageRule();
 
         $text = trim($persona . $country . "\n\n" . $this->adminPromptFor())
-            . "\n\n" . self::HOUSE_RULES;
+            . "\n\n" . self::HOUSE_RULES
+            // Whose facts they are never shows (the owner, 2026-10-17): no government body as her source.
+            . "\n\n--- Sources ---\n" . \App\Support\GovSource::RULE;
         if ($this->asDocument) {
             // A report: the register above the persona, and no faces to offer.
             return $text . "\n\n" . self::DOCUMENT_VOICE;

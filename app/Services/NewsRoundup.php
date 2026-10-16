@@ -619,7 +619,8 @@ class NewsRoundup
 
         $prompt = $this->prompt($items, $range, $keywords, $usedFocus, $also, $pool);
         $parse = fn (string $t) => $this->parse($t);
-        $result = $this->ai->askForJson($settings, $prompt, 9000, $parse);
+        // The news is reported as it is: an agency in a story stays (GovSource, the owner 2026-10-17).
+        $result = $this->ai->askForJson($settings, $prompt, 9000, $parse, ['keepAgencies' => true]);
         if (! is_array($result['data'] ?? null)) {
             return ['ok' => false, 'error' => $result['error'] ?? 'The roundup came back unreadable.', 'result' => $result];
         }
@@ -632,7 +633,7 @@ class NewsRoundup
         // The house rules, checked; one round back to fix what is missed.
         $problems = PageWriter::audit($built['page']);
         if ($problems) {
-            $fix = $this->ai->askForJson($settings, $this->repair($data, $problems), 9000, $parse);
+            $fix = $this->ai->askForJson($settings, $this->repair($data, $problems), 9000, $parse, ['keepAgencies' => true]);
             foreach (['tokensIn', 'tokensOut'] as $k) {
                 $result[$k] = (int) ($result[$k] ?? 0) + (int) ($fix[$k] ?? 0);
             }
