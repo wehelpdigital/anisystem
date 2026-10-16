@@ -30,7 +30,21 @@ class NewsletterSetup extends Command
         if ($this->option('fields')) {
             foreach (Seg::lists() as $key => $id) {
                 // name (*|NAME|*) and greet (*|GREET|*: the first name, or "kaibigan" when we do not know it).
+                // Only the missing ones: Acumbamail adds a second "name" (NAME2) when asked again, the
+                // API cannot remove it, and two fields with one label leave the name unwritten.
+                $have = array_map(fn ($f) => strtolower((string) ($f['label'] ?? '')), (array) (($am->listFields($id) ?? [])['fields'] ?? []));
+                sleep(7);
+                if (! $have) {
+                    $this->line(str_pad($key, 10) . 'skipped, its fields could not be read: ' . $am->lastError());
+
+                    continue;
+                }
                 foreach (['name', 'greet'] as $field) {
+                    if (in_array($field, $have, true)) {
+                        $this->line(str_pad($key, 10) . $field . ' is there already');
+
+                        continue;
+                    }
                     $ok = $am->addListField($id, $field, 'text');
                     $this->line(str_pad($key, 10) . ($ok ? $field . ' field added' : $field . ' not added: ' . $am->lastError()));
                     sleep(7);
