@@ -344,7 +344,7 @@ class CropProtocolController extends Controller
             'residues' => self::RESIDUES,
             'granulars' => self::GRANULARS,
             // The engine's quote (App\Support\AiPricing): one size, today's flat price unless the cost says more.
-            'quote' => $canUse ? (float) AiPricing::credits('protocol') : null,
+            'quote' => $canUse ? (float) AiPricing::credits('protocol', ['lots' => 1, 'cases' => 0]) : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
