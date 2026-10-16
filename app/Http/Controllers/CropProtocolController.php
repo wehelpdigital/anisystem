@@ -2130,7 +2130,7 @@ PROMPT;
                 'for' => (string) ($pg['for'] ?? ''),
                 'byStage' => $byStage,
                 'stageBags' => array_map(fn ($apps) => round(array_sum(array_map(fn ($r) => $r['totalBags'], $apps)), 1), $byStage),
-                'totals' => collect($tot)->map(fn ($perHa, $name) => ['product' => $name, 'bagsPerHa' => round($perHa, 1), 'bags' => round($perHa * $area, 1)])->values()->all(),
+                'totals' => collect($tot)->map(fn ($perHa, $name) => ['product' => $name, 'bagsPerHa' => round($perHa, 1), 'bags' => round($perHa * $area, 2)])->values()->all(),
                 'totalBags' => round(array_sum($tot) * $area, 1),
                 'orphans' => $orphans,
             ] + $checkOf(array_merge($byStage, [$orphans]));

@@ -209,7 +209,7 @@ final class ProtocolCare
                     $other[] = (string) $name;
                     continue;
                 }
-                $products = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form'], 'kind' => $p['kind']], self::productsFor($hit['name'], $fc));
+                $products = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form'], 'kind' => $p['kind'], 'with' => $p['with']], self::productsFor($hit['name'], $fc));
                 $ai[$hit['name']] = ['name' => $hit['name'], 'group' => $hit['group'], 'products' => $products];
             }
             // A product the label names for this very pest, when no ingredient brought one.
@@ -245,13 +245,31 @@ final class ProtocolCare
     /** Up to two registered products for an ingredient on the crop's label; a name with a note ("Nicosulfuron (yellow corn only)") is tried bare too. */
     private static function productsFor(string $ai, string $crop): array
     {
-        $got = ProductBook::forIngredient($ai, $crop, null, 2);
+        $got = ProductBook::forIngredient($ai, $crop, null, 12);
         $bare = trim((string) preg_replace('/\s*\([^)]*\)/', '', $ai));
         if (! $got && $bare !== $ai && $bare !== '') {
-            $got = ProductBook::forIngredient($bare, $crop, null, 2);
+            $got = ProductBook::forIngredient($bare, $crop, null, 12);
         }
+        // A product made of just this ingredient first; a mix says what else is in it.
+        $want = array_map(fn ($w) => ProductBook::norm($w), preg_split('/\s+(?:plus|and)\s+|\s*\+\s*/i', $bare !== '' ? $bare : $ai));
+        foreach ($got as $i => &$p) {
+            $other = array_values(array_filter((array) $p['ai'], function ($a) use ($want) {
+                $n = ProductBook::norm((string) $a);
+                foreach ($want as $w) {
+                    if ($n === $w || str_starts_with($w, $n . ' ') || str_starts_with($n, $w . ' ')) {
+                        return false; // "Cartap" is the "cartap hydrochloride" asked for
+                    }
+                }
 
-        return $got;
+                return true;
+            }));
+            $p['with'] = implode(' and ', array_map(fn ($a) => strtolower((string) $a), $other));
+            $p['_o'] = [count($other), $i];
+        }
+        unset($p);
+        usort($got, fn ($a, $b) => $a['_o'] <=> $b['_o']);
+
+        return array_slice($got, 0, 2);
     }
 
     /** The weed windows for the report, each ingredient with up to two registered products on the crop's label. */
@@ -263,7 +281,7 @@ final class ProtocolCare
         $fc = FieldCatalogue::cropKey($crop) ?? $crop;
         foreach ($weeds['windows'] as &$w) {
             foreach ($w['ingredients'] as &$i) {
-                $i['products'] = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form']], self::productsFor($i['name'], $fc));
+                $i['products'] = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form'], 'with' => $p['with']], self::productsFor($i['name'], $fc));
             }
             unset($i);
             $w['ingredients'] = array_slice($w['ingredients'], 0, 8);

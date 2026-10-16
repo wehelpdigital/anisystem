@@ -2570,7 +2570,7 @@
 
 
     /* ---------------- the report, full screen ---------------- */
-    const bagAmt = (bags) => { const b = Number(bags) || 0; return b >= 1 ? trimN(b) + (b === 1 ? ' bag' : ' bags') : (Math.round(b * 50 * 10) / 10) + ' kg'; };
+    const bagAmt = (bags) => { const b = Number(bags) || 0, kg = b * 50; return b >= 1 ? trimN(b) + (b === 1 ? ' bag' : ' bags') : (kg >= 20 ? Math.round(kg) : Math.round(kg * 10) / 10) + ' kg'; };
     const elAmt = (v) => { const x = Number(v) || 0; return x >= 1 ? (Math.round(x * 10) / 10) + ' kg' : Math.round(x * 1000) + ' g'; };
     const kgAmt = (kg) => { const k = Number(kg) || 0; return k >= 50 ? trimN(k / 50) + (Math.abs(k / 50 - 1) < 0.05 ? ' bag' : ' bags') + ' (' + Math.round(k).toLocaleString() + ' kg)' : elAmt(k); };
     const sweepT = (t) => { const s = String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim(); return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; };
@@ -2766,7 +2766,7 @@
             + (t.sign ? '<p><em>Look for:</em> ' + esc(sweepT(t.sign)) + '</p>' : '')
             + (t.threshold ? '<p><em' + (k ? '' : ' data-tl="economic-threshold"') + '>Act when:</em> ' + esc(sweepT(t.threshold)) + '</p>' : '')
             + (t.cultural ? '<p><em>First, without a spray:</em> ' + esc(sweepT(t.cultural)) + '</p>' : '')
-            + (t.ai && t.ai.length ? '<div class="cr-ais">' + t.ai.map((a, j) => '<div class="cr-ai"><b' + (k || j ? '' : ' data-tl="active-ingredient"') + '>' + esc(a.name) + '</b>' + (a.group ? '<span class="g">' + esc(a.group) + '</span>' : '') + (a.products && a.products.length ? '<small>Sold as ' + esc(a.products.map((p) => p.brand + (p.company ? ' (' + p.company + ')' : '')).join(', ')) + '</small>' : '') + '</div>').join('') + '</div>'
+            + (t.ai && t.ai.length ? '<div class="cr-ais">' + t.ai.map((a, j) => '<div class="cr-ai"><b' + (k || j ? '' : ' data-tl="active-ingredient"') + '>' + esc(a.name) + '</b>' + (a.group ? '<span class="g">' + esc(a.group) + '</span>' : '') + (a.products && a.products.length ? '<small>Sold as ' + esc(a.products.map((p) => p.brand + (p.company ? ' (' + p.company + ')' : '') + (p.with ? ' with ' + p.with : '')).join(', ')) + '</small>' : '') + '</div>').join('') + '</div>'
                 : (t.byLabel && t.byLabel.length ? '<div class="cr-ais">' + t.byLabel.map((p) => '<div class="cr-ai"><b>' + esc(p.ai || p.brand) + '</b>' + (p.group ? '<span class="g">' + esc(p.group) + '</span>' : '') + '<small>Sold as ' + esc(p.brand + (p.company ? ' (' + p.company + ')' : '')) + '</small></div>').join('') + '</div>' : ''))
             + (t.rotate ? '<p><em' + (k ? '' : ' data-tl="group-rotation"') + '>A second spray:</em> ' + esc(sweepT(t.rotate)) + '</p>' : '')
             + (t.sameGroup ? '<p class="cr-note">Both are ' + esc(t.sameGroup) + ': use one, and switch to another group the next time.</p>' : '')
@@ -2774,7 +2774,7 @@
             + (t.weather ? '<p><em>This season:</em> ' + esc(sweepT(t.weather)) + '</p>' : '') + '</div>';
         const weeds = c.weeds && (c.weeds.windows || []).length ? '<details class="cr-fold"><summary>The weed control windows</summary><div class="cr-threats">' + c.weeds.windows.map((w) => '<div class="cr-threat is-weed"><div class="cr-th-h"><b>' + esc(w.title) + '</b><span class="cr-kind">' + esc(w.timing === 'pre' ? 'Before the weeds' : (w.timing === 'prep' ? 'Land preparation' : 'Weeds up')) + '</span></div>'
             + (w.stage ? '<p><em>When:</em> ' + esc(w.stage) + '</p>' : '') + (w.steps || []).slice(0, 3).map((x) => '<p>' + esc(x) + '</p>').join('')
-            + (w.ingredients && w.ingredients.length ? '<div class="cr-ais">' + w.ingredients.slice(0, 6).map((i) => '<div class="cr-ai"><b>' + esc(i.name) + '</b>' + (i.hrac && i.hrac.length ? '<span class="g">HRAC ' + esc(i.hrac.join(', ')) + '</span>' : '') + '<small>' + esc((i.weeds || []).map((x) => ({ grass: 'grasses', sedge: 'sedges', broadleaf: 'broadleaves' })[x] || x).join(', ')) + (i.products && i.products.length ? ' · sold as ' + esc(i.products.map((p) => p.brand).join(', ')) : '') + '</small></div>').join('') + '</div>' : '') + '</div>').join('') + '</div></details>' : '';
+            + (w.ingredients && w.ingredients.length ? '<div class="cr-ais">' + w.ingredients.slice(0, 6).map((i) => '<div class="cr-ai"><b>' + esc(i.name) + '</b>' + (i.hrac && i.hrac.length ? '<span class="g">HRAC ' + esc(i.hrac.join(', ')) + '</span>' : '') + '<small>' + esc((i.weeds || []).map((x) => ({ grass: 'grasses', sedge: 'sedges', broadleaf: 'broadleaves' })[x] || x).join(', ')) + (i.products && i.products.length ? ' · sold as ' + esc(i.products.map((p) => p.brand + (p.with ? ' with ' + p.with : '')).join(', ')) : '') + '</small></div>').join('') + '</div>' : '') + '</div>').join('') + '</div></details>' : '';
         return '<h3 style="margin:1rem 0 .5rem;font-size:.92rem;font-weight:800">Protection, watch first' + (window.aneeTl ? window.aneeTl.flag('ipm') : '') + '</h3>'
             + '<div class="cr-warn" role="note"><span>🧑‍🌾</span><span><b>Spraying is your call, always</b>' + esc(r.disclaimer || pr.disclaimer || '') + '</span></div>'
             + (pr.intro ? '<p class="cr-say" style="margin-top:.6rem">' + esc(sweepT(pr.intro)) + '</p>' : '')
