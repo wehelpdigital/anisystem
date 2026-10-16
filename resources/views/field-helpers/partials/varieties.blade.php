@@ -33,6 +33,8 @@
 
     /* ---- A variety's card ----------------------------------------------- */
     .fhv-grid { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
+    /* "About these yield figures" keeps a gap above the first variety (2026-10-18, the owner). */
+    .fhv-wrap > .yn { margin-bottom: 1rem; }
     .fhv-card { position: relative; display: flex; flex-direction: column; gap: .55rem; min-width: 0; padding: .95rem 1rem; border-radius: 1.2rem; text-align: left; color: inherit;
         background: #fff; border: 1px solid #e3ecd8; box-shadow: 0 16px 34px -30px rgb(20 33 12 / .55); cursor: pointer;
         transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
