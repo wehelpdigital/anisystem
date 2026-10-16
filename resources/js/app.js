@@ -2679,6 +2679,12 @@ const auRegionTier = (key, field, fallback) => {
     const t = ((window.ANEE_REGION || {}).tiers || {})[key];
     return (t && typeof t[field] === 'string' && t[field] !== '') ? t[field] : fallback;
 };
+/* The sheet's lines for a plan, from config/tiers.php `sheet` (2026-10-18); the
+   words below are only the fallback, so the sheet follows the plans. */
+const auRegionPoints = (key, fallback) => {
+    const p = (((window.ANEE_REGION || {}).tiers || {})[key] || {}).points;
+    return (Array.isArray(p) && p.length) ? p : fallback;
+};
 /* The credit coin a page's JS draws beside a balance: a link to My Credits
    for the person whose purse it is, a plain chip for a worker spending the
    farm's. Text is already a number or the sign for unlimited. */
@@ -2696,33 +2702,35 @@ const AU_TIERS = {
     libreAnee: {
         name: 'Libre + Anee',
         price: auRegionTier('libreAnee', 'price', '₱70'), per: '/month', year: auRegionTier('libreAnee', 'year', 'or ₱700/year, about ₱58/mo'),
-        points: [
+        points: auRegionPoints('libreAnee', [
             'Your Libre plan exactly as it is',
             'Anee AI chat: ask anything, show a photo',
-            'All four AI analyses and Realign by Anee',
+            'Every AI analysis, the Land Prep Planner and Anee Auto',
+            'The field helpers, Satellite Weather, NPK Plus and Maps',
             'Buy AI credit packs whenever you need more',
-        ],
+        ]),
     },
     solo: {
         name: 'Solo Farmer',
         price: auRegionTier('solo', 'price', '₱200'), per: '/month', year: auRegionTier('solo', 'year', 'or ₱1,800/year, about ₱150/mo'),
-        points: [
+        points: auRegionPoints('solo', [
+            'Everything in Libre + Anee',
             '3 active seasons, 5 lots each',
             'Workers (without logins) and inventory',
             'Full weather, all reports, unlimited maps',
-            'Video & voice, documents, offline mode · no ads',
-            '30 AI credits every renewal · 6 GB storage',
-        ],
+            'Video and voice, documents, no ads',
+            '30 AI credits every renewal, 6 GB storage',
+        ]),
     },
     owner: {
         name: 'Farm Owner',
         price: auRegionTier('owner', 'price', '₱600'), per: '/month', year: auRegionTier('owner', 'year', 'or ₱6,500/year, about ₱542/mo'),
-        points: [
+        points: auRegionPoints('owner', [
             'Everything in Solo Farmer, unlimited',
             'Worker logins and access levels',
-            'Collab room: team chat, whiteboard, calls',
-            '100 AI credits every renewal · 15 GB storage',
-        ],
+            'Collab Room: team chat, whiteboard, calls',
+            '100 AI credits every renewal, 15 GB storage',
+        ]),
     },
 };
 

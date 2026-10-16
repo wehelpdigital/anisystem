@@ -74,7 +74,7 @@
           "Fertilizer adviser",
           "The right amount at the right time",
           "Rice Crop Manager Advisory Service (RCMAS)",
-          "NPK Plus Calculator, free, and Crop Protocol Analysis on credits"
+          "NPK Plus Calculator from Libre plus Anee, and Crop Protocol Analysis on credits"
         ],
         [
           "Variety guide",
@@ -185,7 +185,7 @@
     },
     {
       "type": "text",
-      "text": "anee.io puts the planning, records and field help in one app that runs in any phone browser and keeps working without signal. The [cropping calendar](/features/cropping-calendar) dates every task, and the [NPK Plus calculator](/features/npk-plus-calculator) checks a fertilizer plan for free. The [pest and disease finders](/features/pest-and-disease-finders) name active ingredients, never brands. In The Stash, you can read every PhilRice Magazine issue inside the app.\n\nBe clear on the limits too. Anee needs internet and uses credits. The free Libre plan has ads, one active season and one lot, and workers and inventory start at Solo Farmer."
+      "text": "anee.io puts the planning, records and field help in one app that runs in any phone browser and keeps working without signal. The [cropping calendar](/features/cropping-calendar) dates every task, and the [NPK Plus calculator](/features/npk-plus-calculator) checks a fertilizer plan. The [pest and disease finders](/features/pest-and-disease-finders) name active ingredients, never brands. In The Stash, you can read every PhilRice Magazine issue inside the app.\n\nBe clear on the limits too. Anee needs internet and uses credits. The free Libre plan has ads, one active season and one lot. NPK Plus and the finders start at Libre plus Anee, and workers and inventory at Solo Farmer."
     },
     {
       "type": "heading",
@@ -201,7 +201,7 @@
         },
         {
           "q": "Are there free digital farming tools in the Philippines?",
-          "a": "Yes. PAGASA Agri Weather, the Rice Crop Manager Advisory Service, the Binhing Palay app and the DA's price monitoring page cost nothing. On anee.io, the Libre plan and the NPK Plus calculator are free too."
+          "a": "Yes. PAGASA Agri Weather, the Rice Crop Manager Advisory Service, the Binhing Palay app and the DA's price monitoring page cost nothing. On anee.io, the Libre plan is free too."
         },
         {
           "q": "Do these tools work without internet?",

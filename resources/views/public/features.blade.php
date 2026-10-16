@@ -27,7 +27,8 @@
     };
     $fFilm = fn (string $key) => $HW::video($key);
     // New this month: on their cards and in the band.
-    $fNew = ['auto', 'pestFinder', 'diseaseFinder', 'weedHelper', 'globalWorkers', 'share', 'cash', 'daycount', 'tags', 'skyWeather', 'satellite', 'npk', 'stash'];
+    // (2026-10-18: the tools placed in the season this week.)
+    $fNew = ['globalLots', 'varietyFinder', 'landprep', 'lcc', 'news', 'nutrientFinder', 'compat', 'auto'];
 @endphp
 
 @push('head')
@@ -142,12 +143,23 @@
     .fz-ico { width: 3rem; height: 3rem; margin-top: -1.5rem; border-radius: 1rem; display: grid; place-items: center; overflow: hidden; background: #fff;
         box-shadow: 0 0 0 1px #e1ead6, 0 10px 22px -12px rgb(20 33 12 / .5); }
     .fz-ico img { width: 2rem; height: 2rem; object-fit: contain; }
+    /* A tool not filmed yet (2026-10-18): no picture above, so the icon sits inside the card and the New tag moves right. */
+    .fz-tool.no-film .fz-tool-body { padding-top: 1.15rem; }
+    .fz-tool.no-film .fz-ico { margin-top: 0; }
+    .fz-tool.no-film .fz-new { left: auto; right: .8rem; }
     .fz-ico.is-face img { width: 100%; height: 100%; object-fit: cover; }
     .fz-tool h4 { margin-top: .3rem; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #14210c; line-height: 1.3; }
     .fz-anee { display: inline-block; margin-left: .4rem; padding: .08rem .45rem; border-radius: 999px; vertical-align: .12em; font-style: normal; font-size: .62rem; font-weight: 900;
         letter-spacing: .05em; text-transform: uppercase; color: #5b4300; background: #fde68a; }
     .fz-short { font-size: .86rem; font-weight: 700; color: #2f5219; }
     .fz-what { font-size: .84rem; line-height: 1.55; color: #4b5563; }
+    /* The plan a tool comes with, its dot in the plan's colour (2026-10-18). */
+    .fz-plan { display: flex; align-items: flex-start; gap: .45rem; font-size: .76rem; font-weight: 800; line-height: 1.35; color: #2f5219; }
+    .fz-plan i { flex: none; width: .55rem; height: .55rem; margin-top: .28rem; border-radius: 999px; background: #86b556; box-shadow: 0 0 0 3px rgb(134 181 86 / .2); }
+    .fz-plan.is-libreAnee i { background: #f5c518; box-shadow: 0 0 0 3px rgb(245 197 24 / .25); }
+    .fz-plan.is-solo i { background: #4a7c2a; }
+    .fz-plan.is-owner i { background: #2d5016; }
+    .fz-plan small { display: block; font-size: .72rem; font-weight: 700; color: #6b7f5a; }
     .fz-go { margin-top: auto; padding-top: .4rem; display: inline-flex; align-items: center; gap: .25rem; font-size: .82rem; font-weight: 800; color: #2f5219; text-decoration: none; }
     .fz-go svg { width: .9rem; height: .9rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .fz-go:hover svg { transform: translateX(3px); }
@@ -183,13 +195,16 @@
         .fz-play { position: static; width: 2.6rem; height: 2.6rem; box-shadow: 0 0 0 4px rgb(245 197 24 / .22), 0 8px 16px -8px rgb(0 0 0 / .45); }
         .fz-tool-body { order: 1; flex: 1; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .75rem; row-gap: .12rem;
             align-items: center; padding: .8rem .2rem .8rem .8rem; }
-        .fz-ico { grid-row: 1 / span 3; align-self: start; width: 2.7rem; height: 2.7rem; margin-top: 0; border-radius: .85rem; }
+        .fz-ico { grid-row: 1 / span 4; align-self: start; width: 2.7rem; height: 2.7rem; margin-top: 0; border-radius: .85rem; }
         .fz-ico img { width: 1.7rem; height: 1.7rem; }
         .fz-tool h4 { margin-top: 0; font-size: .95rem; }
         .fz-short { font-size: .8rem; line-height: 1.4; }
         .fz-what { display: none; }
+        .fz-plan { grid-column: 2; font-size: .72rem; }
         .fz-go { grid-column: 2; padding-top: .2rem; font-size: .76rem; }
         .fz-new { left: auto; right: 4.1rem; top: .5rem; font-size: .55rem; padding: .1rem .45rem; }
+        .fz-tool.no-film .fz-new { right: .8rem; }
+        .fz-tool.no-film .fz-tool-body { padding: .8rem .9rem .8rem .8rem; }
         /* Anee Auto keeps its six steps under the words. */
         .fz-step.is-auto .fz-tool { flex-direction: column; align-items: stretch; }
         .fz-step.is-auto .fz-shot { order: 0; position: absolute; right: .3rem; top: .9rem; z-index: 2; }
@@ -308,7 +323,7 @@
                     <div class="fz-tools">
                         @foreach ($st['items'] as $ti => $it)
                             @php $film = $fFilm($it['key']); $guide = $fGuide($it); @endphp
-                            <article class="fz-tool reveal" id="tool-{{ $it['key'] }}" style="--reveal-delay: {{ ($ti % 3) * 0.06 }}s">
+                            <article class="fz-tool reveal {{ $film ? '' : 'no-film' }}" id="tool-{{ $it['key'] }}" style="--reveal-delay: {{ ($ti % 3) * 0.06 }}s">
                                 @if ($film)
                                     <button type="button" class="fz-shot" data-film="{{ $film[0] }}" data-poster="{{ $film[1] }}" data-key="{{ $it['key'] }}" aria-label="Watch {{ $it['name'] }} at work">
                                         <img src="{{ $film[1] }}" alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170">
@@ -321,6 +336,8 @@
                                     <h4>{{ $it['name'] }}@if ($it['anee'])<i class="fz-anee">Anee</i>@endif</h4>
                                     <p class="fz-short">{{ $it['short'] }}</p>
                                     <p class="fz-what">{{ $it['what'] }}</p>
+                                    {{-- The plan it comes with, read off config/tiers.php (2026-10-18). --}}
+                                    <p class="fz-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></p>
                                     @if ($it['key'] === 'auto')
                                         <ol class="fz-auto-steps">
                                             @foreach ([['Tell her once', 'Lots, crop, soil, water, fertilizer, workers.'], ['She analyzes it all', 'Variety, El Niño or La Niña, the forecast, your soil.'], ['She plans the season', 'Every task from land preparation to harvest.'], ['You just follow', "Today's work every morning, by email too."], ['She keeps it on track', "Can't today? She moves it to the best day."], ['Show her the field', 'A photo, a video or a voice note.']] as $ak => [$at, $aw])
@@ -380,7 +397,7 @@
     <section class="py-16 sm:py-20 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
             <h2 class="font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Bring your next season here</h2>
-            <p class="mt-4 text-gray-600">Set up your first cropping schedule in minutes: lots, workers and the whole calendar. Libre is free forever.</p>
+            <p class="mt-4 text-gray-600">Set up your first cropping schedule in minutes: your lot, its crop and the whole calendar. Libre is free forever, and every tool above says the plan it comes with.</p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <a href="{{ route('signup') }}" class="btn btn-primary btn-lg">Get Started</a>
                 <a href="{{ route('tutorial') }}" class="btn btn-outline btn-lg">Watch the tutorial</a>

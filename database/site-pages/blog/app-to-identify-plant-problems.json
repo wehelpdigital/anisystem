@@ -42,7 +42,7 @@
         "Read the pattern first: spreading patches are usually alive, even damage usually is not.",
         "Check the whole plant, roots included, and your records.",
         "Confirm before you spend.",
-        "In anee.io, three field helpers sort the signs, and Anee reads your photo."
+        "In anee.io, the field helpers sort the signs, and Anee reads your photo."
       ]
     },
     {
@@ -138,7 +138,7 @@
     },
     {
       "type": "text",
-      "text": "Hunger shows as even color changes, often on many plants at once. For palay, see our guides to [yellow rice leaves](/blog/yellow-rice-leaves) and [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice). The free [NPK Plus Calculator](/features/npk-plus-calculator) tells you if your fertilizer plan is short, right or too much."
+      "text": "Hunger shows as even color changes, often on many plants at once. For palay, see our guides to [yellow rice leaves](/blog/yellow-rice-leaves) and [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice). The [NPK Plus Calculator](/features/npk-plus-calculator) tells you if your fertilizer plan is short, right or too much."
     },
     {
       "type": "heading",
@@ -178,7 +178,7 @@
       "ordered": false,
       "items": [
         "Anee needs internet and uses credits, on Libre plus Anee (PHP 70 a month) and the paid plans.",
-        "NPK Plus is free. The finders and the Weed Control Helper come with Libre plus Anee and the paid plans.",
+        "The field helpers and NPK Plus come with Libre plus Anee and the paid plans.",
         "The free Libre plan shows a few ads and holds one active season."
       ]
     },

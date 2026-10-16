@@ -166,7 +166,7 @@
     },
     {
       "type": "text",
-      "text": "anee.io covers the measuring, the timing and the record. [Farm maps](/features/farm-maps) give the area and the length of each side of a field you trace over a satellite view. Each lot keeps its own day zero, so the [Protocol Builder](/features/protocol-builder) and the cropping calendar date every fertilizer task for that lot.\n\nThe free [NPK Plus Calculator](/features/npk-plus-calculator) adds up every nutrient in the fertilizers you plan to use. It checks the total against what your crop needs and shows the yield it can feed. Satellite Analysis reads Sentinel pictures of a field you draw, and Anee, the smart farm technician, points to the weak spots. At the end, the reports show what each season cost and earned, and Compare Reports puts two seasons side by side.\n\nBe clear about the limits, though. The app has no drone or field sensor of its own, so it works from your records, your maps and satellite pictures. Anee's analyses need internet and use credits."
+      "text": "anee.io covers the measuring, the timing and the record. [Farm maps](/features/farm-maps) give the area and the length of each side of a field you trace over a satellite view. Each lot keeps its own day zero, so the [Protocol Builder](/features/protocol-builder) and the cropping calendar date every fertilizer task for that lot.\n\nThe [NPK Plus Calculator](/features/npk-plus-calculator) adds up every nutrient in the fertilizers you plan to use. It checks the total against what your crop needs and shows the yield it can feed. Satellite Analysis reads Sentinel pictures of a field you draw, and Anee, the smart farm technician, points to the weak spots. At the end, the reports show what each season cost and earned, and Compare Reports puts two seasons side by side.\n\nBe clear about the limits, though. The app has no drone or field sensor of its own, so it works from your records, your maps and satellite pictures. Anee's analyses need internet and use credits."
     },
     {
       "type": "image",
@@ -177,7 +177,7 @@
     {
       "type": "cta",
       "title": "Check your fertilizer plan against your crop",
-      "text": "Tap the fertilizers you plan to use, and NPK Plus adds up every nutrient per hectare. It is free.",
+      "text": "Tap the fertilizers you plan to use, and NPK Plus adds up every nutrient per hectare. It comes with Libre plus Anee and every plan above it.",
       "label": "Try NPK Plus",
       "url": "/features/npk-plus-calculator"
     },
@@ -188,7 +188,7 @@
     },
     {
       "type": "text",
-      "text": "The NPK Plus Calculator is free, and so is the Libre plan, which covers one active season with a few ads. Satellite Analysis and Anee's readings need a plan with Anee, from PHP 70 a month, and they run on credits. Solo Farmer, at PHP 200 a month, adds all reports, workers and inventory. See the [pricing page](/pricing) for every plan, and our guide to [digital farming tools](/blog/digital-farming-tools) for the wider picture."
+      "text": "The Libre plan is free and covers one active season with a few ads. The NPK Plus Calculator needs a plan with Anee, from PHP 70 a month, and so do Satellite Analysis and Anee's readings, which run on credits. Solo Farmer, at PHP 200 a month, adds all reports, workers and inventory. See the [pricing page](/pricing) for every plan, and our guide to [digital farming tools](/blog/digital-farming-tools) for the wider picture."
     },
     {
       "type": "heading",

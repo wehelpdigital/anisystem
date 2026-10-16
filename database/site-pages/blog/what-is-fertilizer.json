@@ -29,7 +29,7 @@
     "fertilizer of plants",
     "fertilizer soil"
   ],
-  "excerpt": "Fertilizer is any material, natural or factory made, that supplies the nutrients plants need to grow, usually through the soil. That is the fertilizer definition FAO uses, and Philippine law says much the same. Its main nutrients are nitrogen, phosphorus and potassium, the three numbers on every bag. anee.io, a farm app built for Filipino farmers, adds them up for your crop with its free NPK Plus Calculator.",
+  "excerpt": "Fertilizer is any material, natural or factory made, that supplies the nutrients plants need to grow, usually through the soil. That is the fertilizer definition FAO uses, and Philippine law says much the same. Its main nutrients are nitrogen, phosphorus and potassium, the three numbers on every bag. anee.io, a farm app built for Filipino farmers, adds them up for your crop with its NPK Plus Calculator.",
   "heroImage": {
     "src": "/images/site/guides/blog-what-is-fertilizer.webp",
     "alt": "Granules of a bulk blend fertilizer in several colors spilling from a small bottle",
@@ -350,12 +350,12 @@
     },
     {
       "type": "text",
-      "text": "Knowing the fertilizer definition helps you read a bag. Next comes knowing what your crop needs. The free [NPK Plus Calculator](/features/npk-plus-calculator) in anee.io adds up the nutrients in the fertilizers you pick and checks them against your crop. Then the [Protocol Builder](/features/protocol-builder) puts each dose on its day. Anee, the [smart farm technician](/features/ai-agricultural-technician), explains any label in Tagalog or English, using credits."
+      "text": "Knowing the fertilizer definition helps you read a bag. Next comes knowing what your crop needs. The [NPK Plus Calculator](/features/npk-plus-calculator) in anee.io adds up the nutrients in the fertilizers you pick and checks them against your crop. Then the [Protocol Builder](/features/protocol-builder) puts each dose on its day. Anee, the [smart farm technician](/features/ai-agricultural-technician), explains any label in Tagalog or English, using credits."
     },
     {
       "type": "cta",
       "title": "Add up the nutrients in your plan",
-      "text": "Pick your fertilizers and see the nitrogen, phosphorus and potassium per hectare, free.",
+      "text": "Pick your fertilizers and see the nitrogen, phosphorus and potassium per hectare.",
       "label": "Try NPK Plus",
       "url": "/features/npk-plus-calculator"
     },

@@ -643,6 +643,8 @@ final class Region
                 return [$tier => [
                     'price' => $fmt($m), 'per' => '/month',
                     'year' => $y ? 'or ' . $fmt($y) . ' a year (about ' . $fmt(round($y / 12, 2)) . ' a month)' : '',
+                    // The sheet's lines, from config/tiers.php `sheet` (2026-10-18), so they follow the plans.
+                    'points' => array_values((array) config('tiers.' . $tier . '.sheet', [])),
                 ]];
             })->filter()->all(),
             'pay' => $c['pay'] ?? [],

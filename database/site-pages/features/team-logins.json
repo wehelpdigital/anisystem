@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "Four more rows are plain switches, and each one starts off. **Camera** lets the worker take photos into the farm, and **Video record** lets them record clips. **Voice record** lets them speak a note instead of typing it, which helps when their hands are full of seedlings. Finally, **Chat Anee** lets them ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), about your farm."
+      "text": "Four more rows are plain switches, and each one starts off. **Camera** lets the worker take photos into the farm, and **Video record** lets them record clips. **Voice record** lets them speak a note instead of typing it, which helps when their hands are full of seedlings. Finally, **Chat Anee** lets them ask Anee, the [smart farm technician](/features/ai-agricultural-technician), about your farm."
     },
     {
       "type": "callout",
@@ -166,7 +166,7 @@
           "url": "/features/automatic-stock-deduction"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

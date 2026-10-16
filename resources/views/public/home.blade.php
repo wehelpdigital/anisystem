@@ -437,7 +437,7 @@
                      'Labor, materials and services add up as you go, ' . $peso . ' by ' . $peso . ', so you know the cost before you spend.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                     ['Fertilizer costs more every season.', 'A bag too many is money left in the soil. A bag too few is yield you never harvest.',
-                     'NPK Plus counts every nutrient in your fertilizer plan against what your crop needs, so you buy only what is missing. Free for every farmer.',
+                     'NPK Plus counts every nutrient in your fertilizer plan against what your crop needs, so you buy only what is missing. ' . $HW::planOf('npk')['says'] . '.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12l-1 13H7L6 7zm3 0V5a3 3 0 016 0v2M9.5 12.5h5M12 10v5"/>'],
                 ] as $i => [$t, $w, $a, $ico])
                     <div class="hp-prec-row reveal" style="--reveal-delay: {{ $i * 0.08 }}s; --i: {{ $i }}">
@@ -521,11 +521,12 @@
                                      picked opens its whole explanation below (2026-10-06,
                                      the owner: "see the explanation for each feature"). All
                                      of them are in the page; only the picked one shows. --}}
+                                @php $on = collect($st['items'])->search(fn ($x) => ! empty($x['video'])); $on = $on === false ? 0 : $on; @endphp
                                 <div class="hp-tools{{ count($st['items']) === 1 ? ' is-one' : '' }}">
                                     @foreach ($st['items'] as $j => $it)
                                         @php $f = $filmOf($it['key']); @endphp
-                                        <button type="button" class="hp-tool{{ $j === 0 ? ' is-on' : '' }}" style="--j: {{ $j }}" data-tool="{{ $it['key'] }}"
-                                                aria-pressed="{{ $j === 0 ? 'true' : 'false' }}" aria-controls="hpInfo-{{ $it['key'] }}"
+                                        <button type="button" class="hp-tool{{ $j === $on ? ' is-on' : '' }}" style="--j: {{ $j }}" data-tool="{{ $it['key'] }}"
+                                                aria-pressed="{{ $j === $on ? 'true' : 'false' }}" aria-controls="hpInfo-{{ $it['key'] }}"
                                                 @if ($f) data-src="{{ $f['src'] }}" data-poster="{{ $f['poster'] }}" @endif
                                                 data-name="{{ $it['name'] }}">
                                             <span class="hp-tool-ico{{ str_starts_with($it['icon'], 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
@@ -538,7 +539,7 @@
                                 </div>
                                 <div class="hp-infos">
                                     @foreach ($st['items'] as $j => $it)
-                                        <div class="hp-info{{ $j === 0 ? ' is-on' : '' }}" id="hpInfo-{{ $it['key'] }}" data-info="{{ $it['key'] }}">
+                                        <div class="hp-info{{ $j === $on ? ' is-on' : '' }}" id="hpInfo-{{ $it['key'] }}" data-info="{{ $it['key'] }}" data-name="{{ $it['name'] }}" data-short="{{ $it['short'] }}">
                                             <p class="hp-info-k">
                                                 <span class="hp-info-ico{{ str_starts_with($it['icon'], 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
                                                 <span>{{ $it['name'] }}@if ($it['anee'])<i class="hp-anee-tag">Anee does it</i>@endif</span>
@@ -547,6 +548,8 @@
                                             <ul class="hp-info-g">
                                                 @foreach ($it['gets'] as $g)<li><span class="hp-info-ok">{!! $tick !!}</span><span>{{ $g }}</span></li>@endforeach
                                             </ul>
+                                            {{-- The plan it comes with, read off config/tiers.php (HowItWorks::planOf, 2026-10-18). --}}
+                                            <p class="hp-info-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></p>
                                             @php $wf = $filmOf($it['key']); @endphp
                                             @if ($wf)
                                                 {{-- On a phone the film is not beside the words (there is no room), so it opens over the page. --}}
@@ -592,6 +595,16 @@
                                 <video class="hp-film" data-step-film muted playsinline loop preload="none" poster="{{ $first['poster'] ?? '' }}" aria-label="{{ $hpSteps[0]['items'][0]['name'] }} on a phone">
                                     @if ($first)<source src="{{ $first['src'] }}" type="video/mp4">@endif
                                 </video>
+                                {{-- A tool with no film yet (2026-10-18): its card on the phone's
+                                     screen instead, so the film of the tool before it never plays
+                                     under the wrong name. Filled from the tool's own explanation. --}}
+                                <div class="hp-nofilm" data-step-nofilm aria-hidden="true">
+                                    <span class="hp-nofilm-ico"><img src="" alt=""></span>
+                                    <b class="hp-nofilm-t"></b>
+                                    <span class="hp-nofilm-s"></span>
+                                    <ul class="hp-nofilm-g"></ul>
+                                    <span class="hp-nofilm-plan"></span>
+                                </div>
                             </div>
                             <span class="hp-film-tag" data-step-tag>{{ $hpSteps[0]['items'][0]['name'] }}</span>
                         </div>
@@ -604,7 +617,7 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start your first season free {!! $arrow !!}</a>
                     <a href="{{ route('how') }}" class="hp-alt">See all {{ $tools->count() }} tools step by step</a>
                 </div>
-                <p class="hp-cta-note">The season board, your lot and the growth stages are free. The other tools come with the paid plans.</p>
+                <p class="hp-cta-note">Each tool says the plan it comes with. The season board, your lots, the growth stages, notes and the labor report are on every plan, Libre included.</p>
             </div>
         </div>
     </section>
@@ -1480,7 +1493,7 @@
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and bring your team in {!! $arrow !!}</a>
                 </div>
-                <p class="hp-cta-note">Workers and offline mode come with Solo Farmer. Worker logins and the Collab Room come with Farm Owner.</p>
+                <p class="hp-cta-note">Workers come with Solo Farmer. Worker logins and the Collab Room come with Farm Owner. Offline mode is on every plan.</p>
             </div>
         </div>
     </section>
@@ -1626,7 +1639,7 @@
                     ['Pests and problems', 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z', [
                         ['Expert advice', $R::t('techVisit'), 'Anee answers crop questions any time' . ($ph ? ', in Tagalog or English,' : '') . ' even from a photo of a leaf.'],
                         ['A sick plant', 'Guess the problem and buy what the store suggests.', 'Send a photo. Anee tells you what it is and what to do, with your lot and its stage in mind.'],
-                        ['Learning about pests', 'Ask around and hope the advice fits your crop.', 'Free guides to the pests, diseases and weeds of your crops, with what to do step by step.'],
+                        ['Learning about pests', 'Ask around and hope the advice fits your crop.', 'Guides to the pests, diseases and weeds of your crops, with what to do step by step, and finders that match what you see.'],
                         ['Other farmers\' experience', 'Only the neighbors you happen to meet.', 'A community of growers who trade what worked, with photos and voice.'],
                         ['Halfway through the season', 'You find out how it went at harvest.', 'Anee checks the season so far and names the risks in the coming weeks.'],
                     ]],
@@ -1816,9 +1829,11 @@
     <section class="hp-sec hp-guides-bg">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
-                <p class="hp-kick">Free farm guides</p>
-                <h2 class="hp-h2">Read Free Guides Made <em>for Filipino Farmers.</em></h2>
-                <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the rice black bug, and how much fertilizer a hectare needs. Written for Philippine farms and free to read.</p>
+                <p class="hp-kick">Farm guides</p>
+                <h2 class="hp-h2">Read Guides Made <em>for Filipino Farmers.</em></h2>
+                {{-- The pest, disease, weed, nutrient and variety guides open in full with
+                     Libre + Anee since 2026-10-17 (App\Support\ContentGate::PLUS_SECTIONS). --}}
+                <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the rice black bug, and how much fertilizer a hectare needs. Written for Philippine farms. The crop guides and the farm news are free to read, and the guides to pests, diseases, weeds, nutrients and varieties open in full with {{ config('tiers.' . \App\Support\ContentGate::PLUS_PLAN . '.name') }}.</p>
             </div>
             {{-- What farmers search for most, each a link to the guide that answers it. --}}
             <div class="hp-topics reveal">
@@ -1907,7 +1922,7 @@
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Put the guide on your calendar {!! $arrow !!}</a>
                 </div>
-                <p class="hp-cta-note">Reading the guides is free. Planning your own season with them is free too.</p>
+                <p class="hp-cta-note">The crop guides are free to read, and planning your season with them is free on Libre.</p>
             </div>
         </div>
     </section>
@@ -1934,7 +1949,7 @@
             ['Can anee.io help with the rice bug, thrips and fall armyworm?',
              'Yes. Take a photo and Anee tells you what the pest or disease is and what to do, including when a fungicide or insecticide is needed. Your season board also reminds you when to check for the rice bug and other pests at each growth stage.'],
             ['Where can I read about fertilizer and pests?',
-             'Our free guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop pests, the weeds and grasses or Latest in Agriculture.'],
+             'Our guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop pests, the weeds and grasses or Latest in Agriculture.'],
         ];
     @endphp
     <section class="hp-sec bg-gray-50">
@@ -2363,7 +2378,9 @@
     .hp-st-h { margin-top: .4rem; font-family: var(--font-heading); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; color: var(--hp-ink); line-height: 1.15; }
     .hp-st-p { margin-top: .7rem; color: #4b5563; line-height: 1.65; }
     /* The tools: each with its one line; as many columns as fit. */
-    .hp-tools { margin-top: 1.3rem; display: grid; gap: .55rem; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); }
+    /* Two columns as soon as there is room (2026-10-18): the steps grew to ten and thirteen tools,
+       and one column made the tallest step set a tall, half empty card for all of them. */
+    .hp-tools { margin-top: 1.3rem; display: grid; gap: .55rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); }
     .hp-tool { display: flex; align-items: center; gap: .7rem; padding: .6rem .75rem; border-radius: 1rem; text-align: left; cursor: pointer;
         background: #f7faf3; border: 1px solid #e4ecdb; opacity: 0; transform: translateY(8px);
         transition: opacity .4s var(--hp-ease), transform .4s var(--hp-ease), border-color .28s var(--hp-ease), background-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
@@ -2427,6 +2444,45 @@
         font-size: .88rem; font-weight: 800; color: var(--hp-green); }
     .hp-info-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
     .hp-info-more:hover svg { transform: translateX(3px); }
+    /* The plan a tool comes with (2026-10-18), its dot in the plan's own colour (the compare table's). */
+    .hp-info-plan { margin-top: .85rem; display: inline-flex; align-items: flex-start; gap: .5rem; align-self: flex-start; max-width: 100%;
+        padding: .4rem .75rem .4rem .55rem; border-radius: .8rem; background: #f4f7ef; box-shadow: inset 0 0 0 1px #e1e9d6;
+        font-size: .8rem; font-weight: 800; line-height: 1.35; color: var(--hp-deep); }
+    .hp-info-plan i { flex: none; width: .62rem; height: .62rem; margin-top: .3rem; border-radius: 999px; background: #86b556; box-shadow: 0 0 0 3px rgb(134 181 86 / .2); }
+    .hp-info-plan.is-libreAnee { background: #fffaea; box-shadow: inset 0 0 0 1px #f3e1a0; }
+    .hp-info-plan.is-libreAnee i { background: #f5c518; box-shadow: 0 0 0 3px rgb(245 197 24 / .25); }
+    .hp-info-plan.is-solo i { background: #4a7c2a; box-shadow: 0 0 0 3px rgb(74 124 42 / .2); }
+    .hp-info-plan.is-owner i { background: #2d5016; box-shadow: 0 0 0 3px rgb(45 80 22 / .2); }
+    .hp-info-plan small { display: block; margin-top: .1rem; font-size: .74rem; font-weight: 700; color: #6b7f5a; }
+    .hp-info.is-on .hp-info-plan { animation: hpInfoIn .45s var(--hp-ease) .2s backwards; }
+    /* The phone, for a tool with no film yet: the tool's own card on the screen. */
+    .hp-nofilm { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .55rem;
+        padding: 1.4rem 1.1rem; text-align: center; opacity: 0; visibility: hidden; pointer-events: none;
+        background: radial-gradient(120% 70% at 50% 0%, #ffffff 0%, #eef5e5 55%, #e1ecd3 100%);
+        transition: opacity .28s var(--hp-ease), visibility 0s linear .28s; }
+    .hp-nofilm.is-on { opacity: 1; visibility: visible; transition: opacity .28s var(--hp-ease), visibility 0s; }
+    .hp-nofilm-ico { width: 4.4rem; height: 4.4rem; border-radius: 1.3rem; display: grid; place-items: center; background: #fff;
+        box-shadow: 0 16px 30px -18px rgb(20 33 12 / .55), inset 0 0 0 1px #e3ebd8; }
+    .hp-nofilm-ico img { width: 2.7rem; height: 2.7rem; object-fit: contain; }
+    .hp-nofilm-ico.is-face img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
+    .hp-nofilm-t { margin-top: .35rem; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; line-height: 1.2; color: var(--hp-ink); }
+    .hp-nofilm-s { font-size: .78rem; line-height: 1.4; color: #5b6f4b; }
+    .hp-nofilm-g { margin-top: .4rem; width: 100%; display: grid; gap: .35rem; list-style: none; padding: 0; text-align: left; }
+    .hp-nofilm-g li { padding: .5rem .65rem; border-radius: .75rem; background: rgb(255 255 255 / .9); box-shadow: 0 6px 14px -12px rgb(20 33 12 / .6);
+        font-size: .72rem; font-weight: 700; line-height: 1.35; color: var(--hp-deep); }
+    .hp-nofilm-plan { margin-top: .3rem; padding: .3rem .7rem; border-radius: 999px; font-size: .68rem; font-weight: 800; color: #3b2f00; background: #fdf0b8; }
+    .hp-nofilm.is-on .hp-nofilm-ico, .hp-nofilm.is-on .hp-nofilm-t, .hp-nofilm.is-on .hp-nofilm-s,
+    .hp-nofilm.is-on .hp-nofilm-g li, .hp-nofilm.is-on .hp-nofilm-plan { animation: hpInfoIn .45s var(--hp-ease) backwards; }
+    .hp-nofilm.is-on .hp-nofilm-t { animation-delay: .05s; }
+    .hp-nofilm.is-on .hp-nofilm-s { animation-delay: .09s; }
+    .hp-nofilm.is-on .hp-nofilm-g li:nth-child(1) { animation-delay: .14s; }
+    .hp-nofilm.is-on .hp-nofilm-g li:nth-child(2) { animation-delay: .19s; }
+    .hp-nofilm.is-on .hp-nofilm-g li:nth-child(3) { animation-delay: .24s; }
+    .hp-nofilm.is-on .hp-nofilm-plan { animation-delay: .3s; }
+    @media (prefers-reduced-motion: reduce) {
+        .hp-nofilm, .hp-nofilm * { transition: none !important; animation: none !important; }
+        .hp-info.is-on .hp-info-plan { animation: none; }
+    }
     .hp-st-show { display: flex; flex-direction: column; align-items: center; gap: 1.6rem; }
     .hp-st-show .hp-phone { width: min(15rem, 62vw); margin-bottom: 1.6rem; }
     @media (min-width: 1024px) { .hp-st-show .hp-phone { width: 17rem; } }
@@ -4116,6 +4172,27 @@
         const panes = [...steps.querySelectorAll('.hp-st-pane')];
         const video = steps.querySelector('[data-step-film]');
         const tag = steps.querySelector('[data-step-tag]');
+        // A tool not filmed yet (2026-10-18) shows its own card on the phone,
+        // drawn from its explanation, and the film under it rests.
+        const noFilm = steps.querySelector('[data-step-nofilm]');
+        const card = (info) => {
+            if (!noFilm) return;
+            if (!info) { noFilm.classList.remove('is-on'); return; }
+            const fill = () => {
+                noFilm.querySelector('img').src = info.querySelector('.hp-info-ico img')?.src || '';
+                noFilm.querySelector('.hp-nofilm-ico').classList.toggle('is-face', !!info.querySelector('.hp-info-ico.is-face'));
+                noFilm.querySelector('.hp-nofilm-t').textContent = info.dataset.name || '';
+                noFilm.querySelector('.hp-nofilm-s').textContent = info.dataset.short || '';
+                noFilm.querySelector('.hp-nofilm-g').innerHTML = [...info.querySelectorAll('.hp-info-g li > span:last-child')]
+                    .map((g) => '<li>' + g.innerHTML + '</li>').join('');
+                noFilm.querySelector('.hp-nofilm-plan').textContent = info.querySelector('.hp-info-plan > span')?.firstChild?.textContent || '';
+                noFilm.classList.add('is-on');
+            };
+            video.pause();
+            video.classList.add('is-swapping');
+            // Already showing one: fade the words out, change them, fade them in.
+            if (noFilm.classList.contains('is-on')) { noFilm.classList.remove('is-on'); setTimeout(fill, 220); } else fill();
+        };
         // Long enough to read the first tool's explanation before the next step.
         const DWELL = 12000;
         let at = 0, timer = null, live = false, held = false;
@@ -4128,8 +4205,13 @@
                 b.setAttribute('aria-pressed', on ? 'true' : 'false');
             });
             pane.querySelectorAll('.hp-info').forEach((x) => x.classList.toggle('is-on', x.dataset.info === btn.dataset.tool));
-            if (btn.dataset.src) swapFilm(video, tag, btn.dataset.src, btn.dataset.poster, btn.dataset.name);
-            else if (tag) tag.textContent = btn.dataset.name || '';
+            if (btn.dataset.src) {
+                card(null);
+                swapFilm(video, tag, btn.dataset.src, btn.dataset.poster, btn.dataset.name);
+            } else {
+                card(pane.querySelector('.hp-info[data-info="' + btn.dataset.tool + '"]'));
+                if (tag) { tag.classList.add('is-swapping'); setTimeout(() => { tag.textContent = btn.dataset.name || ''; tag.classList.remove('is-swapping'); }, 260); }
+            }
         };
         const go = (i, fromUser) => {
             at = (i + tabs.length) % tabs.length;
@@ -4140,7 +4222,8 @@
                 t.setAttribute('aria-selected', on ? 'true' : 'false');
             });
             panes.forEach((p, k) => p.classList.toggle('is-on', k === at));
-            pickTool(panes[at].querySelector('.hp-tool'));
+            // A step opens on its first filmed tool, so the phone always has something to play.
+            pickTool(panes[at].querySelector('.hp-tool[data-src]') || panes[at].querySelector('.hp-tool'));
             const list = tabs[at].parentElement;
             if (list.scrollWidth > list.clientWidth) list.scrollTo({ left: tabs[at].offsetLeft - 16, behavior: reduce ? 'auto' : 'smooth' });
             if (fromUser) held = true;
@@ -4173,7 +4256,7 @@
         // The film plays while the phone itself is on screen.
         seen(steps.querySelector('.hp-st-show'), (on) => {
             video.dataset.live = on ? '1' : '0';
-            if (on) play(video); else video.pause();
+            if (on && !noFilm?.classList.contains('is-on')) play(video); else video.pause();
         }, { threshold: 0.3 });
         // The walk runs while its tabs can be seen. On a desk the whole block
         // fits one screen; on a phone it is three screens tall, so it walks

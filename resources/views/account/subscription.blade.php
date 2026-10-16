@@ -80,6 +80,34 @@
     html.dark .sp-card li.x { color: #6b7280; }
     html.dark .sp-order + .sp-order { border-color: #2d3a27; }
     @media (prefers-reduced-motion: reduce) { .sp-toggle i, .sp-toggle button, .sp-card, .sp-card .price > span, .sp-order { transition: none; } }
+
+    /* Compare every plan: a heading that unfolds the table. The fold clips with
+       overflow: clip, not hidden, so the table's header row can still stick
+       under the app bar once it is open. */
+    .sp-cmp { border-radius: 1rem; background: var(--color-white); border: 1px solid var(--color-gray-200); }
+    .sp-cmp-head { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .85rem 1rem; text-align: left; border-radius: 1rem; cursor: pointer;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    @media (hover: hover) { .sp-cmp-head:hover { background: #f8faf5; } }
+    .sp-cmp-head:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+    .sp-cmp-ico { flex: none; width: 2.5rem; height: 2.5rem; border-radius: .8rem; display: grid; place-items: center; background: #eef6e6; color: #3d6823; }
+    .sp-cmp-ico svg { width: 1.3rem; height: 1.3rem; }
+    .sp-cmp-txt { min-width: 0; flex: 1 1 auto; }
+    .sp-cmp-txt b { display: block; font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .sp-cmp-txt i { display: block; margin-top: .1rem; font-style: normal; font-size: .78rem; line-height: 1.4; color: var(--color-gray-500); }
+    .sp-cmp-chev { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-gray-400); transition: transform .38s cubic-bezier(.22,1,.36,1); }
+    .sp-cmp.is-open .sp-cmp-chev { transform: rotate(180deg); }
+    .sp-cmp-fold { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .45s cubic-bezier(.22,1,.36,1), opacity .3s ease; }
+    .sp-cmp.is-open .sp-cmp-fold { grid-template-rows: 1fr; opacity: 1; }
+    .sp-cmp-in { min-height: 0; overflow: clip; visibility: hidden; transition: visibility 0s linear .45s; }
+    .sp-cmp.is-open .sp-cmp-in { visibility: visible; transition-delay: 0s; }
+    .sp-cmp-in > .pc { padding: .4rem .75rem 1rem; }
+    @media (min-width: 640px) { .sp-cmp-in > .pc { padding: .4rem 1.1rem 1.2rem; } }
+    html.dark .sp-cmp { background: #151b12; border-color: #2b3a1c; }
+    html.dark .sp-cmp-head:hover { background: #1a2114; }
+    html.dark .sp-cmp-ico { background: rgb(107 159 61 / .2); color: #a5c97e; }
+    html.dark .sp-cmp-txt b { color: #e8efe1; }
+    html.dark .sp-cmp-txt i { color: #93a684; }
+    @media (prefers-reduced-motion: reduce) { .sp-cmp-fold, .sp-cmp-chev, .sp-cmp-in, .sp-cmp-head { transition: none; } }
 </style>
 @endpush
 
@@ -238,6 +266,27 @@
         </div>
     </div>
 
+    {{-- ============ COMPARE EVERY PLAN ============ --}}
+    {{-- Every tool and limit side by side (2026-10-18, the owner: "update the pricing
+         table comparison both inside anee and in public site"): the public page's own
+         table (partials/plan-compare, read off config/tiers.php), folded away until
+         asked for. #compare-plans in the address opens it. --}}
+    <section class="sp-cmp" id="compare-plans">
+        <button type="button" class="sp-cmp-head" id="spCmpHead" aria-expanded="false" aria-controls="spCmpBody">
+            <span class="sp-cmp-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10H5a2 2 0 01-2-2V9a2 2 0 012-2h4m0 10h6m-6-10h6m0 10V7m0 10h4a2 2 0 002-2V9a2 2 0 00-2-2h-4"/></svg></span>
+            <span class="sp-cmp-txt">
+                <b>Compare every plan</b>
+                <i>Every tool and limit side by side, the same ones the app opens on each plan.</i>
+            </span>
+            <svg class="sp-cmp-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="sp-cmp-fold" id="spCmpBody" role="region" aria-labelledby="spCmpHead">
+            <div class="sp-cmp-in">
+                @include('partials.plan-compare', ['pcApp' => true, 'pcCurrent' => $currentTier])
+            </div>
+        </div>
+    </section>
+
     {{-- ============ YOUR PAYMENTS ============ --}}
     @if ($orders->isNotEmpty())
         <div>
@@ -300,6 +349,18 @@
         grid.classList.toggle('is-year', year);
         toggle.querySelectorAll('[data-period]').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
     });
+})();
+/* Compare every plan: the heading unfolds the table; #compare-plans opens it on arrival. */
+(() => {
+    const box = document.getElementById('compare-plans');
+    const head = document.getElementById('spCmpHead');
+    if (!box || !head) return;
+    const set = (open) => { box.classList.toggle('is-open', open); head.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+    head.addEventListener('click', () => set(!box.classList.contains('is-open')));
+    if (location.hash === '#compare-plans') {
+        set(true);
+        setTimeout(() => box.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }), 120);
+    }
 })();
 </script>
 @endpush

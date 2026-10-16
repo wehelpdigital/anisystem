@@ -16,7 +16,7 @@
     "50 kg bag nutrients",
     "fertilizer cost per hectare"
   ],
-  "excerpt": "Irrigated palay usually needs about 2.5 to 6.5 bags of inorganic fertilizer per hectare, depending on the yield you aim for. PhilRice's Abonong Swak plan uses 2.5 bags for 3 to 4 tons, 4.5 bags for 5 to 6 tons and 6.5 bags for 7 to 8 tons, plus 10 bags of organic fertilizer. Treat these bags of fertilizer per hectare as a starting point and adjust them with a soil test. anee.io, a farm app built for Filipino farmers, has a free NPK Plus calculator that checks your bag count against what rice needs.",
+  "excerpt": "Irrigated palay usually needs about 2.5 to 6.5 bags of inorganic fertilizer per hectare, depending on the yield you aim for. PhilRice's Abonong Swak plan uses 2.5 bags for 3 to 4 tons, 4.5 bags for 5 to 6 tons and 6.5 bags for 7 to 8 tons, plus 10 bags of organic fertilizer. Treat these bags of fertilizer per hectare as a starting point and adjust them with a soil test. anee.io, a farm app built for Filipino farmers, has an NPK Plus calculator that checks your bag count against what rice needs.",
   "heroImage": {
     "src": "/images/site/guides/blog-bags-of-fertilizer-per-hectare.webp",
     "alt": "A wide field of ripening palay in Muñoz, Nueva Ecija, where fertilizer is counted in bags per hectare",
@@ -215,11 +215,11 @@
     },
     {
       "type": "text",
-      "text": "The free [NPK Plus calculator](/features/npk-plus-calculator) takes the bags you plan to use and adds up the nitrogen, phosphorus and potassium per hectare and in all. It tells you if each one is short, right or too much for rice. Want a full plan instead? [Crop Protocol Analysis](/features/crop-protocol-analysis) has Anee write the season by growth stage, with the bags and their dates. That analysis uses credits.\n\nOn Solo Farmer and Farm Owner, [farm inventory](/features/farm-inventory-and-expenses) sets what your plan needs against what is in the shed. You see at once what is left to buy. Each fertilizer task you tick done takes its bags out of stock."
+      "text": "The [NPK Plus calculator](/features/npk-plus-calculator) takes the bags you plan to use and adds up the nitrogen, phosphorus and potassium per hectare and in all. It tells you if each one is short, right or too much for rice. Want a full plan instead? [Crop Protocol Analysis](/features/crop-protocol-analysis) has Anee write the season by growth stage, with the bags and their dates. NPK Plus and the analysis come with Libre plus Anee and the plans above it, and the analysis uses credits.\n\nOn Solo Farmer and Farm Owner, [farm inventory](/features/farm-inventory-and-expenses) sets what your plan needs against what is in the shed. You see at once what is left to buy. Each fertilizer task you tick done takes its bags out of stock."
     },
     {
       "type": "cta",
-      "title": "Check your bag count for free",
+      "title": "Check your bag count",
       "text": "Tap the fertilizers you plan to buy and see the nitrogen, phosphorus and potassium they give your rice per hectare.",
       "label": "Open NPK Plus",
       "url": "/features/npk-plus-calculator"

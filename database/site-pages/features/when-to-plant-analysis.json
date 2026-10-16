@@ -17,7 +17,7 @@
     "El Niño",
     "rice varieties in the Philippines"
   ],
-  "excerpt": "Knowing when to plant decides half the season. The When to Plant Analysis in anee.io reads your town's weather record, the outlook for the coming months and your crop's maturity, then names the planting window with the least risk. It is one of four planning analyses that Anee, the AI technician, runs for you.",
+  "excerpt": "Knowing when to plant decides half the season. The When to Plant Analysis in anee.io reads your town's weather record, the outlook for the coming months and your crop's maturity, then names the planting window with the least risk. It is one of four planning analyses that Anee, the smart farm technician, runs for you.",
   "heroImage": {
     "src": "/images/site/photos/transplant.jpg",
     "alt": "A farmer checks his phone at the edge of a newly transplanted rice field while workers plant behind him",
@@ -129,7 +129,7 @@
       "title": "Related pages",
       "items": [
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

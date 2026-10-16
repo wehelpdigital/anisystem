@@ -18,7 +18,7 @@
     "fertilizer npk",
     "fertilizer components"
   ],
-  "excerpt": "There is no single best NPK ratio for rice, because the right amounts change with soil, season and yield target. As a guide, PhilRice rates for irrigated lowland rice come to about 3.5 parts nitrogen to 1 part phosphate and 1.5 parts potash in the wet season. In the dry season, it is about 4 to 1 to 1.4. You build that ratio by mixing urea, a phosphate grade and potash. anee.io, a farm app built for Filipino farmers, has a free NPK Plus calculator that adds up the bags for you.",
+  "excerpt": "There is no single best NPK ratio for rice, because the right amounts change with soil, season and yield target. As a guide, PhilRice rates for irrigated lowland rice come to about 3.5 parts nitrogen to 1 part phosphate and 1.5 parts potash in the wet season. In the dry season, it is about 4 to 1 to 1.4. You build that ratio by mixing urea, a phosphate grade and potash. anee.io, a farm app built for Filipino farmers, has an NPK Plus calculator that adds up the bags for you.",
   "heroImage": {
     "src": "/images/site/guides/blog-npk-ratio-for-rice.webp",
     "alt": "Round brown granules of compound NPK fertilizer spilling from a bottle, the kind of bag a farmer reads before working out the NPK ratio for rice",
@@ -37,7 +37,7 @@
         "**Rice wants far more nitrogen than phosphate,** about 3.5 to 4 times more in the PhilRice rates.",
         "**No single bag has that ratio,** so you mix urea, a phosphate grade and potash.",
         "**Soil, season and straw change it,** so a soil test or MOET beats a fixed formula.",
-        "**Add it up for free** with the [NPK Plus calculator](/features/npk-plus-calculator)."
+        "**Add it up** with the [NPK Plus calculator](/features/npk-plus-calculator)."
       ]
     },
     {
@@ -239,7 +239,7 @@
     },
     {
       "type": "text",
-      "text": "The free [NPK Plus calculator](/features/npk-plus-calculator) in anee.io does this math for you. Tap the fertilizers you plan to use, and it adds up every nutrient per hectare and in all. Then it tells you if each one is short, right or too much for rice.\n\nOnce the mix looks right, put each dose on its day in the [Protocol Builder](/features/protocol-builder). Anee, the smart farm technician inside anee.io, can also read the plan against your place and season, using credits."
+      "text": "The [NPK Plus calculator](/features/npk-plus-calculator) in anee.io does this math for you. Tap the fertilizers you plan to use, and it adds up every nutrient per hectare and in all. Then it tells you if each one is short, right or too much for rice.\n\nOnce the mix looks right, put each dose on its day in the [Protocol Builder](/features/protocol-builder). Anee, the smart farm technician inside anee.io, can also read the plan against your place and season, using credits."
     },
     {
       "type": "cta",

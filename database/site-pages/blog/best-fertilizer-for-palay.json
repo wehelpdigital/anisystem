@@ -16,7 +16,7 @@
     "fertilizer npk",
     "fertilizer application for rice"
   ],
-  "excerpt": "There is no single best fertilizer for palay. The best one is the right grade, at the right growth stage, in the amount your soil needs. In PhilRice plans, that means complete 14 14 14 or 16 20 0 at basal, urea for top dressing and muriate of potash with the last dose. On anee.io, a farm app built for Filipino farmers, each dose gets a date on your lots, and the free NPK Plus calculator checks the nutrients first.",
+  "excerpt": "There is no single best fertilizer for palay. The best one is the right grade, at the right growth stage, in the amount your soil needs. In PhilRice plans, that means complete 14 14 14 or 16 20 0 at basal, urea for top dressing and muriate of potash with the last dose. On anee.io, a farm app built for Filipino farmers, each dose gets a date on your lots, and the NPK Plus calculator checks the nutrients first.",
   "heroImage": {
     "src": "/images/site/guides/blog-best-fertilizer-for-palay.webp",
     "alt": "A farmer broadcasts fertilizer by hand over a green rice field at dusk",
@@ -227,12 +227,12 @@
     },
     {
       "type": "text",
-      "text": "Start with the free [NPK Plus calculator](/features/npk-plus-calculator). Tap the fertilizers you plan to use, and it adds up the nitrogen, phosphorus and potassium, then says if that is short, right or too much for your crop. Next, write the doses into the [Protocol Builder](/features/protocol-builder). The [cropping calendar](/features/cropping-calendar) then dates each one from every lot's own day zero.\n\nNot sure which grade fits a yellowing lot? Send a photo to Anee, the [smart farm technician](/features/ai-agricultural-technician), in Tagalog or English. She reads the lot's stage, weather and past doses before she answers, and her answers use credits."
+      "text": "Start with the [NPK Plus calculator](/features/npk-plus-calculator). Tap the fertilizers you plan to use, and it adds up the nitrogen, phosphorus and potassium, then says if that is short, right or too much for your crop. Next, write the doses into the [Protocol Builder](/features/protocol-builder). The [cropping calendar](/features/cropping-calendar) then dates each one from every lot's own day zero.\n\nNot sure which grade fits a yellowing lot? Send a photo to Anee, the [smart farm technician](/features/ai-agricultural-technician), in Tagalog or English. She reads the lot's stage, weather and past doses before she answers, and her answers use credits."
     },
     {
       "type": "cta",
       "title": "Plan every bag before you buy it",
-      "text": "Sign up free, add your lots and let anee.io put a date on each fertilizer dose. The NPK Plus calculator is free.",
+      "text": "Sign up free, add your lots and let anee.io put a date on each fertilizer dose. The NPK Plus calculator comes with Libre plus Anee.",
       "label": "Start free",
       "url": "/signup"
     },

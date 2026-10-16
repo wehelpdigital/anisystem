@@ -16,7 +16,7 @@
     "fertilizer budget",
     "crop protocol"
   ],
-  "excerpt": "The best way to make a season fertilizer plan is to work backward from a yield target you can reach. Count what your soil, straw and manure already supply, turn the gap into bags, split them by growth stage and put each dose on a date with the cash and stock ready. IRRI's approach to fitting nutrients to each field starts the same way. anee.io, a farm app built for Filipino farmers, lets you write the whole plan in its Protocol Builder, check it with the free NPK Plus calculator and turn it into a dated cropping calendar.",
+  "excerpt": "The best way to make a season fertilizer plan is to work backward from a yield target you can reach. Count what your soil, straw and manure already supply, turn the gap into bags, split them by growth stage and put each dose on a date with the cash and stock ready. IRRI's approach to fitting nutrients to each field starts the same way. anee.io, a farm app built for Filipino farmers, lets you write the whole plan in its Protocol Builder, check it with the NPK Plus calculator and turn it into a dated cropping calendar.",
   "heroImage": {
     "src": "/images/site/guides/blog-season-fertilizer-plan.webp",
     "alt": "Farmers plant rice under Mount Iriga at the start of a cropping season, when the season fertilizer plan should already be ready",
@@ -153,7 +153,7 @@
     },
     {
       "type": "text",
-      "text": "In the [Protocol Builder](/features/protocol-builder) you write every task of the season on its day: land preparation, sowing, each fertilizer with its rate. Keep one version for the wet season and one for the dry. The free NPK Plus calculator checks the nutrients. Anee can then review the protocol for a rate that looks too high or a stage with nothing planned. Her review uses credits.\n\nWhen you plant, the protocol becomes a [cropping calendar](/features/cropping-calendar) dated from each lot's own day zero. The protocol also adds up the materials its tasks will use, and on Solo Farmer it sets them against your stock, so you see what is left to buy. Cash to prepare then shows the money each day or stretch of days needs. After harvest, View as Protocol turns a lot's finished work into a ready start for next season."
+      "text": "In the [Protocol Builder](/features/protocol-builder) you write every task of the season on its day: land preparation, sowing, each fertilizer with its rate. Keep one version for the wet season and one for the dry. The NPK Plus calculator checks the nutrients. Anee can then review the protocol for a rate that looks too high or a stage with nothing planned. Her review uses credits.\n\nWhen you plant, the protocol becomes a [cropping calendar](/features/cropping-calendar) dated from each lot's own day zero. The protocol also adds up the materials its tasks will use, and on Solo Farmer it sets them against your stock, so you see what is left to buy. Cash to prepare then shows the money each day or stretch of days needs. After harvest, View as Protocol turns a lot's finished work into a ready start for next season."
     },
     {
       "type": "image",

@@ -66,7 +66,7 @@
     },
     {
       "type": "text",
-      "text": "Every picture the season makes lands in the gallery, drawings and saved maps included. Each one links back to the record it came from. Make albums for what you want to keep together, like 'Lot 2 tillering' or 'Harvest 2026'. Videos have their own tab.\n\nTags tie it all together. Tag a note, a photo or a task by lot, by problem or by anything you like. Then find everything with that tag at once. For maps inside notes, see [farm maps](/features/farm-maps). Your records also help [Anee, the AI technician](/features/ai-agricultural-technician). Realign by Anee reads a lot's notes, and her season report reads your photo captions."
+      "text": "Every picture the season makes lands in the gallery, drawings and saved maps included. Each one links back to the record it came from. Make albums for what you want to keep together, like 'Lot 2 tillering' or 'Harvest 2026'. Videos have their own tab.\n\nTags tie it all together. Tag a note, a photo or a task by lot, by problem or by anything you like. Then find everything with that tag at once. For maps inside notes, see [farm maps](/features/farm-maps). Your records also help [Anee, the smart farm technician](/features/ai-agricultural-technician). Realign by Anee reads a lot's notes, and her season report reads your photo captions."
     },
     {
       "type": "heading",
@@ -133,7 +133,7 @@
           "url": "/features/farm-maps"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

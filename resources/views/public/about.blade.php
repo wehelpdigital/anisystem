@@ -199,7 +199,7 @@
                 </div>
             </div>
             <div class="reveal">
-                <p class="ab-guides-k">Free guides from our team</p>
+                <p class="ab-guides-k">Guides from our team</p>
                 <div class="ab-guides">
                     @foreach ([
                         ['/crops/palay', 'Palay', 'Palay in English, its growth stages, and how palay becomes rice.'],

@@ -29,7 +29,7 @@
     },
     {
       "type": "text",
-      "text": "Anee is the [AI agricultural technician](/features/ai-agricultural-technician) inside anee.io. For a season report she reads your farm's own records, not a template."
+      "text": "Anee is the [smart farm technician](/features/ai-agricultural-technician) inside anee.io. For a season report she reads your farm's own records, not a template."
     },
     {
       "type": "list",
@@ -178,7 +178,7 @@
           "url": "/features/farm-reports"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

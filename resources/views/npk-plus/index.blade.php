@@ -776,7 +776,7 @@
                         <button type="button" class="np-anee" id="npAnee"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""><span id="npAneeSays">Analyze further with Anee</span></button>
                     </div>
                     {{-- The owner's rule (2026-10-15): the calculator never uses credits; only Anee's reading does, when it is ready. --}}
-                    <p class="np-free" id="npFree"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>The calculator is free. Credits are used only when you ask Anee to look further.</span></p>
+                    <p class="np-free" id="npFree"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>The calculator uses no credits. Credits are used only when you ask Anee to look further.</span></p>
                 </div>
                 <div class="np-rep" id="npRep" hidden></div>
             </div>

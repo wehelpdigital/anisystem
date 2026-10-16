@@ -32,11 +32,11 @@
       "Past flowering, it tells you to stop: nitrogen then feeds leaves, not grain."
     ]},
     {"type": "heading", "level": 2, "text": "Keep every check"},
-    {"type": "text", "text": "Every reading is saved with its date and its answer, so you can see the field get greener or paler week by week. Give a check its own name and open it again any time, with the date of the next one. Put the urea on your [cropping calendar](/features/cropping-calendar) as a task, and check the season's whole fertilizer plan with the free [NPK Plus calculator](/features/npk-plus-calculator). For the full schedule by target yield, read our [rice fertilizer schedule](/blog/rice-fertilizer-schedule)."},
-    {"type": "cta", "title": "Check your rice leaves this week", "text": "Sign up free. Reading your own chart is free on every plan, and Anee's photo reading uses a few credits.", "label": "Start free", "url": "/signup"},
+    {"type": "text", "text": "Every reading is saved with its date and its answer, so you can see the field get greener or paler week by week. Give a check its own name and open it again any time, with the date of the next one. Put the urea on your [cropping calendar](/features/cropping-calendar) as a task, and check the season's whole fertilizer plan with the [NPK Plus calculator](/features/npk-plus-calculator). For the full schedule by target yield, read our [rice fertilizer schedule](/blog/rice-fertilizer-schedule)."},
+    {"type": "cta", "title": "Check your rice leaves this week", "text": "Sign up free. Reading your own chart is free on every plan. Anee's photo reading comes with Libre plus Anee and up, and uses a few credits.", "label": "Start free", "url": "/signup"},
     {"type": "heading", "level": 2, "text": "Questions about the LCC checker"},
     {"type": "faq", "items": [
-      {"q": "Is the LCC checker free?", "a": "Reading your own chart is free on every plan, Libre included. Anee reading your leaf photos uses a few credits for each check."},
+      {"q": "Is the LCC checker free?", "a": "Reading your own chart is free on every plan, Libre included. Anee reads your leaf photos on Libre plus Anee and up, for a few credits a check."},
       {"q": "Do I need a leaf color chart?", "a": "No. Photograph ten leaves on white paper and Anee reads them. A chart gives the steadiest reading, so ask your municipal agriculturist or the nearest PhilRice station for one."},
       {"q": "Does it work for corn?", "a": "Not yet. The critical panels and the nitrogen rates here are the ones for rice."},
       {"q": "Why did it say to wait?", "a": "Before about 14 days after transplanting, or 21 after sowing, young leaves are naturally pale, and after flowering nitrogen no longer helps the grain. The checker tells you when to read again."}

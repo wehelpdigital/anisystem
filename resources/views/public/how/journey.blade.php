@@ -677,6 +677,13 @@
     .hw-chip:hover .hw-plus { background: rgb(245 197 24 / .18); transform: scale(1.08); }
     .hw-chip:hover .hw-plus::before, .hw-item.is-open .hw-plus::before { border-left-color: var(--acc); }
     .hw-item.is-open .hw-plus { background: rgb(245 197 24 / .18); }
+    /* A tool with no film yet opens its words: a plus, not a play mark (2026-10-18). */
+    .hw-plus.is-words::before, .hw-plus.is-words::after { content: ''; position: absolute; left: 50%; top: 50%; border: 0; border-radius: 1px; background: var(--leaf);
+        transition: background-color .28s var(--ease); }
+    .hw-plus.is-words::before { width: .62rem; height: .14rem; margin: -.07rem 0 0 -.31rem; }
+    .hw-plus.is-words::after { width: .14rem; height: .62rem; margin: -.31rem 0 0 -.07rem; }
+    .hw-chip:hover .hw-plus.is-words::before, .hw-chip:hover .hw-plus.is-words::after,
+    .hw-item.is-open .hw-plus.is-words::before, .hw-item.is-open .hw-plus.is-words::after { background: var(--acc); }
     .hw-item.is-open .hw-chip { border-color: rgb(245 197 24 / .6); }
     /* A tool's words stay in the page (they fill the film's card); they are never shown in place. */
     .hw-more { display: none; }
@@ -687,6 +694,15 @@
     .hw-gets { margin-top: .65rem; display: grid; gap: .35rem; }
     .hw-gets li { display: flex; gap: .5rem; font-size: .83rem; line-height: 1.45; color: var(--ink); }
     .hw-gets svg { flex: none; width: 1rem; height: 1rem; margin-top: .12rem; color: var(--leaf); }
+    /* The plan a tool comes with, its dot in the plan's colour (2026-10-18). */
+    .hw-plan { margin-top: .75rem; display: flex; align-items: flex-start; gap: .5rem; width: fit-content; max-width: 100%; padding: .38rem .75rem .38rem .55rem;
+        border-radius: .75rem; background: rgb(255 255 255 / .07); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12);
+        font-size: .8rem; font-weight: 800; line-height: 1.35; color: var(--ink); }
+    .hw-plan i { flex: none; width: .6rem; height: .6rem; margin-top: .3rem; border-radius: 999px; background: var(--leaf); box-shadow: 0 0 0 3px rgb(168 204 126 / .18); }
+    .hw-plan.is-libreAnee i { background: var(--acc); box-shadow: 0 0 0 3px rgb(245 197 24 / .22); }
+    .hw-plan.is-solo i { background: #7fb24e; }
+    .hw-plan.is-owner i { background: #e4f1d4; box-shadow: 0 0 0 3px rgb(228 241 212 / .2); }
+    .hw-plan small { display: block; margin-top: .1rem; font-size: .74rem; font-weight: 700; color: var(--mute); }
     .hw-link { margin-top: .8rem; display: inline-flex; align-items: center; gap: .35rem; font-size: .83rem; font-weight: 800; color: var(--acc); }
     .hw-link svg { width: .95rem; height: .95rem; transition: transform .28s var(--ease); }
     .hw-link:hover svg { transform: translateX(3px); }
@@ -1306,7 +1322,7 @@
                                 <span class="hw-ico {{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
                                 <span class="hw-txt"><b>{{ $it['name'] }}</b><small>{{ $it['short'] }}</small></span>
                                 @if ($it['anee'])<span class="hw-by"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">Anee</span>@endif
-                                <i class="hw-plus" aria-hidden="true"></i>
+                                <i class="hw-plus {{ $it['video'] ? '' : 'is-words' }}" aria-hidden="true"></i>
                             </button>
                             <div class="hw-more" id="{{ $uid }}" role="region" aria-labelledby="{{ $uid }}-b">
                                 <div><div class="hw-more-in">
@@ -1316,6 +1332,9 @@
                                             <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $g }}</li>
                                         @endforeach
                                     </ul>
+                                    {{-- The plan it comes with, read off config/tiers.php (2026-10-18). A div, so the
+                                         film modal's paragraph rule leaves it be. --}}
+                                    <div class="hw-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></div>
                                     @if ($link)
                                         <a class="hw-link" href="{{ $link[0] }}">{{ $link[1] }}
                                             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>

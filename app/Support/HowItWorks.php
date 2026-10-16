@@ -22,8 +22,17 @@ namespace App\Support;
  *   page                   a /features/{slug} page that tells more (the
  *                          Philippine site's), or url for any other page
  *   app                    the route that opens the tool inside the app
+ *   plan                   the plan it comes with, read off config/tiers.php
+ *                          through GATES (planOf()), never written by hand
  *
  * The words follow the site's style: short, plain, no dashes.
+ *
+ * 2026-10-18 (the owner: "update the list of modules"): the tools of the
+ * last weeks found their place in the season. Global Lots and the Variety
+ * Finder before day zero, the Land Prep Planner when the field is readied,
+ * the LCC Checker and the farm news while the crop grows, the Nutrient
+ * Deficiency Finder and the Compatibility Checker beside the other field
+ * helpers when something looks wrong. Still eight steps.
  */
 class HowItWorks
 {
@@ -75,7 +84,78 @@ class HowItWorks
         // pest finder's icon and film); the weed helper's page is /weeds.
         'pestFinder' => 'pest-and-disease-finders',
         'stash' => 'the-stash',
+        // The tools placed in the season on 2026-10-18.
+        'landprep' => 'land-preparation-planner',
+        'lcc' => 'lcc-checker',
+        'nutrientFinder' => 'nutrient-deficiency-finder',
     ];
+
+    /**
+     * What opens each tool, as config/tiers.php names it (2026-10-18): the
+     * key the gates read, so the plan a tool is said to come with is the one
+     * the app really opens it on. Null = every plan. A second pair is a part
+     * of the tool that comes later (the LCC Checker reads your own chart on
+     * every plan; Anee reading photos of the leaves needs her).
+     */
+    public const GATES = [
+        'when' => 'aiAnalyses', 'what' => 'aiAnalyses', 'variety' => 'aiAnalyses', 'cropProtocol' => 'aiAnalyses',
+        'satellite' => 'aiAnalyses', 'landprep' => 'aiAnalyses', 'review' => 'aiAnalyses', 'auto' => 'aiAnalyses',
+        'chat' => 'ai', 'realign' => 'ai',
+        'maps' => 'maps', 'skyWeather' => 'skyWeather', 'npk' => 'npkPlus',
+        'varietyFinder' => 'fieldHelpers', 'pestFinder' => 'fieldHelpers', 'diseaseFinder' => 'fieldHelpers',
+        'nutrientFinder' => 'fieldHelpers', 'weedHelper' => 'fieldHelpers', 'compat' => 'fieldHelpers',
+        'inventory' => 'inventory', 'stock' => 'inventory',
+        'workers' => 'workers', 'globalWorkers' => 'workers',
+        'access' => 'workerLogins', 'collab' => 'collab',
+        'sofar' => 'reportsAll', 'expenses' => 'reportsAll', 'profit' => 'reportsAll', 'season' => 'reportsAll',
+        'compare' => 'reportsAll', 'asProtocol' => 'reportsAll',
+        'weather' => [null, 'weatherDays', 'The full forecast'],
+        'lcc' => [null, 'aiAnalyses', 'Anee reading your photos'],
+        'capture' => [null, 'videoRecording', 'Quick Record video'],
+        'documentation' => [null, 'docUploads', 'File uploads'],
+        // The pest, disease and weed guides open in full with the field helpers' plan (ContentGate, 2026-10-17).
+        'guides' => [null, 'fieldHelpers', 'The whole guide'],
+    ];
+
+    /**
+     * The plan a tool comes with: ['tier' => key, 'name' => plan name,
+     * 'says' => the line under the tool], plus 'more' for a part of it that
+     * opens on a later plan. The first plan in config order whose value opens
+     * the key wins (true, unlimited, or more than the free plan's number).
+     */
+    public static function planOf(string $key): array
+    {
+        $gate = self::GATES[$key] ?? null;
+        [$main, $moreKey, $moreWhat] = is_array($gate) ? $gate + [null, null, null] : [$gate, null, null];
+        $plans = array_filter(config('tiers'), fn ($t, $k) => $k !== 'admin', ARRAY_FILTER_USE_BOTH);
+        $keys = array_keys($plans);
+        $top = end($keys);
+        $first = function (?string $cfg) use ($plans, $keys, $top) {
+            if ($cfg === null) {
+                return $keys[0];
+            }
+            // array_key_exists, not ??: a null here means unlimited, not missing.
+            $base = array_key_exists($cfg, $plans[$keys[0]]) ? $plans[$keys[0]][$cfg] : false;
+            foreach ($plans as $k => $t) {
+                $v = array_key_exists($cfg, $t) ? $t[$cfg] : false;
+                if ($v === true || ($v === null && $base !== null) || (is_numeric($v) && is_numeric($base) && $v > $base)) {
+                    return $k;
+                }
+            }
+
+            return $top;
+        };
+        $say = fn (string $tier) => $tier === $keys[0] ? 'On every plan, ' . $plans[$tier]['name'] . ' included'
+            : 'Comes with ' . $plans[$tier]['name'] . ($tier === $top ? '' : ' and up');
+        $tier = $first($main);
+        $out = ['tier' => $tier, 'name' => $plans[$tier]['name'], 'says' => $say($tier), 'more' => null];
+        if ($moreKey) {
+            $later = $first($moreKey);
+            $out['more'] = $moreWhat . ': ' . $plans[$later]['name'] . ($later === $top ? '' : ' and up');
+        }
+
+        return $out;
+    }
 
     /**
      * The app's own icon for a feature page (images/...), the one its tool
@@ -116,8 +196,13 @@ class HowItWorks
                 'pattern' => 'plan',
                 'glyph' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
                 'items' => [
+                    // Global Lots (2026-10-16): each field answered once, before any analysis asks.
+                    self::item('globalLots', 'Global Lots', 'Each field once: its place, soil and water', 'map-pin.png', false,
+                        'Add each field once: where it is, its size, its soil, its water and what grew there last. Every analysis reads it from there, so you answer those questions one time, and every six months anee.io asks you to check it is still right.',
+                        ['Place, size, soil and water for each lot', 'Read by every analysis, never asked twice', 'A reminder to check it every six months'],
+                        null, 'farmlots.index'),
                     self::item('when', 'When to Plant Analysis', 'The best planting window for your town', 'appointment.png', true,
-                        "Anee reads your town's weather record, the outlook for the coming months and how your crop grows, then names the window that gives it the best start and the safest harvest.",
+                        "Anee reads twenty years of your town's weather, the outlook for the coming months and how your crop grows, then names the window that gives it the best start and the safest harvest.",
                         ['A best window and a second choice', 'The risk in each month, said plainly', 'Saved, so you can come back to it'],
                         'when-to-plant-analysis', 'wtp.page'),
                     self::item('what', 'What to Plant Analysis', 'The crop that fits your land this season', 'plant.png', true,
@@ -128,6 +213,11 @@ class HowItWorks
                         'Anee looks up the varieties of your crop and compares them for your area: yield, maturity, resistance and how they did in weather like yours.',
                         ['Varieties side by side', 'Strong and weak points for your area', 'The sources she used, to check yourself'],
                         null, 'vary.page'),
+                    // A field helper (2026-10-13): the registered varieties, read before seed is bought.
+                    self::item('varietyFinder', 'Variety Finder', 'Every registered variety of your crop', 'icons/rice-variety.svg', false,
+                        'Every registered variety of rice, corn, vegetables, root crops and fruit trees, with its days to harvest, its yield and what it resists. Filter them by what your farm needs, then let Anee rank the few that fit your place.',
+                        ['Days to harvest, yield and resistance', 'Rice, corn, vegetables, root crops and fruit trees', 'Filters for what your farm needs'],
+                        null, 'fh.page:varieties', $ph ? '/rice-varieties' : null),
                     self::item('cropProtocol', 'Crop Protocol Analysis', 'Anee writes a protocol for your variety', 'icons/biostimulant.png', true,
                         'Pick your crop and variety, and Anee writes the season for your place by growth stage: the bags of fertilizer and when, the sprays, the water and what to watch for.',
                         ['Stage by stage, from land prep to harvest', 'Fertilizer, sprays and water on their days', 'Checked against your weather, soil and water'],
@@ -171,7 +261,7 @@ class HowItWorks
                         ['What the plan needs against what you have', 'Counted in bags, liters or kilos', 'Every move in and out on record'],
                         'farm-inventory-and-expenses', 'pb.page'),
                     self::item('npk', 'NPK Plus Calculator', 'Every nutrient in your fertilizer plan', 'icons/npk.svg', false,
-                        'Tap the fertilizers you plan to use and NPK Plus adds up every nutrient, as the element and as the oxide, checks it against what your crop needs and shows the yield it can feed. Free. Anee can read the plan against your place, soil and season.',
+                        'Tap the fertilizers you plan to use and NPK Plus adds up every nutrient, as the element and as the oxide, checks it against what your crop needs and shows the yield it can feed. The count uses no credits, and Anee can read the plan against your place, soil and season.',
                         ['N, P and K per hectare and in all', 'Micronutrients and biofertilizers counted too', 'Short, right or too much for your crop'],
                         'npk-plus-calculator', 'npk.page'),
                     self::item('review', 'Anee reviews your protocol', 'A second pair of eyes on your plan', 'icons/technician-support.png', true,
@@ -185,12 +275,17 @@ class HowItWorks
                 'word' => 'Plant',
                 'when' => 'Day zero',
                 'title' => 'Set up and plant',
-                'lede' => 'Turn the plan into a living cropping schedule. Each lot keeps its own day zero, so every task lands on the right date.',
+                'lede' => 'Get every field ready on time, then turn the plan into a living cropping schedule. Each lot keeps its own day zero, so every task lands on the right date.',
                 'say' => null,   // the owner took this step's line out (2026-10-01)
                 'face' => 'salute',
                 'pattern' => 'plant',
                 'glyph' => 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z',
                 'items' => [
+                    // The Land Prep Planner (2026-10-14; several lots, each its own crop, crew and machines since).
+                    self::item('landprep', 'Land Prep Planner', 'Every lot ready on time for planting', 'icons/land-prep.svg', true,
+                        'Pick your lots, each with its own crop and planting day. Anee dates every step of getting them ready, from clearing and plowing to harrowing, leveling and the seed, counted back from planting and fitted around your soil, the weather, your workers and your machines.',
+                        ['Each lot with its own crop and planting day', 'Your workers and machines planned on every step', 'What it will all cost'],
+                        'land-preparation-planner', 'landprep.page'),
                     self::item('schedule', 'Cropping schedule', 'The whole season on one board', 'icons/calendar.png', false,
                         "Start a season from your protocol or from scratch. Every task, irrigation, hired service and payroll day sits on one board, dated from each lot's own day zero.",
                         ['Drag a task to move it', 'Drafts and versions to try other plans', 'Undo that still works after you log out'],
@@ -205,7 +300,7 @@ class HowItWorks
                         'farm-workers-and-payroll', 'sm.index'),
                     // The tools the count left out until 2026-10-13 (the owner: "are you sure there's only 45?").
                     self::item('globalWorkers', 'Global Workers', 'Your crew in one list, for every season', 'united.png', false,
-                        'Add each worker once, with their pay, skills and the weekdays they do not work. Put them on any season in a tap, and each season keeps its own record of their days and pay.',
+                        'Add each worker once, with their pay, skills and the weekdays they do not work. Put them on any season or land prep plan in a tap, and each season keeps its own record of their days and pay.',
                         ['One roster for every season', 'Skills and days off kept with each person', 'Changes reach every open season'],
                         null, 'workers.global'),
                     self::item('access', 'Team logins', 'Your team sees what you allow', 'friends.png', false,
@@ -240,7 +335,7 @@ class HowItWorks
                 'face' => 'happy',
                 'pattern' => 'grow',
                 'glyph' => 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z',
-                'items' => [
+                'items' => array_values(array_filter([
                     self::item('growth', 'Growth stages', 'Where every lot stands today', 'icons/soil-restoration.png', false,
                         'Pick any date and each lot shows its growth stage, what to do now and what to watch for. anee.io knows ' . ($ph ? '85 Philippine crops, from palay and mais to gulay and fruit trees.' : 'nearly a hundred crops, from rice and corn to vegetables and fruit trees.'),
                         ['Stage, do list and watch list per lot', 'Annual and perennial crops', 'Shown right on the board'],
@@ -253,6 +348,11 @@ class HowItWorks
                         'Watch the clouds and rain of the last hours over your farm, fast forward the forecast, and see every typhoon with its path, its cone and how far it is from your field.',
                         ['Satellite clouds and rain radar, played back', 'Typhoon tracks with the time at every forecast point', 'Where the rain clusters are headed, hour by hour'],
                         'satellite-weather', 'sky.page'),
+                    // The LCC Checker (2026-10-14): is it time for nitrogen, from the leaves.
+                    self::item('lcc', 'LCC Checker', 'Rice: is it time for nitrogen?', 'icons/leaf-color.svg', false,
+                        'From the third week on, hold your leaves against the leaf color chart and tap the color each one matches, or send Anee photos of the leaves and she reads the color. The checker says if urea is due now and how many kilos your area needs.',
+                        ['Your own chart, or photos read by Anee', 'Whether it is time for nitrogen', 'How much urea, for your area'],
+                        'lcc-checker', 'lcc.page'),
                     self::item('realign', 'Realign by Anee', 'When a crop runs ahead or behind', 'user-refresh.png', true,
                         "Crops do not read calendars. Anee reads a lot's records, its weather and your notes, works out the stage it is truly in, and moves that lot's stage count to match.",
                         ['The real stage, with her reasons', 'What to do now and what to watch', 'Your calendar dates stay as they are'],
@@ -285,14 +385,19 @@ class HowItWorks
                         'Each day the dashboard gives you one tip for the stage your crop is in, from what anee.io knows about each crop and stage. Tap it to ask Anee more.',
                         ['Read on your dashboard each morning', 'Made for your crop and its stage', 'Ask her more with one tap'],
                         null, null),
-                ],
+                    // Latest in Agriculture (2026-10-07): the farm news, from the Philippines' newsrooms.
+                    $ph ? self::item('news', 'Latest in Agriculture', 'Farm news, and what it means for you', 'newspaper.png', false,
+                        'Every few days anee.io gathers the farm news from many newsrooms: prices, the weather, government programs and new ways to farm. Each story ends with what it means for your farm, in Taglish and in English.',
+                        ['The farm news of the week in one place', 'What each story means for your farm', 'In Taglish and in English'],
+                        null, 'community.blog', '/blog') : null,
+                ])),
             ],
             [
                 'key' => 'protect',
                 'word' => 'Protect',
                 'when' => 'When something looks wrong',
                 'title' => 'Catch problems early',
-                'lede' => 'Yellow leaves, holes in the leaves, a storm on the way. The sooner you know what it is, the less it costs.',
+                'lede' => 'Yellow leaves, holes in the leaves, weeds, a storm on the way. The sooner you know what it is and what to put on, the less it costs.',
                 'say' => null,   // the owner took every step's Anee line out (2026-10-02)
                 'face' => 'concerned',
                 'pattern' => 'protect',
@@ -314,10 +419,20 @@ class HowItWorks
                         'Spots, blight, rot or wilting? Pick your crop and the signs you see, and the finder names the diseases that fit, what to do first and the active ingredients that control them.',
                         ['Matched from the signs on your crop', 'What to do first, before any spray', 'Active ingredients, their groups and products sold here'],
                         'pest-and-disease-finders', 'fh.page:diseases'),
+                    // The fifth field helper (2026-10-16).
+                    self::item('nutrientFinder', 'Nutrient Deficiency Finder', 'From the leaves you see to the missing nutrient', 'icons/nutrient.svg', false,
+                        'Yellow, purple or burnt leaves? Pick your crop, where the change started and what it looks like. The finder names the nutrient your crop is likely short of, how to be sure, and the fertilizers sold here that supply it, with photos to compare.',
+                        ['Any crop, with photos to compare', 'How to be sure before you buy', 'The fertilizers sold here that fix it'],
+                        'nutrient-deficiency-finder', 'fh.page:nutrients'),
                     self::item('weedHelper', 'Weed Control Helper', "What to do about weeds at your crop's age", 'icons/weed.svg', false,
                         'Pick your crop, how old it is and the weeds you see. The helper tells you what works at that age: the active ingredients for those weeds, group by group, or weeding by hand when no herbicide fits.',
                         ['By your crop and its age', 'Active ingredients by group, and products sold here', 'Hand weeding when no spray fits'],
                         'pest-and-disease-finders', 'fh.page:weeds'),
+                    // The sixth field helper (2026-10-18): before the tank is filled.
+                    self::item('compat', 'Compatibility Checker', 'Which sprays and fertilizers go on together', 'icons/compat.svg', false,
+                        'Add the sprays and fertilizers you want to put on together, with how much of each. The checker says if they mix, the order to pour them in, how strong the spray is for your crop and its age, and what to watch. It knows over 7,000 products ' . ($ph ? 'sold in the Philippines' : 'registered for sale') . ', and Anee can look up one it does not know, once: what she finds is kept for next time.',
+                        ['Mix or not, pair by pair', 'The mixing order and a jar test', 'How strong the spray is for your crop'],
+                        null, 'fh.page:compat'),
                     $ph ? self::item('guides', 'Crop problem guides', 'Pests, diseases and weeds, explained', 'icons/tool-box.png', false,
                         'Guides to the pests, diseases and weeds of Philippine crops: how to spot them, why they come and what to do about them.',
                         ['Written for Philippine farms', 'What to look for, with pictures', 'What to do, step by step'],
@@ -431,6 +546,7 @@ class HowItWorks
                     $it['url'] = null;
                 }
                 $it['video'] = self::video($it['key']);
+                $it['plan'] = self::planOf($it['key']);
             }
             unset($it);
         }

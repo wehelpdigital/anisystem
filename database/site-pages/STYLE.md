@@ -102,7 +102,7 @@ cover, reveal, supports.
   naturally is left out rather than forced.
 - Every page promotes anee.io honestly: at least one "cta" block and one
   in-text mention that shows how anee.io helps with this exact topic (the
-  cropping calendar that dates every task, Anee the AI technician who answers
+  cropping calendar that dates every task, Anee the smart farm technician who answers
   in Tagalog or English and reads a photo, growth stages and weather, the
   inventory that tracks fertilizer, the reports). Never claim a feature that
   is not in section 7.
@@ -204,7 +204,7 @@ season (a "cropping schedule"). It has:
 - Weather: the week's forecast per lot location; When to Plant Analysis and
   What to Plant Analysis for your town; Variety Research and Comparison; Crop
   Protocol Analysis.
-- Anee, the AI technician: answers in Tagalog or English, reads your
+- Anee, the smart farm technician: answers in Tagalog or English, reads your
   schedules, stages and weather first, can look at a photo of a pest or a sick
   plant, and can write a full season report. Runs on credits.
 - Protocol Builder: plan a whole crop protocol (tasks, materials, rates,
@@ -216,9 +216,18 @@ season (a "cropping schedule"). It has:
   (buyers, prices); Compare Reports season against season.
 - Community: news feed, discussion rooms, direct messages, co-farmers, a
   ranking ladder; a team Collab Room per season with chat and whiteboard.
-- Offline mode for the field (paid plans), a Contact List, Global Notes.
+- Offline mode for the field (every plan, Libre included), a Contact List,
+  Global Notes, Global Lots (each field's place, soil and water, answered once).
 - Plans: Libre (free, with ads), Libre plus Anee, Solo Farmer, Farm Owner;
   pay by GCash or bank transfer in the Philippines. Sign up at /signup.
+- What comes with which plan (2026-10-18, config/tiers.php decides; the
+  comparison at /pricing/compare shows it): Anee, her analyses, the Land
+  Prep Planner, the field helpers (pest, disease, weed, nutrient and variety
+  finders and the Compatibility Checker), Satellite Weather, the NPK Plus
+  calculator and Maps come with Libre plus Anee and every plan above it, and
+  are locked on Libre. There is no add-on. NPK Plus is not free: its count
+  uses no credits. Workers and inventory come with Solo Farmer; worker
+  logins and the Collab Room with Farm Owner.
 
 ## 8. URL map (link only to these)
 

@@ -13,7 +13,7 @@
     "fertilizer with zinc",
     "foliar fertilizer"
   ],
-  "excerpt": "Yes, rice needs micronutrients, and zinc is the one most often short. It shows 2 to 4 weeks after transplanting as dusty brown spots on stunted plants, mostly on alkaline, poorly drained or long flooded soils. PalayCheck fixes it with one method, such as 25 kg of zinc sulfate per hectare at 10 to 14 days after transplanting. But micronutrients for rice are not a pesticide. Fixing a real shortage and returning straw make plants tougher, while too much nitrogen invites pests. In anee.io, a farm app built for Filipino farmers, the free NPK Plus calculator counts micronutrients too.",
+  "excerpt": "Yes, rice needs micronutrients, and zinc is the one most often short. It shows 2 to 4 weeks after transplanting as dusty brown spots on stunted plants, mostly on alkaline, poorly drained or long flooded soils. PalayCheck fixes it with one method, such as 25 kg of zinc sulfate per hectare at 10 to 14 days after transplanting. But micronutrients for rice are not a pesticide. Fixing a real shortage and returning straw make plants tougher, while too much nitrogen invites pests. In anee.io, a farm app built for Filipino farmers, the NPK Plus calculator counts micronutrients too.",
   "heroImage": {
     "src": "/images/site/guides/blog-micronutrients-for-rice.webp",
     "alt": "Bundles of rice seedlings with their roots, ready for transplanting, the stage when a zinc root dip can give micronutrients for rice",
@@ -128,7 +128,7 @@
     },
     {
       "type": "text",
-      "text": "Take a photo of the leaves and send it to [Anee, the smart farm technician](/features/ai-agricultural-technician) inside anee.io. She reads it with your lot's stage, the weather and what you already applied, in Tagalog or English. Her answers use credits, so treat her reading as a lead and confirm it with a test.\n\nThe [Disease Finder](/features/pest-and-disease-finders) helps you rule out tungro and other look alikes first. Then the free [NPK Plus calculator](/features/npk-plus-calculator) counts micronutrients as well as N, P and K, so you see what your plan already gives."
+      "text": "Take a photo of the leaves and send it to [Anee, the smart farm technician](/features/ai-agricultural-technician) inside anee.io. She reads it with your lot's stage, the weather and what you already applied, in Tagalog or English. Her answers use credits, so treat her reading as a lead and confirm it with a test.\n\nThe [Disease Finder](/features/pest-and-disease-finders) helps you rule out tungro and other look alikes first. Then the [NPK Plus calculator](/features/npk-plus-calculator) counts micronutrients as well as N, P and K, so you see what your plan already gives."
     },
     {
       "type": "cta",

@@ -4,9 +4,9 @@
   "sortOrder": 420,
   "lang": "en",
   "category": "Planning",
-  "title": "NPK Plus: A Free Fertilizer Calculator for Every Nutrient in Your Plan",
+  "title": "NPK Plus: A Fertilizer Calculator for Every Nutrient in Your Plan",
   "metaTitle": "Fertilizer Calculator: NPK Plus Adds Up Every Nutrient",
-  "metaDescription": "A free fertilizer calculator for Filipino farmers. Pick your crop and products, and NPK Plus adds up N, P2O5 and K2O per hectare against the usual rate.",
+  "metaDescription": "A fertilizer calculator for Filipino farmers. Pick your crop and products, and NPK Plus adds up N, P2O5 and K2O per hectare against the usual rate.",
   "focusKeyword": "fertilizer calculator",
   "keywords": [
     "fertilizer calculator",
@@ -17,7 +17,7 @@
     "soil test",
     "fertilizer for rice"
   ],
-  "excerpt": "NPK Plus is the free fertilizer calculator in anee.io. Pick your crop and the products you plan to use, and it adds up every nutrient they carry, per hectare and for the whole area. Then it holds the total against the usual rate for your crop, so you see what is short and what is too much before you buy a single bag.",
+  "excerpt": "NPK Plus is the fertilizer calculator in anee.io. Pick your crop and the products you plan to use, and it adds up every nutrient they carry, per hectare and for the whole area. Then it holds the total against the usual rate for your crop, so you see what is short and what is too much before you buy a single bag.",
   "heroImage": {
     "src": "/images/site/app/npk.webp",
     "alt": "NPK Plus fertilizer calculator on a phone showing 97 kg nitrogen, 28 kg P2O5 and 58 kg K2O per hectare, with bars against the usual rate for transplanted rice",
@@ -90,7 +90,7 @@
     },
     {
       "type": "text",
-      "text": "Your season already holds a fertilizer plan, in the materials of each task on your [cropping calendar](/features/cropping-calendar). The NPK Plus button on the Activities board runs the same fertilizer calculator over them, lot by lot. It splits what is already applied, meaning the tasks you ticked done, from what is still planned, per hectare and against the usual rate.\n\nA task with no lot named counts for every lot, shared out by lot size. NPK Plus also reads names the way farmers write them, like Urea 46 0 0, Ammosul or ipot ng manok (chicken manure). A fertilizer name it cannot read goes under Not counted, so nothing drops out quietly. This part is free.\n\nWith Anee on your plan, ask her to read up to eight lots at a time. She weighs each lot's stage, its place, its rain and ENSO, then says what to apply next and when. Each lot she reads uses credits."
+      "text": "Your season already holds a fertilizer plan, in the materials of each task on your [cropping calendar](/features/cropping-calendar). The NPK Plus button on the Activities board runs the same fertilizer calculator over them, lot by lot. It splits what is already applied, meaning the tasks you ticked done, from what is still planned, per hectare and against the usual rate.\n\nA task with no lot named counts for every lot, shared out by lot size. NPK Plus also reads names the way farmers write them, like Urea 46 0 0, Ammosul or ipot ng manok (chicken manure). A fertilizer name it cannot read goes under Not counted, so nothing drops out quietly. This part uses no credits.\n\nWith Anee on your plan, ask her to read up to eight lots at a time. She weighs each lot's stage, its place, its rain and ENSO, then says what to apply next and when. Each lot she reads uses credits."
     },
     {
       "type": "heading",
@@ -104,14 +104,14 @@
     {
       "type": "callout",
       "tone": "info",
-      "title": "Free, with Anee when you want her",
-      "text": "The calculator and its totals on the board and in the protocol are free on every plan, Libre included. Anee's readings come with Libre plus Anee, Solo Farmer and Farm Owner, and each one shows its price before you start."
+      "title": "With Libre plus Anee and up",
+      "text": "The calculator comes with Libre plus Anee, Solo Farmer and Farm Owner, and it uses no credits. On the free Libre plan it is locked, while the nutrient totals on the Activities board and in the Protocol Builder still show on every plan. Anee's readings come with Libre plus Anee and up, and each one shows its price before you start."
     },
     {
       "type": "cta",
-      "title": "Check your fertilizer plan free",
-      "text": "Sign up free and run NPK Plus as many times as you like.",
-      "label": "Start free",
+      "title": "Check your fertilizer plan before you buy",
+      "text": "Sign up, choose Libre plus Anee or a bigger plan, and run NPK Plus as many times as you like.",
+      "label": "Get started",
       "url": "/signup"
     },
     {
@@ -123,8 +123,8 @@
       "type": "faq",
       "items": [
         {
-          "q": "Is NPK Plus free?",
-          "a": "Yes. The calculator has no AI in it and no limit. Only Anee's readings use credits."
+          "q": "Which plan has NPK Plus?",
+          "a": "Libre plus Anee and every plan above it. The calculator has no AI in it and no limit, so the count itself uses no credits. Only Anee's readings of your plan use credits."
         },
         {
           "q": "Why does it show both P2O5 and P?",

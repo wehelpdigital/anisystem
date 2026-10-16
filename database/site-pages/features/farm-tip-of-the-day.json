@@ -71,7 +71,7 @@
     },
     {
       "type": "text",
-      "text": "Under the tip sits a link: Ask Anee about this. Tap it and the chat opens with the question already in the box, the tip followed by 'What should I do about this on my farm?' Nothing goes out until you press send, so you can add the lot, the variety or a photo first. On a season's hub, the chat opens right where you are.\n\nReading the tip is free on every plan, Libre included, and it uses no credits. Asking about it needs a plan with Anee: Libre plus Anee, Solo Farmer or Farm Owner. Each question then costs credits, like any chat with [Anee, the AI agricultural technician](/features/ai-agricultural-technician)."
+      "text": "Under the tip sits a link: Ask Anee about this. Tap it and the chat opens with the question already in the box, the tip followed by 'What should I do about this on my farm?' Nothing goes out until you press send, so you can add the lot, the variety or a photo first. On a season's hub, the chat opens right where you are.\n\nReading the tip is free on every plan, Libre included, and it uses no credits. Asking about it needs a plan with Anee: Libre plus Anee, Solo Farmer or Farm Owner. Each question then costs credits, like any chat with [Anee, the smart farm technician](/features/ai-agricultural-technician)."
     },
     {
       "type": "heading",
@@ -146,7 +146,7 @@
           "url": "/features/offline-farm-app"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

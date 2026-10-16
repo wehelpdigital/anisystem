@@ -70,7 +70,7 @@
     },
     {
       "type": "text",
-      "text": "When the season closes, ask Anee for a season report. She reads the whole season: every activity, the money and your harvest records. She also looks at the weather your lots went through and your past seasons of the same crop. Then she writes the story of it, with a score, what went well, what went wrong and what to change next time.\n\nMid season, Analyze So Far does the same for one lot. It tells you if the lot is on track, needs watching or needs rescue. Both run on credits, like everything [Anee, the AI technician](/features/ai-agricultural-technician) does."
+      "text": "When the season closes, ask Anee for a season report. She reads the whole season: every activity, the money and your harvest records. She also looks at the weather your lots went through and your past seasons of the same crop. Then she writes the story of it, with a score, what went well, what went wrong and what to change next time.\n\nMid season, Analyze So Far does the same for one lot. It tells you if the lot is on track, needs watching or needs rescue. Both run on credits, like everything [Anee, the smart farm technician](/features/ai-agricultural-technician) does."
     },
     {
       "type": "image",
@@ -144,7 +144,7 @@
       "title": "Related pages",
       "items": [
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

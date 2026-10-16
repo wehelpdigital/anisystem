@@ -70,7 +70,7 @@
     },
     {
       "type": "text",
-      "text": "The protocol's Analyses tab keeps each run, newest first, with the version it read and the credits it used. So you can run a review, change the plan, run another and open the older one to see what moved. Keep one version for the wet season and one for the dry, and review each.\n\nWant to ask more? Open a review and tap Ask Anee about it. A chat opens with the review attached, so she can explain a gap or suggest another product for your area. It works like any question to [Anee, the AI agricultural technician](/features/ai-agricultural-technician)."
+      "text": "The protocol's Analyses tab keeps each run, newest first, with the version it read and the credits it used. So you can run a review, change the plan, run another and open the older one to see what moved. Keep one version for the wet season and one for the dry, and review each.\n\nWant to ask more? Open a review and tap Ask Anee about it. A chat opens with the review attached, so she can explain a gap or suggest another product for your area. It works like any question to [Anee, the smart farm technician](/features/ai-agricultural-technician)."
     },
     {
       "type": "heading",
@@ -146,7 +146,7 @@
           "url": "/features/crop-protocol-analysis"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

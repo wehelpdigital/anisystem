@@ -71,7 +71,7 @@
     },
     {
       "type": "text",
-      "text": "Save a version before you try a new idea, like a split fertilizer schedule, and switch between versions to compare. Each version keeps its own tasks, materials and rules.\n\nWhen the plan is ready, tap Analyze by Anee. She reads the whole protocol and gives it a score out of 100, with its strengths, its gaps and its risks. Each task gets a mark of good, check or concern with a short note. She may also suggest tasks you left out, and you can add one with a single tap. Every review stays in the Analyses tab. The review runs on credits, like everything [Anee, the AI technician](/features/ai-agricultural-technician) does."
+      "text": "Save a version before you try a new idea, like a split fertilizer schedule, and switch between versions to compare. Each version keeps its own tasks, materials and rules.\n\nWhen the plan is ready, tap Analyze by Anee. She reads the whole protocol and gives it a score out of 100, with its strengths, its gaps and its risks. Each task gets a mark of good, check or concern with a short note. She may also suggest tasks you left out, and you can add one with a single tap. Every review stays in the Analyses tab. The review runs on credits, like everything [Anee, the smart farm technician](/features/ai-agricultural-technician) does."
     },
     {
       "type": "heading",
@@ -134,7 +134,7 @@
           "url": "/features/cropping-calendar"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

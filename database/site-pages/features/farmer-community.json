@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "Before you post a question, you can also ask [Anee, the AI technician](/features/ai-agricultural-technician). Then bring her answer to the community and hear what farmers near you have seen."
+      "text": "Before you post a question, you can also ask [Anee, the smart farm technician](/features/ai-agricultural-technician). Then bring her answer to the community and hear what farmers near you have seen."
     },
     {
       "type": "cta",
@@ -120,7 +120,7 @@
       "title": "Related pages",
       "items": [
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

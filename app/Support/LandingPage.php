@@ -197,8 +197,8 @@ class LandingPage
             'items' => [
                 ['title' => 'Satellite Analysis', 'text' => 'Draw your field and see its health from space: greenness, the weak corner to walk first, and radar that sees through typhoon clouds.', 'image' => 'satellite'],
                 ['title' => 'Satellite Weather', 'text' => 'Clouds and rain over your farm, played back and fast forwarded, with every typhoon\'s path and a warning when one comes within 300 km.', 'image' => 'sky'],
-                ['title' => 'NPK Plus', 'text' => 'Tap the fertilizers you plan to use and see every nutrient, short, right or too much for your crop, before you buy a single sack. Free.', 'image' => 'npk'],
-                ['title' => 'Pest and disease finders', 'text' => 'From the damage you see to the active ingredient that works, with its group, so the next spray still works too. Free.', 'image' => 'finder'],
+                ['title' => 'NPK Plus', 'text' => 'Tap the fertilizers you plan to use and see every nutrient, short, right or too much for your crop, before you buy a single sack. Comes with Libre + Anee.', 'image' => 'npk'],
+                ['title' => 'Pest and disease finders', 'text' => 'From the damage you see to the active ingredient that works, with its group, so the next spray still works too. Comes with Libre + Anee.', 'image' => 'finder'],
             ],
         ],
         'pillars' => [

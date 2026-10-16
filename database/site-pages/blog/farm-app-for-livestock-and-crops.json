@@ -192,7 +192,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's Palayamanan Plus shows how the two sides feed each other. Straw feeds carabao, cattle and goats. Leftover palay grains feed chickens and ducks, and ducks and fish can live in the paddy. Then manure and crop residue go back to the field as organic fertilizer.\n\nanee.io handles the crop half of that loop. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. [Workers and payroll](/features/farm-workers-and-payroll) count labor cost, and the inventory keeps fertilizer and seed in stock. After harvest, the records keep yield, buyer and price per lot.\n\nThe free [NPK Plus Calculator](/features/npk-plus-calculator) also counts chicken and carabao manure in a crop's fertilizer plan. So the manure from your animals shows up as nutrients, not guesswork. The [Contact List](/features/farm-contact-list) keeps your buyers, suppliers and the nearest veterinarian in one phonebook.\n\nBe clear on the limits. anee.io and Anee, its smart farm technician, are built around crops and seasons. They will not track doses, due dates or feed per bird. For a sick animal, call your city or municipal agriculture or veterinary office, or report it through BAI ADIR."
+      "text": "PhilRice's Palayamanan Plus shows how the two sides feed each other. Straw feeds carabao, cattle and goats. Leftover palay grains feed chickens and ducks, and ducks and fish can live in the paddy. Then manure and crop residue go back to the field as organic fertilizer.\n\nanee.io handles the crop half of that loop. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. [Workers and payroll](/features/farm-workers-and-payroll) count labor cost, and the inventory keeps fertilizer and seed in stock. After harvest, the records keep yield, buyer and price per lot.\n\nThe [NPK Plus Calculator](/features/npk-plus-calculator) also counts chicken and carabao manure in a crop's fertilizer plan. So the manure from your animals shows up as nutrients, not guesswork. The [Contact List](/features/farm-contact-list) keeps your buyers, suppliers and the nearest veterinarian in one phonebook.\n\nBe clear on the limits. anee.io and Anee, its smart farm technician, are built around crops and seasons. They will not track doses, due dates or feed per bird. For a sick animal, call your city or municipal agriculture or veterinary office, or report it through BAI ADIR."
     },
     {
       "type": "cta",
@@ -235,7 +235,7 @@
         },
         {
           "q": "Can manure from my animals count in my fertilizer plan?",
-          "a": "Yes. The free NPK Plus Calculator in anee.io counts chicken and carabao manure with your other fertilizers. Our guide to [organic fertilizer examples](/blog/organic-fertilizer-examples) covers more sources."
+          "a": "Yes. The NPK Plus Calculator in anee.io, on Libre plus Anee and up, counts chicken and carabao manure with your other fertilizers. Our guide to [organic fertilizer examples](/blog/organic-fertilizer-examples) covers more sources."
         }
       ]
     },

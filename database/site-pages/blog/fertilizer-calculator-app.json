@@ -16,7 +16,7 @@
     "Rice Crop Manager",
     "free fertilizer calculator"
   ],
-  "excerpt": "The best fertilizer calculator app for a Filipino farm reads the bag grades sold here, adds up nitrogen, phosphorus and potassium per hectare and compares them with what your crop needs. It should also use your soil test and help you time each split. For rice, PhilRice's MOET app and the Rice Crop Manager give recommendations, often with an extension worker's help. anee.io, a farm app built for Filipino farmers, has NPK Plus, a free calculator that also ties the plan to your dated calendar and your stock.",
+  "excerpt": "The best fertilizer calculator app for a Filipino farm reads the bag grades sold here, adds up nitrogen, phosphorus and potassium per hectare and compares them with what your crop needs. It should also use your soil test and help you time each split. For rice, PhilRice's MOET app and the Rice Crop Manager give recommendations, often with an extension worker's help. anee.io, a farm app built for Filipino farmers, has NPK Plus, a calculator that also ties the plan to your dated calendar and your stock.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-calculator-app.webp",
     "alt": "A farmer spreads fertilizer by hand from a bucket across a rice field, at a rate a fertilizer calculator app helps work out first",
@@ -130,7 +130,7 @@
           "NPK Plus in anee.io",
           "Rice, corn, vegetables and more",
           "N, P and K per hectare and in all, short, right or too much, and the yield the fertilizer alone can feed",
-          "The fertilizers you plan to use, a phone or computer"
+          "The fertilizers you plan to use, a phone or computer, and Libre plus Anee or a bigger plan"
         ]
       ]
     },
@@ -145,7 +145,7 @@
     },
     {
       "type": "text",
-      "text": "[NPK Plus](/features/npk-plus-calculator) is free on every anee.io plan, Libre included. Tap the fertilizers you plan to use and it adds up every nutrient, as the element and as the oxide, per hectare and for the whole area. It counts micronutrients and biofertilizers too, then marks each nutrient short, right or too much for your crop.\n\nThere are honest limits. NPK Plus does not test your soil, so a soil test or MOET result still gives the better base. Its yield line shows what the fertilizer alone can feed, not the harvest you will get. Asking Anee, the smart farm technician, to read the plan against your place, soil and season needs internet and uses credits. The free Libre plan also shows a few ads and keeps one active season."
+      "text": "[NPK Plus](/features/npk-plus-calculator) comes with Libre plus Anee and every anee.io plan above it, and it uses no credits. Tap the fertilizers you plan to use and it adds up every nutrient, as the element and as the oxide, per hectare and for the whole area. It counts micronutrients and biofertilizers too, then marks each nutrient short, right or too much for your crop.\n\nThere are honest limits. NPK Plus does not test your soil, so a soil test or MOET result still gives the better base. Its yield line shows what the fertilizer alone can feed, not the harvest you will get. Asking Anee, the smart farm technician, to read the plan against your place, soil and season needs internet and uses credits. Libre plus Anee also shows a few ads and keeps one active season."
     },
     {
       "type": "heading",
@@ -185,7 +185,7 @@
     },
     {
       "type": "cta",
-      "title": "Try NPK Plus free",
+      "title": "Try NPK Plus",
       "text": "Add the fertilizers you plan to use and see if your crop gets too little, enough or too much.",
       "label": "Open NPK Plus",
       "url": "/features/npk-plus-calculator"
@@ -200,7 +200,7 @@
       "items": [
         {
           "q": "Is there a free fertilizer calculator app in the Philippines?",
-          "a": "Yes. NPK Plus in anee.io is free on every plan, including the free Libre plan. IRRI and PhilRice also launched the Rice Crop Manager in 2013 as a free web tool and Android app for rice."
+          "a": "Yes. IRRI and PhilRice launched the Rice Crop Manager in 2013 as a free web tool and Android app for rice. NPK Plus in anee.io is not free: it comes with Libre plus Anee and every plan above it."
         },
         {
           "q": "Can a fertilizer calculator replace a soil test?",

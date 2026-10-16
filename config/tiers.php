@@ -18,6 +18,13 @@
  * the same ads, and the whole of Anee. Solo and Owner have always had both.
  *
  * Every limit the gates read lives HERE and only here. null = unlimited.
+ * The comparison table (App\Support\PlanCompare, on /pricing/compare and the
+ * app's My Subscription) and the plan each How It Works tool names
+ * (HowItWorks::planOf) are read off these keys. `features` and `excludes`
+ * are the plan cards' lines and `sheet` the upgrade sheet's (app.js reads
+ * it through Region::js()): words, so keep them true to the keys when a
+ * key changes (2026-10-18: offline is on every plan, the field helpers,
+ * Satellite Weather, NPK Plus and Maps come with Libre + Anee).
  * Schedule-scoped limits (lots, workers, video on a farm…) are judged by
  * the SCHEDULE OWNER's tier — a worker inside a farm rides the owner's
  * plan. Personal limits (storage, community, discussions) are the user's
@@ -66,17 +73,18 @@ return [
         'features' => [
             '1 active season (+1 archived)',
             'Activities, notes, tags, growth stages',
+            'Global Lots, contacts, drawings and photos',
+            'Protocol Builder, and the LCC Checker with your own chart',
             'Weather today and tomorrow',
-            'Drawings and photos',
             'Observations, labor report',
-            'Community access (photos)',
+            'Community, the farm news and offline mode',
             '1 GB storage',
             'Shows a few ads',
         ],
         'excludes' => [
             'Anee: AI chat, analyses and credits (Libre + Anee)',
-            'Field helpers: the weed, pest, disease, nutrient and variety finders (Libre + Anee)',
-            'Satellite Weather and the NPK Plus calculator (Libre + Anee)',
+            'The field helpers and the Compatibility Checker (Libre + Anee)',
+            'Satellite Weather, NPK Plus and Maps (Libre + Anee)',
             'Workers and inventory (Solo Farmer)',
             'Video recording, worker logins, Collab Room',
             'Full weather, all reports, document uploads',
@@ -129,13 +137,20 @@ return [
         'features' => [
             'Everything in Libre',
             'Anee AI chat: ask anything, show a photo',
-            'All AI analyses: What to Plant, When to Plant, Variety Ranking, Crop Protocol',
-            'Realign by Anee on your growth stages',
-            'Field helpers: the weed, pest, disease, nutrient and variety finders',
+            'All AI analyses: What to Plant, When to Plant, Variety Ranking, Crop Protocol, Satellite Analysis',
+            'Land Prep Planner, Anee Auto and Realign by Anee',
+            'Field helpers: the pest, disease, weed, nutrient and variety finders and the Compatibility Checker',
             'Satellite Weather and the NPK Plus calculator',
             'Maps: draw and measure up to 3 fields',
             'Buy AI credit packs whenever you need more',
             'Shows a few ads',
+        ],
+        'sheet' => [
+            'Your Libre plan exactly as it is',
+            'Anee AI chat: ask anything, show a photo',
+            'Every AI analysis, the Land Prep Planner and Anee Auto',
+            'The field helpers, Satellite Weather, NPK Plus and Maps',
+            'Buy AI credit packs whenever you need more',
         ],
         'excludes' => [
             'Workers and inventory (Solo Farmer)',
@@ -185,16 +200,24 @@ return [
         'aiAnalyses'        => true,
 
         'features' => [
+            'Everything in Libre + Anee',
             '3 active seasons (+5 archived)',
             'Up to 5 lots per season',
-            'Full weather, maps, video and voice recording',
-            'All reports',
-            'Offline mode for the field',
-            'Workers (without logins) and inventory',
+            'Full weather, unlimited maps, video and voice recording',
+            'All reports, with Compare Reports and the Anee Season Report',
+            'Workers (without logins), Global Workers and inventory',
             'Full community access',
             '30 AI credits each renewal, and you can buy more',
             '6 GB storage (you can add more)',
             'No ads',
+        ],
+        'sheet' => [
+            'Everything in Libre + Anee',
+            '3 active seasons, 5 lots each',
+            'Workers (without logins) and inventory',
+            'Full weather, all reports, unlimited maps',
+            'Video and voice, documents, no ads',
+            '30 AI credits every renewal, 6 GB storage',
         ],
         'excludes' => [
             'Worker logins and the Collab Room (Farm Owner)',
@@ -246,10 +269,17 @@ return [
             'Everything in Solo Farmer, unlimited',
             'Worker logins and access levels',
             'Collab Room: team chat, whiteboard, calls',
+            'The Logs diary: every change and who made it',
             'Create community discussions',
             '100 AI credits each renewal, and you can buy more',
             '15 GB storage (you can add more)',
             'No ads',
+        ],
+        'sheet' => [
+            'Everything in Solo Farmer, unlimited',
+            'Worker logins and access levels',
+            'Collab Room: team chat, whiteboard, calls',
+            '100 AI credits every renewal, 15 GB storage',
         ],
         'excludes' => [],
     ],

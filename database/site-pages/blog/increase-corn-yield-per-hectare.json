@@ -153,11 +153,11 @@
     },
     {
       "type": "text",
-      "text": "Corn tasks run on days after planting, and anee.io counts them for you. The [cropping calendar](/features/cropping-calendar) dates the basal dose, the off barring, the hill up and the side dressing from each lot's own planting day. [Growth stages and weather](/features/growth-stages-and-weather) show each lot's stage beside the forecast, so you can side dress before rain and not during a downpour.\n\nThe free [NPK Plus calculator](/features/npk-plus-calculator) adds up the nitrogen, phosphorus and potassium in your plan and tells you if each one is short, right or too much for corn. If worms show up, the Pest Finder names the likely pest and its active ingredients. Always follow the label and the FPA registration."
+      "text": "Corn tasks run on days after planting, and anee.io counts them for you. The [cropping calendar](/features/cropping-calendar) dates the basal dose, the off barring, the hill up and the side dressing from each lot's own planting day. [Growth stages and weather](/features/growth-stages-and-weather) show each lot's stage beside the forecast, so you can side dress before rain and not during a downpour.\n\nThe [NPK Plus calculator](/features/npk-plus-calculator) adds up the nitrogen, phosphorus and potassium in your plan and tells you if each one is short, right or too much for corn. If worms show up, the Pest Finder names the likely pest and its active ingredients. Always follow the label and the FPA registration."
     },
     {
       "type": "cta",
-      "title": "Check your corn fertilizer plan for free",
+      "title": "Check your corn fertilizer plan",
       "text": "Tap the bags you plan to use and NPK Plus shows the nitrogen, phosphorus and potassium per hectare against what corn needs.",
       "label": "Try NPK Plus",
       "url": "/features/npk-plus-calculator"

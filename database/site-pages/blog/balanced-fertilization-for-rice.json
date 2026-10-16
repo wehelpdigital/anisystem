@@ -13,7 +13,7 @@
     "fertilizer application for rice",
     "fertilizer for soil"
   ],
-  "excerpt": "Balanced fertilization means giving rice the nutrients it lacks in the right amount, proportion and timing. It uses organic and inorganic fertilizer together. The DA adopted it in 1997 and promotes it for palay through the Abonong Swak plans of PhilRice and BSWM. Get a soil reading first, set a yield target, then split nitrogen by growth stage. In anee.io, a farm app built for Filipino farmers, the Protocol Builder holds that plan and the free NPK Plus calculator checks it.",
+  "excerpt": "Balanced fertilization means giving rice the nutrients it lacks in the right amount, proportion and timing. It uses organic and inorganic fertilizer together. The DA adopted it in 1997 and promotes it for palay through the Abonong Swak plans of PhilRice and BSWM. Get a soil reading first, set a yield target, then split nitrogen by growth stage. In anee.io, a farm app built for Filipino farmers, the Protocol Builder holds that plan and the NPK Plus calculator checks it.",
   "heroImage": {
     "src": "/images/site/guides/blog-balanced-fertilization-for-rice.webp",
     "alt": "A farmer walks through a green rice field broadcasting fertilizer from a basin, one step of balanced fertilization",
@@ -187,7 +187,7 @@
     },
     {
       "type": "text",
-      "text": "anee.io is not a DA or PhilRice tool, and it does not replace MOET or a soil test. What it does is hold the plan you make from their advice. In the [Protocol Builder](/features/protocol-builder), write each dose on its day after transplanting or sowing. That covers the organic part, the basal and every nitrogen split. Keep one version for the wet season and one for the dry.\n\nThe free [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in your mix, micronutrients included. It shows what is short or too much. Anee, the smart farm technician inside anee.io, can then review the protocol, using credits. She flags a rate that looks too high or a stage with nothing planned. After harvest, write your yield in Observations, so next season's target comes from real numbers."
+      "text": "anee.io is not a DA or PhilRice tool, and it does not replace MOET or a soil test. What it does is hold the plan you make from their advice. In the [Protocol Builder](/features/protocol-builder), write each dose on its day after transplanting or sowing. That covers the organic part, the basal and every nitrogen split. Keep one version for the wet season and one for the dry.\n\nThe [NPK Plus calculator](/features/npk-plus-calculator) adds up the nutrients in your mix, micronutrients included. It shows what is short or too much. Anee, the smart farm technician inside anee.io, can then review the protocol, using credits. She flags a rate that looks too high or a stage with nothing planned. After harvest, write your yield in Observations, so next season's target comes from real numbers."
     },
     {
       "type": "cta",
