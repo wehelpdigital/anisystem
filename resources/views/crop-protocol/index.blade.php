@@ -2239,6 +2239,10 @@
         if (n.credit && n.credit.K2O) lines.push(n.credit.K2O + ' kg less potassium for the rice straw plowed back.');
         (n.whys || []).slice(0, 3).forEach((w) => lines.push(w + '.'));
         if (n.pLock) lines.push('This soil locks phosphorus: Anee places it in a band, not spread.');
+        if (n.areaSoil && n.areaSoil.length) {
+            const AS = { N: 'nitrogen', P2O5: 'phosphorus', K2O: 'potassium', ph: 'pH', texture: 'soil type' };
+            lines.push('With no soil test for ' + andList(n.areaSoil.map((k) => AS[k] || k)) + ', the levels usual for your area are used. A soil test of this lot replaces them.');
+        }
         const lvl = { watch: 'may run short', likely: 'likely short', test: 'low by the soil test' };
         const amt = (v) => { const x = Number(v) || 0; return x >= 1 ? (Math.round(x * 10) / 10) + ' kg' : Math.round(x * 1000) + ' g'; };
         const mics = Object.entries(n.micros || {}).filter(([, m]) => !m.beneficial);

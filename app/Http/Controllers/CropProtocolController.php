@@ -406,7 +406,8 @@ class CropProtocolController extends Controller
     public static function needFor(array $p): array
     {
         try {
-            $r = NpkNeed::run(self::needInput($p));
+            $in = self::needInput($p);
+            $r = NpkNeed::run($in);
         } catch (\Throwable $e) {
             report($e);
 
@@ -443,6 +444,8 @@ class CropProtocolController extends Controller
             'micro' => $micro,
             'micros' => $micros,
             'tested' => array_intersect_key($r['classes'], array_flip(NpkNeed::TESTED_MICROS)),
+            // What the area's typical soil filled in (N, P2O5, K2O, texture, ph): typical for the area, never a test of this field.
+            'areaSoil' => $in['areaSoil'] ?? [],
         ];
     }
 
@@ -469,7 +472,8 @@ class CropProtocolController extends Controller
         }
         $soil = (string) ($p['soil'] ?? '');
 
-        return [
+        // The area's typical soil fills only what the lot left unknown (ProtocolFacts, the one door to the shelves).
+        return \App\Support\ProtocolFacts::fillNeed([
             'crop' => $p['crop'] ?? null,
             'method' => $p['method'] ?? null,
             'potential' => ($p['potential'] ?? null) !== null ? (float) $p['potential'] * $tons : null,
@@ -483,7 +487,7 @@ class CropProtocolController extends Controller
             'water' => ['irrigated' => 'irrigated', 'limited' => 'partial', 'rainfed' => 'rainfed'][$p['water'] ?? ''] ?? 'irrigated',
             'profile' => $profile,
             'prev' => $prev,
-        ];
+        ], (string) ($p['location'] ?? ''));
     }
 
     /**
@@ -1018,6 +1022,15 @@ class CropProtocolController extends Controller
                 $ctx['history'][$place] = '';
             }
         }
+        // THE SEAM: the app's own shelves (each lot's area soil, each crop's variety trials, each
+        // place's typhoons, floods and droughts), gathered in one place so the asks read them
+        // instead of researching them. A shelf not deployed yet reads as nothing.
+        try {
+            $ctx['facts'] = \App\Support\ProtocolFacts::gather($case, $ctx['cases'], $ctx['records'], $places);
+        } catch (\Throwable $e) {
+            report($e);
+            $ctx['facts'] = ['lots' => [], 'places' => [], 'cases' => []];
+        }
 
         return $ctx;
     }
@@ -1319,6 +1332,10 @@ class CropProtocolController extends Controller
         $asked = [];
         if ($c['variety'] === '') {
             $variety = '1. THE VARIETY: none is named. Name the two or three most widely grown, well documented varieties of this crop for this season and province, with their days to maturity, yield potential and main strengths, and say which you would assume.';
+        } elseif ($rec && ! empty($ctx['facts']['cases'][$c['key']]['variety']['covered'])) {
+            // Its trials are on the shelf (maturity, yields, ratings, stresses): nothing about the variety is searched.
+            $variety = '1. THE VARIETY IS KNOWN, trials and all: ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ')
+                . ' Take these as known and do NOT search for the variety; spend the searches on the items below.';
         } elseif ($rec) {
             $variety = '1. THE VARIETY IS KNOWN: ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ')
                 . ' Take these as known and do not search for them again. Search only for what adds to them: regional trial results near the farmer, its known weaknesses in the field, and any warning about it.';
@@ -1397,6 +1414,9 @@ PROMPT;
         foreach ($ctx['history'] as $place => $w) {
             $hist .= $w !== '' ? '- The area\'s weather record at ' . $place . ":\n" . $w . "\n" : '';
         }
+        foreach ((array) ($ctx['facts']['places'] ?? []) as $pl) {
+            $hist .= \App\Support\ProtocolFacts::hazardLines($pl['hazards'] ?? null, (string) $pl['name']);
+        }
         $crops = '';
         foreach ($ctx['cases'] as $c) {
             $l0 = $case['lots'][$c['lots'][0]];
@@ -1406,6 +1426,7 @@ PROMPT;
             $crops .= 'CROP ' . $c['key'] . ': ' . CropCatalog::label($c['crop']) . '; variety ' . $this->varietyWord($c['variety'])
                 . ($rec ? ' (' . (! empty($rec['learned']) ? 'known from an earlier lookup' : 'on record') . ': ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . ')' : '')
                 . '; ' . (self::METHODS[$c['method']]['label'] ?? $c['method']) . '; counted in ' . $frame['counter'] . ".\n"
+                . \App\Support\ProtocolFacts::varietyLines($ctx['facts']['cases'][$c['key']]['variety'] ?? null)
                 . '- Its stages, in order (use these names exactly): ' . self::stageList($frame) . "\n"
                 . '- Lots growing it: ' . $names . "\n"
                 . ProtocolCare::promptLines($ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null)
@@ -1432,9 +1453,9 @@ THE CROPS
 - EASY TO READ: short plain sentences a farmer reads on a phone; a plain word beside any technical one; ranges written with "to", never a dash. Every word limit is a ceiling, not a target.
 - THE VARIETY comes from the notes and the record: name, breeder, maturity, yield potential, the season it is bred for, strengths and weaknesses. Where it could not be found, found false and name the variety you assumed.
 - STAGES: every stage of every crop, in the order given, named exactly as given: signs at most 18 words (what the farmer sees at that stage), observe at most 22 words (what to check, and how often), intervene at most 26 words (only if it is seen: the threshold, then the step). Leave observe and intervene empty at a stage with nothing to watch.
-- PROTECTION, WATCH FIRST, NEVER BY THE CALENDAR: for every crop 5 to 8 threats, the most likely here this season first: the lots' troubles of last season, then what this season's weather (the outlook, ENSO, the twenty year record of these months) favours, then the crop's worst. For each threat: kind (insect, disease, weed or other); stages = the stage names it strikes; sign at most 16 words; threshold at most 24 words = when the numbers make acting worth it (an economic threshold from the notes or established IPM in plain counts, like "2 egg masses a square meter" or "1 in 10 hills hit"; where none exists, how to judge the spread); cultural at most 30 words = what to do first without a spray (resistant variety, clean seed, water, timing, natural enemies, removing sick plants); ai = the active ingredients to use only once the threshold is reached, CHOSEN ONLY FROM THAT THREAT'S LIST ABOVE and written exactly as listed (an empty list where the list is empty or no spray helps); rotate at most 18 words = the group to switch to for a second spray, never the same group twice in a row; weather at most 16 words = when this season's weather raises the risk ("" when it does not matter). Weeds are one threat per crop with ingredients only from its weed windows. No brand names, no product names, no rates or doses: the farmer decides whether to spray from what the field shows.
+- PROTECTION, WATCH FIRST, NEVER BY THE CALENDAR: for every crop 5 to 8 threats, the most likely here this season first: the lots' troubles of last season, then what this season's weather (the outlook, ENSO, the twenty year record of these months, the typhoons, floods and droughts they have brought) favours, then the crop's worst; where the variety's trial ratings are given, a threat it is rated susceptible to ranks higher and one it resists lower. For each threat: kind (insect, disease, weed or other); stages = the stage names it strikes; sign at most 16 words; threshold at most 24 words = when the numbers make acting worth it (an economic threshold from the notes or established IPM in plain counts, like "2 egg masses a square meter" or "1 in 10 hills hit"; where none exists, how to judge the spread); cultural at most 30 words = what to do first without a spray (resistant variety, clean seed, water, timing, natural enemies, removing sick plants); ai = the active ingredients to use only once the threshold is reached, CHOSEN ONLY FROM THAT THREAT'S LIST ABOVE and written exactly as listed (an empty list where the list is empty or no spray helps); rotate at most 18 words = the group to switch to for a second spray, never the same group twice in a row; weather at most 16 words = when this season's weather raises the risk ("" when it does not matter). Weeds are one threat per crop with ingredients only from its weed windows. No brand names, no product names, no rates or doses: the farmer decides whether to spray from what the field shows.
 - protection.intro at most 40 words: how to scout this crop this season (how often, where in the field).
-- background.place at most 40 words; weather.outlook at most 55 words for the months the crops stand; enso at most 30 words; risks 2 to 4 items of at most 12 words; history at most 45 words = what the area's twenty years say about these months (the wettest weeks, the typhoon months, the dry spells, and how El Nino or La Nina years differed).
+- background.place at most 40 words; weather.outlook at most 55 words for the months the crops stand; enso at most 30 words; risks 2 to 4 items of at most 12 words; history at most 45 words = what the area's twenty years say about these months (the wettest weeks, the typhoon months, the dry spells, and how El Nino or La Nina years differed; where the typhoon, flood and drought record is given, the storms and floods these months have brought). Never say where any record, soil fact or trial figure comes from.
 - workTips: 2 to 4 lines of at most 22 words on running the work across the lots (the busy weeks, the hands each needs, hiring help), agreeing with the work calendar above: never ask to move a planting day the calendar has already set, and where the calendar says the crew falls short, say what helps.
 - headline at most 14 words. summary at most 70 words, plain and warm but factual, ending with the reminder that the crop's stage is the clock, not the calendar. confidence low, moderate or high. dataGaps at most four.
 - Plain text only: no markdown, no emoji shortcodes.
@@ -1466,6 +1487,19 @@ PROMPT;
         $history = $ctx['history'][$l['place']] ?? '';
         $weather = ($ctx['enso'] !== '' ? 'ENSO: ' . $ctx['enso'] . ' ' : '') . ($history !== '' ? 'The area\'s record for these months: ' . mb_substr(preg_replace('/\s+/', ' ', $history), 0, 1600) : '');
         $recLine = $rec ? '- The variety ' . (! empty($rec['learned']) ? 'from an earlier lookup' : 'on record') . ': ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . "\n" : '';
+        // From the seam (ProtocolFacts): the area's typical soil, and the town's typhoons, floods and droughts.
+        $lf = (array) ($ctx['facts']['lots'][$l['i']] ?? []);
+        $areaSoil = \App\Support\ProtocolFacts::soilLines($lf['soil'] ?? null);
+        $hz = $ctx['facts']['places'][$lf['place'] ?? '']['hazards'] ?? null;
+        if (! empty($hz['lines'])) {
+            $weather .= ' The town\'s typhoons, floods and droughts in twenty years: ' . mb_substr((string) preg_replace('/\s+/', ' ', (string) $hz['lines']), 0, 1200);
+        }
+        $filled = (array) ($p['npkNeed']['areaSoil'] ?? []);
+        $filledWord = $filled
+            ? '- The nutrient need above read the area\'s typical soil for what the lot left unknown ('
+                . implode(', ', array_map(fn ($k) => ['P2O5' => 'phosphorus', 'K2O' => 'potassium', 'N' => 'nitrogen', 'ph' => 'pH', 'texture' => 'texture'][$k] ?? $k, $filled))
+                . '): call it typical for the area, never a test of this field.' . "\n"
+            : '';
         $shape = '{"intro":"","granulars":{"soilLogic":"","timingLogic":"","rejected":[{"what":"","why":""}],"cautions":[""]},"programs":[{"name":"","for":"","applications":[{"stage":"","day":0,"product":"","bagsPerHa":0,"kgPerHa":0,"purpose":""}]}],"npk":{"note":""},"deficiencies":[{"nutrient":"","why":"","signs":"","when":"","action":""}],"foliars":[{"stage":"","product":"","why":""}],"water":{"plan":"","ifDry":"","ifWet":""},"yield":{"target":"","realistic":"","note":""},"watch":[""]}';
         $notesText = trim($notes) !== '' ? trim($notes) : 'none found; rely on established agronomy and say so';
 
@@ -1482,7 +1516,7 @@ THE LOT
 - Soil condition (pH, sodium, salt, acid sulfate), reasoned as a combination where more than one is true: {$fd['cond']}
 {$fd['guide']}
 - The lot's newest soil test: {$fd['test']}{$f['ph']}
-- The previous crop: {$fd['prev']}; its residue: {$fd['residue']}
+{$areaSoil}{$filledWord}- The previous crop: {$fd['prev']}; its residue: {$fd['residue']}
 - Field troubles: {$fd['problems']}
 - Field in detail (the farmer's answers about this lot): {$fd['detail']}
 - Fertilizers sold near the farmer: {$f['granulars']}
@@ -1776,6 +1810,12 @@ PROMPT;
             'schedule' => $sched + ['words' => ProtocolCrew::words($sched, $names)],
             'buy' => $buy,
             'disclaimer' => ProtocolCare::DISCLAIMER,
+            // What the app's own shelves gave this run (ProtocolFacts), for the report and the audit: nothing names a source.
+            'shelves' => [
+                'areaSoil' => array_values(array_keys(array_filter((array) ($ctx['facts']['lots'] ?? []), fn ($x) => ! empty($x['soil'])))),
+                'trials' => array_values(array_keys(array_filter((array) ($ctx['facts']['cases'] ?? []), fn ($x) => ! empty($x['variety'])))),
+                'hazards' => array_values(array_map(fn ($x) => (string) $x['name'], array_filter((array) ($ctx['facts']['places'] ?? []), fn ($x) => ! empty($x['hazards'])))),
+            ],
         ];
     }
 
