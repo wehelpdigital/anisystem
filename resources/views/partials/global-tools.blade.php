@@ -330,7 +330,7 @@
                 <b>Your tools</b>
                 {!! $qAnee(true) !!}
                 <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
-                <i>Everyday farm tools. The ones marked + Anee can ask her too.</i>
+                <i>Calculators, checkers and finders that read your farm. The ones marked + Anee can ask her too.</i>
             </button>
             <div class="qa-sub-fold"><div class="qa-sub-in">
             {{-- Satellite Weather (2026-10-07): clouds, rain and typhoon
@@ -344,23 +344,6 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
-            {{-- Maps leave Libre (2026-10-12): the tile stays, wearing a lock. An
-                 Anee tool since 2026-10-14 (the owner), among the + Anee tools. --}}
-            @php $qMapLocked = ! \App\Support\Tier::farmCan('maps'); $qMapRung = \App\Support\Tier::farmUnlocksAt('maps'); @endphp
-            <a href="{{ route('maps.page') }}" class="qa-tile qa-maps"
-               @if ($qMapLocked) data-tier-lock="{{ $qMapRung }}" data-lock-say="Maps come with {{ \App\Support\Tier::withPlan($qMapRung) }}. Draw your lots on the satellite map, measure them and pin what matters." @endif>
-                <span class="qa-ico"><img src="{{ asset('images/location-marker.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
-                <span class="qa-txt {{ $qMapLocked ? 'tl-dim' : '' }}">
-                    <b>Maps{{ \App\Support\Tagalog::flag('maps') }}{!! $qPlus !!}</b>
-                    <i>Draw, measure and pin your fields. Save a map and attach it to your lots, activities or notes.</i>
-                </span>
-                @if ($qMapLocked)
-                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
-                @else
-                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                @endif
-            </a>
-
             {{-- Compare Reports: two saved reports side by side, any season
                  against any other. Gated as CompareController::gate() gates
                  it -- the farm's plan first (reportsAll), then a worker's
@@ -432,8 +415,19 @@
                 @endif
             </a>
         @endforeach
-            {{-- The four analyses first (the owner's order, 2026-09-16); the
-                 notes and the pictures gathered across every season follow. --}}
+            </div></div></div>
+            {{-- The farm's own records (2026-10-16, the owner): what is kept, not
+                 what is worked out. Notes, pictures, maps and drawings, the lots,
+                 the crew, the phonebook and the tags, gathered from every season,
+                 and the three quick doors that add to them. --}}
+            <div class="qa-sub" data-sub="records">
+            <button type="button" class="qa-group" aria-expanded="true">
+                <span class="qa-group-dot" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7.5A1.5 1.5 0 015.5 6h4l2 2h7A1.5 1.5 0 0120 9.5v8a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5z"/></svg></span>
+                <b>Your farm records</b>
+                <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                <i>Notes, pictures, maps, lots, workers and contacts from every season, kept in one place.</i>
+            </button>
+            <div class="qa-sub-fold"><div class="qa-sub-in">
             <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">
                 <span class="qa-ico"><img src="{{ asset('images/sticky-note.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -482,6 +476,23 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            {{-- Maps leave Libre (2026-10-12): the tile stays, wearing a lock. An
+                 Anee tool since 2026-10-14 (the owner), among the + Anee tools. --}}
+            @php $qMapLocked = ! \App\Support\Tier::farmCan('maps'); $qMapRung = \App\Support\Tier::farmUnlocksAt('maps'); @endphp
+            <a href="{{ route('maps.page') }}" class="qa-tile qa-maps"
+               @if ($qMapLocked) data-tier-lock="{{ $qMapRung }}" data-lock-say="Maps come with {{ \App\Support\Tier::withPlan($qMapRung) }}. Draw your lots on the satellite map, measure them and pin what matters." @endif>
+                <span class="qa-ico"><img src="{{ asset('images/location-marker.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt {{ $qMapLocked ? 'tl-dim' : '' }}">
+                    <b>Maps{{ \App\Support\Tagalog::flag('maps') }}{!! $qPlus !!}</b>
+                    <i>Draw, measure and pin your fields. Save a map and attach it to your lots, activities or notes.</i>
+                </span>
+                @if ($qMapLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
+            </a>
+
             <a href="{{ route('draw.page') }}" class="qa-tile qa-draw">
                 <span class="qa-ico"><img src="{{ asset('images/writting.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
