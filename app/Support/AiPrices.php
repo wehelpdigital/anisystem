@@ -52,6 +52,10 @@ final class AiPrices
         // 2026-10-14: the Land Prep Planner, Anee planning every lot's land preparation.
         // Per lot since 2026-10-16.
         'landprep' => 50,
+        // 2026-10-18: the Compatibility Checker's online check, Anee looking up what the product book lacks.
+        // The owner: a flat 80 whenever at least one product is not in the book, one product or six;
+        // nothing (and no Anee) when the book knows them all. What she finds is kept, so it is asked once.
+        'compat' => 80,
     ];
 
     public const NAMES = [
@@ -74,6 +78,7 @@ final class AiPrices
         'skypass' => 'Satellite Weather, a week pass (never sold below what a week costs the house)',
         'lcc' => 'LCC Checker (Anee reads rice leaf photos against the leaf color chart)',
         'landprep' => 'Land Prep Planner, per lot (every lot\'s land preparation, around the crew and the weather)',
+        'compat' => 'Compatibility Checker, the online check (Anee looks up the products the book lacks, searches the web; a flat price whatever the count)',
     ];
 
     /** @var array<string, int>|null */

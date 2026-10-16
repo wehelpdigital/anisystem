@@ -301,10 +301,9 @@ class CompatController extends Controller
         $payer = $this->payer();
         $credits = app(AiCreditService::class);
         $settings = AiSetting::current();
-        $units = max(1, min(6, (int) $request->query('products', 1)));
-
         return $this->json(true, 'ok', [
-            'price' => AiPricing::credits(self::KIND, ['products' => $units]),
+            // One price for any number of products to look up (the owner, 2026-10-18).
+            'price' => AiPricing::credits(self::KIND),
             'balance' => round((float) $credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'canUse' => Tier::farmCan('aiAnalyses') && $payer->canUseAi() && $settings->isUsable(),
@@ -341,8 +340,8 @@ class CompatController extends Controller
             return $this->json(false, 'Our book already knows every product here, so there is nothing for Anee to look up.', [], 422);
         }
         $units = min(6, count($look));
-        $quote = AiPricing::quote(self::KIND, ['products' => $units]);
-        $agreed = AiPricing::agreed($request, $quote, AiPricing::credits(self::KIND, ['products' => $units]));
+        $quote = AiPricing::quote(self::KIND);
+        $agreed = AiPricing::agreed($request, $quote, (int) $quote['credits']);
         if ($agreed === null) {
             return $this->json(false, 'The online check now costs ' . $quote['credits'] . ' credits. Please check again.', ['quote' => $quote['credits']], 409);
         }
@@ -408,7 +407,7 @@ class CompatController extends Controller
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             app(AiCreditService::class)->chargeAllowingNegative($payerId, $price, mb_substr('Compatibility Checker, online check: ' . $units . ' ' . ($units === 1 ? 'product' : 'products') . $note, 0, 250));
-            AiPricing::audit(self::KIND, $result, $price, ['products' => $units], $settings);
+            AiPricing::audit(self::KIND, $result, $price, [], $settings);
             $report = ['result' => $after, 'anee' => ['summary' => $anee['summary'] ?? '', 'notes' => $anee['notes'] ?? [], 'products' => $anee['products'] ?? []],
                 'added' => array_values($added), 'refs' => array_map(fn ($it) => $it['ref'] ?? 'x', $items), 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
             DB::table('as_plant_analyses')->where('id', $id)->update(['report' => json_encode($report, JSON_UNESCAPED_UNICODE), 'credits' => round($price, 2), 'status' => 'ready', 'error' => null, 'updated_at' => now()]);

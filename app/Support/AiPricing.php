@@ -137,6 +137,9 @@ final class AiPricing
             'lcc' => ['unit' => 'leaf', 'free' => 10, 'units' => 10, 'max' => 12, 'baseIn' => 4500, 'baseOut' => 3600, 'unitOut' => 150, 'outCap' => 5048],
             'landprep' => ['unit' => 'lot', 'free' => 1, 'units' => 1, 'max' => 12, 'perUnitPrice' => true, 'baseIn' => 7000, 'baseOut' => 4500, 'unitIn' => 400, 'unitOut' => 250, 'outCap' => 8048, 'om' => 3,
                 'opts' => ['research' => ['in' => 2600, 'out' => 3800, 'search' => 1]]],
+            // 2026-10-18: the Compatibility Checker's online check: a research step on the products the book lacks, then the reading.
+            // One size (the owner: a flat 80 for one product or six), modelled at a typical run so the list price stands.
+            'compat' => ['unit' => '', 'baseIn' => 9000, 'baseOut' => 8000, 'search' => 1],
         ],
     ];
 
