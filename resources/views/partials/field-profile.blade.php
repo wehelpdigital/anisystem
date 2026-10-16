@@ -420,6 +420,29 @@
         .map(([k, q]) => [k, Object.assign({}, q, { o: Object.fromEntries(Object.entries(q.o || {}).filter(([, o]) => !(crop && o[2] === 'rice' && !isRice(crop)))) })]);
     const pagesFor = (crop) => Object.keys(G).filter((p) => qsFor(crop, p).length);
     const count = (v) => Object.keys(v || {}).filter((k) => Q[k] && v[k] !== undefined && !(Array.isArray(v[k]) && !v[k].length)).length + (v && v.phFrom != null && !v.acidity ? 1 : 0);
+    /* Every answer in the shape the bank asks for NOW. A lot saved before a
+       question took several picks kept one word ("salt": "crust" before
+       2026-10-16), and a list where one word belongs breaks the other way:
+       either made the question refuse every tap. Every way in goes through
+       this, so an old answer opens as a ticked box and the rest stay tappable. */
+    function shape(v) {
+        const out = clone(v);
+        Object.keys(out).forEach((k) => {
+            const q = Q[k];
+            if (!q) return;
+            const x = out[k];
+            if (q.multi) {
+                const a = [...new Set([].concat(x == null ? [] : x).filter((y) => typeof y === 'string' && y !== ''))];
+                if (a.length) out[k] = a; else delete out[k];
+            } else if (Array.isArray(x)) {
+                const one = x.find((y) => typeof y === 'string' && y !== '');
+                if (one !== undefined) out[k] = one; else delete out[k];
+            } else if (x === null || x === '') {
+                delete out[k];
+            }
+        });
+        return out;
+    }
     const TNAMES = {};
     const tname = (k) => TNAMES[k] || (k.startsWith('other:') && D.other[k.slice(6)] ? D.other[k.slice(6)][0] : k.replace(/^\w+:/, '').replace(/-/g, ' '));
     function words(v) {
@@ -703,7 +726,7 @@
         const st = { crop: o.crop || null, saved: o.saved !== false, onChange: o.onChange, onSkip: o.onSkip, lot: 0, page: null, lots: [] };
         const setLots = (lots) => {
             st.lots = (lots && lots.length ? lots : [{ name: o.name || 'Your field', value: o.value || {} }]).map((l, i) => ({
-                name: l.name || ('Lot ' + (i + 1)), value: clone(l.value), copiedFrom: l.copiedFrom ?? null, edited: !!l.edited, from: l.from || null,
+                name: l.name || ('Lot ' + (i + 1)), value: shape(l.value), copiedFrom: l.copiedFrom ?? null, edited: !!l.edited, from: l.from || null,
             }));
         };
         setLots(o.lots);
@@ -792,7 +815,7 @@
         function pick(k, x) {
             const q = Q[k], v = lotOf(st.lot).value;
             if (q.multi) {
-                let a = (v[k] || []).slice();
+                let a = [].concat(v[k] == null ? [] : v[k]);
                 if (a.includes(x)) a = a.filter((y) => y !== x);
                 else a = q.none && x === q.none ? [x] : a.filter((y) => y !== q.none).concat(x);
                 if (a.length) v[k] = a; else delete v[k];
@@ -811,7 +834,7 @@
         }
         function toggleTrouble(i, key) {
             const v = lotOf(i).value;
-            let a = (v.outbreaks || []).filter((x) => x !== 'none');
+            let a = [].concat(v.outbreaks || []).filter((x) => x !== 'none');
             a = a.includes(key) ? a.filter((x) => x !== key) : a.concat(key);
             if (a.length) v.outbreaks = a; else delete v.outbreaks;
             if (i === st.lot) repaintQ('outbreaks');
@@ -883,7 +906,7 @@
                     const l = lotOf(me);
                     const keep = Object.fromEntries(Object.entries(r.answers || {}).filter(([k]) => Q[k] || k === 'phFrom' || k === 'phTo' || k === 'tests'));
                     if (!isRice(st.crop)) { delete keep.level; ['weeds', 'stubble'].forEach((k) => { if (keep[k]) keep[k] = [].concat(keep[k]).filter((x) => !(Q[k].o[x] && Q[k].o[x][2] === 'rice')); }); }
-                    l.value = keep; l.from = r.name; l.copiedFrom = null; l.edited = false;
+                    l.value = shape(keep); l.from = r.name; l.copiedFrom = null; l.edited = false;
                     if (st.onChange) st.onChange(me, clone(l.value), Object.assign({}, l, { value: undefined }));
                     show(me, st.page);
                 };
@@ -928,7 +951,7 @@
         try { const r = await window.api(D.urls.save, { method: 'POST', body: p }); SAVED = null; return (r.data && r.data.row) || null; } catch (_) { return null; }
     }
 
-    window.aneeFieldProfile = { mount, open, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS };
+    window.aneeFieldProfile = { mount, open, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS, shape };
 })();
 </script>
 @endpush

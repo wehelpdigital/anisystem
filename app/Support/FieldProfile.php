@@ -377,6 +377,43 @@ final class FieldProfile
      * the old answers (a single water, a single weeds, one pH). A crop of
      * null keeps the rice questions; a crop drops what does not fit it.
      */
+    /**
+     * Every answer in the shape the questions ask for NOW, nothing else
+     * touched (2026-10-16, the owner: "i can't check Any signs of salt"). A
+     * lot saved before a question took several picks kept one word ("salt":
+     * "crust"), and the form refused every tap on it. Lists for questions
+     * with several picks, one word for the others; the soil tests and the
+     * pH beside them stay as they are. The form shapes them the same way.
+     */
+    public static function shape(array $answers): array
+    {
+        foreach ($answers as $k => $v) {
+            $q = self::QUESTIONS[$k] ?? null;
+            if (! $q) {
+                continue;
+            }
+            if (! empty($q['multi'])) {
+                $list = array_values(array_unique(array_filter((array) $v, fn ($x) => is_string($x) && $x !== '')));
+                if ($list) {
+                    $answers[$k] = $list;
+                } else {
+                    unset($answers[$k]);
+                }
+            } elseif (is_array($v)) {
+                $one = current(array_filter($v, fn ($x) => is_string($x) && $x !== ''));
+                if ($one !== false) {
+                    $answers[$k] = $one;
+                } else {
+                    unset($answers[$k]);
+                }
+            } elseif ($v === null || $v === '') {
+                unset($answers[$k]);
+            }
+        }
+
+        return $answers;
+    }
+
     public static function normalize(array $answers, ?string $crop = null): array
     {
         if (isset($answers['soil']) && is_array($answers['soil']) || isset($answers['history']) && is_array($answers['history'])) {
@@ -904,7 +941,7 @@ final class FieldProfile
     /** One saved row as the page sees it. */
     public static function row(object $r): array
     {
-        $answers = json_decode((string) $r->answers, true) ?: [];
+        $answers = self::shape(json_decode((string) $r->answers, true) ?: []);
 
         $row = ['id' => (int) $r->id, 'name' => (string) $r->name, 'crop' => $r->crop, 'cropLabel' => $r->crop ? (FieldCatalogue::crops()[$r->crop][1] ?? null) : null,
             'scheduleId' => $r->scheduleId !== null ? (int) $r->scheduleId : null, 'lotId' => $r->lotId !== null ? (int) $r->lotId : null,

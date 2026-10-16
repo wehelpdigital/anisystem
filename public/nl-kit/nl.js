@@ -28,6 +28,8 @@
     const uid = () => Math.random().toString(36).slice(2, 10);
     const clone = (o) => JSON.parse(JSON.stringify(o));
     const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+    /* Each app's own dark switch: html.dark on anee.io, data-bs-theme on the mother app. */
+    const appDark = () => document.documentElement.classList.contains('dark') || !!document.querySelector('[data-bs-theme="dark"]');
     function el(html) { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
 
     async function call(path, opts = {}) {
@@ -152,6 +154,7 @@
         if (!/\/$/.test(C.api)) C.api += '/';
         root = target;
         root.classList.add('nlk');
+        if (C.framed) root.classList.add('nlk-framed');
         root.innerHTML = shell();
         wireShell();
         refresh(true);
@@ -612,7 +615,7 @@
         let side = 'blocks';
         let phone = false;
         let textView = false;
-        let scheme = 'light';
+        let scheme = appDark() ? 'dark' : 'light';
         const isAcumba = E.kind === 'acumba';
         const locked = !!(E.sendAt && E.status === 'sent');
 
@@ -634,7 +637,7 @@
             '  <main class="nlk-bld-view">' +
             '    <div class="nlk-view-bar"><span class="nlk-grow" data-viewnote>Live preview: tap a part of the email to edit it.</span>' +
             '      <div class="nlk-seg" data-dev><button type="button" data-v="desk" class="is-on" title="Desktop">' + ic('desk', '') + '</button><button type="button" data-v="phone" title="Phone">' + ic('phone') + '</button></div>' +
-            '      <div class="nlk-seg" data-sch><button type="button" data-v="light" class="is-on" title="A light inbox">' + ic('sun') + '</button><button type="button" data-v="dark" title="A dark inbox (phones in dark mode)">' + ic('moon') + '</button></div>' +
+            '      <div class="nlk-seg" data-sch><button type="button" data-v="light"' + (scheme === 'light' ? ' class="is-on"' : '') + ' title="A light inbox">' + ic('sun') + '</button><button type="button" data-v="dark"' + (scheme === 'dark' ? ' class="is-on"' : '') + ' title="A dark inbox (phones in dark mode)">' + ic('moon') + '</button></div>' +
             '      <div class="nlk-seg" data-tv><button type="button" data-v="html" class="is-on">Email</button><button type="button" data-v="text">Text</button></div>' +
             '    </div>' +
             '    <div class="nlk-frame-wrap" data-wrap><iframe class="nlk-frame" title="Email preview" data-frame></iframe></div>' +
@@ -1176,13 +1179,13 @@
             '<div class="nlk-seg nlk-mob-switch" data-mob><button type="button" data-v="edit" class="is-on">Edit</button><button type="button" data-v="view">Preview</button></div>' +
             '<button type="button" class="nlk-btn" data-reset>Back to the anee.io look</button><button type="button" class="nlk-btn is-gold" data-save>Save the design</button></div>' +
             '<div class="nlk-bld-body" data-show="edit"><aside class="nlk-bld-side"><div class="nlk-side-pane" data-form></div></aside>' +
-            '<main class="nlk-bld-view"><div class="nlk-view-bar"><span class="nlk-grow">A sample email in this design</span><div class="nlk-seg" data-sch><button type="button" data-v="light" class="is-on">Light inbox</button><button type="button" data-v="dark">Dark inbox</button></div><div class="nlk-seg" data-dev><button type="button" data-v="desk" class="is-on">Desktop</button><button type="button" data-v="phone">Phone</button></div></div>' +
+            '<main class="nlk-bld-view"><div class="nlk-view-bar"><span class="nlk-grow">A sample email in this design</span><div class="nlk-seg" data-sch><button type="button" data-v="light"' + (appDark() ? '' : ' class="is-on"') + '>Light inbox</button><button type="button" data-v="dark"' + (appDark() ? ' class="is-on"' : '') + '>Dark inbox</button></div><div class="nlk-seg" data-dev><button type="button" data-v="desk" class="is-on">Desktop</button><button type="button" data-v="phone">Phone</button></div></div>' +
             '<div class="nlk-frame-wrap" data-wrap><iframe class="nlk-frame" title="Design preview" data-frame></iframe></div></main></div></div>');
         const form = $('[data-form]', L);
         const frame = $('[data-frame]', L);
         const mark = () => { dirty = true; };
         let pv = 0;
-        let scheme = 'light';
+        let scheme = appDark() ? 'dark' : 'light';
         const preview = debounce(async () => {
             const my = ++pv;
             try {
@@ -1347,8 +1350,8 @@
                 if (!more) box.innerHTML = '';
                 r.data.rows.forEach((x) => {
                     const st = ST[x.status] || ['', x.status];
-                    const list = x.campaigns.length ? x.campaigns.map((c) => '<div><span class="nlk-pill ' + (c.status === 'created' ? 'st-queued' : 'st-expired') + '">' + (c.status === 'created' ? 'Made' : 'Failed') + '</span><b>' + h(c.title) + '</b> to ' + h(c.cells) + (c.campaignId ? ' · #' + c.campaignId : '') + (c.error ? '<span class="nlk-bad" style="color:#b42318"> · ' + h(c.error) + '</span>' : '') + '</div>').join('')
-                        : (x.picks.length ? x.picks.map((p) => '<div><span class="nlk-pill pr-' + (p.priority || 'regular') + '">' + h((PRI[p.priority] || PRI.regular).short) + '</span><b>' + h(p.title) + '</b> to ' + h(p.cells) + (p.people != null ? ' (' + p.people + ')' : '') + '</div>').join('') : '<div style="color:#8a957f">Nothing was in line.</div>');
+                    const list = x.campaigns.length ? x.campaigns.map((c) => '<div><span class="nlk-pill ' + (c.status === 'created' ? 'st-queued' : 'st-expired') + '">' + (c.status === 'created' ? 'Made' : 'Failed') + '</span><b>' + h(c.title) + '</b> to ' + h(c.cells) + (c.campaignId ? ' · #' + c.campaignId : '') + (c.error ? '<span style="color:var(--red)"> · ' + h(c.error) + '</span>' : '') + '</div>').join('')
+                        : (x.picks.length ? x.picks.map((p) => '<div><span class="nlk-pill pr-' + (p.priority || 'regular') + '">' + h((PRI[p.priority] || PRI.regular).short) + '</span><b>' + h(p.title) + '</b> to ' + h(p.cells) + (p.people != null ? ' (' + p.people + ')' : '') + '</div>').join('') : '<div style="color:var(--faint)">Nothing was in line.</div>');
                     box.appendChild(el('<div class="nlk-box nlk-rise"><div class="nlk-line"><b class="nlk-grow">' + h(dayWords(x.date, true)) + ' · ' + h(KIND[x.kind] || x.kind) + '</b><span class="nlk-pill ' + st[0] + '">' + h(st[1]) + '</span></div><div class="nlk-camps">' + list + '</div>' + (x.error ? '<small class="nlk-hint" style="margin:0">' + h(x.error) + '</small>' : '') + '</div>'));
                 });
                 if (!box.children.length) box.innerHTML = '<div class="nlk-empty"><b>Nothing yet</b>Each day\'s send is written here, planned or made.</div>';
