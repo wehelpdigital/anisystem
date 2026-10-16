@@ -203,6 +203,11 @@ def build(v, allv, stats):
             meta_desc = meta_desc[:-1] + ', in plain words.'
     approved = ('The NSIC approved it in %s.' % yr if n.startswith('NSIC') else 'The Philippine Seed Board approved it in %s.' % yr if n.startswith('PSB') else 'PhilRice lists it from %s.' % yr)
     bred = ('It is a traditional variety. ' if v.get('traditional') or by == 'Traditional variety' else '%s bred it. ' % by)
+    # Sold by another company under its own brand (Batari by Aljay, 2026-10-18, the owner:
+    # "batari is different from arize"): say so, so the breeder's own brand is not assumed.
+    seller_co = ((v.get('seller') or {}).get('company') or '').strip()
+    if seller_co and by and seller_co.lower() not in by.lower() and by.lower() not in seller_co.lower() and trades:
+        bred = '%s bred it, and %s sells it under its own brand, %s. ' % (by, seller_co, trades[0])
     known = []
     if trade:
         known.append('sold as %s' % (' or '.join(trades[:2])))

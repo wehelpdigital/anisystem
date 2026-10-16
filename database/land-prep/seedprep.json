@@ -468,6 +468,58 @@
    "confidence": "company"
   },
   {
+   "brand": "Aljay (Batari)",
+   "match": [
+    "NSIC Rc 406H",
+    "Rc 406H",
+    "Mestiso 67",
+    "Mestizo 67",
+    "Batari Indra 01",
+    "Batari Indra",
+    "Batari"
+   ],
+   "brandWords": [
+    "Batari"
+   ],
+   "breeders": [],
+   "soakHours": 24,
+   "soakRange": [
+    12,
+    24
+   ],
+   "refreshEveryHours": 6,
+   "incubateHours": 24,
+   "incubateRange": [
+    24,
+    36
+   ],
+   "sowWhen": "When white roots show on most seeds.",
+   "seedKgPerHa": {
+    "transplanted": [
+     15,
+     18
+    ]
+   },
+   "seedbed": "About 400 square meters of seedbed per hectare. Sow about 50 grams, one handful, per square meter.",
+   "transplantAgeDays": [
+    18,
+    25
+   ],
+   "steps": [
+    "Wash the seed in a pail of clean water.",
+    "Put it in a sack or net bag that lets water through.",
+    "Soak it 12 to 24 hours in flowing water or in a drum of clean water.",
+    "Do not throw away seeds that float. Hybrid seed is often lighter, darker and slightly open, and these seeds still grow.",
+    "If the water is not flowing, change it every 6 hours so the seed does not ferment.",
+    "Wash the seed well after soaking and set the sack on a pallet or wooden platform.",
+    "Incubate 24 to 36 hours until white roots show.",
+    "Keep the seed damp while it incubates. Rinse it and turn the sacks every 4 to 6 hours so it does not overheat."
+   ],
+   "directSeeded": "No PhilRice hybrid rate for direct seeding was found. Brand guides use 15 to 36 kg per hectare, see the brand entries.",
+   "notes": "Batari Indra 01 is NSIC Rc 406H, sold by Aljay under its own Batari brand. It is not a Bayer Arize hybrid, so the Arize instructions do not apply. No written seed preparation from Aljay was found. These are the PhilRice hybrid steps. The instructions on the seed bag come first.",
+   "confidence": "general"
+  },
+  {
    "brand": "Bayer Arize",
    "match": [
     "NSIC Rc 794H",
