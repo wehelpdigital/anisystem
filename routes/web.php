@@ -141,6 +141,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // The newsletter module (2026-10-17): the code, the kit, and whether the migration ran.
             'newsletter' => class_exists(\App\Support\Newsletter\Planner::class) && is_file(public_path('nl-kit/nl.js'))
                 && Illuminate\Support\Facades\Schema::hasTable('as_nl_emails'),
+            'nlMergeTags' => class_exists(\App\Support\Newsletter\MergeTags::class),
             'saltMulti' => ! empty(\App\Support\FieldProfile::QUESTIONS['salt']['multi']),
             'grayWater' => isset(\App\Support\FieldProfile::QUESTIONS['waterLook']['o']['gray']),
             'runReview' => is_file(resource_path('views/partials/run-review.blade.php')),
