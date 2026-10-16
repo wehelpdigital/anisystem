@@ -160,7 +160,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpErr"'),
             // 2026-10-16: each lot its own crop, the two ways to set the days with the crew forecast,
             // What to Plant's twenty, and the variety step without the records' picks.
-            'lpLotCrop' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpLcSheet"'),
+            'lpLotCrop' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'data-screen="plant"'),
             'lpDateMode' => method_exists(\App\Support\LandPrepPlanner::class, 'forecast'),
             'wtpTwenty' => str_contains((string) @file_get_contents(app_path('Http/Controllers/WhatToPlantController.php')), 'TWENTY crops'),
             'vaNoPicks' => ! str_contains((string) @file_get_contents(resource_path('views/variety-analysis/index.blade.php')), 'id="vaBook"'),
@@ -174,6 +174,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'protoMicros' => method_exists(\App\Support\NpkNeed::class, 'check') && method_exists(\App\Http\Controllers\CropProtocolController::class, 'testsFor'),
             'newsSoWhat' => defined(\App\Services\NewsRoundup::class . '::SO_WHAT'),
             'newsTaglish' => method_exists(\App\Support\Newsletter\NewsEmail::class, 'retaglish'),
+            'lpLotsFirst' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpSamePick"'),
+            'climate20' => class_exists(\App\Support\ClimateRecord::class) && class_exists(\App\Support\NutrientBook::class) && defined(\App\Support\ClimateStore::class . '::YEARS') && \App\Support\ClimateStore::YEARS === 20,
             'tlBesideChip' => str_contains((string) @file_get_contents(resource_path('views/partials/tagalog-flags.blade.php')), 'tlx-wc'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
