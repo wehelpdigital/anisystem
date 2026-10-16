@@ -117,7 +117,8 @@ class CommunityText
             // than dropping the tag. A div with a class says the same thing
             // and survives.
             'img[src|alt|width|height]',
-            'div[class]',
+            // `lang` too (2026-10-17): a news story's Taglish tab says it is Filipino.
+            'div[class|lang]',
             'table', 'thead', 'tbody', 'tr', 'th', 'td',
             'iframe[src|width|height|frameborder]',
         ]));

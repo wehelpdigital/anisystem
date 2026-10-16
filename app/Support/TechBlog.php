@@ -34,7 +34,7 @@ class TechBlog
     public const AUTHOR = 'anee.io Technicians';
 
     /** Bump when the drawing below changes, so every article is drawn again. */
-    private const VERSION = 8;
+    private const VERSION = 9;
 
     private const STAMP = 'tech-blog:synced';
 
@@ -240,9 +240,19 @@ class TechBlog
                         . (trim((string) ($b['caption'] ?? '')) !== '' ? '<div class="a-cap">' . e($b['caption']) . "</div>\n" : '');
                 }
             } elseif ($type === 'callout') {
-                $h .= '<div class="a-note' . (($b['tone'] ?? '') === 'warn' ? ' is-warn' : '') . '">'
-                    . (trim((string) ($b['title'] ?? '')) !== '' ? '<b>' . e($b['title']) . '</b>' : '')
-                    . $in($b['text'] ?? '') . "</div>\n";
+                $note = '<div class="a-note' . (($b['tone'] ?? '') === 'warn' ? ' is-warn' : '');
+                $title = trim((string) ($b['title'] ?? '')) !== '' ? '<b>' . e($b['title']) . '</b>' : '';
+                if (trim((string) ($b['textTl'] ?? '')) !== '' && trim((string) ($b['text'] ?? '')) !== '') {
+                    // English and Taglish (2026-10-17, the owner): both kept, shown as two tabs. The
+                    // stored body keeps only classes and lang (CommunityText::articleHtml), so the tab
+                    // buttons are made by the article page's script (partials/lang-tabs); until then
+                    // the Taglish shows, the tab that opens first.
+                    $h .= $note . ' lt">' . $title
+                        . '<div class="lt-pane lt-en is-off">' . $in($b['text']) . '</div>'
+                        . '<div class="lt-pane lt-tl" lang="fil">' . $in($b['textTl']) . "</div></div>\n";
+                } else {
+                    $h .= $note . '">' . $title . $in($b['text'] ?? '') . "</div>\n";
+                }
             } elseif ($type === 'image') {
                 $src = SitePages::img($b['src'] ?? ($b['url'] ?? null));
                 if ($src) {

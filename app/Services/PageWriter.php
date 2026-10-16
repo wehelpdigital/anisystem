@@ -101,8 +101,10 @@ class PageWriter
                 $levels[] = (int) ($b['level'] ?? 2);
             }
             $t = [];
+            // A callout's Taglish (textTl, 2026-10-17) is the same words in another tongue: the
+            // English page is measured on its own (its length, its keywords), never doubled by it.
             array_walk_recursive($b, function ($v, $k) use (&$t) {
-                if (is_string($v) && ! in_array($k, ['type', 'url', 'src', 'tone', 'level'], true)) {
+                if (is_string($v) && ! in_array($k, ['type', 'url', 'src', 'tone', 'level', 'textTl'], true)) {
                     $t[] = $v;
                 }
             });

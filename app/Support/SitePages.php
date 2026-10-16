@@ -398,8 +398,10 @@ class SitePages
     private static function plainOf(array $b): string
     {
         $out = [];
+        // A callout's Taglish (textTl) is the same card in the other tab: a reader reads one of
+        // the two, so the page's length (its reading time, its wordCount) counts the English.
         array_walk_recursive($b, function ($v, $k) use (&$out) {
-            if (is_string($v) && ! in_array($k, ['type', 'url', 'src', 'tone', 'level'], true)) {
+            if (is_string($v) && ! in_array($k, ['type', 'url', 'src', 'tone', 'level', 'textTl'], true)) {
                 $out[] = $v;
             }
         });

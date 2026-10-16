@@ -155,6 +155,13 @@
     .sp-call.tip { background: #f3f8ec; border-color: #c9e0ad; color: #24400f; } .sp-call.tip svg { color: #4a7c2a; }
     .sp-call.warn { background: #fff8e6; border-color: #f5d98a; color: #6b4a00; } .sp-call.warn svg { color: #c79e00; }
     .sp-call.info { background: #eef4fd; border-color: #c7dbf5; color: #1e3a6b; } .sp-call.info svg { color: #2563eb; }
+    /* A news story's "so what" in English and Taglish (partials/lang-tabs): the words take the
+       card's whole width, the switch sits by the title (under it on a narrow phone). */
+    .sp-call.lt { --lt-track: #fff; --lt-line: #c9e0ad; --lt-on: #4a7c2a; --lt-ink: #2d5016; --lt-on-ink: #fff; }
+    .sp-call.lt > div { flex: 1; min-width: 0; }
+    .sp-call.lt .lt-pane p { margin-top: 0; }
+    .sp-call.warn.lt { --lt-line: #f5d98a; --lt-on: #8a6300; --lt-ink: #6b4a00; }
+    .sp-call.info.lt { --lt-line: #c7dbf5; --lt-on: #2563eb; --lt-ink: #1e3a6b; }
     .sp-img { margin: 0; }
     .sp-img img { width: 100%; border-radius: 1rem; }
     .sp-img figcaption { margin-top: .45rem; font-size: .8rem; color: #6b7280; }
@@ -298,5 +305,6 @@
         window.addEventListener('resize', fit);
     }));
 </script>
+@include('partials.lang-tabs')
 @endpush
 @endonce

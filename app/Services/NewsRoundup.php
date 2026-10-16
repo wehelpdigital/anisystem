@@ -8,6 +8,7 @@ use App\Models\AsSiteSetting;
 use App\Support\AiUsage;
 use App\Support\Newsletter\NewsEmail;
 use App\Support\ArticleStyle;
+use App\Support\NewsTaglish;
 use App\Support\SeoKeywords;
 use App\Support\SitePages;
 use Illuminate\Support\Carbon;
@@ -227,6 +228,13 @@ class NewsRoundup
             $note(['status' => $status, 'reason' => Str::limit((string) $out['error'], 480, '')]);
 
             return ['status' => $status, 'reason' => $out['error']];
+        }
+        // Every "so what" card in English and Taglish (2026-10-17, the owner). The writing gives the
+        // Taglish (soWhatTl); a card it left without one gets it here, one Flash ask for all of them.
+        try {
+            $out['page']['blocks'] = NewsTaglish::fill($out['page']['blocks'], $runId)['blocks'];
+        } catch (\Throwable $e) {
+            report($e);
         }
         $page = $this->publish($out['page']);
         DB::table('as_news_items')->whereIn('id', $out['used'])->update(['featuredPageId' => $page->id, 'featuredAt' => now(), 'updated_at' => now()]);
@@ -686,6 +694,8 @@ class NewsRoundup
             . "1. Pick the " . self::MIN_STORIES . ' to ' . self::MAX_STORIES . " stories that matter most to a Filipino farmer: rice and palay, corn, vegetables, prices of farm goods, fertilizer and fuel costs, weather and typhoons, government programs and aid, trade and imports, research a farmer can use. Leave out stories with nothing for a farmer, and when two stories report the same news, keep one.\n"
             . "2. Group them by theme, 2 to 5 themes, never one story per theme unless it stands alone. Each theme gets an H2 heading in Title Case that names the topic exactly (for example \"Palay Prices and Rice Supply\", \"Fuel and Farm Costs\", \"Weather and Typhoon Watch\", \"Help From the Government\", \"Exports and Markets\"). Order the themes by how much they matter to a farmer this week.\n"
             . "3. For every story: a headline in your own words (at most 12 words, Title Case) that keeps the story's key terms exact (a cartel stays a cartel, a fine stays a fine), a summary of the core facts in your own words in 1 or 2 sentences (never copy the source's sentences), and the \"so what\": 2 or 3 sentences on why this news matters to a Filipino farmer and what they can do about it, in plain field terms (palay, cavans, hectares, inputs, the planting window, the harvest). The so what is our own commentary: it is what makes this page worth reading. Never add a number, name or claim that is not in the story given.\n"
+            . "   Then soWhatTl: the same so what in Taglish, for the page's Taglish tab beside the English one (a farmer reads one or the other, so it says what soWhat says):\n"
+            . preg_replace('/^/m', '   ', NewsTaglish::rules(NewsTaglish::PAGE_CHARS))
             . "4. The title: lead with the most important story in specific words, then the rest (for example \"Palay Stocks Fall Before Harvest, Plus Fuel Prices and Typhoon Watch\"). Never a generic \"news roundup\" title. It must contain the focus keyphrase.\n"
             . "5. The excerpt: the first paragraph, 2 or 3 sentences, naming today's date ({$range}) and the top story, with the focus keyphrase.\n"
             . "6. The intro: one short paragraph on what today's news means for farm work.\n"
@@ -700,7 +710,7 @@ class NewsRoundup
             . "The cta: a title and a text of one sentence then two or three short benefit lines, each on its own line, on how anee.io helps a farmer act on news like this (the season calendar, Anee the smart farm technician, the weather per lot).\n"
             . "\n--- Answer ---\nReturn ONLY this JSON object, no fences, no commentary. Use the story ids exactly as given:\n"
             . '{"title": "...", "slug": "words-of-the-keyphrase", "metaTitle": "...", "metaDescription": "...", "focusKeyword": "...", "mainKeywords": ["1 or 2"], "keywordsUsed": ["..."], '
-            . '"excerpt": "...", "intro": "...", "themes": [{"heading": "...", "stories": [{"id": 0, "headline": "...", "summary": "...", "soWhat": "..."}]}], '
+            . '"excerpt": "...", "intro": "...", "themes": [{"heading": "...", "stories": [{"id": 0, "headline": "...", "summary": "...", "soWhat": "...", "soWhatTl": "..."}]}], '
             . '"actionsHeading": "an H2 for the actions", "actions": ["..."], "faqHeading": "an H2 for the questions", "faq": [{"q": "...", "a": "..."}], '
             . '"links": [{"label": "...", "url": "/path"}], "cta": {"title": "...", "text": "..."}}';
     }
@@ -708,7 +718,7 @@ class NewsRoundup
     private function repair(array $data, array $problems): string
     {
         return "You wrote this farm news roundup for anee.io (JSON below). It breaks these rules:\n- " . implode("\n- ", $problems) . "\n\n"
-            . "Fix every one. Keep the stories, their ids, the facts and the order. Keep the house rules: plain words, no dashes, no semicolons, keywords in natural word order. "
+            . "Fix every one. Keep the stories, their ids, the facts and the order, and each story's soWhatTl in Taglish (where a Tagalog word keeps its own hyphen). Keep the house rules: plain words, no dashes, no semicolons, keywords in natural word order. "
             . "The theme headings and actionsHeading and faqHeading are the page's H2 headings: put the focus keyphrase in one of them.\n\n"
             . json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
             . "\n\nReturn ONLY the corrected JSON object in the same format, no fences, no commentary.";
@@ -771,7 +781,13 @@ class NewsRoundup
                 }
                 $blocks[] = ['type' => 'text', 'text' => $c($s['summary'] ?? '')];
                 if (trim((string) ($s['soWhat'] ?? '')) !== '') {
-                    $blocks[] = ['type' => 'callout', 'tone' => 'tip', 'title' => self::SO_WHAT, 'text' => $c($s['soWhat'])];
+                    $call = ['type' => 'callout', 'tone' => 'tip', 'title' => self::SO_WHAT, 'text' => $c($s['soWhat'])];
+                    // Its Taglish beside it (2026-10-17): the page and the Tech Blog show the two as tabs.
+                    $tl = NewsTaglish::tidy((string) ($s['soWhatTl'] ?? ''));
+                    if (mb_strlen($tl) >= 20) {
+                        $call['textTl'] = $tl;
+                    }
+                    $blocks[] = $call;
                 }
                 // The same news from several newsrooms (2026-10-16, the owner): each one a small icon to pick.
                 $outlets = self::outlets($item, $also, $pool);

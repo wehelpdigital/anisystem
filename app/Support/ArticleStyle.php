@@ -74,8 +74,18 @@ class ArticleStyle
         'philrice' => 'PhilRice', 'philmech' => 'PhilMech', 'pagasa' => 'PAGASA', 'uplb' => 'UPLB', 'east west seed' => 'East West Seed',
     ];
 
-    /** A line of prose made to follow the rules; [label](address) links kept whole. */
-    public static function clean(?string $text): string
+    /**
+     * A line of prose made to follow the rules; [label](address) links kept whole.
+     *
+     * $tagalog (2026-10-17, a news story's Taglish "so what", the callout's
+     * textTl): Tagalog spells its affixes and doubled words with a hyphen
+     * (mag-ani, nag-abono, pag-aani, sari-sari), and "nag abono" is a
+     * misspelling, not a plainer word. So there a hyphen after a letter stays;
+     * a dash between words still becomes a comma, a hyphen after a number a
+     * space ("14 14 14"), and a banned English word is swapped only when it
+     * stands alone (never inside "i-implement").
+     */
+    public static function clean(?string $text, bool $tagalog = false): string
     {
         $text = (string) $text;
         if (trim($text) === '') {
@@ -93,7 +103,8 @@ class ArticleStyle
         // A dash between words is a pause: a comma.
         $text = preg_replace('/\s+-{1,2}\s+/u', ', ', $text);
         // A hyphen inside a word or a number joins them: a space ("well drained", "14 14 14").
-        $text = preg_replace('/(?<=[\p{L}\p{N}])-(?=[\p{L}\p{N}])/u', ' ', $text);
+        // In Tagalog only after a number: a word's own hyphen is its spelling.
+        $text = preg_replace($tagalog ? '/(?<=\p{N})-(?=[\p{L}\p{N}])/u' : '/(?<=[\p{L}\p{N}])-(?=[\p{L}\p{N}])/u', ' ', $text);
         $text = str_replace(["\u{2026}", '...'], '.', $text);
         $text = str_replace([';'], '.', $text);
         $text = str_replace(' & ', ' and ', $text);
@@ -104,7 +115,8 @@ class ArticleStyle
         $text = str_replace(['→', '←', '⇒'], 'to', $text);
 
         foreach (self::SWAPS as $bad => $good) {
-            $text = preg_replace_callback('/\b' . preg_quote($bad, '/') . '\b/iu', function ($m) use ($good) {
+            $word = $tagalog ? '/(?<![\p{L}-])' . preg_quote($bad, '/') . '(?![\p{L}-])/iu' : '/\b' . preg_quote($bad, '/') . '\b/iu';
+            $text = preg_replace_callback($word, function ($m) use ($good) {
                 $w = $m[0];
                 if (mb_strtoupper(mb_substr($w, 0, 1)) === mb_substr($w, 0, 1) && mb_strtolower(mb_substr($w, 0, 1)) !== mb_substr($w, 0, 1)) {
                     return mb_strtoupper(mb_substr($good, 0, 1)) . mb_substr($good, 1);
@@ -129,7 +141,7 @@ class ArticleStyle
         return preg_replace_callback('/\]\(@@(\d+)@@\)/', fn ($m) => '](' . ($urls[(int) $m[1]] ?? '') . ')', trim($text));
     }
 
-    /** A page's blocks, every string of prose cleaned; addresses and kinds untouched. */
+    /** A page's blocks, every string of prose cleaned; addresses and kinds untouched. A callout's textTl is Tagalog (clean's $tagalog). */
     public static function cleanBlocks(array $blocks): array
     {
         $skip = ['type', 'url', 'src', 'tone', 'level', 'ordered'];
@@ -143,7 +155,7 @@ class ArticleStyle
                 return $out;
             }
 
-            return is_string($v) ? self::clean($v) : $v;
+            return is_string($v) ? self::clean($v, $k === 'textTl') : $v;
         };
 
         return array_map(fn ($b) => is_array($b) ? $walk($b) : $b, $blocks);

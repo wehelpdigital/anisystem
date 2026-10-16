@@ -5,6 +5,8 @@
     $S = \App\Support\SitePages::class;
     // A Tagalog page's own words around the content (the content itself is the writer's).
     $tl = isset($page) && ($page->lang ?? '') === 'tl';
+    // The English and Taglish switch's addresses: unique even when a page's blocks come in two includes.
+    $ltBase = 'lt' . substr(md5(serialize($blocks)), 0, 6);
 @endphp
 @foreach ($blocks as $i => $b)
     @switch($b['type'] ?? '')
@@ -67,7 +69,11 @@
             @break
         @case('callout')
             @php($tone = in_array($b['tone'] ?? '', ['tip', 'warn', 'info'], true) ? $b['tone'] : 'tip')
-            <div class="sp-call {{ $tone }}">
+            {{-- A news story's "so what" in English and Taglish (2026-10-17, the owner): two tabs
+                 in the card, Taglish first; both texts are in the page (partials/lang-tabs). --}}
+            @php($textTl = trim((string) ($b['textTl'] ?? '')))
+            @php($langTabs = $textTl !== '' && trim((string) ($b['text'] ?? '')) !== '')
+            <div class="sp-call {{ $tone }} {{ $langTabs ? 'lt' : '' }}">
                 @if ($tone === 'warn')
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
                 @elseif ($tone === 'info')
@@ -75,10 +81,25 @@
                 @else
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18h6m-5 3h4M12 3a6 6 0 00-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0012 3z"/></svg>
                 @endif
-                <div>
-                    @if (trim((string) ($b['title'] ?? '')) !== '')<b>{{ $b['title'] }}</b>@endif
-                    <p>{!! $S::inline($b['text'] ?? '') !!}</p>
-                </div>
+                @if ($langTabs)
+                    @php($ltId = $ltBase . '-' . $i)
+                    <div>
+                        <div class="lt-head">
+                            @if (trim((string) ($b['title'] ?? '')) !== '')<b>{{ $b['title'] }}</b>@endif
+                            <div class="lt-tabs is-tl" role="tablist" aria-label="{{ $tl ? 'Wika' : 'Language' }}">
+                                <button type="button" class="lt-tab" role="tab" id="{{ $ltId }}-tab-en" aria-controls="{{ $ltId }}-en" aria-selected="false" tabindex="-1" data-lang="en">English</button>
+                                <button type="button" class="lt-tab" role="tab" id="{{ $ltId }}-tab-tl" aria-controls="{{ $ltId }}-tl" aria-selected="true" tabindex="0" data-lang="tl">Taglish</button>
+                            </div>
+                        </div>
+                        <div class="lt-pane lt-en" id="{{ $ltId }}-en" role="tabpanel" aria-labelledby="{{ $ltId }}-tab-en" tabindex="0" @if ($tl) lang="en" @endif hidden><p>{!! $S::inline($b['text']) !!}</p></div>
+                        <div class="lt-pane lt-tl" id="{{ $ltId }}-tl" role="tabpanel" aria-labelledby="{{ $ltId }}-tab-tl" tabindex="0" lang="fil"><p>{!! $S::inline($textTl) !!}</p></div>
+                    </div>
+                @else
+                    <div>
+                        @if (trim((string) ($b['title'] ?? '')) !== '')<b>{{ $b['title'] }}</b>@endif
+                        <p>{!! $S::inline($b['text'] ?? '') !!}</p>
+                    </div>
+                @endif
             </div>
             @break
         @case('image')

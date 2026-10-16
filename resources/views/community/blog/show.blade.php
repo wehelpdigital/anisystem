@@ -109,7 +109,12 @@
     .article-body .a-table table { margin:0; min-width:30rem; }
     .article-body .a-note ul { margin:.3rem 0 0 1.1rem; }
     .article-body h4 { font-size:1rem; }
+    /* A news story's "so what" in English and Taglish (partials/lang-tabs). The tokens invert
+       in dark mode by themselves: the track goes dark, the words light, the thumb stays green. */
+    .article-body .a-note.lt { --lt-track:var(--color-white); --lt-line:var(--color-brand-200); --lt-on:var(--color-brand-600);
+        --lt-ink:var(--color-brand-800); --lt-on-ink:#fff; }
 </style>
+@include('partials.lang-tabs')
 @endpush
 
 @section('content')

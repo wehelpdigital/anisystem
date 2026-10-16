@@ -105,7 +105,11 @@
         color:var(--color-gray-700); border-radius:.75rem; padding:.6rem .85rem; margin-bottom:1rem;
         font-size:.85rem; }
     .prev-flag b { color:var(--color-brand-700); }
+    /* A news story's "so what" in English and Taglish, as the article page draws it (partials/lang-tabs). */
+    .article-body .a-note.lt { --lt-track:var(--color-white); --lt-line:var(--color-brand-200); --lt-on:var(--color-brand-600);
+        --lt-ink:var(--color-brand-800); --lt-on-ink:#fff; }
 </style>
+@include('partials.lang-tabs')
 @endpush
 
 @section('content')
