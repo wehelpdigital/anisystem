@@ -60,6 +60,26 @@ final class FarmLots
         return $ready;
     }
 
+    /** Whether the pin and boundary columns are in (2026-10-17's migration). */
+    public static function mapReady(): bool
+    {
+        static $ready = null;
+        if ($ready === null) {
+            try {
+                $known = Cache::get('farm-lots:map');
+                if ($known === null) {
+                    $known = FieldProfile::storeReady() && Schema::hasColumn('as_field_profiles', 'boundaryHa') ? 1 : 0;
+                    Cache::put('farm-lots:map', $known, $known ? 86400 : 60);
+                }
+                $ready = (int) $known === 1;
+            } catch (\Throwable) {
+                $ready = false;
+            }
+        }
+
+        return $ready;
+    }
+
     /** Whether the lot columns are in (the migration may not have run yet on this database). */
     public static function ready(): bool
     {
@@ -112,6 +132,10 @@ final class FarmLots
             'where' => self::where($town, $prov),
             'areaHa' => isset($r->areaHa) && $r->areaHa !== null ? (float) $r->areaHa : null,
             'areaUnit' => isset($r->areaUnit, self::AREA_UNITS[$r->areaUnit]) ? $r->areaUnit : 'ha',
+            // Where it is on the map, and its outline (2026-10-16, the owner).
+            'pin' => isset($r->pinLat, $r->pinLng) ? ['lat' => (float) $r->pinLat, 'lng' => (float) $r->pinLng] : null,
+            'boundary' => isset($r->boundary) && is_array($b = json_decode((string) $r->boundary, true)) && count($b) >= 3 ? $b : null,
+            'boundaryHa' => isset($r->boundaryHa) && $r->boundaryHa !== null ? (float) $r->boundaryHa : null,
             'updatedAt' => $at->toIso8601String(),
             'ageDays' => $age,
             'stale' => $age >= self::STALE_DAYS,
@@ -184,6 +208,77 @@ final class FarmLots
         }
 
         return self::one($ownerId, $rid);
+    }
+
+    /**
+     * Set or take off a lot's pin. Not a check of its answers, so the six
+     * months keep running (updated_at is left alone).
+     */
+    public static function setPin(int $ownerId, int $id, ?float $lat, ?float $lng): ?array
+    {
+        if (! self::mapReady()) {
+            return null;
+        }
+        $off = $lat === null || $lng === null;
+        $done = DB::table('as_field_profiles')->where('userId', $ownerId)->where('id', $id)->where('deleteStatus', 1)
+            ->update(['pinLat' => $off ? null : round($lat, 7), 'pinLng' => $off ? null : round($lng, 7)]);
+
+        return $done !== false ? self::one($ownerId, $id) : null;
+    }
+
+    /**
+     * Set or take off a lot's boundary: its points, each [lat, lng], and the
+     * area they enclose. A lot with no size takes the drawn one; a lot with
+     * no pin is pinned at the middle of its outline.
+     */
+    public static function setBoundary(int $ownerId, int $id, ?array $points): ?array
+    {
+        if (! self::mapReady()) {
+            return null;
+        }
+        $have = DB::table('as_field_profiles')->where('userId', $ownerId)->where('id', $id)->where('deleteStatus', 1)->first();
+        if (! $have) {
+            return null;
+        }
+        if (! $points) {
+            DB::table('as_field_profiles')->where('id', $id)->update(['boundary' => null, 'boundaryHa' => null]);
+
+            return self::one($ownerId, $id);
+        }
+        $pts = array_map(fn ($p) => [round((float) $p[0], 7), round((float) $p[1], 7)], $points);
+        $ha = round(self::areaHa($pts), 4);
+        $row = ['boundary' => json_encode($pts), 'boundaryHa' => $ha];
+        if (empty($have->areaHa) && $ha > 0) {
+            $row['areaHa'] = round(min($ha, 100000), 6);
+        }
+        if (! isset($have->pinLat, $have->pinLng)) {
+            $row['pinLat'] = round(array_sum(array_column($pts, 0)) / count($pts), 7);
+            $row['pinLng'] = round(array_sum(array_column($pts, 1)) / count($pts), 7);
+        }
+        DB::table('as_field_profiles')->where('id', $id)->update($row);
+
+        return self::one($ownerId, $id);
+    }
+
+    /**
+     * The area of an outline of [lat, lng] points, in hectares, on the earth's
+     * sphere (the ring area Google's geometry library and turf use).
+     */
+    public static function areaHa(array $pts): float
+    {
+        $n = count($pts);
+        if ($n < 3) {
+            return 0.0;
+        }
+        $r = 6378137.0;
+        $sum = 0.0;
+        for ($i = 0; $i < $n; $i++) {
+            [$lat1, $lng1] = $pts[$i];
+            [$lat2, $lng2] = $pts[($i + 1) % $n];
+            $sum += deg2rad($lng2 - $lng1) * (2 + sin(deg2rad($lat1)) + sin(deg2rad($lat2)));
+        }
+
+        return abs($sum * $r * $r / 2) / 10000;
     }
 
     /** "Still correct": the answers were checked, so the six months start again. */

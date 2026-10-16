@@ -41,6 +41,14 @@
     .gl-acts { display: flex; flex-wrap: wrap; gap: .4rem; padding: 0 .25rem .2rem; }
     .gl-acts .btn { padding: .4rem .8rem; font-size: .8rem; }
     .gl-acts .gl-del { margin-left: auto; color: #b91c1c; }
+    /* The lot on the map (2026-10-16, the owner): its pin and its boundary. */
+    .gl-acts .gl-map { display: inline-flex; align-items: center; gap: .35rem; }
+    .gl-acts .gl-map svg { width: .95rem; height: .95rem; flex: none; }
+    .gl-acts .gl-map.is-set { color: var(--color-brand-700); border-color: var(--color-brand-300); background: var(--color-brand-50); }
+    .gl-onmap { display: flex; flex-wrap: wrap; gap: .35rem; padding: 0 .35rem; }
+    .gl-onmap span { display: inline-flex; align-items: center; gap: .3rem; padding: .15rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #3d5226; background: #eef5e6; }
+    .gl-onmap a { font-size: .72rem; font-weight: 800; color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; align-self: center; }
+    html.dark .gl-onmap span { color: #cfe6b8; background: #22301a; }
     .gl-empty { padding: 2rem 1rem; text-align: center; border-radius: 1.2rem; border: 1px dashed var(--color-gray-300); color: var(--color-gray-500); font-size: .9rem; line-height: 1.55; }
     .gl-empty b { display: block; margin-bottom: .2rem; color: var(--color-gray-800); }
     html.dark .gl-old { color: #fde68a; background: #2a2010; border-color: #5c4413; }
@@ -71,6 +79,7 @@
 </div>
 
 @include('partials.farm-lots')
+@include('partials.lot-map')
 
 @push('scripts')
 <script>
@@ -97,10 +106,22 @@
             + L().card(l, false, 0)
             + '<div class="gl-prevhost" data-prev></div>'
             + '<p class="gl-meta">' + (l.stale ? 'Last checked ' + esc(l.updated) + '. Due for a check.' : 'Last checked ' + esc(l.updated) + '. Next check by ' + esc(l.staleOn) + '.') + '</p>'
+            + onMap(l)
             + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="answers" aria-expanded="false">See its answers</button><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
+            + '<button type="button" class="btn btn-white gl-map' + (l.pin ? ' is-set' : '') + '" data-act="pin">' + PIN + (l.pin ? 'Move the pin' : 'Set the pin location') + '</button>'
+            + '<button type="button" class="btn btn-white gl-map' + (l.boundary ? ' is-set' : '') + '" data-act="draw">' + SHAPE + (l.boundary ? 'Change the boundary' : 'Draw the map boundary') + '</button>'
             + (l.stale ? '<button type="button" class="btn btn-white" data-act="fine">Still correct</button>' : '')
             + '<button type="button" class="btn btn-ghost gl-del" data-act="del">Delete</button></div></div>').join('');
     }
+    const PIN = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0113 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>';
+    const SHAPE = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M5 7l8-3 6 6-3 9-10-2z"/><circle cx="5" cy="7" r="1.6" fill="currentColor"/><circle cx="13" cy="4" r="1.6" fill="currentColor"/><circle cx="19" cy="10" r="1.6" fill="currentColor"/><circle cx="16" cy="19" r="1.6" fill="currentColor"/><circle cx="6" cy="17" r="1.6" fill="currentColor"/></svg>';
+    // What the lot has on the map: its pin (with a link to Google Maps) and the size its boundary encloses.
+    const onMap = (l) => {
+        const bits = [];
+        if (l.pin) bits.push('<span>📍 Pinned</span><a href="https://www.google.com/maps/search/?api=1&query=' + l.pin.lat + ',' + l.pin.lng + '" target="_blank" rel="noopener">Open in Google Maps</a>');
+        if (l.boundary) bits.push('<span>⬠ Boundary, ' + esc(Number(l.boundaryHa || 0).toLocaleString(undefined, { maximumFractionDigits: (l.boundaryHa || 0) < 10 ? 2 : 1 })) + ' ha drawn</span>');
+        return bits.length ? '<div class="gl-onmap">' + bits.join('') + '</div>' : '';
+    };
     async function load(fresh) {
         ALL = await L().rows(fresh);
         paint();
@@ -123,6 +144,11 @@
                 return;
             }
             if (act === 'edit') await L().edit(lot, { ask: false });
+            else if (act === 'pin' || act === 'draw') {
+                if (!window.aneeLotMap) return;
+                const row = await (act === 'pin' ? window.aneeLotMap.pin(lot) : window.aneeLotMap.draw(lot));
+                if (row) await load(true);
+            }
             else if (act === 'fine') await L().confirm(lot);
             else if (act === 'del') {
                 const ok = await window.confirmAction({ title: 'Delete ' + lot.name + '?', message: 'Its place, size and answers go. Analyses you already ran keep what they read.', confirmText: 'Delete the lot' });

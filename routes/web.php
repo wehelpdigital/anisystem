@@ -134,6 +134,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && ! str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'id="flCrop"'),
             // Every crop's troubles in the field questions, with a crop filter (2026-10-16).
             'troublesAll' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqCropSheet'),
+            'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),
             'soilTests' => method_exists(\App\Support\FieldProfile::class, 'cleanTests'),
@@ -832,6 +833,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/farm-lots/{id}', [App\Http\Controllers\FarmLotController::class, 'update'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.update');
     Route::post('/app/farm-lots/{id}/checked', [App\Http\Controllers\FarmLotController::class, 'confirm'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.confirm');
     Route::delete('/app/farm-lots/{id}', [App\Http\Controllers\FarmLotController::class, 'destroy'])->whereNumber('id')->name('farmlots.delete');
+    // A lot's pin and boundary on the map (2026-10-16), and the map's place search.
+    Route::post('/app/farm-lots/{id}/pin', [App\Http\Controllers\FarmLotController::class, 'pin'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.pin');
+    Route::post('/app/farm-lots/{id}/boundary', [App\Http\Controllers\FarmLotController::class, 'boundary'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.boundary');
+    Route::get('/app/farm-lots/find', [App\Http\Controllers\FarmLotController::class, 'find'])->middleware('throttle:20,1')->name('farmlots.find');
     // The old free field helper now opens the planner (defined before fh.page so it wins).
     Route::get('/app/field-helpers/landprep', fn () => redirect()->route('landprep.page'))->name('landprep.legacy');
     // Field helpers (2026-10-07): the weed control helper and the pest and disease finders, in the app.

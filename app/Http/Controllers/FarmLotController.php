@@ -61,6 +61,58 @@ class FarmLotController extends Controller
             : $this->json(false, 'That lot is gone.', [], 404);
     }
 
+    /** Set the lot's pin on the map, or take it off (lat and lng both empty). */
+    public function pin(Request $request, int $id)
+    {
+        $v = Validator::make($request->all(), [
+            'lat' => 'nullable|numeric|between:-90,90|required_with:lng',
+            'lng' => 'nullable|numeric|between:-180,180|required_with:lat',
+        ]);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        if (! FarmLots::mapReady()) {
+            return $this->json(false, 'The map is being set up. Please try again in a few minutes.', [], 503);
+        }
+        $lat = $request->filled('lat') ? (float) $request->input('lat') : null;
+        $lng = $request->filled('lng') ? (float) $request->input('lng') : null;
+        $row = FarmLots::setPin(WorkerContext::effectiveOwnerId(), $id, $lat, $lng);
+
+        return $row ? $this->json(true, $lat === null ? 'The pin is off.' : 'The pin is set.', ['row' => $row])
+            : $this->json(false, 'That lot is gone.', [], 404);
+    }
+
+    /** Set the lot's boundary (3 to 500 points, each [lat, lng]), or take it off (none). */
+    public function boundary(Request $request, int $id)
+    {
+        $v = Validator::make($request->all(), [
+            'points' => 'nullable|array|max:500',
+            'points.*' => 'array|size:2',
+            'points.*.0' => 'numeric|between:-90,90',
+            'points.*.1' => 'numeric|between:-180,180',
+        ]);
+        if ($v->fails()) {
+            return $this->json(false, 'The boundary did not come through whole. Please try again.', [], 422);
+        }
+        $points = array_values((array) $request->input('points', []));
+        if ($points && count($points) < 3) {
+            return $this->json(false, 'A boundary needs at least three points.', [], 422);
+        }
+        if (! FarmLots::mapReady()) {
+            return $this->json(false, 'The map is being set up. Please try again in a few minutes.', [], 503);
+        }
+        $row = FarmLots::setBoundary(WorkerContext::effectiveOwnerId(), $id, $points ?: null);
+
+        return $row ? $this->json(true, $points ? 'The boundary is saved.' : 'The boundary is off.', ['row' => $row])
+            : $this->json(false, 'That lot is gone.', [], 404);
+    }
+
+    /** Find a place on the map by its name (our server asks OpenStreetMap: the maps key allows the map only). */
+    public function find(Request $request)
+    {
+        return $this->json(true, 'ok', ['places' => \App\Support\PlaceSearch::find(mb_substr(trim((string) $request->query('q', '')), 0, 120))]);
+    }
+
     /** The place pickers: provinces, the towns of a province, the barangays of a town. */
     public function places(Request $request)
     {
