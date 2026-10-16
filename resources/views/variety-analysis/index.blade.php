@@ -708,8 +708,8 @@
      * the farmer (the owner, 2026-10-18): a public breeder (PhilRice, IRRI,
      * UPLB, the BPI) or a derby's public host is left out, saved reports too;
      * a seed company stays. The twin of App\Support\GovSource::isGov. */
-    const GOV_W = /philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|state\s+university|university\s+of\s+the\s+philippines|international\s+rice|irri|fao|cimmyt|world\s*veg|avrdc|tnau|nsic\s+registry|variety\s+registry/i;
-    const GOV_C = /(?:DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|PSA|SRA|DOST|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|IPB)/;
+    const GOV_W = /philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|state\s+university|university\s+of\s+the\s+philippines|international\s+rice|\birri\b|\bfao\b|cimmyt|world\s*veg|avrdc|tnau|nsic\s+registry|variety\s+registry/i;
+    const GOV_C = /\b(?:DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|PSA|SRA|DOST|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|IPB)\b/;
     const notGov = (s) => { const t = String(s ?? '').trim(); return t && !GOV_W.test(t) && !GOV_C.test(t) ? t : ''; };
     const U = {
         options: '{{ route('vary.options') }}',
