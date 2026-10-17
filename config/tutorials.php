@@ -308,6 +308,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.seedcount' => [
+            'title' => 'Seed Count and Distance Calculator',
+            'blurb' => 'How many seeds for your spacing, or what spacing for your seeds? Set the rows and the distance between plants and see the seeds, the plants that will stand and the harvest they can carry.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.lcc' => [
             'title' => 'LCC Checker',
             'blurb' => 'Is it time to add nitrogen to your rice? Slide each leaf to the color it matches on your leaf color chart, or let Anee read a photo of your leaves.',
@@ -435,6 +441,7 @@ return [
         'npk.page'      => 'tool.npk',
         'lcc.page'      => 'tool.lcc',
         'bilad.page'    => 'tool.bilad',
+        'seedcalc.page' => 'tool.seedcount',
         // One route for the field helpers: {tool} is the route's own parameter.
         'fh.page'        => 'tool.field.{tool}',
         'workers.global' => 'tool.workers',

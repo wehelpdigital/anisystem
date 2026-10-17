@@ -419,6 +419,15 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        {{-- Seed Count and Distance (2026-10-19, the owner): the seeds for a spacing, or the spacing for the seeds. --}}
+        <a href="{{ route('seedcalc.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/seed-count.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>Seed Count and Distance Calculator{{ \App\Support\Tagalog::flag('seed-count-distance') }}</b>
+                <i>Play with the distance between rows and plants, and see the seeds you need, the plants that will stand and the harvest they can carry. Or start from your seeds and see the spacing.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
 
             {{-- The farm tools, in the same group (2026-10-14, the owner). --}}
         {{-- Field helpers (2026-10-07): the public site's weed control helper

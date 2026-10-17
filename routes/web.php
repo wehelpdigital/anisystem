@@ -198,6 +198,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_ai_usage', 'tokensCached'), false, false),
             // 2026-10-19: the Benta o Bilad Calculator in Quick Tools.
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
+            // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
+            'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
@@ -841,6 +843,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/benta-o-bilad/list', [App\Http\Controllers\BentaBiladController::class, 'list'])->name('bilad.list');
     Route::get('/app/benta-o-bilad/one/{id}', [App\Http\Controllers\BentaBiladController::class, 'one'])->whereNumber('id')->name('bilad.one');
     Route::delete('/app/benta-o-bilad/{id}', [App\Http\Controllers\BentaBiladController::class, 'destroy'])->whereNumber('id')->name('bilad.delete');
+    // Seed Count and Distance (2026-10-19, the owner): spacing, seeds, stand and yield, either way round.
+    Route::get('/app/seed-count-distance', [App\Http\Controllers\SeedSpacingController::class, 'page'])->name('seedcalc.page');
+    Route::post('/app/seed-count-distance/save', [App\Http\Controllers\SeedSpacingController::class, 'save'])->name('seedcalc.save');
+    Route::get('/app/seed-count-distance/list', [App\Http\Controllers\SeedSpacingController::class, 'list'])->name('seedcalc.list');
+    Route::get('/app/seed-count-distance/variety', [App\Http\Controllers\SeedSpacingController::class, 'variety'])->middleware('throttle:60,1')->name('seedcalc.variety');
+    Route::get('/app/seed-count-distance/one/{id}', [App\Http\Controllers\SeedSpacingController::class, 'one'])->whereNumber('id')->name('seedcalc.one');
+    Route::delete('/app/seed-count-distance/{id}', [App\Http\Controllers\SeedSpacingController::class, 'destroy'])->whereNumber('id')->name('seedcalc.delete');
     Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
     Route::get('/app/variety-research/options', [App\Http\Controllers\VarietyAnalysisController::class, 'options'])->name('vary.options');
     Route::get('/app/variety-research/book', [App\Http\Controllers\VarietyAnalysisController::class, 'book'])->name('vary.book');

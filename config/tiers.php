@@ -49,6 +49,7 @@ return [
         'skyWeather'        => false,   // Satellite Weather and the NPK Plus calculator: from Libre + Anee up (2026-10-17, the owner)
         'npkPlus'           => false,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
+        'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'inventory'         => false,   // and so is the shed
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -114,6 +115,7 @@ return [
         'skyWeather'        => true,
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
+        'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'inventory'         => false,
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -180,6 +182,7 @@ return [
         'skyWeather'        => true,
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
+        'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => false,   // logins are the Owner tier's story
         'videoRecording'    => true,
@@ -247,6 +250,7 @@ return [
         'skyWeather'        => true,
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
+        'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,
@@ -308,6 +312,7 @@ return [
         'skyWeather'        => true,
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
+        'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,

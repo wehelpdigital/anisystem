@@ -1,0 +1,111 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Support\SeedSpacing;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+/**
+ * Seed Count and Distance Calculator (2026-10-19, the owner): the rows and
+ * the distance between plants against the seeds, the final stand and the
+ * yield, either way round. The page counts as you type (App\Support\
+ * SeedSpacing is the same arithmetic); a calculation the farmer saves is
+ * counted again here and kept on the analyses shelf (as_plant_analyses, kind
+ * 'seedcalc', no credits), listed on the Saved tab, to open again or delete.
+ */
+class SeedSpacingController extends Controller
+{
+    public const KIND = 'seedcalc';
+
+    public function page()
+    {
+        return view('seed-spacing.index', ['boot' => SeedSpacing::boot()]);
+    }
+
+    /**
+     * A variety's own yield parts, for the page's twin of the count (2026-10-19,
+     * the owner): what App\Support\VarietyYield keeps, or null while the shelf
+     * does not know it (or does not exist yet). No Anee, no lookup that costs.
+     */
+    public function variety(Request $request)
+    {
+        $crop = (string) $request->query('crop', '');
+        $name = mb_substr(trim((string) $request->query('name', '')), 0, 120);
+        $vy = array_key_exists($crop, SeedSpacing::CROPS) && $name !== '' ? SeedSpacing::varietyYield(['crop' => $crop, 'variety' => $name]) : null;
+
+        return $this->json(true, 'ok', ['yield' => $vy]);
+    }
+
+    /** Save one: counted again here, so what is kept is what the rule says. */
+    public function save(Request $request)
+    {
+        $c = SeedSpacing::clean($request->all());
+        if (! $c) {
+            return $this->json(false, SeedSpacing::missing(SeedSpacing::read($request->all())) ?: 'Fill in the spacing first.', [], 422);
+        }
+        $res = SeedSpacing::compute($c);
+        $title = mb_substr(SeedSpacing::title($c, $res), 0, 190);
+        $id = DB::table('as_plant_analyses')->insertGetId([
+            'userId' => Auth::id(), 'kind' => self::KIND, 'title' => $title,
+            'params' => json_encode($c), 'report' => json_encode($res), 'credits' => 0, 'status' => 'ready', 'deleteStatus' => 1,
+            'created_at' => now(), 'updated_at' => now(),
+        ]);
+
+        return $this->json(true, 'Saved.', ['id' => $id, 'title' => $title] + $this->shelf(1));
+    }
+
+    /** One saved calculation, its inputs to put back on the page. */
+    public function one(int $id)
+    {
+        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)
+            ->where('status', 'ready')->where('deleteStatus', 1)->first();
+        if (! $r) {
+            return $this->json(false, 'That calculation is gone.', [], 404);
+        }
+
+        return $this->json(true, 'ok', ['id' => (int) $r->id, 'title' => $r->title, 'params' => json_decode((string) $r->params, true),
+            'report' => json_decode((string) $r->report, true)]);
+    }
+
+    public function list(Request $request)
+    {
+        return $this->json(true, 'ok', $this->shelf(max(1, (int) $request->query('page', 1))));
+    }
+
+    public function destroy(int $id)
+    {
+        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+
+        return $this->json(true, 'Deleted.', $this->shelf(1));
+    }
+
+    /** The farmer's calculations, newest first, twelve to a page. */
+    private function shelf(int $page): array
+    {
+        $per = 12;
+        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
+            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'report', 'params', 'created_at']);
+
+        return [
+            'history' => $rows->take($per)->map(function ($r) {
+                $rep = json_decode((string) $r->report, true) ?: [];
+                $p = json_decode((string) $r->params, true) ?: [];
+                $at = Carbon::parse($r->created_at)->timezone('Asia/Manila');
+
+                return ['id' => (int) $r->id, 'title' => (string) $r->title, 'status' => $rep['status'] ?? 'good', 'mode' => $p['mode'] ?? 'seeds',
+                    'crop' => $p['crop'] ?? null, 'standHa' => $rep['standHa'] ?? null,
+                    'day' => $at->format('j'), 'month' => $at->format('M'), 'at' => $at->format('M j, Y g:i A')];
+            })->values()->all(),
+            'hasMore' => $rows->count() > $per,
+            'page' => $page,
+        ];
+    }
+
+    private function json(bool $ok, string $message, array $data = [], int $status = 200)
+    {
+        return response()->json(['success' => $ok, 'message' => $message, 'data' => $data], $status);
+    }
+}
