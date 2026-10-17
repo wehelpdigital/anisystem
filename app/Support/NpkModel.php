@@ -134,10 +134,12 @@ final class NpkModel
         'sodic' => ['N' => 1.1, 'K2O' => 1.1, 'same' => ['N' => 'nair'], 'why' => 'Sodic soil loses nitrogen to the air, and sodium crowds out potassium'],
         'saline' => ['K2O' => 1.15, 'N' => 1.05, 'why' => 'On salty soil potassium helps the crop keep the salt out'],
         'acid_sulfate' => ['P2O5' => 1.3, 'same' => ['P2O5' => 'pfix'], 'why' => 'Acid sulfate soil locks up phosphorus'],
-        'low_om' => ['N' => 1.15, 'share' => ['N' => 0.9], 'why' => 'Low organic matter gives less nitrogen of its own'],
+        // Low organic matter and a low nitrogen test are one shortfall (a test reads the soil's own N supply,
+        // and the soil atlas rates N by organic matter): they count once, the larger (2026-10-19).
+        'low_om' => ['N' => 1.15, 'same' => ['N' => 'nsupply'], 'share' => ['N' => 0.9], 'why' => 'Low organic matter gives less nitrogen of its own'],
         'peat' => ['N' => 0.85, 'share' => ['N' => 1.1], 'why' => 'Peat gives more nitrogen of its own'],
         'waterlogged' => ['N' => 1.1, 'why' => 'Waterlogged upland soil loses nitrogen'],
-        'testLow' => ['N' => 1.2, 'P2O5' => 1.3, 'K2O' => 1.3, 'share' => ['N' => 0.85, 'P2O5' => 0.85, 'K2O' => 0.85], 'why' => 'Your soil test reads low'],
+        'testLow' => ['N' => 1.2, 'P2O5' => 1.3, 'K2O' => 1.3, 'same' => ['N' => 'nsupply'], 'share' => ['N' => 0.85, 'P2O5' => 0.85, 'K2O' => 0.85], 'why' => 'Your soil test reads low'],
         'testHigh' => ['N' => 0.8, 'P2O5' => 0.6, 'K2O' => 0.6, 'share' => ['N' => 1.1, 'P2O5' => 1.12, 'K2O' => 1.12], 'why' => 'Your soil test reads high'],
     ];
 

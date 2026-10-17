@@ -1509,6 +1509,7 @@
             if (Object.keys(t).length) used.push('the N, P and K levels');
             if (st.area.filled && st.area.filled.texture) used.push('the soil type');
             if (st.area.filled && st.area.filled.ph) used.push('the pH');
+            if (st.area.filled && st.area.filled.conds) used.push(st.area.filled.conds.map((k) => ({ saline: 'the salt', low_om: 'the low organic matter' })[k]).join(' and '));
             say.textContent = 'Using what is typical for your area for ' + (used.join(', ') || 'what you left blank') + '. Your own answers come first.';
             say.hidden = false;
             $('npAreaNo').textContent = 'Stop using them';
@@ -1521,6 +1522,11 @@
         const filled = {};
         if (st.texture === 'unsure' && TEX_W[A.texture] && M.textures[A.texture]) { st.texture = A.texture; filled.texture = A.texture; }
         if ($('npPh').value === '' && A.ph != null) { $('npPh').value = String(A.ph); filled.ph = A.ph; }
+        // The area's salt and low organic matter, only when no condition was picked (SoilAtlas::fill's rule).
+        if (!st.conds.length) {
+            const add = (A.conditions || []).filter((k) => (k === 'saline' || k === 'low_om') && M.conditions[k]);
+            if (add.length) { st.conds = add.slice(); filled.conds = add.slice(); }
+        }
         st.area = { where: A.where, tests: Object.assign({}, A.tests || {}), filled };
         soilTag(); paintArea(); calc();
     };
@@ -1528,6 +1534,7 @@
         const f = (st.area && st.area.filled) || {};
         if (f.texture && st.texture === f.texture) st.texture = 'unsure';
         if (f.ph != null && Number($('npPh').value) === Number(f.ph)) $('npPh').value = '';
+        if (f.conds && st.conds.join(',') === f.conds.join(',')) st.conds = [];
         st.area = null;
         if (!quiet) { soilTag(); paintArea(); calc(); }
     };
@@ -1929,6 +1936,16 @@
             });
             if (used) out.whys.push(skipped && a.whyUnless ? a.whyUnless : a.why);
         });
+        // The soil test. A low N test and low organic matter are one shortfall (the soil's own nitrogen):
+        // its multiplier joins the same group and they count once, the larger (2026-10-19).
+        NPK.forEach((n) => {
+            const b = cls[n] === 'low' ? 'testLow' : cls[n] === 'high' ? 'testHigh' : null;
+            if (!b) return;
+            const a = M.adjust[b], s = a.same && a.same[n];
+            if (s) same[n + ':' + s] = Math.max(same[n + ':' + s] || 1, a[n]); else m[n] *= a[n];
+            sh[n] *= a.share[n];
+            out.whys.push(a.why + ' in ' + NAMES[n].toLowerCase());
+        });
         Object.entries(same).forEach(([key, v]) => {
             const n = key.split(':')[0];
             // An acidifying plan on alkaline soil frees part of the phosphorus lock;
@@ -1938,12 +1955,6 @@
                 else if (sour) { v = v + 0.1 * au; out.whys.push('the acid fertilizers in your plan make the acid soil sourer'); }
             }
             m[n] *= v;
-        });
-        NPK.forEach((n) => {
-            const b = cls[n] === 'low' ? 'testLow' : cls[n] === 'high' ? 'testHigh' : null;
-            if (!b) return;
-            const a = M.adjust[b]; m[n] *= a[n]; sh[n] *= a.share[n];
-            out.whys.push(a.why + ' in ' + NAMES[n].toLowerCase());
         });
         // Your field: the nitrogen the organic matter or slow drainage adds or saves.
         if (fl && fl.on) m.N *= fl.nMult;

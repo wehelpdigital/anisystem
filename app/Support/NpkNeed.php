@@ -455,6 +455,23 @@ final class NpkNeed
                 $out['whys'][] = $skipped && ! empty($a['whyUnless']) ? $a['whyUnless'] : $a['why'];
             }
         }
+        // The soil test. A low N test and low organic matter are one shortfall (the soil's own nitrogen):
+        // its multiplier joins the same group and they count once, the larger (2026-10-19).
+        foreach (self::NPK as $n) {
+            $b = ($cls[$n] ?? null) === 'low' ? 'testLow' : (($cls[$n] ?? null) === 'high' ? 'testHigh' : null);
+            if (! $b) {
+                continue;
+            }
+            $a = NpkModel::ADJUST[$b];
+            $s = $a['same'][$n] ?? null;
+            if ($s) {
+                $same[$n . ':' . $s] = max($same[$n . ':' . $s] ?? 1, $a[$n]);
+            } else {
+                $m[$n] *= $a[$n];
+            }
+            $sh[$n] *= $a['share'][$n];
+            $out['whys'][] = $a['why'] . ' in ' . strtolower(self::NAMES[$n]);
+        }
         foreach ($same as $key => $v) {
             $n = explode(':', $key)[0];
             // An acidifying plan on alkaline soil frees part of the phosphorus lock; on acid soil it adds to it.
@@ -468,16 +485,6 @@ final class NpkNeed
                 }
             }
             $m[$n] *= $v;
-        }
-        foreach (self::NPK as $n) {
-            $b = ($cls[$n] ?? null) === 'low' ? 'testLow' : (($cls[$n] ?? null) === 'high' ? 'testHigh' : null);
-            if (! $b) {
-                continue;
-            }
-            $a = NpkModel::ADJUST[$b];
-            $m[$n] *= $a[$n];
-            $sh[$n] *= $a['share'][$n];
-            $out['whys'][] = $a['why'] . ' in ' . strtolower(self::NAMES[$n]);
         }
         // Your field: the nitrogen the organic matter or slow drainage adds or saves.
         if ($fl['on']) {

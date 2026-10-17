@@ -454,6 +454,15 @@ final class SoilAtlas
             $in['ph'] = (float) $a['phMid'];
             $filled[] = 'ph';
         }
+        // The area's salt and low organic matter, only when no soil condition was given (2026-10-19): an empty
+        // list means "not sure", never "none of them". Acid or alkaline come through the pH, not from here.
+        if (empty($in['conditions'])) {
+            $conds = array_values(array_intersect(['saline', 'low_om'], (array) ($a['conditions'] ?? [])));
+            if ($conds) {
+                $in['conditions'] = $conds;
+                $filled[] = 'conditions';
+            }
+        }
         if ($filled) {
             $in['areaSoil'] = $filled;
         }
