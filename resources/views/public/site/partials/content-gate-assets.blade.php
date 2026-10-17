@@ -22,7 +22,6 @@
     .sp-gate-free { margin: .7rem auto 0 !important; font-size: .78rem !important; font-weight: 700; color: #6b7f5a !important; }
     .sp-gate-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: 1.1rem; }
     .sp-gate-acts .btn { min-width: 11rem; }
-    .sp-gate-tools { margin-top: .9rem; font-size: .8rem; line-height: 1.55; color: #6b7280; }
     .sp-gate-as { margin: -.3rem 0 1rem; padding: .55rem .8rem; border-radius: .8rem; background: #fff7e0; border: 1px solid #f3dc9b; font-size: .82rem; line-height: 1.45; color: #6b4e00; }
     .sp-gate-as a { font-weight: 800; color: #6b4e00; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
     @media (max-width: 639.98px) { .sp-gate-card { margin-top: -14rem; padding: 1.25rem 1rem 1.1rem; } .sp-gate-acts .btn { width: 100%; } }

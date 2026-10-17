@@ -6,8 +6,9 @@
      $plus (default true): the page's full text comes with Libre + Anee, not
      with a free account (2026-10-17, the owner: "registering does not give
      them those details because the feature is only available for libre
-     plus"). A guest is asked to start free and told what the plan costs; a
-     signed in member on Libre is asked to upgrade (ContentGate::upgradeView).
+     plus"). A guest is asked to start free (no price or plan list on the public
+     gate since 2026-10-18, the owner); a signed in member on Libre is asked
+     to upgrade (ContentGate::upgradeView).
      $plus false (land preparation, crop guides): a free account opens it. --}}
 @php
     $tl = $tl ?? false;
@@ -53,13 +54,9 @@
             ? ($price ? $price . ' kada buwan. ' : '') . 'Naroon pa rin lahat ng nasa Libre mo, dagdag ang mga field helper at si Anee.'
             : ($price ? $price . ' a month. ' : '') . 'It keeps everything you have on Libre and adds the field helpers and Anee.' }}</p>
     @elseif ($plus)
-        <p class="sp-gate-free">{{ $tl
-            ? 'Libre ang account, walang credit card. Ang ' . $planName . ($price ? ' ay ' . $price . ' kada buwan' : '') . ': lahat ng field helper at si Anee.'
-            : 'The account is free, no credit card. ' . $planName . ($price ? ' is ' . $price . ' a month' : '') . ': every field helper and Anee.' }}</p>
+        {{-- Price and plan lines off the public gate (the owner, 2026-10-18). --}}
+        <p class="sp-gate-free">{{ $tl ? 'Libre ang account, walang credit card.' : 'The account is free, no credit card.' }}</p>
     @else
         <p class="sp-gate-free">{{ $tl ? 'Libre ang pag-register. Walang credit card. Gumagana sa kahit anong phone.' : 'Free to register. No credit card. Works on any phone.' }}</p>
     @endif
-    <p class="sp-gate-tools">{{ $tl
-        ? 'Libre sa anee.io ang kalendaryo na nagtatakda ng bawat gawain. Sa ' . $planName . ' naman ang mga field helper (peste, sakit, damo, sustansya, binhi at ang Compatibility Checker) at si Anee, ang smart farm technician na sumasagot sa Tagalog.'
-        : 'Free on anee.io: a cropping calendar that dates every task. With ' . $planName . ': the field helpers (the pest, disease, weed, nutrient and variety finders and the Compatibility Checker) and Anee, the smart farm technician who answers in Tagalog or English.' }}</p>
 </div>
