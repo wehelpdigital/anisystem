@@ -811,7 +811,6 @@ class WhatToPlantController extends Controller
         $fc = $p['country'] ?? \App\Support\Region::code();
         $fieldPH = $fc === \App\Support\Region::HOME;
         $countryName = \App\Support\Region::name($fc);
-        $regionBlock = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
         $met = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('met'));
         $climateRule = $fieldPH
             ? 'PAGASA climatological normals for the region named (wet/dry timing, typhoon seasonality)'
@@ -874,9 +873,13 @@ class WhatToPlantController extends Controller
         $soilLine = '';
         if ($fieldPH && class_exists(\App\Support\SoilAtlas::class)) {
             try {
-                $atlas = \App\Support\SoilAtlas::forWhere((string) $p['location'], null);
+                // The land the lot was last cropped as (2026-10-19): a field last in corn reads the area's corn land, as
+                // every module with a corn crop reads it (Malaybalay's corn land is strongly acid, its rice land is not).
+                $landCrop = str_starts_with((string) ($p['fieldProfile']['prevCrop'] ?? ''), 'corn') ? 'corn' : null;
+                $atlas = \App\Support\SoilAtlas::forWhere((string) $p['location'], $landCrop);
                 if ($atlas && ($sw = \App\Support\SoilAtlas::words($atlas, 'short')) !== '') {
-                    $soilLine = "- The area's typical soil (for the area, not a test of this field):\n" . $sw . "\n";
+                    // The block says itself that it is typical for the area, not a test of this field.
+                    $soilLine = $sw . "\n";
                     if (in_array(\App\Support\SoilAtlas::saltRisk($atlas), ['moderate', 'severe'], true)) {
                         $soilLine .= "- The coastal land of this town often holds salt (typical for the area, not a test of this field): favour salt tolerant crops, and say so.\n";
                     }
@@ -906,7 +909,6 @@ class WhatToPlantController extends Controller
 You are an agronomic decision-support analyst for farming in {$countryName}. The farmer asks WHAT to plant on the ground described below, starting around {$start}. Recommend the best-suited crops, ranked, drawn from across the families a farm in {$countryName} weighs: grains, vegetables, root crops, legumes, and fruit/tree crops — only crops actually grown and sold in {$countryName}, in the climate of the region named.
 
 FACTS GIVEN
-- {$regionBlock}
 - Location as the farmer wrote it: {$p['location']}
 - Planned start: {$start}
 - Soil, as the farmer describes it: {$soil}
@@ -975,13 +977,19 @@ PROMPT;
             ? 'the Philippine Statistics Authority (PSA) crop production and yield statistics and the PSA farmgate price survey for the province, the DA regional field office and price monitoring, the provincial and municipal agriculture offices, PhilRice, and news reports'
             : 'the national agricultural statistics office (crop yields by region or county, farmgate or producer prices), the agriculture department and extension services, and news reports';
         $start = \Illuminate\Support\Carbon::parse($p['startMonth'] . '-01')->format('F Y');
-        $asked = trim(implode('; ', array_filter([implode(', ', array_map(fn ($k) => \App\Support\CropCatalog::label((string) $k), (array) ($p['cropsAsked'] ?? []))), (string) ($p['cropsOther'] ?? '')]))) ?: 'none named';
+        // Written from what is not the farmer's own words (2026-10-19): the province and the crops in a fixed order,
+        // so the next farmer of the same province, month and crops reads the kept notes (ResearchShelf) instead of searching.
+        $keys = array_values(array_unique(array_map('strval', (array) ($p['cropsAsked'] ?? []))));
+        sort($keys);
+        $asked = trim(implode('; ', array_filter([implode(', ', array_map(fn ($k) => \App\Support\CropCatalog::label($k), $keys)), trim((string) ($p['cropsOther'] ?? ''))]))) ?: 'none named';
+        $rk = $fieldPH ? \App\Support\ClimateRecord::placeKey((string) $p['location'], 'PH') : null;
+        $place = $rk && ! empty($rk['province']) ? 'the province of ' . $rk['place'] : $p['location'];
 
         return <<<PROMPT
 You are a research assistant for agriculture in {$countryName} with web search. SEARCH THE WEB NOW and write research notes for a farmer choosing WHAT to plant. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
 
 THE CASE
-- Place: {$p['location']}, {$countryName}
+- Place: {$place}, {$countryName}
 - Planting from: {$start}
 - Crops the farmer has in mind: {$asked}
 
