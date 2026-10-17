@@ -207,6 +207,14 @@
     .np-cat { flex: none; padding: .38rem .7rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); background: var(--color-gray-100); border: 0; cursor: pointer;
         transition: background-color .28s var(--np-ease), color .28s var(--np-ease); }
     .np-cat.is-on { background: #1f2937; color: #fff; }
+    /* A mouse cannot slide the tab row: on a desktop it is one tag that opens the choices (2026-10-19). */
+    .np-catbtn { display: none; }
+    @media (min-width: 768px) and (pointer: fine) {
+        .np-catbtn { display: inline-flex; width: 100%; max-width: none; min-height: 2.6rem; margin: 0 0 .55rem; }
+        .np-catbtn span b { font-weight: 800; color: var(--color-gray-900); }
+        html.dark .np-catbtn span b { color: #e8efe1; }
+        #npCats, #npPhCats { display: none; }
+    }
     html.dark .np-cat { background: #1c2616; } html.dark .np-cat.is-on { background: #e8efe1; color: #151b12; }
     .np-prow { display: flex; align-items: center; gap: .65rem; width: 100%; padding: .55rem .6rem; border-radius: .8rem; text-align: left; cursor: pointer; border: 1px solid transparent;
         transition: background-color .28s var(--np-ease), border-color .28s var(--np-ease); }
@@ -896,6 +904,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
                 <input type="text" id="npPhQ" class="form-input" autocomplete="off" placeholder="Brand, product or grade, like Yara or 16-20-0">
             </div>
+            <button type="button" class="np-utag np-catbtn" id="npPhCatBtn" aria-haspopup="dialog"><span>Showing: <b>All</b></span>{!! $chev !!}</button>
             <div class="np-cats" id="npPhCats"></div>
             <div id="npPhList"></div>
             <p class="np-fine mt-2" id="npPhNote">From the Fertilizer and Pesticide Authority's list of registered fertilizers, updated every month. Brands are shown so you can find them; NPK Plus does not recommend one over another.</p>
@@ -906,6 +915,7 @@
             <input type="text" id="npProdQ" class="form-input" autocomplete="off" placeholder="Find a product, like urea or 14-14-14">
             <button type="button" class="crop-search-x hidden" id="npProdQX" aria-label="Clear">✕</button>
         </div>
+        <button type="button" class="np-utag np-catbtn" id="npCatBtn" aria-haspopup="dialog"><span>Showing: <b>All</b></span>{!! $chev !!}</button>
         <div class="np-cats" id="npCats"></div>
         <div id="npProdList"></div>
         </div>
@@ -1752,12 +1762,21 @@
     };
     document.querySelectorAll('#npProdSheet .np-ptab').forEach((b) => b.addEventListener('click', () => phTab(b.dataset.pt)));
     const paintPhCats = () => { $('npPhCats').innerHTML = '<button type="button" class="np-cat is-on" data-c="">All</button>' + Object.entries(OPT.categories).filter(([k]) => k !== 'mine').map(([k, v]) => '<button type="button" class="np-cat" data-c="' + k + '">' + esc(v) + '</button>').join(''); };
+    // The tab row and the desktop tag pick the same category, and each shows it.
+    const catTag = (id, label) => { $(id).querySelector('span').innerHTML = 'Showing: <b>' + esc(label) + '</b>'; };
+    const setPhCat = (c) => {
+        phCat = c;
+        $('npPhCats').querySelectorAll('.np-cat').forEach((x) => x.classList.toggle('is-on', x.dataset.c === c));
+        catTag('npPhCatBtn', c ? OPT.categories[c] || c : 'All');
+        phLoad();
+    };
     $('npPhCats').addEventListener('click', (e) => {
         const b = e.target.closest('.np-cat');
-        if (!b) return;
-        phCat = b.dataset.c;
-        $('npPhCats').querySelectorAll('.np-cat').forEach((x) => x.classList.toggle('is-on', x === b));
-        phLoad();
+        if (b) setPhCat(b.dataset.c);
+    });
+    $('npPhCatBtn').addEventListener('click', () => {
+        const dict = Object.assign({ '': ['All'] }, Object.fromEntries(Object.entries(OPT.categories).filter(([k]) => k !== 'mine').map(([k, v]) => [k, [v]])));
+        pick('Which products to show', '', dict, phCat, setPhCat);
     });
     $('npPhQ').addEventListener('input', () => { clearTimeout(phT); phT = setTimeout(phLoad, 280); });
     const phRow = (p) => {
@@ -1796,12 +1815,19 @@
     });
     $('npProdQ').addEventListener('input', paintProducts);
     $('npProdQX').addEventListener('click', () => { $('npProdQ').value = ''; paintProducts(); $('npProdQ').focus(); });
+    const setCat = (c) => {
+        cat = c;
+        $('npCats').querySelectorAll('.np-cat').forEach((x) => x.classList.toggle('is-on', x.dataset.c === c));
+        catTag('npCatBtn', c === 'all' ? 'All' : OPT.categories[c] || c);
+        paintProducts();
+    };
     $('npCats').addEventListener('click', (e) => {
         const b = e.target.closest('.np-cat');
-        if (!b) return;
-        cat = b.dataset.c;
-        $('npCats').querySelectorAll('.np-cat').forEach((x) => x.classList.toggle('is-on', x === b));
-        paintProducts();
+        if (b) setCat(b.dataset.c);
+    });
+    $('npCatBtn').addEventListener('click', () => {
+        const dict = Object.assign({ all: ['All'] }, Object.fromEntries(Object.entries(OPT.categories).map(([k, v]) => [k, [v]])));
+        pick('Which products to show', '', dict, cat, setCat);
     });
     $('npProdList').addEventListener('click', (e) => {
         const b = e.target.closest('.np-prow');
