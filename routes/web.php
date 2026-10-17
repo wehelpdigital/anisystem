@@ -176,6 +176,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'newsTaglish' => method_exists(\App\Support\Newsletter\NewsEmail::class, 'retaglish'),
             'lpLotsFirst' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'id="lpSamePick"'),
             'climate20' => class_exists(\App\Support\ClimateRecord::class) && class_exists(\App\Support\NutrientBook::class) && defined(\App\Support\ClimateStore::class . '::YEARS') && \App\Support\ClimateStore::YEARS === 20,
+            // 2026-10-18: the hazard book (every town's twenty years of storms, floods and the rest) is loaded and read first.
+            'hazardBook' => class_exists(\App\Support\HazardBook::class) && method_exists(\App\Support\HazardBook::class, 'facts') && \App\Support\HazardBook::ready(),
             'newsTaglishTabs' => class_exists(\App\Support\NewsTaglish::class) && str_contains((string) @file_get_contents(resource_path('views/partials/lang-tabs.blade.php')), 'anee.soWhat.lang'),
             'tlBesideChip' => str_contains((string) @file_get_contents(resource_path('views/partials/tagalog-flags.blade.php')), 'tlx-wc'),
             // 2026-10-18: the Compatibility Checker and its product book.

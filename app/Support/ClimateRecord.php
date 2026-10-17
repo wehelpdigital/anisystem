@@ -25,6 +25,14 @@ use Illuminate\Support\Facades\Schema;
  *
  * Only searched research is kept. A province is the key: storms and floods
  * are reported by province, and a town's twenty years are its province's.
+ *
+ * Since 2026-10-18 the hazard book (App\Support\HazardBook) holds every
+ * Philippine town's, province's and region's twenty years, measured and
+ * reported, built from open data and refreshed twice a month: placeKey()
+ * gives the town's key too ('townKey', 'where'), stored() reads the book
+ * first, so missing() is empty for every Philippine place and the analyses
+ * search for no year of its history; words() then says the book's block.
+ * The web research below stays for a place the book does not know.
  */
 final class ClimateRecord
 {
@@ -58,6 +66,15 @@ final class ClimateRecord
     {
         $country = strtoupper($country ?: Region::code());
         $parts = array_values(array_filter(array_map('trim', explode(',', $location)), fn ($p) => $p !== '' && ! preg_match('/^philippines$/i', $p)));
+        if ($country === 'PH' && HazardBook::ready()) {
+            // The hazard book's names (the gazetteer every lot uses), down to the town (2026-10-18).
+            $w = HazardBook::fromLocation($location);
+            $pl = $w['province'] || $w['town'] ? HazardBook::place($w['province'], $w['town']) : null;
+            if ($pl) {
+                return ['key' => $pl['key'], 'place' => HazardBook::label($pl['province']), 'province' => $pl['province'], 'town' => $pl['town'],
+                    'townKey' => $pl['townKey'], 'where' => $pl['where'], 'region' => $pl['region']];
+            }
+        }
         if ($country === 'PH') {
             static $provinces = null;
             $provinces ??= array_keys((array) json_decode((string) @file_get_contents(public_path('data/ph-locations.json')), true));
@@ -80,19 +97,41 @@ final class ClimateRecord
         return ['key' => strtolower($country) . ':' . mb_strtolower(mb_substr($tail, 0, 100)), 'place' => mb_substr($tail, 0, 160)];
     }
 
-    /** The kept years of a place, by year. */
+    /**
+     * The kept years of a place, by year: the hazard book's first (a town's
+     * key reads the town, else its province; App\Support\HazardBook), then
+     * what web research kept for the years the book lacks.
+     */
     public static function stored(string $key): array
     {
-        if (! self::ready()) {
-            return [];
-        }
         [$from, $to] = self::span();
         $out = [];
-        foreach (self::db()->table('as_climate_years')->where('placeKey', $key)->whereBetween('year', [$from, $to])->orderBy('year')->get() as $r) {
-            $out[(int) $r->year] = $r;
+        if (str_starts_with($key, 'ph:') || str_starts_with($key, 'ph-region:')) {
+            foreach (HazardBook::years($key) as $y => $r) {
+                if ($y >= $from && $y <= $to) {
+                    $r->researchedAt = $r->builtAt;
+                    $r->searched = false;
+                    $r->book = true;
+                    $out[$y] = $r;
+                }
+            }
         }
+        if (! self::ready()) {
+            return $out;
+        }
+        $key = str_contains($key, '|') ? strstr($key, '|', true) : $key;
+        foreach (self::db()->table('as_climate_years')->where('placeKey', $key)->whereBetween('year', [$from, $to])->orderBy('year')->get() as $r) {
+            $out[(int) $r->year] ??= $r;
+        }
+        ksort($out);
 
         return $out;
+    }
+
+    /** Whether the hazard book holds a place's record (no web search of its history then). */
+    public static function inBook(string $key): bool
+    {
+        return (bool) HazardBook::years($key);
     }
 
     /**
@@ -102,10 +141,10 @@ final class ClimateRecord
     public static function missing(string $key): array
     {
         [$from, $to] = self::span();
-        if (! self::ready()) {
+        $have = self::stored($key);
+        if (! $have && ! self::ready()) {
             return range($from, $to);
         }
-        $have = self::stored($key);
         $out = [];
         for ($y = $from; $y <= $to; $y++) {
             $r = $have[$y] ?? null;
@@ -173,8 +212,11 @@ final class ClimateRecord
             if ($year < $from || $year > $to) {
                 continue;
             }
-            $rows[$year] = self::parse($year, $m[2]);
+            $rows[$year] = self::parse($year, GovSource::scrub($m[2]));
         }
+        // The hazard book is the record of a Philippine place: web research never writes over it.
+        $book = str_starts_with($key, 'ph') ? HazardBook::years($key) : [];
+        $rows = array_diff_key($rows, $book);
         if ($searched && $rows && self::ready()) {
             $now = now();
             $out = [];
@@ -247,11 +289,19 @@ final class ClimateRecord
      * by month counted from them, so the month odds are counted, not
      * guessed. Empty when nothing is kept.
      */
-    public static function words(string $key, string $place, bool $lines = true): string
+    public static function words(string $key, string $place, bool $lines = true, array $focus = []): string
     {
         $have = self::stored($key);
         if (! $have) {
             return '';
+        }
+        // The hazard book's record: measured and reported, never searched (2026-10-18).
+        $book = array_filter($have, fn ($r) => ! empty($r->book));
+        if ($book) {
+            $first = reset($book);
+            $label = $first->town ? $first->town . ', ' . HazardBook::label((string) $first->province) : ($first->province ? HazardBook::label((string) $first->province) : $place);
+
+            return HazardBook::block($book, $label, $first->town ? 'town' : 'province', $focus, $lines ? 3200 : 1800);
         }
         if (! $lines) {
             $t = self::tallyLines($have);

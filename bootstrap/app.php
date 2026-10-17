@@ -108,6 +108,11 @@ return Application::configure(basePath: dirname(__DIR__))
         // need model changed (a one row check otherwise), and the kept
         // research past its time removed.
         $schedule->command('nutrients:build --if-stale')->hourlyAt(41)->withoutOverlapping(30)->runInBackground();
+        // The hazard book (2026-10-18): the running year's storms, weather,
+        // reported disasters and quakes, twice a month, so a town's record is
+        // never older than the risk record's 45 days and no analysis searches.
+        $schedule->command('hazards:refresh')->monthlyOn(6, '03:20')->timezone('Asia/Manila')->withoutOverlapping(180)->runInBackground();
+        $schedule->command('hazards:refresh')->monthlyOn(21, '03:20')->timezone('Asia/Manila')->withoutOverlapping(180)->runInBackground();
         // NPK Plus's Philippine products (2026-10-12): the FPA's registered
         // fertilizer list once a month, and at first while only the hand
         // checked products are in.
