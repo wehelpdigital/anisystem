@@ -40,7 +40,7 @@
       "items": [
         {
           "title": "Pick a well drained site",
-          "text": "For kamote, pick a flat or gently sloping field (0 to 5 percent slope) with well drained soil. Newly planted cuttings rot when the soil is waterlogged for more than 24 hours."
+          "text": "For kamote, choose a flat or gently sloping field (0 to 5 percent slope) where water drains away. Fresh cuttings rot if they sit in waterlogged soil for over 24 hours."
         },
         {
           "title": "Plow deep",
@@ -121,7 +121,7 @@
     },
     {
       "type": "text",
-      "text": "Cassava can give good yields in untilled soil if the soil is healthy, well structured and free of compaction. In degraded soil, no tillage may give lower yields in the first years. Reduced or zero tillage also lowers the risk of waterlogging, because it keeps internal drainage.\n\nWhere you do till, prepare the soil when it is not too dry or too wet. A subsoiler can break up a compacted layer. On slopes, plow and ridge along the contour to cut erosion. Plant as soon as the rains start, because delayed planting can sharply cut yields. In heavy rain, plant stakes on top of ridges or mounds, but stakes planted in dry periods sprout better on the flat."
+      "text": "Cassava can yield well with no tillage when the soil is in good health, holds a good crumb and is not packed hard. On worn out soil, skipping tillage may lower the harvest for the first few years. Reduced or zero tillage also lowers the risk of waterlogging, because it keeps internal drainage.\n\nIf you till, wait until the soil is neither dry and hard nor wet and sticky. A subsoiler can break up a compacted layer. On slopes, plow and ridge along the contour to cut erosion. Get the crop in with the first rains, because planting late can cut the harvest hard. In heavy rain, plant stakes on top of ridges or mounds, but stakes planted in dry periods sprout better on the flat."
     },
     {
       "type": "callout",
@@ -136,7 +136,7 @@
     },
     {
       "type": "text",
-      "text": "Ubi needs a well drained area but grows in all kinds of soil, and prefers clay loam rich in organic matter. Make the ridges one meter apart and contour them on rolling land. If you use flat beds, plant right after the last harrowing.\n\nUbi is usually planted from March to May, but the best time is the start of the rainy season. Mulch right after planting with coconut fronds, corn stalks, rice straw or grass clippings that are free of weed seeds. Ubi also gives higher yield with a trellis, so plan your stakes before planting. If you stake in rows, remember that the stakes may block animal drawn weeding."
+      "text": "Ubi needs a well drained area but grows in all kinds of soil, and prefers clay loam rich in organic matter. Make the ridges one meter apart and contour them on rolling land. If you use flat beds, plant right after the last harrowing.\n\nMost ubi goes in from March to May, though the rains' first weeks are the best time. Mulch right after planting with coconut fronds, corn stalks, rice straw or grass clippings that are free of weed seeds. Ubi also gives higher yield with a trellis, so plan your stakes before planting. If you stake in rows, remember that the stakes may block animal drawn weeding."
     },
     {
       "type": "heading",

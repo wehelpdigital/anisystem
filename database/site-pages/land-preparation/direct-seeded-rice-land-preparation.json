@@ -105,7 +105,7 @@
       "items": [
         "Row seeding with a drum seeder: 40 to 60 kg of seed per hectare.",
         "Broadcasting pre germinated seed: 60 to 80 kg per hectare.",
-        "Keep an extra 1 kg of pre germinated seed at the side of the field for replanting.",
+        "Set aside 1 kg more of pre germinated seed by the field, ready to fill any gaps.",
         "Replant bald areas wider than a 10 cm radius within 7 to 10 days after sowing so the crop matures evenly.",
         "Keep standing water off for the first 10 to 14 days after sowing, unless severe drought symptoms appear. From about day 10, bring the water to 2 to 3 cm and replant bare spots at the same time."
       ]
@@ -126,7 +126,7 @@
     },
     {
       "type": "text",
-      "text": "Weeds are the biggest threat in direct seeding. Weed management is usually the biggest challenge in dry seeded rice, and weeds can cut yield to zero if left alone. So land preparation should exhaust the weed seeds in the soil.\n\nThe stale seedbed does exactly that. First, prepare the field and give it water so the weed seeds sprout. Then kill the seedlings before you sow the rice."
+      "text": "Weeds are the biggest threat in direct seeding. In dry seeded rice the weeds are most often the hardest job, and left alone they can wipe out the whole harvest. So land preparation should exhaust the weed seeds in the soil.\n\nThe stale seedbed does exactly that. First, prepare the field and give it water so the weed seeds sprout. Then kill the seedlings before you sow the rice."
     },
     {
       "type": "steps",
@@ -141,7 +141,7 @@
         },
         {
           "title": "Kill the weeds",
-          "text": "Use shallow tillage, or a non selective herbicide such as glyphosate. Follow the FPA label for the rate and safety. Deep tillage brings more weed seeds near the surface."
+          "text": "Use shallow tillage, or a non selective herbicide such as glyphosate. Follow the FPA label for the rate and safety. Tilling deep only lifts more buried weed seed up to where it can sprout."
         },
         {
           "title": "Sow the rice",
@@ -162,7 +162,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Not for every field",
-      "text": "Do not grow dry seeded rice in fields with a history of heavy weed infestation. If your field has a weedy rice or sedge problem, read the [weed management in rice](/weeds/weed-management-in-rice) guide first and consider transplanting."
+      "text": "Skip dry seeding on fields that have been badly overrun by weeds in past seasons. If your field has a weedy rice or sedge problem, read the [weed management in rice](/weeds/weed-management-in-rice) guide first and consider transplanting."
     },
     {
       "type": "heading",
@@ -202,7 +202,7 @@
     },
     {
       "type": "text",
-      "text": "Direct seeding is more common in the dry season than in the wet season. In the dry season, you control the water, so wet seeding with canals works well. In the wet season, hard rains can wash seed away and flood the field, so drainage matters more.\n\nFor soil problems, see [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation). Anee, the [smart farm technician](/features/ai-agricultural-technician), can also read your lot and the weather before you pick a sowing date."
+      "text": "More farmers direct seed in the dry months than in the rainy ones. In the dry season, you control the water, so wet seeding with canals works well. In the wet season, hard rains can wash seed away and flood the field, so drainage matters more.\n\nFor soil problems, see [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation). Anee, the [smart farm technician](/features/ai-agricultural-technician), can also read your lot and the weather before you pick a sowing date."
     },
     {
       "type": "heading",

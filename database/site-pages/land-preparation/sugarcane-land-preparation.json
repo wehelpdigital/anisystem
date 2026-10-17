@@ -43,7 +43,7 @@
       "items": [
         {
           "title": "Choose the direction of the work",
-          "text": "In a rectangular field, plow and harrow in the direction that gives the best efficiency. On rolling land, follow the contour of the land to prevent serious soil erosion."
+          "text": "In a rectangular field, plow and harrow in the direction that gives the best efficiency. On rolling land, work along the contour so the soil does not wash away."
         },
         {
           "title": "Plow deep",
@@ -51,11 +51,11 @@
         },
         {
           "title": "Harrow",
-          "text": "Harrow to break the clods and smooth the surface. The guide says heavy soils such as clay and clay loam need more plowing and harrowing than light soils."
+          "text": "Harrow to break the clods and smooth the surface. Heavy soils such as clay and clay loam take more passes of the plow and harrow than light soils do."
         },
         {
           "title": "Subsoil if there is a hard pan",
-          "text": "Subsoiling breaks the compacted layer without turning the infertile subsoil up. The guide gives a depth of at least 50 to 175 cm, and says to do it when the soil is relatively dry so the hard pan cracks."
+          "text": "Subsoiling breaks the compacted layer without turning the infertile subsoil up. Go at least 50 to 175 cm deep, and do it while the soil is fairly dry, so the hard pan shatters."
         },
         {
           "title": "Furrow just before planting",
@@ -88,7 +88,7 @@
     },
     {
       "type": "text",
-      "text": "The Tarlac guide says field preparation runs from November until May, when harvesting has just finished and plenty of planting materials are available. This is the Luzon cane calendar. Other mill districts have their own harvest and planting months, so match your own mill's season.\n\nIn practice, plan the order of your fields so that the field you harvest first is the first plowed. Then every lot can go from stubble to furrow while the soil is still dry enough to work."
+      "text": "In Tarlac the fields are prepared from November to May. That is right after harvest, when planting material is plentiful. This is the Luzon cane calendar. Other mill districts have their own harvest and planting months, so match your own mill's season.\n\nIn practice, plan the order of your fields so that the field you harvest first is the first plowed. Then every lot can go from stubble to furrow while the soil is still dry enough to work."
     },
     {
       "type": "table",
@@ -121,7 +121,7 @@
         ],
         [
           "Fertilizer in the furrow",
-          "Cover with a thin layer of soil",
+          "Bury it under a little soil",
           "Protects the buds from injury"
         ]
       ]
