@@ -4567,7 +4567,7 @@
     "curl"
    ],
    "hint": "The growing tip dies and the plant turns bushy. Young leaves wilt even with enough water.",
-   "symptoms": "Leaves pale slightly. The growing tip dies, so the plant loses its main shoot and grows in a bushy rosette. Leaves turn brittle and break easily, and young leaves wilt even when the soil is moist.",
+   "symptoms": "Leaves pale slightly. The growing tip dies, so the plant loses its main shoot and grows in a bushy rosette. Leaves turn brittle and break easily, and young leaves droop even though the soil is still wet.",
    "stage": "Mid season.",
    "causes": "Sandy soils low in organic matter, high pH soils and dry spells.",
    "confuse": "Calcium deficiency looks very similar. A soil or leaf test separates them.",
@@ -16014,7 +16014,7 @@
    "symptoms": "Young leaves show it first: yellow patches between the veins, with an uneven green band along the midrib and main veins, called mottle leaf. As it gets worse the leaves turn pale yellow to almost white, come out small, narrow and pointed (little leaf), stand upright, and twigs die back. Fruit on these twigs stay small, with a smooth, pale, thin skin and little juice, and the tree flowers and sets less.",
    "stage": "New flushes, at any age.",
    "causes": "High pH and limed soils, soils high in phosphorus or given heavy phosphate, organic soils, and large, frequent doses of poultry manure. Shortage of magnesium or copper can also cut zinc uptake. A soil pH below 6.5 is best.",
-   "confuse": "Citrus greening (huanglongbing, HLB) is the big look alike. A survey in Oriental Mindoro found HLB in 150 of 155 calamansi trees tested, with a blotchy mottle and yellowing between the veins similar to zinc deficiency. Small, narrow, thick, corky, upright leaves with enlarged veins. Do the pen test: draw a circle on each side of the midrib. Zinc deficiency looks the same in both circles, HLB blotches do not match. Manganese deficiency also mottles young leaves but keeps them normal in size.",
+   "confuse": "Citrus greening (huanglongbing, HLB) is the big look alike. A survey in Oriental Mindoro found HLB in 150 of 155 calamansi trees tested, with a blotchy mottle and yellowing between the veins similar to zinc deficiency. Small, narrow, thick, corky, upright leaves with enlarged veins. Do the pen test: mark a circle on the left and on the right of the midrib. With zinc deficiency both circles look alike, while HLB blotches differ from side to side. Manganese deficiency also mottles young leaves but keeps them normal in size.",
    "confirm": "Do the pen test, then spray zinc on a few branches: if the next flush comes out green and normal sized, it was zinc. If the blotches stay uneven or the tree keeps declining, send leaves for an HLB laboratory test (a PCR test). A leaf test for zinc also helps.",
    "fix": "Spray zinc on the young flush when the leaves are two thirds to almost fully expanded. Repeat on each major flush in bad cases, because zinc does not move on to later flushes. Give Zinc sulfate at 2 percent (20 grams per liter) mixed with 1 percent lime (10 grams per liter), every two weeks. Zinc on the soil rarely pays on acid soils and does not work on limey ones.",
    "prevent": "Keep the pH below 6.5, avoid heavy phosphate and too much poultry manure, and include zinc in regular sprays. Control citrus psyllids and buy certified planting material from trusted nurseries so HLB does not hide behind zinc signs.",
