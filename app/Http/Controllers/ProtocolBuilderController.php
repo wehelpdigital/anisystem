@@ -1002,11 +1002,28 @@ Version: {$versionName} (one of several versions of this protocol)" : '';
             $variety .= "\nWhat anee.io's records know of it (judge the timing and the protection against it; never name an agency or the registry as the source): " . $vf;
         }
         $description = $this->orNot($p->description);
-        // NPK Plus's need for this crop and variety per hectare (2026-10-18): the fertilizer is judged against the app's own count, as in NPK Plus and the Crop Protocol.
+        // The farmer's own town (their newest lot): its hazard months below, and its typical soil for the need (2026-10-19).
+        $home = null;
         try {
-            $need = \App\Support\NutrientBook::forLot($p->crop, $p->dayType === 'DAS' ? 'direct_wet' : null, $p->variety);
+            $home = \Illuminate\Support\Facades\DB::table('as_field_profiles')->where('userId', $p->userId)->where('deleteStatus', 1)->whereNotNull('province')
+                ->orderByDesc('updated_at')->first(['province', 'town']);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+        $homeWhere = $home ? trim(($home->town ? $home->town . ', ' : '') . $home->province) : '';
+        // NPK Plus's need for this crop and variety per hectare (2026-10-18): the fertilizer is judged against the app's own count, as in NPK Plus and the Crop Protocol.
+        // Since 2026-10-19 with the area's typical soil of the farmer's town (as the board and the Builder's NPK reading count it) and the app's
+        // verdict on what the protocol's fertilizer gives a hectare (ProtocolNpkController::plan), so Anee explains the numbers instead of adding them up.
+        try {
+            $need = \App\Support\NutrientBook::forLot($p->crop, $p->dayType === 'DAS' ? 'direct_wet' : null, $p->variety, [], null, 1.0, $homeWhere !== '' ? ['place' => $homeWhere] : []);
+            $perHa = [];
+            try {
+                $perHa = (array) (ProtocolNpkController::plan($p, 1.0)['total'] ?? []);
+            } catch (\Throwable $e) {
+                report($e);
+            }
             $needText = ! empty($need['known']) && $need['need']
-                ? "\n" . \App\Support\NutrientBook::promptLines($need, []) . "(Per hectare, before a soil test. Judge the protocol's fertilizer against it for the area the protocol is written for; do not count a different need.)\n"
+                ? "\n" . \App\Support\NutrientBook::promptLines($need, $perHa) . "(Per hectare, before a soil test" . ($homeWhere !== '' ? ', in ' . $homeWhere : '') . ". Judge the protocol's fertilizer against it; do not count a different need.)\n"
                 : '';
         } catch (\Throwable $e) {
             $needText = '';
@@ -1014,8 +1031,6 @@ Version: {$versionName} (one of several versions of this protocol)" : '';
         // The farmer's own town in the hazard book (2026-10-18): the months storms, floods and dry spells hit there, so the timing is judged for where it is grown.
         $placeText = '';
         try {
-            $home = \Illuminate\Support\Facades\DB::table('as_field_profiles')->where('userId', $p->userId)->where('deleteStatus', 1)->whereNotNull('province')
-                ->orderByDesc('updated_at')->first(['province', 'town']);
             if ($home) {
                 $hz = \App\Support\HazardBook::monthsWords(trim(($home->town ? $home->town . ', ' : '') . $home->province), range(1, 12), null, null, 1000);
                 $placeText = $hz !== '' ? "\nWhere the farmer grows (their newest lot): " . trim($hz) . "\nJudge the timing against it: say which planting months put flowering or harvest into the months storms or floods hit most years there." : '';

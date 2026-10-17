@@ -1071,8 +1071,9 @@ class FarmReportController extends BaseScheduleController
     private function aneePrompt(\App\Models\AsCroppingSchedule $schedule, string $kind, $lot, ?array $facts = null): string
     {
         $ctx = [];
-        // The whole season, in the same words the chat's season snapshot uses.
-        $ctx[] = \App\Support\SeasonContext::text($schedule);
+        // The whole season, in the same words the chat's season snapshot uses; the varieties are said once, in full, by the
+        // crops' clocks below (2026-10-19: the snapshot's short lines came first and the full ones again after).
+        $ctx[] = \App\Support\SeasonContext::text($schedule, false);
 
         // The money, from the profit engine's own arithmetic.
         $pf = $this->profitFacts($schedule);
@@ -1116,7 +1117,7 @@ class FarmReportController extends BaseScheduleController
             $line = $L->lotName . ': ' . (\App\Support\CropStages::label($L->crop) ?: $L->crop)
                 . ($L->variety ? ' (' . $L->variety . ')' : '')
                 . ($L->dayZeroDate ? ', day zero ' . substr((string) $L->dayZeroDate, 0, 10) : '')
-                . ($maturity ? ', typical maturity ' . $maturity . ' days' : '');
+                . ($maturity ? ', maturity ' . $maturity . ' days' . ($L->daysToMaturity ? ' (set for the lot)' : ($L->varietyDays() && $maturity === $L->varietyDays() ? " (the variety's own)" : " (the crop's usual)")) : '');
             if ($L->dayZeroDate) {
                 $ran = (int) \Carbon\Carbon::parse((string) $L->dayZeroDate)->diffInDays(now('Asia/Manila'), false);
                 $line .= ', ' . $ran . ' days elapsed to today';
@@ -1200,7 +1201,6 @@ class FarmReportController extends BaseScheduleController
             . ' Be unbiased: name what went wrong plainly. Be warm and a little jolly in tone — this is a debrief between friends, not an audit.'
             . ' Account for delays honestly: ENSO conditions, typhoons, drought spells, herbicide setbacks and labor gaps stretch a crop\'s calendar — use the weather records given before blaming the farmer.'
             . ' Say protocol timings in ' . $schedule->dayType . ' day-counts, not bare dates. Use plain language a farmer reads easily; short sentences. No emoji shortcodes like :name:.'
-            . ' ' . \App\Support\Region::promptBlock()
             . "\n\n=== THE RECORDS ===\n" . implode("\n\n", $ctx)
             . "\n\n=== YOUR ANSWER ===\nReturn ONLY a single JSON object, no fences, no commentary, exactly this shape:\n" . $schema;
     }

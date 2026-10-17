@@ -113,7 +113,8 @@ class SeasonContext
      * sentence better than it reads a brace, and the shape costs tokens that
      * say nothing.
      */
-    public static function text(AsCroppingSchedule $schedule): string
+    /** $varieties false: a caller that says the varieties itself, in full (the season reports), leaves this block out. */
+    public static function text(AsCroppingSchedule $schedule, bool $varieties = true): string
     {
         $d = self::json($schedule);
         $out = [];
@@ -145,7 +146,7 @@ class SeasonContext
         }
 
         // What is known of the varieties planted (2026-10-18): the records and their registration trials, said once each.
-        $known = self::varietyFacts($p, (array) ($d['lots'] ?? []));
+        $known = $varieties ? self::varietyFacts($p, (array) ($d['lots'] ?? [])) : [];
         if ($known) {
             $out[] = '';
             $out[] = 'THE VARIETIES PLANTED, AS KNOWN (anee.io\'s own records; never name an agency, the registry or an institute as the source):';
@@ -296,6 +297,8 @@ class SeasonContext
         // retires every snapshot built by the old code. Without it a fix to
         // the compiler is invisible until somebody edits their season.
         $parts[] = 'build:' . self::BUILD;
+        // And the day (2026-10-19): "today", every lot's age and stage are the day's, so a quiet season no longer reads last week's.
+        $parts[] = 'day:' . now('Asia/Manila')->toDateString();
 
         return substr(hash('sha256', implode('|', $parts)), 0, 40);
     }
@@ -385,7 +388,8 @@ class SeasonContext
             }
             $age = LotCalendar::ageOf($l, $today, $zero[$l->id] ?? null, $transplant[$l->id] ?? null);
             $crop = CropStages::normalize($l->crop);
-            $stage = $age && $crop ? CropStages::stageFor($crop, $l->stageDay($age), $age['counter']) : null;
+            // On the lot's own days (its variety's near the crop's), as the board, the reports and Realign read the stage (2026-10-19).
+            $stage = $age && $crop ? CropStages::stageFor($crop, $l->stageDay($age), $age['counter'], $l->maturityDays()) : null;
             $size = trim(rtrim(rtrim((string) $l->lotSize, '0'), '.') . ' ' . $l->lotSizeUnit);
 
             $rows[] = array_filter([
