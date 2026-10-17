@@ -399,7 +399,7 @@ def build(v, allv, stats):
     H('Where should you plant it?')
     if e:
         where = {
-            'irrigated': 'It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant at the same time as your neighbors, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step.',
+            'irrigated': 'It suits irrigated lowland, where you control the water. Level the field well so the water stands evenly, and plant together with the farms around you, so pests cannot move from field to field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step.',
             'rainfed-tpr': 'It suits rainfed lowland that depends on the rains. So wait until the rains settle before you sow the seedbed, then transplant into the puddled field. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) shows each step.',
             'rainfed-dsr': 'It suits rainfed fields that are seeded directly. So prepare the field when the first rains come, and seed it once the soil holds moisture. Our guide to [land preparation for direct seeded rice](/land-preparation/direct-seeded-rice-land-preparation) shows how.',
             'upland': 'It suits upland fields, with no standing water. So sow at the start of the rains, and keep weeds down in the first weeks, because upland rice cannot drown them out. Our [rice variety finder](/rice-varieties) lists the other upland choices.',
