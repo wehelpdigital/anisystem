@@ -39,7 +39,7 @@ final class NpkNeed
     public const NPK = ['N', 'P2O5', 'K2O'];
 
     /** The elements a soil test can say are low or enough by their critical level (NpkModel::ELEMENTS). */
-    public const TESTED_MICROS = ['Zn', 'B', 'S'];
+    public const TESTED_MICROS = ['Zn', 'B', 'S', 'Fe', 'Mn', 'Cu'];
 
     /** The usual germination the seeding rates in the guides assume. */
     public const GERM_USUAL = 85;
@@ -68,7 +68,10 @@ final class NpkNeed
         'strongAlk' => 'strongly alkaline soil', 'sodic' => 'sodic soil', 'saline' => 'salty soil', 'acid_sulfate' => 'acid sulfate soil', 'low_om' => 'low organic matter',
         'peat' => 'peat soil', 'waterlogged' => 'waterlogged soil', 'flooded' => 'a flooded paddy', 'calcareous' => 'limy (calcareous) soil',
         'high_p' => 'heavy phosphorus in the plan locks it up', 'high_k' => 'heavy potassium in the plan crowds it out',
-        'liming' => 'the lime in the plan locks it up', 'excess_zn' => 'heavy zinc in the plan crowds it out'];
+        'liming' => 'the lime in the plan locks it up', 'excess_zn' => 'heavy zinc in the plan crowds it out',
+        // 2026-10-19: the researched factors the first build left out.
+        'high_rainfall' => 'heavy rain over the season washes it out', 'drought' => 'a dry season',
+        'intensive_cropping' => 'two or three crops a year', 'upland' => 'dry seeded rice on soil that is not flooded'];
 
     public const NAMES = ['N' => 'Nitrogen', 'P2O5' => 'Phosphorus', 'K2O' => 'Potassium', 'Ca' => 'Calcium', 'Mg' => 'Magnesium', 'S' => 'Sulfur', 'Zn' => 'Zinc',
         'B' => 'Boron', 'Fe' => 'Iron', 'Mn' => 'Manganese', 'Cu' => 'Copper', 'Mo' => 'Molybdenum', 'Si' => 'Silicon', 'Co' => 'Cobalt'];
@@ -125,6 +128,7 @@ final class NpkNeed
             $f[] = 'low_om';
         }
         $water = in_array($in['water'] ?? '', ['irrigated', 'partial', 'rainfed'], true) ? $in['water'] : 'irrigated';
+        $f = self::moreFactors($f, $in, (string) ($in['texture'] ?? 'unsure'), $water);
         $g = self::goal($c, $in, $fieldOn, $water, (array) ($in['conditions'] ?? []));
         $fl = self::fieldLayer($c, $f, $fieldOn ? FieldProfile::normalize($profile) : [], (array) ($in['prev'] ?? []));
         $plan = (array) ($in['plan'] ?? []);
@@ -181,6 +185,46 @@ final class NpkNeed
         if ($c && in_array($c['key'], ['rice', 'rice_dsr_wet'], true)) {
             $f[] = 'flooded';
             $f = array_values(array_diff($f, ['waterlogged']));
+        }
+        // 2026-10-19: loam, a near neutral pH (6.0 to 7.3, or the word when no number is known), and rice
+        // sown dry on soil that is never flooded.
+        if ($texture === 'loam') {
+            $f[] = 'loam';
+        }
+        if ($ph !== null ? ($ph >= 6 && $ph <= 7.3) : in_array('neutral', $conds, true)) {
+            $f[] = 'neutral';
+        }
+        if ($c && $c['key'] === 'rice_dsr_dry') {
+            $f[] = 'upland';
+        }
+
+        return array_values(array_unique($f));
+    }
+
+    /**
+     * The factors the farmer and the season tell (2026-10-19), the page's rules: heavy rain over the crop's
+     * season (1,000 mm or more in its window, not on clay or in a flooded paddy), a dry season (rainfed or
+     * partly watered and under 70% of what the crop drinks), two or three crops a year, zinc put on in the
+     * last two seasons, and a tonne or more of manure or compost a hectare in the plan.
+     * $in: season {rainMm, waterShare}, intensive, zincRecent, organicKg.
+     */
+    public static function moreFactors(array $f, array $in, string $texture, string $water): array
+    {
+        $season = (array) ($in['season'] ?? []);
+        if (isset($season['rainMm']) && (float) $season['rainMm'] >= 1000 && $texture !== 'clay' && ! in_array('flooded', $f, true)) {
+            $f[] = 'high_rainfall';
+        }
+        if (isset($season['waterShare']) && $water !== 'irrigated' && (float) $season['waterShare'] < 0.7) {
+            $f[] = 'drought';
+        }
+        if (! empty($in['intensive'])) {
+            $f[] = 'intensive_cropping';
+        }
+        if (! empty($in['zincRecent'])) {
+            $f[] = 'zinc_recent';
+        }
+        if ((float) ($in['organicKg'] ?? 0) >= 1000) {
+            $f[] = 'organic_inputs';
         }
 
         return array_values(array_unique($f));

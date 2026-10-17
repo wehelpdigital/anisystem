@@ -747,8 +747,14 @@
                                 <button type="button" class="np-utag is-wide is-none" id="npConds"><span>None picked</span>{!! $chev !!}</button>
                                 <span class="np-hint">Acidic, alkaline, sodic, salty, acid sulfate, low in organic matter, peat or waterlogged.</span>
                             </div></div>
+                            {{-- 2026-10-19: two answers that move zinc and sulfur. --}}
+                            <div class="np-lq" data-lq="habits"><div>
+                                <span class="np-label">How the field is farmed <span>(optional)</span></span>
+                                <label class="np-switch mt-1"><input type="checkbox" id="npIntensive"> <span><b>Two or three crops a year</b><br><span class="text-xs text-gray-500 font-normal">A field cropped that often runs short of zinc and sulfur sooner.</span></span></label>
+                                <label class="np-switch mt-2"><input type="checkbox" id="npZincRecent"> <span><b>Zinc went on in the last two seasons</b><br><span class="text-xs text-gray-500 font-normal">A dose of zinc sulfate keeps working for two or three crops.</span></span></label>
+                            </div></div>
                             <div class="np-testbox">
-                                <label class="np-switch"><input type="checkbox" id="npSoilOn"> <span><b>I have a soil test</b><br><span class="text-xs text-gray-500 font-normal">It sharpens the need for nitrogen, phosphorus, potassium, sulfur, zinc and boron.</span></span></label>
+                                <label class="np-switch"><input type="checkbox" id="npSoilOn"> <span><b>I have a soil test</b><br><span class="text-xs text-gray-500 font-normal">It sharpens the need for nitrogen, phosphorus, potassium, sulfur, zinc, boron, iron, manganese and copper.</span></span></label>
                                 <div class="np-soil" id="npSoil"><div>
                                     <div class="np-cgrid" id="npSoilGrid"></div>
                                     <div class="np-soilu">
@@ -1086,7 +1092,9 @@
     const FACTOR = { sandy: 'sandy soil', clay: 'clay soil', acid: 'acid soil', strongAcid: 'very acid soil', alkaline: 'alkaline soil', strongAlk: 'strongly alkaline soil', sodic: 'sodic soil',
         saline: 'salty soil', acid_sulfate: 'acid sulfate soil', low_om: 'low organic matter', peat: 'peat soil', waterlogged: 'waterlogged soil', flooded: 'a flooded paddy',
         calcareous: 'limy (calcareous) soil', high_p: 'heavy phosphorus in the plan locks it up', high_k: 'heavy potassium in the plan crowds it out',
-        liming: 'the lime in the plan locks it up', excess_zn: 'heavy zinc in the plan crowds it out' };
+        liming: 'the lime in the plan locks it up', excess_zn: 'heavy zinc in the plan crowds it out',
+        high_rainfall: 'heavy rain over the season washes it out', drought: 'a dry season', intensive_cropping: 'two or three crops a year',
+        upland: 'dry seeded rice on soil that is not flooded' };
     // The usual germination the seeding rates in the guides assume.
     const GERM_USUAL = 85;
 
@@ -1482,9 +1490,11 @@
     $('npTexture').addEventListener('click', () => ready() && pick('Soil type', 'Rub a moist pinch between your fingers.', M.textures, st.texture, (k) => { st.texture = k; TOUCH.texture = true; soilTag(); calc(); }));
     $('npConds').addEventListener('click', () => ready() && pick('What else is true of your soil', 'Pick all that fit. Leave it empty if you are not sure.', M.conditions, st.conds, (sel) => { st.conds = sel; TOUCH.conds = true; soilTag(); calc(); }, true));
     $('npPh').addEventListener('input', () => { TOUCH.ph = true; });
-    const SOIL = [['om', 'Organic matter %'], ['n', 'Total N %'], ['p', 'P ppm'], ['k', 'K'], ['zn', 'Zn ppm'], ['b', 'B ppm'], ['s', 'S ppm']];
+    const SOIL = [['om', 'Organic matter %'], ['n', 'Total N %'], ['p', 'P ppm'], ['k', 'K'], ['zn', 'Zn ppm'], ['b', 'B ppm'], ['s', 'S ppm'], ['fe', 'Fe ppm'], ['mn', 'Mn ppm'], ['cu', 'Cu ppm']];
     $('npSoilGrid').innerHTML = SOIL.map(([k, l]) => '<label>' + esc(l) + '<input type="number" class="form-input" step="any" min="0" inputmode="decimal" data-s="' + k + '"></label>').join('');
     $('npSoilOn').addEventListener('change', () => { TOUCH.soilTest = true; $('npSoil').classList.toggle('is-on', $('npSoilOn').checked); calc(); });
+    $('npIntensive').addEventListener('change', () => { st.intensive = $('npIntensive').checked; calc(); });
+    $('npZincRecent').addEventListener('change', () => { st.zincRecent = $('npZincRecent').checked; calc(); });
     $('npSoil').addEventListener('input', () => { TOUCH.soilTest = true; calc(); });
     /* A soil test kit's levels (2026-10-16): a lot's log can hold a kit result, read
        as low, medium or high. They stand for a nutrient no number was typed for. */
@@ -1572,7 +1582,7 @@
         if (s.k != null) { const meq = s.kUnit === 'meq' ? s.k : s.k / 391; out.K2O = meq < 0.2 ? 'low' : meq <= 0.4 ? 'medium' : 'high'; }
         if (s.om != null) { out.N = s.om < 2 ? 'low' : s.om <= 4 ? 'medium' : 'high'; if (s.om < 2) out.OM = 'low'; }
         else if (s.n != null) out.N = s.n < 0.1 ? 'low' : s.n <= 0.2 ? 'medium' : 'high';
-        ['Zn', 'B', 'S'].forEach((el) => {
+        ['Zn', 'B', 'S', 'Fe', 'Mn', 'Cu'].forEach((el) => {
             const v = s[el.toLowerCase()], crit = (M.elements[el] || {}).critical;
             if (v != null && crit) out[el] = v < crit ? 'low' : 'ok';
         });
@@ -1581,7 +1591,7 @@
         return out;
     };
     // What is true of this field, as the model's factors.
-    const factors = (c) => {
+    const factors = (c, X = {}) => {
         const f = new Set();
         if (st.texture === 'sandy' || st.texture === 'clay') f.add(st.texture);
         const ph = phVal();
@@ -1594,6 +1604,17 @@
         // A sodic soil's high pH is sodium, which crowds the calcium off the clay.
         if (f.has('strongAlk') && !f.has('sodic')) f.add('calcareous');
         if (c && (c.key === 'rice' || c.key === 'rice_dsr_wet')) { f.add('flooded'); f.delete('waterlogged'); }
+        // 2026-10-19 (NpkNeed::factors and moreFactors, the same rules): loam, a near neutral pH, dry seeded
+        // rice; heavy rain or a dry season from the twenty years of weather; what the farmer tells.
+        if (st.texture === 'loam') f.add('loam');
+        if (ph != null ? (ph >= 6 && ph <= 7.3) : st.conds.includes('neutral')) f.add('neutral');
+        if (c && c.key === 'rice_dsr_dry') f.add('upland');
+        const SPx = X.SP;
+        if (SPx && SPx.rain >= 1000 && st.texture !== 'clay' && !f.has('flooded')) f.add('high_rainfall');
+        if (SPx && st.water !== 'irrigated' && SPx.wr < 0.7) f.add('drought');
+        if (st.intensive) f.add('intensive_cropping');
+        if (st.zincRecent) f.add('zinc_recent');
+        if ((X.organicKg || 0) >= 1000) f.add('organic_inputs');
         return f;
     };
 
@@ -2099,10 +2120,12 @@
             const k = AC.perKg[p.slug || ''] ?? (/\b(lime|limestone|dolomit\w*|apog)\b/i.test(p.name || '') ? -0.9 : 0);
             return k < 0 ? sum + kgOf(p, l.amount, l.unit) * -k : sum;
         }, 0) / area : 0;
+        // Manure or compost in the plan, kg per hectare (organic_inputs at a tonne or more).
+        const organicKg = area > 0 ? st.lines.reduce((sum, l) => { const p = prodOf(l.id); return p && l.unit !== 'dose' && p.category === 'organic' ? sum + kgOf(p, l.amount, l.unit) : sum; }, 0) / area : 0;
         $('npN').textContent = fmt(perHa.N, 0); $('npP').textContent = fmt(perHa.P2O5, 0); $('npK').textContent = fmt(perHa.K2O, 0);
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
 
-        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl, limeEq);
+        const c = cropOf(st.crop), g = goalOf(c), f = factors(c, { SP: seasonPlanks(c, g), organicKg }), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl, limeEq);
         // A level the area filled is the area's, not a test the farmer made (the Crop Protocol says it the same way).
         if (st.area) {
             const own = soilClass(soil(false)), names = { N: 'nitrogen', P2O5: 'phosphorus', K2O: 'potassium' };
@@ -2164,7 +2187,7 @@
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
                 target: num('npTarget') ? { value: num('npTarget'), unit: yu[1], tPerHa: Math.round(num('npTarget') * yu[3] * 100) / 100 } : null,
                 seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null } : null,
-                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null,
+                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), intensive: !!st.intensive, zincRecent: !!st.zincRecent, prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null,
                 // The variety's source (2026-10-15) and what the field in detail changed, in words.
                 varietyPick: st.varPick ? Object.assign({}, st.varPick, recT(st.varPick) ? { potential: recT(st.varPick), potentialIs: st.varPick.top ? 'top' : 'avg', potentialFrom: potOwn() ? 'own' : 'record' } : {}) : null,
                 fieldAdjust: FL.map((l) => l.lead + ' ' + l.text + (l.e ? ' [' + l.e + ']' : '')),
@@ -2780,6 +2803,8 @@
             if (st.prov) seasonSoon(400);
             st.texture = M.textures[set.texture] ? set.texture : 'unsure';
             st.conds = Array.isArray(set.conditions) ? set.conditions.filter((k) => M.conditions[k]) : [];
+            st.intensive = !!set.intensive; $('npIntensive').checked = st.intensive;
+            st.zincRecent = !!set.zincRecent; $('npZincRecent').checked = st.zincRecent;
             st.area = set.area && typeof set.area === 'object' ? { where: set.area.where || '', tests: set.area.tests || {}, filled: set.area.filled || {} } : null;
             st.areaNo = false;
             const s = d.soil || {};
