@@ -440,6 +440,9 @@ class NpkPlusController extends Controller
                 Log::warning('npk: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'The reading could not be read. Nothing was charged. Please try again.');
             }
+            // The calculator's verdict stands (2026-10-19), as the board's and the Builder's readings take theirs
+            // (NutrientBook::overlay): the reading and the free sheet never disagree on short, right or too much.
+            $anee['nutrients'] = self::overlayNeeds((array) ($anee['nutrients'] ?? []), (array) ((json_decode((string) $calc->result, true) ?: [])['needs'] ?? []));
             $report = ['format' => 1, 'anee' => $anee, 'webSources' => (array) ($result['sources'] ?? []), 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
             // The price agreed when the run began.
             $charged = $price;
@@ -464,6 +467,31 @@ class NpkPlusController extends Controller
         }
 
         return ['bag' => 'bags', 'dose' => 'hectare doses', 'L' => 'liters'][$unit] ?? $unit;
+    }
+
+    /**
+     * Anee's nutrient list with the calculator's own state for N, P2O5 and K2O
+     * (short under 0.9 of the need, too much over 1.3, the page's rule): her
+     * comment stays and her own status is kept as aneeStatus where it differed.
+     */
+    public static function overlayNeeds(array $list, array $needs): array
+    {
+        $alias = ['N' => 'N', 'NITROGEN' => 'N', 'P' => 'P2O5', 'P2O5' => 'P2O5', 'PHOSPHORUS' => 'P2O5', 'K' => 'K2O', 'K2O' => 'K2O', 'POTASSIUM' => 'K2O'];
+        $say = ['short' => 'short', 'right' => 'right', 'over' => 'over'];
+        foreach ($list as &$n) {
+            if (! is_array($n)) {
+                continue;
+            }
+            $k = $alias[strtoupper(trim((string) ($n['nutrient'] ?? '')))] ?? null;
+            $state = $k ? ($say[(string) ($needs[$k]['state'] ?? '')] ?? null) : null;
+            if ($state && ($n['status'] ?? null) !== $state) {
+                $n['aneeStatus'] = $n['status'] ?? null;
+                $n['status'] = $state;
+            }
+        }
+        unset($n);
+
+        return $list;
     }
 
     public static function planWords(object $calc): string
@@ -495,6 +523,9 @@ class NpkPlusController extends Controller
             . 'Totals per hectare (elemental unless named as oxide): ' . json_encode($res['perHa'] ?? []) . "\n"
             . 'N-P2O5-K2O per hectare: ' . ($res['npkPerHa'] ?? '?') . "\n"
             . ($soil ? 'Soil test: ' . json_encode($soil) . "\n" : 'No soil test given.' . "\n")
+            // Levels the farmer took from the area's typical soil (Use these, 2026-10-18): typical for the area, never a test of this field.
+            . (! empty($set['area']['tests']) || ! empty($set['area']['filled'])
+                ? 'Of these, typical for the area (soil samples taken there, not a test of this field; say so): ' . json_encode(array_filter(['levels' => $set['area']['tests'] ?? null, 'filled' => $set['area']['filled'] ?? null])) . "\n" : '')
             . (! empty($set['texture']) && $set['texture'] !== 'unsure' ? 'Soil type: ' . $set['texture'] . "\n" : '')
             . (! empty($set['conditions']) ? 'Soil conditions the farmer picked: ' . implode(', ', array_map('strval', (array) $set['conditions'])) . "\n" : '')
             . (! empty($set['fieldAdjust']) ? 'What the calculator counted for the field in detail: ' . mb_substr(implode(' ', array_map('strval', (array) $set['fieldAdjust'])), 0, 900) . "\n" : '')
@@ -552,7 +583,7 @@ class NpkPlusController extends Controller
             . 'Planting date: ' . ($p['plantingDate'] ?: 'not given') . '; how the farmer means to apply it: ' . (self::TIMING[$p['timing']] ?? $p['timing']) . "\n"
             . ($p['variety'] ? 'Variety: ' . $p['variety'] . (($vf = \App\Support\VarietyBook::factsLine((string) $calc->crop, (string) $p['variety'])) !== '' ? ' (known: ' . $vf . ')' : '') . "\n" : '') . ($p['notes'] ? 'Notes: ' . $p['notes'] . "\n" : '')
             . 'ENSO: ' . (EnsoOutlook::forPrompt() ?: 'not available') . "\n"
-            . self::historyFor($p) . "\n"
+            . self::historyFor($p + ['crop' => (string) $calc->crop]) . "\n"
             . "RULES: Weigh the plan against the crop's need and the soil, the water, the weather of that season and ENSO. The need is the calculator's (NPK Plus's need model): judge the plan against it and do not recount it. The field's weather record is measured history kept by the app: use it, with its El Niño and La Niña shares, for what the season does to losses and timing. Say if it is enough, short or too much for each nutrient, which product to cut, add or split, and WHEN each product should go on by growth stage. Name products by their grade or active nutrient, never a brand. Never invent a number that is not in the plan or the research notes; say what you cannot know. Remember: the yield still depends on the weather, the variety and the soil.\n\n"
             . 'Return exactly: {"verdict":"good|close|needs changes|unbalanced","headline":"one line","summary":"3 plain sentences",'
             . '"nutrients":[{"nutrient":"N|P2O5|K2O|S|Zn|...","status":"short|right|over","comment":""}],'
@@ -565,7 +596,8 @@ class NpkPlusController extends Controller
     /** The area's typical soil (the soil atlas), as prompt lines; '' where the atlas knows nothing of the place. */
     private static function areaSoil(array $p, object $calc): string
     {
-        $w = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $calc->crop));
+        $needs = (json_decode((string) $calc->result, true) ?: [])['needs'] ?? null;
+        $w = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $calc->crop), $needs ? 'short' : 'prompt');
 
         return $w !== '' ? $w . "\n" : '';
     }
@@ -575,7 +607,9 @@ class NpkPlusController extends Controller
     {
         $from = $p['plantingDate'] ? \Illuminate\Support\Carbon::parse($p['plantingDate']) : now('Asia/Manila')->addDays(14);
         $focus = [];
-        for ($i = 0; $i <= 4; $i++) {
+        $crop = (string) ($p['crop'] ?? '');
+        $days = (int) (\App\Support\VarietyBook::days($crop, (string) ($p['variety'] ?? '')) ?: ($crop !== '' ? CropCatalog::maturity($crop) : 120));
+        for ($i = 0, $n = min(12, (int) ceil($days / 30) + 1); $i < $n; $i++) {
             $focus[] = (int) $from->copy()->startOfMonth()->addMonths($i)->month;
         }
 
