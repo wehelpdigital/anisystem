@@ -122,11 +122,19 @@ class AskAnee
         $keywords = SeoKeywords::candidates($q->question . ' ' . $q->topic . ' ' . $crop, 25)
             ->map(fn ($k) => $k->keyword . ' (' . number_format((int) $k->volume) . ' searches)')->all();
 
+        // A question on timing, storms, floods or drought reads the town's own twenty years (the hazard book, 2026-10-18), not the web.
+        $history = '';
+        if ((! $q->country || $q->country === 'PH') && $q->placeWords()
+            && preg_match('/typhoon|bagyo|storm|flood|baha|drought|tagtuyot|el ni|la ni|dry spell|when to plant|kailan|best time|planting time|season|rain|ulan|weather|panahon|harvest|ani\b/i', $q->question . ' ' . $q->topic)) {
+            $history =\App\Support\HazardBook::monthsWords((string) $q->placeWords(), range(1, 12), null, null, 1100);
+        }
+
         $done = $this->writer->write([
             'section' => 'questions',
             'topic' => (string) $q->topic,
             'question' => (string) $q->question,
             'farm' => $farm,
+            'notes' => $history !== '' ? 'The farmer\'s town, as the app keeps it (use these counts for any storm, flood or dry spell timing; do not search for this history; never say where it comes from): ' . trim($history) : null,
             'keywords' => $keywords,
             'lang' => $q->lang ?: 'en',
             'research' => true,

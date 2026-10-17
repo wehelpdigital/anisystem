@@ -1011,12 +1011,24 @@ Version: {$versionName} (one of several versions of this protocol)" : '';
         return <<<PROMPT
 You are reviewing a crop protocol a farmer wrote for themselves in the Protocol Builder. Read it as an experienced agronomist in {$region} would, and judge it honestly: is it complete, is the timing right, is anything missing, is anything risky or wasteful.
 
+        // The farmer's own town in the hazard book (2026-10-18): the months storms, floods and dry spells hit there, so the timing is judged for where it is grown.
+        $placeText = '';
+        try {
+            $home = \Illuminate\Support\Facades\DB::table('as_field_profiles')->where('userId', $p->userId)->where('deleteStatus', 1)->whereNotNull('province')
+                ->orderByDesc('updated_at')->first(['province', 'town']);
+            if ($home) {
+                $hz = \App\Support\HazardBook::monthsWords(trim(($home->town ? $home->town . ', ' : '') . $home->province), range(1, 12), null, null, 1000);
+                $placeText = $hz !== '' ? "\nWhere the farmer grows (their newest lot): " . trim($hz) . "\nJudge the timing against it: say which planting months put flowering or harvest into the months storms or floods hit most years there." : '';
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
 THE PROTOCOL
 Title: {$p->title}
 Crop: {$cropLabel}
 Variety: {$variety}
 Day count: {$dt['label']} — {$dt['sub']}
-Description: {$description}{$versionLine}
+Description: {$description}{$versionLine}{$placeText}
 
 THE TASKS, in the farmer's order (the code in [brackets] is the task's id — quote it exactly in "tasks"; lines marked === PHASE === are the farmer's own phase headings, not tasks — read the tasks under each as that phase's work; {$countWords})
 {$taskText}

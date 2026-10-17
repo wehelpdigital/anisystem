@@ -309,7 +309,9 @@ class SatelliteController extends Controller
                 if ($notes !== '') {
                     $rest = ClimateRecord::harvest($rk['key'], $rk['place'], 'PH', $notes, (bool) ($meta['searched'] ?? false), (array) ($meta['sources'] ?? []))['rest'];
                 }
-                $kept = ClimateRecord::words($rk['key'], $rk['place']);
+                // The town's record, the months the crop still stands in the field marked (2026-10-18).
+                $now = (int) now('Asia/Manila')->month;
+                $kept = ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], false, [$now, $now % 12 + 1, ($now + 1) % 12 + 1, ($now + 2) % 12 + 1]);
 
                 return $this->prompt($p, $s, $ctx + ['record' => $kept !== '' ? $kept . "\n" : ''])
                     . ($rest !== '' ? "\n\nRESEARCH NOTES, found on the web by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win:\n" . $rest : '');
@@ -591,7 +593,8 @@ class SatelliteController extends Controller
     private function researchPrompt(array $p, float $lat = 0, float $lng = 0): string
     {
         $rk = ClimateRecord::placeKey((string) $p['location'], 'PH');
-        $missing = ClimateRecord::missing($rk['key']);
+        // The town's twenty years are in the hazard book (2026-10-18): no hazard year is searched.
+        $missing = ClimateRecord::missing($rk['townKey'] ?? $rk['key']);
         $age = ! empty($p['plantedOn']) ? (int) \Illuminate\Support\Carbon::parse($p['plantedOn'])->startOfDay()->diffInDays(now('Asia/Manila')->startOfDay()) : null;
         $weeks = $age !== null ? max(0, (int) round($age / 7)) : null;
         // The area's soil is the app's own (the soil atlas, 2026-10-18): searched for only where the atlas has nothing.

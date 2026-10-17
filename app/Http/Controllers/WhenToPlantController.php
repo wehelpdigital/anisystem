@@ -339,7 +339,7 @@ class WhenToPlantController extends Controller
                 \App\Support\VarietyLearned::hit((int) $p['varietyRecord']['learnedId']);
             }
             // What the record held and what this run added to it.
-            $report['recordKept'] = ['place' => $rk['place'], 'years' => count(ClimateRecord::stored($rk['key'])), 'added' => $keptYears];
+            $report['recordKept'] = ['place' => $rk['where'] ?? $rk['place'], 'years' => count(ClimateRecord::stored($rk['townKey'] ?? $rk['key'])), 'added' => $keptYears];
 
             // The charge lands through the same ledger every question uses,
             // so the subscription page's credit log shows it.
@@ -712,7 +712,8 @@ class WhenToPlantController extends Controller
             : 'the breeder\'s or seed company\'s own page, the national variety registry, university extension notes';
         $rec = (array) ($p['varietyRecord'] ?? []);
         $rk = ClimateRecord::placeKey((string) $p['location'], $fc);
-        $missing = ClimateRecord::missing($rk['key']);
+        // A Philippine town's twenty years are in the hazard book (2026-10-18): nothing is missing, so no year is searched.
+        $missing = ClimateRecord::missing($rk['townKey'] ?? $rk['key']);
         // A variety on record is known (its facts reach the document); one named and not on record is looked up.
         $varietyAsk = ! $rec && $variety !== ''
             ? "0. THE VARIETY FIRST: \"{$variety}\" of {$cropLabel}. Search for its published characteristics: days to maturity (or harvest), yield potential, plant height and lodging, the season it is bred for (wet / dry, early / late), its tolerance to drought, flooding or submergence, heat, salinity and cold where they apply, its pest and disease resistance (for rice: blast, bacterial leaf blight, tungro, brown planthopper, stem borer; for other crops the ones that matter), and who released it and when. Prefer {$registry}. Give the figures with their source. If nothing reliable turns up, say plainly that the variety could not be found; never guess its traits.\n"
@@ -779,7 +780,6 @@ PROMPT;
     {
         $fc = $p['country'] ?? \App\Support\Region::code();
         $rk = ClimateRecord::placeKey((string) $p['location'], $fc);
-        $kept = ClimateRecord::words($rk['key'], $rk['place']);
         $focus = [];
         $m = (int) ($p['fromMonth'] ?? 0);
         $span = (((int) ($p['toYear'] ?? 0) - (int) ($p['fromYear'] ?? 0)) * 12 + (int) ($p['toMonth'] ?? 0) - $m)
@@ -791,6 +791,8 @@ PROMPT;
 
         return ($kept !== '' ? $kept : "THE PLACE'S RISK RECORD: none kept for " . $rk['place'] . " yet; rely on the research notes below, and say so in dataGaps where they are thin.\n")
             . ($weather !== '' ? "\n" . $weather : '');
+        // The town's own record when the hazard book knows it, the farmer's months marked.
+        $kept = ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], true, $focus);
     }
 
     /**
@@ -821,6 +823,11 @@ PROMPT;
         $maturity = CropCatalog::maturity($p['crop']);
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
+        // The area's typical soil when the soil atlas knows the place (2026-10-18): a lime or salt flush lead time moves the earliest week.
+        if (class_exists(\App\Support\SoilAtlas::class)) {
+            $atlas = trim(\App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']), 'short'));
+            $soilBlock .= $atlas !== '' ? '- ' . $atlas . "\n" : '';
+        }
         $ensoRule = $enso !== ''
             ? 'the observed ENSO state AND the official NOAA CPC forecast given above (weigh its stated probabilities toward the planting window rather than assuming neutral conditions, and say plainly where the forecast still leaves uncertainty)'
             : 'general ENSO behaviour — state plainly that you cannot know the live ENSO state for ' . $p['year'] . ' and mark it as uncertainty rather than inventing a forecast';
@@ -862,7 +869,7 @@ FACTS GIVEN
 - Soil condition as the farmer knows it: {$soil}
 {$soilBlock}{$ensoBlock}
 GROUND RULES
-- At the end of this brief: THE PLACE'S RISK RECORD (its storms, floods, droughts and heat year by year over the last twenty years, kept by the app from earlier web research, with a month tally counted from it), THE FIELD'S WEATHER RECORD (twenty years of measured rain, heavy rain days, storm gust years and heat, month by month, with what El Niño and La Niña months did there), and any research notes gathered just now (the variety, the newest year). Rely on them first for riskHistory, typhoonOdds and the avoid windows; where they and memory disagree, they win; where they are silent, say so in dataGaps. Weigh the ENSO rows of the weather record against the ENSO outlook above: they say what this phase has done to THIS field's rain before.
+- At the end of this brief: THE PLACE'S HAZARD HISTORY (for a Philippine town: the storms measured near it from their tracks, with the wind and rain they brought there, the dry spells, hot spells and heavy rain measured near it, and the floods and other events reported for the town or its province, with a month tally of the years with one; never say where it comes from) or THE PLACE'S RISK RECORD (year by year from earlier research, with a month tally), THE FIELD'S WEATHER RECORD (twenty years of measured rain, heavy rain days, storm gust years and heat, month by month, with what El Niño and La Niña months did there), and any research notes gathered just now (the variety, the newest year). Rely on them first for riskHistory, typhoonOdds and the avoid windows; where they and memory disagree, they win; where they are silent, say so in dataGaps. Weigh the ENSO rows of the weather record against the ENSO outlook above: they say what this phase has done to THIS field's rain before.
 - Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, the soil condition given, and the crop calendar arithmetic above.
 - The soil condition moves the window too: a correction that must go on before planting (lime for acidic soil, gypsum and leaching for sodic, a salt flush for saline) pushes the earliest good week back by its lead time, and weather that worsens the condition at emergence (salts peaking in the driest weeks, a sodic soil crusting under heavy rain, an acid sulfate soil flushing acid with the first rains after a dry spell) lowers those weeks' scores. Say this in the week reasons and the threats where it applies. If the soil condition is not known, add a soil test to dataGaps.
 - Weigh the WHOLE crop cycle, not just the planting day: a planting month is only as good as the weather the crop meets at its sensitive stages (flowering, grain fill, harvest) in the months after it.
@@ -878,7 +885,7 @@ Rules for the shape:
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates INSIDE the farmer's months ({$whenShort}), and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole month range. fromYear/toYear carry the calendar year of each end. If none of the farmer's months is sound, still give the least risky weeks inside them, lower the confidence, and say plainly in the why, the threats and the summary which nearby months would be safer.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
 - monthScores carries TWELVE consecutive months, each with its year, starting with {$firstMonth} (the first of the farmer's months): the farmer's own months first, the rest for comparison, so a better month just outside their range shows; score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the farmer's range — a flat run of equal scores is an unfinished answer.
-- typhoonOdds: the place's TROPICAL CYCLONE record, counted from the risk record's month tally ("Tropical cyclones" row: the years with at least one, and in brackets how many in all), with the year lines of any new research added to it — never guessed. years = the span read. months = ALL twelve calendar months (1–12, calendar order); chance = the percentage (0–100, whole number) of the years read in which at least one typhoon or tropical storm (a hurricane where that is the local word) affected the place in that month — e.g. 7 of 20 years = 35; storms = how many cyclones in all struck that month over the record; note ≤ 12 words (the strongest one, with its year, where there was one). peak ≤ 20 words naming the riskiest stretch. note ≤ 40 words on how it was counted and how thin the record is. Where the place lies outside the cyclone belt, every chance is 0 and the note says so. Use these odds when you rank the weeks: a crop that flowers or is harvested in a high-chance month carries that risk.
+- typhoonOdds: the place's TROPICAL CYCLONE record, counted from the month tally at the end ("Storms that hit" or "Tropical cyclones": the years with at least one, and how many in all), with the year lines of any new research added to it — never guessed. years = the span read. months = ALL twelve calendar months (1–12, calendar order); chance = the percentage (0–100, whole number) of the years read in which at least one typhoon or tropical storm (a hurricane where that is the local word) affected the place in that month — e.g. 7 of 20 years = 35; storms = how many cyclones in all struck that month over the record; note ≤ 12 words (the strongest one, with its year, where there was one). peak ≤ 20 words naming the riskiest stretch. note ≤ 40 words on how it was counted and how thin the record is. Where the place lies outside the cyclone belt, every chance is 0 and the note says so. Use these odds when you rank the weeks: a crop that flowers or is harvested in a high-chance month carries that risk.
 - riskHistory: the place's twenty-year record from the risk record and the weather record (the measured heavy rain and gust years back the flood and storm scores; the dry months and the El Niño shares back the drought scores). years = the span read (e.g. "2006–2025"). months = ALL twelve calendar months (month 1–12, calendar order); for each kind — storm (typhoons/hurricanes/severe storms), flood, drought, heat, frost — a 0–100 DAMAGE INDEX for that month: how often a damaging event of that kind struck in that month over the twenty years, weighted by how bad it was (0 = never, 100 = most years and severe); frost is 0 where it does not occur; note ≤ 12 words on the month. events = the four to eight worst events found, each with year, month, kind, what (≤ 14 words, name the storm where it has one) and impact "high"/"moderate". note ≤ 40 words on how the record was read and how thin it is. Never invent an event; a month with no record scores 0 and says so.
 - threats: at most three, what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words. Keep the whole answer tight.
 PROMPT;

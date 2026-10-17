@@ -144,6 +144,13 @@ class SeasonContext
             }
         }
 
+        // The place's storms and floods (the hazard book, 2026-10-18): what struck since the season began, and what these months usually bring.
+        $hz = self::hazards($schedule);
+        if ($hz !== '') {
+            $out[] = '';
+            $out[] = trim($hz);
+        }
+
         if (! empty($d['activities'])) {
             $out[] = '';
             $out[] = 'WORK from the first entry to today (oldest first):';
@@ -202,6 +209,41 @@ class SeasonContext
         $out[] = 'Question: ';
 
         return implode("\n", $out);
+    }
+
+    /**
+     * The season's place in the hazard book, in a few lines: what struck it
+     * since the season began, and the next three months' odds. Kept half a
+     * day per season (not in the snapshot, so its build stays as it is).
+     */
+    private static function hazards(AsCroppingSchedule $s): string
+    {
+        try {
+            return (string) \Illuminate\Support\Facades\Cache::remember('season-hazards:' . $s->id . ':' . now('Asia/Manila')->format('Y-m-d'), 43200, function () use ($s) {
+                $s->loadMissing('lots');
+                $lot = $s->lots->first(fn ($l) => (int) $l->deleteStatus === 1 && ($l->locProvince || $l->locTown));
+                if (! $lot) {
+                    return '';
+                }
+                $where = trim(implode(', ', array_filter([$lot->locTown, $lot->locProvince])));
+                $closed = in_array((string) $s->status, ['completed', 'archived'], true);
+                $m = (int) now('Asia/Manila')->month;
+                // a closed season looks back only; an open one also looks at the months ahead
+                $out = $closed ? '' : HazardBook::monthsWords($where, [$m, $m % 12 + 1, ($m + 1) % 12 + 1], null, null, 650);
+                // the season's own span: its first day zero (or first work) to today, or to its last work when closed
+                $start = $s->lots->pluck('dayZeroDate')->filter()->min() ?: $s->activities()->min('targetDate');
+                if ($start) {
+                    $end = $closed ? (string) ($s->activities()->max('targetDate') ?: now('Asia/Manila')->toDateString()) : now('Asia/Manila')->toDateString();
+                    $out .= HazardBook::between($where, Carbon::parse($start)->toDateString(), substr($end, 0, 10), null, null, 450);
+                }
+
+                return $out;
+            });
+        } catch (\Throwable $e) {
+            report($e);
+
+            return '';
+        }
     }
 
     /** About four characters to a token, the same rule the credit service uses. */

@@ -1048,7 +1048,7 @@ RULES ALREADY APPLIED:
 
 WEATHER
 - Forecast, next 16 days at the field: {$fc}
-- Climate history: {$climate} {$plowClimate} {$plantClimate}
+- Climate history: {$climate} {$plowClimate} {$plantClimate}{$hazards}
 - ENSO: {$enso}
 
 RULES FOR YOUR ANSWER

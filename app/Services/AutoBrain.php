@@ -48,6 +48,7 @@ class AutoBrain
         $s = AsCroppingSchedule::find($auto->croppingScheduleId);
         $a = (array) $auto->answers;
         $lots = [];
+        $hzSeen = [];
         foreach (AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get() as $al) {
             $lot = AsScheduleLot::find($al->lotId);
             if (! $lot || (int) $lot->deleteStatus !== 1) {
@@ -82,6 +83,19 @@ class AutoBrain
             }
             if ($al->imbalance) {
                 $row['farmerKeptAnUnbalancedPlan'] = (AutoBook::IMBALANCE[$al->imbalanceReason] ?? $al->imbalanceReason) . ($al->imbalanceNote ? ': ' . $al->imbalanceNote : '');
+            }
+            // The town's twenty years of storms, floods, dry spells and heat (the hazard book, 2026-10-18), the months this lot stands in the field marked; said once per town.
+            $hzWhere = trim(implode(', ', array_filter([$lot->locTown, $lot->locProvince])));
+            if ($hzWhere !== '' && ! isset($hzSeen[$hzWhere])) {
+                $hzSeen[$hzWhere] = $row['name'];
+                $m0 = $al->fieldDate ? (int) $al->fieldDate->month : (int) now('Asia/Manila')->month;
+                $span = min(12, (int) ceil(((int) ($row['maturityDays'] ?? 120)) / 30) + 1);
+                $hz = \App\Support\HazardBook::words($lot->locProvince, $lot->locTown, array_map(fn ($i) => ($m0 - 1 + $i) % 12 + 1, range(0, $span - 1)), 1500);
+                if ($hz !== '') {
+                    $row['placeHistory'] = $hz;
+                }
+            } elseif ($hzWhere !== '') {
+                $row['placeHistory'] = 'Same town as ' . $hzSeen[$hzWhere] . ': see its placeHistory.';
             }
             $lots[] = $row;
         }

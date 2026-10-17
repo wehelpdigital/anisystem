@@ -537,6 +537,8 @@ class SkyWeatherController extends Controller
             . "RULES: Within 300 km a storm is a direct threat; say when its closest approach is, how strong, and the wind and rain to expect. If no storm is near, say so plainly and focus on rain, wind and heat. Tie every action to the lot's crop and stage (for example: harvest early if the grain is mature enough, drain or open the canals, delay fertilizer before heavy rain, prop or hill up tall corn, secure seedlings, protect the harvest in storage). Use PAGASA wind signal language only as a guide, never claim PAGASA issued a signal. Never invent a number not given above. Say what you cannot know.\n\n"
             . 'Return exactly: {"headline":"one line","risk":"low|moderate|high|severe","riskWhy":"",'
             . '"storm":{"status":"none near|watch|warning","reading":"","closestApproach":"when and how close","expect":"wind and rain to expect at the farm"},'
+            // The storms and floods that hit this town in this month and the next over twenty years (the hazard book, 2026-10-18).
+            . (($hz = \App\Support\HazardBook::monthsWords((string) ($p['place'] ?? ''), [(int) now('Asia/Manila')->month, (int) now('Asia/Manila')->month % 12 + 1], (float) $p['lat'], (float) $p['lng'])) !== '' ? $hz . "\n" : '')
             . '"next72h":"plain words","next10Days":"plain words",'
             . '"forLot":{"reading":"what this weather means for this crop at this stage","risks":["",""],"opportunities":["e.g. a dry window to spray or harvest"]},'
             . '"actions":[{"when":"now|before the storm|during|after|this week","what":"","why":""}],'

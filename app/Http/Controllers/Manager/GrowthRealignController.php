@@ -432,6 +432,13 @@ class GrowthRealignController extends BaseScheduleController
         if ($wx !== '') {
             $ctx[] = $wx;
         }
+        // The storms, floods, dry spells and heat that struck the lot's town since its day zero (the hazard book, 2026-10-18).
+        $hzFrom = $lot->dayZeroDate ? Carbon::parse($lot->dayZeroDate)->toDateString() : $asOf->copy()->subMonths(5)->toDateString();
+        $hz = \App\Support\HazardBook::between(trim(implode(', ', array_filter([(string) $lot->locTown, (string) $lot->locProvince]))), $hzFrom, $asOf->toDateString(),
+            $lot->pinLat ? (float) $lot->pinLat : null, $lot->pinLng ? (float) $lot->pinLng : null, 900);
+        if ($hz !== '') {
+            $ctx[] = trim($hz) . "\nA storm or flood here that hit the crop at a sensitive stage is a real reason for it to run late: name it with its date when it moved the reading.";
+        }
 
         $ctx[] = 'ANSWER WITH ONE JSON OBJECT ONLY, no fences, no commentary, these keys exactly:'
             . ' {"stageIndex": <integer index from the stage table>, "stageLabel": <its name>,'
