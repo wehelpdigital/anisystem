@@ -190,11 +190,11 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-18: the Crop Protocol for several lots, with the work calendar and the price by lots and crops.
             'protoLots' => class_exists(\App\Support\ProtocolCrew::class) && method_exists(\App\Http\Controllers\CropProtocolController::class, 'lotParams')
                 && \App\Support\AiPrices::of('protocolLot') > 0,
-        ],
-        // The guides, crop problems, blog and feature pages live per section:
             // 2026-10-18: the soil atlas (the area's typical soil, by province, town and barangay), loaded.
             'soilAtlas' => class_exists(\App\Support\SoilAtlas::class) && \App\Support\SoilAtlas::ready()
                 && rescue(fn () => \Illuminate\Support\Facades\DB::table('as_soil_fertility')->count() > 9000, false, false),
+        ],
+        // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
         'sitePages' => (function () {
             try {
