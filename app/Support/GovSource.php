@@ -207,6 +207,10 @@ final class GovSource
             fn ($m) => "\x01" . (preg_match('/ed$|wn$|nd$/', $m[1]) || in_array(strtolower($m[1]), ['found', 'showed'], true) ? 'reports showed' : 'records show'), $text);
         // "PAGASA data", "PhilRice's catalogue", "BSWM soil maps" -> "the data", "the catalogue", "the soil maps".
         $text = preg_replace('/\b(?:the\s+)?' . $one . '(?:\'s)?\s+((?:climatological\s+|climate\s+|soil\s+|seasonal\s+|weather\s+|official\s+)?(?:data|records?|figures|normals|numbers|tables?|forecasts?|outlooks?|advisories|catalogue|catalog|database|lists?|maps?|surveys?|tests|trials|studies|reports?)\b)/iu', "\x01the $1", $text);
+        // "Data from PhilRice show 5 t/ha" -> "Data show 5 t/ha" (2026-10-19): only where the clause ends or a
+        // verb follows, so "results of the DA corn derby" is left to the rule above it.
+        $text = preg_replace('/\b((?:climate\s+|soil\s+|yield\s+|trial\s+|official\s+)?(?:data|records|figures|numbers|statistics|surveys?|studies|trials|results|research))\s+(?:from|by|of)\s+' . $many
+            . '(?=\s*(?:[.,;:!?)]|$|(?:show|shows|showed|say|says|said|indicate|indicates|indicated|suggest|suggests|put|puts|place|places|give|gives|gave)\b))/iu', '$1', $text);
         // "PAGASA's Dagupan station" -> "the Dagupan station".
         $text = preg_replace('/\b(?:the\s+)?' . $one . '\'s\s+/iu', "\x01the ", $text);
         // "PAGASA Type I climate" -> "Type I climate".

@@ -238,7 +238,7 @@ class SitePageController extends Controller
             }
             $out[] = '';
         }
-        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties (PhilRice data)', 'crop-varieties' => 'Crop varieties (NSIC registry and seed sellers)', 'features' => 'Feature pages'];
+        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties', 'crop-varieties' => 'Crop varieties', 'features' => 'Feature pages'];
         try {
             $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);
             foreach ($names as $section => $name) {
