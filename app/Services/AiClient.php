@@ -142,10 +142,11 @@ class AiClient
         $image = $opts['image'] ?? null;
         $retryAfterTimeout = (bool) ($opts['retryAfterTimeout'] ?? true);
         unset($opts['onPhase'], $opts['image'], $opts['retryAfterTimeout']);
-        $sum = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => []];
+        $sum = ['tokensIn' => 0, 'tokensOut' => 0, 'tokensCached' => 0, 'searched' => false, 'sources' => []];
         $fold = function (array $r) use (&$sum): void {
             $sum['tokensIn'] += (int) ($r['tokensIn'] ?? 0);
             $sum['tokensOut'] += (int) ($r['tokensOut'] ?? 0);
+            $sum['tokensCached'] += (int) ($r['tokensCached'] ?? 0);
             $sum['searched'] = $sum['searched'] || (bool) ($r['searched'] ?? false);
             foreach ((array) ($r['sources'] ?? []) as $src) {
                 if (! in_array($src, $sum['sources'], true)) {
@@ -187,7 +188,9 @@ class AiClient
             $retry = $this->ask($settings, [
                 ['role' => 'user', 'text' => $prompt],
                 ['role' => 'assistant', 'text' => (string) $result['text']],
-            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut, ['timeout' => $opts['timeout'], 'keepAgencies' => ! empty($opts['keepAgencies'])]);
+            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut, ['timeout' => $opts['timeout'], 'keepAgencies' => ! empty($opts['keepAgencies']),
+                // A job with its own system prompt (a news sort) keeps it on the retry, not Anee's whole persona (2026-10-19).
+                'system' => $opts['system'] ?? null]);
             $fold($retry);
             if ($retry['ok'] ?? false) {
                 $data = $parse((string) $retry['text']);
@@ -260,7 +263,7 @@ class AiClient
          * runs out) is tried once more, not twice: three stalls would be
          * seven and a half minutes of nothing. */
         $research = ['ok' => false, 'text' => '', 'searched' => false];
-        $spent = ['tokensIn' => 0, 'tokensOut' => 0];
+        $spent = ['tokensIn' => 0, 'tokensOut' => 0, 'tokensCached' => 0];
         $stalls = 0;
         for ($try = 0; $try < 3; $try++) {
             $brief = $try === 0 ? $researchPrompt
@@ -273,6 +276,7 @@ class AiClient
             $got = $this->ask($settings, [], $brief, null, $notesMaxOut, ['search' => true, 'timeout' => self::TIMEOUT_SEARCHED]);
             $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
             $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
+            $spent['tokensCached'] += (int) ($got['tokensCached'] ?? 0);
             if (($got['ok'] ?? false) && trim((string) $got['text']) !== '') {
                 $research = $got;
                 if ($got['searched'] ?? false) {
@@ -300,6 +304,7 @@ class AiClient
         $doc = $this->askForJson($settings, $docOf(trim((string) $research['text']), ['searched' => (bool) ($research['searched'] ?? false), 'sources' => (array) ($research['sources'] ?? [])]), $maxOut, $parse, ['onPhase' => $onPhase]);
         $doc['tokensIn'] += $spent['tokensIn'];
         $doc['tokensOut'] += $spent['tokensOut'];
+        $doc['tokensCached'] = (int) ($doc['tokensCached'] ?? 0) + $spent['tokensCached'];
         $doc['searched'] = (bool) ($research['searched'] ?? false);
         $doc['paidSearch'] = true;
         $doc['shelf'] = false;
@@ -397,6 +402,7 @@ class AiClient
             'text' => trim($text),
             'tokensIn' => (int) ($json['usage']['input_tokens'] ?? 0),
             'tokensOut' => (int) ($json['usage']['output_tokens'] ?? 0),
+            'tokensCached' => (int) ($json['usage']['cache_read_input_tokens'] ?? 0),
             'searched' => (int) ($json['usage']['server_tool_use']['web_search_requests'] ?? 0) > 0,
             'sources' => self::uniqueSources($sources),
             'error' => null,
@@ -459,6 +465,7 @@ class AiClient
             'text' => trim((string) ($json['choices'][0]['message']['content'] ?? '')),
             'tokensIn' => (int) ($json['usage']['prompt_tokens'] ?? 0),
             'tokensOut' => (int) ($json['usage']['completion_tokens'] ?? 0),
+            'tokensCached' => (int) ($json['usage']['prompt_tokens_details']['cached_tokens'] ?? 0),
             'searched' => $searched,
             'sources' => self::uniqueSources($sources),
             'error' => null,
@@ -535,6 +542,9 @@ class AiClient
             'ok' => true,
             'text' => trim($text),
             'tokensIn' => (int) ($json['usageMetadata']['promptTokenCount'] ?? 0),
+            // Of those, the ones Gemini's implicit prefix cache served (billed at a fraction): the
+            // fixed text first in a prompt is what lets it apply (2026-10-19, measured in as_ai_usage).
+            'tokensCached' => (int) ($json['usageMetadata']['cachedContentTokenCount'] ?? 0),
             // Thoughts are billed output at Google even though they are not
             // candidate text — the ledger counts what the house actually pays.
             'tokensOut' => (int) ($json['usageMetadata']['candidatesTokenCount'] ?? 0)
@@ -584,6 +594,6 @@ class AiClient
 
     private function fail(string $error): array
     {
-        return ['ok' => false, 'text' => '', 'tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => [], 'error' => $error];
+        return ['ok' => false, 'text' => '', 'tokensIn' => 0, 'tokensOut' => 0, 'tokensCached' => 0, 'searched' => false, 'sources' => [], 'error' => $error];
     }
 }

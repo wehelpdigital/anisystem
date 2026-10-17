@@ -583,7 +583,10 @@ final class Region
         $met = self::as($field, fn () => self::agency('met'));
         $tail = ' Money is in ' . $c['currency']['name'] . ' (' . $c['currency']['symbol'] . ').'
             . ' Name only varieties, products and practices actually available and registered in ' . $c['name'] . '.'
-            . ' Authorities to prefer: ' . $research . '; weather and climate from ' . $met . '.';
+            // At home the official guides are followed but never named as the source (GovSource, 2026-10-17): the
+            // old "Authorities to prefer: PhilRice, DA, ..." line told every prompt the opposite (2026-10-19).
+            . ($field === self::HOME ? ' Follow the official recommendations and registered products of the country, said as your own advice.'
+                : ' Authorities to prefer: ' . $research . '; weather and climate from ' . $met . '.');
         if ($field === $farmer) {
             return 'COUNTRY: the farmer is in ' . $c['name'] . ' (' . $c['code'] . '). ' . $lang . $tail;
         }

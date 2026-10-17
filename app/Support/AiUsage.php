@@ -27,7 +27,10 @@ final class AiUsage
         $out = (int) ($result['tokensOut'] ?? 0);
         $metered = app(AiCreditService::class)->priceFor($settings, $in, $out);
         try {
-            DB::table('as_ai_usage')->insert([
+            // Of the tokens in, those the provider's prefix cache served (2026-10-19): measured, so the owner
+            // can see whether caching ever applies before any price counts on it.
+            $cached = self::hasCached() ? ['tokensCached' => min($in, max(0, (int) ($result['tokensCached'] ?? 0)))] : [];
+            DB::table('as_ai_usage')->insert($cached + [
                 'kind' => mb_substr($kind, 0, 24),
                 'userId' => $userId,
                 'payerId' => $payerId,
@@ -49,6 +52,15 @@ final class AiUsage
 
         return ' · ' . self::k($in) . ' in / ' . self::k($out) . ' out ≈ ' . number_format($metered) . ' metered'
             . (! empty($result['paidSearch'] ?? $result['searched'] ?? false) ? ' + web search' : (! empty($result['shelf']) ? ' + kept research' : ''));
+    }
+
+    /** Whether the ledger has the cached tokens column yet (it arrives by migration 2026_10_19_200000). */
+    private static function hasCached(): bool
+    {
+        static $has = null;
+
+        return $has ??= (bool) \Illuminate\Support\Facades\Cache::remember('ai-usage:has-cached', 3600,
+            fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_ai_usage', 'tokensCached'));
     }
 
     private static function k(int $n): string
