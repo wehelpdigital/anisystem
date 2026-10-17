@@ -9,12 +9,15 @@ use Illuminate\Support\Facades\DB;
  * How anee.io is paid while there is no payment gateway (2026-09-30), and
  * what can be bought that way.
  *
- * The Philippines pays by GCash or a bank transfer; every other country by
- * PayPal. The receiving accounts, the GCash processing fee and whether Anee
- * may approve a GCash plan on her own are set in the mother app (AniSystem >
- * Orders) and stored on the settings shelf under `pay.manual`; what is not
- * set falls back to DEFAULTS. PayPal keeps its own row (`pay.paypal`, see
- * Region::paypal()).
+ * The Philippines pays by the QR or a bank transfer; every other country by
+ * PayPal. The QR (method key 'gcash') is a QR Ph code on our GCash account,
+ * so ANY bank or wallet app that scans QR Ph pays it (InstaPay); a buyer is
+ * never told the name of the wallet behind it (the owner, 2026-10-17), only
+ * staff screens say GCash. The receiving accounts, the processing fee and
+ * whether Anee may approve a QR plan on her own are set in the mother app
+ * (AniSystem > Orders) and stored on the settings shelf under `pay.manual`;
+ * what is not set falls back to DEFAULTS. PayPal keeps its own row
+ * (`pay.paypal`, see Region::paypal()).
  */
 class ManualPay
 {
@@ -40,6 +43,17 @@ class ManualPay
         // Said to the buyer while an order waits for a person.
         'reviewHours' => 24,
     ];
+
+    /**
+     * What the built-in QR itself carries (public/images/pay/gcash-qr.png,
+     * decoded 2026-10-17: a QR Ph P2P code, com.p2pqrpay, acquirer
+     * GXCHPHM2XXX). A bank or another wallet that scans it may print this
+     * account number and this name on its receipt instead of the mobile
+     * number, so the receipt check knows them too. Only while the built-in
+     * QR is the one shown (gcashQr blank): a QR the owner uploads carries
+     * its own.
+     */
+    public const BUILTIN_QR = ['account' => '217020000000656', 'name' => 'anee.io'];
 
     /** The tiers that can be bought, cheapest first (the upgrade ladder). */
     public const TIERS = ['libreAnee', 'solo', 'owner'];
@@ -75,6 +89,25 @@ class ManualPay
         return (string) MediaStore::url(MediaStore::REMOTE_PREFIX . ltrim($qr, '/'));
     }
 
+    /**
+     * Every way a receipt may name our receiving account: the numbers (the
+     * mobile number, and the QR's own account while the built-in QR shows)
+     * and the masked account name.
+     *
+     * @return array{numbers: list<string>, name: string, qrName: ?string}
+     */
+    public static function receiving(): array
+    {
+        $s = self::settings();
+        $builtIn = trim((string) $s['gcashQr']) === '';
+
+        return [
+            'numbers' => array_values(array_filter([(string) $s['gcashNumber'], $builtIn ? self::BUILTIN_QR['account'] : null])),
+            'name' => (string) $s['gcashName'],
+            'qrName' => $builtIn ? self::BUILTIN_QR['name'] : null,
+        ];
+    }
+
     /** '09569044144' -> '0956 904 4144', for reading aloud and copying. */
     public static function spacedNumber(?string $n = null): string
     {
@@ -84,7 +117,9 @@ class ManualPay
     }
 
     /**
-     * The ways this buyer can pay: GCash and bank at home, PayPal abroad.
+     * The ways this buyer can pay: the QR and bank at home, PayPal abroad.
+     * The labels are the buyer's words: the 'gcash' key stays (orders,
+     * settings and the mother app read it) but its label never says GCash.
      *
      * @return array<string, array{label:string, ready:bool}>
      */
@@ -92,7 +127,7 @@ class ManualPay
     {
         if (Region::ph()) {
             return [
-                'gcash' => ['label' => 'GCash', 'ready' => true],
+                'gcash' => ['label' => 'QR code', 'ready' => true],
                 'bank' => ['label' => 'Bank transfer', 'ready' => self::bankReady()],
             ];
         }

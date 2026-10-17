@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Buying AI Credits. Same manual-GCash flow as a subscription: the order lands
+ * Buying AI Credits. Same paid-by-hand flow as a subscription: the order lands
  * in the mother app's ecom-orders queue, and approving it grants the credits.
  */
 class AiCreditController extends Controller
@@ -95,7 +95,7 @@ class AiCreditController extends Controller
         }
 
         // The price is the country's (pesos at home, dollars elsewhere),
-        // and the proof field is a GCash number at home, a PayPal email elsewhere.
+        // and the proof field is the payer's mobile number at home, a PayPal email elsewhere.
         $price = \App\Support\Region::packPrice($pack);
         $payPH = \App\Support\Region::ph();
         $request->merge([
@@ -111,9 +111,9 @@ class AiCreditController extends Controller
             'notes' => ['nullable', 'string', 'max:2000'],
         ], [
             'amountSent.min' => 'The amount sent must be at least ' . \App\Support\Region::money($price) . ', the full pack price.',
-            'gcashPhone.regex' => 'Enter the GCash number in the format 09XXXXXXXXX (11 digits).',
-            'referenceNumber.required_without' => 'Enter the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
-            'screenshot.required_without' => 'Upload a screenshot of the payment or enter the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . '.',
+            'gcashPhone.regex' => 'Enter the mobile number you paid from in the format 09XXXXXXXXX (11 digits).',
+            'referenceNumber.required_without' => 'Enter the ' . ($payPH ? 'reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
+            'screenshot.required_without' => 'Upload a screenshot of the payment or enter the ' . ($payPH ? 'reference number' : 'PayPal transaction ID') . '.',
         ]);
 
         // Per-user mutex, so a double submit cannot create two orders.

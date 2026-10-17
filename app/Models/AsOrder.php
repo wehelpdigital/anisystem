@@ -76,13 +76,24 @@ class AsOrder extends Model
         };
     }
 
+    /**
+     * How it was paid, in the BUYER's words: the checkout, My Subscription
+     * and the order emails. The QR is never called GCash to a buyer (the
+     * owner, 2026-10-17): it is a QR Ph code any bank or wallet app pays.
+     */
     public function methodLabel(): string
     {
         return match ($this->method) {
-            'gcash' => 'GCash',
+            'gcash' => 'QR code',
             'bank' => 'Bank transfer',
             'paypal' => 'PayPal',
             default => ucfirst((string) $this->method),
         };
+    }
+
+    /** How it was paid, for staff: which account the money reached. */
+    public function staffMethodLabel(): string
+    {
+        return $this->method === 'gcash' ? 'GCash (QR)' : $this->methodLabel();
     }
 }

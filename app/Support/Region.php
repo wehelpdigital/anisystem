@@ -320,7 +320,11 @@ final class Region
         return self::symbol() . number_format($n, fmod($n, 1.0) > 0.001 ? 2 : 0);
     }
 
-    /** The way this country pays: "GCash" at home, "PayPal" elsewhere. */
+    /**
+     * The way this country pays, as words that fit "paid through ...":
+     * "any bank or wallet app" at home (the QR is a QR Ph code; no wallet is
+     * ever named to a buyer, the owner's rule of 2026-10-17), "PayPal" elsewhere.
+     */
     public static function payMethod(): string
     {
         return (string) self::get('pay.method', 'PayPal');

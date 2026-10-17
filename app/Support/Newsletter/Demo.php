@@ -115,7 +115,7 @@ final class Demo
                         ['type' => 'story', 'src' => self::IMG . 'photos/palay-phone.jpg', 'title' => 'Isang plano para sa buong season', 'html' => '<p>Mula punla hanggang ani, may petsa ang bawat gawain. Hindi mo na kailangang tandaan lahat.</p>', 'url' => 'https://anee.io/pricing', 'label' => 'Tingnan ang Libre + Anee'],
                         ['type' => 'divider', 'style' => 'line'],
                         ['type' => 'story', 'src' => self::IMG . 'photos/inspect.jpg', 'title' => 'Picture lang ng dahon', 'html' => '<p>Ipakita mo sa akin ang dahon. Sasabihin ko kung peste, sakit, o kulang lang sa pagkain ang tanim, at ano ang susunod na hakbang.</p>', 'url' => 'https://anee.io/pricing', 'label' => 'Tingnan ang Libre + Anee'],
-                        ['type' => 'text', 'html' => '<p>Walang credit card, GCash lang. At kung hindi mo sulit, huwag mo nang ituloy. Ganun lang kasimple.</p>'],
+                        ['type' => 'text', 'html' => '<p>Walang credit card. Wallet o bank app lang sa cellphone mo. At kung hindi mo sulit, huwag mo nang ituloy. Ganun lang kasimple.</p>'],
                         $sign('isang spray lang ang usapan'),
                     ],
                 ],

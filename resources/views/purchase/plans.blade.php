@@ -2,7 +2,7 @@
 
 @section('title', 'Choose Your Plan')
 @section('page-title', 'Choose Your Plan')
-@section('page-subtitle', 'Pay by ' . \App\Support\Region::payMethod() . '. We turn it on once we check it.')
+@section('page-subtitle', 'Pay through ' . \App\Support\Region::payMethod() . '. We turn it on once we check it.')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
@@ -12,7 +12,7 @@
     <div class="text-center mb-6 md:mb-8">
         <h2 class="text-xl md:text-2xl font-bold text-gray-900">Simple plans, full access</h2>
         <p class="text-sm text-gray-500 mt-1 max-w-lg mx-auto">
-            Every plan opens the full season planner. Pay with {{ \App\Support\Region::payMethod() }} and our team
+            Every plan opens the full season planner. Pay through {{ \App\Support\Region::payMethod() }} and our team
             checks it, usually within the day.
         </p>
     </div>
@@ -65,7 +65,7 @@
 
         <p class="text-center text-xs text-gray-500 mt-6 max-w-md mx-auto">
             Our team checks each payment by hand. Your plan starts once your
-            {{ \App\Support\Region::payMethod() }} payment is approved. We will email you.
+            payment is approved. We will email you.
         </p>
     @endif
 </div>

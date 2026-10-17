@@ -45,7 +45,7 @@
                 </h2>
                 @if ($status === 'pending')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                        Our team checks {{ \App\Support\Region::payMethod() }} payments by hand. We will email you once it is approved.
+                        Our team checks every payment by hand. We will email you once it is approved.
                     </p>
                 @elseif ($status === 'rejected')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">

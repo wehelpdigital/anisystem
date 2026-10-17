@@ -77,8 +77,8 @@
                     @if ($gcash->qrCodeImage ?? null)
                         <div class="mt-4">
                             <img src="{{ rtrim(config('anisystem.btc_check_url'), '/').'/'.ltrim($gcash->qrCodeImage, '/') }}"
-                                alt="GCash QR code" class="mx-auto w-44 sm:w-52 rounded-xl border border-blue-100 bg-white p-2">
-                            <p class="text-xs text-blue-700 mt-2">Or scan this QR code in your GCash app</p>
+                                alt="QR code for anee.io" class="mx-auto w-44 sm:w-52 rounded-xl border border-blue-100 bg-white p-2">
+                            <p class="text-xs text-blue-700 mt-2">Or scan this QR code with any bank or wallet app</p>
                         </div>
                     @endif
                 </div>
@@ -88,7 +88,7 @@
                 @endif
             @else
                 <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-4 text-sm text-gray-600 text-center">
-                    Support will send you the GCash details. Email
+                    Support will send you the payment details. Email
                     <span class="font-semibold">support@anee.io</span> to pay.
                 </div>
             @endif
@@ -96,7 +96,7 @@
             {{-- Steps --}}
             <ol class="mt-5 space-y-3">
                 @foreach ([
-                    'Send '.\App\Support\Region::money($price).' to the '.($payPH ? 'GCash number' : 'PayPal account').' above.',
+                    'Send '.\App\Support\Region::money($price).' to the '.($payPH ? 'mobile number' : 'PayPal account').' above.',
                     'Screenshot the receipt, or copy the '.($payPH ? 'reference number' : 'transaction ID').'.',
                     'Send us your proof with the form below.',
                 ] as $i => $step)
@@ -113,7 +113,7 @@
     <div class="card">
         <div class="card-body">
             <h2 class="text-lg font-bold text-gray-900 mb-1">Proof of payment</h2>
-            <p class="text-sm text-gray-500 mb-4">Give the {{ $payPH ? 'GCash reference number' : 'PayPal transaction ID' }}, a screenshot, or both.</p>
+            <p class="text-sm text-gray-500 mb-4">Give the {{ $payPH ? 'reference number' : 'PayPal transaction ID' }}, a screenshot, or both.</p>
 
             <form method="POST" action="{{ $submitUrl }}" enctype="multipart/form-data" class="space-y-4" novalidate>
                 @csrf
@@ -133,7 +133,7 @@
                         @error('amountSent') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <label for="gcashPhone" class="form-label">{{ $payPH ? 'Your GCash number' : 'Your PayPal email' }} <span class="font-normal text-gray-400">(optional)</span></label>
+                        <label for="gcashPhone" class="form-label">{{ $payPH ? 'The mobile number you paid from' : 'Your PayPal email' }} <span class="font-normal text-gray-400">(optional)</span></label>
                         <input id="gcashPhone" name="gcashPhone" type="{{ $payPH ? 'tel' : 'email' }}" inputmode="{{ $payPH ? 'numeric' : 'email' }}"
                             value="{{ old('gcashPhone') }}" class="form-input" placeholder="{{ $payPH ? '09XXXXXXXXX' : 'you@example.com' }}">
                         @error('gcashPhone') <p class="form-error">{{ $message }}</p> @enderror
@@ -141,7 +141,7 @@
                 </div>
 
                 <div>
-                    <label for="referenceNumber" class="form-label">{{ $payPH ? 'GCash reference number' : 'PayPal transaction ID' }}</label>
+                    <label for="referenceNumber" class="form-label">{{ $payPH ? 'Reference number' : 'PayPal transaction ID' }}</label>
                     <input id="referenceNumber" name="referenceNumber" type="text"
                         value="{{ old('referenceNumber') }}" class="form-input" placeholder="{{ $payPH ? 'e.g. 1234 567 8901' : 'e.g. 8AB12345CD678901E' }}">
                     <p class="form-hint">Needed if you skip the screenshot.</p>
@@ -178,7 +178,7 @@
 
                 <button type="submit" class="btn btn-accent btn-lg w-full">Send Payment Proof</button>
                 <p class="text-center text-xs text-gray-500">
-                    Our team checks {{ $payMethod }} payments by hand. We will email you once it is approved.
+                    Our team checks every payment by hand. We will email you once it is approved.
                 </p>
             </form>
         </div>

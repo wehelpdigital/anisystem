@@ -83,7 +83,7 @@
         [
           "Prices in pesos",
           "A dollar subscription is hard to pay from the farm",
-          "Check that you can pay by GCash or bank transfer"
+          "Check that you can pay from a local bank or wallet app"
         ]
       ]
     },
@@ -171,7 +171,7 @@
     },
     {
       "type": "text",
-      "text": "The guides cost nothing. Anee and the finders come with the plans below, and you can buy credit packs when you run low. You pay by GCash or bank transfer, and the [pricing page](/pricing) shows the current details."
+      "text": "The guides cost nothing. Anee and the finders come with the plans below, and you can buy credit packs when you run low. You pay from any bank or wallet app, and the [pricing page](/pricing) shows the current details."
     },
     {
       "type": "table",

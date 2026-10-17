@@ -38,7 +38,7 @@
         "Pick an app that dates tasks by days after transplanting (DAT) or sowing (DAS) for each lot, not one fixed calendar for the whole farm.",
         "It should know palay growth stages and show the forecast beside the plan, so a top dressing or a spray does not land on the day before rain.",
         "It must run on the phone you already have, keep working where the signal is weak, and answer you in Tagalog or English.",
-        "anee.io meets these checks and starts free. Paid plans run from PHP 70 to PHP 600 a month, paid by GCash or bank transfer."
+        "anee.io meets these checks and starts free. Paid plans run from PHP 70 to PHP 600 a month, paid from any bank or wallet app."
       ]
     },
     {
@@ -92,7 +92,7 @@
         [
           "Price in pesos, local payment",
           "A dollar credit card keeps many farmers out",
-          "A free plan, and paid plans by GCash or bank transfer"
+          "A free plan, and paid plans you pay from any bank or wallet app"
         ],
         [
           "Records you can reuse",
@@ -227,7 +227,7 @@
     },
     {
       "type": "text",
-      "text": "Pay by GCash or bank transfer. A fair test is one lot on Libre for a full season, then decide if you need more."
+      "text": "Pay from any bank or wallet app. A fair test is one lot on Libre for a full season, then decide if you need more."
     },
     {
       "type": "cta",

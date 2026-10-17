@@ -76,7 +76,7 @@ class AdminOrdersController extends Controller
             'expected' => ['total' => (float) $o->total, 'number' => ManualPay::spacedNumber(), 'name' => ManualPay::settings()['gcashName']],
             'effect' => $o->effect,
             'timeline' => array_values(array_filter([
-                ['at' => $this->at($o->created_at), 'say' => 'Order opened, paying by ' . $o->methodLabel()],
+                ['at' => $this->at($o->created_at), 'say' => 'Order opened, paying by ' . $o->staffMethodLabel()],
                 $o->submittedAt ? ['at' => $this->at($o->submittedAt), 'say' => 'Proof sent (' . ($o->proofKind === 'ref' ? 'reference number' : $o->proofKind) . ')'] : null,
                 $o->aiCheckedAt ? ['at' => $this->at($o->aiCheckedAt), 'say' => 'Anee read the receipt: ' . ($o->aiStatus ?? '')] : null,
                 $o->approvedAt ? ['at' => $this->at($o->approvedAt), 'say' => 'Approved by ' . $this->who($o->decidedBy)] : null,
@@ -155,7 +155,7 @@ class AdminOrdersController extends Controller
             'kind' => $o->kind,
             'itemName' => $o->itemName,
             'method' => $o->method,
-            'methodLabel' => $o->methodLabel(),
+            'methodLabel' => $o->staffMethodLabel(),
             'currency' => $o->currency,
             'total' => (float) $o->total,
             'aiStatus' => $o->aiStatus,

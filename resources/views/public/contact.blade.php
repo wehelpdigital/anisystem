@@ -20,7 +20,7 @@
 @endphp
 
 @section('title', 'Contact anee.io: Help With Your Farm App')
-@section('meta_description', 'Questions about plans, ' . $pay . ' payments or using the app? Email support@anee.io and a real person on the anee.io team replies, usually within a business day.')
+@section('meta_description', 'Questions about plans, payments or using the app? Email support@anee.io and a real person on the anee.io team replies, usually within a business day.')
 
 {{-- CONTACT (rebuilt 2026-10-06 in the homepage's look). Still no form, on
      purpose: a contact form swallows a message, the sender cannot see what
@@ -46,7 +46,7 @@
                 <span class="hp-mark"><span class="hp-shimmer">to Help.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M6 13 Q 150 27, 294 5"/></svg></span>
             </h1>
             <p class="ct2-lede animate-fade-up" style="animation-delay:.12s">
-                Questions about plans, {{ $pay }} payments or setting up your season? Write to us. A real person reads
+                Questions about plans, payments or setting up your season? Write to us. A real person reads
                 every message and answers, usually within a business day.
             </p>
             <div class="ct2-routes animate-fade-up" style="animation-delay:.18s" role="group" aria-label="Faster ways to get help">
@@ -150,9 +150,9 @@
         $quick = [
             ['Is anee.io free?', 'Yes. The Libre plan is free forever, with one active season. Anee, your smart farm technician, comes with Libre + Anee for ' . $aneePrice . ' a month, and you can upgrade inside the app whenever your farm needs more.'],
             ['How do I pay for a plan?', $ph
-                ? 'Open My Subscription in the app, pick a plan and pay with GCash or a bank transfer, then send a screenshot of the receipt on the same screen. '
+                ? 'Open My Subscription in the app, pick a plan, scan the QR code with any bank or wallet app and pay, then send a screenshot of the receipt on the same screen. '
                     . ($payCfg['aiAutoApprove']
-                        ? 'Anee checks a GCash receipt in about a minute and your plan starts right away. Other payments are checked by a person, usually within ' . $reviewHours . ' hours.'
+                        ? 'Anee checks that receipt in about a minute and your plan starts right away. Other payments are checked by a person, usually within ' . $reviewHours . ' hours.'
                         : 'A person checks it, usually within ' . $reviewHours . ' hours, and your plan turns on by itself.')
                 : 'Open My Subscription in the app, pick a plan and pay with ' . $pay . ', then send the receipt on the same screen. A person checks it, usually within ' . $reviewHours . ' hours, and your plan turns on by itself.'],
             ['Can I ask Anee without an account?', 'Yes. If you do not have an account yet, you can ask Anee one free question a week on the Try and Ask Anee page. Members ask her inside the app, where she comes with Libre + Anee and every plan above it.'],

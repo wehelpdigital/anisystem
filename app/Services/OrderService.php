@@ -17,8 +17,9 @@ use RuntimeException;
  *
  *   start()   the buyer picks what and how to pay: an order waits (awaiting)
  *   submit()  the proof arrives: the order waits for a decision (review);
- *             a GCash receipt is read by Anee, and a GCash PLAN she can
- *             vouch for on every check is approved there and then
+ *             a QR receipt (from any bank or wallet app, paid to our GCash
+ *             account) is read by Anee, and a QR PLAN she can vouch for on
+ *             every check is approved there and then
  *   approve() the payment is good: the plan starts, or the credits land
  *   reject()  the payment could not be verified
  *   revoke()  an approval is taken back: the plan row is cancelled (and any
@@ -125,7 +126,7 @@ class OrderService
 
     /**
      * The proof: a picture or PDF of the receipt, a reference number, or
-     * both. The order goes to review; a GCash receipt is then read.
+     * both. The order goes to review; a QR receipt is then read.
      *
      * @return AsOrder the order as it stands after the proof (maybe approved)
      */
@@ -158,7 +159,7 @@ class OrderService
     }
 
     /**
-     * After the proof: read a GCash receipt, approve a plan Anee vouches for,
+     * After the proof: read a QR receipt, approve a plan Anee vouches for,
      * and tell everyone what happened. The buyer waits for this call when a
      * plan could be approved on the spot; for credits it runs after the page
      * has answered (the reading only helps the admin).
@@ -313,7 +314,7 @@ class OrderService
             'startsAt' => $start,
             'expiresAt' => $start->copy()->addDays((int) $o->days),
             'verifiedAt' => $now,
-            'notes' => 'Paid by ' . $o->methodLabel() . ', order ' . $o->orderNumber,
+            'notes' => 'Paid by ' . $o->staffMethodLabel() . ', order ' . $o->orderNumber,
             'deleteStatus' => 1,
         ]);
 
@@ -501,7 +502,7 @@ class OrderService
         $buyer = User::find($o->userId);
         foreach ($admins as $id) {
             $this->safe(fn () => $this->notes->notify((int) $id, 'order-admin', 'Payment to review: ' . $o->orderNumber,
-                trim(($buyer?->firstName . ' ' . $buyer?->lastName)) . ' · ' . $o->itemName . ' · ' . $o->methodLabel() . ' ' . number_format((float) $o->total, 2),
+                trim(($buyer?->firstName . ' ' . $buyer?->lastName)) . ' · ' . $o->itemName . ' · ' . $o->staffMethodLabel() . ' ' . number_format((float) $o->total, 2),
                 route('admin.orders', ['open' => $o->id])));
         }
     }

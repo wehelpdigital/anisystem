@@ -4,8 +4,10 @@
      account is confirmed by an emailed link, Libre is free forever so
      nothing is paid to start, workers and inventory are Solo Farmer and up,
      Anee is Libre + Anee and up, all reports past Labor are Solo Farmer and
-     up, and a plan is paid from My Subscription (GCash or bank at home,
-     PayPal abroad) with the receipt checked by Anee or by a person. The ten
+     up, and a plan is paid from My Subscription (the QR, which any bank or
+     wallet app pays, or a bank transfer at home; PayPal abroad; a wallet is
+     never named, the owner's rule of 2026-10-17) with the receipt checked by
+     Anee or by a person. The ten
      steps follow a season from sign up to the reports; paying has its own
      band after them, read from the same shelf the checkout reads. --}}
 @php
@@ -16,7 +18,7 @@
     $hours = (int) $payCfg['reviewHours'];
     $fast = $ph && $payCfg['aiAutoApprove'];
     $fee = (float) $payCfg['gcashFee'];
-    $payWays = $ph ? 'GCash or a bank transfer' : $pay;
+    $payWays = $ph ? 'any bank or wallet app' : $pay;
     $price = fn ($tier) => $R::priceTag($R::tierPrice($tier, 'month'));
     $tierName = fn ($tier) => config('tiers.' . $tier . '.name');
 @endphp
@@ -189,9 +191,15 @@
                 <h3>How to pay for a plan</h3>
                 <ol>
                     <li>In the app, open <b>My Subscription</b> and pick a plan, by the month or by the year.</li>
-                    <li>Pay with <b>{{ $payWays }}</b>.@if ($ph && $fee > 0) GCash adds a {{ $R::priceTag($fee) }} processing fee.@endif</li>
+                    <li>
+                        @if ($ph)
+                            Scan the QR code shown and pay from <b>{{ $payWays }}</b>.@if ($fee > 0) A {{ $R::priceTag($fee) }} processing fee is added.@endif
+                        @else
+                            Pay with <b>{{ $payWays }}</b>.
+                        @endif
+                    </li>
                     @if ($fast)
-                        <li>Send a <b>screenshot of the receipt</b> on the same screen. Anee checks a GCash receipt in about a minute, and your plan starts right away. A bank transfer, or a reference number with no screenshot, is checked by a person, usually within {{ $hours }} hours.</li>
+                        <li>Send a <b>screenshot of the receipt</b> on the same screen. Anee checks it in about a minute, and your plan starts right away. A bank transfer, or a reference number with no screenshot, is checked by a person, usually within {{ $hours }} hours.</li>
                     @else
                         <li>Send the <b>receipt</b> on the same screen. A person checks it, usually within {{ $hours }} hours, and your plan turns on by itself.</li>
                     @endif
@@ -219,13 +227,13 @@
                     [
                         'q' => 'How long until my plan starts?',
                         'a' => $fast
-                            ? 'A GCash receipt screenshot is the fastest: Anee checks it in about a minute and your plan starts right away. A bank transfer, or a reference number with no screenshot, is checked by a person, usually within ' . $hours . ' hours. You get an email once it is approved, so there is no need to keep checking.'
+                            ? 'A screenshot of the receipt is the fastest: Anee checks it in about a minute and your plan starts right away. A bank transfer, or a reference number with no screenshot, is checked by a person, usually within ' . $hours . ' hours. You get an email once it is approved, so there is no need to keep checking.'
                             : 'A person checks your payment, usually within ' . $hours . ' hours. You get an email once it is approved, and your plan turns on by itself, so there is no need to keep checking.',
                     ],
                     [
                         'q' => 'How can I pay?',
                         'a' => $ph
-                            ? 'With GCash or a bank transfer, from My Subscription in the app. GCash is the fastest way, because Anee can check its receipt in about a minute.'
+                            ? 'From any bank or wallet app: open My Subscription in the app, pick a plan and scan the QR code shown. Send a screenshot of the receipt and Anee checks it in about a minute.'
                             : 'With ' . $pay . ', from My Subscription in the app. Send the receipt on the same screen and a person checks it.',
                     ],
                     [

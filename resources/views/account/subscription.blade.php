@@ -202,7 +202,7 @@
         <div class="flex flex-wrap items-end justify-between gap-3 mb-3 px-1">
             <div>
                 <h2 class="text-base font-bold text-gray-900">Plans</h2>
-                <p class="text-sm text-gray-500">{{ Region::ph() ? 'Pay by GCash or bank transfer.' : 'Pay by PayPal.' }} Nothing renews by itself.</p>
+                <p class="text-sm text-gray-500">{{ Region::ph() ? 'Pay from any bank or wallet app.' : 'Pay by PayPal.' }} Nothing renews by itself.</p>
             </div>
             <div class="sp-toggle" id="spToggle" role="tablist" aria-label="Billing period">
                 <i aria-hidden="true"></i>

@@ -83,7 +83,7 @@ class PurchaseController extends Controller
         $user = $request->user();
 
         // The price is the country's (pesos at home, dollars elsewhere),
-        // and the proof field is a GCash number at home, a PayPal email elsewhere.
+        // and the proof field is the payer's mobile number at home, a PayPal email elsewhere.
         $price = \App\Support\Region::planPrice($plan);
         $payPH = \App\Support\Region::ph();
         $request->merge([
@@ -99,9 +99,9 @@ class PurchaseController extends Controller
             'notes' => ['nullable', 'string', 'max:2000'],
         ], [
             'amountSent.min' => 'The amount sent must be at least ' . \App\Support\Region::money($price) . ', the full plan price.',
-            'gcashPhone.regex' => 'Enter the GCash number in the format 09XXXXXXXXX (11 digits).',
-            'referenceNumber.required_without' => 'Provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
-            'screenshot.required_without' => 'Upload a screenshot of the payment or provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . '.',
+            'gcashPhone.regex' => 'Enter the mobile number you paid from in the format 09XXXXXXXXX (11 digits).',
+            'referenceNumber.required_without' => 'Provide the ' . ($payPH ? 'reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
+            'screenshot.required_without' => 'Upload a screenshot of the payment or provide the ' . ($payPH ? 'reference number' : 'PayPal transaction ID') . '.',
             'screenshot.max' => 'The screenshot must be 5 MB or smaller.',
             'screenshot.mimes' => 'The screenshot must be a JPG, PNG or WebP picture.',
         ]);

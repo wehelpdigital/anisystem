@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Orders')
-@section('subtitle', 'Payments by GCash, bank and PayPal')
+@section('subtitle', 'Payments by GCash QR, bank and PayPal')
 
 @section('bar')
     <div class="ad-chips" id="orChips">
@@ -154,7 +154,7 @@
     }
     function aiBlock(o) {
         const ai = o.ai;
-        if (!ai) return o.method === 'gcash' ? '<p class="text-sm text-gray-500">Not read yet.</p>' : '<p class="text-sm text-gray-500">Anee reads GCash receipts only. This one is checked by hand.</p>';
+        if (!ai) return o.method === 'gcash' ? '<p class="text-sm text-gray-500">Not read yet.</p>' : '<p class="text-sm text-gray-500">Anee reads QR receipts only (GCash, Maya or a bank app paying our GCash). This one is checked by hand.</p>';
         const icon = (ok) => ok === true ? '<i class="y">✓</i>' : ok === false ? '<i class="n">✕</i>' : '<i class="q">?</i>';
         const read = ai.read || {};
         return `<div class="od-verdict ${esc(ai.verdict)}"><b>${esc(aiWord[ai.verdict] || ai.verdict)}.</b>&nbsp;${esc(ai.summary || '')}</div>

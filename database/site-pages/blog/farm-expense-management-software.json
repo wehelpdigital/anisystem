@@ -89,7 +89,7 @@
         [
           "Can I pay locally?",
           "Not every farmer has a credit card",
-          "GCash or bank transfer, priced in pesos"
+          "Any bank or wallet app, priced in pesos"
         ]
       ]
     },
@@ -225,7 +225,7 @@
         },
         {
           "q": "How do I pay for anee.io?",
-          "a": "You pay in pesos by GCash or bank transfer in the Philippines. Monthly and yearly options are on the pricing page."
+          "a": "You pay in pesos from any Philippine bank or wallet app. Monthly and yearly options are on the pricing page."
         }
       ]
     },

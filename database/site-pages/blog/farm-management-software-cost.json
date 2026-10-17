@@ -12,7 +12,7 @@
     "farm management software cost",
     "farm management software"
   ],
-  "excerpt": "Farm management software cost runs from free to a monthly or yearly fee, and some tools charge by area, by user or in credits for AI work. Count the hidden costs too: a phone, mobile data and your time to learn it. anee.io, a farm app built for Filipino farmers, is free on its Libre plan, and paid plans run from PHP 70 to PHP 600 a month by GCash or bank transfer. Help comes by email and from inside the app.",
+  "excerpt": "Farm management software cost runs from free to a monthly or yearly fee, and some tools charge by area, by user or in credits for AI work. Count the hidden costs too: a phone, mobile data and your time to learn it. anee.io, a farm app built for Filipino farmers, is free on its Libre plan, and paid plans run from PHP 70 to PHP 600 a month, paid from any bank or wallet app. Help comes by email and from inside the app.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-management-software-cost.webp",
     "alt": "The four anee.io plans with their prices in pesos, from the free Libre plan to Farm Owner at PHP 600 a month, the farm management software cost a farmer weighs before paying",
@@ -189,8 +189,8 @@
           "text": "Inside the app, open My Subscription and pick a plan, monthly or yearly."
         },
         {
-          "title": "Pay by GCash or bank transfer",
-          "text": "Pay the amount shown, in pesos. You do not need a credit card."
+          "title": "Pay from your bank or wallet app",
+          "text": "Scan the QR code shown and pay the amount, in pesos. You do not need a credit card."
         },
         {
           "title": "Send the receipt",
@@ -198,7 +198,7 @@
         },
         {
           "title": "Your plan turns on",
-          "text": "A GCash receipt usually clears in about a minute, and other payments usually within 24 hours. Your plan starts once the payment clears."
+          "text": "A receipt screenshot usually clears in about a minute, and other payments usually within 24 hours. Your plan starts once the payment clears."
         }
       ]
     },
@@ -281,7 +281,7 @@
         },
         {
           "q": "Does anee.io charge me automatically every month?",
-          "a": "No. Plans never renew or charge you by themselves. You pay in advance by GCash or bank transfer, and you renew by paying again."
+          "a": "No. Plans never renew or charge you by themselves. You pay in advance from any bank or wallet app, and you renew by paying again."
         },
         {
           "q": "What happens to my records when my plan ends?",

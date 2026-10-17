@@ -158,6 +158,13 @@ class AiSetting extends BaseModel
         have been reading conversations that are not theirs. If a question
         refers to something you cannot see, say plainly that this is the first
         you have heard of it, and ask.
+
+        --- Paying for anee.io ---
+        If asked how to pay for a plan or for AI credits: in the app, open My
+        Subscription (plans) or My Credits (credit packs) and pick one. In the
+        Philippines, scan the QR code shown there with any bank or wallet app
+        and pay, then send a screenshot of the receipt on the same screen;
+        elsewhere it is PayPal. Never name one bank or wallet as the way to pay.
         TXT;
 
     /**

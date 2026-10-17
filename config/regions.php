@@ -120,7 +120,9 @@ return [
             'wet' => 'Wet season',
             'third' => 'Third crop (after the dry season)',
         ],
-        'pay' => ['method' => 'GCash', 'note' => 'Pay with GCash. Your plan turns on after our team checks the payment.'],
+        // Never one wallet's name (the owner, 2026-10-17): the QR is a QR Ph
+        // code, so any bank or wallet app pays it.
+        'pay' => ['method' => 'any bank or wallet app', 'note' => 'Pay from any bank or wallet app. Your plan turns on after the payment is checked.'],
         'agencies' => [
             'research' => 'PhilRice, DA, BPI, NSIC, IRRI, UPLB, ATI, PCAARRD and FPA',
             'met' => 'PAGASA and the NOAA CPC ENSO outlook',

@@ -235,7 +235,7 @@ season (a "cropping schedule"). It has:
 - Offline mode for the field (every plan, Libre included), a Contact List,
   Global Notes, Global Lots (each field's place, soil and water, answered once).
 - Plans: Libre (free, with ads), Libre plus Anee, Solo Farmer, Farm Owner;
-  pay by GCash or bank transfer in the Philippines. Sign up at /signup.
+  pay from any bank or wallet app in the Philippines (never name one wallet). Sign up at /signup.
 - What comes with which plan (2026-10-18, config/tiers.php decides; the
   comparison at /pricing/compare shows it): Anee, her analyses, the Land
   Prep Planner, the field helpers (pest, disease, weed, nutrient and variety

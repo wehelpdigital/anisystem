@@ -10,7 +10,15 @@ use App\Support\ManualPay;
 use Carbon\Carbon;
 
 /**
- * Anee reads a GCash receipt; the code decides (2026-09-30).
+ * Anee reads a payment receipt; the code decides (2026-09-30).
+ *
+ * The money reaches our GCash account, but the buyer is shown a QR Ph code
+ * and never the word GCash (the owner, 2026-10-17), so the receipt may come
+ * from GCash, Maya or any bank's app. Each is checked the same way: the
+ * amount, the reference, the receiving account and the date. Only what is
+ * GCash's own (a 13-digit Ref No., the name masked GCash's way) is asked of
+ * a GCash receipt alone; another app's reference has its own length, and a
+ * name it prints its own way is left to a person rather than failed.
  *
  * She is shown the uploaded picture or PDF with GcashReceipt::guide() and
  * asked only to READ it: what app, what kind of screen, the amount, the
@@ -19,23 +27,29 @@ use Carbon\Carbon;
  * the number she was hoping for.
  *
  * Then every check is made here, in code, against the order:
- *   a GCash app receipt, sent/successful; no editing seen; she is sure of it;
- *   the amount sent is the order's total to the centavo; the recipient is
- *   our GCash number (or, when the number is hidden, our masked name); a
- *   13-digit Ref No. never used on another order and matching any the buyer
- *   typed; the same file never sent before; and the payment made after the
- *   order was opened (and not in the future).
+ *   a receipt of GCash, Maya or a bank app, sent/successful; no editing
+ *   seen; she is sure of it; the amount the recipient got is the order's
+ *   total to the centavo; the recipient is our account (its mobile number,
+ *   the built-in QR's own account number, or, when no number shows, our
+ *   masked name); a reference never used on another order and matching any
+ *   the buyer typed (13 digits on a GCash receipt); the same file never sent
+ *   before; and the payment made after the order was opened (and not in
+ *   the future).
  * Only when all pass is the verdict "pass". A clear contradiction is "fail";
- * anything she could not read, or a receipt from another app, is "unsure".
- * Either way the order then waits for a person, with the reasons shown.
+ * anything she could not read, or a receipt of an app she does not know, is
+ * "unsure". Either way the order then waits for a person, with the reasons
+ * shown.
  *
  * The run is logged on as_ai_usage (kind 'receipt') at no charge to anyone:
- * the GCash processing fee on the order pays for it.
+ * the processing fee on a QR order pays for it.
  */
 class ReceiptCheck
 {
     /** How sure she must say she is, 0-100, before a pass. */
     public const SURE = 80;
+
+    /** The apps whose receipts can pass, as staff read them. */
+    public const APPS = ['gcash' => 'GCash', 'maya' => 'Maya', 'bank' => 'bank app', 'wallet' => 'wallet app'];
 
     public function __construct(private AiClient $ai) {}
 
@@ -85,12 +99,15 @@ class ReceiptCheck
         };
         $txt = fn ($v) => trim((string) ($v ?? ''));
 
-        // 1. A GCash receipt of a sent, successful payment.
+        // 1. A receipt of a sent, successful payment, from GCash, Maya or a
+        //    bank's app (the buyer is shown a QR Ph code, never told which).
         $isReceipt = (bool) ($read['isReceipt'] ?? false);
         $app = strtolower($txt($read['app'] ?? ''));
-        $add('receipt', 'A GCash payment receipt', $isReceipt && $app === 'gcash' ? true : ($isReceipt ? null : false),
+        $isGcash = $app === 'gcash';
+        $known = isset(self::APPS[$app]);
+        $add('receipt', 'A payment receipt (GCash, Maya or a bank app)', $isReceipt && $known ? true : ($isReceipt ? null : false),
             ! $isReceipt ? 'This does not look like a payment receipt.'
-                : ($app === 'gcash' ? 'A GCash ' . str_replace('_', ' ', $txt($read['kind'] ?? 'receipt')) . '.' : 'A receipt from ' . ($app ?: 'another app') . ', not the GCash app: checked by hand.'));
+                : ($known ? 'A ' . self::APPS[$app] . ' ' . str_replace('_', ' ', $txt($read['kind'] ?? 'receipt')) . '.' : 'A receipt from ' . ($app ?: 'an app') . ' Anee does not know: checked by hand.'));
         $status = strtolower($txt($read['status'] ?? ''));
         $add('status', 'Sent successfully', in_array($status, ['success', 'successful', 'sent', 'completed'], true) ? true : ($status === '' || $status === 'unknown' ? null : false),
             $status === '' || $status === 'unknown' ? 'No status could be read.' : 'It says: ' . $status . '.');
@@ -113,25 +130,48 @@ class ReceiptCheck
         $add('amount', 'The amount is ₱' . number_format($want, 2), $amount === null ? null : abs($amount - $want) < 0.01,
             $amount === null ? 'No amount could be read.' : 'The receipt shows ₱' . number_format($amount, 2) . '.');
 
-        // 4. The recipient: our number, or (when hidden) our masked name.
-        $numOk = GcashReceipt::numberMatches($read['recipientNumber'] ?? null, (string) $s['gcashNumber']);
-        $nameOk = GcashReceipt::nameMatches($read['recipientName'] ?? null, (string) $s['gcashName']);
-        $recipOk = $numOk === false ? false : ($numOk === true ? ($nameOk === false ? false : true) : ($nameOk === true ? true : ($nameOk === false ? false : null)));
-        $add('recipient', 'Sent to our GCash (' . ManualPay::spacedNumber() . ')', $recipOk,
-            'Read: ' . ($txt($read['recipientName'] ?? '') ?: 'no name') . ', ' . ($txt($read['recipientNumber'] ?? '') ?: 'no number') . '.');
+        // 4. The recipient: our number (the mobile number, or the built-in
+        //    QR's own account), or (when hidden) our masked name. GCash masks
+        //    names its own way; another app may print fewer or more words, so
+        //    there a name that cannot be compared is a person's call, not a no.
+        $acct = ManualPay::receiving();
+        $numOk = GcashReceipt::anyNumberMatches($read['recipientNumber'] ?? null, $acct['numbers']);
+        $nameRead = $read['recipientName'] ?? null;
+        $nameOk = GcashReceipt::nameMatches($nameRead, $acct['name'], $isGcash);
+        $qrNamed = $acct['qrName'] !== null && self::plain($nameRead) !== '' && self::plain($nameRead) === self::plain($acct['qrName']);
+        $toGcash = (bool) preg_match('/g\s*cash|g\s*xchange/i', $txt($read['recipientBank'] ?? ''));
+        if ($numOk === false) {
+            $recipOk = false;
+        } elseif ($numOk === true) {
+            $recipOk = $nameOk === false && ! $qrNamed ? ($isGcash ? false : null) : true;
+        } else {
+            // No number shows: the masked name alone, and from another app
+            // only with the destination printed as GCash.
+            $recipOk = $nameOk === true ? ($isGcash || $toGcash ? true : null) : ($nameOk === false && ! $qrNamed ? false : null);
+        }
+        $add('recipient', 'Sent to our account (GCash ' . ManualPay::spacedNumber() . ')', $recipOk,
+            'Read: ' . ($txt($nameRead) ?: 'no name') . ', ' . ($txt($read['recipientNumber'] ?? '') ?: 'no number')
+            . ($txt($read['recipientBank'] ?? '') !== '' ? ', at ' . $txt($read['recipientBank']) : '') . '.');
 
-        // 5. The Ref No.: 13 digits, new, and the one the buyer typed.
-        $ref = GcashReceipt::refDigits($read['referenceNumber'] ?? null);
-        $typed = GcashReceipt::refDigits($order->refNumber);
+        // 5. The reference: new, the one the buyer typed, and of the app's
+        //    shape: a GCash Ref No. is 13 digits; another app's reference is
+        //    letters and digits of its own length (6 to 32 here).
+        $ref = GcashReceipt::refKey($read['referenceNumber'] ?? null);
+        $typed = GcashReceipt::refKey($order->refNumber);
         $refUsed = $ref !== '' && AsOrder::where('id', '!=', $order->id)
             ->whereNotIn('status', [AsOrder::CANCELLED])
-            ->where(fn ($q) => $q->where('refNumber', $ref)->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(aiReport, '$.read.ref')) = ?", [$ref]))->exists();
-        $refOk = $ref === '' ? null : (strlen($ref) === 13 && ! $refUsed && ($typed === '' || $typed === $ref));
-        $add('ref', 'A new Ref No. (13 digits)', $refOk,
-            $ref === '' ? 'No Ref No. could be read.'
-                : ($refUsed ? 'Ref No. ' . $ref . ' was already used on another order.'
-                    : (strlen($ref) !== 13 ? 'Ref No. ' . $ref . ' is not 13 digits.'
-                        : ($typed !== '' && $typed !== $ref ? 'The typed Ref No. (' . $typed . ') is not the one on the receipt (' . $ref . ').' : 'Ref No. ' . $ref . '.'))));
+            ->where(fn ($q) => $q->whereRaw("UPPER(REPLACE(REPLACE(REPLACE(refNumber, ' ', ''), '-', ''), '.', '')) = ?", [$ref])
+                ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(aiReport, '$.read.ref')) = ?", [$ref]))->exists();
+        $shapeOk = $isGcash ? (strlen($ref) === 13 && ctype_digit($ref)) : (strlen($ref) >= 6 && strlen($ref) <= 32);
+        $typedOff = $typed !== '' && $typed !== $ref;
+        // A buyer paying from a bank may type its trace number instead: only
+        // a GCash receipt has one number to type, so only there is it a no.
+        $refOk = $ref === '' ? null : ($refUsed || ! $shapeOk ? false : ($typedOff ? ($isGcash ? false : null) : true));
+        $add('ref', $isGcash ? 'A new Ref No. (13 digits)' : 'A new reference number', $refOk,
+            $ref === '' ? 'No reference number could be read.'
+                : ($refUsed ? 'Reference ' . $ref . ' was already used on another order.'
+                    : (! $shapeOk ? 'Reference ' . $ref . ($isGcash ? ' is not 13 digits.' : ' is not the shape of a reference (6 to 32 letters and digits).')
+                        : ($typedOff ? 'The typed reference (' . $typed . ') is not the one on the receipt (' . $ref . ').' : 'Reference ' . $ref . '.'))));
 
         // 6. The same file never sent before.
         $dupe = app(OrderService::class)->shaSeenElsewhere($order->proofSha, $order->id);
@@ -158,9 +198,16 @@ class ReceiptCheck
         return $this->report($verdict, $summary, $checks, [
             'app' => $app, 'kind' => $txt($read['kind'] ?? ''), 'status' => $status,
             'amount' => $amount, 'recipientName' => $txt($read['recipientName'] ?? ''), 'recipientNumber' => $txt($read['recipientNumber'] ?? ''),
+            'recipientBank' => $txt($read['recipientBank'] ?? ''),
             'senderName' => $txt($read['senderName'] ?? ''), 'ref' => $ref, 'dateTime' => $when?->toDateTimeString(),
             'authenticity' => $score, 'notes' => mb_substr($txt($read['notes'] ?? ''), 0, 500),
         ]);
+    }
+
+    /** Letters and digits only, lower case: "ANEE.IO" and "anee io" read alike. */
+    private static function plain(mixed $v): string
+    {
+        return strtolower((string) preg_replace('/[^A-Za-z0-9]/', '', (string) ($v ?? '')));
     }
 
     /**
@@ -196,14 +243,15 @@ or complete anything. Reply with one JSON object and nothing else:
 
 {
   "isReceipt": true or false,          // a payment confirmation or receipt at all?
-  "app": "gcash" | "maya" | "bank" | "other" | "unknown",   // whose screen or document it is
-  "kind": "express_send" | "qr_payment" | "instapay_transfer" | "transaction_detail" | "sms" | "other",
+  "app": "gcash" | "maya" | "bank" | "wallet" | "other" | "unknown",   // whose screen or document it is: the GCash app, Maya, a bank's app or site, another wallet app
+  "kind": "express_send" | "qr_payment" | "instapay_transfer" | "bank_transfer" | "transaction_detail" | "sms" | "other",
   "status": "success" | "pending" | "failed" | "unknown",
   "amountToRecipient": number or null,  // what the recipient receives, excluding any fee charged to the sender
   "amount": number or null,             // the "Total Amount Sent" or total shown
   "currency": "PHP" | "other",
   "recipientName": "as printed, keeping its masking" or null,
-  "recipientNumber": "as printed, keeping its masking" or null,
+  "recipientNumber": "the recipient's mobile or account number as printed, keeping its masking" or null,
+  "recipientBank": "the destination bank or wallet as printed (e.g. GCash, G-Xchange)" or null,
   "senderName": "as printed" or null,
   "referenceNumber": "exactly as printed" or null,
   "dateTime": "YYYY-MM-DD HH:MM (24-hour, as printed, Philippine time)" or null,

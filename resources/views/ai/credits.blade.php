@@ -119,7 +119,7 @@
         <div class="card p-4 border-l-4 border-accent-500">
             <p class="font-bold text-gray-900">Order {{ $pending->orderNumber }} is being checked</p>
             <p class="text-sm text-gray-500 mt-1">
-                We add {{ $pending->credits }} credits ({{ $pending->packName }}) once your {{ \App\Support\Region::payMethod() }} payment is confirmed.
+                We add {{ $pending->credits }} credits ({{ $pending->packName }}) once your payment is confirmed.
                 This usually takes a few hours.
             </p>
         </div>
@@ -224,7 +224,7 @@
                     </div>
                 @endforeach
             </div>
-            <p class="text-xs text-gray-500 px-1">Pay by {{ \App\Support\Region::payMethod() }}. Our team checks it, usually within a few hours. Credits never expire.</p>
+            <p class="text-xs text-gray-500 px-1">Pay through {{ \App\Support\Region::payMethod() }}. Our team checks it, usually within a few hours. Credits never expire.</p>
         @endif
     </div>
 </div>

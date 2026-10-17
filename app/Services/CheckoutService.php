@@ -151,7 +151,7 @@ class CheckoutService
                 'fieldChanged' => 'paymentMethod',
                 'previousValue' => null,
                 'newValue' => 'manual_gcash',
-                'description' => 'Customer submitted payment details via ' . \App\Support\Region::payMethod() . ' from anee.io. Amount: ' . \App\Support\Region::symbol() . number_format($amountSent, 2)
+                'description' => 'Customer submitted payment details via ' . (\App\Support\Region::ph() ? 'GCash' : 'PayPal') . ' from anee.io. Amount: ' . \App\Support\Region::symbol() . number_format($amountSent, 2)
                     .($referenceNumber ? '. Ref: '.$referenceNumber : ''),
                 'ipAddress' => request()->ip(),
                 'userAgent' => request()->userAgent(),
@@ -287,7 +287,7 @@ class CheckoutService
                 'fieldChanged' => 'paymentMethod',
                 'previousValue' => null,
                 'newValue' => 'manual_gcash',
-                'description' => 'Customer submitted payment details via ' . \App\Support\Region::payMethod() . ' from anee.io (AI Credits). Amount: ' . \App\Support\Region::symbol() . number_format($amountSent, 2)
+                'description' => 'Customer submitted payment details via ' . (\App\Support\Region::ph() ? 'GCash' : 'PayPal') . ' from anee.io (AI Credits). Amount: ' . \App\Support\Region::symbol() . number_format($amountSent, 2)
                     .($referenceNumber ? '. Ref: '.$referenceNumber : ''),
                 'ipAddress' => request()->ip(),
                 'userAgent' => request()->userAgent(),

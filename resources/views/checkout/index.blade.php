@@ -52,7 +52,7 @@
     .co-method.is-picked { border-color: #4a7c2a; box-shadow: 0 0 0 4px rgb(74 124 42 / .12); }
     .co-method:disabled { opacity: .55; cursor: not-allowed; }
     .co-method .logo { flex: none; width: 2.8rem; height: 2.8rem; border-radius: .85rem; display: grid; place-items: center; font-weight: 900; color: #fff; font-size: 1.15rem; }
-    .co-method .logo.gcash { background: #0a58f5; }
+    .co-method .logo.gcash { background: #1f6f8b; }
     .co-method .logo.bank { background: #2d5016; }
     .co-method .logo.paypal { background: #003087; }
     .co-method b { display: block; color: #14210c; font-weight: 800; }
@@ -179,17 +179,19 @@
     <section class="co-step" data-step="1">
         <div class="card p-5 mt-4">
             <h2 class="co-h">How will you pay?</h2>
-            <p class="co-sub">{{ $isPh ? 'No card payments yet. Pay by GCash or bank transfer, then send us the receipt.' : 'Pay by PayPal, then send us the receipt.' }}</p>
+            <p class="co-sub">{{ $isPh ? 'No card payments yet. Pay from any bank or wallet app, then send us the receipt.' : 'Pay by PayPal, then send us the receipt.' }}</p>
             <div class="co-methods" role="radiogroup" aria-label="How you will pay">
                 @foreach ($methods as $key => $m)
                     <button type="button" class="co-method" role="radio" aria-checked="false" data-method="{{ $key }}" @disabled(! $m['ready'])>
-                        <span class="logo {{ $key }}" aria-hidden="true">{{ ['gcash' => 'G', 'bank' => '🏦', 'paypal' => 'P'][$key] ?? '₱' }}</span>
+                        {{-- The 'gcash' key is the QR: a QR Ph code any bank or wallet app pays. A buyer never reads which wallet it is (the owner, 2026-10-17). --}}
+                        <span class="logo {{ $key }}" aria-hidden="true">@if ($key === 'gcash')<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path stroke-linecap="round" d="M14 14h3v3M21 14v.01M14 21h.01M17.5 21H21v-3.5"/></svg>@else{{ ['bank' => '🏦', 'paypal' => 'P'][$key] ?? '₱' }}@endif</span>
                         <span class="min-w-0">
                             <b>{{ $m['label'] }}</b>
                             <small>
                                 @if (! $m['ready'])
-                                    Not available yet. Please use {{ $isPh ? 'GCash' : 'another way' }} for now.
+                                    Not available yet. Please use {{ $isPh ? 'the QR code' : 'another way' }} for now.
                                 @elseif ($key === 'gcash')
+                                    Scan it with any bank or wallet app.
                                     @if ($aiPlan) Anee checks it in about a minute, so your plan starts right away. @else A person checks it, usually within {{ $pay['reviewHours'] }} hours. @endif
                                     Plus a {{ $money($gcashFee) }} processing fee.
                                 @else
@@ -203,7 +205,7 @@
             </div>
             <div class="co-lines">
                 <div><span>{{ $isPlan ? 'Plan' : ($isAddon ? 'Field helpers, 1 month' : 'Credits') }}</span><span>{{ $money($showPrice) }}</span></div>
-                <div id="coFeeLine" hidden><span>GCash processing fee</span><span>{{ $money($gcashFee) }}</span></div>
+                <div id="coFeeLine" hidden><span>Processing fee</span><span>{{ $money($gcashFee) }}</span></div>
                 <div class="tot"><span>You pay</span><span id="coTotal">{{ $money($showPrice) }}</span></div>
             </div>
             <div class="co-actions">
@@ -223,26 +225,29 @@
             </div>
             <div class="co-warn" role="note">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
-                <span><b>Send exactly this amount.</b> Wrong payments are not refunded. Check the amount and number twice before you send.</span>
+                <span><b>Send exactly this amount.</b> Wrong payments are not refunded. Check the amount and the name twice before you send.</span>
             </div>
 
-            {{-- GCash --}}
+            {{-- The QR. It is a QR Ph code, so any bank or wallet app that
+                 scans QR Ph pays it (InstaPay). The account behind it is a
+                 GCash wallet, which only staff screens say. --}}
             <div data-pay="gcash" hidden>
                 <div class="co-acct">
-                    <div class="co-acct-row"><div class="min-w-0"><small>GCash number</small><b>{{ \App\Support\ManualPay::spacedNumber() }}</b></div>
-                        <button type="button" class="co-copy" data-copy="{{ preg_replace('/\D/', '', $pay['gcashNumber']) }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copy</button></div>
-                    <div class="co-acct-row"><div class="min-w-0"><small>Account name in GCash</small><b>{{ $pay['gcashName'] }}</b></div></div>
                     <div class="co-qr">
-                        <small class="text-xs font-extrabold uppercase tracking-wider text-gray-400">Or scan this QR code</small>
-                        <img src="{{ $qrUrl }}" alt="GCash QR code for anee.io" id="coQr" width="482" height="641" loading="lazy">
-                        <a href="{{ $qrUrl }}" download="anee-gcash-qr.png" class="co-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Save QR</a>
+                        <small class="text-xs font-extrabold uppercase tracking-wider text-gray-400">Scan this QR code</small>
+                        <img src="{{ $qrUrl }}" alt="QR code for paying anee.io" id="coQr" width="482" height="641" loading="lazy">
+                        <a href="{{ $qrUrl }}" download="anee-io-qr.png" class="co-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Save QR</a>
                     </div>
+                    <div class="co-acct-row"><div class="min-w-0"><small>Account name</small><b>{{ $pay['gcashName'] }}</b></div></div>
+                    <div class="co-acct-row"><div class="min-w-0"><small>Mobile number</small><b>{{ \App\Support\ManualPay::spacedNumber() }}</b></div>
+                        <button type="button" class="co-copy" data-copy="{{ preg_replace('/\D/', '', $pay['gcashNumber']) }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copy</button></div>
                 </div>
                 <ol class="co-how">
-                    <li><span>Open GCash and tap <b>Send</b> › <b>Express Send</b>, or <b>QR</b> › <b>Upload QR</b> with the saved QR.</span></li>
-                    <li><span>Send exactly <b data-total-text></b> to <b>{{ \App\Support\ManualPay::spacedNumber() }}</b>.</span></li>
+                    <li><span>Open your bank or wallet app and scan the QR code. Most apps call it <b>Scan QR</b> or <b>QR Ph</b>. You can also upload the saved QR from your photos.</span></li>
+                    <li><span>Send exactly <b data-total-text></b>. Before you pay, check that your app shows this name: <b>{{ $pay['gcashName'] }}</b></span></li>
                     <li><span>Screenshot the receipt screen. That is what we check.</span></li>
                 </ol>
+                <p class="co-sub mt-3">If your bank or wallet adds its own transfer fee, that is fine. What must arrive is exactly <b data-total-text></b>.</p>
             </div>
 
             {{-- Bank --}}
@@ -286,7 +291,7 @@
     <section class="co-step" data-step="3">
         <form class="card p-5 mt-4" id="coProof" novalidate>
             <h2 class="co-h">Send us your receipt</h2>
-            <p class="co-sub">Send one of these. {{ $aiPlan ? 'A GCash receipt screenshot is fastest. Anee checks it in about a minute.' : 'A person checks it, usually within ' . $pay['reviewHours'] . ' hours.' }}</p>
+            <p class="co-sub" id="coProofSub">Send one of these. A person checks it, usually within {{ $pay['reviewHours'] }} hours.</p>
             <div class="co-seg" role="tablist">
                 <button type="button" class="is-on" data-proof="image" role="tab" aria-selected="true">Screenshot</button>
                 <button type="button" data-proof="pdf" role="tab" aria-selected="false">PDF receipt</button>
@@ -308,7 +313,7 @@
             </div>
             <div class="co-field" data-proof-pane="ref">
                 <label for="coRef" id="coRefLabel">Reference number <span class="font-medium text-gray-400">(optional)</span></label>
-                <input type="text" id="coRef" class="form-input" inputmode="numeric" autocomplete="off" maxlength="40" placeholder="{{ $isPh ? 'e.g. 1023 796 539709' : 'The transaction ID' }}">
+                <input type="text" id="coRef" class="form-input" autocomplete="off" autocapitalize="characters" maxlength="40" placeholder="{{ $isPh ? 'As printed on your receipt' : 'The transaction ID' }}">
             </div>
             <div class="co-hint" id="coRefOnlyHint" hidden>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -316,7 +321,7 @@
             </div>
             <div class="co-field">
                 <label for="coNote">A note for us <span class="font-medium text-gray-400">(optional)</span></label>
-                <input type="text" id="coNote" class="form-input" maxlength="500" placeholder="e.g. paid from my wife's GCash">
+                <input type="text" id="coNote" class="form-input" maxlength="500" placeholder="e.g. paid from my wife's account">
             </div>
             <div class="co-actions">
                 <button type="submit" class="btn btn-primary btn-lg" id="coSend">Send receipt</button>
@@ -347,6 +352,7 @@
     const AI_PLAN = @json($aiPlan);
     const PRICE = {{ $showPrice }};
     const FEE = { gcash: {{ $gcashFee }} };
+    const REVIEW_HOURS = {{ (int) $pay['reviewHours'] }};
     const START_URL = @json(route('checkout.start'));
     const LINKS = {
         farm: @json(route('app.dashboard')),
@@ -415,9 +421,13 @@
         $$('[data-total-text]').forEach((e) => { e.textContent = order.totalText; });
         $('#coPayNumber').textContent = order.number;
         $('#coPayTitle').textContent = 'Send ' + order.totalText + ' by ' + order.methodLabel;
-        // The proof step speaks the method's language.
-        const gcash = order.method === 'gcash';
-        $('#coRef').placeholder = gcash ? 'e.g. 1023 796 539709' : (order.method === 'paypal' ? 'The PayPal transaction ID' : 'The bank reference number');
+        // The proof step speaks the method's language. The QR's receipt may
+        // come from any bank or wallet app, so its reference has no one shape.
+        const qr = order.method === 'gcash';
+        $('#coRef').placeholder = qr ? 'As printed on your receipt' : (order.method === 'paypal' ? 'The PayPal transaction ID' : 'The bank reference number');
+        $('#coProofSub').textContent = 'Send one of these. ' + (AI_PLAN && qr
+            ? 'A screenshot of the receipt is fastest: Anee checks it in about a minute.'
+            : 'A person checks it, usually within ' + REVIEW_HOURS + ' hours.');
     }
     $('#coChange').addEventListener('click', async () => {
         if (order?.status === 'awaiting') {
@@ -482,11 +492,11 @@
     ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('is-over'); }));
     ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('is-over'); }));
     drop.addEventListener('drop', (e) => { if (e.dataTransfer.files[0]) { file.files = e.dataTransfer.files; paintFile(); } });
-    // A GCash Ref No. reads best in its own 4-3-6 groups.
+    // A reference is letters and digits; anything else typed is dropped.
+    // Its length is the paying app's own, so it is not grouped or cut.
     $('#coRef').addEventListener('input', (e) => {
-        if (order?.method !== 'gcash') return;
-        const d = e.target.value.replace(/\D/g, '').slice(0, 13);
-        e.target.value = [d.slice(0, 4), d.slice(4, 7), d.slice(7)].filter(Boolean).join(' ');
+        const v = e.target.value.replace(/[^A-Za-z0-9 ]/g, '');
+        if (v !== e.target.value) e.target.value = v;
     });
 
     $('#coProof').addEventListener('submit', async (e) => {
@@ -497,8 +507,8 @@
             window.toast?.(proofKind === 'ref' ? 'Type the reference number.' : 'Choose the receipt first, or type the reference number.', 'error');
             return;
         }
-        if (order?.method === 'gcash' && proofKind === 'ref' && ref.replace(/\D/g, '').length !== 13) {
-            window.toast?.('A GCash reference number has 13 digits.', 'error');
+        if (proofKind === 'ref' && ref.replace(/[^A-Za-z0-9]/g, '').length < 6) {
+            window.toast?.('Type the whole reference number, as printed on your receipt.', 'error');
             return;
         }
         const fd = new FormData();
