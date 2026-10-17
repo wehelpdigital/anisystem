@@ -232,7 +232,7 @@ return [
         'name'    => 'Farm Owner',
         'price'   => 600,
         'period'  => 'month',
-        'priceYear' => 6500,
+        'priceYear' => 6480,   // a year saves at least 10% (2026-10-19, the owner): 12 x 600 less 10%
         'match'   => ['owner', 'farm owner', 'boss', 'lifetime', 'life time'],
         'tagline' => 'Run the whole farm, with your crew.',
 

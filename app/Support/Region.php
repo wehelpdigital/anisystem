@@ -28,6 +28,9 @@ final class Region
     public const COOKIE = 'anee_country';
     public const USD_KEY = 'prices.usd';
 
+    /** A year of a plan saves at least this much against twelve months (2026-10-19, the owner). */
+    public const YEAR_SAVE_MIN = 0.10;
+
     private static ?string $memo = null;
     /** @var array<string, array> */
     private static array $confMemo = [];
@@ -382,11 +385,34 @@ final class Region
             return null;
         }
         if (self::ph() || (float) $peso == 0.0) {
-            return (float) $peso;
+            return $period === 'year' && (float) $peso > 0 ? self::yearCap($tier, (float) $peso) : (float) $peso;
         }
         $usd = self::usd()['tiers'][$tier][$period] ?? null;
+        $price = $usd !== null ? (float) $usd : self::roughUsd((float) $peso);
 
-        return $usd !== null ? (float) $usd : self::roughUsd((float) $peso);
+        return $period === 'year' ? self::yearCap($tier, $price) : $price;
+    }
+
+    /** A yearly price held to at least YEAR_SAVE_MIN off twelve months, in this country's money. */
+    private static function yearCap(string $tier, float $year): float
+    {
+        $month = self::tierPrice($tier, 'month');
+        if (! $month) {
+            return $year;
+        }
+        $cap = $month * 12 * (1 - self::YEAR_SAVE_MIN);
+        $cap = self::ph() ? floor($cap) : floor($cap) + 0.99 - ($cap - floor($cap) < 0.99 ? 1 : 0);
+
+        return min($year, $cap);
+    }
+
+    /** What a year saves against twelve months, in whole percent (0 when there is no yearly price). */
+    public static function yearSave(string $tier): int
+    {
+        $m = self::tierPrice($tier, 'month');
+        $y = self::tierPrice($tier, 'year');
+
+        return $m && $y ? (int) round((1 - $y / ($m * 12)) * 100) : 0;
     }
 
     /** A legacy plan's price (anisystem_plans) for this country. */
@@ -649,7 +675,9 @@ final class Region
 
                 return [$tier => [
                     'price' => $fmt($m), 'per' => '/month',
-                    'year' => $y ? 'or ' . $fmt($y) . ' a year (about ' . $fmt(round($y / 12, 2)) . ' a month)' : '',
+                    'year' => $y ? 'or ' . $fmt($y) . ' a year (about ' . $fmt(round($y / 12, 2)) . ' a month)' . (self::yearSave($tier) > 0 ? ', you save ' . self::yearSave($tier) . '%' : '') : '',
+                    // The year straight to checkout from the upgrade sheet (2026-10-19).
+                    'yearSave' => self::yearSave($tier), 'yearItem' => $y ? $tier . ':year' : null,
                     // The sheet's lines, from config/tiers.php `sheet` (2026-10-18), so they follow the plans.
                     'points' => array_values((array) config('tiers.' . $tier . '.sheet', [])),
                 ]];

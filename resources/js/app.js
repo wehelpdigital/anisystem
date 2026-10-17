@@ -2709,7 +2709,7 @@ window.creditCoin = function creditCoin(text) {
 const AU_TIERS = {
     libreAnee: {
         name: 'Libre + Anee',
-        price: auRegionTier('libreAnee', 'price', '₱70'), per: '/month', year: auRegionTier('libreAnee', 'year', 'or ₱700/year, about ₱58/mo'),
+        price: auRegionTier('libreAnee', 'price', '₱70'), per: '/month', year: auRegionTier('libreAnee', 'year', 'or ₱700/year, about ₱58/mo, you save 17%'),
         points: auRegionPoints('libreAnee', [
             'Your Libre plan exactly as it is',
             'Anee AI chat: ask anything, show a photo',
@@ -2720,7 +2720,7 @@ const AU_TIERS = {
     },
     solo: {
         name: 'Solo Farmer',
-        price: auRegionTier('solo', 'price', '₱200'), per: '/month', year: auRegionTier('solo', 'year', 'or ₱1,800/year, about ₱150/mo'),
+        price: auRegionTier('solo', 'price', '₱200'), per: '/month', year: auRegionTier('solo', 'year', 'or ₱1,800/year, about ₱150/mo, you save 25%'),
         points: auRegionPoints('solo', [
             'Everything in Libre + Anee',
             '3 active seasons, 5 lots each',
@@ -2732,7 +2732,7 @@ const AU_TIERS = {
     },
     owner: {
         name: 'Farm Owner',
-        price: auRegionTier('owner', 'price', '₱600'), per: '/month', year: auRegionTier('owner', 'year', 'or ₱6,500/year, about ₱542/mo'),
+        price: auRegionTier('owner', 'price', '₱600'), per: '/month', year: auRegionTier('owner', 'year', 'or ₱6,480/year, about ₱540/mo, you save 10%'),
         points: auRegionPoints('owner', [
             'Everything in Solo Farmer, unlimited',
             'Worker logins and access levels',
@@ -2742,6 +2742,11 @@ const AU_TIERS = {
     },
 };
 
+/* The year of a rung, as the layout's window.ANEE_REGION.tiers says it: its saving and checkout item. */
+const auYear = (rung) => {
+    const t = ((window.ANEE_REGION || {}).tiers || {})[rung];
+    return t && t.yearItem ? { item: t.yearItem, save: Number(t.yearSave) || 0 } : null;
+};
 /* A rung key as the server may spell it, to the card's key. */
 const auRung = (tier) => {
     const k = String(tier || '').trim();
@@ -2833,6 +2838,8 @@ window.aneeUpgrade = function aneeUpgrade(message, tier) {
         + card
         + '<div class="au-acts">'
         + '<a class="btn btn-accent" href="/account/subscription">' + (t ? 'Upgrade your plan' : 'See the plans') + '</a>'
+        // A year saves at least 10% (2026-10-19, the owner): straight to checkout for the year.
+        + (t && auYear(rung) ? '<a class="btn btn-white au-year" href="/checkout?item=' + encodeURIComponent(rung + ':year') + '">Pay for a year' + (auYear(rung).save > 0 ? ' and save ' + auYear(rung).save + '%' : '') + '</a>' : '')
         + '<button type="button" class="btn btn-white" data-au-close>Not now</button>'
         + '</div></div>';
     box.classList.add('is-open');
