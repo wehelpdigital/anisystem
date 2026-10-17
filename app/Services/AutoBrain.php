@@ -68,12 +68,12 @@ class AutoBrain
             if ($rec) {
                 $row['varietyKnown'] = ltrim(VarietyBook::promptLines([$rec]), '- ');
             }
-            if ($at && $withWeather) {
             // The area's typical soil from samples taken there (the soil atlas, 2026-10-18): never a test of this lot.
             $aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::for($lot->locProvince, $lot->locTown, $lot->locBarangay, $lot->crop), 'short');
             if ($aw !== '') {
                 $row['areaSoil'] = preg_replace('/^[^\n]*\n/', '', $aw);
             }
+            if ($at && $withWeather) {
                 $row['soilGrids'] = $this->soilGrids($at[0], $at[1]);
                 $row['forecast'] = $this->forecastWords($at[0], $at[1]);
             }
