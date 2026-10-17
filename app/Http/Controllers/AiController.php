@@ -1390,7 +1390,8 @@ class AiController extends Controller
 
         $bits = array_filter([
             'Crop: ' . ($schedule->cropType ?: 'not set'),
-            $schedule->cropVariety ? 'Variety: ' . $schedule->cropVariety : null,
+            // What the records know of the variety (2026-10-18), in one line, never its source.
+            $schedule->cropVariety ? 'Variety: ' . $schedule->cropVariety . (($vf = \App\Support\VarietyBook::factsLine((string) $schedule->cropType, (string) $schedule->cropVariety)) !== '' ? ' (known: ' . $vf . ')' : '') : null,
             $lots ? 'Lots: ' . $lots : null,
         ]);
 

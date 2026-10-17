@@ -801,7 +801,8 @@ class WhatToPlantController extends Controller
         // The field's twenty years of measured weather and the province's kept risk tally (2026-10-18): monthRisk is read from them.
         $rk = \App\Support\ClimateRecord::placeKey((string) $p['location'], $p['country'] ?? null);
         // Built while the farmer's request waits: what the shelf keeps, no lookup.
-        $history = \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, [], false, false) . \App\Support\ClimateRecord::words($rk['key'], $rk['place'], false);
+        // The town's own twenty years of storms, floods, dry spells and heat when the hazard book knows it (2026-10-18, the hazard history agent's block), else the province's kept tally.
+        $history = \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, [], false, false) . \App\Support\ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], false);
         // The field in detail, when the farmer gave it: one compact line.
         $fieldLine = FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []));
 
@@ -849,14 +850,41 @@ class WhatToPlantController extends Controller
                 ($p['elevation'] ?? '') === 'highland' ? 'cool' : null,
             ]));
             $words = ['saline' => 'salt tolerant', 'flood' => 'flood tolerant', 'drought' => 'drought or rainfed', 'cool' => 'cool highland'];
+            // A variety bred for the ground, or rated tolerant of its stress in its registration trials (2026-10-18).
+            $stressOf = ['saline' => 'salinity', 'flood' => 'submergence', 'drought' => 'drought', 'cool' => 'cold'];
+            $tolerant = fn (array $r, string $w) => in_array((string) ($r['trials']['stress'][$stressOf[$w]] ?? ''), ['moderately tolerant', 'tolerant', 'highly tolerant'], true);
             foreach ($want as $w) {
-                $n = count(array_filter(\App\Support\VarietyBook::rows('rice'), fn ($r) => in_array($w, $r['envs'], true) || ($w === 'drought' && array_intersect(['rainfed-tpr', 'rainfed-dsr', 'upland'], $r['envs']))));
+                $n = count(array_filter(\App\Support\VarietyBook::rows('rice'), fn ($r) => in_array($w, $r['envs'], true) || ($w === 'drought' && array_intersect(['rainfed-tpr', 'rainfed-dsr', 'upland'], $r['envs'])) || $tolerant($r, $w)));
                 if ($n) {
                     $hard[] = $n . ' registered ' . $words[$w] . ' rice varieties';
                 }
             }
+            // Corn on a dry or flooded field: the hybrids rated tolerant in their trials.
+            foreach (['drought' => 'drought', 'flood' => 'submergence'] as $w => $stress) {
+                if (in_array($w, $want, true)) {
+                    $n = count(array_filter(\App\Support\VarietyBook::rows('corn_yellow'), fn ($r) => in_array((string) ($r['trials']['stress'][$stress] ?? ''), ['moderately tolerant', 'tolerant', 'highly tolerant'], true)));
+                    if ($n) {
+                        $hard[] = $n . ' registered ' . $words[$w] . ' corn varieties';
+                    }
+                }
+            }
         }
         $hardLine = $hard ? '- Varieties on record bred for this ground: ' . implode('; ', $hard) . ". Where a crop has varieties bred for the field's hard ground, that lifts its fit.survival; say so in its why.\n" : '';
+        // The area's typical soil from the soil atlas (2026-10-18, the soil atlas agent's block).
+        $soilLine = '';
+        if ($fieldPH && class_exists(\App\Support\SoilAtlas::class)) {
+            try {
+                $atlas = \App\Support\SoilAtlas::forWhere((string) $p['location'], null);
+                if ($atlas && ($sw = \App\Support\SoilAtlas::words($atlas, 'short')) !== '') {
+                    $soilLine = "- The area's typical soil (for the area, not a test of this field):\n" . $sw . "\n";
+                    if (in_array(\App\Support\SoilAtlas::saltRisk($atlas), ['moderate', 'severe'], true)) {
+                        $soilLine .= "- The coastal land of this town often holds salt (typical for the area, not a test of this field): favour salt tolerant crops, and say so.\n";
+                    }
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
         // The crops the farmer has in mind, by the book's name, plus their own words.
         $askedNames = array_map(fn ($k) => (string) ($book[$k]['label'] ?? $k), self::picks($book, $p['cropsAsked'] ?? []));
         $asked = ($askedNames ? implode('; ', $askedNames) : '')
@@ -901,14 +929,14 @@ FACTS GIVEN
 - Crops the farmer has in mind (each must be analysed and ranked, honestly): {$asked}
 - Crop families the farmer does NOT want at all: {$excludedLine}. Families still in play: {$familiesLeft}.
 - What matters most to the farmer, in their order, with the weight each carries in the score: {$prioLine}
-{$ensoBlock}{$history}{$hardLine}
+{$ensoBlock}{$history}{$hardLine}{$soilLine}
 GROUND RULES
 - BE REALISTIC ABOUT THE PLACE. Recommend only crops that are actually grown commercially and sold in {$countryName}, and that really grow in the climate of the region and elevation named — the climate decides, not the wish list. Concretely: {$realism}. A crop that cannot grow in that climate is simply left out; it is not a recommendation and not padding for the avoid list.
 - CANDIDATE POOL. Choose the top pick and every recommendation from these crops, which this app keeps a calendar for in {$countryName} (days to harvest in brackets, and where the app keeps variety records, how many varieties are registered and the spread of their days, so a crop's daysToHarvest can reflect its early and late varieties): {$pool}. If a crop that is genuinely important in the region named is missing from the pool, you may add it only when it is really grown commercially there, and you must say so in dataGaps.
 - THE FARMER'S OWN CROPS. Every crop listed under "crops the farmer has in mind" must appear in recommendations with farmerAsked true, scored and ranked as honestly as your own picks: if it fits this ground poorly, say so plainly in its why and rank it low — never drop it, never flatter it. A name there that is not a real crop grown in {$countryName} goes in avoid instead, with the reason.
 - THE FARMER'S PRIORITIES. Score every crop on the six fits (fit.profit, fit.survival, fit.ease, fit.speed, fit.market, fit.food, each 0-100 for THIS ground and farmer), then make score the weighted average of those six using the weights given above (the farmer's first priority weighs most). Rank by score. When a priority decided a placing, say so in the why.
 - HARVEST DAY. A fine planting window is not enough: the crop must also come off the field safely. For every recommendation give plantMonth (1-12, the month its window opens), daysToHarvest (days from planting to first harvest for this crop in this climate, from its real maturity — for a tree crop, months to first bearing times 30), harvestWindow in words (e.g. "late February – mid March"), harvestMonth (1-12, when most of the harvest lands), and harvestRisk: what the region's climate typically does in that harvest month — floods, typhoons/storms, drought, heat, frost — as score 0-100 (0 = calm, 100 = a harvest very likely lost or delayed), kind (one of "flood", "storm", "drought", "heat", "frost", "none") and a note of at most 20 words. A crop whose harvest lands in the flood or typhoon peak must say so, and that risk must pull down fit.survival and the score.
-- monthRisk: twelve rows, January to December, each 0-100 for storm, flood, drought, heat and frost in the region named, from THE FIELD'S WEATHER RECORD above (twenty years, measured: heavy rain years for flood, storm gust years and the kept cyclone tally for storm, dry months and the El Niño shares for drought, hot days for heat) and the region's climatological normals — the chart under the ranking draws every crop's growing bar and harvest against it. Be consistent: a crop's harvestRisk must agree with monthRisk in its harvestMonth.
+- monthRisk: twelve rows, January to December, each 0-100 for storm, flood, drought, heat and frost in the region named, from THE FIELD'S WEATHER RECORD above (twenty years, measured: heavy rain years for flood, storm gust years and the kept cyclone tally for storm, THE PLACE'S HAZARD HISTORY's month tally (the years a storm, a flood or a dry spell hit each month, measured near the town or reported for it) for storm, flood and drought, dry months and the El Niño shares for drought, hot days for heat) and the region's climatological normals — the chart under the ranking draws every crop's growing bar and harvest against it. Be consistent: a crop's harvestRisk must agree with monthRisk in its harvestMonth.
 - Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
 - REAL HARVESTS AND PRICES: research notes gathered from the web just now follow at the end of this brief (what farmers in the province really harvest of each main crop, the latest farmgate prices, recent derbies). fit.profit and fit.market rest on them first, over memory: a crop real farmers there harvest well and sell at a fair farmgate price scores higher than one with a better textbook yield. Where a crop's why rests on a real figure, say it briefly with its year (e.g. "farmers here averaged 4.2 t/ha in the 2025 dry season, PSA"). A crop the notes say nothing about is scored from established knowledge, and not flattered.
 - Read the extra signals as an agronomist would, and say in each "why" which ones moved the pick: soil pH sets which crops tolerate the ground (acid-tolerant vs lime-loving); the LOOK of the irrigation water is a clue — muddy/brown carries silt (fine for paddy, clogs drip), grayish carries fine silt, fine sand or volcanic ash as in lahar areas (it leaves a gray crust that seals the seedbed, wears pumps and clogs drip and sprinklers, so let it settle in a pond first; sand itself settles fast, so gray water that stays gray is mostly fine silt or ash), cloudy white or milky suggests suspended lime/minerals or fine clay (check salinity and hardness before drip or sensitive vegetables), greenish means algae and nutrient load (watch clogging and disease), salty taste or a white crust means salinity (favor salt-tolerant crops), a bad smell or oily film means contamination (avoid leafy vegetables eaten raw); the lay and elevation set drainage, cold and cloud; sunlight rules out sun-loving crops in shade; the previous crop sets rotation (do not repeat a family that shares its pests and diseases); labor, budget and the market decide whether a labor-heavy, input-heavy or perishable crop is realistic. A skipped signal is "not stated" — do not guess it; name it in dataGaps if it would have changed the ranking.

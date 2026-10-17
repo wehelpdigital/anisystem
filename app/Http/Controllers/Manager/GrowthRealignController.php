@@ -411,6 +411,10 @@ class GrowthRealignController extends BaseScheduleController
             . ($lot->transplantDate ? ' Transplanted ' . Carbon::parse($lot->transplantDate)->format('M j, Y') . '.' : '')
             . ($reading['maturity'] ? ' Days to maturity for this lot: ' . $reading['maturity'] . '.' : '')
             . ' Today is ' . $asOf->format('M j, Y') . '.';
+        // The variety as the records know it (2026-10-18): its days by season, its height and ratings say how fast it should run.
+        if ($lot->variety && ($vf = \App\Support\VarietyBook::factsLine((string) $lot->crop, (string) $lot->variety)) !== '') {
+            $ctx[] = 'THE VARIETY, AS KNOWN (anee.io\'s records; never name an agency or the registry): ' . $vf . '. A variety that matures in fewer days than the crop\'s usual length runs ahead of the usual stage table; one with more runs behind.';
+        }
 
         $ctx[] = 'THE CALENDAR SAYS: ' . $age['counter'] . ' ' . $age['day'] . ' -> stage ' . $stage['index'] . ' "' . $stage['label'] . '"'
             . ' (' . $unit . ' ' . ($stage['dayInStage'] + 1) . ' of ' . ($stage['lengthDays'] ?? '?') . ' in this stage).';

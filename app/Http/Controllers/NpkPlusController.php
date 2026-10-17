@@ -550,7 +550,7 @@ class NpkPlusController extends Controller
             . 'Water: ' . (self::WATER[$p['water']] ?? $p['water']) . "\n"
             . FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $calc->crop ?: null, '')
             . 'Planting date: ' . ($p['plantingDate'] ?: 'not given') . '; how the farmer means to apply it: ' . (self::TIMING[$p['timing']] ?? $p['timing']) . "\n"
-            . ($p['variety'] ? 'Variety: ' . $p['variety'] . "\n" : '') . ($p['notes'] ? 'Notes: ' . $p['notes'] . "\n" : '')
+            . ($p['variety'] ? 'Variety: ' . $p['variety'] . (($vf = \App\Support\VarietyBook::factsLine((string) $calc->crop, (string) $p['variety'])) !== '' ? ' (known: ' . $vf . ')' : '') . "\n" : '') . ($p['notes'] ? 'Notes: ' . $p['notes'] . "\n" : '')
             . 'ENSO: ' . (EnsoOutlook::forPrompt() ?: 'not available') . "\n"
             . self::historyFor($p) . "\n"
             . "RULES: Weigh the plan against the crop's need and the soil, the water, the weather of that season and ENSO. The need is the calculator's (NPK Plus's need model): judge the plan against it and do not recount it. The field's weather record is measured history kept by the app: use it, with its El Niño and La Niña shares, for what the season does to losses and timing. Say if it is enough, short or too much for each nutrient, which product to cut, add or split, and WHEN each product should go on by growth stage. Name products by their grade or active nutrient, never a brand. Never invent a number that is not in the plan or the research notes; say what you cannot know. Remember: the yield still depends on the weather, the variety and the soil.\n\n"

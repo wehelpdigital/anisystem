@@ -573,6 +573,8 @@ class SatelliteController extends Controller
         $units = ['seeds_ha' => 'seeds per hectare', 'plants_ha' => 'plants per hectare', 'kg_ha' => 'kg of seed per hectare', 'hills_m2' => 'hills per square meter'];
 
         return 'Crop: ' . $crop . ($p['variety'] ? ' (variety ' . $p['variety'] . ')' : '') . "\n"
+            // What the records know of the variety (2026-10-18): its ratings say which pests and diseases matter at this age.
+            . ($p['variety'] && ($vf = \App\Support\VarietyBook::factsLine((string) $p['crop'], (string) $p['variety'])) !== '' ? 'The variety, as anee.io\'s records know it (never name an agency or the registry): ' . $vf . "\n" : '')
             . 'Place: ' . $p['location'] . ", Philippines\n"
             . 'Planted: ' . ($p['plantedOn'] ? $p['plantedOn'] . ' (' . $age . ' days ago)' : 'not stated') . '; way in: ' . (self::METHODS[$p['method']] ?? $p['method']) . "\n"
             . 'Seeding rate or density: ' . ($p['density'] ? rtrim(rtrim(number_format($p['density'], 2, '.', ''), '0'), '.') . ' ' . ($units[$p['densityUnit']] ?? '') : 'not stated') . "\n"

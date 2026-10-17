@@ -997,6 +997,10 @@ Version: {$versionName} (one of several versions of this protocol)" : '';
         $taskText = $this->joined($lines);
         $stageText = $this->joined($stages, 'No table for this crop.');
         $variety = $this->orNot($p->variety);
+        // What the records know of the variety (2026-10-18): days by season, ratings, tolerances, limits; the review times the protocol by them.
+        if ($p->variety && ($vf = \App\Support\VarietyBook::factsLine((string) $p->crop, (string) $p->variety)) !== '') {
+            $variety .= "\nWhat anee.io's records know of it (judge the timing and the protection against it; never name an agency or the registry as the source): " . $vf;
+        }
         $description = $this->orNot($p->description);
         // NPK Plus's need for this crop and variety per hectare (2026-10-18): the fertilizer is judged against the app's own count, as in NPK Plus and the Crop Protocol.
         try {

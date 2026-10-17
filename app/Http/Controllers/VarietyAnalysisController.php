@@ -36,8 +36,11 @@ use Illuminate\Support\Facades\Validator;
  *
  * The variety records (2026-10-14): before Anee writes, she is handed the
  * registered varieties of the crop that best fit the field, from anee.io's own
- * NSIC and PhilRice records (App\Support\VarietyBook), with their trial days,
- * yields and ratings; and every variety in her answer is linked back to its
+ * records (App\Support\VarietyBook), with their trial days, yields and
+ * ratings, and since 2026-10-18 the registration trials of each in short
+ * (App\Support\VarietyRegistry: by season, the advantage over the checks,
+ * the tolerances and limits), so the research no longer looks those up;
+ * and every variety in her answer is linked back to its
  * record, with a "by the numbers" shortlist beside her ranking.
  *
  * Same shelf (as_plant_analyses, kind 'variety'), same job walk, same
@@ -855,9 +858,14 @@ class VarietyAnalysisController extends Controller
         $land = self::ELEVATIONS[$p['elevation'] ?? ''] ?? 'not stated';
         // The records on file that fit this field: the search checks them first.
         $onFile = self::onRecord($p) ? \App\Support\VarietyBook::namedThenFit($p['crop'], $p['varieties'] ?? [], self::bookCase($p), 14) : [];
+        // The registration trial facts the records now carry (2026-10-18): the days, yields, ratings and tolerances of
+        // these varieties are not looked up again; the search spends itself on what is newer and on real harvests.
+        $covered = array_values(array_filter($onFile, fn ($r) => ! empty($r['trials']) || ($r['days'] !== null && $r['yield'] !== null && $r['ratings'])));
         $onFileLine = $onFile
-            ? "\n5. These {$cropLabel} varieties are on anee.io's own records (NSIC registry, PhilRice) and fit this field on paper: " . implode(', ', array_map(fn ($r) => $r['name'] . ($r['aliases'] ? ' (' . $r['aliases'][0] . ')' : ''), $onFile)) . '. For each, look for anything newer than its registration: regional trial results near the farmer, seed availability this season, field reports of how it did.'
+            ? "\n5. These {$cropLabel} varieties are on anee.io's own records and fit this field on paper: " . implode(', ', array_map(fn ($r) => $r['name'] . ($r['aliases'] ? ' (' . $r['aliases'][0] . ')' : ''), $onFile)) . '. For each, look for anything newer than its registration: regional trial results near the farmer, seed availability this season, field reports of how it did.'
+                . ($covered ? ' The app already holds the trial days, yields, pest and disease ratings and stress tolerance of ' . implode(', ', array_map(fn ($r) => $r['name'], $covered)) . ': do NOT look those figures up again and do not repeat them in the notes.' : '')
             : '';
+        $wordCap = count($covered) >= 6 ? 1200 : 1600;
         $derbyRunners = $fieldPH
             ? 'the DA regional field offices, PhilRice, the provincial and municipal agriculture offices, state universities, and the seed companies (SL Agritech, Bayer, Syngenta, Corteva Pioneer, Bioseed, East West Seed and others)'
             : 'the agriculture department and extension services, universities, state variety trial programs and the seed companies';
@@ -876,13 +884,13 @@ THE CASE
 
 FIND, IN THIS ORDER
 1. The newest {$cropLabel} varieties registered or released in {$countryName} ({$seeds}) in {$year}, {$year}-1 and {$year}-2: name, breeder or company, year, what it was bred for.
-2. For each of the farmer's named varieties AND for 4–6 top-yielding released INBRED or open-pollinated varieties suited to this soil and these troubles: documented yield (trial or published figure, with unit and source), days to maturity, pest and disease resistance ratings, stress tolerance (drought, submergence, salinity, heat, acidity, alkalinity, lodging), grain or fruit quality notes, and any regional trial results in or near the farmer's region.
+2. For each of the farmer's named varieties AND for 4–6 top-yielding released INBRED or open-pollinated varieties suited to this soil and these troubles (skip the trial figures of any variety listed in 5 below as already held by the app): documented yield (trial or published figure, with unit and source), days to maturity, pest and disease resistance ratings, stress tolerance (drought, submergence, salinity, heat, acidity, alkalinity, lodging), grain or fruit quality notes, and any regional trial results in or near the farmer's region.
 2b. The same for 3–5 HYBRID varieties of {$cropLabel} sold in {$countryName} by the top seed companies {$hybridHouses}: yield, maturity, resistance, seed cost and availability per hectare where published, and whether the seed must be bought fresh each season.
 3. The seasonal climate outlook from {$met} for the farmer's region for the PLANTING SEASON named above (rainfall, ENSO state, severe-weather expectation across the months the crop will stand in the field).
 4. Anything published about which of these varieties do well or poorly on this soil type, at this elevation, in this season and with these troubles — which are bred for the wet season and which for the dry, which stand the highland's cool nights or the lowland's heat.{$onFileLine}
 6. REAL HARVESTS, NOT ONLY BROCHURES (the most important part after the newest releases). Search for the MOST RECENT {$cropLabel} derbies in {$countryName}: variety derbies, techno demo farms, hybrid derbies, field days and yield contests run by {$derbyRunners}, newest first, in or near the farmer's province and region first, then anywhere in the country. For each: its name, the town and province, the season and year, the organizer, and EVERY variety's harvested yield as reported (t/ha, or cavans per hectare with the kilos per cavan). Then search for real farmers' own reported harvests with these varieties in the last two seasons: news reports, agriculture office reports, farmer cooperatives, farmers' field schools, farmer groups and seed company field posts naming the farmer or the place, each with the yield, the place, the season and the source. Real harvests weigh more than the seller's or the brochure's figure: say plainly where they differ.
 
-Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the headings, at most 1600 words, no JSON, no markdown tables.{$block}
+Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the headings, at most {$wordCap} words, no JSON, no markdown tables.{$block}
 PROMPT;
     }
 
@@ -916,6 +924,20 @@ PROMPT;
         $soilBlock = $soilGuide !== '' ? "- What the soil troubles mean for the choice (weigh each variety's published tolerance to them, and say so):\n" . $soilGuide . "\n" : '';
         // The field in detail, when the farmer gave it: one compact line.
         $soilBlock .= FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop']);
+        // The area's typical soil from the soil atlas (2026-10-18, the soil atlas agent's block): the varieties are weighed against it.
+        if (self::onRecord($p) && class_exists(\App\Support\SoilAtlas::class)) {
+            try {
+                $atlas = \App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']);
+                if ($atlas && ($sw = \App\Support\SoilAtlas::words($atlas, 'short')) !== '') {
+                    $soilBlock .= "- The area's typical soil (for the area, not a test of this field):\n" . $sw . "\n";
+                    if (in_array(\App\Support\SoilAtlas::saltRisk($atlas), ['moderate', 'severe'], true)) {
+                        $soilBlock .= "- The coastal land of this town often holds salt (typical for the area, not a test of this field): favour salt tolerant varieties, and say so.\n";
+                    }
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
         $notes = $p['notes'] !== '' ? $p['notes'] : 'none';
         $order = [];
         foreach ($p['priorities'] as $i => $k) {
@@ -938,14 +960,18 @@ PROMPT;
         }
         // Built while the farmer's request waits: what the shelf keeps, no lookup.
         $ensoBlock .= \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, $focus, $focus !== [], false);
+        // The town's storms, floods and dry spells in the season's months (the hazard book, 2026-10-18, the hazard history agent's block): an early variety dodges the typhoon peak.
+        if (class_exists(\App\Support\HazardBook::class)) {
+            $ensoBlock .= \App\Support\HazardBook::wordsFor((string) $p['location'], $focus, 1500);
+        }
         $forecast = $this->forecastLines($p['location']);
         $year = now('Asia/Manila')->year;
         // anee.io's own variety records that best fit this field (2026-10-14).
         $B = \App\Support\VarietyBook::class;
         $records = self::onRecord($p) ? $B::namedThenFit($p['crop'], $p['varieties'] ?? [], self::bookCase($p), 22) : [];
-        $recordsBlock = $records ? "\nVARIETY RECORDS ON FILE\nanee.io keeps the official records of " . CropCatalog::label($p['crop']) . ' varieties: the NSIC registry of the Bureau of Plant Industry and PhilRice seed data (days to maturity and yields from the national trials, pest and disease ratings, the growing environment and area each is recommended for). These ' . count($records) . ' fit this field best on paper (the farmer\'s own varieties first, where they are on file), out of' . count($B::rows($p['crop'])) . " on file:\n"
+        $recordsBlock = $records ? "\nVARIETY RECORDS ON FILE\nanee.io keeps its own records of " . CropCatalog::label($p['crop']) . ' varieties (days to maturity and yields from the national trials, pest and disease ratings, the growing environment and area each is recommended for, and for most of them the registration trials in short: days and yield by season, the best test, the advantage over the check varieties, the seasons and sites tried, the ratings, the tolerance of salt, drought, flooding and cold, the season it does better in and its known limits). These ' . count($records) . ' fit this field best on paper (the farmer\'s own varieties first, where they are on file), out of' . count($B::rows($p['crop'])) . " on file:\n"
             . $B::promptLines($records) . "\n"
-            . "How to use them: draw most of the ranking from these records where they fit, and add a variety from the research notes only when it is newer or plainly better here. For a variety on this list, take maturityDays and yieldPotential from its record and name 'NSIC registry' or 'PhilRice' in its sources (a newer figure from the notes may stand beside it, with its own source). Write each variety's registered name first, exactly as written here, with the name it is sold under in brackets when it has one, e.g. 'NSIC Rc 666H (Jackpot 102)'. A record marked 'seller figures' holds the seller's own claims, not trial results: say so where it matters.\n" : '';
+            . "How to use them: draw most of the ranking from these records where they fit, and add a variety from the research notes only when it is newer or plainly better here. For a variety on this list, take maturityDays and yieldPotential from its record (the record's own figure first; where its registration trials differ, give the range) and write 'trials' in its sources, never an agency, the registry or a research institute (a newer figure from the notes may stand beside it, with its own source). Its ratings, tolerances and limits are measured: score protection and survival from them, not from memory. Write each variety's registered name first, exactly as written here, with the name it is sold under in brackets when it has one, e.g. 'NSIC Rc 666H (Jackpot 102)'. A record marked 'seller figures' holds the seller's own claims, not trial results: say so where it matters.\n" : '';
 
         // The FIELD's country, which may not be the farmer's.
         $fc = $p['country'] ?? \App\Support\Region::code();
@@ -988,10 +1014,10 @@ Return ONLY a valid JSON object — no code fences, no commentary — in exactly
 {"headline":"","topPick":{"variety":"","by":"","why":""},"ranking":[{"rank":1,"variety":"","type":"inbred","by":"","released":"","maturityDays":"","yieldPotential":"","fieldResults":[{"kind":"derby","where":"","when":"","yield":"","source":""}],"scores":{"yield":0,"protection":0,"survival":0,"quickness":0},"strengths":[""],"weaknesses":[""],"fitNotes":"","sources":[""]}],"givenVarieties":[{"variety":"","verdict":""}],"newest":[{"variety":"","by":"","year":"","note":""}],"derbies":[{"name":"","where":"","when":"","by":"","results":[{"variety":"","yield":""}],"source":""}],"conditions":{"soil":"","weather":"","risks":[""]},"management":[""],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - headline: one line, ≤ 14 words, the answer in a breath.
-- ranking: TEN varieties (fewer only when fewer than ten released varieties can be grown here at all, and then say so in dataGaps). Every variety in newest that can be grown on this ground is IN the ranking too, scored like the rest. Each with: type ("hybrid" for F1 hybrids whose seed is bought fresh each season, "inbred" for inbred, open-pollinated and public registered varieties — never leave it empty), by (breeder / seed company / institution), released (year or "n/a"), maturityDays (e.g. "110–115 DAS" or "n/a"), yieldPotential (a published figure with unit, e.g. "6.5–8.0 t/ha (PhilRice trials)", or "not published"), scores (all four, 0–100), strengths (2–3 short items), weaknesses (1–3 short items), fitNotes (≤ 40 words on THIS ground and climate), fieldResults (zero to three real harvests from the notes, newest and nearest first: kind "derby" for a derby, techno demo or yield contest, "farmer" for a farmer's own reported harvest, "trial" for a regional trial; where = town and province; when = season and year; yield = as reported, with t/ha and cavans where given; source = the short source name; an empty list when none was found), sources (1–3 short source names, e.g. "PhilRice Rc 222 factsheet 2023").
+- ranking: TEN varieties (fewer only when fewer than ten released varieties can be grown here at all, and then say so in dataGaps). Every variety in newest that can be grown on this ground is IN the ranking too, scored like the rest. Each with: type ("hybrid" for F1 hybrids whose seed is bought fresh each season, "inbred" for inbred, open-pollinated and public registered varieties — never leave it empty), by (the seed company that bred or sells it; for a public variety write "public variety", never an agency, a university or an institute), released (year or "n/a"), maturityDays (e.g. "110–115 DAS" or "n/a"), yieldPotential (a published figure with unit, e.g. "6.5–8.0 t/ha (trials)", or "not published"), scores (all four, 0–100), strengths (2–3 short items), weaknesses (1–3 short items), fitNotes (≤ 40 words on THIS ground and climate), fieldResults (zero to three real harvests from the notes, newest and nearest first: kind "derby" for a derby, techno demo or yield contest, "farmer" for a farmer's own reported harvest, "trial" for a regional trial; where = town and province; when = season and year; yield = as reported, with t/ha and cavans where given; source = the short source name; an empty list when none was found), sources (1–3 short source names, e.g. "trials", "seed company leaflet 2023", "Nueva Ecija derby 2025"; never an agency, the registry or a research institute).
 - givenVarieties: one entry for EACH variety the farmer named (empty list if none), verdict ≤ 35 words — including when it is unsuitable, unavailable, or could not be found (say so plainly).
 - newest: two to five of the most recent relevant releases in {$countryName} found online (year required), each with a ≤ 20-word note on why it matters here (and, when it is not in the ranking, why not).
-- derbies: zero to four of the most recent derbies, techno demos or yield contests found in the notes, the nearest and newest first: name, where (town and province), when (season and year), by (the organizer), results (each variety's harvested yield as reported, best first, up to eight), source; [] when none was found.
+- derbies: zero to four of the most recent derbies, techno demos or yield contests found in the notes, the nearest and newest first: name, where (town and province), when (season and year), by (the organizer when it is a seed company, a cooperative or a town; empty for a government office, a university or an institute), results (each variety's harvested yield as reported, best first, up to eight), source; [] when none was found.
 - conditions: soil (≤ 45 words on what this soil and its troubles demand of a variety), weather (≤ 45 words on the outlook and what it favours), risks (2–4 short items).
 - management: three to five short, practical lines specific to the top pick on this ground.
 - topPick: the variety you judge best for the farmer's priority order, with why ≤ 60 words.

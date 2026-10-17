@@ -106,9 +106,48 @@ class AsScheduleLot extends BaseModel
     public function maturityDays(): ?int
     {
         $mine = (int) ($this->daysToMaturity ?? 0);
+        if ($mine > 0) {
+            return $mine;
+        }
+        $crop = \App\Support\CropStages::maturity($this->crop);
+        // The variety's own days when the farmer typed none (2026-10-18): its record or its
+        // registration trials, kept only when near the crop's usual length (a day count read
+        // in the wrong unit never stretches a stage table).
+        $variety = $this->varietyDays();
+        if ($variety && $crop && $variety >= $crop * 0.65 && $variety <= $crop * 1.45) {
+            return $variety;
+        }
 
-        return $mine > 0 ? $mine : \App\Support\CropStages::maturity($this->crop);
+        return $crop;
     }
+
+    /** The planted variety's days to harvest from anee.io's records, or null; read once per lot. */
+    public function varietyDays(): ?int
+    {
+        if ($this->varietyDaysRead) {
+            return $this->varietyDaysMemo;
+        }
+        $this->varietyDaysRead = true;
+        $name = trim((string) ($this->variety ?? ''));
+        if ($name === '' || ! $this->crop || \App\Support\CropCatalog::isPerennial((string) $this->crop)) {
+            return null;
+        }
+        try {
+            $rec = \App\Support\VarietyBook::find((string) $this->crop, $name);
+            if ($rec && ! empty($rec['days']) && ($rec['daysUnit'] ?? 'days') === 'days') {
+                $this->varietyDaysMemo = (int) round((float) $rec['days']);
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return $this->varietyDaysMemo;
+    }
+
+    /** Not columns: the variety's days, read once per lot. */
+    private ?int $varietyDaysMemo = null;
+
+    private bool $varietyDaysRead = false;
 
     /**
      * Realign by Anee, as every page draws it: her stored reading plus the

@@ -144,6 +144,16 @@ class SeasonContext
             }
         }
 
+        // What is known of the varieties planted (2026-10-18): the records and their registration trials, said once each.
+        $known = self::varietyFacts($p, (array) ($d['lots'] ?? []));
+        if ($known) {
+            $out[] = '';
+            $out[] = 'THE VARIETIES PLANTED, AS KNOWN (anee.io\'s own records; never name an agency, the registry or an institute as the source):';
+            foreach ($known as $line) {
+                $out[] = '- ' . $line;
+            }
+        }
+
         // The place's storms and floods (the hazard book, 2026-10-18): what struck since the season began, and what these months usually bring.
         $hz = self::hazards($schedule);
         if ($hz !== '') {
@@ -306,6 +316,38 @@ class SeasonContext
             'inventory' => self::inventory($schedule),
             'moves' => self::moves($schedule),
         ];
+    }
+
+    /** One facts line per distinct crop and variety of the season and its lots, at most four. */
+    private static function varietyFacts(array $plan, array $lots): array
+    {
+        $pairs = [];
+        if (! empty($plan['variety'])) {
+            $pairs[] = [(string) ($plan['crop'] ?? ''), (string) $plan['variety']];
+        }
+        foreach ($lots as $l) {
+            if (! empty($l['variety'])) {
+                $pairs[] = [(string) ($l['crop'] ?? ($plan['crop'] ?? '')), (string) $l['variety']];
+            }
+        }
+        $out = [];
+        foreach ($pairs as [$crop, $variety]) {
+            $k = mb_strtolower($variety);
+            if (isset($out[$k]) || count($out) >= 4) {
+                continue;
+            }
+            try {
+                $line = VarietyBook::factsLine($crop, $variety);
+            } catch (\Throwable $e) {
+                report($e);
+                $line = '';
+            }
+            if ($line !== '') {
+                $out[$k] = $line;
+            }
+        }
+
+        return array_values($out);
     }
 
     private static function plan(AsCroppingSchedule $s, Carbon $today): array

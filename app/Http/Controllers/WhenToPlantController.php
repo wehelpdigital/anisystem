@@ -629,9 +629,11 @@ class WhenToPlantController extends Controller
         return array_filter([
             'name' => $r['name'], 'alias' => $r['aliases'][0] ?? null, 'type' => $r['type'], 'days' => $r['days'], 'daysUnit' => $r['daysUnit'],
             'where' => $r['where'] ?: null, 'yieldAvg' => $r['yield'], 'yieldTop' => $r['yieldTop'] ?? null, 'year' => $r['year'],
-            'source' => $l ? 'Anee\'s own web research of ' . date('M Y', strtotime((string) $l['at'])) . ', kept by the app' : ($r['registered'] ? 'NSIC registry and PhilRice seed data' : 'the variety records'),
+            'source' => $l ? 'Anee\'s own web research of ' . date('M Y', strtotime((string) $l['at'])) . ', kept by the app' : 'anee.io\'s variety records',
             // A kept variety's other facts reach the prompt too.
             'learnedId' => $l['id'] ?? null, 'facts' => $l ? ($r['learnedLine'] ?? null) : null,
+            // Its registration trials in short (2026-10-18): days and yield by season, the season it does better in, the stresses, the limits.
+            'trials' => $l ? null : (\App\Support\VarietyBook::trialWords($r) ?: null),
         ], fn ($v) => $v !== null && $v !== '');
     }
 
@@ -655,7 +657,8 @@ class WhenToPlantController extends Controller
             . ': ' . ($v['type'] ?? '') . (! empty($v['days']) ? ', ' . (int) round($v['days']) . ' ' . ($v['daysUnit'] ?? 'days') . ' to harvest' : '')
             . (! empty($v['where']) ? ', bred for ' . $v['where'] : '')
             . (! empty($v['yieldAvg']) ? ', ' . $v['yieldAvg'] . ' t/ha average in the national trials' . (! empty($v['yieldTop']) ? ' and ' . $v['yieldTop'] . ' at best' : '') : '')
-            . (! empty($v['year']) ? ', released ' . $v['year'] : '') . ' (' . ($v['source'] ?? 'the variety records') . ')';
+            . (! empty($v['year']) ? ', released ' . $v['year'] : '') . ' (' . ($v['source'] ?? 'the variety records') . ')'
+            . (! empty($v['trials']) ? '; ' . $v['trials'] . '. Weigh its dry and wet season figures when you score the months' : '');
     }
 
     private function params(Request $request): array
@@ -708,7 +711,7 @@ class WhenToPlantController extends Controller
         $cropLabel = CropCatalog::label($p['crop']);
         $variety = trim((string) ($p['variety'] ?? ''));
         $registry = $fieldPH
-            ? 'the NSIC / PhilRice / IRRI registration and seed catalogues, the seed company\'s own page, DA and university extension notes'
+            ? 'the variety registration and seed catalogues, the seed company\'s own page, extension notes (read them, but never name an agency, the registry or an institute as the source)'
             : 'the breeder\'s or seed company\'s own page, the national variety registry, university extension notes';
         $rec = (array) ($p['varietyRecord'] ?? []);
         $rk = ClimateRecord::placeKey((string) $p['location'], $fc);
@@ -846,7 +849,7 @@ PROMPT;
         // The variety: a record's facts as known (2026-10-15), else the research notes carry what is published.
         $rec = (array) ($p['varietyRecord'] ?? []);
         $varietyFact = $rec
-            ? '- Stated variety: "' . $p['variety'] . '", ON RECORD: ' . self::recordWords($rec) . '. These are known facts: time the crop by these days to harvest, and let its growing environment and tolerances move the windows, the month scores and the threats. The research notes may add regional trial results. In the variety field, found is true, maturityDays is these days and source names the record.'
+            ? '- Stated variety: "' . $p['variety'] . '", ON RECORD: ' . self::recordWords($rec) . '. These are known facts: time the crop by these days to harvest, and let its growing environment and tolerances move the windows, the month scores and the threats. The research notes may add regional trial results. In the variety field, found is true, maturityDays is these days (by the planting season where the record gives dry and wet days) and source is "anee.io\'s variety records", never an agency, the registry or an institute.'
             : str_replace('{VARIETY}', (string) $p['variety'], '- Stated variety: "{VARIETY}" — the research notes at the end carry what the web says about it (maturity, season it is bred for, tolerance to drought / flood / heat / cold, pest and disease resistance, who released it). USE those published traits: time the crop by the variety\'s own days to maturity where the notes give one, and let its tolerances and weaknesses move the windows, the month scores and the threats (a submergence-tolerant variety fears the flood month less; an early-maturing one can dodge it). Where the notes say the variety could not be found, say variety-specific data is unavailable in dataGaps and reason from the crop\'s typical range. Never invent varietal traits, and never use a trait the notes do not carry.');
         $when = self::whenWords($p);
         $whenShort = self::whenTitle($p);

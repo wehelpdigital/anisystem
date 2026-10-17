@@ -282,7 +282,7 @@ final class VarietyRegistry
         }
         foreach (array_slice((array) ($t['advantage'] ?? []), 0, $full ? 4 : 2) as $a) {
             if (isset($a['pct'])) {
-                $bits[] = ($a['pct'] >= 0 ? '+' : '') . $n($a['pct']) . '% over ' . ($a['over'] ?? 'the check') . (! empty($a['season']) && $a['season'] !== 'across' ? ' in the ' . $a['season'] . ' season' : '');
+                $bits[] = $n(abs((float) $a['pct'])) . '% ' . ($a['pct'] >= 0 ? 'more' : 'less') . ' than ' . ($a['over'] ?? 'the check') . (! empty($a['season']) && $a['season'] !== 'across' ? ' in the ' . $a['season'] . ' season' : '');
             }
         }
         if (! empty($t['tested'])) {
@@ -318,7 +318,7 @@ final class VarietyRegistry
             if (! empty($t['areas'])) {
                 $bits[] = 'recommended for ' . $t['areas'];
             }
-            foreach (array_slice((array) ($t['tests'] ?? []), 0, 6) as $x) {
+            foreach (array_slice(array_values(array_filter((array) ($t['tests'] ?? []), fn ($x) => ($x['season'] ?? '') !== 'across')), 0, 4) as $x) {
                 if (isset($x['yield'])) {
                     $bits[] = 'at ' . ($x['where'] ?? 'one site') . (! empty($x['season']) ? ' (' . $x['season'] . ')' : '') . ' ' . $n($x['yield']) . ' ' . $u;
                 }

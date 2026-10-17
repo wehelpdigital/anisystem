@@ -449,6 +449,10 @@ class SkyWeatherController extends Controller
                 return $this->json(false, 'That lot is not on your farm.', [], 404);
             }
             $lotFacts = $this->lotFacts($lot, $season) + ['name' => $lot->lotName, 'season' => $season->title];
+            // What the records know of the variety (2026-10-18): its tolerance of flooding, lodging and drought weighs the weather.
+            if ($lot->variety && ($vf = \App\Support\VarietyBook::factsLine((string) ($lot->crop ?: $season->cropType), (string) $lot->variety)) !== '') {
+                $lotFacts['varietyKnown'] = $vf;
+            }
         }
         // The price the page showed is the price charged; a page that sends `quote` must match it.
         $quote = AiPricing::quote(self::KIND);

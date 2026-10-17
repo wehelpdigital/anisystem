@@ -426,7 +426,7 @@ class FarmReportController extends BaseScheduleController
             ->max(fn ($a) => $a->targetDate->format('Y-m-d'));
         foreach ($schedule->lots as $lot) {
             if (! $lot->crop || ! $lot->dayZeroDate) continue;
-            $expected = (int) ($lot->daysToMaturity ?: (\App\Support\CropCatalog::CROPS[$lot->crop]['maturity'] ?? 0));
+            $expected = (int) ($lot->maturityDays() ?: 0); // the lot's days, else its variety's (2026-10-18), else the crop's
             if ($expected <= 0) continue;
             $endIso = $lastDone ?: now('Asia/Manila')->toDateString();
             $ran = (int) \Carbon\Carbon::parse((string) $lot->dayZeroDate)->diffInDays(\Carbon\Carbon::parse($endIso), false);
@@ -1109,9 +1109,10 @@ class FarmReportController extends BaseScheduleController
                 } catch (\Throwable) {
                     $rec = null;
                 }
-                $varieties[$L->crop . '|' . $L->variety] = $rec ? $L->variety . ' = ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') : null;
+                // The full registration trial block (2026-10-18): a season is judged against what the variety gave by season in its trials.
+                $varieties[$L->crop . '|' . $L->variety] = $rec ? $L->variety . ' = ' . (\App\Support\VarietyBook::factsLine($L->crop, $L->variety, true) ?: ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ')) : null;
             }
-            $maturity = (int) ($L->daysToMaturity ?: (\App\Support\CropCatalog::CROPS[$L->crop]['maturity'] ?? 0));
+            $maturity = (int) ($L->maturityDays() ?: 0); // the lot's days, else its variety's (2026-10-18), else the crop's
             $line = $L->lotName . ': ' . (\App\Support\CropStages::label($L->crop) ?: $L->crop)
                 . ($L->variety ? ' (' . $L->variety . ')' : '')
                 . ($L->dayZeroDate ? ', day zero ' . substr((string) $L->dayZeroDate, 0, 10) : '')
@@ -1126,7 +1127,7 @@ class FarmReportController extends BaseScheduleController
             $known = array_values(array_filter($varieties));
             $unknown = count($varieties) > count($known);
             $ctx[] = "THE CROPS' CLOCKS: " . implode(' | ', $clock)
-                . ($known ? "\nTHE VARIETIES, AS KNOWN (use these facts; do not guess others): " . implode(' | ', $known) : '')
+                . ($known ? "\nTHE VARIETIES, AS KNOWN (use these facts; do not guess others; weigh the harvest against what the variety gave in its trials in the same season; never name an agency or the registry as the source): " . implode(' | ', $known) : '')
                 . ($unknown || ! $varieties ? ' (Research what the named variety is known for — maturity, lodging, pest tolerance — and use it where it helps; say when you are unsure.)' : '');
         }
 
@@ -1489,7 +1490,7 @@ class FarmReportController extends BaseScheduleController
             if ($endIso && $L->crop) {
                 try { $atHarvest = \App\Support\LotCalendar::ageOf($L, \Carbon\Carbon::parse($endIso), $zero, $tp[$L->id] ?? null); } catch (\Throwable $e) { $atHarvest = null; }
             }
-            $maturity = (int) ($L->daysToMaturity ?: (\App\Support\CropCatalog::CROPS[$L->crop]['maturity'] ?? 0));
+            $maturity = (int) ($L->maturityDays() ?: 0); // the lot's days, else its variety's (2026-10-18), else the crop's
 
             $lotRows[] = [
                 'name' => $L->lotName,
@@ -1616,7 +1617,7 @@ class FarmReportController extends BaseScheduleController
             if (! $L->crop) continue;
             $age = null;
             try { $age = \App\Support\LotCalendar::ageOf($L, $today, $dz[$L->id] ?? null, $tp[$L->id] ?? null); } catch (\Throwable $e) { $age = null; }
-            $maturity = (int) ($L->daysToMaturity ?: (\App\Support\CropCatalog::CROPS[$L->crop]['maturity'] ?? 0));
+            $maturity = (int) ($L->maturityDays() ?: 0); // the lot's days, else its variety's (2026-10-18), else the crop's
             $day = $age['day'] ?? null;
             $counter = $age['counter'] ?? ($L->dayType ?: 'DAS');
             $stage = ($day !== null && $counter !== 'AGE') ? \App\Support\CropStages::stageFor($L->crop, max(0, (int) $day), $counter, $maturity ?: null) : null;
