@@ -352,7 +352,12 @@ class AiController extends Controller
             $context = $this->scheduleContext($request->input('scheduleId'), $userId);
         }
         $context = $this->applyLinkContext($context, $conversation);
-        $context .= $analysisCtx;
+        // An attached analysis goes before the plan's closing "Question: " (2026-10-19): appended after it, it sat between
+        // the label and the farmer's own question.
+        $tail = 'Question: ';
+        $context = $analysisCtx !== '' && str_ends_with($context, $tail)
+            ? substr($context, 0, -strlen($tail)) . rtrim($analysisCtx) . "\n\n" . $tail
+            : $context . $analysisCtx;
 
         $userMessage = AiMessage::create([
             'conversationId' => $conversation->id,
