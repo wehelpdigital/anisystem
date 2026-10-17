@@ -120,11 +120,15 @@ final class NpkNeed
         $fieldOn = $profile !== [] && FieldProfile::count($profile) > 0;
         $f = self::factors($c, (string) ($in['texture'] ?? 'unsure'), (array) ($in['conditions'] ?? []), isset($in['ph']) && $in['ph'] !== null ? (float) $in['ph'] : null);
         $cls = self::classes((array) ($in['tests'] ?? []));
+        // A soil test's organic matter under 2% is low organic matter for the micros too (2026-10-19).
+        if (($cls['OM'] ?? null) === 'low' && ! in_array('low_om', $f, true)) {
+            $f[] = 'low_om';
+        }
         $water = in_array($in['water'] ?? '', ['irrigated', 'partial', 'rainfed'], true) ? $in['water'] : 'irrigated';
         $g = self::goal($c, $in, $fieldOn, $water, (array) ($in['conditions'] ?? []));
         $fl = self::fieldLayer($c, $f, $fieldOn ? FieldProfile::normalize($profile) : [], (array) ($in['prev'] ?? []));
         $plan = (array) ($in['plan'] ?? []);
-        $md = self::model($c, $g, $f, $cls, $fl, (array) ($plan['perHa'] ?? []), (float) ($plan['acidEq'] ?? 0));
+        $md = self::model($c, $g, $f, $cls, $fl, (array) ($plan['perHa'] ?? []), (float) ($plan['acidEq'] ?? 0), isset($plan['limeEq']) ? (float) $plan['limeEq'] : null);
 
         return [
             'crop' => $key,
@@ -196,6 +200,9 @@ final class NpkNeed
                 $out[$el] = $tests[$el];
             }
         }
+        if (($tests['OM'] ?? null) === 'low') {
+            $out['OM'] = 'low';
+        }
 
         return $out;
     }
@@ -222,6 +229,9 @@ final class NpkNeed
         }
         if (isset($t['om'])) {
             $out['N'] = $band((float) $t['om'], 2, 4);
+            if ((float) $t['om'] < 2) {
+                $out['OM'] = 'low';
+            }
         } elseif (isset($t['n'])) {
             $out['N'] = $band((float) $t['n'], 0.1, 0.2);
         }
@@ -259,6 +269,23 @@ final class NpkNeed
             $sp = (float) ($pct['S'] ?? 0);
             $perN = $AC['perN'][$slug] ?? (($sp >= 20 && $n >= 18) ? 5.35 : $AC['defaultPerN']);
             $sum += $kg * $n / 100 * $perN + ((isset($AC['perS'][$slug]) || ($sp >= 80 && ! ($n > 0))) ? $kg * $sp / 100 * ($AC['perS'][$slug] ?? 3.1) : 0);
+        }
+
+        return $sum;
+    }
+
+    /**
+     * The plan's liming materials in kg of lime equivalent (ACIDITY perKg below 0: agricultural lime,
+     * dolomite). Gypsum and calcium nitrate carry calcium but do not raise the pH, so they are not lime.
+     */
+    public static function limeEq(array $lines): float
+    {
+        $sum = 0.0;
+        foreach ($lines as [$slug, $kg]) {
+            $k = NpkModel::ACIDITY['perKg'][(string) $slug] ?? 0;
+            if ($k < 0) {
+                $sum += (float) $kg * -$k;
+            }
         }
 
         return $sum;
@@ -402,7 +429,7 @@ final class NpkNeed
      * secondary and micro elements with their need. perHa and acidEq are the
      * plan's (none: the need before any plan).
      */
-    public static function model(?array $c, array $g, array $f, array $cls, array $fl, array $perHa = [], float $acidEq = 0.0): array
+    public static function model(?array $c, array $g, array $f, array $cls, array $fl, array $perHa = [], float $acidEq = 0.0, ?float $limeEq = null): array
     {
         $out = ['need' => [], 'raw' => [], 'how' => [], 'adj' => [], 'share' => [], 'whys' => [], 'credit' => [], 'micro' => [], 'pLock' => false, 'lockouts' => [], 'acid' => null];
         $has = fn (string $k) => in_array($k, $f, true);
@@ -549,7 +576,9 @@ final class NpkNeed
         if ((float) ($perHa['K2O'] ?? 0) > (! empty($out['need']['K2O']) ? $out['need']['K2O'] * 1.5 : 150)) {
             $pf[] = 'high_k';
         }
-        if ((float) ($perHa['Ca'] ?? 0) >= 150) {
+        // Lime in the plan: its liming materials, 300 kg of lime equivalent a hectare or more (a caller
+        // that gives no limeEq falls back on the plan's net effect on the pH). Gypsum is not lime.
+        if (($limeEq ?? max(0.0, -$acidEq)) >= 300) {
             $pf[] = 'liming';
         }
         if ((float) ($perHa['Zn'] ?? 0) > 10) {

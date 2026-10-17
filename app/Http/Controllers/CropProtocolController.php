@@ -2155,7 +2155,7 @@ PROMPT;
                     $lines[] = [$an['slug'], $kg, $an['pct']];
                 }
             }
-            $run = $known ? NpkNeed::run($needIn + ['plan' => ['perHa' => $perHa, 'acidEq' => NpkNeed::acidEq($lines)]]) : null;
+            $run = $known ? NpkNeed::run($needIn + ['plan' => ['perHa' => $perHa, 'acidEq' => NpkNeed::acidEq($lines), 'limeEq' => NpkNeed::limeEq($lines)]]) : null;
             $want = $run ? ['n' => (float) ($run['need']['N'] ?? 0), 'p' => (float) ($run['need']['P2O5'] ?? 0), 'k' => (float) ($run['need']['K2O'] ?? 0)] : $need;
             $has = ['n' => (float) ($perHa['N'] ?? 0), 'p' => (float) ($perHa['P2O5'] ?? 0), 'k' => (float) ($perHa['K2O'] ?? 0)];
             $rows = [];

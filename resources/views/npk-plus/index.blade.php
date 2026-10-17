@@ -1566,7 +1566,7 @@
         const out = {};
         if (s.p != null) out.P2O5 = s.pMethod === 'bray' ? (s.p < 15 ? 'low' : s.p <= 30 ? 'medium' : 'high') : (s.p < 10 ? 'low' : s.p <= 20 ? 'medium' : 'high');
         if (s.k != null) { const meq = s.kUnit === 'meq' ? s.k : s.k / 391; out.K2O = meq < 0.2 ? 'low' : meq <= 0.4 ? 'medium' : 'high'; }
-        if (s.om != null) out.N = s.om < 2 ? 'low' : s.om <= 4 ? 'medium' : 'high';
+        if (s.om != null) { out.N = s.om < 2 ? 'low' : s.om <= 4 ? 'medium' : 'high'; if (s.om < 2) out.OM = 'low'; }
         else if (s.n != null) out.N = s.n < 0.1 ? 'low' : s.n <= 0.2 ? 'medium' : 'high';
         ['Zn', 'B', 'S'].forEach((el) => {
             const v = s[el.toLowerCase()], crit = (M.elements[el] || {}).critical;
@@ -1584,6 +1584,8 @@
         if (ph != null) { if (ph < 5) f.add('strongAcid'); else if (ph < 5.5) f.add('acid'); else if (ph > 8) f.add('strongAlk'); else if (ph > 7.3) f.add('alkaline'); }
         else { if (st.conds.includes('acidic')) f.add('acid'); if (st.conds.includes('alkaline')) f.add('alkaline'); }
         ['sodic', 'saline', 'acid_sulfate', 'low_om', 'peat', 'waterlogged'].forEach((k) => { if (st.conds.includes(k)) f.add(k); });
+        // A soil test's organic matter under 2% is low organic matter for the micros too (NpkNeed::run).
+        if (soilClass(soil(false)).OM === 'low') f.add('low_om');
         // Strongly alkaline and NOT sodic reads as a limy soil, rich in calcium.
         // A sodic soil's high pH is sodium, which crowds the calcium off the clay.
         if (f.has('strongAlk') && !f.has('sodic')) f.add('calcareous');
@@ -1934,7 +1936,7 @@
     /* ---- the need model (App\Support\NpkModel says where each number comes from) ----
        App\Support\NpkNeed is its twin on the server (the Crop Protocol sizes its
        programs with it): change the arithmetic in both. */
-    const needModel = (c, g, f, cls, perHa = {}, acidEq = 0, fl = null) => {
+    const needModel = (c, g, f, cls, perHa = {}, acidEq = 0, fl = null, limeEq = null) => {
         const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null, acid: null, credit: {} };
         // The plan's own acidity (kg of lime per hectare): how far it goes toward its full effect.
         const alk = ['alkaline', 'strongAlk', 'calcareous', 'sodic'].some((k) => f.has(k)), sour = ['strongAcid', 'acid', 'acid_sulfate'].some((k) => f.has(k));
@@ -2021,7 +2023,9 @@
         const pf = new Set();
         if ((perHa.P2O5 || 0) > (out.need.P2O5 ? out.need.P2O5 * 1.5 : 100)) pf.add('high_p');
         if ((perHa.K2O || 0) > (out.need.K2O ? out.need.K2O * 1.5 : 150)) pf.add('high_k');
-        if ((perHa.Ca || 0) >= 150) pf.add('liming');
+        // Lime in the plan: its liming materials, 300 kg of lime equivalent a hectare or more (no limeEq
+        // given: the plan's net effect on the pH). Gypsum and calcium nitrate carry calcium, not lime.
+        if ((limeEq != null ? limeEq : Math.max(0, -acidEq)) >= 300) pf.add('liming');
         if ((perHa.Zn || 0) > 10) pf.add('excess_zn');
         out.lockouts = [...pf];
         const ff = new Set([...f, ...pf]);
@@ -2083,10 +2087,18 @@
             const perN = AC.perN[slug] != null ? AC.perN[slug] : (p.pct.S >= 20 && p.pct.N >= 18 ? 5.35 : AC.defaultPerN);
             return sum + nKg * perN + (AC.perS[slug] != null || (p.pct.S >= 80 && !(p.pct.N > 0)) ? sKg * (AC.perS[slug] ?? 3.1) : 0);
         }, 0) / area : 0;
+        // The plan's liming materials, in kg of lime equivalent per hectare (NpkNeed::limeEq); a farmer's own
+        // lime or dolomite counts by its name.
+        const limeEq = area > 0 ? st.lines.reduce((sum, l) => {
+            const p = prodOf(l.id);
+            if (!p || l.unit === 'dose') return sum;
+            const k = AC.perKg[p.slug || ''] ?? (/\b(lime|limestone|dolomit\w*|apog)\b/i.test(p.name || '') ? -0.9 : 0);
+            return k < 0 ? sum + kgOf(p, l.amount, l.unit) * -k : sum;
+        }, 0) / area : 0;
         $('npN').textContent = fmt(perHa.N, 0); $('npP').textContent = fmt(perHa.P2O5, 0); $('npK').textContent = fmt(perHa.K2O, 0);
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
 
-        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl);
+        const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl, limeEq);
         // A level the area filled is the area's, not a test the farmer made (the Crop Protocol says it the same way).
         if (st.area) {
             const own = soilClass(soil(false)), names = { N: 'nitrogen', P2O5: 'phosphorus', K2O: 'potassium' };
