@@ -63,8 +63,15 @@ final class HazardBook
     public static function ready(): bool
     {
         try {
-            return (bool) Cache::remember('hazard-book:' . self::conn() . ':ready', 600, fn () => self::schema()->hasTable('as_hazard_years')
-                && self::db()->table('as_hazard_years')->limit(1)->exists());
+            // a "yes" is kept ten minutes, a "no" only one (the book may be loading)
+            $key = 'hazard-book:' . self::conn() . ':ready';
+            if (Cache::get($key) === true) {
+                return true;
+            }
+            $yes = self::schema()->hasTable('as_hazard_years') && self::db()->table('as_hazard_years')->limit(1)->exists();
+            Cache::put($key, $yes, $yes ? 600 : 60);
+
+            return $yes;
         } catch (\Throwable) {
             return false;
         }
@@ -115,7 +122,21 @@ final class HazardBook
     /** The towns of the book: [province => [norm(town) => town]], the provinces by norm, regions, points. Cached a day. */
     private static function gazetteer(): array
     {
-        return Cache::remember('hazard-book:' . self::conn() . ':gaz:v' . self::VERSION, 86400, function () {
+        // An empty list (the book not loaded yet) is never kept for long: it would blind the book for a day.
+        $key = 'hazard-book:' . self::conn() . ':gaz:v' . self::VERSION;
+        $hit = Cache::get($key);
+        if (is_array($hit) && ! empty($hit['prov'])) {
+            return $hit;
+        }
+        $g = self::buildGazetteer();
+        Cache::put($key, $g, $g['prov'] ? 86400 : 60);
+
+        return $g;
+    }
+
+    private static function buildGazetteer(): array
+    {
+        return (function () {
             $out = ['prov' => [], 'towns' => [], 'region' => [], 'pts' => []];
             if (! self::schema()->hasTable('as_hazard_towns')) {
                 return $out;
@@ -137,7 +158,7 @@ final class HazardBook
             }
 
             return $out;
-        });
+        })();
     }
 
     /**
