@@ -71,7 +71,7 @@
                         @php $pdOn = $key === $pdOrder[0]; @endphp
                         <button type="button" class="pd-tab" role="tab" id="pd-tab-{{ $key }}" aria-controls="pd-panel-{{ $key }}"
                                 aria-selected="{{ $pdOn ? 'true' : 'false' }}" tabindex="{{ $pdOn ? '0' : '-1' }}"
-                                style="--pd-tint: {{ $pdTint[$key] ?? $pdSpare[$loop->index % count($pdSpare)] }}"><i class="pd-dot" aria-hidden="true"></i>{{ $tier['name'] }}</button>
+                                style="--pd-tint: {{ $pdTint[$key] ?? $pdSpare[$loop->index % count($pdSpare)] }}"><i class="pd-dot" aria-hidden="true"></i>{{ $tier['name'] }}@if ($key === 'libreAnee')<b class="pd-pop">Most popular</b>@endif</button>
                     @endforeach
                 </div>
             </div>
@@ -81,6 +81,8 @@
                     @foreach ($tiers as $key => $tier)
                         @php
                             $isStar = $key === 'owner';
+                            // The plan most farmers take (the owner, 2026-10-18).
+                            $isPop = $key === 'libreAnee';
                             $isFree = empty($tier['price']);
                             $pdSlot = $pdSlotOf[$key] ?? 0;
                             if (! $isFree) {
@@ -94,7 +96,7 @@
                              data-name="{{ $tier['name'] }}" data-slot="{{ $pdSlot }}"
                              style="--s: {{ $pdSlot }}; z-index: {{ 10 + (count($pdOrder) - $pdSlot) * 2 }}; --pd-tint: {{ $pdTint[$key] ?? $pdSpare[$loop->index % count($pdSpare)] }}"
                              @if ($pdSlot) role="button" tabindex="0" aria-label="Show the {{ $tier['name'] }} plan" @endif>
-                            @if ($isStar)<span class="pr-flag">Most complete</span>@endif
+                            @if ($isStar)<span class="pr-flag">Most complete</span>@elseif ($isPop)<span class="pr-flag is-pop">Most popular</span>@endif
                             <div class="pd-face" id="pd-panel-{{ $key }}" role="tabpanel" aria-labelledby="pd-tab-{{ $key }}"
                                  @if ($pdSlot) inert aria-hidden="true" @else tabindex="0" @endif>
                                 <span class="pd-band" aria-hidden="true"></span>
@@ -319,6 +321,12 @@
         box-shadow: 0 0 0 3px #fff, 0 8px 18px -8px rgb(20 33 12 / .8);
         transition: opacity .35s var(--pd-ease) .2s, transform .45s var(--pd-ease) .2s; }
     .pd-card.is-back .pr-flag { opacity: 0; transform: translate(-50%, .5rem); transition-delay: 0s; }
+    /* Libre + Anee is the most popular plan: its flag is yellow with dark words, and its tab
+       wears the same badge, so it shows while another card is in front. */
+    .pd-card .pr-flag.is-pop { background: #f5c518; color: #14210c; }
+    .pd-pop { position: absolute; top: -.72rem; right: -.15rem; padding: .14rem .45rem; border-radius: 999px;
+        font-size: .58rem; font-weight: 800; line-height: 1.2; letter-spacing: .05em; text-transform: uppercase;
+        color: #14210c; background: #f5c518; box-shadow: 0 0 0 2px #fff, 0 4px 10px -4px rgb(20 33 12 / .45); pointer-events: none; }
 
     /* The card's own words, a little larger now that one is read at a time. */
     .pd-inner .pr-name { font-size: 1.3rem; }
