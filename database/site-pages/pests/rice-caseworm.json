@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "The rice caseworm is a moth larva found in rice fields with standing water, in both wetland and irrigated rice. The larva cuts off leaf tips to make a case. It hides in the case and floats on the water surface during the day, and feeds on the leaves. The adult moths are nocturnal and come to lights.\n\nIt is mostly a problem in ill drained fields. The damage looks bad, but its pattern is easy to recognize once you have seen the cases."
+      "text": "The rice caseworm is the larva of a moth, and it lives wherever rice stands in water, in wetland and irrigated fields alike. The larva cuts off leaf tips to make a case. It hides in the case and floats on the water surface during the day, and feeds on the leaves. The adult moths are nocturnal and come to lights.\n\nIt is mostly a problem in ill drained fields. The damage looks bad, but its pattern is easy to recognize once you have seen the cases."
     },
     {
       "type": "table",
@@ -81,7 +81,7 @@
     },
     {
       "type": "text",
-      "text": "Look at the water between the hills. Small tubes of rolled leaf that float or cling to the leaves are the cases. Leaves cut off cleanly at right angles, as with a pair of scissors, are a sure sign. Feeding leaves a papery upper skin and a ladder like pattern of hard fibers. The [rice leaffolder](/pests/rice-leaffolder) also rolls leaves, but it stays on the leaf and does not float."
+      "text": "Look at the water between the hills. Small tubes of rolled leaf that float or cling to the leaves are the cases. Leaf tips snipped off straight across, as if with scissors, are a sure sign. Feeding leaves a papery upper skin and a ladder like pattern of hard fibers. The [rice leaffolder](/pests/rice-leaffolder) also rolls leaves, but it stays on the leaf and does not float."
     },
     {
       "type": "list",
@@ -148,7 +148,7 @@
       "type": "list",
       "items": [
         "Fix drainage so water does not stand in the field for long.",
-        "Plant at the same time as your neighbors.",
+        "Plant together with the farms around you.",
         "Keep the bunds and the canals clean of weeds.",
         "Check the seedbed and the first weeks of the crop for floating cases."
       ]

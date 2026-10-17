@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "The red palm weevil is a large beetle with a long snout. Its grubs are legless, white with a brown head, and grow up to 50 mm long. They bore through the inside of the palm and make tunnels up to a meter long. It is native to southern Asia and Melanesia, and the Philippines is among the countries where it lives.\n\nThe weevil attacks coconut, betel nut, oil palm, sago palm, date palm and many ornamental palms. Palms can stand a lot of damage inside before any sign shows, and young palms under about 20 to 25 years are the most open to attack. So by the time the crown wilts, the trunk may already be hollow."
+      "text": "The red palm weevil is a large beetle with a long snout. Its grubs have no legs, a white body and a brown head, and they reach 50 mm. They chew through the inside of the palm, leaving tunnels as long as a meter. The weevil comes from southern Asia and Melanesia, and the Philippines is one of the countries it lives in.\n\nIt attacks coconut and oil palm, betel nut, sago and date palms, and many palms grown for show. Palms can stand a lot of damage inside before any sign shows, and young palms under about 20 to 25 years are the most open to attack. So by the time the crown wilts, the trunk may already be hollow."
     },
     {
       "type": "table",
@@ -202,7 +202,7 @@
       "items": [
         {
           "q": "Why do I see no damage until the palm collapses?",
-          "a": "The grubs live and feed inside the palm. Palms can stand a lot of internal damage before symptoms show."
+          "a": "The grubs live and feed inside the palm. A palm can be badly eaten inside long before anything shows outside."
         },
         {
           "q": "How does the weevil get into the palm?",

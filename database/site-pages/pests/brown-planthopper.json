@@ -47,7 +47,7 @@
         "Honeydew and black sooty mold on the lower stems",
         "Hoppers crowded on the base of the tillers, dropping onto the water when you tap the hill",
         "Crescent shaped white eggs inside the midrib or leaf sheath, with egg laying marks that let fungi and bacteria in",
-        "Stunted plants with ragged stunt or grassy stunt, two virus diseases that BPH spreads and that no spray can cure"
+        "Short, stunted hills sick with ragged stunt or grassy stunt, two viruses BPH carries that no spray can cure"
       ]
     },
     {
@@ -81,7 +81,7 @@
     },
     {
       "type": "text",
-      "text": "BPH numbers peak toward harvest, usually March to April in the dry season and September to October in the wet season. The 2017 outbreak across 18 provinces caused an estimated 17.87 million pesos in damage."
+      "text": "BPH counts climb highest near harvest. In the wet season that is most often September to October, and in the dry season March to April. The 2017 outbreak across 18 provinces caused an estimated 17.87 million pesos in damage."
     },
     {
       "type": "heading",
@@ -101,7 +101,7 @@
         },
         {
           "title": "Walk diagonally",
-          "text": "In transplanted rice, check the bases of 10 to 20 hills as you cross the field on a diagonal."
+          "text": "In transplanted rice, cross the field corner to corner and look at the base of 10 to 20 hills along the way."
         },
         {
           "title": "Count the helpers too",
@@ -109,13 +109,13 @@
         },
         {
           "title": "Stop at the milk stage",
-          "text": "There is no need to scout for BPH after the milk stage."
+          "text": "Once the grain reaches the milk stage, you can stop checking for BPH."
         }
       ]
     },
     {
       "type": "text",
-      "text": "At one BPH per stem or less, you still have time to act if numbers rise. Drain the field for three to four days once counts reach about 10 per hill, since BPH prefers cool, humid conditions at the base.\n\nA light trap near a light colored wall or over a pan of water can warn you. If hundreds of BPH land in it, check your seedbed and fields at once and scout daily for the next few weeks. Keep the lights away from seedbeds and fields.\n\nanee.io helps you keep that rhythm. Your [cropping calendar](/features/cropping-calendar) counts days after transplanting for every lot, so you can set a weekly hopper check from early tillering to the milk stage. The [growth stages](/features/growth-stages-and-weather) view shows when each lot enters its risky weeks. Snap a photo of the insects at the base and send it to Anee, the [smart farm technician](/features/ai-agricultural-technician), who helps you tell a planthopper from a leafhopper in Tagalog or English."
+      "text": "At one BPH per stem or less, you still have time to act if numbers rise. Drain the field for three to four days once counts reach about 10 per hill, since BPH prefers cool, humid conditions at the base.\n\nA light trap can warn you early: set it against a pale wall or above a basin of water. If hundreds of BPH land in it, check your seedbed and fields at once and scout daily for the next few weeks. Keep the lights away from seedbeds and fields.\n\nanee.io helps you keep that rhythm. Your [cropping calendar](/features/cropping-calendar) counts days after transplanting for every lot, so you can set a weekly hopper check from early tillering to the milk stage. The [growth stages](/features/growth-stages-and-weather) view shows when each lot enters its risky weeks. Snap a photo of the insects at the base and send it to Anee, the [smart farm technician](/features/ai-agricultural-technician), who helps you tell a planthopper from a leafhopper in Tagalog or English."
     },
     {
       "type": "heading",
@@ -209,7 +209,7 @@
     },
     {
       "type": "text",
-      "text": "Use insecticide only as a last resort, and choose a selective one if the infestation is very high. For seedbeds, spray only when all three conditions hold: more than one planthopper per stem on average, more hoppers than natural enemies, and no way to flood the seedbed.\n\nPymetrozine is a common choice. It belongs to IRAC Group 9B, and it stops the hoppers from feeding. Chess insecticide (Chess 50 WG) from Syngenta contains pymetrozine, and its Philippine product page lists brown plant hopper on rice. Syngenta calls it highly selective for beneficial insects. Insect growth regulators also work against the nymphs.\n\nTreat these as examples. Follow the label and the FPA registration, and never add a broad spectrum insecticide to the tank just to be sure. Our guide to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) compares these products."
+      "text": "Use insecticide only as a last resort, and choose a selective one if the infestation is very high. In a seedbed, spray only if all three are true: the stems average over one planthopper each, hoppers outnumber their natural enemies, and you cannot flood the seedbed.\n\nPymetrozine is a common choice. It belongs to IRAC Group 9B, and it stops the hoppers from feeding. Chess insecticide (Chess 50 WG) from Syngenta contains pymetrozine, and its Philippine product page lists brown plant hopper on rice. Syngenta calls it highly selective for beneficial insects. Insect growth regulators also work against the nymphs.\n\nTreat these as examples. Follow the label and the FPA registration, and never add a broad spectrum insecticide to the tank just to be sure. Our guide to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) compares these products."
     },
     {
       "type": "cta",

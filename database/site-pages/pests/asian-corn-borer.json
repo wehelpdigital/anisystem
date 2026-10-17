@@ -38,8 +38,8 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Eggs.** Flat, white to pale yellow, laid in overlapping masses of 10 to 60 like fish scales. You find them on the underside of leaves near the midrib, and they hatch in 3 to 5 days.",
-        "**Larvae.** Creamy white with a dark head when young. Later they turn pale pink to light brown with dark spots on each segment, and grow to 20 to 25 mm.",
+        "**Eggs.** Flat and white to pale yellow, laid 10 to 60 together in clusters that overlap like the scales of a fish. You find them on the underside of leaves near the midrib, and they hatch in 3 to 5 days.",
+        "**Larvae.** Creamy white with a dark head when young. As they grow to 20 to 25 mm their color shifts to a pale pink or light brown, and each segment carries dark spots.",
         "**Timing.** Corn borer eggs begin to hatch around the eight leaf stage."
       ]
     },
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "Synchronous planting comes first.When every farm in the area plants at the same time, moths have no younger corn nearby to move into.\n\nAfter an infestation, cut and plow under or burn the stubble. You can bury or burn removed tassels, or give them to farm animals as feed."
+      "text": "Synchronous planting comes first.When every farm in the area plants at the same time, moths have no younger corn nearby to move into.\n\nAfter an infestation, cut and plow under or burn the stubble. Tassels you pull off can be buried, burned or fed to your animals."
     },
     {
       "type": "heading",

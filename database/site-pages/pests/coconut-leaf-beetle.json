@@ -88,7 +88,7 @@
     {
       "type": "list",
       "items": [
-        "Narrow red brown streaks run along the leaflets of the unopened spear leaf.",
+        "The still folded spear leaf shows thin red brown streaks along its leaflets.",
         "As the leaf opens, the streaks grow into grey, scorched blotches.",
         "The youngest fronds look burned, while the older fronds stay green.",
         "Flat, narrow beetles and larvae hide inside the folded spear leaf.",
@@ -215,7 +215,7 @@
         },
         {
           "q": "Who is hit hardest?",
-          "a": "Seedlings in nurseries and young palms after planting. Older palms are attacked too, and lose yield."
+          "a": "Nursery seedlings, and young palms in their first months in the field. Older palms are attacked too, and lose yield."
         }
       ]
     },

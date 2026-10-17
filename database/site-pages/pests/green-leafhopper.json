@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "Green leafhoppers are the most common leafhoppers in rice fields. Adults are 3 to 5 millimeters long, bright green with variable black marks, and they move sideways in a quick diagonal run. The nymphs are soft bodied and yellowish white. Two species spread tungro, Nephotettix malayanus and Nephotettix virescens, and N. virescens is the most efficient carrier.\n\nAcross the country, the green leafhopper is one of the five major rice insect pests. The sap feeding alone rarely ruins a crop. The virus it carries does the worse harm."
+      "text": "No leafhopper turns up more often in rice fields than the green leafhopper. Adults are 3 to 5 millimeters long, bright green with variable black marks, and they move sideways in a quick diagonal run. The nymphs are soft bodied and yellowish white. Two species spread tungro, Nephotettix malayanus and Nephotettix virescens, and N. virescens is the most efficient carrier.\n\nAcross the country, the green leafhopper is one of the five major rice insect pests. The sap feeding alone rarely ruins a crop. The virus it carries does the worse harm."
     },
     {
       "type": "table",
@@ -185,7 +185,7 @@
         },
         {
           "q": "Will spraying stop tungro?",
-          "a": "Often not. Insecticides are often unable to prevent or reduce tungro infection. Resistant varieties and synchronous planting work better."
+          "a": "Often not. Spraying for the hopper usually does not stop tungro or even slow it. Resistant varieties and synchronous planting work better."
         },
         {
           "q": "How do I tell it from a planthopper?",

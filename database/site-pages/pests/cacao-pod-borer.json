@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "The adult is a brown moth about 5 to 7 mm long with bright yellow patches at the tips of the forewings and long antennae. It rests under branches in the day and flies at night. The female lays eggs on the pod surface, and the larvae tunnel through the husk into the pulp.\n\nIt is one of the major insect pests of cacao in the Philippines. Studies report annual losses of up to 50 percent or even more where it is not managed, and infestation of 60 to 80 percent was recorded in Davao in 1990. It also lives on rambutan and some other trees, which can carry it between farms."
+      "text": "The adult is a small brown moth, 5 to 7 mm long, with long antennae and a bright yellow patch at the end of each forewing. It rests under branches in the day and flies at night. The female lays eggs on the pod surface, and the larvae tunnel through the husk into the pulp.\n\nFew insects cost cacao growers in the Philippines as much. Studies report annual losses of up to 50 percent or even more where it is not managed, and infestation of 60 to 80 percent was recorded in Davao in 1990. It also lives on rambutan and some other trees, which can carry it between farms."
     },
     {
       "type": "table",
@@ -118,7 +118,7 @@
       "type": "list",
       "ordered": true,
       "items": [
-        "Harvest completely, frequently and regularly. Pick all pods as soon as they turn yellow, and do it every 7 days, so you break the moth cycle.",
+        "Harvest completely, frequently and regularly. Every 7 days, take off every pod that has turned yellow, so the moth cannot finish its life cycle.",
         "Bury infested pods at once or destroy them, so the larvae cannot leave.",
         "Prune the trees every 6 months to keep an open canopy, with a height of about 3 meters, which makes harvest and checking easier.",
         "Sleeve young pods with plastic bags where the labor is available. It works but costs time and money.",
@@ -181,7 +181,7 @@
       "items": [
         {
           "q": "How often should I harvest to fight the borer?",
-          "a": "Every 7 days, picking all pods as soon as they turn yellow. This breaks the life cycle of the moth."
+          "a": "Every 7 days, taking off every pod that has turned yellow. This breaks the life cycle of the moth."
         },
         {
           "q": "Does bagging the pods work?",

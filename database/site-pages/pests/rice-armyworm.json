@@ -31,7 +31,7 @@
     },
     {
       "type": "text",
-      "text": "At least three armyworm species attack rice in Asia. The rice ear cutting caterpillar (Mythimna separata), the rice swarming caterpillar (Spodoptera mauritia) and the common cutworm (Spodoptera litura) are the ones named in the sources. They also attack corn, sorghum and sugarcane. Our [fall armyworm](/pests/fall-armyworm) page covers the corn pest, which is a different insect.\n\nThe caterpillars are nocturnal. They hide at the base of the plants or in cracks in the soil by day. They are active on cloudy days or at night in the upper canopy. So a farmer may see only the damage, not the pest."
+      "text": "At least three armyworm species attack rice in Asia. The rice ear cutting caterpillar (Mythimna separata), the rice swarming caterpillar (Spodoptera mauritia) and the common cutworm (Spodoptera litura) are the ones named in the sources. They also attack corn, sorghum and sugarcane. Our [fall armyworm](/pests/fall-armyworm) page covers the corn pest, which is a different insect.\n\nThe caterpillars come out at night. In the daytime they hide low on the hills or down in cracks in the soil. They are active on cloudy days or at night in the upper canopy. So a farmer may see only the damage, not the pest."
     },
     {
       "type": "table",
@@ -82,7 +82,7 @@
     },
     {
       "type": "text",
-      "text": "Look for leaves eaten down to the midrib, leaving only the veins. Check the base of the hills and the soil cracks at dawn, where the caterpillars hide. Mature larvae reach about 40 millimeters and carry a narrow, yellowish white stripe along the back. Panicles that bend over or collapse, cut at the base, point to the ear cutting caterpillar. Do not confuse it with the [rice leaffolder](/pests/rice-leaffolder), which folds the leaf and stays inside."
+      "text": "Look for leaves eaten down to the midrib, leaving only the veins. Check the base of the hills and the soil cracks at dawn, where the caterpillars hide. Full grown larvae are about 40 millimeters long, with a thin yellowish white line down the back. Panicles that bend over or collapse, cut at the base, point to the ear cutting caterpillar. Do not confuse it with the [rice leaffolder](/pests/rice-leaffolder), which folds the leaf and stays inside."
     },
     {
       "type": "list",
@@ -181,7 +181,7 @@
       "items": [
         {
           "q": "Why do I never see the caterpillars?",
-          "a": "They feed at night or on cloudy days, and they hide at the base of the plants or in the soil by day. Check at dawn."
+          "a": "They eat at night or on cloudy days, and in daylight they hide low on the hills or in the soil. Check at dawn."
         },
         {
           "q": "What is the best defense in the seedbed?",
