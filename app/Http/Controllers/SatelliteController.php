@@ -643,12 +643,12 @@ class SatelliteController extends Controller
             . "THE SAME WEEKS IN EARLIER YEARS (this month and next, the app's stored weather history):\n" . ClimateStore::sameDaysWords((array) ($ctx['climate'] ?? [])) . "\n\n"
             . ($ctx['record'] ?? '')
             . 'ENSO: ' . ($ctx['enso'] ?: 'not available') . "\n\n"
+            . (($aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']))) !== '' ? $aw . "\n(These samples come before the model below: where they differ, trust the samples.)\n\n" : '')
             . "MODELLED SOIL AT THE SPOT (ISRIC SoilGrids 250 m, top 30 cm; a map estimate, not a test of this field):\n" . json_encode($ctx['soil'] ?? []) . "\n\n"
             . "HOW TO READ IT\n"
             . "- NDVI: bare or flooded ground is near 0 to 0.2; young crop 0.2 to 0.4; a full green canopy 0.6 to 0.9. Judge against what this crop should show at this age. A wide stdDev, a high lowShare or one weak zone means uneven growth: say which part of the field (use the zone names), and the likely causes (water, nutrients, pests, disease, gaps, waterlogging, salt), and what to check on foot.\n"
             . "- Radar: VH rises as leaves and stems fill in; VV minus VH narrows as the canopy thickens; very low VV and VH (below about -20 dB) over a paddy can mean standing water. Radar sees through cloud.\n"
             . "- If Sentinel-2 is not available (typhoon cloud), say so plainly and base the crop reading on the radar and its history alone.\n"
-            . (($aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']))) !== '' ? $aw . "\n(These samples come before the model below: where they differ, trust the samples.)\n\n" : '')
             . "- Spacing: at 10 m pixels a satellite cannot count plants. Judge stand uniformity and gaps from the zone spread and the history, and compare the stated density with what the crop needs, saying the limit honestly.\n"
             . "- High density hybrid corn (90,000 or more seeds per hectare) on sodic or alkaline soil: weigh lodging, zinc and iron shortage, sodium crusting and poor emergence.\n"
             . "- Use the research notes below for the soil studies and hazards of this place. Never invent a number. Say what you cannot know.\n\n"

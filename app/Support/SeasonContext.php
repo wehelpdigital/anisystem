@@ -279,6 +279,18 @@ class SeasonContext
         ], fn ($v) => $v !== '');
     }
 
+    /** The lot's area soil in one line (the soil atlas, 2026-10-18), or ''. */
+    private static function soilOf(object $l): string
+    {
+        try {
+            return SoilAtlas::line(SoilAtlas::for($l->locProvince, $l->locTown, $l->locBarangay, $l->crop));
+        } catch (\Throwable $e) {
+            report($e);
+
+            return '';
+        }
+    }
+
     private static function lots(AsCroppingSchedule $s, Carbon $today): array
     {
         [$zero, $transplant] = LotCalendar::effectiveAnchors($s);
@@ -364,18 +376,6 @@ class SeasonContext
                 'note' => Str::limit(trim(strip_tags((string) $a->description)), 180, ''),
             ], fn ($v) => $v !== '');
         })->values()->all();
-    /** The lot's area soil in one line (the soil atlas, 2026-10-18), or ''. */
-    private static function soilOf(object $l): string
-    {
-        try {
-            return SoilAtlas::line(SoilAtlas::for($l->locProvince, $l->locTown, $l->locBarangay, $l->crop));
-        } catch (\Throwable $e) {
-            report($e);
-
-            return '';
-        }
-    }
-
     }
 
     private static function notes(AsCroppingSchedule $s): array
