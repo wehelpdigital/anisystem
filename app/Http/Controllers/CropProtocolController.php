@@ -415,10 +415,9 @@ class CropProtocolController extends Controller
         }
         // A level the area's typical soil filled in is not this lot's test: NPK Plus's "Your soil test reads low
         // in nitrogen" becomes "Soil around here usually reads low in nitrogen" for those elements only.
-        $filled = array_intersect_key(['N' => 'nitrogen', 'P2O5' => 'phosphorus', 'K2O' => 'potassium'], array_flip((array) ($in['areaSoil'] ?? [])));
-        if ($filled) {
-            $r['whys'] = array_map(fn ($w) => is_string($w) && preg_match('/^Your soil test reads\b.*\b(?:' . implode('|', $filled) . ')\b/i', $w)
-                ? (string) preg_replace('/^Your soil test reads/i', 'Soil around here usually reads', $w) : $w, (array) $r['whys']);
+        // The same rewrite NPK Plus and the nutrient book use (SoilAtlas::areaWhys), one rule in one place.
+        if (! empty($in['areaSoil']) && method_exists(\App\Support\SoilAtlas::class, 'areaWhys')) {
+            $r['whys'] = \App\Support\SoilAtlas::areaWhys((array) $r['whys'], (array) $in['areaSoil']);
         }
         $g = $r['goal'];
         $sd = $g['seed'];
