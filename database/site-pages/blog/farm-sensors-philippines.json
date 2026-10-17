@@ -15,7 +15,7 @@
   "excerpt": "Some farm apps connect to farm sensors such as weather stations, soil moisture probes and water level meters, mostly on big farms. In the Philippines, public projects like AutoMonPH and SARAI send their own text advisories instead. For a small rice farm, a plastic AWD tube and a good forecast do much of the same job. Built for Filipino farmers, the anee.io app does not connect to sensors or machines. It works from forecast weather, satellite pictures and your own field notes.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-sensors-philippines.webp",
-    "alt": "Weather station with farm sensors beside rice paddies at IRRI in Los Banos, Laguna",
+    "alt": "Weather station with farm sensors beside rice paddies in Los Banos, Laguna",
     "credit": "Africa Rice Center, CC BY SA 3.0, via Wikimedia Commons"
   },
   "blocks": [
