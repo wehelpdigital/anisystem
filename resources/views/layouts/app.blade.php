@@ -136,7 +136,7 @@
             try {
                 const ref = document.referrer ? new URL(document.referrer) : null;
                 // Opened, not walked back to: the overlays keep entries of their own in the history.
-                if (ref && ref.origin === location.origin && ref.pathname !== location.pathname && !/\/(login|register)/.test(ref.pathname)) { location.assign(ref.href); return; }
+                if (ref && ref.origin === location.origin && ref.pathname !== location.pathname && !/\/(login|register)\b/.test(ref.pathname)) { location.assign(ref.href); return; }
             } catch (_) {}
             location.href = fallback || @json(route('app.dashboard'));
         };
