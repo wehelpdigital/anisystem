@@ -144,6 +144,23 @@ def sentence(s):
     return s if s.endswith(('.', '!', '?')) else s + '.'
 
 
+# Words that may start a note put after "Why farmers know it:" in small letters. Any other first
+# word is a name (Ramgo's, East West, PhilFIDA, Allied, Ilocos) and keeps its capital.
+PLAIN_START = {'the', 'a', 'an', 'one', 'on', 'in', 'sold', 'listed', 'top', 'with', 'named', 'registered', 'best', 'highest',
+               'among', 'called', 'introduced', 'low', 'ranked', 'shown', 'launched', 'still', 'second', 'tied', 'first', 'old',
+               'topped', 'kept', 'large', 'big', 'tiny', 'sweet', 'showcased', 'check', 'about', 'produced', 'featured', 'over',
+               'it', 'mother', 'father', 'grown', 'planted', 'bred', 'used', 'widely', 'popular', 'known', 'chosen', 'picked',
+               'released', 'recommended', 'many', 'most', 'its', 'for', 'from', 'at', 'as', 'two', 'three', 'four', 'five',
+               'very', 'uncultivated', 'subject', 'straight', 'several', 'seed', 'public', 'outyielded', 'long', 'erect', 'early',
+               'dark', 'covered', 'considered', 'commercially', 'beat'}
+
+
+def lower_start(s):
+    """A sentence put after a colon: its first letter small only when its first word is an ordinary word."""
+    w = re.sub(r'[^A-Za-z]', '', s.split()[0]) if s.split() else ''
+    return s[:1].lower() + s[1:] if w.lower() in PLAIN_START else s
+
+
 GROUP_GUIDES = {
     'fruit': [['/land-preparation/fruit-tree-land-preparation', 'Land preparation for fruit trees'], ['/crops/pagtatanim-ng-puno', 'Pagtatanim ng puno'],
               ['/blog/fertilizer-for-fruit-trees', 'Fertilizer for fruit trees']],
@@ -747,7 +764,7 @@ def build(v, allv, st):
         pop = sentence(research.get('popular') or '')
         line = []
         if pop:
-            line.append('Why farmers know it: %s' % (pop[:1].lower() + pop[1:]))
+            line.append('Why farmers know it: %s' % lower_start(pop))
         if research.get('claims'):
             line.append('These are the seller\'s own figures, from its own trials. So plant a small area first, and compare it with your usual %s on the same ground.' % cw)
         else:
