@@ -334,6 +334,7 @@
     .np-mrow.is-short .np-mbar .have { background: #f59e0b; } .np-mrow.is-over .np-mbar .have { background: #dc2626; }
     .np-mval { text-align: right; min-width: 4.6rem; }
     .np-mval em { display: block; font-style: normal; font-size: .7rem; font-weight: 800; color: var(--color-gray-500); }
+    .np-mrow.is-helps .np-mval em { color: #2d5016; }
     .np-mrow.is-short .np-mval em { color: #b45309; } .np-mrow.is-over .np-mval em { color: #b91c1c; } .np-mrow.is-right .np-mval em, .np-mrow.is-testok .np-mval em { color: #2d5016; }
     html.dark .np-mrow.is-right .np-mval em, html.dark .np-mrow.is-testok .np-mval em { color: #a5c97e; }
     .np-mrow small.np-down { color: var(--color-gray-500); font-style: italic; }
@@ -364,7 +365,8 @@
     .lb-st.is-over .lb-out { box-shadow: inset 0 5px 0 #dc2626; }
     /* Solid planks, never see-through: a plank that is not counted is pale
        raw wood, a plank NPK Plus cannot measure is weathered grey. */
-    .lb-st.is-unknown .lb-out, .lb-st.is-unknown .lb-in { filter: saturate(.25) brightness(1.22); }
+    .lb-st.is-unknown .lb-out, .lb-st.is-unknown .lb-in, .lb-st.is-noflag .lb-out, .lb-st.is-noflag .lb-in,
+    .lb-st.is-notneeded .lb-out, .lb-st.is-notneeded .lb-in, .lb-st.is-extra .lb-out, .lb-st.is-extra .lb-in { filter: saturate(.25) brightness(1.22); }
     .lb-st.is-dull .lb-out, .lb-st.is-dull .lb-in { filter: grayscale(1) brightness(.8); }
     .lb-st.is-limit .lb-out b { padding: 2px 0; background: rgb(180 83 9 / .85); }
     .lb-spill { position: absolute; right: 3px; top: -3px; bottom: 0; width: 8px; transform: translateZ(2px); backface-visibility: hidden; -webkit-backface-visibility: hidden;
@@ -431,15 +433,15 @@
     .lb-k:hover { background: var(--color-gray-50); }
     html.dark .lb-k:hover { background: #121a0d; }
     .lb-k > i { width: .7rem; height: 1.1rem; border-radius: 2px; background: linear-gradient(90deg, #6f4519, #c4874a, #6f4519); }
-    .lb-k.is-dull > i { filter: grayscale(1); opacity: .7; } .lb-k.is-unknown > i { opacity: .45; }
+    .lb-k.is-dull > i { filter: grayscale(1); opacity: .7; } .lb-k.is-unknown > i, .lb-k.is-noflag > i, .lb-k.is-notneeded > i, .lb-k.is-extra > i { opacity: .45; }
     .lb-k b { font-weight: 800; color: var(--color-gray-800); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .lb-k b small { font-weight: 700; color: var(--color-gray-400); }
     .lb-kbar { position: relative; height: .4rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
     .lb-kbar span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: #4a7c2a; transition: width .6s var(--np-ease); }
     .lb-k.is-short .lb-kbar span { background: #f59e0b; } .lb-k.is-over .lb-kbar span { background: #dc2626; }
-    .lb-k.is-dull .lb-kbar span, .lb-k.is-unknown .lb-kbar span { background: var(--color-gray-300, #cbd5e1); }
+    .lb-k.is-dull .lb-kbar span, .lb-k.is-unknown .lb-kbar span, .lb-k.is-noflag .lb-kbar span, .lb-k.is-notneeded .lb-kbar span, .lb-k.is-extra .lb-kbar span { background: var(--color-gray-300, #cbd5e1); }
     .lb-k em { font-style: normal; font-size: .66rem; font-weight: 800; text-align: right; color: var(--color-gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .lb-k.is-short em { color: #b45309; } .lb-k.is-over em { color: #b91c1c; } .lb-k.is-right em, .lb-k.is-fixed em { color: #2d5016; }
+    .lb-k.is-short em { color: #b45309; } .lb-k.is-over em { color: #b91c1c; } .lb-k.is-right em, .lb-k.is-fixed em, .lb-k.is-testok em { color: #2d5016; }
     .lb-reach { display: flex; align-items: baseline; gap: .55rem; margin-top: .7rem; font-size: .8rem; line-height: 1.45; color: var(--color-gray-600); }
     .lb-reach[hidden] { display: none; }
     .lb-reach b { flex: none; font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; line-height: 1; color: #1d6fd1; }
@@ -2099,7 +2101,7 @@
             : '';
 
         const micro = micros(c, md, tot, perHa, area, out.length);
-        const reach = barrel(c, md, states, perHa, out.length, g);
+        const reach = barrel(c, md, states, perHa, out.length, g, micro);
 
         const seedV = num('npSeed');
         RES = { perHa: Object.fromEntries(Object.entries(perHa).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])), total: Object.fromEntries(Object.entries(tot).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])),
@@ -2154,6 +2156,8 @@
     };
 
     /* ---- the micros tab: each element's need per area, from the model ---- */
+    // One word per verdict, shared with the barrel's planks and key (2026-10-19).
+    const MICRO_WORD = { short: 'Short', right: 'Enough', over: 'Too much', extra: 'Extra', noflag: 'Not flagged', testok: 'Enough', notneeded: 'Not needed' };
     const micros = (c, md, tot, perHa, area, has) => {
         const out = {};
         let k = 0;
@@ -2164,7 +2168,7 @@
             let state;
             if (need > 0) { const r = plan / need; state = r < 0.9 ? 'short' : r > (e.over || 5) ? 'over' : 'right'; }
             else state = plan > 0 ? 'extra' : mm.level === 'notneeded' ? 'notneeded' : mm.level === 'testok' ? 'testok' : 'noflag';
-            out[el] = { need: Math.round(need * 1000) / 1000, plan: Math.round(plan * 1000) / 1000, level: mm.level, state };
+            out[el] = { need: Math.round(need * 1000) / 1000, plan: Math.round(plan * 1000) / 1000, level: mm.level, state, beneficial: !!e.beneficial };
             // "Not flagged" is not "the soil gives enough": it means nothing you
             // told NPK Plus points to a shortage. Only a soil test says enough.
             const say = { none: 'No shortage flagged: nothing you told NPK Plus points to one', notneeded: 'Not needed for this crop', watch: 'May run short', likely: 'Likely short',
@@ -2175,8 +2179,9 @@
             const warn = state === 'over' && e.toxic ? ' ' + e.toxic : '';
             const scale = Math.max(need * 1.6, plan * 1.05, 1e-9);
             const bar = need > 0 || plan > 0 ? '<span class="np-mbar"><span class="have" style="width:' + Math.min(100, plan / scale * 100) + '%"></span>' + (need > 0 ? '<span class="need" style="left:' + (need / scale * 100) + '%"></span>' : '') + '</span>' : '';
-            const word = { short: 'Short', right: 'Enough', over: 'Too much', extra: 'Extra', noflag: 'Not flagged', testok: 'Enough', notneeded: 'Not needed' }[state];
-            return '<div class="np-mrow is-' + state + (['Ca', 'Mg', 'S'].includes(el) ? ' is-sec' : '') + (e.beneficial ? ' is-ben' : '') + '" style="--k:' + (k++) + '"><i>' + el + '</i>'
+            // A beneficial element is never "short": it would help (the barrel leaves it out the same way).
+            const word = e.beneficial && state === 'short' ? 'Would help' : MICRO_WORD[state];
+            return '<div class="np-mrow is-' + (e.beneficial && state === 'short' ? 'helps' : state) + (['Ca', 'Mg', 'S'].includes(el) ? ' is-sec' : '') + (e.beneficial ? ' is-ben' : '') + '" style="--k:' + (k++) + '"><i>' + el + '</i>'
                 + '<span class="np-mtxt"><b>' + NAMES[el] + (e.beneficial ? '<span class="np-ben">Beneficial, not required</span>' : '') + '</b><small>' + esc(say + fix + warn) + '</small>' + down + bar + '</span>'
                 + '<span class="np-mval"><em>' + word + '</em><small>' + (need > 0 ? 'Need ' + amt(need) + ' per ha' + (area > 0 && Math.abs(area - 1) > 0.001 ? ', ' + amt(need * area) + ' in all' : '') : 'Need none') + '</small><small>Plan ' + (plan > 0 ? amt(plan) + ' per ha' : 'none') + '</small></span></div>';
         };
@@ -2202,23 +2207,39 @@
        yield goal that nutrient allows: what the soil gives on its own, plus
        what the plan covers of the rest. Sun, water and temperature are grey
        planks drawn full, because NPK Plus cannot measure them. */
-    const STAVES = [
-        { k: 'N', t: 'N' }, { k: 'P2O5', t: 'P₂O₅' }, { k: 'K2O', t: 'K₂O' }, { k: 'Ca', t: 'Ca' }, { k: 'Mg', t: 'Mg' }, { k: 'S', t: 'S' }, { k: 'Zn', t: 'Zn' }, { k: 'B', t: 'B' },
-        { k: 'sun', t: 'Sun', name: 'Sunlight', dull: true }, { k: 'water', t: 'Water', name: 'Water', dull: true }, { k: 'temp', t: 'Temp', name: 'Temperature', dull: true },
-    ];
+    // N, P, K, the three secondaries, zinc and boron always stand; any other required element (iron,
+    // manganese, copper, molybdenum) joins when the Micros tab has a verdict on it, so a shortage there is a
+    // plank here too. Beneficial elements stay out: they help, they never hold the harvest back.
+    const STAVES_BASE = [{ k: 'N', t: 'N' }, { k: 'P2O5', t: 'P₂O₅' }, { k: 'K2O', t: 'K₂O' }, { k: 'Ca', t: 'Ca' }, { k: 'Mg', t: 'Mg' }, { k: 'S', t: 'S' }, { k: 'Zn', t: 'Zn' }, { k: 'B', t: 'B' }];
+    const STAVES_SKY = [{ k: 'sun', t: 'Sun', name: 'Sunlight', dull: true }, { k: 'water', t: 'Water', name: 'Water', dull: true }, { k: 'temp', t: 'Temp', name: 'Temperature', dull: true }];
+    let STAVES = STAVES_BASE.concat(STAVES_SKY);
+    const stavesFor = (micro) => {
+        const has = STAVES_BASE.map((x) => x.k);
+        const more = Object.keys(M.elements || {}).filter((el) => !has.includes(el) && !(M.elements[el] || {}).beneficial
+            && micro && micro[el] && ['short', 'over', 'right', 'testok'].includes(micro[el].state));
+        return STAVES_BASE.concat(more.map((el) => ({ k: el, t: el })), STAVES_SKY);
+    };
     const BR = (() => {
-        const n = STAVES.length, R = 80, H = 190, ang = 360 / n;
-        const W = Math.ceil(2 * R * Math.tan(Math.PI / n)) + 1, RW = R - 4, WW = Math.ceil(2 * RW * Math.tan(Math.PI / n)) + 1;
+        const R = 80, H = 190;
         const el = $('lbBarrel'), stage = $('lbStage'), svg = $('lbArrow'), ap = svg.querySelector('.lb-ap'), ah = svg.querySelector('.lb-ah'), alab = $('lbALab');
         const disc = (cls, d, y) => '<div class="' + cls + '" style="width:' + d + 'px;height:' + d + 'px;margin-left:' + (-d / 2) + 'px;top:' + y + 'px"></div>';
-        el.innerHTML = disc('lb-shadow', 2 * R * 1.7, H + 2) + disc('lb-floor', 2 * R, H)
-            + STAVES.map((s, i) => '<div class="lb-st" style="width:' + W + 'px;margin-left:' + (-W / 2) + 'px;transform:rotateY(' + (i * ang) + 'deg) translateZ(' + R + 'px);--d:' + (i * 55) + 'ms">'
-                + '<div class="lb-out"><b>' + s.t + '</b><small></small></div><div class="lb-in"></div><div class="lb-spill"></div><div class="lb-pool"></div></div>').join('')
-            + '<div class="lb-water">' + STAVES.map((s, i) => '<div class="lb-wf" style="width:' + WW + 'px;margin-left:' + (-WW / 2) + 'px;transform:rotateY(' + (i * ang) + 'deg) translateZ(' + RW + 'px)"></div>').join('')
-            + disc('lb-top', 2 * RW + 3, 0) + '</div>'
-            + disc('lb-rim', 2 * R + 16, 0);
-        const sts = [...el.querySelectorAll('.lb-st')], water = el.querySelector('.lb-water'), top = el.querySelector('.lb-top');
         let ry = -18, rx = -16, vel = 0, drag = null, aim = null, on = false, raf = 0, t0 = performance.now(), lim = -1, level = 0, arrowT = 0;
+        let n = 0, ang = 0, built = '', sts = [], water = null, top = null;
+        // The barrel is put together for a set of planks, and again only when the set changes.
+        const build = (list) => {
+            const sig = list.map((x) => x.k).join(',');
+            if (sig === built) return;
+            built = sig; n = list.length; ang = 360 / n; lim = -1;
+            const W = Math.ceil(2 * R * Math.tan(Math.PI / n)) + 1, RW = R - 4, WW = Math.ceil(2 * RW * Math.tan(Math.PI / n)) + 1;
+            el.innerHTML = disc('lb-shadow', 2 * R * 1.7, H + 2) + disc('lb-floor', 2 * R, H)
+                + list.map((s, i) => '<div class="lb-st" style="width:' + W + 'px;margin-left:' + (-W / 2) + 'px;transform:rotateY(' + (i * ang) + 'deg) translateZ(' + R + 'px);--d:' + (i * 55) + 'ms">'
+                    + '<div class="lb-out"><b>' + s.t + '</b><small></small></div><div class="lb-in"></div><div class="lb-spill"></div><div class="lb-pool"></div></div>').join('')
+                + '<div class="lb-water">' + list.map((s, i) => '<div class="lb-wf" style="width:' + WW + 'px;margin-left:' + (-WW / 2) + 'px;transform:rotateY(' + (i * ang) + 'deg) translateZ(' + RW + 'px)"></div>').join('')
+                + disc('lb-top', 2 * RW + 3, 0) + '</div>'
+                + disc('lb-rim', 2 * R + 16, 0);
+            sts = [...el.querySelectorAll('.lb-st')]; water = el.querySelector('.lb-water'); top = el.querySelector('.lb-top');
+        };
+        build(STAVES);
         const apply = () => {
             const idle = !drag && aim === null && Math.abs(vel) < 0.05 && !still();
             if (!idle) t0 = performance.now();
@@ -2280,7 +2301,7 @@
         });
         window.addEventListener('resize', () => { if (on) drawArrow(false); });
         return {
-            H, face,
+            H, face, build,
             set(rows, levelPx, limIdx) {
                 rows.forEach((r, i) => {
                     sts[i].style.height = r.px + 'px';
@@ -2307,14 +2328,16 @@
             leave() { on = false; clearTimeout(arrowT); },
         };
     })();
-    const WORD = { short: 'Short', right: 'Enough', over: 'Too much', fixed: 'From the air', unknown: 'Not measured', dull: 'Not measured' };
+    const WORD = Object.assign({}, MICRO_WORD, { fixed: 'From the air', unknown: 'Not measured', dull: 'Not measured' });
     /* The planks. A nutrient's plank is judged exactly as its own tab judges
        it, against the need for your goal: the soil's own share of the goal,
        and the part of the rest the plan covers, short or enough by the same
        line as the NPK and Micros tabs (the owner saw calcium "enough" here
        and "short" there, 2026-10-12). Sun, water and heat are tons the season
        lets the variety carry, set against the goal (seasonPlanks). */
-    const barrel = (c, md, states, perHa, has, g) => {
+    const barrel = (c, md, states, perHa, has, g, micro) => {
+        STAVES = stavesFor(micro);
+        BR.build(STAVES);
         const H = BR.H, rows = [], SP = seasonPlanks(c, g);
         STAVES.forEach((s) => {
             if (s.dull) {
@@ -2341,19 +2364,23 @@
                     note = 'Soil ' + Math.round(s0 * 100) + '%, plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the rest of the need for your goal';
                 }
             } else if (c && md.micro[n]) {
-                const mm = md.micro[n], plan = perHa[n] || 0;
+                // The Micros tab's own verdict (micros() above), so the two never disagree.
+                const mm = md.micro[n], plan = perHa[n] || 0, v = (micro && micro[n]) || {};
+                state = v.state || 'noflag';
                 if (mm.need > 0) {
                     const cover = plan / mm.need;
                     ratio = mm.share + (1 - mm.share) * Math.min(1, cover);
-                    // The Micros tab's own line: short under 90% of the need, too much past its limit.
-                    state = cover > ((M.elements[n] || {}).over || 5) ? 'over' : cover < 0.9 ? 'short' : 'right';
                     if (state === 'over') ratio = 1.1;
                     if (state === 'right') ratio = Math.max(ratio, 1);
-                    note = { watch: 'May run short', likely: 'Likely short', test: 'Low by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal' : ', none in plan');
-                } else if (mm.level === 'testok') { state = 'right'; ratio = 1; note = 'Enough, by your soil test'; }
-                else { state = 'unknown'; ratio = null; note = 'No shortage flagged, not measured'; }
+                    note = { watch: 'May run short', likely: 'Likely short', test: 'Short by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal' : ', none in plan');
+                } else if (state === 'testok') { ratio = 1; note = 'Enough, by your soil test'; }
+                else {
+                    // Not flagged, not needed or extra: no need to measure the plank against, drawn full and pale.
+                    ratio = null;
+                    note = { notneeded: 'Not needed for this crop', extra: 'Extra: the crop has no need for it here' }[state] || 'No shortage flagged: nothing you told NPK Plus points to one';
+                }
             }
-            const px = state === 'unknown' ? H : Math.max(22, Math.round(H * Math.min(1.22, ratio)));
+            const px = ratio === null ? H : Math.max(22, Math.round(H * Math.min(1.22, ratio)));
             rows.push({ state, ratio, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
         });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null && r.state !== 'dull');
@@ -2402,8 +2429,10 @@
                 : 'The shortest plank is <b>' + esc(Ls.name || NAMES[Ls.k]) + '</b>' + (Ls.name ? '' : ' (' + Ls.t + ')') + ': ' + esc(L.note.toLowerCase()) + '. It holds the water at ' + reach + '% of your goal. Raise it first; more of the others will not raise the water.';
             const over = STAVES.filter((s, i) => rows[i].state === 'over').map((s) => NAMES[s.k].toLowerCase());
             if (over.length) say += ' Too much ' + esc(list(over)) + ': the taller plank holds no more water. It costs money' + (over.includes('nitrogen') ? ', and too much nitrogen can make the crop lodge and draw pests' : '') + '.';
-            const unk = STAVES.filter((s, i) => rows[i].state === 'unknown').map((s) => s.t);
-            if (unk.length) say += ' Not measured: ' + esc(unk.join(', ')) + '. Nothing you told NPK Plus points to a shortage of them; a soil test would measure them.';
+            const unk = STAVES.filter((s, i) => rows[i].state === 'noflag').map((s) => s.t);
+            if (unk.length) say += ' Not flagged: ' + esc(unk.join(', ')) + '. Nothing you told NPK Plus points to a shortage of them, as the Micros tab says; only a soil test can say they are enough.';
+            const nn = STAVES.filter((s, i) => rows[i].state === 'notneeded').map((s) => s.t);
+            if (nn.length) say += ' Not needed for this crop: ' + esc(nn.join(', ')) + '.';
         }
         say += SP ? ' Sun, water and temperature are read from twenty years of weather at your field and the ENSO state now: a rough guide to the season, not a forecast of it.'
             : ' The grey planks, sun, water and temperature, can be the shortest too: pick the place and the planting date in step 4 and NPK Plus reads them from twenty years of weather at your field.';
