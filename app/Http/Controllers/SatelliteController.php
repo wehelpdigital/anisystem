@@ -309,9 +309,8 @@ class SatelliteController extends Controller
                 if ($notes !== '') {
                     $rest = ClimateRecord::harvest($rk['key'], $rk['place'], 'PH', $notes, (bool) ($meta['searched'] ?? false), (array) ($meta['sources'] ?? []))['rest'];
                 }
-                // The town's record, the months the crop still stands in the field marked (2026-10-18).
-                $now = (int) now('Asia/Manila')->month;
-                $kept = ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], false, [$now, $now % 12 + 1, ($now + 1) % 12 + 1, ($now + 2) % 12 + 1]);
+                // The town's record, the months the crop still stands in the field marked (2026-10-18), now to its harvest (2026-10-19).
+                $kept = self::recordFor($p, $rk);
 
                 return $this->prompt($p, $s, $ctx + ['record' => $kept !== '' ? $kept . "\n" : ''])
                     . ($rest !== '' ? "\n\nRESEARCH NOTES, found on the web by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win:\n" . $rest : '');
@@ -566,6 +565,34 @@ class SatelliteController extends Controller
 
     /* ------------------------------------------------------------ prompts */
 
+    /** The days to harvest: the variety's own (VarietyBook::days), else the crop's usual. */
+    private static function daysOf(array $p): int
+    {
+        return (int) (\App\Support\VarietyBook::days((string) $p['crop'], (string) ($p['variety'] ?? '')) ?: CropCatalog::maturity((string) $p['crop']));
+    }
+
+    /**
+     * The calendar months from now to the crop's harvest (planted on plus its
+     * days), one to six of them; the next four when the planting day is unknown.
+     */
+    public static function standMonths(array $p): array
+    {
+        $now = now('Asia/Manila')->startOfMonth();
+        $end = ! empty($p['plantedOn']) ? \Illuminate\Support\Carbon::parse($p['plantedOn'])->addDays(self::daysOf($p))->startOfMonth() : $now->copy()->addMonths(3);
+        $out = [];
+        for ($m = $now->copy(); $m <= $end && count($out) < 6; $m->addMonth()) {
+            $out[] = (int) $m->month;
+        }
+
+        return $out ?: [(int) $now->month];
+    }
+
+    /** The town's hazard record for a prompt, the months the crop still stands marked. */
+    public static function recordFor(array $p, array $rk): string
+    {
+        return ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], false, self::standMonths($p));
+    }
+
     private function facts(array $p): string
     {
         $crop = CropCatalog::label($p['crop']);
@@ -599,17 +626,21 @@ class SatelliteController extends Controller
         $missing = ClimateRecord::missing($rk['townKey'] ?? $rk['key']);
         $age = ! empty($p['plantedOn']) ? (int) \Illuminate\Support\Carbon::parse($p['plantedOn'])->startOfDay()->diffInDays(now('Asia/Manila')->startOfDay()) : null;
         $weeks = $age !== null ? max(0, (int) round($age / 7)) : null;
+        // Written from the crop's stage and the province (2026-10-19), so the next field of the same crop, variety, stage and
+        // province reads the kept notes (ResearchShelf) instead of searching; the stage table is the app's own.
+        $stage = $age !== null ? (\App\Support\CropStages::stageFor((string) $p['crop'], $age, null, self::daysOf($p))['label'] ?? null) : null;
+        $where = ! empty($rk['province']) ? 'the province of ' . $rk['place'] : $p['location'];
         // The area's soil is the app's own (the soil atlas, 2026-10-18): searched for only where the atlas has nothing.
         $atlas = \App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']);
         $n = $atlas ? 2 : 3;
 
         return "You are researching for a satellite field analysis in the Philippines. Use web search. Write plain research notes (not JSON).\n\n"
             . 'Crop: ' . CropCatalog::label($p['crop']) . (! empty($p['variety']) ? ' (variety ' . $p['variety'] . ')' : '') . "\n"
-            . 'Place: ' . $p['location'] . ", Philippines\n"
-            . 'Age: ' . ($weeks !== null ? 'about ' . $weeks . ' weeks from planting' : 'not stated') . '; way in: ' . (self::METHODS[$p['method']] ?? $p['method']) . "\n\n"
+            . 'Place: ' . $where . ", Philippines\n"
+            . 'Stage: ' . ($stage ? $stage : ($weeks !== null ? 'about ' . $weeks . ' weeks from planting' : 'not stated')) . '; way in: ' . (self::METHODS[$p['method']] ?? $p['method']) . "\n\n"
             . "Find and summarize, citing the sources you read:\n"
             . ($atlas ? '' : "1. SOIL OF THIS AREA: any soil survey or published study of the soils in or near this town or province (pH, sodic, alkaline, saline, acid sulfate, texture, drainage, known deficiencies). Say what it found. If none exists for this exact place, say so and give the province's general soil picture.\n")
-            . ($atlas ? '1' : '2') . ". THE CROP: for this crop (and variety if named) at about this age, the typical Sentinel-2 NDVI range of a healthy field in the tropics, typical Sentinel-1 VH backscatter behaviour as the canopy grows, and the main pests and diseases that strike at this stage in the Philippines and the weather that favours them.\n"
+            . ($atlas ? '1' : '2') . ". THE CROP: for this crop (and variety if named) at this stage, the typical Sentinel-2 NDVI range of a healthy field in the tropics, typical Sentinel-1 VH backscatter behaviour as the canopy grows, and the main pests and diseases that strike at this stage in the Philippines and the weather that favours them.\n"
             . ($p['crop'] === 'corn' || str_contains(strtolower(CropCatalog::label($p['crop'])), 'corn') ? ($n++) . ". HIGH DENSITY HYBRID CORN: how 90,000 or more seeds per hectare behaves in NDVI and radar, lodging and nutrient risks at that density, and how sodic or alkaline soil limits it.\n" : '')
             . ($missing ? $n . '. HAZARDS OF THIS PLACE in ' . ClimateRecord::yearsWords($missing) . ': the typhoons, floods, drought and heat that hit ' . $rk['place'] . "'s farms.\n" . ClimateRecord::ask($rk['place'], $missing, true) : '')
             . "\nThe app keeps the field's weather history, its forecast and the ENSO state" . ($atlas ? ' and the area\'s soil survey' : '') . ": do not look those up. Be factual. Keep numbers with their source.";
@@ -641,14 +672,14 @@ class SatelliteController extends Controller
             . "THE FIELD\n" . $this->facts($p)
             . FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop'], '')
             . 'Elevation: ' . ($ctx['elevation'] ?? 'unknown') . " m\n\n"
-            . "WHAT THE SATELLITES SAW (" . (($sat['source'] ?? '') === 'planetary' ? 'Copernicus Sentinel pictures through Microsoft Planetary Computer; Sentinel-1 is terrain corrected gamma nought' : 'Google Earth Engine') . "; times are Philippine time; NDVI from 10 m Sentinel-2 with clouds masked; radar in dB from Sentinel-1, VV and VH):\n"
+            . "WHAT THE SATELLITES SAW (" . (($s['source'] ?? '') === 'planetary' ? 'Copernicus Sentinel pictures through Microsoft Planetary Computer; Sentinel-1 is terrain corrected gamma nought' : 'Google Earth Engine') . "; times are Philippine time; NDVI from 10 m Sentinel-2 with clouds masked; radar in dB from Sentinel-1, VV and VH):\n"
             . json_encode($sat, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n\n"
             . "WEATHER: last 30 days rain " . ($w['past30Rain'] ?? '?') . " mm, evapotranspiration " . ($w['past30Et0'] ?? '?') . " mm. Next 10 days:\n" . $nextDays . "\n"
             . 'Next 16 days rain total ' . ($w['next16Rain'] ?? '?') . " mm.\n\n"
             . "THE SAME WEEKS IN EARLIER YEARS (this month and next, the app's stored weather history):\n" . ClimateStore::sameDaysWords((array) ($ctx['climate'] ?? [])) . "\n\n"
             . ($ctx['record'] ?? '')
             . 'ENSO: ' . ($ctx['enso'] ?: 'not available') . "\n\n"
-            . (($aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']))) !== '' ? $aw . "\n(These samples come before the model below: where they differ, trust the samples.)\n\n" : '')
+            . (($aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']), 'short')) !== '' ? $aw . "\n(These samples come before the model below: where they differ, trust the samples.)\n\n" : '')
             . "MODELLED SOIL AT THE SPOT (ISRIC SoilGrids 250 m, top 30 cm; a map estimate, not a test of this field):\n" . json_encode($ctx['soil'] ?? []) . "\n\n"
             . "HOW TO READ IT\n"
             . "- NDVI: bare or flooded ground is near 0 to 0.2; young crop 0.2 to 0.4; a full green canopy 0.6 to 0.9. Judge against what this crop should show at this age. A wide stdDev, a high lowShare or one weak zone means uneven growth: say which part of the field (use the zone names), and the likely causes (water, nutrients, pests, disease, gaps, waterlogging, salt), and what to check on foot.\n"
