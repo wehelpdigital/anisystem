@@ -454,6 +454,9 @@
     .lb-reach[hidden] { display: none; }
     .lb-reach b { flex: none; font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; line-height: 1; color: #1d6fd1; }
     html.dark .lb-reach b { color: #7cc0ff; }
+    .lb-reach .lb-harvest { display: block; margin-top: .35rem; font-size: .76rem; color: var(--color-gray-500); }
+    .lb-reach .lb-harvest b { display: inline; font-size: inherit; font-family: inherit; color: var(--color-gray-700); }
+    html.dark .lb-reach .lb-harvest b { color: #e8efe1; }
     .np-law p + p { margin-top: .65rem; }
     .np-law p { font-size: .88rem; line-height: 1.6; color: var(--color-gray-700); }
     .np-law h4 { margin-top: 1rem; margin-bottom: .3rem; font-family: var(--font-heading); font-weight: 800; font-size: .95rem; color: var(--color-gray-900); }
@@ -1006,7 +1009,8 @@
         <h4>What it means on your farm</h4>
         <p>Find the shortest plank and raise it first. If phosphorus is short, more urea will not raise the harvest; it only costs money. Once phosphorus is fixed, another plank becomes the shortest, and that one is next.</p>
         <h4>How NPK Plus draws it</h4>
-        <p>Each nutrient plank is how much of your yield goal that nutrient allows: what your soil gives on its own, plus what your fertilizer adds. A plank taller than the rim is a nutrient given more than the crop needs; it holds no more water. Sun, water and temperature are grey: NPK Plus cannot measure them, but in a drought or a long cloudy spell they can be the shortest plank of all.</p>
+        <p>Each nutrient plank is how much of that nutrient's need for your goal your plan covers: the same number the NPK and Micros tabs show, so a nutrient they call short is a short plank here. A plank taller than the rim is a nutrient given more than the crop needs; it holds no more water. Sun, water and temperature are how much of the crop's need the season meets, read from twenty years of weather at your field.</p>
+        <p>The soil gives part of a missing nutrient on its own, so the harvest falls less than a short plank shows. NPK Plus says that harvest apart, under the barrel. What the plan leaves out is taken from the soil, and the next season starts poorer.</p>
         <p class="np-fine">It is a simple picture. In a real field the nutrients work together, the shortest plank can change during the season, and the variety and the soil decide how much each fertilizer really gives.</p>
     </div>
 </div>
@@ -2150,11 +2154,11 @@
             : '';
 
         const micro = micros(c, md, tot, perHa, area, out.length);
-        const reach = barrel(c, md, states, perHa, out.length, g, micro);
+        const { reach, harvest } = barrel(c, md, states, perHa, out.length, g, micro);
 
         const seedV = num('npSeed');
         RES = { perHa: Object.fromEntries(Object.entries(perHa).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])), total: Object.fromEntries(Object.entries(tot).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])),
-            npkPerHa: npk, needs: states, micros: micro, reach, lines: out, areaHa: area, soilClass: cls,
+            npkPerHa: npk, needs: states, micros: micro, reach, harvest, lines: out, areaHa: area, soilClass: cls,
             goal: g.Y ? { tPerHa: Math.round(g.Y * 100) / 100, counted: Math.round(g.Yeff * 100) / 100, why: g.why, fieldCap: g.capped ? Math.round(g.cap.k * 100) / 100 : null } : null,
             setup: { variety: $('npVariety').value.trim(), areaUnit: st.areaUnit, areaValue: num('npArea'), yUnit: st.yUnit,
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
@@ -2378,12 +2382,15 @@
         };
     })();
     const WORD = Object.assign({}, MICRO_WORD, { fixed: 'From the air', unknown: 'Not measured', dull: 'Not measured' });
-    /* The planks. A nutrient's plank is judged exactly as its own tab judges
-       it, against the need for your goal: the soil's own share of the goal,
-       and the part of the rest the plan covers, short or enough by the same
-       line as the NPK and Micros tabs (the owner saw calcium "enough" here
-       and "short" there, 2026-10-12). Sun, water and heat are tons the season
-       lets the variety carry, set against the goal (seasonPlanks). */
+    /* The planks (2026-10-19, the owner: "NPK does not adhere to the barrel").
+       A nutrient's plank is the very number its own tab shows: the share of
+       its need for your goal the plan covers, short or enough by the same
+       line, so "Short" in a tab is always a short plank here. Sun, water and
+       heat are the share of the crop's need the season meets (seasonPlanks).
+       The water is the need met at the shortest plank. The harvest is said
+       apart (yr): the soil gives part of a missing nutrient on its own, so a
+       short plan costs less harvest than its plank shows, while it drains
+       the soil for the next season. */
     const barrel = (c, md, states, perHa, has, g, micro) => {
         STAVES = stavesFor(micro);
         BR.build(STAVES);
@@ -2396,21 +2403,23 @@
                     : s.k === 'water' ? (st.water === 'irrigated' ? 'Irrigated: the crop gets the ' + Math.round(SP.need) + ' mm it drinks' : 'About ' + Math.round(SP.supply) + ' of the ' + Math.round(SP.need) + ' mm the crop drinks')
                     : fmt(SP.tmean, 1) + '°C on average, ' + Math.round(SP.hotN) + ' days too hot for flowers')
                     + (SP.cap ? ', enough for about ' + fmt(SP.cap[s.k] / yu0[3]) + ' ' + yu0[1] : '');
-                rows.push({ state, ratio: r, px: Math.max(22, Math.round(H * Math.min(1.22, r))), pct: Math.round(Math.min(1, r) * 100) + '%', note, season: true });
+                rows.push({ state, ratio: r, yr: r, px: Math.max(22, Math.round(H * Math.min(1.22, r))), pct: Math.round(Math.min(1, r) * 100) + '%', note, season: true });
                 return;
             }
             const n = s.k;
-            let state = 'unknown', ratio = null, note = c ? 'No numbers for this crop' : 'Pick the crop';
+            let state = 'unknown', ratio = null, yr = null, note = c ? 'No numbers for this crop' : 'Pick the crop';
+            // A plank from its tab's verdict and cover: short at its cover, enough at the rim, too much above it.
+            const plank = (st0, cover, over) => st0 === 'over' ? over : st0 === 'right' || st0 === 'testok' ? 1 : Math.min(1, cover);
             if (c && NPK.includes(n)) {
-                if (md.how.N === 'legume' && n === 'N') { state = 'fixed'; ratio = 1; note = 'A legume makes its own'; }
+                if (md.how.N === 'legume' && n === 'N') { state = 'fixed'; ratio = 1; yr = 1; note = 'A legume makes its own'; }
                 else if (md.need[n] != null) {
                     const s0 = md.share[n], cover = md.need[n] > 0 ? perHa[n] / md.need[n] : 1;
-                    ratio = s0 + (1 - s0) * Math.min(1, cover);
-                    // The NPK tab's own verdict, so the two never disagree.
+                    // The NPK tab's own verdict and number, so the two never disagree.
                     state = states[n] ? states[n].state : 'right';
-                    if (state === 'right') ratio = Math.max(ratio, 1);
-                    if (state === 'over') ratio = Math.min(1.22, 1 + (cover - 1) * 0.25);
-                    note = 'Soil ' + Math.round(s0 * 100) + '%, plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the rest of the need for your goal';
+                    ratio = plank(state, cover, Math.min(1.22, 1 + (cover - 1) * 0.25));
+                    yr = state === 'short' ? s0 + (1 - s0) * Math.min(1, cover) : 1;
+                    note = 'Plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal'
+                        + (state === 'short' ? ' (the soil gives some on its own: the harvest keeps about ' + Math.round(yr * 100) + '%)' : '');
                 }
             } else if (c && md.micro[n]) {
                 // The Micros tab's own verdict (micros() above), so the two never disagree.
@@ -2418,11 +2427,10 @@
                 state = v.state || 'noflag';
                 if (mm.need > 0) {
                     const cover = plan / mm.need;
-                    ratio = mm.share + (1 - mm.share) * Math.min(1, cover);
-                    if (state === 'over') ratio = 1.1;
-                    if (state === 'right') ratio = Math.max(ratio, 1);
+                    ratio = plank(state, cover, 1.1);
+                    yr = state === 'short' ? mm.share + (1 - mm.share) * Math.min(1, cover) : 1;
                     note = { watch: 'May run short', likely: 'Likely short', test: 'Short by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal' : ', none in plan');
-                } else if (state === 'testok') { ratio = 1; note = 'Enough, by your soil test'; }
+                } else if (state === 'testok') { ratio = 1; yr = 1; note = 'Enough, by your soil test'; }
                 else {
                     // Not flagged, not needed or extra: no need to measure the plank against, drawn full and pale.
                     ratio = null;
@@ -2430,7 +2438,7 @@
                 }
             }
             const px = ratio === null ? H : Math.max(22, Math.round(H * Math.min(1.22, ratio)));
-            rows.push({ state, ratio, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
+            rows.push({ state, ratio, yr, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
         });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null && r.state !== 'dull');
         // The season's sky and water, from twenty years of weather.
@@ -2459,23 +2467,29 @@
             return '<button type="button" class="lb-k is-' + r.state + '" data-i="' + i + '" title="' + esc(r.note) + '"><i></i><b>' + esc(s.name || NAMES[s.k]) + (s.dull ? '' : ' <small>' + s.t + '</small>') + '</b>'
                 + '<span class="lb-kbar"><span style="width:' + (r.ratio === null ? (r.state === 'dull' ? 100 : 0) : Math.min(100, r.ratio * 100)) + '%"></span></span><em>' + (WORD[r.state] || '') + '</em></button>';
         }).join('');
-        // The water, said: the share of the goal the plan reaches.
+        // The water, said: the share of the need met at the shortest plank. And the harvest apart: the
+        // soil gives part of a missing nutrient on its own, so it falls less than the water.
         const reach = limIdx >= 0 ? Math.round(Math.min(1, rows[limIdx].ratio) * 100) : null;
+        const ys = measured.map(([r]) => r.yr).filter((v) => v != null);
+        const harvest = limIdx >= 0 && ys.length ? Math.round(Math.min(1, ...ys) * 100) : null;
+        const tons = (pc) => g.Yeff ? fmt(g.Yeff * pc / 100 / yu[3]) + ' ' + yu[1] : '';
         $('lbReach').hidden = reach === null;
-        if (reach !== null) $('lbReach').innerHTML = '<b>' + reach + '%</b><span>of your goal' + (g.Yeff ? ', near ' + fmt(g.Yeff * reach / 100 / yu[3]) + ' ' + esc(yu[1]) : '') + ', by this count. The water is your yield.</span>';
-        $('lbALab').innerHTML = 'The water is your yield' + (reach !== null && g.Yeff ? '<b>about ' + esc(fmt(g.Yeff * reach / 100 / yu[3])) + ' ' + esc(yu[1]) + '</b>' : '');
+        if (reach !== null) $('lbReach').innerHTML = '<b>' + reach + '%</b><span>of what your crop needs for your goal is met, at the shortest plank.'
+            + (harvest !== null && harvest > reach ? '<small class="lb-harvest">The harvest: about <b>' + harvest + '%</b> of your goal' + (g.Yeff ? ', near ' + esc(tons(harvest)) : '') + ', because the soil gives part of what is missing on its own.</small>' : '') + '</span>';
+        $('lbALab').innerHTML = 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : '');
         let say = '';
         const cName = c ? esc(cropShort(c).toLowerCase()) : '';
         if (!c) say = st.cropPicked ? 'No crop picked: the barrel needs the crop\'s numbers.' : 'Pick the crop in step 1: the planks are measured against what it needs.';
-        else if (!has) say = 'Add a fertilizer in step 5, and the water rises to show how much of your goal the plan can reach.';
+        else if (!has) say = 'Add a fertilizer in step 5, and the water rises to show how much of the need your plan meets.';
         else if (limIdx < 0) say = 'There are no numbers on file for ' + cName + ', so the planks cannot be measured.';
         else {
             const L = rows[limIdx], Ls = STAVES[limIdx];
             const seasonMax = SP && SP.cap ? Math.min(SP.cap.sun, SP.cap.water, SP.cap.temp) : null;
             say = reach >= 97
-                ? 'Every plank NPK Plus can measure reaches the rim: on this plan, the nutrients are not what holds your goal back.'
+                ? 'Every plank NPK Plus can measure reaches the rim: your plan meets the need for your goal.'
                     + (seasonMax && g.Yeff && seasonMax >= g.Yeff ? ' The season itself could carry about ' + esc(fmt(seasonMax / yu[3])) + ' ' + esc(yu[1]) + ', so your goal of ' + esc(fmt(g.Yeff / yu[3])) + ' ' + esc(yu[1]) + ' sits within it.' : '')
-                : 'The shortest plank is <b>' + esc(Ls.name || NAMES[Ls.k]) + '</b>' + (Ls.name ? '' : ' (' + Ls.t + ')') + ': ' + esc(L.note.toLowerCase()) + '. It holds the water at ' + reach + '% of your goal. Raise it first; more of the others will not raise the water.';
+                : 'The shortest plank is <b>' + esc(Ls.name || NAMES[Ls.k]) + '</b>' + (Ls.name ? '' : ' (' + Ls.t + ')') + ': ' + esc(L.note.toLowerCase()) + '. ' + (reach === 0 ? 'Your plan gives none of it, so the water stays at the bottom.' : 'It holds the water at ' + reach + '% of the need.') + ' Raise it first; more of the others will not raise the water.'
+                    + (harvest !== null && harvest > reach ? ' The soil gives part of what is missing on its own, so this season\'s harvest may still come near ' + harvest + '% of your goal' + (g.Yeff ? ' (' + esc(tons(harvest)) + ')' : '') + ', but what the plan leaves out is taken from the soil, and the next season starts poorer.' : '');
             const over = STAVES.filter((s, i) => rows[i].state === 'over').map((s) => NAMES[s.k].toLowerCase());
             if (over.length) say += ' Too much ' + esc(list(over)) + ': the taller plank holds no more water. It costs money' + (over.includes('nitrogen') ? ', and too much nitrogen can make the crop lodge and draw pests' : '') + '.';
             const unk = STAVES.filter((s, i) => rows[i].state === 'noflag').map((s) => s.t);
@@ -2486,7 +2500,7 @@
         say += SP ? ' Sun, water and temperature are read from twenty years of weather at your field and the ENSO state now: a rough guide to the season, not a forecast of it.'
             : ' The grey planks, sun, water and temperature, can be the shortest too: pick the place and the planting date in step 4 and NPK Plus reads them from twenty years of weather at your field.';
         $('lbSay').innerHTML = '<div class="np-say">' + say + '</div>';
-        return reach;
+        return { reach, harvest };
     };
     $('lbKey').addEventListener('click', (e) => { const b = e.target.closest('.lb-k'); if (b) { $('lbStage').classList.add('was-turned'); BR.face(Number(b.dataset.i)); } });
     $('lbInfo').addEventListener('click', (e) => { e.stopPropagation(); window.openSheet('npLawSheet'); });
@@ -2854,7 +2868,7 @@
             useBtn.disabled = true; useBtn.textContent = 'Saving…';
             try {
                 const r = await save();
-                tell({ type: 'npk-plan', calcId: r.data.id, needs: RES.needs, micros: RES.micros, reach: RES.reach, npk: RES.npkPerHa, goal: RES.goal });
+                tell({ type: 'npk-plan', calcId: r.data.id, needs: RES.needs, micros: RES.micros, reach: RES.reach, harvest: RES.harvest, npk: RES.npkPerHa, goal: RES.goal });
             } catch (err) { window.toast?.(err.message, 'error'); }
             useBtn.textContent = 'Use this plan';
         });
