@@ -352,6 +352,10 @@ class AiController extends Controller
             $context = $this->scheduleContext($request->input('scheduleId'), $userId);
         }
         $context = $this->applyLinkContext($context, $conversation);
+        // A question about the weather or timing gets the forecast data the chat rules need (2026-10-19): the ENSO line,
+        // and inside a season the week ahead at its places, from what the app keeps. Other questions go without.
+        $context = \App\Support\SkyLines::into($context, \App\Support\SkyLines::forQuestion((string) $prompt,
+            $request->boolean('attachPlan') || $request->boolean('usePlan') ? $this->planFor($request->input('scheduleId'), $userId) : null));
         // An attached analysis goes before the plan's closing "Question: " (2026-10-19): appended after it, it sat between
         // the label and the farmer's own question.
         $tail = 'Question: ';

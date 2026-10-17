@@ -304,6 +304,11 @@ class SatelliteController extends Controller
              * written from the case and not the field, are kept for the next
              * field of the same case (2026-10-18). */
             $rk = ClimateRecord::placeKey((string) $p['location'], 'PH');
+            // What ENSO means here now and what earlier years did in these weeks depend on the place, the month and the
+            // ENSO reading alone: written once and reused for the same key (OutlookShelf 'satellite.sky', 2026-10-19).
+            $skyParts = ['place' => (string) ($rk['townKey'] ?? $rk['key']), 'cell' => ClimateStore::cellKey($lat, $lng), 'month' => now('Asia/Manila')->format('Y-m')];
+            $keptSky = \App\Support\OutlookShelf::get('satellite.sky', $skyParts);
+            $ctx['climateKept'] = ! empty($keptSky['enso']);
             $doc = function (string $notes, array $meta = []) use ($p, $s, $ctx, $rk): string {
                 $rest = $notes;
                 if ($notes !== '') {
@@ -322,6 +327,12 @@ class SatelliteController extends Controller
             if ($anee === null) {
                 Log::warning('satellite: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
+            }
+            if ($ctx['climateKept']) {
+                $anee['climate'] = ['enso' => (string) $keptSky['enso'], 'history' => (string) ($keptSky['history'] ?? '')];
+                $anee['climateKept'] = true;
+            } elseif (! empty($anee['climate']['enso'])) {
+                \App\Support\OutlookShelf::put('satellite.sky', $skyParts, ['enso' => (string) $anee['climate']['enso'], 'history' => (string) ($anee['climate']['history'] ?? '')], true, (string) $p['location'], $skyParts['month']);
             }
 
             $report = [
@@ -696,7 +707,7 @@ class SatelliteController extends Controller
             . '"disease":{"risk":"low|medium|high","reading":"why","watchFor":[{"problem":"","why":"","sign":"","when":""}]},'
             . '"threats":[{"threat":"","when":"","likelihood":"low|medium|high","severity":"low|medium|high","why":"","action":""}],'
             . '"weather":{"outlook":"the next 10 days for this crop","rain":"","heat":"","wind":""},'
-            . '"climate":{"enso":"what ENSO means here now","history":"what earlier years did in these weeks"},'
+            . (! empty($ctx['climateKept']) ? '' : '"climate":{"enso":"what ENSO means here now","history":"what earlier years did in these weeks"},')
             . '"soil":{"reading":"the soil picture","properties":[{"name":"","value":"","meaning":""}],"studies":[{"title":"","finding":""}],"fit":"how well this soil suits the crop and what to watch"},'
             . '"actions":[{"priority":"now|this week|this month","what":"","why":""}],'
             . '"confidence":"low|medium|high","dataGaps":["what would make this surer"]}';

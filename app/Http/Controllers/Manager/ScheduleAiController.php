@@ -408,6 +408,9 @@ class ScheduleAiController extends BaseScheduleController
          * question about a beetle came back about their rice. The season is
          * where the thread LIVES, not a premise it argues from. */
         $context = $request->boolean('usePlan') ? $this->scheduleContext($schedule) : '';
+        // A question about the weather or timing gets the forecast data the chat rules need (2026-10-19): the ENSO
+        // line and the week ahead at the season's places, from what the app keeps. Other questions go without.
+        $context = \App\Support\SkyLines::into($context, \App\Support\SkyLines::forQuestion((string) $prompt, $schedule));
         // What Anee has already worked out for this season, one line each
         // (AneeMemory::season): her own words, not the plan.
         $context = ($request->boolean('forget') ? '' : \App\Support\AneeMemory::season($schedule, $askerId)) . $context;

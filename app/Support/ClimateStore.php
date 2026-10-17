@@ -60,7 +60,12 @@ final class ClimateStore
      */
     public const STORM_GUST = 70;
 
-    private const DAILY = 'precipitation_sum,shortwave_radiation_sum,et0_fao_evapotranspiration,temperature_2m_max,temperature_2m_min,temperature_2m_mean,wind_gusts_10m_max';
+    /**
+     * The archive's daily variables: the weeks' seven and, since 2026-10-19,
+     * the wind, the humidity and the weather code that the kept days
+     * (WeatherDays) carry too. Ten are still one weighted call.
+     */
+    private const DAILY = WeatherDays::DAILY;
 
     /** NOAA's three month seasons, by their middle month. */
     private const SEASONS = ['DJF' => 1, 'JFM' => 2, 'FMA' => 3, 'MAM' => 4, 'AMJ' => 5, 'MJJ' => 6, 'JJA' => 7, 'JAS' => 8, 'ASO' => 9, 'SON' => 10, 'OND' => 11, 'NDJ' => 12];
@@ -69,26 +74,41 @@ final class ClimateStore
 
     /* ------------------------------------------------------------- ENSO */
 
-    /** The latest stored ENSO reading, or a first one fetched now if none is kept yet. */
+    /**
+     * The latest stored ENSO reading. One older than Freshness::ENSO_DAYS
+     * (the collector stopped) or none at all is read from NOAA now and kept,
+     * at most once in half an hour; when NOAA does not answer, the last kept
+     * one stands.
+     */
     public static function enso(): ?array
     {
-        if (! self::schema()->hasTable('as_enso_readings')) {
+        if (! Cache::remember(self::cacheKey('has:enso'), 600, fn () => self::schema()->hasTable('as_enso_readings'))) {
             return EnsoOutlook::state();
         }
-        $r = self::db()->table('as_enso_readings')->orderByDesc('fetchedAt')->first();
+        $r = Cache::remember(self::cacheKey('enso:last'), 600, fn () => (array) (self::db()->table('as_enso_readings')->orderByDesc('fetchedAt')->first() ?? []));
+        if ((! $r || ! Freshness::ensoFresh($r['fetchedAt'] ?? null)) && Cache::add(self::cacheKey('enso:tried'), 1, now()->addMinutes(30))) {
+            $fresh = self::refreshEnso();
+            if ($fresh) {
+                return $fresh;
+            }
+        }
         if (! $r) {
-            return self::refreshEnso();
+            return null;
         }
 
-        return ['oni' => (float) $r->oni, 'phase' => $r->phase, 'strength' => (string) $r->strength, 'label' => $r->label,
-            'season' => $r->season, 'alert' => $r->alert, 'asOf' => Carbon::parse($r->fetchedAt)->toDateString()];
+        return ['oni' => (float) $r['oni'], 'phase' => $r['phase'], 'strength' => (string) $r['strength'], 'label' => $r['label'],
+            'season' => $r['season'], 'alert' => $r['alert'], 'asOf' => Carbon::parse($r['fetchedAt'])->toDateString()];
     }
 
-    /** Read NOAA now and keep the reading (one row a day at most), and the whole ONI history. */
+    /**
+     * Read NOAA now and keep the reading (one row a day at most), the whole
+     * ONI history and the advisory (EnsoOutlook::readAdvisory, one row per
+     * advisory in as_enso_advisories).
+     */
     public static function refreshEnso(): ?array
     {
         try {
-            $txt = Http::timeout(15)->get('https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt')->body();
+            $txt = Http::timeout(15)->get(EnsoOutlook::ONI_URL)->body();
         } catch (\Throwable $e) {
             Log::warning('climate: ONI not read', ['e' => $e->getMessage()]);
 
@@ -120,26 +140,19 @@ final class ClimateStore
         $strength = $a >= 2 ? 'very strong' : ($a >= 1.5 ? 'strong' : ($a >= 1 ? 'moderate' : 'weak'));
         $phase = $oni >= 0.5 ? 'el_nino' : ($oni <= -0.5 ? 'la_nina' : 'neutral');
         $label = $phase === 'neutral' ? 'ENSO neutral' : ('A ' . $strength . ' ' . ($phase === 'el_nino' ? 'El Niño' : 'La Niña'));
-        $alert = null;
-        $synopsis = null;
-        try {
-            $html = Http::timeout(15)->get('https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml')->body();
-            $text = preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags(str_ireplace('&nbsp;', ' ', $html)), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?? '';
-            if (preg_match('/ENSO Alert System Status:\s*(.{3,60}?)\s*(?:Synopsis|$)/iu', $text, $m)) {
-                $alert = trim($m[1]);
-            }
-            if (preg_match('/Synopsis:\s*(.{40,600})/iu', $text, $m)) {
-                $dot = mb_strrpos($m[1], '. ');
-                $synopsis = trim($dot !== false ? mb_substr($m[1], 0, $dot + 1) : $m[1]);
-            }
-        } catch (\Throwable $e) {
-            // The advisory is a nicety; the ONI is the number.
+        // The advisory is a nicety; the ONI is the number. It is kept on its own, one row per advisory.
+        $adv = EnsoOutlook::readAdvisory();
+        if ($adv) {
+            EnsoOutlook::keepAdvisory($adv);
         }
+        $alert = $adv['alert'] ?? null;
+        $synopsis = $adv['synopsis'] ?? null;
         $row = ['oni' => $oni, 'season' => $season, 'phase' => $phase, 'strength' => $phase === 'neutral' ? null : $strength, 'label' => $label,
             'alert' => $alert ? mb_substr($alert, 0, 80) : null, 'synopsis' => $synopsis, 'fetchedAt' => now(), 'updated_at' => now()];
         if (self::schema()->hasTable('as_enso_readings')) {
             $today = self::db()->table('as_enso_readings')->whereDate('fetchedAt', now()->toDateString())->first();
             $today ? self::db()->table('as_enso_readings')->where('id', $today->id)->update($row) : self::db()->table('as_enso_readings')->insert($row + ['created_at' => now()]);
+            Cache::forget(self::cacheKey('enso:last'));
         }
 
         return ['oni' => $oni, 'phase' => $phase, 'strength' => (string) $row['strength'], 'label' => $label, 'season' => $season, 'alert' => $row['alert'], 'asOf' => now()->toDateString()];
@@ -185,6 +198,36 @@ final class ClimateStore
 
             return $out;
         });
+    }
+
+    /**
+     * What ENSO did in the months of a season that is over or under way, in
+     * one line for a prompt (2026-10-19, the season reports): each month's
+     * ONI from the kept history, and the phase it adds up to. '' when the
+     * history holds none of those months (the ONI runs about a month behind).
+     */
+    public static function oniWords(string $from, string $to): string
+    {
+        $oni = self::oniByMonth();
+        $a = Carbon::parse($from)->startOfMonth();
+        $b = Carbon::parse($to)->startOfMonth();
+        $bits = [];
+        $vals = [];
+        for ($m = $a->copy(); $m->lte($b) && count($bits) < 18; $m->addMonth()) {
+            $v = $oni[(int) $m->year][(int) $m->month] ?? null;
+            if ($v !== null) {
+                $bits[] = self::MONTHS[(int) $m->month] . ' ' . $m->year . ' ' . sprintf('%+.2f', $v);
+                $vals[] = $v;
+            }
+        }
+        if (! $bits) {
+            return '';
+        }
+        $avg = array_sum($vals) / count($vals);
+        $phase = $avg >= 0.5 ? 'an El Niño season' : ($avg <= -0.5 ? 'a La Niña season' : 'an ENSO neutral season');
+
+        return 'ENSO IN THE SEASON\'S MONTHS (the ONI, the 3 month running sea temperature anomaly; +0.5 or more is El Niño, -0.5 or less La Niña): '
+            . implode(', ', $bits) . ' (' . $phase . ').';
     }
 
     /* ---------------------------------------------------------- weather */
@@ -305,6 +348,12 @@ final class ClimateStore
             }
 
             return 0;
+        }
+        // The last days of the answer are kept day by day as well (the season reports and Realign read them).
+        try {
+            WeatherDays::keep((string) $cell->cellKey, $d);
+        } catch (\Throwable $e) {
+            report($e);
         }
         $weeks = [];
         foreach ($d['time'] as $i => $day) {

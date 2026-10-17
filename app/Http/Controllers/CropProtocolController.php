@@ -1036,6 +1036,8 @@ class CropProtocolController extends Controller
         }
         $ctx['forecast'] = $this->forecastLines($case['location']);
         $ctx['enso'] = \App\Support\EnsoOutlook::forPrompt();
+        // Each lot ask reads ENSO in one short line: the farm ask carries the whole of it (2026-10-19).
+        $ctx['ensoBrief'] = \App\Support\EnsoOutlook::brief();
         // Twenty years of each place (up to three), for the months its lots stand in the field.
         $places = [];
         foreach ($case['lots'] as $l) {
@@ -1046,15 +1048,25 @@ class CropProtocolController extends Controller
                 $places[$l['place']][($start - 1 + $m) % 12 + 1] = true;
             }
         }
+        $bgParts = [];
         foreach (array_slice($places, 0, 3, true) as $place => $months) {
             $focus = array_keys($months);
             sort($focus);
+            $bgParts[mb_strtolower(trim((string) $place))] = $focus;
             try {
                 $ctx['history'][$place] = \App\Support\ClimateStore::wordsFor((string) $place, null, null, $focus, true, false);
             } catch (\Throwable $e) {
                 $ctx['history'][$place] = '';
             }
         }
+        // The farm's ENSO line and its twenty years of these months depend on the places, the months and the ENSO
+        // reading alone: written once and reused for the same key (OutlookShelf, 2026-10-19).
+        ksort($bgParts);
+        $ctx['bgParts'] = ['places' => $bgParts];
+        $ctx['keptBg'] = [
+            'enso' => (string) (\App\Support\OutlookShelf::get('protocol.enso', $ctx['bgParts'])['enso'] ?? ''),
+            'history' => (string) (\App\Support\OutlookShelf::get('protocol.history', $ctx['bgParts'], false)['history'] ?? ''),
+        ];
         // THE SEAM: the app's own shelves (each lot's area soil, each crop's variety trials, each
         // place's typhoons, floods and droughts), gathered in one place so the asks read them
         // instead of researching them. A shelf not deployed yet reads as nothing.
@@ -1280,6 +1292,7 @@ class CropProtocolController extends Controller
                 throw new \RuntimeException(! empty($farm['timedOut']) ? 'Anee took too long on the farm part today. Nothing was charged. Please try again in a while.'
                     : ($farm['error'] ?? 'The protocol could not be read. Nothing was charged. Please try again.'));
             }
+            $farm['data'] = self::withKeptBackground($farm['data'], $ctx);
             // 3. Each lot's fertilizer and nutrition, one ask a lot.
             $lotOut = [];
             foreach ($case['lots'] as $l) {
@@ -1475,6 +1488,36 @@ PROMPT;
         ];
     }
 
+    /**
+     * The farm's ENSO line and its twenty years of these months (OutlookShelf,
+     * 2026-10-19): a part the farm ask was told was kept goes back in; one it
+     * wrote is kept for the next farm with the same places and months.
+     */
+    private static function withKeptBackground(array $farm, array $ctx): array
+    {
+        $parts = (array) ($ctx['bgParts'] ?? []);
+        if (empty($parts['places'])) {
+            return $farm;
+        }
+        $kept = (array) ($ctx['keptBg'] ?? []);
+        $where = implode('; ', array_keys($parts['places']));
+        $bg = (array) ($farm['background'] ?? []);
+        $bg['weather'] = (array) ($bg['weather'] ?? []);
+        if (($kept['enso'] ?? '') !== '') {
+            $bg['weather']['enso'] = $kept['enso'];
+        } elseif (($e = trim((string) ($bg['weather']['enso'] ?? ''))) !== '') {
+            \App\Support\OutlookShelf::put('protocol.enso', $parts, ['enso' => $e], true, $where);
+        }
+        if (($kept['history'] ?? '') !== '') {
+            $bg['history'] = $kept['history'];
+        } elseif (($h = trim((string) ($bg['history'] ?? ''))) !== '') {
+            \App\Support\OutlookShelf::put('protocol.history', $parts, ['history' => $h], false, $where);
+        }
+        $farm['background'] = $bg;
+
+        return $farm;
+    }
+
     /** The farm part: the background, then each crop's stage guide and its protection, watch first. */
     private function farmPrompt(array $case, array $ctx, array $notes): string
     {
@@ -1511,7 +1554,12 @@ PROMPT;
                 . ProtocolCare::promptLines($ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null)
                 . '- Research notes for this crop:' . "\n" . (trim($notes[$c['key']] ?? '') !== '' ? trim($notes[$c['key']]) : 'none found; rely on established agronomy and say so in dataGaps') . "\n\n";
         }
-        $shape = '{"headline":"","background":{"place":"","weather":{"outlook":"","enso":"","risks":[""]},"history":""},"crops":[{"key":"c1","variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""},"stages":[{"stage":"","signs":"","observe":"","intervene":""}],"protection":{"intro":"","threats":[{"name":"","kind":"insect","stages":[""],"sign":"","threshold":"","cultural":"","ai":[""],"rotate":"","weather":""}]}}],"workTips":[""],"summary":"","confidence":"moderate","dataGaps":[""]}';
+        // A background part already written for these places and months is left out (OutlookShelf, 2026-10-19).
+        $keptBg = (array) ($ctx['keptBg'] ?? []);
+        $bgShape = '"background":{"place":"","weather":{"outlook":""' . (($keptBg['enso'] ?? '') === '' ? ',"enso":""' : '') . ',"risks":[""]}' . (($keptBg['history'] ?? '') === '' ? ',"history":""' : '') . '}';
+        $bgKept = array_keys(array_filter(['background.weather.enso' => ($keptBg['enso'] ?? '') !== '', 'background.history' => ($keptBg['history'] ?? '') !== '']));
+        $bgRule = $bgKept ? '- ' . implode(' and ', $bgKept) . ' ' . (count($bgKept) > 1 ? 'are' : 'is') . " already written for these places and months: leave them out.\n" : '';
+        $shape = '{"headline":"",' . $bgShape . ',"crops":[{"key":"c1","variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""},"stages":[{"stage":"","signs":"","observe":"","intervene":""}],"protection":{"intro":"","threats":[{"name":"","kind":"insect","stages":[""],"sign":"","threshold":"","cultural":"","ai":[""],"rotate":"","weather":""}]}}],"workTips":[""],"summary":"","confidence":"moderate","dataGaps":[""]}';
         $enso = $ctx['enso'] !== '' ? '- ENSO: ' . $ctx['enso'] . "\n" : '';
         $crew = $case['crew'];
         $plan = ($ctx['planWords'] ?? '') !== ''
@@ -1534,7 +1582,7 @@ THE CROPS
 - PROTECTION, WATCH FIRST, NEVER BY THE CALENDAR: for every crop 5 to 8 threats, the most likely here this season first: the lots' troubles of last season, then what this season's weather (the outlook, ENSO, the twenty year record of these months, the typhoons, floods and droughts they have brought) favours, then the crop's worst; where the variety's trial ratings are given, a threat it is rated susceptible to ranks higher and one it resists lower. For each threat: kind (insect, disease, weed or other); stages = the stage names it strikes; sign at most 16 words; threshold at most 24 words = when the numbers make acting worth it (an economic threshold from the notes or established IPM in plain counts, like "2 egg masses a square meter" or "1 in 10 hills hit"; where none exists, how to judge the spread); cultural at most 30 words = what to do first without a spray (resistant variety, clean seed, water, timing, natural enemies, removing sick plants); ai = the active ingredients to use only once the threshold is reached, CHOSEN ONLY FROM THAT THREAT'S LIST ABOVE and written exactly as listed (an empty list where the list is empty or no spray helps); rotate at most 18 words = the group to switch to for a second spray, never the same group twice in a row; weather at most 16 words = when this season's weather raises the risk ("" when it does not matter). Weeds are one threat per crop with ingredients only from its weed windows. No brand names, no product names, no rates or doses: the farmer decides whether to spray from what the field shows.
 - protection.intro at most 40 words: how to scout this crop this season (how often, where in the field).
 - background.place at most 40 words; weather.outlook at most 55 words for the months the crops stand; enso at most 30 words; risks 2 to 4 items of at most 12 words; history at most 45 words = what the area's twenty years say about these months (the wettest weeks, the typhoon months, the dry spells, and how El Nino or La Nina years differed; where the typhoon, flood and drought record is given, the storms and floods these months have brought). Never say where any record, soil fact or trial figure comes from.
-- workTips: 2 to 4 lines of at most 22 words on running the work across the lots (the busy weeks, the hands each needs, hiring help), agreeing with the work calendar above: never ask to move a planting day the calendar has already set, and where the calendar says the crew falls short, say what helps.
+{$bgRule}- workTips: 2 to 4 lines of at most 22 words on running the work across the lots (the busy weeks, the hands each needs, hiring help), agreeing with the work calendar above: never ask to move a planting day the calendar has already set, and where the calendar says the crew falls short, say what helps.
 - headline at most 14 words. summary at most 70 words, plain and warm but factual, ending with the reminder that the crop's stage is the clock, not the calendar. confidence low, moderate or high. dataGaps at most four.
 - Plain text only: no markdown, no emoji shortcodes.
 
@@ -1562,7 +1610,7 @@ PROMPT;
             ? 'The recommended program must deliver THE NUTRIENT NEED above, within about a tenth either way; the other two say in their "for" line how they differ (a lean one that falls short says so). The app checks every program against that need and shows the farmer each gap'
             : 'Every program must add up to the need for its own aim; the app checks each one';
         $history = $ctx['history'][$l['place']] ?? '';
-        $weather = ($ctx['enso'] !== '' ? 'ENSO: ' . $ctx['enso'] . ' ' : '') . ($history !== '' ? 'The area\'s record for these months: ' . mb_substr(preg_replace('/\s+/', ' ', $history), 0, 1600) : '');
+        $weather = (($ctx['ensoBrief'] ?? '') !== '' ? $ctx['ensoBrief'] . ' ' : ($ctx['enso'] !== '' ? 'ENSO: ' . $ctx['enso'] . ' ' : '')) . ($history !== '' ? 'The area\'s record for these months: ' . mb_substr(preg_replace('/\s+/', ' ', $history), 0, 1600) : '');
         $recLine = $rec ? '- The variety ' . (! empty($rec['learned']) ? 'from an earlier lookup' : 'on record') . ': ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . "\n" : '';
         // From the seam (ProtocolFacts): the area's typical soil, and the town's typhoons, floods and droughts.
         $lf = (array) ($ctx['facts']['lots'][$l['i']] ?? []);

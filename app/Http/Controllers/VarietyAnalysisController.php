@@ -817,7 +817,7 @@ class VarietyAnalysisController extends Controller
             $fc = null;
         }
         if (! $fc || empty($fc['days'])) {
-            return 'not available — search the seasonal outlook for the region instead';
+            return 'not available — read the season from the weather record and the ENSO outlook given here';
         }
         $days = collect($fc['days'])->map(fn ($d) => $d['label'] . ': ' . $d['text']
             . (isset($d['max'], $d['min']) ? ', ' . $d['min'] . '–' . $d['max'] . '°C' : '')
@@ -831,6 +831,17 @@ class VarietyAnalysisController extends Controller
      * document is written. Prose, not JSON -- asked for JSON the model
      * does not search (see AiClient::researchThenJson).
      */
+    /**
+     * Whether the season's weather is the app's own for this field: a town
+     * at home the hazard book knows, with its twenty years of rain, storms
+     * and floods and a kept ENSO outlook. The outlook is then not searched.
+     */
+    private static function keptSky(array $p): bool
+    {
+        return ($p['country'] ?? \App\Support\Region::code()) === \App\Support\Region::HOME
+            && \App\Support\HazardBook::odds((string) $p['location']) !== null && \App\Support\EnsoOutlook::forPrompt() !== '';
+    }
+
     private function researchPrompt(array $p): string
     {
         $crop = CropCatalog::CROPS[$p['crop']];
@@ -867,7 +878,7 @@ class VarietyAnalysisController extends Controller
         $wordCap = count($covered) >= 6 ? 1200 : 1600;
         // The season's weather is the app's own for a town at home (2026-10-19): its twenty years of rain, storms and
         // floods (ClimateStore, HazardBook) and the ENSO outlook reach the document, so the outlook is not searched.
-        $keptSky = $fieldPH && \App\Support\HazardBook::odds((string) $p['location']) !== null && \App\Support\EnsoOutlook::forPrompt() !== '';
+        $keptSky = self::keptSky($p);
         $outlookAsk = $keptSky ? '' : "3. The seasonal climate outlook from {$met} for the farmer's region for the PLANTING SEASON named above (rainfall, ENSO state, severe-weather expectation across the months the crop will stand in the field).
 ";
         $keptLine = $keptSky ? "
@@ -988,6 +999,8 @@ PROMPT;
         $climateHint = $fieldPH ? 'wet/dry timing, typhoon seasonality' : 'frost dates, growing-season length, rainfall and heat timing, the severe-weather season';
         $plan = ! empty($p['season']) ? (! empty($p['month']) ? 'Planting in ' . self::monthWords($p['month']) . ', in this season: ' : '') . \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
         $land = self::ELEVATIONS[$p['elevation'] ?? ''] ?? 'not stated';
+        // The season's outlook is the app's own for a town the hazard book knows, so the notes do not carry one (2026-10-19).
+        $outlookNote = self::keptSky($p) ? '' : ', the seasonal outlook';
 
         return <<<PROMPT
 You are an agronomic decision-support analyst for farming in {$countryName}, with web search available. The farmer asks WHICH VARIETY of {$cropLabel} to plant on the ground described below. Research and compare varieties, score each on four criteria, and rank them by the farmer's own priorities.
@@ -1005,7 +1018,7 @@ FACTS GIVEN
 - Weather now: {$forecast}
 {$ensoBlock}{$recordsBlock}
 WHAT TO READ FROM
-Research notes gathered from the web just now follow at the end of this brief (the newest registrations and releases of {$cropLabel} in {$countryName} in {$year} and the two years before, trial yields, the most recent derbies and real farmers' harvests, resistance ratings, days to maturity, the seasonal outlook). Rely on them first, over memory; note the year of each finding. Where a claim is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
+Research notes gathered from the web just now follow at the end of this brief (the newest registrations and releases of {$cropLabel} in {$countryName} in {$year} and the two years before, trial yields, the most recent derbies and real farmers' harvests, resistance ratings, days to maturity{$outlookNote}). Rely on them first, over memory; note the year of each finding. Where a claim is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
 
 GROUND RULES
 - Reason from what you found and from established agronomy: the soil-water behaviour implied by the described soil and troubles, the region's climate ({$climateHint}) and the outlook above, each variety's documented traits. No invented yields; a yield figure must be a trial or published figure with its source.

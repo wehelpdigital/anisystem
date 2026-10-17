@@ -391,33 +391,40 @@ class SkyWeatherController extends Controller
         return $grid;
     }
 
+    /**
+     * Five days of hours from the hour we are in, and ten days from today:
+     * the place's field reading (2026-10-19), kept three hours and shared
+     * with the analyses at the place (Satellite, the board's NPK reading).
+     * It asked Open-Meteo itself every half hour before.
+     */
     private function hourly(float $lat, float $lng): array
     {
-        return Cache::remember(sprintf('sky:fc:%.2f,%.2f', $lat, $lng), 1800, function () use ($lat, $lng) {
-            try {
-                $r = Http::timeout(15)->get('https://api.open-meteo.com/v1/forecast', [
-                    'latitude' => $lat, 'longitude' => $lng, 'timezone' => 'Asia/Manila', 'forecast_days' => 10,
-                    'hourly' => 'precipitation,precipitation_probability,cloud_cover,wind_speed_10m,wind_gusts_10m,temperature_2m',
-                    'daily' => 'weather_code,precipitation_sum,precipitation_probability_max,wind_gusts_10m_max,temperature_2m_max,temperature_2m_min',
-                ])->json();
-            } catch (\Throwable $e) {
-                return ['hours' => [], 'days' => []];
+        $r = app(\App\Services\WeatherService::class)->fieldReading($lat, $lng);
+        if (! $r) {
+            return ['hours' => [], 'days' => []];
+        }
+        $h = (array) ($r['hourly'] ?? []);
+        $now = now('Asia/Manila')->startOfHour()->format('Y-m-d\TH:i');
+        $hours = [];
+        foreach ((array) ($h['time'] ?? []) as $i => $t) {
+            if ($t < $now || count($hours) >= 120) {
+                continue;
             }
-            $h = (array) ($r['hourly'] ?? []);
-            $hours = [];
-            foreach (array_slice((array) ($h['time'] ?? []), 0, 120) as $i => $t) {
-                $hours[] = ['t' => $t, 'rain' => $h['precipitation'][$i] ?? null, 'pop' => $h['precipitation_probability'][$i] ?? null, 'cloud' => $h['cloud_cover'][$i] ?? null,
-                    'wind' => $h['wind_speed_10m'][$i] ?? null, 'gust' => $h['wind_gusts_10m'][$i] ?? null, 'temp' => $h['temperature_2m'][$i] ?? null];
+            $hours[] = ['t' => $t, 'rain' => $h['precipitation'][$i] ?? null, 'pop' => $h['precipitation_probability'][$i] ?? null, 'cloud' => $h['cloud_cover'][$i] ?? null,
+                'wind' => $h['wind_speed_10m'][$i] ?? null, 'gust' => $h['wind_gusts_10m'][$i] ?? null, 'temp' => $h['temperature_2m'][$i] ?? null];
+        }
+        $d = (array) ($r['daily'] ?? []);
+        $today = now('Asia/Manila')->toDateString();
+        $days = [];
+        foreach ((array) ($d['time'] ?? []) as $i => $t) {
+            if ($t < $today || count($days) >= 10) {
+                continue;
             }
-            $d = (array) ($r['daily'] ?? []);
-            $days = [];
-            foreach ((array) ($d['time'] ?? []) as $i => $t) {
-                $days[] = ['date' => $t, 'rain' => $d['precipitation_sum'][$i] ?? null, 'pop' => $d['precipitation_probability_max'][$i] ?? null,
-                    'gust' => $d['wind_gusts_10m_max'][$i] ?? null, 'tmax' => $d['temperature_2m_max'][$i] ?? null, 'tmin' => $d['temperature_2m_min'][$i] ?? null, 'code' => $d['weather_code'][$i] ?? null];
-            }
+            $days[] = ['date' => $t, 'rain' => $d['precipitation_sum'][$i] ?? null, 'pop' => $d['precipitation_probability_max'][$i] ?? null,
+                'gust' => $d['wind_gusts_10m_max'][$i] ?? null, 'tmax' => $d['temperature_2m_max'][$i] ?? null, 'tmin' => $d['temperature_2m_min'][$i] ?? null, 'code' => $d['weather_code'][$i] ?? null];
+        }
 
-            return ['hours' => $hours, 'days' => $days];
-        });
+        return ['hours' => $hours, 'days' => $days];
     }
 
     /* ------------------------------------------------------------ Anee */
@@ -499,12 +506,23 @@ class SkyWeatherController extends Controller
             $storms = $this->stormsNear($p['lat'], $p['lng']);
             $fc = $this->hourly($p['lat'], $p['lng']);
             $ctx = ['storms' => $storms, 'forecast' => $fc, 'climate' => FieldContext::climate($p['lat'], $p['lng']), 'enso' => EnsoOutlook::forPrompt()];
+            // ENSO and what these weeks usually bring depend on the place, the month and the ENSO reading alone:
+            // written once and reused for the same key (OutlookShelf 'sky.climate', 2026-10-19).
+            $skyParts = ['place' => mb_strtolower(trim((string) ($p['place'] ?? ''))), 'cell' => \App\Support\ClimateStore::cellKey((float) $p['lat'], (float) $p['lng']), 'month' => now('Asia/Manila')->format('Y-m')];
+            $keptClimate = (string) (\App\Support\OutlookShelf::get('sky.climate', $skyParts)['climate'] ?? '');
+            $ctx['climateKept'] = $keptClimate !== '';
             $settings = $settings->forField('PH');
             $result = $this->ai->askForJson($settings, $this->prompt($p, $ctx), 6000, fn (string $t) => $this->parse($t), ['onPhase' => $beat]);
             $anee = $result['data'] ?? null;
             if ($anee === null) {
                 Log::warning('skyweather: unparsable answer', ['head' => mb_substr((string) ($result['text'] ?? ''), 0, 400)]);
                 throw new \RuntimeException($result['error'] ?? 'The reading could not be read. Nothing was charged. Please try again.');
+            }
+            if ($ctx['climateKept']) {
+                $anee['climate'] = $keptClimate;
+                $anee['climateKept'] = true;
+            } elseif (is_string($anee['climate'] ?? null) && trim($anee['climate']) !== '') {
+                \App\Support\OutlookShelf::put('sky.climate', $skyParts, ['climate' => trim($anee['climate'])], true, (string) ($p['place'] ?? ''), $skyParts['month']);
             }
             $report = ['format' => 1, 'anee' => $anee, 'storms' => $storms, 'days' => $fc['days'] ?? [], 'enso' => $ctx['enso'], 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
@@ -546,7 +564,7 @@ class SkyWeatherController extends Controller
             . '"next72h":"plain words","next10Days":"plain words",'
             . '"forLot":{"reading":"what this weather means for this crop at this stage","risks":["",""],"opportunities":["e.g. a dry window to spray or harvest"]},'
             . '"actions":[{"when":"now|before the storm|during|after|this week","what":"","why":""}],'
-            . '"climate":"ENSO and what these weeks usually bring","confidence":"low|medium|high","watch":"what to keep checking"}';
+            . (! empty($ctx['climateKept']) ? '' : '"climate":"ENSO and what these weeks usually bring",') . '"confidence":"low|medium|high","watch":"what to keep checking"}';
     }
 
     private function parse(string $text): ?array

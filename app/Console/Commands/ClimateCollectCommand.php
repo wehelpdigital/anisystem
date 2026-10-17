@@ -37,8 +37,15 @@ class ClimateCollectCommand extends Command
             return self::SUCCESS;
         }
         if ($this->option('enso')) {
+            // The ONI, its history and the advisory, kept for every analysis (they read the kept ones while fresh, 2026-10-19).
             $e = ClimateStore::refreshEnso();
             $this->info($e ? 'ENSO: ' . $e['label'] . ' (ONI ' . $e['oni'] . ', ' . $e['season'] . ')' : 'ENSO could not be read.');
+            $a = \App\Support\EnsoOutlook::advisory();
+            $this->line($a ? 'Advisory of ' . ($a['issuedOn'] ?? '?') . ': ' . ($a['alert'] ?? 'no alert') . ($a['nextOn'] ?? null ? ', next on ' . $a['nextOn'] : '') : 'No advisory kept.');
+            $gone = \App\Support\OutlookShelf::prune();
+            if ($gone) {
+                $this->line('Outlooks past their use removed: ' . $gone);
+            }
 
             return self::SUCCESS;
         }

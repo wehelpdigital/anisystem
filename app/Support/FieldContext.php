@@ -14,115 +14,86 @@ use Illuminate\Support\Facades\Http;
  */
 final class FieldContext
 {
-    /** The last 30 days and the next 16, day by day. */
+    /**
+     * The last 30 days and the next 16, day by day, through the app's own
+     * stores (2026-10-19): the past days of the field's weather square, read
+     * once and kept (WeatherDays), and today on from the place's field
+     * reading, shared by every analysis there and kept three hours
+     * (WeatherService::fieldReading). Before, one forecast call of its own
+     * brought both, about 3.3 weighted calls a place every three hours. The
+     * past days carry no rain chance (the archive has none).
+     */
     public static function weather(float $lat, float $lng): array
     {
-        // Kept three hours per place (two decimals, about a kilometer), the
-        // same window the weather module keeps its readings, and from Open-Meteo's
-        // best match model (2026-10-12).
-        $key = sprintf('fc:wx2:%.2f,%.2f', $lat, $lng);
-
-        return Cache::remember($key, 3 * 3600, function () use ($lat, $lng) {
-            try {
-                $res = Http::timeout(15)->retry(1, 300)->get('https://api.open-meteo.com/v1/forecast', [
-                    'latitude' => $lat, 'longitude' => $lng, 'timezone' => 'Asia/Manila', 'models' => 'best_match',
-                    'past_days' => 30, 'forecast_days' => 16,
-                    'daily' => 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,et0_fao_evapotranspiration,relative_humidity_2m_mean',
-                ]);
-            } catch (\Throwable $e) {
-                return [];
+        $key = sprintf('fc:wx3:%.2f,%.2f', $lat, $lng);
+        $hit = Cache::get($key);
+        if (is_array($hit) && $hit) {
+            return $hit;
+        }
+        $days = [];
+        try {
+            $past = WeatherDays::range($lat, $lng, now('Asia/Manila')->subDays(30)->toDateString(), now('Asia/Manila')->subDay()->toDateString());
+        } catch (\Throwable $e) {
+            report($e);
+            $past = [];
+        }
+        foreach ($past as $t => $v) {
+            $days[] = ['date' => $t, 'past' => true, 'tmax' => self::n($v['tmax'], 1), 'tmin' => self::n($v['tmin'], 1), 'rain' => self::n($v['rain'], 1), 'pop' => null,
+                'wind' => self::n($v['wind'], 0), 'gust' => self::n($v['gust'], 0), 'et0' => self::n($v['et0'], 1), 'rh' => self::n($v['rh'], 0), 'code' => $v['code']];
+        }
+        $r = app(\App\Services\WeatherService::class)->fieldReading($lat, $lng);
+        $d = (array) ($r['daily'] ?? []);
+        $today = now('Asia/Manila')->toDateString();
+        foreach ((array) ($d['time'] ?? []) as $i => $t) {
+            if ($t < $today) {
+                continue;
             }
-            $d = $res->ok() ? (array) $res->json('daily') : [];
-            if (empty($d['time'])) {
-                return [];
-            }
-            $today = now('Asia/Manila')->toDateString();
-            $days = [];
-            foreach ($d['time'] as $i => $t) {
-                $days[] = [
-                    'date' => $t, 'past' => $t < $today,
-                    'tmax' => self::n($d['temperature_2m_max'][$i] ?? null, 1), 'tmin' => self::n($d['temperature_2m_min'][$i] ?? null, 1),
-                    'rain' => self::n($d['precipitation_sum'][$i] ?? null, 1), 'pop' => self::n($d['precipitation_probability_max'][$i] ?? null, 0),
-                    'wind' => self::n($d['wind_speed_10m_max'][$i] ?? null, 0), 'gust' => self::n($d['wind_gusts_10m_max'][$i] ?? null, 0),
-                    'et0' => self::n($d['et0_fao_evapotranspiration'][$i] ?? null, 1), 'rh' => self::n($d['relative_humidity_2m_mean'][$i] ?? null, 0),
-                    'code' => $d['weather_code'][$i] ?? null,
-                ];
-            }
-            $past = array_filter($days, fn ($x) => $x['past']);
-            $next = array_values(array_filter($days, fn ($x) => ! $x['past']));
-
-            return [
-                'days' => $days,
-                'past30Rain' => round(array_sum(array_column($past, 'rain')), 1),
-                'past30Et0' => round(array_sum(array_column($past, 'et0')), 1),
-                'next16Rain' => round(array_sum(array_column($next, 'rain')), 1),
-                'next10Rain' => round(array_sum(array_column(array_slice($next, 0, 10), 'rain')), 1),
-                'maxGustNext10' => max(array_merge([0], array_column(array_slice($next, 0, 10), 'gust'))),
-                'hotDaysNext10' => count(array_filter(array_slice($next, 0, 10), fn ($x) => ($x['tmax'] ?? 0) >= 35)),
+            $days[] = [
+                'date' => $t, 'past' => false,
+                'tmax' => self::n($d['temperature_2m_max'][$i] ?? null, 1), 'tmin' => self::n($d['temperature_2m_min'][$i] ?? null, 1),
+                'rain' => self::n($d['precipitation_sum'][$i] ?? null, 1), 'pop' => self::n($d['precipitation_probability_max'][$i] ?? null, 0),
+                'wind' => self::n($d['wind_speed_10m_max'][$i] ?? null, 0), 'gust' => self::n($d['wind_gusts_10m_max'][$i] ?? null, 0),
+                'et0' => null, 'rh' => null, 'code' => $d['weather_code'][$i] ?? null,
             ];
-        });
+        }
+        if (! $days) {
+            return [];
+        }
+        $past = array_filter($days, fn ($x) => $x['past']);
+        $next = array_values(array_filter($days, fn ($x) => ! $x['past']));
+        $out = [
+            'days' => $days,
+            'past30Rain' => round(array_sum(array_column($past, 'rain')), 1),
+            'past30Et0' => round(array_sum(array_column($past, 'et0')), 1),
+            'next16Rain' => round(array_sum(array_column($next, 'rain')), 1),
+            'next10Rain' => round(array_sum(array_column(array_slice($next, 0, 10), 'rain')), 1),
+            'maxGustNext10' => max(array_merge([0], array_column(array_slice($next, 0, 10), 'gust'))),
+            'hotDaysNext10' => count(array_filter(array_slice($next, 0, 10), fn ($x) => ($x['tmax'] ?? 0) >= 35)),
+        ];
+        // Only a whole answer is kept for the three hours; a part is asked for again next time.
+        if ($past && $next) {
+            Cache::put($key, $out, now()->addHours(Freshness::FORECAST_HOURS));
+        }
+
+        return $out;
     }
 
     /**
      * The same 60 days (this month and next) in each of the last twenty
-     * years, from the climate shelf (App\Support\ClimateStore, 2026-10-18).
-     * It read five years from the archive before, five calls a place a month;
-     * the shelf keeps them, so a place is read once. The archive is still
-     * asked, as before, only where the shelf has nothing.
+     * years, from the climate shelf (App\Support\ClimateStore, 2026-10-18),
+     * which keeps them: a place is read once. It read five years from the
+     * archive before, five calls a place a month, and still did where the
+     * shelf had nothing until 2026-10-19; the shelf's own fill is that read.
      */
     public static function climate(float $lat, float $lng): array
     {
         try {
-            $kept = ClimateStore::sameDays($lat, $lng, now('Asia/Manila')->startOfMonth(), 60);
-            if ($kept) {
-                return $kept;
-            }
+            return ClimateStore::sameDays($lat, $lng, now('Asia/Manila')->startOfMonth(), 60);
         } catch (\Throwable $e) {
             report($e);
+
+            return [];
         }
-
-        return self::climateFromArchive($lat, $lng);
-    }
-
-    /** The old way: five years, read from the archive, one call a year. */
-    private static function climateFromArchive(float $lat, float $lng): array
-    {
-        $key = sprintf('fc:clim:%.2f,%.2f:%s', $lat, $lng, now('Asia/Manila')->format('Y-m'));
-
-        return Cache::remember($key, 86400 * 20, function () use ($lat, $lng) {
-            $years = [];
-            $start = now('Asia/Manila')->startOfMonth();
-            for ($y = 1; $y <= 5; $y++) {
-                $from = $start->copy()->subYears($y);
-                $to = $from->copy()->addDays(59);
-                try {
-                    $res = Http::timeout(15)->get('https://archive-api.open-meteo.com/v1/archive', [
-                        'latitude' => $lat, 'longitude' => $lng, 'timezone' => 'Asia/Manila',
-                        'start_date' => $from->toDateString(), 'end_date' => $to->toDateString(),
-                        'daily' => 'precipitation_sum,temperature_2m_max,wind_gusts_10m_max',
-                    ]);
-                } catch (\Throwable $e) {
-                    continue;
-                }
-                $d = $res->ok() ? (array) $res->json('daily') : [];
-                if (empty($d['time'])) {
-                    continue;
-                }
-                $rain = array_filter((array) ($d['precipitation_sum'] ?? []), 'is_numeric');
-                $tmax = array_filter((array) ($d['temperature_2m_max'] ?? []), 'is_numeric');
-                $gust = array_filter((array) ($d['wind_gusts_10m_max'] ?? []), 'is_numeric');
-                $years[] = [
-                    'from' => $from->toDateString(), 'to' => $to->toDateString(),
-                    'rain' => round(array_sum($rain), 0),
-                    'wetDays' => count(array_filter($rain, fn ($v) => $v >= 10)),
-                    'maxDayRain' => $rain ? round(max($rain), 0) : null,
-                    'hotDays' => count(array_filter($tmax, fn ($v) => $v >= 35)),
-                    'maxGust' => $gust ? round(max($gust), 0) : null,
-                ];
-            }
-
-            return $years;
-        });
     }
 
     /**

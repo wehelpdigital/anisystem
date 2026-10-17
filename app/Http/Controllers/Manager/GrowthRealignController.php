@@ -443,6 +443,12 @@ class GrowthRealignController extends BaseScheduleController
         if ($hz !== '') {
             $ctx[] = trim($hz) . "\nA storm or flood here that hit the crop at a sensitive stage is a real reason for it to run late: name it with its date when it moved the reading.";
         }
+        // The week ahead at the lot (2026-10-19): the place's kept forecast, for the recommendations and the watch list.
+        $at = $this->place($schedule, $lot);
+        $next = $at ? app(\App\Services\WeatherService::class)->nextDaysWords($at[0], $at[1], 7) : '';
+        if ($next !== '') {
+            $ctx[] = 'THE NEXT 7 DAYS AT THE FIELD (forecast): ' . $next . '. Time the recommendations by it (no spray or urea before heavy rain) and put a coming storm or dry run on the watch list.';
+        }
 
         $ctx[] = 'ANSWER WITH ONE JSON OBJECT ONLY, no fences, no commentary, these keys exactly:'
             . ' {"stageIndex": <integer index from the stage table>, "stageLabel": <its name>,'
@@ -574,70 +580,50 @@ class GrowthRealignController extends BaseScheduleController
         return implode("\n\n", $out);
     }
 
-    /** The sky the field had, month by month (the reports' own reading, cached a day). */
+    /**
+     * The sky the field had, month by month, beside the usual of those days
+     * (WeatherDays, 2026-10-19: the days are read once and kept, so a realign
+     * the next day, or the season report, asks the archive nothing again).
+     */
     private function weatherHistory($schedule): string
     {
         try {
-            $lat = null;
-            $lng = null;
-            foreach ($schedule->lots as $L) {
-                if ($L->pinLat && $L->pinLng) { $lat = (float) $L->pinLat; $lng = (float) $L->pinLng; break; }
-            }
-            if ($lat === null) {
-                foreach ($schedule->lots as $L) {
-                    $place = trim(implode(', ', array_filter([(string) $L->locTown, (string) $L->locProvince])));
-                    if ($place !== '') {
-                        $geo = app(\App\Services\WeatherService::class)->geocode($place);
-                        if ($geo) { $lat = (float) $geo['lat']; $lng = (float) $geo['lon']; break; }
-                    }
-                }
-            }
-            if ($lat === null) {
+            $at = $this->place($schedule);
+            if (! $at) {
                 return '';
             }
+            [$lat, $lng] = $at;
             $dates = $schedule->activities->pluck('targetDate')->filter();
             $start = $dates->min()?->format('Y-m-d') ?? now('Asia/Manila')->subMonths(4)->toDateString();
             $end = now('Asia/Manila')->subDays(3)->toDateString();
             if ($start >= $end) {
                 return '';
             }
-            $key = 'anee-wx-' . md5($lat . '|' . $lng . '|' . $start . '|' . $end);
 
-            return Cache::remember($key, 86400, function () use ($lat, $lng, $start, $end) {
-                $res = Http::timeout(20)->get('https://archive-api.open-meteo.com/v1/archive', [
-                    'latitude' => $lat, 'longitude' => $lng, 'start_date' => $start, 'end_date' => $end,
-                    'daily' => 'precipitation_sum,temperature_2m_max,temperature_2m_min,wind_speed_10m_max',
-                    'timezone' => 'Asia/Manila',
-                ])->json();
-                $days = $res['daily']['time'] ?? [];
-                if (! $days) {
-                    return '';
-                }
-                $rain = $res['daily']['precipitation_sum'] ?? [];
-                $tmax = $res['daily']['temperature_2m_max'] ?? [];
-                $wind = $res['daily']['wind_speed_10m_max'] ?? [];
-                $m = [];
-                foreach ($days as $i => $d) {
-                    $ym = substr($d, 0, 7);
-                    $m[$ym] = $m[$ym] ?? ['rain' => 0.0, 'wet' => 0, 'dry' => 0, 'hot' => 0, 'windy' => 0];
-                    $r = (float) ($rain[$i] ?? 0);
-                    $m[$ym]['rain'] += $r;
-                    $m[$ym]['wet'] += $r >= 1 ? 1 : 0;
-                    $m[$ym]['dry'] += $r < 1 ? 1 : 0;
-                    $m[$ym]['hot'] += ((float) ($tmax[$i] ?? 0)) >= 35 ? 1 : 0;
-                    $m[$ym]['windy'] += ((float) ($wind[$i] ?? 0)) >= 40 ? 1 : 0;
-                }
-                $bits = [];
-                foreach ($m as $ym => $v) {
-                    $bits[] = $ym . ': ' . round($v['rain']) . 'mm rain over ' . $v['wet'] . ' wet days, ' . $v['dry'] . ' dry days'
-                        . ($v['hot'] ? ', ' . $v['hot'] . ' days ≥35°C' : '') . ($v['windy'] ? ', ' . $v['windy'] . ' windy days (≥40 km/h gusts)' : '');
-                }
-
-                return 'THE SKY OVER THE SEASON (Open-Meteo daily archive for the field, ' . $start . ' → ' . $end . '): ' . implode(' | ', $bits) . '.';
-            });
+            return Cache::remember('anee-wx2-' . md5($lat . '|' . $lng . '|' . $start . '|' . $end), 86400,
+                fn () => \App\Support\WeatherDays::seasonWords($lat, $lng, $start, $end)) ?? '';
         } catch (\Throwable $e) {
             return '';
         }
+    }
+
+    /** Where the field is: the lot's pin, else the season's first pinned lot, else the first town that geocodes. [lat, lng] or null. */
+    private function place($schedule, ?AsScheduleLot $lot = null): ?array
+    {
+        $lots = $lot ? collect([$lot])->merge($schedule->lots) : $schedule->lots;
+        foreach ($lots as $L) {
+            if ($L->pinLat && $L->pinLng) {
+                return [(float) $L->pinLat, (float) $L->pinLng];
+            }
+        }
+        foreach ($lots as $L) {
+            $place = trim(implode(', ', array_filter([(string) $L->locTown, (string) $L->locProvince])));
+            if ($place !== '' && ($geo = app(\App\Services\WeatherService::class)->geocode($place))) {
+                return [(float) $geo['lat'], (float) $geo['lon']];
+            }
+        }
+
+        return null;
     }
 
     /** Strict-JSON parse: fences stripped, must decode to an object with a stage in it. */

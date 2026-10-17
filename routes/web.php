@@ -196,6 +196,11 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-19: every module on the same shelf facts (one storm count, one variety days rule) and the ledger's cached tokens.
             'shelvesOne' => method_exists(\App\Support\HazardBook::class, 'odds') && method_exists(\App\Support\VarietyBook::class, 'days')
                 && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_ai_usage', 'tokensCached'), false, false),
+            // 2026-10-19: every analysis reads the kept ENSO advisory, the kept past days and the shared field reading, and reuses a place's written outlook.
+            'keptSky' => class_exists(\App\Support\Freshness::class) && class_exists(\App\Support\WeatherDays::class) && class_exists(\App\Support\OutlookShelf::class)
+                && method_exists(\App\Support\EnsoOutlook::class, 'brief') && method_exists(\App\Services\WeatherService::class, 'fieldReading')
+                && rescue(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_enso_advisories') && \Illuminate\Support\Facades\Schema::hasTable('as_weather_days')
+                    && \Illuminate\Support\Facades\Schema::hasTable('as_ai_outlooks'), false, false),
             // 2026-10-19: the Benta o Bilad Calculator in Quick Tools.
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.

@@ -29,12 +29,24 @@ class WeatherService
     private const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
     private const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 
-    /** How long a kept reading serves everyone at its place. */
-    public const FRESH_HOURS = 3;
+    /** How long a kept reading serves everyone at its place (the one rule: App\Support\Freshness). */
+    public const FRESH_HOURS = \App\Support\Freshness::FORECAST_HOURS;
 
     private const HOURLY = 'weather_code,temperature_2m,apparent_temperature,precipitation_probability,precipitation,rain,relative_humidity_2m,wind_speed_10m,is_day';
 
     private const DAILY = 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max';
+
+    /**
+     * The field reading (2026-10-19): what the analyses and Satellite Weather
+     * read beyond the panels, the day's rain in mm, the wind and the gusts,
+     * and five days of hours with the cloud. 13 variables over 16 days, about
+     * 1.5 of Open-Meteo's weighted calls; it replaced two readings of the same
+     * point (FieldContext's, 30 past days and 16 coming, about 3.3, and Sky
+     * Weather's own, about 1.2 every half hour).
+     */
+    private const FIELD_HOURLY = 'precipitation,precipitation_probability,cloud_cover,wind_speed_10m,wind_gusts_10m,temperature_2m';
+
+    private const FIELD_DAILY = 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max';
 
     /** Readings already looked up in this request. */
     private array $memo = [];
@@ -48,7 +60,39 @@ class WeatherService
      */
     public function reading(float $lat, float $lon): ?array
     {
-        $key = sprintf('%.2f,%.2f', $lat, $lon);
+        return $this->kept(sprintf('%.2f,%.2f', $lat, $lon), $lat, $lon, [
+            'models' => 'best_match',
+            'hourly' => self::HOURLY,
+            'daily' => self::DAILY,
+            'timezone' => 'auto',
+            'forecast_days' => 16,
+            'forecast_hours' => 168,
+        ]);
+    }
+
+    /**
+     * The field reading for coordinates (see FIELD_DAILY): kept per place in
+     * the same table, under "f:" and the place, on the same three hour rule,
+     * so every analysis at a place and the Satellite Weather page share one.
+     * Hours from the current one, five days of them; days from today, 16.
+     *
+     * @return array{tz:string,hourly:array,daily:array,fetchedAt:string}|null
+     */
+    public function fieldReading(float $lat, float $lon): ?array
+    {
+        return $this->kept(sprintf('f:%.2f,%.2f', $lat, $lon), $lat, $lon, [
+            'models' => 'best_match',
+            'hourly' => self::FIELD_HOURLY,
+            'daily' => self::FIELD_DAILY,
+            'timezone' => 'Asia/Manila',
+            'forecast_days' => 16,
+            'forecast_hours' => 123,
+        ]);
+    }
+
+    /** A kept reading by its key, asked of Open-Meteo with $ask once it is FRESH_HOURS old. */
+    private function kept(string $key, float $lat, float $lon, array $ask): ?array
+    {
         if (isset($this->memo[$key])) {
             return $this->memo[$key];
         }
@@ -66,16 +110,7 @@ class WeatherService
 
         $fresh = null;
         try {
-            $res = Http::timeout(10)->retry(1, 250)->get(self::FORECAST_URL, [
-                'latitude' => $lat,
-                'longitude' => $lon,
-                'models' => 'best_match',
-                'hourly' => self::HOURLY,
-                'daily' => self::DAILY,
-                'timezone' => 'auto',
-                'forecast_days' => 16,
-                'forecast_hours' => 168,
-            ]);
+            $res = Http::timeout(10)->retry(1, 250)->get(self::FORECAST_URL, ['latitude' => $lat, 'longitude' => $lon] + $ask);
             if ($res->ok() && is_array($res->json('daily')) && ! empty($res->json('daily.time')) && ! empty($res->json('hourly.time'))) {
                 $fresh = ['tz' => (string) ($res->json('timezone') ?: 'UTC'), 'hourly' => $res->json('hourly'), 'daily' => $res->json('daily')];
             }
@@ -89,7 +124,7 @@ class WeatherService
         $now = now();
         try {
             DB::table('as_weather_forecasts')->upsert([[
-                'placeKey' => $key, 'lat' => round($lat, 4), 'lng' => round($lon, 4), 'model' => 'best_match',
+                'placeKey' => $key, 'lat' => round($lat, 4), 'lng' => round($lon, 4), 'model' => (string) ($ask['models'] ?? 'best_match'),
                 'payload' => json_encode($fresh, JSON_UNESCAPED_SLASHES), 'fetchedAt' => $now, 'created_at' => $now, 'updated_at' => $now,
             ]], ['placeKey'], ['lat', 'lng', 'model', 'payload', 'fetchedAt', 'updated_at']);
         } catch (\Throwable $e) {
@@ -97,6 +132,22 @@ class WeatherService
         }
 
         return $this->memo[$key] = $fresh + ['fetchedAt' => $now->toIso8601String()];
+    }
+
+    /**
+     * The next days at coordinates in one short line for a prompt
+     * (2026-10-19, for the asks that had no forecast: Realign, the So Far
+     * report, Anee Auto's observe and ask, the chat about the weather): the
+     * sky, the low and high, the rain chance, from the place's kept reading
+     * (no call when it is fresh). '' when there is none.
+     */
+    public function nextDaysWords(float $lat, float $lon, int $days = 7): string
+    {
+        $fc = $this->forecast($lat, $lon, $days);
+
+        return $fc ? collect($fc)->map(fn ($d) => $d['label'] . ': ' . $d['text']
+            . (isset($d['max'], $d['min']) ? ', ' . $d['min'] . '–' . $d['max'] . '°C' : '')
+            . (isset($d['pop']) ? ', rain ' . $d['pop'] . '%' : ''))->implode('; ') : '';
     }
 
     /** One hour of a reading, as the panels draw it. */

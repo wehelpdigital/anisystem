@@ -128,13 +128,18 @@ class AskAnee
             && preg_match('/typhoon|bagyo|storm|flood|baha|drought|tagtuyot|el ni|la ni|dry spell|when to plant|kailan|best time|planting time|season|rain|ulan|weather|panahon|harvest|ani\b/i', $q->question . ' ' . $q->topic)) {
             $history =\App\Support\HazardBook::monthsWords((string) $q->placeWords(), range(1, 12), null, null, 1100);
         }
+        // A question about El Niño or La Niña reads the ENSO state and outlook the app keeps (2026-10-19), not the web's.
+        $enso = preg_match('/el ni|la ni|enso/i', $q->question . ' ' . $q->topic) ? \App\Support\EnsoOutlook::brief() : '';
+        if ($enso !== '') {
+            $history = trim($history . "\n" . $enso . ' (as of ' . now('Asia/Manila')->format('F Y') . '; a page is read for months, so say the month whenever it speaks of the present state; do not search for it)');
+        }
 
         $done = $this->writer->write([
             'section' => 'questions',
             'topic' => (string) $q->topic,
             'question' => (string) $q->question,
             'farm' => $farm,
-            'notes' => $history !== '' ? 'The farmer\'s town, as the app keeps it (use these counts for any storm, flood or dry spell timing; do not search for this history; never say where it comes from): ' . trim($history) : null,
+            'notes' => $history !== '' ? 'What the app keeps for this question, the farmer\'s town and the ENSO state (use these counts for any storm, flood or dry spell timing; do not search for this history; never say where it comes from): ' . trim($history) : null,
             'keywords' => $keywords,
             'lang' => $q->lang ?: 'en',
             'research' => true,

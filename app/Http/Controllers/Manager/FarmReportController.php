@@ -1155,6 +1155,15 @@ class FarmReportController extends BaseScheduleController
         if ($weather !== '') {
             $ctx[] = $weather;
         }
+        // What ENSO did in the season's own months (the kept ONI history), so the read weighs the season it had,
+        // and, for a season still growing, the days just ahead (the place's kept forecast) (2026-10-19).
+        $dates = $schedule->activities->pluck('targetDate')->filter();
+        if ($dates->isNotEmpty() && ($oni = \App\Support\ClimateStore::oniWords($dates->min()->format('Y-m-d'), min($dates->max()->format('Y-m-d'), now('Asia/Manila')->toDateString()))) !== '') {
+            $ctx[] = $oni;
+        }
+        if ($kind === 'sofar' && ($at = $this->fieldPlace($schedule)) && ($next = app(\App\Services\WeatherService::class)->nextDaysWords($at[0], $at[1], 10)) !== '') {
+            $ctx[] = 'THE NEXT 10 DAYS AT THE FIELD (forecast): ' . $next . '. Use it for weather.outlook and the next steps.';
+        }
 
         // The photos' words (up to 20; their text, not their pixels).
         $shots = \App\Models\AsGalleryImage::where('croppingScheduleId', $schedule->id)
@@ -1281,10 +1290,11 @@ class FarmReportController extends BaseScheduleController
     }
 
     /**
-     * The season's own daily weather off Open-Meteo's archive, summarized
-     * per month so the prompt carries a story, not 120 raw rows. The lot's
-     * pin gives the coordinates; failing that, its town geocodes; failing
-     * everything, the report simply says the sky's records were not there.
+     * The season's own daily weather, summarized per month so the prompt
+     * carries a story, not 120 raw rows, each month beside the usual rain of
+     * those days (WeatherDays::seasonWords). The lot's pin gives the
+     * coordinates; failing that, its town geocodes; failing everything, the
+     * report simply says the sky's records were not there.
      */
     private function weatherHistory(\App\Models\AsCroppingSchedule $schedule): string
     {
@@ -1292,44 +1302,53 @@ class FarmReportController extends BaseScheduleController
         if (! $w) {
             return '';
         }
-        $bits = [];
-        foreach ($w['months'] as $v) {
-            $bits[] = $v['ym'] . ': ' . round($v['rain']) . 'mm rain over ' . $v['wet'] . ' wet days, '
-                . $v['dry'] . ' dry days' . ($v['hot'] ? ', ' . $v['hot'] . ' days ≥35°C' : '')
-                . ($v['windy'] ? ', ' . $v['windy'] . ' windy days (≥40 km/h gusts)' : '');
+
+        return \App\Support\WeatherDays::seasonWords($w['lat'], $w['lng'], $w['from'], $w['to'], $w['months']);
+    }
+
+    /** Where the season's field is: the first pinned lot, else the first town that geocodes. [lat, lng] or null. */
+    private function fieldPlace(\App\Models\AsCroppingSchedule $schedule): ?array
+    {
+        foreach ($schedule->lots as $L) {
+            if ($L->pinLat && $L->pinLng) {
+                return [(float) $L->pinLat, (float) $L->pinLng];
+            }
+        }
+        foreach ($schedule->lots as $L) {
+            $place = trim(implode(', ', array_filter([(string) $L->locTown, (string) $L->locProvince])));
+            if ($place !== '' && ($geo = app(\App\Services\WeatherService::class)->geocode($place))) {
+                return [(float) $geo['lat'], (float) ($geo['lon'] ?? $geo['lng'] ?? 0)];
+            }
         }
 
-        return 'THE SKY OVER THE SEASON (Open-Meteo daily archive for the field, ' . $w['from'] . ' → ' . $w['to'] . '): '
-            . implode(' | ', $bits) . '.';
+        return null;
+    }
+
+    /** The months for the report's rain chart (the place's coordinates stay out of the saved report). */
+    private function chartWeather(\App\Models\AsCroppingSchedule $schedule): ?array
+    {
+        $w = $this->weatherMonths($schedule);
+
+        return $w ? array_diff_key($w, ['lat' => 1, 'lng' => 1]) : null;
     }
 
     /**
-     * The same archive as numbers, month by month, for the season report's
-     * rain chart as well as the prompt. Null when there is no place to ask
-     * about or the archive does not answer (a failure is not cached).
+     * The same days as numbers, month by month, for the season report's
+     * rain chart as well as the prompt. The days come from the app's kept
+     * days (WeatherDays, 2026-10-19): read once from the archive and kept,
+     * so a report run again, or the next day, asks nothing outside. Null
+     * when there is no place or no day can be had (a failure is not cached).
      *
-     * @return array{from:string,to:string,months:array<int,array>}|null
+     * @return array{from:string,to:string,lat:float,lng:float,months:array<int,array>}|null
      */
     private function weatherMonths(\App\Models\AsCroppingSchedule $schedule): ?array
     {
         try {
-            $lat = null;
-            $lng = null;
-            foreach ($schedule->lots as $L) {
-                if ($L->pinLat && $L->pinLng) { $lat = (float) $L->pinLat; $lng = (float) $L->pinLng; break; }
-            }
-            if ($lat === null) {
-                foreach ($schedule->lots as $L) {
-                    $place = trim(implode(', ', array_filter([(string) $L->locTown, (string) $L->locProvince])));
-                    if ($place !== '') {
-                        $geo = app(\App\Services\WeatherService::class)->geocode($place);
-                        if ($geo) { $lat = (float) $geo['lat']; $lng = (float) ($geo['lon'] ?? $geo['lng'] ?? 0); break; }
-                    }
-                }
-            }
-            if ($lat === null) {
+            $at = $this->fieldPlace($schedule);
+            if (! $at) {
                 return null;
             }
+            [$lat, $lng] = $at;
 
             $dates = $schedule->activities->pluck('targetDate')->filter();
             $start = $dates->min()?->format('Y-m-d') ?? now('Asia/Manila')->subMonths(4)->toDateString();
@@ -1339,42 +1358,12 @@ class FarmReportController extends BaseScheduleController
                 return null;
             }
 
-            $key = 'anee-wxm-' . md5($lat . '|' . $lng . '|' . $start . '|' . $end);
+            $key = 'anee-wxm2-' . md5($lat . '|' . $lng . '|' . $start . '|' . $end);
 
             return Cache::remember($key, 86400, function () use ($lat, $lng, $start, $end) {
-                $res = Http::timeout(20)->get('https://archive-api.open-meteo.com/v1/archive', [
-                    'latitude' => $lat, 'longitude' => $lng,
-                    'start_date' => $start, 'end_date' => $end,
-                    'daily' => 'precipitation_sum,temperature_2m_max,temperature_2m_min,wind_speed_10m_max',
-                    'timezone' => 'Asia/Manila',
-                ])->json();
-                $days = $res['daily']['time'] ?? [];
-                if (! $days) {
-                    return null;
-                }
-                $rain = $res['daily']['precipitation_sum'] ?? [];
-                $tmax = $res['daily']['temperature_2m_max'] ?? [];
-                $wind = $res['daily']['wind_speed_10m_max'] ?? [];
-                $m = [];
-                foreach ($days as $i => $d) {
-                    $ym = substr($d, 0, 7);
-                    $m[$ym] = $m[$ym] ?? ['ym' => $ym, 'rain' => 0.0, 'wet' => 0, 'dry' => 0, 'hot' => 0, 'windy' => 0, 'n' => 0, 'tmax' => 0.0];
-                    $r = (float) ($rain[$i] ?? 0);
-                    $m[$ym]['rain'] += $r;
-                    $m[$ym]['wet'] += $r >= 1 ? 1 : 0;
-                    $m[$ym]['dry'] += $r < 1 ? 1 : 0;
-                    $m[$ym]['hot'] += ((float) ($tmax[$i] ?? 0)) >= 35 ? 1 : 0;
-                    $m[$ym]['windy'] += ((float) ($wind[$i] ?? 0)) >= 40 ? 1 : 0;
-                    $m[$ym]['tmax'] += (float) ($tmax[$i] ?? 0);
-                    $m[$ym]['n']++;
-                }
-                foreach ($m as &$v) {
-                    $v['rain'] = round($v['rain'], 1);
-                    $v['tmax'] = $v['n'] ? round($v['tmax'] / $v['n'], 1) : null;
-                }
-                unset($v);
+                $months = \App\Support\WeatherDays::months(\App\Support\WeatherDays::range($lat, $lng, $start, $end));
 
-                return ['from' => $start, 'to' => $end, 'months' => array_values($m)];
+                return $months ? ['from' => $start, 'to' => $end, 'lat' => $lat, 'lng' => $lng, 'months' => $months] : null;
             });
         } catch (\Throwable $e) {
             return null;
@@ -1555,7 +1544,7 @@ class FarmReportController extends BaseScheduleController
                 'workers' => array_values(array_map(fn ($w) => ['name' => $w['name'], 'days' => round($w['days'], 1), 'pay' => round($w['pay'], 2)], array_slice($workers, 0, 6, true))),
                 'workerCount' => count($workers),
             ],
-            'weather' => $this->weatherMonths($schedule),
+            'weather' => $this->chartWeather($schedule),
             'past' => $past,
         ];
     }
@@ -1775,7 +1764,7 @@ class FarmReportController extends BaseScheduleController
             ],
             'overdue' => array_slice($overdue, 0, 6),
             'coming' => array_slice($coming, 0, 8),
-            'weather' => $this->weatherMonths($schedule),
+            'weather' => $this->chartWeather($schedule),
         ];
     }
 

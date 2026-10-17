@@ -376,18 +376,58 @@ class WhatToPlantController extends Controller
                 'pending' => true, 'id' => $id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named, $research);
+            $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named, $research, $p);
             exit;
         }
 
         @set_time_limit(420);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named, $research);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt, $price, $named, $research, $p);
 
         return $this->jobState($id);
     }
 
+    /** The key parts of a town's month risk: a Philippine place the hazard book knows. Null elsewhere (written every run). */
+    private static function riskParts(array $p): ?array
+    {
+        if (($p['country'] ?? \App\Support\Region::HOME) !== \App\Support\Region::HOME || trim((string) ($p['location'] ?? '')) === '') {
+            return null;
+        }
+        $rk = \App\Support\ClimateRecord::placeKey((string) $p['location'], 'PH');
+
+        return isset($rk['where']) ? ['place' => (string) ($rk['townKey'] ?? $rk['key'])] : null;
+    }
+
+    /** The town's kept month risk (twelve rows), or null. */
+    private static function keptMonthRisk(array $p): ?array
+    {
+        $parts = self::riskParts($p);
+        $k = $parts ? \App\Support\OutlookShelf::get('what.risk', $parts, false) : null;
+
+        return $k && count((array) ($k['monthRisk'] ?? [])) === 12 ? array_values($k['monthRisk']) : null;
+    }
+
+    /** The kept month risk into a report written without it, or a written one kept. */
+    private static function withMonthRisk(array $report, array $p): array
+    {
+        $parts = self::riskParts($p);
+        if (! $parts) {
+            return $report;
+        }
+        if (count((array) ($report['monthRisk'] ?? [])) !== 12) {
+            if ($k = self::keptMonthRisk($p)) {
+                $report['monthRisk'] = $k;
+                $report['monthRiskKept'] = true;
+            }
+
+            return $report;
+        }
+        \App\Support\OutlookShelf::put('what.risk', $parts, ['monthRisk' => array_values($report['monthRisk'])], false, (string) $parts['place']);
+
+        return $report;
+    }
+
     /** The model call and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, int $price, int $named, string $research = ''): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, int $price, int $named, string $research = '', array $p = []): void
     {
         /* The heartbeat: before every call to the model the row says which
          * phase it is in and touches updated_at, so the page can move its
@@ -416,6 +456,9 @@ class WhatToPlantController extends Controller
                 ]);
                 throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
             }
+            // The town's month by month risk (OutlookShelf 'what.risk', 2026-10-19): a run that was given the kept one
+            // gets it back in the report; one that wrote it keeps it for the next farmer there.
+            $report = self::withMonthRisk($report, $p);
 
             // The price agreed when the run began.
             $charged = (float) $price;
@@ -805,6 +848,19 @@ class WhatToPlantController extends Controller
         $history = \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, [], false, false) . \App\Support\ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], false);
         // The field in detail, when the farmer gave it: one compact line.
         $fieldLine = FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []));
+        // The town's month by month risk, written once from its kept record and kept until the hazard book's next
+        // refresh (2026-10-19, OutlookShelf 'what.risk'): given here instead of asked again, so the harvest risks agree with it.
+        $keptRisk = self::keptMonthRisk($p);
+        $riskShape = $keptRisk ? '' : '"monthRisk":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0}],';
+        $riskRows = $keptRisk ? '' : "- monthRisk: exactly twelve rows, month 1 to 12.\n";
+        $riskRule = $keptRisk
+            ? '- monthRisk is already written for this place from the same record (each month: storm, flood, drought, heat, frost, 0-100): '
+                . collect($keptRisk)->map(fn ($r) => date('M', mktime(0, 0, 0, (int) $r['month'], 1)) . ' ' . (int) $r['storm'] . '/' . (int) $r['flood'] . '/' . (int) $r['drought'] . '/' . (int) $r['heat'] . '/' . (int) $r['frost'])->implode('; ')
+                . ". Leave monthRisk out of the JSON. Be consistent: a crop's harvestRisk must agree with it in its harvestMonth.\n"
+            : <<<'RULE'
+- monthRisk: twelve rows, January to December, each 0-100 for storm, flood, drought, heat and frost in the region named, from THE FIELD'S WEATHER RECORD above (twenty years, measured: heavy rain years for flood, storm gust years and the kept cyclone tally for storm, THE PLACE'S HAZARD HISTORY's month tally (the years a storm, a flood or a dry spell hit each month, measured near the town or reported for it) for storm, flood and drought, dry months and the El Niño shares for drought, hot days for heat) and the region's climatological normals — the chart under the ranking draws every crop's growing bar and harvest against it. Be consistent: a crop's harvestRisk must agree with monthRisk in its harvestMonth.
+
+RULE;
 
         // The FIELD's country, which may not be the farmer's: its name, its
         // weather authority, its crops; the language stays the farmer's.
@@ -938,8 +994,7 @@ GROUND RULES
 - THE FARMER'S OWN CROPS. Every crop listed under "crops the farmer has in mind" must appear in recommendations with farmerAsked true, scored and ranked as honestly as your own picks: if it fits this ground poorly, say so plainly in its why and rank it low — never drop it, never flatter it. A name there that is not a real crop grown in {$countryName} goes in avoid instead, with the reason.
 - THE FARMER'S PRIORITIES. Score every crop on the six fits (fit.profit, fit.survival, fit.ease, fit.speed, fit.market, fit.food, each 0-100 for THIS ground and farmer), then make score the weighted average of those six using the weights given above (the farmer's first priority weighs most). Rank by score. When a priority decided a placing, say so in the why.
 - HARVEST DAY. A fine planting window is not enough: the crop must also come off the field safely. For every recommendation give plantMonth (1-12, the month its window opens), daysToHarvest (days from planting to first harvest for this crop in this climate, from its real maturity — for a tree crop, months to first bearing times 30), harvestWindow in words (e.g. "late February – mid March"), harvestMonth (1-12, when most of the harvest lands), and harvestRisk: what the region's climate typically does in that harvest month — floods, typhoons/storms, drought, heat, frost — as score 0-100 (0 = calm, 100 = a harvest very likely lost or delayed), kind (one of "flood", "storm", "drought", "heat", "frost", "none") and a note of at most 20 words. A crop whose harvest lands in the flood or typhoon peak must say so, and that risk must pull down fit.survival and the score.
-- monthRisk: twelve rows, January to December, each 0-100 for storm, flood, drought, heat and frost in the region named, from THE FIELD'S WEATHER RECORD above (twenty years, measured: heavy rain years for flood, storm gust years and the kept cyclone tally for storm, THE PLACE'S HAZARD HISTORY's month tally (the years a storm, a flood or a dry spell hit each month, measured near the town or reported for it) for storm, flood and drought, dry months and the El Niño shares for drought, hot days for heat) and the region's climatological normals — the chart under the ranking draws every crop's growing bar and harvest against it. Be consistent: a crop's harvestRisk must agree with monthRisk in its harvestMonth.
-- Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
+{$riskRule}- Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
 - REAL HARVESTS AND PRICES: research notes gathered from the web just now follow at the end of this brief (what farmers in the province really harvest of each main crop, the latest farmgate prices, recent derbies). fit.profit and fit.market rest on them first, over memory: a crop real farmers there harvest well and sell at a fair farmgate price scores higher than one with a better textbook yield. Where a crop's why rests on a real figure, say it briefly with its year (e.g. "farmers here averaged 4.2 t/ha in the 2025 dry season, PSA"). A crop the notes say nothing about is scored from established knowledge, and not flattered.
 - Read the extra signals as an agronomist would, and say in each "why" which ones moved the pick: soil pH sets which crops tolerate the ground (acid-tolerant vs lime-loving); the LOOK of the irrigation water is a clue — muddy/brown carries silt (fine for paddy, clogs drip), grayish carries fine silt, fine sand or volcanic ash as in lahar areas (it leaves a gray crust that seals the seedbed, wears pumps and clogs drip and sprinklers, so let it settle in a pond first; sand itself settles fast, so gray water that stays gray is mostly fine silt or ash), cloudy white or milky suggests suspended lime/minerals or fine clay (check salinity and hardness before drip or sensitive vegetables), greenish means algae and nutrient load (watch clogging and disease), salty taste or a white crust means salinity (favor salt-tolerant crops), a bad smell or oily film means contamination (avoid leafy vegetables eaten raw); the lay and elevation set drainage, cold and cloud; sunlight rules out sun-loving crops in shade; the previous crop sets rotation (do not repeat a family that shares its pests and diseases); labor, budget and the market decide whether a labor-heavy, input-heavy or perishable crop is realistic. A skipped signal is "not stated" — do not guess it; name it in dataGaps if it would have changed the ranking.
 - EXCLUDED FAMILIES. A family the farmer does not want never appears in recommendations, topPick or surprises — not one crop of it. The family-coverage rule below applies only to the families still in play. The crops the farmer named themselves are exempt: they asked, so they are ranked.
@@ -950,13 +1005,12 @@ GROUND RULES
 - Write every "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"topPick":{"crop":"","category":"","why":"","window":"","daysToHarvest":0,"harvestWindow":"","harvestRisk":{"score":0,"kind":"none","note":""}},"recommendations":[{"rank":1,"crop":"","category":"","score":0,"farmerAsked":false,"window":"","plantMonth":0,"daysToHarvest":0,"harvestWindow":"","harvestMonth":0,"harvestRisk":{"score":0,"kind":"none","note":""},"fit":{"profit":0,"survival":0,"ease":0,"speed":0,"market":0,"food":0},"why":"","watch":""}],"monthRisk":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0}],"surprises":[{"crop":"","category":"","why":"","window":"","plantMonth":0,"daysToHarvest":0,"harvestWindow":"","harvestMonth":0,"harvestRisk":{"score":0,"kind":"none","note":""}}],"avoid":[{"crop":"","why":""}],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"topPick":{"crop":"","category":"","why":"","window":"","daysToHarvest":0,"harvestWindow":"","harvestRisk":{"score":0,"kind":"none","note":""}},"recommendations":[{"rank":1,"crop":"","category":"","score":0,"farmerAsked":false,"window":"","plantMonth":0,"daysToHarvest":0,"harvestWindow":"","harvestMonth":0,"harvestRisk":{"score":0,"kind":"none","note":""},"fit":{"profit":0,"survival":0,"ease":0,"speed":0,"market":0,"food":0},"why":"","watch":""}],{$riskShape}"surprises":[{"crop":"","category":"","why":"","window":"","plantMonth":0,"daysToHarvest":0,"harvestWindow":"","harvestMonth":0,"harvestRisk":{"score":0,"kind":"none","note":""}}],"avoid":[{"crop":"","why":""}],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - surprises: zero to three, as defined above, each with the same harvest fields as a recommendation and a why of at most 45 words; [] when none.
 - recommendations: TWENTY crops of your own choosing — the best twenty, even where the twentieth is only a modest fit, the score says how modest — plus every crop the farmer had in mind (so 20 + those), all in ONE ranking by score, best first, each with: category (one of "Grain", "Vegetable", "Root crop", "Legume", "Fruit / tree"), score 0-100 (the priority-weighted fit for THIS ground and start month), farmerAsked (true only for the farmer's own crops), window (when to plant it, specific — e.g. "mid May – early June"), plantMonth, daysToHarvest, harvestWindow, harvestMonth and harvestRisk as defined above, fit with all six numbers, why (≤ 35 words, grounded in the facts), watch (the one thing to watch for on this ground, ≤ 15 words). Fewer than twenty of your own only when the pool truly has no more crops that could be grown on this ground at all.
 - topPick repeats the rank-1 crop with a fuller why (≤ 60 words), its window, daysToHarvest, harvestWindow and harvestRisk.
-- monthRisk: exactly twelve rows, month 1 to 12.
-- avoid: two to four crops a farmer in this region might otherwise try — crops that DO grow in {$countryName} but that this ground, water, season or market argues against — each with the plain reason. Never fill it with crops from another climate that no farmer there would plant anyway.
+{$riskRows}- avoid: two to four crops a farmer in this region might otherwise try — crops that DO grow in {$countryName} but that this ground, water, season or market argues against — each with the plain reason. Never fill it with crops from another climate that no farmer there would plant anyway.
 - confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words, plain and warm but factual.
 PROMPT;
     }

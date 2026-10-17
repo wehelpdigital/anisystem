@@ -158,11 +158,13 @@ class AutoBrain
         return $out ? $out + ['note' => 'ISRIC SoilGrids, 250 m model of the top 30 cm, not a test of this field'] : [];
     }
 
-    private function forecastWords(float $lat, float $lng): string
+    private function forecastWords(float $lat, float $lng, int $count = 16): string
     {
-        $days = $this->planner->skyAt($lat, $lng);
+        // From today on: a reading kept since last night still holds yesterday (2026-10-19).
+        $today = now('Asia/Manila')->toDateString();
+        $days = array_filter($this->planner->skyAt($lat, $lng), fn ($d) => $d >= $today, ARRAY_FILTER_USE_KEY);
         $out = [];
-        foreach (array_slice($days, 0, 16, true) as $d => $x) {
+        foreach (array_slice($days, 0, $count, true) as $d => $x) {
             $out[] = $d . ': rain chance ' . $x['pop'] . '%' . ($x['mm'] !== null ? ', ' . $x['mm'] . ' mm' : '') . ($x['wind'] !== null ? ', wind up to ' . $x['wind'] . ' km/h' : '');
         }
 
@@ -317,6 +319,8 @@ class AutoBrain
         return "You are Anee, a smart farm technician, writing the whole season's calendar for ONE lot of a Filipino farm. The farmer follows it day by day; you will move tasks yourself when weather or workers change, so give each task its ideal day and how far it may move. Return ONE JSON object, nothing else.\n\n"
             . "THE LOT:\n" . json_encode($lot, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
             . "YOUR FIRST READING OF IT:\n" . json_encode($reading, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
+            // The season as the reading read it from the weather record, the town's history and ENSO (2026-10-19): the long view the 16 day forecast cannot give.
+            . (! empty($auto->analysis['season']) ? "THE SEASON, AS YOUR READING SAID IT:\n" . json_encode($auto->analysis['season'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n" : '')
             . "THE REST OF THE FARM (other lots share the same workers): " . json_encode($others, JSON_UNESCAPED_UNICODE) . "\n"
             . 'SOIL: ' . json_encode($f['soil'], JSON_UNESCAPED_UNICODE) . ($f['fieldInDetail'] ? "\nFIELD IN DETAIL (the farmer's own answers): " . $f['fieldInDetail'] : '') . "\nWATER: " . $f['water'] . ($f['waterNote'] ? ' (' . $f['waterNote'] . ')' : '') . "\nPAST PROBLEMS: " . json_encode(array_merge($f['pastProblems'], $f['pastPestsAndDiseases']), JSON_UNESCAPED_UNICODE)
             . "\nWORKERS: " . json_encode($f['workers'], JSON_UNESCAPED_UNICODE) . "\nENSO: " . $f['enso'] . "\n\n"
@@ -399,6 +403,12 @@ class AutoBrain
         return $rows;
     }
 
+    /** Whether a question is about the weather, a spray, fertilizer or timing (it then gets the forecast). */
+    public static function skyQuestion(string $q): bool
+    {
+        return \App\Support\SkyLines::question($q);
+    }
+
     /* ----------------------------------------------------- from the field */
 
     public function observationPrompt(AsAutoSeason $auto, ?int $lotId, string $words, int $pictures, bool $video, bool $voice = false): string
@@ -410,6 +420,15 @@ class AutoBrain
             ->where('plannedDate', '<=', now('Asia/Manila')->addDays(14)->toDateString())->when($lotId, fn ($q) => $q->where('lotId', $lotId))
             ->orderBy('plannedDate')->limit(20)->get(['id', 'title', 'kind', 'plannedDate'])->map(fn ($t) => $t->plannedDate->toDateString() . ' ' . $t->title)->implode('; ');
         $day = $lot && ! empty($lot['fieldDate']) ? (int) Carbon::parse($lot['fieldDate'], 'Asia/Manila')->diffInDays(now('Asia/Manila')->startOfDay(), false) : null;
+        // What is seen today is read without the town's twenty years (2026-10-19: "Same town as" pointed at nothing here),
+        // and with the week ahead, so a spray or a new task is timed by the rain.
+        $next = '';
+        if ($lot) {
+            unset($lot['placeHistory']);
+            $sl = AsScheduleLot::find((int) $lot['lotId']);
+            $at = $sl ? $this->planner->placeOf($sl) : null;
+            $next = $at ? $this->forecastWords($at[0], $at[1], 7) : '';
+        }
 
         return "You are Anee, a smart farm technician, on an Anee Auto season you plan for this farmer. They sent an observation from the field"
             . ($pictures ? ' with ' . $pictures . ' picture' . ($pictures > 1 ? 's' : '') . ($video ? ' (frames from a video)' : '') : '')
@@ -417,6 +436,7 @@ class AutoBrain
             . 'THE LOT: ' . json_encode($lot, JSON_UNESCAPED_UNICODE) . ($day !== null ? "\nDay in the field today: " . $day . ' (' . ($lot['counter'] ?? '') . ')' : '') . "\n"
             . 'SOIL: ' . json_encode($f['soil']['readFromSigns'], JSON_UNESCAPED_UNICODE) . "\nWATER: " . $f['water'] . "\n"
             . "THE NEXT TWO WEEKS ON THE CALENDAR: " . ($soon ?: 'nothing') . "\n"
+            . ($next !== '' ? 'THE NEXT 7 DAYS AT THE LOT (forecast): ' . $next . "\n" : '')
             . "THE FARMER SAYS: " . ($words !== '' ? $words : '(nothing, only pictures)') . "\n\n"
             . "RULES: Be honest about how sure you are from a phone picture. Prevention and thresholds first; a spray only when the signs call for it, by ACTIVE INGREDIENT with its IRAC, FRAC or HRAC group and a label rate range, never a brand, with its safety. A new task's inDays is days from today (0 = today). No dashes in your words.\n\n"
             . 'Return exactly: {"what":"likely cause, or \'nothing wrong\'","confidence":"low|medium|high","severity":"none|low|medium|high","reading":"what you see and why you think so",'
@@ -433,8 +453,27 @@ class AutoBrain
             ->where('plannedDate', '<=', now('Asia/Manila')->addDays(7)->toDateString())->orderBy('plannedDate')->limit(25)->get()
             ->map(fn ($t) => $t->plannedDate->toDateString() . ' · ' . $t->title . ($t->summary ? ': ' . $t->summary : ''))->implode("\n");
 
+        // A question about the weather, a spray, fertilizer or timing gets the forecast data the chat rules need (2026-10-19),
+        // the week ahead at each of the farm's places (at most three) and the season the reading said; other questions go without.
+        $sky = '';
+        if (self::skyQuestion($question)) {
+            $seen = [];
+            foreach ($f['lots'] as $l) {
+                $sl = count($seen) < 3 ? AsScheduleLot::find((int) $l['lotId']) : null;
+                $at = $sl ? $this->planner->placeOf($sl) : null;
+                $key = $at ? sprintf('%.2f,%.2f', $at[0], $at[1]) : null;
+                if ($key && ! isset($seen[$key]) && ($w = $this->forecastWords($at[0], $at[1], 7)) !== '') {
+                    $seen[$key] = true;
+                    $sky .= 'THE NEXT 7 DAYS AT ' . mb_strtoupper((string) ($l['place'] ?: $l['name'])) . ' (forecast data): ' . $w . "\n";
+                }
+            }
+            if (! empty($auto->analysis['season'])) {
+                $sky .= 'THE SEASON, AS YOUR READING SAID IT: ' . json_encode($auto->analysis['season'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n";
+            }
+        }
+
         return "You are Anee, a smart farm technician running this farmer's Anee Auto season: you plan their days and move tasks when weather or workers change. Answer their question in the chat: warm, short, plain words, practical. Use the season below. Never name a pesticide brand; active ingredients only. No dashes. You may use one Anee face like :anee-happy: or :anee-thinking:.\n\n"
             . 'THE SEASON: ' . json_encode(['lots' => array_map(fn ($l) => array_intersect_key($l, array_flip(['name', 'crop', 'variety', 'method', 'fieldDate', 'areaHa', 'place'])), $f['lots']), 'soil' => $f['soil']['readFromSigns'], 'water' => $f['water']], JSON_UNESCAPED_UNICODE)
-            . "\nTHIS WEEK ON THE CALENDAR:\n" . ($today ?: 'nothing planned') . "\n\nTHE LAST FEW LINES OF THE CHAT:\n" . implode("\n", $recent) . "\n\nTODAY: " . now('Asia/Manila')->format('l, F j, Y') . "\n\nTHE FARMER ASKS: " . $question;
+            . "\nTHIS WEEK ON THE CALENDAR:\n" . ($today ?: 'nothing planned') . "\n" . ($sky !== '' ? $sky : '') . "\nTHE LAST FEW LINES OF THE CHAT:\n" . implode("\n", $recent) . "\n\nTODAY: " . now('Asia/Manila')->format('l, F j, Y') . "\n\nTHE FARMER ASKS: " . $question;
     }
 }
