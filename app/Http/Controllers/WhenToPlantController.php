@@ -327,6 +327,9 @@ class WhenToPlantController extends Controller
                 throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
             }
 
+            // The typhoon odds as the app counts them from the hazard book (2026-10-19), so the chart says the
+            // same percentage as every other module's prompt for this town; Anee's note on each month stays.
+            $report = self::bookOdds($report, $p);
             $report['webSources'] = (array) ($result['sources'] ?? []);
             $report['searched'] = (bool) ($result['searched'] ?? false);
             $report['researchNotes'] = mb_substr((string) ($result['researchText'] ?? ''), 0, 6000);
@@ -637,6 +640,49 @@ class WhenToPlantController extends Controller
         ], fn ($v) => $v !== null && $v !== '');
     }
 
+    /** The days the crop is timed by: the stated variety's own (VarietyBook::days), else the crop's usual. */
+    private static function daysOf(array $p): int
+    {
+        return (int) (\App\Support\VarietyBook::days((string) ($p['crop'] ?? ''), (string) ($p['variety'] ?? '')) ?: CropCatalog::maturity((string) ($p['crop'] ?? '')));
+    }
+
+    /**
+     * The report's typhoon odds set from the hazard book's own count
+     * (HazardBook::odds: the years with a storm that month, of the years
+     * read), for a field at home whose town the book knows. The model's note
+     * on each month, its peak and its note stay; a report it left without
+     * odds gets them too. Elsewhere the report is left as it came.
+     */
+    public static function bookOdds(array $report, array $p): array
+    {
+        if (($p['country'] ?? \App\Support\Region::HOME) !== \App\Support\Region::HOME) {
+            return $report;
+        }
+        $o = \App\Support\HazardBook::odds((string) ($p['location'] ?? ''));
+        if (! $o) {
+            return $report;
+        }
+        $had = [];
+        foreach ((array) ($report['typhoonOdds']['months'] ?? []) as $m) {
+            if (is_array($m) && isset($m['month'])) {
+                $had[(int) $m['month']] = $m;
+            }
+        }
+        $months = [];
+        foreach ($o['months'] as $n => $x) {
+            $months[] = ['month' => $n, 'chance' => $x['chance'], 'storms' => $x['storms'], 'note' => (string) ($had[$n]['note'] ?? '')];
+        }
+        $report['typhoonOdds'] = [
+            'years' => $o['span'][0] . ' to ' . $o['span'][1] . ' (' . $o['years'] . ' years)',
+            'months' => $months,
+            'peak' => (string) ($report['typhoonOdds']['peak'] ?? ''),
+            'note' => (string) ($report['typhoonOdds']['note'] ?? ''),
+            'counted' => true,
+        ];
+
+        return $report;
+    }
+
     /** Whether a run must look the named variety up: one is named, and neither the records nor an earlier lookup know it. */
     public static function needsLookup(Request $request): bool
     {
@@ -786,7 +832,7 @@ PROMPT;
         $focus = [];
         $m = (int) ($p['fromMonth'] ?? 0);
         $span = (((int) ($p['toYear'] ?? 0) - (int) ($p['fromYear'] ?? 0)) * 12 + (int) ($p['toMonth'] ?? 0) - $m)
-            + (int) ceil(((int) CropCatalog::maturity($p['crop'])) / 30);
+            + (int) ceil(self::daysOf($p) / 30);
         for ($i = 0; $m > 0 && $i <= min(11, max(0, $span)); $i++) {
             $focus[] = ($m - 1 + $i) % 12 + 1;
         }
@@ -823,7 +869,10 @@ PROMPT;
             : '';
         // The field in detail, when the farmer gave it: one compact line.
         $soilBlock .= FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $p['crop']);
-        $maturity = CropCatalog::maturity($p['crop']);
+        // The variety's own days when its record has them (the rule a season's lot uses), the crop's otherwise.
+        $cropDays = (int) CropCatalog::maturity($p['crop']);
+        $varDays = \App\Support\VarietyBook::days((string) $p['crop'], (string) ($p['variety'] ?? ''));
+        $maturity = $varDays ? $varDays . " (the stated variety's own; the crop's usual is " . $cropDays . ')' : $cropDays;
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
         // The area's typical soil when the soil atlas knows the place (2026-10-18): a lime or salt flush lead time moves the earliest week.
@@ -832,7 +881,7 @@ PROMPT;
             $soilBlock .= $atlas !== '' ? '- ' . $atlas . "\n" : '';
         }
         $ensoRule = $enso !== ''
-            ? 'the observed ENSO state AND the official NOAA CPC forecast given above (weigh its stated probabilities toward the planting window rather than assuming neutral conditions, and say plainly where the forecast still leaves uncertainty)'
+            ? 'the observed ENSO state AND the official ENSO forecast given above (weigh its stated probabilities toward the planting window rather than assuming neutral conditions, and say plainly where the forecast still leaves uncertainty)'
             : 'general ENSO behaviour — state plainly that you cannot know the live ENSO state for ' . $p['year'] . ' and mark it as uncertainty rather than inventing a forecast';
 
         // The field's country, which may not be the farmer's: its name, its
@@ -840,16 +889,17 @@ PROMPT;
         $fc = $p['country'] ?? \App\Support\Region::code();
         $fieldPH = $fc === \App\Support\Region::HOME;
         $countryName = \App\Support\Region::name($fc);
-        $regionBlock = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
         $cropLabel = CropCatalog::label($p['crop']);
         $met = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('met'));
         $climateRule = $fieldPH
-            ? 'PAGASA climatological normals (wet/dry season timing for the region named), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences)'
+            ? 'the climatological normals of the region named (wet/dry season timing), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences)'
             : 'the climatological normals for the region named as published by ' . $met . ' (frost dates and the growing season where they apply, rainfall and temperature timing), the historical severe-weather seasonality of that region (storms, heat, drought, floods)';
         // The variety: a record's facts as known (2026-10-15), else the research notes carry what is published.
         $rec = (array) ($p['varietyRecord'] ?? []);
+        // The variety in the one line every module reads (VarietyBook::factsLine: the record, its ratings, its trials), else this module's own.
+        $line = $rec ? \App\Support\VarietyBook::factsLine((string) $p['crop'], (string) ($rec['name'] ?? $p['variety']), false, $fc) : '';
         $varietyFact = $rec
-            ? '- Stated variety: "' . $p['variety'] . '", ON RECORD: ' . self::recordWords($rec) . '. These are known facts: time the crop by these days to harvest, and let its growing environment and tolerances move the windows, the month scores and the threats. The research notes may add regional trial results. In the variety field, found is true, maturityDays is these days (by the planting season where the record gives dry and wet days) and source is "anee.io\'s variety records", never an agency, the registry or an institute.'
+            ? '- Stated variety: "' . $p['variety'] . '", ON RECORD: ' . ($line !== '' ? $line : self::recordWords($rec)) . '. These are known facts: time the crop by these days to harvest, and let its growing environment and tolerances move the windows, the month scores and the threats. The research notes may add regional trial results. In the variety field, found is true, maturityDays is these days (by the planting season where the record gives dry and wet days) and source is "anee.io\'s variety records", never an agency, the registry or an institute.'
             : str_replace('{VARIETY}', (string) $p['variety'], '- Stated variety: "{VARIETY}" — the research notes at the end carry what the web says about it (maturity, season it is bred for, tolerance to drought / flood / heat / cold, pest and disease resistance, who released it). USE those published traits: time the crop by the variety\'s own days to maturity where the notes give one, and let its tolerances and weaknesses move the windows, the month scores and the threats (a submergence-tolerant variety fears the flood month less; an early-maturing one can dodge it). Where the notes say the variety could not be found, say variety-specific data is unavailable in dataGaps and reason from the crop\'s typical range. Never invent varietal traits, and never use a trait the notes do not carry.');
         $when = self::whenWords($p);
         $whenShort = self::whenTitle($p);
@@ -862,7 +912,6 @@ PROMPT;
 You are an agronomic decision-support analyst for farming in {$countryName}. Recommend when to PLANT, inside the months the farmer is considering, for the case below. The farmer chose MONTHS rather than a named cropping season on purpose: with the changing climate the textbook wet and dry seasons no longer keep their dates, so judge each month by what this place's recent record and the current outlook say, not by the season it used to belong to.
 
 FACTS GIVEN
-- {$regionBlock}
 - Planting months the farmer is considering: {$when}
 - Crop: {$cropLabel} — typical days to maturity: {$maturity}
 - Growth stages for calendar arithmetic: {$stages}
@@ -884,7 +933,7 @@ Return ONLY a valid JSON object — no code fences, no commentary — in exactly
 {"weekRanks":[{"rank":1,"from":"2026-11-09","to":"2026-11-15","label":"","score":0,"why":"","factors":{"rain":"","storms":"","enso":"","field":""},"flowering":"","harvest":"","watch":""}],"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"typhoonOdds":{"years":"","months":[{"month":1,"chance":0,"storms":0,"note":""}],"peak":"","note":""},"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - weekRanks is THE CORE OF THIS ANALYSIS — the farmer wants the best WEEK, not the best month. Work through the farmer's months ({$whenShort}) WEEK BY WEEK (Monday to Sunday) and judge each week as a planting week against everything above: the place's recent rain onset and dry spells, its storm / flood / drought / heat record from the research notes, the ENSO outlook, the crop's own calendar (work out, from the variety's days to maturity where the notes give it or else the crop's, when a crop planted that week flowers or reaches its sensitive stage and when it is harvested, and what weather those stages meet), every field problem the farmer reported, and the variety's traits. Then return the best week ranges RANKED: rank 1 is the best, then the second best, and so on, up to five. A range is one week, or two or three adjacent weeks that score alike; ranges never overlap; all sit inside the farmer's months; rank 1 lies inside bestWindow. For each: from and to as ISO dates (YYYY-MM-DD: the Monday and the Sunday), label spelling the dates WITH THE YEAR (e.g. "Nov 9 – 15, 2026" or "Nov 30 – Dec 13, 2026"), score 0–100 as a planting week, why ≤ 45 words naming the concrete reasons for its place in the ranking, factors = one line each (≤ 14 words) on how rain, storms, ENSO and this field's reported problems bear on that range (field = "" when the farmer reported none), flowering "around Jan 20–27, 2027" (the sensitive stage for a planting in that range; "" for a crop without one), harvest "around Feb 25, 2027", watch ≤ 15 words — the one thing to watch for in that range. Differentiate the scores honestly; if fewer than five ranges are worth planting in, return fewer and say why in the summary.
-- variety: what the research found about the stated variety — found true only when the notes carry real published traits; name as published; maturityDays (0 when unknown); season it is bred for in a few words; traits ≤ 60 words in plain words (yield, height, tolerances, resistances, and how they shaped this timing); caution ≤ 25 words (its known weakness on this ground, or ""); source the registry, breeder or agency the notes cite. When the farmer named no variety, or none was found: found false and the rest empty or 0.
+- variety: what the research found about the stated variety — found true only when the notes carry real published traits; name as published; maturityDays (0 when unknown); season it is bred for in a few words; traits ≤ 60 words in plain words (yield, height, tolerances, resistances, and how they shaped this timing); caution ≤ 25 words (its known weakness on this ground, or ""); source = the seed company whose page the notes cite, else "published variety records" (never an agency, the registry or an institute). When the farmer named no variety, or none was found: found false and the rest empty or 0.
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates INSIDE the farmer's months ({$whenShort}), and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole month range. fromYear/toYear carry the calendar year of each end. If none of the farmer's months is sound, still give the least risky weeks inside them, lower the confidence, and say plainly in the why, the threats and the summary which nearby months would be safer.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
 - monthScores carries TWELVE consecutive months, each with its year, starting with {$firstMonth} (the first of the farmer's months): the farmer's own months first, the rest for comparison, so a better month just outside their range shows; score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the farmer's range — a flat run of equal scores is an unfinished answer.
