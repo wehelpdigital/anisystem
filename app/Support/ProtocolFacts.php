@@ -39,8 +39,8 @@ final class ProtocolFacts
             $key = self::placeKey((string) $l['place']);
             $out['lots'][$l['i']] = ['soil' => self::soil((string) $l['place'], (string) $l['crop']), 'place' => $key];
             if (! isset($out['places'][$key]) && count($out['places']) < 3) {
+                // In the season's order (November to March), as the crops stand in the field.
                 $focus = array_map('intval', array_keys((array) ($focusByPlace[$l['place']] ?? [])));
-                sort($focus);
                 $out['places'][$key] = ['name' => (string) $l['place'], 'hazards' => self::hazards((string) $l['place'], $focus)];
             }
         }
@@ -89,8 +89,10 @@ final class ProtocolFacts
             $a = SoilAtlas::for($pp['province'], $pp['town'], null, $cropKey);
             if (is_array($a) && $a) {
                 $words = method_exists(SoilAtlas::class, 'words') ? (string) SoilAtlas::words($a, 'prompt') : '';
+                $short = method_exists(SoilAtlas::class, 'words') ? (string) SoilAtlas::words($a, 'short') : '';
                 $got = [
                     'lines' => self::clean($words),
+                    'short' => self::clean($short !== '' ? $short : $words), // without the area's usual rates
                     'data' => $a,
                     'tests' => array_filter((array) ($a['tests'] ?? []), fn ($v) => in_array($v, ['low', 'medium', 'high'], true)),
                     'texture' => in_array($a['texture']['typical'] ?? null, ['clay', 'loam', 'sandy'], true) ? $a['texture']['typical'] : null,
@@ -200,7 +202,9 @@ final class ProtocolFacts
                 $data = method_exists(HazardBook::class, 'summary') ? HazardBook::summary($pp['province'] ?? null, $pp['town'] ?? null) : null;
             }
             if ($words !== '') {
-                $got = ['lines' => self::clean($words), 'data' => is_array($data) ? $data : null];
+                // The few months the crops stand, in one short paragraph, for a lot's own ask.
+                $short = $focus && method_exists(HazardBook::class, 'monthsWords') ? trim((string) HazardBook::monthsWords($place, array_values($focus), null, null, 900)) : '';
+                $got = ['lines' => self::clean($words), 'short' => self::clean($short), 'data' => is_array($data) ? $data : null];
             }
         } catch (\Throwable $e) {
             report($e);
@@ -211,10 +215,14 @@ final class ProtocolFacts
 
     /* ============================================================== prompts */
 
-    /** The soil block of one lot's prompt, said as typical for the area ('' when unknown). */
-    public static function soilLines(?array $facts): string
+    /**
+     * The soil block of one lot's prompt, said as typical for the area ('' when
+     * unknown). Without the area's usual rates when NPK Plus's need is known, so
+     * the programs answer to one number only.
+     */
+    public static function soilLines(?array $facts, bool $rates = true): string
     {
-        $w = trim((string) ($facts['lines'] ?? ''));
+        $w = trim((string) ($facts[$rates ? 'lines' : 'short'] ?? ($facts['lines'] ?? '')));
 
         return $w === '' ? '' : $w . "\n" . '(The lot\'s own answers and its soil test above always win over this; it only fills what they leave unknown.)' . "\n";
     }

@@ -413,6 +413,13 @@ class CropProtocolController extends Controller
 
             return ['known' => false];
         }
+        // A level the area's typical soil filled in is not this lot's test: NPK Plus's "Your soil test reads low
+        // in nitrogen" becomes "Soil around here usually reads low in nitrogen" for those elements only.
+        $filled = array_intersect_key(['N' => 'nitrogen', 'P2O5' => 'phosphorus', 'K2O' => 'potassium'], array_flip((array) ($in['areaSoil'] ?? [])));
+        if ($filled) {
+            $r['whys'] = array_map(fn ($w) => is_string($w) && preg_match('/^Your soil test reads\b.*\b(?:' . implode('|', $filled) . ')\b/i', $w)
+                ? (string) preg_replace('/^Your soil test reads/i', 'Soil around here usually reads', $w) : $w, (array) $r['whys']);
+        }
         $g = $r['goal'];
         $sd = $g['seed'];
         $micro = ['likely' => [], 'watch' => []];
@@ -665,7 +672,7 @@ class CropProtocolController extends Controller
                 'tasks' => ProtocolCrew::tasks($frame, ProtocolCrew::skeleton($frame), [], ['weedy' => self::weedy($l['profile'])])];
             $n = $request->boolean('needs', true) ? self::needFor($l['p']) : null;
             $lots[] = ['i' => $l['i'], 'name' => $l['name'], 'harvestDays' => $frame['harvest'], 'seedAge' => $frame['seedAge'],
-                'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed'])) : null];
+                'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed', 'areaSoil'])) : null];
         }
         $s = ProtocolCrew::schedule($sched, $case['crew'], $case['mode']);
         $size = self::sizeOf($case);
@@ -1491,9 +1498,11 @@ PROMPT;
         $recLine = $rec ? '- The variety ' . (! empty($rec['learned']) ? 'from an earlier lookup' : 'on record') . ': ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . "\n" : '';
         // From the seam (ProtocolFacts): the area's typical soil, and the town's typhoons, floods and droughts.
         $lf = (array) ($ctx['facts']['lots'][$l['i']] ?? []);
-        $areaSoil = \App\Support\ProtocolFacts::soilLines($lf['soil'] ?? null);
+        $areaSoil = \App\Support\ProtocolFacts::soilLines($lf['soil'] ?? null, ! $known);
         $hz = $ctx['facts']['places'][$lf['place'] ?? '']['hazards'] ?? null;
-        if (! empty($hz['lines'])) {
+        if (! empty($hz['short'])) {
+            $weather .= ' ' . preg_replace('/\s+/', ' ', (string) $hz['short']);
+        } elseif (! empty($hz['lines'])) {
             $weather .= ' The town\'s typhoons, floods and droughts in twenty years: ' . mb_substr((string) preg_replace('/\s+/', ' ', (string) $hz['lines']), 0, 1200);
         }
         $filled = (array) ($p['npkNeed']['areaSoil'] ?? []);
