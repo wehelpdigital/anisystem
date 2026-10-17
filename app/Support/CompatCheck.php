@@ -526,7 +526,7 @@ final class CompatCheck
                     $this->note('heat_fert', 'care', $fert);
                 }
             } elseif ($weather === '' && ($sulfur || $oil || $lime || $propanil)) {
-                $this->tips[] = 'Do not spray ' . implode(' or ', array_map(fn ($x) => $x['name'], array_merge($sulfur, $lime, $oil, $propanil))) . ' when it is hotter than about 32 C (29 C for lime sulfur). Spray early in the morning or late in the afternoon.';
+                $this->tips[] = 'Do not spray ' . implode(' or ', array_map(fn ($x) => $x['name'], array_merge($sulfur, $lime, $oil, $propanil))) . ' when it is hotter than about 32 C (29 C for lime sulfur). Spray in the cool of the early morning or late in the day.';
             }
             if ($this->with($sprays, ['auxin'])) {
                 $this->tips[] = 'Keep the drift of ' . $this->with($sprays, ['auxin'])[0]['name'] . ' off nearby vegetables and other broadleaf crops: even a little vapor can twist and kill them. Spray when the air is still.';

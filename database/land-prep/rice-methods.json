@@ -170,7 +170,7 @@
      "from": -14,
      "to": -14,
      "what": "Spread manure or compost",
-     "how": "Two weeks before transplanting, spread about 10 bags per hectare of air dried chicken manure, commercial organic fertilizer or vermicompost, so the next harrowing mixes it in.",
+     "how": "Two weeks before transplanting, spread about 10 bags per hectare of organic fertilizer (air dried chicken manure, vermicompost or a bagged organic fertilizer), so the next harrowing mixes it in.",
      "basis": "palaycheck"
     },
     {
@@ -419,7 +419,7 @@
      "from": -14,
      "to": -14,
      "what": "Spread manure or compost",
-     "how": "Two weeks before transplanting, spread about 10 bags per hectare of air dried chicken manure, commercial organic fertilizer or vermicompost, so the next harrowing mixes it in.",
+     "how": "Two weeks before transplanting, spread about 10 bags per hectare of organic fertilizer (air dried chicken manure, vermicompost or a bagged organic fertilizer), so the next harrowing mixes it in.",
      "basis": "palaycheck"
     },
     {
@@ -1594,7 +1594,7 @@
   "One transplanting plan for two methods: rice_tpr sows the seedbed at -21 for everyone, then tells mechanical users to transplant 14 to 18 day seedlings. Sowing at -21 makes them 21 days old. A mechanical plan has to sow at -18 to -14 in trays (70 to 160 g per tray, 250 to 300 trays per hectare) or a modified wet dapog bed (420 to 960 g per square meter on about 50 square meters), at 30 by 15 cm with 3 to 6 seedlings per hill. None of that is in the current plan.",
   "One wet direct seeding plan for two methods: broadcasting needs 60 to 80 kg of seed per hectare, drum seeder row seeding 40 to 60 kg. rice_dsr_wet gives no seeding rate at all.",
   "Missing PalayCheck steps in all rice plans: the 30 day rest after the last harvest, matching the area planting schedule within 14 days, and the dike size (15 cm high, 20 cm wide, compacted, against rats).",
-  "Missing the seedbed size and the seedbed ground preparation: 400 square meters per hectare (20 beds of 1 by 20 m), prepared about a week before sowing, with 3 to 4 bags of organic fertilizer or carbonized rice hull before leveling on heavy clay soil.",
+  "Missing the seedbed size and the seedbed ground preparation: 400 square meters per hectare (20 beds of 1 by 20 m), prepared about a week before sowing; on heavy clay soil, 3 to 4 bags of organic fertilizer or carbonized rice hull are mixed in, then the bed is leveled.",
   "Seedbed feeding mistimed: rice_tpr feeds the seedbed at [-16, -12], which is 5 to 9 days after its own sowing day of -21. PalayCheck: zinc sulfate 7 to 10 days after sowing (1 to 2 kg per seedbed, 0.5 kg for mild and 2 kg for severe zinc shortage), then 2 to 4 kg of 14-14-14 at 10 to 14 days. The current step also mixes in the seedbed watering, which PalayCheck schedules on its own, when seedlings reach 2 to 3 cm (about 7 days after sowing).",
   "Seed soaking window too wide for wet direct seeding: rice_dsr_wet soaks at [-3, -2]. Soaking 3 days ahead gives 72 hours to sowing and long sprouts that break and clog a drum seeder. PalayCheck soaks exactly 2 days before (24 hours soaking, 24 hours covered) and sows on day 0.",
   "Wet direct seeding misses the canal size (25 cm wide, 5 cm deep, along the dikes and through the middle, where the plan only says drainage canals along the dikes), the extra 1 kg of pre germinated seed sown along the edge for replanting, and zinc seed soaking (1 kg zinc sulfate per 40 kg of seed in the last soaking water).",
