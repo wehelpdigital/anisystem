@@ -1302,6 +1302,39 @@ class CropProtocolController extends Controller
         }
     }
 
+    /**
+     * The variety card with the record's figures first (2026-10-19): its days (the calendar runs on them, VarietyBook::nearUsual)
+     * and its yields, the average and the best (else the best trial site), the way every module says them. Where Anee gave
+     * other figures (a seller's claim, a derby), they are kept beside as maturityClaimed and yieldClaimed.
+     */
+    private static function varietyCard(array $v, ?array $rec, string $crop): array
+    {
+        if (! $rec) {
+            return $v;
+        }
+        $n = fn ($x) => rtrim(rtrim(number_format((float) $x, 2, '.', ''), '0'), '.');
+        $days = \App\Support\VarietyBook::nearUsual(isset($rec['days']) && is_numeric($rec['days']) && ($rec['daysUnit'] ?? 'days') === 'days' ? (int) round((float) $rec['days']) : null, $crop);
+        if ($days) {
+            if (! empty($v['maturityDays']) && (int) $v['maturityDays'] !== $days) {
+                $v['maturityClaimed'] = (int) $v['maturityDays'];
+            }
+            $v['maturityDays'] = $days;
+        }
+        $unit = (string) ($rec['yieldUnit'] ?? 't/ha');
+        $avg = $rec['yield'] ?? null;
+        $top = $rec['yieldTop'] ?? null;
+        $best = $rec['trials']['yield']['top'] ?? null;
+        if (preg_match('#t/?ha#i', $unit) && ($avg || $top)) {
+            $say = ($avg ? $n($avg) . ' t/ha average' : '') . ($top ? ($avg ? ', ' : '') . $n($top) . ' at best' : ($best ? ', ' . $n($best) . ' at the best trial site' : ''));
+            if (! empty($v['yieldPotential']) && trim((string) $v['yieldPotential']) !== $say) {
+                $v['yieldClaimed'] = (string) $v['yieldPotential'];
+            }
+            $v['yieldPotential'] = $say;
+        }
+
+        return $v;
+    }
+
     /** A stage's days on its count: "DAT 7 to 20", the land preparation "before DAT 0", the last "DAT 90 on". */
     private static function daysLabel(array $frame, array $s): string
     {
@@ -1661,7 +1694,8 @@ PROMPT;
             $crops[$c['key']] = [
                 'key' => $c['key'], 'crop' => $c['crop'], 'cropLabel' => self::cropName($c['crop']), 'icon' => CropCatalog::CROPS[$c['crop']]['icon'] ?? '🌱',
                 'method' => $c['method'], 'methodLabel' => self::METHODS[$c['method']]['label'] ?? $c['method'], 'variety' => $c['variety'], 'counter' => $frame['counter'],
-                'varietyInfo' => (array) ($words['variety'] ?? []), 'record' => ! empty($ctx['records'][$l0['i']]) ? \App\Support\VarietyBook::brief($ctx['records'][$l0['i']]) : null,
+                'varietyInfo' => self::varietyCard((array) ($words['variety'] ?? []), $ctx['records'][$l0['i']] ?? null, (string) $c['crop']),
+                'record' => ! empty($ctx['records'][$l0['i']]) ? \App\Support\VarietyBook::brief($ctx['records'][$l0['i']]) : null,
                 'stages' => $stages,
                 'protection' => ProtocolCare::attach((array) ($words['protection'] ?? []), $ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null, $c['crop'], $frame),
                 'weeds' => ProtocolCare::weedsForReport($ctx['weeds'][$c['key']] ?? null, $c['crop']),
