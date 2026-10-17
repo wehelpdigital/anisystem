@@ -193,6 +193,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-18: the soil atlas (the area's typical soil, by province, town and barangay), loaded.
             'soilAtlas' => class_exists(\App\Support\SoilAtlas::class) && \App\Support\SoilAtlas::ready()
                 && rescue(fn () => \Illuminate\Support\Facades\DB::table('as_soil_fertility')->count() > 9000, false, false),
+            // 2026-10-19: every module on the same shelf facts (one storm count, one variety days rule) and the ledger's cached tokens.
+            'shelvesOne' => method_exists(\App\Support\HazardBook::class, 'odds') && method_exists(\App\Support\VarietyBook::class, 'days')
+                && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_ai_usage', 'tokensCached'), false, false),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.

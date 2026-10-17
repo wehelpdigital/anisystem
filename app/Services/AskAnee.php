@@ -52,8 +52,8 @@ class AskAnee
             . "topic: 3 to 8 plain English words naming the subject, e.g. \"yellow leaves on rice after transplanting\".\n"
             . "crop: the crop key when the question clearly names a crop, else null.\n"
             . "lang: \"tl\" when the question is mostly Tagalog or Taglish, else \"en\".\n"
-            . "match: the id of a question above ONLY when that page already fully answers this same question (same crop, same problem, same need). Otherwise null.\n\n"
-            . AneeEmoji::promptLine();
+            // The faces are listed once, in the chat's own instructions (AiSetting::instructions adds AneeEmoji::promptLine), 2026-10-19.
+            . "match: the id of a question above ONLY when that page already fully answers this same question (same crop, same problem, same need). Otherwise null.\n";
 
         $parse = function (string $t): ?array {
             $t = preg_replace('/^```(?:json)?\s*|\s*```$/i', '', trim($t));

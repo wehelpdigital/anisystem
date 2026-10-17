@@ -305,6 +305,11 @@ class NpkSeasonController extends BaseScheduleController
                 $b .= 'Not counted (could not be read): ' . implode('; ', array_column($l['unread'], 'name')) . "\n";
             }
             $wx = $this->weatherFor($l);
+            // What this month and next usually bring there (the hazard book, 2026-10-19): a split or a delay is judged against the
+            // storms and heavy rain of most years, not only the next two weeks. Said once per place, like the forecast.
+            if ($l['place'] && ($hz = \App\Support\HazardBook::monthsWords((string) $l['place'], [(int) $today->month, (int) $today->copy()->addMonth()->month], $l['lat'] ?? null, $l['lng'] ?? null, 600)) !== '') {
+                $wx .= trim($hz) . "\n";
+            }
             if ($wx !== '') {
                 $key = md5($wx);
                 $b .= isset($wxSeen[$key]) ? 'Weather: same place as lot "' . $wxSeen[$key] . "\".\n" : $wx;
