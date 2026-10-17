@@ -64,10 +64,18 @@ class AutoBrain
                 'fieldDate' => $al->fieldDate?->toDateString(), 'sowDate' => $al->sowDate?->toDateString(), 'treeAgeMonths' => $al->treeMonths,
                 'place' => trim(implode(', ', array_filter([$lot->locBarangay, $lot->locTown, $lot->locProvince]))) ?: null,
                 'pin' => $lot->pinLat ? [round((float) $lot->pinLat, 5), round((float) $lot->pinLng, 5)] : null,
-                'maturityDays' => $lot->daysToMaturity ?: (! empty($rec['days']) ? (int) round($rec['days']) : CropCatalog::maturity($lot->crop)),
+                // The lot's own days, else its variety's within the crop's range, else the crop's (AsScheduleLot::maturityDays,
+                // 2026-10-19): the rule the season's feed and every module use, so the reading and the calendar agree with them.
+                'maturityDays' => $lot->maturityDays() ?: CropCatalog::maturity($lot->crop),
             ];
             if ($rec) {
                 $row['varietyKnown'] = ltrim(VarietyBook::promptLines([$rec]), '- ');
+            } elseif (! $lot->variety && $lot->crop) {
+                // No variety named: the records that fit the crop, so the reading picks from them and nothing is searched.
+                $opts = rescue(fn () => VarietyBook::namedThenFit((string) $lot->crop, [], [], 5), [], false);
+                if ($opts) {
+                    $row['varietiesOnRecord'] = VarietyBook::promptLines($opts);
+                }
             }
             // The area's typical soil from samples taken there (the soil atlas, 2026-10-18): never a test of this lot.
             $aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::for($lot->locProvince, $lot->locTown, $lot->locBarangay, $lot->crop), 'short');
@@ -88,9 +96,7 @@ class AutoBrain
             $hzWhere = trim(implode(', ', array_filter([$lot->locTown, $lot->locProvince])));
             if ($hzWhere !== '' && ! isset($hzSeen[$hzWhere])) {
                 $hzSeen[$hzWhere] = $row['name'];
-                $m0 = $al->fieldDate ? (int) $al->fieldDate->month : (int) now('Asia/Manila')->month;
-                $span = min(12, (int) ceil(((int) ($row['maturityDays'] ?? 120)) / 30) + 1);
-                $hz = \App\Support\HazardBook::words($lot->locProvince, $lot->locTown, array_map(fn ($i) => ($m0 - 1 + $i) % 12 + 1, range(0, $span - 1)), 1500);
+                $hz = self::placeHistory($lot, $row['fieldDate'], (int) ($row['maturityDays'] ?? 120));
                 if ($hz !== '') {
                     $row['placeHistory'] = $hz;
                 }
@@ -122,6 +128,21 @@ class AutoBrain
             'workers' => $people->map(fn ($p) => ['name' => $p['name'], 'offWeekdays' => array_map(fn ($d) => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][$d] ?? $d, $p['off']), 'skills' => $p['skills']])->values()->all(),
             'enso' => EnsoOutlook::forPrompt(),
         ];
+    }
+
+    /** The months a lot stands in the field: its field day's month through its harvest (its days), at most twelve. */
+    public static function standMonths(?string $fieldDate, int $days): array
+    {
+        $m0 = $fieldDate ? (int) substr($fieldDate, 5, 2) : (int) now('Asia/Manila')->month;
+        $span = min(12, (int) ceil(max(30, $days) / 30) + 1);
+
+        return array_map(fn ($i) => ($m0 - 1 + $i) % 12 + 1, range(0, $span - 1));
+    }
+
+    /** The town's twenty years of storms, floods, dry spells and heat, this lot's months marked (the hazard book). */
+    public static function placeHistory(AsScheduleLot $lot, ?string $fieldDate, int $days): string
+    {
+        return (string) \App\Support\HazardBook::words($lot->locProvince, $lot->locTown, self::standMonths($fieldDate, $days), 1500);
     }
 
     private function soilGrids(float $lat, float $lng): array
@@ -166,35 +187,47 @@ class AutoBrain
     {
         $f = $this->facts($auto);
         $f['climate'] = null;
-        if ($first = collect($f['lots'])->firstWhere('pin')) {
-            // Twenty years of the same weeks from the climate shelf, said in a few lines (2026-10-18).
-            $f['climate'] = \App\Support\ClimateStore::sameDaysWords(FieldContext::climate($first['pin'][0], $first['pin'][1]));
+        // The field's twenty years for the months the crops stand (the climate shelf), not only this month and next (2026-10-19).
+        $months = [];
+        foreach ($f['lots'] as $l) {
+            $months = array_merge($months, self::standMonths($l['fieldDate'] ?? null, (int) ($l['maturityDays'] ?? 120)));
+        }
+        if ($first = collect($f['lots'])->first(fn ($l) => ! empty($l['pin']) || ! empty($l['place']))) {
+            $f['climate'] = \App\Support\ClimateStore::wordsFor((string) ($first['place'] ?? ''), $first['pin'][0] ?? null, $first['pin'][1] ?? null, array_values(array_unique($months)), true) ?: null;
         }
         $book = collect($f['lots'])->pluck('cropKey')->filter()->unique()->mapWithKeys(fn ($k) => [CropCatalog::label($k) => AutoBook::forPrompt($k)])->all();
+        // Each crop's stages on its count (the Growth Stages table), so the critical moments are the app's own, not searched.
+        $stages = collect($f['lots'])->filter(fn ($l) => ! empty($l['cropKey']))->unique('cropKey')->mapWithKeys(fn ($l) => [CropCatalog::label($l['cropKey']) => collect(CropStages::stagesFor($l['cropKey'], $l['counter'] ?? null, $l['maturityDays'] ?? null))
+            ->map(fn ($st) => (is_array($st) ? ($st[1] ?? $st['label'] ?? 'stage') : 'stage') . ' from day ' . (int) (is_array($st) ? ($st[0] ?? $st['from'] ?? 0) : 0))->implode('; ')])->filter()->all();
         $json = json_encode($f, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         // Learn once (2026-10-18): a variety the records or an earlier lookup know is in THE FARM (varietyKnown) and is not looked up again.
         $unknown = self::unknownVarieties($f['lots']);
-        $look = collect($f['lots'])->filter(fn ($l) => ! $l['variety'] || empty($l['varietyKnown']))
-            ->map(fn ($l) => ($l['variety'] ?: 'no variety named') . ' (' . ($l['crop'] ?: 'crop not set') . ')')->unique()->implode('; ');
-        $known = collect($f['lots'])->filter(fn ($l) => $l['variety'] && ! empty($l['varietyKnown']))->pluck('variety')->unique()->implode(', ');
         $blocks = implode('', array_map(fn ($crop, $names) => VarietyLearned::askBlock($names, $crop), array_keys($unknown), $unknown));
-        $varietyAsk = $look !== ''
-            ? "1. THE VARIETIES FIRST: {$look}. For each named variety find: who bred or released it (NSIC, PhilRice, IRRI, a seed company), its maturity in days, yield potential and average yield in t/ha, the season it was bred for, its tolerances and weaknesses (lodging, blast, tungro, BLB, drought, submergence, salinity, heat), and anything a grower is warned about. Where no variety is named, say what the common hybrids and inbreds for that crop in the Philippines are."
-                . ($known !== '' ? " The app already knows {$known} (their facts are in THE FARM as varietyKnown): do not look those up." : '') . "\n"
-            : "1. THE VARIETIES are known to the app ({$known}; their facts are in THE FARM as varietyKnown): do not look them up.\n";
-
-        $research = "You are Anee, a smart farm technician for Filipino farmers, researching before planning a whole season for a farmer. Use the web search tool. Write research NOTES (prose, not JSON) with the pages you read.\n\n"
-            . $varietyAsk
-            . "2. THE SEASON: what PAGASA's seasonal outlook expects for rain and typhoons in the months the crops will be in the field, for the provinces named (the farm's twenty year weather record, each town's twenty years of storms, floods and dry spells (placeHistory) and the ENSO state are in THE FARM below: do not look those up).\n"
-            . (collect($f['lots'])->every(fn ($l) => ! empty($l['areaSoil']))
-                ? "3. THE SOIL: the area's typical soil of every lot is in THE FARM (areaSoil, from soil samples taken there): do not look it up. Only say how such a soil locks up or frees nutrients (for example: sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots and free some; gypsum brings calcium that pushes sodium out).\n"
-                : "3. THE SOIL: what the farmer's soil signs and the place point to, and how that soil locks up or frees nutrients (for example: sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots and free some; gypsum brings calcium that pushes sodium out).\n")
-            . "4. Each crop's critical moments for nutrients and water in Philippine guides (PhilRice PalayCheck, DA production guides).\n\n"
-            . "THE FARM:\n" . $json . $blocks;
+        $soilKnown = collect($f['lots'])->every(fn ($l) => ! empty($l['areaSoil']));
+        /* Only what the app does not keep is searched (2026-10-19): a named variety neither the records nor an earlier lookup
+         * know, and the soil of a lot the soil atlas has no samples for. The season's outlook is read from the weather record,
+         * each town's twenty years and the ENSO outlook; the crop's critical moments from its stages and the crop book; a lot
+         * with no variety picks from the records that fit it. Nothing left: no search at all. The brief carries the case, not
+         * the farm (no forecast, no workers), so the same case reads the kept notes (ResearchShelf 'auto'). */
+        $asks = [];
+        if ($unknown) {
+            $asks[] = 'THE VARIETIES: ' . collect($unknown)->map(fn ($names, $crop) => implode(', ', $names) . ' (' . CropCatalog::label((string) $crop) . ')')->implode('; ')
+                . '. For each find: who bred or released it (a seed company, or a public breeder), its maturity in days, yield potential and average yield in t/ha, the season it was bred for, its tolerances and weaknesses (lodging, blast, tungro, BLB, drought, submergence, salinity, heat), and anything a grower is warned about.';
+        }
+        if (! $soilKnown) {
+            $asks[] = 'THE SOIL of ' . collect($f['lots'])->filter(fn ($l) => empty($l['areaSoil']) && ! empty($l['place']))->pluck('place')->unique()->implode('; ')
+                . ': soil surveys or studies of the area (pH, sodic, saline, acid sulfate, texture, known deficiencies).';
+        }
+        $research = $asks ? "You are researching before a whole season is planned for a Filipino farm. Use the web search tool. Write research NOTES (prose, not JSON) with the pages you read, at most 700 words.\n\n"
+            . implode("\n", array_map(fn ($a, $i) => ($i + 1) . '. ' . $a, $asks, array_keys($asks)))
+            . "\n\nThe app keeps the farm's weather record, each town's storms and floods of twenty years and the ENSO outlook: do not look those up." . $blocks
+            : '';
 
         $doc = "You are Anee, a smart farm technician for Filipino farmers. You are reading a farm before planning its whole season. Return ONE JSON object, nothing else. Plain words a farmer understands. Never invent a number the facts or the research do not support; where you are unsure, say so in dataGaps.\n\n"
             . "THE FARM:\n" . $json . "\n\nTHE CROP BOOK (land preparation, seedbed, preventive sprays, safety):\n" . json_encode($book, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
+            . ($stages ? "EACH CROP'S STAGES (day counts from the field day, the app's own table):\n" . json_encode($stages, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n" : '')
             . "RULES: Read the soil from the farmer's signs and pH answer FIRST, then the lot's areaSoil (soil samples taken in that area, typical for the area and not a test of this lot), then the SoilGrids model; if they disagree, trust the farmer's signs, then the samples, and say so. Call the samples \"typical for your area\" and never say where they came from. The goal must be realistic for the variety, the soil, the water and the season, not the variety's best ever. Fertilizer focus is about WHICH nutrients and WHEN matter most on this soil, not amounts; the farmer chooses products next.\n\n"
+            . "THE SEASON: no outlook was searched. Read season.outlook, rain, typhoon and heat from THE FARM's climate (the field's weather record for these months, with what El Nino and La Nina did there), each lot's placeHistory and the ENSO outlook. The fertilizer's critical moments follow EACH CROP'S STAGES and the crop book. A lot with varietiesOnRecord and no variety named: name the one that fits it best in its variety block, from that list. A lot's areaSoil and its soil signs: say how that soil locks up or frees nutrients (sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots; gypsum's calcium pushes sodium out).\n\n"
             . "HISTORY: each lot's placeHistory is its town's twenty years of storms, floods, dry spells and heat, kept by the app. Count season.typhoon, rain and heat and the lots' risks from it (how many of the years a storm or flood hit the months this crop stands in the field, the worst one by name and year), and let it move the risks' prevent advice. Never say where it comes from.\n\n"
             . 'Return exactly: {"headline":"one line","season":{"outlook":"","enso":"","rain":"","typhoon":"","heat":"","watch":["",""]},'
             . '"lots":[{"lotId":0,"variety":{"found":true,"name":"","by":"","maturityDays":0,"yieldPotentialTPerHa":0,"averageTPerHa":0,"season":"","traits":[""],"cautions":[""],"source":""},'
@@ -265,6 +298,10 @@ class AutoBrain
     {
         $f = $this->facts($auto);
         $lot = collect($f['lots'])->firstWhere('lotId', $lotId) ?? [];
+        // The reading says a town's history once ("Same town as Lot 1"); the calendar of ONE lot needs it whole, for its own months.
+        if (str_starts_with((string) ($lot['placeHistory'] ?? ''), 'Same town as') && ($sl = AsScheduleLot::find($lotId))) {
+            $lot['placeHistory'] = self::placeHistory($sl, $lot['fieldDate'] ?? null, (int) ($lot['maturityDays'] ?? 120)) ?: $lot['placeHistory'];
+        }
         $reading = collect((array) ($auto->analysis['lots'] ?? []))->firstWhere('lotId', $lotId) ?? [];
         $others = collect($f['lots'])->where('lotId', '!=', $lotId)->map(fn ($l) => ['name' => $l['name'], 'crop' => $l['crop'], 'fieldDate' => $l['fieldDate']])->values();
         $crop = $lot['cropKey'] ?? null;

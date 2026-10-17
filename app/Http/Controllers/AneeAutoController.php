@@ -686,7 +686,9 @@ class AneeAutoController extends Controller
             $this->beat($auto, 'start');
             $unknown = AutoBrain::unknownVarietiesOf($auto);
             [$research, $doc] = $this->brain->readingPrompts($auto);
-            $result = $this->ai->researchThenJson($settings, $research, $doc, 9000, fn (string $t) => AutoBrain::parseObject($t, 'lots'), fn ($phase, $try = 1) => $this->beat($auto, $phase, (int) $try));
+            // The brief is the case's (unknown varieties, a lot's soil the atlas lacks), so its notes are kept for the next farm (2026-10-19).
+            $result = $this->ai->researchThenJson($settings, $research, $doc, 9000, fn (string $t) => AutoBrain::parseObject($t, 'lots'), fn ($phase, $try = 1) => $this->beat($auto, $phase, (int) $try),
+                3000, ['kind' => 'auto', 'scope' => mb_substr('auto ' . $auto->id, 0, 250)]);
             if (! ($result['ok'] ?? false)) {
                 throw new \RuntimeException($result['error'] ?? 'Anee\'s reading could not be read. Please try again.');
             }
