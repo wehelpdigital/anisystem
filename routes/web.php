@@ -196,6 +196,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-19: every module on the same shelf facts (one storm count, one variety days rule) and the ledger's cached tokens.
             'shelvesOne' => method_exists(\App\Support\HazardBook::class, 'odds') && method_exists(\App\Support\VarietyBook::class, 'days')
                 && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_ai_usage', 'tokensCached'), false, false),
+            // 2026-10-19: the Benta o Bilad Calculator in Quick Tools.
+            'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
@@ -833,6 +835,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/lcc-checker/list', [App\Http\Controllers\LccCheckerController::class, 'list'])->name('lcc.list');
     Route::post('/app/lcc-checker/rename', [App\Http\Controllers\LccCheckerController::class, 'rename'])->name('lcc.rename');
     Route::delete('/app/lcc-checker/{id}', [App\Http\Controllers\LccCheckerController::class, 'destroy'])->whereNumber('id')->name('lcc.delete');
+    // Benta o Bilad (2026-10-19, the owner): sell the palay wet or dry it first.
+    Route::get('/app/benta-o-bilad', [App\Http\Controllers\BentaBiladController::class, 'page'])->name('bilad.page');
+    Route::post('/app/benta-o-bilad/save', [App\Http\Controllers\BentaBiladController::class, 'save'])->name('bilad.save');
+    Route::get('/app/benta-o-bilad/list', [App\Http\Controllers\BentaBiladController::class, 'list'])->name('bilad.list');
+    Route::get('/app/benta-o-bilad/one/{id}', [App\Http\Controllers\BentaBiladController::class, 'one'])->whereNumber('id')->name('bilad.one');
+    Route::delete('/app/benta-o-bilad/{id}', [App\Http\Controllers\BentaBiladController::class, 'destroy'])->whereNumber('id')->name('bilad.delete');
     Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
     Route::get('/app/variety-research/options', [App\Http\Controllers\VarietyAnalysisController::class, 'options'])->name('vary.options');
     Route::get('/app/variety-research/book', [App\Http\Controllers\VarietyAnalysisController::class, 'book'])->name('vary.book');

@@ -302,6 +302,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.bilad' => [
+            'title' => 'Benta o Bilad Calculator',
+            'blurb' => 'Sell your palay wet, or dry it first? Put in your sacks, the harvester, the drying and both prices, and see which leaves you more money.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.lcc' => [
             'title' => 'LCC Checker',
             'blurb' => 'Is it time to add nitrogen to your rice? Slide each leaf to the color it matches on your leaf color chart, or let Anee read a photo of your leaves.',
@@ -428,6 +434,7 @@ return [
         'sky.page'      => 'tool.sky-weather',
         'npk.page'      => 'tool.npk',
         'lcc.page'      => 'tool.lcc',
+        'bilad.page'    => 'tool.bilad',
         // One route for the field helpers: {tool} is the route's own parameter.
         'fh.page'        => 'tool.field.{tool}',
         'workers.global' => 'tool.workers',

@@ -74,6 +74,7 @@ class PlanCompare
                 ['NPK Plus Calculator', 'Every nutrient in your fertilizer plan, against what your crop needs', $gate('npkPlus'), 'npk-plus'],
                 // The chart is read on every plan; Anee reading photos of the leaves needs her.
                 ['LCC Checker', 'Rice: is it time for nitrogen, and how much urea', fn (array $t) => ! empty($t['aiAnalyses']) ? 'Chart and photos' : 'Your own chart', 'lcc-checker'],
+                ['Benta o Bilad Calculator', 'Sell the palay wet or dry it first: which leaves you more money', $gate('bentaBilad'), 'benta-o-bilad'],
             ], 'The calculators and finders use no credits. Anee reading a plan, a photo or a product the book does not know uses a few.'],
             ['Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', [
                 ['Forecast', null, fn (array $t) => $t['weatherDays'] === null ? 'Full forecast' : 'Today and tomorrow', 'forecast'],

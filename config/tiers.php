@@ -48,6 +48,7 @@ return [
         'fieldHelpers'      => false,   // the field helpers (App\Support\FieldPack): locked on Libre, open from Libre + Anee up; no add-on since 2026-10-18
         'skyWeather'        => false,   // Satellite Weather and the NPK Plus calculator: from Libre + Anee up (2026-10-17, the owner)
         'npkPlus'           => false,
+        'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'inventory'         => false,   // and so is the shed
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -112,6 +113,7 @@ return [
         'fieldHelpers'      => true,
         'skyWeather'        => true,
         'npkPlus'           => true,
+        'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'inventory'         => false,
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -177,6 +179,7 @@ return [
         'fieldHelpers'      => true,
         'skyWeather'        => true,
         'npkPlus'           => true,
+        'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => false,   // logins are the Owner tier's story
         'videoRecording'    => true,
@@ -243,6 +246,7 @@ return [
         'fieldHelpers'      => true,
         'skyWeather'        => true,
         'npkPlus'           => true,
+        'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,
@@ -303,6 +307,7 @@ return [
         'fieldHelpers'      => true,
         'skyWeather'        => true,
         'npkPlus'           => true,
+        'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,

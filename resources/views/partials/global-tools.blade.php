@@ -410,6 +410,15 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        {{-- Benta o Bilad (2026-10-19, the owner): sell the harvest wet, or dry it first? --}}
+        <a href="{{ route('bilad.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/benta-bilad.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>Benta o Bilad Calculator{{ \App\Support\Tagalog::flag('benta-o-bilad') }}</b>
+                <i>Sell your palay wet, or dry it first? Put in your sacks, the harvester, the drying and both prices, and see which leaves you more money.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
 
             {{-- The farm tools, in the same group (2026-10-14, the owner). --}}
         {{-- Field helpers (2026-10-07): the public site's weed control helper
