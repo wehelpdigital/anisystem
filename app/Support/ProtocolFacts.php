@@ -146,28 +146,33 @@ final class ProtocolFacts
 
     /**
      * The variety's registration trial facts, from the record VarietyBook::find
-     * returned: ['lines' => the full block, 'data' => trials, 'covered' => true
-     * when its ratings and stresses are there, so research need not look them
-     * up], or null.
+     * returned: ['lines' => the full trial block ('' when it has none), 'data' =>
+     * trials, 'covered' => true when its pest or disease ratings and its days
+     * (or stresses) are known, from the trials or the record itself, so research
+     * does not look the variety up], or null when there is neither.
      */
     public static function variety(?array $rec): ?array
     {
-        if (! $rec || empty($rec['trials']) || ! is_array($rec['trials'])) {
+        if (! $rec) {
             return null;
         }
-        $t = $rec['trials'];
+        $t = is_array($rec['trials'] ?? null) ? $rec['trials'] : [];
+        $rated = ! empty($t['ratings']) || ! empty($rec['ratings']);
+        $timed = ! empty($t['days']) || ! empty($t['stress']) || ($rec['days'] ?? null) !== null;
+        $covered = $rated && $timed;
+        if (! $t && ! $covered) {
+            return null;
+        }
         $lines = '';
-        try {
-            $lines = method_exists(VarietyBook::class, 'trialWords') ? (string) VarietyBook::trialWords($rec, true) : '';
-        } catch (\Throwable $e) {
-            report($e);
+        if ($t) {
+            try {
+                $lines = method_exists(VarietyBook::class, 'trialWords') ? (string) VarietyBook::trialWords($rec, true) : '';
+            } catch (\Throwable $e) {
+                report($e);
+            }
         }
 
-        return [
-            'lines' => self::clean($lines),
-            'data' => $t,
-            'covered' => ! empty($t['ratings']) && (! empty($t['stress']) || ! empty($t['days'])),
-        ];
+        return ['lines' => self::clean($lines), 'data' => $t ?: null, 'covered' => $covered];
     }
 
     /* ============================================================= hazards */
