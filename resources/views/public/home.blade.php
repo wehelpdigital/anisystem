@@ -95,9 +95,10 @@
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
-                        The farm app for Filipino farmers who grow palay, mais and gulay: your cropping calendar, every
-                        peso, your field from space and Anee, your smart farm technician, in one place. Successful
-                        businesses run on systems. Smart farmers run on anee.io.
+                        {{-- "More than 50 tools" (2026-10-19, the owner), counted down to the ten from How It Works' own list. --}}
+                        The farm app for Filipino farmers who grow palay, mais and gulay: more than {{ intdiv(max(10, $tools->count() - 1), 10) * 10 }} tools
+                        to help you farm, from your cropping calendar and every peso to your field from space and Anee, your
+                        smart farm technician, all in one place. Successful businesses run on systems. Smart farmers run on anee.io.
                     @else
                         anee.io puts your whole season on your phone: every field counted from its own day zero, every
                         task on its right day, every dollar written down, and Anee, your smart farm technician, ready with
