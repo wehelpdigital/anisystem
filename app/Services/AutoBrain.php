@@ -69,6 +69,11 @@ class AutoBrain
                 $row['varietyKnown'] = ltrim(VarietyBook::promptLines([$rec]), '- ');
             }
             if ($at && $withWeather) {
+            // The area's typical soil from samples taken there (the soil atlas, 2026-10-18): never a test of this lot.
+            $aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::for($lot->locProvince, $lot->locTown, $lot->locBarangay, $lot->crop), 'short');
+            if ($aw !== '') {
+                $row['areaSoil'] = preg_replace('/^[^\n]*\n/', '', $aw);
+            }
                 $row['soilGrids'] = $this->soilGrids($at[0], $at[1]);
                 $row['forecast'] = $this->forecastWords($at[0], $at[1]);
             }
@@ -166,14 +171,17 @@ class AutoBrain
 
         $research = "You are Anee, a smart farm technician for Filipino farmers, researching before planning a whole season for a farmer. Use the web search tool. Write research NOTES (prose, not JSON) with the pages you read.\n\n"
             . $varietyAsk
-            . "2. THE SEASON: what PAGASA's seasonal outlook expects for rain and typhoons in the months the crops will be in the field, for the provinces named (the farm's twenty year weather record and the ENSO state are in THE FARM below: do not look those up).\n"
-            . "3. THE SOIL: what the farmer's soil signs and the place point to, and how that soil locks up or frees nutrients (for example: sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots and free some; gypsum brings calcium that pushes sodium out).\n"
+            . "2. THE SEASON: what PAGASA's seasonal outlook expects for rain and typhoons in the months the crops will be in the field, for the provinces named (the farm's twenty year weather record, each town's twenty years of storms, floods and dry spells (placeHistory) and the ENSO state are in THE FARM below: do not look those up).\n"
+            . (collect($f['lots'])->every(fn ($l) => ! empty($l['areaSoil']))
+                ? "3. THE SOIL: the area's typical soil of every lot is in THE FARM (areaSoil, from soil samples taken there): do not look it up. Only say how such a soil locks up or frees nutrients (for example: sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots and free some; gypsum brings calcium that pushes sodium out).\n"
+                : "3. THE SOIL: what the farmer's soil signs and the place point to, and how that soil locks up or frees nutrients (for example: sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots and free some; gypsum brings calcium that pushes sodium out).\n")
             . "4. Each crop's critical moments for nutrients and water in Philippine guides (PhilRice PalayCheck, DA production guides).\n\n"
             . "THE FARM:\n" . $json . $blocks;
 
         $doc = "You are Anee, a smart farm technician for Filipino farmers. You are reading a farm before planning its whole season. Return ONE JSON object, nothing else. Plain words a farmer understands. Never invent a number the facts or the research do not support; where you are unsure, say so in dataGaps.\n\n"
             . "THE FARM:\n" . $json . "\n\nTHE CROP BOOK (land preparation, seedbed, preventive sprays, safety):\n" . json_encode($book, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
-            . "RULES: Read the soil from the farmer's signs and pH answer FIRST, then the SoilGrids model; if they disagree, trust the farmer's signs and say so. The goal must be realistic for the variety, the soil, the water and the season, not the variety's best ever. Fertilizer focus is about WHICH nutrients and WHEN matter most on this soil, not amounts; the farmer chooses products next.\n\n"
+            . "RULES: Read the soil from the farmer's signs and pH answer FIRST, then the lot's areaSoil (soil samples taken in that area, typical for the area and not a test of this lot), then the SoilGrids model; if they disagree, trust the farmer's signs, then the samples, and say so. Call the samples \"typical for your area\" and never say where they came from. The goal must be realistic for the variety, the soil, the water and the season, not the variety's best ever. Fertilizer focus is about WHICH nutrients and WHEN matter most on this soil, not amounts; the farmer chooses products next.\n\n"
+            . "HISTORY: each lot's placeHistory is its town's twenty years of storms, floods, dry spells and heat, kept by the app. Count season.typhoon, rain and heat and the lots' risks from it (how many of the years a storm or flood hit the months this crop stands in the field, the worst one by name and year), and let it move the risks' prevent advice. Never say where it comes from.\n\n"
             . 'Return exactly: {"headline":"one line","season":{"outlook":"","enso":"","rain":"","typhoon":"","heat":"","watch":["",""]},'
             . '"lots":[{"lotId":0,"variety":{"found":true,"name":"","by":"","maturityDays":0,"yieldPotentialTPerHa":0,"averageTPerHa":0,"season":"","traits":[""],"cautions":[""],"source":""},'
             . '"soil":{"reading":"two or three sentences","texture":"clay|loam|sandy|unsure","ph":"acidic|neutral|alkaline|unsure","conditions":["sodic|saline|acid_sulfate|low_om|waterlogged"],"lockouts":[""],"unlocks":[""]},'

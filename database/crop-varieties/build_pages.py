@@ -87,9 +87,18 @@ def safe(s):
 # named after one (BPI Cp 4, PCA 15 3, UPLB Gold, Pagasa 7) keeps its name.
 GOVN = (r"(?:the\s+)?(?:DA(?:\s+(?:BAR|RFO\s*\d+|Caraga|CAR|Region\s+\d+))?|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)(?:\s+station)?"
         r"|PCA(?!\s*\d)|PhilRice|PCAARRD|BSWM|IRRI|FAO|NSIC(?:\s+registry)?(?!\s*(?:\d{4}\s*)?(?:[A-Z][a-z]{0,3}\s*-?\s*\d|\d))"
-        r"|the\s+registry|registry)")
-GOV_PART = re.compile(GOVN + r"(?:\s+(?:derby|derbies|trials?|data|guide|station|records?|list))?", re.I)
+        r"|UPLB(?:\s+IPB)?|MMSU|USM|VSU|CLSU|(?:DOST\s+)?PCAARRD|DOST|the\s+registry|registry)")
+GOV_PART = re.compile(GOVN + r"(?:\s+(?:derby|derbies|trials?|data|guide|station|records?|list|study|studies|project|survey|report))?", re.I)
 GOV_SAYS = [
+    # "DA-BPI's ampalaya guide", "BPI's Jan 2025 list" -> "the ampalaya guide", "the Jan 2025 list".
+    (re.compile(r"\b(?:DA[- ]BPI|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|DA|PCA(?!\s*\d)|PhilRice)'s\s+"), 'the '),
+    # "the Benguet State University organic cabbage trial", "two DMMMSU La Union trials" -> "the organic cabbage trial", "two La Union trials".
+    (re.compile(r"\b(a|an|the|one|two|three|four)\s+(?:[A-Z][a-z]+\s+){1,3}State\s+University\s+"), r"\1 "),
+    (re.compile(r"\b(a|an|the|one|two|three|four)\s+(?:UPLB|MMSU|USM|VSU|CLSU|DMMMSU|BSU|CvSU)\s+(?=[A-Za-z0-9])"), r"\1 "),
+    # "by a DOST PCAARRD project", "in DOST PCAARRD gabi demo farms", "a 2017 DOST PCAARRD forum" -> the project, the farms, the forum.
+    (re.compile(r"\b(?:DOST\s+)?PCAARRD\s+(?=[a-z0-9])"), ''),
+    # "on DA Region 2's recommended rate" -> "on the recommended rate".
+    (re.compile(r"\b(?:the\s+)?DA(?:\s+(?:Region|RFO)\s*\d+)?'s\s+"), 'the '),
     (re.compile(r"(^|[.;:]\s+)(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice)\s+recommends\s+it\b"), lambda m: m.group(1) + ('It is recommended' if m.group(1).strip() in ('', '.') else 'it is recommended')),
     (re.compile(r"\b(?:the\s+)?(?:DA|BPI|PCA(?!\s*\d)|PhilRice)\s+describes\b"), 'also described as'),
     (re.compile(r"\bNSIC trials\b"), 'national trials'),

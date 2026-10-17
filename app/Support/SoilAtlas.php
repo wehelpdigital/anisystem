@@ -500,6 +500,23 @@ final class SoilAtlas
         return 'soil typical for the area (' . ($a['samples'] ? $a['samples'] . ' samples, ' : '') . 'not a test of this lot): ' . implode('; ', $bits);
     }
 
+    /** Up to five salt tolerant varieties of the crop on record (App\Support\VarietyRegistry), as words; '' when none. */
+    public static function saltTolerant(?string $crop, int $limit = 5): string
+    {
+        if (! $crop || ! class_exists(VarietyRegistry::class) || ! method_exists(VarietyRegistry::class, 'tolerant')) {
+            return '';
+        }
+        try {
+            $rows = VarietyRegistry::tolerant($crop === 'corn' ? 'corn' : 'rice', 'salinity', $limit);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return '';
+        }
+
+        return implode(', ', array_map(fn ($r) => $r['name'] . ' (' . $r['rating'] . (! empty($r['days']) ? ', ' . (int) $r['days'] . ' days' : '') . ')', array_slice($rows, 0, $limit)));
+    }
+
     /** The salt risk in one word for a place ('none' when the coast survey did not include it, null when there is no survey). */
     public static function saltRisk(?array $a): ?string
     {
@@ -593,6 +610,9 @@ final class SoilAtlas
                 $t .= '; the saltiest sample in the town read EC ' . $sal['worst']['ec'] . ' dS/m (' . $sal['worst']['barangay'] . ')';
             }
             $lines[] = $t . '.';
+            if ($use !== 'short' && in_array($sal['risk'], ['moderate', 'severe'], true) && ($names = self::saltTolerant($a['asked'] === 'other' ? null : $a['crop'])) !== '') {
+                $lines[] = 'Salt tolerant ' . $cropWord . ' varieties on record: ' . $names . '.';
+            }
         } elseif ($sal && empty($sal['surveyed'])) {
             $lines[] = 'Salinity: not one of the coastal towns found salty in this province.';
         }

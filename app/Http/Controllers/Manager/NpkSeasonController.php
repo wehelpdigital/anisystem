@@ -290,6 +290,9 @@ class NpkSeasonController extends BaseScheduleController
                 . '; size ' . ($l['size'] ?: 'not set') . ($l['areaHa'] ? ' (' . round($l['areaHa'], 4) . ' ha)' : '')
                 . '; ' . ($l['age'] ?: 'no day zero yet') . ($l['stage'] ? ', stage ' . $l['stage'] : '') . ($l['dayZero'] ? '; day zero ' . $l['dayZero'] : '')
                 . '; place: ' . ($l['place'] ?: 'not set') . ".\n";
+            // The lot's area soil in one line (the soil atlas, 2026-10-18): typical for the area, never a test of this lot.
+            $soilLine = $l['place'] ? \App\Support\SoilAtlas::line(\App\Support\SoilAtlas::forWhere($l['place'], (string) ($l['cropKey'] ?? ''))) : '';
+            $b .= $soilLine !== '' ? 'Area: ' . $soilLine . ".\n" : '';
             $b .= ! empty($l['needRun']) ? \App\Support\NutrientBook::promptLines($l['needRun'], (array) $l['total'])
                 : 'Usual recommended rate for this crop, kg per ha: ' . ($l['usual'] ? json_encode($l['usual']) : 'not in our table') . "\n";
             $b .= $l['trees'] ? 'Counted at ' . $l['trees'] . " trees per ha.\n" : '';
@@ -348,7 +351,7 @@ class NpkSeasonController extends BaseScheduleController
             try {
                 $rice = str_starts_with((string) (\App\Support\CropStages::normalize($l['cropKey'] ?? '') ?? ''), 'rice');
                 $l['needRun'] = \App\Support\NutrientBook::forLot($l['cropKey'] ?? null, $rice && ($l['counter'] ?? '') === 'DAS' ? 'direct_wet' : null,
-                    $l['variety'] ?: null, $answers[$l['id']] ?? [], null, $l['areaHa'] ?: 1);
+                    $l['variety'] ?: null, $answers[$l['id']] ?? [], null, $l['areaHa'] ?: 1, ['place' => $l['place'] ?? '']);
             } catch (\Throwable $e) {
                 report($e);
                 $l['needRun'] = null;

@@ -46,7 +46,7 @@ class SeasonContext
      * keyed on the DATA it was built from and would otherwise survive a fix
      * to the code that built it.
      */
-    private const BUILD = 3;
+    private const BUILD = 4;
 
     /** Activities are capped: a season with three hundred is not a preamble. */
     private const MAX_ACTIVITIES = 90;
@@ -139,6 +139,7 @@ class SeasonContext
                     . (! empty($l['age']) ? ', ' . $l['age'] : '')
                     . (! empty($l['stage']) ? ', ' . $l['stage'] : '')
                     . (! empty($l['need']) ? '; ' . $l['need'] : '')
+                    . (! empty($l['soil']) ? '; ' . $l['soil'] : '')
                     . '.';
             }
         }
@@ -298,8 +299,11 @@ class SeasonContext
                 'variety' => (string) ($l->variety ?: ''),
                 'age' => $age ? LotCalendar::says($age) : '',
                 'stage' => (string) ($stage['label'] ?? ''),
-                // NPK Plus's count for the lot (2026-10-18): a chat answer about fertilizer says the same numbers as the tools.
-                'need' => NutrientBook::lotLine($l->crop, $l->variety, $age && ($age['counter'] ?? '') === 'DAS' && str_starts_with((string) $crop, 'rice') ? 'direct_wet' : null),
+                // NPK Plus's count for the lot (2026-10-18): a chat answer about fertilizer says the same numbers as the tools,
+                // on the soil typical for the lot's area where the atlas knows it (the soil atlas).
+                'need' => NutrientBook::lotLine($l->crop, $l->variety, $age && ($age['counter'] ?? '') === 'DAS' && str_starts_with((string) $crop, 'rice') ? 'direct_wet' : null,
+                    ['province' => $l->locProvince, 'town' => $l->locTown, 'barangay' => $l->locBarangay]),
+                'soil' => self::soilOf($l),
             ], fn ($v) => $v !== '');
         }
 
@@ -360,6 +364,18 @@ class SeasonContext
                 'note' => Str::limit(trim(strip_tags((string) $a->description)), 180, ''),
             ], fn ($v) => $v !== '');
         })->values()->all();
+    /** The lot's area soil in one line (the soil atlas, 2026-10-18), or ''. */
+    private static function soilOf(object $l): string
+    {
+        try {
+            return SoilAtlas::line(SoilAtlas::for($l->locProvince, $l->locTown, $l->locBarangay, $l->crop));
+        } catch (\Throwable $e) {
+            report($e);
+
+            return '';
+        }
+    }
+
     }
 
     private static function notes(AsCroppingSchedule $s): array

@@ -940,6 +940,27 @@ final class LandPrepPlanner
             $note('info', 'Red or yellow soil is often acidic and low in phosphorus. A soil test tells you what it needs.', 'soil');
         }
 
+        /* ---- the area's typical soil (the soil atlas, 2026-10-18) ----
+           Only where the farmer left the answer blank, and only as a note or a
+           test: what the samples near the farm show, never this field's own. */
+        $loc = (array) ($case['location'] ?? []);
+        $lot0 = (array) ($case['lots'][0] ?? []);
+        $area = \App\Support\SoilAtlas::for($lot0['province'] ?? ($loc['province'] ?? null), $lot0['town'] ?? ($loc['town'] ?? null), $lot0['barangay'] ?? null, $crop);
+        $acidBlank = in_array($s['acidity'] ?? '', ['', 'untested'], true) && ! isset($s['phFrom']) && ! isset($s['ph']);
+        if ($area && $acidBlank && in_array($area['ph']['band'] ?? null, ['very acid', 'strongly acid'], true) && ($area['ph']['shares'][$area['ph']['class']] ?? 0) >= 0.4) {
+            $share = (int) round(($area['ph']['shares'][$area['ph']['class']] ?? 0) * 100);
+            $add(self::step('soil_test', -60, -45, 'Test the soil', 'Take a soil sample to a soils laboratory or check it with a soil test kit, early enough for the result to come back before plowing.', 'anee', null, 'soil', 'Soils near your farm are often acid.'));
+            $note('info', 'Typical for your area: ' . $share . '% of the soil samples near your farm read pH ' . $area['ph']['range'] . ' (' . $area['ph']['band'] . '). Test your own field before you lime: lime only at the rate the test gives.', 'soil');
+        }
+        $saltBlank = empty($s['salt']);
+        if ($area && $saltBlank && in_array($area['salinity']['risk'] ?? null, ['moderate', 'severe'], true)) {
+            $tol = $rice ? \App\Support\SoilAtlas::saltTolerant('rice', 4) : '';
+            $note('warn', 'Typical for your area: coastal land in your town often holds salt. Look for a white crust, burnt leaf tips or salty water; if you see them, flush the salt with good water before the final harrowing and choose a salt tolerant variety' . ($tol !== '' ? ', for example ' . $tol : '') . '.', 'soil');
+        }
+        if ($area && ($area['zinc']['class'] ?? null) && in_array($area['zinc']['class'], ['L', 'ML'], true) && ($area['zinc']['share'] ?? 0) >= 0.5) {
+            $note('info', 'Typical for your area: zinc runs low in the soils near your farm. Watch the young crop for dusty brown leaves, and ask the soil test for zinc.', 'soil');
+        }
+
         /* ---- acidity, with a known pH range ---- */
         $acid = $s['acidity'] ?? '';
         $lo = isset($s['phFrom']) && is_numeric($s['phFrom']) ? (float) $s['phFrom'] : (isset($s['ph']) && is_numeric($s['ph']) ? (float) $s['ph'] : null);

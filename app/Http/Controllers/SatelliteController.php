@@ -594,18 +594,20 @@ class SatelliteController extends Controller
         $missing = ClimateRecord::missing($rk['key']);
         $age = ! empty($p['plantedOn']) ? (int) \Illuminate\Support\Carbon::parse($p['plantedOn'])->startOfDay()->diffInDays(now('Asia/Manila')->startOfDay()) : null;
         $weeks = $age !== null ? max(0, (int) round($age / 7)) : null;
-        $n = 3;
+        // The area's soil is the app's own (the soil atlas, 2026-10-18): searched for only where the atlas has nothing.
+        $atlas = \App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']);
+        $n = $atlas ? 2 : 3;
 
         return "You are researching for a satellite field analysis in the Philippines. Use web search. Write plain research notes (not JSON).\n\n"
             . 'Crop: ' . CropCatalog::label($p['crop']) . (! empty($p['variety']) ? ' (variety ' . $p['variety'] . ')' : '') . "\n"
             . 'Place: ' . $p['location'] . ", Philippines\n"
             . 'Age: ' . ($weeks !== null ? 'about ' . $weeks . ' weeks from planting' : 'not stated') . '; way in: ' . (self::METHODS[$p['method']] ?? $p['method']) . "\n\n"
             . "Find and summarize, citing the sources you read:\n"
-            . "1. SOIL OF THIS AREA: any soil survey, BSWM soil series, or published study of the soils in or near this town or province (pH, sodic, alkaline, saline, acid sulfate, texture, drainage, known deficiencies). Name the study and what it found. If none exists for this exact place, say so and give the province's general soil picture.\n"
-            . "2. THE CROP: for this crop (and variety if named) at about this age, the typical Sentinel-2 NDVI range of a healthy field in the tropics, typical Sentinel-1 VH backscatter behaviour as the canopy grows, and the main pests and diseases that strike at this stage in the Philippines and the weather that favours them.\n"
+            . ($atlas ? '' : "1. SOIL OF THIS AREA: any soil survey or published study of the soils in or near this town or province (pH, sodic, alkaline, saline, acid sulfate, texture, drainage, known deficiencies). Say what it found. If none exists for this exact place, say so and give the province's general soil picture.\n")
+            . ($atlas ? '1' : '2') . ". THE CROP: for this crop (and variety if named) at about this age, the typical Sentinel-2 NDVI range of a healthy field in the tropics, typical Sentinel-1 VH backscatter behaviour as the canopy grows, and the main pests and diseases that strike at this stage in the Philippines and the weather that favours them.\n"
             . ($p['crop'] === 'corn' || str_contains(strtolower(CropCatalog::label($p['crop'])), 'corn') ? ($n++) . ". HIGH DENSITY HYBRID CORN: how 90,000 or more seeds per hectare behaves in NDVI and radar, lodging and nutrient risks at that density, and how sodic or alkaline soil limits it.\n" : '')
             . ($missing ? $n . '. HAZARDS OF THIS PLACE in ' . ClimateRecord::yearsWords($missing) . ': the typhoons, floods, drought and heat that hit ' . $rk['place'] . "'s farms.\n" . ClimateRecord::ask($rk['place'], $missing, true) : '')
-            . "\nThe app keeps the field's weather history, its forecast and the ENSO state: do not look those up. Be factual. Keep numbers with their source.";
+            . "\nThe app keeps the field's weather history, its forecast and the ENSO state" . ($atlas ? ' and the area\'s soil survey' : '') . ": do not look those up. Be factual. Keep numbers with their source.";
     }
 
     private function prompt(array $p, array $s, array $ctx): string
@@ -646,6 +648,7 @@ class SatelliteController extends Controller
             . "- NDVI: bare or flooded ground is near 0 to 0.2; young crop 0.2 to 0.4; a full green canopy 0.6 to 0.9. Judge against what this crop should show at this age. A wide stdDev, a high lowShare or one weak zone means uneven growth: say which part of the field (use the zone names), and the likely causes (water, nutrients, pests, disease, gaps, waterlogging, salt), and what to check on foot.\n"
             . "- Radar: VH rises as leaves and stems fill in; VV minus VH narrows as the canopy thickens; very low VV and VH (below about -20 dB) over a paddy can mean standing water. Radar sees through cloud.\n"
             . "- If Sentinel-2 is not available (typhoon cloud), say so plainly and base the crop reading on the radar and its history alone.\n"
+            . (($aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']))) !== '' ? $aw . "\n(These samples come before the model below: where they differ, trust the samples.)\n\n" : '')
             . "- Spacing: at 10 m pixels a satellite cannot count plants. Judge stand uniformity and gaps from the zone spread and the history, and compare the stated density with what the crop needs, saying the limit honestly.\n"
             . "- High density hybrid corn (90,000 or more seeds per hectare) on sodic or alkaline soil: weigh lodging, zinc and iron shortage, sodium crusting and poor emergence.\n"
             . "- Use the research notes below for the soil studies and hazards of this place. Never invent a number. Say what you cannot know.\n\n"

@@ -165,8 +165,20 @@ final class NutrientBook
             'ph' => $more['ph'] ?? null, 'fieldProfile' => $answers,
             'testP' => $more['testP'] ?? 'unsure', 'testK' => $more['testK'] ?? 'unsure', 'prevCrop' => 'unsure', 'residue' => 'unsure',
         ];
-        $run = self::forField(\App\Http\Controllers\CropProtocolController::needInput($p));
+        $in = \App\Http\Controllers\CropProtocolController::needInput($p);
+        // The area's typical soil (the soil atlas, 2026-10-18) fills only what the lot left unknown, as the
+        // Crop Protocol and NPK Plus do: $more['place'] = "Barangay, Town, Province" (or the three as an array).
+        if (! empty($more['place'])) {
+            $pl = $more['place'];
+            $atlas = is_array($pl) ? SoilAtlas::for($pl['province'] ?? null, $pl['town'] ?? null, $pl['barangay'] ?? null, $crop)
+                : SoilAtlas::forWhere((string) $pl, $crop);
+            $in = SoilAtlas::fill($in, $atlas);
+        }
+        $run = self::forField($in);
         $run['potential'] = $p['potential'];
+        if (! empty($in['areaSoil'])) {
+            $run['areaSoil'] = $in['areaSoil'];
+        }
 
         return $run;
     }
@@ -196,6 +208,7 @@ final class NutrientBook
 
         return $lead . 'THE NEED, counted by the app with NPK Plus\'s need model (the official guide rate sized to the yield goal, the soil and the field), version ' . ($run['version'] ?? self::version())
             . ': yield goal ' . $goal . '; ' . NpkNeed::words($run['need']) . ($run['whys'] ? ' (moved by: ' . implode('; ', array_map('lcfirst', array_slice($run['whys'], 0, 4))) . ')' : '') . ".\n"
+            . (! empty($run['areaSoil']) ? $lead . 'Where the lot gave no answer, soil levels typical for the area were used (' . implode(', ', array_map(fn ($k) => ['ph' => 'pH', 'texture' => 'soil type'][$k] ?? $k, (array) $run['areaSoil'])) . '): call them typical for the area, never a test of this field.' . "\n" : '')
             . ($micro !== '' ? $lead . 'Secondary and micro elements likely short here, kg of the element per hectare: ' . $micro . ".\n" : '')
             . ($ben !== '' ? $lead . 'Beneficial, not required (never call them short): ' . $ben . ".\n" : '')
             . ($verdicts !== '' ? $lead . 'THE APP\'S VERDICT, the plan per hectare against that need (short under 90 percent, too much over 130 percent for N, P2O5 and K2O): ' . $verdicts . ".\n" : '');
@@ -366,7 +379,7 @@ final class NutrientBook
      * crop and the variety at its usual goal, before a soil test. Empty when
      * the crop has no numbers.
      */
-    public static function lotLine(?string $crop, ?string $variety, ?string $method = null): string
+    public static function lotLine(?string $crop, ?string $variety, ?string $method = null, ?array $place = null): string
     {
         $key = NpkNeed::cropKey($crop, $method);
         if (! $key) {
@@ -374,7 +387,12 @@ final class NutrientBook
         }
         try {
             $pot = self::varietyPotential($key, $variety);
-            $run = NpkNeed::run(self::input($key, null, $pot, 'unsure', null));
+            $in = self::input($key, null, $pot, 'unsure', null);
+            // The soil typical for the lot's area (the soil atlas, 2026-10-18), where the atlas knows it.
+            if ($place && ! empty($place['province'])) {
+                $in = SoilAtlas::fill($in, SoilAtlas::for($place['province'], $place['town'] ?? null, $place['barangay'] ?? null, $crop));
+            }
+            $run = NpkNeed::run($in);
         } catch (\Throwable $e) {
             return '';
         }
@@ -385,6 +403,6 @@ final class NutrientBook
             ->map(fn ($m, $el) => (NpkNeed::NAMES[$el] ?? $el) . ' ' . (['likely' => 'likely short', 'watch' => 'may run short'][$m['level']]))->values()->implode(', ');
 
         return 'need by NPK Plus for ' . rtrim(rtrim(number_format((float) $run['goal']['Y'], 1, '.', ''), '0'), '.') . ' t/ha (' . ($pot ? '80 percent of the variety\'s best yield on record' : 'the Philippine average')
-            . ', before a soil test; a lower goal needs less): ' . NpkNeed::words($run['need']) . ($micro !== '' ? '; ' . $micro : '');
+            . (! empty($in['areaSoil']) ? ', on the soil typical for the area' : '') . ', before a soil test; a lower goal needs less): ' . NpkNeed::words($run['need']) . ($micro !== '' ? '; ' . $micro : '');
     }
 }

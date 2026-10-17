@@ -269,6 +269,7 @@ class ProtocolNpkController extends Controller
             . ($plan['trees'] ? 'Counted at ' . $plan['trees'] . " trees per ha.\n" : '')
             . ($plan['unread'] ? 'Not counted (could not be read): ' . implode('; ', array_column($plan['unread'], 'name')) . "\n" : '')
             . ($ask['location'] !== '' ? 'Where it will be used: ' . $ask['location'] . "\n" : 'Place not given.' . "\n")
+            . ($ask['location'] !== '' && ($aw = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere($ask['location'], (string) $pr['crop']), 'short')) !== '' ? $aw . "\n" : '')
             . 'Soil: ' . (SoilConditions::words($ask['soilConditions'], $ask['phValue']) ?: 'not stated') . "\n"
             . (SoilConditions::guidance($ask['soilConditions']) ? SoilConditions::guidance($ask['soilConditions']) . "\n" : '')
             . 'Water: ' . (NpkPlusController::WATER[$ask['water']] ?? 'not stated') . "\n"
@@ -289,7 +290,9 @@ class ProtocolNpkController extends Controller
         $pr = $plan['protocol'];
 
         return \App\Support\NutrientBook::forLot($pr['crop'], ($pr['dayType'] ?? '') === 'DAS' ? 'direct_wet' : null, $pr['variety'] ?? null, [], null, (float) ($plan['areaHa'] ?? 1),
-            ['soilConditions' => (array) ($ask['soilConditions'] ?? []), 'ph' => $ask['phValue'] ?? null, 'water' => ($ask['water'] ?? '') ?: 'irrigated']);
+            ['soilConditions' => (array) ($ask['soilConditions'] ?? []), 'ph' => $ask['phValue'] ?? null, 'water' => ($ask['water'] ?? '') ?: 'irrigated',
+                // the soil typical for the place, where the farmer named one (the soil atlas, 2026-10-18)
+                'place' => (string) ($ask['location'] ?? '')]);
     }
 
     private function parse(string $text): ?array

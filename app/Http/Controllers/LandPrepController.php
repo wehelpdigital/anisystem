@@ -996,6 +996,20 @@ PROMPT;
         $plantClimate = $pk ? 'The two weeks around ' . $word . ' averaged ' . round($pk['avg']['rain']) . ' mm of rain.' : '';
         $enso = $weather['ensoText'] ?: 'not available';
         $place = $weather['place']['label'] ?? (trim(($case['location']['town'] ?? '') . ', ' . ($case['location']['province'] ?? ''), ', ') ?: 'not given');
+        // The town's storms, floods and dry spells in the preparation months and the month after planting (the hazard book, 2026-10-18).
+        $hazards = '';
+        try {
+            $P0 = Carbon::parse($sched['plantings'][0] ?? $case['planting'] ?? now());
+            $hzMonths = array_values(array_unique(array_map(fn ($d) => (int) $P0->copy()->addDays($d)->month, [-60, -30, 0, 30])));
+            $hazards = \App\Support\HazardBook::monthsWords(trim(($case['location']['town'] ?? '') . ', ' . ($case['location']['province'] ?? ''), ', '), $hzMonths,
+                isset($case['location']['lat']) ? (float) $case['location']['lat'] : null, isset($case['location']['lng']) ? (float) $case['location']['lng'] : null, 800);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+        $hazards = $hazards !== '' ? "\n- Storms and floods here before: " . trim($hazards) : '';
+        // The area's typical soil from samples taken there (the soil atlas, 2026-10-18): it stands only where a lot's answers are blank.
+        $areaSoil = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::for($case['location']['province'] ?? null, $case['location']['town'] ?? null, null, (string) $case['crop']), 'short');
+        $areaSoil = $areaSoil !== '' ? "\n" . $areaSoil . "\n" : '';
         $variety = $case['variety'] !== '' ? $case['variety'] : 'not chosen yet';
         $mixedLine = LP::mixed($case) ? ' Some lots grow their own crop or plant another way (see LOTS): the steps of each lot follow its own crop, and an added step for one crop names its lots.' : '';
         $seedSource = $case['seedSource'] !== '' ? (self::SEED_Q['o'][$case['seedSource']][0] ?? $case['seedSource']) : 'not given';
@@ -1015,7 +1029,7 @@ LOTS:
 {$lots}
 CREW: {$crewLine}
 EACH LOT'S SOIL, WATER AND HISTORY (the farmer's own observations, lots with the same answers together):
-{$answers}
+{$answers}{$areaSoil}
 FARMER'S NOTES: {$farmerNotes}
 SEED PREPARATION: {$seed}{$research}
 

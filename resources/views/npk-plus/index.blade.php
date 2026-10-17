@@ -246,6 +246,21 @@
     .np-soilu label { display: flex; align-items: center; gap: .45rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
     .np-soilu .np-utag { min-height: 2.1rem; min-width: 0; }
     .np-testbox { margin-top: 1rem; padding: .8rem; border-radius: .9rem; border: 1px dashed var(--color-gray-200); }
+    /* The area's typical soil (2026-10-18): offered, never applied by itself. */
+    .np-area { margin: .2rem 0 .9rem; padding: .85rem .9rem; border-radius: .95rem; border: 1px solid rgb(132 204 22 / .35); background: linear-gradient(180deg, rgb(132 204 22 / .1), rgb(132 204 22 / .03)); }
+    html.dark .np-area { border-color: #3a5a1c; background: linear-gradient(180deg, rgb(132 204 22 / .12), transparent); }
+    .np-area-h { font-family: var(--font-heading); font-weight: 800; font-size: .9rem; color: var(--color-gray-900); }
+    .np-area-t { margin-top: .15rem; font-size: .78rem; color: var(--color-gray-500); }
+    .np-area-l { margin: .5rem 0 0; padding-left: 1rem; list-style: disc; font-size: .82rem; line-height: 1.5; color: var(--color-gray-700); }
+    .np-area-l li + li { margin-top: .2rem; }
+    .np-area-b { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .7rem; }
+    .np-area-use { padding: .5rem .85rem; border-radius: .7rem; border: 0; cursor: pointer; font-weight: 800; font-size: .82rem; color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); transition: transform .28s var(--np-ease), opacity .28s var(--np-ease); }
+    .np-area-use:hover { transform: translateY(-1px); }
+    .np-area-no { padding: .5rem .85rem; border-radius: .7rem; border: 1px solid var(--color-gray-200); background: transparent; cursor: pointer; font-weight: 700; font-size: .82rem; color: var(--color-gray-700); }
+    .np-area.is-on .np-area-use { display: none; }
+    .np-area-say { margin-top: .5rem; font-size: .78rem; font-weight: 700; color: #4d7c0f; }
+    html.dark .np-area-say { color: #a3e635; }
+    @media (prefers-reduced-motion: reduce) { .np-area-use { transition: none; } }
     html.dark .np-testbox { border-color: #2b3a1c; }
 
     /* What the plan gives: three tabs. */
@@ -691,6 +706,18 @@
                                 @include('partials.field-profile-card')
                             </div>
                             </div></div>
+                            <div class="np-lq is-off" id="npAreaWrap"><div>
+                                <div class="np-area" id="npArea">
+                                    <p class="np-area-h">Typical for your area</p>
+                                    <p class="np-area-t" id="npAreaT"></p>
+                                    <ul class="np-area-l" id="npAreaL"></ul>
+                                    <p class="np-area-say" id="npAreaSay" hidden></p>
+                                    <div class="np-area-b">
+                                        <button type="button" class="np-area-use" id="npAreaUse">Use these for what I left blank</button>
+                                        <button type="button" class="np-area-no" id="npAreaNo">Not now</button>
+                                    </div>
+                                </div>
+                            </div></div>
                             <div class="np-lq" data-lq="texture"><div>
                                 <span class="np-label">Soil type</span>
                                 <button type="button" class="np-utag is-wide is-none" id="npTexture"><span>Not sure</span>{!! $chev !!}</button>
@@ -1046,7 +1073,7 @@
 
     let OPT = null, M = null, calcId = null, RES = null;
     const st = { crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
-        texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null, varPick: null };
+        texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null, varPick: null, areaSoil: null, area: null, areaNo: false };
     // The field in detail (partials/field-profile-card) and what the farmer set by hand (theirs wins over what it fills).
     let FPC = null;
     const TOUCH = {};
@@ -1367,9 +1394,11 @@
         const c = cropOf(st.crop), ask = ++seasonAsk;
         $('npSeason').innerHTML = 'Reading twenty years of weather at ' + esc(town ? town + ', ' + prov : prov) + '…';
         try {
-            const r = await window.api(U.season + '?' + new URLSearchParams({ town, province: prov, from: $('npPlanted').value || '', days: seasonDays(c) }).toString());
+            const r = await window.api(U.season + '?' + new URLSearchParams({ town, province: prov, from: $('npPlanted').value || '', days: seasonDays(c),
+                crop: st.crop || '', barangay: (LOT && LOT.barangay) || '' }).toString());
             if (ask !== seasonAsk) return;
             st.season = r.data;
+            areaGot(r.data && r.data.area);
         } catch (err) { if (ask !== seasonAsk) return; st.season = null; $('npSeason').textContent = err.message || 'The season could not be read.'; calc(); return; }
         paintSeason(); calc();
     };
@@ -1450,11 +1479,61 @@
     $('npPMethod').addEventListener('click', () => pick('How phosphorus was measured', 'It is printed on the soil test result.', P_METHOD, st.pMethod, (k) => { st.pMethod = k; tagSay('npPMethod', P_METHOD, k); calc(); }));
     $('npKUnit').addEventListener('click', () => pick('Potassium is given in', 'It is printed beside the number.', K_UNIT, st.kUnit, (k) => { st.kUnit = k; tagSay('npKUnit', K_UNIT, k); calc(); }));
     const phVal = () => { const v = Number($('npPh').value); return $('npPh').value !== '' && v >= 2 && v <= 12 ? v : null; };
+    /* The area's typical soil (2026-10-18, the soil atlas): offered for the
+       answers left blank, never applied by itself (no auto-advance), and
+       read last: a soil test number, then a kit level, then the area. The
+       Crop Protocol fills the same unknowns the same way, so a lot with no
+       soil test reaches the same need in both. */
+    const TEX_W = { clay: 'clay', loam: 'loam', sandy: 'sandy' };
+    const areaGot = (A) => {
+        st.areaSoil = A || null;
+        if (st.area && A) st.area.tests = Object.assign({}, A.tests || {});
+        if (st.area && !A) areaStop(true);
+        paintArea();
+    };
+    const paintArea = () => {
+        const A = st.areaSoil, wrap = $('npAreaWrap');
+        if (!A || st.areaNo) { wrap.classList.add('is-off'); return; }
+        $('npAreaT').textContent = A.where + (A.samples ? ': what ' + A.samples + ' soil samples there usually show' + (A.year ? ' (' + A.year + ')' : '') : '') + '. Not a test of your field.';
+        $('npAreaL').innerHTML = (A.lines || []).filter((l) => !/^Read for /.test(l)).slice(0, 5).map((l) => '<li>' + esc(l) + '</li>').join('');
+        $('npArea').classList.toggle('is-on', !!st.area);
+        const say = $('npAreaSay');
+        if (st.area) {
+            const used = [];
+            const t = st.area.tests || {};
+            if (Object.keys(t).length) used.push('the N, P and K levels');
+            if (st.area.filled && st.area.filled.texture) used.push('the soil type');
+            if (st.area.filled && st.area.filled.ph) used.push('the pH');
+            say.textContent = 'Using what is typical for your area for ' + (used.join(', ') || 'what you left blank') + '. Your own answers come first.';
+            say.hidden = false;
+            $('npAreaNo').textContent = 'Stop using them';
+        } else { say.hidden = true; $('npAreaNo').textContent = 'Not now'; }
+        wrap.classList.remove('is-off');
+    };
+    const areaUse = () => {
+        const A = st.areaSoil;
+        if (!A) return;
+        const filled = {};
+        if (st.texture === 'unsure' && TEX_W[A.texture] && M.textures[A.texture]) { st.texture = A.texture; filled.texture = A.texture; }
+        if ($('npPh').value === '' && A.ph != null) { $('npPh').value = String(A.ph); filled.ph = A.ph; }
+        st.area = { where: A.where, tests: Object.assign({}, A.tests || {}), filled };
+        soilTag(); paintArea(); calc();
+    };
+    const areaStop = (quiet) => {
+        const f = (st.area && st.area.filled) || {};
+        if (f.texture && st.texture === f.texture) st.texture = 'unsure';
+        if (f.ph != null && Number($('npPh').value) === Number(f.ph)) $('npPh').value = '';
+        st.area = null;
+        if (!quiet) { soilTag(); paintArea(); calc(); }
+    };
+    $('npAreaUse').addEventListener('click', areaUse);
+    $('npAreaNo').addEventListener('click', () => { if (st.area) areaStop(); else { st.areaNo = true; paintArea(); } });
     const soil = () => {
         const s = {};
         if ($('npSoilOn').checked) $('npSoilGrid').querySelectorAll('input').forEach((i) => { if (i.value !== '') s[i.dataset.s] = Number(i.value); });
         const ph = phVal(); if (ph != null) s.ph = ph;
         if ($('npSoilOn').checked && st.kit && Object.keys(st.kit).length) s.levels = Object.assign({}, st.kit);
+        if (st.area && st.area.tests && Object.keys(st.area.tests).length) s.levels = Object.assign({}, st.area.tests, s.levels || {});
         if (!Object.keys(s).length) return null;
         s.pMethod = st.pMethod; s.kUnit = st.kUnit;
         return s;
@@ -2023,7 +2102,9 @@
                 varietyPick: st.varPick ? Object.assign({}, st.varPick, recT(st.varPick) ? { potential: recT(st.varPick), potentialIs: st.varPick.top ? 'top' : 'avg', potentialFrom: potOwn() ? 'own' : 'record' } : {}) : null,
                 fieldAdjust: FL.map((l) => l.lead + ' ' + l.text + (l.e ? ' [' + l.e + ']' : '')),
                 // The farm's lot it was made for (2026-10-16): a saved calculation opens on it again.
-                lotId: LOT ? LOT.id : null, lotName: LOT ? LOT.name : null },
+                lotId: LOT ? LOT.id : null, lotName: LOT ? LOT.name : null,
+                // The area's typical soil the farmer chose to use (2026-10-18).
+                area: st.area ? { where: st.area.where, tests: st.area.tests, filled: st.area.filled } : null },
             season: (() => { const SP = seasonPlanks(c, g); return SP ? { place: st.season.place, window: st.season.window, enso: SP.t.e ? SP.t.e.label : null, rainMm: Math.round(SP.rain), sunMJ: SP.rad, tmean: SP.tmean,
                 needMm: Math.round(SP.need), water: st.water, planks: { sun: Math.round(Math.min(1, SP.sun) * 100), water: Math.round(Math.min(1, SP.water) * 100), temp: Math.round(Math.min(1, SP.temp) * 100) },
                 potential: SP.pot ? { tPerHa: Math.round(SP.pot.t * 10) / 10, given: SP.pot.given } : null,
@@ -2595,6 +2676,8 @@
             if (st.prov) seasonSoon(400);
             st.texture = M.textures[set.texture] ? set.texture : 'unsure';
             st.conds = Array.isArray(set.conditions) ? set.conditions.filter((k) => M.conditions[k]) : [];
+            st.area = set.area && typeof set.area === 'object' ? { where: set.area.where || '', tests: set.area.tests || {}, filled: set.area.filled || {} } : null;
+            st.areaNo = false;
             const s = d.soil || {};
             $('npPh').value = set.ph != null ? set.ph : (s.ph != null ? s.ph : '');
             st.kit = s.levels && typeof s.levels === 'object' ? s.levels : null;

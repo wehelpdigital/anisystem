@@ -531,7 +531,7 @@
   "research": {
    "company": "East-West Seed",
    "kind": "F1 hybrid",
-   "popular": "one of eight varieties in DA Region 02's ampalaya guide, an entry in two DMMMSU La Union trials (2006, 2013), and named in East-West's 2025 story of a Pangasinan grower who prospered with it",
+   "popular": "one of eight varieties in the ampalaya guide, an entry in two La Union trials (2006, 2013), and named in East-West's 2025 story of a Pangasinan grower who prospered with it",
    "facts": {
     "maturityDays": "first harvest 48 to 52 days after transplanting",
     "fruit": "long and fat, dark green with a glossy skin",
@@ -578,7 +578,7 @@
   "research": {
    "company": "East-West Seed",
    "kind": "F1 hybrid",
-   "popular": "East-West's first hybrid (1986), which the company calls the first commercial vegetable hybrid bred in the Philippines; still in DA Region 02's ampalaya variety table and used as an entry in DMMMSU trials",
+   "popular": "East-West's first hybrid (1986), which the company calls the first commercial vegetable hybrid bred in the Philippines; still in the ampalaya variety table and used as an entry in DMMMSU trials",
    "facts": {
     "maturityDays": "first harvest 48 to 57 days after transplanting (Jade Star L)",
     "fruit": "green, cylindrical with a slightly blunt tip",
@@ -713,7 +713,7 @@
   "research": {
    "company": "Ramgo",
    "kind": "open pollinated (listed without F1)",
-   "popular": "in Ramgo's professional bitter gourd line and in DA Region 02's ampalaya variety table",
+   "popular": "in Ramgo's professional bitter gourd line and in the ampalaya variety table",
    "facts": {
     "maturityDays": "first harvest 45 to 55 days after transplanting (Ramgo); DA Region 02 gives 70 to 75 days",
     "yield": "15 to 20 t/ha potential (company figure)",
@@ -761,9 +761,9 @@
   "research": {
    "company": "Allied Botanical (Condor)",
    "kind": "open pollinated",
-   "popular": "listed from the Philippine Seed Industry Association catalogue in DA-BPI's ampalaya guide and in DA Region 02's variety table (as Sta. Lucia, Condor)",
+   "popular": "listed from the Philippine Seed Industry Association catalogue in the ampalaya guide and in the variety table (as Sta. Lucia, Condor)",
    "facts": {
-    "maturityDays": "first harvest 45 to 50 days after transplanting (Allied sheet); DA-BPI's table gives 58 days after sowing",
+    "maturityDays": "first harvest 45 to 50 days after transplanting (Allied sheet); the table gives 58 days after sowing",
     "fruit": "long, heavy, cylindrical and thick fleshed, dark green, about 35 to 38 cm and 200 to 250 g",
     "traits": [
      "intermediate resistance to the 'namamarako' virus that turns vines male",
@@ -857,7 +857,7 @@
   "research": {
    "company": "Allied Botanical (Condor)",
    "kind": "F1 hybrid",
-   "popular": "Agriculture Monthly (2015) followed an Aurora, Isabela farmer who adopted Condor Trident Improved and kept bearing through a cold spell that slowed neighbours' ampalaya; an older Trident is in the seed industry table of DA-BPI's ampalaya guide",
+   "popular": "Agriculture Monthly (2015) followed an Aurora, Isabela farmer who adopted Condor Trident Improved and kept bearing through a cold spell that slowed neighbours' ampalaya; an older Trident is in the seed industry table of the ampalaya guide",
    "facts": {
     "maturityDays": "first harvest 45 to 50 days after transplanting (Allied sheet); the 2015 report gives 60 to 65 days after direct sowing",
     "yield": "about 30 t/ha potential (company figure quoted in Agriculture Monthly)",
@@ -953,7 +953,7 @@
   "research": {
    "company": "Ramgo",
    "kind": "F1 hybrid",
-   "popular": "in Ramgo's professional bitter gourd line and listed (as Verde Suerte F1) in DA Region 02's ampalaya variety table",
+   "popular": "in Ramgo's professional bitter gourd line and listed (as Verde Suerte F1) in the ampalaya variety table",
    "facts": {
     "maturityDays": "first harvest 45 to 50 days after transplanting (Ramgo); DA Region 02 calls it early maturing",
     "yield": "20 to 25 t/ha potential (company figure)",
@@ -2361,7 +2361,7 @@
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
   "research": {
-   "company": "Institute of Plant Breeding (UPLB)",
+   "company": "Institute of Plant Breeding",
    "kind": "dessert banana, IPB selection",
    "popular": "The improved Mapilak line, tested in Laguna, Batangas, Cavite, Quirino, Isabela and Davao City.",
    "facts": {
@@ -2655,7 +2655,7 @@
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
   "research": {
-   "company": "Institute of Plant Breeding (UPLB)",
+   "company": "Institute of Plant Breeding",
    "kind": "dessert banana, IPB selection",
    "popular": "IPB's dessert banana bred to resist bunchy top, the first banana with an NSIC number.",
    "facts": {
@@ -4249,13 +4249,13 @@
   "research": {
    "company": "Kaneko Seeds (Japan)",
    "kind": "imported variety (Japan)",
-   "popular": "top marketable yield in the Benguet State University organic cabbage trial, which recommends it with Lucky Ball and Scorpio for Benguet; also listed in DA's cabbage production guide",
+   "popular": "top marketable yield in the organic cabbage trial, which recommends it with Lucky Ball and Scorpio for Benguet; also listed in the cabbage production guide",
    "facts": {
     "maturityDays": "55 to 60 days",
     "yield": "about 24 t/ha marketable, averaged over three Benguet sites and four seasons under organic growing (BSU trial)",
-    "fruit": "head: round, green and compact; the heaviest heads in the BSU trial, about 520 g on average under organic growing",
+    "fruit": "head: round, green and compact; the heaviest heads in the trial, about 520 g on average under organic growing",
     "traits": [
-     "out-yielded Scorpio in several of the BSU trial seasons",
+     "out-yielded Scorpio in several of the trial seasons",
      "low share of non-marketable heads in the dry season at high elevation (BSU)"
     ],
     "season": "dry and wet seasons in the highlands",
@@ -4295,13 +4295,13 @@
   "research": {
    "company": "Sakata (sold by Allied Botanical)",
    "kind": "F1 hybrid",
-   "popular": "check variety in a Benguet State University cabbage trial (2011 to 2013), which calls it the variety Benguet farmers had commonly planted for more than 10 years; also listed in DA's cabbage production guide",
+   "popular": "check variety in a cabbage trial (2011 to 2013), which calls it the variety Benguet farmers had commonly planted for more than 10 years; also listed in the cabbage production guide",
    "facts": {
     "maturityDays": "55 to 60 days in the guide; Allied gives 65 to 70 days after transplanting",
     "yield": "about 21 t/ha marketable, averaged over three Benguet sites and four seasons under organic growing (BSU trial)",
     "fruit": "head: round, compact, small core, purple veins, about 1 to 1.2 kg (Allied)",
     "traits": [
-     "highest heading percentage across sites in the BSU trial",
+     "highest heading percentage across sites in the trial",
      "heat tolerant and juicy with a slight sweetness (Allied claim)"
     ],
     "season": "all year in the highlands",
@@ -15813,7 +15813,7 @@
   "research": {
    "company": "Philippine Coconut Authority",
    "kind": "dwarf x tall hybrid",
-   "popular": "Produced at PCA's Bohol seed garden and planted in Davao Oriental to replace typhoon-hit palms; on PCA's VCO list.",
+   "popular": "Produced at the Bohol seed garden and planted in Davao Oriental to replace typhoon-hit palms; on the VCO list.",
    "facts": {
     "harvest": "bears within about five years",
     "yield": "about 67 nuts per palm a year, 2.78 t copra/ha",
@@ -16394,7 +16394,7 @@
   "research": {
    "company": "Philippine Coconut Authority (native dwarf)",
    "kind": "dwarf cultivar",
-   "popular": "Mother palm of PCA 15-1 and PCA 15-4, and on PCA's list for coconut sap sugar.",
+   "popular": "Mother palm of PCA 15-1 and PCA 15-4, and on the list for coconut sap sugar.",
    "facts": {
     "harvest": "bears in about four years with proper care",
     "yield": "about 74 nuts per palm a year, 2.6 t copra/ha",
@@ -16750,7 +16750,7 @@
   "research": {
    "company": "Philippine Coconut Authority",
    "kind": "dwarf x tall hybrid",
-   "popular": "It is recommended for both virgin coconut oil and coconut sap sugar; grown in PCA's Bohol replanting program.",
+   "popular": "It is recommended for both virgin coconut oil and coconut sap sugar; grown in the Bohol replanting program.",
    "facts": {
     "harvest": "PCA hybrids bear within about five years",
     "yield": "about 71 nuts per palm a year, 2.19 t copra/ha",
@@ -17263,7 +17263,7 @@
   "research": {
    "company": "Philippine Coconut Authority (local tall population)",
    "kind": "tall cultivar",
-   "popular": "Big-nut tall used as father of PCA 15-2, 15-4 and 15-9; on PCA's VCO list.",
+   "popular": "Big-nut tall used as father of PCA 15-2, 15-4 and 15-9; on the VCO list.",
    "facts": {
     "yield": "about 60 nuts per palm a year, 2.5 t copra/ha",
     "fruit": "big nuts, about 321 g copra per nut (highest per nut in the registry)",
@@ -19742,7 +19742,7 @@
   "research": {
    "company": "BPI-Baguio NCRDC",
    "kind": "Arabica selection",
-   "popular": "BPI's registered highland Arabica with Class A cup quality and moderate rust resistance.",
+   "popular": "the registered highland Arabica with Class A cup quality and moderate rust resistance.",
    "facts": {
     "harvest": "first flowers and fruit about 36 months after planting",
     "yield": "about 0.71 kg per tree",
@@ -22607,7 +22607,7 @@
   "research": {
    "company": "Corteva (Pioneer)",
    "kind": "yellow GM hybrid",
-   "popular": "On Pioneer's current Philippine list and BPI's Jan 2025 list as one of only two PowerCore Ultra hybrids.",
+   "popular": "On Pioneer's current Philippine list and the Jan 2025 list as one of only two PowerCore Ultra hybrids.",
    "facts": {
     "maturityDays": "116 to 120 days after planting (Pioneer); about 107 in national trials",
     "yield": "potential 14 t/ha (Pioneer); national trials 8.61 t/ha Luzon, 7.58 Mindanao",
@@ -22700,7 +22700,7 @@
   "research": {
    "company": "Corteva (Pioneer)",
    "kind": "yellow GM hybrid",
-   "popular": "On Pioneer's current Philippine list and BPI's Jan 2025 list as one of only two PowerCore Ultra hybrids; its 2025 brochure carries the number one at harvest slogan.",
+   "popular": "On Pioneer's current Philippine list and the Jan 2025 list as one of only two PowerCore Ultra hybrids; its 2025 brochure carries the number one at harvest slogan.",
    "facts": {
     "maturityDays": "110 to 115 days after planting (Pioneer); about 107 in national trials",
     "yield": "shelling recovery up to 85%; potential 14 t/ha (Pioneer); national trials 8.39 t/ha Luzon, 7.23 Mindanao",
@@ -22795,7 +22795,7 @@
   "research": {
    "company": "Corteva (Pioneer)",
    "kind": "yellow GM hybrid",
-   "popular": "On Pioneer's current Philippine list and BPI's Jan 2025 list.",
+   "popular": "On Pioneer's current Philippine list and the Jan 2025 list.",
    "facts": {
     "maturityDays": "116 to 120 days after planting (Pioneer); 104 to 105 in national trials",
     "yield": "potential 13 t/ha (Pioneer); national trials 8.55 t/ha Luzon, 7.08 Mindanao",
@@ -23124,7 +23124,7 @@
   "research": {
    "company": "Corteva (Pioneer)",
    "kind": "yellow GM hybrid",
-   "popular": "On BPI's Jan 2025 list of PowerCore hybrids cleared for sale.",
+   "popular": "On the Jan 2025 list of PowerCore hybrids cleared for sale.",
    "facts": {
     "maturityDays": "about 104 to 109 in national trials",
     "yield": "P3530PW: 5.64 t/ha Luzon, 6.48 Mindanao in national trials; older P3530YHR: 7.65 Luzon, 8.36 Mindanao",
@@ -23216,7 +23216,7 @@
   "research": {
    "company": "Corteva (Pioneer)",
    "kind": "yellow GM hybrid",
-   "popular": "Pioneer's 2025 brochures for the 3585 line (PW and PWU) bill it as the number one at harvest, under Pioneer's 50 years in the Philippines banner; on Pioneer's current list and BPI's Jan 2025 list.",
+   "popular": "Pioneer's 2025 brochures for the 3585 line (PW and PWU) bill it as the number one at harvest, under Pioneer's 50 years in the Philippines banner; on Pioneer's current list and the Jan 2025 list.",
    "facts": {
     "maturityDays": "110 to 115 days after planting (Pioneer)",
     "yield": "shelling recovery up to 85%; potential 14 t/ha (Pioneer); national trials 6.90 t/ha Luzon, 6.30 Mindanao",
@@ -23494,7 +23494,7 @@
   "research": {
    "company": "Bioseed Research Philippines",
    "kind": "yellow GM hybrid",
-   "popular": "Shown at DA-10's Mar and Oct 2022 Bukidnon and Misamis Oriental derbies; on BPI's Jan 2025 list.",
+   "popular": "Shown at DA-10's Mar and Oct 2022 Bukidnon and Misamis Oriental derbies; on the Jan 2025 list.",
    "facts": {
     "maturityDays": "107 to 108 in national trials",
     "yield": "national trials averaged 7.72 t/ha in Mindanao",
@@ -24093,7 +24093,7 @@
   "research": {
    "company": "Corteva (Pioneer)",
    "kind": "yellow GM hybrid",
-   "popular": "On BPI's Jan 2025 list and Pioneer's current Philippine list; topped the GM class of DA-12's 2025 dry season trial in Sarangani (6.42 t/ha).",
+   "popular": "On the Jan 2025 list and Pioneer's current Philippine list; topped the GM class of DA-12's 2025 dry season trial in Sarangani (6.42 t/ha).",
    "facts": {
     "maturityDays": "116 to 120 days after planting (Pioneer); 106 to 108 in national trials",
     "yield": "potential 14 t/ha (Pioneer); national trials 11.06 t/ha Luzon, 5.45 Mindanao",
@@ -25585,7 +25585,7 @@
   "research": {
    "company": "Corteva (Pioneer)",
    "kind": "yellow GM hybrid",
-   "popular": "Still the only Intrasect (YHR) hybrid on BPI's Jan 2025 list; third (7.75 t/ha) in the 2022 Central Luzon corn derby (SunStar).",
+   "popular": "Still the only Intrasect (YHR) hybrid on the Jan 2025 list; third (7.75 t/ha) in the 2022 Central Luzon corn derby (SunStar).",
    "facts": {
     "maturityDays": "110 to 115 days; 105 to 107 in national trials",
     "yield": "potential 14 t/ha; shelling recovery up to 85%; national trials averaged 8.89 t/ha",
@@ -25747,7 +25747,7 @@
   "research": {
    "company": "Bayer (Dekalb); also sold as AH 8719S by Asian Hybrid",
    "kind": "yellow GM hybrid",
-   "popular": "BPI's Jan 2025 list shows it licensed to Asian Hybrid Seed Technologies and sold as Dekalb 8719S or AH 8719S; placed third and fourth at two Bukidnon stations in DA-10's 2022 derby.",
+   "popular": "the Jan 2025 list shows it licensed to Asian Hybrid Seed Technologies and sold as Dekalb 8719S or AH 8719S; placed third and fourth at two Bukidnon stations in DA-10's 2022 derby.",
    "facts": {
     "maturityDays": "106 to 108 in national trials",
     "yield": "national trials averaged 10.30 t/ha in Luzon and 8.79 in Mindanao",
@@ -25949,7 +25949,7 @@
   "research": {
    "company": "Bayer (Dekalb)",
    "kind": "yellow GM hybrid",
-   "popular": "On BPI's Jan 2025 list of GM hybrids cleared for sale; Bayer says it placed second (7.9 t/ha) in the 2021 Asturias, Cebu derby.",
+   "popular": "On the Jan 2025 list of GM hybrids cleared for sale; Bayer says it placed second (7.9 t/ha) in the 2021 Asturias, Cebu derby.",
    "facts": {
     "maturityDays": "105 to 107 in national trials",
     "yield": "national trials averaged 9.21 t/ha in Luzon and 7.79 in Mindanao",
@@ -26435,7 +26435,7 @@
   "research": {
    "company": "Bioseed Research Philippines",
    "kind": "yellow GM hybrid",
-   "popular": "GM version of Bioseed 9899, which was on DA Region 2's recommended list; on BPI's Jan 2025 list.",
+   "popular": "GM version of Bioseed 9899, which was on the recommended list; on the Jan 2025 list.",
    "facts": {
     "maturityDays": "about 105 in national trials",
     "yield": "national trials averaged 9.12 t/ha in Luzon and 8.94 in Mindanao",
@@ -27640,7 +27640,7 @@
   "research": {
    "company": "Advanta Seeds (UPL)",
    "kind": "yellow GM hybrid (conventional version also registered)",
-   "popular": "Listed as 'Super 999' among Advanta's two GM hybrids on BPI's Jan 2025 list of GM corn for sale.",
+   "popular": "Listed as 'Super 999' among Advanta's two GM hybrids on the Jan 2025 list of GM corn for sale.",
    "facts": {
     "maturityDays": "about 105 in national trials (GM); 108 for the conventional version",
     "yield": "national trials averaged 7.9 t/ha in Luzon (GM); conventional 7.40 Luzon, 6.82 Visayas",
@@ -30143,7 +30143,7 @@
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
   "research": {
-   "company": "Mariano Marcos State University (MMSU), Batac",
+   "company": "Mariano Marcos State University, Batac",
    "kind": "white glutinous OPV",
    "popular": "Shown with Glut 1 at MMSU's 2018 farmers' field day in Solsona, where farmers praised it as chichacorn.",
    "facts": {
@@ -35187,12 +35187,12 @@
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
   "research": {
-   "company": "Mariano Marcos State University (MMSU), Batac",
+   "company": "Mariano Marcos State University, Batac",
    "kind": "white glutinous OPV",
    "popular": "MMSU's pick for the Ilocos kornik industry: the 2018 push with three state colleges and a 2023 farmer training in Ilocos Norte both centred on it.",
    "facts": {
-    "maturityDays": "about 90 days to harvest (MMSU); 94 to 99 days in national trials",
-    "yield": "up to 6 to 7 t/ha (MMSU); 5.61 t/ha in national trials",
+    "maturityDays": "about 90 days to harvest; 94 to 99 days in national trials",
+    "yield": "up to 6 to 7 t/ha; 5.61 t/ha in national trials",
     "traits": [
      "plants about 176 cm",
      "ear about 14 cm, shelling about 79%",
@@ -36722,7 +36722,7 @@
   "research": {
    "company": "Corteva (Pioneer), formerly Pioneer Hi-Bred",
    "kind": "yellow GM hybrid (older)",
-   "popular": "A long running Pioneer hybrid that was on DA Region 2's recommended list with seed at the Ilagan station (2018 guide).",
+   "popular": "A long running Pioneer hybrid that was on the recommended list with seed at the Ilagan station (2018 guide).",
    "facts": {
     "maturityDays": "about 105",
     "yield": "6.22 t/ha in national trials; 5.05 t/ha listed by DA Region 2",
@@ -37253,7 +37253,7 @@
   "research": {
    "company": "UPLB Institute of Plant Breeding (IPB)",
    "kind": "white OPV (flint)",
-   "popular": "Tied with IPB Var 6 as a top yielder in the 2011 to 2013 farmer trials in Isabela, Quezon, Bohol and North Cotabato, and farmers liked its stand in both seasons (UPLB study).",
+   "popular": "Tied with IPB Var 6 as a top yielder in the 2011 to 2013 farmer trials in Isabela, Quezon, Bohol and North Cotabato, and farmers liked its stand in both seasons.",
    "facts": {
     "maturityDays": "about 98 (wet season) to 105 (dry season) in national trials",
     "yield": "5.81 t/ha Luzon and 4.82 t/ha Mindanao in national trials; 4.1 t/ha on farmers' fields over four seasons",
@@ -39969,7 +39969,7 @@
   "research": {
    "company": "DA Cagayan Valley research center (CVIARC/CVRC), Ilagan, Isabela",
    "kind": "white OPV (flint)",
-   "popular": "Isabela farmers' first pick among white corns in the 2011 to 2013 farmer trials (UPLB study); on DA Region 2's recommended list with seed sold at CVIARC.",
+   "popular": "Isabela farmers' first pick among white corns in the 2011 to 2013 farmer trials; on the recommended list with seed sold at CVIARC.",
    "facts": {
     "maturityDays": "95 to 100; 98 to 105 in national trials",
     "yield": "about 5.5 t/ha",
@@ -40065,7 +40065,7 @@
   "research": {
    "company": "DA Cagayan Valley research center (CVIARC/CVRC), Ilagan, Isabela",
    "kind": "white OPV (flint)",
-   "popular": "Among the three white corns Isabela farmers liked best in the 2011 to 2013 farmer trials (UPLB study); on DA Region 2's recommended list.",
+   "popular": "Among the three white corns Isabela farmers liked best in the 2011 to 2013 farmer trials; on the recommended list.",
    "facts": {
     "maturityDays": "95 to 100; 97 to 105 in national trials",
     "yield": "about 5.5 t/ha",
@@ -42292,7 +42292,7 @@
   "research": {
    "company": "DA Cagayan Valley research center (CVIARC/CVRC), Ilagan, Isabela",
    "kind": "white glutinous OPV",
-   "popular": "On DA Region 2's recommended corn list, seed sold at CVIARC in Ilagan.",
+   "popular": "On the recommended corn list, seed sold at CVIARC in Ilagan.",
    "facts": {
     "maturityDays": "about 98",
     "yield": "5.31 t/ha",
@@ -42378,7 +42378,7 @@
   "research": {
    "company": "DA Cagayan Valley research center (CVIARC/CVRC), Ilagan, Isabela",
    "kind": "white glutinous OPV",
-   "popular": "The highest yielding glutinous corn on DA Region 2's recommended list, seed sold at CVIARC in Ilagan.",
+   "popular": "The highest yielding glutinous corn on the recommended list, seed sold at CVIARC in Ilagan.",
    "facts": {
     "maturityDays": "about 98",
     "yield": "5.54 t/ha",
@@ -43212,7 +43212,7 @@
   "research": {
    "company": "Bayer (Dekalb), formerly Monsanto",
    "kind": "yellow hybrid (conventional; GM versions also registered)",
-   "popular": "An older Dekalb workhorse: on DA Region 2's recommended list (2018) and entered as 9132S in DA Ilocos' 2020 Vigan derby.",
+   "popular": "An older Dekalb workhorse: on the recommended list (2018) and entered as 9132S in DA Ilocos' 2020 Vigan derby.",
    "facts": {
     "maturityDays": "101 to 105 in national trials (conventional); DA Region 2 lists the RR/YG version at 120 to 125",
     "yield": "8.53 t/ha in national trials",
@@ -49309,7 +49309,7 @@
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
   "research": {
-   "company": "University of Southern Mindanao (USM), Kabacan",
+   "company": "University of Southern Mindanao, Kabacan",
    "kind": "white OPV",
    "popular": "Bohol's provincial government bought 750 sacks for its corn farmers in 2018; earlier seed went to about 2,000 upland farmers.",
    "facts": {
@@ -51015,7 +51015,7 @@
   "research": {
    "company": "Asian Hybrid Seed Technologies",
    "kind": "yellow GM hybrid",
-   "popular": "Top yielder under site specific nutrient management (7.85 t/ha) at DA Ilocos' Feb 2020 Vigan derby; on BPI's Jan 2025 list.",
+   "popular": "Top yielder under site specific nutrient management (7.85 t/ha) at DA Ilocos' Feb 2020 Vigan derby; on the Jan 2025 list.",
    "facts": {
     "yield": "7.85 t/ha at the 2020 Vigan derby",
     "gm": "YieldGard plus Roundup Ready (events MON810 x NK603): corn borer protection plus glyphosate tolerance; sold as 90:10 bag in bag refuge",
@@ -56323,7 +56323,7 @@
   "research": {
    "company": "IPB-UPLB (bred); sold by Ramgo",
    "kind": "IPB-UPLB bred F1 hybrid",
-   "popular": "public IPB-UPLB hybrid that Ramgo sells commercially; on DA Region 2's recommended list",
+   "popular": "public IPB-UPLB hybrid that Ramgo sells commercially; on the recommended list",
    "facts": {
     "maturityDays": "first harvest about 45 days after transplanting (Ramgo and DA Region 2; Ramgo's own page says 60)",
     "yield": "32 to 133% more marketable fruit than the commercial check in national trials, 2011 to 2014; Ramgo claims 30 to 35 t/ha",
@@ -56778,7 +56778,7 @@
   "research": {
    "company": "UPCA (now UPLB)",
    "kind": "open pollinated",
-   "popular": "old public variety still on DA Region 2's recommended list; Agriculture Monthly (2018) featured it as a waterlogging-tolerant eggplant",
+   "popular": "old public variety still on the recommended list; Agriculture Monthly (2018) featured it as a waterlogging-tolerant eggplant",
    "facts": {
     "maturityDays": "about 100 days to first harvest (95 to 105 in the Seed Board record); DA Region 2 lists 70 to 72 days after transplanting",
     "yield": "20 to 25 t/ha (Agriculture Monthly); 27.7 t/ha in the Seed Board record",
@@ -56941,7 +56941,7 @@
   "sources": [],
   "research": {
    "kind": "F1 hybrid",
-   "popular": "on DA Region 2's list of recommended eggplants; seller not identified",
+   "popular": "on the list of recommended eggplants; seller not identified",
    "facts": {
     "maturityDays": "first harvest about 50 days after transplanting",
     "fruit": "straight, cylindrical, glossy dark purple",
@@ -57023,7 +57023,7 @@
   "research": {
    "company": "East-West Seed",
    "kind": "F1 hybrid",
-   "popular": "East-West's round eggplant, preferred in Nueva Ecija and parts of Northern Luzon (Agriculture Monthly 2020); on DA Region 2's recommended list",
+   "popular": "East-West's round eggplant, preferred in Nueva Ecija and parts of Northern Luzon (Agriculture Monthly 2020); on the recommended list",
    "facts": {
     "maturityDays": "first harvest 45 to 50 days after transplanting",
     "fruit": "round, purple-green",
@@ -57066,7 +57066,7 @@
   "research": {
    "company": "East-West Seed",
    "kind": "F1 hybrid",
-   "popular": "the commercial hybrid check that IPB-UPLB's Tanglaw and Tanyag were tested against in the 2012 to 2013 national trials; on DA Region 2's recommended list",
+   "popular": "the commercial hybrid check that IPB-UPLB's Tanglaw and Tanyag were tested against in the 2012 to 2013 national trials; on the recommended list",
    "facts": {
     "fruit": "purple, cylindrical",
     "traits": [
@@ -57533,7 +57533,7 @@
   "research": {
    "company": "DA Regional Field Office I (Ilocos)",
    "kind": "traditional/local, grown from cloves",
-   "popular": "registered with NSIC in 2017; BPI's garlic guide lists Ilocos Pink among the garlic varieties found in the country",
+   "popular": "registered with NSIC in 2017; the garlic guide lists Ilocos Pink among the garlic varieties found in the country",
    "facts": {
     "maturityDays": "about 111 days after planting",
     "yield": "6.45 t/ha on raised beds, 5.02 t/ha with minimum tillage",
@@ -57801,7 +57801,7 @@
   "research": {
    "company": "DA Regional Field Office I (Ilocos)",
    "kind": "traditional/local, grown from cloves",
-   "popular": "BPI's garlic production guide calls it the most common garlic planted commercially in the country; registered with NSIC in 2017",
+   "popular": "the garlic production guide calls it the most common garlic planted commercially in the country; registered with NSIC in 2017",
    "facts": {
     "maturityDays": "about 103 days after planting; trials give 90 to 110 days",
     "yield": "5.55 t/ha on raised beds and 4.33 t/ha with minimum tillage in the national trials; BPI cites 3.5 t/ha potential",
@@ -65944,7 +65944,7 @@
   "research": {
    "company": "BPI La Granja NCRDPSC",
    "kind": "improved open-pollinated variety, yellow seed",
-   "popular": "The yellow-seeded munggo in the registry, a newer version of BPI's original Ginintuan.",
+   "popular": "The yellow-seeded munggo in the registry, a newer version of the original Ginintuan.",
    "facts": {
     "maturityDays": "57 to 59 days",
     "yield": "1.37 t/ha dry season, 1.42 t/ha wet season",
@@ -66046,7 +66046,7 @@
   "research": {
    "company": "DA-BPI Los Baños",
    "kind": "improved open-pollinated variety",
-   "popular": "First of BPI's Luntian munggo series, approved after nearly seven years of testing and recommended for all regions.",
+   "popular": "First of the Luntian munggo series, approved after nearly seven years of testing and recommended for all regions.",
    "facts": {
     "maturityDays": "60 to 61 days",
     "yield": "1.38 t/ha dry season, 1.3 t/ha wet season",
@@ -68681,11 +68681,11 @@
   "research": {
    "company": "Ramgo (East-West Seed and Harbest also sell an okra by this name)",
    "kind": "open pollinated",
-   "popular": "the only okra in DA Region 2's okra guide (listed twice, once from East-West); Harbest lists it among its Seeds of Hope bestsellers",
+   "popular": "the only okra in the okra guide (listed twice, once from East-West); Harbest lists it among its Seeds of Hope bestsellers",
    "facts": {
     "maturityDays": "first harvest 40 to 50 days after sowing (Ramgo's two pages); DA Region 2 lists 50 to 60 days",
     "yield": "20 to 30 t/ha potential (Ramgo garden packet page)",
-    "fruit": "smooth, slender, tapering green pods (dark green in DA's table, bright green for the East-West seed)",
+    "fruit": "smooth, slender, tapering green pods (dark green in the table, bright green for the East-West seed)",
     "traits": [
      "vigorous",
      "tolerant to thrips, leaf folder, leafhopper, anthracnose and mildew (Ramgo's claim)"
@@ -69384,7 +69384,7 @@
   "research": {
    "company": "Allied Botanical (Condor)",
    "kind": "open pollinated",
-   "popular": "the local angled patola type; DA Region 02's patola guide lists Tagalog Native among its recommended varieties, and Allied Botanical packs a Tagalog selection",
+   "popular": "the local angled patola type; the patola guide lists Tagalog Native among its recommended varieties, and Allied Botanical packs a Tagalog selection",
    "facts": {
     "maturityDays": "first harvest about 47 days after transplanting (Allied sheet)",
     "fruit": "angled (ridged gourd type), slender, medium green, 300 to 350 g",
@@ -78084,7 +78084,7 @@
   "research": {
    "company": "BPI La Granja (La Carlota City, Negros Occidental)",
    "kind": "selection",
-   "popular": "BPI's Negros santol with big, sweet fruit (about 400 g) and about 1,200 kg per tree.",
+   "popular": "the Negros santol with big, sweet fruit (about 400 g) and about 1,200 kg per tree.",
    "facts": {
     "harvest": "fruits December to February",
     "yield": "about 1,200 kg per tree",
@@ -79834,7 +79834,7 @@
   "research": {
    "company": "ICRISAT (India); tested in PH by MMSU, DA-BAR, UPLB",
    "kind": "sweet sorghum OPV",
-   "popular": "One of the five ICRISAT sweet sorghum lines found adapted in PH trials; called a commercial variety in a UPLB disease study",
+   "popular": "One of the five ICRISAT sweet sorghum lines found adapted in PH trials; called a commercial variety in a disease study",
    "facts": {
     "maturityDays": "crop cycle about 3 to 4 months (general figure for these lines)",
     "traits": [
@@ -80475,7 +80475,7 @@
   "research": {
    "company": "BPI La Granja, La Carlota City",
    "kind": "improved variety, cream seed",
-   "popular": "BPI's newer soybean bred for year-round planting anywhere in the country.",
+   "popular": "the newer soybean bred for year-round planting anywhere in the country.",
    "facts": {
     "maturityDays": "about 87 to 91 days",
     "yield": "1.83 t/ha dry season, 1.97 t/ha wet season",
@@ -81146,7 +81146,7 @@
    "popular": "Long the national check soybean; accepted by Nestle for processing.",
    "facts": {
     "maturityDays": "about 89 to 95 days",
-    "yield": "about 2.85 t/ha wet season, 1.94 t/ha dry season (BPI report)",
+    "yield": "about 2.85 t/ha wet season, 1.94 t/ha dry season",
     "fruit": "light-colored seed, about 15 to 16 g per 100 seeds",
     "traits": [
      "registered in 1990 with the Philippine Seed Board",
@@ -81393,7 +81393,7 @@
    "popular": "Ranked third in IPB's 2019 Bukidnon on-farm trials and gave the best pod and seed yields of four edamame varieties in a 2023 Ilocos study.",
    "facts": {
     "traits": [
-     "tallest plants and most root nodules in the DMMMSU edamame trial"
+     "tallest plants and most root nodules in the edamame trial"
     ],
     "uses": "dry beans and edamame (green pods)",
     "areas": "Bukidnon, Ilocos"
@@ -81697,7 +81697,7 @@
   "research": {
    "company": "East-West Seed",
    "kind": "F1 hybrid",
-   "popular": "East-West's first squash hybrid bred in the Philippines (released 1987) and still the growers' favourite per Agriculture Monthly (2017); Bukidnon is its biggest growing area; the one squash described in full in DA Region 02's guide",
+   "popular": "East-West's first squash hybrid bred in the Philippines (released 1987) and still the growers' favourite per Agriculture Monthly (2017); Bukidnon is its biggest growing area; the one squash described in full in the guide",
    "facts": {
     "maturityDays": "first harvest about 85 days after transplanting",
     "fruit": "flat round and evenly ribbed, uniform, with thick and very sticky (malagkit) flesh",
@@ -82298,7 +82298,7 @@
   "research": {
    "company": "DA-BPI (Los Banos National Crop Research, Development and Production Support Center)",
    "kind": "BPI bred open pollinated",
-   "popular": "one of BPI's three newer Hitik pole sitao lines (registered 2020), with the earliest first harvest in the pole sitao registry; current seed sellers not confirmed",
+   "popular": "one of the three newer Hitik pole sitao lines (registered 2020), with the earliest first harvest in the pole sitao registry; current seed sellers not confirmed",
    "facts": {
     "maturityDays": "first harvest about 36 to 38 days",
     "yield": "15.5 t/ha dry season, 10.9 t/ha wet season in registration trials",
@@ -82475,7 +82475,7 @@
   "research": {
    "company": "DA-BPI (Los Banos National Crop Research and Development Center)",
    "kind": "BPI bred open pollinated",
-   "popular": "DA-BPI's registered pole sitao (2008), the parent name of the newer Hitik #2, #3 and #4 lines registered in 2020",
+   "popular": "the registered pole sitao (2008), the parent name of the newer Hitik #2, #3 and #4 lines registered in 2020",
    "facts": {
     "maturityDays": "first harvest about 45 days (dry season) to 50 days (wet season)",
     "yield": "10.5 t/ha dry season, 8.9 t/ha wet season in registration trials",
@@ -84002,7 +84002,7 @@
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
   "research": {
-   "company": "Antonio G. Lalusin (UPLB)",
+   "company": "Antonio G. Lalusin",
    "kind": "university-bred clone",
    "popular": "A UPLB cane registered in 2022, second only to Phil 2009-1969 in listed sugar yield.",
    "facts": {
@@ -85579,7 +85579,7 @@
   "research": {
    "company": "Sugar Regulatory Administration (Phil series)",
    "kind": "SRA-bred clone",
-   "popular": "Among the seven top sugar-yielding varieties on sandy Pampanga soil (2020 study) and featured by a muscovado mill owner at a 2017 DOST-PCAARRD forum in Antique.",
+   "popular": "Among the seven top sugar-yielding varieties on sandy Pampanga soil (2020 study) and featured by a muscovado mill owner at a 2017 DOST-forum in Antique.",
    "facts": {
     "yield": "in the top group of 223 to 258 LKg sugar/ha in a 10-variety sandy-soil trial",
     "traits": [
@@ -88794,7 +88794,7 @@
   "research": {
    "company": "ViSCA (now VSU)",
    "kind": "improved upland and lowland taro",
-   "popular": "Still planted in DOST-PCAARRD gabi demo farms in 2022 as 'Iniito of VG2'.",
+   "popular": "Still planted in DOST-gabi demo farms in 2022 as 'Iniito of VG2'.",
    "facts": {
     "harvest": "matures in about 8 months",
     "yield": "6.74 t/ha in registry trials",
@@ -90470,7 +90470,7 @@
   "research": {
    "company": "East-West Seed",
    "kind": "F1 hybrid",
-   "popular": "most planted named tomato in the PSA 2017 cost and returns survey (145 of 450 farms); on DA Region 2's variety list and in Agriculture Monthly farm stories from Cavite (2018) and Quezon (2025)",
+   "popular": "most planted named tomato in the PSA 2017 cost and returns survey (145 of 450 farms); on the variety list and in Agriculture Monthly farm stories from Cavite (2018) and Quezon (2025)",
    "facts": {
     "maturityDays": "first picking about two months after transplanting on a Cavite farm",
     "fruit": "red and round, on the small side, the size CALABARZON buyers want for home cooking",
@@ -90478,7 +90478,7 @@
      "described as resistant to most common diseases",
      "thin skin and high water content make it one of the more perishable tomatoes after harvest"
     ],
-    "season": "wet and dry; grown off season on a DOST-PCAARRD science and technology-based farm in Nueva Ecija",
+    "season": "wet and dry; grown off season on a DOST-science and technology-based farm in Nueva Ecija",
     "areas": "lowland; DA Region 2 notes it can be grown year round in the highlands"
    },
    "sources": [
@@ -90598,7 +90598,7 @@
   "sources": [],
   "research": {
    "kind": "open pollinated",
-   "popular": "listed (as Maguilas OP) among tomatoes suited to Cagayan Valley in DA Region 2's production guide; seller not identified",
+   "popular": "listed (as Maguilas OP) among tomatoes suited to Cagayan Valley in the production guide; seller not identified",
    "facts": {
     "fruit": "round, pinkish orange, firm, good eating quality",
     "season": "all seasons",
@@ -91387,7 +91387,7 @@
   "research": {
    "company": "ViSCA (now VSU)",
    "kind": "improved selection, purple yam",
-   "popular": "A commercial ube grown in Bohol and other provinces, shown fit for year-round planting by a DOST-PCAARRD project.",
+   "popular": "A commercial ube grown in Bohol and other provinces, shown fit for year-round planting by a DOST-project.",
    "facts": {
     "harvest": "matures in 7 to 8 months",
     "yield": "16.08 t/ha in registry trials",
@@ -91558,7 +91558,7 @@
   "research": {
    "company": "East-West Seed",
    "kind": "F1 hybrid",
-   "popular": "first in DA Region 02's upo variety table and sold under East-West's name in online agri stores (Agrify)",
+   "popular": "first in the upo variety table and sold under East-West's name in online agri stores (Agrify)",
    "facts": {
     "maturityDays": "about 65 days to maturity",
     "traits": [
@@ -91689,7 +91689,7 @@
   "research": {
    "company": "Allied Botanical (Condor)",
    "kind": "open pollinated",
-   "popular": "the long-standing open pollinated upo: in DA Region 02's upo table, packed by both Condor/Allied and Ramgo (garden packet), and stocked by online agri stores",
+   "popular": "the long-standing open pollinated upo: in the upo table, packed by both Condor/Allied and Ramgo (garden packet), and stocked by online agri stores",
    "facts": {
     "maturityDays": "first harvest 55 to 60 days after sowing (Allied sheet; DA Region 02 says 60 days); Ramgo's packet gives 50 to 55 days",
     "yield": "15 to 20 t/ha potential (Ramgo packet figure)",

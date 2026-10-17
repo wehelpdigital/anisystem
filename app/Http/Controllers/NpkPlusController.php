@@ -127,7 +127,7 @@ class NpkPlusController extends Controller
     {
         $v = Validator::make($request->all(), [
             'town' => 'nullable|string|max:120', 'province' => 'nullable|string|max:120', 'lat' => 'nullable|numeric|between:-60,60', 'lng' => 'nullable|numeric|between:-180,180',
-            'from' => 'nullable|date', 'days' => 'nullable|integer|min:20|max:400',
+            'from' => 'nullable|date', 'days' => 'nullable|integer|min:20|max:400', 'crop' => 'nullable|string|max:40', 'barangay' => 'nullable|string|max:160',
         ]);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
@@ -167,7 +167,33 @@ class NpkPlusController extends Controller
             'window' => ['from' => $from->toDateString(), 'days' => $days, 'months' => array_keys($months)],
             'years' => $years, 'avg' => $avg, 'enso' => \App\Support\ClimateStore::enso(), 'through' => $hist['through'] ?? null,
             'monthsAhead' => (int) max(0, now('Asia/Manila')->startOfDay()->diffInMonths($from->copy()->startOfDay(), false)),
+            'area' => self::areaCard($request->input('province'), $request->input('town'), $request->input('barangay'), $request->input('crop')),
         ]);
+    }
+
+    /**
+     * The area's typical soil for the soil step (the soil atlas, 2026-10-18):
+     * what the page may offer to fill the answers the farmer left unknown,
+     * in the same vocabulary the Crop Protocol fills (SoilAtlas::fill), so a
+     * lot with no soil test reaches the same need in both. Null where the
+     * atlas has nothing for the place.
+     */
+    private static function areaCard(?string $province, ?string $town, ?string $barangay, ?string $crop): ?array
+    {
+        $a = \App\Support\SoilAtlas::for($province, $town, $barangay, $crop);
+        if (! $a || (! $a['tests'] && empty($a['texture']['typical']) && $a['phMid'] === null && empty($a['salinity']['surveyed']))) {
+            return null;
+        }
+        $pl = $a['place'];
+
+        return [
+            'where' => trim(implode(', ', array_filter([$pl['level'] === 'barangay' ? $pl['barangay'] : null, $pl['town'], $pl['province']]))),
+            'level' => $pl['level'], 'samples' => $a['samples'], 'year' => $a['year'],
+            'tests' => (object) $a['tests'], 'texture' => $a['texture']['typical'] ?? null, 'ph' => $a['phMid'],
+            'phBand' => $a['ph']['band'] ?? null, 'phRange' => $a['ph']['range'] ?? null,
+            'salt' => $a['salinity']['risk'] ?? null, 'conditions' => $a['conditions'],
+            'lines' => array_values(array_filter(explode("\n", \App\Support\SoilAtlas::words($a, 'card')))),
+        ];
     }
 
     /**
@@ -495,6 +521,8 @@ class NpkPlusController extends Controller
         $bio = collect(json_decode((string) $calc->lines, true) ?: [])->filter(fn ($l) => ! empty($l['estimate']))->pluck('name')->filter()->unique()->sort()->values()->all();
         $month = $p['plantingDate'] ? \Illuminate\Support\Carbon::parse($p['plantingDate'])->format('F Y') : 'not given';
         $province = \App\Support\ClimateRecord::placeKey((string) $p['location'], 'PH')['place'];
+        // The area's soil is the app's own (the soil atlas, 2026-10-18): asked of the web only where the atlas has nothing.
+        $atlas = \App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $calc->crop);
         $n = 1;
 
         return "Research for a fertilizer plan check in the Philippines. Use web search and write plain notes (not JSON).\n"
@@ -504,11 +532,11 @@ class NpkPlusController extends Controller
             . (! empty($res['needs'])
                 ? ($n++) . ') the DA, BSWM or PhilRice guide\'s timing of this crop\'s fertilizer by growth stage in this province or region (which stage gets which share); the kilograms per hectare are already counted by the app, do not look them up; '
                 : ($n++) . ') the DA, BSWM or PhilRice fertilizer recommendation for this crop in this province or region, and its timing by growth stage; ')
-            . ($n++) . ') the soils of this area (pH, sodic, saline, acid sulfate, deficiencies such as zinc) from BSWM soil surveys or studies; '
+            . ($atlas ? '' : ($n++) . ') the soils of this area (pH, sodic, saline, acid sulfate, deficiencies such as zinc) from soil surveys or studies; ')
             . ($bio ? ($n++) . ') for these biofertilizers (' . implode(', ', $bio) . '), what field trials show they can replace; ' : '')
             // Real harvests (2026-10-17, the owner: "we need real people data").
             . ($n++) . ") REAL HARVESTS: the most recent derbies, techno demos and farmers' reported harvests of this crop (and this variety, when named) in this province or region, newest first: the yield (t/ha, or cavans per hectare with the kilos per cavan), the season, the place and the fertilizer used where reported. Cite each source. "
-            . 'The app keeps the field\'s weather history and the ENSO state: do not look those up. At most 900 words.';
+            . 'The app keeps the field\'s weather history and the ENSO state' . ($atlas ? ' and the area\'s soil survey' : '') . ': do not look those up. At most 900 words.';
     }
 
     private function prompt(array $p, object $calc): string
@@ -518,6 +546,7 @@ class NpkPlusController extends Controller
             . 'Place: ' . $p['location'] . "\n"
             . 'Soil as the farmer knows it: ' . (SoilConditions::words($p['soilConditions'], $p['phValue']) ?: 'not stated') . "\n"
             . (SoilConditions::guidance($p['soilConditions']) ? SoilConditions::guidance($p['soilConditions']) . "\n" : '')
+            . self::areaSoil($p, $calc)
             . 'Water: ' . (self::WATER[$p['water']] ?? $p['water']) . "\n"
             . FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $calc->crop ?: null, '')
             . 'Planting date: ' . ($p['plantingDate'] ?: 'not given') . '; how the farmer means to apply it: ' . (self::TIMING[$p['timing']] ?? $p['timing']) . "\n"
@@ -533,6 +562,14 @@ class NpkPlusController extends Controller
             . '"warnings":[""],"confidence":"low|medium|high"}';
     }
 
+    /** The area's typical soil (the soil atlas), as prompt lines; '' where the atlas knows nothing of the place. */
+    private static function areaSoil(array $p, object $calc): string
+    {
+        $w = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $calc->crop));
+
+        return $w !== '' ? $w . "\n" : '';
+    }
+
     /** The field's weather record for the months the crop stands in the field (the climate shelf, 2026-10-18). */
     private static function historyFor(array $p): string
     {
@@ -542,7 +579,9 @@ class NpkPlusController extends Controller
             $focus[] = (int) $from->copy()->startOfMonth()->addMonths($i)->month;
         }
 
-        return \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, $focus, true);
+        return \App\Support\ClimateStore::wordsFor((string) $p['location'], null, null, $focus, true)
+            // The town's twenty years of storms and floods (the hazard book), so the split timing avoids the months they hit most years.
+            . (class_exists(\App\Support\HazardBook::class) && method_exists(\App\Support\HazardBook::class, 'wordsFor') ? \App\Support\HazardBook::wordsFor((string) $p['location'], $focus, 1200) : '');
     }
 
     private function parse(string $text): ?array
