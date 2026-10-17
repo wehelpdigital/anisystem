@@ -788,11 +788,11 @@ PROMPT;
             $focus[] = ($m - 1 + $i) % 12 + 1;
         }
         $weather = ClimateStore::wordsFor((string) $p['location'], null, null, $focus);
+        // The town's own record when the hazard book knows it, the farmer's months marked.
+        $kept = ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], true, $focus);
 
         return ($kept !== '' ? $kept : "THE PLACE'S RISK RECORD: none kept for " . $rk['place'] . " yet; rely on the research notes below, and say so in dataGaps where they are thin.\n")
             . ($weather !== '' ? "\n" . $weather : '');
-        // The town's own record when the hazard book knows it, the farmer's months marked.
-        $kept = ClimateRecord::words($rk['townKey'] ?? $rk['key'], $rk['where'] ?? $rk['place'], true, $focus);
     }
 
     /**

@@ -1007,10 +1007,6 @@ Version: {$versionName} (one of several versions of this protocol)" : '';
         } catch (\Throwable $e) {
             $needText = '';
         }
-
-        return <<<PROMPT
-You are reviewing a crop protocol a farmer wrote for themselves in the Protocol Builder. Read it as an experienced agronomist in {$region} would, and judge it honestly: is it complete, is the timing right, is anything missing, is anything risky or wasteful.
-
         // The farmer's own town in the hazard book (2026-10-18): the months storms, floods and dry spells hit there, so the timing is judged for where it is grown.
         $placeText = '';
         try {
@@ -1023,6 +1019,10 @@ You are reviewing a crop protocol a farmer wrote for themselves in the Protocol 
         } catch (\Throwable $e) {
             report($e);
         }
+
+        return <<<PROMPT
+You are reviewing a crop protocol a farmer wrote for themselves in the Protocol Builder. Read it as an experienced agronomist in {$region} would, and judge it honestly: is it complete, is the timing right, is anything missing, is anything risky or wasteful.
+
 THE PROTOCOL
 Title: {$p->title}
 Crop: {$cropLabel}
