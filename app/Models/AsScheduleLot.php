@@ -113,8 +113,9 @@ class AsScheduleLot extends BaseModel
         // The variety's own days when the farmer typed none (2026-10-18): its record or its
         // registration trials, kept only when near the crop's usual length (a day count read
         // in the wrong unit never stretches a stage table).
-        $variety = $this->varietyDays();
-        if ($variety && $crop && $variety >= $crop * 0.65 && $variety <= $crop * 1.45) {
+        // The one rule (App\Support\VarietyBook::nearUsual), so the season's lots, When to Plant and Anee Auto time it alike.
+        $variety = $crop ? \App\Support\VarietyBook::nearUsual($this->varietyDays(), $this->crop) : null;
+        if ($variety) {
             return $variety;
         }
 

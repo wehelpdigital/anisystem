@@ -107,8 +107,10 @@ final class ClimateRecord
         [$from, $to] = self::span();
         $out = [];
         if (str_starts_with($key, 'ph:') || str_starts_with($key, 'ph-region:')) {
+            // Every year the book holds (2005 on), as HazardBook::words reads them: a town's
+            // record says the same span and the same month counts in every module (2026-10-19).
             foreach (HazardBook::years($key) as $y => $r) {
-                if ($y >= $from && $y <= $to) {
+                if ($y <= $to) {
                     $r->researchedAt = $r->builtAt;
                     $r->searched = false;
                     $r->book = true;
@@ -148,6 +150,11 @@ final class ClimateRecord
         $out = [];
         for ($y = $from; $y <= $to; $y++) {
             $r = $have[$y] ?? null;
+            // A year the hazard book holds is never searched: the book refreshes itself (hazards:refresh),
+            // and harvest() never writes over it, so a search for its running year was paid on every run.
+            if ($r && ! empty($r->book)) {
+                continue;
+            }
             if (! $r || (! $r->complete && (! $r->researchedAt || now()->diffInDays($r->researchedAt, true) >= self::REFRESH_DAYS))) {
                 $out[] = $y;
             }

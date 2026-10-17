@@ -396,6 +396,73 @@ final class HazardBook
     }
 
     /**
+     * The storm odds of a place by calendar month, counted the way the prompt
+     * block's tally counts them (block()): the years with a storm that month,
+     * of all the years read, and how many storms began here that month. So a
+     * chart drawn from these and a prompt that reads the block say the same
+     * percentage (2026-10-19, one lot gives the same odds in every module).
+     * Null when the book does not know the place.
+     *
+     * @return array{place:string, years:int, span:array{0:int,1:int}, months:array<int, array{years:int, chance:int, storms:int, severe:int}>}|null
+     */
+    public static function odds(?string $location, ?float $lat = null, ?float $lng = null): ?array
+    {
+        try {
+            $w = $location ? self::fromLocation($location) : ['province' => null, 'town' => null];
+            $pl = self::place($w['province'], $w['town'], $lat, $lng);
+            if (! $pl) {
+                return null;
+            }
+            [$rows, $level] = self::rowsFor($pl);
+            if (! $rows) {
+                return null;
+            }
+            $hit = array_fill(1, 12, 0);
+            $all = array_fill(1, 12, 0);
+            $sev = array_fill(1, 12, 0);
+            foreach ($rows as $r) {
+                $seen = [];
+                $seenSev = [];
+                foreach ((array) json_decode((string) $r->events, true) as $e) {
+                    if (($e['kind'] ?? '') !== 'storm' || empty($e['months'])) {
+                        continue;
+                    }
+                    foreach ((array) $e['months'] as $m) {
+                        $m = (int) $m;
+                        if ($m < 1 || $m > 12) {
+                            continue;
+                        }
+                        if (empty($seen[$m])) {
+                            $hit[$m]++;
+                            $seen[$m] = true;
+                        }
+                        if (($e['impact'] ?? '') === 'severe' && empty($seenSev[$m])) {
+                            $sev[$m]++;
+                            $seenSev[$m] = true;
+                        }
+                    }
+                    $first = (int) $e['months'][0];
+                    if ($first >= 1 && $first <= 12) {
+                        $all[$first]++;
+                    }
+                }
+            }
+            $n = count($rows);
+            $months = [];
+            for ($m = 1; $m <= 12; $m++) {
+                $months[$m] = ['years' => $hit[$m], 'chance' => (int) round(100 * $hit[$m] / max(1, $n)), 'storms' => max($all[$m], $hit[$m]), 'severe' => $sev[$m]];
+            }
+
+            return ['place' => $level === 'town' ? $pl['where'] : self::label($pl['province']), 'years' => $n,
+                'span' => [(int) array_key_first($rows), (int) array_key_last($rows)], 'months' => $months];
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+    }
+
+    /**
      * The history of a place for a prompt: what the months held over the
      * years, the worst storms near it, the floods, droughts and the rest,
      * and (with $lines) one line a year. $focus marks the months an

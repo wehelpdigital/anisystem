@@ -563,6 +563,45 @@ class VarietyBook
         return $line;
     }
 
+    /**
+     * A variety's days to harvest for any module that times a crop by it, by
+     * the one rule a season's lot uses (AsScheduleLot::maturityDays): the
+     * record's days (its registration trials fill a record that has none),
+     * kept only when near the crop's usual length (0.65x to 1.45x), so a day
+     * count read in the wrong unit never stretches a calendar. Null when the
+     * variety is unknown, has no days, or the crop is a tree crop.
+     */
+    public static function days(?string $crop, ?string $variety): ?int
+    {
+        $name = trim((string) $variety);
+        if ($name === '' || ! $crop || CropCatalog::isPerennial((string) $crop)) {
+            return null;
+        }
+        try {
+            $rec = self::find((string) $crop, $name);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+        if (! $rec || empty($rec['days']) || ($rec['daysUnit'] ?? 'days') !== 'days') {
+            return null;
+        }
+
+        return self::nearUsual((int) round((float) $rec['days']), $crop);
+    }
+
+    /** A variety's day count when it sits within 0.65x to 1.45x of the crop's usual length, else null. */
+    public static function nearUsual(?int $days, ?string $crop): ?int
+    {
+        $usual = CropStages::maturity($crop);
+        if (! $days || $days <= 0) {
+            return null;
+        }
+
+        return ! $usual || ($days >= $usual * 0.65 && $days <= $usual * 1.45) ? $days : null;
+    }
+
     /** Whether the name is known (on the record or kept from an earlier lookup), so no research is needed. */
     public static function known(?string $cropKey, ?string $name): bool
     {
@@ -641,7 +680,8 @@ class VarietyBook
                 $bits[] = 'not registered, seller figures';
             }
             if (! empty($r['seller'])) {
-                $bits[] = 'the seller says: ' . $r['seller'];
+                // A seller's note may quote an agency ("listed by DA Region 2"): the figure stays, whose it is goes (GovSource).
+                $bits[] = 'the seller says: ' . GovSource::scrub((string) $r['seller']);
             }
             // What its registration papers say, in short (2026-10-18); never where it came from.
             if (($tw = self::trialWords($r)) !== '') {

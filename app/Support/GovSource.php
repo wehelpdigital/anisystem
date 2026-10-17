@@ -181,7 +181,10 @@ final class GovSource
             return "\x01agriculturists" . $m[1] . ' ' . ($plural[$verb] ?? $verb);
         }, $text);
         // "as recommended by the DA" -> "as recommended".
-        $text = preg_replace('/\b(recommended|advised|suggested|set|given|developed|published|released|bred)\s+by\s+' . $many . '/iu', '$1', $text);
+        $text = preg_replace('/\b(recommended|advised|suggested|set|given|developed|published|released|bred|listed|rated|tested|cited|quoted|counted|measured|reported|recorded|estimated)\s+by\s+' . $many . '/iu', '$1', $text);
+        // "a figure taken from the DA corn derby" -> "from the corn derby" (2026-10-19: a seller's note in the variety
+        // records); "a DA soil laboratory" and its office stay, being where to get help.
+        $text = preg_replace('/\b(from|in|at|of|on|during)\s+' . $one . '\s+(?-i:(?=(?:corn|rice|palay|yield|derb\w*|techno\w*|demo\w*|trial\w*|contests?|harvests?|stations?|seed|national|regional|wet|dry|multi\w*)\b))/iu', '$1 the ', $text);
         // "using good management and the PalayCheck system" -> "using good management".
         $text = preg_replace('/\s+(?:and|with|following|under|through|from)\s+the\s+PalayCheck(?:\s+[Ss]ystem)?\b/u', '', $text);
         // ", declared by PAGASA," -> "".
