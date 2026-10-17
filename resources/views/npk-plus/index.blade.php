@@ -254,13 +254,16 @@
     .np-area-l { margin: .5rem 0 0; padding-left: 1rem; list-style: disc; font-size: .82rem; line-height: 1.5; color: var(--color-gray-700); }
     .np-area-l li + li { margin-top: .2rem; }
     .np-area-b { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .7rem; }
-    .np-area-use { padding: .5rem .85rem; border-radius: .7rem; border: 0; cursor: pointer; font-weight: 800; font-size: .82rem; color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); transition: transform .28s var(--np-ease), opacity .28s var(--np-ease); }
+    .np-area-use { max-width: 20rem; overflow: hidden; white-space: nowrap; padding: .5rem .85rem; border-radius: .7rem; border: 0; cursor: pointer; font-weight: 800; font-size: .82rem; color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518);
+        transition: transform .28s var(--np-ease), opacity .28s var(--np-ease), max-width .28s var(--np-ease), padding .28s var(--np-ease); }
     .np-area-use:hover { transform: translateY(-1px); }
     .np-area-no { padding: .5rem .85rem; border-radius: .7rem; border: 1px solid var(--color-gray-200); background: transparent; cursor: pointer; font-weight: 700; font-size: .82rem; color: var(--color-gray-700); }
-    .np-area.is-on .np-area-use { display: none; }
+    .np-area.is-on .np-area-use { opacity: 0; max-width: 0; padding-left: 0; padding-right: 0; pointer-events: none; }
+    .np-area-say:not([hidden]) { animation: npAreaIn .28s var(--np-ease); }
+    @keyframes npAreaIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
     .np-area-say { margin-top: .5rem; font-size: .78rem; font-weight: 700; color: #4d7c0f; }
     html.dark .np-area-say { color: #a3e635; }
-    @media (prefers-reduced-motion: reduce) { .np-area-use { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .np-area-use { transition: none; } .np-area-say:not([hidden]) { animation: none; } }
     html.dark .np-testbox { border-color: #2b3a1c; }
 
     /* What the plan gives: three tabs. */
