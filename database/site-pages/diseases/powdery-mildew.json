@@ -90,7 +90,7 @@
       "items": [
         "Round white spots, like flour, appear on the leaves, the leaf stalks and the stems.",
         "The spots spread until whole leaves look dusted with powder on top and below.",
-        "Infected leaves turn yellow, then brown, dry out and die early.",
+        "Sick leaves yellow, brown, dry up and die before their time.",
         "On pepper and tomato, pale yellow blotches show on top while white powder grows only underneath.",
         "Pepper leaves with the disease tend to drop off the plant.",
         "Fruit left bare by the dying leaves get sunburned and ripen too early."
@@ -109,7 +109,7 @@
     },
     {
       "type": "text",
-      "text": "Powdery mildew seldom kills a plant, but it steals the leaves that feed the fruit. The Pacific Pests and Pathogens sheet says it cuts growth and yield. Then early leaf death causes fruit sunburn, early ripening, poor storage and poor flavor. Also, sick plants catch other diseases more easily, gummy stem blight in particular.\n\nCornell University gives a clear action threshold for cucurbits. Start checking when the first fruits form. Then begin a fungicide program when you find one leaf with symptoms out of 50 older leaves, looking at both sides. Waiting past that point weakens control and helps the fungus build resistance."
+      "text": "Powdery mildew seldom kills a plant, but it steals the leaves that feed the fruit. The Pacific Pests and Pathogens sheet says it cuts growth and yield. Then early leaf death causes fruit sunburn, early ripening, poor storage and poor flavor. Also, sick plants catch other diseases more easily, gummy stem blight in particular.\n\nCucurbits have a clear point at which to act. Start checking once the first fruits form. Then start spraying a fungicide when 1 in every 50 older leaves you check, top and underside, shows the disease. Waiting past that point weakens control and helps the fungus build resistance."
     },
     {
       "type": "heading",

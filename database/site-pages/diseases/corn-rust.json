@@ -83,7 +83,7 @@
     },
     {
       "type": "text",
-      "text": "Look at both sides of the leaf. Common rust pustules are circular to elongate, powdery, and brown to brick red, scattered over both leaf surfaces. Southern rust pustules are round to oval, light cinnamon brown to orange, and packed in dense groups mostly on the upper surface. Rub a pustule with your finger. If it leaves rusty brown powder, it is rust."
+      "text": "Look at both sides of the leaf. Common rust makes powdery pustules, round to long and brown to brick red. They are spread over both faces of the leaf. Southern rust pustules are round or oval and pale cinnamon brown to orange. They sit crowded close together, mostly on the top of the leaf. Rub a pustule with your finger. If it leaves rusty brown powder, it is rust."
     },
     {
       "type": "list",
@@ -208,7 +208,7 @@
       "items": [
         {
           "q": "What is the difference between common rust and southern rust?",
-          "a": "Common rust (Puccinia sorghi) has brick red to brown pustules on both sides of the leaf and prefers cooler weather. Southern rust (Puccinia polysora) has orange to cinnamon pustules in dense groups on the upper side and likes warm weather."
+          "a": "Common rust (Puccinia sorghi) puts brick red to brown pustules on both faces of the leaf. It likes cooler weather. Southern rust (Puccinia polysora) has orange to cinnamon pustules in dense groups on the upper side and likes warm weather."
         },
         {
           "q": "Do I need to spray for corn rust?",

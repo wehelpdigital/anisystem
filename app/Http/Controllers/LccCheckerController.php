@@ -88,8 +88,13 @@ class LccCheckerController extends Controller
     public static function varieties(): array
     {
         $rows = [];
+        // A variety the catalogue has no days for yet takes them from its registration trials (2026-10-18).
+        $book = [];
+        foreach (\App\Support\VarietyBook::rows('rice') as $r) {
+            $book[$r['name']] = $r;
+        }
         foreach (RiceVarieties::all() as $v) {
-            $days = (int) round((float) ($v['maturity'] ?? 0));
+            $days = (int) round((float) ($v['maturity'] ?? ($book[$v['name'] ?? '']['days'] ?? 0)));
             if (empty($v['name']) || $days < 60 || $days > 200) {
                 continue;
             }
@@ -101,6 +106,15 @@ class LccCheckerController extends Controller
                 'h' => ($v['type'] ?? '') === 'hybrid' ? 1 : 0,
                 'p' => ! empty($v['preferred']) ? 1 : 0,
             ];
+        }
+        // The registered varieties only the trials hold, with their trial days.
+        foreach ($book as $r) {
+            $days = (int) round((float) ($r['days'] ?? 0));
+            if (empty($r['trialsOnly']) || $days < 60 || $days > 200) {
+                continue;
+            }
+            $rows[] = ['n' => (string) $r['name'], 'l' => (string) ($r['aliases'][0] ?? ''), 't' => implode(', ', array_slice((array) $r['aliases'], 1, 3)),
+                'd' => $days, 'h' => $r['type'] === 'hybrid' ? 1 : 0, 'p' => 0];
         }
 
         return $rows;

@@ -102,15 +102,189 @@ final class VarietyFinder
             $items = array_map([self::class, 'crop'], CropVarieties::forCrop($crop));
             $meta = CropVarieties::book()['crops'][$crop] ?? [];
         }
+        // What each variety's registration trials showed (2026-10-18), and the registered varieties only the trials hold.
+        $items = self::withTrials($items, $crop);
         $units = array_count_values(array_filter(array_column($items, 'du')));
         arsort($units);
 
         return [
             'crop' => ['key' => $crop, 'local' => $row[0], 'name' => $row[1], 'icon' => $row[2], 'count' => count($items),
                 'unit' => array_key_first($units) ?? 'days', 'harvest' => (string) ($meta['harvest'] ?? 'days to harvest'),
-                'source' => $crop === 'rice' ? 'PhilRice\'s seed database and the NSIC registry' : 'the NSIC registry of the Bureau of Plant Industry, and seed sellers for the few never registered'],
+                'source' => $crop === 'rice' ? 'anee.io\'s variety records' : 'anee.io\'s variety records, and seed sellers for the few never registered'],
             'filters' => $crop === 'rice' ? self::riceFilters($items) : self::cropFilters($crop, $items),
             'items' => array_map([self::class, 'lean'], $items),
+        ];
+    }
+
+    /** Stress names as the finder shows them. */
+    private const STRESS = ['salinity' => 'Salt', 'submergence' => 'Flooding', 'drought' => 'Drought', 'cold' => 'Cold', 'heat' => 'Heat', 'lodging' => 'Lodging', 'acidity' => 'Acid soil'];
+
+    /**
+     * The finder's varieties with their registration trials joined on
+     * (`tr`, App\Support\VarietyRegistry) and a figure the record lacks
+     * filled from them; then the registered varieties only the trials
+     * hold, in the same shape. Never a source in what it shows.
+     */
+    private static function withTrials(array $items, string $crop): array
+    {
+        try {
+            [$by, $rest] = VarietyRegistry::split($crop);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return $items;
+        }
+        if (! $by && ! $rest) {
+            return $items;
+        }
+        foreach ($items as &$it) {
+            $t = $by[$it['n']] ?? null;
+            if (! $t) {
+                continue;
+            }
+            $it['tr'] = self::trialView($t, $it);
+            if ($it['d'] === null && ! empty($t['days'])) {
+                $it['d'] = (int) round($t['days']);
+                $it['du'] = $it['du'] ?: 'days';
+            }
+            if ($it['ya'] === null && ! empty($t['yieldAvg']) && (($t['facts']['yieldUnit'] ?? 't/ha') === 't/ha')) {
+                $it['ya'] = (float) $t['yieldAvg'];
+                $it['ym'] ??= ! empty($t['yieldTop']) ? (float) $t['yieldTop'] : null;
+                $it['yu'] = $it['yu'] ?: 't/ha';
+                $it['yt'] = null;
+            }
+            if (! $it['res']) {
+                $it['res'] = self::trialRatings($t);
+            }
+        }
+        unset($it);
+        foreach ($rest as $t) {
+            $items[] = self::trialOnly($t, $crop);
+        }
+
+        return $items;
+    }
+
+    /** The ratings of a trial row in the finder's shape. */
+    private static function trialRatings(array $t): array
+    {
+        $out = [];
+        foreach ((array) ($t['facts']['ratings'] ?? []) as $label => $code) {
+            if (is_string($code) && ($r = self::rating(Str::ucfirst((string) $label), $code))) {
+                $out[] = $r;
+            }
+        }
+
+        return $out;
+    }
+
+    /** What the detail sheet shows of the trials: plain words and numbers. */
+    private static function trialView(array $t, ?array $it = null): array
+    {
+        $f = (array) ($t['facts'] ?? []);
+        $unit = (string) ($f['yieldUnit'] ?? 't/ha');
+        $yb = (array) ($f['yieldBy'] ?? []);
+        $db = (array) ($f['daysBy'] ?? []);
+        $sea = [];
+        foreach (['dry' => 'Dry season', 'wet' => 'Wet season'] as $k => $label) {
+            if (isset($yb[$k]) || isset($db[$k])) {
+                $sea[] = [$label, isset($yb[$k]) ? (float) $yb[$k] : null, isset($db[$k]) ? (int) round($db[$k]) : null];
+            }
+        }
+        foreach ((array) ($yb['islands'] ?? []) as $isl => $v) {
+            if (is_numeric($v)) {
+                $sea[] = [(string) $isl, (float) $v, null];
+            }
+        }
+        $adv = [];
+        foreach (array_slice((array) ($f['advantage'] ?? []), 0, 3) as $a) {
+            if (isset($a['pct'])) {
+                $adv[] = self::num(abs((float) $a['pct'])) . '% ' . ((float) $a['pct'] >= 0 ? 'more' : 'less') . ' than ' . ($a['over'] ?? 'the check variety')
+                    . (! empty($a['season']) && $a['season'] !== 'across' ? ' in the ' . $a['season'] . ' season' : '');
+            }
+        }
+        $te = (array) ($f['tested'] ?? []);
+        $tried = trim(implode(', ', array_filter([
+            ! empty($te['seasons']) ? $te['seasons'] . ' ' . ((int) $te['seasons'] === 1 ? 'season' : 'seasons') : null,
+            ! empty($te['locations']) ? $te['locations'] . ' ' . ((int) $te['locations'] === 1 ? 'site' : 'sites') : null,
+            $te['years'] ?? null,
+        ])));
+        $st = [];
+        foreach ((array) ($t['stress'] ?? []) as $k => $w) {
+            if (is_string($w) && $w !== '' && isset(self::STRESS[$k])) {
+                $st[] = [self::STRESS[$k], Str::ucfirst($w)];
+            }
+        }
+        $diff = null;
+        $c = (array) ($t['conflicts'] ?? []);
+        if ($it && isset($c['days']['ours'], $c['days']['trials'])) {
+            $diff = 'Our record gives ' . self::num($c['days']['ours'], 0) . ' days; its registration trials averaged ' . self::num($c['days']['trials'], 0) . '.';
+        } elseif ($it && isset($c['yield']['ours'], $c['yield']['trials'])) {
+            $diff = 'Our record gives ' . self::num($c['yield']['ours'], 2) . ' t/ha; its registration trials averaged ' . self::num($c['yield']['trials'], 2) . '.';
+        }
+
+        return array_filter([
+            'sea' => $sea,
+            'u' => $unit,
+            'avg' => isset($t['yieldAvg']) ? (float) $t['yieldAvg'] : null,
+            'best' => isset($t['yieldTop']) ? (float) $t['yieldTop'] : null,
+            'd' => isset($t['days']) ? (int) round($t['days']) : null,
+            'h' => isset($t['heightCm']) ? (int) round($t['heightCm']) : null,
+            'adv' => $adv,
+            'tried' => $tried !== '' ? $tried : null,
+            'st' => $st,
+            'fit' => in_array($t['seasonFit'] ?? '', ['wet', 'dry'], true) ? 'Does better in the ' . $t['seasonFit'] . ' season' : null,
+            'tra' => array_values(array_slice((array) ($f['traits'] ?? []), 0, 6)),
+            'lim' => array_values(array_slice((array) ($f['limits'] ?? []), 0, 4)),
+            'areas' => isset($f['areas']) ? self::plain((string) $f['areas']) : null,
+            'diff' => $diff,
+            'notes' => $t['notes'] ?? null,
+        ], fn ($x) => $x !== null && $x !== [] && $x !== '');
+    }
+
+    /** A registered variety only the trials hold, as a finder card. */
+    private static function trialOnly(array $t, string $crop): array
+    {
+        $f = (array) ($t['facts'] ?? []);
+        $type = (string) ($t['type'] ?? '');
+        $hy = str_contains($type, 'hybrid');
+        $kind = $crop === 'rice' ? ($hy ? 'Hybrid' : 'Inbred') : ($t['kind'] ? Str::ucfirst((string) $t['kind']) : ($type !== '' ? Str::ucfirst($type) : 'Registered variety'));
+        $alias = array_values(array_filter(array_unique((array) ($t['aliases'] ?? []))));
+        $islands = (array) ($f['islands'] ?? []);
+        $dom = in_array('National', $islands, true) ? ['luzon', 'visayas', 'mindanao'] : array_values(array_map('strtolower', $islands));
+        $envs = $crop === 'rice' ? (array) ($t['envs'] ?? []) : [];
+        $res = self::trialRatings($t);
+        $ok = [];
+        if ($crop === 'rice') {
+            $keys = ['blast' => 'blast', 'bacterial leaf blight' => 'blb', 'tungro' => 'tungro', 'brown planthopper' => 'bph', 'green leafhopper' => 'glh', 'stem borer' => 'sb', 'sheath blight' => 'shb'];
+            foreach ((array) ($f['ratings'] ?? []) as $label => $code) {
+                if (isset($keys[$label]) && in_array($code, ['R', 'MR', 'HR'], true)) {
+                    $ok[] = $keys[$label];
+                }
+            }
+        }
+        $yu = (string) ($f['yieldUnit'] ?? 't/ha');
+        $name = (string) $t['name'];
+        $slug = 'tr-' . Str::slug($name . ' ' . ($t['localName'] ?? ''));
+        $chip = $crop === 'rice' ? ($hy ? 'hybrid' : 'inbred') : ($crop === 'corn' ? ($hy ? 'hybrid' : 'opv') : Str::slug($kind));
+
+        return [
+            's' => $slug, 'n' => $name, 'al' => $alias, 'ln' => $t['localName'] ?? null, 'y' => $t['year'] ?? null, 'o' => $t['company'] ?? null,
+            'reg' => $crop === 'rice' ? null : ($t['regNo'] ?? null),
+            'k' => $kind, 'hy' => $hy, 'gl' => ! empty($f['grain']['glutinous']), 'nw' => false,
+            'd' => isset($t['days']) ? (int) round($t['days']) : null, 'du' => (string) ($f['daysUnit'] ?? 'days'), 'dt' => null,
+            'ya' => isset($t['yieldAvg']) ? (float) $t['yieldAvg'] : null, 'ym' => isset($t['yieldTop']) ? (float) $t['yieldTop'] : null, 'yu' => $yu, 'yt' => null, 'yx' => [],
+            'h' => isset($t['heightCm']) ? (float) $t['heightCm'] : null, 'hu' => 'cm',
+            'res' => $res, 'ok' => $ok, 'grain' => [], 'traits' => [],
+            'env' => $envs,
+            'envL' => array_values(array_filter(array_map(fn ($e) => RiceVarieties::ENVIRONMENTS[$e][0] ?? null, $envs))),
+            'where' => in_array('National', $islands, true) ? ['Nationwide'] : $islands, 'dom' => $dom,
+            'sea' => in_array($t['seasonFit'] ?? '', ['wet', 'dry'], true) ? [Str::ucfirst($t['seasonFit']) . ' season'] : [],
+            'est' => [], 'el' => [], 'rem' => null, 'uses' => null, 'notes' => null,
+            'chip' => $chip,
+            'tr' => self::trialView($t),
+            'q' => strtolower(implode(' ', array_filter([$name, str_replace([' ', '-'], '', $name), implode(' ', $alias), str_replace([' ', '-'], '', implode(' ', $alias)),
+                $t['localName'] ?? '', $t['company'] ?? '', $t['regNo'] ?? '', $kind]))),
         ];
     }
 
@@ -118,6 +292,14 @@ final class VarietyFinder
     private static function lean(array $v): array
     {
         return array_filter($v, fn ($x) => $x !== null && $x !== false && $x !== [] && $x !== '');
+    }
+
+    /** A breeder as the finder shows it: a seed company, never a government body, state university or institute (the owner, 2026-10-18). */
+    private static function breeder(?string $b): ?string
+    {
+        $b = trim((string) $b);
+
+        return $b === '' || GovSource::isGov($b) || preg_match('/\b(?:universit|college|institute|bureau|department|council|station|center|centre)\b/i', $b) ? null : $b;
     }
 
     /** Words from the files for the screen: no semicolons in what a farmer reads. */
@@ -197,7 +379,7 @@ final class VarietyFinder
             ->filter(fn ($w, $k) => str_contains(strtolower((string) ($v['breeder'] ?? '')), $k))->implode(' ');
 
         return [
-            's' => $v['slug'], 'n' => $v['name'], 'al' => $trade, 'ln' => $v['localName'] ?? null, 'y' => $v['year'] ?? null, 'o' => $v['breeder'] ?? null, 'reg' => null,
+            's' => $v['slug'], 'n' => $v['name'], 'al' => $trade, 'ln' => $v['localName'] ?? null, 'y' => $v['year'] ?? null, 'o' => self::breeder($v['breeder'] ?? null), 'reg' => null,
             'k' => ($v['type'] ?? '') === 'hybrid' ? 'Hybrid' : 'Inbred', 'hy' => ($v['type'] ?? '') === 'hybrid', 'gl' => ($v['special'] ?? null) === 'glutinous', 'nw' => ! empty($v['new']),
             'd' => ! empty($v['maturity']) ? (int) round($v['maturity']) : null, 'du' => 'days', 'dt' => null,
             'ya' => isset($v['yieldAvg']) ? (float) $v['yieldAvg'] : null, 'ym' => isset($v['yieldMax']) ? (float) $v['yieldMax'] : null, 'yu' => 't/ha', 'yt' => null, 'yx' => [],
@@ -210,7 +392,7 @@ final class VarietyFinder
             'est' => array_values(array_filter(array_map(fn ($e) => self::ESTABLISH[strtolower($e)] ?? ucfirst($e), (array) ($v['establishment'] ?? [])))),
             'el' => [], 'rem' => isset($v['remarks']) ? self::plain((string) $v['remarks']) : null, 'uses' => null, 'notes' => null,
             'chip' => ($v['type'] ?? '') === 'hybrid' ? 'hybrid' : 'inbred',
-            'q' => strtolower($v['name'] . ' ' . str_replace(' ', '', $v['name']) . ' ' . ($v['localName'] ?? '') . ' ' . ($v['breeder'] ?? '') . ' ' . implode(' ', $trade)
+            'q' => strtolower($v['name'] . ' ' . str_replace(' ', '', $v['name']) . ' ' . ($v['localName'] ?? '') . ' ' . (self::breeder($v['breeder'] ?? null) ?? '') . ' ' . implode(' ', $trade)
                 . ' ' . str_replace([' ', '-'], '', implode(' ', $trade)) . ' ' . $brand),
         ];
     }
@@ -262,7 +444,7 @@ final class VarietyFinder
                     $facts[] = [$label, self::plain(str_replace(' (Roundup)', '', $f[$k]))];
                 }
             }
-            $notes = ['popular' => self::plain((string) ($r['popular'] ?? '')), 'by' => (string) ($r['company'] ?? ''), 'claims' => ! empty($r['claims']),
+            $notes = ['popular' => self::plain((string) ($r['popular'] ?? '')), 'by' => (string) (self::breeder($r['company'] ?? null) ?? ''), 'claims' => ! empty($r['claims']),
                 'facts' => $facts, 'traits' => array_values(array_map([self::class, 'plain'], array_filter((array) ($f['traits'] ?? []), 'is_string')))];
         }
         $alias = array_values((array) ($v['aliases'] ?? []));
@@ -270,7 +452,7 @@ final class VarietyFinder
         $dt = is_array($m) && ! empty($m['text']) && ! is_numeric($m['text']) ? (string) preg_replace('/\bN\.?\s?A\b\.?/', 'not given', (string) $m['text']) : null;
 
         return [
-            's' => $v['slug'], 'n' => $v['name'], 'al' => $alias, 'ln' => $v['localName'] ?? null, 'y' => $v['year'] ?? null, 'o' => $v['owner'] ?? null, 'reg' => $v['reg'] ?? null,
+            's' => $v['slug'], 'n' => $v['name'], 'al' => $alias, 'ln' => $v['localName'] ?? null, 'y' => $v['year'] ?? null, 'o' => self::breeder($v['owner'] ?? null), 'reg' => $v['reg'] ?? null,
             'k' => $kind, 'hy' => str_contains(strtolower($kind), 'hybrid'), 'gl' => false, 'nw' => false,
             'd' => CropVarieties::days($v), 'du' => is_array($m) ? (($m['unit'] ?? 'days') === 'months' ? 'months' : 'days') : null, 'dt' => $dt,
             'ya' => isset($y['value']) && is_numeric($y['value']) ? (float) $y['value'] : null, 'ym' => null, 'yu' => $y['unit'] ?? null,
@@ -284,7 +466,7 @@ final class VarietyFinder
             'rem' => null, 'uses' => $v['uses'] ?? null, 'notes' => $notes,
             'chip' => $chip,
             'q' => strtolower(implode(' ', array_filter([$v['name'], str_replace([' ', '-'], '', $v['name']), implode(' ', $alias), str_replace([' ', '-'], '', implode(' ', $alias)),
-                $v['localName'] ?? '', $v['owner'] ?? '', $v['reg'] ?? '', $kind]))),
+                $v['localName'] ?? '', self::breeder($v['owner'] ?? null) ?? '', $v['reg'] ?? '', $kind]))),
         ];
     }
 
@@ -313,7 +495,7 @@ final class VarietyFinder
         return [
             ['key' => 'env', 'label' => 'Kind of farm', 'all' => 'Any farm', 'opts' => $env],
             ['key' => 'res', 'label' => 'Resistant to', 'all' => 'Any', 'multi' => true, 'opts' => $res,
-                'note' => 'Rated resistant or moderately resistant in PhilRice\'s tests. Pick more than one to need them all.'],
+                'note' => 'Rated resistant or moderately resistant in trials. Pick more than one to need them all.'],
             ['key' => 'type', 'label' => 'Type', 'all' => 'Every type', 'opts' => [
                 self::opt('inbred', 'Inbred', $c->where('chip', 'inbred')->count()), self::opt('hybrid', 'Hybrid', $c->where('chip', 'hybrid')->count()),
                 self::opt('glutinous', 'Glutinous', $c->where('gl', true)->count())]],

@@ -390,7 +390,7 @@
                 + (rice ? '<span><b>' + (v.ym !== undefined ? fmt(v.ym) : 'n/a') + '</b><small' + flag('t-ha-top') + '>t/ha top</small></span>'
                     : '<span><b>' + (v.h ? fmt(v.h, 0) : 'n/a') + '</b><small>' + (v.hu === 'm' ? 'm tall' : 'cm tall') + '</small></span>') + '</span>'
                 + (v.ya !== undefined && s.yBest && v.yu === s.yu ? '<span class="fhv-meter" aria-hidden="true"><i style="width: ' + Math.min(100, Math.round(v.ya / s.yBest * 100)) + '%"></i></span>' : '')
-            : '<span class="fhv-nodata">' + esc(v.yt ? 'Yield: ' + v.yt : (rice ? 'Days to harvest and yield not listed by PhilRice yet' : 'Traits and ratings inside')) + '</span>';
+            : '<span class="fhv-nodata">' + esc(v.yt ? 'Yield: ' + v.yt : (rice ? 'Days to harvest and yield not published yet' : 'Traits and ratings inside')) + '</span>';
         const res = (v.res || []).slice(0, rice ? 7 : 4);
         return '<button type="button" class="fhv-card' + (v.hy ? ' is-hybrid' : '') + '" data-s="' + esc(v.s) + '">'
             + '<span class="fhv-ctop"><span><span class="fhv-name">' + esc(v.n) + '</span>' + (alias ? '<span class="fhv-trade">' + esc(alias) + '</span>' : '') + (v.ln ? '<span class="fhv-local">' + esc(v.ln) + '</span>' : '') + '</span>'
@@ -506,6 +506,27 @@
             out.push(sec('Pests and diseases', '<ul class="fhv-res">' + v.res.map((r, i) => '<li class="' + r[3] + '" style="--i: ' + i + '"><b' + FH.tlAttr(RES_TL[r[1]], rated) + '>' + esc(r[1]) + '</b><span>' + esc(r[0]) + '<small>' + esc(r[2]) + '</small></span></li>').join('') + '</ul>'
                 + '<p class="fh-fine" style="margin-top:.6rem">Green held up in the tests, yellow took a middling share of damage, red took clear damage. A rating can break down when a new strain comes, so keep scouting.</p>', false, 'resistance-rating'));
         }
+        // What its registration trials showed (2026-10-18): by season, the advantage over the checks, the stresses, the limits.
+        const tr = v.tr;
+        if (tr && ((tr.sea || []).length || (tr.adv || []).length || (tr.st || []).length || (tr.lim || []).length || (tr.tra || []).length || tr.tried || tr.fit)) {
+            const parts = [];
+            if ((tr.sea || []).length) {
+                parts.push('<div class="fhd-facts">' + tr.sea.map(([l, y, d]) => '<div><small>' + esc(l) + '</small><b style="font-size:.88rem;font-weight:700">'
+                    + esc([y !== null && y !== undefined ? fmt(y, y >= 100 ? 0 : 2) + ' ' + (tr.u || 't/ha') : '', d ? d + ' days' : ''].filter(Boolean).join(', ')) + '</b></div>').join('') + '</div>');
+            }
+            const lines = [];
+            if (tr.best) lines.push('Best test: ' + fmt(tr.best, tr.best >= 100 ? 0 : 2) + ' ' + (tr.u || 't/ha'));
+            (tr.adv || []).forEach((x) => lines.push(x));
+            if (tr.tried) lines.push('Tried over ' + tr.tried);
+            if (tr.fit) lines.push(tr.fit);
+            (tr.st || []).forEach(([k, w]) => lines.push(k + ': ' + w.toLowerCase()));
+            (tr.tra || []).forEach((x) => lines.push(x));
+            if (lines.length) parts.push('<ul>' + lines.map((x) => '<li>' + esc(x.charAt(0).toUpperCase() + x.slice(1)) + '</li>').join('') + '</ul>');
+            if ((tr.lim || []).length) parts.push('<p class="fhv-say"><b>Watch:</b> ' + esc(tr.lim.join('; ')) + '</p>');
+            if (tr.areas) parts.push('<p class="fh-fine">Recommended for ' + esc(tr.areas) + '</p>');
+            if (tr.diff) parts.push('<p class="fh-fine">' + esc(tr.diff) + '</p>');
+            out.push(sec('In its trials', '<div class="fhv-notes">' + parts.join('') + '</div>', true));
+        }
         // Grain (rice) and the registry's traits (every other crop).
         if ((v.grain || []).length) {
             out.push(sec('Grain and eating quality', '<div class="fhv-tiles">' + v.grain.map((g) => '<div class="fhv-tile"><small>' + esc(g[0]) + '</small><b>' + esc(g[1]) + '</b>' + (g[2] ? '<span>' + esc(g[2]) + '</span>' : '')
@@ -513,8 +534,8 @@
         }
         if ((v.traits || []).length) {
             const tr = v.traits.slice(0, 9);
-            out.push(sec('Traits in the registry', '<div class="fhv-tiles">' + tr.map((t) => '<div class="fhv-tile is-trait"><small>' + esc(t[0]) + '</small><b>' + esc(t[1]) + '</b></div>').join('') + '</div>'
-                + (v.traits.length > tr.length ? '<p class="fh-fine" style="margin-top:.5rem">And ' + plural(v.traits.length - tr.length, 'more trait', 'more traits') + ' in the registry.</p>' : ''), true));
+            out.push(sec('Traits on record', '<div class="fhv-tiles">' + tr.map((t) => '<div class="fhv-tile is-trait"><small>' + esc(t[0]) + '</small><b>' + esc(t[1]) + '</b></div>').join('') + '</div>'
+                + (v.traits.length > tr.length ? '<p class="fh-fine" style="margin-top:.5rem">And ' + plural(v.traits.length - tr.length, 'more trait', 'more traits') + ' on record.</p>' : ''), true));
         }
         // Where and when to plant it.
         const dl = [];
@@ -533,10 +554,10 @@
             out.push(sec(n.claims ? 'What its seller says' : 'Good to know', '<div class="fhv-notes">' + (n.popular ? '<p>' + esc(n.popular) + '</p>' : '')
                 + ((n.facts || []).length ? '<div class="fhd-facts">' + n.facts.map(([l, x]) => '<div><small>' + esc(l) + '</small><b style="font-size:.88rem;font-weight:700">' + esc(x) + '</b></div>').join('') + '</div>' : '')
                 + ((n.traits || []).length ? '<ul>' + n.traits.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '')
-                + (n.claims ? '<p class="fh-fine">Claims from the seller, not checked by the registry.</p>' : '') + '</div>', true));
+                + (n.claims ? '<p class="fh-fine">Claims from the seller, not checked in trials.</p>' : '') + '</div>', true));
         }
         const who = [v.o ? (rice ? 'Bred by ' : 'From ') + v.o : '', v.reg ? 'Registered as ' + v.reg : (rice ? '' : 'Not on the NSIC registry'), v.y ? 'Released ' + v.y : ''].filter(Boolean).join('. ');
-        const from = rice ? c.source : (v.reg ? 'the NSIC registry of the Bureau of Plant Industry' + (n && n.claims ? ', and its seller' : '') : 'its seller');
+        const from = rice ? c.source : (v.reg ? 'anee.io\'s variety records' + (n && n.claims ? ', and its seller' : '') : 'its seller');
         const chips = [v.k ? '<span class="' + (v.hy ? 'is-h' : '') + '"' + FH.tlAttr(kindTl(v.k)) + '>' + esc(v.k) + '</span>' : '', v.gl ? '<span class="is-g">Glutinous</span>' : '', v.nw ? '<span class="is-n">New</span>' : '',
             v.y ? '<span>' + esc(v.y) + '</span>' : '', v.reg ? '<span>' + esc(v.reg) + '</span>' : ''].join('');
         return '<header class="fhv-hero"><span class="fhv-ic" aria-hidden="true">' + esc(c.icon) + '</span><div><small>' + esc(c.name) + ' variety</small><h2>' + esc(v.n) + '</h2>'
@@ -656,6 +677,11 @@
     // The crop sheet counts "1 varieties" as its noun less an s: say it right.
     document.querySelectorAll('#fhvCropSheet .cp-n').forEach((n) => { if (/^1 varietie$/.test(n.textContent.trim())) n.textContent = '1 variety'; });
     start(book);
+    // A link from an analysis (?q=Name, 2026-10-18): the finder opens on that variety's search.
+    try {
+        const want = new URLSearchParams(location.search).get('q');
+        if (want) { q.value = want.slice(0, 80); st.q = q.value; st.shown = STEP; paint(true); }
+    } catch (e) {}
 })();
 </script>
 @endpush

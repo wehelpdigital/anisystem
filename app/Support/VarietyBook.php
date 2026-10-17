@@ -66,7 +66,9 @@ class VarietyBook
         if (str_starts_with($k, 'corn_')) {
             return ['crop', 'corn', substr($k, 5)];
         }
-        $crops = CropVarieties::crops();
+        // The crops with records, read once a request (crops() walks every record).
+        static $crops = null;
+        $crops ??= CropVarieties::crops();
 
         return isset($crops[$k]) ? ['crop', $k, null] : null;
     }
@@ -114,17 +116,29 @@ class VarietyBook
         return null;
     }
 
-    /** Every record of the crop in one shape. */
+    /** Rows by book, per request (the trial facts are joined once). */
+    private static array $rowCache = [];
+
+    /**
+     * Every record of the crop in one shape. Each carries `trials` when its
+     * registration papers were read (App\Support\VarietyRegistry, 2026-10-18),
+     * and a registered variety only the papers hold comes after the curated
+     * ones, in the same shape (`trialsOnly`).
+     */
     public static function rows(?string $cropKey): array
     {
         $book = self::bookFor($cropKey);
         if (! $book) {
             return [];
         }
-        if ($book[0] === 'rice') {
-            return array_map(fn ($v) => self::fromRice($v), RiceVarieties::all());
+        $id = $book[1] . ':' . ($book[2] ?? '') . ':' . (VarietyRegistry::$off ? 'off' : 'on');
+        if (isset(self::$rowCache[$id])) {
+            return self::$rowCache[$id];
         }
-        $rows = array_map(fn ($v) => self::fromCrop($v), CropVarieties::forCrop($book[1]));
+        if ($book[0] === 'rice') {
+            return self::$rowCache[$id] = self::withTrials(array_map(fn ($v) => self::fromRice($v), RiceVarieties::all()), 'rice');
+        }
+        $rows = self::withTrials(array_map(fn ($v) => self::fromCrop($v), CropVarieties::forCrop($book[1])), $book[1]);
         if ($book[1] === 'corn' && $book[2]) {
             $want = $book[2];
             $rows = array_values(array_filter($rows, function ($r) use ($want) {
@@ -138,7 +152,167 @@ class VarietyBook
             }));
         }
 
+        return self::$rowCache[$id] = $rows;
+    }
+
+    /** Forget the rows read this request (tests, measurements). */
+    public static function forget(): void
+    {
+        self::$rowCache = [];
+        self::$matchIndex = [];
+        VarietyRegistry::forget();
+    }
+
+    /**
+     * The curated records with the trial facts of their registration papers
+     * joined on (`trials`), and the registered varieties only the papers
+     * hold appended. The curated figures are kept; a figure the record lacks
+     * (the newest varieties have no days or yield yet) is filled from the
+     * trials and marked (`fromTrials`).
+     */
+    private static function withTrials(array $rows, string $bookKey): array
+    {
+        try {
+            [$by, $rest] = VarietyRegistry::split($bookKey);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return $rows;
+        }
+        if (! $by && ! $rest) {
+            return $rows;
+        }
+        foreach ($rows as &$r) {
+            $t = $by[$r['name']] ?? null;
+            if (! $t) {
+                continue;
+            }
+            $r['trials'] = VarietyRegistry::trials($t);
+            $filled = [];
+            if ($r['days'] === null && ! empty($t['days'])) {
+                $r['days'] = (float) $t['days'];
+                $filled[] = 'days';
+            }
+            if ($r['yield'] === null && ! empty($t['yieldAvg']) && ($r['yieldUnit'] ?? 't/ha') === 't/ha') {
+                $r['yield'] = (float) $t['yieldAvg'];
+                $r['yieldTop'] ??= ! empty($t['yieldTop']) ? (float) $t['yieldTop'] : null;
+                $filled[] = 'yield';
+            }
+            if (! $r['ratings'] && ! empty($t['facts']['ratings'])) {
+                $r['ratings'] = self::shortRatings((array) $t['facts']['ratings']);
+                $filled[] = 'ratings';
+            }
+            if (! $r['envs'] && ! empty($t['envs']) && $bookKey === 'rice') {
+                $r['envs'] = (array) $t['envs'];
+                $r['where'] = implode(', ', array_map(fn ($e) => self::RICE_ENVS[$e] ?? $e, $r['envs']));
+                $filled[] = 'envs';
+            }
+            if (! $r['domain'] && ! empty($t['facts']['islands'])) {
+                $r['domain'] = (array) $t['facts']['islands'];
+            }
+            if (! $r['seasons'] && in_array($t['seasonFit'] ?? '', ['wet', 'dry'], true)) {
+                $r['seasons'] = [$t['seasonFit']];
+            }
+            if ($filled) {
+                $r['fromTrials'] = $filled;
+            }
+        }
+        unset($r);
+        foreach ($rest as $t) {
+            $rows[] = self::fromRegistry($t, $bookKey);
+        }
+
         return $rows;
+    }
+
+    /** The ratings the fit arithmetic reads: one code per pest or disease. */
+    private static function shortRatings(array $ratings): array
+    {
+        $out = [];
+        foreach ($ratings as $k => $c) {
+            if (is_string($c) && in_array($c, ['HR', 'R', 'MR', 'T', 'I', 'MS', 'S', 'HS'], true)) {
+                $out[(string) $k] = $c;
+            }
+        }
+
+        return $out;
+    }
+
+    /** A registered variety only its papers hold, as a record. */
+    private static function fromRegistry(array $t, string $bookKey): array
+    {
+        $f = (array) ($t['facts'] ?? []);
+        $type = (string) ($t['type'] ?? '');
+        $hybrid = str_contains($type, 'hybrid');
+        $envs = $bookKey === 'rice' ? (array) ($t['envs'] ?? []) : [];
+        $islands = (array) ($f['islands'] ?? []);
+
+        return [
+            'name' => $t['name'],
+            'aliases' => array_values(array_filter(array_unique(array_merge([$t['localName'] ?? null], (array) ($t['aliases'] ?? []))))),
+            'type' => $hybrid ? 'hybrid' : ($bookKey === 'rice' ? 'inbred' : 'other'),
+            'kind' => trim((string) ($t['kind'] ?? '') ?: ($hybrid ? 'hybrid' : ($bookKey === 'rice' ? 'inbred' : ($type ?: 'variety')))),
+            'color' => $f['color'] ?? null,
+            'year' => $t['year'] ?? null,
+            'days' => isset($t['days']) ? (float) $t['days'] : null,
+            'daysUnit' => (string) ($f['daysUnit'] ?? 'days'),
+            'yield' => isset($t['yieldAvg']) && ($f['yieldUnit'] ?? 't/ha') === 't/ha' ? (float) $t['yieldAvg'] : null,
+            'yieldTop' => isset($t['yieldTop']) && ($f['yieldUnit'] ?? 't/ha') === 't/ha' ? (float) $t['yieldTop'] : null,
+            'yieldUnit' => (string) ($f['yieldUnit'] ?? 't/ha'),
+            'ratings' => self::shortRatings((array) ($f['ratings'] ?? [])),
+            'envs' => $envs,
+            'domain' => $islands,
+            'seasons' => in_array($t['seasonFit'] ?? '', ['wet', 'dry'], true) ? [$t['seasonFit']] : [],
+            'elevation' => in_array('cool', $envs, true) ? ['highland'] : [],
+            'where' => $envs ? implode(', ', array_map(fn ($e) => self::RICE_ENVS[$e] ?? $e, $envs)) : ($islands ? (in_array('National', $islands, true) ? 'nationwide' : implode(', ', $islands)) : ''),
+            'registered' => true,
+            'url' => url('/app/field-helpers/varieties') . '?crop=' . rawurlencode($bookKey) . '&q=' . rawurlencode((string) $t['name']),
+            'seller' => '',
+            'trials' => VarietyRegistry::trials($t),
+            'trialsOnly' => true,
+        ];
+    }
+
+    /**
+     * A record's registration trial facts in words for a prompt, '' when it
+     * has none. Short: the line promptLines() adds; full: every test, rating,
+     * stress, grain, area and limit (the Crop Protocol, the season reports).
+     */
+    public static function trialWords(array $rec, bool $full = false): string
+    {
+        if (empty($rec['trials']) || ! is_array($rec['trials'])) {
+            return '';
+        }
+        $t = $rec['trials'];
+        if (! $full) {
+            // Short: only what the record's own line does not already say (prompts stay lean).
+            if (isset($t['days'], $rec['days']) && abs((float) $t['days'] - (float) $rec['days']) <= 2 && empty($t['conflict']['days'])) {
+                unset($t['days']);
+            }
+            if (isset($t['yield']['avg'], $rec['yield']) && $rec['yield'] > 0 && abs((float) $t['yield']['avg'] - (float) $rec['yield']) / (float) $rec['yield'] <= 0.05) {
+                unset($t['yield']['avg']);
+            }
+            if (isset($t['heightCm']) && empty($rec['trialsOnly'])) {
+                unset($t['heightCm']);
+            }
+            $own = (array) ($rec['ratings'] ?? []);
+            $t['ratings'] = array_filter((array) ($t['ratings'] ?? []), fn ($c, $k) => ($own[$k] ?? null) !== $c, ARRAY_FILTER_USE_BOTH);
+            unset($t['traits'], $t['tested']['years']);
+        }
+        $w = VarietyRegistry::words($t, $full, (string) ($rec['daysUnit'] ?? 'days'));
+        if ($w === '') {
+            return '';
+        }
+        // Where the curated figure and the trials differ, both are said; the curated one leads.
+        $c = (array) ($t['conflict'] ?? []);
+        $diff = [];
+        foreach (['days' => 'days', 'yield' => 't/ha average'] as $k => $unit) {
+            if (isset($c[$k]['ours'], $c[$k]['trials'])) {
+                $diff[] = self::num((float) $c[$k]['ours']) . ' ' . $unit . ' on record against ' . self::num((float) $c[$k]['trials']) . ' in the registration trials';
+            }
+        }
+
+        return 'registration trials: ' . $w . ($diff ? ' (differs: ' . implode('; ', $diff) . ')' : '');
     }
 
     /**
@@ -287,34 +461,37 @@ class VarietyBook
         if ($name === '') {
             return null;
         }
-        static $indexes = [];
         $book = self::bookFor($cropKey);
         if (! $book) {
             return null;
         }
-        $id = $book[1] . ':' . ($book[2] ?? '');
-        if (! isset($indexes[$id])) {
+        $id = $book[1] . ':' . ($book[2] ?? '') . ':' . (VarietyRegistry::$off ? 'off' : 'on');
+        if (! isset(self::$matchIndex[$id])) {
             $index = [];
             foreach (self::rows($cropKey) as $r) {
-                foreach (array_merge([$r['name']], $r['aliases']) as $n) {
-                    foreach (self::keys($n) as $k) {
+                // The curated names first; the names the registration papers add (line names, the registered number with its year) after.
+                foreach (array_merge([$r['name']], $r['aliases'], (array) ($r['trials']['names'] ?? [])) as $n) {
+                    foreach (self::keys((string) $n) as $k) {
                         $index[$k] ??= $r;
                     }
                 }
             }
-            $indexes[$id] = $index;
+            self::$matchIndex[$id] = $index;
         }
         $parts = array_merge([$name], preg_split('/\s*[()\/,;]\s*|\s+or\s+|\s+aka\s+/i', $name) ?: []);
         foreach ($parts as $part) {
             foreach (self::keys($part) as $k) {
-                if (isset($indexes[$id][$k])) {
-                    return $indexes[$id][$k];
+                if (isset(self::$matchIndex[$id][$k])) {
+                    return self::$matchIndex[$id][$k];
                 }
             }
         }
 
         return null;
     }
+
+    /** Name indexes by book, per request. */
+    private static array $matchIndex = [];
 
     /**
      * The variety a written name means, looked up first by every module
@@ -350,6 +527,40 @@ class VarietyBook
         }
 
         return VarietyLearned::asRecord($l) + ['learnedLine' => VarietyLearned::words($l)];
+    }
+
+    /**
+     * One line of what is known about a variety, for any prompt that has a
+     * crop and a variety name and nothing else (the chat's season context,
+     * NPK Plus, Satellite, Realign, the Builder review, Ask Anee): the
+     * record's figures, its registration trials in short, or a kept lookup.
+     * $crop may be an app crop key or a written crop name. '' when the name
+     * is unknown, or the field is not in the Philippines (the records speak
+     * only for a field there). No search, no AI: files and one cached query.
+     */
+    public static function factsLine(?string $crop, ?string $variety, bool $full = false, ?string $country = null): string
+    {
+        $variety = trim((string) $variety);
+        if ($variety === '' || mb_strlen($variety) > 120) {
+            return '';
+        }
+        $fc = Region::valid($country) ?: Region::code();
+        if ($fc !== Region::HOME) {
+            return '';
+        }
+        $key = self::bookFor($crop) ? (string) $crop : self::cropKeyFor($crop);
+        $rec = $key ? self::find($key, $variety) : null;
+        if (! $rec) {
+            return '';
+        }
+        $line = ltrim(self::promptLines([$rec]), '- ');
+        if ($full && ($tw = self::trialWords($rec, true)) !== '') {
+            // The full trial block replaces the short one promptLines() carries.
+            $short = self::trialWords($rec);
+            $line = $short !== '' ? str_replace($short, $tw, $line) : $line . ' ' . $tw;
+        }
+
+        return $line;
     }
 
     /** Whether the name is known (on the record or kept from an earlier lookup), so no research is needed. */
@@ -431,6 +642,10 @@ class VarietyBook
             }
             if (! empty($r['seller'])) {
                 $bits[] = 'the seller says: ' . $r['seller'];
+            }
+            // What its registration papers say, in short (2026-10-18); never where it came from.
+            if (($tw = self::trialWords($r)) !== '') {
+                $bits[] = $tw;
             }
 
             return '- ' . $r['name'] . ' [' . implode('; ', $bits) . ']';

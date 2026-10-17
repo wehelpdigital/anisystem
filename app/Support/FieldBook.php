@@ -59,7 +59,64 @@ final class FieldBook
             'products' => self::problemProducts($section, $entries),
             // Systemic, translaminar or contact, per active ingredient (2026-10-15).
             'mobility' => AiMobility::payload(),
+            // The varieties rated to hold up against each one, per crop (2026-10-18): the variety records and their registration trials.
+            'resist' => self::resistant($entries),
         ];
+    }
+
+    /**
+     * For each pest or disease, per crop, the registered varieties rated
+     * highly resistant, resistant or moderately resistant to it (the
+     * curated records and their registration trials, App\Support\VarietyBook),
+     * strongest first, then newest: [slug => [crop => [[name, other name, code, year]]]].
+     * A rating is matched by its name inside the entry's name ("blast" in
+     * "Rice blast"), so only the ones the records rate are listed.
+     */
+    public static function resistant(array $entries, int $limit = 8): array
+    {
+        // Kept an hour, and anew whenever a variety file changes (a deploy).
+        $stamp = implode(':', array_map(fn ($f) => (string) (@filemtime(database_path($f)) ?: 0),
+            ['rice-varieties/varieties.json', 'crop-varieties/varieties.json', VarietyRegistry::FILE]));
+        $key = 'field-resist:' . md5(json_encode(array_map(fn ($e) => [$e['k'], $e['crops']], $entries)) . $limit) . ':' . $stamp;
+
+        return \Illuminate\Support\Facades\Cache::remember($key, 3600, fn () => self::resistantNow($entries, $limit));
+    }
+
+    private static function resistantNow(array $entries, int $limit): array
+    {
+        $out = [];
+        $rank = ['HR' => 3, 'R' => 2, 'MR' => 1];
+        foreach ($entries as $e) {
+            $name = ' ' . mb_strtolower((string) $e['name'] . ' ' . str_replace('-', ' ', (string) $e['k'])) . ' ';
+            foreach ((array) $e['crops'] as $crop) {
+                try {
+                    $rows = VarietyBook::rows((string) $crop);
+                } catch (\Throwable $ex) {
+                    $rows = [];
+                }
+                $hits = [];
+                foreach ($rows as $r) {
+                    foreach ((array) $r['ratings'] as $label => $code) {
+                        $label = mb_strtolower((string) $label);
+                        if (! isset($rank[$code]) || mb_strlen($label) < 4 || ! str_contains($name, ' ' . $label . ' ')) {
+                            continue;
+                        }
+                        // "leaf blight" is not "bacterial leaf blight", nor "blight" "sheath blight".
+                        if (preg_match('/(bacterial|sheath|late|early|southern)\s+' . preg_quote($label, '/') . '/u', $name) && ! str_contains($label, ' ')) {
+                            continue;
+                        }
+                        $hits[$r['name']] = [$r['name'], $r['aliases'][0] ?? null, $code, $r['year'] ?? null, $rank[$code]];
+                    }
+                }
+                if (! $hits) {
+                    continue;
+                }
+                usort($hits, fn ($a, $b) => [$b[4], $b[3] ?? 0] <=> [$a[4], $a[3] ?? 0]);
+                $out[$e['k']][$crop] = array_map(fn ($h) => array_slice($h, 0, 4), array_slice($hits, 0, $limit));
+            }
+        }
+
+        return $out;
     }
 
     /**

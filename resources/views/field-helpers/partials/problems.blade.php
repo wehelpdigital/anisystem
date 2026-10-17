@@ -87,6 +87,8 @@
     'products' => $book['products'],
     // Systemic, translaminar or contact, per active ingredient (App\Support\AiMobility).
     'mobility' => $book['mobility'] ?? null,
+    // The varieties rated to hold up against each one, per crop (FieldBook::resistant).
+    'resist' => (object) ($book['resist'] ?? []),
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
 @push('scripts')
 <script>
@@ -126,6 +128,19 @@
     /* ---- One entry, in the catalogue's second pane ------------------- */
     const labels = (keys, book) => keys.map((k) => book[k]).filter(Boolean);
     const chips = (list) => '<ul class="fhd-chips">' + list.map((l) => '<li>' + esc(l) + '</li>').join('') + '</ul>';
+    // The varieties rated to hold up against it, on the crop in view or its first rated crop (2026-10-18).
+    const RES_WORD = { HR: 'Highly resistant', R: 'Resistant', MR: 'Moderately resistant' };
+    const resistOf = (i, crop) => {
+        const by = (D.resist || {})[i.k];
+        if (!by) return '';
+        const c = crop && by[crop] ? crop : Object.keys(by)[0];
+        const list = by[c] || [];
+        if (!list.length) return '';
+        const cn = D.cropNames[c] ? D.cropNames[c][0].toLowerCase() : '';
+        return FH.sec(I.sprout, 'Varieties that hold up against it' + (cn ? ' (' + cn + ')' : ''),
+            '<ul class="fhd-chips">' + list.map(([n, a, code]) => '<li title="' + esc(RES_WORD[code] || '') + '">' + esc(n + (a ? ' (' + a + ')' : '')) + ' · ' + esc(code) + '</li>').join('') + '</ul>'
+            + '<p class="fh-fine">Rated in their trials: HR highly resistant, R resistant, MR moderately resistant. A rating can break down when a new strain comes, so keep scouting.</p>');
+    };
     const detail = (i, ctx) => {
         const parts = labels(i.parts || [], D.parts), signs = labels(i.signs || [], D.signs);
         // The crop the catalogue is on, else any crop (each product says what its label names).
@@ -143,6 +158,7 @@
             + (spray ? FH.sec(I.drop, 'What to spray', spray + '<p class="fh-fine">' + legend + ' Switch to a different group next time, so the ' + D.noun + ' does not learn to survive it.</p>'
                 + (sold(i, crop) ? FH.rateLine(D.noun) : '') + FH.SHOP_NOTE, 'what-to-spray') : '')
             + (i.no ? '<section>' + noSpray(i) + '</section>' : '')
+            + resistOf(i, crop)
             + (named.length ? FH.sec(I.bag, 'Products labelled for this' + (crop && D.cropNames[crop] ? ' on ' + D.cropNames[crop][0].toLowerCase() : ''), FH.prodStrip(named, { help: !spray })
                 + (spray ? '' : FH.rateLine(D.noun))) : '')
             + FH.sources(i.sources)
