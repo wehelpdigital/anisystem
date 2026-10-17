@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Cache;
  *
  * Everything Anee should not be trusted to count is counted here, in PHP:
  *
- *  - the base steps of a plan: rice by planting method from the PalayCheck
- *    System of PhilRice (database/land-prep/rice-methods.json, written in our
- *    own words), the other crops from App\Support\LandPrep::PLANS, each a
+ *  - the base steps of a plan: rice by planting method from the standard
+ *    practice for irrigated lowland rice and its field calendar
+ *    (database/land-prep/rice-methods.json, written in our own words), the
+ *    other crops from App\Support\LandPrep::PLANS, each a
  *    window of days before (negative) or after the planting day;
  *  - the rules the farmer's answers trigger, LOT BY LOT since round two
  *    (lots differ: one is clay and floods, the next is sandy and dry): a
@@ -467,7 +468,7 @@ final class LandPrepPlanner
             $m = self::riceBook()['methods'][$method] ?? self::riceBook()['methods']['tpr_manual'] ?? ['steps' => []];
             $out = [];
             foreach ((array) $m['steps'] as $s) {
-                $out[] = self::step($s['key'], (int) $s['from'], (int) $s['to'], $s['what'], $s['how'], self::tagOf($s['basis'] ?? 'palaycheck'),
+                $out[] = self::step($s['key'], (int) $s['from'], (int) $s['to'], $s['what'], $s['how'], self::tagOf($s['basis'] ?? 'standard'),
                     $s['follows'] ?? null, ($s['basis'] ?? '') === 'suggestion' ? 'method' : null);
             }
 
@@ -560,7 +561,8 @@ final class LandPrepPlanner
     private static function tagOf(string $basis): string
     {
         return match ($basis) {
-            'palaycheck', 'philrice' => 'philrice',
+            // The saved tag stays 'philrice' (a key, shown as "Standard practice").
+            'standard', 'philrice' => 'philrice',
             'irri' => 'irri',
             'suggestion', 'anee' => 'anee',
             default => 'extension',
@@ -1785,7 +1787,7 @@ final class LandPrepPlanner
         if ($refresh === null) {
             $refreshNote = 'The seed company gives no water change schedule. In still water, change it every 6 hours.';
         }
-        // Seed per hectare: PalayCheck's for inbred seed, the brand's own for a hybrid.
+        // Seed per hectare: the standard rates for inbred seed, the brand's own for a hybrid.
         $rates = (array) ($src['seedKgPerHa'] ?? []);
         $rate = match (true) {
             $type === 'inbred' && $method === 'dsr_wet_broadcast' => [60, 80],

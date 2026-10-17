@@ -6,17 +6,16 @@
   "category": "Getting Started",
   "title": "What Is the Best Way to Learn Modern Farming Techniques in the Philippines?",
   "metaTitle": "Modern Farming Techniques: How to Learn Them in the PH",
-  "metaDescription": "Learn modern farming techniques the practical way: free ATI courses, PalayCheck, farmer field schools and tests on your own lot, plus which ones pay first.",
+  "metaDescription": "Learn modern farming techniques the practical way: free ATI courses, rice key checks, farmer field schools and tests on your own lot, and which pay first.",
   "focusKeyword": "modern farming techniques",
   "keywords": [
     "modern farming techniques",
     "modern farming in the Philippines",
     "alternate wetting and drying",
     "farmer field school",
-    "PalayCheck",
     "free farming courses"
   ],
-  "excerpt": "The best way to learn modern farming techniques in the Philippines is to pair a free course with practice on your own field. Take an ATI online course or join a farmer field school, follow a proven system like PalayCheck, then try one new technique per season on part of your lot and compare it with your old way. anee.io, a farm app built for Filipino farmers, makes that comparison easy, because it records what you did, on which day and what it cost, season after season.",
+  "excerpt": "The best way to learn modern farming techniques in the Philippines is to pair a free course with practice on your own field. Take an ATI online course or join a farmer field school, score your rice season against nine key checks from seed to drying, then try one new technique per season on part of your lot and compare it with your old way. anee.io, a farm app built for Filipino farmers, makes that comparison easy, because it records what you did, on which day and what it cost, season after season.",
   "heroImage": {
     "src": "/images/site/guides/blog-modern-farming-techniques.webp",
     "alt": "A drone sprays a rice field during a demonstration of modern farming techniques in Los Banos, Laguna",
@@ -56,9 +55,9 @@
           "Where to learn"
         ],
         [
-          "PalayCheck",
-          "Compares your practices with the best ones, stage by stage, through key checks",
-          "The PalayCheck guide, in English or Tagalog"
+          "Rice key checks",
+          "Holds your practices up to the best ones, stage by stage, with nine checks you can see or count",
+          "Our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare)"
         ],
         [
           "Alternate wetting and drying (AWD)",
@@ -103,8 +102,7 @@
         "**e Learning**: self paced online certificate courses on crops, livestock and poultry, fisheries and sustainable agriculture.",
         "**School on the Air**: radio lessons on the full package of technology for rice, corn, high value crops, livestock and organic farming.",
         "**Farmers' Contact Center**: technical advice by voice call, text, email or online chat.",
-        "**Agri Extension on Wheels**: a mobile hub that brings knowledge products closer to farming communities.",
-        "**PalayCheck**: a rice crop management system, free to download in English and in Tagalog."
+        "**Agri Extension on Wheels**: a mobile hub that brings knowledge products closer to farming communities."
       ]
     },
     {
@@ -118,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "Because you learn on a real field, with your neighbors, across a real season. A farmer field school is a group that meets regularly during a production cycle. Members set up experiments and learn hands on, so they can adapt practices to their own conditions.\n\nPalayCheck works the same way. It presents the best practices as key checks, compares them with what farmers do, and learns through farmers' discussion groups. So ask your municipal agriculturist or the nearest ATI center if a field school or PalayCheck group runs in your area."
+      "text": "Because you learn on a real field, with your neighbors, across a real season. A farmer field school is a group that meets regularly during a production cycle. Members set up experiments and learn hands on, so they can adapt practices to their own conditions.\n\nRice key checks work the same way. Each good practice becomes a check you can see or count in the field, you hold it up to what you did, and you talk the results over with other farmers. So ask your municipal agriculturist or the nearest ATI center if a field school or a farmer learning group runs in your area."
     },
     {
       "type": "heading",
@@ -199,7 +197,7 @@
       "items": [
         {
           "q": "What are examples of modern farming techniques in the Philippines?",
-          "a": "Common ones are PalayCheck crop management, alternate wetting and drying for irrigated rice, fertilizer by soil test or leaf color, and mechanized planting, harvest and drying. Keeping records and planning by the weather also count."
+          "a": "Common ones are crop management by key checks, alternate wetting and drying for irrigated rice, fertilizer by soil test or leaf color, and mechanized planting, harvest and drying. Keeping records and planning by the weather also count."
         },
         {
           "q": "Where can I take free farming courses online?",

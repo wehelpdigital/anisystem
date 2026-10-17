@@ -189,7 +189,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Free rice tools:** the Rice Crop Manager Advisory Service on the web. The PalayCheck App and Binhing Palay also show a price of zero on Google Play.",
+        "**Free rice tools:** the Rice Crop Manager Advisory Service on the web. Binhing Palay and a few rice calendar apps also cost nothing on Google Play.",
         "**anee.io Libre, free:** one active season with one lot, the board, growth stages, harvest observations and the labor report, with a few ads.",
         "**Libre plus Anee, PHP 70 a month:** adds Anee and her analyses, which use credits.",
         "**Solo Farmer, PHP 200 a month or PHP 1,800 a year:** up to 5 lots per season, payroll, inventory, all reports, no ads.",
@@ -242,14 +242,14 @@
         ],
         [
           "What should I do at this crop age?",
-          "PalayCheck App, with reminders by place and crop age",
+          "A rice calendar app, with reminders by place and crop age",
           "The day's tasks on your board"
         ]
       ]
     },
     {
       "type": "text",
-      "text": "The Rice Crop Manager Advisory Service is free. In Tarlac, one farmer who followed it cut his fertilizer from 12 bags to 6, and his yield rose from 4 to 5.5 tons per hectare. That is one farmer's season, not a promise. Our guide to the [PalayCheck key checks](/blog/palaycheck-key-checks) explains each check."
+      "text": "The Rice Crop Manager Advisory Service is free. In Tarlac, one farmer who followed it cut his fertilizer from 12 bags to 6, and his yield rose from 4 to 5.5 tons per hectare. That is one farmer's season, not a promise. Our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) explains the nine checks of a season."
     },
     {
       "type": "heading",
@@ -280,7 +280,7 @@
         },
         {
           "q": "Is there a free rice farming app?",
-          "a": "Yes. The PalayCheck App and Binhing Palay show a price of zero on Google Play, and the Rice Crop Manager Advisory Service is free on the web. Libre, the anee.io free plan, works too, with a few ads."
+          "a": "Yes. Binhing Palay and some rice calendar apps cost nothing on Google Play, and the Rice Crop Manager Advisory Service is free on the web. Libre, the anee.io free plan, works too, with a few ads."
         },
         {
           "q": "Can a rice farming app tell me when to apply fertilizer?",
@@ -309,8 +309,8 @@
           "url": "/blog/free-farm-app-philippines"
         },
         {
-          "label": "The PalayCheck key checks",
-          "url": "/blog/palaycheck-key-checks"
+          "label": "How to increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
         },
         {
           "label": "Pagtatanim ng palay",

@@ -53,7 +53,7 @@ P = {
     'android': 'blog/farm-app-for-android', 'swcost': 'blog/farm-management-software-cost',
     'digitize': 'blog/digitize-farm-records', 'yieldfc': 'blog/crop-yield-forecasting',
     'livestock': 'blog/farm-app-for-livestock-and-crops', 'sensors': 'blog/farm-sensors-philippines',
-    'multi': 'blog/multiple-cropping', 'palaycheck': 'blog/palaycheck-key-checks',
+    'multi': 'blog/multiple-cropping',
     'palayisda': 'blog/palayisdaan', 'drying': 'blog/palay-drying', 'drawing': 'blog/palay-drawing',
     # One page per rice variety (2026-10-13), from PhilRice's seed database.
     'rv216': 'rice-varieties/nsic-rc-216', 'rv222': 'rice-varieties/nsic-rc-222', 'rv402': 'rice-varieties/nsic-rc-402',
@@ -267,7 +267,6 @@ MAP = {
     'fish emulsion fertilizer': ['organic', 'foliar'],
     'fertilizer granules': ['inorg', 'apply'],
     'fertilizer application methods': ['apply', 'png'],
-    'palay check system': ['pnp', 'frice'],
     'palay rice': ['palay', 'price'],
     'fertilizer calculation formula': ['calc'],
     'fertilizer examples': ['inorg', 'organic'],
@@ -391,12 +390,11 @@ MAP = {
     'palay in tagalog': ['words'],
     'palay sa bukid': ['pnp', 'png'],
     'palay at mais': ['multi', 'alamatmais'],
-    'palay farming': ['pnp', 'riceapp', 'palaycheck'],
+    'palay farming': ['pnp', 'riceapp'],
     'palay seeder': ['pnp', 'palay'],
     'palay harvester': ['drying', 'cost'],
     'palay dryer': ['drying'],
     'palay dryer machine': ['drying'],
-    'palay key check 1 to 9': ['palaycheck'],
     'palayisdaan': ['palayisda'],
     'palay price per kilo today 2025': ['price'],
     'ani ng palay': ['ani', 'alamat'],
@@ -424,6 +422,9 @@ SKIP = {
     'fertilized egg is called': 'biology (an egg cell), not crop fertilizer',
     'fertilized egg of ascaris lumbricoides': 'biology (a parasite egg), not crop fertilizer',
     'fertilizer fund scam': 'a 2004 political case, not farm advice; naming people there is legal risk',
+    # The owner, 2026-10-17: PalayCheck is named nowhere outside The Stash, so no page targets these.
+    'palay check system': 'names PalayCheck, which the owner wants named nowhere but The Stash (2026-10-17); its subject, the nine checks of a rice season, lives at blog/increase-rice-yield-per-hectare',
+    'palay key check 1 to 9': 'names the PalayCheck Key Checks; the page was taken off the site (the owner, 2026-10-17), and the nine checks are told in our words at blog/increase-rice-yield-per-hectare',
 }
 
 

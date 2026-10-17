@@ -64,7 +64,6 @@ HERO = {
     'cool': ('/images/site/hero-terraces.jpg', 'Rice terraces in the cool highlands, where {n} is meant to grow'),
     None: ('/images/site/photos/hero-planting.jpg', 'Farmers planting rice by hand, the start of a season of {n}'),
 }
-SRC_PALAYCHECK = {'label': 'PhilRice: PalayCheck System, 2022 revised edition', 'url': 'https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf'}
 SRC_IRRI_STAGES = {'label': 'IRRI Rice Knowledge Bank: Growth stages of the rice plant', 'url': 'http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm'}
 SRC_FAO = {'label': 'FAO: Rice in human nutrition, amylose classes of milled rice', 'url': 'https://www.fao.org/4/T0567E/T0567E0b.htm'}
 SRC_JULIANO = {'label': 'PhilRice: Rice in health and nutrition, by Dr Bienvenido O. Juliano (2013)', 'url': 'https://www.philrice.gov.ph/rice-in-health-and-nutrition/'}

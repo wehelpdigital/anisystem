@@ -9,11 +9,11 @@ namespace App\Support;
  * before), what to do, how, in a farmhand's words, and a key the Land Prep
  * Planner (App\Support\LandPrepPlanner) uses to move, drop or schedule it.
  *
- * Rice follows the PalayCheck System of PhilRice (2022 revised edition) and
- * its field calendar, one plan per planting method: by hand, by machine
+ * Rice follows the standard practice for irrigated lowland rice and its
+ * field calendar, one plan per planting method: by hand, by machine
  * (trays or dapog), wet seeded by broadcasting, wet seeded with a drum
- * seeder. Dry seeded rice follows PhilRice and IRRI dry seeding practice,
- * since PalayCheck covers transplanted and wet seeded rice only. The day
+ * seeder. Dry seeded rice follows the usual dry seeding practice, since the
+ * standard practice covers transplanted and wet seeded rice only. The day
  * counts match database/land-prep/rice-methods.json, which the planner reads
  * for the full steps (basis, anchors). The other crops follow DA, BPI and
  * university extension guides.

@@ -6,7 +6,7 @@
   "category": "Farm Apps",
   "title": "What Is the Best Farm Management Software, and Is There a Free One for Small Farms?",
   "metaTitle": "Farm Management Software for Small Farms: Free Options",
-  "metaDescription": "Farm management software explained: the five kinds, what a small farm really needs, free options like the PalayCheck App, and where anee.io fits.",
+  "metaDescription": "Farm management software explained: the five kinds, what a small farm really needs, the free options for rice, and where anee.io fits.",
   "focusKeyword": "farm management software",
   "keywords": [
     "farm management software",
@@ -19,7 +19,7 @@
     "farm management application",
     "best farm management app"
   ],
-  "excerpt": "The best farm management software for a small farm dates every task from planting and adds up costs, labor and harvest by itself, on an ordinary phone. You do not need costly precision tools to start. Built for Filipino farmers, anee.io has a free Libre plan for one season. For rice, the PalayCheck App is also free.",
+  "excerpt": "The best farm management software for a small farm dates every task from planting and adds up costs, labor and harvest by itself, on an ordinary phone. You do not need costly precision tools to start. Built for Filipino farmers, anee.io has a free Libre plan for one season. For rice, some calendar apps on Google Play are free too.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-management-software.webp",
     "alt": "A farmer works at a computer in the open air office of his farm as a utility vehicle crosses the field behind him, the daily setting of farm management software",
@@ -41,7 +41,7 @@
       "items": [
         "There are five kinds: record keepers, crop management, farm business, precision agriculture and livestock software.",
         "A small crop farm needs the first two most: a plan dated by day count, and records that add up.",
-        "Free options exist: a notebook, a spreadsheet, the PalayCheck App for rice, and the Libre plan of anee.io.",
+        "Free options exist: a notebook, a spreadsheet, a free rice calendar app, and the Libre plan of anee.io.",
         "anee.io plans and records crops, with workers, stock and money reports. It keeps no livestock records."
       ]
     },
@@ -125,7 +125,7 @@
         [
           "Tasks dated from planting",
           "A dose a week late costs grain",
-          "A notebook calendar, or the PalayCheck App",
+          "A notebook calendar, or a free rice calendar app",
           "Each lot's day count and growth stage, on Libre"
         ],
         [
@@ -180,13 +180,13 @@
       "ordered": false,
       "items": [
         "**A notebook or a spreadsheet.** Both cost nothing, but neither reminds you what is due. Our comparison of a [farm record keeping app and a notebook](/blog/farm-record-keeping-app) weighs them fairly.",
-        "**PalayCheck App.** Free on Google Play for Android. It builds a rice calendar from your variety, establishment method and nutrient option, records expenses and harvest, and sums up cost and net income at season end. It covers rice only.",
+        "**A free rice calendar app.** You can find some on Google Play for Android. They date the season from your variety, planting method and fertilizer choice, keep expenses and harvest, and add up cost and net income when the season ends. They cover rice only.",
         "**anee.io Libre.** Free for good, with a few ads: one active season with one lot, the activities board, notes, tags, growth stages, harvest observations and the labor report, offline too."
       ]
     },
     {
       "type": "text",
-      "text": "A PalayCheck App 2.0 is on the way, with offline use among the planned changes. Our list of the [best free farm app for Filipino farmers](/blog/free-farm-app-philippines) compares the free tools in more detail."
+      "text": "Before you rely on a free app in the field, check that it still works without signal. Our list of the [best free farm app for Filipino farmers](/blog/free-farm-app-philippines) compares the free tools in more detail."
     },
     {
       "type": "heading",
@@ -257,7 +257,7 @@
         },
         {
           "q": "Is any farm management software free?",
-          "a": "Yes. The PalayCheck App is free on Google Play for rice farmers. The Libre plan of anee.io is free too, with a few ads and one active season. A spreadsheet also costs nothing if you own a phone or computer."
+          "a": "Yes. Rice farmers can find free calendar apps on Google Play. The Libre plan of anee.io is free too, with a few ads and one active season. A spreadsheet also costs nothing if you own a phone or computer."
         },
         {
           "q": "What is the difference between crop management software and farm accounting software?",

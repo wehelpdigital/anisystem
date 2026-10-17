@@ -156,7 +156,7 @@
     },
     {
       "type": "text",
-      "text": "For a small farm with two or three regular workers, a notebook can work. It costs nothing and needs no signal. But you add it up by hand, and it gets wet. It also cannot tell you which lot used the most labor unless you write that down every time.\n\nA spreadsheet adds up for you, yet most farmers fill it in at night from memory. Also consider the PalayCheck App, made for Android phones. It tracks your rice farming activities, expenses and harvest data, then gives a season summary of production costs and estimated net income. A full farm app makes sense when you run a crew, several lots or more than one crop."
+      "text": "For a small farm with two or three regular workers, a notebook can work. It costs nothing and needs no signal. But you add it up by hand, and it gets wet. It also cannot tell you which lot used the most labor unless you write that down every time.\n\nA spreadsheet adds up for you, yet most farmers fill it in at night from memory. Also consider a free rice app for Android phones. Some keep your rice work, expenses and harvest, then sum up what the season cost to produce and what it likely earned. A full farm app makes sense when you run a crew, several lots or more than one crop."
     },
     {
       "type": "heading",
@@ -177,7 +177,7 @@
       "items": [
         {
           "q": "Is there a free farm labor tracking app?",
-          "a": "A notebook or spreadsheet costs nothing, and the free PalayCheck App covers rice activities and expenses. In anee.io, the free Libre plan covers activities and notes, but the workers roster and payroll start with Solo Farmer at PHP 200 a month."
+          "a": "A notebook or spreadsheet costs nothing, and free rice apps for Android cover rice work and expenses. In anee.io, the free Libre plan covers activities and notes, but the workers roster and payroll start with Solo Farmer at PHP 200 a month."
         },
         {
           "q": "Does anee.io work without signal in the field?",

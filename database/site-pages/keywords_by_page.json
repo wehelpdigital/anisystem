@@ -57,7 +57,6 @@
   "*treser ng palay",
   "rice variety 216",
   "fertilizer for rice",
-  "*palay check system",
   "*pag aani ng palay",
   "*palay seedlings",
   "*palay seeder",
@@ -192,7 +191,6 @@
   "fertilizer for top dressing",
   "method of fertilizer application",
   "*fertilizer for rice",
-  "palay check system",
   "*fertilizer application for rice",
   "why fertilizer is important"
  ],
@@ -799,10 +797,6 @@
  ],
  "rice-varieties/nsic-rc-222": [
   "*rice variety 222"
- ],
- "blog/palaycheck-key-checks": [
-  "*palay key check 1 to 9",
-  "palay farming"
  ],
  "blog/cost-of-producing-rice-per-hectare": [
   "fertilizer machine",

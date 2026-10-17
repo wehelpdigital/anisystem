@@ -32,7 +32,7 @@
       "ordered": false,
       "items": [
         "A free farm app should plan your tasks by date, show your crop's stage and keep your records, at no cost and with no trial clock.",
-        "The Rice Crop Manager is free, and PhilRice offers apps for varieties, PalayCheck, MOET and the leaf color chart.",
+        "The Rice Crop Manager is free, and PhilRice offers apps for varieties, a rice calendar, MOET and the leaf color chart.",
         "anee.io's Libre plan is free: one active season, the activities board, growth stages, notes, photos, weather for two days and harvest records.",
         "Libre shows a few ads. Anee, workers, inventory, full weather and most reports come with paid plans."
       ]
@@ -123,8 +123,8 @@
           "A list of released rice varieties, showing each one's traits, how it holds up to pests and diseases, and its grain quality. Works offline"
         ],
         [
-          "PalayCheck app",
-          "Guidance and reminders for your place and the age of your palay, plus a list of tasks and costs"
+          "Rice calendar app",
+          "Reminders for your place and the age of your palay, with a list of tasks and costs"
         ],
         [
           "MOET app",
@@ -252,7 +252,7 @@
         },
         {
           "q": "Which free apps does PhilRice offer?",
-          "a": "Binhing Palay, the PalayCheck app, the MOET app, the LCC app and the Rice Crop Manager, all on its Rice Apps page. The Rice Crop Manager gives fertilizer advice for your field and is free."
+          "a": "Binhing Palay, a rice calendar app, the MOET app, the LCC app and the Rice Crop Manager, all on its Rice Apps page. The Rice Crop Manager gives fertilizer advice for your field and is free."
         },
         {
           "q": "Do I need a new phone for a farm app?",

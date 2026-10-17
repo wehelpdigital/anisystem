@@ -43,7 +43,10 @@ final class GovSource
         . '"for your area", "registered varieties", "the leaf color chart". These stay: a variety\'s own name (NSIC Rc 222, BPI Ri 1, IR64), '
         . 'the safety line to use only products registered with the Fertilizer and Pesticide Authority (FPA) and an FPA registration number, '
         . 'telling the farmer where to get a soil test or help (the Municipal Agriculture Office, a DA soil laboratory), and a news story '
-        . 'whose subject is an agency.';
+        . 'whose subject is an agency. Never name PalayCheck at all, in any spelling: not the PalayCheck system, not "PalayCheck Key Checks", '
+        . 'not Sistemang PalayCheck and not the PalayCheck App, not even as a guide, a training or an app to try. Give its practices as the '
+        . 'usual practice in your own words ("the nine key checks of a rice season", "Key Check 5, enough nutrients from tillering to flowering", '
+        . '"a free rice calendar app").';
 
     /** A source naming one of them: names, acronyms (as written) and addresses. */
     private const WORDS = '/philrice|phil\s+rice\b|philippine rice research|bswm|bureau\s+of\s+(?:soils|plant\s+industry|agricultural|animal\s+industry|fisheries)'
@@ -54,7 +57,7 @@ final class GovSource
         . '|buplant|\bda\.gov|\bdost\b|variety\s+registry|seed\s+registry'
         // The research bodies (2026-10-17).
         . '|international\s+rice\s+research|irri\.org|\birri\b|food\s+and\s+agriculture\s+organi[sz]ation|\bfao\b|fao\.org|cimmyt|avrdc'
-        . '|world\s*veg|vegetable\s+center|\bcabi\b|cabi\.org|plantwise|rice\s+knowledge\s+bank|knowledgebank|rice\s+crop\s+manager|nutrient\s+manager|palaycheck'
+        . '|world\s*veg|vegetable\s+center|\bcabi\b|cabi\.org|plantwise|rice\s+knowledge\s+bank|knowledgebank|rice\s+crop\s+manager|nutrient\s+manager|palay[\s_-]?check'
         // State universities abroad the catalogues cited, and the weather and disaster agencies (2026-10-17).
         . '|\btnau\b|tnau\.ac\.in|kerala\s+agricultural\s+university|\bkau\.in|uf\s+ifas|\bifas\b|ufl\.edu|phivolcs|ndrrmc|\bnoaa\b|noaa\.gov|\bjtwc\b|jma\.go\.jp/i';
 
@@ -128,7 +131,7 @@ final class GovSource
             . '|Bureau\s+of\s+Plant\s+Industry|Department\s+of\s+Agriculture|PAGASA|PhilMech|PhilFIDA|DOST\s?PCAARRD|PCAARRD'
             . '|Agricultural\s+Training\s+Institute|Philippine\s+Coconut\s+Authority'
             . '|National\s+Irrigation\s+Administration|Philippine\s+Statistics\s+Authority|National\s+Seed\s+Industry\s+Council'
-            . '|PalayCheck(?:\s+[Ss]ystem)?|NSIC\s+registry|(?:the\s+)?(?:national\s+)?(?:variety|seed)\s+registry|NSIC(?!\s*(?:\d{4}\s*)?(?:[A-Z][a-z]{0,3}\s*-?\s*\d|Rice|\d))|UPLB|International\s+Rice\s+Research\s+Institute|Food\s+and\s+Agriculture\s+Organi[sz]ation'
+            . '|(?:Sistemang\s+)?Palay\s?Check(?:\s+[Ss]ystem)?|NSIC\s+registry|(?:the\s+)?(?:national\s+)?(?:variety|seed)\s+registry|NSIC(?!\s*(?:\d{4}\s*)?(?:[A-Z][a-z]{0,3}\s*-?\s*\d|Rice|\d))|UPLB|International\s+Rice\s+Research\s+Institute|Food\s+and\s+Agriculture\s+Organi[sz]ation'
             . '|(?:IRRI|PhilRice|Pinoy)\s+Rice\s+Knowledge\s+Bank|PhilRice\s+Knowledge\s+Bank|Rice\s+Knowledge\s+Bank|World\s+Vegetable\s+Center|CIMMYT|AVRDC|CABI(?:\s+Plantwise)?'
             . '|TNAU|Kerala\s+Agricultural\s+University|UF\s+IFAS|PHIVOLCS|NDRRMC|NOAA(?:\s+CPC)?|JTWC|Joint\s+Typhoon\s+Warning\s+Center|Japan\s+Meteorological\s+Agency'
             . '|(?-i:IRRI|FAO|DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|PSA|SRA|KAU|OCD|JMA))';
@@ -168,6 +171,7 @@ final class GovSource
         $many = '(?:' . $one . ')(?:\s*(?:\(\s*[A-Z]{2,8}\s*\))?(?:,\s*(?:and|or)?|\band\b|\bor\b|\/|&)\s*(?:' . $one . ')(?:\s*\(\s*[A-Z]{2,8}\s*\))?)*';
         // A typographic apostrophe counts as one ("PAGASA’s").
         $text = str_replace("\u{2019}s ", "'s ", $text);
+        $text = self::palayCheckFirst($text);
 
         // "(PhilRice)", "(DA Caraga)", "(source: BSWM)", "(PhilRice and IRRI, 2019)".
         $text = preg_replace('/\s?\((?:(?:source|sources|from|per|based\s+on|see|ayon\s+sa)\s*:?\s+)?' . $many . '(?:,?\s*\d{4})?\)/iu', '', $text);
@@ -186,7 +190,7 @@ final class GovSource
         // records); "a DA soil laboratory" and its office stay, being where to get help.
         $text = preg_replace('/\b(from|in|at|of|on|during)\s+' . $one . '\s+(?-i:(?=(?:corn|rice|palay|yield|derb\w*|techno\w*|demo\w*|trial\w*|contests?|harvests?|stations?|seed|national|regional|wet|dry|multi\w*)\b))/iu', '$1 the ', $text);
         // "using good management and the PalayCheck system" -> "using good management".
-        $text = preg_replace('/\s+(?:and|with|following|under|through|from)\s+the\s+PalayCheck(?:\s+[Ss]ystem)?\b/u', '', $text);
+        $text = preg_replace('/\s+(?:and|with|following|under|through|from)\s+the\s+Palay\s?Check(?:\s+[Ss]ystem)?\b(?!\s+(?:mobile\s+)?app)/iu', '', $text);
         // ", declared by PAGASA," -> "".
         $text = preg_replace('/,?\s+(?:as\s+)?(?:declared|issued|announced|reported)\s+by\s+' . $many . '\s*,?(?=\s)/iu', '', $text);
         // "PAGASA and climate models project" -> "Climate models project".
@@ -234,6 +238,7 @@ final class GovSource
             return $left ? $m[1] . ' ' . implode(', ', $left) : "\x04";
         }, $text);
         $text = preg_replace('/^[^\S\n]*\x04[^\S\n]*(?:\n|$)/mu', '', $text);
+        $text = self::palayCheckLast($text);
 
         // Where a rewrite began a sentence, the sentence keeps its capital.
         $text = preg_replace_callback('/(^|[.!?]\s+|\n[ \t]*(?:[-*>]\s+|\d+[.)]\s+)?|"|\*\*)\x01(\p{Ll})/u', fn ($m) => $m[1] . mb_strtoupper($m[2]), $text);
@@ -246,8 +251,61 @@ final class GovSource
     /** Whether a text might name one at all: the quick test that spares the rest. */
     public static function mightName(string $text): bool
     {
-        return (bool) (preg_match('/philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|nsic\s+registry|authority|institute|administration|organi[sz]ation|seed\s+industry|knowledge\s+bank|vegetable\s+center|cimmyt|avrdc|cabi|registry|\.gov\.ph|irri\.org|fao\.org|tnau|ifas|kerala|phivolcs|ndrrmc|noaa|jtwc|meteorological|palaycheck/i', $text)
+        return (bool) (preg_match('/philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|nsic\s+registry|authority|institute|administration|organi[sz]ation|seed\s+industry|knowledge\s+bank|vegetable\s+center|cimmyt|avrdc|cabi|registry|\.gov\.ph|irri\.org|fao\.org|tnau|ifas|kerala|phivolcs|ndrrmc|noaa|jtwc|meteorological|palay[\s_-]?check/i', $text)
             || preg_match('/\b(?:DA|BPI|ATI|NIA|PCA|FPA|PSA|SRA|IRRI|FAO|NSIC|KAU|OCD|JMA)\b/', $text));
+    }
+
+    /** PalayCheck in any spelling, with the words that may come with it. */
+    private const PALAYCHECK = '(?:Sistemang\s+)?Palay[\s_-]?Check(?:\s+System)?';
+
+    /**
+     * PalayCheck is named nowhere (the owner, 2026-10-17: "remove this don't
+     * say some came from PalayCheck"), not even as a tool. The first pass,
+     * before the other rules: its maker goes with it ("PhilRice's PalayCheck
+     * System recommends" is left to the rules as "PalayCheck System
+     * recommends", so "Agriculturists recommend"), and its Key Checks keep
+     * their number without its name ("the PalayCheck system's Key Check 5",
+     * "Key Check 5 of PalayCheck" -> "Key Check 5"; "the nine PalayCheck Key
+     * Checks" -> "the nine key checks").
+     */
+    private static function palayCheckFirst(string $text): string
+    {
+        if (! preg_match('/palay[\s_-]?check/i', $text)) {
+            return $text;
+        }
+        $pc = self::PALAYCHECK;
+        $text = preg_replace('/\b(?:the\s+)?(?:DA[\s-]+)?(?:PhilRice|Phil\s?Rice|Philippine\s+Rice\s+Research\s+Institute)(?:\s*\(\s*PhilRice\s*\))?(?:\'s)?\s+(?=' . $pc . ')/iu', '', $text);
+        $text = preg_replace('/(\bKey\s+Checks?(?:\s+\d+)?)\s+(?:of|from|in|under)\s+(?:the\s+)?' . $pc . '\b(?!\s+(?:mobile\s+)?app)/iu', '$1', $text);
+
+        return preg_replace_callback('/\b(the\s+)?' . $pc . '(?:\'s)?\s+(Key\s+Checks?)\b(\s+\d+)?/iu', function ($m) {
+            $num = $m[3] ?? '';
+            if ($num !== '' && ! preg_match('/s$/i', $m[2])) {
+                return "\x01" . $m[2] . $num;
+            }
+
+            return "\x01" . ($m[1] !== '' ? 'the ' : '') . 'key checks' . $num;
+        }, $text);
+    }
+
+    /**
+     * The last pass, after the sources lines (a source naming it still goes
+     * as a source): what the rules left of it, in plain words. "the
+     * PalayCheck App" becomes "a rice calendar app", a bold "PalayCheck
+     * System:" label "Key checks:", "a PalayCheck group" "a key check group",
+     * and any other mention "the rice season checklist".
+     */
+    private static function palayCheckLast(string $text): string
+    {
+        if (! preg_match('/palay[\s_-]?check/i', $text)) {
+            return $text;
+        }
+        $pc = self::PALAYCHECK;
+        // "the PalayCheck App", "PalayCheck mobile app", "the PalayCheck App 2.0".
+        $text = preg_replace('/\b(?:the\s+|a\s+)?' . $pc . '\s+(?:mobile\s+)?(?:app|application)\b(?:\s+\d+(?:\.\d+)?\b)?/iu', "\x01a rice calendar app", $text);
+        $text = preg_replace('/\*\*(?:the\s+)?' . $pc . '(:?)\*\*/iu', '**Key checks$1**', $text);
+        $text = preg_replace('/\b([Aa])n?\s+' . $pc . '\b/u', '$1 key check', $text);
+
+        return preg_replace('/\b(?:the\s+)?' . $pc . '\b/iu', "\x01the rice season checklist", $text);
     }
 
     /** A part of a "Sources:" line with its address put back, for the test. */

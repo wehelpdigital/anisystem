@@ -270,6 +270,28 @@ class SitePages
         }
     }
 
+    /**
+     * Pages taken off the site, each sent for good (301) to the guide of ours
+     * that covers its subject, so old links and search engines land somewhere
+     * useful. 2026-10-17, the owner: PalayCheck is named nowhere but The
+     * Stash; the nine checks of a rice season live in the yield guide.
+     */
+    public const MOVED = [
+        'blog/palaycheck-key-checks' => 'blog/increase-rice-yield-per-hectare',
+    ];
+
+    /** Where a page taken off the site sends its reader now, or null. */
+    public static function movedTo(string $section, string $slug): ?string
+    {
+        $to = self::MOVED[$section . '/' . $slug] ?? null;
+        if ($to === null) {
+            return null;
+        }
+        [$s, $g] = explode('/', $to, 2);
+
+        return self::url($s, $g);
+    }
+
     /** Where a page that used to live under /problems lives now (or null). */
     public static function movedProblem(string $slug): ?AsSitePage
     {

@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Timing matters because the grain keeps changing in the field. Cut too early, and you get immature grains and more broken rice at the mill. Cut too late, and ripe grains shatter onto the ground. Our list of the [PalayCheck key checks](/blog/palaycheck-key-checks) shows where harvest fits in the season."
+      "text": "Timing matters because the grain keeps changing in the field. Cut too early, and you get immature grains and more broken rice at the mill. Cut too late, and ripe grains shatter onto the ground. Our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare) shows where harvest fits among the nine checks of a season."
     },
     {
       "type": "heading",
@@ -211,8 +211,8 @@
           "url": "/blog/palay-drying"
         },
         {
-          "label": "The PalayCheck key checks",
-          "url": "/blog/palaycheck-key-checks"
+          "label": "How to increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
         },
         {
           "label": "Alternate wetting and drying",

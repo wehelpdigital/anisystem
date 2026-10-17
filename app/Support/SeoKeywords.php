@@ -121,7 +121,10 @@ class SeoKeywords
             return collect();
         }
         $words = self::words($text);
-        $rows = DB::table(self::TABLE)->where('deleteStatus', 1)->get();
+        // A keyword naming PalayCheck is never offered, even one imported again
+        // (the owner, 2026-10-17: PalayCheck is named nowhere but The Stash).
+        $rows = DB::table(self::TABLE)->where('deleteStatus', 1)->get()
+            ->reject(fn ($r) => (bool) preg_match('/palay[\s_-]?check/i', (string) $r->keyword));
         $scored = $rows->map(function ($r) use ($words) {
             $kw = self::words($r->keyword);
             $hit = count(array_intersect($kw, $words));

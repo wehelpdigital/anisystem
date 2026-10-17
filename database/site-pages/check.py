@@ -96,6 +96,10 @@ GOV_SAID = re.compile(r"\b(?:according\s+to|as\s+per|based\s+on|ayon\s+sa|source
                       r"|\b(?:" + GOV_NAMES + r")(?:'s)?\s+(?:recommends?|advises?|suggests?|says|lists|gives|notes|warns|recommendation|practice|catalogue|data|figures|guide)\b")
 
 
+# PalayCheck in any spelling: "PalayCheck", "Palay Check", "palay-check", "palaycheck-key-checks".
+PALAYCHECK = re.compile(r"palay[\s_-]*check", re.I)
+
+
 def is_gov_url(url):
     """An address is judged by its host: a newspaper story about the DA is not the DA."""
     m = re.match(r"^[a-z]+://([^/?#]+)", (url or "").strip(), re.I)
@@ -381,6 +385,14 @@ def check(path, urls, focus_seen):
         m = GOV_SAID.search(plain(t))
         if m:
             errs.append("the words give a government body or research institute as the source: %r" % m.group(0))
+    # PalayCheck is named nowhere but The Stash (the owner, 2026-10-17): not in
+    # the words, a heading, a keyword, a link or an address.
+    if not stash:
+        whole = json.dumps(page, ensure_ascii=False)
+        hits = list(PALAYCHECK.finditer(whole))
+        if hits:
+            i = hits[0].start()
+            errs.append("names PalayCheck %d time(s), only The Stash may: ...%s..." % (len(hits), whole[max(0, i - 30):i + 40]))
     if not any(b.get("type") == "faq" for b in page.get("blocks", [])):
         warns.append("no faq block")
     hero = page.get("heroImage") or {}

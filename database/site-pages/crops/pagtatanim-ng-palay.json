@@ -21,7 +21,6 @@
     "palatak palay seeder",
     "treser ng palay",
     "pag aani ng palay",
-    "palay check system",
     "fertilizer for rice",
     "broadleaves",
     "sedges weeds",
@@ -233,11 +232,11 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "Ano ang PalayCheck System?"
+      "text": "Siyam na key check para sa mas mataas na ani"
     },
     {
       "type": "text",
-      "text": "Ang PalayCheck System, na hinahanap din bilang Palay Check System, ay rice integrated crop management system para sa pagtatanim ng palay. Sa halip na hiwa hiwalay na payo, pinagsasama nito ang binhi, lupa, tubig, abono, peste, ani at postharvest. Learning, checking and sharing ang tawag dito: ikinukumpara mo ang gawi mo sa pinakamainam na gawi, sinusukat ang resulta, at ibinabahagi sa kapwa magsasaka.\n\nSa 2022 revised edition, may siyam na [Key Checks](/blog/palaycheck-key-checks):"
+      "text": "Tingnan ang buong season ng pagtatanim ng palay bilang isang kabuuan, hindi hiwa hiwalay na payo: binhi, lupa, tubig, abono, peste, ani at postharvest. Bawat bahagi ay may target na makikita o mabibilang mo sa bukid. Itapat ang ginawa mo sa target, sukatin ang resulta, at pag usapan ito kasama ng kapwa magsasaka.\n\nIto ang siyam na [key check](/blog/increase-rice-yield-per-hectare) mula binhi hanggang bodega:"
     },
     {
       "type": "list",
@@ -282,8 +281,8 @@
           "a": "Kapag 85 hanggang 90 percent ng butil ay kulay ginto kung kamay ang gagapas, o 90 hanggang 95 percent kung combine harvester. Patuyuin muna ang bukid 1 hanggang 2 linggo bago nito."
         },
         {
-          "q": "Ano ang Palay Check System?",
-          "a": "Ito ang PalayCheck System, isang rice integrated crop management system na may siyam na Key Checks mula binhi hanggang pag iimbak."
+          "q": "Ano ang siyam na key check sa palay?",
+          "a": "Siyam na target mula binhi hanggang pag iimbak: dekalidad na binhi, pantay na bukid, sabay sabay na tanim, sapat na punla, sapat na sustansya, walang stress sa tubig, maliit na bawas sa ani dahil sa peste, ani sa tamang oras, at tamang pagpapatuyo."
         },
         {
           "q": "Ano ang palatak palay seeder?",
@@ -308,8 +307,8 @@
           "url": "/blog/fertilizer-for-rice"
         },
         {
-          "label": "PalayCheck Key Checks",
-          "url": "/blog/palaycheck-key-checks"
+          "label": "Paano itaas ang ani ng palay kada hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
         },
         {
           "label": "Pagpapatuyo ng palay",

@@ -1,14 +1,14 @@
 {
- "source": "PhilRice PalayCheck System for irrigated lowland rice, 2022 revised edition, and the PalayCheck field calendar it is built on. Dry direct seeding follows PhilRice and IRRI practice.",
+ "source": "The standard practice for irrigated lowland rice and its field calendar, written in our own words. Dry direct seeding follows the usual dry seeding practice.",
  "basisKey": {
-  "palaycheck": "PhilRice PalayCheck System (manual and its field calendar)",
-  "philrice": "Other PhilRice guidance outside PalayCheck",
-  "irri": "IRRI practice (dry seeded rice guide)",
+  "standard": "The standard practice for irrigated lowland rice (its manual and field calendar)",
+  "philrice": "Other standard rice guidance",
+  "irri": "The usual dry seeded rice practice",
   "suggestion": "Our own addition, show it as a suggestion"
  },
  "addsNote": "Steps listed under a question in adds carry from and to worked out for tpr_manual. For other methods, place them by their follows anchor when that step exists, or keep the same days when they have no anchor.",
  "dayZero": "Each plan counts days from its planting day: the transplanting day for tpr_manual and tpr_mechanical, the sowing day for the direct seeded plans. Negative days come before it.",
- "follows": "A step with follows moves with that other step when the farmer logs a different date, the way the PalayCheck calendar reschedules: follows.from and follows.to are days after (negative, before) the named step.",
+ "follows": "A step with follows moves with that other step when the farmer logs a different date, the way the standard field calendar reschedules: follows.from and follows.to are days after (negative, before) the named step.",
  "methods": {
   "tpr_manual": {
    "label": "Transplanted rice, by hand",
@@ -24,7 +24,7 @@
      "to": -21,
      "what": "Let the field rest",
      "how": "Leave at least 30 days between the last harvest and sowing the seedbed, with no rice growing on the field. Plow under any ratoon or stray rice plants. Most rice pests live about a month, so the break starves them, kills the disease left by the last crop, and lets the old straw rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "calendar",
@@ -32,7 +32,7 @@
      "to": -35,
      "what": "Check the planting schedule in your area",
      "how": "Ask your irrigators association or the municipal agriculture office when your service area plants. Set your planting day no more than 14 days before or after that date. Fields that go in together share the water better, and pests have no younger crop next door to move into.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "dikes",
@@ -40,7 +40,7 @@
      "to": -28,
      "what": "Clean and fix the dikes and canals",
      "how": "Cut the weeds on the dikes, patch every leak, and pack the soil firm so water does not seep out. Build them about 15 cm high and 20 cm wide, a size rats find hard to burrow into. Clear the canals so the field fills and drains when you want it to. Clean dikes also leave fewer hiding places for pests.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soften",
@@ -61,7 +61,7 @@
      "to": -30,
      "what": "Spread the old straw back",
      "how": "Scatter the straw from the last crop over the field, about 30 days before transplanting, about 3 to 8 tons per hectare (roughly the weight of the grain you aim to harvest). Turned under early, it has time to rot and gives back nutrients, potassium most of all. Burning wastes it.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "plow",
@@ -69,7 +69,7 @@
      "to": -21,
      "what": "Plow or rotavate",
      "how": "Plow once, between 21 and 30 days before transplanting, with a hand tractor, a four wheel tractor, a rotavator or a carabao. Burying the weeds, stubble and straw now gives them time to rot, and the buried weed seeds and dropped grain have time to sprout so the harrow can kill them later.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soak_field",
@@ -77,7 +77,7 @@
      "to": -14,
      "what": "Keep the plowed field wet for a week",
      "how": "Let shallow water back in after plowing and leave the field alone for about 7 days. The clods soften, and the weeds and straw underneath start to rot.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "plow",
       "from": 1,
@@ -90,7 +90,7 @@
      "to": -25,
      "what": "Get the seedbed ground ready",
      "how": "About a week before sowing, plow and harrow a patch of about 400 square meters for every hectare you will plant. On heavy clay, work in 3 to 4 bags of commercial organic fertilizer or some carbonized rice hull before leveling, so the soil stays loose and the seedlings come out with their roots whole. Loam soil does not need it.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_seedbed",
       "from": -7,
@@ -103,7 +103,7 @@
      "to": -19,
      "what": "Shape the seedbed plots",
      "how": "One to three days before sowing, shape wet beds about 1 meter wide and 20 meters long, raised about 5 cm, and level them well so the seed comes up evenly. Leave a canal about 40 cm wide between beds for draining.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_seedbed",
       "from": -3,
@@ -116,7 +116,7 @@
      "to": -20,
      "what": "Soak the seed",
      "how": "Two days before sowing, soak the seed in clean water for 24 hours. For one hectare use 20 to 40 kg of good seed, about 40 kg of inbred or 20 kg of hybrid. Old or home kept seed should pass a germination test first.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_seedbed",
       "from": -2,
@@ -129,7 +129,7 @@
      "to": -19,
      "what": "Let the seed sprout",
      "how": "Take the seed out of the water and keep it covered for another 24 hours in a shaded, airy spot. Sow when most grains show a small sprout.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "seed_soak",
       "from": 1,
@@ -142,7 +142,7 @@
      "to": -18,
      "what": "Sow the seedbed",
      "how": "Drain the beds, then scatter the sprouted seed evenly, about 1 kg on every 10 square meters, without piling. Crowded seedlings grow thin and weak. Sow 18 to 21 days before your transplanting day.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "harrow1",
@@ -150,7 +150,7 @@
      "to": -14,
      "what": "First harrowing, lengthwise",
      "how": "Harrow along the same lines you plowed. It breaks the clods, works the stubble in, and wakes up more weed seeds so the next pass can bury them. Wait 5 to 7 days or more after plowing, longer if there is a lot of straw or weeds to rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "seedbed_water",
@@ -158,7 +158,7 @@
      "to": -11,
      "what": "Water the seedbed",
      "how": "When the seedlings stand 2 to 3 cm tall, about a week after sowing, let in 2 cm of water and raise it slowly to 5 cm as they grow. Never cover the seedlings, so roots and tillers develop well. Watch for pests.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_seedbed",
       "from": 5,
@@ -171,7 +171,7 @@
      "to": -14,
      "what": "Spread manure or compost",
      "how": "Two weeks before transplanting, spread about 10 bags per hectare of organic fertilizer (air dried chicken manure, vermicompost or a bagged organic fertilizer), so the next harrowing mixes it in.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "seedbed_zinc",
@@ -179,7 +179,7 @@
      "to": -8,
      "what": "Zinc for the seedbed",
      "how": "Seven to ten days after sowing, mix zinc sulfate into the seedbed: 1 to 2 kg on the 400 square meter bed when you aim for 5 tons or more per hectare, or 0.5 kg for a mild zinc shortage and 2 kg for a severe one.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_seedbed",
       "from": 7,
@@ -192,7 +192,7 @@
      "to": -4,
      "what": "Feed the seedbed",
      "how": "Ten to fourteen days after sowing, spread 2 to 4 kg of 14-14-14 over the seedbed (4 kg for hybrid).",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_seedbed",
       "from": 10,
@@ -205,7 +205,7 @@
      "to": -7,
      "what": "Second harrowing, crosswise",
      "how": "Five to seven days after the first pass, harrow across the field. This buries the new flush of weeds and starts the leveling.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow1",
       "from": 5,
@@ -218,7 +218,7 @@
      "to": -1,
      "what": "Final harrowing and leveling",
      "how": "Make the last pass a day or two before transplanting, then pull a wooden plank behind a carabao or hand tractor, or use a leveler on the tiller, under about 5 cm of water. The field is ready when no spot holds water deeper than 5 cm (about a thumb length) and no lump of soil shows above the water. A level field saves water and fertilizer, keeps weeds and snails down, and ripens evenly.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow2",
       "from": 5,
@@ -231,7 +231,7 @@
      "to": 0,
      "what": "Pull and lay out the seedlings",
      "how": "Pull the seedlings the day before or the morning of transplanting and set the bundles out across the field. Do not cut the leaf tips: the wound lets disease in.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "transplant",
@@ -239,7 +239,7 @@
      "to": 0,
      "what": "Transplant in straight rows",
      "how": "Plant 2 to 3 seedlings per hill for inbred or 1 to 2 for hybrid, 20 by 20 cm apart in the wet season or 20 by 15 cm in the dry season, for at least 25 hills in a square meter. Straight rows make fertilizing, weeding and spotting off types easier.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "weeds_snails",
@@ -247,7 +247,7 @@
      "to": 3,
      "what": "Stop weeds and snails early",
      "how": "If weeds are a problem, spray a pre emergence herbicide within 3 days of transplanting, following its label. Where golden apple snails are present, control them the day after transplanting.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "water_replant",
@@ -255,7 +255,7 @@
      "to": 7,
      "what": "First water and replanting",
      "how": "Three days after transplanting, raise the water to 2 to 3 cm. Fill missing hills with spare seedlings from the same seedbed within 7 days, the sooner the better (3 to 5 days), so the whole field ripens together.",
-     "basis": "palaycheck"
+     "basis": "standard"
     }
    ]
   },
@@ -273,7 +273,7 @@
      "to": -14,
      "what": "Let the field rest",
      "how": "Leave at least 30 days between the last harvest and sowing the nursery, with no rice growing on the field. Plow under any ratoon or stray rice plants. Most rice pests live about a month, so the break starves them, kills the disease left by the last crop, and lets the old straw rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "calendar",
@@ -281,7 +281,7 @@
      "to": -35,
      "what": "Check the planting schedule in your area",
      "how": "Ask your irrigators association or the municipal agriculture office when your service area plants. Set your planting day no more than 14 days before or after that date. Fields that go in together share the water better, and pests have no younger crop next door to move into.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "dikes",
@@ -289,7 +289,7 @@
      "to": -28,
      "what": "Clean and fix the dikes and canals",
      "how": "Cut the weeds on the dikes, patch every leak, and pack the soil firm so water does not seep out. Build them about 15 cm high and 20 cm wide, a size rats find hard to burrow into. Clear the canals so the field fills and drains when you want it to. Clean dikes also leave fewer hiding places for pests.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soften",
@@ -310,7 +310,7 @@
      "to": -30,
      "what": "Spread the old straw back",
      "how": "Scatter the straw from the last crop over the field, about 30 days before transplanting, about 3 to 8 tons per hectare (roughly the weight of the grain you aim to harvest). Turned under early, it has time to rot and gives back nutrients, potassium most of all. Burning wastes it.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "plow",
@@ -318,7 +318,7 @@
      "to": -21,
      "what": "Plow or rotavate",
      "how": "Plow once, between 21 and 30 days before transplanting, with a hand tractor, a four wheel tractor, a rotavator or a carabao. Burying the weeds, stubble and straw now gives them time to rot, and the buried weed seeds and dropped grain have time to sprout so the harrow can kill them later.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soak_field",
@@ -326,7 +326,7 @@
      "to": -14,
      "what": "Keep the plowed field wet for a week",
      "how": "Let shallow water back in after plowing and leave the field alone for about 7 days. The clods soften, and the weeds and straw underneath start to rot.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "plow",
       "from": 1,
@@ -339,7 +339,7 @@
      "to": -21,
      "what": "Plan the nursery",
      "how": "About a week before sowing, choose a level spot near the field. For one hectare you need 250 to 300 trays of 28 by 58 cm, or a wet bed of about 50 square meters for the modified wet dapog method. Work carbonized rice hull or organic fertilizer into the bed soil before leveling so it stays loose.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_nursery",
       "from": -7,
@@ -365,7 +365,7 @@
      "to": -16,
      "what": "Soak the seed",
      "how": "Two days before sowing, soak 20 to 40 kg of seed per hectare in clean water for 24 hours.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_nursery",
       "from": -2,
@@ -378,7 +378,7 @@
      "to": -15,
      "what": "Let the seed sprout",
      "how": "Take the seed out of the water and keep it covered for 24 hours in a shaded, airy spot, until most grains show a small sprout.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "seed_soak",
       "from": 1,
@@ -391,7 +391,7 @@
      "to": -14,
      "what": "Sow the trays or dapog bed",
      "how": "Spread the sprouted seed evenly: 70 to 160 g in each tray, or 420 to 960 g per square meter of dapog bed. Sow 14 to 18 days before the transplanter comes.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "nursery_care",
@@ -412,7 +412,7 @@
      "to": -14,
      "what": "First harrowing, lengthwise",
      "how": "Harrow along the same lines you plowed. It breaks the clods, works the stubble in, and wakes up more weed seeds so the next pass can bury them. Wait 5 to 7 days or more after plowing, longer if there is a lot of straw or weeds to rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "manure",
@@ -420,7 +420,7 @@
      "to": -14,
      "what": "Spread manure or compost",
      "how": "Two weeks before transplanting, spread about 10 bags per hectare of organic fertilizer (air dried chicken manure, vermicompost or a bagged organic fertilizer), so the next harrowing mixes it in.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "nursery_zinc",
@@ -428,7 +428,7 @@
      "to": -4,
      "what": "Zinc for the nursery",
      "how": "Seven to ten days after sowing, give zinc sulfate where you aim for 5 tons or more per hectare or the soil is short of zinc: 1 to 2 kg covers the seedlings for a hectare.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_nursery",
       "from": 7,
@@ -441,7 +441,7 @@
      "to": -7,
      "what": "Second harrowing, crosswise",
      "how": "Five to seven days after the first pass, harrow across the field. This buries the new flush of weeds and starts the leveling.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow1",
       "from": 5,
@@ -454,7 +454,7 @@
      "to": -4,
      "what": "Feed the nursery",
      "how": "About 10 days after sowing, give 2 to 4 kg of 14-14-14 across the seedlings for one hectare.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "sow_nursery",
       "from": 10,
@@ -467,7 +467,7 @@
      "to": -1,
      "what": "Final harrowing and leveling",
      "how": "Make the last pass one to three days before transplanting, then pull a wooden plank behind a carabao or hand tractor, or use a leveler on the tiller, under about 5 cm of water. The field is ready when no spot holds water deeper than 5 cm (about a thumb length) and no lump of soil shows above the water. A level field saves water and fertilizer, keeps weeds and snails down, and ripens evenly.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow2",
       "from": 5,
@@ -493,7 +493,7 @@
      "to": 0,
      "what": "Transplant by machine",
      "how": "Set the transplanter to 30 by 15 cm with 3 to 6 seedlings per hill, the same in both seasons, for at least 21 hills in a square meter. Do not cut the seedling tips.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "weeds_snails",
@@ -501,7 +501,7 @@
      "to": 3,
      "what": "Stop weeds and snails early",
      "how": "If weeds are a problem, spray a pre emergence herbicide within 3 days of transplanting, following its label. Where golden apple snails are present, control them the day after transplanting.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "water_replant",
@@ -509,7 +509,7 @@
      "to": 7,
      "what": "First water and replanting",
      "how": "Three days after transplanting, raise the water to 2 to 3 cm. Fill missing hills with spare seedlings from the same nursery, planted by hand, within 7 days, the sooner the better (3 to 5 days), so the whole field ripens together.",
-     "basis": "palaycheck"
+     "basis": "standard"
     }
    ]
   },
@@ -526,7 +526,7 @@
      "to": -35,
      "what": "Check the planting schedule in your area",
      "how": "Ask your irrigators association or the municipal agriculture office when your service area plants. Set your planting day no more than 14 days before or after that date. Fields that go in together share the water better, and pests have no younger crop next door to move into.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soften",
@@ -547,7 +547,7 @@
      "to": -21,
      "what": "Spread the old straw back",
      "how": "Scatter the straw from the last crop over the field, before plowing, about 3 to 8 tons per hectare (roughly the weight of the grain you aim to harvest). Turned under early, it has time to rot and gives back nutrients, potassium most of all. Burning wastes it.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "plow",
@@ -555,7 +555,7 @@
      "to": -21,
      "what": "Plow or rotavate",
      "how": "Plow once, between 21 and 30 days before sowing, with a hand tractor, a four wheel tractor, a rotavator or a carabao. Burying the weeds, stubble and straw now gives them time to rot, and the buried weed seeds and dropped grain have time to sprout so the harrow can kill them later.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "rest",
@@ -563,7 +563,7 @@
      "to": -1,
      "what": "Let the field rest",
      "how": "Leave at least 30 days between the last harvest and sowing, with no rice growing on the field. Plow under any ratoon or stray rice plants. Most rice pests live about a month, so the break starves them, kills the disease left by the last crop, and lets the old straw rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soak_field",
@@ -571,7 +571,7 @@
      "to": -14,
      "what": "Keep the plowed field wet for a week",
      "how": "Let shallow water back in after plowing and leave the field alone for about 7 days. The clods soften, and the weeds and straw underneath start to rot.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "plow",
       "from": 1,
@@ -584,7 +584,7 @@
      "to": -20,
      "what": "Clean and fix the dikes and canals",
      "how": "Cut the weeds on the dikes, patch every leak, and pack the soil firm so water does not seep out. Build them about 15 cm high and 20 cm wide, a size rats find hard to burrow into. Clear the canals so the field fills and drains when you want it to. Clean dikes also leave fewer hiding places for pests.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "harrow1",
@@ -592,7 +592,7 @@
      "to": -13,
      "what": "First harrowing, lengthwise",
      "how": "Harrow along the same lines you plowed. It breaks the clods, works the stubble in, and wakes up more weed seeds so the next pass can bury them. Wait 5 to 7 days or more after plowing, longer if there is a lot of straw or weeds to rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "harrow2",
@@ -600,7 +600,7 @@
      "to": -6,
      "what": "Second harrowing, crosswise",
      "how": "Five to seven days after the first pass, harrow across the field. This buries the new flush of weeds and starts the leveling.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow1",
       "from": 5,
@@ -613,7 +613,7 @@
      "to": -2,
      "what": "Soak the seed",
      "how": "Two days before sowing, soak 60 to 80 kg of seed per hectare in clean water for 24 hours. Where zinc is short, add 1 kg of zinc sulfate for every 40 kg of seed to the last change of soaking water. Old or home kept seed should pass a germination test first.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "level",
@@ -621,7 +621,7 @@
      "to": -1,
      "what": "Final harrowing and leveling",
      "how": "Make the last pass so it is done by the day before sowing, then pull a wooden plank behind a carabao or hand tractor, or use a leveler on the tiller, under about 5 cm of water. The field is ready when no spot holds water deeper than 5 cm (about a thumb length) and no lump of soil shows above the water. A level field saves water and fertilizer, keeps weeds and snails down, and ripens evenly.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow2",
       "from": 5,
@@ -634,7 +634,7 @@
      "to": -1,
      "what": "Cut the small canals",
      "how": "Right after leveling, cut small canals about 25 cm wide and 5 cm deep along the inside of the dikes and through the middle of the field. They drain extra water fast, collect snails, and give you a path for replanting and weeding.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "seed_incubate",
@@ -642,7 +642,7 @@
      "to": -1,
      "what": "Let the seed sprout",
      "how": "Take the seed out of the water and keep it covered for 24 hours in a shaded, airy spot, until most grains show a small sprout.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "seed_soak",
       "from": 1,
@@ -655,7 +655,7 @@
      "to": 0,
      "what": "Drain and sow",
      "how": "Drain the field down to soft, saturated mud. Air the sprouted seed briefly so it does not clump, then broadcast it evenly by hand, or with a seed spreader or drone. Sow an extra 1 kg along one side of the field for filling gaps later.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "weeds_pre",
@@ -663,7 +663,7 @@
      "to": 3,
      "what": "Pre emergence herbicide",
      "how": "If weeds are a problem, spray a pre emergence herbicide within 3 days of sowing, following its label. Pull what survives.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "guard",
@@ -671,7 +671,7 @@
      "to": 7,
      "what": "Guard the seed",
      "how": "Birds, rats and snails go for sown seed first. Chasing birds off is the most practical defense. Fill rat burrows with mud and water, keep the dikes clean, and join any community baiting.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "keep_wet",
@@ -679,7 +679,7 @@
      "to": 14,
      "what": "Keep the soil wet, not flooded",
      "how": "Hold back irrigation for the first 10 to 14 days so the soil stays saturated with no standing water. Only let water in if drought starts to stress the seedlings.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "weeds_post",
@@ -687,7 +687,7 @@
      "to": 9,
      "what": "Early post emergence herbicide",
      "how": "If many weeds still come up, spray an early post emergence herbicide 6 to 9 days after sowing, by its label, and pull the rest.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "replant",
@@ -695,7 +695,7 @@
      "to": 10,
      "what": "Fill the bare patches",
      "how": "Between 7 and 10 days after sowing, replant bare patches more than 20 cm across with seedlings from the extra seed sown along the edge, so the field ripens together.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "first_water",
@@ -703,7 +703,7 @@
      "to": 14,
      "what": "First water",
      "how": "From about 10 days after sowing, and by day 14 at the latest, let water in to 2 to 3 cm. Watch for golden apple snails as the water rises and control them where they are many.",
-     "basis": "palaycheck"
+     "basis": "standard"
     }
    ]
   },
@@ -720,7 +720,7 @@
      "to": -35,
      "what": "Check the planting schedule in your area",
      "how": "Ask your irrigators association or the municipal agriculture office when your service area plants. Set your planting day no more than 14 days before or after that date. Fields that go in together share the water better, and pests have no younger crop next door to move into.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soften",
@@ -741,7 +741,7 @@
      "to": -21,
      "what": "Spread the old straw back",
      "how": "Scatter the straw from the last crop over the field, before plowing, about 3 to 8 tons per hectare (roughly the weight of the grain you aim to harvest). Turned under early, it has time to rot and gives back nutrients, potassium most of all. Burning wastes it.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "plow",
@@ -749,7 +749,7 @@
      "to": -21,
      "what": "Plow or rotavate",
      "how": "Plow once, between 21 and 30 days before sowing, with a hand tractor, a four wheel tractor, a rotavator or a carabao. Burying the weeds, stubble and straw now gives them time to rot, and the buried weed seeds and dropped grain have time to sprout so the harrow can kill them later.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "rest",
@@ -757,7 +757,7 @@
      "to": -1,
      "what": "Let the field rest",
      "how": "Leave at least 30 days between the last harvest and sowing, with no rice growing on the field. Plow under any ratoon or stray rice plants. Most rice pests live about a month, so the break starves them, kills the disease left by the last crop, and lets the old straw rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "soak_field",
@@ -765,7 +765,7 @@
      "to": -14,
      "what": "Keep the plowed field wet for a week",
      "how": "Let shallow water back in after plowing and leave the field alone for about 7 days. The clods soften, and the weeds and straw underneath start to rot.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "plow",
       "from": 1,
@@ -778,7 +778,7 @@
      "to": -20,
      "what": "Clean and fix the dikes and canals",
      "how": "Cut the weeds on the dikes, patch every leak, and pack the soil firm so water does not seep out. Build them about 15 cm high and 20 cm wide, a size rats find hard to burrow into. Clear the canals so the field fills and drains when you want it to. Clean dikes also leave fewer hiding places for pests.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "harrow1",
@@ -786,7 +786,7 @@
      "to": -13,
      "what": "First harrowing, lengthwise",
      "how": "Harrow along the same lines you plowed. It breaks the clods, works the stubble in, and wakes up more weed seeds so the next pass can bury them. Wait 5 to 7 days or more after plowing, longer if there is a lot of straw or weeds to rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "harrow2",
@@ -794,7 +794,7 @@
      "to": -6,
      "what": "Second harrowing, crosswise",
      "how": "Five to seven days after the first pass, harrow across the field. This buries the new flush of weeds and starts the leveling.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow1",
       "from": 5,
@@ -807,7 +807,7 @@
      "to": -2,
      "what": "Soak the seed",
      "how": "Two days before sowing, soak 40 to 60 kg of seed per hectare in clean water for 24 hours. Where zinc is short, add 1 kg of zinc sulfate for every 40 kg of seed to the last change of soaking water. Old or home kept seed should pass a germination test first.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "level",
@@ -815,7 +815,7 @@
      "to": -1,
      "what": "Final harrowing and leveling",
      "how": "Make the last pass so it is done by the day before sowing, then pull a wooden plank behind a carabao or hand tractor, or use a leveler on the tiller, under about 5 cm of water. The field is ready when no spot holds water deeper than 5 cm (about a thumb length) and no lump of soil shows above the water. A level field saves water and fertilizer, keeps weeds and snails down, and ripens evenly.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow2",
       "from": 5,
@@ -828,7 +828,7 @@
      "to": -1,
      "what": "Cut the small canals",
      "how": "Right after leveling, cut small canals about 25 cm wide and 5 cm deep along the inside of the dikes and through the middle of the field. They drain extra water fast, collect snails, and give you a path for replanting and weeding.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "seed_incubate",
@@ -836,7 +836,7 @@
      "to": -1,
      "what": "Let the seed sprout",
      "how": "Take the seed out of the water and keep it covered for 24 hours in a shaded, airy spot, until most grains show a small sprout.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "seed_soak",
       "from": 1,
@@ -862,7 +862,7 @@
      "to": 0,
      "what": "Drain and sow",
      "how": "Drain the field down to saturated mud and pull the drum seeder along the field in straight rows. Sow an extra 1 kg along one side of the field for filling gaps later.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "drum_setup",
@@ -883,7 +883,7 @@
      "to": 3,
      "what": "Pre emergence herbicide",
      "how": "If weeds are a problem, spray a pre emergence herbicide within 3 days of sowing, following its label. Pull what survives.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "guard",
@@ -891,7 +891,7 @@
      "to": 7,
      "what": "Guard the seed",
      "how": "Birds, rats and snails go for sown seed first. Chasing birds off is the most practical defense. Fill rat burrows with mud and water, keep the dikes clean, and join any community baiting.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "keep_wet",
@@ -899,7 +899,7 @@
      "to": 14,
      "what": "Keep the soil wet, not flooded",
      "how": "Hold back irrigation for the first 10 to 14 days so the soil stays saturated with no standing water. Only let water in if drought starts to stress the seedlings.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "weeds_post",
@@ -907,7 +907,7 @@
      "to": 9,
      "what": "Early post emergence herbicide",
      "how": "If many weeds still come up, spray an early post emergence herbicide 6 to 9 days after sowing, by its label, and pull the rest.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "replant",
@@ -915,7 +915,7 @@
      "to": 10,
      "what": "Fill the bare patches",
      "how": "Between 7 and 10 days after sowing, replant bare patches more than 20 cm across with seedlings from the extra seed sown along the edge, so the field ripens together.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "first_water",
@@ -923,7 +923,7 @@
      "to": 14,
      "what": "First water",
      "how": "From about 10 days after sowing, and by day 14 at the latest, let water in to 2 to 3 cm. Watch for golden apple snails as the water rises and control them where they are many.",
-     "basis": "palaycheck"
+     "basis": "standard"
     }
    ]
   },
@@ -932,7 +932,7 @@
    "plantingDay": "Sowing day",
    "seedlingAge": "No seedbed: dry seed goes straight into moist soil.",
    "seedRate": "About 40 to 60 kg per hectare drilled or dibbled in rows about 20 cm apart, or 60 to 80 kg if broadcast and covered.",
-   "note": "The PalayCheck System covers transplanted and wet direct seeded rice only. This plan follows PhilRice and IRRI dry seeding practice, and the PalayCheck rules that apply to every rice field.",
+   "note": "The standard rice practice covers transplanted and wet direct seeded rice only. This plan follows the usual dry seeding practice, and the standard rules that apply to every rice field.",
    "steps": [
     {
      "key": "crack_plow",
@@ -948,7 +948,7 @@
      "to": -35,
      "what": "Check the planting schedule in your area",
      "how": "Ask your irrigators association or the municipal agriculture office when your service area plants. Set your planting day no more than 14 days before or after that date. Fields that go in together share the water better, and pests have no younger crop next door to move into.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "dikes",
@@ -956,7 +956,7 @@
      "to": -30,
      "what": "Fix the dikes before the rains",
      "how": "Patch and pack the dikes, about 15 cm high and 20 cm wide, so the first rains stay in the field and rats find them hard to burrow.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "plow",
@@ -972,7 +972,7 @@
      "to": -1,
      "what": "Let the field rest",
      "how": "Leave at least 30 days between the last harvest and sowing, with no rice growing on the field. Plow under any ratoon or stray rice plants. Most rice pests live about a month, so the break starves them, kills the disease left by the last crop, and lets the old straw rot.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "harrow_level",
@@ -1017,7 +1017,7 @@
      "to": 3,
      "what": "Pre emergence herbicide",
      "how": "Spray a pre emergence herbicide on moist soil within 3 days of sowing, following its label. Weeds are the biggest threat to dry seeded rice.",
-     "basis": "palaycheck"
+     "basis": "standard"
     },
     {
      "key": "no_flood",
@@ -1053,7 +1053,7 @@
     }
    ],
    "effect": "Sets the seed amount and seedlings per hill. Transplanted: 40 kg inbred or 20 kg hybrid per hectare, 2 to 3 seedlings per hill for inbred, 1 to 2 for hybrid. Mechanical transplanting uses the low end of 20 to 40 kg for hybrid. The seedbed 14-14-14 rises to 4 kg for hybrid, and the 14 day manure step is listed for inbred targets only.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "seed_source",
@@ -1080,7 +1080,7 @@
      "to": -27,
      "what": "Test the seed",
      "how": "Count 100 grains, roll them in a wet cloth or sow them in a tray, and count how many sprout in 5 days. 85 or more is good seed. Fewer means more seed per hectare, or a better source.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "seed_soak",
       "from": -14,
@@ -1088,7 +1088,7 @@
      }
     }
    ],
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "season",
@@ -1104,7 +1104,7 @@
     }
    ],
    "effect": "Hand transplanted spacing is 20 by 15 cm in the dry season and 20 by 20 cm in the wet season (machine spacing stays 30 by 15 cm). In the wet season, wet direct seeding is risky because heavy rain washes the seed, so the canals matter more and transplanting is safer. In typhoon prone places, pick a variety whose harvest comes before the typhoon months.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "last_harvest",
@@ -1124,7 +1124,7 @@
     }
    ],
    "effect": "Less than 30 days: warn that the rest period is short and offer a later planting day. Plow under the stubble and any ratoon right away so no rice keeps growing.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "previous_crop",
@@ -1176,7 +1176,7 @@
     }
    ],
    "effect": "Irrigation keeps the step that matches your planting day to the irrigators association schedule. Pump fields can save water later with alternate wetting and drying. Rainfed fields start land preparation only after the rains soften the soil, so offer dry direct seeding, or wet preparation timed to the rains, and add a reminder to fix dikes before the rains.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "drainage",
@@ -1231,7 +1231,7 @@
      }
     }
    ],
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "soil_texture",
@@ -1251,7 +1251,7 @@
     }
    ],
    "effect": "Clay: add 3 to 4 bags of commercial organic fertilizer or carbonized rice hull to the seedbed, and allow an extra day or two of soaking before plowing. Clay fields drain two weeks before harvest. Loam: no seedbed organic fertilizer needed, drain one week before harvest. Sandy: water runs out fast, so puddle well and pack the dikes, and do not dry seed on sand or loamy sand.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "acidity",
@@ -1298,7 +1298,7 @@
      }
     }
    ],
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "salinity",
@@ -1352,7 +1352,7 @@
     }
    ],
    "effect": "Mild: 0.5 kg zinc sulfate on the 400 square meter seedbed 7 to 10 days after sowing. Severe: 2 kg. Instead of the seedbed dose, you can dip the seedling roots in a 2 percent zinc oxide mix for 15 to 30 minutes before transplanting, or broadcast 25 kg of zinc sulfate per hectare 10 to 14 days after transplanting. Wet direct seeded: 1 kg zinc sulfate per 40 kg of seed in the last soaking water. Use only one of these.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "weed_history",
@@ -1387,7 +1387,7 @@
      }
     }
    ],
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "snail_history",
@@ -1414,10 +1414,10 @@
      "to": -1,
      "what": "Screen the water gates",
      "how": "Fix wire or bamboo screens over the water inlets and outlets so snails cannot ride the water in.",
-     "basis": "palaycheck"
+     "basis": "standard"
     }
    ],
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "rat_bird_history",
@@ -1441,7 +1441,7 @@
     }
    ],
    "effect": "Rats: keep the dikes clean and no bigger than 15 by 20 cm, dig out or flood burrows with mud and water, and plant with your neighbors so the rats have no lone field to feed on. Join community baiting with sealed bait packs only. Birds: plan someone to chase them off in the first week after sowing, and avoid sowing far ahead or behind the neighbors.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "pest_history",
@@ -1465,7 +1465,7 @@
     }
    ],
    "effect": "Any outbreak makes the 30 day rest and synchronous planting firm rules, and calls for a resistant variety. Brown planthopper: do not broadcast seed, transplant instead. Blast: plow the infected stubble under right after harvest so the fungus rots.",
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "new_land",
@@ -1538,7 +1538,7 @@
      "to": -4,
      "what": "Extra leveling pass",
      "how": "Drag the plank from the high spots toward the low spots under shallow water, so the final leveling only has to smooth.",
-     "basis": "palaycheck",
+     "basis": "standard",
      "follows": {
       "step": "harrow2",
       "from": 2,
@@ -1546,7 +1546,7 @@
      }
     }
    ],
-   "basis": "palaycheck"
+   "basis": "standard"
   },
   {
    "key": "power",
@@ -1589,24 +1589,24 @@
   }
  ],
  "differences": [
-  "Wrong final leveling date: rice_tpr levels 7 to 3 days before transplanting ([-7, -3]). PalayCheck does the last harrowing and leveling the day before (the calendar puts it 1 day before transplanting and says to finish 1 day before sowing for wet seeding). Leveling a week early lets the mud set and a new flush of weeds start before planting. Move it to [-2, -1] (by hand) or [-3, -2] plus a settling day (machine).",
-  "Harrowings too early: rice_tpr and rice_dsr_wet have the first harrowing at [-21, -16] and the second at [-14, -9]. The PalayCheck calendar puts them at 14 and 7 days before planting (the 21 day count: plow, harrow, harrow, final pass, about a week apart). Our own public guides already say 14, then 7 to 9, then 1 to 2, so the planner contradicts its own guide pages.",
+  "Wrong final leveling date: rice_tpr levels 7 to 3 days before transplanting ([-7, -3]). The standard calendar does the last harrowing and leveling the day before (the calendar puts it 1 day before transplanting and says to finish 1 day before sowing for wet seeding). Leveling a week early lets the mud set and a new flush of weeds start before planting. Move it to [-2, -1] (by hand) or [-3, -2] plus a settling day (machine).",
+  "Harrowings too early: rice_tpr and rice_dsr_wet have the first harrowing at [-21, -16] and the second at [-14, -9]. The standard calendar puts them at 14 and 7 days before planting (the 21 day count: plow, harrow, harrow, final pass, about a week apart). Our own public guides already say 14, then 7 to 9, then 1 to 2, so the planner contradicts its own guide pages.",
   "One transplanting plan for two methods: rice_tpr sows the seedbed at -21 for everyone, then tells mechanical users to transplant 14 to 18 day seedlings. Sowing at -21 makes them 21 days old. A mechanical plan has to sow at -18 to -14 in trays (70 to 160 g per tray, 250 to 300 trays per hectare) or a modified wet dapog bed (420 to 960 g per square meter on about 50 square meters), at 30 by 15 cm with 3 to 6 seedlings per hill. None of that is in the current plan.",
   "One wet direct seeding plan for two methods: broadcasting needs 60 to 80 kg of seed per hectare, drum seeder row seeding 40 to 60 kg. rice_dsr_wet gives no seeding rate at all.",
-  "Missing PalayCheck steps in all rice plans: the 30 day rest after the last harvest, matching the area planting schedule within 14 days, and the dike size (15 cm high, 20 cm wide, compacted, against rats).",
+  "Missing standard steps in all rice plans: the 30 day rest after the last harvest, matching the area planting schedule within 14 days, and the dike size (15 cm high, 20 cm wide, compacted, against rats).",
   "Missing the seedbed size and the seedbed ground preparation: 400 square meters per hectare (20 beds of 1 by 20 m), prepared about a week before sowing; on heavy clay soil, 3 to 4 bags of organic fertilizer or carbonized rice hull are mixed in, then the bed is leveled.",
-  "Seedbed feeding mistimed: rice_tpr feeds the seedbed at [-16, -12], which is 5 to 9 days after its own sowing day of -21. PalayCheck: zinc sulfate 7 to 10 days after sowing (1 to 2 kg per seedbed, 0.5 kg for mild and 2 kg for severe zinc shortage), then 2 to 4 kg of 14-14-14 at 10 to 14 days. The current step also mixes in the seedbed watering, which PalayCheck schedules on its own, when seedlings reach 2 to 3 cm (about 7 days after sowing).",
-  "Seed soaking window too wide for wet direct seeding: rice_dsr_wet soaks at [-3, -2]. Soaking 3 days ahead gives 72 hours to sowing and long sprouts that break and clog a drum seeder. PalayCheck soaks exactly 2 days before (24 hours soaking, 24 hours covered) and sows on day 0.",
+  "Seedbed feeding mistimed: rice_tpr feeds the seedbed at [-16, -12], which is 5 to 9 days after its own sowing day of -21. The standard manual: zinc sulfate 7 to 10 days after sowing (1 to 2 kg per seedbed, 0.5 kg for mild and 2 kg for severe zinc shortage), then 2 to 4 kg of 14-14-14 at 10 to 14 days. The current step also mixes in the seedbed watering, which the standard calendar schedules on its own, when seedlings reach 2 to 3 cm (about 7 days after sowing).",
+  "Seed soaking window too wide for wet direct seeding: rice_dsr_wet soaks at [-3, -2]. Soaking 3 days ahead gives 72 hours to sowing and long sprouts that break and clog a drum seeder. The standard calendar soaks exactly 2 days before (24 hours soaking, 24 hours covered) and sows on day 0.",
   "Wet direct seeding misses the canal size (25 cm wide, 5 cm deep, along the dikes and through the middle, where the plan only says drainage canals along the dikes), the extra 1 kg of pre germinated seed sown along the edge for replanting, and zinc seed soaking (1 kg zinc sulfate per 40 kg of seed in the last soaking water).",
-  "Wet direct seeding water: rice_dsr_wet keeps standing water off for 10 days. The 2022 PalayCheck manual says hold irrigation for 0 to 14 days after sowing unless drought is severe (the older app text says 10). Replanting of bare patches more than 20 cm across belongs at 7 to 10 days after sowing, and snail control when the first water goes in (10 days).",
+  "Wet direct seeding water: rice_dsr_wet keeps standing water off for 10 days. The 2022 standard manual says hold irrigation for 0 to 14 days after sowing unless drought is severe (the older app text says 10). Replanting of bare patches more than 20 cm across belongs at 7 to 10 days after sowing, and snail control when the first water goes in (10 days).",
   "rice_tpr transplanting step lacks hybrid seedlings per hill (1 to 2), the season spacing (20 by 20 cm wet, 20 by 15 cm dry), the 25 hills per square meter target, and the warning that seedlings older than 25 days recover poorly.",
-  "Pulling the seedlings and laying the bundles out in the field is a separate PalayCheck step the day before transplanting. The current plan merges it into transplanting.",
-  "Soaking after plowing: the current plan soaks before plowing and then says to leave the field a week. The PalayCheck calendar floods the field a day or two after plowing and keeps it wet for about a week so clods soften and weeds rot. Soaking before plowing is still useful on hard ground, but it is our suggestion, not PalayCheck. The rice-land-preparation guide page says the soil dries a little during that week. That follows one loosely worded PalayCheck line, while the calendar itself soaks the field.",
-  "rice_dsr_dry is labeled as following PalayCheck in the class docblock, but PalayCheck has no dry seeding plan. Mark every step as a PhilRice, IRRI or our own suggestion. Its seeding depth also disagrees with our guide page: the plan says 2 to 3 cm, the guide says 1 to 2 cm and never deeper than 3. It has no seeding rate, no stale seedbed step (the guide has one), and no water rule for the young crop.",
+  "Pulling the seedlings and laying the bundles out in the field is a separate standard step the day before transplanting. The current plan merges it into transplanting.",
+  "Soaking after plowing: the current plan soaks before plowing and then says to leave the field a week. The standard calendar floods the field a day or two after plowing and keeps it wet for about a week so clods soften and weeds rot. Soaking before plowing is still useful on hard ground, but it is our suggestion, not the standard calendar. The rice-land-preparation guide page says the soil dries a little during that week. That follows one loosely worded line of the manual, while the calendar itself soaks the field.",
+  "rice_dsr_dry is labeled as following the standard manual in the class docblock, but that manual has no dry seeding plan. Mark every step as other standard guidance, the usual dry seeding practice or our own suggestion. Its seeding depth also disagrees with our guide page: the plan says 2 to 3 cm, the guide says 1 to 2 cm and never deeper than 3. It has no seeding rate, no stale seedbed step (the guide has one), and no water rule for the young crop.",
   "SOIL_STEPS saline: \"Plant salt tolerant\" sits at [-7, 0], but for transplanted rice the variety must be chosen before the seed is soaked (about -23). The step also says to make raised beds for vegetables, which does not fit a rice plan. For rice, the field should stay under water after flushing so salt does not rise again, and strong transplanted seedlings do better than direct seeding.",
   "SOIL_STEPS acidic: the soil test at [-45, -40] leaves too little time for laboratory results before liming at -30. Move it to about two months ahead or allow a MOET kit check. For flooded rice, lime only strongly acidic soil (around pH below 5) or where a test calls for it, because flooding itself raises the pH. Avoid ammonium sulfate on strongly acidic soil.",
-  "No zinc step anywhere, although PalayCheck gives exact zinc options for seedbeds, seedling dips, broadcasting and seed soaking. Zinc shortage is common in fields that stay waterlogged.",
+  "No zinc step anywhere, although the standard manual gives exact zinc options for seedbeds, seedling dips, broadcasting and seed soaking. Zinc shortage is common in fields that stay waterlogged.",
   "planFor() sends every rice crop key to rice_tpr and only knows rice_dsr_wet and rice_dsr_dry. With five methods the wizard should ask the planting method (by hand, by machine, broadcast, drum seeder, dry seeding) instead of inferring it from the crop key.",
-  "Source wording: credit the PhilRice PalayCheck System (2022 revised edition) in page text, never the app."
+  "Source wording: name no reference and no maker in page text or in the app (the owner, 2026-10-17)."
  ]
 }

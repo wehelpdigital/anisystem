@@ -1611,13 +1611,6 @@
    "crops/pagtatanim-ng-gulay"
   ]
  },
- "palay check system": {
-  "volume": 210,
-  "pages": [
-   "crops/pagtatanim-ng-palay",
-   "blog/fertilizer-for-rice"
-  ]
- },
  "palay rice": {
   "volume": 210,
   "pages": [
@@ -1884,12 +1877,6 @@
   "volume": 110,
   "pages": [
    "blog/palay-drawing"
-  ]
- },
- "palay key check 1 to 9": {
-  "volume": 110,
-  "pages": [
-   "blog/palaycheck-key-checks"
   ]
  },
  "fertilizer for pechay": {
@@ -2166,8 +2153,7 @@
   "volume": 70,
   "pages": [
    "crops/pagtatanim-ng-palay",
-   "blog/rice-farming-app",
-   "blog/palaycheck-key-checks"
+   "blog/rice-farming-app"
   ]
  },
  "fertilizer research": {

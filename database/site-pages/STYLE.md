@@ -29,6 +29,12 @@ machine wrote them.
   safety line and registration numbers, and where to get a soil test (the
   Municipal Agriculture Office, a DA soil laboratory) stay. check.py fails a
   page that breaks this.
+- Never name PalayCheck at all, in any spelling (Palay Check, the PalayCheck
+  System, Sistemang PalayCheck, the PalayCheck App), not even as a tool or a
+  keyword (the owner, 2026-10-17). Say the practice in our words ("the nine
+  key checks", "a free rice calendar app") and link our own guide,
+  /blog/increase-rice-yield-per-hectare. Only The Stash keeps the name.
+  check.py fails any other page that has it.
 - Pesticides: name the active ingredient and the group, say what it is used
   on, and always tell the reader to follow the product label and the FPA
   registration. Never give a spray rate you did not verify on a label or an
@@ -452,7 +458,7 @@ Blog:
 /blog/farm-management-software-cost, /blog/digitize-farm-records,
 /blog/crop-yield-forecasting, /blog/farm-app-for-livestock-and-crops,
 /blog/farm-sensors-philippines, /blog/multiple-cropping,
-/blog/palaycheck-key-checks, /blog/palayisdaan, /blog/palay-drying,
+/blog/palayisdaan, /blog/palay-drying,
 /blog/palay-drawing
 
 ## 9. Keywords per page

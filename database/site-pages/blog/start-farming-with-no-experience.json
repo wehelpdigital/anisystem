@@ -68,7 +68,7 @@
         [
           "Skills",
           "Do you know the crop from planting to harvest?",
-          "ATI courses, PalayCheck and a farmer you trust"
+          "ATI courses, our crop guides and a farmer you trust"
         ],
         [
           "Money",
@@ -97,7 +97,7 @@
       "items": [
         {
           "title": "Learn the basics",
-          "text": "Take a free online course from the ATI, or read the PalayCheck system if you plan to grow palay. Spend a few days with an experienced farmer during planting and harvest."
+          "text": "Take a free online course from the ATI, or read our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) if you plan to grow palay. Spend a few days with an experienced farmer during planting and harvest."
         },
         {
           "title": "Register in the RSBSA",
@@ -145,7 +145,7 @@
         "**ATI e Learning**: self paced online certificate courses on crops, livestock and poultry, fisheries and sustainable agriculture.",
         "**School on the Air**: farm lessons by radio, made for farmers in hard to reach areas.",
         "**Farmers' Contact Center**: the ATI help desk for farm questions, by call, text, email or online chat.",
-        "**PalayCheck**: a rice crop management system, with key checks for each stage, in English and in Tagalog.",
+        "**Rice key checks**: nine checks from seed to drying that show where a season lost its yield, in our guide to [raising rice yield per hectare](/blog/increase-rice-yield-per-hectare).",
         "**Other farmers**: ask in the [farmer community](/features/farmer-community) of anee.io, and work beside a neighbor for a season."
       ]
     },

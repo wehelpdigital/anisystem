@@ -97,6 +97,10 @@ class SitePageController extends Controller
         if ($section === 'crop-varieties' && $slug === 'rice') {
             return redirect(SitePages::url('rice-varieties'), 301);
         }
+        // A page taken off the site: to the guide that covers its subject, for good (2026-10-17).
+        if ($to = SitePages::movedTo($section, $slug)) {
+            return redirect($to, 301);
+        }
         // A crop's own variety finder: /crop-varieties/corn (2026-10-13).
         if ($section === 'crop-varieties' && ($crop = \App\Support\CropVarieties::cropBySlug($slug))) {
             return view('public.site.crop-varieties-crop', [

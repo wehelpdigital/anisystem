@@ -39,8 +39,8 @@ use Illuminate\Support\Facades\Validator;
  * variety, seed, planting day, lots, machines, workers, then for EVERY lot
  * its soil, water, acidity, last season, weeds and troubles, then the
  * place) and gets a dated land preparation plan for every lot. The
- * arithmetic is App\Support\LandPrepPlanner's: PhilRice practice for rice
- * (PalayCheck System), the extension plans for the other crops, the rules
+ * arithmetic is App\Support\LandPrepPlanner's: the standard practice for
+ * rice, the extension plans for the other crops, the rules
  * each lot's answers trigger, the seed preparation of the chosen variety,
  * and the crew laid on the calendar so nobody is in two places at once. A
  * variety not on our list is looked up on the web first. Anee reads the

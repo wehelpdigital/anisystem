@@ -12,7 +12,7 @@
     "farm app for android",
     "farm management app"
   ],
-  "excerpt": "You can download a farm app for Android from Google Play, where you will find rice apps such as the PalayCheck App and Binhing Palay. anee.io, a farm app built for Filipino farmers, works another way. It is a web app, so you open anee.io in Chrome and install it to your home screen. It then opens like any other app, offline mode included, but it is not in the Play Store.",
+  "excerpt": "You can download a farm app for Android from Google Play, where you will find rice apps such as Binhing Palay and free rice calendar apps. anee.io, a farm app built for Filipino farmers, works another way. It is a web app, so you open anee.io in Chrome and install it to your home screen. It then opens like any other app, offline mode included, but it is not in the Play Store.",
   "heroImage": {
     "src": "/images/site/guides/blog-farm-app-for-android.webp",
     "alt": "A farm app for Android on three phone screens: Quick Capture taking a photo of the crop, Anee saying hello, and a farm map centred on the phone's location",
@@ -59,7 +59,7 @@
         [
           "Google Play Store",
           "An app installed and updated by the store",
-          "The PalayCheck App and Binhing Palay"
+          "Binhing Palay and free rice calendar apps"
         ],
         [
           "An official APK file",
@@ -80,7 +80,7 @@
     },
     {
       "type": "text",
-      "text": "On Google Play, the PalayCheck App shows a price of zero and more than 10,000 downloads. It builds a rice calendar from your variety and planting method, and it logs expenses and harvest. Our guide to the [best free farm app](/blog/free-farm-app-philippines) compares the free tools in more detail."
+      "text": "On Google Play, look for a free rice calendar app. A good one dates the season from your variety and planting method, and it keeps your expenses and harvest too. Our guide to the [best free farm app](/blog/free-farm-app-philippines) compares the free tools in more detail."
     },
     {
       "type": "heading",
@@ -214,7 +214,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Rice advisory apps:** Binhing Palay, the PalayCheck App, the MOET app, the LCC app and the RCM Advisory Service all sit on one Rice Apps page.",
+        "**Rice advisory apps:** Binhing Palay, a rice calendar app, the MOET app, the LCC app and the RCM Advisory Service all sit on one Rice Apps page.",
         "**Planning and record apps:** they date the work and add up costs and harvests. anee.io is one, built for Filipino farmers, and our guide to the [best farm management app](/blog/farm-management-app-philippines) shows what to expect.",
         "**Pest and disease photo apps:** you take a photo and get a likely cause. See our guide to the [plant disease identification app](/blog/plant-disease-identification-app).",
         "**Weather apps:** forecasts, rain radar and typhoon warnings for your town.",

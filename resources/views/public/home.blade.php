@@ -1846,7 +1846,7 @@
                     ['/pests/rice-black-bug', 'Rice black bug'], ['/pests/thrips', 'Thrips insect'], ['/pests/fall-armyworm', 'Fall armyworm'], ['/pests/cutworm', 'Cutworm'],
                     ['/weeds/common-weeds-philippines', 'Common weeds in the Philippines'], ['/weeds/purple-nutsedge', 'Purple nutsedge'], ['/weeds/makahiya', 'Makahiya'],
                     ['/crops/rice-varieties-philippines', 'Rice varieties in the Philippines'], ['/blog/palay-price-philippines', 'Palay price in the Philippines'],
-                    ['/blog/fertilizer-price-philippines', 'Fertilizer price in the Philippines'], ['/blog/palaycheck-key-checks', 'PalayCheck key checks 1 to 9'],
+                    ['/blog/fertilizer-price-philippines', 'Fertilizer price in the Philippines'], ['/blog/increase-rice-yield-per-hectare', 'Increase rice yield per hectare'],
                     ['/crops/corn-kernel', 'Corn kernel'], ['/crops/corn-seeds', 'Corn seeds'], ['/crops/vegetables-philippines', 'Vegetables in the Philippines'],
                 ] as $i => [$href, $label])
                     <a href="{{ url($href) }}" class="hp-topic" style="--h: {{ ($i * 41) % 150 + 30 }}">{{ $label }}</a>
