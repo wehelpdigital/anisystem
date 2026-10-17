@@ -707,7 +707,7 @@
                             </div>
                             </div></div>
                             <div class="np-lq is-off" id="npAreaWrap"><div>
-                                <div class="np-area" id="npArea">
+                                <div class="np-area" id="npAreaCard">
                                     <p class="np-area-h">Typical for your area</p>
                                     <p class="np-area-t" id="npAreaT"></p>
                                     <ul class="np-area-l" id="npAreaL"></ul>
@@ -1496,7 +1496,7 @@
         if (!A || st.areaNo) { wrap.classList.add('is-off'); return; }
         $('npAreaT').textContent = A.where + (A.samples ? ': what ' + A.samples + ' soil samples there usually show' + (A.year ? ' (' + A.year + ')' : '') : '') + '. Not a test of your field.';
         $('npAreaL').innerHTML = (A.lines || []).filter((l) => !/^Read for /.test(l)).slice(0, 5).map((l) => '<li>' + esc(l) + '</li>').join('');
-        $('npArea').classList.toggle('is-on', !!st.area);
+        $('npAreaCard').classList.toggle('is-on', !!st.area);
         const say = $('npAreaSay');
         if (st.area) {
             const used = [];
