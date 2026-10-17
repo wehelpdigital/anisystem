@@ -984,9 +984,11 @@ PROMPT;
             ! empty($r['kept']) => 'VARIETY FACTS (from your own earlier web research on it, kept by the app; it is not on our list)',
             default => 'VARIETY RESEARCH (your own web search just now, not on our list)',
         };
+        // The variety said once (2026-10-19): its kept or record line already carries its days, type and company.
+        $rNotes = trim(mb_substr((string) ($r['notes'] ?? ''), 0, 700));
         $research = ! $r ? '' : "\n" . $head . ': ' . (! $r['ok'] ? 'the lookup failed. Tell the farmer to follow the seed bag.'
             : (! $r['found'] ? 'this exact variety was not found. Tell the farmer to follow the seed bag.'
-                : implode(', ', array_filter([$r['days'] ? 'about ' . $r['days'] . ' days to harvest' : null, $r['type'] ?: null, $r['company'] ? 'by ' . $r['company'] : null])) . '. Notes: ' . mb_substr($r['notes'], 0, 700)));
+                : ($rNotes !== '' ? $rNotes : implode(', ', array_filter([$r['days'] ? 'about ' . $r['days'] . ' days to harvest' : null, $r['type'] ?: null, $r['company'] ? 'by ' . $r['company'] : null])) . '.')));
         $fc = $weather['forecast'] ? implode(', ', array_map(fn ($d) => $d['date'] . ' ' . $d['text'] . (isset($d['pop']) ? ' rain ' . $d['pop'] . '%' : '') . (isset($d['max']) ? ' ' . $d['min'] . ' to ' . $d['max'] . ' C' : ''), $weather['forecast'])) : 'not available';
         $h = $weather['history'];
         $climate = $h ? 'Over the whole preparation window to two weeks after ' . $word . ', the last ' . count($h['years']) . ' years averaged ' . round($h['avg']['rain']) . ' mm of rain (driest year ' . min(array_column($h['years'], 'rain')) . ' mm, wettest ' . max(array_column($h['years'], 'rain')) . ' mm), ' . $h['avg']['tmax'] . ' C average highs.' : 'not available';
@@ -1007,8 +1009,17 @@ PROMPT;
             report($e);
         }
         $hazards = $hazards !== '' ? "\n- Storms and floods here before: " . trim($hazards) : '';
-        // The area's typical soil from samples taken there (the soil atlas, 2026-10-18): it stands only where a lot's answers are blank.
-        $areaSoil = \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::for($case['location']['province'] ?? null, $case['location']['town'] ?? null, null, (string) $case['crop']), 'short');
+        // The area's typical soil from samples taken there (the soil atlas, 2026-10-18): it stands only where a lot's answers are
+        // blank (2026-10-19: it stood always, beside the lots' own answers and the planner's area notes in the steps).
+        $blank = false;
+        foreach ($case['lots'] as $l) {
+            $a = array_merge((array) ($l['soil'] ?? []), (array) ($l['profile'] ?? []));
+            if (in_array((string) ($a['texture'] ?? ''), ['', 'unsure'], true) || in_array((string) ($a['acidity'] ?? ''), ['', 'unsure', 'untested'], true)) {
+                $blank = true;
+                break;
+            }
+        }
+        $areaSoil = $blank ? \App\Support\SoilAtlas::words(\App\Support\SoilAtlas::for($case['location']['province'] ?? null, $case['location']['town'] ?? null, null, (string) $case['crop']), 'short') : '';
         $areaSoil = $areaSoil !== '' ? "\n" . $areaSoil . "\n" : '';
         $variety = $case['variety'] !== '' ? $case['variety'] : 'not chosen yet';
         $mixedLine = LP::mixed($case) ? ' Some lots grow their own crop or plant another way (see LOTS): the steps of each lot follow its own crop, and an added step for one crop names its lots.' : '';
