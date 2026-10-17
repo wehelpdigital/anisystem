@@ -482,7 +482,10 @@ class CropProtocolController extends Controller
         return \App\Support\ProtocolFacts::fillNeed([
             'crop' => $p['crop'] ?? null,
             'method' => $p['method'] ?? null,
-            'potential' => ($p['potential'] ?? null) !== null ? (float) $p['potential'] * $tons : null,
+            // The variety's potential on record when none was given (2026-10-19): the rule NPK Plus and the nutrient book
+            // use, so a lot gets one need in every module (Muñoz NSIC Rc 222 was N 113 here and N 217 in the book).
+            'potential' => ($p['potential'] ?? null) !== null && $p['potential'] !== '' ? (float) $p['potential'] * $tons
+                : \App\Support\NutrientBook::varietyPotential(NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null) ?? ($p['crop'] ?? null), $p['variety'] ?? null),
             'target' => ($p['targetYield'] ?? null) !== null ? (float) $p['targetYield'] * $tons : null,
             'areaHa' => (float) ($p['area'] ?? 0),
             'seed' => ($p['seedAmount'] ?? null) ? ['amount' => (float) $p['seedAmount'], 'unit' => $p['seedUnit'] ?? 'kg', 'germination' => $p['germination'] ?? null] : null,
@@ -1173,6 +1176,7 @@ class CropProtocolController extends Controller
             $got = $this->ai->ask($s, [], $ask, null, 3200, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED]);
             $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
             $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
+            $spent['tokensCached'] = ($spent['tokensCached'] ?? 0) + (int) ($got['tokensCached'] ?? 0);
             if (($got['ok'] ?? false) && trim((string) $got['text']) !== '') {
                 $best = $got;
                 if ($got['searched'] ?? false) {
@@ -1205,10 +1209,11 @@ class CropProtocolController extends Controller
                 'updated_at' => now(),
             ]);
         };
-        $usage = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'paidSearch' => false, 'searchCalls' => 0, 'shelf' => false];
+        $usage = ['tokensIn' => 0, 'tokensOut' => 0, 'tokensCached' => 0, 'searched' => false, 'paidSearch' => false, 'searchCalls' => 0, 'shelf' => false];
         $fold = function (array $r) use (&$usage): void {
             $usage['tokensIn'] += (int) ($r['tokensIn'] ?? 0);
             $usage['tokensOut'] += (int) ($r['tokensOut'] ?? 0);
+            $usage['tokensCached'] += (int) ($r['tokensCached'] ?? 0);
         };
         try {
             $cases = $ctx['cases'];
@@ -1330,7 +1335,6 @@ class CropProtocolController extends Controller
         $rNutrient = \App\Support\Region::agency('nutrient');
         $rMet = \App\Support\Region::agency('met');
         $rSources = \App\Support\Region::agency('sources');
-        $rRegion = \App\Support\Region::promptBlock();
         $province = \App\Support\ClimateRecord::placeKey((string) $l0['place'])['place'];
         $months = implode(' and ', array_map(fn ($m) => \Illuminate\Support\Carbon::parse($m . '-01')->format('F Y'), $c['months']));
         $label = CropCatalog::label($c['crop']);
@@ -1354,8 +1358,18 @@ class CropProtocolController extends Controller
         $nutrients = $known
             ? "2. The official guide in {$rCountry} for this crop's fertilizer by growth stage in this region and season ({$rNutrient}): the SPLIT TIMING (which stage gets which share) and the inorganic products sold there. The kilograms of N, P2O5 and K2O per hectare are already counted by the app from the official guide: do not look them up."
             : "2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, and the common inorganic products.";
+        // What the app keeps (2026-10-19): the crop's pests, diseases and weeds with their active ingredients and groups (the field
+        // catalogue, in the farm ask), and for a town at home its weather record, its twenty years of storms and floods and ENSO.
+        $placeKey = mb_strtolower(trim((string) preg_replace('/\s+/', ' ', (string) $l0['place'])));
+        $sky = \App\Support\Region::ph() && ! empty($ctx['facts']['places'][$placeKey]['hazards']) && ($ctx['enso'] ?? '') !== '';
+        $ipm = ! empty($ctx['threats'][$c['key']]['pests']) || ! empty($ctx['threats'][$c['key']]['diseases'])
+            ? "3. Pest and disease control for this crop in the region, only what the app's catalogue lacks (it holds the insects, diseases and weeds with their signs, active ingredients and IRAC, FRAC or HRAC groups: do not list those): the economic thresholds in plain counts for the main ones by growth stage, and any current outbreak advisory for the province or region."
+            : "3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds in plain counts, the recommended controls (cultural, biological, chemical with active ingredients and their IRAC, FRAC or HRAC group), and any current outbreak advisories.";
+        $outlook = $sky ? '' : "5. The seasonal climate OUTLOOK from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe weather expected). Only the outlook: the app keeps the area's twenty year weather record and reads the ENSO state itself.\n";
+        $words = $sky ? '900' : '1,100';
+        $keptSky = $sky ? " The app keeps this place's weather record, its twenty years of storms, floods and dry spells and the ENSO outlook: do not look those up." : '';
         $text = <<<PROMPT
-You are a research assistant for agronomy in {$rCountry} with web search. {$rRegion} SEARCH THE WEB NOW and write research notes for a season protocol. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+You are a research assistant for agronomy in {$rCountry} with web search. SEARCH THE WEB NOW and write research notes for a season protocol. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.{$keptSky}
 
 THE CASE
 - Crop: {$label}; variety: {$this->varietyWord($c['variety'])}
@@ -1364,12 +1378,11 @@ THE CASE
 FIND, IN THIS ORDER
 {$variety}
 {$nutrients}
-3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds in plain counts, the recommended controls (cultural, biological, chemical with active ingredients and their IRAC, FRAC or HRAC group), and any current outbreak advisories.
+{$ipm}
 4. Irrigation and water management by growth stage for this crop and method, and what to change under drought or flooding.
-5. The seasonal climate OUTLOOK from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe weather expected). Only the outlook: the app keeps the area's twenty year weather record and reads the ENSO state itself.
-6. REAL HARVESTS: the most recent derbies, techno demo farms and yield contests with this variety, or this crop when the variety has none, in or near this province first, then anywhere in {$rCountry}: the event, the place, the season and year, the yield (t/ha, or cavans per hectare with the kilos per cavan) and the fertilizer program used where reported. Then real farmers' own reported harvests with it in the last two seasons, each with the yield, the place, the season and the source.
+{$outlook}6. REAL HARVESTS: the most recent derbies, techno demo farms and yield contests with this variety, or this crop when the variety has none, in or near this province first, then anywhere in {$rCountry}: the event, the place, the season and year, the yield (t/ha, or cavans per hectare with the kilos per cavan) and the fertilizer program used where reported. Then real farmers' own reported harvests with it in the last two seasons, each with the yield, the place, the season and the source.
 
-Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,100 words, no JSON, no markdown tables.
+Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the headings, at most {$words} words, no JSON, no markdown tables.
 PROMPT;
         if ($asked) {
             try {
@@ -1409,7 +1422,6 @@ PROMPT;
     private function farmPrompt(array $case, array $ctx, array $notes): string
     {
         $country = \App\Support\Region::name();
-        $region = \App\Support\Region::promptBlock();
         $lots = '';
         foreach ($case['lots'] as $l) {
             $fd = $this->lotField($l);
@@ -1431,10 +1443,12 @@ PROMPT;
             $frame = $ctx['frames'][$l0['i']];
             $rec = $ctx['records'][$l0['i']] ?? null;
             $names = implode(', ', array_map(fn ($i) => $case['lots'][$i]['name'], $c['lots']));
+            // The variety in one line with its full registration trials (VarietyBook::factsLine), not the record's line and the trials again.
+            $vline = $rec && empty($rec['learned']) ? \App\Support\VarietyBook::factsLine($c['crop'], (string) ($rec['name'] ?? $c['variety']), true) : '';
             $crops .= 'CROP ' . $c['key'] . ': ' . CropCatalog::label($c['crop']) . '; variety ' . $this->varietyWord($c['variety'])
-                . ($rec ? ' (' . (! empty($rec['learned']) ? 'known from an earlier lookup' : 'on record') . ': ' . ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ') . ')' : '')
+                . ($rec ? ' (' . (! empty($rec['learned']) ? 'known from an earlier lookup' : 'on record') . ': ' . ($vline !== '' ? $vline : ltrim(\App\Support\VarietyBook::promptLines([$rec]), '- ')) . ')' : '')
                 . '; ' . (self::METHODS[$c['method']]['label'] ?? $c['method']) . '; counted in ' . $frame['counter'] . ".\n"
-                . \App\Support\ProtocolFacts::varietyLines($ctx['facts']['cases'][$c['key']]['variety'] ?? null)
+                . ($vline !== '' ? '' : \App\Support\ProtocolFacts::varietyLines($ctx['facts']['cases'][$c['key']]['variety'] ?? null))
                 . '- Its stages, in order (use these names exactly): ' . self::stageList($frame) . "\n"
                 . '- Lots growing it: ' . $names . "\n"
                 . ProtocolCare::promptLines($ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null)
@@ -1453,7 +1467,6 @@ PROMPT;
 You are an agronomic decision-support analyst for farming in {$country}. A farmer is planting the lots below this season. Write the FARM PART of their crop protocol: the background, then for every crop its growth stages and its protection plan. Each lot's fertilizer plan is written separately: no fertilizer amounts here.
 
 THE FARM
-- {$region}
 {$lots}{$plan}- Weather now: {$ctx['forecast']}
 {$enso}{$hist}
 THE CROPS
@@ -1482,7 +1495,6 @@ PROMPT;
         $fd = $this->lotField($l);
         $f = $fd['f'];
         $country = \App\Support\Region::name();
-        $region = \App\Support\Region::promptBlock();
         $unitWord = self::yieldUnits()[$p['yieldUnit']] ?? array_values(self::yieldUnits())[0];
         $known = ! empty($p['npkNeed']['known']);
         $when = $l['day'] ? \Illuminate\Support\Carbon::parse($l['day'])->format('F j, Y') : \Illuminate\Support\Carbon::parse($l['month'] . '-01')->format('F Y') . ' (the day is set by the farm\'s work calendar)';
@@ -1517,7 +1529,6 @@ PROMPT;
 You are an agronomic decision-support analyst for farming in {$country}. Write the FERTILIZER AND NUTRITION PLAN of ONE LOT for this season, by growth stage, for a farmer who reads it on a phone. The farm's background, stage guide and protection are written separately: only fertilizer, nutrition, water and yield here.
 
 THE LOT
-- {$region}
 - Lot: {$l['name']}, {$l['place']}; {$f['area']} hectare(s)
 - Crop: {$f['cropLabel']}; variety: {$f['variety']}
 {$recLine}- Planting: {$when}; method: {$f['method']}; counted in {$frame['counter']}
