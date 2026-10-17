@@ -155,6 +155,30 @@
     .sc-save svg { width: 1.1rem; height: 1.1rem; }
     .sc-reset { min-height: 3rem; padding: 0 1rem; border-radius: 1rem; font-weight: 800; color: var(--color-gray-600); border: 1.5px solid var(--color-gray-200); background: var(--color-white); }
 
+    /* ---- the lot and the season (2026-10-19) ---- */
+    .sc-opt-w { margin-left: .3rem; font-size: .68rem; font-weight: 700; color: var(--color-gray-400); }
+    .sc-x { width: 2.75rem; justify-content: center; padding: 0; }
+    .sc-pair > .sc-tag.is-wide { width: auto; flex: 1 1 auto; min-width: 0; }
+    .sc-nolot { justify-self: start; margin-top: .1rem; font-size: .76rem; font-weight: 800; color: #2d5016; text-decoration: underline; text-underline-offset: 3px; }
+    .sc-fs-lot { margin-top: .35rem; font-size: .78rem; line-height: 1.5; color: var(--color-gray-600); }
+    .sc-fs-season { margin-top: .55rem; padding: .7rem .8rem; border-radius: .9rem; background: #f3f8ff; font-size: .78rem; line-height: 1.6; color: #24405f; transition: opacity .28s var(--sc-e); }
+    .sc-fs-season:empty { display: none; }
+    .sc-fs-season.is-busy { opacity: .6; }
+    .sc-enso { display: inline-block; margin-top: .35rem; padding: .12rem .55rem; border-radius: 999px; font-size: .7rem; font-weight: 800; background: #fdf0d2; color: #8a4b05; }
+    .sc-enso.is-wet { background: #e3eefc; color: #1550a0; }
+    .sc-fs-g { margin-top: .75rem; font-size: .68rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-500); }
+    .sc-pl { display: flex; gap: .6rem; align-items: flex-start; margin-top: .45rem; font-size: .8rem; line-height: 1.45; color: var(--color-gray-800); animation: scIn .35s var(--sc-e) both; }
+    .sc-pl > b { flex: none; min-width: 3.2rem; padding: .12rem .4rem; border-radius: .55rem; text-align: center; font-size: .72rem; font-weight: 900; background: #fdf0d2; color: #8a4b05; font-variant-numeric: tabular-nums; }
+    .sc-pl > b.is-bad { background: #fde2e2; color: #9b1c1c; }
+    .sc-pl small { display: block; margin-top: .05rem; font-size: .72rem; color: var(--color-gray-500); }
+    .sc-pl i { font-style: normal; font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-400); margin-left: .3rem; }
+    .sc-fs-note { margin-top: .55rem; font-size: .74rem; line-height: 1.5; color: var(--color-gray-500); }
+    .sc-fs-cmp { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .85rem; }
+    .sc-fs-cmp:empty { display: none; }
+    .sc-fs-cmp div { padding: .6rem .7rem; border-radius: .9rem; border: 1px solid var(--color-gray-200); font-size: .68rem; font-weight: 700; color: var(--color-gray-500); min-width: 0; }
+    .sc-fs-cmp div b { display: block; margin-top: .12rem; font-size: .92rem; font-weight: 800; color: var(--color-gray-900); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    .sc-fs-cmp div span { display: block; margin-top: .1rem; font-size: .7rem; font-weight: 600; color: var(--color-gray-500); }
+
     /* ---- the phone dock: the answer in one line while the form scrolls ---- */
     .sc-dock { position: fixed; left: .75rem; right: .75rem; bottom: calc(.75rem + env(safe-area-inset-bottom)); z-index: 40; display: flex; align-items: center; gap: .6rem; padding: .55rem .6rem .55rem .9rem; border-radius: 1.1rem;
         color: #fff; background: rgb(28 52 14 / .96); box-shadow: 0 14px 34px -14px rgb(0 0 0 / .55); transition: opacity .28s var(--sc-e), transform .28s var(--sc-e); }
@@ -220,9 +244,16 @@
     html.dark .sc-opt.is-on { background: #1f2d16; }
     html.dark .sc-tab-n { background: #2b3a1c; color: #d5e3c5; }
     html.dark .sc-more { background: #22301a; color: #cfe3bd; }
+    html.dark .sc-fs-season { background: #101d2e; color: #c8daf3; }
+    html.dark .sc-pl { color: #d5dfcb; }
+    html.dark .sc-pl > b { background: #3d2f0d; color: #f6d68a; } html.dark .sc-pl > b.is-bad { background: #431818; color: #f7b4b4; }
+    html.dark .sc-enso { background: #3d2f0d; color: #f6d68a; } html.dark .sc-enso.is-wet { background: #13294a; color: #a9c8f5; }
+    html.dark .sc-fs-cmp div { border-color: #2b3a1c; } html.dark .sc-fs-cmp div b { color: #e8efe1; }
+    html.dark .sc-nolot { color: #b9d99c; }
 
     @media (prefers-reduced-motion: reduce) {
-        .sc-drop, .sc-sprout, .sc-card, .sc-srow, .sc-head.is-pop, .sc-swap, .sc-flag, .sc-field .f-in { animation: none !important; }
+        .sc-drop, .sc-sprout, .sc-card, .sc-srow, .sc-head.is-pop, .sc-swap, .sc-flag, .sc-field .f-in, .sc-pl { animation: none !important; }
+        .sc-fs-season { transition: none !important; }
         .sc-tab-ind, .sc-gbar span, .sc-gmark, .sc-gscale span, .sc-ybar span, .sc-dock, .sc-head, .sc-chip { transition: none !important; }
     }
     html.sm-still .sc-drop, html.sm-still .sc-sprout, html.sm-still .sc-field .f-in { animation: none !important; }
@@ -235,9 +266,11 @@
     $infoIco = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 11v5M12 8h.01"/></svg>';
     // Built here: the json directive reads one argument, and an inline array is cut at its first comma.
     $scBoot = $boot + ['urls' => ['save' => route('seedcalc.save'), 'list' => route('seedcalc.list'), 'one' => url('/app/seed-count-distance/one'), 'del' => url('/app/seed-count-distance'),
-        'variety' => route('seedcalc.variety')]];
+        'variety' => route('seedcalc.variety'), 'context' => route('seedcalc.context')]];
 @endphp
 @include('partials.variety-pick')
+@include('partials.farm-lots')
+@include('partials.month-pick')
 <script type="application/json" id="scBoot">@json($scBoot)</script>
 <div class="sc-wrap">
     <section class="sc-hero">
@@ -275,6 +308,13 @@
                     <button type="button" class="sc-tag is-wide is-crop" id="scCrop" aria-haspopup="dialog"><span><span class="sc-tag-t">Yellow corn, hybrid</span><small>Mais</small></span>{!! $chev !!}</button>
                     <button type="button" class="sc-tag is-wide is-crop" id="scVariety" aria-haspopup="dialog"><span><span class="sc-tag-t">Any variety</span><small>Optional: pick yours or type its name</small></span>{!! $chev !!}</button>
                 </div>
+                {{-- The lot (2026-10-19, the owner): its size, soil and water count in. Optional. --}}
+                <div class="sc-row">
+                    <div class="sc-f"><span>Which lot is it for?<small class="sc-opt-w">Optional</small>{{ \App\Support\Tagalog::flag('lot') }}</span>
+                        <div id="scLots"></div>
+                        <button type="button" class="sc-nolot" id="scNoLot" hidden>Use no lot</button>
+                        <small>Its size fills in, and its soil and water count in the stand and the harvest.</small></div>
+                </div>
                 <div class="sc-row is-2">
                     <div class="sc-f" id="scMethodF"><span>How it is planted</span>
                         <button type="button" class="sc-tag is-wide" id="scMethod" aria-haspopup="dialog"><span>Sown where it grows</span>{!! $chev !!}</button></div>
@@ -284,6 +324,18 @@
                             <button type="button" class="sc-tag" id="scAreaUnit" aria-haspopup="dialog"><span>Hectares</span>{!! $chev !!}</button>
                         </div>
                         <small>Leave it empty to count one hectare.</small></div>
+                </div>
+                {{-- When it is planted: with a lot, twenty years of its weather, the ENSO outlook and the forecast. --}}
+                <div class="sc-row is-2">
+                    <div class="sc-f"><span>Planting month<small class="sc-opt-w">Optional</small></span>
+                        <div class="sc-pair">
+                            <button type="button" class="sc-tag is-wide" id="scMonth" aria-haspopup="dialog"><span>Not set</span>{!! $chev !!}</button>
+                            <button type="button" class="sc-tag sc-x" id="scMonthX" aria-label="Clear the month" hidden>✕</button>
+                        </div>
+                        <small>With a lot, the month reads twenty years of its weather.</small></div>
+                    <label class="sc-f"><span>Planting day<small class="sc-opt-w">Optional</small></span>
+                        <span class="sc-in"><input type="number" class="form-input" id="scDay" min="1" max="31" step="1" inputmode="numeric" placeholder="15"></span>
+                        <small>Empty: the 15th of the month.</small></label>
                 </div>
                 <p class="sc-usual" id="scCropNote">{!! $infoIco !!}<span></span></p>
             </section>
@@ -436,6 +488,15 @@
                     <p class="sc-say" id="scEmptyLine"></p>
                 </div>
 
+                {{-- The field and the season, counted (2026-10-19). --}}
+                <div class="sc-box" id="scFS" hidden>
+                    <h5>Your field and season</h5>
+                    <p class="sc-fs-lot" id="scFSLot"></p>
+                    <div class="sc-fs-season" id="scFSSeason"></div>
+                    <div id="scFSLines"></div>
+                    <div class="sc-fs-cmp" id="scFSCmp"></div>
+                </div>
+
                 <div class="sc-box">
                     <h5 id="scFieldTitle">Your field, drawn to scale</h5>
                     <div class="sc-field" id="scField"></div>
@@ -516,10 +577,10 @@
     const val = (id) => { const s = $(id).value; return s === '' ? null : Number(s); };
     const LS = 'anee.seedcalc.last';
     const st = { crop: 'corn_yellow', method: 'direct', layout: 'rows', mode: 'seeds', areaUnit: 'ha', rowSet: 'set', amountUnit: 'kg', amountPer: 'ha', targetPer: 'ha', hillMode: 'auto', last: null, tone: null,
-        variety: '', vRec: null, vy: null };
+        variety: '', vRec: null, vy: null, lotId: null, lot: null, month: null, ctx: null, ctxBusy: false };
     const crop = () => B.crops[st.crop];
 
-    /* calc:start (App\Support\SeedSpacing: read, missing, enough, suggest, parts, compute) */
+    /* calc:start (App\Support\SeedSpacing: read, missing, enough, suggest, parts, core, compute; App\Support\SeedPenalty and SeasonFactors) */
     const K = B.k;
     const perHillFor = (C, m) => (C[m] && C[m].perHill) || C.perHill;
     const weighs = (C, m) => m === 'piece' ? !!(C.pieceWt && C.pieceWt.length) : !!(C.tgw && C.tgw.length);
@@ -561,7 +622,11 @@
         const keepV = n('keep', 1, 20, C.keep === null ? null : C.keep);
         const vname = String(inp.variety ?? '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
         const c = {
-            crop: key, method, variety: vname === '' ? null : vname.slice(0, 120), layout: pk('layout', B.layouts, C.layout), mode: pk('mode', B.modes, 'seeds'),
+            crop: key, method, variety: vname === '' ? null : vname.slice(0, 120),
+            lotId: inp.lotId !== null && inp.lotId !== undefined && inp.lotId !== '' && isFinite(Number(inp.lotId)) && Math.trunc(Number(inp.lotId)) > 0 ? Math.trunc(Number(inp.lotId)) : null,
+            month: /^\d{4}-(0[1-9]|1[0-2])$/.test(String(inp.month ?? '')) ? String(inp.month) : null,
+            day: (() => { const d = n('day', 1, 31); return d === null ? null : Math.round(d); })(),
+            layout: pk('layout', B.layouts, C.layout), mode: pk('mode', B.modes, 'seeds'),
             area: n('area', 0, 1000000), areaUnit: pk('areaUnit', B.areaUnits, 'ha'),
             row: n('row', 1, 5000, C.row[1]), plant: n('plant', 0.5, 5000, C.plant[1]),
             bed: n('bed', 10, 1000, bed[0]), bedRows: Math.round(n('bedRows', 1, 12, bed[1])),
@@ -590,13 +655,14 @@
         }
         return '';
     };
-    const compute = (c, vy) => {
+    const core = (c, vy, pen, forceN) => {
         const C = B.crops[c.crop], Y = C.yield, m = c.method, areaHa = areaHaOf(c);
         const g = c.germ / 100, L = c.loss / 100, fit = c.fit / 100, res = c.reserve / 100;
         const nursery = m === 'transplant' && !!(C.tgw && C.tgw.length), hasGerm = m !== 'transplant' || nursery;
-        const pCome = m === 'transplant' ? 1 - L : g, post = m === 'transplant' ? 1 : 1 - L, pLive = pCome * post;
+        // The field and the season at emergence lower the chance (SeedPenalty); the seedbed's temperature, its germination.
+        const pCome = (m === 'transplant' ? 1 - L : g) * pen.emerge.k, post = m === 'transplant' ? 1 : 1 - L, pLive = pCome * post, gBed = g * pen.seedbed.k;
         const sug = suggest(C, m, pCome, c.keep);
-        const n = c.hillMode === 'auto' ? sug.n : c.perHill;
+        const n = forceN ?? (c.hillMode === 'auto' ? sug.n : c.perHill);
         const k = Math.min(c.keep ?? n, n);
         const kept = keptMean(n, pCome, k) * post;
         const empty = Math.pow(1 - pCome, n), short = c.keep !== null && c.keep >= 2 ? shortShare(n, pCome, Math.min(c.keep, n)) : empty, filled = 1 - Math.pow(1 - pLive, n);
@@ -615,7 +681,7 @@
                 if (c.mode === 'spacing') {
                     const count = c.amountUnit === 'count' ? c.amount : (c.amountUnit === 'kg' ? c.amount * 1000 : c.amount) / unit;
                     const perHa = c.amountPer === 'lot' ? count / areaHa : count;
-                    const field = nursery ? perHa * g * fit : perHa;
+                    const field = nursery ? perHa * gBed * fit : perHa;
                     return { count, hills: field / (n * (1 + res)) };
                 }
                 const perHa = c.targetPer === 'lot' ? c.target / areaHa : c.target;
@@ -636,7 +702,7 @@
         }
         const effRow = c.layout === 'beds' ? c.bed / c.bedRows : c.layout === 'triangle' ? plant * K.tri : row;
         const areaHill = effRow * plant, hillsHa = 1e8 / areaHill;
-        const fieldHa = hillsHa * n, buyHa = nursery ? fieldHa / (g * fit) : fieldHa;
+        const fieldHa = hillsHa * n, buyHa = nursery ? fieldHa / (gBed * fit) : fieldHa;
         const needLo = buyHa, needHi = buyHa * (1 + res);
         const kgLo = wts ? needLo * wts.lo / 1000 : null, kgHi = wts ? needHi * wts.hi / 1000 : null;
         const plantsHa = hillsHa * kept, standHa = hillsHa * perHillStand;
@@ -650,8 +716,8 @@
             gw = c.weight ? [c.weight, c.weight] : (spanOf(vy ? vy.tgw : null) || [(C.tgw[0] + C.tgw[1]) / 2, (C.tgw[0] + C.tgw[1]) / 2]);
             const raw = hillsHa * filled * P.tillers[1] / 10000;
             panM2 = Math.min(raw, P.ceiling[1]); panM2Lo = Math.min(hillsHa * filled * P.tillers[0] / 10000, P.ceiling[0]); capped = raw > P.ceiling[1];
-            kgHa = panM2 * P.grains[1] * P.filled[1] / 100 * gw[1] / 1000 * 10;
-            kgHaLo = panM2Lo * P.grains[0] * P.filled[0] / 100 * gw[0] / 1000 * 10 * keepShare;
+            kgHa = panM2 * P.grains[1] * P.filled[1] * pen.flower / 100 * gw[1] / 1000 * 10;
+            kgHaLo = panM2Lo * P.grains[0] * P.filled[0] * pen.flower / 100 * gw[0] / 1000 * 10 * keepShare;
         } else {
             if (plantsHa > hi) { plantsY = hi; plateau = true; }
             if (Y.model === 'ear') {
@@ -660,6 +726,9 @@
             } else if ((Y.unit || 'kg') === 'count') { pieces = plantsY * P.perPlant[1]; piecesLo = plantsY * P.perPlant[0] * keepShare; }
             else { const div = (Y.unit || 'kg') === 'g' ? 1000 : 1; kgHa = plantsY * P.perPlant[1] / div; kgHaLo = plantsY * P.perPlant[0] / div * keepShare; }
         }
+        const GK = pen.growth.k;
+        if (kgHa !== null) { kgHa *= GK; kgHaLo *= GK; }
+        if (pieces !== null) { pieces *= GK; piecesLo *= GK; }
         const flags = [['stand-' + status, { sparse: 'bad', thin: 'warn', good: 'good', crowded: 'warn', danger: 'bad' }[status]]];
         const phMax = perHillFor(C, m)[2];
         if (c.crop === 'rice' && n > K.riceMax) flags.push(['rice-seedlings', n >= K.riceBad ? 'bad' : 'warn']);
@@ -677,6 +746,7 @@
         if (plateau) flags.push(['yield-plateau', 'info']);
         const lot = (v) => v === null || !areaHa ? null : v * areaHa;
         return {
+            _row: row, _plant: plant, penK: { emerge: pen.emerge.k, seedbed: pen.seedbed.k, growth: pen.growth.k, flower: pen.flower },
             status, flags, variety: c.variety, varietyYield: !!vy, basis: vy ? vy.basis || null : null,
             areaHa, row, plant, effRow, square, plantSpan, given, areaHill, hillsHa, hillsLot: lot(hillsHa),
             perHill: n, suggest: sug.n, suggestOk: sug.ok, kept: k, fieldHa, buyLo: needLo, buyHi: needHi, buyLotLo: lot(needLo), buyLotHi: lot(needHi),
@@ -688,6 +758,160 @@
             // For the page only.
             filled, pLive, wts, hasGerm, byHills, usualRow,
         };
+    };
+    /* ---- the field and the season: App\Support\SeedPenalty and SeasonFactors, the same ---- */
+    const PK = B.pen.k;
+    const PEN0 = { emerge: { k: 1, lines: [] }, seedbed: { k: 1, lines: [] }, growth: { k: 1, lines: [] }, flower: 1, notes: [], W: null, SF: null };
+    // NpkNeed::ensoTilt: full from October to May, half in the southwest monsoon, half again more than nine months out.
+    const ensoTiltOf = (enso, win) => {
+        const T = enso ? B.pen.ensoTilt[enso.phase || ''] : null;
+        if (!enso || enso.phase === 'neutral' || !T) return { rain: 1, sun: 1, temp: 0 };
+        const lvl = { weak: 0, moderate: 1, strong: 2, 'very strong': 3 }[enso.strength || ''] ?? 1;
+        const months = (win && win.months) || [];
+        const dry = months.length ? months.filter((mo) => mo >= 10 || mo <= 5).length / months.length : 1;
+        const w = (0.5 + 0.5 * dry) * (Number((win && win.monthsAhead) || 0) > 9 ? 0.5 : 1);
+        return { rain: 1 + T.rain[lvl] * w, sun: 1 + T.sun[lvl] * w, temp: T.temp[lvl] * w };
+    };
+    // SeasonFactors::of, NPK Plus's seasonPlanks() factors: sun, water, temperature.
+    const seasonFactorsOf = (ckey, hist, win, enso, water) => {
+        if (!hist || !hist.avg) return null;
+        const K = Object.assign({}, B.pen.climate.default, B.pen.climate[ckey] || {}), t = ensoTiltOf(enso, win), a = hist.avg, days = Math.max(1, Math.trunc(Number(win.days || 1)));
+        const cl = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+        const rain = a.rain * t.rain, rad = a.rad * t.sun, tmean = a.tmean + t.temp, et0 = a.et0 * (t.rain < 1 ? 1 + (1 - t.rain) * 0.15 : 1);
+        const need = et0 * K.kc + (K.extraMm || 0), eff = rain * 0.75;
+        const supply = water === 'irrigated' ? need : water === 'partial' ? eff + 0.5 * Math.max(0, need - eff) : eff;
+        const wr = Math.min(1, supply / Math.max(1, need)), fw = cl(1 - K.ky * (1 - wr), 0.1, 1), fs = cl(rad / K.rad, 0.2, 1.1);
+        const dev = Math.max(0, K.opt[0] - tmean, tmean - K.opt[1]), phase = (enso && enso.phase) || null;
+        const hotRaw = K.hot >= 35 ? (a.hot35 || 0) : K.hot >= 32 ? (a.hot32 || 0) : (a.hot30 || 0);
+        const hotN = hotRaw * (phase === 'el_nino' ? 1.3 : phase === 'la_nina' ? 0.85 : 1);
+        const ft = cl((1 - 0.07 * dev) * (1 - 0.8 * Math.min(1, hotN / days)), 0.25, 1);
+        return { sun: fs, water: fw, temp: ft, rain, rad, tmean, need, supply, wr, hotN, dev, tilt: t, K };
+    };
+    // SeedPenalty::weather: the chance of a heavy or a dry start, the mean and the warm part of the day.
+    const weatherOf = (season) => {
+        if (!season || !season.emerge || !(season.emerge.years || []).length) return null;
+        const t = ensoTiltOf(season.enso || null, season.ewindow), ys = season.emerge.years, n = ys.length;
+        let heavy = ys.filter((y) => y.rain * t.rain >= PK.HEAVY_MM).length / n, dry = ys.filter((y) => y.rain * t.rain < PK.DRY_MM).length / n;
+        let tm = season.emerge.avg.tmean + t.temp, tx = season.emerge.avg.tmax + t.temp;
+        const rain = season.emerge.avg.rain * t.rain;
+        let fc = null;
+        const F = season.forecast || [];
+        if (F.length) {
+            const nF = Math.min(PK.EMERGE_DAYS, F.length);
+            const tmF = F.reduce((s, d) => s + (d.max + d.min) / 2, 0) / F.length, txF = F.reduce((s, d) => s + d.max, 0) / F.length;
+            tm = (tm * (PK.EMERGE_DAYS - nF) + tmF * nF) / PK.EMERGE_DAYS; tx = (tx * (PK.EMERGE_DAYS - nF) + txF * nF) / PK.EMERGE_DAYS;
+            const wk = F.slice(0, 7).filter((d) => d.mm !== null && d.mm !== undefined);
+            const sum = wk.reduce((s, d) => s + d.mm, 0), max = wk.length ? Math.max(...wk.map((d) => d.mm)) : 0;
+            fc = { days: nF, tm: tmF, tx: txF, mmDays: wk.length, sum, max, from: F[0].date, to: F[F.length - 1].date };
+            if (wk.length >= 5) {
+                if (max >= PK.FC_HEAVY_DAY || sum >= PK.FC_HEAVY_WEEK) { heavy = Math.max(heavy, PK.FC_HEAVY_P); fc.heavy = true; }
+                if (sum < PK.FC_DRY_WEEK) { dry = Math.max(dry, PK.FC_DRY_P); fc.dry = true; }
+            }
+        }
+        return { heavy, dry, tm, tw: (tm + tx) / 2, tx, rain, years: n, tilt: t, fc };
+    };
+    const cardinalOf = (T, t) => { const [b, o1, o2, x] = T; if (t <= b || t >= x) return 0; if (t < o1) return (t - b) / (o1 - b); if (t > o2) return (x - t) / (x - o2); return 1; };
+    // NpkNeed::fieldCap's caps (NpkModel::FIELD): water, salt, sodium.
+    const fieldCapOf = (key, on, water, conds) => {
+        if (!on) return [];
+        const caps = B.pen.field.caps, kind = key.startsWith('rice') ? 'rice' : 'other', why = [];
+        if (water === 'rainfed') why.push(['rainfed', caps.rainfed[kind]]); else if (water === 'partial') why.push(['partial', caps.partial[kind]]);
+        if (conds.includes('saline')) why.push(['saline', caps.saline]);
+        if (conds.includes('sodic')) why.push(['sodic', caps.sodic]);
+        return why;
+    };
+    // SeedPenalty::of: each line [code, factor, from, a number for its words].
+    const penOf = (C, key, m, f, season) => {
+        const E = [], S = [], G = [], notes = [];
+        const rice = key.startsWith('rice'), tp = m === 'transplant', pc = m === 'piece', dir = m === 'direct';
+        const hasTgw = !!(C.tgw && C.tgw.length), nursery = tp && hasTgw, small = !pc && hasTgw && C.tgw[1] < 10;
+        const W = weatherOf(season), water = f ? f.water : null, wk = water || 'irrigated';
+        const wt = (k, w) => 1 - w * (1 - k);
+        const add = (L, code, k, from, v = null) => { if (k < 0.9995) L.push([code, k, from, v]); };
+        const wetOf = (ff) => ff.drainage ?? (ff.signs.some((x) => x === 'rust' || x === 'smell') ? 'slow' : null);
+        if (f) {
+            if (water === null) notes.push('nowater');
+            const sea = f.salt.includes('sea');
+            const ec = f.ec ?? ((f.saline || f.waterSalty) ? (sea ? PK.SALT_EC_SEA : PK.SALT_EC_SIGNS) : null);
+            if (ec !== null) { const [thr, slope] = B.pen.salt[key] || B.pen.salt.default; add(E, 'salt', Math.max(PK.SALT_FLOOR, 1 - PK.SALT_EMERGE * slope / 100 * Math.max(0, ec - thr)), 'lot', ec); }
+            if (f.sodic && dir && !rice) add(E, 'sodic', small ? PK.SODIC_SMALL : PK.SODIC_LARGE, 'lot');
+            const dr = wetOf(f), wW = tp ? 0.7 : 1;
+            if (!rice) {
+                if (dr === 'stands') add(E, 'wet', wt(PK.WET_STANDS, wW), 'lot', 'stands');
+                else if (dr === 'slow') add(E, 'wet', wt(PK.WET_SLOW, wW), 'lot', 'slow');
+                const mo = season ? Number(String(season.from).slice(5, 7)) : null;
+                if (f.flooding === 'often' && mo !== null && mo >= 6 && mo <= 11) add(E, 'flood', wt(PK.FLOOD_WET, wW), 'lot');
+            } else if (key === 'rice_dsr' && dr === 'stands') add(E, 'dsrwater', PK.DSR_STANDS, 'lot');
+            const strong = (f.ph !== null && f.ph < PK.ACID_PH) || (f.ph === null && f.acidity === 'strong');
+            if (f.sulfate) add(E, 'sulfate', wt(rice ? PK.ACID_SULFATE_RICE : PK.ACID_SULFATE, tp ? 0.5 : 1), 'lot');
+            else if (strong && !rice) add(E, 'acid', wt(PK.ACID_STRONG, tp ? 0.5 : 1), 'lot', f.ph);
+            const crusty = ['silt', 'clay', 'heavy_clay'].includes(f.texture || '') && dir && !rice && !f.sodic;
+            if (crusty) { if (W) add(E, 'crust', 1 - (small ? PK.CRUST_SMALL : PK.CRUST_LARGE) * W.heavy, 'season', W.heavy); else add(E, 'crust', small ? PK.CRUST_FLAT_SMALL : PK.CRUST_FLAT_LARGE, 'lot'); }
+            if (!W && f.texture === 'sandy' && water === 'rainfed' && (dir || pc)) add(E, 'sandy', PK.SANDY_DRY_FLAT, 'lot');
+        }
+        if (W) {
+            const poor = !!f && (['slow', 'stands'].includes(f.drainage || '') || ['clay', 'heavy_clay'].includes(f.texture || ''));
+            const wR = (tp ? 0.33 : pc ? 0.7 : 1) * (poor ? 1.3 : 1);
+            add(E, 'heavy', Math.max(0, 1 - PK.RAIN_ROT * W.heavy * wR), W.fc && W.fc.heavy ? 'forecast' : 'season', W.heavy);
+            if (wk !== 'irrigated' && !(rice && tp && wk === 'partial')) {
+                const tex = f ? f.texture : null, mult = tex === 'sandy' ? 1.4 : ['clay', 'heavy_clay'].includes(tex) ? 0.8 : 1;
+                const wD = (wk === 'partial' ? 0.5 : 1) * (tp ? 0.7 : 1) * mult;
+                add(E, 'dry', Math.max(0, 1 - PK.DRY_LOSS * W.dry * wD), W.fc && W.fc.dry ? 'forecast' : 'season', W.dry);
+            }
+            const T = B.pen.germT[key];
+            if (T && (dir || pc || nursery)) {
+                const cool = W.tm < T[1] ? cardinalOf(T, W.tm) : 1, hot = W.tw > T[2] ? cardinalOf(T, W.tw) : 1;
+                const k = 1 - PK.TEMP_SOFT * (1 - Math.min(cool, hot));
+                add(nursery ? S : E, hot < cool ? 'hot' : 'cool', k, W.fc ? 'forecast' : 'season', hot < cool ? W.tw : W.tm);
+            }
+        }
+        const capWater = season && season.hist && season.hist.avg ? 'irrigated' : wk;
+        const conds = f ? [(f.saline || f.waterSalty) ? 'saline' : null, f.sodic ? 'sodic' : null].filter(Boolean) : [];
+        fieldCapOf(key, !!f, capWater, conds).forEach((w) => add(G, 'cap-' + w[0], w[1], 'lot'));
+        const SF = season ? seasonFactorsOf(B.pen.climateKey[key] || key, season.hist, season.window, season.enso || null, wk) : null;
+        if (SF) {
+            const min = Math.min(1, SF.sun, SF.water, SF.temp), which = min === SF.water ? 'water' : min === SF.temp ? 'temp' : 'sun';
+            add(G, 'season-' + which, min, 'season', which === 'water' ? SF.wr : which === 'temp' ? SF.tmean : SF.rad);
+        }
+        if (f) {
+            if (B.pen.roots.includes(key)) {
+                const kr = Math.min(f.hardpan === 'yes' ? PK.ROOT_HARDPAN : 1, f.depth === 'shallow' ? PK.ROOT_SHALLOW : 1);
+                add(G, f.depth === 'shallow' && kr === PK.ROOT_SHALLOW ? 'shallow' : 'hardpan', kr, 'lot');
+            } else if (f.hardpan === 'yes' && wk === 'rainfed' && !rice) add(G, 'hardpandry', PK.HARDPAN_DRY, 'lot');
+            if (!rice) {
+                const dr = wetOf(f);
+                if (dr === 'stands') add(G, 'growwet', PK.GROW_STANDS, 'lot', 'stands'); else if (dr === 'slow') add(G, 'growwet', PK.GROW_SLOW, 'lot', 'slow');
+            }
+        }
+        let flower = 1;
+        if (rice && season && season.flower && season.flower.avg && SF) {
+            const usual = SF.hotN * PK.FLOWER_DAYS / Math.max(1, Math.trunc(Number(season.days))), phase = season.enso ? season.enso.phase : null;
+            const hotF = (season.flower.avg.hot35 || 0) * (phase === 'el_nino' ? 1.3 : phase === 'la_nina' ? 0.85 : 1);
+            const excess = Math.max(0, hotF - usual);
+            flower = Math.max(PK.FLOWER_FLOOR, 1 - PK.FLOWER_HEAT * excess);
+            if (flower < 0.9995) G.push(['flower', flower, 'season', excess]);
+        }
+        const prod = (L, floor, skip = []) => {
+            let k = 1, cap = 1;
+            L.forEach((l) => { if (skip.includes(l[0])) return; if (l[0].startsWith('cap-')) cap *= l[1]; else k *= l[1]; });
+            return Math.max(floor, k * Math.max(B.pen.field.capFloor, cap));
+        };
+        return { emerge: { k: prod(E, PK.EMERGE_FLOOR), lines: E }, seedbed: { k: prod(S, PK.EMERGE_FLOOR), lines: S }, growth: { k: prod(G, PK.GROWTH_FLOOR, ['flower']), lines: G }, flower, notes, W, SF };
+    };
+    // SeedSpacing::compute: the plan on this field and season, and the same plan on a field that takes nothing.
+    const IDEAL_KEYS = ['status', 'standHa', 'standLot', 'plantsHa', 'emptyShare', 'buyLo', 'buyHi', 'kgLo', 'kgHi', 'kgHaLo', 'kgHaHi', 'yLotLo', 'yLotHi', 'piecesHa', 'piecesHaLo', 'piecesLot', 'piecesLotLo'];
+    const compute = (c, vy, ctx) => {
+        const C = B.crops[c.crop];
+        const pen = ctx && (ctx.facts || ctx.season) ? penOf(C, c.crop, c.method, ctx.facts || null, ctx.season || null) : PEN0;
+        const r = core(c, vy, pen, null);
+        let ideal = null;
+        if (pen.emerge.lines.length || pen.seedbed.lines.length || pen.growth.lines.length) {
+            const b = core(Object.assign({}, c, { mode: 'seeds', row: r._row, plant: r._plant, hillMode: 'set', perHill: r.perHill }), vy, PEN0, null);
+            ideal = {};
+            IDEAL_KEYS.forEach((k) => { ideal[k] = b[k]; });
+        }
+        delete r._row; delete r._plant;
+        return Object.assign(r, { pen, ideal });
     };
     /* calc:end */
 
@@ -762,6 +986,7 @@
         st.variety = ''; st.vRec = null; st.vy = null;
         fillCropDefaults();
         paint(true);
+        if (st.lotId || st.month) ctxSoon(0);
     };
 
     /* ---- show what the mode, layout and method need ---- */
@@ -1005,7 +1230,7 @@
     const calc = () => {
         const C = crop();
         const raw = {
-            crop: st.crop, method: st.method, variety: st.variety, layout: st.layout, mode: st.mode, area: val('scArea'), areaUnit: st.areaUnit,
+            crop: st.crop, method: st.method, variety: st.variety, lotId: st.lotId, month: st.month, day: val('scDay'), layout: st.layout, mode: st.mode, area: val('scArea'), areaUnit: st.areaUnit,
             row: val('scRow'), plant: val('scPlant'), bed: val('scBed'), bedRows: val('scBedRows'), rowSet: st.rowSet,
             amount: val('scAmount'), amountUnit: st.amountUnit, amountPer: st.amountPer, target: val('scTarget'), targetPer: st.targetPer,
             hillMode: st.hillMode, perHill: val('scPerHill'), keep: val('scKeep'), germ: val('scGerm'), fit: val('scFit'), loss: val('scLoss'), reserve: val('scReserve'),
@@ -1016,7 +1241,7 @@
         try { localStorage.setItem(LS, JSON.stringify(raw)); } catch (e) {}
         $('scEmpty').hidden = !why; $('scRes').hidden = !!why;
         if (why) { $('scEmptySay').textContent = why; st.last = null; dock(); return; }
-        const r = compute(c, st.vy);
+        const r = compute(c, st.vy, st.ctx);
         st.last = { c: raw, r };
         // The suggested count shows in its box.
         if (st.hillMode === 'auto' && Number($('scPerHill').value) !== r.perHill) $('scPerHill').value = r.perHill;
@@ -1063,8 +1288,10 @@
         $('scEmptyLine').textContent = (c.method === 'direct' ? 'With ' + r.perHill + ' ' + (r.perHill === 1 ? 'seed' : 'seeds') + ' a hill at ' + num(c.germ) + '% germination, ' + oneIn(r.emptyShare) + '. '
             : c.method === 'piece' ? 'With ' + r.perHill + ' ' + (r.perHill === 1 ? U[0] : U[1]) + ' a hill at ' + num(c.germ) + '% taking root, ' + oneIn(r.emptyShare) + '. '
             : 'With ' + num(c.loss) + '% lost after transplanting, ' + oneIn(r.emptyShare, true) + '. ')
-            + (r.byHills ? '' : 'Each hill keeps ' + num(r.keptPerHill, 2) + ' plants on average' + (c.keep !== null && r.perHill > c.keep ? ' after thinning to ' + c.keep : '') + '.');
+            + (r.byHills ? '' : 'Each hill keeps ' + num(r.keptPerHill, 2) + ' plants on average' + (c.keep !== null && r.perHill > c.keep ? ' after thinning to ' + c.keep : '') + '.')
+            + (r.ideal && r.ideal.standHa > r.standHa + 0.5 ? ' Your field and season take about ' + pctOff(r.standHa / r.ideal.standHa) + ' of the stand: ' + many(r.ideal.standHa) + ' on a field that takes nothing.' : '');
         drawField(c, r);
+        paintFS(c, r);
         // The flags.
         const order = { bad: 0, warn: 1, info: 2, good: 3 };
         $('scFlags').innerHTML = r.flags.slice().sort((a, b) => order[a[1]] - order[b[1]]).map((f, i) => {
@@ -1096,7 +1323,8 @@
         }
         $('scYBig').textContent = big; $('scYSub').textContent = sub;
         $('scYTitle').textContent = Y.perYear ? 'Potential harvest at full bearing' : 'Potential harvest';
-        $('scYSay').textContent = (r.varietyYield ? 'Counted with the own yield parts of ' + st.variety + ', from its records. ' : '') + say + 'The top is what the ' + (r.byHills ? 'hills' : 'plants') + ' can carry' + (Y.model === 'tiller' ? ' (' + rng([r.panM2Lo, r.panM2]) + ' panicles a square meter × ' + rng(r.parts.grains) + ' grains × ' + rng(r.parts.filled) + '% filled)' : '') + '; the bottom ' + (Object.values(r.parts).some((v) => v && Math.abs(v[0] - v[1]) > 1e-9) ? 'counts the low end of each part and takes off' : 'takes off') + ' the ' + num(c.harvestLoss) + '% lost at harvest. Weather, pests and fertilizer decide where in between.';
+        const yIdeal = r.ideal ? (r.kgHaHi !== null && r.ideal.kgHaHi ? r.kgHaHi / r.ideal.kgHaHi : r.piecesHa !== null && r.ideal.piecesHa ? r.piecesHa / r.ideal.piecesHa : 1) : 1;
+        $('scYSay').textContent = (yIdeal < 0.995 ? 'Your field and season take about ' + pctOff(yIdeal) + ' of it. ' : '') + (r.varietyYield ? 'Counted with the own yield parts of ' + st.variety + ', from its records. ' : '') + say + 'The top is what the ' + (r.byHills ? 'hills' : 'plants') + ' can carry' + (Y.model === 'tiller' ? ' (' + rng([r.panM2Lo, r.panM2]) + ' panicles a square meter × ' + rng(r.parts.grains) + ' grains × ' + rng(r.parts.filled) + '% filled)' : '') + '; the bottom ' + (Object.values(r.parts).some((v) => v && Math.abs(v[0] - v[1]) > 1e-9) ? 'counts the low end of each part and takes off' : 'takes off') + ' the ' + num(c.harvestLoss) + '% lost at harvest. Weather, pests and fertilizer decide where in between.';
         const yHi = r.kgHaHi ?? r.piecesHa ?? 0, yLo = r.kgHaLo ?? r.piecesHaLo ?? 0, ySc = Math.max(1, yHi * 1.12);
         $('scYBar').style.left = (yLo / ySc * 100) + '%'; $('scYBar').style.width = Math.max(3, (yHi - yLo) / ySc * 100) + '%';
         $('scYield').hidden = !big;
@@ -1137,6 +1365,145 @@
     } catch (e) {}
     $('scDockGo').addEventListener('click', () => $('scOut').scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' }));
 
+
+    /* ---- the lot and the planting month (2026-10-19, the owner): the field and the season count in ---- */
+    let LOTP = null, ctxAsk = 0, ctxT = 0;
+    const MONTHS = (() => { const out = [], d = new Date(); d.setDate(1); for (let i = 0; i < 18; i++) { out.push(d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0')); d.setMonth(d.getMonth() + 1); } return out; })();
+    const monthWord = (ym) => (ym && window.aneeMonthPick ? window.aneeMonthPick.label(ym) : ym || 'Not set');
+    function paintWhen() { tag('scMonth', st.month ? monthWord(st.month) : 'Not set'); $('scMonthX').hidden = !st.month; $('scNoLot').hidden = !st.lotId; }
+    function ctxSoon(ms = 250) { clearTimeout(ctxT); ctxT = setTimeout(loadCtx, ms); }
+    async function loadCtx() {
+        paintWhen();
+        if (!st.lotId && !st.month) { st.ctx = null; st.ctxBusy = false; calc(); return; }
+        const ask = ++ctxAsk;
+        st.ctxBusy = true; calc();
+        try {
+            const q = new URLSearchParams({ crop: st.crop, lotId: st.lotId || '', month: st.month || '', day: $('scDay').value || '' }).toString();
+            const res = await window.api(B.urls.context + '?' + q, { method: 'GET' });
+            if (ask !== ctxAsk) return;
+            st.ctx = res.data || null;
+            if (st.ctx && st.lotId && !st.ctx.lot) st.lotId = null;
+        } catch (e) { if (ask !== ctxAsk) return; st.ctx = null; }
+        st.ctxBusy = false; calc();
+    }
+    const useLotArea = (lot) => {
+        const a = Number(lot && lot.areaHa);
+        if (!(a > 0)) return;
+        st.areaUnit = lot.areaUnit === 'sqm' || a < 0.1 ? 'sqm' : 'ha';
+        $('scArea').value = String(st.areaUnit === 'sqm' ? Math.round(a * 10000) : Math.round(a * 10000) / 10000);
+        tag('scAreaUnit', B.areaUnits[st.areaUnit][0]);
+    };
+    const mountLots = () => {
+        if (LOTP || !window.aneeLots) return;
+        LOTP = window.aneeLots.picker($('scLots'), { crop: () => crop().book || st.crop, value: st.lotId || null, onPick: (lot) => {
+            const was = st.lotId;
+            st.lotId = lot ? lot.id : null; st.lot = lot || null;
+            if (lot && lot.id !== was) useLotArea(lot);
+            ctxSoon(0);
+        } });
+    };
+    if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
+    $('scNoLot').addEventListener('click', () => { st.lotId = null; st.lot = null; if (LOTP) LOTP.set(null); ctxSoon(0); });
+    $('scMonth').addEventListener('click', async () => {
+        if (!window.aneeMonthPick) return;
+        const k = await window.aneeMonthPick.open({ months: MONTHS, value: st.month, title: 'Which month will you plant?' });
+        if (!k || k === st.month) return;
+        st.month = k; ctxSoon(0);
+    });
+    $('scMonthX').addEventListener('click', () => { st.month = null; ctxSoon(0); });
+    $('scDay').addEventListener('input', () => ctxSoon(700));
+
+    /* ---- the field and the season, in words ---- */
+    const pctOff = (k) => Math.max(1, Math.round((1 - k) * 100)) + '%';
+    const isoDay = (iso, add = 0) => { const d = new Date(iso + 'T00:00:00'); d.setDate(d.getDate() + add); return d.toLocaleDateString('en-PH', { month: 'short', day: 'numeric' }); };
+    const lcFirst = (s) => s ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+    const factsWords = (f) => {
+        if (!f) return 'no answers about its soil and water yet';
+        const T = { sandy: 'sandy', loam: 'loam', silt: 'silty', clay: 'clay', heavy_clay: 'heavy clay that cracks' };
+        const bits = [T[f.texture] || '', { slow: 'drains slowly', stands: 'water stands for days' }[f.drainage] || '', f.flooding === 'often' ? 'floods most wet seasons' : '',
+            f.saline || f.waterSalty ? 'signs of salt' : '', f.sodic ? 'a sodic crust' : '', f.sulfate ? 'acid sulfate' : f.ph !== null ? 'pH ' + num(f.ph, 1) : f.acidity === 'strong' ? 'strongly acidic' : '',
+            f.hardpan === 'yes' ? 'a hardpan' : '', f.depth === 'shallow' ? 'shallow over rock' : '',
+            { irrigated: 'watered all season', partial: 'water part of the time', rainfed: 'rain only' }[f.water] || 'its water not answered'];
+        return bits.filter(Boolean).join(', ');
+    };
+    const penWords = (l, g, c, r) => {
+        const C = crop(), nm = shortName(C), [code, k, from, v] = l, f = st.ctx && st.ctx.facts, W = r.pen.W, SF = r.pen.SF, yrs = W ? W.years : 20;
+        const eff = 'About ' + pctOff(k) + ' ' + (g === 'growth' ? (code === 'flower' ? 'fewer filled grains' : 'less harvest') : g === 'seedbed' ? 'fewer come up in the seedbed, so sow more' : c.method === 'transplant' ? 'fewer take after planting out' : 'fewer come up');
+        const seasonNext = ' Pick the month to count your season.';
+        switch (code) {
+            case 'salt': return ['Salt, about ' + num(v, 1) + ' dS/m' + (f && f.ec !== null ? ', by your soil test' : f && f.salt.includes('sea') ? ', sea water at high tide' : ', from the signs of salt'), eff + (c.method === 'transplant' ? ': young seedlings feel salt the most.' : ': seeds stand salt better than seedlings, but not this much.')];
+            case 'sodic': return ['A sodic crust that seals the soil', eff + ': small seeds push through it worst.'];
+            case 'wet': return [v === 'stands' ? 'Water stands for days after rain' : 'Some spots stay wet for days', eff + (c.method === 'transplant' ? ': young plants drown and their roots rot.' : ': seeds rot and young plants drown.')];
+            case 'flood': return ['Floods most wet seasons, planted in the flood months', eff + '.'];
+            case 'dsrwater': return ['Water stands on the field', eff + ': direct seeded rice wants a drained surface its first week.'];
+            case 'sulfate': return ['Acid sulfate soil', eff + ': hard on young roots.'];
+            case 'acid': return ['Strongly acidic soil' + (v !== null && v !== undefined ? ', pH ' + num(v, 1) : ''), eff + ': aluminum stunts young roots. Lime helps.'];
+            case 'crust': return ['Clay or silt that crusts after a hard rain', from === 'lot' ? eff + ', at an average chance of a hard rain.' + seasonNext : eff + ': ' + pct(v) + ' of the last ' + yrs + ' years brought one in the first three weeks.'];
+            case 'sandy': return ['Sandy soil on rain only', eff + ': seeds dry out before they root.' + seasonNext];
+            case 'heavy': return from === 'forecast' ? ['Heavy rain in the forecast', eff + ': the forecast shows a downpour in your first week. Sow after it if you can.']
+                : ['A heavy start', eff + ': ' + pct(v) + ' of the last ' + yrs + ' years brought 300 mm or more in the first three weeks.'];
+            case 'dry': return from === 'forecast' ? ['Almost no rain in the forecast', eff + ': your first week looks dry. Water the rows, or sow after a rain.']
+                : ['A dry start', eff + ': ' + pct(v) + ' of the last ' + yrs + ' years brought under 30 mm in the first three weeks, and the field waits on the rain.'];
+            case 'hot': return ['Too hot for ' + nm + ' seed, about ' + num(v, 1) + '°C in the warm part of the day', eff + (g === 'seedbed' ? ': shade the seedbed, or sow in a cooler month.' : '.')];
+            case 'cool': return ['Cool for ' + nm + ' seed, about ' + num(v, 1) + '°C on average', eff + ': it comes up slowly, and more of it rots.'];
+            case 'cap-rainfed': return ['Rain only', eff + ': with no other water, the rain decides.' + seasonNext];
+            case 'cap-partial': return ['Water only part of the time', eff + '.' + seasonNext];
+            case 'cap-saline': return ['Salty soil', eff + ', as NPK Plus counts it.'];
+            case 'cap-sodic': return ['Sodic soil', eff + ', as NPK Plus counts it.'];
+            case 'season-water': return ["The season's water", eff + ': the rain' + (f && f.water === 'partial' ? ' and the water source meet' : ' meets') + ' about ' + pct(v) + ' of what the crop drinks.'];
+            case 'season-sun': return ["The season's sun", eff + ': about ' + num(v, 1) + ' MJ a day, under the ' + (SF ? SF.K.rad : 17) + ' a full crop wants.'];
+            case 'season-temp': return ["The season's heat", eff + ': about ' + num(v, 1) + '°C on average' + (SF && SF.hotN >= 1 ? ', with about ' + num(SF.hotN) + ' days too hot for its flowers' : '') + '.'];
+            case 'hardpan': return ['A hard layer under the plow depth', eff + ': roots and tubers fork and stay small.'];
+            case 'shallow': return ['Rock or gravel within a hand span', eff + ': no room for roots and tubers.'];
+            case 'hardpandry': return ['A hardpan under a crop on rain only', eff + ': shallow roots run dry sooner.'];
+            case 'growwet': return [v === 'stands' ? 'Water standing for days through the season' : 'Slow drainage through the season', eff + '.'];
+            case 'flower': return ['Heat at flowering', eff + ': about ' + num(v, 1) + ' more days of 35°C or more than usual when it flowers.'];
+        }
+        return [code, eff + '.'];
+    };
+    function paintFS(c, r) {
+        const box = $('scFS'), X = st.ctx, on = !!(st.lotId || st.month);
+        box.hidden = !on;
+        if (!on) return;
+        const C = crop(), lot = X && X.lot, S = X && X.season, P = r.pen;
+        $('scFSLot').innerHTML = lot ? 'From <b>' + esc(lot.name) + '</b>' + (lot.where ? ' (' + esc(lot.where) + ')' : '') + ': ' + esc(factsWords(X.facts)) + '.'
+            : st.lotId ? 'Reading the lot…' : 'No lot picked, so no soil or water is counted.';
+        let sh = '';
+        if (S && S.hist && S.hist.avg) {
+            const a = S.hist.avg, t = ensoTiltOf(S.enso || null, S.window);
+            sh = '<b>' + esc(isoDay(S.from)) + ' to ' + esc(isoDay(S.from, S.days - 1)) + '</b> (' + S.days + ' days) at ' + esc(S.place) + '. In the same weeks of the last ' + S.hist.years.length + ' years: about <b>' + num(a.rain) + ' mm</b> of rain, <b>'
+                + num(a.rad, 1) + ' MJ</b> of sun a day, an average of <b>' + num(a.tmean, 1) + '°C</b>, and ' + num(a.hot32) + ' days at 32°C or more.';
+            if (S.enso && S.enso.phase && S.enso.phase !== 'neutral' && S.enso.label) {
+                sh += '<br><span class="sc-enso' + (S.enso.phase === 'la_nina' ? ' is-wet' : '') + '">With ' + esc(lcFirst(S.enso.label)) + ' ahead, about ' + Math.round(Math.abs(1 - t.rain) * 100) + '% ' + (t.rain < 1 ? 'less' : 'more') + ' rain'
+                    + (Math.abs(t.temp) >= 0.05 ? ' and ' + num(Math.abs(t.temp), 1) + '°C ' + (t.temp > 0 ? 'warmer' : 'cooler') : '') + '</span>';
+            }
+            const fc = P.W && P.W.fc;
+            if (fc) sh += '<br>Forecast for your first days, ' + esc(isoDay(fc.from)) + ' to ' + esc(isoDay(fc.to)) + ': ' + (fc.mmDays ? 'about ' + num(fc.sum) + ' mm of rain in the first week, ' : '') + 'highs near ' + num(fc.tx) + '°C, an average near ' + num(fc.tm) + '°C.';
+        } else if (st.ctxBusy && st.month && st.lotId) sh = 'Reading twenty years of weather at the lot…';
+        else if (st.month) sh = ({ nolot: 'Pick a lot to read the weather where it is.', noplace: 'This lot has no town yet: add it to the lot to read its weather.', nohistory: 'No weather history could be read for this place yet.' })[X && X.why] || (st.lotId ? '' : 'Pick a lot to read the weather where it is.');
+        else sh = 'Pick the planting month to count the season too.';
+        const sv = $('scFSSeason');
+        sv.innerHTML = sh; sv.classList.toggle('is-busy', !!st.ctxBusy);
+        let lh = '';
+        [['emerge', c.method === 'transplant' ? 'When they are planted out' : 'When they come up'], ['seedbed', 'In the seedbed'], ['growth', 'While it grows']].forEach(([g, title]) => {
+            const L = P[g].lines;
+            if (!L.length) return;
+            lh += '<p class="sc-fs-g">' + title + '</p>' + L.map((l, i) => {
+                const w = penWords(l, g, c, r), src = l[2] === 'lot' ? 'from your lot' : l[2] === 'forecast' ? 'the forecast' : 'the season';
+                return '<div class="sc-pl" style="animation-delay:' + Math.min(i, 6) * 40 + 'ms"><b class="' + (1 - l[1] >= 0.15 ? 'is-bad' : '') + '">−' + pctOff(l[1]) + '</b><span>' + esc(w[0]) + '<i>' + src + '</i><small>' + esc(w[1]) + '</small></span></div>';
+            }).join('');
+            const k = g === 'growth' ? P.growth.k * P.flower : P[g].k;
+            if (L.length > 1) lh += '<p class="sc-fs-note">Together: about ' + pctOff(k) + ' ' + (g === 'growth' ? 'less harvest' : 'fewer') + ', held to ' + (g === 'growth' ? 'at most 60%' : 'at most half') + '.</p>';
+        });
+        if (P.notes.includes('nowater')) lh += '<p class="sc-fs-note">The lot does not say where its water comes from, so it is counted as watered all season.</p>';
+        if (!lh && (lot || S)) lh = '<p class="sc-fs-note">Nothing in this lot or season takes from the stand or the harvest.</p>';
+        $('scFSLines').innerHTML = lh;
+        const Y = C.yield, yt = (lo, hi) => lo === null || lo === undefined ? 'None' : hi >= 1000 ? num(lo / 1000, 1) + ' to ' + num(hi / 1000, 1) + ' t' : kgTxt(lo) + ' to ' + kgTxt(hi) + ' kg';
+        const yr = (R) => R.kgHaHi !== null && R.kgHaHi !== undefined ? yt(R.kgHaLo, R.kgHaHi) : R.piecesHa !== null && R.piecesHa !== undefined ? many(R.piecesHaLo) + ' to ' + many(R.piecesHa) + ' ' + (Y.word || Y.what) : 'None';
+        $('scFSCmp').innerHTML = r.ideal ? '<div>Final stand<b>' + many(r.standHa) + '</b><span>' + many(r.ideal.standHa) + ' on a field that takes nothing</span></div>'
+            + '<div>Harvest a hectare<b>' + yr(r) + '</b><span>' + yr(r.ideal) + ' on a field that takes nothing</span></div>' : '';
+    }
+
     /* ---- put inputs back (a saved one, or the last one on this phone) ---- */
     const fill = (c) => {
         if (!c || !B.crops[c.crop]) return false;
@@ -1151,6 +1518,8 @@
         st.amountPer = c.amountPer === 'lot' ? 'lot' : 'ha'; st.targetPer = c.targetPer === 'lot' ? 'lot' : 'ha';
         st.hillMode = c.hillMode === 'set' ? 'set' : 'auto';
         st.variety = typeof c.variety === 'string' ? c.variety : ''; st.vRec = null; st.vy = null;
+        st.lotId = Number(c.lotId) > 0 ? Number(c.lotId) : null; st.lot = null; st.ctx = null;
+        st.month = /^\d{4}-(0[1-9]|1[0-2])$/.test(String(c.month || '')) ? c.month : null;
         fillCropDefaults();
         const map = { area: 'scArea', row: 'scRow', plant: 'scPlant', bed: 'scBed', bedRows: 'scBedRows', amount: 'scAmount', target: 'scTarget', perHill: 'scPerHill', keep: 'scKeep',
             germ: 'scGerm', fit: 'scFit', loss: 'scLoss', reserve: 'scReserve', weight: 'scWeight', tillers: 'scTillers', grains: 'scGrains', filled: 'scFilled', ears: 'scEars',
@@ -1159,11 +1528,14 @@
         st.tone = null; shown.clear();
         paint(true); calc();
         if (st.variety && B.varietyShelf) loadVariety().then(() => { paint(); calc(); });
+        setVal('scDay', c.day ?? ''); paintWhen();
+        if (LOTP) LOTP.set(st.lotId);
+        if (st.lotId || st.month) ctxSoon(0);
         return true;
     };
     const start = () => { setCrop('corn_yellow'); calc(); };
     try { const last = JSON.parse(localStorage.getItem(LS) || 'null'); if (!(last && typeof last === 'object' && fill(last))) start(); } catch (e) { start(); }
-    $('scReset').addEventListener('click', () => { const k = st.crop; st.mode = 'seeds'; st.rowSet = 'set'; st.amountPer = st.targetPer = 'ha'; setVal('scArea', ''); setVal('scAmount', ''); st.tone = null; shown.clear(); setCrop(k); calc(); window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' }); });
+    $('scReset').addEventListener('click', () => { const k = st.crop; st.mode = 'seeds'; st.month = null; setVal('scDay', ''); paintWhen(); st.rowSet = 'set'; st.amountPer = st.targetPer = 'ha'; setVal('scArea', ''); setVal('scAmount', ''); st.tone = null; shown.clear(); setCrop(k); calc(); window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' }); });
 
     /* ---- the tabs and the saved list ---- */
     const LIST = { rows: [], page: 1, more: false };

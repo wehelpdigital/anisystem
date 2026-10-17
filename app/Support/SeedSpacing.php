@@ -485,6 +485,10 @@ final class SeedSpacing
         $c = [
             'crop' => $key, 'method' => $method,
             'variety' => $variety === '' ? null : mb_substr($variety, 0, 120),
+            // The lot it is for, and when it is planted (2026-10-19, the owner): its soil, water and season.
+            'lotId' => isset($in['lotId']) && is_numeric($in['lotId']) && (int) $in['lotId'] > 0 ? (int) $in['lotId'] : null,
+            'month' => preg_match('/^\d{4}-(0[1-9]|1[0-2])$/', (string) ($in['month'] ?? '')) ? (string) $in['month'] : null,
+            'day' => ($dd = $n('day', 1, 31)) === null ? null : (int) round($dd),
             'layout' => $pick('layout', self::LAYOUTS, $C['layout']),
             'mode' => $pick('mode', self::MODES, 'seeds'),
             'area' => $n('area', 0, 1000000), 'areaUnit' => $pick('areaUnit', self::AREA_UNITS, 'ha'),
@@ -675,12 +679,34 @@ final class SeedSpacing
         return ['n' => $top, 'ok' => false];
     }
 
-    /** The whole count, from cleaned inputs (and a variety's yield parts; looked up when not given). */
-    public static function compute(array $c, ?array $vy = null): array
+    /**
+     * The whole count, from cleaned inputs: a variety's yield parts (looked
+     * up when not given) and the lot and season (SeedPenalty::context(), when
+     * given): the field and the season count in, and the same plan is counted
+     * again on an ideal field (ideal), so the farmer sees what each costs.
+     */
+    public static function compute(array $c, ?array $vy = null, ?array $ctx = null): array
+    {
+        $vy ??= self::varietyYield($c);
+        $C = self::crop($c['crop']);
+        $pen = $ctx && ($ctx['facts'] || $ctx['season']) ? SeedPenalty::of($C, $c['crop'], $c['method'], $ctx['facts'] ?? null, $ctx['season'] ?? null) : SeedPenalty::none();
+        $r = self::core($c, $vy, $pen);
+        $ideal = null;
+        if ($pen['emerge']['lines'] || $pen['seedbed']['lines'] || $pen['growth']['lines']) {
+            // The same plan: its spacing and its seeds a hill, on a field and a season that take nothing.
+            $b = self::core(['mode' => 'seeds', 'row' => $r['_row'], 'plant' => $r['_plant'], 'hillMode' => 'set', 'perHill' => $r['perHill']] + $c, $vy, SeedPenalty::none());
+            $ideal = array_intersect_key($b, array_flip(['status', 'standHa', 'standLot', 'plantsHa', 'emptyShare', 'buyLo', 'buyHi', 'kgLo', 'kgHi', 'kgHaLo', 'kgHaHi', 'yLotLo', 'yLotHi', 'piecesHa', 'piecesHaLo', 'piecesLot', 'piecesLotLo']));
+        }
+        unset($r['_row'], $r['_plant']);
+
+        return $r + ['pen' => $pen, 'ideal' => $ideal];
+    }
+
+    /** The count itself, with the field and season penalties given (SeedPenalty::of or none), and the seeds a hill when held. */
+    private static function core(array $c, ?array $vy, array $pen, ?int $forceN = null): array
     {
         $C = self::crop($c['crop']);
         $Y = $C['yield'];
-        $vy ??= self::varietyYield($c);
         $method = $c['method'];
         $areaHa = self::areaHa($c);
         $g = $c['germ'] / 100;
@@ -691,11 +717,13 @@ final class SeedSpacing
         $nursery = $method === 'transplant' && ! empty($C['tgw']);
         $hasGerm = $method !== 'transplant' || $nursery;
         // The chance one seed, piece or seedling put in a hill comes up (or lives); the losses after thinning.
-        $pCome = $method === 'transplant' ? 1 - $L : $g;
+        // The field and the season at emergence lower the chance (SeedPenalty); the seedbed's temperature, its germination.
+        $pCome = ($method === 'transplant' ? 1 - $L : $g) * $pen['emerge']['k'];
+        $gBed = $g * $pen['seedbed']['k'];
         $post = $method === 'transplant' ? 1.0 : 1 - $L;
         $pLive = $pCome * $post;
         $sug = self::suggest($C, $method, $pCome, $c['keep']);
-        $n = $c['hillMode'] === 'auto' ? $sug['n'] : $c['perHill'];
+        $n = $forceN ?? ($c['hillMode'] === 'auto' ? $sug['n'] : $c['perHill']);
         $k = min($c['keep'] ?? $n, $n);
         $kept = self::keptMean($n, $pCome, $k) * $post;
         $empty = (1 - $pCome) ** $n;
@@ -721,11 +749,11 @@ final class SeedSpacing
         $plantSpan = null;
         $given = null;
         if ($c['mode'] !== 'seeds') {
-            $hillsFor = function (?float $unit) use ($c, $areaHa, $nursery, $g, $fit, $n, $res, $perHillStand) {
+            $hillsFor = function (?float $unit) use ($c, $areaHa, $nursery, $gBed, $fit, $n, $res, $perHillStand) {
                 if ($c['mode'] === 'spacing') {
                     $count = $c['amountUnit'] === 'count' ? $c['amount'] : ($c['amountUnit'] === 'kg' ? $c['amount'] * 1000 : $c['amount']) / $unit;
                     $perHa = $c['amountPer'] === 'lot' ? $count / $areaHa : $count;
-                    $field = $nursery ? $perHa * $g * $fit : $perHa;
+                    $field = $nursery ? $perHa * $gBed * $fit : $perHa;
 
                     return ['count' => $count, 'hills' => $field / ($n * (1 + $res))];
                 }
@@ -764,7 +792,7 @@ final class SeedSpacing
         $hillsHa = 1e8 / $areaHill;
         // 2. What the hills take, and the seeds to buy.
         $fieldHa = $hillsHa * $n;
-        $buyHa = $nursery ? $fieldHa / ($g * $fit) : $fieldHa;
+        $buyHa = $nursery ? $fieldHa / ($gBed * $fit) : $fieldHa;
         $needLo = $buyHa;
         $needHi = $buyHa * (1 + $res);
         $kgLo = $wts ? $needLo * $wts['lo'] / 1000 : null;
@@ -797,8 +825,9 @@ final class SeedSpacing
             $panM2 = min($raw, $P['ceiling'][1]);
             $panM2Lo = min($hillsHa * $filled * $P['tillers'][0] / 10000, $P['ceiling'][0]);
             $capped = $raw > $P['ceiling'][1];
-            $kgHa = $panM2 * $P['grains'][1] * $P['filled'][1] / 100 * $gw[1] / 1000 * 10;
-            $kgHaLo = $panM2Lo * $P['grains'][0] * $P['filled'][0] / 100 * $gw[0] / 1000 * 10 * $keepShare;
+            // Heat at flowering empties spikelets: the filled share falls (SeedPenalty::FLOWER_HEAT).
+            $kgHa = $panM2 * $P['grains'][1] * $P['filled'][1] * $pen['flower'] / 100 * $gw[1] / 1000 * 10;
+            $kgHaLo = $panM2Lo * $P['grains'][0] * $P['filled'][0] * $pen['flower'] / 100 * $gw[0] / 1000 * 10 * $keepShare;
         } else {
             if ($plantsHa > $hi) {
                 $plantsY = (float) $hi;
@@ -818,6 +847,14 @@ final class SeedSpacing
                 $div = ($Y['unit'] ?? 'kg') === 'g' ? 1000 : 1;
                 $kgHa = $plantsY * $P['perPlant'][1] / $div;
                 $kgHaLo = $plantsY * $P['perPlant'][0] / $div * $keepShare;
+            }
+        }
+
+        // The field and the season at growth: the harvest the plants that stand can carry.
+        $GK = $pen['growth']['k'];
+        foreach (['kgHa', 'kgHaLo', 'pieces', 'piecesLo'] as $v) {
+            if ($$v !== null) {
+                $$v *= $GK;
             }
         }
 
@@ -872,8 +909,10 @@ final class SeedSpacing
         $lot = fn ($v) => $v === null || ! $areaHa ? null : $v * $areaHa;
 
         return [
+            '_row' => $row, '_plant' => $plant,
             'status' => $status,
             'flags' => $flags,
+            'penK' => ['emerge' => round($pen['emerge']['k'], 4), 'seedbed' => round($pen['seedbed']['k'], 4), 'growth' => round($pen['growth']['k'], 4), 'flower' => round($pen['flower'], 4)],
             'variety' => $c['variety'] ?? null, 'varietyYield' => $vy ? true : false, 'basis' => $vy['basis'] ?? null,
             'areaHa' => $r($areaHa, 4),
             'row' => $r($row, 2), 'plant' => $r($plant, 2), 'effRow' => $r($effRow, 2), 'square' => $r($square, 2),
@@ -902,7 +941,7 @@ final class SeedSpacing
     }
 
     /** A saved calculation's name: "Yellow corn, hybrid · 70 × 20 cm · 19 to 29 kg a ha · Oct 19". */
-    public static function title(array $c, array $res): string
+    public static function title(array $c, array $res, ?string $lot = null): string
     {
         $C = self::crop($c['crop']);
         $num = fn ($v, $d) => str_contains($s = number_format((float) $v, $d), '.') ? rtrim(rtrim($s, '0'), '.') : $s;
@@ -914,7 +953,7 @@ final class SeedSpacing
         $seeds = $res['kgLo'] !== null ? $kg($res['kgLo']) . ' to ' . $kg($res['kgHi']) . ' kg a ha' : number_format($res['buyLo']) . ' a ha';
         $name = $C['name'] . (! empty($c['variety']) ? ', ' . $c['variety'] : '');
 
-        return $name . ' · ' . $space . ' · ' . $seeds . ' · ' . now('Asia/Manila')->format('M j');
+        return $name . ' · ' . $space . ' · ' . $seeds . ($lot ? ' · ' . $lot : '') . ' · ' . now('Asia/Manila')->format('M j');
     }
 
     /** What the page boots with. */
@@ -926,6 +965,7 @@ final class SeedSpacing
             'k' => ['thin' => self::THIN, 'crowd' => self::CROWD, 'shortOk' => self::SHORT_OK, 'shortPart' => self::SHORT_PART, 'shortBad' => self::SHORT_BAD, 'tri' => self::TRI,
                 'bed' => self::BED, 'riceMax' => self::RICE_HILL_MAX, 'riceBad' => self::RICE_HILL_BAD],
             'varietyShelf' => class_exists(\App\Support\VarietyYield::class),
+            'pen' => SeedPenalty::boot(),
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\SeedPenalty;
 use App\Support\SeedSpacing;
+use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +41,23 @@ class SeedSpacingController extends Controller
         return $this->json(true, 'ok', ['yield' => $vy]);
     }
 
+    /**
+     * The lot and the season for the page (2026-10-19, the owner): the lot's
+     * facts and, with a planting month, twenty years of the same weeks, the
+     * ENSO outlook and the kept forecast (SeedPenalty::context, the shared
+     * stores only). The page counts the penalties from these, as save() does.
+     */
+    public function context(Request $request)
+    {
+        $crop = (string) $request->query('crop', '');
+        if (! array_key_exists($crop, SeedSpacing::CROPS)) {
+            return $this->json(false, 'Pick a crop first.', [], 422);
+        }
+        $c = SeedSpacing::read(['crop' => $crop, 'lotId' => $request->query('lotId'), 'month' => $request->query('month'), 'day' => $request->query('day')]);
+
+        return $this->json(true, 'ok', SeedPenalty::context(WorkerContext::effectiveOwnerId(), $c['lotId'], $crop, $c['month'], $c['day']));
+    }
+
     /** Save one: counted again here, so what is kept is what the rule says. */
     public function save(Request $request)
     {
@@ -46,8 +65,14 @@ class SeedSpacingController extends Controller
         if (! $c) {
             return $this->json(false, SeedSpacing::missing(SeedSpacing::read($request->all())) ?: 'Fill in the spacing first.', [], 422);
         }
-        $res = SeedSpacing::compute($c);
-        $title = mb_substr(SeedSpacing::title($c, $res), 0, 190);
+        // The lot and the season counted again from the shelves, as the page counted them.
+        $ctx = $c['lotId'] || $c['month'] ? SeedPenalty::context(WorkerContext::effectiveOwnerId(), $c['lotId'], $c['crop'], $c['month'], $c['day']) : null;
+        if ($ctx && ! $ctx['lot']) {
+            $c['lotId'] = null;
+        }
+        $res = SeedSpacing::compute($c, null, $ctx);
+        $res['lot'] = $ctx['lot'] ?? null;
+        $title = mb_substr(SeedSpacing::title($c, $res, $ctx['lot']['name'] ?? null), 0, 190);
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => $title,
             'params' => json_encode($c), 'report' => json_encode($res), 'credits' => 0, 'status' => 'ready', 'deleteStatus' => 1,

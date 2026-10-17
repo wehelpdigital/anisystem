@@ -200,6 +200,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
+            // 2026-10-19: the lot and the season in the Seed Count and Distance Calculator.
+            'seedField' => class_exists(\App\Support\SeedPenalty::class) && \Illuminate\Support\Facades\Route::has('seedcalc.context'),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.
@@ -848,6 +850,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/seed-count-distance/save', [App\Http\Controllers\SeedSpacingController::class, 'save'])->name('seedcalc.save');
     Route::get('/app/seed-count-distance/list', [App\Http\Controllers\SeedSpacingController::class, 'list'])->name('seedcalc.list');
     Route::get('/app/seed-count-distance/variety', [App\Http\Controllers\SeedSpacingController::class, 'variety'])->middleware('throttle:60,1')->name('seedcalc.variety');
+    Route::get('/app/seed-count-distance/context', [App\Http\Controllers\SeedSpacingController::class, 'context'])->middleware('throttle:60,1')->name('seedcalc.context');
     Route::get('/app/seed-count-distance/one/{id}', [App\Http\Controllers\SeedSpacingController::class, 'one'])->whereNumber('id')->name('seedcalc.one');
     Route::delete('/app/seed-count-distance/{id}', [App\Http\Controllers\SeedSpacingController::class, 'destroy'])->whereNumber('id')->name('seedcalc.delete');
     Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
