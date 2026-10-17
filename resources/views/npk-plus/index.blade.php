@@ -1493,8 +1493,8 @@
     const SOIL = [['om', 'Organic matter %'], ['n', 'Total N %'], ['p', 'P ppm'], ['k', 'K'], ['zn', 'Zn ppm'], ['b', 'B ppm'], ['s', 'S ppm'], ['fe', 'Fe ppm'], ['mn', 'Mn ppm'], ['cu', 'Cu ppm']];
     $('npSoilGrid').innerHTML = SOIL.map(([k, l]) => '<label>' + esc(l) + '<input type="number" class="form-input" step="any" min="0" inputmode="decimal" data-s="' + k + '"></label>').join('');
     $('npSoilOn').addEventListener('change', () => { TOUCH.soilTest = true; $('npSoil').classList.toggle('is-on', $('npSoilOn').checked); calc(); });
-    $('npIntensive').addEventListener('change', () => { st.intensive = $('npIntensive').checked; calc(); });
-    $('npZincRecent').addEventListener('change', () => { st.zincRecent = $('npZincRecent').checked; calc(); });
+    $('npIntensive').addEventListener('change', () => { st.intensive = $('npIntensive').checked; TOUCH.habits = true; calc(); });
+    $('npZincRecent').addEventListener('change', () => { st.zincRecent = $('npZincRecent').checked; TOUCH.habits = true; calc(); });
     $('npSoil').addEventListener('input', () => { TOUCH.soilTest = true; calc(); });
     /* A soil test kit's levels (2026-10-16): a lot's log can hold a kit result, read
        as low, medium or high. They stand for a nutrient no number was typed for. */
@@ -2572,6 +2572,13 @@
             if (w !== st.water) { st.water = w; tagWide('npWaterBtn', WATER_U[w][0], false); moved = true; }
             if (WATER_U[L.waterNpk]) got.push('the water');
         }
+        // How the field is farmed (2026-10-19): the lot's crops a year and its last zinc set the two switches, the
+        // answers NpkNeed::run reads for the Crop Protocol, so a lot counts the same in both.
+        if (!TOUCH.habits) {
+            const hi = ['two', 'three'].includes(answers.cropsYear), hz = answers.zincGiven === 'recent';
+            if (hi !== !!st.intensive || hz !== !!st.zincRecent) { st.intensive = hi; st.zincRecent = hz; $('npIntensive').checked = hi; $('npZincRecent').checked = hz; moved = true; }
+            if (answers.cropsYear || answers.zincGiven) got.push('how the field is farmed');
+        }
         // The layer reads the answers whatever moved: the goal, the need and its lines follow at once.
         soilTag(); hints(); calc();
         // The water lives in step 4: it says when the details filled it.
@@ -2599,6 +2606,7 @@
         texture: lotHas('texture'),
         ph: lotHas('phFrom'),
         conds: (lotHas('acidity') || lotHas('phFrom')) && lotHas('salt'),
+        habits: lotHas('cropsYear') && lotHas('zincGiven'),
         loc: !!(LOT && LOT.where),
     });
     const fold = (el, off) => {
@@ -2627,6 +2635,7 @@
         const n = FPC ? FPC.count() : 0;
         lotSay('soil', [H.texture && M ? M.textures[st.texture][0] : '', H.ph && phVal() != null ? 'pH ' + fmt(phVal()) : '',
             H.conds ? (st.conds.length ? st.conds.map((k) => (M.conditions[k] || [k])[0]).join(', ') : 'nothing else of note') : '',
+            H.habits ? ({ one: 'one crop a year', two: 'two crops a year', three: 'three crops a year' }[LOT.answers.cropsYear] || '') + (LOT.answers.zincGiven === 'recent' ? ', zinc lately' : '') : '',
             n ? n + (n === 1 ? ' answer' : ' answers') + ', counted under the need' : 'no answers yet'].filter(Boolean));
         lotSay('anee', [LOT.place || LOT.where || '', n ? n + (n === 1 ? ' answer' : ' answers') + ' about its soil, water and last season' : ''].filter(Boolean));
     }
@@ -2639,6 +2648,7 @@
         if (H.water) TOUCH.water = false;
         if (H.ph) TOUCH.ph = false;
         if (H.conds) TOUCH.conds = false;
+        if (H.habits) TOUCH.habits = false;
         if (H.place) {
             st.prov = lot.province; st.town = lot.town;
             if ($('npProvBtn')) { tagWide('npProvBtn', st.prov, false); tagWide('npTownBtn', townName(st.town), false); $('npTownBtn').disabled = false; }
@@ -2820,7 +2830,7 @@
             st.lines = (d.lines || []).filter((l) => OPT.products.some((p) => p.id === l.id)).map((l) => ({ id: l.id, amount: l.amount, unit: l.unit }));
             tab(false); lines(); setCrop(d.crop || null); go(5);
             // A saved plan's answers are the farmer's: the field in detail fills none of them.
-            Object.assign(TOUCH, { water: true, texture: st.texture !== 'unsure', conds: st.conds.length > 0, ph: phVal() != null });
+            Object.assign(TOUCH, { water: true, texture: st.texture !== 'unsure', conds: st.conds.length > 0, ph: phVal() != null, habits: true });
             varPaintTag(); potPaint();
             if (d.analysis) showReport(d.analysis.report, d.analysis.params); else $('npRep').hidden = true;
             mountCard();

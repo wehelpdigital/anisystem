@@ -771,6 +771,10 @@
     .cq-hint.is-warn { color: #92400e; background: #fffbeb; border-color: #fde68a; }
     .cq-hint b { color: inherit; }
     .cq-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .cq-habits { margin-top: .9rem; }
+    .cq-habits .cq-sub { margin: .35rem 0 0; }
+    .cq-habits .cq-label + .cq-pills { margin-top: .1rem; }
+    .cq-habits > div + .cq-label { margin-top: .7rem; }
     .cq-pill { min-height: 2.4rem; padding: .3rem .85rem; border-radius: 999px; font-size: .82rem; font-weight: 700; color: var(--color-gray-700); background: var(--color-white); border: 1.5px solid var(--color-gray-200);
         transition: border-color .28s var(--cq-e), background-color .28s var(--cq-e), color .28s var(--cq-e); }
     .cq-pill:hover { border-color: #a8cc7e; }
@@ -1350,6 +1354,8 @@
                     </div>
                 </div>
                 <p class="cq-sub cq-sub-s" id="cqSeedHint" style="margin-top:.45rem"></p>
+                {{-- How the lot is farmed (2026-10-19): asked here only when its last season page is answered already. --}}
+                <div class="cq-habits" id="cqHabits" hidden></div>
                 <div class="cq-need" id="cqNeed" hidden aria-live="polite"></div>
             </section>
 
@@ -2099,6 +2105,7 @@
         potSay();
         paintSeedUnits();
         paintSameGoal();
+        paintHabits();
         needSoon(true);
     }
     function readGoal() {
@@ -2134,6 +2141,31 @@
         PAGE.goal.priority = b.dataset.goal;
         $('cqGoals').querySelectorAll('.cq-choice').forEach((c) => c.classList.toggle('is-on', c === b));
         paintSameGoal();
+    });
+    /* How the lot is farmed (2026-10-19, the owner: the protocol counts what NPK Plus counts): two or three crops a
+       year and zinc in the last two seasons, lot answers NpkNeed::run reads. Asked here only when the lot's last
+       season page is answered already (the field questions step asks them otherwise); the answer rides in the
+       lot's profile and goes back into the lot on the run. */
+    const HABITS = ['cropsYear', 'zincGiven'];
+    function paintHabits() {
+        const i = PAGE.i, l = S.lots[i], FP = window.aneeFieldProfile, box = $('cqHabits');
+        const keys = l && FP && FP.questions ? HABITS.filter((k) => FP.questions[k] && pageDone(l.base, 'last', fqCrop(i)) && !answeredVal((l.base || {})[k])) : [];
+        box.hidden = !keys.length;
+        if (!keys.length) { box.innerHTML = ''; return; }
+        const v = l.profile || {};
+        box.innerHTML = keys.map((k) => { const q = FP.questions[k]; return '<span class="cq-label">' + esc(q.q) + ' <small>(optional)</small></span>'
+            + '<div class="cq-pills" role="radiogroup" aria-label="' + esc(q.short || q.q) + '">' + Object.entries(q.o || {}).map(([o, lab]) => '<button type="button" class="cq-pill' + (v[k] === o ? ' is-on' : '') + '" data-habit="' + esc(k) + '" data-v="' + esc(o) + '" role="radio" aria-checked="' + (v[k] === o) + '">' + esc(lab[0]) + '</button>').join('') + '</div>'
+            + (q.why ? '<p class="cq-sub cq-sub-s">' + esc(q.why) + '</p>' : ''); }).join('');
+    }
+    $('cqHabits').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-habit]'), l = S.lots[PAGE.i];
+        if (!b || !l) return;
+        const k = b.dataset.habit;
+        l.profile = l.profile || {};
+        // A second press on the same answer takes it back.
+        if (l.profile[k] === b.dataset.v) delete l.profile[k]; else l.profile[k] = b.dataset.v;
+        b.parentElement.querySelectorAll('[data-habit]').forEach((x) => { const on = l.profile[k] === x.dataset.v; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', String(on)); });
+        needSoon();
     });
     $('cqUnits').addEventListener('click', (e) => {
         const b = e.target.closest('[data-unit]');
@@ -2238,9 +2270,11 @@
         if (n.credit && n.credit.N) lines.push(n.credit.N + ' kg less nitrogen for the legume before.');
         if (n.credit && n.credit.K2O) lines.push(n.credit.K2O + ' kg less potassium for the rice straw plowed back.');
         (n.whys || []).slice(0, 3).forEach((w) => lines.push(w + '.'));
+        // The weather of these weeks and the ENSO outlook, as NPK Plus counts them (2026-10-19).
+        if (n.season && n.season.words) lines.push(n.season.words);
         if (n.pLock) lines.push('This soil locks phosphorus: Anee places it in a band, not spread.');
         if (n.areaSoil && n.areaSoil.length) {
-            const AS = { N: 'nitrogen', P2O5: 'phosphorus', K2O: 'potassium', ph: 'pH', texture: 'soil type' };
+            const AS = { N: 'nitrogen', P2O5: 'phosphorus', K2O: 'potassium', ph: 'pH', texture: 'soil type', conditions: 'salt and organic matter' };
             lines.push('With no soil test for ' + andList(n.areaSoil.map((k) => AS[k] || k)) + ', the levels usual for your area are used. A soil test of this lot replaces them.');
         }
         const lvl = { watch: 'may run short', likely: 'likely short', test: 'low by the soil test' };
@@ -2806,7 +2840,8 @@
             + (moved ? '<div class="cr-state is-warn"><span>📅</span><span><b>Planted ' + esc(dayFmt(pl.planting)) + ', ' + pl.shift + ' days after ' + (pl.asked ? 'your day' : 'the start of the month') + '</b>' + esc(pl.why && pl.why.by && pl.why.by.length ? 'Your crew is busy before it on other lots. Every job of this lot follows the new day.' : 'The first day that fits your crew. Every job of this lot follows it.') + '</span></div>' : '')
             + (n.known ? '<div class="cq-need"><div class="cq-need-h">This lot\'s need a hectare, counted like NPK Plus</div><div class="cq-need-n"><span><b>' + kgFmt(n.need.N) + '</b><small>kg N</small></span><span><b>' + kgFmt(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kgFmt(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
                 + (mics.length ? '<div class="cq-need-m">' + mics.map(([, m]) => '<span>' + esc(m.name) + ' ' + esc(elAmt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + '</small></span>').join('') + '</div>' : '')
-                + (n.goal ? '<p>For <b>' + esc(fmt2(n.goal.eff / tIn) + ' ' + unit) + '</b> a hectare (' + esc(n.goal.why) + (Math.abs(n.goal.eff - n.goal.t) > 0.01 ? ', less for this lot\'s field' : '') + '), on this lot\'s soil, its soil test and its history. Every program below is checked against it.</p>' : '') + '</div>' : '')
+                + (n.goal ? '<p>For <b>' + esc(fmt2(n.goal.eff / tIn) + ' ' + unit) + '</b> a hectare (' + esc(n.goal.why) + (Math.abs(n.goal.eff - n.goal.t) > 0.01 ? ', less for this lot\'s field' : '') + '), on this lot\'s soil, its soil test, its history' + (n.season ? ' and the weather of these weeks' : '') + '. Every program below is checked against it.</p>' : '')
+                + (n.season && n.season.words ? '<p>' + esc(n.season.words) + '</p>' : '') + '</div>' : '')
             + '<div data-proghost></div>'
             + ((fix.length || mic.length) ? '<div class="cr-card"><h3>To reach your target' + (window.aneeTl ? window.aneeTl.flag('nutrient-deficiency') : '') + '<small>What the recommended program still leaves short of this lot\'s need, worked out like NPK Plus</small></h3><div class="cr-fix">'
                 + fix.map((f) => '<div class="cr-fixrow"><span>' + esc(f.el === 'P2O5' ? 'P' : (f.el === 'K2O' ? 'K' : f.el)) + '</span><div><b>' + esc(bagAmt(f.bags) + ' ' + f.product) + '</b> for the lot (' + esc(f.bagsPerHa >= 1 ? trimN(f.bagsPerHa) + ' bags' : Math.round(f.kgPerHa) + ' kg') + ' a hectare) at ' + esc(f.stage.toLowerCase()) + '. <small>' + esc(f.label + ' short by ' + f.gap + ' kg a hectare. ' + (f.note || '')) + '</small></div></div>').join('')

@@ -452,6 +452,12 @@ class CropProtocolController extends Controller
             'tested' => array_intersect_key($r['classes'], array_flip(NpkNeed::TESTED_MICROS)),
             // What the area's typical soil filled in (N, P2O5, K2O, texture, ph): typical for the area, never a test of this field.
             'areaSoil' => $in['areaSoil'] ?? [],
+            // The weather the need read (2026-10-19, NpkNeed::seasonWater) and how the lot is farmed, as NPK Plus counts them.
+            'season' => ! empty($in['season']) ? array_merge(array_map(fn ($v) => is_float($v) ? round($v, 3) : $v, $in['season']), [
+                'heavy' => in_array('high_rainfall', $r['factors'], true), 'dry' => in_array('drought', $r['factors'], true),
+                'words' => NpkNeed::seasonWords($in['season'], in_array('high_rainfall', $r['factors'], true), in_array('drought', $r['factors'], true)),
+            ]) : null,
+            'habits' => ['intensive' => in_array('intensive_cropping', $r['factors'], true), 'zincRecent' => in_array('zinc_recent', $r['factors'], true)],
         ];
     }
 
@@ -477,6 +483,8 @@ class CropProtocolController extends Controller
             $prev[] = 'rice_straw';
         }
         $soil = (string) ($p['soil'] ?? '');
+        $water = ['irrigated' => 'irrigated', 'limited' => 'partial', 'rainfed' => 'rainfed'][$p['water'] ?? ''] ?? 'irrigated';
+        $place = trim((string) ($p['location'] ?? ''));
 
         // The area's typical soil fills only what the lot left unknown (ProtocolFacts, the one door to the shelves).
         return \App\Support\ProtocolFacts::fillNeed([
@@ -493,10 +501,23 @@ class CropProtocolController extends Controller
             'conditions' => array_values(array_unique($conds)),
             'ph' => ($p['ph'] ?? null) !== null ? (float) $p['ph'] : ($L['phValue'] ?? null),
             'tests' => self::testsFor($p, $profile),
-            'water' => ['irrigated' => 'irrigated', 'limited' => 'partial', 'rainfed' => 'rainfed'][$p['water'] ?? ''] ?? 'irrigated',
+            'water' => $water,
             'profile' => $profile,
             'prev' => $prev,
-        ], (string) ($p['location'] ?? ''));
+            // The weeks it stands in the field, as NPK Plus reads them (2026-10-19, the owner): twenty years of the
+            // place's weather and the ENSO outlook; heavy rain or a dry season moves calcium, magnesium and boron.
+            'season' => $place !== '' ? \App\Support\ProtocolFacts::season($place, NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null), self::plantedOn($p), $water) : null,
+        ], $place);
+    }
+
+    /** The day a lot's season is read from: its own day, else the middle of its month; null when neither is known. */
+    private static function plantedOn(array $p): ?string
+    {
+        if (! empty($p['day']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $p['day'])) {
+            return (string) $p['day'];
+        }
+
+        return ! empty($p['month']) && preg_match('/^\d{4}-\d{2}$/', (string) $p['month']) ? $p['month'] . '-15' : null;
     }
 
     /**
@@ -545,6 +566,9 @@ class CropProtocolController extends Controller
             . (! empty($n['credit']['N']) ? ' ' . $n['credit']['N'] . ' kg N already taken off for the legume before.' : '')
             . (! empty($n['credit']['K2O']) ? ' ' . $n['credit']['K2O'] . ' kg K2O already taken off for the rice straw plowed back.' : '')
             . (! empty($n['pLock']) ? ' This soil locks phosphorus: band or place it, never broadcast it.' : '')
+            . (! empty($n['season']['words']) ? ' The weather it counted: ' . lcfirst($n['season']['words']) : '')
+            . (! empty($n['habits']['intensive']) ? ' The lot grows two or three crops a year, already counted.' : '')
+            . (! empty($n['habits']['zincRecent']) ? ' The lot had zinc in the last two seasons, already counted.' : '')
             . "\n" . ($micro !== ''
                 ? '- THE SECONDARY AND MICRO ELEMENT NEED, worked out the same way (NPK Plus\'s corrective dose sized to the yield goal, counted only where this crop, this soil or the soil test make a shortfall likely), kg of the ELEMENT per hectare: ' . $micro . '. Every other element: no shortage flagged here.'
                     . ($okByTest !== '' ? ' Enough by the soil test: ' . $okByTest . '.' : '')
@@ -674,7 +698,7 @@ class CropProtocolController extends Controller
                 'tasks' => ProtocolCrew::tasks($frame, ProtocolCrew::skeleton($frame), [], ['weedy' => self::weedy($l['profile'])])];
             $n = $request->boolean('needs', true) ? self::needFor($l['p']) : null;
             $lots[] = ['i' => $l['i'], 'name' => $l['name'], 'harvestDays' => $frame['harvest'], 'seedAge' => $frame['seedAge'],
-                'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed', 'areaSoil'])) : null];
+                'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed', 'areaSoil', 'season', 'habits'])) : null];
         }
         $s = ProtocolCrew::schedule($sched, $case['crew'], $case['mode']);
         $size = self::sizeOf($case);
@@ -890,7 +914,7 @@ class CropProtocolController extends Controller
         $prev = self::PREV_OF[(string) ($profile['prevCrop'] ?? '')] ?? ['unsure', 'unsure'];
 
         return [
-            'location' => (string) $lot['place'], 'crop' => (string) $lot['crop'], 'variety' => (string) $lot['variety'], 'month' => (string) $lot['month'],
+            'location' => (string) $lot['place'], 'crop' => (string) $lot['crop'], 'variety' => (string) $lot['variety'], 'month' => (string) $lot['month'], 'day' => $lot['day'] ?? null,
             'method' => (string) $lot['method'], 'priority' => (string) $lot['priority'],
             'targetYield' => $lot['targetYield'], 'yieldUnit' => (string) $lot['yieldUnit'], 'area' => (float) $lot['areaHa'],
             'soil' => isset(self::SOILS[$L['soil'] ?? '']) ? (string) $L['soil'] : 'unsure',

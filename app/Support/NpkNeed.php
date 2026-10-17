@@ -33,6 +33,10 @@ namespace App\Support;
  * waterlogged), ph, tests {N|P2O5|K2O: low|medium|high, Zn|B|S: low|ok},
  * water (irrigated, partial, rainfed), profile (FieldProfile answers), prev
  * (legume, rice_straw), plan {perHa: {N, P2O5, ..., Zn}, acidEq: kg lime}.
+ * Since 2026-10-19 also season {rainMm, waterShare} (seasonWater(): the
+ * page's seasonPlanks(), the twenty years of weather tilted by the ENSO
+ * outlook), intensive and zincRecent (the page's switches; from the lot's
+ * cropsYear and zincGiven answers when not given) and organicKg.
  */
 final class NpkNeed
 {
@@ -128,6 +132,11 @@ final class NpkNeed
             $f[] = 'low_om';
         }
         $water = in_array($in['water'] ?? '', ['irrigated', 'partial', 'rainfed'], true) ? $in['water'] : 'irrigated';
+        // How the lot is farmed (2026-10-19): two or three crops a year, zinc in the last two seasons, from the
+        // lot's own answers when the caller did not say (NPK Plus's switches say it on the page).
+        $fa = $fieldOn ? FieldProfile::normalize($profile) : [];
+        $in['intensive'] ??= in_array($fa['cropsYear'] ?? '', ['two', 'three'], true);
+        $in['zincRecent'] ??= ($fa['zincGiven'] ?? '') === 'recent';
         $f = self::moreFactors($f, $in, (string) ($in['texture'] ?? 'unsure'), $water);
         $g = self::goal($c, $in, $fieldOn, $water, (array) ($in['conditions'] ?? []));
         $fl = self::fieldLayer($c, $f, $fieldOn ? FieldProfile::normalize($profile) : [], (array) ($in['prev'] ?? []));
@@ -228,6 +237,100 @@ final class NpkNeed
         }
 
         return array_values(array_unique($f));
+    }
+
+    /**
+     * The days NPK Plus reads a season over (the page's seasonDays()): a year
+     * for a perennial, else the crop's days to harvest, else 110.
+     */
+    public static function seasonDays(?string $key): int
+    {
+        if ($key !== null && CropCatalog::isPerennial($key)) {
+            return 365;
+        }
+        $m = $key !== null ? (CropCatalog::CROPS[$key]['maturity'] ?? null) : null;
+
+        return is_numeric($m) && (int) $m > 0 ? (int) $m : 110;
+    }
+
+    /** A season's window as NPK Plus reads it: its first day, its days, the months it touches, how many months ahead it starts. */
+    public static function seasonWindow(\Carbon\CarbonInterface $from, int $days): array
+    {
+        $months = [];
+        for ($d = 0; $d < $days; $d += 7) {
+            $months[(int) $from->copy()->addDays($d)->format('n')] = true;
+        }
+
+        return ['from' => $from->toDateString(), 'days' => $days, 'months' => array_keys($months),
+            'monthsAhead' => (int) max(0, now('Asia/Manila')->startOfDay()->diffInMonths($from->copy()->startOfDay(), false))];
+    }
+
+    /**
+     * How the ENSO outlook tilts a season (the page's ensoTilt()): rain, sun
+     * and heat. Full from October to May, when El Nino cuts the rain most,
+     * half in the southwest monsoon, and half again for a season more than
+     * nine months out, where the outlook is weak.
+     */
+    public static function ensoTilt(?array $enso, array $window): array
+    {
+        $T = NpkModel::ENSO_TILT[$enso['phase'] ?? ''] ?? null;
+        if (! $enso || ($enso['phase'] ?? '') === 'neutral' || ! $T) {
+            return ['rain' => 1.0, 'sun' => 1.0, 'temp' => 0.0];
+        }
+        $lvl = ['weak' => 0, 'moderate' => 1, 'strong' => 2, 'very strong' => 3][$enso['strength'] ?? ''] ?? 1;
+        $months = (array) ($window['months'] ?? []);
+        $dry = $months ? count(array_filter($months, fn ($m) => $m >= 10 || $m <= 5)) / count($months) : 1;
+        $w = (0.5 + 0.5 * $dry) * ((int) ($window['monthsAhead'] ?? 0) > 9 ? 0.5 : 1);
+
+        return ['rain' => 1 + $T['rain'][$lvl] * $w, 'sun' => 1 + $T['sun'][$lvl] * $w, 'temp' => $T['temp'][$lvl] * $w];
+    }
+
+    /**
+     * The season's water, counted as NPK Plus's seasonPlanks() counts it
+     * (2026-10-19, the owner: the Crop Protocol follows NPK Plus, the weather
+     * and the ENSO outlook too): the rain of the same weeks in twenty years,
+     * tilted by the outlook, against what the crop drinks (its kc on the
+     * air's pull, plus a paddy's seepage). Three quarters of the rain reach
+     * the roots; a water source that runs part of the time makes up half the
+     * rest. rainMm and waterShare are what moreFactors() reads (heavy rain, a
+     * dry season). $hist = ClimateStore::season(), $window = seasonWindow(),
+     * $enso = ClimateStore::enso(). Change it with the page's seasonPlanks().
+     */
+    public static function seasonWater(?array $c, ?array $hist, array $window, ?array $enso, string $water): ?array
+    {
+        if (! $c || empty($hist['avg'])) {
+            return null;
+        }
+        $K = array_merge(NpkModel::CLIMATE['default'], NpkModel::CLIMATE[$c['key']] ?? []);
+        $t = self::ensoTilt($enso, $window);
+        $a = $hist['avg'];
+        $rain = (float) $a['rain'] * $t['rain'];
+        $et0 = (float) $a['et0'] * ($t['rain'] < 1 ? 1 + (1 - $t['rain']) * 0.15 : 1);
+        $need = $et0 * (float) $K['kc'] + (float) ($K['extraMm'] ?? 0);
+        $eff = $rain * 0.75;
+        $supply = $water === 'irrigated' ? $need : ($water === 'partial' ? $eff + 0.5 * max(0, $need - $eff) : $eff);
+
+        return ['rainMm' => $rain, 'waterShare' => min(1, $supply / max(1, $need)), 'needMm' => $need, 'water' => $water, 'avgRain' => (float) $a['rain'],
+            'years' => count((array) ($hist['years'] ?? [])), 'tilt' => round($t['rain'], 3),
+            'enso' => ($enso['phase'] ?? 'neutral') !== 'neutral' ? ($enso['label'] ?? null) : null, 'from' => $window['from'], 'days' => $window['days']];
+    }
+
+    /** The season a need read, in words for the farmer and for the prompt. */
+    public static function seasonWords(?array $s, bool $heavy = false, bool $dry = false): string
+    {
+        if (! $s) {
+            return '';
+        }
+        $tilt = (float) ($s['tilt'] ?? 1);
+        $water = (string) ($s['water'] ?? 'irrigated');
+        $mm = fn ($v) => number_format(round((float) $v));
+
+        return 'In these weeks the last ' . (int) $s['years'] . ' years brought about ' . $mm($s['avgRain'] ?? $s['rainMm']) . ' mm of rain'
+            . (abs($tilt - 1) >= 0.01 && ! empty($s['enso']) ? '. With ' . lcfirst((string) $s['enso']) . ' ahead, expect about ' . $mm($s['rainMm']) . ' mm this time' : '')
+            . ', against the ' . $mm($s['needMm']) . ' mm the crop drinks'
+            . ($water !== 'irrigated' ? ', so ' . ($water === 'partial' ? 'the rain and the water source meet' : 'the rain meets') . ' about ' . round(min(1, (float) $s['waterShare']) * 100) . '% of it' : '') . '.'
+            . ($heavy ? ' That much rain washes calcium, magnesium and boron out, so the need holds more of them.' : '')
+            . ($dry ? ' A season that dry makes boron and calcium harder for the roots to take up, so the need holds more of them.' : '');
     }
 
     /** Soil test bands, as levels: low, medium or high per nutrient; zinc, boron and sulfur low or ok. */

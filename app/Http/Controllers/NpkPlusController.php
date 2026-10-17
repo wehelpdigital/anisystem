@@ -157,16 +157,14 @@ class NpkPlusController extends Controller
         $hist = \App\Support\ClimateStore::season($lat, $lng, $from, $days, $label ?: null);
         $years = $hist['years'] ?? [];
         $avg = $hist['avg'] ?? null;
-        $months = [];
-        for ($d = 0; $d < $days; $d += 7) {
-            $months[(int) $from->copy()->addDays($d)->format('n')] = true;
-        }
+        // The window as the Crop Protocol reads it too (NpkNeed::seasonWindow): its months and how far ahead it starts.
+        $win = \App\Support\NpkNeed::seasonWindow($from, $days);
 
         return $this->json(true, 'ok', [
             'place' => ['label' => $label ?: round($lat, 3) . ', ' . round($lng, 3), 'lat' => round($lat, 4), 'lng' => round($lng, 4)],
-            'window' => ['from' => $from->toDateString(), 'days' => $days, 'months' => array_keys($months)],
+            'window' => ['from' => $win['from'], 'days' => $win['days'], 'months' => $win['months']],
             'years' => $years, 'avg' => $avg, 'enso' => \App\Support\ClimateStore::enso(), 'through' => $hist['through'] ?? null,
-            'monthsAhead' => (int) max(0, now('Asia/Manila')->startOfDay()->diffInMonths($from->copy()->startOfDay(), false)),
+            'monthsAhead' => $win['monthsAhead'],
             'area' => self::areaCard($request->input('province'), $request->input('town'), $request->input('barangay'), $request->input('crop')),
         ]);
     }

@@ -16,6 +16,8 @@ namespace App\Support;
  *               carries them as the record's `trials` (and promptLines() says
  *               them compactly); trialWords($rec, true) is the full block.
  *  - hazards(): twenty years of typhoons, floods and droughts by town.
+ *  - season():  the weeks a lot stands in the field, from the climate shelf
+ *               and the ENSO outlook, as NPK Plus counts them (2026-10-19).
  *
  * Every reader is guarded (class_exists / method_exists, try/catch), so a
  * shelf that is not deployed yet reads as nothing and the protocol runs as
@@ -149,6 +151,41 @@ final class ProtocolFacts
         }
 
         return $in;
+    }
+
+    /* ============================================================== season */
+
+    /**
+     * The season a lot stands in, as NPK Plus reads it (2026-10-19, the owner:
+     * the protocol follows NPK Plus, the weather and the ENSO outlook too):
+     * the same weeks in twenty years at the lot's place from the climate shelf
+     * (ClimateStore::season), tilted by the ENSO outlook, against the water
+     * the crop drinks (NpkNeed::seasonWater). NpkNeed::moreFactors reads it as
+     * heavy rain or a dry season. $from is the planting day (null: two weeks
+     * from now, NPK Plus's own default). Null when it cannot be read.
+     */
+    public static function season(string $place, ?string $cropKey, ?string $from, string $water): ?array
+    {
+        $c = NpkNeed::crop($cropKey);
+        if (! $c || trim($place) === '' || ! class_exists(ClimateStore::class) || ! method_exists(NpkNeed::class, 'seasonWater')) {
+            return null;
+        }
+        try {
+            $start = $from ? \Illuminate\Support\Carbon::parse($from, 'Asia/Manila')->startOfDay() : now('Asia/Manila')->startOfDay()->addDays(14);
+            $days = NpkNeed::seasonDays($c['key']);
+            $memo = 'season|' . mb_strtolower(trim($place)) . '|' . $start->toDateString() . '|' . $days;
+            if (! array_key_exists($memo, self::$memo)) {
+                $at = ClimateStore::locate($place);
+                self::$memo[$memo] = $at ? ClimateStore::season((float) $at['lat'], (float) $at['lng'], $start, $days, $place) : null;
+            }
+            self::$memo['enso'] ??= ['v' => ClimateStore::enso()];
+
+            return NpkNeed::seasonWater($c, self::$memo[$memo], NpkNeed::seasonWindow($start, $days), self::$memo['enso']['v'], $water);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
     }
 
     /* ============================================================= variety */

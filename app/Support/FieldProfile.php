@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Schema;
  *   water[] waterLook[] drainage flooding salt[] (page water)
  *   acidity lastLimed, tests[] (the soil test log, which sets phFrom phTo) (page acid)
  *   slope elevation sun hazards[]             (page land)
- *   prevCrop harvested stubble lastPlowed newLand cropLook[] yieldLast fertUse (page last)
+ *   prevCrop harvested stubble lastPlowed newLand cropLook[] yieldLast fertUse cropsYear zincGiven (page last)
  *   weeds[] level wild[]                      (page weeds)
  *   outbreaks[]  (pest:slug, disease:slug, other:key, or none) (page problems)
  *
@@ -179,6 +179,16 @@ final class FieldProfile
             'why' => 'Years without fertilizer wear the soil down. Heavy use leaves phosphorus behind, so less may be needed.', 'o' => [
                 'none' => ['None for years', ''], 'organic' => ['Manure or compost only', ''], 'light' => ['Less than the usual bags', ''],
                 'usual' => ['The usual bags for the crop', ''], 'heavy' => ['More than the usual', ''],
+            ]],
+        // How the lot is farmed (2026-10-19, the owner: the Crop Protocol counts what NPK Plus counts). NpkNeed::run
+        // reads both: two or three crops a year raise sulfur, zinc and silicon; zinc lately lowers zinc.
+        'cropsYear' => ['in' => 'history', 'page' => 'last', 'short' => 'Crops a year', 'q' => 'How many crops does this lot grow in a year?',
+            'why' => 'A lot cropped two or three times a year runs short of zinc and sulfur sooner.', 'o' => [
+                'one' => ['One crop a year', ''], 'two' => ['Two crops a year', ''], 'three' => ['Three crops a year', ''],
+            ]],
+        'zincGiven' => ['in' => 'history', 'page' => 'last', 'short' => 'Last zinc', 'q' => 'When did this lot last get zinc?',
+            'why' => 'A dose of zinc sulfate keeps working for two or three crops, so a lot that had it lately needs less.', 'o' => [
+                'recent' => ['In the last two seasons', ''], 'longer' => ['Longer ago', ''], 'never' => ['Never, or not sure', ''],
             ]],
         'weeds' => ['in' => 'history', 'page' => 'weeds', 'short' => 'Weeds', 'q' => 'How weedy was it last season?', 'multi' => true, 'none' => 'few',
             'why' => 'Weedy rice and tough weeds need extra passes before planting. Pick every one that fits.', 'o' => [
@@ -755,6 +765,9 @@ final class FieldProfile
             ['fertUse', 'heavy', 'it had more fertilizer than usual in past seasons, so phosphorus may have built up'],
             ['yieldLast', 'worse', 'it yields less than the farms around it'],
             ['yieldLast', 'better', 'it yields better than the farms around it'],
+            ['cropsYear', 'two', 'it grows two crops a year, so zinc and sulfur run short sooner'],
+            ['cropsYear', 'three', 'it grows three crops a year, so zinc and sulfur run short sooner'],
+            ['zincGiven', 'recent', 'it had zinc in the last two seasons, which keeps working for two or three crops'],
         ];
         foreach ($map as [$k, $v, $line]) {
             if ($has($k, $v)) {
