@@ -148,28 +148,45 @@ final class VarietyYield
         }
         if (! isset(self::$index[$crop])) {
             $ix = [];
+            $exact = [];
             foreach ($rows as $i => $r) {
                 if (str_starts_with($r['nameKey'], '*')) {
                     continue;
                 }
                 foreach (array_merge([$r['name']], $r['aliases']) as $n) {
+                    $exact[self::flat((string) $n)] ??= $i;
+                    // A seller variety whose loose keys meet a book variety's is found by its exact name only.
+                    if (! empty($r['extra']['matchExact'])) {
+                        continue;
+                    }
                     foreach (VarietyBook::nameKeys((string) $n) as $k) {
                         $ix[$k] ??= $i;
                     }
                 }
             }
-            self::$index[$crop] = $ix;
+            self::$index[$crop] = ['keys' => $ix, 'exact' => $exact];
+        }
+        // The name as written first ("Sugar Baby F1" is the hybrid, "Sugar Baby" the old open pollinated
+        // one, though the name keys drop the F1), then the name keys VarietyBook matches by.
+        if (isset(self::$index[$crop]['exact'][$f = self::flat($name)]) && $f !== '') {
+            return $rows[self::$index[$crop]['exact'][$f]];
         }
         $parts = array_merge([$name], preg_split('/\s*[()\/,;]\s*|\s+or\s+|\s+aka\s+/i', $name) ?: []);
         foreach ($parts as $part) {
             foreach (VarietyBook::nameKeys((string) $part) as $k) {
-                if (isset(self::$index[$crop][$k])) {
-                    return $rows[self::$index[$crop][$k]];
+                if (isset(self::$index[$crop]['keys'][$k])) {
+                    return $rows[self::$index[$crop]['keys'][$k]];
                 }
             }
         }
 
         return null;
+    }
+
+    /** A name in lowercase letters and digits only, nothing dropped ("Sugar Baby F1" -> sugarbabyf1). */
+    private static function flat(string $s): string
+    {
+        return (string) preg_replace('/[^a-z0-9]+/', '', strtr(mb_strtolower($s), ['ñ' => 'n']));
     }
 
     /** The typical parts of a record's kind on a calculator crop's shelf (rows keyed '*hybrid', '*inbred' ...). */
