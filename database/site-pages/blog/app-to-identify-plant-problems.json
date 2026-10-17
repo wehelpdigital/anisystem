@@ -32,7 +32,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Many apps that promise to tell you what's wrong with plants were built to name diseases. Yet a sick plant often has no disease at all. Penn State Extension notes that a majority of the plant problems diagnosed are abiotic, which means the cause is not alive: weather, water, soil, fertilizer or a spray.\n\nNC State Extension adds a simple rule. Living problems generally start small and spread, while nonliving problems do not spread. Also, insects and pathogens rarely attack healthy plant tissue. So the first question is not which disease it is, but which kind of problem it is."
+      "text": "Many apps that promise to tell you what's wrong with plants were built to name diseases. Yet a sick plant often has no disease at all. Most of the sick plants that labs look at turn out to have an abiotic problem, a cause that is not alive: weather, water, soil, fertilizer or a spray.\n\nA simple rule helps here. A problem caused by something living usually begins in one spot and grows, while a nonliving cause stays where it is. Also, insects and disease seldom go after plant tissue that is healthy. So the first question is not which disease it is, but which kind of problem it is."
     },
     {
       "type": "list",
@@ -61,7 +61,7 @@
     },
     {
       "type": "text",
-      "text": "A plant has only a few ways to show stress. It yellows, wilts, spots, stunts or loses leaves, whatever the cause. NC State Extension notes that underwatering causes wilting and marginal leaf burn. Too much rain can lead to root rot. Also, uniform patterns between the veins usually point to nutrition, while vein clearing can come from certain pesticides and some viruses."
+      "text": "A plant has only a few ways to show stress. It yellows, wilts, spots, stunts or loses leaves, whatever the cause. Too little water, for example, makes leaves wilt and burns their edges. Too much rain can lead to root rot. Also, uniform patterns between the veins usually point to nutrition, while vein clearing can come from certain pesticides and some viruses."
     },
     {
       "type": "table",

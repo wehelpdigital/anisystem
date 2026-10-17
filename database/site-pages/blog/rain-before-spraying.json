@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A shower that comes too soon after a spray washes much of it off the leaves. Then you pay twice: once for the first tank and again for the respray, plus the labor. A herbicide can also wash into the paddy water and drift to the lots nearby. So a check for rain before spraying matters as much as picking the right product.\n\nThe dry time a product needs is called rainfastness. It is the time needed between an application and a rain event for the product to keep its effect. It depends on the product, its formulation, any sticker or surfactant, and the weather at the time."
+      "text": "A shower that comes too soon after a spray washes much of it off the leaves. Then you pay twice: once for the first tank and again for the respray, plus the labor. A herbicide can also wash into the paddy water and drift to the lots nearby. So a check for rain before spraying matters as much as picking the right product.\n\nThe dry time a product needs is called rainfastness. It means how long a spray must dry on the plant before rain can fall without washing its effect away. It depends on the product, its formulation, any sticker or surfactant, and the weather at the time."
     },
     {
       "type": "heading",
@@ -50,7 +50,7 @@
     },
     {
       "type": "text",
-      "text": "There is no single number. Rainfastness information can usually be found on the label. For most products, showers 2 hours after treatment will not need a respray. Treat that as the general rule, and the label as the law.\n\nConditions in the field change the answer. In one test, a wheat fungicide applied before infection was rainfast after 15 minutes under dry conditions. In the field, with dew on the wheat heads, it took about 60 minutes. The authors warn not to apply those numbers to other products, but the lesson travels: a dry canopy helps, so let the dew lift first."
+      "text": "There is no single number. Most labels say how rainfast the product is. For most products, showers 2 hours after treatment will not need a respray. Treat that as the general rule, and the label as the law.\n\nConditions in the field change the answer. In one test, a wheat fungicide applied before infection was rainfast after 15 minutes under dry conditions. In the field, with dew on the wheat heads, it took about 60 minutes. The authors warn not to apply those numbers to other products, but the lesson travels: a dry canopy helps, so let the dew lift first."
     },
     {
       "type": "heading",

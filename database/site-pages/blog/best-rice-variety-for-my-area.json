@@ -55,7 +55,7 @@
       "items": [
         "**It suits your environment or season.** In rainfed areas, give priority to varieties bred for rainfed fields. In the wet season, think about local pests like the [brown planthopper](/pests/brown-planthopper) and how easily a variety lodges or shatters.",
         "**It answers a local field problem.** Where typhoons, drought or floods hit, pick a variety whose maturity lets the crop escape them.",
-        "**It has proven itself nearby.** It should have performed well in at least two seasons of local adaptability trials.",
+        "**It has proven itself nearby.** It should have done well in trials near you for two seasons or more.",
         "**It sells.** It should have high market demand, so your buyer pays well for the grain."
       ]
     },
@@ -196,7 +196,7 @@
         },
         {
           "q": "How many seasons should I test a variety?",
-          "a": "At least two. A variety counts as recommended when it performed well in at least two seasons of adaptability trials. A single good season may only mean the weather was kind."
+          "a": "At least two. A variety earns a recommendation once it has done well in two or more seasons of trials in the area. A single good season may only mean the weather was kind."
         }
       ]
     },

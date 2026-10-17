@@ -35,7 +35,7 @@
         "**Multiple cropping** covers sequential cropping, relay cropping, intercropping and ratoon cropping.",
         "**Munggo, mais or melon** fit after the palay harvest, with vegetables on the dikes.",
         "**Munggo fits well after rice.** Zero or minimum tillage works after rice, with harvest 60 to 70 days after planting.",
-        "**A break from rice helps.** Plant at the same time as your neighbors, after a 1 to 2 month fallow, to break the brown planthopper's life cycle.",
+        "**A break from rice helps.** Plant together with the farms around you, after a 1 to 2 month fallow, to break the brown planthopper's life cycle.",
         "**Plan lot by lot**, each crop with its own day zero, water window and budget."
       ]
     },
@@ -46,7 +46,7 @@
     },
     {
       "type": "text",
-      "text": "Multiple cropping is the practice of growing more than one crop on the same land in one year. It comes in the patterns below."
+      "text": "Multiple cropping means raising two or more crops on one piece of land within a single year. It comes in the patterns below."
     },
     {
       "type": "table",
@@ -93,8 +93,8 @@
       "ordered": false,
       "items": [
         "**The soil moisture is already there.** Munggo planted in September or October needs no extra irrigation if residual rain and soil moisture are enough. Planting from January to March, though, needs irrigation at the critical stages.",
-        "**The soil gains.** Munggo gets nitrogen through bacteria in its roots. Munggo after rice also restores the natural fertility of the soil.",
-        "**Pests lose their food.** Planting at the same time as your neighbors, after a 1 to 2 month fallow, breaks the planthopper's life cycle. A crop that is not rice keeps the field earning during that break.",
+        "**The soil gains.** Munggo gets nitrogen through bacteria in its roots. Planted after rice, munggo also gives the soil back some of its own richness.",
+        "**Pests lose their food.** Planting together with the farms around you, after a 1 to 2 month fallow, breaks the planthopper's life cycle. A crop that is not rice keeps the field earning during that break.",
         "**Diseases build up less.** Growing one crop again and again lets pathogens multiply, so rotate munggo with crops that are not legumes.",
         "**Cash comes between rice harvests.** In 2014, an estimate put the earnings of 7,500 hectares of munggo after rice in San Mateo, Isabela, at 350 million pesos a year."
       ]
@@ -266,7 +266,7 @@
         },
         {
           "q": "How long should a field rest between rice crops?",
-          "a": "Leave a 1 to 2 month fallow, and plant at the same time as your neighbors, to break the brown planthopper's life cycle. A crop that is not rice can use that time."
+          "a": "Leave a 1 to 2 month fallow, and plant together with the farms around you, to break the brown planthopper's life cycle. A crop that is not rice can use that time."
         }
       ]
     },

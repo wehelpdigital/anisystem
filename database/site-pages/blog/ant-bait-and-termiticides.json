@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "An ant bait has two parts: a food the ants want and an insecticide that kills slowly. The slowness is the point. UC IPM explains that the poison must act slowly so the workers get back to the nest before they die. There the bait passes from mouth to mouth to other workers, larvae and queens.\n\nA spray works the other way around. It kills the foragers you see and leaves the nest alive, and the queen keeps laying. That is why UC IPM advises against using insecticide sprays while you are baiting."
+      "text": "An ant bait has two parts: a food the ants want and an insecticide that kills slowly. The slowness is the point. The poison has to work slowly, so the workers still make it home to the nest before they die. Back inside, they feed the bait to the other workers, the larvae and the queens.\n\nA spray works the other way around. It kills the foragers you see and leaves the nest alive, and the queen keeps laying. That is why UC IPM advises against using insecticide sprays while you are baiting."
     },
     {
       "type": "heading",
@@ -97,7 +97,7 @@
       "items": [
         {
           "title": "Follow the trail",
-          "text": "Watch where the ants walk in the early morning or late afternoon. Put the bait on or right beside the trail, as close to the nest as you can."
+          "text": "Watch where the ants march at dawn or toward evening. Put the bait on or right beside the trail, as close to the nest as you can."
         },
         {
           "title": "Keep it off the crop",

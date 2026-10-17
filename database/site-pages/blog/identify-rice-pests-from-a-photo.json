@@ -32,7 +32,7 @@
       "ordered": false,
       "items": [
         "Take three photos: the insect up close, the damage, and the hill or patch around it.",
-        "Shoot in the early morning or late afternoon, the usual hours for monitoring insect pests.",
+        "Take the photos at dawn or toward evening, the hours when insects are usually counted.",
         "Match the damage, not just the bug, with the table below.",
         "Confirm with a field check, like pulling a tiller or tapping the base of the hill, before you spray.",
         "In anee.io, send the photo to Anee or match the damage in the Pest Finder."
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Go early or late",
-          "text": "Walk the field from 5 to 7 in the morning or late in the afternoon. These are the hours for monitoring insect pests, since many move or hide later in the day."
+          "text": "Walk the field from 5 to 7 at dawn, or again toward evening. These are the hours for monitoring insect pests, since many move or hide later in the day."
         },
         {
           "title": "Shoot the insect",
