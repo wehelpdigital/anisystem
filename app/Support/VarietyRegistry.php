@@ -85,6 +85,13 @@ final class VarietyRegistry
         return (string) (@filemtime(database_path(self::FILE)) ?: 0);
     }
 
+    /** The table's last write, kept five minutes: the data version of the cached rows. */
+    private static function version(): string
+    {
+        return (string) Cache::remember('variety-registry:' . self::conn() . ':version', 300,
+            fn () => (string) (self::db()->table(self::TABLE)->max('updated_at') ?? '0') . ':' . self::db()->table(self::TABLE)->count());
+    }
+
     /** Every row of the seed file, decoded (the fallback and sync's input). */
     public static function fileRows(?string $file = null): array
     {
@@ -131,8 +138,10 @@ final class VarietyRegistry
             return $out;
         };
         try {
+            // Keyed by the seed file AND the table's last write (read at most every five minutes), so a
+            // sync that lands after the new file (a deploy's migration) is seen within minutes, never hours.
             $by = self::ready()
-                ? Cache::remember('variety-registry:' . $id . ':all:' . self::stamp(), 21600, fn () => $group(
+                ? Cache::remember('variety-registry:' . $id . ':all:' . self::stamp() . ':' . self::version(), 21600, fn () => $group(
                     self::db()->table(self::TABLE)->where('status', 1)->orderBy('sortOrder')->get()->map(fn ($r) => self::decode($r))->all()))
                 : $group(self::fileRows());
         } catch (\Throwable $e) {
@@ -375,6 +384,7 @@ final class VarietyRegistry
             }
         }
         self::forget();
+        Cache::forget('variety-registry:' . self::conn() . ':version');
 
         return ['rows' => count($rows), 'written' => count($todo), 'retired' => $retired];
     }
