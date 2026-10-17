@@ -517,6 +517,23 @@ final class SoilAtlas
         return implode(', ', array_map(fn ($r) => $r['name'] . ' (' . $r['rating'] . (! empty($r['days']) ? ', ' . (int) $r['days'] . ' days' : '') . ')', array_slice($rows, 0, $limit)));
     }
 
+    /**
+     * The need's reasons with a filled level said as the area's, never as a
+     * test the farmer made: "Your soil test reads low in nitrogen" becomes
+     * "Soil around here usually reads low in nitrogen" for the filled
+     * elements only (the Crop Protocol and NPK Plus's page say the same).
+     */
+    public static function areaWhys(array $whys, array $filled): array
+    {
+        $names = array_intersect_key(['N' => 'nitrogen', 'P2O5' => 'phosphorus', 'K2O' => 'potassium'], array_flip($filled));
+        if (! $names) {
+            return $whys;
+        }
+
+        return array_map(fn ($w) => is_string($w) && preg_match('/^Your soil test reads\b.*\b(?:' . implode('|', $names) . ')\b/i', $w)
+            ? (string) preg_replace('/^Your soil test reads/i', 'Soil around here usually reads', $w) : $w, $whys);
+    }
+
     /** The salt risk in one word for a place ('none' when the coast survey did not include it, null when there is no survey). */
     public static function saltRisk(?array $a): ?string
     {

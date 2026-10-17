@@ -1528,12 +1528,12 @@
     };
     $('npAreaUse').addEventListener('click', areaUse);
     $('npAreaNo').addEventListener('click', () => { if (st.area) areaStop(); else { st.areaNo = true; paintArea(); } });
-    const soil = () => {
+    const soil = (withArea = true) => {
         const s = {};
         if ($('npSoilOn').checked) $('npSoilGrid').querySelectorAll('input').forEach((i) => { if (i.value !== '') s[i.dataset.s] = Number(i.value); });
         const ph = phVal(); if (ph != null) s.ph = ph;
         if ($('npSoilOn').checked && st.kit && Object.keys(st.kit).length) s.levels = Object.assign({}, st.kit);
-        if (st.area && st.area.tests && Object.keys(st.area.tests).length) s.levels = Object.assign({}, st.area.tests, s.levels || {});
+        if (withArea && st.area && st.area.tests && Object.keys(st.area.tests).length) s.levels = Object.assign({}, st.area.tests, s.levels || {});
         if (!Object.keys(s).length) return null;
         s.pMethod = st.pMethod; s.kUnit = st.kUnit;
         return s;
@@ -2045,6 +2045,15 @@
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
 
         const c = cropOf(st.crop), g = goalOf(c), f = factors(c), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl);
+        // A level the area filled is the area's, not a test the farmer made (the Crop Protocol says it the same way).
+        if (st.area) {
+            const own = soilClass(soil(false)), names = { N: 'nitrogen', P2O5: 'phosphorus', K2O: 'potassium' };
+            const filled = Object.keys(st.area.tests || {}).filter((k) => names[k] && !own[k]).map((k) => names[k]);
+            if (filled.length) {
+                const re = new RegExp('^Your soil test reads\\b.*\\b(?:' + filled.join('|') + ')\\b', 'i');
+                md.whys = (md.whys || []).map((w) => typeof w === 'string' && re.test(w) ? w.replace(/^Your soil test reads/i, 'Soil around here usually reads') : w);
+            }
+        }
         const FL = fieldLines(c, g, f, md, fl);
         const yu = Y_U[st.yUnit], goalSaid = g.Yeff ? fmt(g.Yeff / yu[3]) + ' ' + yu[1] : '';
         $('npOutSub').textContent = (out.length ? 'For ' + fmt(area, 3) + ' ha' : 'Add a fertilizer to see the totals') + (c && goalSaid ? ', against the need for ' + goalSaid + ' of ' + cropShort(c).toLowerCase() : '') + '.' + (estimated ? ' Includes biofertilizer estimates.' : '');

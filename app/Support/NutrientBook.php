@@ -178,6 +178,7 @@ final class NutrientBook
         $run['potential'] = $p['potential'];
         if (! empty($in['areaSoil'])) {
             $run['areaSoil'] = $in['areaSoil'];
+            $run['whys'] = SoilAtlas::areaWhys((array) ($run['whys'] ?? []), (array) $in['areaSoil']);
         }
 
         return $run;
