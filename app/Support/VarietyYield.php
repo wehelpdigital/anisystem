@@ -34,6 +34,12 @@ use Illuminate\Support\Facades\Cache;
  * potential by it to land on the record. Null when no yield is on record.
  * `extra` keeps the traits that explain the parts (panicle length, height,
  * ear length and rows, kernel weight, shelling, head or bulb weight ...).
+ * The part `pack` says how the seed is sold, from the seller (2026-10-19):
+ * a list, the usual pack first, each ['kind' => 'kg'|'g'|'seeds', 'size',
+ * 'label' => 'bag'|'can'|'pack'|'pouch'] with maybe 'word' ("kernels"),
+ * 'about' (the seeds a weighed pack holds, as printed) and 'what'. It is
+ * no yield part: a seller row known only by its pack carries no other
+ * part, so the crop's usual yield parts still count for it.
  *
  * The rules: numbers and names only (no sentence from any source is kept),
  * never a source named (no agency, institute, university or registry; a
