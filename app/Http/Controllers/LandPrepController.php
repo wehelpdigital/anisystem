@@ -869,7 +869,7 @@ PROMPT;
     /** The place, its forecast, twenty years of its weather over the prep window, ENSO. All best effort. */
     private function weather(array $case, array $plan): array
     {
-        $out = ['place' => null, 'forecast' => [], 'history' => null, 'plowWindow' => null, 'plantWeek' => null, 'enso' => null, 'ensoText' => ''];
+        $out = ['place' => null, 'forecast' => [], 'window' => null, 'history' => null, 'plowWindow' => null, 'plantWeek' => null, 'enso' => null, 'ensoText' => ''];
         $loc = $case['location'];
         $label = trim(implode(', ', array_filter([$loc['town'] ?? null, $loc['province'] ?? null, $loc['place'] ?? null])));
         $lat = $loc['lat'] ?? null;
@@ -891,7 +891,16 @@ PROMPT;
         if ($lat !== null && $lng !== null) {
             $out['place'] = ['label' => $label !== '' ? str_replace(' (Capital)', '', $label) : round($lat, 3) . ', ' . round($lng, 3), 'lat' => round((float) $lat, 4), 'lng' => round((float) $lng, 4)];
             try {
-                $out['forecast'] = app(WeatherService::class)->forecast((float) $lat, (float) $lng, 16) ?: [];
+                // The place's shared field reading (2026-10-19): the rain in mm and the gusts beside the chance; the panels' reading if it fails.
+                $out['forecast'] = app(WeatherService::class)->fieldDays((float) $lat, (float) $lng, 16) ?: (app(WeatherService::class)->forecast((float) $lat, (float) $lng, 16) ?: []);
+            } catch (\Throwable $e) {
+            }
+            try {
+                // The preparation, from its first step on the earliest lot to three days after the last planting: the forecast days that matter.
+                $plantings = array_values(array_filter(array_map('strval', (array) ($plan['sched']['plantings'] ?? []))));
+                $p0 = Carbon::parse($plantings ? min($plantings) : $case['planting']);
+                $pN = Carbon::parse($plantings ? max($plantings) : $case['planting']);
+                $out['window'] = [$p0->copy()->addDays((int) min(array_column($plan['steps'], 'from') ?: [0]))->toDateString(), $pN->copy()->addDays(3)->toDateString()];
             } catch (\Throwable $e) {
             }
             try {
@@ -915,6 +924,56 @@ PROMPT;
         }
 
         return $out;
+    }
+
+    /**
+     * The forecast for the prompt in one short line (2026-10-19, the owner:
+     * the rain in mm and the gusts, tokens kept low): only the days inside
+     * the preparation (two days before its first step to three days after the
+     * last planting), wet or windy days one by one, the dry ones run together.
+     * When the forecast ends before the preparation starts, it says so.
+     */
+    private static function forecastWords(array $weather): string
+    {
+        $days = array_values((array) ($weather['forecast'] ?? []));
+        if (! $days) {
+            return 'not available';
+        }
+        $fmt = fn (string $d) => Carbon::parse($d)->format('M j');
+        [$from, $to] = array_pad((array) ($weather['window'] ?? []), 2, null);
+        $from = $from ? Carbon::parse($from)->subDays(2)->toDateString() : null;
+        $last = (string) end($days)['date'];
+        if ($from && $from > $last) {
+            return 'it reaches only to ' . $fmt($last) . ', before the preparation (from ' . $fmt((string) $weather['window'][0]) . '): lean on the history';
+        }
+        $in = array_values(array_filter($days, fn ($d) => (! $from || $d['date'] >= $from) && (! $to || $d['date'] <= $to)));
+        if (! $in) {
+            return 'none of its days fall in the preparation: lean on the history';
+        }
+        $bits = [];
+        $run = [];
+        $flush = function () use (&$run, &$bits, $fmt) {
+            if ($run) {
+                $bits[] = $fmt($run[0]) . (count($run) > 1 ? ' to ' . (substr($run[0], 0, 7) === substr(end($run), 0, 7) ? Carbon::parse(end($run))->format('j') : $fmt(end($run))) : '') . ' dry';
+                $run = [];
+            }
+        };
+        foreach ($in as $d) {
+            $mm = $d['mm'] ?? null;
+            $gust = $d['gust'] ?? null;
+            $wet = $mm !== null ? $mm >= 1 : ($d['pop'] ?? 0) >= 50;
+            $windy = $gust !== null && $gust >= 40;
+            if (! $wet && ! $windy) {
+                $run[] = (string) $d['date'];
+                continue;
+            }
+            $flush();
+            $bits[] = $fmt((string) $d['date']) . ' ' . ($mm !== null ? round($mm) . ' mm' : 'rain') . (isset($d['pop']) ? ' (' . $d['pop'] . '%)' : '') . ($windy ? ', gusts ' . $gust : '');
+        }
+        $flush();
+        $mmIn = array_filter(array_column($in, 'mm'), 'is_numeric');
+
+        return $fmt((string) $in[0]['date']) . ' to ' . $fmt((string) end($in)['date']) . ($mmIn ? ', ' . round(array_sum($mmIn)) . ' mm in all' : '') . ' (gusts in km/h): ' . implode('; ', $bits);
     }
 
     /** A lot's answers in words, for the prompt and the plan: [[short name, the answer], ...]. */
@@ -989,7 +1048,7 @@ PROMPT;
         $research = ! $r ? '' : "\n" . $head . ': ' . (! $r['ok'] ? 'the lookup failed. Tell the farmer to follow the seed bag.'
             : (! $r['found'] ? 'this exact variety was not found. Tell the farmer to follow the seed bag.'
                 : ($rNotes !== '' ? $rNotes : implode(', ', array_filter([$r['days'] ? 'about ' . $r['days'] . ' days to harvest' : null, $r['type'] ?: null, $r['company'] ? 'by ' . $r['company'] : null])) . '.')));
-        $fc = $weather['forecast'] ? implode(', ', array_map(fn ($d) => $d['date'] . ' ' . $d['text'] . (isset($d['pop']) ? ' rain ' . $d['pop'] . '%' : '') . (isset($d['max']) ? ' ' . $d['min'] . ' to ' . $d['max'] . ' C' : ''), $weather['forecast'])) : 'not available';
+        $fc = self::forecastWords($weather);
         $h = $weather['history'];
         $climate = $h ? 'Over the whole preparation window to two weeks after ' . $word . ', the last ' . count($h['years']) . ' years averaged ' . round($h['avg']['rain']) . ' mm of rain (driest year ' . min(array_column($h['years'], 'rain')) . ' mm, wettest ' . max(array_column($h['years'], 'rain')) . ' mm), ' . $h['avg']['tmax'] . ' C average highs.' : 'not available';
         $pw = $weather['plowWindow'];
@@ -1058,7 +1117,7 @@ RULES ALREADY APPLIED:
 {$notes}
 
 WEATHER
-- Forecast, next 16 days at the field: {$fc}
+- Forecast at the field: {$fc}
 - Climate history: {$climate} {$plowClimate} {$plantClimate}{$hazards}
 - ENSO: {$enso}
 
@@ -1256,7 +1315,7 @@ PROMPT;
             'research' => $research ? array_intersect_key($research, array_flip(['ok', 'found', 'searched', 'days', 'type', 'company'])) : null,
             'weather' => [
                 'place' => $weather['place'],
-                'forecast' => array_map(fn ($d) => array_intersect_key($d, array_flip(['date', 'text', 'emoji', 'max', 'min', 'pop'])), $weather['forecast']),
+                'forecast' => array_map(fn ($d) => array_intersect_key($d, array_flip(['date', 'text', 'emoji', 'max', 'min', 'pop', 'mm', 'gust'])), $weather['forecast']),
                 'history' => $h ? ['years' => count($h['years']), 'rain' => round($h['avg']['rain']), 'dry' => min(array_column($h['years'], 'rain')), 'wet' => max(array_column($h['years'], 'rain')), 'tmax' => $h['avg']['tmax']] : null,
                 'plowRain' => $weather['plowWindow'] ? round($weather['plowWindow']['avg']['rain']) : null,
                 'plantRain' => $weather['plantWeek'] ? round($weather['plantWeek']['avg']['rain']) : null,

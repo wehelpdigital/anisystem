@@ -90,6 +90,35 @@ class WeatherService
         ]);
     }
 
+    /**
+     * The next days from the field reading, today first (2026-10-19, Land
+     * Prep): the sky, the low and high, the rain chance, the rain in mm, the
+     * wind and the gusts. Null when there is no reading.
+     *
+     * @return list<array{date:string,text:string,emoji:string,max:?int,min:?int,pop:?int,mm:?float,wind:?int,gust:?int}>|null
+     */
+    public function fieldDays(float $lat, float $lon, int $dayCount = 16): ?array
+    {
+        $r = $this->fieldReading($lat, $lon);
+        if (! $r) {
+            return null;
+        }
+        $d = (array) ($r['daily'] ?? []);
+        $today = Carbon::now($r['tz'])->toDateString();
+        $days = [];
+        foreach ((array) ($d['time'] ?? []) as $i => $iso) {
+            if ($iso < $today || count($days) >= max(1, min(16, $dayCount))) {
+                continue;
+            }
+            $meta = $this->codeMeta((int) ($d['weather_code'][$i] ?? 0));
+            $n = fn (string $k, int $dp = 0) => isset($d[$k][$i]) && is_numeric($d[$k][$i]) ? ($dp ? round((float) $d[$k][$i], $dp) : (int) round((float) $d[$k][$i])) : null;
+            $days[] = ['date' => $iso, 'text' => $meta['text'], 'emoji' => $meta['emoji'], 'max' => $n('temperature_2m_max'), 'min' => $n('temperature_2m_min'),
+                'pop' => $n('precipitation_probability_max'), 'mm' => $n('precipitation_sum', 1), 'wind' => $n('wind_speed_10m_max'), 'gust' => $n('wind_gusts_10m_max')];
+        }
+
+        return $days ?: null;
+    }
+
     /** A kept reading by its key, asked of Open-Meteo with $ask once it is FRESH_HOURS old. */
     private function kept(string $key, float $lat, float $lon, array $ask): ?array
     {

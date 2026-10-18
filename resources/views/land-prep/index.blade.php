@@ -788,6 +788,8 @@
     .lp-fd span { display: block; font-size: 1.2rem; line-height: 1.5; }
     .lp-fd b { display: block; font-size: .74rem; color: var(--color-gray-900); }
     .lp-fd i { display: block; font-style: normal; font-size: .64rem; font-weight: 800; color: #0369a1; }
+    .lp-fd em { display: block; font-style: normal; font-size: .58rem; font-weight: 700; color: var(--color-gray-600); white-space: nowrap; }
+    html.dark .lp-fd em { color: #b9c4b0; }
     .lp-wx { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); gap: .45rem; margin-top: .7rem; }
     .lp-wx div { padding: .6rem .5rem; border-radius: .9rem; text-align: center; background: #f0f9ff; min-width: 0; }
     .lp-wx b { display: block; font-family: var(--font-heading); font-size: 1.1rem; color: #0c4a6e; }
@@ -3473,7 +3475,7 @@
         if (!w.place && !w.enso && !a.weather) return '';
         let h = '<div class="lp-c"><h3>🌦️ Weather and water' + (w.enso ? '<em>' + esc(w.enso) + tlf('enso') + '</em>' : '') + '</h3>';
         if (a.weather) h += '<p class="lp-p" style="margin-bottom:.7rem">' + esc(a.weather) + '</p>';
-        if (fc.length) h += '<div class="lp-scrollx"><div class="lp-fc" tabindex="0" aria-label="The forecast, day by day. It slides sideways.">' + fc.map((d) => '<div class="lp-fd"><small>' + esc(fmt(d.date, { weekday: 'short' })) + ' ' + esc(fmt(d.date, { day: 'numeric' })) + '</small><span>' + esc(d.emoji || '') + '</span><b>' + (d.max != null ? d.max + '°' : '') + '</b><i>' + (d.pop != null ? d.pop + '%' : '') + '</i></div>').join('') + '</div>'
+        if (fc.length) h += '<div class="lp-scrollx"><div class="lp-fc" tabindex="0" aria-label="The forecast, day by day. It slides sideways.">' + fc.map((d) => '<div class="lp-fd"><small>' + esc(fmt(d.date, { weekday: 'short' })) + ' ' + esc(fmt(d.date, { day: 'numeric' })) + '</small><span>' + esc(d.emoji || '') + '</span><b>' + (d.max != null ? d.max + '°' : '') + '</b><i>' + (d.pop != null ? d.pop + '%' : '') + '</i>' + (d.mm != null ? '<em>' + esc(Math.round(d.mm)) + ' mm</em>' : '') + (d.gust != null && d.gust >= 40 ? '<em>gust ' + esc(d.gust) + '</em>' : '') + '</div>').join('') + '</div>'
             + '<button type="button" class="lp-nudge" data-nudge aria-label="Slide to see more days">Slide<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button></div>';
         if (w.history || w.plowRain != null) {
             h += '<div class="lp-wx">' + (w.history ? '<div><b>' + w.history.rain + ' mm' + tlf('rain-mm') + '</b><small>rain over the prep, a ' + w.history.years + ' year average</small></div><div><b>' + w.history.dry + ' to ' + w.history.wet + '</b><small>mm, driest to wettest year</small></div>' : '')

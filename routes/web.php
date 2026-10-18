@@ -201,6 +201,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && method_exists(\App\Support\EnsoOutlook::class, 'brief') && method_exists(\App\Services\WeatherService::class, 'fieldReading')
                 && rescue(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_enso_advisories') && \Illuminate\Support\Facades\Schema::hasTable('as_weather_days')
                     && \Illuminate\Support\Facades\Schema::hasTable('as_ai_outlooks'), false, false),
+            // 2026-10-19: Land Prep reads the shared field reading: the rain in mm and the gusts.
+            'lpFieldRain' => method_exists(\App\Services\WeatherService::class, 'fieldDays')
+                && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), '.lp-fd em'),
             // 2026-10-19: the Benta o Bilad Calculator in Quick Tools.
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
