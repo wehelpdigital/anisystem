@@ -1302,7 +1302,8 @@
         const U = units(C, c.method), W = standWord(C), lot = r.areaHa ? (r.areaHa >= 0.1 ? num(r.areaHa, r.areaHa < 10 ? 2 : 1) + ' ha' : num(r.areaHa * 10000) + ' m²') : '';
         const buyWord = r.nursery ? 'seeds' : U[1];
         const seedsRange = (a, b) => many(a) + ' to ' + many(b);
-        const kgRange = (a, b) => (a === null ? '' : kgTxt(a) + ' to ' + kgTxt(b) + ' kg');
+        // Under a kilo, seed reads in grams.
+        const kgRange = (a, b) => (a === null ? '' : b < 1 ? num(a * 1000) + ' to ' + num(b * 1000) + ' g' : kgTxt(a) + ' to ' + kgTxt(b) + ' kg');
         const spaceTxt = () => c.layout === 'triangle' ? cmTxt(r.plant) + ' cm, in triangles' : c.layout === 'beds' ? cmTxt(r.plant) + ' cm, ' + c.bedRows + ' rows a bed' : cmTxt(r.row) + ' × ' + cmTxt(r.plant) + ' cm';
         // The headline.
         const worst = r.flags.some((f) => f[1] === 'bad') ? 'bad' : r.flags.some((f) => f[1] === 'warn') ? 'warn' : 'good';
@@ -1600,7 +1601,7 @@
     }
     const rangeTxt = (a, b, f) => { const lo = Math.min(a, b), hi = Math.max(a, b); return Math.abs(hi - lo) < 1e-9 * Math.max(1, hi) || f(lo) === f(hi) ? f(lo) : f(lo) + ' to ' + f(hi); };
     const yieldOf = (R) => R.kgHaHi !== null && R.kgHaHi !== undefined ? [R.kgHaLo, R.kgHaHi, true] : R.piecesHa !== null && R.piecesHa !== undefined ? [R.piecesHaLo, R.piecesHa, false] : null;
-    const massRange = (lo, hi) => hi >= 1000 ? num(lo / 1000, 1) + ' to ' + num(hi / 1000, 1) + ' t' : kgTxt(lo) + ' to ' + kgTxt(hi) + ' kg';
+    const massRange = (lo, hi) => hi >= 1000 ? num(lo / 1000, 1) + ' to ' + num(hi / 1000, 1) + ' t' : hi < 1 ? num(lo * 1000) + ' to ' + num(hi * 1000) + ' g' : kgTxt(lo) + ' to ' + kgTxt(hi) + ' kg';
     let rangeLast = {};
     function paintRange(c, r) {
         const C = crop(), W = standWord(C), U = units(C, c.method), Y = C.yield, u = r.usual || r, P = r.pen;
