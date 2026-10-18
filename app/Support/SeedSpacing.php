@@ -157,7 +157,17 @@ final class SeedSpacing
      * good final stand a hectare [low, high], established plants (or hills for
      * transplanted rice) in standBy; yield = the model and its defaults (loss =
      * the usual share lost at harvest); book = the variety book's crop key
-     * where it is not this one (App\Support\VarietyBook, the variety pick).
+     * where it is not this one (App\Support\VarietyBook, the variety pick);
+     * packs = the bags, cans and packets the seed is usually sold in here,
+     * each kind kg, g or seeds (sold by count) and size, the usual one
+     * first, 'seed' = the kinds of seed it is the usual pack for (a variety's
+     * own packs, from the shelf, come before them). Packs researched
+     * 2026-10-19 from Philippine seed sellers' bags, cans and listings and
+     * seed program bags (scratchpad packs/: DEKALB, NK and Pioneer bags of
+     * 35,000 kernels, about 9 to 10 kg; 9 kg and 18 kg corn bags; 20 kg corn
+     * and certified rice seed bags; hybrid rice in 3 kg and 15 kg bags;
+     * vegetable cans and packs from East-West, Allied Botanical, Ramgo,
+     * Known-You and Seminis listings).
      * Researched 2026-10-19 from extension and seed company guides, trials
      * and seed standards (notes in our own words, no agency named); the
      * stands agree with App\Support\NpkModel::SEEDING, counted after the
@@ -171,6 +181,7 @@ final class SeedSpacing
             'stand' => [195000, 333333], 'standBy' => 'hills',
             'yield' => ['model' => 'tiller', 'tillers' => 12, 'grains' => 100, 'filled' => 80, 'ceiling' => 600, 'loss' => 5, 'what' => 'palay', 'sack' => 50],
             'testDays' => '5 to 10',
+            'packs' => [['kind' => 'kg', 'size' => 20, 'label' => 'bag', 'seed' => ['good', 'opv', 'saved'], 'what' => 'certified seed'], ['kind' => 'kg', 'size' => 40, 'label' => 'sack', 'what' => 'certified seed'], ['kind' => 'kg', 'size' => 3, 'label' => 'bag', 'seed' => ['hybrid'], 'what' => 'hybrid seed'], ['kind' => 'kg', 'size' => 15, 'label' => 'bag', 'what' => 'hybrid seed']],
             'note' => '20 by 20 cm is the usual, 20 by 15 cm in the dry season. 25 by 25 cm suits tall, leafy varieties in the wet season but leaves fewer hills than a full field wants. Hybrids: 1 to 2 seedlings a hill; inbreds: 2 to 3.'],
         'rice_dsr' => ['name' => 'Rice, direct seeded in rows', 'local' => 'Palay, sabog tanim sa hanay', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows', 'book' => 'rice_dsr_wet',
             'row' => [15, 20, 30], 'plant' => [5, 10, 20], 'perHill' => [2, 4, 8], 'keep' => null,
@@ -178,6 +189,7 @@ final class SeedSpacing
             'stand' => [1200000, 2500000], 'standBy' => 'plants',
             'yield' => ['model' => 'tiller', 'tillers' => 8, 'grains' => 90, 'filled' => 80, 'ceiling' => 600, 'loss' => 5, 'what' => 'palay', 'sack' => 50],
             'testDays' => '5 to 10',
+            'packs' => [['kind' => 'kg', 'size' => 20, 'label' => 'bag', 'seed' => ['good', 'opv', 'saved'], 'what' => 'certified seed'], ['kind' => 'kg', 'size' => 40, 'label' => 'sack', 'what' => 'certified seed'], ['kind' => 'kg', 'size' => 3, 'label' => 'bag', 'seed' => ['hybrid'], 'what' => 'hybrid seed'], ['kind' => 'kg', 'size' => 15, 'label' => 'bag', 'what' => 'hybrid seed']],
             'note' => 'A drum seeder or a seed drill on rows 20 to 25 cm apart takes about 40 to 60 kg a hectare. Broadcast seed has no rows to count: it takes about 60 to 80 kg.'],
         'corn_yellow' => ['name' => 'Yellow corn, hybrid', 'local' => 'Mais, dilaw', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows',
             'row' => [60, 70, 90], 'plant' => [15, 20, 25], 'perHill' => [1, 1, 2], 'keep' => 1, 'oneSeed' => true,
@@ -185,6 +197,7 @@ final class SeedSpacing
             'stand' => [60000, 91000], 'standBy' => 'plants',
             'yield' => ['model' => 'ear', 'ears' => 0.95, 'perEar' => 120, 'fresh' => false, 'loss' => 5, 'what' => 'dry grain', 'sack' => 50, 'word' => 'ears'],
             'testDays' => '4 to 7',
+            'packs' => [['kind' => 'seeds', 'size' => 35000, 'label' => 'bag', 'seed' => ['hybrid'], 'word' => 'kernels'], ['kind' => 'kg', 'size' => 9, 'label' => 'bag'], ['kind' => 'kg', 'size' => 18, 'label' => 'bag'], ['kind' => 'kg', 'size' => 20, 'label' => 'bag', 'seed' => ['opv', 'saved']]],
             'note' => 'One seed a hill in 70 cm rows with 18 to 20 cm between hills is the usual with hybrid seed: about 22 to 24 kg a hectare for 75,000 plants or more. Fill any gaps within a week.'],
         'corn_white' => ['name' => 'White or glutinous corn', 'local' => 'Mais, puti o lagkitan', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows', 'book' => 'corn_glutinous',
             'row' => [60, 75, 90], 'plant' => [20, 25, 30], 'perHill' => [1, 1, 2], 'keep' => 1, 'oneSeed' => true,
@@ -192,6 +205,7 @@ final class SeedSpacing
             'stand' => [40000, 60000], 'standBy' => 'plants',
             'yield' => ['model' => 'ear', 'ears' => 0.95, 'perEar' => 90, 'fresh' => false, 'loss' => 5, 'what' => 'dry grain', 'sack' => 50, 'word' => 'ears'],
             'testDays' => '4 to 7',
+            'packs' => [['kind' => 'kg', 'size' => 20, 'label' => 'bag', 'seed' => ['opv', 'saved']], ['kind' => 'kg', 'size' => 1, 'label' => 'bag', 'seed' => ['hybrid']]],
             'note' => 'About 20 kg of seed at 75 by 25 cm; 75 by 30 cm for bigger green ears to sell fresh. A fresh glutinous ear in its husk weighs about 150 to 250 g.'],
         'corn_sweet' => ['name' => 'Sweet corn', 'local' => 'Mais, matamis', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows',
             'row' => [60, 75, 90], 'plant' => [20, 25, 30], 'perHill' => [1, 1, 2], 'keep' => 1, 'oneSeed' => true,
@@ -199,6 +213,7 @@ final class SeedSpacing
             'stand' => [46000, 66667], 'standBy' => 'plants',
             'yield' => ['model' => 'ear', 'ears' => 0.9, 'perEar' => 300, 'fresh' => true, 'loss' => 5, 'what' => 'fresh ears', 'word' => 'ears'],
             'testDays' => '4 to 7',
+            'packs' => [['kind' => 'kg', 'size' => 1, 'label' => 'bag'], ['kind' => 'kg', 'size' => 0.5, 'label' => 'bag']],
             'note' => 'Sweet corn seed is shriveled and comes up weaker than field corn: sow into moist, warm soil, not too deep. Ears are ready about 70 to 80 days after sowing.'],
         'sorghum' => ['name' => 'Sorghum', 'local' => 'Batad', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows',
             'row' => [45, 60, 75], 'plant' => [10, 15, 20], 'perHill' => [1, 2, 3], 'keep' => 1,
@@ -215,6 +230,7 @@ final class SeedSpacing
             'stand' => [200000, 333333], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 4, 'unit' => 'g', 'loss' => 5, 'what' => 'dry beans'],
             'testDays' => '5 to 7',
+            'packs' => [['kind' => 'kg', 'size' => 25, 'label' => 'bag']],
             'note' => 'Drilled at 15 to 18 seeds a meter in rows 50 to 60 cm apart, about 18 to 20 kg a hectare, and not thinned.'],
         'peanut' => ['name' => 'Peanut', 'local' => 'Mani', 'group' => 'legume', 'methods' => ['direct'], 'layout' => 'rows',
             'row' => [40, 50, 60], 'plant' => [10, 15, 25], 'perHill' => [1, 2, 2], 'keep' => null,
@@ -236,6 +252,7 @@ final class SeedSpacing
             'stand' => [34000, 53333], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.25, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh pods'],
             'testDays' => '5 to 8',
+            'packs' => [['kind' => 'kg', 'size' => 1, 'label' => 'bag'], ['kind' => 'g', 'size' => 500, 'label' => 'can'], ['kind' => 'g', 'size' => 100, 'label' => 'can']],
             'note' => 'Sown 2 to 3 seeds a hill beside the trellis and thinned to 2 strong plants. Picking starts 45 to 60 days after planting and goes on every few days.'],
         'bushsitaw' => ['name' => 'Bush sitaw', 'local' => 'Sitaw, palumpong', 'group' => 'legume', 'methods' => ['direct'], 'layout' => 'rows', 'book' => 'stringbean',
             'row' => [60, 75, 90], 'plant' => [20, 25, 30], 'perHill' => [2, 2, 3], 'keep' => 1,
@@ -243,6 +260,7 @@ final class SeedSpacing
             'stand' => [45000, 80000], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.15, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh pods'],
             'testDays' => '5 to 8',
+            'packs' => [['kind' => 'kg', 'size' => 1, 'label' => 'bag'], ['kind' => 'g', 'size' => 500, 'label' => 'can'], ['kind' => 'g', 'size' => 100, 'label' => 'can']],
             'note' => 'No trellis: rows 60 cm apart in the dry season and 75 cm in the wet, one plant a hill. Picking starts about 40 to 45 days after it comes up.'],
 
         // ---- Fruit vegetables ----
@@ -252,6 +270,7 @@ final class SeedSpacing
             'stand' => [40000, 90000], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.15, 'unit' => 'kg', 'loss' => 5, 'what' => 'fresh pods'],
             'testDays' => '7 to 14',
+            'packs' => [['kind' => 'g', 'size' => 500, 'label' => 'can']],
             'note' => 'Rows 75 cm apart in the wet season, up to 1 m in the dry, hills 30 cm, thinned to 2 plants about two weeks after sowing. The seed coat is hard: soak it overnight before sowing.'],
         'tomato' => ['name' => 'Tomato', 'local' => 'Kamatis', 'group' => 'fruitveg', 'methods' => ['transplant'], 'layout' => 'rows',
             'row' => [75, 100, 150], 'plant' => [30, 50, 60], 'perHill' => [1, 1, 1], 'keep' => 1,
@@ -259,6 +278,7 @@ final class SeedSpacing
             'stand' => [12500, 26667], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 1.25, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh fruit'],
             'testDays' => '7 to 14',
+            'packs' => [['kind' => 'g', 'size' => 25, 'label' => 'can']],
             'note' => 'One seed a tray cell (about 100 to 150 g of seed a hectare) or a seedbed (200 to 300 g), planted out at 20 to 30 days. Rows of 75 cm to 1 m for bush types, wider for tall, staked types.'],
         'eggplant' => ['name' => 'Eggplant', 'local' => 'Talong', 'group' => 'fruitveg', 'methods' => ['transplant'], 'layout' => 'rows',
             'row' => [75, 100, 120], 'plant' => [40, 50, 100], 'perHill' => [1, 1, 1], 'keep' => 1,
@@ -266,6 +286,7 @@ final class SeedSpacing
             'stand' => [9500, 26667], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 1.5, 'unit' => 'kg', 'loss' => 8, 'what' => 'fresh fruit'],
             'testDays' => '7 to 14',
+            'packs' => [['kind' => 'g', 'size' => 50, 'label' => 'can'], ['kind' => 'g', 'size' => 25, 'label' => 'can']],
             'note' => 'Planted out at 30 to 35 days, with 3 to 4 true leaves. Wider hills in the wet season keep the leaves drier and the fruit borer easier to find.'],
         'chili' => ['name' => 'Hot pepper', 'local' => 'Sili, haba o labuyo', 'group' => 'fruitveg', 'methods' => ['transplant'], 'layout' => 'rows',
             'row' => [60, 75, 100], 'plant' => [30, 40, 60], 'perHill' => [1, 1, 1], 'keep' => 1,
@@ -273,6 +294,7 @@ final class SeedSpacing
             'stand' => [15800, 55556], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.4, 'unit' => 'kg', 'loss' => 8, 'what' => 'fresh fruit'],
             'testDays' => '7 to 14',
+            'packs' => [['kind' => 'g', 'size' => 25, 'label' => 'can']],
             'note' => 'Pepper seed comes up slowly: keep the seedbed moist and shaded, and plant out at 30 to 40 days. Labuyo bears far less a plant than siling haba: lower the harvest a plant.'],
         'bellpepper' => ['name' => 'Bell pepper', 'local' => 'Sili, malaki', 'group' => 'fruitveg', 'methods' => ['transplant'], 'layout' => 'rows',
             'row' => [60, 75, 100], 'plant' => [30, 40, 50], 'perHill' => [1, 1, 1], 'keep' => 1,
@@ -280,6 +302,7 @@ final class SeedSpacing
             'stand' => [19000, 44444], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.5, 'unit' => 'kg', 'loss' => 8, 'what' => 'fresh fruit'],
             'testDays' => '7 to 14',
+            'packs' => [['kind' => 'g', 'size' => 50, 'label' => 'can']],
             'note' => 'Raise the seedlings in trays under a rain shelter. Close enough that the leaves shade the fruit from sunscald, wide enough for air to move.'],
 
         // ---- Vines and gourds ----
@@ -289,6 +312,7 @@ final class SeedSpacing
             'stand' => [6000, 22222], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 2, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh fruit'],
             'testDays' => '7 to 14',
+            'packs' => [['kind' => 'g', 'size' => 100, 'label' => 'pack'], ['kind' => 'g', 'size' => 50, 'label' => 'can']],
             'note' => 'Nick the hard seed coat, soak it half a day, and keep it in a damp cloth until the root shows: one sprouted seed a hill is enough. Rows 2 m apart in the dry season, 3 m in the wet.'],
         'squash' => ['name' => 'Squash', 'local' => 'Kalabasa', 'group' => 'vine', 'methods' => ['direct', 'transplant'], 'layout' => 'rows',
             'row' => [200, 250, 400], 'plant' => [75, 100, 200], 'perHill' => [1, 2, 3], 'keep' => 1, 'transplant' => ['perHill' => [1, 1, 1]],
@@ -296,6 +320,7 @@ final class SeedSpacing
             'stand' => [2300, 6667], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 6, 'unit' => 'kg', 'loss' => 5, 'what' => 'fresh fruit'],
             'testDays' => '4 to 7',
+            'packs' => [['kind' => 'g', 'size' => 100, 'label' => 'pack'], ['kind' => 'g', 'size' => 250, 'label' => 'can'], ['kind' => 'g', 'size' => 50, 'label' => 'can']],
             'note' => 'Soak the seed overnight and wrap it in a damp cloth until the root shows. The vines run 3 m or more; use ridges or raised beds in the wet season.'],
         'cucumber' => ['name' => 'Cucumber', 'local' => 'Pipino', 'group' => 'vine', 'methods' => ['direct', 'transplant'], 'layout' => 'rows',
             'row' => [75, 100, 150], 'plant' => [20, 30, 50], 'perHill' => [1, 2, 3], 'keep' => 1, 'transplant' => ['perHill' => [1, 1, 1]],
@@ -303,6 +328,7 @@ final class SeedSpacing
             'stand' => [20000, 44444], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.6, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh fruit'],
             'testDays' => '3 to 7',
+            'packs' => [['kind' => 'g', 'size' => 50, 'label' => 'can'], ['kind' => 'g', 'size' => 10, 'label' => 'pack']],
             'note' => 'Two to three seeds a hill 30 cm apart, thinned to one. No soaking needed; on a trellis the hills can sit closer than on the ground.'],
         'watermelon' => ['name' => 'Watermelon', 'local' => 'Pakwan', 'group' => 'vine', 'methods' => ['direct', 'transplant'], 'layout' => 'rows',
             'row' => [150, 200, 300], 'plant' => [60, 150, 250], 'perHill' => [1, 2, 4], 'keep' => 1, 'transplant' => ['perHill' => [1, 1, 1]],
@@ -310,6 +336,7 @@ final class SeedSpacing
             'stand' => [1500, 6667], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 6, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh fruit'],
             'testDays' => '5 to 14',
+            'packs' => [['kind' => 'seeds', 'size' => 2500, 'label' => 'pack']],
             'note' => 'Hybrid seed is costly: many growers sow one seed a tray cell and transplant (about 0.5 to 0.8 kg a hectare). Test the seed somewhere warm.'],
         'upo' => ['name' => 'Upo', 'local' => 'Upo', 'group' => 'vine', 'methods' => ['direct', 'transplant'], 'layout' => 'rows',
             'row' => [200, 300, 400], 'plant' => [75, 100, 150], 'perHill' => [1, 2, 2], 'keep' => 1, 'transplant' => ['perHill' => [1, 1, 1]],
@@ -333,6 +360,7 @@ final class SeedSpacing
             'stand' => [190000, 385000], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.05, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh leaves'],
             'testDays' => '5 to 7',
+            'packs' => [['kind' => 'g', 'size' => 500, 'label' => 'can'], ['kind' => 'g', 'size' => 100, 'label' => 'can'], ['kind' => 'kg', 'size' => 1, 'label' => 'bag']],
             'note' => 'Beds 1 m wide with 30 cm paths, rows 20 cm apart, plants 10 cm apart. Transplanting takes about 1 to 2.5 kg of seed a hectare; sowing in rows and thinning, about 3 kg.'],
         'cabbage' => ['name' => 'Cabbage', 'local' => 'Repolyo', 'group' => 'leafy', 'methods' => ['transplant'], 'layout' => 'rows',
             'row' => [40, 50, 75], 'plant' => [30, 40, 50], 'perHill' => [1, 1, 1], 'keep' => 1,
@@ -340,6 +368,7 @@ final class SeedSpacing
             'stand' => [35000, 55000], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.7, 'unit' => 'kg', 'loss' => 15, 'what' => 'heads'],
             'testDays' => '7 to 10',
+            'packs' => [['kind' => 'g', 'size' => 25, 'label' => 'pack'], ['kind' => 'g', 'size' => 50, 'label' => 'pack'], ['kind' => 'g', 'size' => 10, 'label' => 'pack']],
             'note' => 'Single rows 50 cm apart, or two rows on a bed 1 m wide. Wider spacing gives bigger heads; closer gives more, smaller heads.'],
         'lettuce' => ['name' => 'Lettuce', 'local' => 'Letsugas', 'group' => 'leafy', 'methods' => ['transplant'], 'layout' => 'beds', 'bed' => [175, 3],
             'row' => [30, 30, 40], 'plant' => [20, 30, 40], 'perHill' => [1, 1, 1], 'keep' => 1,
@@ -347,6 +376,7 @@ final class SeedSpacing
             'stand' => [28600, 57100], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.2, 'unit' => 'kg', 'loss' => 15, 'what' => 'fresh heads'],
             'testDays' => '5 to 7',
+            'packs' => [['kind' => 'g', 'size' => 100, 'label' => 'can'], ['kind' => 'g', 'size' => 10, 'label' => 'pack']],
             'note' => 'Beds 1 m wide with paths of about 75 cm: 3 rows for leaf types, 2 for heading types, plants 30 to 40 cm apart.'],
         'onion' => ['name' => 'Bulb onion', 'local' => 'Sibuyas', 'group' => 'leafy', 'methods' => ['transplant', 'direct'], 'layout' => 'beds', 'bed' => [130, 7],
             'row' => [10, 15, 20], 'plant' => [7.5, 10, 15], 'perHill' => [1, 1, 1], 'keep' => 1, 'direct' => ['perHill' => [2, 3, 4]],
@@ -354,6 +384,7 @@ final class SeedSpacing
             'stand' => [300000, 800000], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.04, 'unit' => 'kg', 'loss' => 10, 'what' => 'dry bulbs'],
             'testDays' => '7 to 12',
+            'packs' => [['kind' => 'g', 'size' => 400, 'label' => 'can'], ['kind' => 'seeds', 'size' => 25000, 'label' => 'pack']],
             'note' => 'Most growers transplant seedlings 5 to 7 weeks old, 6 to 8 rows on a bed. Onion seed loses its germination within a year: buy fresh seed every season.'],
         'carrot' => ['name' => 'Carrot', 'local' => 'Karot', 'group' => 'leafy', 'methods' => ['direct'], 'layout' => 'beds', 'bed' => [105, 7],
             'row' => [10, 10, 20], 'plant' => [5, 10, 12], 'perHill' => [2, 3, 5], 'keep' => 1,
@@ -361,6 +392,7 @@ final class SeedSpacing
             'stand' => [380000, 700000], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 0.05, 'unit' => 'kg', 'loss' => 15, 'what' => 'roots'],
             'testDays' => '10 to 14',
+            'packs' => [['kind' => 'g', 'size' => 400, 'label' => 'can'], ['kind' => 'g', 'size' => 300, 'label' => 'can'], ['kind' => 'g', 'size' => 100, 'label' => 'can']],
             'note' => 'Beds 70 to 80 cm wide with 30 cm paths, lines 10 cm apart, thinned to 10 cm about a month after sowing. Forked and cracked roots do not sell.'],
         'radish' => ['name' => 'Radish', 'local' => 'Labanos', 'group' => 'leafy', 'methods' => ['direct'], 'layout' => 'rows',
             'row' => [25, 30, 50], 'plant' => [10, 15, 20], 'perHill' => [1, 2, 3], 'keep' => 1,
@@ -409,6 +441,7 @@ final class SeedSpacing
             'stand' => [1333, 3333], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 30, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh fruit', 'perYear' => true],
             'testDays' => '10 to 14',
+            'packs' => [['kind' => 'g', 'size' => 10, 'label' => 'pack'], ['kind' => 'g', 'size' => 5, 'label' => 'pack']],
             'thinNote' => 'When they flower, keep the one with perfect (bisexual) flowers, the one that bears the best fruit, and cut the others.',
             'note' => 'Many growers set 3 seedlings a hill and keep the one that flowers right for fruiting.'],
         'banana' => ['name' => 'Banana, Lakatan or Latundan', 'local' => 'Saging, lakatan o latundan', 'group' => 'tree', 'methods' => ['piece'], 'layout' => 'rows', 'piece' => ['plantlet', 'plantlets'],
@@ -516,7 +549,94 @@ final class SeedSpacing
 
     /** What the usual field's answer keeps. */
     public const USUAL_KEYS = ['status', 'standHa', 'standLot', 'plantsHa', 'emptyShare', 'buyLo', 'buyHi', 'buyLotLo', 'buyLotHi', 'kgLo', 'kgHi', 'kgLotLo', 'kgLotHi',
-        'kgHaLo', 'kgHaHi', 'yLotLo', 'yLotHi', 'piecesHa', 'piecesHaLo', 'piecesLot', 'piecesLotLo', 'row', 'plant', 'square', 'perHill', 'fieldHa', 'reserve'];
+        'kgHaLo', 'kgHaHi', 'yLotLo', 'yLotHi', 'piecesHa', 'piecesHaLo', 'piecesLot', 'piecesLotLo', 'row', 'plant', 'square', 'perHill', 'fieldHa', 'reserve',
+        'packLo', 'packHi', 'packLotLo', 'packLotHi'];
+
+    /** The words a pack may be called by; anything else is a "pack". */
+    public const PACK_LABELS = ['bag', 'can', 'pack', 'pouch', 'sack', 'box', 'tin'];
+
+    /** A pack's id, its size written the same in PHP and JS ("seeds-35000-bag", "kg-0.5-bag"). */
+    private static function packNum(float $v): string
+    {
+        return rtrim(rtrim(sprintf('%.4f', $v), '0'), '.');
+    }
+
+    /** One pack held to its shape (kind, size, label, word, about, what, seed), or null. */
+    private static function packOf($p, string $from): ?array
+    {
+        if (! is_array($p)) {
+            return null;
+        }
+        $kind = (string) ($p['kind'] ?? '');
+        $size = $p['size'] ?? null;
+        if (! in_array($kind, ['kg', 'g', 'seeds'], true) || ! is_numeric($size) || (float) $size <= 0 || (float) $size > 1e7) {
+            return null;
+        }
+        $size = (float) $size;
+        $label = substr((string) preg_replace('/[^a-z]/', '', strtolower((string) ($p['label'] ?? ''))), 0, 12);
+        $label = in_array($label, self::PACK_LABELS, true) ? $label : 'pack';
+        $what = is_string($p['what'] ?? null) && preg_match('/^[A-Za-z ]{1,30}$/', $p['what']) ? $p['what'] : null;
+
+        return [
+            'id' => $kind . '-' . self::packNum($size) . '-' . $label, 'kind' => $kind, 'size' => $size, 'label' => $label,
+            'word' => $kind === 'seeds' && ($p['word'] ?? '') === 'kernels' ? 'kernels' : 'seeds',
+            'about' => isset($p['about']) && is_numeric($p['about']) && (float) $p['about'] > 0 ? (float) $p['about'] : null,
+            'what' => $what, 'seed' => array_values(array_filter((array) ($p['seed'] ?? []), 'is_string')), 'from' => $from,
+        ];
+    }
+
+    /**
+     * The packs this seed is sold in (2026-10-19, the owner: "say the # of
+     * bags needed for seeds, not only kg"): the variety's own (VarietyYield
+     * part 'pack', one or a list) first, then the crop's. Only for seed that
+     * is sown or raised in a seedbed; bought plants and pieces have none, and
+     * a weighed pack needs a seed weight.
+     */
+    public static function packs(array $c, ?array $vy): array
+    {
+        $C = self::CROPS[$c['crop']];
+        $m = $c['method'];
+        if ($m === 'piece' || ($m === 'transplant' && empty($C['tgw']))) {
+            return [];
+        }
+        $v = $vy['pack'] ?? null;
+        $own = is_array($v) ? (array_is_list($v) ? array_slice($v, 0, 8) : [$v]) : [];
+        $out = [];
+        foreach ([[$own, 'variety'], [(array) ($C['packs'] ?? []), 'crop']] as [$list, $from]) {
+            foreach ($list as $p) {
+                $p = self::packOf($p, $from);
+                if ($p && ! isset($out[$p['id']]) && ($p['kind'] === 'seeds' || self::weighs($C, $m))) {
+                    $out[$p['id']] = $p;
+                }
+            }
+        }
+
+        return array_values($out);
+    }
+
+    /** The pack counted: the farmer's pick, else the variety's first, else the crop's usual for the kind of seed, else its first. */
+    public static function packPick(array $list, array $c): ?array
+    {
+        if (! $list) {
+            return null;
+        }
+        foreach ($list as $p) {
+            if ($p['id'] === ($c['pack'] ?? null)) {
+                return $p;
+            }
+        }
+        if ($list[0]['from'] === 'variety') {
+            return $list[0];
+        }
+        $t = $c['seed']['type'] ?? null;
+        foreach ($list as $p) {
+            if ($t !== null && in_array($t, $p['seed'], true)) {
+                return $p;
+            }
+        }
+
+        return $list[0];
+    }
 
     /**
      * The seed's germination, its least, the seedbed fit, the losses, the
@@ -612,6 +732,8 @@ final class SeedSpacing
             // Germination and losses are no longer typed (withSeed resolves them): the seed's kind is.
             'seedType' => isset(self::SEED_KINDS[$key]['types'][$in['seedType'] ?? '']) ? (string) $in['seedType'] : null,
             'weight' => $n('weight', 0.01, 10000000),
+            // The pack the farmer picked (2026-10-19): null counts the variety's or the crop's usual.
+            'pack' => preg_match('/^(kg|g|seeds)-\d+(\.\d+)?-[a-z]{1,12}$/', (string) ($in['pack'] ?? '')) ? (string) $in['pack'] : null,
             // The yield parts: null keeps the variety's or the crop's own.
             'tillers' => $n('tillers', 0, 100),
             'grains' => $n('grains', 1, 500),
@@ -825,7 +947,7 @@ final class SeedSpacing
         }
         unset($r['_row'], $r['_plant']);
 
-        return $r + ['pen' => $pen, 'usual' => $usual, 'seed' => $c['seed']];
+        return $r + ['pen' => $pen, 'usual' => $usual, 'seed' => $c['seed'], 'packs' => self::packs($c, $vy)];
     }
 
     /** The count itself, with the field and season penalties given (SeedPenalty::of or none), and the seeds a hill when held. */
@@ -929,6 +1051,21 @@ final class SeedSpacing
         $needHi = $buyHa * (1 + $res);
         $kgLo = $wts ? $needLo * $wts['lo'] / 1000 : null;
         $kgHi = $wts ? $needHi * $wts['hi'] / 1000 : null;
+        // The packs to buy: a pack sold by count from the seeds (the seed size does not matter), a weighed one from the kilos.
+        $pk = self::packPick(self::packs($c, $vy), $c);
+        $packLo = null;
+        $packHi = null;
+        $packEach = null;
+        if ($pk && $pk['kind'] === 'seeds') {
+            $packLo = $needLo / $pk['size'];
+            $packHi = $needHi / $pk['size'];
+            $packEach = $wts ? $pk['size'] * $wts['mid'] / 1000 : null;
+        } elseif ($pk && $wts) {
+            $kgP = $pk['kind'] === 'kg' ? $pk['size'] : $pk['size'] / 1000;
+            $packLo = $kgLo / $kgP;
+            $packHi = $kgHi / $kgP;
+            $packEach = $kgP * 1000 / $wts['mid'];
+        }
         // 3. The stand.
         $plantsHa = $hillsHa * $kept;
         $standHa = $hillsHa * $perHillStand;
@@ -1059,6 +1196,11 @@ final class SeedSpacing
             'buyLotLo' => $r($lot($needLo), 1), 'buyLotHi' => $r($lot($needHi), 1),
             'kgLo' => $r($kgLo, 3), 'kgHi' => $r($kgHi, 3),
             'kgLotLo' => $r($lot($kgLo), 3), 'kgLotHi' => $r($lot($kgHi), 3),
+            // The packs: [low, high] packs a hectare and for the lot, unrounded (the page rounds up to buy), and what one holds
+            // (kilos for a pack sold by count, seeds for a weighed one).
+            'pack' => $packLo === null ? null : array_diff_key($pk, ['seed' => 1]),
+            'packLo' => $r($packLo, 4), 'packHi' => $r($packHi, 4), 'packLotLo' => $r($lot($packLo), 4), 'packLotHi' => $r($lot($packHi), 4),
+            'packEach' => $r($packEach, 3),
             'nursery' => $nursery,
             'emptyShare' => $r($empty, 4), 'shortShare' => $r($short, 4), 'keptPerHill' => $r($kept, 4),
             'plantsHa' => $r($plantsHa, 1), 'plantsLot' => $r($lot($plantsHa), 1), 'plantsM2' => $r($plantsHa / 10000, 2),
@@ -1084,9 +1226,22 @@ final class SeedSpacing
         $space = $c['layout'] === 'triangle' ? $cm($res['plant']) . $u . ' triangle' : ($c['layout'] === 'beds' ? $cm($res['plant']) . $u . ' on beds' : $cm($res['row']) . ' × ' . $cm($res['plant']) . $u);
         $kg = fn ($v) => $v >= 10 ? number_format($v, 0) : $num($v, $v >= 1 ? 1 : 2);
         $seeds = $res['kgLo'] !== null ? $kg($res['kgLo']) . ' to ' . $kg($res['kgHi']) . ' kg a ha' : number_format($res['buyLo']) . ' a ha';
+        // The packs to buy, rounded up: for the lot when it has a size, else a hectare.
+        $pk = $res['pack'] ?? null;
+        $hiP = $res['areaHa'] ? ($res['packLotHi'] ?? null) : ($res['packHi'] ?? null);
+        $bags = $pk && $hiP !== null && $c['mode'] !== 'spacing' ? ' · ' . self::packWords($pk, (int) max(1, ceil($hiP - 1e-9))) : '';
         $name = $C['name'] . (! empty($c['variety']) ? ', ' . $c['variety'] : '');
 
-        return $name . ' · ' . $space . ' · ' . $seeds . ($lot ? ' · ' . $lot : '') . ' · ' . now('Asia/Manila')->format('M j');
+        return $name . ' · ' . $space . ' · ' . $seeds . $bags . ($lot ? ' · ' . $lot : '') . ' · ' . now('Asia/Manila')->format('M j');
+    }
+
+    /** "3 bags of 35,000 kernels", "2 bags of 20 kg certified seed", "4 cans of 25 g". */
+    public static function packWords(array $p, int $n): string
+    {
+        $label = $n === 1 ? $p['label'] : (in_array($p['label'], ['pouch', 'box'], true) ? $p['label'] . 'es' : $p['label'] . 's');
+        $size = $p['kind'] === 'seeds' ? number_format($p['size']) . ' ' . $p['word'] : self::packNum($p['size']) . ' ' . $p['kind'];
+
+        return number_format($n) . ' ' . $label . ' of ' . $size . (! empty($p['what']) ? ' ' . $p['what'] : '');
     }
 
     /** What the page boots with. */
@@ -1094,7 +1249,7 @@ final class SeedSpacing
     {
         return [
             'crops' => self::CROPS, 'groups' => self::GROUPS, 'modes' => self::MODES, 'layouts' => self::LAYOUTS, 'methods' => self::METHODS,
-            'rowSet' => self::ROWSET, 'hillMode' => self::HILLMODE, 'seedTypes' => self::SEED_TYPES, 'seedKinds' => self::SEED_KINDS, 'usualKeys' => self::USUAL_KEYS, 'per' => self::PER, 'areaUnits' => self::AREA_UNITS, 'yieldKeys' => self::YIELD_KEYS,
+            'rowSet' => self::ROWSET, 'hillMode' => self::HILLMODE, 'seedTypes' => self::SEED_TYPES, 'seedKinds' => self::SEED_KINDS, 'usualKeys' => self::USUAL_KEYS, 'packLabels' => self::PACK_LABELS, 'per' => self::PER, 'areaUnits' => self::AREA_UNITS, 'yieldKeys' => self::YIELD_KEYS,
             'k' => ['thin' => self::THIN, 'crowd' => self::CROWD, 'shortOk' => self::SHORT_OK, 'shortOne' => self::SHORT_ONE, 'shortPart' => self::SHORT_PART, 'shortBad' => self::SHORT_BAD, 'tri' => self::TRI,
                 'bed' => self::BED, 'riceMax' => self::RICE_HILL_MAX, 'riceBad' => self::RICE_HILL_BAD],
             'varietyShelf' => class_exists(\App\Support\VarietyYield::class),
