@@ -32,6 +32,12 @@
     .gl-item { display: grid; gap: .55rem; padding: .55rem; border-radius: 1.3rem; background: var(--color-white); border: 1px solid var(--color-gray-200);
         animation: glRise .34s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 40ms); transition: border-color .28s cubic-bezier(.22,1,.36,1); }
     .gl-item.is-old { border-color: #fcd34d; }
+    /* A copy just made: it rises in with a short yellow glow, so the eye finds it. */
+    .gl-item.is-new { animation: glRise .34s cubic-bezier(.22,1,.36,1) both, glNew 1.6s cubic-bezier(.22,1,.36,1) .2s both; }
+    @keyframes glNew { 0% { box-shadow: 0 0 0 0 rgb(245 197 24 / 0); border-color: #f5c518; } 30% { box-shadow: 0 0 0 5px rgb(245 197 24 / .35); border-color: #f5c518; } 100% { box-shadow: 0 0 0 0 rgb(245 197 24 / 0); } }
+    .gl-acts .gl-dup { display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; }
+    .gl-acts .gl-dup svg { width: .95rem; height: .95rem; flex: none; }
+    .gl-acts .gl-dup.is-busy { opacity: .55; pointer-events: none; }
     .gl-item .fl-card { border-color: transparent; animation: none; }
     .gl-item .fl-card .fl-ck { display: none; }
     .gl-item .fl-ans { padding: 0 .1rem; }
@@ -60,7 +66,7 @@
     html.dark .gl-old { color: #fde68a; background: #2a2010; border-color: #5c4413; }
     html.dark .gl-item { background: #151b12; border-color: #2b3a1c; }
     html.dark .gl-item.is-old { border-color: #6b4f12; }
-    @media (prefers-reduced-motion: reduce) { .gl-hero img, .gl-item, .gl-old { animation: none; } .gl-item { transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .gl-hero img, .gl-item, .gl-item.is-new, .gl-old { animation: none; } .gl-item { transition: none; } }
 </style>
 @endpush
 
@@ -108,18 +114,21 @@
             return;
         }
         if (!list.length) { $('glGrid').innerHTML = '<div class="gl-empty">No lot by that name or place.</div>'; return; }
-        $('glGrid').innerHTML = list.map((l, i) => '<div class="gl-item' + (l.stale ? ' is-old' : '') + '" style="--i:' + Math.min(i, 10) + '" data-id="' + l.id + '">'
+        $('glGrid').innerHTML = list.map((l, i) => '<div class="gl-item' + (l.stale ? ' is-old' : '') + (l.id === NEW_ID ? ' is-new' : '') + '" style="--i:' + Math.min(i, 10) + '" data-id="' + l.id + '">'
             + L().card(l, false, 0)
             // Preview answers and Edit answers (2026-10-19, the owner): each opens a sheet, no card opens here.
             + L().ansButtons('data-act="prev"', 'data-act="answers"')
             + '<p class="gl-meta">' + (l.stale ? 'Last checked ' + esc(l.updated) + '. Due for a check.' : 'Last checked ' + esc(l.updated) + '. Next check by ' + esc(l.staleOn) + '.') + '</p>'
             + onMap(l)
             + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
+            + '<button type="button" class="btn btn-white gl-dup" data-act="dup" aria-label="Duplicate ' + esc(l.name) + '">' + COPY + 'Duplicate</button>'
             + (l.stale ? '<button type="button" class="btn btn-white" data-act="fine">Still correct</button>' : '')
             + '<button type="button" class="btn btn-white gl-map' + (l.pin ? ' is-set' : '') + '" data-act="pin">' + PIN + (l.pin ? 'Move pin' : 'Set pin') + '</button>'
             + '<button type="button" class="btn btn-white gl-map' + (l.boundary ? ' is-set' : '') + '" data-act="draw">' + SHAPE + (l.boundary ? 'Edit boundary' : 'Draw boundary') + '</button>'
             + '<button type="button" class="btn btn-ghost gl-del" data-act="del" aria-label="Delete ' + esc(l.name) + '" title="Delete this lot">' + TRASH + '</button></div></div>').join('');
     }
+    const COPY = '<svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5V6.6a2.1 2.1 0 00-2.1-2.1H6.6a2.1 2.1 0 00-2.1 2.1v6.8a2.1 2.1 0 002.1 2.1h1.9"/></svg>';
+    let NEW_ID = 0;
     const TRASH = '<svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 7h15M10 11v6m4-6v6M6.5 7l.9 12a2 2 0 002 1.8h5.2a2 2 0 002-1.8l.9-12M9.5 7V4.8c0-.5.4-.8.8-.8h3.4c.4 0 .8.3.8.8V7"/></svg>';
     const PIN = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0113 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></svg>';
     const SHAPE = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M5 7l8-3 6 6-3 9-10-2z"/><circle cx="5" cy="7" r="1.6" fill="currentColor"/><circle cx="13" cy="4" r="1.6" fill="currentColor"/><circle cx="19" cy="10" r="1.6" fill="currentColor"/><circle cx="16" cy="19" r="1.6" fill="currentColor"/><circle cx="6" cy="17" r="1.6" fill="currentColor"/></svg>';
@@ -153,6 +162,19 @@
                 if (row) await load(true);
             }
             else if (act === 'fine') await L().confirm(lot);
+            else if (act === 'dup') {
+                const b = e.target.closest('[data-act]');
+                b.classList.add('is-busy');
+                try {
+                    const r = await window.api(DEL + '/' + lot.id + '/duplicate', { method: 'POST' });
+                    NEW_ID = Number((r.data && r.data.row && r.data.row.id) || 0);
+                    await load(true);
+                    const el = NEW_ID && $('glGrid').querySelector('[data-id="' + NEW_ID + '"]');
+                    if (el) el.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+                    window.toast?.(r.message, 'success');
+                    setTimeout(() => { NEW_ID = 0; }, 2500);
+                } finally { b.classList.remove('is-busy'); }
+            }
             else if (act === 'del') {
                 const ok = await window.confirmAction({ title: 'Delete ' + lot.name + '?', message: 'Its place, size and answers go. Analyses you already ran keep what they read.', confirmText: 'Delete the lot' });
                 if (!ok) return;

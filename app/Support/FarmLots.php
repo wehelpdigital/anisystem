@@ -211,6 +211,28 @@ final class FarmLots
     }
 
     /**
+     * A copy of a lot (2026-10-19, the owner): its answers, place, size and
+     * unit, under its name with the next number ("North field 2"). Not its
+     * map pin or boundary, a copy being another piece of ground, and not its
+     * season links. Null when the lot is not this owner's.
+     */
+    public static function duplicate(int $ownerId, int $id): ?array
+    {
+        $l = self::one($ownerId, $id);
+        if (! $l) {
+            return null;
+        }
+        $data = ['name' => (string) ($l['name'] ?? 'My lot'), 'answers' => (array) ($l['answers'] ?? [])];
+        foreach (['province', 'town', 'barangay', 'areaHa', 'areaUnit'] as $k) {
+            if (array_key_exists($k, $l)) {
+                $data[$k] = $l[$k];
+            }
+        }
+
+        return self::save($ownerId, $data);
+    }
+
+    /**
      * Set or take off a lot's pin. Not a check of its answers, so the six
      * months keep running (updated_at is left alone).
      */

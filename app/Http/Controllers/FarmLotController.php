@@ -54,6 +54,18 @@ class FarmLotController extends Controller
             : $this->json(false, 'That lot is gone.', [], 404);
     }
 
+    /** A copy of a lot: its answers, place and size, the next number on its name; the map is drawn again. */
+    public function duplicate(int $id)
+    {
+        if (! FarmLots::ready()) {
+            return $this->json(false, 'Lots are not ready yet.', [], 503);
+        }
+        $row = FarmLots::duplicate(WorkerContext::effectiveOwnerId(), $id);
+
+        return $row ? $this->json(true, 'Copied as ' . $row['name'] . '. Its answers, place and size came with it; set its own pin and boundary on the map.', ['row' => $row])
+            : $this->json(false, 'That lot is gone.', [], 404);
+    }
+
     public function destroy(int $id)
     {
         return FarmLots::remove(WorkerContext::effectiveOwnerId(), $id)

@@ -134,6 +134,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'lpRound2' => Illuminate\Support\Facades\Route::has('landprep.check') && Illuminate\Support\Facades\Schema::hasTable('as_field_profiles'),
             // Global Lots (2026-10-16): the routes, and the lot columns the migration adds.
             'farmLots' => Illuminate\Support\Facades\Route::has('farmlots.index') && Illuminate\Support\Facades\Schema::hasColumn('as_field_profiles', 'barangay'),
+            'farmLotsDuplicate' => Illuminate\Support\Facades\Route::has('farmlots.duplicate'),
             'lotUnit' => Illuminate\Support\Facades\Schema::hasColumn('as_field_profiles', 'areaUnit'),
             // The lot's answers as question and answer cards, and no crop on a lot (2026-10-16).
             'lotAnswers' => str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'fl-qa')
@@ -941,6 +942,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/farm-lots', [App\Http\Controllers\FarmLotController::class, 'save'])->middleware('throttle:60,1')->name('farmlots.save');
     Route::post('/app/farm-lots/{id}', [App\Http\Controllers\FarmLotController::class, 'update'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.update');
     Route::post('/app/farm-lots/{id}/checked', [App\Http\Controllers\FarmLotController::class, 'confirm'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.confirm');
+    Route::post('/app/farm-lots/{id}/duplicate', [App\Http\Controllers\FarmLotController::class, 'duplicate'])->whereNumber('id')->middleware('throttle:30,1')->name('farmlots.duplicate');
     Route::delete('/app/farm-lots/{id}', [App\Http\Controllers\FarmLotController::class, 'destroy'])->whereNumber('id')->name('farmlots.delete');
     // A lot's pin and boundary on the map (2026-10-16), and the map's place search.
     Route::post('/app/farm-lots/{id}/pin', [App\Http\Controllers\FarmLotController::class, 'pin'])->whereNumber('id')->middleware('throttle:60,1')->name('farmlots.pin');
