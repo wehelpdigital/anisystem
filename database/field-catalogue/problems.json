@@ -22796,18 +22796,7 @@
    "sources": [],
    "ranks": {},
    "aiBy": {},
-   "avoid": [
-    [
-     "Pymetrozine",
-     "A spray cannot cure tungro, and pymetrozine is weak on the green leafhopper. See the leafhopper's own list.",
-     null
-    ],
-    [
-     "Buprofezin",
-     "Kills leafhopper nymphs only, not the winged adults that bring tungro in. It cannot cure the virus.",
-     null
-    ]
-   ],
+   "avoid": [],
    "prevent": [
     "Plant a tungro resistant or leafhopper resistant variety where tungro has struck, and change varieties every few seasons.",
     "Plant together across the barangay after a fallow, and avoid the weeks when leafhoppers peaked before.",
@@ -28503,18 +28492,7 @@
     "banana": 0
    },
    "aiBy": {},
-   "avoid": [
-    [
-     "Dimethoate",
-     "No spray cures the virus. To clear aphids from a sick mat before you destroy it, use a product named under banana aphid.",
-     null
-    ],
-    [
-     "Acephate",
-     "No spray cures the virus. To clear aphids from a sick mat before you destroy it, use a product named under banana aphid.",
-     null
-    ]
-   ],
+   "avoid": [],
    "prevent": [
     "Plant only virus tested tissue culture plantlets. Never take suckers from a bunched mat or from a farm where bunchy top is found.",
     "On a sick mat, kill the aphids first with soap, oil or a banana aphid spray, then inject herbicide or dig out the whole mat and all its suckers.",
