@@ -59,7 +59,10 @@ final class GovSource
         . '|international\s+rice\s+research|irri\.org|\birri\b|food\s+and\s+agriculture\s+organi[sz]ation|\bfao\b|fao\.org|cimmyt|avrdc'
         . '|world\s*veg|vegetable\s+center|\bcabi\b|cabi\.org|plantwise|rice\s+knowledge\s+bank|knowledgebank|rice\s+crop\s+manager|nutrient\s+manager|palay[\s_-]?check'
         // State universities abroad the catalogues cited, and the weather and disaster agencies (2026-10-17).
-        . '|\btnau\b|tnau\.ac\.in|kerala\s+agricultural\s+university|\bkau\.in|uf\s+ifas|\bifas\b|ufl\.edu|phivolcs|ndrrmc|\bnoaa\b|noaa\.gov|\bjtwc\b|jma\.go\.jp/i';
+        . '|\btnau\b|tnau\.ac\.in|kerala\s+agricultural\s+university|\bkau\.in|uf\s+ifas|\bifas\b|ufl\.edu|phivolcs|ndrrmc|\bnoaa\b|noaa\.gov|\bjtwc\b|jma\.go\.jp'
+        // Research bodies, universities and governments abroad that the crop tables cited (2026-10-19).
+        . '|\bicar\b|icar\.(?:org|gov)\.in|icrisat|embrapa|jircas|\bciat\b|cgiar|inifap|\bunesp\b|csiro|\baciar\b|\.gob\.[a-z]{2}\b|\.gov\.(?:au|in|my|th|vn|id|cn)\b|\.ac\.in\b'
+        . '|\buniversit(?:y|ies|ad|ade|e)\b|\bnt\s+government/i';
 
     /** The acronyms, matched as capitals only (BPI Ri 1 is a variety, not a source). */
     private const CAPS = '/\b(?:DA|BPI(?!\s*-?\s*(?:[A-Z][a-z]{0,2}\s*-?\s*)?\d)|ATI|NIA|PCA|FPA|SRA|NFA|PSA|BFAR|DOST|NSIC(?!\s*(?:\d{4}\s*)?(?:[A-Z][a-z]{0,3}\s*-?\s*\d|Rice|\d))|UPLB|CLSU|VSU|CMU|ISU|BSU|MMSU|USM|CvSU|RFO|TNAU|KAU|OCD|JMA|JTWC|NOAA|PHIVOLCS|NDRRMC)\b/';

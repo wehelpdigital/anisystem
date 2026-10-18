@@ -165,7 +165,7 @@ final class NpkModel
             'sources' => []],
         'corn_sweet' => ['w' => [8, 15], 'n' => [50000, 66667], 'countWord' => 'plants', 'note' => 'No Philippine guide states a sweet corn rate, so this follows a seed company guideline of 55,000 to 60,000 plants per hectare from roughly 8 to 15 kg depending on seed size, which matches 75 cm rows at 20 to 25 cm.',
             'sources' => [['label' => 'Starke Ayres, Sweetcorn production guideline (South Africa, not Philippine)', 'url' => 'https://www.starkeayres.com/uploads/files/Sweetcorn-Production-Guideline-2019.pdf']]],
-        'sorghum' => ['w' => [8, 10], 'n' => null, 'countWord' => null, 'note' => 'The ICRISAT, MMSU and PCARRD book on sweet sorghum in the Philippines lists 8 kg of seed per hectare, and Indian sweet sorghum practice goes to about 10 kg.',
+        'sorghum' => ['w' => [8, 10], 'n' => null, 'countWord' => null, 'note' => 'A sweet sorghum guide for the Philippines lists 8 kg of seed per hectare, and sweet sorghum practice in India goes to about 10 kg.',
             'sources' => []],
         'mungbean' => ['w' => [18, 20], 'n' => null, 'countWord' => null, 'note' => 'Drill 18 to 20 kg of mungbean seed per hectare in rows 50 to 60 cm apart.',
             'sources' => []],
@@ -395,7 +395,7 @@ final class NpkModel
 
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
-            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => self::SEEDING, 'elements' => self::ELEMENTS, 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
+            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
             'field' => self::FIELD,
         ];
     }

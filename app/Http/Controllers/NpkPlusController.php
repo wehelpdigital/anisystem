@@ -85,7 +85,10 @@ class NpkPlusController extends Controller
             'products' => $products->map(fn ($p) => $this->productRow($p))->values(),
             'categories' => self::CATEGORIES,
             'crops' => collect(NpkCrops::TABLE)->map(fn ($c, $k) => ['key' => $k, 'label' => CropCatalog::label($k), 'icon' => CropCatalog::CROPS[$k]['icon'] ?? '🌱',
-                'group' => CropCatalog::CROPS[$k]['group'] ?? 'Other crops', 'maturity' => CropCatalog::CROPS[$k]['maturity'] ?? null, 'perennial' => CropCatalog::isPerennial($k)] + $c)->values(),
+                'group' => CropCatalog::CROPS[$k]['group'] ?? 'Other crops', 'maturity' => CropCatalog::CROPS[$k]['maturity'] ?? null, 'perennial' => CropCatalog::isPerennial($k),
+                // The crop's sources as shown under "How NPK Plus counted the need": never a government body, institute or university
+                // (GovSource, 2026-10-19); the long 'about' notes are for us and are not sent.
+                'sources' => \App\Support\GovSource::keep($c['sources'] ?? [])] + array_diff_key($c, ['about' => 1]))->values(),
             'soilConditions' => SoilConditions::OPTIONS,
             'model' => \App\Support\NpkModel::forClient(),
             'water' => self::WATER,
