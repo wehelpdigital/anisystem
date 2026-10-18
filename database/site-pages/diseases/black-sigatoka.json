@@ -138,29 +138,88 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Mancozeb",
-          "FRAC M3",
-          "a multi site protectant, helps against resistance when mixed or rotated"
+          "FRAC M03",
+          "A first choice. 110 registered products name it on banana."
         ],
         [
           "Chlorothalonil",
-          "FRAC M5",
-          "a multi site protectant used on banana leaves"
+          "FRAC M05",
+          "A first choice. 107 registered products name it on banana."
+        ],
+        [
+          "Difenoconazole",
+          "FRAC 3",
+          "A sound second choice. 56 registered products name it on banana."
+        ],
+        [
+          "Pyraclostrobin",
+          "FRAC 11",
+          "A sound second choice. 27 registered products name it on banana."
+        ],
+        [
+          "Benomyl",
+          "FRAC 1",
+          "A sound second choice. 26 registered products name it on banana."
         ],
         [
           "Thiophanate methyl",
           "FRAC 1",
-          "a benzimidazole, listed among products used for pre harvest control"
+          "A sound second choice. 19 registered products name it on banana."
+        ],
+        [
+          "Propineb",
+          "FRAC M03",
+          "A sound second choice. 16 registered products name it on banana."
+        ],
+        [
+          "Propiconazole",
+          "FRAC 3",
+          "A sound second choice. 15 registered products name it on banana."
+        ],
+        [
+          "Tebuconazole",
+          "FRAC 3",
+          "A sound second choice. 12 registered products name it on banana."
+        ],
+        [
+          "Tridemorph",
+          "FRAC 5",
+          "A sound second choice. 12 registered products name it on banana."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 37 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Iprodione:** Its banana label is mainly for crown rot of the fruit. It does little against black sigatoka on the leaves.",
+        "**Mineral oil:** A spray oil: it carries the fungicide and slows the fungus a little, but alone it will not hold black sigatoka.",
+        "**Isoprothiolane:** A rice blast fungicide with no good proof against black sigatoka. Use a proven protectant instead.",
+        "**Organosilicone surfactant plus non ionic surfactant and non ionic surfactant plus c12 Fatty Acids:** A wetting agent, not a fungicide: it only helps a real fungicide spread and stick.",
+        "**Saponin (tea seed):** A tea seed extract that works mostly as a wetting agent. No good proof that it holds black sigatoka."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** This fungus resists group 1 (benomyl, thiophanate methyl) and group 11 (strobilurins) widely in Latin America and Africa. Philippine plantations still test sensitive, so keep it that way. Mix every systemic with mancozeb or chlorothalonil, never spray one group twice in a row, keep groups 1, 7, 11 and 21 to about 3 sprays a year each and group 3 to 8, never over half of all sprays."
     },
     {
       "type": "callout",
@@ -176,11 +235,23 @@
     {
       "type": "list",
       "items": [
-        "Start each planting from clean, tissue cultured material.",
-        "Remove dead and dying leaves on a fixed schedule, especially after heavy rain.",
-        "Keep drainage open and spacing wide, so leaves dry quickly after rain.",
-        "Feed plants well. Fertile soil gives stronger plants, which hold their leaves longer.",
-        "Read our [plant diseases guide](/diseases/plant-diseases-philippines) to learn the other banana diseases to watch, such as [moko disease](/diseases/moko-disease)."
+        "Plant clean tissue culture plantlets on well drained land, with rows along the usual wind and wide spacing, so leaves dry fast after rain.",
+        "Every week in the wet months, cut off leaves more than half dead and cut out streaked parts. Take them out of the field or bury them.",
+        "Keep 3 or 4 plants per mat (the bearing plant, one follower and one or two small suckers) and remove the rest so air moves.",
+        "Keep weeds down, keep drains open and feed the plants well, with enough potash, so they hold their leaves longer.",
+        "After harvest, strip the dead leaves from the cut mother plant too. Old leaves on the ground feed the next wave of spores.",
+        "Where the disease is heavy, grow tolerant cooking banana types. Dessert types lose their leaves fastest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Bacillus based biologicals and tea tree oil products can fill drier weeks inside a program, but none holds black sigatoka alone in heavy rain."
       ]
     },
     {

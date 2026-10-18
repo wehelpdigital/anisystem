@@ -139,34 +139,68 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Dimethoate",
           "IRAC 1B",
-          "a systemic spray for seedlings, listed by Pacific Pests"
+          "A sound second choice. Registered products name it on mungbean, soybean, string bean and cowpea."
         ],
         [
-          "Diazinon",
+          "Lambda cyhalothrin plus thiamethoxam",
+          "IRAC 3A plus 4A",
+          "A sound second choice. 1 registered product names it on string bean."
+        ],
+        [
+          "Cypermethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean and cowpea."
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 91 registered products name it on mungbean."
+        ],
+        [
+          "Profenofos",
           "IRAC 1B",
-          "listed by Pacific Pests for seedlings"
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean and cowpea."
         ],
         [
           "Methomyl",
           "IRAC 1A",
-          "listed by Pacific Pests for seedlings"
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean and cowpea."
         ],
         [
-          "Imidacloprid",
-          "IRAC 4A",
-          "as a seed dressing, which Pacific Pests calls promising"
+          "Malathion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean, cowpea and more."
+        ],
+        [
+          "Fenobucarb (BPMC) plus chlorpyrifos",
+          "IRAC 1A plus 1B",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean, cowpea and more."
+        ],
+        [
+          "Carbaryl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean and cowpea."
+        ],
+        [
+          "Carbofuran",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean, cowpea and more."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 6 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
     },
     {
       "type": "callout",
@@ -182,10 +216,23 @@
     {
       "type": "list",
       "items": [
-        "Clear volunteer beans and wild legumes before planting.",
-        "Keep new plantings away from old bean fields.",
-        "Hill up the young plants and mulch them.",
-        "Remove the crop remains after harvest."
+        "Clear volunteer beans and wild legumes before planting, and keep the new crop away from old bean fields.",
+        "Plant on time with vigorous seed, and water and feed so seedlings grow fast through the first 3 weeks.",
+        "Hill up soil around the stems at 2 to 3 weeks and mulch. The plant grows new roots above the damage.",
+        "Where bean fly is common, sow a little more seed than usual to make up for lost seedlings.",
+        "After harvest, collect the crop remains and burn or bury them."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small wasps parasitize the maggots in the stems. Spare them by not spraying past the seedling stage.",
+        "A 5 percent neem seed kernel extract on seedlings matched an insecticide in mungbean trials. Use it no more than 4 times."
       ]
     },
     {

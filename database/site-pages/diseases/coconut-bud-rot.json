@@ -137,27 +137,17 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Copper (Bordeaux paste)",
-          "FRAC M1",
-          "applied to the crown after removing infected fronds, according to the Pacific fact sheet"
-        ],
-        [
-          "Phosphorous acid",
+          "Fosetyl aluminium",
           "FRAC P07",
-          "given by injection, recommended in the Pacific fact sheet"
-        ],
-        [
-          "Metalaxyl",
-          "FRAC 4",
-          "given by injection, listed in the same fact sheet"
+          "A first choice. 9 registered products name it on coconut."
         ]
       ]
     },
@@ -175,10 +165,12 @@
     {
       "type": "list",
       "items": [
-        "Plant on well drained land, and keep the planting open to wind and sun.",
-        "Raise seedlings in a clean, well drained nursery, and look at them every week.",
-        "Do not plant palms too close, and clear plant debris around young palms, since the water mold survives there.",
-        "Check young palms after heavy rain, since wet weather is when bud rot begins. Our [plant diseases guide](/diseases/plant-diseases-philippines) lists other diseases to watch."
+        "Open drains in low, wet parts of the farm and avoid planting coconut where water stands after rain.",
+        "Do not crowd the palms, and clear trash around young palms, so air moves through the crowns and they dry after rain.",
+        "Cut down and burn a palm with a rotten bud as soon as you find it, so its spores do not reach the neighbors.",
+        "Keep nurseries clean and drained, do not crowd the seedlings, and pull out and burn any sick seedling.",
+        "Keep rhinoceros beetle and palm weevil damage down. Their holes in the crown let water and the water mold in.",
+        "Plant hybrids or tall types in wet areas. Pure dwarf types catch bud rot most easily."
       ]
     },
     {

@@ -135,6 +135,52 @@
       "text": "A soil insecticide comes last, and its timing must match the young grubs, since older grubs are harder to kill. The sources we used do not name an active ingredient, so ask the DA for an FPA registered product and follow the label."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "A first choice. 1 registered product names it on pineapple."
+        ],
+        [
+          "Spirotetramat",
+          "IRAC 23",
+          "A sound second choice. 19 registered products name it on pineapple."
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "A sound second choice. Registered products name it on corn and sugarcane."
+        ],
+        [
+          "Tetraniliprole",
+          "IRAC 28",
+          "A sound second choice. 1 registered product names it on corn."
+        ],
+        [
+          "Carbofuran",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. Registered products name it on corn and peanut."
+        ],
+        [
+          "Chlorpyrifos",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. Registered products name it on sugarcane and pineapple."
+        ]
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -148,10 +194,23 @@
     {
       "type": "list",
       "items": [
-        "Join the community beetle collection every year at the first beetle flight.",
-        "Plow and cultivate the soil well after harvest.",
-        "Keep light traps in the area during the beetle flight.",
-        "Watch fields that had grubs last year, since the grubs live one to two years."
+        "Collect the beetles by hand and with light traps for about three weeks from their first flight at the start of the rains, as a whole village.",
+        "Plow deep and harrow more than once. Pick up the grubs and let birds, earwigs and fire ants take the rest.",
+        "Time planting and cultivation to the beetle season, so young grubs meet freshly worked soil.",
+        "Flood the field for a few days where water allows. Grubs drown or come up for the birds.",
+        "Check the roots of a few wilting plants before you decide. Orange yellow patches that wilt are the sign."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Scoliid wasps lay their eggs on the grubs, and ground beetles, birds, toads and fungus diseases kill many more.",
+        "Metarhizium fungus mixed into the furrow or into compost infects the grubs. It works best on young ones."
       ]
     },
     {

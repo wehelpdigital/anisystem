@@ -138,27 +138,42 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Mancozeb",
-          "FRAC M3",
-          "protectant, named by the Pacific Pests fact sheet, start at about six pustules per leaf"
+          "Difenoconazole plus propiconazole",
+          "FRAC 3 plus 3",
+          "A first choice. 24 registered products name it on corn."
+        ],
+        [
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A first choice. 10 registered products name it on corn."
+        ],
+        [
+          "Azoxystrobin",
+          "FRAC 11",
+          "A sound second choice. 19 registered products name it on corn."
+        ],
+        [
+          "Tebuconazole",
+          "FRAC 3",
+          "A sound second choice. 12 registered products name it on corn."
         ],
         [
           "Chlorothalonil",
-          "FRAC M5",
-          "protectant, named by the Pacific Pests fact sheet"
+          "FRAC M05",
+          "A sound second choice. 11 registered products name it on corn."
         ],
         [
-          "Propiconazole",
-          "FRAC 3",
-          "tested against southern rust in research trials"
+          "Fluoxastrobin",
+          "FRAC 11",
+          "A sound second choice. 2 registered products name it on corn."
         ]
       ]
     },
@@ -176,10 +191,11 @@
     {
       "type": "list",
       "items": [
-        "Choose a rust tolerant hybrid and check the seed label or ask your supplier.",
-        "Keep the field clean of volunteer corn and weeds that carry the fungus.",
-        "Plant on time with your neighbors, so the crop avoids the warm, wet peak.",
-        "Record the weeks rust appeared, then change your planting date next season."
+        "Plant a resistant hybrid: it is the best and cheapest rust control.",
+        "Plant early or in the drier season, and do not plant beside an older infected field.",
+        "Destroy volunteer corn, and plow under or remove the crop residue after harvest.",
+        "Remove Oxalis weeds near the field, since they can host common rust.",
+        "Feed balanced nitrogen with enough potassium."
       ]
     },
     {

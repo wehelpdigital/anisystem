@@ -137,23 +137,30 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
-        ],
-        [
-          "Fipronil",
-          "IRAC 2B",
-          "trunk injection, uneconomical for coconut per the Pacific fact sheet"
+          "On Philippine labels"
         ],
         [
           "Imidacloprid",
           "IRAC 4A",
-          "trunk injection, uneconomical for coconut per the Pacific fact sheet"
+          "No product sold here names it on its label yet. Ask your technician before you use it."
         ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Fipronil:** Very toxic to bees, fish and the earwigs that eat weevil grubs, and no label names this weevil."
       ]
     },
     {
@@ -170,10 +177,24 @@
     {
       "type": "list",
       "items": [
-        "Prune with care and keep the cuts small and clean.",
-        "Do not cut steps in the trunk for climbing.",
-        "Remove dying palms promptly so they do not become a breeding place.",
-        "Walk the grove often and look for frass, brown fluid at the holes and wilting crowns."
+        "Do not wound the trunk: cut no climbing steps, and cut green fronds about 120 cm from the trunk.",
+        "Seal any trunk wound or cut at once with tar or mud. The females lay eggs in fresh wounds.",
+        "Cut down palms past saving, split them and burn or bury them, so the grubs inside cannot become adults.",
+        "Treat bud rot and rhinoceros beetle holes early. The weevil lays eggs in the wounds and rotting tissue they leave.",
+        "Trap adults with a pheromone lure in a bucket baited with sugarcane, or a split log with toddy, and kill the catch each week.",
+        "Clean rotting debris out of the leaf axils and crown now and then."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Earwigs and assassin bugs eat the eggs and young grubs. Avoid spraying the crowns.",
+        "Weevils caught in traps can be killed with Beauveria or Metarhizium fungus instead of poison."
       ]
     },
     {

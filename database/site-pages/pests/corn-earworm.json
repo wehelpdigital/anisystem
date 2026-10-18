@@ -138,39 +138,85 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Lambda cyhalothrin",
-          "IRAC 3A",
-          "listed for fruitworm control in vegetables by a Philippine seed company"
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "A first choice. Registered products name it on corn, tobacco and tomato."
         ],
         [
-          "Tebufenozide",
-          "IRAC 18A",
-          "listed in the same source"
+          "Bacillus thuringiensis kurstaki",
+          "IRAC 11A",
+          "A first choice. Registered products name it on tobacco, cotton and tomato."
         ],
         [
-          "Fipronil",
-          "IRAC 2B",
-          "listed in the same source"
+          "Bacillus thuringiensis aizawai",
+          "IRAC 11A",
+          "A first choice. 1 registered product names it on corn."
         ],
         [
-          "Cypermethrin",
-          "IRAC 3A",
-          "named in a Philippine review of corn pests and their management"
+          "Emamectin benzoate",
+          "IRAC 6",
+          "A first choice. Registered products name it on corn and tomato."
         ],
         [
-          "Deltamethrin",
-          "IRAC 3A",
-          "named in the same Philippine review"
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 6 registered products name it on tobacco."
+        ],
+        [
+          "Flubendiamide",
+          "IRAC 28",
+          "A sound second choice. Registered products name it on tobacco and tomato."
+        ],
+        [
+          "Indoxacarb",
+          "IRAC 22A",
+          "A sound second choice. Registered products name it on corn and tobacco."
+        ],
+        [
+          "Abamectin",
+          "IRAC 6",
+          "A sound second choice. 2 registered products name it on tobacco."
+        ],
+        [
+          "Lufenuron",
+          "IRAC 15",
+          "A sound second choice. 2 registered products name it on tomato."
+        ],
+        [
+          "Pyridalyl",
+          "IRAC UN",
+          "A sound second choice. Registered products name it on corn and tobacco."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 19 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Deltamethrin, cypermethrin, alpha cypermethrin, beta cypermethrin, permethrin, beta cyfluthrin, lambda cyhalothrin and fenvalerate:** Corn earworm resists pyrethroids across Asia, and the spray kills the egg wasps, spiders and bugs that eat it.",
+        "**Lambda cyhalothrin plus thiamethoxam and acetamiprid plus bifenthrin:** Its pyrethroid part is widely resisted by earworm in Asia, and the other part does nothing to caterpillars."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Corn earworm (Helicoverpa armigera) resists pyrethroids across Asia through a gene now found almost everywhere, and in places resists organophosphates, carbamates and Bt cotton too. Rotate by generation, one group for about 30 days, among 28, 6, 22A, 5 and Bt, and never follow one group 28 product with another."
     },
     {
       "type": "callout",
@@ -186,10 +232,25 @@
     {
       "type": "list",
       "items": [
-        "Plant corn early and plant together with the farms around you, so the silking window is short.",
-        "Clean the field of weeds and crop residue after harvest.",
-        "Check the ear tips every week from silking.",
-        "Keep weeds down around the field, so moths have fewer places to lay eggs."
+        "Plow after harvest to break the pupal cells in the soil, and keep weeds and volunteer plants out of the field.",
+        "Plant corn at the same time as your neighbors, so silking does not drag on across the area.",
+        "Pick larvae by hand on small plots, and destroy bored fruits and ears so the larvae do not finish growing.",
+        "Plant a border of sunflower, marigold or castor around tomato and pepper as a trap crop, and spray or pick the larvae there.",
+        "A sex pheromone trap shows when moths arrive, so you know when to start checking silks and flowers."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Trichogramma egg wasp cards cut earworm damage on corn in local trials. Release them as silking begins.",
+        "Spiders, lady beetles, assassin bugs and ants eat the eggs and young larvae. Skip pyrethroids to keep them.",
+        "Bt, neem and the fungi Beauveria and Metarhizium kill young larvae. Use them before any synthetic spray.",
+        "Helicoverpa NPV, where sold, kills the larvae and spares every natural enemy."
       ]
     },
     {

@@ -138,34 +138,38 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
-        ],
-        [
-          "Chlorpyrifos",
-          "IRAC 1B",
-          "listed in the Pacific fact sheet, check the FPA registration first"
+          "On Philippine labels"
         ],
         [
           "Fipronil",
           "IRAC 2B",
-          "listed in the Pacific fact sheet, check the FPA registration first"
+          "A sound second choice. 2 registered products name it on banana."
         ],
         [
           "Bifenthrin",
           "IRAC 3A",
-          "listed in the Pacific fact sheet, check the FPA registration first"
+          "A sound second choice. 1 registered product names it on banana."
         ],
         [
-          "Imidacloprid",
-          "IRAC 4A",
-          "listed in the Pacific fact sheet, check the FPA registration first"
+          "Carbofuran",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 2 registered products name it on banana."
+        ],
+        [
+          "Oxamyl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on banana."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Banana weevils have resisted cyclodienes, organophosphates and carbamates in other banana countries where one soil product was used for years. Rotate fipronil (2B), bifenthrin (3A) and imidacloprid (4A), and let clean suckers and traps carry most of the load."
     },
     {
       "type": "callout",
@@ -181,10 +185,24 @@
     {
       "type": "list",
       "items": [
-        "Buy tissue cultured plants or inspected suckers only.",
-        "Never plant suckers taken from a field with weak, tunneled mats.",
-        "Chop and dry harvested pseudostems.",
-        "Rest the land after you remove old corms, for at least 3 months and longer if you can."
+        "Plant tissue cultured plantlets, or pare suckers down to clean white flesh and throw out any with tunnels.",
+        "A hot water dip of pared suckers, about 53 to 55 C for 20 minutes, kills grubs and eggs and also nematodes.",
+        "After clearing an old field, rest it or grow another crop as long as you can before banana again. A year beats 3 months.",
+        "Cut harvested stems at ground level, chop them and spread the pieces to dry. Rotting stumps breed weevils.",
+        "Lay split pseudostem traps cut side down by the mats, collect the weevils every few days, and change the traps every 2 weeks.",
+        "Desucker on time and keep old corms out of the field, so adults find fewer places to lay eggs."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Beauveria bassiana put on the cut face of pseudostem traps infects the weevils that come, and they carry it to others.",
+        "Predatory beetles (Plaesius) and some ants eat weevil eggs and grubs in the mat. Avoid soaking the soil with broad insecticides."
       ]
     },
     {

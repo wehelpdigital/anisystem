@@ -137,6 +137,32 @@
       "text": "A virus has no cure, so the control is the vector and clean plants. Extension sources say that insecticides are not economical for this disease, since the infection rate is usually low. If hopper numbers are very high on young plants, ask the DA about an FPA registered product. We name no active ingredient here, because our sources named none."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Pymetrozine",
+          "IRAC 9B",
+          "A first choice. 30 registered products name it on corn."
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "A sound second choice. 1 registered product names it on corn."
+        ]
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -150,10 +176,22 @@
     {
       "type": "list",
       "items": [
-        "Keep the field and its borders free of itch grass and other grass weeds.",
-        "Rogue out sick plants early, in the first weeks.",
-        "Plant the same variety together with the farms around you where you can.",
-        "Use virus resistant seed when you can get it."
+        "Pull out striped, stunted plants early: close the young leaves in your hand so hoppers cannot jump, bag the plant and burn it.",
+        "Clear itch grass, barnyard grass and goosegrass from the field and borders. They keep the hopper and the virus alive.",
+        "Rotate corn with a crop that is not a grass, so the hoppers lose their food between seasons.",
+        "Plant at the same time as your neighbors, and use virus resistant seed where it is sold."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spiders, lady beetles, mirid bugs that eat hopper eggs, and egg wasps keep numbers down. Avoid broad sprays that kill them.",
+        "Beauveria or Metarhizium fungus infects hoppers in humid weather."
       ]
     },
     {

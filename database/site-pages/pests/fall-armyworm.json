@@ -128,6 +128,80 @@
       "text": "Pick by active ingredient and group, not by brand, and rotate groups between sprays to slow resistance. Aim the spray into the whorl, where the larvae hide, and hit them while they are small."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "A first choice. 10 registered products name it on corn."
+        ],
+        [
+          "Bacillus thuringiensis aizawai",
+          "IRAC 11A",
+          "A first choice. 2 registered products name it on corn."
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "A first choice. 2 registered products name it on corn."
+        ],
+        [
+          "Spinetoram",
+          "IRAC 5",
+          "A first choice. 2 registered products name it on corn."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 6 registered products name it on corn."
+        ],
+        [
+          "Bacillus thuringiensis kurstaki",
+          "IRAC 11A",
+          "A sound second choice. 2 registered products name it on corn."
+        ],
+        [
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A sound second choice. 2 registered products name it on corn."
+        ],
+        [
+          "Indoxacarb",
+          "IRAC 22A",
+          "A sound second choice. 2 registered products name it on corn."
+        ],
+        [
+          "Lufenuron",
+          "IRAC 15",
+          "A sound second choice. 2 registered products name it on corn."
+        ],
+        [
+          "Pyridalyl",
+          "IRAC UN",
+          "A sound second choice. 2 registered products name it on corn."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 8 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Fall armyworm reached Asia carrying resistance to pyrethroids, organophosphates and carbamates, and some fields in China now respond less to chlorantraniliprole. Use one group for about 30 days, the life of one generation, then switch: 28, then 5 or 6, then 22A or 15. A group 28 seed treatment counts as the first window."
+    },
+    {
       "type": "table",
       "caption": "Label crops and pests from Syngenta Philippines product pages and the Cagayan Valley protocol, checked September 2026. Always read the label on the bottle you buy.",
       "rows": [

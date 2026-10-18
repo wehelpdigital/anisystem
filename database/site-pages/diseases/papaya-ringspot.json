@@ -149,11 +149,22 @@
     {
       "type": "list",
       "items": [
-        "Use only seed and seedlings from a trusted source, and never move seedlings in from an infected area.",
-        "Inspect every tree each week during the first months, when infection hurts most.",
-        "Do not plant papaya next to old papaya or cucurbit fields.",
-        "Remove volunteer papaya and sick trees as soon as you see them.",
-        "Check our [plant diseases guide](/diseases/plant-diseases-philippines) for other virus diseases that spread by aphids, such as [banana bunchy top](/diseases/banana-bunchy-top)."
+        "Raise seedlings under fine net or buy from a nursery you trust, and check each seedling for mosaic before planting.",
+        "Plant new papaya far from old papaya and from squash, melon and other cucurbits, and time planting for months when aphids are fewer.",
+        "Pull sick trees and stray papaya seedlings at once, and end badly hit blocks. They feed the virus and aphids to the rest.",
+        "Plant two or more rows of corn or another tall crop around the papaya block so passing aphids probe there first and lose the virus.",
+        "Wash knives between trees, keep weeds down, and grow tolerant or resistant varieties where you can get them."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Ladybird beetles, hoverflies and small wasps keep aphid numbers down, but no natural enemy is fast enough to stop the virus."
       ]
     },
     {

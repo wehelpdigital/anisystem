@@ -137,17 +137,27 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Copper fungicides",
-          "FRAC M1",
-          "a preventive spray in the nursery only"
+          "Copper hydroxide",
+          "FRAC M01",
+          "A sound second choice. 12 registered products name it on cabbage."
+        ],
+        [
+          "Bordeaux mixture",
+          "FRAC M01",
+          "A sound second choice. 3 registered products name it on cabbage."
+        ],
+        [
+          "Cuprous oxide",
+          "FRAC M01",
+          "A sound second choice. 2 registered products name it on cabbage."
         ]
       ]
     },
@@ -165,11 +175,23 @@
     {
       "type": "list",
       "items": [
-        "Plant certified seed and healthy seedlings every season.",
-        "Rotate away from crucifers for at least 2 years, and longer if you can.",
-        "Keep the field and its borders free of cabbage family weeds.",
-        "Choose resistant varieties where they are sold, since some cabbage varieties resist black rot. Radish shows good resistance, and broccoli and Brussels sprouts are less affected than cabbage.",
-        "Bury or remove crop residue straight after harvest."
+        "Buy certified clean seed, and never save seed from a crop that had black rot. The bacterium lives in seed for years.",
+        "Soak doubtful cabbage seed in hot water at 50 degrees Celsius for 25 minutes. It lowers the risk but can lower germination.",
+        "Raise seedlings in clean trays, clean tools with diluted bleach, and discard any seedling with a spot.",
+        "Rotate for two to three years away from the cabbage family, pull cabbage family weeds, and plow under crop debris right after harvest.",
+        "Avoid overhead watering, and stay out of the field while the leaves are wet.",
+        "Keep diamondback moth and other caterpillars down, since their feeding wounds let the bacteria in."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Protect the small wasps and spiders that hold diamondback moth down. Fewer caterpillar wounds mean fewer ways in for the bacteria."
       ]
     },
     {

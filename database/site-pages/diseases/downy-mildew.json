@@ -137,39 +137,72 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Mancozeb",
-          "FRAC M3",
-          "the base of most programs, protects the leaf"
+          "FRAC M03",
+          "A first choice. Registered products name it on squash, cucumber, watermelon and melon."
         ],
         [
           "Chlorothalonil",
-          "FRAC M5",
-          "protectant, apply before infection"
-        ],
-        [
-          "Copper oxychloride",
-          "FRAC M1",
-          "allowed in organic farming, protects only"
+          "FRAC M05",
+          "A first choice. Registered products name it on bitter gourd, squash, cucumber, sponge gourd and more."
         ],
         [
           "Cyazofamid",
           "FRAC 21",
-          "targets water molds, alternate it with other groups"
+          "A first choice. 1 registered product names it on watermelon."
         ],
         [
-          "Mandipropamid",
-          "FRAC 40",
-          "targets water molds, alternate it with other groups"
+          "Fluopicolide plus propamocarb",
+          "FRAC 43 plus 28",
+          "A first choice. 1 registered product names it on watermelon."
+        ],
+        [
+          "Propineb",
+          "FRAC M03",
+          "A sound second choice. Registered products name it on bitter gourd, squash, cucumber, sponge gourd and more."
+        ],
+        [
+          "Copper hydroxide",
+          "FRAC M01",
+          "A sound second choice. Registered products name it on cucumber and watermelon."
+        ],
+        [
+          "Cuprous oxide",
+          "FRAC M01",
+          "A sound second choice. 2 registered products name it on cucumber."
+        ],
+        [
+          "Captan",
+          "FRAC M04",
+          "Older or broad chemistry: a last resort. Registered products name it on squash, cucumber, watermelon and melon."
         ]
       ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Carbendazim:** Benzimidazoles do not act on water molds. Carbendazim does nothing to downy mildew.",
+        "**Tebuconazole plus trifloxystrobin:** Downy mildew resists the strobilurin half, and the triazole half does not touch water molds at all.",
+        "**Azoxystrobin:** Cucurbit downy mildew resists strobilurins widely in Asia, starting in Japan. Azoxystrobin often fails on it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Cucurbit downy mildew resists the strobilurins (FRAC 11) and metalaxyl (FRAC 4) widely in Asia, and resistance to the CAA group (FRAC 40) has been found in some countries. Keep mancozeb or chlorothalonil in every spray and change the downy mildew group (21, 28 with 43, 40) each time."
     },
     {
       "type": "callout",
@@ -185,10 +218,11 @@
     {
       "type": "list",
       "items": [
-        "Pull volunteer cucurbits and cucurbit weeds around the field, since the water mold survives only on living plants.",
-        "Do not plant a new cucurbit crop next to an older one that already has the disease.",
-        "Avoid relying on metalaxyl alone, because the Pacific Pests sheet notes resistance to it. Our [fungicides guide](/blog/fungicides) explains how to rotate groups.",
-        "Plan the crop so the young vines do not meet the wettest, foggiest weeks."
+        "Plant a tolerant or resistant variety. In the rainy season it is the cheapest protection you can buy.",
+        "Water early in the day at the base of the vines so the leaves dry before night.",
+        "Space the plants well, run rows with the usual wind, and keep the trellis open so the leaves dry fast.",
+        "Pick off infected older leaves early, pull badly sick vines, and plow under old vines right after the last harvest.",
+        "Do not plant a new crop beside an old infected one, and avoid the wettest weeks of the year when you can."
       ]
     },
     {

@@ -137,29 +137,43 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Spinosad",
-          "IRAC 5",
-          "a biopesticide listed in the Pacific Pests and Pathogens fact sheet"
+          "Flubendiamide",
+          "IRAC 28",
+          "A first choice. 2 registered products name it on onion."
         ],
         [
-          "Bacillus thuringiensis var kurstaki",
-          "IRAC 11A",
-          "listed in the same fact sheet, best on young larvae"
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A first choice. 1 registered product names it on onion."
         ],
         [
-          "Azadirachtin (neem)",
-          "IRAC UN",
-          "neem oil sprays were given out to Nueva Ecija onion growers"
+          "Emamectin benzoate",
+          "IRAC 6",
+          "A first choice. 1 registered product names it on onion."
+        ],
+        [
+          "Chlorfenapyr plus indoxacarb plus lufenuron",
+          "IRAC 13 plus 22A plus 15",
+          "A sound second choice. 2 registered products name it on onion."
+        ],
+        [
+          "Lufenuron plus cyantraniliprole",
+          "IRAC 15 plus 28",
+          "A sound second choice. 1 registered product names it on onion."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Beet armyworm in Asia resists pyrethroids, organophosphates and carbamates, and in China many fields now resist diamides and some resist emamectin. Use one group per generation, about 3 to 4 weeks: a diamide (28), then emamectin (6), then spinosad (5) or indoxacarb (22A)."
     },
     {
       "type": "callout",
@@ -175,10 +189,24 @@
     {
       "type": "list",
       "items": [
-        "Set pheromone traps early in the dry season and read them every few days.",
-        "Rotate onion with crops that are not hosts and clean the field of weeds.",
-        "Plant together with the farms around you.",
-        "Check fields at the first warning from the BPI or your municipal agriculture office."
+        "Crush the white, cottony egg masses and the groups of tiny larvae (harabas) by hand while scouting.",
+        "Hang sex pheromone traps from transplanting and read them every few days to time your control.",
+        "Plant together with your neighbors, so no young onion field sits beside an old one full of larvae.",
+        "After harvest, clear weeds and old leaves, then plow or flood the field so the pupae in the soil die.",
+        "Rest the field from onion and other hosts for a season. Rice after onion breaks the cycle well.",
+        "Light traps at night, or fine net over small shallot plots, keep the moths off."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spiders, earwigs and predatory wasps eat eggs and larvae. Pyrethroid sprays kill them first.",
+        "The beet armyworm virus (SeNPV) and Bt aizawai, where you can buy them, work best on newly hatched larvae."
       ]
     },
     {

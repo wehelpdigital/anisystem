@@ -96,6 +96,92 @@
       "text": "How to control anthracnose before you spray"
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M05",
+          "A first choice. Registered products name it on mango, string bean, cowpea, bitter gourd and more."
+        ],
+        [
+          "Mancozeb",
+          "FRAC M03",
+          "A first choice. Registered products name it on mango, string bean, cowpea, cucumber and more."
+        ],
+        [
+          "Azoxystrobin plus difenoconazole",
+          "FRAC 11 plus 3",
+          "A first choice. Registered products name it on mango and onion."
+        ],
+        [
+          "Prochloraz",
+          "FRAC 3",
+          "A first choice. Registered products name it on mango and banana."
+        ],
+        [
+          "Difenoconazole",
+          "FRAC 3",
+          "A sound second choice. 53 registered products name it on mango."
+        ],
+        [
+          "Azoxystrobin",
+          "FRAC 11",
+          "A sound second choice. Registered products name it on mango, banana and watermelon."
+        ],
+        [
+          "Propineb",
+          "FRAC M03",
+          "A sound second choice. Registered products name it on mango and onion."
+        ],
+        [
+          "Tebuconazole",
+          "FRAC 3",
+          "A sound second choice. 13 registered products name it on mango."
+        ],
+        [
+          "Carbendazim plus tebuconazole",
+          "FRAC 1 plus 3",
+          "A sound second choice. 12 registered products name it on mango."
+        ],
+        [
+          "Copper hydroxide",
+          "FRAC M01",
+          "A sound second choice. Registered products name it on mango, cucumber, watermelon and tomato."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 20 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Potassium silicate:** A plant tonic, not a fungicide: it does not stop the anthracnose fungus."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Anthracnose fungi in Asian mango orchards often resist group 1 (benomyl, carbendazim, thiophanate methyl), and group 11 (strobilurins) loses ground fast when used alone. Build the season on mancozeb or chlorothalonil, slot in prochloraz or a group 3 plus 11 mix in the wettest weeks, and never spray one systemic group twice in a row."
+    },
+    {
       "type": "steps",
       "items": [
         {

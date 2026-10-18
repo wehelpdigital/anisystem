@@ -136,6 +136,47 @@
       "text": "No spray can cure the virus in a plant that has it. A spray can only target the whitefly. An Indian review says foliar systemic sprays every 2 to 3 weeks can hold the whitefly down, but ICAR authors warn that whiteflies have grown resistant to many insecticides, so rotate groups. It also says to avoid spraying weeds on field borders, because that kills the natural enemies of the whitefly. We found no whitefly active ingredient that a Philippine authority names for tomato, so we list none. Ask your local agriculture office what is registered with the FPA."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "What the Labels Name for the Whitefly"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name the whitefly on tomato, chili and bell pepper. They work on the insect that carries the virus, not on a sick plant. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A first choice. 2 registered products name it on tomato."
+        ],
+        [
+          "Abamectin plus spiromesifen",
+          "IRAC 6 plus 23",
+          "A first choice. Registered products name it on tomato, chili and bell pepper."
+        ],
+        [
+          "Dinotefuran",
+          "IRAC 4A",
+          "A sound second choice. 10 registered products name it on tomato."
+        ],
+        [
+          "Acetamiprid plus bifenthrin",
+          "IRAC 4A plus 3A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on tomato."
+        ],
+        [
+          "Lambda cyhalothrin plus thiamethoxam",
+          "IRAC 3A plus 4A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on tomato."
+        ]
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -149,11 +190,24 @@
     {
       "type": "list",
       "items": [
-        "Start with clean seedlings from a screened nursery.",
-        "Keep your field and borders free of weeds that host whiteflies.",
-        "Do not plant a new crop next to an old tomato crop that has leaf curl.",
-        "Plan a break between tomato crops.",
-        "Choose varieties with resistance, and ask your agriculture office for the current list."
+        "Raise seedlings under fine insect net, and plant only seedlings free of whiteflies and curled leaves.",
+        "Plant a tolerant or resistant tomato variety where one is sold. It is the surest protection in whitefly seasons.",
+        "Pull the first curled plants early, bag them before carrying them out, and destroy the crop residue after harvest.",
+        "Leave a few weeks with no tomato or pepper in the area between crops, and do not plant beside an older infected field.",
+        "Keep borders free of weeds that host whitefly, and use yellow sticky traps and silver reflective mulch to keep whiteflies off.",
+        "Plant a few rows of corn or sorghum around the field as a barrier against whiteflies blowing in."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small parasitic wasps, lacewings and ladybirds feed on whiteflies. Do not spray borders and weeds with broad insecticides.",
+        "Beauveria or Metarhizium sprays on the leaf underside lower whitefly numbers. They do not stop the virus in a plant already sick."
       ]
     },
     {

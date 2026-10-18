@@ -138,17 +138,17 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Dinotefuran",
           "IRAC 4A",
-          "trunk injection, used in the emergency response in Batangas"
+          "A first choice. 8 registered products name it on coconut."
         ]
       ]
     },
@@ -166,10 +166,23 @@
     {
       "type": "list",
       "items": [
-        "Buy seedlings only from nurseries that inspect for scale insects, and check every one on arrival.",
-        "Look at the underside of the leaflets once a month, especially after strong winds.",
-        "Keep ornamental palms and mangosteen seedlings near the grove clean too.",
-        "Avoid moving fronds, seedlings or cut palm material from an infested district."
+        "Never carry coconut seedlings, fronds, husks or ornamental palms out of an infested area. That is how cocolisap spread.",
+        "Cut the badly crusted lower fronds and burn or bury them on the spot, before the crawlers move on.",
+        "Report the first yellowing palms to your local agriculture office at once, so wasp releases can start early.",
+        "Do not spray broad insecticides on the palms or on the crops under them. It kills the wasps and lady beetles doing the work.",
+        "Fertilize and weed the palms well. A well fed palm survives an attack and recovers faster."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "The native wasp Comperiella calauanica parasitizes cocolisap and brought the outbreaks down. Protect it and ask for releases.",
+        "Small lady beetles and other predators eat the scales and their crawlers. Leave them be."
       ]
     },
     {

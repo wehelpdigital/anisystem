@@ -139,24 +139,84 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "A sound second choice. 8 registered products name it on banana."
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. Registered products name it on citrus, banana, calamansi and pomelo."
+        ],
+        [
+          "Bifenthrin plus buprofezin",
+          "IRAC 3A plus 16",
+          "A sound second choice. 2 registered products name it on banana."
         ],
         [
           "Mineral oil",
+          "Not grouped",
+          "A sound second choice. 2 registered products name it on banana."
+        ],
+        [
+          "Potassium salts of fatty acids",
+          "Not grouped",
+          "A sound second choice. 2 registered products name it on banana."
+        ],
+        [
+          "Azadirachtin",
           "IRAC UN",
-          "listed by UF for papaya mealybug, with limited effect"
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Beauveria bassiana",
+          "IRAC UNF",
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 1 registered product names it on banana."
         ],
         [
           "Malathion",
           "IRAC 1B",
-          "listed by UF among the registered options in Florida, with limited effect"
+          "Older or broad chemistry: a last resort. Registered products name it on papaya, citrus, banana, mango and more."
+        ],
+        [
+          "Diazinon",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 21 registered products name it on banana."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 8 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Carbaryl:** Barely touches waxy mealybugs and kills their wasps and lady beetles, so outbreaks follow."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Citrus mealybug and other mealybugs have resisted organophosphates and pyrethroids in other countries. Rotate spirotetramat (23), buprofezin (16) and a neonicotinoid (4A) with oils or soaps, and keep broad sprays out."
     },
     {
       "type": "callout",
@@ -172,10 +232,25 @@
     {
       "type": "list",
       "items": [
-        "Buy clean seedlings and cuttings, and check them for white cotton before planting.",
-        "Clean tools, shoes and baskets when you move between blocks.",
-        "Control ants and weeds around the trees and plants.",
-        "Avoid broad spectrum sprays so the natural enemies keep working."
+        "Check seedlings, cuttings and fruits from other farms before they come in. Mealybugs ride on planting material.",
+        "Cut off and bag heavily infested shoots and fruits, and wash small colonies off with a strong jet of water.",
+        "Keep ants off with sticky bands on the trunk and by breaking their nests. Ants guard mealybugs from their enemies.",
+        "Weed the farm and its edges. Many weeds carry mealybugs between seasons.",
+        "Do not overfeed with nitrogen. Soft new growth breeds more mealybugs.",
+        "Clean tools, sacks and shoes after working in an infested block."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Tiny wasps such as Acerophagus papayae can crash papaya mealybug numbers. Brown puffed mealybugs mean they are working.",
+        "Lady beetles (including the mealybug destroyer), lacewings and hoverfly larvae eat mealybugs. Avoid broad sprays.",
+        "Beauveria bassiana or Lecanicillium sprays infect mealybugs in humid weather."
       ]
     },
     {

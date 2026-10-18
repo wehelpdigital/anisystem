@@ -138,34 +138,50 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Metalaxyl plus mancozeb",
-          "FRAC 4 plus FRAC M3",
-          "seed or foliar treatment, resistance to metalaxyl alone has been reported"
+          "Dimethomorph",
+          "FRAC 40",
+          "A first choice. 2 registered products name it on corn."
         ],
         [
-          "Dimethomorph plus mancozeb",
-          "FRAC 40 plus FRAC M3",
-          "named by East West Seed for downy mildew"
+          "Cyazofamid",
+          "FRAC 21",
+          "A sound second choice. 1 registered product names it on corn."
         ],
         [
-          "Propineb",
-          "FRAC M3",
-          "named by East West Seed, protectant"
+          "Metalaxyl",
+          "FRAC 4",
+          "A sound second choice. 1 registered product names it on corn."
         ],
         [
-          "Maneb",
-          "FRAC M3",
-          "named by East West Seed, protectant"
+          "Metalaxyl M",
+          "FRAC 4",
+          "A sound second choice. 1 registered product names it on corn."
         ]
       ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Chlorothalonil:** A contact spray cannot reach downy mildew inside the plant. Seed treatment and pulling sick plants do the work."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** This mildew has lost sensitivity to metalaxyl (group 4) seed treatment in parts of Asia. Where metalaxyl has failed, switch to a dimethomorph (group 40) seed treatment or use the two together, and never rely on metalaxyl alone season after season."
     },
     {
       "type": "callout",
@@ -181,10 +197,11 @@
     {
       "type": "list",
       "items": [
-        "Choose a downy mildew tolerant variety first, and ask your supplier for the latest list.",
-        "Treat seed before sowing in fields with a history of the disease.",
-        "Do not plant corn in low, flood prone spots during the wet season.",
-        "Keep records of which lots had the disease and move your corn away from them if you can."
+        "Plant treated seed of a resistant or tolerant hybrid. Resistance is the main defense.",
+        "Plant on time with your neighbors, so young corn never stands beside older infected corn or sugarcane.",
+        "Pull, bag and burn striped seedlings in the first three weeks, before they shed spores.",
+        "Clear volunteer corn, sorghum and wild grasses such as talahib from the field and its edges.",
+        "Drain the field well and avoid planting where water stands."
       ]
     },
     {

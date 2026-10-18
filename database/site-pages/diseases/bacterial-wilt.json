@@ -150,11 +150,23 @@
     {
       "type": "list",
       "items": [
-        "Choose resistant varieties or grafted seedlings.",
-        "Buy seedlings only from a clean nursery, or raise your own in sterilized media.",
-        "Use raised beds, good drainage and rotation, and do not plant after a wilt outbreak without a break.",
-        "Clean boots, tools and wheelbarrows after you work in an infected spot.",
-        "Keep records of the beds that had wilt, so you plant a safe crop there next season."
+        "Graft tomato, eggplant or pepper onto a resistant rootstock, or plant a resistant variety. This is the surest answer in fields with a wilt history.",
+        "Raise seedlings in clean, sterilized media, and plant only healthy seed tubers and ginger rhizomes from fields free of wilt.",
+        "Rotate for three to four years with rice, corn or other grasses. Flooded rice in between helps clear the soil.",
+        "Plant on raised beds, drain the field well, and never let water run from a sick field into a clean one.",
+        "Pull wilted plants with the soil around the roots and destroy them away from the field. Wash tools and boots before entering a clean field.",
+        "Avoid cutting roots when weeding, and keep root knot nematodes down, since their wounds let the bacteria in."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Compost and other organic matter feed soil microbes that compete with the bacteria. They help, but they do not replace grafting and rotation."
       ]
     },
     {

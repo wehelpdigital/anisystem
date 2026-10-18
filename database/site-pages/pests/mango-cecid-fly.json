@@ -138,29 +138,58 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Cartap",
-          "IRAC 14",
-          "used against kurikong"
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A first choice. 1 registered product names it on mango."
         ],
         [
-          "Pyrethroids",
-          "IRAC 3A",
-          "used against kurikong"
+          "Tetraniliprole",
+          "IRAC 28",
+          "A first choice. 1 registered product names it on mango."
         ],
         [
-          "Carbamates",
+          "Lambda cyhalothrin plus thiamethoxam",
+          "IRAC 3A plus 4A",
+          "A sound second choice. 42 registered products name it on mango."
+        ],
+        [
+          "Abamectin",
+          "IRAC 6",
+          "A sound second choice. 5 registered products name it on mango."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 4 registered products name it on mango."
+        ],
+        [
+          "Abamectin plus spiromesifen",
+          "IRAC 6 plus 23",
+          "A sound second choice. 1 registered product names it on mango."
+        ],
+        [
+          "Bifenthrin plus imidacloprid",
+          "IRAC 3A plus 4A",
+          "Older or broad chemistry: a last resort. 3 registered products name it on mango."
+        ],
+        [
+          "Carbosulfan",
           "IRAC 1A",
-          "used against kurikong"
+          "Older or broad chemistry: a last resort. 2 registered products name it on mango."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Sprays given week after week with the same product breed flies that survive it. Rotate a diamide (28), abamectin (6) and a neonicotinoid or pyrethroid mix (4A, 3A) between sprays, and add a sticker so the spray stays on the fruit."
     },
     {
       "type": "callout",
@@ -176,10 +205,24 @@
     {
       "type": "list",
       "items": [
-        "Prune after every harvest to open the canopy.",
-        "Bag the fruit on time.",
-        "Keep a record of each flower induction date for each tree.",
-        "Join community clean up and spray schedules."
+        "Write down the flower induction date. The fly starts on young fruit at about day 32 to 35, so plan checks and any spray around it.",
+        "Bag the fruits once they are big enough to hold a bag, about 45 to 55 days after induction, to keep the egg laying females off.",
+        "Gather and bury fallen fruits and spotted leaves. The larvae leave the spots and drop to the soil to pupate.",
+        "Mulch or turn the soil under the canopy during fruiting so fewer larvae can pupate there.",
+        "Prune crowded branches after every harvest so the crown dries fast and any spray reaches the fruit.",
+        "Induce flowers together with your neighbors. An area that fruits at one time leaves the fly no young fruit later."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Tiny parasitic wasps attack the larvae inside the spots. Weekly broad sprays wipe them out.",
+        "Ants, spiders and ground beetles take larvae as they drop to the soil, so leave the litter under the trees unsprayed."
       ]
     },
     {

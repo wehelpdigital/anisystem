@@ -139,44 +139,72 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
-        ],
-        [
-          "Spinosad",
-          "IRAC 5",
-          "a bioinsecticide listed by Pacific Pests"
-        ],
-        [
-          "Bacillus thuringiensis",
-          "IRAC 11",
-          "a bacterial insecticide listed by Pacific Pests"
-        ],
-        [
-          "Neem (azadirachtin)",
-          "IRAC UN",
-          "a plant based option listed by Pacific Pests"
-        ],
-        [
-          "Pyrethrum",
-          "IRAC 3A",
-          "a plant based option listed by Pacific Pests"
+          "On Philippine labels"
         ],
         [
           "Chlorantraniliprole",
           "IRAC 28",
-          "used in an Indian cowpea trial, in a sequence with a plant based and a biological product"
+          "A first choice. Registered products name it on mungbean, soybean, string bean and cowpea."
         ],
         [
-          "Emamectin benzoate",
-          "IRAC 6",
-          "used in the same Indian cowpea trial, check the FPA registration first"
+          "Spinosad",
+          "IRAC 5",
+          "A first choice. Registered products name it on mungbean, soybean, string bean and cowpea."
+        ],
+        [
+          "Flubendiamide",
+          "IRAC 28",
+          "A first choice. 4 registered products name it on string bean."
+        ],
+        [
+          "Indoxacarb",
+          "IRAC 22A",
+          "A sound second choice. 7 registered products name it on string bean."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 3 registered products name it on string bean."
+        ],
+        [
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A sound second choice. 1 registered product names it on string bean."
+        ],
+        [
+          "Cypermethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean and cowpea."
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 85 registered products name it on mungbean."
+        ],
+        [
+          "Methomyl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean and cowpea."
+        ],
+        [
+          "Malathion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. Registered products name it on mungbean, soybean, string bean and cowpea."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 14 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Pod borer in parts of Asia already survives some pyrethroids and organophosphates. Keep one group per window and switch: a diamide (28), then spinosad (5), then indoxacarb (22A) or emamectin (6)."
     },
     {
       "type": "callout",
@@ -192,10 +220,24 @@
     {
       "type": "list",
       "items": [
-        "Avoid planting legumes next to old, infested legumes.",
-        "Remove all crop remains after harvest.",
-        "Check the flowers on a regular schedule from the first bloom.",
-        "Try intercropping with maize on a small plot before you use it on the whole farm."
+        "From first bloom, check flowers and young pods every 2 to 3 days and pick off webbed flowers and larvae by hand.",
+        "Do not plant beans beside an infested field, and avoid legume after legume in the same plot.",
+        "Rows of corn or sorghum between bean rows can cut borer attack. Try it on a small plot first.",
+        "Pick pods often. Old pods left on the vine breed more borers.",
+        "Destroy crop remains right after harvest, so pupae and larvae do not feed the next generation.",
+        "Grow tolerant varieties where they are sold for your area."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small wasps, spiders and earwigs attack the larvae. Broad sprays kill them and the borer returns.",
+        "Bt and neem sprayed at flowering reach young larvae in the flowers before they enter the pods."
       ]
     },
     {

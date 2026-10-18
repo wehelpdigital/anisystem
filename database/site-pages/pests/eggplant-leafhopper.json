@@ -138,19 +138,72 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Fipronil",
-          "IRAC 2B",
-          "gave the highest drop in leafhopper numbers and the highest yield in an eggplant trial, though the gap was not statistically proven"
+          "Dinotefuran",
+          "IRAC 4A",
+          "A first choice. 10 registered products name it on eggplant."
+        ],
+        [
+          "Flonicamid",
+          "IRAC 29",
+          "A first choice. 6 registered products name it on eggplant."
+        ],
+        [
+          "Thiamethoxam",
+          "IRAC 4A",
+          "A sound second choice. 19 registered products name it on eggplant."
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. 5 registered products name it on okra."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 3 registered products name it on eggplant."
+        ],
+        [
+          "Acetamiprid",
+          "IRAC 4A",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Afidopyropen",
+          "IRAC 9D",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Azadirachtin",
+          "IRAC UN",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A sound second choice. 1 registered product names it on eggplant."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 19 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Cotton leafhopper in South Asia now survives many pyrethroids and organophosphates and, in places, imidacloprid and thiamethoxam. Keep one group per window and switch: a neonicotinoid (4A), then flonicamid (29), then afidopyropen (9D) or tolfenpyrad (21A)."
     },
     {
       "type": "callout",
@@ -166,10 +219,23 @@
     {
       "type": "list",
       "items": [
-        "Plant on plastic or other mulch to make the field less friendly to the hoppers.",
-        "Pick a resistant variety when one is available for your area.",
-        "Clear weeds and crop remains after harvest.",
-        "Plant a different crop after eggplant, and do not put okra next to a young eggplant block."
+        "Plant on plastic or rice straw mulch. Mulched fields carried fewer hoppers in trials.",
+        "Choose varieties that resist the leafhopper where they are sold for your area.",
+        "Keep weeds and old okra, cotton or eggplant plants away, and do not put okra next to a young eggplant block.",
+        "Clear crop remains after harvest and plant a different crop after eggplant.",
+        "Go easy on nitrogen. Soft, fast growth draws more hoppers."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spiders, lacewings, lady beetles and predatory bugs eat the hoppers. Broad sprays kill them first.",
+        "Weekly 5 percent chili or kakawate extract sprays from 21 days after transplanting cut hopper numbers in a trial."
       ]
     },
     {

@@ -138,22 +138,62 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name the banana aphid on banana. They work on the insect that carries the virus, not on a sick plant. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
-          "FRAC group",
-          "Use"
+          "IRAC group",
+          "On Philippine labels"
         ],
         [
-          "Dimethoate",
-          "IRAC 1B",
-          "listed in the Pacific Pests and Pathogens fact sheet for aphid control, use depends on the country"
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. 5 registered products name it on banana."
         ],
         [
-          "Acephate",
+          "Potassium salts of fatty acids",
+          "Not grouped",
+          "A sound second choice. 2 registered products name it on banana."
+        ],
+        [
+          "Beauveria bassiana",
+          "IRAC UNF",
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Mineral oil",
+          "Not grouped",
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Malathion",
           "IRAC 1B",
-          "listed in the same fact sheet, use depends on the country"
+          "Older or broad chemistry: a last resort. 40 registered products name it on banana."
+        ],
+        [
+          "Chlorpyrifos",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 15 registered products name it on banana."
+        ],
+        [
+          "Fenitrothion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 4 registered products name it on banana."
+        ],
+        [
+          "Bifenthrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on banana."
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on banana."
         ]
       ]
     },
@@ -171,10 +211,24 @@
     {
       "type": "list",
       "items": [
-        "Use only virus tested tissue cultured plantlets.",
-        "Do not buy or trade suckers from farms where bunchy top has been seen.",
-        "Scout every week or two, and remove sick plants the same day you find them.",
-        "Learn how to manage the aphid that spreads the virus in our [integrated pest management guide](/pests/integrated-pest-management)."
+        "Plant only virus tested tissue culture plantlets. Never take suckers from a bunched mat or from a farm where bunchy top is found.",
+        "On a sick mat, kill the aphids first with soap, oil or a banana aphid spray, then inject herbicide or dig out the whole mat and all its suckers.",
+        "Remove sick mats the same day you find them, then check the mats around them every week for the next months.",
+        "Prune extra suckers and keep weeds down around the mats. The aphids gather on young suckers.",
+        "Clear a hit area together with your neighbors, and replant only after every sick mat and stray sucker nearby is gone.",
+        "Abaca growers: rogue sick plants the same way and raise abaca nurseries far from infected banana and abaca fields."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Ladybird beetles, hoverfly larvae, lacewings and small wasps eat the aphids, but they never stop the virus. Spray only the sick mat to spare them.",
+        "Soap or horticultural oil sprayed into the leaf throat and sheaths clears aphids from a sick mat before you remove it."
       ]
     },
     {

@@ -138,22 +138,37 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
+        ],
+        [
+          "Captan",
+          "FRAC M04",
+          "A first choice. 2 registered products name it on celery."
+        ],
+        [
+          "Bacillus amyloliquefaciens",
+          "FRAC BM02",
+          "A first choice. Registered products name it on tomato, chili, bell pepper and watermelon."
         ],
         [
           "Mancozeb",
-          "FRAC M3",
-          "seed and seedbed treatment named by the Pacific Pests fact sheet"
+          "FRAC M03",
+          "A sound second choice. 83 registered products name it on cotton."
         ],
         [
-          "Thiram",
-          "FRAC M3",
-          "seed treatment named by the Pacific Pests fact sheet"
+          "Azoxystrobin",
+          "FRAC 11",
+          "A sound second choice. 23 registered products name it on watermelon."
+        ],
+        [
+          "Chlorothalonil plus mancozeb",
+          "FRAC M05 plus M03",
+          "A sound second choice. 1 registered product names it on tomato."
         ]
       ]
     },
@@ -171,10 +186,24 @@
     {
       "type": "list",
       "items": [
-        "Start every season with sterilized seedbed media and clean trays.",
-        "Keep the bed well drained and water only as much as the seedlings need.",
-        "Use fresh, healthy seed and do not sow too thickly.",
-        "Write down which beds lost seedlings, and move the nursery to a new spot next time."
+        "Heat or steam the seedbed soil or tray mix before sowing, or use a clean soilless mix such as coir with compost.",
+        "Use clean trays and tools, and water with clean rainwater or tap water, not pond or ditch water.",
+        "Sow thin and shallow in raised, well drained beds, and water only enough to keep the mix moist.",
+        "Give the seedbed sun and moving air, and never stack filled trays or crowd the seedlings.",
+        "Use treated or healthy seed, and keep fresh manure out of the seedbed.",
+        "Remove sick seedlings with the soil around them at once."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Coat the seed with Trichoderma or mix it into the tray media before sowing. It guards roots against Pythium, Rhizoctonia and Fusarium.",
+        "Bacillus based products used as a seed soak or drench add protection at sowing."
       ]
     },
     {

@@ -138,19 +138,40 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Pirimiphos methyl",
+          "Carbaryl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 27 registered products name it on coffee."
+        ],
+        [
+          "Dimethoate",
           "IRAC 1B",
-          "when monitoring shows more than 2 percent infested berries, applied early"
+          "Older or broad chemistry: a last resort. 6 registered products name it on coffee."
         ]
       ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Copper hydroxide and bordeaux mixture:** A copper fungicide for leaf rust and berry disease. It does nothing to the berry borer."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** The berry borer once resisted endosulfan in New Caledonia after years of one product. With few registered choices here, keep sprays rare and let picking and sanitation do the work."
     },
     {
       "type": "callout",
@@ -166,10 +187,24 @@
     {
       "type": "list",
       "items": [
-        "Strip and clean the trees fully after harvest.",
-        "Remove all fallen and dried berries from the ground.",
-        "Keep trees pruned and well fed.",
-        "Sample berries every few weeks from the start of ripening."
+        "Pick ripe berries every 2 to 3 weeks through the season, and do not leave over ripe berries on the tree.",
+        "Gather fallen and black berries from the ground and destroy them. Borers wait in them for the next crop.",
+        "After the main harvest, strip every berry left on the tree, green, ripe or dry, to break the borer's cycle.",
+        "Dry harvested beans fast and well, and store them in sealed sacks, so borers in them die and cannot fly back.",
+        "Hang lure traps with a methanol and ethanol mix when few berries are on the trees. About 4 traps per 50 trees caught the most in one highland trial.",
+        "Prune and fertilize on time. Open, healthy trees are easier to pick clean and dry faster."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spray Beauveria bassiana early in the season when females are boring in. It kills many in humid places, fewer in dry ones.",
+        "Small parasitic wasps attack the borer inside the berry. They help a little where they are present."
       ]
     },
     {

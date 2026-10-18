@@ -128,6 +128,92 @@
       "text": "Cymbush 5 EC contains cypermethrin, a Group 3A pyrethroid. Its Syngenta Philippines label lists cutworm on beans, onion, tobacco and cotton, but for corn it lists only borers and earworms. Karate 2.5 EC, with lambda cyhalothrin, lists cutworms on tomato, onion and tobacco. For corn, the label of Proclaim Opti 5 WG, with emamectin benzoate, lists cutworm.\n\nSo before you use Cymbush insecticide against cutworm, check that your crop is on the label. The larvae feed above ground at night, and UMass Extension times sprays for that window, so aim at the base of the plants. Follow the label rate and the harvest interval, and see our guide to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides)."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "A first choice. Registered products name it on corn, string bean, tobacco, cabbage and more."
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "A first choice. 12 registered products name it on onion."
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "A first choice. Registered products name it on corn, cabbage, onion, tomato and more."
+        ],
+        [
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "A sound second choice. Registered products name it on pechay, potato, onion, garlic and more."
+        ],
+        [
+          "Indoxacarb",
+          "IRAC 22A",
+          "A sound second choice. Registered products name it on tobacco and bitter gourd."
+        ],
+        [
+          "Flubendiamide",
+          "IRAC 28",
+          "A sound second choice. Registered products name it on string bean, tobacco, cabbage, onion and more."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. Registered products name it on string bean, cabbage and eggplant."
+        ],
+        [
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A sound second choice. Registered products name it on string bean, cabbage, onion, tomato and more."
+        ],
+        [
+          "Lufenuron",
+          "IRAC 15",
+          "A sound second choice. 2 registered products name it on tomato."
+        ],
+        [
+          "Pyridalyl",
+          "IRAC UN",
+          "A sound second choice. Registered products name it on tobacco and cabbage."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 26 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Dinotefuran:** A whitefly and hopper product. Caterpillars like cutworms barely respond to it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Common cutworm (Spodoptera litura) resists pyrethroids, organophosphates and carbamates in much of Asia, and in places emamectin and the diamides too. Rotate by generation among 28, 5 or 6, 22A, 15 and Bt, and never spray the same group twice in a row."
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Follow the label and the FPA registration",

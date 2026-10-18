@@ -139,27 +139,52 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Neem (azadirachtin)",
-          "IRAC UN",
-          "a plant based spray listed by Pacific Pests"
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "A first choice. Registered products name it on bitter gourd, squash, cucumber, sponge gourd and more."
+        ],
+        [
+          "Cypermethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 100 registered products name it on watermelon."
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 91 registered products name it on watermelon."
+        ],
+        [
+          "Methomyl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 58 registered products name it on melon."
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "Older or broad chemistry: a last resort. 31 registered products name it on watermelon."
         ],
         [
           "Carbaryl",
           "IRAC 1A",
-          "named by the University of Guam when beetle numbers stay high"
+          "Older or broad chemistry: a last resort. Registered products name it on bitter gourd, squash, cucumber, sponge gourd and more."
         ],
         [
-          "Pyrethrum",
+          "Fenvalerate",
           "IRAC 3A",
-          "a plant based option listed with soap by Pacific Pests"
+          "Older or broad chemistry: a last resort. Registered products name it on bitter gourd, squash, cucumber, sponge gourd and more."
+        ],
+        [
+          "Alpha cypermethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on watermelon."
         ]
       ]
     },
@@ -177,10 +202,24 @@
     {
       "type": "list",
       "items": [
-        "Plow or till the field after harvest, to kill the pupae.",
-        "Keep the field free of wild cucurbit vines.",
-        "Avoid planting new cucurbits next to old ones.",
-        "Choose a fast growing variety and give it enough nutrients and water from the start."
+        "Handpick beetles in the early morning or evening, when they are slow, and drop them in soapy water.",
+        "Cover young plants with fine net until they flower, then remove it so bees can reach the flowers.",
+        "Remove wild cucurbit vines around the field, and do not plant new cucurbits beside old ones.",
+        "Feed and water well from the start, so plants grow fast and outgrow the damage.",
+        "After harvest, destroy crop remains and plow to expose grubs and pupae. Wait 1 to 2 months before cucurbits again.",
+        "When you must spray, spray alternate rows so helpful insects survive in the rows left unsprayed."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Ground beetles, spiders, ants and birds eat the grubs and pupae in the soil. Tilling after harvest exposes them.",
+        "Neem, or pyrethrum with soap, sprayed late in the day repels the adults with less harm to bees."
       ]
     },
     {

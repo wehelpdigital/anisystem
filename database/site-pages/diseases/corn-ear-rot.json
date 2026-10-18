@@ -139,33 +139,40 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Prothioconazole",
-          "FRAC 3",
-          "triazole, stopped all ear rot fungi in the lab, cut contamination by about half in the field"
+          "Difenoconazole plus propiconazole",
+          "FRAC 3 plus 3",
+          "A sound second choice. 24 registered products name it on corn."
         ],
         [
-          "Prochloraz",
-          "FRAC 3",
-          "imidazole, stopped all ear rot fungi in the lab"
+          "Azoxystrobin",
+          "FRAC 11",
+          "Older or broad chemistry: a last resort. 20 registered products name it on corn."
         ],
         [
-          "Boscalid",
-          "FRAC 7",
-          "reduced Aspergillus flavus contamination in field trials"
-        ],
-        [
-          "Carboxin plus thiram",
-          "FRAC 7 plus FRAC M3",
-          "seed treatment named by the Pacific Pests fact sheet for Fusarium"
+          "Captan",
+          "FRAC M04",
+          "Older or broad chemistry: a last resort. 3 registered products name it on corn."
         ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Copper sulfate:** Copper does not stop the Fusarium and Aspergillus fungi that rot ears."
       ]
     },
     {
@@ -182,11 +189,12 @@
     {
       "type": "list",
       "items": [
-        "Choose a tolerant variety.",
-        "Control corn borers and earworms before silking.",
-        "Harvest on time and dry the grain quickly.",
-        "Clean your store and keep grain dry, cool and off the ground.",
-        "Write down which fields had moldy ears and plan the insect control there first."
+        "Control earworm and corn borer, whose holes let the ear rot fungi in.",
+        "Plant tolerant hybrids with tight husks that cover the ear tip.",
+        "Avoid drought stress and nitrogen shortage at flowering. Aspergillus hits stressed corn hardest.",
+        "Harvest on time, and dry the grain to 13 to 15 percent moisture within about two days.",
+        "Sort out moldy ears before storage, and clean the store and the sheller first.",
+        "Rotate away from corn, and bury or remove the residue that carries the fungi."
       ]
     },
     {

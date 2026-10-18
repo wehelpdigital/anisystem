@@ -149,10 +149,23 @@
     {
       "type": "list",
       "items": [
-        "Raise your seedlings under a fine net.",
-        "Clean the field and the seedbed of weeds and old cabbage stalks.",
-        "Check the hearts of new transplants twice a week.",
-        "Plant the whole field at the same time."
+        "Raise seedlings under fine net, in a seedbed kept clean of weeds and old crop remains.",
+        "Transplant strong seedlings about 5 to 6 inches tall. They outgrow early damage better.",
+        "Check the heart of each new transplant twice a week for two weeks. Crush larvae and pinch off damaged tips on small plots.",
+        "Clear crucifer weeds and old cabbage stalks, and plant the whole field at one time.",
+        "Webworm is worst in hot, dry spells. Sprinkling from above disturbs the moths and young larvae."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "The wasp Chelonus blackburni and other small wasps attack the eggs and larvae. Sprays that spare the diamondback moth wasps spare these too.",
+        "Bt aimed into the heart kills young larvae with no harm to the wasps."
       ]
     },
     {

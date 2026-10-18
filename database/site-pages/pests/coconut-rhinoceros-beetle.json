@@ -150,10 +150,23 @@
     {
       "type": "list",
       "items": [
-        "Never leave dead standing palms, cut trunks or stumps to rot in the grove.",
-        "Cover or turn compost heaps and manure piles often.",
-        "Walk the farm each month and check the crown of young palms for fresh cuts.",
-        "Work with neighbors, because beetles fly between farms."
+        "Cut fallen and dead palms and old stumps into pieces, then split, burn or bury them. Rotting trunks are where the grubs grow.",
+        "Turn, spread or use up heaps of compost, manure, sawdust and coconut husks, or cover them with fine net so beetles cannot lay eggs.",
+        "Grow a creeping cover crop over cut logs and stumps at replanting. Shaded logs draw far fewer beetles.",
+        "Pull the beetle out of its hole in the crown with a hooked wire and kill it, then fill the hole with sand.",
+        "Hang pheromone traps 1 to 2 km apart to watch numbers, and empty them often. More traps near breeding sites catch more beetles."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spread the green muscardine fungus (Metarhizium) into breeding heaps and logs. Grubs that pick it up die and pass it on.",
+        "Where it is offered, release beetles carrying the Oryctes virus. It spreads in the breeding sites and keeps numbers down for years."
       ]
     },
     {

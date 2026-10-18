@@ -129,6 +129,80 @@
       "text": "These insects build resistance fast when one insecticide group goes on over and over. Every insecticide label shows an IRAC group number. Rotate between groups from one spray to the next, and never tank mix two products from the same group. Spray only when your counts call for it, aim for the leaf folds and flowers where they hide, and respect the days to harvest on the label."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "A first choice. 12 registered products name it on onion."
+        ],
+        [
+          "Spinetoram",
+          "IRAC 5",
+          "A first choice. Registered products name it on mango and potato."
+        ],
+        [
+          "Flometoquin",
+          "IRAC 34",
+          "A first choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Abamectin",
+          "IRAC 6",
+          "A sound second choice. Registered products name it on tobacco, onion, tomato, eggplant and more."
+        ],
+        [
+          "Chlorfenapyr",
+          "IRAC 13",
+          "A sound second choice. 19 registered products name it on potato."
+        ],
+        [
+          "Abamectin plus spiromesifen",
+          "IRAC 6 plus 23",
+          "A sound second choice. Registered products name it on onion, tomato, chili, bell pepper and more."
+        ],
+        [
+          "Azadirachtin",
+          "IRAC UN",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A sound second choice. Registered products name it on mango, onion, tomato, eggplant and more."
+        ],
+        [
+          "Isocycloseram",
+          "IRAC 30",
+          "A sound second choice. Registered products name it on eggplant and watermelon."
+        ],
+        [
+          "Tolfenpyrad",
+          "IRAC 21A",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 21 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Onion thrips and melon thrips in Asia survive pyrethroids, many organophosphates and carbamates, and often imidacloprid. Spinosad has failed where it was sprayed every week. Keep one group for a window of 2 to 3 weeks, then switch: spinosad or spinetoram (5), then abamectin (6) or cyantraniliprole (28), then a newer group such as flometoquin (34)."
+    },
+    {
       "type": "list",
       "ordered": false,
       "items": [

@@ -136,6 +136,37 @@
       "text": "The Pacific fact sheet does not recommend insecticides for smallholders. They are costly and risky for people and the environment, and the evidence of benefit is thin. Talk to your DA technician before you consider any."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 91 registered products name it on cacao."
+        ],
+        [
+          "Carbaryl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 27 registered products name it on cacao."
+        ],
+        [
+          "Deltamethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 13 registered products name it on cacao."
+        ]
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -149,10 +180,24 @@
     {
       "type": "list",
       "items": [
-        "Harvest every 7 days in the peak season.",
-        "Never leave pods or husks on the ground.",
-        "Keep trees pruned and open.",
-        "Do not move pods and leaves from an infested farm to a clean one."
+        "Harvest every 7 days and take every ripening pod, so the larvae have no time to leave and pupate.",
+        "Bury the pod husks right after opening, or cover the heap tightly with plastic for 2 weeks so the larvae inside die.",
+        "Sleeve young pods, about 8 to 10 cm long, in plastic bags open at the bottom. The moth cannot lay eggs on them.",
+        "Prune twice a year to keep trees about 3 meters tall and open, so pods are easy to reach and moths find less shade to rest.",
+        "In the lean season strip off all pods once to break the moth's cycle, and keep the same schedule as your neighbors."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Weaver ants (hantik) and black cocoa ants guard the pods against the moth. Keep their nests and keep sprays off them.",
+        "Spiders and tiny egg wasps kill the eggs laid on the pod surface.",
+        "Beauveria bassiana sprayed on the lower branches where moths rest can kill some adults."
       ]
     },
     {

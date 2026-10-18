@@ -198,6 +198,11 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pestsRegistered' => method_exists(\App\Support\FieldCatalogue::class, 'aiFor') && method_exists(\App\Support\ProductBook::class, 'keysForProblemIngredient')
                 && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_crop_problems', 'advice')
                     && \Illuminate\Support\Facades\DB::table('as_crop_problems')->where('section', 'pests')->where('slug', 'rice-bug')->where('advice', 'like', '%Carbosulfan%')->exists(), false, false),
+            // 2026-10-19: the same for every other crop (true once the second migration has synced it: spinosad on the
+            // diamondback moth of cabbage, mancozeb on black sigatoka).
+            'pestsAllCrops' => rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_crop_problems', 'advice')
+                && \Illuminate\Support\Facades\DB::table('as_crop_problems')->where('section', 'pests')->where('slug', 'diamondback-moth')->where('advice', 'like', '%Spinosad%')->exists()
+                && \Illuminate\Support\Facades\DB::table('as_crop_problems')->where('section', 'diseases')->where('slug', 'black-sigatoka')->where('advice', 'like', '%Mancozeb%')->exists(), false, false),
             // 2026-10-18: the soil atlas (the area's typical soil, by province, town and barangay), loaded.
             'soilAtlas' => class_exists(\App\Support\SoilAtlas::class) && \App\Support\SoilAtlas::ready()
                 && rescue(fn () => \Illuminate\Support\Facades\DB::table('as_soil_fertility')->count() > 9000, false, false),

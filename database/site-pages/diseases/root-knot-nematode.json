@@ -139,27 +139,37 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Fluopyram",
-          "IRAC N3",
-          "listed among nematicides registered for vegetable crops in Florida"
+          "FRAC 7",
+          "A first choice. Registered products name it on banana, pineapple, potato, eggplant and more."
         ],
         [
-          "Fluensulfone",
-          "IRAC N UN",
-          "a newer nematicide listed for vegetable crops in Florida"
+          "Spirotetramat",
+          "IRAC 23",
+          "A sound second choice. 20 registered products name it on pineapple."
+        ],
+        [
+          "Carbofuran",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. Registered products name it on banana, tobacco, potato, cowpea and more."
+        ],
+        [
+          "Cadusafos",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. Registered products name it on banana and pineapple."
         ],
         [
           "Oxamyl",
-          "IRAC N1A",
-          "an older carbamate, very toxic and restricted in many countries"
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on banana."
         ]
       ]
     },
@@ -177,11 +187,24 @@
     {
       "type": "list",
       "items": [
-        "Buy seedlings from nurseries that use clean or pasteurized soil, and look at the roots before you plant.",
-        "Wash soil off tools, tillers and boots before you move from an infested field to a clean one.",
-        "Do not follow one susceptible vegetable with another in the same bed. Break the run with a poor host, a bare fallow or a marigold crop.",
-        "Keep weeds down during the fallow, because many weeds also feed the nematode.",
-        "Pull a few plants at every harvest and check the roots, so you know which beds need work before the next season. Our [integrated pest management guide](/pests/integrated-pest-management) shows how to plan these steps together."
+        "Raise seedlings in pasteurized or soilless mix, and never transplant seedlings with knotted roots.",
+        "Solarize beds before planting: wet the soil and cover it with clear plastic for 4 to 6 weeks in the dry season.",
+        "Rotate with poor hosts such as corn, or flood the field for a rice crop. Grow Crotalaria or marigold during the fallow.",
+        "Plant resistant varieties or graft onto resistant rootstock where you can, and choose resistant sweet potato and tomato types.",
+        "Work compost or manure into the soil, mulch, and water deeply so roots can outgrow the damage.",
+        "After harvest, pull and burn the old roots, and clean soil off tools and tillers before moving to a clean field."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Products with the fungus Purpureocillium (Paecilomyces) lilacinus or with Bacillus lower egg numbers when put in the planting hole.",
+        "Compost rich soil keeps more of the fungi and mites that feed on nematodes."
       ]
     },
     {

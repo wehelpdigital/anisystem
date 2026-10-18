@@ -137,24 +137,72 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Dimethoate",
-          "IRAC 1B",
-          "systemic, listed by the Pacific fact sheet, can be sprayed or trunk injected"
+          "Pymetrozine",
+          "IRAC 9B",
+          "A first choice. 30 registered products name it on mango."
         ],
         [
-          "Synthetic pyrethroids",
-          "IRAC 3A",
-          "listed by the Pacific fact sheet, also kill natural enemies"
+          "Cyantraniliprole plus pymetrozine",
+          "IRAC 28 plus 9B",
+          "A first choice. 1 registered product names it on mango."
+        ],
+        [
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "A sound second choice. 83 registered products name it on mango."
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "A sound second choice. 21 registered products name it on mango."
+        ],
+        [
+          "Thiamethoxam",
+          "IRAC 4A",
+          "A sound second choice. 19 registered products name it on mango."
+        ],
+        [
+          "Dinotefuran",
+          "IRAC 4A",
+          "A sound second choice. 9 registered products name it on mango."
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. 4 registered products name it on mango."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 3 registered products name it on mango."
+        ],
+        [
+          "Acetamiprid",
+          "IRAC 4A",
+          "A sound second choice. 1 registered product names it on mango."
+        ],
+        [
+          "Azadirachtin",
+          "IRAC UN",
+          "A sound second choice. 1 registered product names it on mango."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 26 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Hoppers in mango areas that get one group spray after spray stop dying, and pyrethroids and neonicotinoids are the groups most overused in Asia. Rotate pymetrozine (9B), buprofezin (16), cartap (14), a neonicotinoid (4A) and a pyrethroid (3A), and never use one group twice in a row in the same flowering."
     },
     {
       "type": "callout",
@@ -170,10 +218,24 @@
     {
       "type": "list",
       "items": [
-        "Prune each year after harvest so the canopy stays open.",
-        "Keep trees well spaced and the orchard clean.",
-        "Check new nursery plants before you bring them into the orchard.",
-        "Scout every season from the first flower buds."
+        "Prune after harvest so light and wind reach inside the crown. Hoppers thrive in shaded, humid trees.",
+        "Induce all trees in a block at the same time, so the flowering window is short and hoppers cannot move from early to late trees.",
+        "Count hoppers every week from bud swell until the fruits are pea sized, instead of spraying by the calendar.",
+        "If a spray is needed, give it before the flowers open. Sprays at full bloom kill the bees and flies that set the fruit.",
+        "Do not bring nursery plants carrying hoppers or eggs into a clean orchard.",
+        "Wash or wipe sooty mold off small trees and keep weeds low under the canopy to dry the air."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spiders, lady beetles, lacewing larvae and small wasps eat hoppers and their eggs. Every needless spray kills them.",
+        "Beauveria bassiana or Metarhizium anisopliae in an oil based spray can cut hopper numbers in humid weather."
       ]
     },
     {

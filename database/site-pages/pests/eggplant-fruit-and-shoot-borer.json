@@ -139,29 +139,84 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
-        ],
-        [
-          "Spinosad",
-          "IRAC 5",
-          "gave strong control of the shoot and fruit borer in an Indian field trial"
-        ],
-        [
-          "Emamectin benzoate",
-          "IRAC 6",
-          "ranked next to chlorantraniliprole and spinosad in the same trial"
+          "On Philippine labels"
         ],
         [
           "Chlorantraniliprole",
           "IRAC 28",
-          "the most effective of the products in that trial"
+          "A first choice. 34 registered products name it on eggplant."
+        ],
+        [
+          "Spinosad",
+          "IRAC 5",
+          "A first choice. 12 registered products name it on eggplant."
+        ],
+        [
+          "Flubendiamide",
+          "IRAC 28",
+          "A first choice. 4 registered products name it on eggplant."
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "A first choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Spinetoram",
+          "IRAC 5",
+          "A first choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Abamectin",
+          "IRAC 6",
+          "A sound second choice. 39 registered products name it on eggplant."
+        ],
+        [
+          "Indoxacarb",
+          "IRAC 22A",
+          "A sound second choice. 6 registered products name it on eggplant."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 3 registered products name it on eggplant."
+        ],
+        [
+          "Azadirachtin",
+          "IRAC UN",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Broflanilide",
+          "IRAC 30",
+          "A sound second choice. 1 registered product names it on eggplant."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 19 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Acetamiprid and dinotefuran:** A neonicotinoid made for leafhoppers and whitefly. It gives poor control of borer larvae."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** In South Asia the borer resists pyrethroids and organophosphates. Rotate by windows of about 4 weeks: a diamide (28), then spinosad or spinetoram (5), then emamectin (6) or indoxacarb (22A), and come back to a group only after the others."
     },
     {
       "type": "callout",
@@ -177,10 +232,25 @@
     {
       "type": "list",
       "items": [
-        "Plant clean seedlings, and check the nursery for wilted shoots before you transplant.",
-        "Clear old eggplant stubble and wild nightshade weeds around the field.",
-        "Keep a break of at least one crop that is not in the eggplant family.",
-        "Ask your agricultural technician about eggplant varieties with better resistance to the borer."
+        "Clip wilted shoot tips and bored fruits every week, bag them and bury them deep. Never leave them on the ground.",
+        "Raise seedlings under fine net and plant only seedlings with clean, unbored tips.",
+        "Hang sex pheromone traps from transplanting to the last harvest, and change the lure on time.",
+        "After the last picking, uproot and destroy the old plants. Do not set a new field beside an old one.",
+        "Rotate with a crop outside the eggplant family, such as corn, rice or beans, and remove wild nightshade weeds.",
+        "Grow a variety with better borer tolerance where one is available."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Earwigs, the wasp Trathala flavoorbitalis and egg wasps attack the borer. Early broad sprays kill them.",
+        "Trichogramma cards placed weekly from flowering cut the number of eggs that hatch.",
+        "Bt sprays reach only newly hatched larvae before they bore in. Time them with the trap catch."
       ]
     },
     {

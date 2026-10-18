@@ -138,22 +138,42 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
+        ],
+        [
+          "Azoxystrobin plus difenoconazole",
+          "FRAC 11 plus 3",
+          "A first choice. 31 registered products name it on corn."
+        ],
+        [
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A first choice. 10 registered products name it on corn."
         ],
         [
           "Mancozeb",
-          "FRAC M3",
-          "protectant, named by the Pacific Pests fact sheet"
+          "FRAC M03",
+          "A sound second choice. 84 registered products name it on corn."
         ],
         [
           "Chlorothalonil",
-          "FRAC M5",
-          "protectant, named by the Pacific Pests fact sheet"
+          "FRAC M05",
+          "A sound second choice. 34 registered products name it on corn."
+        ],
+        [
+          "Difenoconazole plus propiconazole",
+          "FRAC 3 plus 3",
+          "A sound second choice. 24 registered products name it on corn."
+        ],
+        [
+          "Azoxystrobin",
+          "FRAC 11",
+          "A sound second choice. 2 registered products name it on corn."
         ]
       ]
     },
@@ -171,10 +191,11 @@
     {
       "type": "list",
       "items": [
-        "Choose a hybrid with good resistance to this blight.",
-        "Do not leave corn residue lying on the surface after harvest.",
-        "Rotate away from corn when you can, since continuous corn builds up the fungus.",
-        "Keep records of the fields that had blight and plant a tolerant hybrid there first."
+        "Plant a resistant hybrid. Most good hybrids carry resistance, and it beats any spray.",
+        "Plow under or remove corn residue after harvest, since the fungus lives on it for up to two years.",
+        "Rotate with a crop that is not a grass, and clear volunteer corn, sorghum and grassy weeds.",
+        "Feed enough phosphorus and potassium, and do not oversupply nitrogen.",
+        "Keep to the right spacing, so the canopy dries quickly after rain."
       ]
     },
     {

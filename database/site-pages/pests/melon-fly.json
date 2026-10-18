@@ -140,32 +140,17 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Spinosad",
-          "IRAC 5",
-          "mixed with a protein bait"
-        ],
-        [
-          "Spinetoram",
-          "IRAC 5",
-          "mixed with a protein bait"
-        ],
-        [
-          "Malathion",
-          "IRAC 1B",
-          "an older option listed in the Pacific Pests sheet"
-        ],
-        [
-          "Fipronil",
-          "IRAC 2B",
-          "used in bait stations in the University of Hawaii trial, where damage fell from 80 percent to under 5 percent in two months"
+          "Lambda cyhalothrin plus thiamethoxam",
+          "IRAC 3A plus 4A",
+          "Older or broad chemistry: a last resort. 50 registered products name it on bitter gourd."
         ]
       ]
     },
@@ -183,10 +168,24 @@
     {
       "type": "list",
       "items": [
-        "Bag every young fruit before the flies find it.",
-        "Pick up and destroy fallen fruit all through the season.",
-        "Plow or turn the soil after harvest, to expose the pupae.",
-        "Plant together with the farms around you, so the flies do not move from one crop to the next."
+        "Bag young fruit as soon as it sets, in paper or fine mesh, before the flies find it.",
+        "Every few days pick up stung and fallen fruit. Bury it deep, or seal it in a plastic bag in the sun.",
+        "Hang cue lure traps around the field to catch males and to see when the flies arrive.",
+        "Spot spray protein bait mixed with an insecticide weekly on border plants and leaf undersides, never on the fruit.",
+        "Do not follow one cucurbit crop with another. Plant with your neighbors and destroy crop remains after the last harvest.",
+        "Plow or turn the soil after harvest to expose the pupae."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Ants, ground beetles and spiders eat larvae and pupae in the soil. Chickens let into the field after harvest eat many more.",
+        "Small braconid wasps such as Psyttalia fletcheri lay their eggs in the maggots. Bait sprays spare them better than cover sprays."
       ]
     },
     {

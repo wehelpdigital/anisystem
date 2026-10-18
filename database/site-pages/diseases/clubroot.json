@@ -137,22 +137,22 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
-        ],
-        [
-          "Fluazinam",
-          "FRAC 29",
-          "soil treatment at transplanting, registered for clubroot in some countries"
+          "On Philippine labels"
         ],
         [
           "Cyazofamid",
           "FRAC 21",
-          "soil treatment, registered for clubroot in the United States"
+          "A first choice. 2 registered products name it on cabbage."
+        ],
+        [
+          "Bacillus amyloliquefaciens",
+          "FRAC BM02",
+          "Older or broad chemistry: a last resort. 1 registered product names it on cabbage."
         ]
       ]
     },
@@ -170,10 +170,24 @@
     {
       "type": "list",
       "items": [
-        "Rotate away from all crucifers for 4 to 7 years where the disease has been found.",
-        "Pull cabbage family weeds in and around the field, since they host the disease too.",
-        "Collect and burn the old roots and plant debris, and never compost infected plants.",
-        "Plow deeply and keep the field well drained, and test the soil pH before every cabbage crop. A field with clubbed roots may also have [black rot](/diseases/black-rot), so check the leaves too."
+        "Lime the field to a pH of 7.1 to 7.5 before transplanting. Test the soil first so you lime enough.",
+        "Raise seedlings in clean trays with pasteurized or soilless mix, and never buy seedlings from a field with clubroot.",
+        "Plant on raised beds and open the drains. Wet soil lets the spores swim to the roots.",
+        "Grow a clubroot resistant cabbage or Chinese cabbage variety in fields with a history of the disease.",
+        "Wash soil off boots, tools and tillers before moving from an infested field to a clean one.",
+        "Rotate away from the cabbage family for as long as you can and pull cabbage family weeds. The spores live many years."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "In trials, lime plus the soil fungus Paecilomyces lilacinus gave better control than lime alone.",
+        "Bacillus based soil products add a little protection when used with lime."
       ]
     },
     {

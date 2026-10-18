@@ -138,22 +138,27 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients that work on the Asian citrus psyllid, the insect that carries it, not on a sick plant. No product sold here names it on its label yet, so ask your technician first.",
       "rows": [
         [
           "Active ingredient",
-          "FRAC group",
-          "Use"
+          "IRAC group",
+          "On Philippine labels"
         ],
         [
           "Imidacloprid",
           "IRAC 4A",
-          "a neonicotinoid used on young trees for psyllid control"
+          "No product sold here names the Asian citrus psyllid on its label yet. Ask your technician before you use it."
         ],
         [
           "Thiamethoxam",
           "IRAC 4A",
-          "a neonicotinoid used for psyllid control on young citrus"
+          "No product sold here names the Asian citrus psyllid on its label yet. Ask your technician before you use it."
+        ],
+        [
+          "Mineral oil",
+          "IRAC UN",
+          "No product sold here names the Asian citrus psyllid on its label yet. Ask your technician before you use it."
         ]
       ]
     },
@@ -171,10 +176,24 @@
     {
       "type": "list",
       "items": [
-        "Plant only certified, disease indexed seedlings, and ask for the BPI tag on mother trees.",
-        "Inspect new seedlings and new flushes every week for psyllids.",
-        "Remove sick trees quickly, so they are not a source for the psyllids.",
-        "Keep records of where each tree came from. For other tree diseases and pests, see our [crop pests guide](/pests/crop-pests-philippines) and [plant diseases guide](/diseases/plant-diseases-philippines)."
+        "Plant only certified disease free seedlings raised in insect proof screen houses. Never graft budwood from a tree that shows signs.",
+        "Every month in greening areas, look for blotchy mottled leaves, yellow shoots and small lopsided fruit. Kill the psyllids on a sick tree, then remove and burn it.",
+        "Keep kamuning (orange jasmine) and curry leaf away from citrus. Both host the psyllid and the greening bacterium.",
+        "Never bring citrus plants or budwood from greening areas into clean ones, and keep a record of where each tree came from.",
+        "Replant a block all at once with clean trees, and work with neighbors so psyllids from abandoned trees do not reinfect them.",
+        "Feed and water trees well. It does not cure greening, but it keeps lightly hit trees bearing longer."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Ladybird beetles, hoverfly larvae, lacewings and tiny parasitic wasps kill psyllid nymphs. Spare them by spraying only flushes that carry psyllids.",
+        "Horticultural oil, neem or soap sprays on new flushes cut psyllid numbers with less harm to these enemies."
       ]
     },
     {

@@ -137,23 +137,77 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Pyrethrum",
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. 5 registered products name it on banana."
+        ],
+        [
+          "Potassium salts of fatty acids",
+          "Not grouped",
+          "A sound second choice. 2 registered products name it on banana."
+        ],
+        [
+          "Beauveria bassiana",
+          "IRAC UNF",
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Mineral oil",
+          "Not grouped",
+          "A sound second choice. 1 registered product names it on banana."
+        ],
+        [
+          "Malathion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 40 registered products name it on banana."
+        ],
+        [
+          "Chlorpyrifos",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 15 registered products name it on banana."
+        ],
+        [
+          "Fenitrothion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 4 registered products name it on banana."
+        ],
+        [
+          "Bifenthrin",
           "IRAC 3A",
-          "plant derived, for small colonies"
+          "Older or broad chemistry: a last resort. 1 registered product names it on banana."
         ],
         [
-          "Rotenone (from derris)",
-          "IRAC 21B",
-          "plant derived, for small colonies"
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on banana."
         ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Buprofezin:** Does not work on aphids. It is made for hoppers, whiteflies and mealybugs.",
+        "**Bifenthrin plus buprofezin:** A treated bunch bag. Banana aphids live on the plant base and suckers, so the bag does not reach them.",
+        "**Deltamethrin:** Banned on banana."
       ]
     },
     {
@@ -170,10 +224,25 @@
     {
       "type": "list",
       "items": [
-        "Buy clean, disease free planting material only.",
-        "Keep weeds and wild gingers and heliconias out of the farm.",
-        "Check the heart of the plant and the new suckers each week in the wet season.",
-        "Rogue out sick plants early, before the aphids move the virus."
+        "Plant only clean, virus free planting material such as tissue cultured plantlets from a trusted nursery.",
+        "Kill the aphids on a bunchy top plant first, then kill the plant and its suckers and chop it where it stands.",
+        "Never move suckers out of a field or town with bunchy top.",
+        "Clear volunteer bananas, heliconia and canna near the farm. They shelter the aphids.",
+        "Desucker often. Aphids crowd on young suckers and new growth.",
+        "Check every 2 weeks and rogue sick plants at once, together with the neighbors, since the aphids fly between farms."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Lady beetles, lacewings, hoverfly larvae, small wasps and many spiders feed on banana aphids. Avoid broad sprays.",
+        "Ants tend the aphids at the plant base. Keeping ants down lets the predators work.",
+        "Beauveria bassiana and Lecanicillium infect aphid colonies in humid weather."
       ]
     },
     {

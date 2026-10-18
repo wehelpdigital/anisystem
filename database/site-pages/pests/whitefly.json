@@ -139,34 +139,80 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Insecticidal soap",
-          "no IRAC group",
-          "a soap and oil spray that suffocates nymphs, used in vegetables and listed by Pacific Pests"
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A first choice. Registered products name it on tomato and eggplant."
         ],
         [
-          "Neem (azadirachtin)",
-          "IRAC UN",
-          "a plant based option listed by Pacific Pests and UC IPM"
+          "Abamectin plus spiromesifen",
+          "IRAC 6 plus 23",
+          "A first choice. Registered products name it on tomato, eggplant, chili, bell pepper and more."
         ],
         [
-          "Buprofezin",
-          "IRAC 16",
-          "a growth regulator for the nymph stages, listed by UC IPM"
+          "Afidopyropen",
+          "IRAC 9D",
+          "A first choice. 1 registered product names it on eggplant."
         ],
         [
-          "Spirotetramat",
-          "IRAC 23",
-          "listed by UC IPM for use during the growing season"
+          "Dinotefuran",
+          "IRAC 4A",
+          "A sound second choice. Registered products name it on tomato, eggplant and watermelon."
+        ],
+        [
+          "Flometoquin",
+          "IRAC 34",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Tolfenpyrad",
+          "IRAC 21A",
+          "A sound second choice. 1 registered product names it on eggplant."
+        ],
+        [
+          "Lambda cyhalothrin plus thiamethoxam",
+          "IRAC 3A plus 4A",
+          "Older or broad chemistry: a last resort. Registered products name it on tomato and eggplant."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "Older or broad chemistry: a last resort. 3 registered products name it on eggplant."
+        ],
+        [
+          "Acetamiprid plus bifenthrin",
+          "IRAC 4A plus 3A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on tomato."
+        ],
+        [
+          "Chlorfluazuron",
+          "IRAC 15",
+          "Older or broad chemistry: a last resort. 1 registered product names it on watermelon."
         ]
       ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Beta cyfluthrin:** Pyrethroids kill the wasps that hold whitefly down, and whitefly comes back worse after them."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Bemisia whitefly in Asia widely survives organophosphates, pyrethroids and imidacloprid, and in places other neonicotinoids and pyriproxyfen. Keep one group per window of 2 to 3 weeks: spiromesifen or spirotetramat (23), then afidopyropen (9D) or cyantraniliprole (28), then dinotefuran (4A) or flometoquin (34). Never two neonicotinoids in a row."
     },
     {
       "type": "callout",
@@ -182,10 +228,25 @@
     {
       "type": "list",
       "items": [
-        "Plant on the same dates as your neighbors, and avoid planting next to old crops that are full of whitefly.",
-        "Keep nursery seedlings under a fine net until transplanting.",
-        "Clear weeds and old crop remains right after harvest.",
-        "Choose varieties that tolerate virus where they are sold for your area."
+        "Raise seedlings under fine net and check them for eggs and nymphs before transplanting.",
+        "Hang yellow sticky traps around the field from planting, to catch adults flying in and to count them.",
+        "A border of corn around the field, or silver plastic mulch, keeps many adults off young plants.",
+        "Remove weeds, volunteer plants and old crop remains, and never plant a new crop beside an old one full of whitefly.",
+        "Plant on the same dates as your neighbors and pull out the crop right after the last harvest.",
+        "Choose varieties that tolerate leaf curl virus where they are sold for your area."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Encarsia and Eretmocerus wasps, lacewings and lady beetles eat whitefly. Pyrethroid sprays kill them and the whitefly comes back worse.",
+        "Insecticidal soap, oil and neem sprayed under the leaves kill nymphs with little harm to the wasps.",
+        "Fungi such as Beauveria bassiana and Lecanicillium lecanii work on nymphs in humid weather."
       ]
     },
     {

@@ -138,32 +138,32 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Propiconazole",
-          "FRAC 3",
-          "triazole, full growth stop in lab tests of maize and rice isolates"
+          "Difenoconazole plus propiconazole",
+          "FRAC 3 plus 3",
+          "A first choice. 24 registered products name it on corn."
         ],
         [
-          "Hexaconazole",
-          "FRAC 3",
-          "triazole, full growth stop in lab tests"
+          "Azoxystrobin",
+          "FRAC 11",
+          "A first choice. 20 registered products name it on corn."
         ],
         [
-          "Validamycin",
-          "FRAC U18",
-          "antibiotic, completely stopped radial growth of most isolates in lab tests"
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A first choice. 1 registered product names it on corn."
         ],
         [
-          "Carbendazim",
-          "FRAC 1",
-          "full growth stop in lab tests, rotate with another group"
+          "Fluoxastrobin",
+          "FRAC 11",
+          "A sound second choice. 2 registered products name it on corn."
         ]
       ]
     },
@@ -181,10 +181,22 @@
     {
       "type": "list",
       "items": [
-        "Choose a tolerant variety and plant at the spacing your supplier advises.",
-        "Remove grass weeds from the field and the bunds all season.",
-        "Bury or burn corn debris after harvest.",
-        "Keep notes on the lots that had banded blight and change the crop on them next season."
+        "Strip the two or three lowest leaves with their sheaths at about day 40. It slows the fungus as it climbs.",
+        "Use wider spacing and avoid dense stands that hold humidity.",
+        "Do not plant corn right after rice that had sheath blight, and keep water from a sick field away from a clean one.",
+        "Clear grass weeds, and bury or burn crop debris after harvest.",
+        "Plant a tolerant hybrid where one is sold."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Trichoderma or Bacillus subtilis on the seed and soil slow the fungus. Use them before chemical sprays."
       ]
     },
     {

@@ -137,22 +137,27 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Copper compounds",
-          "FRAC M1",
-          "a protectant, applied before infection"
+          "Copper hydroxide",
+          "FRAC M01",
+          "A first choice. 12 registered products name it on coffee."
         ],
         [
-          "Triazole fungicides",
-          "FRAC 3",
-          "systemic, so ask an agriculturist for a registered active ingredient and do not repeat the same group every time"
+          "Cuprous oxide",
+          "FRAC M01",
+          "A first choice. 2 registered products name it on coffee."
+        ],
+        [
+          "Bordeaux mixture",
+          "FRAC M01",
+          "A sound second choice. 2 registered products name it on coffee."
         ]
       ]
     },
@@ -170,10 +175,22 @@
     {
       "type": "list",
       "items": [
-        "Choose resistant or tolerant planting material when you replant.",
-        "Keep spacing and shade right, and prune each year.",
-        "Scout the lower leaves of a few trees often in the rainy season.",
-        "Keep soil fertility up, since weak trees suffer more. See our [plant diseases guide](/diseases/plant-diseases-philippines) for other leaf diseases to watch."
+        "When you replant, choose rust resistant or tolerant coffee and clean seedlings. Arabica at low and middle elevations suffers most.",
+        "Give light, even shade and prune every year so leaves dry quickly after rain. Heavy shade keeps leaves wet and feeds the rust.",
+        "Feed the trees well, above all in heavy bearing years. Trees that bear heavily on poor soil drop their leaves to rust first.",
+        "Space trees so air moves through the rows and keep the farm weeded.",
+        "Renew old, exhausted trees by stumping. Young vigorous growth stands rust better."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "A white fungus (Lecanicillium) often grows over old rust spots and slows the rust. It is a friend, not a new disease."
       ]
     },
     {

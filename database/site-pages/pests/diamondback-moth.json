@@ -138,39 +138,90 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
-        ],
-        [
-          "Bacillus thuringiensis",
-          "IRAC 11A",
-          "the first choice, most effective on young larvae, and accepted in organic farming"
+          "On Philippine labels"
         ],
         [
           "Spinosad",
           "IRAC 5",
-          "listed in the University of California guide, with resistance reported where it is overused"
-        ],
-        [
-          "Emamectin benzoate",
-          "IRAC 6",
-          "listed in the same guide"
-        ],
-        [
-          "Chlorantraniliprole",
-          "IRAC 28",
-          "listed in the same guide"
+          "A first choice. 12 registered products name it on cabbage."
         ],
         [
           "Indoxacarb",
           "IRAC 22A",
-          "listed in the same guide"
+          "A first choice. 7 registered products name it on cabbage."
+        ],
+        [
+          "Bacillus thuringiensis kurstaki",
+          "IRAC 11A",
+          "A first choice. Registered products name it on cabbage, pechay, mustard and cauliflower."
+        ],
+        [
+          "Bacillus thuringiensis aizawai",
+          "IRAC 11A",
+          "A first choice. Registered products name it on cabbage, pechay, mustard, broccoli and more."
+        ],
+        [
+          "Spinetoram",
+          "IRAC 5",
+          "A first choice. 2 registered products name it on cabbage."
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "A first choice. 1 registered product names it on cabbage."
+        ],
+        [
+          "Abamectin",
+          "IRAC 6",
+          "A sound second choice. 40 registered products name it on cabbage."
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "A sound second choice. 36 registered products name it on cabbage."
+        ],
+        [
+          "Chlorfenapyr",
+          "IRAC 13",
+          "A sound second choice. 19 registered products name it on cabbage."
+        ],
+        [
+          "Novaluron",
+          "IRAC 15",
+          "A sound second choice. 3 registered products name it on cabbage."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 20 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Deltamethrin, cypermethrin, fenvalerate and permethrin:** Philippine cabbage moths survive pyrethroids, and the spray kills the wasps that keep them down.",
+        "**Malathion, profenofos and phenthoate:** Philippine cabbage moths survive organophosphates, and the spray kills the wasps that keep them down.",
+        "**Fenobucarb (BPMC):** An old carbamate the moths resist. It also kills the parasitic wasps.",
+        "**Imidacloprid:** Made for sucking insects. It does not control caterpillars.",
+        "**Tetraconazole:** A fungicide. It does not kill caterpillars, so this label line looks like an error.",
+        "**Phenthoate plus fenobucarb (BPMC):** Both halves are old chemistry the moths resist, and both kill the wasps.",
+        "**Acephate plus imidacloprid:** The moths resist acephate and imidacloprid does not hit caterpillars. It mostly kills the wasps."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Philippine moths resist pyrethroids, organophosphates and carbamates, moths in many Asian fields survive cartap, and moths on some highland farms survive every diamide. Keep one group for one window of about 3 to 4 weeks (one moth generation), then switch: Bt, then spinosad or spinetoram, then emamectin, then indoxacarb or chlorfenapyr, and drop any group that failed for the rest of the crop."
     },
     {
       "type": "callout",
@@ -186,10 +237,25 @@
     {
       "type": "list",
       "items": [
-        "Do not spray on a calendar. Spray only when scouting shows a need.",
-        "Keep the wasps alive by avoiding broad spectrum sprays.",
-        "Rotate crucifers with a crop from another family.",
-        "Destroy crop residue and crucifer weeds right after harvest."
+        "Raise seedlings under fine net and plant only clean seedlings, free of eggs and small larvae.",
+        "Plant the whole block at one time and leave a break of at least a month with no crucifer in the field.",
+        "Right after harvest, plow under or feed to animals the old stalks and leaves. Larvae and pupae live on in them.",
+        "Rotate cabbage, pechay and mustard with a crop of another family, such as tomato, beans or corn.",
+        "A row of mustard around the field draws the moths away from the cabbage. Destroy it once it fills with larvae.",
+        "Sprinkling the plants from above in the evening washes off young larvae and disturbs the moths."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Protect the wasps Diadegma semiclausum in the highlands and Cotesia plutellae in the lowlands. Broad sprays kill them first.",
+        "Bt sprays (kurstaki or aizawai) kill only caterpillars and spare the wasps, spiders and syrphid flies.",
+        "Spiders, ground beetles and lacewings eat larvae and pupae left on the leaves."
       ]
     },
     {

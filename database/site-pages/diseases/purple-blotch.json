@@ -137,34 +137,68 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
-        ],
-        [
-          "Mancozeb",
-          "FRAC M3",
-          "a protectant spray, common where the disease is bad"
+          "On Philippine labels"
         ],
         [
           "Chlorothalonil",
-          "FRAC M5",
-          "a protectant spray, common where the disease is bad"
+          "FRAC M05",
+          "A first choice. Registered products name it on onion and garlic."
         ],
         [
-          "Copper fungicides",
-          "FRAC M1",
-          "a protectant spray"
+          "Mancozeb",
+          "FRAC M03",
+          "A first choice. Registered products name it on onion and garlic."
         ],
         [
-          "Triazole fungicides",
+          "Difenoconazole",
           "FRAC 3",
-          "a systemic option, rotate with the protectants"
+          "A first choice. 53 registered products name it on onion."
+        ],
+        [
+          "Propineb",
+          "FRAC M03",
+          "A sound second choice. 16 registered products name it on onion."
+        ],
+        [
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A sound second choice. 9 registered products name it on onion."
+        ],
+        [
+          "Fluazinam",
+          "FRAC 29",
+          "A sound second choice. 7 registered products name it on onion."
+        ],
+        [
+          "Fluopyram plus trifloxystrobin",
+          "FRAC 7 plus 11",
+          "A sound second choice. 3 registered products name it on onion."
+        ],
+        [
+          "Azoxystrobin",
+          "FRAC 11",
+          "A sound second choice. 1 registered product names it on onion."
+        ],
+        [
+          "Iminoctadine",
+          "FRAC M07",
+          "A sound second choice. 1 registered product names it on onion."
+        ],
+        [
+          "Propineb plus trifloxystrobin",
+          "FRAC M03 plus 11",
+          "A sound second choice. 1 registered product names it on onion."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 4 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
     },
     {
       "type": "callout",
@@ -180,11 +214,23 @@
     {
       "type": "list",
       "items": [
-        "Start each crop with clean seed or sets.",
-        "Rotate with other crops for 3 years.",
-        "Keep thrips down all season.",
-        "Water by drip so the leaves do not stay wet.",
-        "Choose varieties that show resistance where they are sold, since resistance has been found in onion and garlic."
+        "Use clean seed and healthy sets, and throw out any seedling with leaf spots before transplanting.",
+        "Keep thrips down. The fungus enters older leaves through thrips scars.",
+        "Water at the base or by furrow, not over the leaves, so the leaves do not stay wet for long.",
+        "Rotate for three years with crops outside the onion family, and bury or remove leaf debris after harvest.",
+        "Feed with balanced nitrogen and potash. Plants short of food or overfed with nitrogen spot worse.",
+        "Harvest when the necks fall and cure bulbs in the shade until the necks are dry, so the fungus cannot rot them in storage."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Bacillus based products can help as protectants under light pressure, best in the dry season."
       ]
     },
     {

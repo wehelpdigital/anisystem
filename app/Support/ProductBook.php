@@ -58,6 +58,8 @@ final class ProductBook
                 $r['diseases'] = array_values(array_unique(array_map(fn ($x) => substr($x, 2), array_filter($refs, fn ($x) => str_starts_with($x, 'd:')))));
                 $r['app_ai'] = [implode(' plus ', (array) ($r['ai'] ?? []))];
             }
+            // Its ingredients as one key ("lambda cyhalothrin plus thiamethoxam"), worked out once.
+            $r['_n'] = self::norm(implode(' plus ', (array) ($r['ai'] ?? [])));
             $r['_o'] = [self::ORIGIN_RANK[$r['origin'] ?? 'ph'] ?? 2, $i];
             $all[$r['key']] = $r;
         }
@@ -156,7 +158,7 @@ final class ProductBook
         $all = self::all();
         $out = [];
         foreach (self::oneABrand($keys) as $k) {
-            if (self::norm(implode(' plus ', (array) ($all[$k]['ai'] ?? []))) === $n) {
+            if (($all[$k]['_n'] ?? '') === $n) {
                 $out[] = $k;
                 if (count($out) >= $max) {
                     break;
@@ -195,9 +197,19 @@ final class ProductBook
         return (string) ($book[$company]['o'] ?? 'ph');
     }
 
+    /** The key a product list is filed under: lower case, dashes as spaces, no commas, one space between words. Kept once worked out. */
     public static function norm(string $s): string
     {
-        return trim((string) preg_replace('/\s+/', ' ', strtolower(str_replace(['-', ','], [' ', ''], $s))));
+        static $seen = [];
+        if (isset($seen[$s])) {
+            return $seen[$s];
+        }
+        $n = strtolower(strtr($s, ['-' => ' ', ',' => '', "\t" => ' ', "\n" => ' ', "\r" => ' ']));
+        while (str_contains($n, '  ')) {
+            $n = str_replace('  ', ' ', $n);
+        }
+
+        return $seen[$s] = trim($n);
     }
 
     /* ---------------------------------------------------------------- */

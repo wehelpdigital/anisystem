@@ -139,24 +139,48 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Spinosad",
           "IRAC 5",
-          "mixed with a protein bait, as the Pacific Pests sheet advises"
+          "A first choice. 2 registered products name it on mango."
         ],
         [
-          "Spinetoram",
-          "IRAC 5",
-          "mixed with a protein bait, as the Pacific Pests sheet advises"
+          "Cypermethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 100 registered products name it on mango."
+        ],
+        [
+          "Lambda cyhalothrin plus thiamethoxam",
+          "IRAC 3A plus 4A",
+          "Older or broad chemistry: a last resort. 40 registered products name it on mango."
+        ],
+        [
+          "Carbaryl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 27 registered products name it on mango."
+        ],
+        [
+          "Fenthion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 2 registered products name it on mango."
+        ],
+        [
+          "Carbosulfan",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on mango."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** In Asia the oriental fruit fly resists organophosphates such as malathion and trichlorfon and pyrethroids such as beta cypermethrin, and spinosad resistance has shown up where bait was used alone for years. Lean on sanitation, bagging and male traps so bait sprays stay few, and swap the bait's insecticide group when a choice is registered."
     },
     {
       "type": "callout",
@@ -172,10 +196,25 @@
     {
       "type": "list",
       "items": [
-        "Keep the orchard floor clean of fallen fruit all through the season.",
-        "Bag the fruit well before harvest.",
-        "Use traps from half grown fruit on, so you act before the fly builds up.",
-        "Plan your planting and harvest dates with neighbors to break the fly's food supply."
+        "Bag the fruits at least 6 weeks before harvest so the females cannot sting them.",
+        "Pick up fallen and overripe fruit every 2 to 3 days. Bury it deep or seal it in a plastic bag in the sun.",
+        "Harvest at the mature green stage when the buyer allows. The flies prefer soft ripe fruit.",
+        "Kill the males: blocks or wicks with methyl eugenol and a killing agent, spread over the whole area, cut mating.",
+        "Clear wild host trees and unpicked fruit near the orchard, and work with neighbors, since the flies travel between farms.",
+        "Prune the canopy open. Bagging, bait spots and checks are easier on low, open trees."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Native parasitic wasps attack the eggs and maggots in the fruit. They survive where cover sprays are few.",
+        "Weaver ants (hantik) patrolling the canopy cut fruit fly stings on mango. Leave their nests on the tree.",
+        "Ants, beetles and chickens eat the maggots and pupae in the soil under the trees."
       ]
     },
     {

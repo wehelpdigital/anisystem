@@ -159,7 +159,9 @@
     const cropWord = (c) => (c && D.cropNames[c] ? D.cropNames[c][0].toLowerCase() : '');
     // The ingredients for one crop (2026-10-19): the registered ones whose labels name it there, best first
     // ([name, group, tier, products, companies, why]), else the entry's own list.
-    const aiOf = (i, crop) => { const r = crop && i.aiBy ? i.aiBy[crop] : null; return (r && r.length) ? r : (i.ai || []).map(([n, g]) => [n, g, '', 0, 0, '']); };
+    // A row's caution comes as a number into the entry's whys (each sent once), -1 for none.
+    const withWhy = (i, rows) => (rows || []).map((r) => [r[0], r[1], r[2], r[3], r[4], typeof r[5] === 'number' ? (r[5] >= 0 ? ((i.whys || [])[r[5]] || '') : '') : (r[5] || '')]);
+    const aiOf = (i, crop) => { const r = crop && i.aiBy ? i.aiBy[crop] : null; return (r && r.length) ? withWhy(i, r) : (i.ai || []).map(([n, g]) => [n, g, '', 0, 0, '']); };
     const refOf = (i) => (D.pests ? 'p:' : 'd:') + i.k;
     // The products sold here for one ingredient: those whose label names this very pest or disease on the crop
     // ("*": any crop), else the ingredient on the crop's labels. Philippine companies first (the server's order).
@@ -208,8 +210,8 @@
     const linesOf = (list, max) => '<ul class="fd-list">' + list.slice(0, max || list.length).map((l) => '<li>' + esc(l) + '</li>').join('') + '</ul>';
     // A virus: no spray cures the plant; its vectors' own lists, on the crop in view when they attack it.
     const vectorOf = (i, crop) => (i.vec || []).map((v) => {
-        const c = crop && v.ai && v.ai[crop] ? crop : '', rows = c ? v.ai[c] : (v.any || []);
-        const nm = String(v.name).toLowerCase();
+        const c = crop && v.ai && v.ai[crop] ? crop : '', rows = withWhy(i, c ? v.ai[c] : (v.any || []));
+        const nm = String(v.name).toLowerCase().replace(/\b(asian|oriental)\b/g, (w) => w.charAt(0).toUpperCase() + w.slice(1));
         return '<div class="fd-vec"><span class="fh-spray-h">' + I.drop + 'Slow the spread: control the ' + esc(nm) + '</span>'
             + '<p class="fh-fine">The ' + esc(nm) + ' carries it from plant to plant. These work on the insect' + (c ? ' on ' + esc(cropWord(c)) : '') + ', not on the sick plant.</p>'
             + (crop && !c && rows.length ? '<p class="fh-fine fd-off">No product sold here names the ' + esc(nm) + ' on ' + esc(cropWord(crop) || 'this crop') + ' yet. These are labelled for it on other crops: use one only where the label names your crop, or ask your technician.</p>' : '')

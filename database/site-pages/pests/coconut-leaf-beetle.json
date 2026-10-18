@@ -137,27 +137,6 @@
       "text": "Chemicals are best kept for young palms and nurseries, and only when natural enemies cannot keep up. Synthetic pyrethroids probably work but also kill the natural enemies. Follow the label and the FPA registration."
     },
     {
-      "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
-      "rows": [
-        [
-          "Active ingredient",
-          "IRAC group",
-          "Use"
-        ],
-        [
-          "Pyrethrum",
-          "IRAC 3A",
-          "plant derived, for young palms and nurseries only"
-        ],
-        [
-          "Rotenone (from derris)",
-          "IRAC 21B",
-          "plant derived, for young palms and nurseries only"
-        ]
-      ]
-    },
-    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -171,10 +150,24 @@
     {
       "type": "list",
       "items": [
-        "Check every new palm and ornamental palm that enters the farm.",
-        "Do not move palms or fronds out of an infested district.",
-        "Keep nursery seedlings well watered, because dry periods favor the beetle.",
-        "Protect the wasps and fungi that live in your grove by avoiding broad spray campaigns."
+        "Inspect seedlings and ornamental palms before moving them. Brontispa travels mostly on planting material.",
+        "Cut and burn spear leaves crowded with larvae on young palms and in the nursery.",
+        "Water and feed young palms well so the spear unfolds fast. The beetle lives only in the folded spear.",
+        "Keep earwig homes: leave some leaf litter and husks near the palms and do not spray the crowns.",
+        "Where both are planted, local tall types tend to suffer less than some dwarf types."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Put earwigs (Chelisoches morio) into the spear leaves. They hunt Brontispa eggs and larvae and can be reared cheaply.",
+        "The wasps Asecodes hispinarum (on larvae) and Tetrastichus brontispae (on pupae) parasitize Brontispa and bring outbreaks down.",
+        "Metarhizium anisopliae sprayed into the spear leaf infects larvae and adults in wet weather."
       ]
     },
     {

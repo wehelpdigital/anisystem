@@ -138,34 +138,73 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Abamectin",
           "IRAC 6",
-          "named by Pacific Pests as the most effective option"
+          "A first choice. Registered products name it on onion, potato, tomato and watermelon."
         ],
         [
           "Cyromazine",
           "IRAC 17",
-          "a growth regulator that works on the larvae, not the adults"
+          "A first choice. Registered products name it on onion, potato, tomato, watermelon and more."
         ],
         [
-          "Spinosad",
+          "Spinetoram",
           "IRAC 5",
-          "listed by Pacific Pests for leafminer"
+          "A first choice. Registered products name it on onion, potato and tomato."
         ],
         [
-          "Neem (azadirachtin)",
-          "IRAC UN",
-          "a plant based option with lower risk to helpers"
+          "Cyantraniliprole",
+          "IRAC 28",
+          "A first choice. Registered products name it on onion and tomato."
+        ],
+        [
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "A sound second choice. 73 registered products name it on potato."
+        ],
+        [
+          "Abamectin plus spiromesifen",
+          "IRAC 6 plus 23",
+          "A sound second choice. Registered products name it on onion, potato, tomato and watermelon."
+        ],
+        [
+          "Tetraniliprole",
+          "IRAC 28",
+          "A sound second choice. 1 registered product names it on tomato."
+        ],
+        [
+          "Chlorfluazuron",
+          "IRAC 15",
+          "Older or broad chemistry: a last resort. 1 registered product names it on watermelon."
         ]
       ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Carbosulfan and carbaryl:** Highland leafminers survive old carbamates, and the spray kills their wasps, so mines spread faster.",
+        "**Bifenthrin plus imidacloprid, acetamiprid plus bifenthrin, cypermethrin and fenvalerate:** Pyrethroids kill the wasps that keep leafminer down, and it comes back worse.",
+        "**Fenthion, malathion and profenofos:** Leafminers survive many organophosphates, and the spray kills their wasps, so mines spread faster.",
+        "**Fenobucarb (BPMC) plus chlorpyrifos:** Two old broad chemicals that leafminers survive. They kill the wasps and mines spread faster."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** The pea leafminer (Liriomyza huidobrensis) of highland potato and vegetables survives many organophosphates, carbamates and pyrethroids. Keep one group per window of 2 to 3 weeks: abamectin (6), then cyromazine (17), then spinetoram (5) or cyantraniliprole (28)."
     },
     {
       "type": "callout",
@@ -181,10 +220,24 @@
     {
       "type": "list",
       "items": [
-        "Check seedlings before transplanting.",
-        "Plow the soil and clear weeds before planting.",
-        "Keep sprays to the minimum so the parasitic wasps survive.",
-        "Destroy crop remains right after harvest, and avoid leaving old crops next to new ones."
+        "Check seedlings and first leaves for tunnels, and never transplant mined seedlings.",
+        "Plow the soil and clear weeds before planting, so the pupae in the soil dry out or get eaten.",
+        "Pick and crush mined leaves while the attack is light.",
+        "Bury or burn crop remains right after harvest, and do not leave an old crop beside a new one.",
+        "Yellow sticky traps catch the adult flies and show when they build up.",
+        "Rotate with a crop the fly does not like, such as corn or rice."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Parasitic wasps such as Diglyphus, Chrysocharis and Neochrysocharis kill many larvae in the mines. Broad sprays kill them and leafminer comes back worse.",
+        "Neem works on the larvae with less harm to the wasps."
       ]
     },
     {

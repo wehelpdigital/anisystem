@@ -138,39 +138,72 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
-        ],
-        [
-          "Mancozeb",
-          "FRAC M3",
-          "protectant, the usual partner for the systemic products"
+          "On Philippine labels"
         ],
         [
           "Chlorothalonil",
-          "FRAC M5",
-          "protectant, apply before infection"
+          "FRAC M05",
+          "A first choice. Registered products name it on potato and tomato."
         ],
         [
-          "Cymoxanil",
-          "FRAC 27",
-          "works inside the leaf, usually sold mixed with mancozeb"
+          "Mancozeb",
+          "FRAC M03",
+          "A first choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Cymoxanil plus mancozeb",
+          "FRAC 27 plus M03",
+          "A first choice. Registered products name it on potato and tomato."
         ],
         [
           "Dimethomorph",
           "FRAC 40",
-          "systemic, pair it with a protectant"
+          "A first choice. Registered products name it on potato and tomato."
         ],
         [
-          "Metalaxyl",
-          "FRAC 4",
-          "resistance is common, so never use it alone"
+          "Cymoxanil plus famoxadone",
+          "FRAC 27 plus 11",
+          "A first choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Chlorothalonil plus mancozeb",
+          "FRAC M05 plus M03",
+          "A first choice. 2 registered products name it on potato."
+        ],
+        [
+          "Cyazofamid",
+          "FRAC 21",
+          "A first choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Dimethomorph plus mancozeb",
+          "FRAC 40 plus M03",
+          "A first choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Ametoctradin plus dimethomorph",
+          "FRAC 45 plus 40",
+          "A first choice. 1 registered product names it on potato."
+        ],
+        [
+          "Fluopicolide plus propamocarb",
+          "FRAC 43 plus 28",
+          "A first choice. Registered products name it on potato and tomato."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 18 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Late blight resists metalaxyl and the other phenylamides (FRAC 4) in many places in Asia, so never use them alone or as a cure. Turn the systemic groups each spray (27, 40, 21, 43, 45, 49) and keep mancozeb or chlorothalonil in every tank."
     },
     {
       "type": "callout",
@@ -186,10 +219,23 @@
     {
       "type": "list",
       "items": [
-        "Grow late blight resistant potato varieties such as Igorota and Solibao in the highlands, especially in the wet season.",
-        "Rotate for 2 to 3 years away from potato and tomato.",
-        "Clear volunteer potato plants and haul away cull piles, since the water mold survives in old tubers.",
-        "Harvest in dry weather, and sort out every rotten tuber before storage. Our [fungicides guide](/blog/fungicides) explains how to rotate groups next season."
+        "Plant certified clean seed tubers and healthy tomato seedlings. One sick tuber can start the disease in a whole field.",
+        "Grow a resistant or tolerant variety where one suits your area. It cuts the number of sprays a season needs.",
+        "Plant on ridges with good drainage and enough room between rows so the leaves dry quickly after rain and fog.",
+        "Hill up potato rows well so spores washed off the leaves do not reach the tubers. Kill blighted vines about two weeks before digging.",
+        "Destroy cull piles and volunteer potato and tomato plants, and do not plant a new crop beside an older infected one.",
+        "Water at the base of the plants, not over the leaves, and do not overfeed with nitrogen."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Bacillus biofungicides give a little help under light pressure, but no biological holds late blight on its own in the wet season."
       ]
     },
     {

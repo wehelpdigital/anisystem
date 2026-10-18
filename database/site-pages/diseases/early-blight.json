@@ -138,34 +138,84 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
-        ],
-        [
-          "Mancozeb",
-          "FRAC M3",
-          "protectant, coats the leaf before the spores land"
+          "On Philippine labels"
         ],
         [
           "Chlorothalonil",
-          "FRAC M5",
-          "protectant, named by the Pacific Pests sheet"
+          "FRAC M05",
+          "A first choice. Registered products name it on potato and tomato."
         ],
         [
-          "Difenoconazole",
-          "FRAC 3",
-          "systemic triazole, rotate it with a protectant"
+          "Mancozeb",
+          "FRAC M03",
+          "A first choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Azoxystrobin plus difenoconazole",
+          "FRAC 11 plus 3",
+          "A first choice. 5 registered products name it on tomato."
+        ],
+        [
+          "Chlorothalonil plus mancozeb",
+          "FRAC M05 plus M03",
+          "A first choice. 1 registered product names it on tomato."
+        ],
+        [
+          "Difenoconazole plus pydiflumetofen",
+          "FRAC 3 plus 7",
+          "A first choice. 1 registered product names it on tomato."
         ],
         [
           "Azoxystrobin",
           "FRAC 11",
-          "systemic strobilurin, resistance has been reported, so never use it alone or back to back"
+          "A sound second choice. 23 registered products name it on tomato."
+        ],
+        [
+          "Propineb",
+          "FRAC M03",
+          "A sound second choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A sound second choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Fluopyram plus trifloxystrobin",
+          "FRAC 7 plus 11",
+          "A sound second choice. Registered products name it on potato and tomato."
+        ],
+        [
+          "Azoxystrobin plus mancozeb",
+          "FRAC 11 plus M03",
+          "A sound second choice. 1 registered product names it on tomato."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 10 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Mancozeb plus metalaxyl:** Metalaxyl does nothing to early blight and wastes a late blight tool. Buy plain mancozeb for early blight."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Early blight has become resistant to the strobilurins (FRAC 11) and to some SDHI fungicides (FRAC 7) in many countries. Use them only in mixes or in turn with mancozeb or chlorothalonil, never more than two sprays of one group in a row."
     },
     {
       "type": "callout",
@@ -181,11 +231,23 @@
     {
       "type": "list",
       "items": [
-        "Rotate for 2 to 3 years away from tomato, potato, eggplant and pepper.",
-        "After harvest, burn or bury the old plants deeply, since the fungus survives in crop debris.",
-        "Pull volunteer tomato plants and weeds of the tomato family that carry the fungus between crops.",
-        "Do not plant a new tomato crop next to an older one that already has the disease.",
-        "Ask your Municipal Agriculture Office about tolerant varieties. Tolerant tomatoes exist, but no fully resistant ones."
+        "Start with clean seed and healthy seedlings, and throw out any seedling with dark leaf spots or a sunken lesion on the stem.",
+        "Stake or trellis tomato and prune the lowest leaves so the canopy dries fast after rain.",
+        "Mulch the beds so rain does not splash soil and spores onto the lower leaves.",
+        "Feed the crop well through the season. Hungry plants carrying a heavy fruit load get the worst early blight.",
+        "Rotate for two or three years away from tomato, potato, eggplant and pepper, and plow under or remove crop debris after harvest.",
+        "Water at the base early in the day, not over the leaves late in the afternoon."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Bacillus based biofungicides can hold light early blight when sprayed before the spots climb the plant."
       ]
     },
     {

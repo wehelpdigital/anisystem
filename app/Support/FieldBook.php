@@ -230,6 +230,21 @@ final class FieldBook
      */
     private static function advice(array $e): array
     {
+        // A caution (row[5]) repeats on every crop: each entry sends its own once, in whys, and the rows say which.
+        $whys = [];
+        $at = [];
+        $pack = function (array $rows) use (&$whys, &$at): array {
+            return array_map(function ($r) use (&$whys, &$at) {
+                $w = (string) ($r[5] ?? '');
+                if ($w !== '' && ! isset($at[$w])) {
+                    $at[$w] = count($whys);
+                    $whys[] = $w;
+                }
+                $r[5] = $w === '' ? -1 : $at[$w];
+
+                return $r;
+            }, array_values($rows));
+        };
         $vec = [];
         foreach ((array) ($e['vector'] ?? []) as $slug) {
             $v = FieldCatalogue::problem('pests', (string) $slug);
@@ -239,13 +254,14 @@ final class FieldBook
             $by = [];
             foreach ((array) $e['crops'] as $c) {
                 if (in_array($c, $v['crops'], true)) {
-                    $by[$c] = FieldCatalogue::aiFor($v, $c);
+                    $by[$c] = $pack(FieldCatalogue::aiFor($v, $c));
                 }
             }
-            $vec[] = ['k' => (string) $slug, 'name' => $v['name'], 'local' => $v['local'], 'ai' => (object) $by, 'any' => FieldCatalogue::aiFor($v, null)];
+            $vec[] = ['k' => (string) $slug, 'name' => $v['name'], 'local' => $v['local'], 'ai' => (object) $by, 'any' => $pack(FieldCatalogue::aiFor($v, null))];
         }
+        $aiBy = array_map($pack, (array) ($e['aiBy'] ?? []));
 
-        return ['aiBy' => (object) ($e['aiBy'] ?? []), 'avoid' => array_values((array) ($e['avoid'] ?? [])),
+        return ['aiBy' => (object) $aiBy, 'whys' => $whys, 'avoid' => array_values((array) ($e['avoid'] ?? [])),
             'prevent' => array_values((array) ($e['prevent'] ?? [])), 'bio' => array_values((array) ($e['bio'] ?? [])),
             'threshold' => (string) ($e['threshold'] ?? ''), 'rotate' => (string) ($e['rotate'] ?? ''), 'vec' => $vec];
     }
@@ -259,6 +275,17 @@ final class FieldBook
      * get their own lists too, so its card can show what controls them.
      */
     private static function problemProducts(string $section, array $entries): array
+    {
+        // Kept six hours, and anew whenever the product book or an entry's lists change (a deploy, a sync).
+        $stamp = md5((string) @filemtime(database_path('field-catalogue/products.json')) . json_encode(array_map(fn ($e) => [$e['k'], $e['crops'], $e['ai'], $e['aiBy'] ?? null, $e['vec'] ?? null], $entries)));
+        try {
+            return \Illuminate\Support\Facades\Cache::remember('field-products:v1:' . $section . ':' . $stamp, 21600, fn () => self::problemProductsNow($section, $entries));
+        } catch (\Throwable $e) {
+            return self::problemProductsNow($section, $entries);
+        }
+    }
+
+    private static function problemProductsNow(string $section, array $entries): array
     {
         $ip = [];
         $pi = [];

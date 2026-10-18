@@ -165,6 +165,89 @@
       "text": "Larvae inside the stalk are hard to reach, so a spray only works while they still feed in the whorl. Several Syngenta Philippines labels list corn borers on corn. Lambda cyhalothrin (Karate 2.5 EC) covers corn borers, while cypermethrin (Cymbush 5 EC) covers borers and earworms. Emamectin benzoate (Proclaim Opti 5 WG) covers the Asiatic corn borer.\n\nUse only products that the FPA registered for corn borer on corn, follow the label rate and harvest interval, and rotate insecticide groups. Our guide to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) explains these products in more detail."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "A first choice. 34 registered products name it on corn."
+        ],
+        [
+          "Emamectin benzoate",
+          "IRAC 6",
+          "A first choice. 1 registered product names it on corn."
+        ],
+        [
+          "Pyridalyl",
+          "IRAC UN",
+          "A sound second choice. 2 registered products name it on corn."
+        ],
+        [
+          "Bacillus thuringiensis aizawai",
+          "IRAC 11A",
+          "A sound second choice. 1 registered product names it on corn."
+        ],
+        [
+          "Flubendiamide",
+          "IRAC 28",
+          "A sound second choice. 1 registered product names it on corn."
+        ],
+        [
+          "Indoxacarb",
+          "IRAC 22A",
+          "A sound second choice. 1 registered product names it on corn."
+        ],
+        [
+          "Tetraniliprole",
+          "IRAC 28",
+          "A sound second choice. 1 registered product names it on corn."
+        ],
+        [
+          "Cypermethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 100 registered products name it on corn."
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 91 registered products name it on corn."
+        ],
+        [
+          "Methomyl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. Registered products name it on corn and sorghum."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 15 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Carbosulfan:** Here it is a seed treatment, which wears off before the borer eggs hatch near the eight leaf stage.",
+        "**Clothianidin plus imidacloprid:** A seed treatment for maggots and hoppers. It is spent before the borer comes near the eight leaf stage."
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Follow the label",

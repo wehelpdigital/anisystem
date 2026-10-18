@@ -137,22 +137,32 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Copper compounds",
-          "FRAC M1",
-          "protectant sprays on pods in the wet season, according to the Pacific fact sheet"
+          "Copper hydroxide",
+          "FRAC M01",
+          "A first choice. 12 registered products name it on cacao."
         ],
         [
-          "Phosphorous acid (potassium phosphonate)",
+          "Fosetyl aluminium",
           "FRAC P07",
-          "trunk injection once or twice a year, according to the same fact sheet"
+          "A first choice. 8 registered products name it on cacao."
+        ],
+        [
+          "Cuprous oxide",
+          "FRAC M01",
+          "A first choice. 2 registered products name it on cacao."
+        ],
+        [
+          "Bordeaux mixture",
+          "FRAC M01",
+          "A sound second choice. 3 registered products name it on cacao."
         ]
       ]
     },
@@ -170,10 +180,23 @@
     {
       "type": "list",
       "items": [
-        "Prune and thin shade so sun and wind reach the pods.",
-        "Remove diseased pods, empty shells and water shoots every week or two.",
-        "Keep rats down, since they carry the water mold from pod to pod.",
-        "Disinfect pruning tools, and check your trees after every spell of rain. Our [plant diseases guide](/diseases/plant-diseases-philippines) shows other water mold diseases to watch."
+        "Prune to an open canopy, remove water shoots and low branches, and thin the shade so sun and wind dry the pods after rain.",
+        "Space cacao at least 3 meters apart and avoid heavy clay and wet spots where water stands after rain.",
+        "Harvest ripe pods on time and pick every black pod each round. Bury or burn sick pods and empty husks away from the trees.",
+        "Mulch the bare ground under the trees. Rain splash from bare soil throws the water mold up onto the low pods.",
+        "Keep rats and squirrels down, since they chew sick pods and carry the water mold to healthy ones, and clean knives between trees.",
+        "Plant tolerant clones when you replant or rehabilitate old trees."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Trichoderma sprays on pods have been tried abroad. They help a little but never replace picking the sick pods."
       ]
     },
     {
