@@ -88,10 +88,14 @@
        buttons, "Preview answers" (every answer page by page in one sheet, flReviewSheet, each
        with its own Edit) and "Edit answers" (every question in one form, aneeFieldProfile.ask). */
     .fl-card { transition: border-color .28s var(--fl-e), background-color .28s var(--fl-e), transform .28s var(--fl-e), box-shadow .28s var(--fl-e), border-radius .28s var(--fl-e); }
-    .fl-card.is-on.has-acts { border-bottom-left-radius: .4rem; border-bottom-right-radius: .4rem; border-bottom-color: #c9dcb4; box-shadow: inset 1px 0 0 #4a7c2a, inset -1px 0 0 #4a7c2a, inset 0 1px 0 #4a7c2a; }
+    /* The picked lot and its buttons are one container: square inner corners, one fill, one border, a soft divider. */
+    .fl-card.is-on.has-acts { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; box-shadow: inset 1px 0 0 #4a7c2a, inset -1px 0 0 #4a7c2a, inset 0 1px 0 #4a7c2a; }
+    @media (hover: hover) { .fl-card.is-on.has-acts:hover { transform: none; box-shadow: inset 1px 0 0 #4a7c2a, inset -1px 0 0 #4a7c2a, inset 0 1px 0 #4a7c2a; } }
     .fl-ans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; min-width: 0; }
-    .fl-ans.is-join { margin-top: -.55rem; padding: .55rem; border-radius: .4rem .4rem 1.1rem 1.1rem; background: #f3f8ec; border: 1.5px solid #4a7c2a; border-top: 0;
+    .fl-ans.is-join { position: relative; margin-top: calc(-.55rem - 1.5px); padding: .2rem .8rem .75rem; border-radius: 0 0 1.1rem 1.1rem; background: #f3f8ec; border: 1.5px solid #4a7c2a; border-top: 0;
         box-shadow: inset 1px 0 0 #4a7c2a, inset -1px 0 0 #4a7c2a, inset 0 -1px 0 #4a7c2a; }
+    .fl-ans.is-join::before { content: ''; position: absolute; left: .8rem; right: .8rem; top: 0; height: 1px; background: #d3e4bf; }
+    .fl-ans.is-join .fl-ans-b { margin-top: .55rem; }
     .fl-ans.is-under { margin-top: .5rem; }
     .fl-ans[hidden] { display: none; }
     .fl-ans-b { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-width: 0; min-height: 2.75rem; padding: .35rem .6rem; border-radius: 999px; font-size: .82rem; font-weight: 800; line-height: 1.15;
@@ -184,8 +188,9 @@
     .fl-only[aria-checked="true"] i::after { transform: translateX(1.1rem); }
     .fl-only:focus-visible { outline: 2px solid #86b556; outline-offset: 2px; }
 
-    html.dark .fl-card.is-on.has-acts { border-bottom-color: #34482a; box-shadow: inset 1px 0 0 #6b9f3d, inset -1px 0 0 #6b9f3d, inset 0 1px 0 #6b9f3d; }
-    html.dark .fl-ans.is-join { background: #1a2414; border-color: #6b9f3d; box-shadow: inset 1px 0 0 #6b9f3d, inset -1px 0 0 #6b9f3d, inset 0 -1px 0 #6b9f3d; }
+    html.dark .fl-card.is-on.has-acts { border-bottom-color: transparent; box-shadow: inset 1px 0 0 #6b9f3d, inset -1px 0 0 #6b9f3d, inset 0 1px 0 #6b9f3d; }
+    html.dark .fl-ans.is-join { background: #1c2914; border-color: #6b9f3d; box-shadow: inset 1px 0 0 #6b9f3d, inset -1px 0 0 #6b9f3d, inset 0 -1px 0 #6b9f3d; }
+    html.dark .fl-ans.is-join::before { background: #34482a; }
     html.dark .fl-ans-b { color: #cfe6b8; background: #10150d; border-color: #3d5a26; }
     html.dark .fl-ans-b:hover { background: #1c2914; border-color: #6b9f3d; }
     html.dark .fl-ans-b.is-edit { background: #26361b; border-color: #4a6b2c; }
@@ -920,7 +925,20 @@
             paintOld();
             paintActs(false);
         }
-        // The picked lot wears "Preview answers" and "Edit answers", joined under its card.
+        /* The bar opens out of the card's bottom edge: height, padding and fade (never the margin, which would
+           jump), then the buttons rise in a moment after. Closing runs it back. */
+        function joinMove(bar, open, done) {
+            if (reduce() || !bar.animate) { done && done(); return; }
+            const cs = getComputedStyle(bar), h = bar.offsetHeight;
+            const full = { height: h + 'px', paddingTop: cs.paddingTop, paddingBottom: cs.paddingBottom, opacity: 1 };
+            const zero = { height: '0px', paddingTop: '0px', paddingBottom: '0px', opacity: 0 };
+            bar.style.overflow = 'hidden';
+            const an = bar.animate(open ? [zero, full] : [full, zero], { duration: open ? 320 : 240, easing: 'cubic-bezier(.22,1,.36,1)' });
+            if (open) bar.querySelectorAll('.fl-ans-b').forEach((b, i) => b.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }],
+                { duration: 300, delay: 90 + i * 50, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' }));
+            an.onfinish = () => { bar.style.overflow = ''; done && done(); };
+        }
+        // The picked lot wears "Preview answers" and "Edit answers", joined under its card as one container.
         function paintActs(animate) {
             const old = el.querySelector('[data-fl-acts]');
             const card = st.lot ? el.querySelector('[data-fl-lot="' + st.lot.id + '"]') : null;
@@ -928,7 +946,7 @@
             if (old && card && old.previousElementSibling === card) return;
             if (old) {
                 old.removeAttribute('data-fl-acts');
-                if (animate && !reduce()) { fold(old, false, true); setTimeout(() => old.remove(), 320); } else old.remove();
+                if (animate && !reduce()) joinMove(old, false, () => old.remove()); else old.remove();
             }
             if (!card) return;
             const tpl = document.createElement('div');
@@ -936,10 +954,9 @@
             const bar = tpl.firstChild;
             bar.setAttribute('data-fl-acts', '');
             bar.setAttribute('aria-label', st.lot.name + ': its answers');
-            if (animate) bar.hidden = true;
             card.after(bar);
             card.classList.add('has-acts');
-            if (animate) fold(bar, true, true);
+            if (animate) joinMove(bar, true);
         }
         function paintOld() {
             const box = el.querySelector('[data-fl-old]');
