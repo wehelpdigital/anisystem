@@ -15,6 +15,10 @@ namespace App\Support;
  *  3. Drying takes out water, from the moisture at harvest down to the moisture
  *     of dry palay: dry weight = wet weight x (100 - wet %) / (100 - dry %),
  *     and a little more is lost on the drying floor (spilled, birds, rain).
+ *     Or, by the weight of a sack (2026-10-19, the owner): a sack that weighs
+ *     W kg wet weighs D kg once dry, D a range (low to high), the floor's loss
+ *     already in it; dry weight = wet weight x D / W, counted at the middle of
+ *     the range, with both ends said beside it.
  *  4. Sell wet: wet kg x wet price, less the harvester's cash.
  *     Dry then sell: dry kg x dry price, less the drying labor, the other
  *     drying costs and the harvester's cash.
@@ -43,6 +47,12 @@ final class BentaBilad
 
     public const AREA_UNITS = ['ha' => ['Hectares', 'ha'], 'sqm' => ['Square meters', 'm²']];
 
+    /** How the drying's weight is counted (2026-10-19, the owner): the farmer picks one. */
+    public const DRY_BY = [
+        'pct' => ['By moisture', 'The moisture at harvest and when dry, and the share lost while drying'],
+        'kg' => ['By the weight of a sack', 'What one sack weighs wet, and what it weighs once dry'],
+    ];
+
     /** A draw is closer than this share of the money, or this many pesos. */
     public const EVEN_SHARE = 0.01;
 
@@ -70,13 +80,28 @@ final class BentaBilad
             'wetMoisture' => $n('wetMoisture', 10, 45, self::DEFAULTS['wetMoisture']),
             'dryMoisture' => $n('dryMoisture', 5, 25, self::DEFAULTS['dryMoisture']),
             'lossPct' => $n('lossPct', 0, 30, self::DEFAULTS['lossPct']),
+            'dryBy' => ($in['dryBy'] ?? 'pct') === 'kg' ? 'kg' : 'pct',
+            'dryKgLo' => $n('dryKgLo', 1, 150),
+            'dryKgHi' => $n('dryKgHi', 1, 150),
             'priceWet' => $n('priceWet', 0, 100000),
             'priceDry' => $n('priceDry', 0, 100000),
         ];
         if ($c['harvesterMode'] === 'pct') {
             $c['harvester'] = min(90, $c['harvester']);
         }
-        if (! $c['sacks'] || ! $c['priceWet'] || ! $c['priceDry'] || $c['dryMoisture'] >= $c['wetMoisture']) {
+        if ($c['dryBy'] === 'kg') {
+            // The range reads either way round; one figure is a range of one.
+            $lo = $c['dryKgLo'] ?? $c['dryKgHi'];
+            $hi = $c['dryKgHi'] ?? $lo;
+            $c['dryKgLo'] = $lo !== null ? min($lo, $hi) : null;
+            $c['dryKgHi'] = $lo !== null ? max($lo, $hi) : null;
+            if ($c['dryKgLo'] === null || $c['dryKgHi'] >= $c['kgPerSack']) {
+                return null;
+            }
+        } elseif ($c['dryMoisture'] >= $c['wetMoisture']) {
+            return null;
+        }
+        if (! $c['sacks'] || ! $c['priceWet'] || ! $c['priceDry']) {
             return null;
         }
 
@@ -97,11 +122,12 @@ final class BentaBilad
         };
         $hCash = $c['harvesterMode'] === 'cash' ? $c['harvester'] : 0.0;
         $left = max(0.0, $H - $hSacks);
-        // 2 and 3. Wet and dry weights.
+        // 2 and 3. Wet and dry weights: by moisture, or by the weight of a sack (its middle; the loss is in it).
         $wetKg = $left * $W;
-        $keep = (100 - $c['wetMoisture']) / (100 - $c['dryMoisture']);
+        $byKg = ($c['dryBy'] ?? 'pct') === 'kg';
+        $keep = $byKg ? (($c['dryKgLo'] + $c['dryKgHi']) / 2) / $W : (100 - $c['wetMoisture']) / (100 - $c['dryMoisture']);
         $afterWater = $wetKg * $keep;
-        $lossKg = $afterWater * $c['lossPct'] / 100;
+        $lossKg = $byKg ? 0.0 : $afterWater * $c['lossPct'] / 100;
         $dryKg = $afterWater - $lossKg;
         // The drying bill.
         $labor = match ($c['laborMode']) {
@@ -147,7 +173,19 @@ final class BentaBilad
             'sacksPerHa' => $areaHa ? $r($H / $areaHa, 1) : null,
             'netWetPerHa' => $areaHa ? $r($netWet / $areaHa) : null,
             'netDryPerHa' => $areaHa ? $r($netDry / $areaHa) : null,
+            // By the weight of a sack: the dry sack's weight at which both pay the same, and both ends of the range.
+            'breakEvenSackKg' => $left > 0 && $c['priceDry'] > 0 ? $r(($wetGross + $dryCost) / $c['priceDry'] / $left) : null,
+            'range' => $byKg && $c['dryKgHi'] > $c['dryKgLo'] ? [
+                'lo' => self::end(self::compute(['dryKgHi' => $c['dryKgLo']] + $c)),
+                'hi' => self::end(self::compute(['dryKgLo' => $c['dryKgHi']] + $c)),
+            ] : null,
         ];
+    }
+
+    /** One end of a dry weight range: what the farmer reads beside the middle. */
+    private static function end(array $r): array
+    {
+        return array_intersect_key($r, array_flip(['verdict', 'diff', 'dryKg', 'netDry']));
     }
 
     /** A saved calculation's name: "120 sacks · dry it · Oct 19". */

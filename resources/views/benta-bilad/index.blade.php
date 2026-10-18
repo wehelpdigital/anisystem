@@ -74,6 +74,11 @@
     .bb-tag.is-wide { width: 100%; }
     .bb-tag small { font-weight: 600; color: var(--color-gray-500); }
     .bb-swap { animation: bbSwap .32s var(--bb-e) both; }
+    .bb-range { display: flex; align-items: center; gap: .45rem; min-width: 0; }
+    .bb-range .bb-in { flex: 1 1 0; min-width: 0; }
+    .bb-range > i { font-style: normal; font-size: .8rem; font-weight: 700; color: var(--color-gray-500); flex: none; }
+    .bb-vrange { margin-top: .55rem; font-size: .84rem; line-height: 1.45; opacity: .95; }
+    .bb-vrange strong { font-weight: 800; }
     @keyframes bbSwap { from { opacity: 0; transform: translateY(-4px); } }
 
     /* ---- the answer ---- */
@@ -202,7 +207,7 @@
 @php
     $chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
     // Built here: the json directive reads one argument, and an inline array is cut at its first comma.
-    $bbBoot = ['harvester' => $harvester, 'labor' => $labor, 'areaUnits' => $areaUnits, 'defaults' => $defaults, 'even' => $even, 'drySackKg' => $drySackKg,
+    $bbBoot = ['harvester' => $harvester, 'labor' => $labor, 'dryBy' => $dryBy, 'areaUnits' => $areaUnits, 'defaults' => $defaults, 'even' => $even, 'drySackKg' => $drySackKg,
         'urls' => ['save' => route('bilad.save'), 'list' => route('bilad.list'), 'one' => url('/app/benta-o-bilad/one'), 'del' => url('/app/benta-o-bilad')]];
 @endphp
 <script type="application/json" id="bbBoot">@json($bbBoot)</script>
@@ -282,7 +287,24 @@
                         <span class="bb-in"><b>₱</b><input type="number" class="form-input is-pre" id="bbOther" min="0" step="any" inputmode="decimal" placeholder="0"><em>in all</em></span>
                         <small>Hauling to the drying floor and back, the net or tarpaulin, meals, or a dryer's fee.</small></label>
                 </div>
-                <div class="bb-row is-3">
+                {{-- How the weight the drying takes out is counted (2026-10-19, the owner): by moisture, or by the weight of a sack. --}}
+                <div class="bb-row">
+                    <div class="bb-f"><span>Count the drying</span>
+                        <button type="button" class="bb-tag is-wide" id="bbDryBy" aria-haspopup="dialog"><span>By moisture</span>{!! $chev !!}</button></div>
+                </div>
+                <div class="bb-row is-2 bb-swap" id="bbByKg" hidden>
+                    <label class="bb-f"><span>One sack when wet</span>
+                        <span class="bb-in"><input type="number" class="form-input" id="bbKgWet" min="10" max="150" step="any" inputmode="decimal" value="{{ $defaults['kgPerSack'] }}"><em>kg</em></span>
+                        <small>The same as the weight of one sack above.</small></label>
+                    <div class="bb-f"><span>The same sack once dry</span>
+                        <div class="bb-range">
+                            <span class="bb-in"><input type="number" class="form-input" id="bbKgDryLo" min="1" max="150" step="any" inputmode="decimal" placeholder="Like 42" aria-label="Lightest dry sack, kg"><em>kg</em></span>
+                            <i>to</i>
+                            <span class="bb-in"><input type="number" class="form-input" id="bbKgDryHi" min="1" max="150" step="any" inputmode="decimal" placeholder="Like 45" aria-label="Heaviest dry sack, kg"><em>kg</em></span>
+                        </div>
+                        <small>Weigh a sack before and after drying. Spills and birds are already in it.</small></div>
+                </div>
+                <div class="bb-row is-3 bb-swap" id="bbByPct">
                     <label class="bb-f"><span>Moisture at harvest{{ \App\Support\Tagalog::flag('moisture-content') }}</span>
                         <span class="bb-in"><input type="number" class="form-input" id="bbMWet" min="10" max="45" step="any" inputmode="decimal" value="{{ $defaults['wetMoisture'] }}"><em>%</em></span>
                         <small>Fresh palay: 20 to 28%.</small></label>
@@ -317,7 +339,7 @@
             <div id="bbRes" hidden>
                 <div class="bb-verdict" id="bbVerdict">
                     <span class="bb-vic" id="bbVic"></span>
-                    <span><small id="bbVKick">The answer</small><b id="bbVHead"></b><p id="bbVSay"></p></span>
+                    <span><small id="bbVKick">The answer</small><b id="bbVHead"></b><p id="bbVSay"></p><p class="bb-vrange" id="bbVRange" hidden></p></span>
                 </div>
                 <div class="bb-two">
                     <div class="bb-way is-wet" id="bbWayWet"><span class="bb-crown">More money</span>
@@ -385,7 +407,7 @@
     const peso = (v, d = 0) => (v < 0 ? '−' : '') + '₱' + Math.abs(v).toLocaleString('en-PH', { minimumFractionDigits: d, maximumFractionDigits: d });
     const num = (v, d = 0) => Number(v).toLocaleString('en-PH', { minimumFractionDigits: d, maximumFractionDigits: d });
     const val = (id) => { const s = $(id).value; return s === '' ? null : Number(s); };
-    const st = { areaUnit: 'ha', hMode: 'pct', lMode: 'sack', last: null, verdict: null };
+    const st = { areaUnit: 'ha', hMode: 'pct', lMode: 'sack', dryBy: 'pct', last: null, verdict: null };
     const LS = 'anee.bilad.last';
 
     /* ---- the choice tags ---- */
@@ -434,6 +456,26 @@
     };
     $('bbLMode').addEventListener('click', () => pick('How the drying labor is paid', B.labor, st.lMode, (k) => { if (k !== st.lMode) { st.lMode = k; $('bbLRate').value = ''; paintL(); calc(); } }));
 
+    /* How the drying is counted (2026-10-19, the owner): by moisture, or by the weight of a sack wet and once dry.
+       Switching to the sack's weight with nothing typed starts it at what the moisture figures give, a kilo either side. */
+    const paintDry = (anim = true) => {
+        tag('bbDryBy', B.dryBy[st.dryBy][0]);
+        const kg = st.dryBy === 'kg';
+        $('bbByKg').hidden = !kg; $('bbByPct').hidden = kg;
+        if (anim) swap(kg ? $('bbByKg') : $('bbByPct'));
+    };
+    $('bbDryBy').addEventListener('click', () => pick('Count the drying', B.dryBy, st.dryBy, (k) => {
+        if (k === st.dryBy) return;
+        st.dryBy = k;
+        if (k === 'kg' && val('bbKgDryLo') === null && val('bbKgDryHi') === null) {
+            const W = val('bbKg') || B.defaults.kgPerSack, mw = val('bbMWet') ?? B.defaults.wetMoisture, md = val('bbMDry') ?? B.defaults.dryMoisture, ls = val('bbLoss') ?? B.defaults.lossPct;
+            const d = mw > md ? W * (100 - mw) / (100 - md) * (1 - ls / 100) : null;
+            if (d) { $('bbKgDryLo').value = Math.max(1, Math.round(d - 1)); $('bbKgDryHi').value = Math.round(d + 1); }
+        }
+        $('bbKgWet').value = $('bbKg').value;
+        paintDry(); calc();
+    }));
+
     /* ---- the arithmetic: App\Support\BentaBilad::clean() and compute(), the same ---- */
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     const read = () => {
@@ -443,19 +485,27 @@
             harvesterMode: st.hMode, harvester: n('bbH', 0, 100000000, 0), laborMode: st.lMode, laborRate: n('bbLRate', 0, 100000000, 0),
             laborWorkers: n('bbLWorkers', 0, 1000, 1), laborDays: n('bbLDays', 0, 365, 1), otherCost: n('bbOther', 0, 100000000, 0),
             wetMoisture: n('bbMWet', 10, 45, B.defaults.wetMoisture), dryMoisture: n('bbMDry', 5, 25, B.defaults.dryMoisture), lossPct: n('bbLoss', 0, 30, B.defaults.lossPct),
+            dryBy: st.dryBy, dryKgLo: n('bbKgDryLo', 1, 150), dryKgHi: n('bbKgDryHi', 1, 150),
             priceWet: n('bbPWet', 0, 100000), priceDry: n('bbPDry', 0, 100000),
         };
         if (c.harvesterMode === 'pct') c.harvester = Math.min(90, c.harvester);
+        if (c.dryBy === 'kg') {
+            // The range reads either way round; one figure is a range of one.
+            const lo = c.dryKgLo ?? c.dryKgHi, hi = c.dryKgHi ?? lo;
+            c.dryKgLo = lo !== null ? Math.min(lo, hi) : null; c.dryKgHi = lo !== null ? Math.max(lo, hi) : null;
+        }
         return c;
     };
     const missing = (c) => !c.sacks ? 'Fill in how many sacks you harvested.' : !c.priceWet || !c.priceDry ? 'Fill in both prices, wet and dry, for a kilo.'
+        : c.dryBy === 'kg' ? (c.dryKgLo === null ? 'Fill in what one sack weighs once dry.' : c.dryKgHi >= c.kgPerSack ? 'A dry sack has to weigh less than the same sack wet.' : '')
         : c.dryMoisture >= c.wetMoisture ? 'The moisture when dry has to be below the moisture at harvest.' : '';
     const compute = (c) => {
         const H = c.sacks, W = c.kgPerSack, areaHa = c.area ? (c.areaUnit === 'sqm' ? c.area / 10000 : c.area) : null;
         const hSacks = c.harvesterMode === 'pct' ? H * c.harvester / 100 : c.harvesterMode === 'sacks' ? Math.min(H, c.harvester) : 0;
         const hCash = c.harvesterMode === 'cash' ? c.harvester : 0;
-        const left = Math.max(0, H - hSacks), wetKg = left * W;
-        const keep = (100 - c.wetMoisture) / (100 - c.dryMoisture), afterWater = wetKg * keep, lossKg = afterWater * c.lossPct / 100, dryKg = afterWater - lossKg;
+        const left = Math.max(0, H - hSacks), wetKg = left * W, byKg = c.dryBy === 'kg';
+        const keep = byKg ? ((c.dryKgLo + c.dryKgHi) / 2) / W : (100 - c.wetMoisture) / (100 - c.dryMoisture);
+        const afterWater = wetKg * keep, lossKg = byKg ? 0 : afterWater * c.lossPct / 100, dryKg = afterWater - lossKg;
         const labor = c.laborMode === 'sack' ? c.laborRate * left : c.laborMode === 'day' ? c.laborRate * c.laborWorkers * c.laborDays : c.laborRate;
         const dryCost = labor + c.otherCost, wetGross = wetKg * c.priceWet, dryGross = dryKg * c.priceDry;
         const netWet = wetGross - hCash, netDry = dryGross - dryCost - hCash, diff = netDry - netWet;
@@ -463,8 +513,11 @@
         return { verdict: diff > even ? 'dry' : diff < -even ? 'wet' : 'even', diff, hSacks, hCash, hWorth: hSacks * W * c.priceWet, left, wetKg, waterKg: wetKg - afterWater, lossKg, dryKg,
             drySacks: dryKg / B.drySackKg, shrinkPct: wetKg > 0 ? (1 - dryKg / wetKg) * 100 : null, labor, dryCost, wetGross, dryGross, netWet, netDry,
             breakEvenDry: dryKg > 0 ? (wetGross + dryCost) / dryKg : null, breakEvenWet: wetKg > 0 ? (dryGross - dryCost) / wetKg : null,
-            areaHa, sacksPerHa: areaHa ? H / areaHa : null, netWetPerHa: areaHa ? netWet / areaHa : null, netDryPerHa: areaHa ? netDry / areaHa : null };
+            areaHa, sacksPerHa: areaHa ? H / areaHa : null, netWetPerHa: areaHa ? netWet / areaHa : null, netDryPerHa: areaHa ? netDry / areaHa : null,
+            breakEvenSackKg: left > 0 && c.priceDry > 0 ? (wetGross + dryCost) / c.priceDry / left : null,
+            range: byKg && c.dryKgHi > c.dryKgLo ? { lo: end(compute(Object.assign({}, c, { dryKgHi: c.dryKgLo }))), hi: end(compute(Object.assign({}, c, { dryKgLo: c.dryKgHi }))) } : null };
     };
+    const end = (r) => ({ verdict: r.verdict, diff: r.diff, dryKg: r.dryKg, netDry: r.netDry });
 
     /* ---- numbers that count to their new value ---- */
     const shown = new Map();
@@ -510,6 +563,15 @@
         $('bbVSay').textContent = r.verdict === 'dry' ? 'Drying leaves you about ' + gap + ' more, after the drying costs.'
             : r.verdict === 'wet' ? 'Selling wet leaves you about ' + gap + ' more. The drying costs and the weight lost eat up the better dry price.'
             : 'The difference is only about ' + gap + '. Sell wet to save the work and the rain risk, or dry if you have the time and the sun.';
+        // By the weight of a sack, as a range: both ends, and whether the answer turns inside it.
+        const R = r.range, vr = $('bbVRange');
+        if (R) {
+            const kgW = (x) => num(x, Math.round(x * 10) % 10 ? 1 : 0);
+            const endSay = (x, kg) => 'at ' + kgW(kg) + ' kg a dry sack, ' + (x.verdict === 'dry' ? 'drying leaves about ' + peso(Math.abs(x.diff)) + ' more' : x.verdict === 'wet' ? 'selling wet leaves about ' + peso(Math.abs(x.diff)) + ' more' : 'both leave about the same');
+            vr.innerHTML = (R.lo.verdict !== R.hi.verdict ? '<strong>It turns inside your range.</strong> ' : '') + esc(endSay(R.lo, c.dryKgLo).replace(/^a/, 'A') + '; ' + endSay(R.hi, c.dryKgHi) + '.')
+                + (r.breakEvenSackKg != null ? ' Drying pays once a dry sack weighs more than <strong>' + esc(num(r.breakEvenSackKg, 1)) + ' kg</strong>.' : '');
+            vr.hidden = false;
+        } else vr.hidden = true;
         // The two ways.
         $('bbWayWet').classList.toggle('is-win', r.verdict === 'wet'); $('bbWayDry').classList.toggle('is-win', r.verdict === 'dry');
         countTo($('bbNetWet'), r.netWet, (x) => peso(x)); countTo($('bbNetDry'), r.netDry, (x) => peso(x));
@@ -547,12 +609,17 @@
         $('bbHow').innerHTML = [
             r.hSacks > 0 ? 'The harvester takes ' + num(r.hSacks, 1) + ' sacks at the field (worth about ' + peso(r.hWorth) + ' wet), so ' + num(r.left, 1) + ' sacks are yours.' : r.hCash > 0 ? 'The harvester is paid ' + peso(r.hCash) + ' in cash, the same whether you sell wet or dry.' : 'No harvester cost was put in.',
             num(r.left, 1) + ' sacks × ' + num(c.kgPerSack, 1) + ' kg = ' + num(r.wetKg, 0) + ' kg of wet palay.',
-            'Drying from ' + num(c.wetMoisture, 1) + '% to ' + num(c.dryMoisture, 1) + '% moisture keeps ' + num((100 - c.wetMoisture) / (100 - c.dryMoisture) * 100, 1) + '% of the weight, and ' + num(c.lossPct, 1) + '% more is lost while drying: ' + num(r.dryKg, 0) + ' kg of dry palay.',
+            c.dryBy === 'kg'
+                ? 'A ' + num(c.kgPerSack, 1) + ' kg wet sack weighs ' + (c.dryKgHi > c.dryKgLo ? num(c.dryKgLo, 1) + ' to ' + num(c.dryKgHi, 1) + ' kg once dry, counted at ' + num((c.dryKgLo + c.dryKgHi) / 2, 1) + ' kg' : num(c.dryKgLo, 1) + ' kg once dry') + ', so drying keeps ' + num(r.dryKg / Math.max(1, r.wetKg) * 100, 1) + '% of the weight: ' + num(r.dryKg, 0) + ' kg of dry palay.'
+                : 'Drying from ' + num(c.wetMoisture, 1) + '% to ' + num(c.dryMoisture, 1) + '% moisture keeps ' + num((100 - c.wetMoisture) / (100 - c.dryMoisture) * 100, 1) + '% of the weight, and ' + num(c.lossPct, 1) + '% more is lost while drying: ' + num(r.dryKg, 0) + ' kg of dry palay.',
             'Drying costs ' + peso(r.dryCost) + ': ' + peso(r.labor) + ' of labor' + (c.otherCost > 0 ? ' and ' + peso(c.otherCost) + ' more' : '') + '.',
             'Benta: ' + num(r.wetKg, 0) + ' kg × ' + peso(c.priceWet, 2) + (r.hCash ? ' less the harvester' : '') + ' = ' + peso(r.netWet) + '. Bilad: ' + num(r.dryKg, 0) + ' kg × ' + peso(c.priceDry, 2) + ' less the drying' + (r.hCash ? ' and the harvester' : '') + ' = ' + peso(r.netDry) + '.',
         ].map((x) => '<li>' + esc(x) + '</li>').join('');
     };
-    ['bbSacks', 'bbKg', 'bbArea', 'bbH', 'bbLRate', 'bbLWorkers', 'bbLDays', 'bbOther', 'bbMWet', 'bbMDry', 'bbLoss', 'bbPWet', 'bbPDry'].forEach((id) => $(id).addEventListener('input', calc));
+    ['bbSacks', 'bbKg', 'bbArea', 'bbH', 'bbLRate', 'bbLWorkers', 'bbLDays', 'bbOther', 'bbMWet', 'bbMDry', 'bbLoss', 'bbKgDryLo', 'bbKgDryHi', 'bbPWet', 'bbPDry'].forEach((id) => $(id).addEventListener('input', calc));
+    // The wet sack is one figure in two places: the harvest card and the drying card.
+    $('bbKg').addEventListener('input', () => { $('bbKgWet').value = $('bbKg').value; });
+    $('bbKgWet').addEventListener('input', () => { $('bbKg').value = $('bbKgWet').value; calc(); });
 
     /* ---- put inputs back (a saved one, or the last one on this phone) ---- */
     const fill = (c) => {
@@ -560,7 +627,8 @@
         const set = (id, v) => { $(id).value = v === null || v === undefined ? '' : v; };
         set('bbSacks', c.sacks); set('bbKg', c.kgPerSack); set('bbArea', c.area || ''); set('bbH', c.harvester || ''); set('bbLRate', c.laborRate || '');
         set('bbLWorkers', c.laborWorkers ?? 2); set('bbLDays', c.laborDays ?? 2); set('bbOther', c.otherCost || ''); set('bbMWet', c.wetMoisture); set('bbMDry', c.dryMoisture);
-        set('bbLoss', c.lossPct); set('bbPWet', c.priceWet); set('bbPDry', c.priceDry);
+        set('bbLoss', c.lossPct); set('bbPWet', c.priceWet); set('bbPDry', c.priceDry); set('bbKgWet', c.kgPerSack);
+        set('bbKgDryLo', c.dryKgLo ?? ''); set('bbKgDryHi', c.dryKgHi ?? ''); st.dryBy = c.dryBy === 'kg' ? 'kg' : 'pct'; paintDry(false);
         st.areaUnit = c.areaUnit === 'sqm' ? 'sqm' : 'ha'; tag('bbAreaUnit', AREA[st.areaUnit][0]);
         st.hMode = B.harvester[c.harvesterMode] ? c.harvesterMode : 'pct'; st.lMode = B.labor[c.laborMode] ? c.laborMode : 'sack';
         paintH(); paintL(); calc();
@@ -568,7 +636,8 @@
     try { const last = JSON.parse(localStorage.getItem(LS) || 'null'); if (last && typeof last === 'object') fill(last); else { paintH(); paintL(); } } catch (e) { paintH(); paintL(); }
     $('bbReset').addEventListener('click', () => {
         ['bbSacks', 'bbArea', 'bbH', 'bbLRate', 'bbOther', 'bbPWet', 'bbPDry'].forEach((id) => { $(id).value = ''; });
-        $('bbKg').value = B.defaults.kgPerSack; $('bbMWet').value = B.defaults.wetMoisture; $('bbMDry').value = B.defaults.dryMoisture; $('bbLoss').value = B.defaults.lossPct;
+        $('bbKg').value = $('bbKgWet').value = B.defaults.kgPerSack; $('bbMWet').value = B.defaults.wetMoisture; $('bbMDry').value = B.defaults.dryMoisture; $('bbLoss').value = B.defaults.lossPct;
+        $('bbKgDryLo').value = $('bbKgDryHi').value = '';
         $('bbLWorkers').value = 2; $('bbLDays').value = 2; st.verdict = null; shown.clear();
         calc(); $('bbSacks').focus();
     });

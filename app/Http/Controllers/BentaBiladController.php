@@ -24,6 +24,7 @@ class BentaBiladController extends Controller
         return view('benta-bilad.index', [
             'harvester' => BentaBilad::HARVESTER,
             'labor' => BentaBilad::LABOR,
+            'dryBy' => BentaBilad::DRY_BY,
             'areaUnits' => BentaBilad::AREA_UNITS,
             'defaults' => BentaBilad::DEFAULTS,
             'even' => ['share' => BentaBilad::EVEN_SHARE, 'pesos' => BentaBilad::EVEN_PESOS],
