@@ -149,6 +149,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && Illuminate\Support\Facades\Schema::hasTable('as_nl_emails'),
             'nutrientDeficiencies' => class_exists(\App\Support\DeficiencyCatalogue::class) && is_file(database_path('field-catalogue/deficiencies.json'))
                 && Illuminate\Support\Facades\Schema::hasTable('as_site_pages') && \App\Models\AsSitePage::where('section', 'nutrient-deficiencies')->exists(),
+            // 2026-10-19: the deficiency finder's products from the whole registration list (Philippine companies first), silicon, and the pages synced.
+            'deficiencyProducts' => rescue(fn () => isset(\App\Support\DeficiencyCatalogue::NUTRIENTS['si']) && count(\App\Support\DeficiencyCatalogue::fertilizers()) > 1000
+                && \App\Models\AsSitePage::where('section', 'nutrient-deficiencies')->where('slug', 'silicon-deficiency')->exists(), false, false),
             'lpCosts' => method_exists(\App\Support\LandPrepPlanner::class, 'costs'),
             'nlMergeTags' => class_exists(\App\Support\Newsletter\MergeTags::class),
             'saltMulti' => ! empty(\App\Support\FieldProfile::QUESTIONS['salt']['multi']),
