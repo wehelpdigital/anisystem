@@ -83,6 +83,19 @@ final class SeedSpacing
         'set' => ['I set it', 'Type your own number'],
     ];
 
+    /**
+     * The kind of seed (2026-10-19, the owner: germination and losses are no
+     * longer typed; they come from the variety, else the seed's kind, else the
+     * crop). SEED_KINDS lists the kinds a crop is sold as, each [usual
+     * germination, the least such seed shows], and its usual kind (default).
+     */
+    public const SEED_TYPES = [
+        'hybrid' => ['Hybrid seed', 'A new bag each season', 'a hybrid bag'],
+        'opv' => ['Open pollinated or inbred', 'Bought, not saved', 'open pollinated or inbred seed'],
+        'good' => ['Certified or good seed', 'From a seed store, this season', 'good seed'],
+        'saved' => ['Seed I saved myself', 'From my own last harvest', 'seed saved from your own harvest'],
+    ];
+
     public const AMOUNT_UNITS = ['count' => 'Count', 'kg' => 'Kilos', 'g' => 'Grams'];
 
     public const PER = ['ha' => ['A hectare', 'The amount is for one hectare'], 'lot' => ['My lot', 'The amount is for the lot size above']];
@@ -463,6 +476,82 @@ final class SeedSpacing
     /** The yield parts a farmer can type; left empty, the variety's own or the crop's usual count. */
     public const YIELD_KEYS = ['tillers', 'grains', 'filled', 'ceiling', 'ears', 'perEar', 'perPlant'];
 
+    /**
+     * The kinds of seed a crop is sold as, [usual germination %, the least
+     * such seed shows], and the usual kind (researched 2026-10-19: seed bags,
+     * seed standards, growers' guides; saved seed from seed testing surveys).
+     */
+    public const SEED_KINDS = [
+        'rice' => ['default' => 'opv', 'types' => ['opv' => [85, 85], 'hybrid' => [85, 85], 'saved' => [75, 70]]],
+        'rice_dsr' => ['default' => 'opv', 'types' => ['opv' => [85, 85], 'hybrid' => [85, 85], 'saved' => [75, 70]]],
+        'corn_yellow' => ['default' => 'hybrid', 'types' => ['hybrid' => [90, 85], 'saved' => [75, 65]]],
+        'corn_white' => ['default' => 'opv', 'types' => ['opv' => [85, 85], 'saved' => [75, 70]]],
+        'corn_sweet' => ['default' => 'hybrid', 'types' => ['hybrid' => [85, 85], 'opv' => [80, 75]]],
+        'sorghum' => ['default' => 'opv', 'types' => ['opv' => [85, 80], 'hybrid' => [90, 85], 'saved' => [75, 70]]],
+        'mungbean' => ['default' => 'good', 'types' => ['good' => [85, 80], 'saved' => [75, 70]]],
+        'peanut' => ['default' => 'good', 'types' => ['good' => [80, 80], 'saved' => [75, 70]]],
+        'soybean' => ['default' => 'good', 'types' => ['good' => [85, 80], 'saved' => [70, 65]]],
+        'stringbean' => ['default' => 'good', 'types' => ['good' => [85, 75], 'saved' => [75, 70]]],
+        'bushsitaw' => ['default' => 'good', 'types' => ['good' => [85, 75], 'saved' => [75, 70]]],
+        'okra' => ['default' => 'opv', 'types' => ['opv' => [75, 65], 'hybrid' => [85, 75], 'saved' => [70, 60]]],
+        'tomato' => ['default' => 'hybrid', 'types' => ['hybrid' => [85, 70], 'opv' => [80, 70], 'saved' => [70, 60]]],
+        'eggplant' => ['default' => 'hybrid', 'types' => ['hybrid' => [80, 70], 'opv' => [80, 70], 'saved' => [70, 60]]],
+        'chili' => ['default' => 'opv', 'types' => ['opv' => [75, 60], 'hybrid' => [85, 75], 'saved' => [65, 55]]],
+        'bellpepper' => ['default' => 'hybrid', 'types' => ['hybrid' => [80, 60], 'opv' => [75, 60]]],
+        'ampalaya' => ['default' => 'hybrid', 'types' => ['hybrid' => [80, 60], 'opv' => [75, 60], 'saved' => [65, 55]]],
+        'squash' => ['default' => 'hybrid', 'types' => ['hybrid' => [90, 60], 'opv' => [85, 60], 'saved' => [70, 60]]],
+        'cucumber' => ['default' => 'hybrid', 'types' => ['hybrid' => [85, 60], 'opv' => [80, 60]]],
+        'watermelon' => ['default' => 'hybrid', 'types' => ['hybrid' => [85, 60], 'opv' => [80, 60]]],
+        'upo' => ['default' => 'opv', 'types' => ['opv' => [80, 60], 'hybrid' => [85, 70], 'saved' => [70, 60]]],
+        'patola' => ['default' => 'opv', 'types' => ['opv' => [80, 60], 'hybrid' => [85, 70], 'saved' => [70, 60]]],
+        'pechay' => ['default' => 'opv', 'types' => ['opv' => [85, 75], 'hybrid' => [90, 80], 'saved' => [70, 60]]],
+        'cabbage' => ['default' => 'hybrid', 'types' => ['hybrid' => [85, 75], 'opv' => [80, 70]]],
+        'lettuce' => ['default' => 'opv', 'types' => ['opv' => [85, 80]]],
+        'onion' => ['default' => 'opv', 'types' => ['opv' => [75, 70], 'hybrid' => [85, 80]]],
+        'carrot' => ['default' => 'opv', 'types' => ['opv' => [70, 55], 'hybrid' => [80, 65]]],
+        'radish' => ['default' => 'opv', 'types' => ['opv' => [85, 75], 'hybrid' => [90, 80], 'saved' => [70, 60]]],
+        'papaya' => ['default' => 'hybrid', 'types' => ['hybrid' => [75, 60], 'opv' => [70, 60], 'saved' => [65, 55]]],
+    ];
+
+    /** What the usual field's answer keeps. */
+    public const USUAL_KEYS = ['status', 'standHa', 'standLot', 'plantsHa', 'emptyShare', 'buyLo', 'buyHi', 'buyLotLo', 'buyLotHi', 'kgLo', 'kgHi', 'kgLotLo', 'kgLotHi',
+        'kgHaLo', 'kgHaHi', 'yLotLo', 'yLotHi', 'piecesHa', 'piecesHaLo', 'piecesLot', 'piecesLotLo', 'row', 'plant', 'square', 'perHill', 'fieldHa', 'reserve'];
+
+    /**
+     * The seed's germination, its least, the seedbed fit, the losses, the
+     * replant reserve and the harvest loss: the variety's own (VarietyYield
+     * parts germ, germMin, seedFit, loss), else its kind's (seedTypes), else
+     * the crop's. Said back as plain lines; the farmer types none of them.
+     */
+    public static function withSeed(array $c, ?array $vy): array
+    {
+        $C = self::CROPS[$c['crop']];
+        $kinds = self::SEED_KINDS[$c['crop']] ?? null;
+        $types = (array) ($kinds['types'] ?? []);
+        $type = isset($types[$c['seedType'] ?? '']) ? $c['seedType'] : ($kinds['default'] ?? null);
+        $mid = fn ($v) => ($s = self::span($v)) ? ($s[0] + $s[1]) / 2 : null;
+        $vg = $mid($vy['germ'] ?? null);
+        $tg = $type !== null && isset($types[$type]) ? (float) $types[$type][0] : null;
+        $germ = $vg ?? $tg ?? (float) (($C['germ'] ?? [100])[0]);
+        $vm = $mid($vy['germMin'] ?? null);
+        // The least good seed shows: the variety's, else the crop's usual kind's, else the crop's.
+        $dk = $kinds['default'] ?? null;
+        $germMin = $vm ?? ($dk !== null && isset($types[$dk][1]) ? (float) $types[$dk][1] : (float) (($C['germ'] ?? [100, 100])[1]));
+        $vf = $mid($vy['seedFit'] ?? null);
+        $fit = $vf ?? (float) ($C['fit'] ?? 100);
+        $vl = $mid($vy['loss'] ?? null);
+        $loss = $vl ?? (float) $C['loss'];
+        $hold = fn ($v, $lo, $hi) => max($lo, min($hi, (float) $v));
+        $out = [
+            'germ' => $hold($germ, 1, 100), 'germMin' => $hold($germMin, 1, 100), 'fit' => $hold($fit, 1, 100), 'loss' => $hold($loss, 0, 90),
+            'reserve' => (float) $C['reserve'], 'harvestLoss' => (float) $C['yield']['loss'],
+        ];
+
+        return $c + $out + ['seed' => $out + ['type' => $type,
+            'from' => ['germ' => $vg !== null ? 'variety' : ($tg !== null ? 'type' : 'crop'), 'germMin' => $vm !== null ? 'variety' : 'crop',
+                'fit' => $vf !== null ? 'variety' : 'crop', 'loss' => $vl !== null ? 'variety' : 'crop']]];
+    }
+
     /** What one crop starts on, for the page and the server alike. */
     public static function crop(string $key): array
     {
@@ -519,10 +608,8 @@ final class SeedSpacing
             'hillMode' => $pick('hillMode', self::HILLMODE, 'auto'),
             'perHill' => (int) round($n('perHill', 1, 20, (float) $ph[1])),
             'keep' => ($k = $n('keep', 1, 20, $C['keep'] === null ? null : (float) $C['keep'])) === null ? null : (int) round($k),
-            'germ' => $n('germ', 1, 100, (float) (($C['germ'] ?? [100])[0])),
-            'fit' => $n('fit', 1, 100, (float) ($C['fit'] ?? 100)),
-            'loss' => $n('loss', 0, 90, (float) $C['loss']),
-            'reserve' => $n('reserve', 0, 100, (float) $C['reserve']),
+            // Germination and losses are no longer typed (withSeed resolves them): the seed's kind is.
+            'seedType' => isset(self::SEED_KINDS[$key]['types'][$in['seedType'] ?? '']) ? (string) $in['seedType'] : null,
             'weight' => $n('weight', 0.01, 10000000),
             // The yield parts: null keeps the variety's or the crop's own.
             'tillers' => $n('tillers', 0, 100),
@@ -531,7 +618,6 @@ final class SeedSpacing
             'ears' => $n('ears', 0, 5),
             'perEar' => $n('perEar', 0, 5000),
             'perPlant' => $n('perPlant', 0, 100000),
-            'harvestLoss' => $n('harvestLoss', 0, 90, (float) $Y['loss']),
         ];
         // A weighed amount needs a seed weight; with none to go on it is a count.
         if ($c['amountUnit'] !== 'count' && ! self::weighs($C, $method)) {
@@ -727,17 +813,18 @@ final class SeedSpacing
     {
         $vy ??= self::varietyYield($c);
         $C = self::crop($c['crop']);
+        $c = self::withSeed($c, $vy);
         $pen = $ctx && ($ctx['facts'] || $ctx['season']) ? SeedPenalty::of($C, $c['crop'], $c['method'], $ctx['facts'] ?? null, $ctx['season'] ?? null) : SeedPenalty::none();
         $r = self::core($c, $vy, $pen);
-        $ideal = null;
+        // On a usual field: the same inputs, counted with no lot, season or forecast taken off (2026-10-19, the owner: a range between the two).
+        $usual = null;
         if ($pen['emerge']['lines'] || $pen['seedbed']['lines'] || $pen['growth']['lines']) {
-            // The same plan: its spacing and its seeds a hill, on a field and a season that take nothing.
-            $b = self::core(['mode' => 'seeds', 'row' => $r['_row'], 'plant' => $r['_plant'], 'hillMode' => 'set', 'perHill' => $r['perHill']] + $c, $vy, SeedPenalty::none());
-            $ideal = array_intersect_key($b, array_flip(['status', 'standHa', 'standLot', 'plantsHa', 'emptyShare', 'buyLo', 'buyHi', 'kgLo', 'kgHi', 'kgHaLo', 'kgHaHi', 'yLotLo', 'yLotHi', 'piecesHa', 'piecesHaLo', 'piecesLot', 'piecesLotLo']));
+            $b = self::core($c, $vy, SeedPenalty::none());
+            $usual = array_intersect_key($b, array_flip(self::USUAL_KEYS));
         }
         unset($r['_row'], $r['_plant']);
 
-        return $r + ['pen' => $pen, 'ideal' => $ideal];
+        return $r + ['pen' => $pen, 'usual' => $usual, 'seed' => $c['seed']];
     }
 
     /** The count itself, with the field and season penalties given (SeedPenalty::of or none), and the seeds a hill when held. */
@@ -936,8 +1023,8 @@ final class SeedSpacing
             $flags[] = ['plant-wide', 'info'];
         }
         if ($hasGerm && $C['germ']) {
-            if ($c['germ'] < $C['germ'][1]) {
-                $flags[] = ['germ-low', $c['germ'] < $C['germ'][1] - 15 ? 'bad' : 'warn'];
+            if ($c['germ'] < $c['germMin']) {
+                $flags[] = ['germ-low', $c['germ'] < $c['germMin'] - 15 ? 'bad' : 'warn'];
             } elseif ($c['germ'] > 98) {
                 $flags[] = ['germ-high', 'info'];
             }
@@ -1006,7 +1093,7 @@ final class SeedSpacing
     {
         return [
             'crops' => self::CROPS, 'groups' => self::GROUPS, 'modes' => self::MODES, 'layouts' => self::LAYOUTS, 'methods' => self::METHODS,
-            'rowSet' => self::ROWSET, 'hillMode' => self::HILLMODE, 'per' => self::PER, 'areaUnits' => self::AREA_UNITS, 'yieldKeys' => self::YIELD_KEYS,
+            'rowSet' => self::ROWSET, 'hillMode' => self::HILLMODE, 'seedTypes' => self::SEED_TYPES, 'seedKinds' => self::SEED_KINDS, 'usualKeys' => self::USUAL_KEYS, 'per' => self::PER, 'areaUnits' => self::AREA_UNITS, 'yieldKeys' => self::YIELD_KEYS,
             'k' => ['thin' => self::THIN, 'crowd' => self::CROWD, 'shortOk' => self::SHORT_OK, 'shortOne' => self::SHORT_ONE, 'shortPart' => self::SHORT_PART, 'shortBad' => self::SHORT_BAD, 'tri' => self::TRI,
                 'bed' => self::BED, 'riceMax' => self::RICE_HILL_MAX, 'riceBad' => self::RICE_HILL_BAD],
             'varietyShelf' => class_exists(\App\Support\VarietyYield::class),
