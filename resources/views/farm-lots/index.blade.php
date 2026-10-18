@@ -34,8 +34,7 @@
     .gl-item.is-old { border-color: #fcd34d; }
     .gl-item .fl-card { border-color: transparent; animation: none; }
     .gl-item .fl-card .fl-ck { display: none; }
-    .gl-item .fl-prev { margin: 0; }
-    .gl-prevhost:empty { display: none; }
+    .gl-item .fl-ans { padding: 0 .1rem; }
     @keyframes glRise { from { opacity: 0; transform: translateY(8px); } }
     .gl-meta { padding: 0 .35rem; font-size: .74rem; color: var(--color-gray-500); }
     .gl-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; padding: 0 0 .2rem; }
@@ -111,7 +110,8 @@
         if (!list.length) { $('glGrid').innerHTML = '<div class="gl-empty">No lot by that name or place.</div>'; return; }
         $('glGrid').innerHTML = list.map((l, i) => '<div class="gl-item' + (l.stale ? ' is-old' : '') + '" style="--i:' + Math.min(i, 10) + '" data-id="' + l.id + '">'
             + L().card(l, false, 0)
-            + '<div class="gl-prevhost" data-prev></div>'
+            // Preview answers and Edit answers (2026-10-19, the owner): each opens a sheet, no card opens here.
+            + L().ansButtons('data-act="prev"', 'data-act="answers"')
             + '<p class="gl-meta">' + (l.stale ? 'Last checked ' + esc(l.updated) + '. Due for a check.' : 'Last checked ' + esc(l.updated) + '. Next check by ' + esc(l.staleOn) + '.') + '</p>'
             + onMap(l)
             + '<div class="gl-acts"><button type="button" class="btn btn-white" data-act="edit">Edit</button>'
@@ -141,16 +141,11 @@
         if (!item) return;
         const lot = lotOf(item);
         if (!lot) return;
-        if (e.target.closest('.fl-prev')) return;
-        const act = e.target.closest('[data-act]')?.dataset.act || (e.target.closest('.fl-card') ? 'answers' : null);
+        // A tap on the lot's card previews its answers, like the Preview answers button.
+        const act = e.target.closest('[data-act]')?.dataset.act || (e.target.closest('.fl-card') ? 'prev' : null);
         try {
-            if (act === 'answers') {
-                // The lot's answers as cards to slide through, under its card.
-                const open = L().togglePreview(item.querySelector('[data-prev]'), lot, { onEdit: () => {} });
-                const b = item.querySelector('[data-act="answers"]');
-                if (b) { b.textContent = open ? 'Hide its answers' : 'See its answers'; b.setAttribute('aria-expanded', String(open)); }
-                return;
-            }
+            if (act === 'prev') { await L().review(lot, {}); return; }
+            if (act === 'answers') { await L().editAnswers(lot, {}); return; }
             if (act === 'edit') await L().edit(lot, { ask: false });
             else if (act === 'pin' || act === 'draw') {
                 if (!window.aneeLotMap) return;

@@ -25,8 +25,18 @@
        aneeLots.legacy(lot, crop) -> Promise of FieldProfile::legacy() for the lot's answers
        aneeLots.payload(lot) -> { lotId, location, place, areaHa, fieldProfile, fieldProfileFrom }
        aneeLots.confirm(lot) -> Promise<lot>   "Still correct": the six months start again
-       aneeLots.togglePreview(host, lot, { crop, onEdit }) -> bool   the lot's answers as cards to
-                                     slide through, opened in (or closed from) any host element
+       aneeLots.togglePreview(host, lot, { crop, onEdit, onSaved }) -> bool   the lot's answer card,
+                                     opened in (or closed from) any host element: its name and place,
+                                     "N of M answered" with a bar, four key answers (soil, water,
+                                     acidity, last crop) and the yellow "Review all answers".
+                                     "Edit the lot" calls onEdit(lot) when given (the caller's own
+                                     sheet), else the kit's sheet. onSaved(lot) after the review saved.
+       aneeLots.review(lot, { crop, commit, onSaved }) -> Promise<lot | null>   every answer page by
+                                     page in one sheet (#flReviewSheet), each with an Edit that opens
+                                     that one question (aneeFieldProfile.ask). A change is saved at once
+                                     through saveAnswers (answers only); closing fires aneelots:changed
+                                     once. commit(answers) -> Promise<{answers}> keeps it elsewhere.
+       aneeLots.saveAnswers(lot, answers) -> Promise<lot>   POST /app/farm-lots/{id} with the answers only
      A lot has no crop (2026-10-16, the owner: what grows on a lot changes often; the analysis says it).
      A lot: { id, name, province, town, barangay, place, where, areaHa, areaUnit,
               answers, count, updated, updatedAt, ageDays, stale, staleOn }
@@ -74,95 +84,151 @@
     .fl-old button:hover { background: #fef3c7; }
     .fl-old button.is-main:hover { background: #b45309; }
 
-    /* The picked lot's answers, as cards to slide through (2026-10-16, the owner). */
-    .fl-prev { display: grid; gap: .55rem; min-width: 0; margin: -.1rem 0 .15rem; padding: .7rem 0 .65rem; border-radius: 1.1rem;
-        background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; overflow: hidden; animation: flPrevIn .38s var(--fl-e) both; }
-    .fl-prev.is-out { animation: flPrevOut .24s var(--fl-e) both; }
-    @keyframes flPrevIn { from { opacity: 0; transform: translateY(-6px); clip-path: inset(0 0 100% 0 round 1.1rem); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 1.1rem); } }
-    @keyframes flPrevOut { to { opacity: 0; transform: translateY(-6px); } }
-    .fl-prev-h { display: flex; align-items: center; gap: .5rem; padding: 0 .85rem; min-width: 0; }
-    .fl-prev-h b { flex: 1; min-width: 0; font-size: .8rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; color: #3d6823; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .fl-prev-h b small { display: block; margin-top: .1rem; font-size: .72rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: #6b7a5c; white-space: normal; }
-    .fl-prev-h button.is-main { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
-    .fl-prev-h button.is-main:hover { background: #3d6823; border-color: #3d6823; }
-    .fl-prev.is-sheet { margin: 0; }
-    .fl-prev-h button { flex: none; min-height: 2.2rem; padding: .25rem .8rem; border-radius: 999px; font-size: .76rem; font-weight: 800; color: #3d6823; background: #fff; border: 1.5px solid #cfe0bd;
-        transition: background-color .28s var(--fl-e), border-color .28s var(--fl-e); }
-    .fl-prev-h button:hover { background: #eef5e6; border-color: #86b556; }
-    .fl-prev-row { display: flex; gap: .6rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding: 0 .85rem; padding: .1rem .85rem .2rem;
-        scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-    .fl-prev-row::-webkit-scrollbar { display: none; }
-    .fl-prev-row:focus-visible { outline: 2px solid #86b556; outline-offset: -2px; border-radius: .9rem; }
-    .fl-prev-row { align-items: stretch; }
-    .fl-pc { flex: 0 0 84%; max-width: 20rem; min-width: 0; scroll-snap-align: start; display: flex; flex-direction: column; padding: .8rem .85rem .85rem; border-radius: 1.05rem;
-        background: #fff; border: 1px solid #e3ecd9; box-shadow: 0 10px 22px -18px rgb(20 33 12 / .55); }
-    @media (min-width: 640px) { .fl-pc { flex-basis: 17.5rem; } }
-    .fl-pc header { display: flex; align-items: center; gap: .55rem; padding-bottom: .55rem; margin-bottom: .2rem; border-bottom: 1px solid #edf2e6; }
-    .fl-pc header > span { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .75rem; display: grid; place-items: center; font-size: 1.1rem; background: #f1f6ea; }
-    .fl-pc header > div { flex: 1; min-width: 0; }
-    .fl-pc header b { display: block; font-size: .9rem; font-weight: 800; line-height: 1.25; color: #14210c; }
-    .fl-pc header small { display: block; font-size: .7rem; font-weight: 700; color: #6b7a5c; }
-    .fl-pc header small.is-done { color: #3d6823; }
-    .fl-pc header em { flex: none; font-style: normal; font-size: .66rem; font-weight: 800; color: #9aa68d; }
-    .fl-qa { list-style: none; margin: 0; padding: 0; display: grid; }
-    .fl-qa li { display: grid; gap: .12rem; padding: .5rem 0; border-bottom: 1px dashed #e7eee0; min-width: 0; }
-    .fl-qa li:last-child { border-bottom: 0; padding-bottom: 0; }
-    .fl-qa span { font-size: .74rem; line-height: 1.4; color: #6b7280; overflow-wrap: anywhere; }
-    .fl-qa b { display: flex; align-items: flex-start; gap: .35rem; font-size: .86rem; font-weight: 800; line-height: 1.35; color: #1f3a10; overflow-wrap: anywhere; }
-    .fl-qa b::before { content: ''; flex: none; width: .5rem; height: .5rem; margin-top: .38em; border-radius: 999px; background: #6b9f3d; }
-    .fl-qa li.is-empty b { font-weight: 600; font-style: italic; color: #a1a8a0; }
-    .fl-qa li.is-empty b::before { background: transparent; box-shadow: inset 0 0 0 1.5px #c9d3c0; }
-    .fl-prev-f { display: flex; align-items: center; gap: .6rem; padding: 0 .85rem; min-width: 0; }
-    .fl-dots { display: flex; gap: .3rem; flex: none; }
-    .fl-dots i { width: .4rem; height: .4rem; border-radius: 999px; background: #cfdcc0; transition: width .28s var(--fl-e), background-color .28s var(--fl-e); }
-    .fl-dots i.is-on { width: 1.1rem; background: #4a7c2a; }
-    /* "Slide to see more": a finger that swipes, until the cards are slid once. */
-    .fl-hint { flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: flex-end; gap: .45rem; font-size: .74rem; font-weight: 800; color: #5b6b4c;
-        transition: opacity .28s var(--fl-e), transform .28s var(--fl-e); }
-    .fl-hint.is-gone { opacity: 0; transform: translateX(6px); pointer-events: none; }
-    .fl-hint svg { flex: none; width: 3.25rem; height: 1.5rem; overflow: visible; }
-    .fl-hint .fl-f1 { fill: rgb(134 181 86 / .3); }
-    .fl-hint .fl-f2 { fill: #4a7c2a; stroke: #fff; stroke-width: 1.6; }
-    html.dark .fl-hint .fl-f1 { fill: rgb(143 194 94 / .28); }
-    html.dark .fl-hint .fl-f2 { fill: #8fc25e; stroke: #10150d; }
-    .fl-hint .fl-finger { animation: flSwipe 1.9s var(--fl-e) infinite; transform-origin: center; }
-    .fl-hint .fl-trail { animation: flTrail 1.9s var(--fl-e) infinite; }
-    @keyframes flSwipe { 0% { transform: translateX(14px); opacity: 0; } 12% { transform: translateX(14px); opacity: 1; } 62% { transform: translateX(-18px); opacity: 1; } 82%, 100% { transform: translateX(-18px); opacity: 0; } }
-    @keyframes flTrail { 0%, 12% { stroke-dashoffset: -36; opacity: 0; } 62% { stroke-dashoffset: 0; opacity: .7; } 82%, 100% { stroke-dashoffset: 0; opacity: 0; } }
-    .fl-arrows { display: none; gap: .35rem; flex: none; }
-    @media (hover: hover) and (pointer: fine) {
-        .fl-arrows { display: inline-flex; }
-        .fl-hint .fl-touch { display: none; }
-    }
-    @media not all and (hover: hover) and (pointer: fine) { .fl-hint .fl-mouse { display: none; } }
-    .fl-arrows button { width: 2.1rem; height: 2.1rem; border-radius: 999px; display: grid; place-items: center; color: #3d6823; background: #fff; border: 1.5px solid #cfe0bd;
-        transition: background-color .28s var(--fl-e), opacity .28s var(--fl-e); }
-    .fl-arrows button:hover:not(:disabled) { background: #eef5e6; }
-    .fl-arrows button:disabled { opacity: .4; cursor: default; }
-    .fl-arrows svg { width: .9rem; height: .9rem; }
-    html.dark .fl-prev { background: #151b12; border-color: #2b3a1c; }
-    html.dark .fl-prev-h b { color: #a5c97e; }
-    html.dark .fl-prev-h button, html.dark .fl-arrows button { color: #a5c97e; background: #10150d; border-color: #3d5a26; }
-    html.dark .fl-pc { background: #10150d; border-color: #2b3a1c; }
-    html.dark .fl-pc header > span { background: #1c2616; }
-    html.dark .fl-pc header b { color: #e8efe1; }
-    html.dark .fl-pc header { border-color: #22301a; }
-    html.dark .fl-pc header small { color: #93a684; }
-    html.dark .fl-pc header small.is-done { color: #a5c97e; }
-    html.dark .fl-qa li { border-color: #22301a; }
-    html.dark .fl-qa span { color: #9aa78d; }
-    html.dark .fl-qa b { color: #d5ebc0; }
-    html.dark .fl-qa b::before { background: #8fc25e; }
-    html.dark .fl-qa li.is-empty b { color: #6f7b66; }
-    html.dark .fl-qa li.is-empty b::before { box-shadow: inset 0 0 0 1.5px #3a4a2c; }
-    html.dark .fl-dots i { background: #3a4a2c; }
-    html.dark .fl-dots i.is-on { background: #8fc25e; }
-    html.dark .fl-hint { color: #b9caa8; }
+    /* A lot's answers (2026-10-19, the owner): no card opens under a picked lot. It wears two
+       buttons, "Preview answers" (every answer page by page in one sheet, flReviewSheet, each
+       with its own Edit) and "Edit answers" (every question in one form, aneeFieldProfile.ask). */
+    .fl-card { transition: border-color .28s var(--fl-e), background-color .28s var(--fl-e), transform .28s var(--fl-e), box-shadow .28s var(--fl-e), border-radius .28s var(--fl-e); }
+    .fl-card.is-on.has-acts { border-bottom-left-radius: .4rem; border-bottom-right-radius: .4rem; border-bottom-color: #c9dcb4; box-shadow: inset 1px 0 0 #4a7c2a, inset -1px 0 0 #4a7c2a, inset 0 1px 0 #4a7c2a; }
+    .fl-ans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; min-width: 0; }
+    .fl-ans.is-join { margin-top: -.55rem; padding: .55rem; border-radius: .4rem .4rem 1.1rem 1.1rem; background: #f3f8ec; border: 1.5px solid #4a7c2a; border-top: 0;
+        box-shadow: inset 1px 0 0 #4a7c2a, inset -1px 0 0 #4a7c2a, inset 0 -1px 0 #4a7c2a; }
+    .fl-ans.is-under { margin-top: .5rem; }
+    .fl-ans[hidden] { display: none; }
+    .fl-ans-b { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-width: 0; min-height: 2.75rem; padding: .35rem .6rem; border-radius: 999px; font-size: .82rem; font-weight: 800; line-height: 1.15;
+        color: #2d5016; background: #fff; border: 1.5px solid #cfe0bd; transition: background-color .28s var(--fl-e), border-color .28s var(--fl-e), transform .28s var(--fl-e); }
+    .fl-ans-b span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fl-ans-b svg { flex: none; width: 1rem; height: 1rem; }
+    .fl-ans-b:hover { background: #f4f9ee; border-color: #86b556; }
+    .fl-ans-b:active { transform: scale(.97); }
+    .fl-ans-b:focus-visible { outline: 2px solid #4a7c2a; outline-offset: 2px; }
+    .fl-ans-b.is-edit { background: #e4efd4; border-color: #b9d39c; }
+    .fl-ans-b.is-edit:hover { background: #d9e9c4; border-color: #86b556; }
+    @media (max-width: 400px) { .fl-ans-b { gap: .3rem; padding-left: .45rem; padding-right: .45rem; font-size: .8rem; } .fl-ans-b svg { width: .92rem; height: .92rem; } }
+    @media (max-width: 340px) { .fl-ans { grid-template-columns: 1fr; } }
+    /* How many are answered. */
+    .fl-prog { display: grid; gap: .4rem; }
+    .fl-prog-t { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; min-width: 0; font-size: .82rem; color: #4b5a3e; }
+    .fl-prog-t b { font-weight: 800; color: #1f3a10; }
+    .fl-prog-t span { flex: none; font-size: .74rem; font-weight: 800; color: #5f6e51; }
+    .fl-bar { height: .5rem; border-radius: 999px; background: #e1ead5; overflow: hidden; }
+    .fl-bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #86b556, #4a7c2a); transition: width .55s var(--fl-e); }
+    .fl-bar.is-full i { background: linear-gradient(90deg, #4a7c2a, #2d5016); }
+    /* The answers inside the lot's own sheet. */
+    .fl-sa { display: grid; gap: .65rem; padding: .85rem; border-radius: 1.1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; }
+    .fl-sa .fl-sub { margin: 0; }
+    .fl-walk { justify-self: center; min-height: 2.75rem; padding: .3rem .8rem; font-size: .8rem; font-weight: 800; color: #3d6823; text-decoration: underline; text-underline-offset: 3px; }
+    /* The yellow call: a new lot's questions. */
+    .fl-review { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; min-height: 3rem; padding: .55rem 1.1rem; border-radius: 999px; font-size: .92rem; font-weight: 800;
+        color: #3b2f00; background: #f5c518; box-shadow: 0 10px 22px -14px rgb(245 197 24 / .95); transition: background-color .28s var(--fl-e), transform .28s var(--fl-e), box-shadow .28s var(--fl-e); }
+    .fl-review:hover { background: #ffd23f; box-shadow: 0 14px 26px -14px rgb(245 197 24); }
+    .fl-review:active { transform: scale(.98); }
+    .fl-review:focus-visible { outline: 3px solid #3b2f00; outline-offset: 2px; }
+    .fl-review svg { flex: none; width: 1.05rem; height: 1.05rem; animation: flNudge 2.6s var(--fl-e) infinite; }
+    @keyframes flNudge { 0%, 55%, 100% { transform: none; } 70% { transform: translateX(4px); } 85% { transform: none; } }
+
+    /* Preview answers (flReviewSheet): the lot, then a section a page, an Edit a question. */
+    #flReviewSheet .fq-head h2 small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fl-rv-top { flex: none; display: grid; gap: .45rem; padding: .1rem 1.15rem .8rem; border-bottom: 1px solid #eef2ea; }
+    .fl-rv-sum { display: flex; align-items: center; gap: .6rem; min-width: 0; }
+    .fl-rv-sum .fl-prog-t { flex: 1; }
+    .fl-rv-all { flex: none; display: inline-flex; align-items: center; gap: .35rem; min-height: 2.75rem; padding: .3rem .9rem; border-radius: 999px; font-size: .8rem; font-weight: 800;
+        color: #2d5016; background: #e4efd4; border: 1.5px solid #b9d39c; transition: background-color .28s var(--fl-e), border-color .28s var(--fl-e), transform .28s var(--fl-e); }
+    .fl-rv-all:hover { background: #d9e9c4; border-color: #86b556; }
+    .fl-rv-all:active { transform: scale(.97); }
+    .fl-rv-all svg { width: .9rem; height: .9rem; }
+    .fl-rv { padding-top: 0; }
+    .fl-rs { margin-top: .35rem; }
+    .fl-rs[hidden], .fl-rq[hidden], .fl-rv-none[hidden] { display: none; }
+    .fl-rs-h { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: .55rem; margin: 0; padding: .75rem 0 .5rem; background: #fff; }
+    .fl-rs-h > span { flex: none; width: 2.05rem; height: 2.05rem; border-radius: .7rem; display: grid; place-items: center; font-size: 1.05rem; background: #f1f6ea; }
+    .fl-rs-h b { flex: 1; min-width: 0; font-size: .96rem; font-weight: 800; line-height: 1.25; color: #14210c; }
+    .fl-rs-h em { flex: none; display: inline-flex; align-items: center; gap: .25rem; padding: .18rem .6rem; border-radius: 999px; font-style: normal; font-size: .72rem; font-weight: 800;
+        color: #5b6b4c; background: #f1f4ec; transition: color .28s var(--fl-e), background-color .28s var(--fl-e); }
+    .fl-rs-h em.is-done { color: #2d5016; background: #e4efd4; }
+    .fl-rs-h em svg { width: .72rem; height: .72rem; }
+    .fl-qa { display: grid; border-radius: 1rem; background: #fff; border: 1px solid #e5ece0; overflow: hidden; }
+    .fl-rs.is-lot .fl-qa { background: #f8faf6; }
+    .fl-rq { display: flex; align-items: center; gap: .65rem; min-width: 0; padding: .6rem .55rem .6rem .85rem; border-top: 1px solid #eef2ea; }
+    .fl-rq:first-child { border-top: 0; }
+    .fl-rq.is-info { padding-top: .5rem; padding-bottom: .5rem; }
+    .fl-rq-t { flex: 1; min-width: 0; }
+    .fl-rq-t small { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 700; color: #6b7280; }
+    .fl-rq-t b { display: block; margin-top: .08rem; font-size: .9rem; font-weight: 800; line-height: 1.35; color: #1f3a10; overflow-wrap: anywhere; transition: opacity .28s var(--fl-e); }
+    .fl-rq.is-empty .fl-rq-t b { font-weight: 600; font-style: italic; color: #969d92; }
+    .fl-rq-e { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: .3rem; min-height: 2.75rem; min-width: 2.75rem; padding: .3rem .85rem; border-radius: 999px;
+        font-size: .8rem; font-weight: 800; color: #3d6823; background: #fff; border: 1.5px solid #d5e3c5;
+        transition: background-color .28s var(--fl-e), border-color .28s var(--fl-e), color .28s var(--fl-e), transform .28s var(--fl-e), opacity .28s var(--fl-e); }
+    .fl-rq-e:hover { background: #eef5e6; border-color: #86b556; }
+    .fl-rq-e:active { transform: scale(.96); }
+    .fl-rq-e svg { flex: none; width: .85rem; height: .85rem; }
+    .fl-rq.is-empty:not(.is-extra) .fl-rq-e { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    .fl-rq.is-empty:not(.is-extra) .fl-rq-e:hover { background: #3d6823; border-color: #3d6823; }
+    .fl-rq.is-busy .fl-rq-t b { opacity: .55; }
+    .fl-rq.is-busy .fl-rq-e { pointer-events: none; opacity: .5; }
+    /* The answer just saved: a soft yellow wash, the new words rising in, a Saved tag. */
+    .fl-rq.is-new { animation: flRvNew 1.9s var(--fl-e); }
+    .fl-rq.is-new .fl-rq-t b { animation: flRvVal .45s var(--fl-e) both; }
+    @keyframes flRvNew { 0%, 55% { background-color: #fff4c7; box-shadow: inset 4px 0 0 #f5c518; } 100% { background-color: transparent; box-shadow: inset 4px 0 0 transparent; } }
+    @keyframes flRvVal { from { opacity: 0; transform: translateY(5px); } }
+    .fl-ok { display: inline-flex; align-items: center; gap: .2rem; padding: .05rem .45rem; border-radius: 999px; font-style: normal; font-size: .64rem; font-weight: 900; letter-spacing: .03em;
+        color: #2d5016; background: #e4efd4; animation: flOk 2.6s var(--fl-e) both; }
+    .fl-ok svg { width: .62rem; height: .62rem; }
+    @keyframes flOk { 0% { opacity: 0; transform: scale(.8); } 12%, 80% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+    .fl-rv-none { margin: 1.2rem 0 .4rem; padding: 1.1rem; border-radius: 1rem; text-align: center; font-size: .9rem; line-height: 1.5; color: #2d5016; background: #f3f8ec; border: 1px dashed #b9d39c; }
+    .fl-rv-note { margin: .8rem 0 0; padding: .65rem .8rem; border-radius: .9rem; font-size: .8rem; line-height: 1.5; color: #5b6472; background: #f8faf6; border: 1px solid #e8eee1; }
+    /* "Only unanswered": a switch in the sheet's foot. */
+    .fl-only { flex: none; display: inline-flex; align-items: center; gap: .55rem; min-height: 2.75rem; padding: .2rem .5rem .2rem .15rem; border-radius: 999px; font-size: .84rem; font-weight: 800; color: #374151; background: transparent; }
+    .fl-only i { position: relative; flex: none; width: 2.6rem; height: 1.5rem; border-radius: 999px; background: #d3dbc9; transition: background-color .28s var(--fl-e); }
+    .fl-only i::after { content: ''; position: absolute; top: .18rem; left: .18rem; width: 1.14rem; height: 1.14rem; border-radius: 999px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .25); transition: transform .28s var(--fl-e); }
+    .fl-only[aria-checked="true"] i { background: #4a7c2a; }
+    .fl-only[aria-checked="true"] i::after { transform: translateX(1.1rem); }
+    .fl-only:focus-visible { outline: 2px solid #86b556; outline-offset: 2px; }
+
+    html.dark .fl-card.is-on.has-acts { border-bottom-color: #34482a; box-shadow: inset 1px 0 0 #6b9f3d, inset -1px 0 0 #6b9f3d, inset 0 1px 0 #6b9f3d; }
+    html.dark .fl-ans.is-join { background: #1a2414; border-color: #6b9f3d; box-shadow: inset 1px 0 0 #6b9f3d, inset -1px 0 0 #6b9f3d, inset 0 -1px 0 #6b9f3d; }
+    html.dark .fl-ans-b { color: #cfe6b8; background: #10150d; border-color: #3d5a26; }
+    html.dark .fl-ans-b:hover { background: #1c2914; border-color: #6b9f3d; }
+    html.dark .fl-ans-b.is-edit { background: #26361b; border-color: #4a6b2c; }
+    html.dark .fl-ans-b.is-edit:hover { background: #2f4321; }
+    html.dark .fl-prog-t, html.dark .fl-prog-t span { color: #a9b69c; }
+    html.dark .fl-prog-t b { color: #d5ebc0; }
+    html.dark .fl-bar { background: #26331d; }
+    html.dark .fl-bar i { background: linear-gradient(90deg, #6b9f3d, #8fc25e); }
+    html.dark .fl-bar.is-full i { background: linear-gradient(90deg, #8fc25e, #a5c97e); }
+    html.dark .fl-sa { background: #151b12; border-color: #2b3a1c; }
+    html.dark .fl-walk { color: #a5c97e; }
+    html.dark .fl-review:focus-visible { outline-color: #f5c518; }
+    html.dark .fl-rv-top { border-color: #222b1a; }
+    html.dark .fl-rv-all { color: #cfe6b8; background: #26361b; border-color: #4a6b2c; }
+    html.dark .fl-rv-all:hover { background: #2f4321; }
+    html.dark .fl-rs-h { background: #151b12; }
+    html.dark .fl-rs-h > span { background: #1c2616; }
+    html.dark .fl-rs-h b { color: #e8efe1; }
+    html.dark .fl-rs-h em { color: #a9b69c; background: #1c2616; }
+    html.dark .fl-rs-h em.is-done { color: #cfe6b8; background: #22301a; }
+    html.dark .fl-qa { background: #10150d; border-color: #2b3a1c; }
+    html.dark .fl-rs.is-lot .fl-qa { background: #131a10; }
+    html.dark .fl-rq { border-color: #22301a; }
+    html.dark .fl-rq-t small { color: #9aa78d; }
+    html.dark .fl-rq-t b { color: #d5ebc0; }
+    html.dark .fl-rq.is-empty .fl-rq-t b { color: #75816b; }
+    html.dark .fl-rq-e { color: #a5c97e; background: #151b12; border-color: #3d5a26; }
+    html.dark .fl-rq-e:hover { background: #1c2914; border-color: #6b9f3d; }
+    html.dark .fl-rq.is-empty:not(.is-extra) .fl-rq-e { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    html.dark .fl-rq.is-new { animation-name: flRvNewD; }
+    @keyframes flRvNewD { 0%, 55% { background-color: #3a3210; box-shadow: inset 4px 0 0 #f5c518; } 100% { background-color: transparent; box-shadow: inset 4px 0 0 transparent; } }
+    html.dark .fl-ok { color: #cfe6b8; background: #22301a; }
+    html.dark .fl-rv-none { color: #cfe6b8; background: #1a2114; border-color: #3d5a26; }
+    html.dark .fl-rv-note { color: #a9b69c; background: #1a2114; border-color: #2b3a1c; }
+    html.dark .fl-only { color: #d5e3c5; }
+    html.dark .fl-only i { background: #34412b; }
+    html.dark .fl-only[aria-checked="true"] i { background: #6b9f3d; }
+    /* Reduced motion: no movement. The yellow wash stays: it is a color, and it says what changed. */
     @media (prefers-reduced-motion: reduce) {
-        .fl-prev, .fl-prev.is-out, .fl-hint .fl-finger, .fl-hint .fl-trail { animation: none !important; }
-        .fl-dots i, .fl-hint { transition: none; }
+        .fl-review svg, .fl-rq.is-new .fl-rq-t b, .fl-ok { animation: none !important; }
+        .fl-bar i, .fl-review, .fl-ans-b, .fl-rv-all, .fl-rq-e, .fl-only i, .fl-only i::after, .fl-rs-h em, .fl-rq-t b { transition: none !important; }
     }
-    html.sm-still .fl-prev, html.sm-still .fl-hint .fl-finger, html.sm-still .fl-hint .fl-trail { animation: none !important; }
+    html.sm-still .fl-review svg, html.sm-still .fl-rq.is-new .fl-rq-t b, html.sm-still .fl-ok { animation: none !important; }
 
     /* The lot sheet. It wears the field questions' sheet (fq-sheet, fq-box). */
     .fl-f { margin-top: 1rem; }
@@ -244,6 +310,17 @@
     </div>
 </dialog>
 
+{{-- Every answer of one lot, page by page, each with its own Edit (aneeLots.review). --}}
+<dialog class="fq-sheet is-full" id="flReviewSheet" aria-labelledby="flReviewTitle">
+    <div class="fq-box" tabindex="-1">
+        <div class="fq-grip" aria-hidden="true"></div>
+        <div class="fq-head"><h2 id="flReviewTitle">Its answers<small id="flReviewSub"></small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="fl-rv-top" id="flReviewTop"></div>
+        <div class="fq-body fl-rv" id="flReviewBody"></div>
+        <div class="fq-foot"><button type="button" class="fl-only" id="flReviewOnly" role="switch" aria-checked="false"><i aria-hidden="true"></i>Only unanswered</button><span></span><button type="button" class="btn btn-primary" data-fq-close>Done</button></div>
+    </div>
+</dialog>
+
 {{-- A list to pick from: the provinces, the towns, the barangays, the units. --}}
 <dialog class="fq-sheet" id="flPickSheet" aria-labelledby="flPickTitle">
     <div class="fq-box" tabindex="-1">
@@ -270,7 +347,7 @@
         'icon' => asset('images/treasure-map.png'),
         'units' => \App\Support\FarmLots::AREA_UNITS,
         // The questions in words, for the picked lot's preview: key => [short name, page, option => label].
-        'qs' => collect(\App\Support\FieldProfile::QUESTIONS)->map(fn ($q) => [$q['short'], $q['page'], collect($q['o'])->map(fn ($o) => $o[0])->all(), $q['q']])->all(),
+        'qs' => collect(\App\Support\FieldProfile::QUESTIONS)->map(fn ($q) => [$q['short'], $q['page'], collect($q['o'])->map(fn ($o) => $o[0])->all(), $q['q'], $q['only'] ?? null])->all(),
         'others' => collect(\App\Support\FieldProfile::OTHER)->map(fn ($o) => $o[0])->all(),
     ];
 @endphp
@@ -432,11 +509,11 @@
         const paintQ = () => {
             const box = $('flQ');
             if (!box) return;
-            box.innerHTML = prevHtml({ name: st.name, answers: st.answers }, { sheet: true });
-            const pv = box.firstElementChild;
-            pv.style.animation = 'none';
-            wirePrev(pv);
+            box.innerHTML = sheetAnswersHtml(st);
         };
+        // Preview answers and Edit answers, here too; a change stays in this sheet until "Save the lot".
+        const here = () => ({ id: st.id, name: st.name || 'Your lot', place: [st.barangay, st.town, st.province].filter(Boolean).join(', '), answers: st.answers });
+        const keepHere = async (answers) => { st.answers = answers; paintQ(); paintTests(); return { answers }; };
         body.innerHTML = (st.stale ? '<div class="fl-warn">These answers were saved on ' + esc(st.updated) + ', over six months ago. Check each one and change what is different now, then save.</div>' : '')
             + '<div class="fl-f"><label class="fl-lab" for="flName">Name of the lot</label><input type="text" class="form-input" id="flName" maxlength="120" placeholder="Like North field, or the lot by the creek" value="' + esc(st.name) + '"></div>'
             + '<div class="fl-f"><span class="fl-lab">Where is it?</span><p class="fl-sub">The weather, the season and the advice follow the place.</p><div class="fl-tags is-3" id="flPlace"></div></div>'
@@ -478,6 +555,12 @@
                     if (r && r.v && UNITS[r.v]) { st.areaUnit = r.v; t.querySelector('b').textContent = UNITS[r.v][0]; bump(t); }
                 } else if (t.id === 'flQBtn') {
                     await askQuestions();
+                } else if (t.matches('[data-fl-review]')) {
+                    read();
+                    await review(here(), { crop: st.crop, commit: keepHere });
+                } else if (t.matches('[data-fl-answers]')) {
+                    read();
+                    await editAnswers(here(), { crop: st.crop, commit: keepHere });
                 }
             } catch (_) {
                 window.toast?.('The list could not load. Please try again.', 'error');
@@ -540,127 +623,281 @@
             + '<span class="fl-chips">' + chips.join('') + '</span></span><span class="fl-ck">' + CHECK + '</span></button>';
     }
 
-    /* ---- the picked lot's answers, as cards to slide through ---- */
+    /* ---- a lot's answers: "Preview answers" and "Edit answers", each a sheet ----
+       (2026-10-19, the owner: the "Its answers" card under a picked lot looked bad on a phone:
+       "instead we want a button to preview answers, and edit answers that when clicked shows a
+       modal to show the answers or edit.") No card opens under a lot any more: the picked lot
+       carries the two buttons, and so do the lot cards of Global Lots, Land Prep, Crop Protocol
+       and Anee Auto. Group icon maps list every group: TILE above, PREV_ICON and PREV_NAME here,
+       PAGE_ICON and PAGE_SHORT in partials/field-profile. */
     const PREV_ICON = { lot: '🗺️', soil: '🟤', water: '💧', acid: '🧪', tests: '🧫', land: '⛰️', last: '🌾', weeds: '🌿', problems: '🐛' };
     const PREV_NAME = { lot: 'The lot', soil: 'Soil', water: 'Water', acid: 'Acidity and lime', tests: 'Soil tests', land: 'The land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
     const TESTS = () => (window.aneeFieldProfile && window.aneeFieldProfile.tests) || null;
-    const ARROW = (d) => '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' + (d < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '"/></svg>';
+    const PEN = '<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L19 9a2.8 2.8 0 00-4-4L4 16v4z"/><path stroke-linecap="round" d="M13.5 6.5l4 4"/></svg>';
+    const EYE = '<svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linejoin="round" d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+    const OK = '<svg fill="none" stroke="currentColor" stroke-width="3.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     const troubleName = (k) => k.startsWith('other:') ? (D.others[k.slice(6)] || k.slice(6)) : k.replace(/^[a-z]+:/, '').replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
-    function prevCards(lot, o) {
-        const a = (lot && lot.answers) || {};
-        const said = (v) => !(v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length));
-        const cards = o.sheet ? [] : [{ key: 'lot', rows: [['Where is it?', lot.place || ''], ['How big is it?', fmtSize(lot)], ['Last checked', lot.updated ? lot.updated + (lot.stale ? ', due for a check' : '') : '']], lot: true }];
-        Object.keys(D.groups).forEach((g) => {
-            const rows = [];
-            Object.entries(D.qs).forEach(([k, q]) => {
-                if (q[1] !== g) return;
-                const v = a[k];
-                let words = '';
-                if (said(v)) {
-                    words = k === 'outbreaks' ? ([].concat(v).includes('none') ? 'None' : [].concat(v).map(troubleName).join(', '))
-                        : [].concat(v).map((x) => (q[2] && q[2][x]) || x).join(', ');
-                }
-                rows.push([q[3] || q[0], words]);
-            });
-            cards.push({ key: g, rows });
-            // The soil test log follows the acidity: each result by its date, newest first.
-            const T = TESTS();
-            if (g === 'acid' && T) {
-                const list = T.list(a);
-                cards.push({ key: 'tests', extra: true, none: 'No soil test logged. A test is optional.', rows: list.length ? list.map((t) => [T.date(t), T.words(t)]) : [['Soil test', '']] });
-            }
-        });
-        return cards;
+    const said = (v) => !(v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length));
+    // The lot's questions (all of them with no crop; the rice only ones only for rice).
+    const qKeys = (crop) => Object.keys(D.qs).filter((k) => !(crop && D.qs[k][4] === 'rice' && !String(crop).startsWith('rice')));
+    // The newest pH of the soil test log ("pH 5.8", "pH 5.5 to 6"), or ''.
+    function phOf(a) {
+        const T = TESTS(), t = T ? T.list(a || {}).find((x) => x && x.ph != null) : null;
+        const n = (x) => String(Math.round(Number(x) * 100) / 100);
+        return t ? 'pH ' + n(t.ph) + (t.phTo != null && Number(t.phTo) !== Number(t.ph) ? ' to ' + n(t.phTo) : '') : '';
     }
-    function prevHtml(lot, o) {
-        o = o || {};
-        const cards = prevCards(lot, o);
-        const n = cards.length;
-        const asked = cards.filter((c) => !c.lot && !c.extra).reduce((t, c) => t + c.rows.length, 0);
-        const got = cards.filter((c) => !c.lot && !c.extra).reduce((t, c) => t + c.rows.filter((r) => r[1]).length, 0);
-        const body = cards.map((cd, i) => {
-            const done = cd.rows.filter((r) => r[1]).length;
-            return '<article class="fl-pc" aria-label="' + esc(PREV_NAME[cd.key]) + '"><header><span aria-hidden="true">' + PREV_ICON[cd.key] + '</span>'
-                + '<div><b>' + esc(PREV_NAME[cd.key]) + '</b>' + (cd.lot ? '<small>Where it is and its size</small>'
-                    : cd.extra ? '<small' + (done ? ' class="is-done"' : '') + '>' + (done ? done + (done === 1 ? ' result logged' : ' results logged') : 'Optional') + '</small>'
-                    : '<small' + (done === cd.rows.length ? ' class="is-done"' : '') + '>' + (done ? done + ' of ' + cd.rows.length + ' answered' : 'Not answered yet') + '</small>') + '</div>'
-                + '<em>' + (i + 1) + ' of ' + n + '</em></header>'
-                + '<ul class="fl-qa">' + cd.rows.map((r) => '<li' + (r[1] ? '' : ' class="is-empty"') + '><span>' + esc(r[0]) + '</span><b>' + esc(r[1] || cd.none || 'Not answered yet') + '</b></li>').join('') + '</ul>'
-                + '</article>';
-        }).join('');
-        const head = o.sheet
-            ? '<div class="fl-prev-h"><b>' + (got ? got + ' of ' + asked + ' questions answered' : 'Not answered yet') + '<small>' + (got ? 'Slide through them below. Change any that is different now.' : 'Every analysis reads these answers, so they are asked once, here.') + '</small></b>'
-                + '<button type="button" id="flQBtn"' + (got ? '' : ' class="is-main"') + '>' + (got ? 'Change the answers' : 'Answer the questions') + '</button></div>'
-            : '<div class="fl-prev-h"><b>Its answers<small>' + got + ' of ' + asked + ' questions answered</small></b><button type="button" data-fl-edit>Edit the lot</button></div>';
-        return '<div class="fl-prev' + (o.sheet ? ' is-sheet' : '') + '" data-fl-prev>'
-            + head
-            + '<div class="fl-prev-row" tabindex="0" role="group" aria-label="' + esc(lot.name || 'The lot') + ': its answers, ' + n + ' cards">' + body + '</div>'
-            + '<div class="fl-prev-f"><span class="fl-dots" aria-hidden="true">' + cards.map((_, i) => '<i' + (i ? '' : ' class="is-on"') + '></i>').join('') + '</span>'
-            + '<span class="fl-hint" aria-hidden="true"><svg class="fl-touch" viewBox="0 0 52 24"><path class="fl-trail" d="M46 12H10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="36"/>'
-            + '<g class="fl-finger"><circle class="fl-f1" cx="30" cy="12" r="8.5"/><circle class="fl-f2" cx="30" cy="12" r="5"/></g></svg>'
-            + '<span class="fl-touch">Slide to see more</span><span class="fl-mouse">More with the arrows</span></span>'
-            + '<span class="fl-arrows"><button type="button" data-fl-go="-1" aria-label="Back one card" disabled>' + ARROW(-1) + '</button><button type="button" data-fl-go="1" aria-label="Next card">' + ARROW(1) + '</button></span></div>'
+    const isAnswered = (a, k) => said((a || {})[k]) || (k === 'acidity' && !!phOf(a));
+    // One answer in plain words, or '' when it is not answered.
+    function answerWords(a, k) {
+        a = a || {};
+        const q = D.qs[k], v = a[k];
+        let w = '';
+        if (q && said(v)) {
+            w = k === 'outbreaks' ? ([].concat(v).includes('none') ? 'None last season' : [].concat(v).map(troubleName).join(', '))
+                : [].concat(v).map((x) => (q[2] && q[2][x]) || x).join(', ');
+        }
+        if (k === 'acidity') { const ph = phOf(a); if (ph) w = w ? w + ', ' + ph : ph + ', from a soil test'; }
+        return w;
+    }
+    function tally(a, crop) {
+        const keys = qKeys(crop);
+        return { asked: keys.length, got: keys.filter((k) => isAnswered(a, k)).length };
+    }
+    /* The two buttons, for any lot card: `prev` and `edit` are the attributes each button wears
+       (the caller listens for them), `cls` adds to the row's class (is-join: under a picked card). */
+    const ansButtons = (prev, edit, cls) => '<div class="fl-ans' + (cls ? ' ' + cls : '') + '">'
+        + '<button type="button" class="fl-ans-b" ' + prev + ' aria-haspopup="dialog">' + EYE + '<span>Preview answers</span></button>'
+        + '<button type="button" class="fl-ans-b is-edit" ' + edit + ' aria-haspopup="dialog">' + PEN + '<span>Edit answers</span></button></div>';
+    /* The answers inside the lot's own sheet: how many, and the same two buttons. A new lot with
+       none yet gets the walk through every page instead (the yellow "Answer the questions"). */
+    function sheetAnswersHtml(st) {
+        const t = tally(st.answers, lastCrop(st.answers, st.crop));
+        const pct = t.asked ? Math.round(t.got / t.asked * 100) : 0;
+        return '<div class="fl-sa">'
+            + '<div class="fl-prog"><div class="fl-prog-t"><b>' + (t.got ? t.got + ' of ' + t.asked + ' answered' : 'Not answered yet') + '</b><span>' + (t.got === t.asked ? 'All answered' : pct + '%') + '</span></div>'
+            + '<div class="fl-bar' + (t.got === t.asked ? ' is-full' : '') + '" role="progressbar" aria-label="Questions answered" aria-valuemin="0" aria-valuemax="' + t.asked + '" aria-valuenow="' + t.got + '"><i style="width:' + pct + '%"></i></div></div>'
+            + (t.got ? ansButtons('data-fl-review', 'data-fl-answers') + '<button type="button" class="fl-walk" id="flQBtn">Or go through them page by page</button>'
+                : '<p class="fl-sub">Every analysis reads these answers, so they are asked once, here.</p><button type="button" class="fl-review" id="flQBtn">Answer the questions<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>')
             + '</div>';
     }
-    // Wire one preview: the dots follow the slide, the hint leaves after the first one.
-    function wirePrev(box) {
-        const row = box.querySelector('.fl-prev-row');
-        const dots = [...box.querySelectorAll('.fl-dots i')];
-        const hint = box.querySelector('.fl-hint');
-        const [back, next] = box.querySelectorAll('[data-fl-go]');
-        const step = () => { const c = row.querySelector('.fl-pc'); return c ? c.getBoundingClientRect().width + 9.6 : row.clientWidth; };
-        let raf = 0, slid = false;
-        const sync = () => {
-            raf = 0;
-            const i = Math.max(0, Math.min(dots.length - 1, Math.round(row.scrollLeft / step())));
-            dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
-            const end = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
-            if (back) back.disabled = row.scrollLeft < 4;
-            if (next) next.disabled = end;
-            if (row.scrollLeft > 8 && !slid) { slid = true; hint.classList.add('is-gone'); }
-        };
-        row.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(sync); }, { passive: true });
-        box.addEventListener('click', (e) => {
-            const b = e.target.closest('[data-fl-go]');
-            if (!b) return;
-            row.scrollBy({ left: Number(b.dataset.flGo) * step(), behavior: reduce() ? 'auto' : 'smooth' });
-        });
-        row.addEventListener('keydown', (e) => {
-            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-            e.preventDefault();
-            row.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * step(), behavior: reduce() ? 'auto' : 'smooth' });
-        });
-        // Everything fits (a wide screen): nothing to slide, so no hint and no arrows.
-        requestAnimationFrame(() => { if (row.scrollWidth <= row.clientWidth + 4) { hint.classList.add('is-gone'); box.querySelector('.fl-arrows').style.display = 'none'; } sync(); });
+
+    /* ---- saving: the answers only, through the lot's own save (FarmLots::save) ----
+       The place and the size stay as they are. The six month check starts again, as any save does. */
+    async function saveAnswers(lot, answers) {
+        const r = await call(D.urls.update + '/' + lot.id, { method: 'POST', body: { answers } });
+        ROWS = null;
+        return r.data.row;
+    }
+    const sameAnswers = (a, b) => { const FP = window.aneeFieldProfile, sh = FP && FP.shape ? FP.shape : clone; return JSON.stringify(sh(a || {})) === JSON.stringify(sh(b || {})); };
+
+    /* ---- "Edit answers": every question of the lot, page by page in one form, one Save ----
+       editAnswers(lot, { crop, commit, onSaved, quiet }) -> Promise<the lot as saved, or null>
+       The form is the field questions' own (aneeFieldProfile.ask with all). A save fires
+       aneelots:changed (unless quiet: the preview sheet fires it once, when it closes).
+       commit(answers) -> Promise<{answers}> keeps the change elsewhere instead. */
+    async function editAnswers(lot, o) {
+        o = o || {};
+        const FP = window.aneeFieldProfile;
+        if (!FP || !FP.ask || !lot || !(o.commit || lot.id)) return null;
+        const a = clone(lot.answers);
+        const got = await FP.ask({ all: true, crop: lastCrop(a, o.crop), value: a, title: lot.name || 'Your lot', sub: 'Change any answer, then save' });
+        if (!got || sameAnswers(got, a)) return null;
+        try {
+            const row = o.commit ? await o.commit(clone(got)) : await saveAnswers(lot, got);
+            const out = Object.assign({}, lot, row || {}, { answers: clone((row && row.answers) || got) });
+            if (!o.commit && !o.quiet) { window.toast?.('The answers are saved.', 'success'); changed(out); }
+            if (o.onSaved && !o.quiet) o.onSaved(clone(out));
+            return out;
+        } catch (err) {
+            window.toast?.(err.message || 'The answers did not save. Please try again.', 'error');
+            return null;
+        }
     }
 
-    /* The same cards anywhere (Global Lots, the Land Prep and Anee Auto lot cards): opened in a
-       host, closed again on a second tap. Its own "Edit the lot" opens the lot's sheet. */
-    function preview(host, lot, o) {
-        o = o || {};
-        host.innerHTML = prevHtml(lot);
-        const box = host.firstElementChild;
-        if (o.still) box.style.animation = 'none';
-        wirePrev(box);
-        box.addEventListener('click', async (e) => {
-            if (!e.target.closest('[data-fl-edit]')) return;
-            const row = await edit(lot, { crop: o.crop || null, ask: false });
-            if (!row) return;
-            if (o.onEdit) o.onEdit(row); else preview(host, row, Object.assign({}, o, { still: true }));
-        });
-        return box;
+    /* ---- "Preview answers": every answer, page by page (flReviewSheet) ----
+       review(lot, { crop, commit, onSaved, onEdit }) -> Promise<the lot as saved, or null>
+       Each item's Edit opens that one question (aneeFieldProfile.ask); "Edit all" opens the whole
+       form. A change is saved at once and shows where it was, and closing the sheet fires
+       aneelots:changed once. "The lot" (its place, size and last check) opens the lot's sheet:
+       the caller's onEdit(lot) when given, else the kit's. */
+    function reviewRows(a, crop) {
+        const T = TESTS();
+        return Object.keys(D.groups).map((g) => {
+            const items = qKeys(crop).filter((k) => D.qs[k][1] === g).map((k) => ({ k, name: D.qs[k][0], words: answerWords(a, k), done: isAnswered(a, k) }));
+            // The soil test log rides with the acidity: optional, so it is not counted.
+            if (g === 'acid' && T) {
+                const list = T.list(a), w = list.length ? T.words(list[0]) : '';
+                items.push({ k: 'tests', extra: true, name: 'Soil tests', done: list.length > 0,
+                    words: list.length ? (list.length === 1 ? T.date(list[0]) : list.length + ' results. The newest, ' + T.date(list[0])) + (w ? ': ' + w : '') : '' });
+            }
+            return { g, title: D.groups[g], items };
+        }).filter((s) => s.items.length);
     }
-    function togglePreview(host, lot, o) {
-        if (!host || !lot) return false;
-        const open = host.querySelector(':scope > .fl-prev');
-        if (open) {
-            if (reduce()) { open.remove(); return false; }
-            open.classList.add('is-out');
-            setTimeout(() => open.remove(), 240);
-            return false;
+    const rqHtml = (it, edit) => '<div class="fl-rq' + (it.done ? '' : ' is-empty') + (it.extra ? ' is-extra' : '') + '" data-k="' + esc(it.k) + '">'
+        + '<div class="fl-rq-t"><small>' + esc(it.name) + '</small><b>' + esc(it.words || (it.extra ? 'None logged. A test is optional.' : 'Not answered yet')) + '</b></div>'
+        + (edit ? '<button type="button" class="fl-rq-e" data-rv-edit="' + esc(it.k) + '" aria-label="' + esc((it.done ? 'Change: ' : (it.extra ? 'Add: ' : 'Answer: ')) + it.name) + '">'
+            + (it.done ? PEN + 'Edit' : PLUS + (it.extra ? 'Add' : 'Answer')) + '</button>' : '')
+        + '</div>';
+    function rsHtml(s, edit) {
+        const asked = s.items.filter((x) => !x.extra), got = asked.filter((x) => x.done).length, all = got === asked.length;
+        return '<section class="fl-rs" data-g="' + esc(s.g) + '" aria-label="' + esc(s.title) + '"><h3 class="fl-rs-h"><span aria-hidden="true">' + (PREV_ICON[s.g] || '•') + '</span><b>' + esc(s.title) + '</b>'
+            + '<em' + (all ? ' class="is-done"' : '') + '>' + (all ? OK : '') + got + ' of ' + asked.length + '</em></h3>'
+            + '<div class="fl-qa">' + s.items.map((it) => rqHtml(it, edit)).join('') + '</div></section>';
+    }
+    // The lot itself: where it is, its size and its last check, with the lot sheet one tap away.
+    function lotRowsHtml(l, edit) {
+        const rows = [['Where is it?', l.where || l.place || ''], ['How big is it?', fmtSize(l)], ['Last checked', l.updated ? l.updated + (l.stale ? ', due for a check' : '') : '']];
+        return '<section class="fl-rs is-lot" data-g="lot" aria-label="The lot"><h3 class="fl-rs-h"><span aria-hidden="true">' + PREV_ICON.lot + '</span><b>The lot</b>'
+            + (edit ? '<button type="button" class="fl-rq-e" data-rv-lot aria-label="Edit the lot: its name, place and size">' + PEN + 'Edit</button>' : '') + '</h3>'
+            + '<div class="fl-qa">' + rows.map((r) => '<div class="fl-rq' + (r[1] ? '' : ' is-empty') + ' is-info"><div class="fl-rq-t"><small>' + esc(r[0]) + '</small><b>' + esc(r[1] || 'Not set') + '</b></div></div>').join('') + '</div></section>';
+    }
+    // Fold an element in or out by its measured height (never by class alone: none to 0 snaps).
+    function fold(el, show, animate) {
+        if (!el || show === !el.hidden) return;
+        if (el._flFold) { el._flFold.cancel(); el._flFold = null; }
+        if (!animate || reduce() || !el.animate) { el.hidden = !show; return; }
+        el.hidden = false;
+        const cs = getComputedStyle(el), h = el.offsetHeight;
+        const full = { height: h + 'px', opacity: 1, paddingTop: cs.paddingTop, paddingBottom: cs.paddingBottom, marginTop: cs.marginTop, borderTopWidth: cs.borderTopWidth, borderBottomWidth: cs.borderBottomWidth };
+        const zero = { height: '0px', opacity: 0, paddingTop: '0px', paddingBottom: '0px', marginTop: '0px', borderTopWidth: '0px', borderBottomWidth: '0px' };
+        el.style.overflow = 'hidden';
+        const an = el.animate(show ? [zero, full] : [full, zero], { duration: 280, easing: 'cubic-bezier(.22,1,.36,1)' });
+        el._flFold = an;
+        an.onfinish = () => { el._flFold = null; el.style.overflow = ''; if (!show) el.hidden = true; };
+    }
+    function review(lot, o) {
+        o = o || {};
+        const dlg = $('flReviewSheet'), body = $('flReviewBody'), top = $('flReviewTop'), sw = $('flReviewOnly');
+        bind(dlg);
+        let cur = Object.assign({}, lot || {}, { answers: clone(lot && lot.answers) });
+        let saved = null, only = false, busy = false;
+        const FP = window.aneeFieldProfile;
+        const canEdit = !!(FP && FP.ask) && !!(o.commit || cur.id);
+        const crop = () => lastCrop(cur.answers, o.crop);
+        const head = () => {
+            $('flReviewTitle').firstChild.textContent = cur.name || 'Your lot';
+            $('flReviewSub').textContent = o.commit ? 'Changes are kept when you save the lot' : ([cur.where || cur.place || '', fmtSize(cur)].filter(Boolean).join(' · ') || 'Every answer the analyses read');
+        };
+        const paintTop = (first) => {
+            const t = tally(cur.answers, crop()), pct = t.asked ? Math.round(t.got / t.asked * 100) : 0;
+            if (first) {
+                top.innerHTML = '<div class="fl-rv-sum"><div class="fl-prog-t"><b></b><span></span></div>'
+                    + (canEdit ? '<button type="button" class="fl-rv-all" data-rv-all>' + PEN + 'Edit all</button>' : '') + '</div>'
+                    + '<div class="fl-bar" role="progressbar" aria-label="Questions answered" aria-valuemin="0"><i></i></div>';
+            }
+            top.querySelector('.fl-prog-t b').textContent = t.got + ' of ' + t.asked + ' answered';
+            top.querySelector('.fl-prog-t span').textContent = t.got === t.asked ? 'All answered' : (t.asked - t.got) + ' to go';
+            const bar = top.querySelector('.fl-bar'), i = bar.querySelector('i');
+            bar.classList.toggle('is-full', t.got === t.asked);
+            bar.setAttribute('aria-valuemax', String(t.asked));
+            bar.setAttribute('aria-valuenow', String(t.got));
+            if (first && !reduce()) { i.style.width = '0'; requestAnimationFrame(() => requestAnimationFrame(() => { i.style.width = pct + '%'; })); } else i.style.width = pct + '%';
+        };
+        // "Only unanswered": the answered rows fold away, and a page with none left folds too.
+        const hides = (r, keep) => only && !(keep && keep.has(r.dataset.k)) && (r.classList.contains('is-extra') || r.classList.contains('is-info') || !r.classList.contains('is-empty'));
+        const applyOnly = (animate, keep) => {
+            let left = false;
+            body.querySelectorAll('.fl-rs').forEach((s) => {
+                let any = false;
+                s.querySelectorAll('.fl-rq').forEach((r) => { const h = hides(r, keep); if (!h) any = true; fold(r, !h, animate); });
+                if (any) left = true;
+                fold(s, any, animate);
+            });
+            fold(body.querySelector('.fl-rv-none'), only && !left, animate);
+        };
+        const paint = () => {
+            const keep = body.scrollTop;
+            body.innerHTML = (canEdit ? '' : '<p class="fl-rv-note">These are the answers this analysis reads. Change them in Global Lots.</p>')
+                + (o.commit || !cur.id ? '' : lotRowsHtml(cur, true))
+                + reviewRows(cur.answers, crop()).map((s) => rsHtml(s, canEdit)).join('')
+                + '<p class="fl-rv-none" hidden>Every question is answered. Turn off Only unanswered to see them all.</p>';
+            body.scrollTop = keep;
+        };
+        const words = () => { const w = {}; body.querySelectorAll('.fl-rq[data-k]').forEach((r) => { w[r.dataset.k] = r.querySelector('.fl-rq-t b').textContent; }); return w; };
+        // After a save: repaint, and the rows whose words changed show it (a yellow wash, a Saved tag).
+        function landed(was, k) {
+            paintTop(false);
+            paint();
+            const now = [...body.querySelectorAll('.fl-rq[data-k]')].filter((r) => r.querySelector('.fl-rq-t b').textContent !== was[r.dataset.k]);
+            const lit = now.length ? now : [body.querySelector('.fl-rq[data-k="' + k + '"]')].filter(Boolean);
+            applyOnly(false, new Set(lit.map((r) => r.dataset.k)));
+            lit.forEach((el) => {
+                el.classList.add('is-new');
+                el.querySelector('.fl-rq-t small').insertAdjacentHTML('beforeend', '<em class="fl-ok">' + OK + 'Saved</em>');
+                el.addEventListener('animationend', (ev) => { if (ev.target === el) el.classList.remove('is-new'); });
+            });
+            if (lit[0]) lit[0].scrollIntoView({ block: 'nearest', behavior: reduce() ? 'auto' : 'smooth' });
+            // Answered while showing only the unanswered: it leaves once it is seen.
+            if (only) setTimeout(() => { if (dlg.open) applyOnly(true); }, 1500);
         }
-        preview(host, lot, o);
-        return true;
+        const onClick = async (e) => {
+            if (busy) return;
+            // The lot itself: its own sheet, over this one (or the caller's, once this one closes).
+            if (e.target.closest('[data-rv-lot]')) {
+                if (o.onEdit) { const fn = o.onEdit, l = clone(cur); sheetClose(dlg); closed(dlg).then(() => fn(l)); return; }
+                const row = await edit(cur, { crop: o.crop || null, ask: false });
+                if (row) { cur = Object.assign({}, cur, row, { answers: clone(row.answers) }); saved = cur; head(); paintTop(false); paint(); applyOnly(false); }
+                return;
+            }
+            // Every answer at once, in the whole form.
+            if (e.target.closest('[data-rv-all]')) {
+                const was = words();
+                busy = true;
+                try {
+                    const row = await editAnswers(cur, { crop: o.crop, commit: o.commit || null, quiet: true });
+                    if (row) { cur = row; saved = cur; landed(was, ''); }
+                } finally { busy = false; }
+                return;
+            }
+            const b = e.target.closest('[data-rv-edit]');
+            if (!b || !canEdit) return;
+            const k = b.dataset.rvEdit, key = k === 'tests' ? 'acidity' : k, q = D.qs[key];
+            if (!q) return;
+            const got = await FP.ask({ crop: crop(), value: cur.answers, keys: [key], title: q[0], sub: (cur.name || 'Your lot') + ', ' + String(D.groups[q[1]] || '').toLowerCase() });
+            if (!got || sameAnswers(got, cur.answers)) return;
+            const was = words();
+            const row = body.querySelector('.fl-rq[data-k="' + k + '"]');
+            if (row) { row.classList.add('is-busy'); row.querySelector('.fl-rq-t b').textContent = 'Saving…'; }
+            busy = true;
+            try {
+                const r = o.commit ? await o.commit(clone(got)) : await saveAnswers(cur, got);
+                cur = Object.assign({}, cur, r || {}, { answers: clone((r && r.answers) || got) });
+                saved = cur;
+                landed(was, k);
+            } catch (err) {
+                paint();
+                applyOnly(false);
+                window.toast?.(err.message || 'That answer did not save. Please try again.', 'error');
+            } finally { busy = false; }
+        };
+        body.onclick = onClick;
+        top.onclick = onClick;
+        sw.setAttribute('aria-checked', 'false');
+        sw.onclick = () => { only = !only; sw.setAttribute('aria-checked', String(only)); applyOnly(true); if (only) body.scrollTo({ top: 0, behavior: reduce() ? 'auto' : 'smooth' }); };
+        const p = closed(dlg).then(() => {
+            body.onclick = null;
+            top.onclick = null;
+            sw.onclick = null;
+            if (saved && !o.commit) changed(saved);
+            if (saved && o.onSaved) o.onSaved(clone(saved));
+            return saved ? clone(saved) : null;
+        });
+        head();
+        paintTop(true);
+        paint();
+        sheetOpen(dlg);
+        body.scrollTop = 0;
+        return p;
+    }
+
+    /* Kept for the callers of before (2026-10-16 to 10-19, when it opened an answer card in
+       `host`): it opens the preview sheet now, and nothing opens in the host. */
+    function preview(host, lot, o) { review(lot, o || {}); return null; }
+    function togglePreview(host, lot, o) {
+        if (!lot) return false;
+        if (host) host.querySelectorAll(':scope > .fl-prev').forEach((x) => x.remove());
+        review(lot, o || {});
+        return false;
     }
 
     /* ---- the picker an analysis wears ---- */
@@ -681,25 +918,28 @@
                 + '<div class="fl-old" data-fl-old hidden></div>'
                 + '<p class="fl-more"><span>Your lots are kept in Global Lots.</span><a href="' + esc(D.urls.page) + '" target="_blank" rel="noopener">Open Global Lots</a></p>';
             paintOld();
-            paintPrev(false);
+            paintActs(false);
         }
-        // The picked lot's answers open right under its card.
-        function paintPrev(animate) {
-            const old = el.querySelector('[data-fl-prev]');
+        // The picked lot wears "Preview answers" and "Edit answers", joined under its card.
+        function paintActs(animate) {
+            const old = el.querySelector('[data-fl-acts]');
             const card = st.lot ? el.querySelector('[data-fl-lot="' + st.lot.id + '"]') : null;
-            if (old && (!card || old.previousElementSibling !== card || animate)) {
-                if (animate && !reduce()) { old.classList.add('is-out'); old.removeAttribute('data-fl-prev'); setTimeout(() => old.remove(), 240); }
-                else old.remove();
-            } else if (old) {
-                return;
+            el.querySelectorAll('.fl-card.has-acts').forEach((c) => { if (c !== card) c.classList.remove('has-acts'); });
+            if (old && card && old.previousElementSibling === card) return;
+            if (old) {
+                old.removeAttribute('data-fl-acts');
+                if (animate && !reduce()) { fold(old, false, true); setTimeout(() => old.remove(), 320); } else old.remove();
             }
             if (!card) return;
             const tpl = document.createElement('div');
-            tpl.innerHTML = prevHtml(st.lot);
-            const box = tpl.firstChild;
-            if (!animate) box.style.animation = 'none';
-            card.after(box);
-            wirePrev(box);
+            tpl.innerHTML = ansButtons('data-fl-review', 'data-fl-answers', 'is-join');
+            const bar = tpl.firstChild;
+            bar.setAttribute('data-fl-acts', '');
+            bar.setAttribute('aria-label', st.lot.name + ': its answers');
+            if (animate) bar.hidden = true;
+            card.after(bar);
+            card.classList.add('has-acts');
+            if (animate) fold(bar, true, true);
         }
         function paintOld() {
             const box = el.querySelector('[data-fl-old]');
@@ -715,13 +955,16 @@
             st.lot = lot;
             el.querySelectorAll('.fl-card').forEach((c) => { const on = Number(c.getAttribute('data-fl-lot')) === st.id; c.classList.toggle('is-on', on); c.setAttribute('aria-checked', on ? 'true' : 'false'); });
             paintOld();
-            paintPrev(true);
+            paintActs(true);
             if (o.onPick) o.onPick(lot ? clone(lot) : null);
         }
         el.addEventListener('click', async (e) => {
             const add = e.target.closest('[data-fl-add]');
             if (add) { const row = await edit(null, { crop: crop() }); if (row) { st.id = row.id; await paint(true); pick(st.lot); } return; }
             if (e.target.closest('[data-fl-edit]') && st.lot) { const row = await edit(st.lot, { crop: crop(), ask: false }); if (row) { await paint(true); pick(st.lot); } return; }
+            // Preview answers and Edit answers: a save fires aneelots:changed, which repaints this picker.
+            if (e.target.closest('[data-fl-review]') && st.lot) { await review(st.lot, { crop: crop() }); return; }
+            if (e.target.closest('[data-fl-answers]') && st.lot) { await editAnswers(st.lot, { crop: crop() }); return; }
             if (e.target.closest('[data-fl-check]') && st.lot) { const row = await edit(st.lot, { crop: crop() }); if (row) { await paint(true); pick(st.lot); } return; }
             if (e.target.closest('[data-fl-fine]') && st.lot) { try { await confirm(st.lot); await paint(true); pick(st.lot); } catch (err) { window.toast?.(err.message, 'error'); } return; }
             const c = e.target.closest('[data-fl-lot]');
@@ -746,7 +989,7 @@
         };
     }
 
-    window.aneeLots = { picker, edit, rows, answered, has, legacy, payload, confirm, card, meta: () => META, staleDays: D.staleDays, crops: CROPS, fmtHa, fmtSize, units: UNITS, preview, togglePreview };
+    window.aneeLots = { picker, edit, rows, answered, has, legacy, payload, confirm, card, meta: () => META, staleDays: D.staleDays, crops: CROPS, fmtHa, fmtSize, units: UNITS, preview, togglePreview, review, editAnswers, saveAnswers, ansButtons };
 })();
 </script>
 @endpush

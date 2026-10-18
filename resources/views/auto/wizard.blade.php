@@ -647,7 +647,9 @@
             + '<div class="au-lot-b">'
             + '<span class="au-lab">Which of your lots is it? <small>(optional)</small></span>'
             + (fv ? '<button type="button" class="au-pin is-set" data-act="farm"><span aria-hidden="true">🗺️</span><span><b>' + esc(fv.name) + '</b><small>' + esc([fv.place, Number(fv.areaHa) > 0 ? (window.aneeLots && window.aneeLots.fmtSize ? window.aneeLots.fmtSize(fv) : fmtHa(fv.areaHa)) : ''].filter(Boolean).join(' · ')) + '</small></span></button>'
-                + '<div class="au-flot-acts"><button type="button" class="au-link" data-act="farm">Change</button><button type="button" class="au-link" data-act="farmPrev" aria-expanded="false">See its answers</button><button type="button" class="au-link" data-act="farmEdit">Edit the lot</button></div><div class="au-flprev" data-farmprev></div>'
+                + '<div class="au-flot-acts"><button type="button" class="au-link" data-act="farm">Change</button><button type="button" class="au-link" data-act="farmEdit">Edit the lot</button></div>'
+                // Preview answers and Edit answers (2026-10-19, the owner): each opens a sheet (partials/farm-lots).
+                + (window.aneeLots && window.aneeLots.ansButtons ? window.aneeLots.ansButtons('data-act="farmPrev"', 'data-act="farmAns"', 'is-under') : '')
                 : '<button type="button" class="au-pin" data-act="farm"><span aria-hidden="true">🗺️</span><span>Use one of your lots<small>Its name, size, place, soil and water come with it, so they are not asked again</small></span></button>')
             + '<div class="au-row' + (askSize ? ' is-2' : '') + '"><div><span class="au-lab">Crop</span><button type="button" class="au-tag' + (c ? '' : ' is-none') + '" data-act="crop"><span>' + (c ? c.icon + ' ' + esc(cropName(l.crop)) : 'Choose the crop') + '</span>' + CHEV + '</button></div>'
             + (askSize ? '<div><span class="au-lab">Size</span><div class="flex gap-2"><input type="number" class="form-input flex-1" data-f="size" min="0" step="any" inputmode="decimal" value="' + (l.size ?? '') + '" placeholder="Like 1.5">'
@@ -730,15 +732,12 @@
         });
         if (act === 'farm') openFarm(l);
         if (act === 'farmEdit') editFarm(l);
-        // The linked lot's answers as cards to slide through (partials/farm-lots).
-        if (act === 'farmPrev' && window.aneeLots && window.aneeLots.togglePreview) {
-            const fv = farmView(l);
-            const host = a.parentNode && a.parentNode.nextElementSibling && a.parentNode.nextElementSibling.matches('[data-farmprev]') ? a.parentNode.nextElementSibling : null;
-            if (fv && host) {
-                const open = window.aneeLots.togglePreview(host, fv, { crop: l.crop || null, onEdit: () => editFarm(l) });
-                a.textContent = open ? 'Hide its answers' : 'See its answers';
-                a.setAttribute('aria-expanded', String(open));
-            }
+        // The linked lot's answers in a sheet (partials/farm-lots). A save fires aneelots:changed, which refills the lots.
+        if ((act === 'farmPrev' || act === 'farmAns') && window.aneeLots && window.aneeLots.review) {
+            if (!FLROWS) await loadFarm();
+            const fv = farmRow(l);
+            if (fv && act === 'farmAns') await window.aneeLots.editAnswers(fv, { crop: l.crop || null });
+            else if (fv) await window.aneeLots.review(fv, { crop: l.crop || null, onEdit: () => editFarm(l) });
         }
         if (act === 'variety') pickVariety(l, a);
         if (act === 'prov') { try { await loadPh(); } catch (_) { return; } pick('Choose the province', Object.keys(PHL).sort().map((p) => ({ key: p, label: p, hint: PHL[p].length + ' towns and cities' })), l.province, async (k) => { if (k !== l.province) l.town = null; l.province = k; await saveLot(l).catch(() => {}); paintLots(); }); }

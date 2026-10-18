@@ -22,6 +22,14 @@
        fq.setCrop(crop)  fq.setLots(lots)
        aneeFieldProfile.open({ crop, value, title, saved }) -> Promise<answers or null>
            the same questions in a full screen sheet with its own Back and Next.
+       aneeFieldProfile.ask({ crop, value, keys: ['texture'], page, title, sub }) -> Promise<answers or null>
+           ONE question (or the questions in `keys`, or a whole `page`) in a small sheet with
+           Cancel and Save (2026-10-19, the lot review's Edit). The answers come back whole.
+       aneeFieldProfile.ask({ all: true, crop, value, title, sub }) -> Promise<answers or null>
+           EVERY question in one form, page by page under sticky titles, with a row of page
+           buttons to jump and one Save (the lot's "Edit answers"). A tap outside does not close it.
+       mount(el, { keys }) draws only those questions on each page, with no lot banner;
+       mount(el, { all: true }) draws every page at once.
        aneeFieldProfile.groups   page key -> [title, line]
        aneeFieldProfile.count(value)  aneeFieldProfile.words(value)  (a short summary)
        aneeFieldProfile.save({ name, crop, answers, lotId, scheduleId }) -> Promise<row or null>
@@ -220,6 +228,32 @@
     }
     .fq-sheet.is-full .fq-box { height: 94vh; height: 94dvh; }
     @media (min-width: 640px) { .fq-sheet.is-full .fq-box { width: min(40rem, calc(100vw - 2rem)); height: min(52rem, 92vh); } }
+    /* One question (aneeFieldProfile.ask): as tall as the question, never past the screen. */
+    .fq-sheet.is-ask .fq-box { height: auto; max-height: 90vh; max-height: 90dvh; }
+    @media (min-width: 640px) { .fq-sheet.is-ask .fq-box { width: min(36rem, calc(100vw - 2rem)); height: auto; max-height: min(46rem, 90vh); } }
+    .fq-sheet.is-ask .fq-body { padding-top: .1rem; }
+    .fq-sheet.is-ask .fq-head h2 small, #fqAskSheet .fq-head h2 small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* Every question in one form (aneeFieldProfile.ask with all): page buttons, then each page under its sticky title. */
+    .fq-jump { display: flex; flex-wrap: wrap; gap: .4rem; margin: .4rem 0 .1rem; }
+    .fq-jump button { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.75rem; padding: .3rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #2d5016;
+        background: #f3f8ec; border: 1px solid #d7e7c4; transition: background-color .28s var(--fq-e), border-color .28s var(--fq-e), transform .28s var(--fq-e); }
+    .fq-jump button:hover { background: #e4efd4; border-color: #a8cc7e; }
+    .fq-jump button:active { transform: scale(.97); }
+    .fq-sec { scroll-margin-top: 0; }
+    .fq-sec-h { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: .55rem; margin-top: .9rem; padding: .7rem 0 .55rem; background: #fff; border-bottom: 1px solid #eef2ea; }
+    .fq-sec-h > span { flex: none; width: 2.05rem; height: 2.05rem; border-radius: .7rem; display: grid; place-items: center; font-size: 1.05rem; background: #f1f6ea; }
+    .fq-sec-h b { flex: 1; min-width: 0; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; line-height: 1.25; color: #14210c; }
+    .fq-sec-h em { flex: none; padding: .15rem .55rem; border-radius: 999px; font-style: normal; font-size: .72rem; font-weight: 800; color: #5b6b4c; background: #f1f4ec; transition: color .28s var(--fq-e), background-color .28s var(--fq-e); }
+    .fq-sec-h em.is-done { color: #2d5016; background: #e4efd4; }
+    .fq-sec .fq-q:first-of-type { padding-top: .85rem; }
+    html.dark .fq-jump button { color: #cfe6b8; background: #1a2414; border-color: #2f4321; }
+    html.dark .fq-jump button:hover { background: #22301a; }
+    html.dark .fq-sec-h { background: #151b12; border-color: #222b1a; }
+    html.dark .fq-sec-h > span { background: #1c2616; }
+    html.dark .fq-sec-h b { color: #e8efe1; }
+    html.dark .fq-sec-h em { color: #a9b69c; background: #1c2616; }
+    html.dark .fq-sec-h em.is-done { color: #cfe6b8; background: #22301a; }
+    @media (prefers-reduced-motion: reduce) { .fq-jump button, .fq-sec-h em { transition: none !important; } }
     @keyframes fqFade { from { opacity: 0; } }
     @keyframes fqUp { from { transform: translateY(100%); } }
     @keyframes fqPopC { from { opacity: 0; transform: translate(-50%, -46%) scale(.97); } }
@@ -382,6 +416,16 @@
         <div class="fq-foot"><button type="button" class="btn btn-white" id="fqOpenBack">Back</button><span></span><button type="button" class="btn btn-primary" id="fqOpenNext">Next</button></div>
     </div>
 </dialog>
+
+{{-- One question on its own (aneeFieldProfile.ask): change one answer and save it. --}}
+<dialog class="fq-sheet is-ask" id="fqAskSheet" aria-labelledby="fqAskTitle">
+    <div class="fq-box" tabindex="-1">
+        <div class="fq-grip" aria-hidden="true"></div>
+        <div class="fq-head"><h2 id="fqAskTitle">One answer<small id="fqAskSub"></small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="fq-body" id="fqAskBody"></div>
+        <div class="fq-foot"><button type="button" class="btn btn-white" data-fq-close>Cancel</button><span></span><button type="button" class="btn btn-primary" id="fqAskSave">Save the answer</button></div>
+    </div>
+</dialog>
 @endpush
 
 @push('scripts')
@@ -405,6 +449,10 @@
     const BOOK = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 4.5A1.5 1.5 0 016.5 3H19v15H6.5A1.5 1.5 0 005 19.5v-15zM5 19.5A1.5 1.5 0 006.5 21H19M9 7h6"/></svg>';
     const PLUS = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
     const isRice = (crop) => String(crop || '').startsWith('rice');
+    // Each page's icon and short name, for the one form's titles and page buttons. Every group is listed
+    // (as TILE, PREV_ICON and PREV_NAME are in partials/farm-lots and TILES in field-profile-card).
+    const PAGE_ICON = { soil: '🟤', water: '💧', acid: '🧪', land: '⛰️', last: '🌾', weeds: '🌿', problems: '🐛' };
+    const PAGE_SHORT = { soil: 'Soil', water: 'Water', acid: 'Acidity', land: 'The land', last: 'Last season', weeds: 'Weeds', problems: 'Troubles' };
 
     /* Tagalog help flags (data-tl, see partials/tagalog-flags): the technical
        questions by key, and the technical answers by question.answer, with a
@@ -648,7 +696,8 @@
     }
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.fq-sheet').forEach((dlg) => {
-            dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-fq-close]')) sheetClose(dlg); });
+            // data-keep: a tap outside does not close it (the one form holds many changes until Save).
+            dlg.addEventListener('click', (e) => { if ((e.target === dlg && !dlg.hasAttribute('data-keep')) || e.target.closest('[data-fq-close]')) sheetClose(dlg); });
             dlg.addEventListener('cancel', (e) => { e.preventDefault(); sheetClose(dlg); });
         });
     });
@@ -724,7 +773,8 @@
     /* ---- one form: a page of one lot at a time ---- */
     function mount(el, o) {
         o = o || {};
-        const st = { crop: o.crop || null, saved: o.saved !== false, onChange: o.onChange, onSkip: o.onSkip, lot: 0, page: null, lots: [] };
+        // keys: only these questions are drawn (one answer changed on its own, aneeFieldProfile.ask).
+        const st = { crop: o.crop || null, saved: o.saved !== false, onChange: o.onChange, onSkip: o.onSkip, lot: 0, page: null, lots: [], keys: Array.isArray(o.keys) && o.keys.length ? o.keys : null, all: !!o.all };
         const setLots = (lots) => {
             st.lots = (lots && lots.length ? lots : [{ name: o.name || 'Your field', value: o.value || {} }]).map((l, i) => ({
                 name: l.name || ('Lot ' + (i + 1)), value: shape(l.value), copiedFrom: l.copiedFrom ?? null, edited: !!l.edited, from: l.from || null,
@@ -770,6 +820,21 @@
             st.page = pages.includes(page) ? page : pages[0];
             const l = lotOf(st.lot), v = l.value, pi = pages.indexOf(st.page), first = pi === 0, many = st.lots.length > 1;
             let h = '<div class="fq-page' + (reduce() ? '' : ' is-in' + (back ? ' is-back' : '')) + '">';
+            if (st.all) {
+                // Every page at once: the page buttons, then each page under its own sticky title.
+                el.innerHTML = h + '<nav class="fq-jump" aria-label="Go to a page">' + pages.map((p) => '<button type="button" data-jump="' + p + '"><span aria-hidden="true">' + (PAGE_ICON[p] || '') + '</span>' + esc(PAGE_SHORT[p] || G[p][0]) + '</button>').join('') + '</nav>'
+                    + pages.map((p) => '<div class="fq-sec" data-page="' + p + '"><div class="fq-sec-h"><span aria-hidden="true">' + (PAGE_ICON[p] || '•') + '</span><b>' + esc(G[p][0]) + '</b><em></em></div>'
+                        + qsFor(st.crop, p).map(([k, q]) => qHtml(k, q, v)).join('') + '</div>').join('') + '</div>';
+                if (pages.includes('problems')) troublesFor().then(fillThumbs);
+                return;
+            }
+            if (st.keys) {
+                // Only the asked questions: no lot banner, no page title, no saved answers row.
+                const list = qsFor(st.crop, st.page).filter(([k]) => st.keys.includes(k));
+                el.innerHTML = h + list.map(([k, q]) => qHtml(k, q, v)).join('') + '</div>';
+                if (list.some(([k]) => k === 'outbreaks')) troublesFor().then(fillThumbs);
+                return;
+            }
             h += '<div class="fq-lot" style="--lc:' + color(st.lot) + '"><i></i><b>' + esc(many ? 'Lot ' + (st.lot + 1) : l.name) + '</b><span>' + esc(many && l.name !== 'Lot ' + (st.lot + 1) ? l.name : '') + '</span>'
                 + '<span class="fq-dots" aria-label="Page ' + (pi + 1) + ' of ' + pages.length + '">' + pages.map((p, j) => '<u class="' + (j === pi ? 'is-on' : (j < pi ? 'is-done' : '')) + '"></u>').join('') + '</span></div>';
             if (l.copiedFrom !== null && st.lots[l.copiedFrom]) {
@@ -851,6 +916,8 @@
             window.toast?.('Lot ' + (i + 1) + ' now has the answers of Lot ' + (from + 1) + '.');
         }
         el.addEventListener('click', async (e) => {
+            const jb = e.target.closest('[data-jump]');
+            if (jb) { const sec = el.querySelector('.fq-sec[data-page="' + jb.dataset.jump + '"]'); if (sec) sec.scrollIntoView({ block: 'start', behavior: reduce() ? 'auto' : 'smooth' }); return; }
             const tb = e.target.closest('[data-st-add], [data-st-edit]');
             if (tb) {
                 const i = st.lot, v = lotOf(i).value;
@@ -948,11 +1015,49 @@
         });
     }
 
+    /* ---- one question (or a few, or one page) in a small sheet: change it, save it ----
+       The answers come back whole, with the change in them, or null when it was closed. */
+    function ask(o) {
+        o = o || {};
+        return new Promise((resolve) => {
+            const dlg = $('fqAskSheet'), body = $('fqAskBody');
+            const keys = (Array.isArray(o.keys) ? o.keys : []).filter((k) => Q[k]);
+            // A rice only question keeps its place when the crop is not rice: it is still the lot's answer.
+            const crop = keys.some((k) => Q[k].only === 'rice') && !isRice(o.crop) ? null : (o.crop || null);
+            const page = o.page && G[o.page] ? o.page : (keys.length ? Q[keys[0]].page : pagesFor(crop)[0]);
+            const all = !!o.all;
+            const only = keys.length ? keys : qsFor(crop, page).map(([k]) => k);
+            // The one form is tall and keeps many changes: a tap outside does not close it.
+            dlg.classList.toggle('is-full', all);
+            dlg.classList.toggle('is-ask', !all);
+            dlg.toggleAttribute('data-keep', all);
+            // Each page's title says how many of its questions are answered, as they are.
+            const counts = () => body.querySelectorAll('.fq-sec').forEach((sec) => {
+                const n = sec.querySelectorAll('.fq-q').length, d = sec.querySelectorAll('.fq-q.is-done').length, em = sec.querySelector('.fq-sec-h em');
+                if (em) { em.textContent = d + ' of ' + n; em.classList.toggle('is-done', d === n); }
+            });
+            // A fresh host each time: a mount listens on its element, so reusing one would stack listeners.
+            body.innerHTML = '<div></div>';
+            const f = mount(body.firstElementChild, { crop, value: o.value || {}, name: o.title || 'Your lot', saved: false, keys: all ? null : only, all, onChange: all ? counts : null });
+            const q1 = keys.length === 1 ? Q[keys[0]] : null;
+            $('fqAskTitle').firstChild.textContent = o.title || (all ? 'Your lot' : (q1 ? q1.short : G[page][0]));
+            $('fqAskSub').textContent = o.sub || (all ? 'Change any answer, then save' : G[page][0]);
+            $('fqAskSave').textContent = all ? 'Save the answers' : 'Save the answer';
+            let result = null;
+            $('fqAskSave').onclick = () => { result = f.value(0); sheetClose(dlg); };
+            once(dlg).then(() => resolve(result));
+            f.show(0, page);
+            if (all) counts();
+            sheetOpen(dlg);
+            body.scrollTop = 0;
+        });
+    }
+
     async function save(p) {
         try { const r = await window.api(D.urls.save, { method: 'POST', body: p }); SAVED = null; return (r.data && r.data.row) || null; } catch (_) { return null; }
     }
 
-    window.aneeFieldProfile = { mount, open, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS, shape };
+    window.aneeFieldProfile = { mount, open, ask, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS, shape };
 })();
 </script>
 @endpush

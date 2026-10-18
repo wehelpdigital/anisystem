@@ -1777,10 +1777,10 @@
             + (l.place ? '<small>' + esc(l.place) + '</small>' : '<small class="is-none">No place yet</small>')
             + '<span class="cq-flchips">' + (n ? '<span>' + n + (n === 1 ? ' answer' : ' answers') + '</span>' : '<span class="is-ask">No answers yet</span>')
             + (ask ? '<span class="is-ask">' + ask + (ask === 1 ? ' page' : ' pages') + ' of questions later</span>' : '')
-            + (l.stale ? '<span class="is-old">Check it</span>' : '') + '</span>'
-            + '<button type="button" class="cq-flprev" data-lot-prev="' + l.uid + '" aria-expanded="false">See its answers</button></div>'
+            + (l.stale ? '<span class="is-old">Check it</span>' : '') + '</span></div>'
             + '<button type="button" class="cq-fledit" data-lot-edit="' + l.uid + '" aria-label="Edit ' + esc(l.name) + '">Edit</button></div>'
-            + '<div data-prevhost="' + l.uid + '"></div>';
+            // Preview answers and Edit answers (2026-10-19, the owner): each opens a sheet (partials/farm-lots).
+            + (window.aneeLots && window.aneeLots.ansButtons ? window.aneeLots.ansButtons('data-lot-prev="' + l.uid + '"', 'data-lot-ans="' + l.uid + '"', 'is-under') : '');
     }
     function paintLots() {
         if (!S.lots.length) {
@@ -1824,14 +1824,15 @@
     $('cqLots').addEventListener('click', async (e) => {
         const ed = e.target.closest('[data-lot-edit]');
         if (ed) { const l = S.lots.find((y) => String(y.uid) === ed.dataset.lotEdit); if (l && await editFarm(l)) { paintLots(); FQ && FQ.setLots(fqLots()); } return; }
-        const pv = e.target.closest('[data-lot-prev]');
+        // The lot's answers in a sheet: Preview answers, or Edit answers. A save fires aneelots:changed (below).
+        const pv = e.target.closest('[data-lot-prev], [data-lot-ans]');
         if (pv) {
-            const l = S.lots.find((y) => String(y.uid) === pv.dataset.lotPrev);
-            if (!l || !window.aneeLots || !window.aneeLots.togglePreview) return;
+            const l = S.lots.find((y) => String(y.uid) === (pv.dataset.lotPrev || pv.dataset.lotAns));
+            if (!l || !window.aneeLots || !window.aneeLots.review) return;
             const lot = Object.assign({}, l.lot || {}, { id: l.farmLotId, name: l.name, answers: clone(l.profile), count: window.aneeFieldProfile ? window.aneeFieldProfile.count(l.profile) : 0 });
-            const open = window.aneeLots.togglePreview($('cqLots').querySelector('[data-prevhost="' + l.uid + '"]'), lot, { crop: fqCrop(S.lots.indexOf(l)), onEdit: async () => { await editFarm(l); paintLots(); } });
-            pv.textContent = open ? 'Hide its answers' : 'See its answers';
-            pv.setAttribute('aria-expanded', String(open));
+            const crop = fqCrop(S.lots.indexOf(l));
+            if (pv.dataset.lotAns) await window.aneeLots.editAnswers(lot, { crop });
+            else await window.aneeLots.review(lot, { crop, onEdit: async () => { if (await editFarm(l)) paintLots(); } });
             return;
         }
         const x = e.target.closest('[data-lot-x]');
