@@ -118,17 +118,25 @@ final class ProtocolCare
                 [$from, $to] = $span[$k] ?? [0, 0];
             }
             $ing = [];
+            // The ingredients for this crop (FieldCatalogue::forCrop): registered here for it first; a
+            // name only for other crops dropped; where nothing registered covers a group, the rest marked.
             foreach (['grasses' => 'grass', 'sedges' => 'sedge', 'broadleaves' => 'broadleaf'] as $field => $g) {
-                foreach ((array) ($w[$field] ?? []) as $name) {
-                    $ing[$name] ??= ['name' => $name, 'hrac' => array_map('strval', (array) ($groups[$name] ?? [])), 'weeds' => []];
+                foreach (FieldCatalogue::forCrop((array) $w, $fc, $field) as [$name, $mark]) {
+                    $ing[$name] ??= ['name' => $name, 'hrac' => array_map('strval', (array) ($groups[$name] ?? [])), 'weeds' => []] + ($mark ? ['mark' => $mark] : []);
                     $ing[$name]['weeds'][] = $g;
                 }
             }
+            // Registered ones before marked ones, the file's order kept within each.
+            uasort($ing, fn ($a, $b) => isset($a['mark']) <=> isset($b['mark']));
             $windows[] = ['key' => $k, 'title' => (string) ($w['title'] ?? $w['label'] ?? ''), 'stage' => (string) ($w['stage'] ?? ''), 'timing' => (string) ($w['timing'] ?? ''),
                 'from' => $from, 'to' => $to, 'steps' => array_values(array_map('strval', (array) ($w['steps'] ?? []))), 'ingredients' => array_values($ing)];
         }
+        $crit = FieldCatalogue::critical($plan, $fc);
 
-        return ['key' => $planKey, 'label' => (string) ($plan['label'] ?? ''), 'after' => (string) ($plan['after'] ?? ''), 'windows' => $windows];
+        return ['key' => $planKey, 'label' => (string) ($plan['label'] ?? ''), 'after' => (string) ($plan['after'] ?? ''), 'windows' => $windows,
+            // When weeds cost this crop the most yield, and what keeps them out (2026-10-18).
+            'critical' => $crit ? array_intersect_key($crit, array_flip(['from', 'to', 'say'])) : null,
+            'prevent' => array_values(array_map('strval', (array) ($plan['prevent'] ?? [])))];
     }
 
     /** The candidates as the prompt reads them: one line a pest or disease, then the weed windows. */
@@ -143,9 +151,17 @@ final class ProtocolCare
         $out = "- Pests our catalogue lists for it:\n" . implode("\n", array_map($line, $threats['pests'] ?? [])) . "\n"
             . "- Diseases our catalogue lists for it:\n" . implode("\n", array_map($line, $threats['diseases'] ?? [])) . "\n";
         if ($weeds && $weeds['windows']) {
-            $out .= '- Weed control windows (' . $weeds['after'] . "), the ingredients by HRAC group:\n";
+            $out .= '- Weed control windows (' . $weeds['after'] . "), the ingredients by HRAC group (registered in the Philippines for this crop unless marked):\n";
+            $mark = ['abroad' => 'no product registered in the Philippines', 'other' => 'not on a Philippine label for this crop'];
             foreach ($weeds['windows'] as $w) {
-                $out .= '  - ' . $w['title'] . ' (' . $w['stage'] . '): ' . implode('; ', array_map(fn ($i) => $i['name'] . ($i['hrac'] ? ' (HRAC ' . implode(', ', $i['hrac']) . ')' : ''), array_slice($w['ingredients'], 0, 6))) . "\n";
+                $out .= '  - ' . $w['title'] . ' (' . $w['stage'] . '): ' . implode('; ', array_map(function ($i) use ($mark) {
+                    $about = array_filter([$i['hrac'] ? 'HRAC ' . implode(', ', $i['hrac']) : '', $mark[$i['mark'] ?? ''] ?? '']);
+
+                    return $i['name'] . ($about ? ' (' . implode(', ', $about) . ')' : '');
+                }, array_slice($w['ingredients'], 0, 6))) . "\n";
+            }
+            if (! empty($weeds['critical']['say'])) {
+                $out .= '- Weed free period: ' . $weeds['critical']['say'] . "\n";
             }
         }
 

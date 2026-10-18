@@ -233,7 +233,7 @@
     },
     {
       "type": "text",
-      "text": "Many herbicides work on only one or two groups. Take the recommendations behind our weed control helper. On their own, cyhalofop butyl, metamifop and profoxydim are group 1 grass killers, and they appear on the grass lists only. Next, 2,4 D amine and 2,4 D IBE are group 4 broadleaf killers, listed for sedges and broadleaves but never for grasses.\n\nSo a farmer who mistakes mutha for a grass may spray a grass killer for nothing. Name the group, then count the days after planting. Our [weed control helper in anee.io](/features/pest-and-disease-finders) takes both and lists the active ingredients that fit, each with its herbicide group."
+      "text": "Many herbicides work on only one or two groups. Look at the lists in our weed control helper, which follow the herbicides registered in the Philippines for each crop. On their own, cyhalofop butyl, metamifop and profoxydim are group 1 grass killers, and they appear on the grass lists only. Next, 2,4 D amine and 2,4 D IBE are group 4 broadleaf killers, listed for sedges and broadleaves but never for grasses.\n\nSo a farmer who mistakes mutha for a grass may spray a grass killer for nothing. Name the group, then count the days after planting. Our [weed control helper in anee.io](/features/pest-and-disease-finders) takes both and lists the active ingredients that fit, each with its herbicide group."
     },
     {
       "type": "callout",
@@ -318,15 +318,6 @@
         {
           "label": "Farm words in Tagalog",
           "url": "/blog/farm-words-in-tagalog"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "University of Illinois Extension: Telling apart grasses, sedges, rushes",
-          "url": "https://extension.illinois.edu/blogs/grasses-glance/2023-04-17-telling-apart-grasses-sedges-rushes"
         }
       ]
     }

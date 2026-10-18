@@ -9,11 +9,13 @@ namespace App\Support;
  * The plans themselves (for each crop group, and for rice each way of
  * planting: the windows of its age, what to do in each, and the active
  * ingredients that work on each weed group then) live in the field
- * catalogue (App\Support\FieldCatalogue::weedPlans()). Rice's are from
- * PhilRice's recommendations; the rest from DA, BPI, SRA, PCA and
- * university extension guides. Active ingredients only, never a product or
- * brand name: a farmer takes the ingredient to the store and reads the
- * label there.
+ * catalogue (App\Support\FieldCatalogue::weedPlans()). Since 2026-10-18
+ * every ingredient is checked against the products registered for sale in
+ * the Philippines, crop by crop (each window's `on`, `abroad` and `only`,
+ * read through FieldCatalogue::forCrop()); one with no registration here
+ * stays only where nothing registered covers that window, and says so.
+ * Active ingredients only, never a product or brand name: a farmer takes
+ * the ingredient to the store and reads the label there.
  *
  * A field with two or three groups at once takes the ingredients that are
  * in every one of those groups' lists, so only the per group lists are
@@ -49,6 +51,7 @@ final class WeedControl
         15 => 'Seedling growth inhibitors',
         22 => 'Contact burners (paraquat, diquat)',
         27 => 'HPPD inhibitors',
+        28 => 'DHODH inhibitors (tetflupyrolimet)',
         29 => 'Cellulose inhibitors (indaziflam)',
     ];
 }

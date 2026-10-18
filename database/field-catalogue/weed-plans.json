@@ -9,6 +9,22 @@
    ],
    "method": "transplanted",
    "after": "after transplanting",
+   "prevent": [
+    "Sow clean seed. Weedy rice and grass seeds come in with farm saved seed, so buy certified seed, or float your own seed in water, skim off what floats and pick out red, awned or odd grains.",
+    "Prepare the land twice. Flood and plow, wait 7 to 10 days for the weed seeds to sprout, then harrow them under. A second wait and harrowing before planting kills a second flush (the stale seedbed).",
+    "Level the field so one depth of water covers every part. High spots grow weeds and low spots drown the young rice.",
+    "Keep the seedbed, bunds and canals clean, and wash the tractor, harrow and thresher before they come in from a weedy field.",
+    "Transplant sturdy seedlings at even spacing in straight rows, so the rice starts taller than the weeds and a rotary weeder can pass.",
+    "Pull escapes, weedy rice above all, before they flower; one plant that drops its seed fills the field next season.",
+    "Switch herbicide groups from season to season so the weeds do not learn to survive one group."
+   ],
+   "critical": {
+    "rice": {
+     "from": 10,
+     "to": 40,
+     "say": "Keep the field free of weeds from about 10 to 40 days after transplanting; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "0-5",
@@ -16,40 +32,86 @@
      "timing": "pre",
      "stage": "Before the weeds come up",
      "steps": [
-      "Keep the soil saturated after transplanting. Wet soil holds back many weed seeds.",
-      "If this field had a lot of weeds last season, apply a pre emergence herbicide now, before the weeds come up. Read and follow the label on the bottle, box or sachet."
+      "Keep the soil saturated, or under 2 to 3 cm of water, from the day you transplant. Water over the soil stops most grass seeds from sprouting.",
+      "Replant missing hills now, so the gaps do not fill with weeds.",
+      "If this field had a lot of weeds last season, apply a pre emergence herbicide now, before the weeds come up, and keep the water in for 3 to 5 days so it does not wash away. Read and follow the label on the bottle, box or sachet."
      ],
      "grasses": [
       "Butachlor",
-      "Butachlor plus 2,4 D IBE",
-      "Clomazone",
-      "Oxadiazon",
-      "Pendimethalin",
-      "Penoxsulam plus butachlor",
       "Pretilachlor",
+      "Oxadiazon",
+      "Butachlor plus 2,4 D IBE",
+      "Pendimethalin",
       "Pyrazosulfuron ethyl plus pretilachlor",
-      "Tefuryltrione plus triafamone"
+      "Clomazone",
+      "Penoxsulam plus butachlor",
+      "Tefuryltrione plus triafamone",
+      "Tetflupyrolimet",
+      "Thiobencarb plus 2,4 D IBE"
      ],
      "sedges": [
       "Butachlor",
-      "Butachlor plus 2,4 D IBE",
-      "Oxadiazon",
-      "Penoxsulam plus butachlor",
       "Pretilachlor",
+      "Oxadiazon",
+      "Butachlor plus 2,4 D IBE",
       "Pyrazosulfuron ethyl plus pretilachlor",
-      "Tefuryltrione plus triafamone"
+      "Imazosulfuron",
+      "Penoxsulam plus butachlor",
+      "Tefuryltrione plus triafamone",
+      "Thiobencarb plus 2,4 D IBE"
      ],
      "broadleaves": [
-      "Bensulfuron methyl",
-      "Butachlor plus 2,4 D IBE",
-      "Oxadiazon",
-      "Penoxsulam plus butachlor",
       "Pretilachlor",
+      "Oxadiazon",
+      "Butachlor plus 2,4 D IBE",
       "Pyrazosulfuron ethyl plus pretilachlor",
-      "Tefuryltrione plus triafamone"
+      "Imazosulfuron",
+      "Penoxsulam plus butachlor",
+      "Tefuryltrione plus triafamone",
+      "Thiobencarb plus 2,4 D IBE"
      ],
      "short": "0 to 5 days",
-     "title": "0 to 5 days after transplanting"
+     "title": "0 to 5 days after transplanting",
+     "on": {
+      "Butachlor": [
+       "rice"
+      ],
+      "Pretilachlor": [
+       "rice"
+      ],
+      "Oxadiazon": [
+       "rice"
+      ],
+      "Butachlor plus 2,4 D IBE": [
+       "rice"
+      ],
+      "Pendimethalin": [
+       "rice"
+      ],
+      "Pyrazosulfuron ethyl plus pretilachlor": [
+       "rice"
+      ],
+      "Clomazone": [
+       "rice"
+      ],
+      "Penoxsulam plus butachlor": [
+       "rice"
+      ],
+      "Tefuryltrione plus triafamone": [
+       "rice"
+      ],
+      "Tetflupyrolimet": [
+       "rice"
+      ],
+      "Thiobencarb plus 2,4 D IBE": [
+       "rice"
+      ],
+      "Imazosulfuron": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "6-10",
@@ -57,39 +119,91 @@
      "timing": "early",
      "stage": "Weeds at two to three leaves",
      "steps": [
-      "Pull the weeds by hand while they are small.",
-      "Where you cannot weed by hand, use a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
+      "Pull the weeds by hand while they are small and easy to tell from the rice.",
+      "Where you cannot weed by hand, spray an early post emergence herbicide on weeds at 2 to 3 leaves. Drain the field to wet mud first if the label says so. Read and follow the label on the bottle, box or sachet.",
       "Bring the water back 1 to 3 days after you spray, 3 to 5 cm deep, and hold it there for 4 to 5 days so the weeds stay under water. Keep the young rice above it."
      ],
      "grasses": [
-      "Bispyribac sodium",
       "Butachlor plus propanil",
-      "Clomazone plus propanil",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
-      "Flucetosulfuron",
+      "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
+      "Penoxsulam plus cyhalofop butyl",
       "Pendimethalin",
-      "Penoxsulam plus cyhalofop butyl"
+      "Cyhalofop butyl plus propanil",
+      "Propyrisulfuron",
+      "Clomazone plus propanil",
+      "Thiobencarb plus propanil",
+      "Flucetosulfuron",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "sedges": [
-      "Bispyribac sodium",
       "Butachlor plus propanil",
+      "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
+      "Penoxsulam plus cyhalofop butyl",
+      "Imazosulfuron",
+      "Propyrisulfuron",
       "Clomazone plus propanil",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Thiobencarb plus propanil",
       "Flucetosulfuron",
-      "Penoxsulam plus cyhalofop butyl"
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "broadleaves": [
-      "Bispyribac sodium",
-      "Bensulfuron methyl",
       "Butachlor plus propanil",
-      "Clomazone plus propanil",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
-      "Flucetosulfuron",
+      "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
+      "Penoxsulam plus cyhalofop butyl",
       "Pendimethalin",
-      "Penoxsulam plus cyhalofop butyl"
+      "Cyhalofop butyl plus propanil",
+      "Imazosulfuron",
+      "Propyrisulfuron",
+      "Clomazone plus propanil",
+      "Thiobencarb plus propanil",
+      "Flucetosulfuron",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "short": "6 to 10 days",
-     "title": "6 to 10 days after transplanting"
+     "title": "6 to 10 days after transplanting",
+     "on": {
+      "Butachlor plus propanil": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus bispyribac sodium": [
+       "rice"
+      ],
+      "Bispyribac sodium": [
+       "rice"
+      ],
+      "Penoxsulam plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Pendimethalin": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus propanil": [
+       "rice"
+      ],
+      "Propyrisulfuron": [
+       "rice"
+      ],
+      "Clomazone plus propanil": [
+       "rice"
+      ],
+      "Thiobencarb plus propanil": [
+       "rice"
+      ],
+      "Flucetosulfuron": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus florpyrauxifen benzyl": [
+       "rice"
+      ],
+      "Imazosulfuron": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "11-20",
@@ -98,43 +212,103 @@
      "stage": "Weeds growing with the rice",
      "steps": [
       "Keep water in the field. It stops weed seeds from sprouting and holds back the seedlings that already did.",
-      "Weed by hand or run a rotary weeder between the rows. It cuts, tramples and buries the weeds.",
+      "Run a rotary weeder between the rows at about 15 days, and pull what grows inside the hills. It cuts, tramples and buries the weeds and loosens the soil for the roots.",
       "Let nature help. Grow Azolla on the water, and spare the small black Altica beetle, which eats the leaves of Ludwigia weeds.",
-      "If weeding and nature cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
+      "If weeding cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
       "Bring the water back 1 to 3 days after you spray, 3 to 5 cm deep, and hold it there for 4 to 5 days so the weeds stay under water. Keep the young rice above it."
      ],
      "grasses": [
+      "Cyhalofop butyl plus bispyribac sodium",
       "Bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "Penoxsulam plus cyhalofop butyl",
+      "Metamifop plus bispyribac sodium",
       "Cyhalofop butyl plus ethoxysulfuron",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Propyrisulfuron",
       "Fenoxaprop P ethyl plus ethoxysulfuron",
       "Flucetosulfuron",
-      "Metamifop plus penoxsulam",
-      "Penoxsulam plus cyhalofop butyl",
+      "Florpyrauxifen benzyl",
+      "Cyhalofop butyl plus florpyrauxifen benzyl",
       "Profoxydim"
      ],
      "sedges": [
-      "Bentazone",
+      "Cyhalofop butyl plus bispyribac sodium",
       "Bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "Penoxsulam plus cyhalofop butyl",
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
       "Cyhalofop butyl plus ethoxysulfuron",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Propyrisulfuron",
       "Fenoxaprop P ethyl plus ethoxysulfuron",
       "Flucetosulfuron",
-      "Metamifop plus penoxsulam",
-      "Penoxsulam plus cyhalofop butyl"
+      "Carfentrazone ethyl",
+      "Florpyrauxifen benzyl",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "broadleaves": [
-      "Bentazone",
+      "Cyhalofop butyl plus bispyribac sodium",
       "Bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "Penoxsulam plus cyhalofop butyl",
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
       "Cyhalofop butyl plus ethoxysulfuron",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Propyrisulfuron",
       "Fenoxaprop P ethyl plus ethoxysulfuron",
       "Flucetosulfuron",
-      "Metamifop plus penoxsulam",
-      "Penoxsulam plus cyhalofop butyl"
+      "Carfentrazone ethyl",
+      "Florpyrauxifen benzyl",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "short": "11 to 20 days",
-     "title": "11 to 20 days after transplanting"
+     "title": "11 to 20 days after transplanting",
+     "on": {
+      "Cyhalofop butyl plus bispyribac sodium": [
+       "rice"
+      ],
+      "Bispyribac sodium": [
+       "rice"
+      ],
+      "Pyribenzoxim plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Penoxsulam plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Metamifop plus bispyribac sodium": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus ethoxysulfuron": [
+       "rice"
+      ],
+      "Propyrisulfuron": [
+       "rice"
+      ],
+      "Fenoxaprop P ethyl plus ethoxysulfuron": [
+       "rice"
+      ],
+      "Flucetosulfuron": [
+       "rice"
+      ],
+      "Florpyrauxifen benzyl": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus florpyrauxifen benzyl": [
+       "rice"
+      ],
+      "Profoxydim": [
+       "rice"
+      ],
+      "Bentazone": [
+       "rice"
+      ],
+      "Carfentrazone ethyl": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "21-30",
@@ -143,33 +317,65 @@
      "stage": "Rice tillering",
      "steps": [
       "Top up the water if the level has dropped.",
-      "Weed by hand or run a rotary weeder between the rows. It cuts, tramples and buries the weeds.",
+      "Give the rotary weeder a second pass about 10 days after the first, before the rice closes over the rows; later passes break the tillers.",
       "Let nature help. Grow Azolla on the water, and spare the small black Altica beetle, which eats the leaves of Ludwigia weeds.",
-      "If weeding and nature cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
+      "2,4 D and MCPA belong here, once the rice has tillered; on younger rice they can twist the leaves. If weeding cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
       "Bring the water back 1 to 3 days after you spray, 3 to 5 cm deep, and hold it there for 4 to 5 days so the weeds stay under water."
      ],
      "grasses": [
-      "Fenoxaprop P ethyl plus ethoxysulfuron",
-      "Metamifop plus penoxsulam"
+      "Metamifop plus bispyribac sodium",
+      "Fenoxaprop P ethyl plus ethoxysulfuron"
      ],
      "sedges": [
       "2,4 D amine",
       "2,4 D IBE",
-      "Fenoxaprop P ethyl plus ethoxysulfuron",
       "MCPA",
-      "Metamifop plus penoxsulam",
-      "Metsulfuron methyl plus chlorimuron ethyl"
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
+      "Metsulfuron methyl plus chlorimuron ethyl",
+      "Fenoxaprop P ethyl plus ethoxysulfuron",
+      "Carfentrazone ethyl"
      ],
      "broadleaves": [
       "2,4 D amine",
       "2,4 D IBE",
-      "Fenoxaprop P ethyl plus ethoxysulfuron",
       "MCPA",
-      "Metamifop plus penoxsulam",
-      "Metsulfuron methyl plus chlorimuron ethyl"
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
+      "Metsulfuron methyl plus chlorimuron ethyl",
+      "Fenoxaprop P ethyl plus ethoxysulfuron",
+      "Carfentrazone ethyl"
      ],
      "short": "21 to 30 days",
-     "title": "21 to 30 days after transplanting"
+     "title": "21 to 30 days after transplanting",
+     "on": {
+      "Metamifop plus bispyribac sodium": [
+       "rice"
+      ],
+      "Fenoxaprop P ethyl plus ethoxysulfuron": [
+       "rice"
+      ],
+      "2,4 D amine": [
+       "rice"
+      ],
+      "2,4 D IBE": [
+       "rice"
+      ],
+      "MCPA": [
+       "rice"
+      ],
+      "Bentazone": [
+       "rice"
+      ],
+      "Metsulfuron methyl plus chlorimuron ethyl": [
+       "rice"
+      ],
+      "Carfentrazone ethyl": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "31-40",
@@ -178,9 +384,9 @@
      "stage": "Rice near full tillering",
      "steps": [
       "Top up the water if the level has dropped.",
-      "Pull the weeds by hand.",
+      "Pull the weeds by hand, grasses and weedy rice first, before they flower.",
       "Spare the small black Altica beetle, which eats the leaves of Ludwigia weeds.",
-      "Spray only as a rescue, when weeding and nature have failed. Use a post emergence herbicide and follow the label on the bottle, box or sachet."
+      "Spray only as a rescue, when weeding has failed. Use a post emergence herbicide and follow the label on the bottle, box or sachet."
      ],
      "grasses": [],
      "sedges": [
@@ -190,15 +396,17 @@
       "Metsulfuron methyl plus chlorimuron ethyl"
      ],
      "short": "31 to 40 days",
-     "title": "31 to 40 days after transplanting"
+     "title": "31 to 40 days after transplanting",
+     "on": {
+      "Metsulfuron methyl plus chlorimuron ethyl": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "PhilRice weed management recommendations",
-     "url": "https://www.philrice.gov.ph"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "rice_direct",
@@ -209,6 +417,23 @@
    ],
    "method": "direct",
    "after": "after seeding",
+   "prevent": [
+    "Sow clean seed. Weedy rice and grass seeds come in with farm saved seed, so buy certified seed, or float your own seed in water, skim off what floats and pick out red, awned or odd grains.",
+    "Prepare the land twice. Flood and plow, wait 7 to 10 days for the weed seeds to sprout, then harrow them under. A second wait and harrowing before planting kills a second flush (the stale seedbed).",
+    "Level the field so one depth of water covers every part. High spots grow weeds and low spots drown the young rice.",
+    "Sow pregerminated seed on a firm, level seedbed at the seeding rate your seed calls for. A thick, even stand shades out weeds sooner than a thin one.",
+    "Weedy rice spreads fastest in direct seeding. Where it is bad, transplant for a season or two, or sow in rows so you can tell the crop from the weed.",
+    "Keep the seedbed, bunds and canals clean, and wash the tractor, harrow and thresher before they come in from a weedy field.",
+    "Pull escapes, weedy rice above all, before they flower; one plant that drops its seed fills the field next season.",
+    "Switch herbicide groups from season to season so the weeds do not learn to survive one group."
+   ],
+   "critical": {
+    "rice": {
+     "from": 14,
+     "to": 50,
+     "say": "Keep the field free of weeds from about 14 to 50 days after seeding; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "0-5",
@@ -216,37 +441,75 @@
      "timing": "pre",
      "stage": "Before the weeds come up",
      "steps": [
-      "Keep the soil saturated after seeding. Wet soil holds back many weed seeds.",
-      "If this field had a lot of weeds last season, apply a pre emergence herbicide now, before the weeds come up. Read and follow the label on the bottle, box or sachet."
+      "Keep the soil saturated after seeding, with no standing water until the seedlings are up. Wet soil holds back many weed seeds.",
+      "If this field had a lot of weeds last season, apply a pre emergence herbicide now, before the weeds come up. In wet seeded rice, use one made for it, such as pretilachlor with a safener. Read and follow the label on the bottle, box or sachet."
      ],
      "grasses": [
       "Butachlor",
+      "Pretilachlor",
+      "Oxadiazon",
+      "Pretilachlor plus butachlor",
       "Butachlor plus 2,4 D IBE",
+      "Pendimethalin",
+      "Pyrazosulfuron ethyl plus pretilachlor",
       "Butachlor with safener",
       "Clomazone",
-      "Oxadiazon",
-      "Pendimethalin",
-      "Pretilachlor",
-      "Pretilachlor plus butachlor"
+      "Tetflupyrolimet"
      ],
      "sedges": [
       "Butachlor",
-      "Butachlor plus 2,4 D IBE",
-      "Butachlor with safener",
-      "Oxadiazon",
       "Pretilachlor",
-      "Pretilachlor plus butachlor"
+      "Oxadiazon",
+      "Pretilachlor plus butachlor",
+      "Butachlor plus 2,4 D IBE",
+      "Pyrazosulfuron ethyl plus pretilachlor",
+      "Butachlor with safener"
      ],
      "broadleaves": [
-      "Butachlor plus 2,4 D IBE",
-      "Butachlor with safener",
-      "Oxadiazon",
-      "Pendimethalin",
       "Pretilachlor",
-      "Pretilachlor plus butachlor"
+      "Oxadiazon",
+      "Pretilachlor plus butachlor",
+      "Butachlor plus 2,4 D IBE",
+      "Pendimethalin",
+      "Pyrazosulfuron ethyl plus pretilachlor",
+      "Butachlor with safener"
      ],
      "short": "0 to 5 days",
-     "title": "0 to 5 days after seeding"
+     "title": "0 to 5 days after seeding",
+     "on": {
+      "Butachlor": [
+       "rice"
+      ],
+      "Pretilachlor": [
+       "rice"
+      ],
+      "Oxadiazon": [
+       "rice"
+      ],
+      "Pretilachlor plus butachlor": [
+       "rice"
+      ],
+      "Butachlor plus 2,4 D IBE": [
+       "rice"
+      ],
+      "Pendimethalin": [
+       "rice"
+      ],
+      "Pyrazosulfuron ethyl plus pretilachlor": [
+       "rice"
+      ],
+      "Butachlor with safener": [
+       "rice"
+      ],
+      "Clomazone": [
+       "rice"
+      ],
+      "Tetflupyrolimet": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "6-10",
@@ -254,42 +517,118 @@
      "timing": "early",
      "stage": "Weeds at two to three leaves",
      "steps": [
-      "Apply an early post emergence herbicide while the weeds are still small. Read and follow the label on the bottle, box or sachet.",
-      "Bring the water back 1 to 3 days after you spray, 3 to 5 cm deep, and hold it there for 4 to 5 days so the weeds stay under water. Keep the young rice above it."
+      "Spray an early post emergence herbicide while the weeds are still at 2 to 3 leaves. Read and follow the label on the bottle, box or sachet.",
+      "Bring the water back 1 to 3 days after you spray, 3 to 5 cm deep, and hold it there for 4 to 5 days so the weeds stay under water. Keep the young rice above it.",
+      "Where you sowed in rows, a light hoe or push weeder between the rows works from now on."
      ],
      "grasses": [
-      "Bispyribac sodium",
       "Butachlor plus propanil",
+      "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
       "Cyhalofop butyl",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
-      "Flucetosulfuron",
       "Metamifop",
-      "Pendimethalin",
-      "Penoxsulam",
+      "Pyribenzoxim plus cyhalofop butyl",
       "Penoxsulam plus cyhalofop butyl",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Cyhalofop butyl plus propanil",
+      "Pyrazosulfuron ethyl plus pretilachlor",
+      "Pendimethalin",
+      "Propyrisulfuron",
+      "Clomazone plus propanil",
+      "Thiobencarb plus propanil",
+      "Pretilachlor plus pyribenzoxim",
+      "Penoxsulam",
+      "Flucetosulfuron",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "sedges": [
-      "Bispyribac sodium",
       "Butachlor plus propanil",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
-      "Flucetosulfuron",
-      "Penoxsulam",
+      "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
       "Penoxsulam plus cyhalofop butyl",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Pyrazosulfuron ethyl plus pretilachlor",
+      "Propyrisulfuron",
+      "Clomazone plus propanil",
+      "Thiobencarb plus propanil",
+      "Pretilachlor plus pyribenzoxim",
+      "Penoxsulam",
+      "Flucetosulfuron",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "broadleaves": [
-      "Bispyribac sodium",
       "Butachlor plus propanil",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
-      "Flucetosulfuron",
-      "Pendimethalin",
-      "Penoxsulam",
+      "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
       "Penoxsulam plus cyhalofop butyl",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Cyhalofop butyl plus propanil",
+      "Pyrazosulfuron ethyl plus pretilachlor",
+      "Pendimethalin",
+      "Propyrisulfuron",
+      "Clomazone plus propanil",
+      "Thiobencarb plus propanil",
+      "Pretilachlor plus pyribenzoxim",
+      "Penoxsulam",
+      "Flucetosulfuron",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "short": "6 to 10 days",
-     "title": "6 to 10 days after seeding"
+     "title": "6 to 10 days after seeding",
+     "on": {
+      "Butachlor plus propanil": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus bispyribac sodium": [
+       "rice"
+      ],
+      "Bispyribac sodium": [
+       "rice"
+      ],
+      "Cyhalofop butyl": [
+       "rice"
+      ],
+      "Metamifop": [
+       "rice"
+      ],
+      "Pyribenzoxim plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Penoxsulam plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus propanil": [
+       "rice"
+      ],
+      "Pyrazosulfuron ethyl plus pretilachlor": [
+       "rice"
+      ],
+      "Pendimethalin": [
+       "rice"
+      ],
+      "Propyrisulfuron": [
+       "rice"
+      ],
+      "Clomazone plus propanil": [
+       "rice"
+      ],
+      "Thiobencarb plus propanil": [
+       "rice"
+      ],
+      "Pretilachlor plus pyribenzoxim": [
+       "rice"
+      ],
+      "Penoxsulam": [
+       "rice"
+      ],
+      "Flucetosulfuron": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus florpyrauxifen benzyl": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "11-20",
@@ -297,48 +636,118 @@
      "timing": "post",
      "stage": "Weeds growing with the rice",
      "steps": [
-      "Keep water in the field. It stops weed seeds from sprouting and holds back the seedlings that already did.",
-      "Pull the weeds by hand.",
+      "Keep water in the field once the rice can take it, 2 to 5 cm deep. It stops weed seeds from sprouting and holds back the seedlings that already did.",
+      "Pull the weeds by hand, or hoe between the rows where you sowed in lines. Fill thin spots, where weeds take over first.",
       "Spare the small black Altica beetle, which eats the leaves of Ludwigia weeds.",
-      "If hand weeding and nature cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
+      "If hand weeding cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
       "Bring the water back 1 to 3 days after you spray, 3 to 5 cm deep, and hold it there for 4 to 5 days so the weeds stay under water. Keep the young rice above it."
      ],
      "grasses": [
-      "Bispyribac sodium",
       "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
+      "Cyhalofop butyl",
+      "Metamifop",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "Penoxsulam plus cyhalofop butyl",
+      "Metamifop plus bispyribac sodium",
+      "Pyribenzoxim",
       "Cyhalofop butyl plus ethoxysulfuron",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Propyrisulfuron",
       "Fenoxaprop P ethyl plus ethoxysulfuron",
       "Flucetosulfuron",
-      "Metamifop",
-      "Penoxsulam plus cyhalofop butyl",
-      "Profoxydim",
-      "Pyribenzoxim",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Florpyrauxifen benzyl",
+      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Profoxydim"
      ],
      "sedges": [
-      "Bispyribac sodium",
       "Cyhalofop butyl plus bispyribac sodium",
+      "Bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "Penoxsulam plus cyhalofop butyl",
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
+      "Pyribenzoxim",
       "Cyhalofop butyl plus ethoxysulfuron",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Propyrisulfuron",
       "Fenoxaprop P ethyl plus ethoxysulfuron",
       "Flucetosulfuron",
-      "Penoxsulam plus cyhalofop butyl",
-      "Pyribenzoxim",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Carfentrazone ethyl",
+      "Florpyrauxifen benzyl",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "broadleaves": [
-      "Bispyribac sodium",
       "Cyhalofop butyl plus bispyribac sodium",
-      "Cyhalofop butyl plus florpyrauxifen benzyl",
+      "Bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "Penoxsulam plus cyhalofop butyl",
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
+      "Pyribenzoxim",
+      "Cyhalofop butyl plus ethoxysulfuron",
+      "Propyrisulfuron",
       "Fenoxaprop P ethyl plus ethoxysulfuron",
       "Flucetosulfuron",
-      "Penoxsulam plus cyhalofop butyl",
-      "Pyribenzoxim",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Carfentrazone ethyl",
+      "Florpyrauxifen benzyl",
+      "Cyhalofop butyl plus florpyrauxifen benzyl"
      ],
      "short": "11 to 20 days",
-     "title": "11 to 20 days after seeding"
+     "title": "11 to 20 days after seeding",
+     "on": {
+      "Cyhalofop butyl plus bispyribac sodium": [
+       "rice"
+      ],
+      "Bispyribac sodium": [
+       "rice"
+      ],
+      "Cyhalofop butyl": [
+       "rice"
+      ],
+      "Metamifop": [
+       "rice"
+      ],
+      "Pyribenzoxim plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Penoxsulam plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Metamifop plus bispyribac sodium": [
+       "rice"
+      ],
+      "Pyribenzoxim": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus ethoxysulfuron": [
+       "rice"
+      ],
+      "Propyrisulfuron": [
+       "rice"
+      ],
+      "Fenoxaprop P ethyl plus ethoxysulfuron": [
+       "rice"
+      ],
+      "Flucetosulfuron": [
+       "rice"
+      ],
+      "Florpyrauxifen benzyl": [
+       "rice"
+      ],
+      "Cyhalofop butyl plus florpyrauxifen benzyl": [
+       "rice"
+      ],
+      "Profoxydim": [
+       "rice"
+      ],
+      "Bentazone": [
+       "rice"
+      ],
+      "Carfentrazone ethyl": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "21-30",
@@ -347,37 +756,84 @@
      "stage": "Rice tillering",
      "steps": [
       "Top up the water if the level has dropped.",
-      "Pull the weeds by hand.",
+      "Pull the weeds by hand, grasses and weedy rice first, before the rice closes over the ground.",
       "Spare the small black Altica beetle, which eats the leaves of Ludwigia weeds.",
-      "If hand weeding and nature cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
+      "2,4 D and MCPA belong here, once the rice has tillered. If hand weeding cannot keep up, apply a post emergence herbicide. Read and follow the label on the bottle, box or sachet.",
       "Bring the water back 1 to 3 days after you spray, 3 to 5 cm deep, and hold it there for 4 to 5 days so the weeds stay under water."
      ],
      "grasses": [
       "Cyhalofop butyl plus bispyribac sodium",
       "Metamifop",
-      "Pyribenzoxim",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Pyribenzoxim plus cyhalofop butyl",
+      "Metamifop plus bispyribac sodium",
+      "Pyribenzoxim"
      ],
      "sedges": [
+      "2,4 D amine",
+      "2,4 D IBE",
       "Cyhalofop butyl plus bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "MCPA",
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
+      "Metsulfuron methyl plus chlorimuron ethyl",
       "Pyribenzoxim",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Carfentrazone ethyl"
      ],
      "broadleaves": [
+      "2,4 D amine",
+      "2,4 D IBE",
       "Cyhalofop butyl plus bispyribac sodium",
+      "Pyribenzoxim plus cyhalofop butyl",
+      "MCPA",
+      "Metamifop plus bispyribac sodium",
+      "Bentazone",
+      "Metsulfuron methyl plus chlorimuron ethyl",
       "Pyribenzoxim",
-      "Pyribenzoxim plus cyhalofop butyl"
+      "Carfentrazone ethyl"
      ],
      "short": "21 to 30 days",
-     "title": "21 to 30 days after seeding"
+     "title": "21 to 30 days after seeding",
+     "on": {
+      "Cyhalofop butyl plus bispyribac sodium": [
+       "rice"
+      ],
+      "Metamifop": [
+       "rice"
+      ],
+      "Pyribenzoxim plus cyhalofop butyl": [
+       "rice"
+      ],
+      "Metamifop plus bispyribac sodium": [
+       "rice"
+      ],
+      "Pyribenzoxim": [
+       "rice"
+      ],
+      "2,4 D amine": [
+       "rice"
+      ],
+      "2,4 D IBE": [
+       "rice"
+      ],
+      "MCPA": [
+       "rice"
+      ],
+      "Bentazone": [
+       "rice"
+      ],
+      "Metsulfuron methyl plus chlorimuron ethyl": [
+       "rice"
+      ],
+      "Carfentrazone ethyl": [
+       "rice"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "PhilRice weed management recommendations",
-     "url": "https://www.philrice.gov.ph"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "corn_sorghum",
@@ -390,6 +846,20 @@
     "sorghum"
    ],
    "after": "after planting",
+   "prevent": [
+    "Plow and harrow twice, about 2 weeks apart. The first flush of weeds, itchgrass among them, sprouts after the first pass and dies at the second.",
+    "Plant on time, at the spacing your seed calls for, with a full stand. Corn that comes up evenly shades the rows about 6 weeks after planting.",
+    "Put the fertilizer in the furrow or beside the hill, not spread over the whole field, so it feeds the corn and not the weeds.",
+    "Clean the harrow, planter and sheller after a weedy field so itchgrass seed does not travel to the next one.",
+    "Rotate with mungbean or peanut, and do not let the weeds between seasons go to seed."
+   ],
+   "critical": {
+    "*": {
+     "from": 14,
+     "to": 42,
+     "say": "Keep the field free of weeds from about 2 to 6 weeks after planting; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -397,26 +867,44 @@
      "timing": "prep",
      "stage": "Field being plowed, or green weeds before no till planting",
      "steps": [
-      "Plow and harrow twice, about 2 weeks apart. The first flush of weeds, itchgrass among them, sprouts after the first pass and dies at the second.",
-      "For no till planting, or where cogon and other perennial grasses grow, spray a burndown herbicide on green, growing weeds 7 to 14 days before planting.",
-      "Clean the harrow and planter after a weedy field so itchgrass seed does not travel to the next one. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Plow and harrow, then let the next flush of weeds come up and harrow again just before you plant (the stale seedbed).",
+      "For no till planting, or where cogon and other perennial grasses grow, spray a burndown herbicide on green, growing weeds 7 to 14 days before planting."
      ],
      "grasses": [
       "Glyphosate",
       "Glufosinate ammonium",
-      "Paraquat"
+      "Glyphosate plus 2,4 D amine"
      ],
      "sedges": [
-      "Glyphosate"
+      "Glyphosate",
+      "Glyphosate plus 2,4 D amine"
      ],
      "broadleaves": [
       "Glyphosate",
       "Glufosinate ammonium",
-      "Paraquat",
-      "2,4 D amine"
+      "Glyphosate plus 2,4 D amine"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Glyphosate": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Glufosinate ammonium": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Glyphosate plus 2,4 D amine": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "pre_emergence",
@@ -425,26 +913,65 @@
      "stage": "Seed in the ground; corn and weeds not up yet",
      "steps": [
       "Spray a pre emergence herbicide on moist soil right after planting, before the corn and the weeds come up. Do not walk on the sprayed soil afterwards.",
-      "In Philippine trials, atrazine with pendimethalin before emergence, then hilling up at about 25 days, gave the best control of itchgrass and the other main weeds.",
-      "Sorghum takes atrazine, but pendimethalin and metolachlor injure it unless the seed bag says the seed is treated with a safener for them."
+      "A pre emergence spray, then hilling up at about 25 days, keeps itchgrass and most other weeds down until the corn shades them.",
+      "Sorghum takes atrazine; most other corn herbicides injure it."
      ],
      "grasses": [
-      "Pendimethalin (corn only)",
-      "S metolachlor (corn only)",
-      "Atrazine plus S metolachlor (corn only)",
-      "Atrazine"
+      "Atrazine",
+      "Linuron",
+      "Pendimethalin",
+      "Isoxaflutole plus thiencarbazone methyl"
      ],
      "sedges": [
-      "Halosulfuron methyl",
-      "Atrazine"
+      "Isoxaflutole plus thiencarbazone methyl"
      ],
      "broadleaves": [
       "Atrazine",
-      "Atrazine plus S metolachlor (corn only)",
-      "Pendimethalin (corn only)"
+      "Linuron",
+      "Pendimethalin",
+      "Isoxaflutole plus thiencarbazone methyl"
      ],
      "short": "0 to 3 days",
-     "title": "0 to 3 days after planting"
+     "title": "0 to 3 days after planting",
+     "on": {
+      "Atrazine": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous",
+       "sorghum"
+      ],
+      "Linuron": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Pendimethalin": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Isoxaflutole plus thiencarbazone methyl": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Pendimethalin": [
+       "corn_yellow",
+       "corn_glutinous",
+       "corn_sweet"
+      ],
+      "Isoxaflutole plus thiencarbazone methyl": [
+       "corn_yellow",
+       "corn_glutinous"
+      ],
+      "Linuron": [
+       "corn_yellow",
+       "corn_glutinous"
+      ]
+     }
     },
     {
      "key": "early_post",
@@ -454,29 +981,140 @@
      "steps": [
       "Keep the field weed free from 2 to 6 weeks after planting; weeds cut corn yield most in these weeks.",
       "Off bar about 2 weeks after planting and hill up at about 25 to 30 days, then pull the weeds left in the row by hand.",
-      "If you spray, spray small weeds. Glyphosate or glufosinate go over the top only of corn whose seed bag says it is herbicide tolerant. Nicosulfuron and 2,4 D can injure sweet corn."
+      "If you spray, spray small weeds. Glyphosate goes over the top only of corn whose seed bag says it is herbicide tolerant. 2,4 D can injure sweet corn."
      ],
      "grasses": [
-      "Nicosulfuron (yellow corn only)",
-      "Topramezone (corn only)",
+      "Atrazine (small grasses)",
+      "Tolpyralate",
+      "Atrazine plus topramezone",
+      "Tembotrione",
+      "Tembotrione plus thiencarbazone methyl",
       "Glyphosate (herbicide tolerant corn only)",
-      "Glufosinate ammonium (glufosinate tolerant corn only)"
+      "Mesotrione plus glyphosate plus S metolachlor (herbicide tolerant corn only)"
      ],
      "sedges": [
-      "Halosulfuron methyl",
       "2,4 D amine (not sweet corn)",
-      "Glyphosate (herbicide tolerant corn only)"
+      "2,4 D IBE (not sweet corn)",
+      "MCPA (not sweet corn)",
+      "Tolpyralate",
+      "Atrazine plus topramezone",
+      "Tembotrione plus thiencarbazone methyl",
+      "Glyphosate (herbicide tolerant corn only)",
+      "Mesotrione plus glyphosate plus S metolachlor (herbicide tolerant corn only)"
      ],
      "broadleaves": [
       "2,4 D amine (not sweet corn)",
+      "2,4 D IBE (not sweet corn)",
       "Atrazine",
-      "Mesotrione (corn only)",
-      "Topramezone (corn only)",
+      "MCPA (not sweet corn)",
+      "Tolpyralate",
+      "Atrazine plus topramezone",
+      "Tembotrione",
+      "Tembotrione plus thiencarbazone methyl",
       "Glyphosate (herbicide tolerant corn only)",
-      "Glufosinate ammonium (glufosinate tolerant corn only)"
+      "Mesotrione plus glyphosate plus S metolachlor (herbicide tolerant corn only)"
      ],
      "short": "2 to 4 weeks",
-     "title": "2 to 4 weeks after planting"
+     "title": "2 to 4 weeks after planting",
+     "on": {
+      "Atrazine (small grasses)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous",
+       "sorghum"
+      ],
+      "Tolpyralate": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Atrazine plus topramezone": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Tembotrione": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Tembotrione plus thiencarbazone methyl": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Glyphosate (herbicide tolerant corn only)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Mesotrione plus glyphosate plus S metolachlor (herbicide tolerant corn only)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "2,4 D amine (not sweet corn)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "2,4 D IBE (not sweet corn)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "MCPA (not sweet corn)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Atrazine": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous",
+       "sorghum"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Atrazine plus topramezone": [
+       "corn_yellow",
+       "corn_glutinous"
+      ],
+      "Tembotrione": [
+       "corn_yellow",
+       "corn_glutinous"
+      ],
+      "Tembotrione plus thiencarbazone methyl": [
+       "corn_yellow",
+       "corn_glutinous"
+      ],
+      "Tolpyralate": [
+       "corn_yellow",
+       "corn_glutinous"
+      ],
+      "Glyphosate (herbicide tolerant corn only)": [
+       "corn_yellow"
+      ],
+      "Mesotrione plus glyphosate plus S metolachlor (herbicide tolerant corn only)": [
+       "corn_yellow"
+      ],
+      "2,4 D amine (not sweet corn)": [
+       "corn_yellow",
+       "corn_glutinous",
+       "sorghum"
+      ],
+      "2,4 D IBE (not sweet corn)": [
+       "corn_yellow",
+       "corn_glutinous",
+       "sorghum"
+      ],
+      "MCPA (not sweet corn)": [
+       "corn_yellow",
+       "corn_glutinous",
+       "sorghum"
+      ]
+     }
     },
     {
      "key": "late_post",
@@ -485,53 +1123,53 @@
      "stage": "Corn knee high; rows not closed yet",
      "steps": [
       "Hill up if you have not, and pull or slash weeds in the rows before they flower. One itchgrass plant drops thousands of seeds, so never let it set seed.",
-      "Use only directed sprays now: hold the nozzle low between the rows with a shield and never let the spray touch the corn leaves. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children.",
+      "Use only directed sprays now: hold the nozzle low between the rows with a shield and never let the spray touch the corn leaves.",
       "Once the rows close, the corn shades out most new weeds; pull the big ones that are left before harvest."
      ],
      "grasses": [
-      "Glufosinate ammonium (directed)",
-      "Paraquat (directed)",
-      "Glyphosate (directed with a shield)"
+      "Glyphosate (directed with a shield)",
+      "Ametryn (directed)",
+      "Glufosinate ammonium (directed)"
      ],
      "sedges": [
-      "Glyphosate (directed with a shield)"
+      "Glyphosate (directed with a shield)",
+      "2,4 D amine (directed)"
      ],
      "broadleaves": [
       "2,4 D amine (directed)",
-      "Glufosinate ammonium (directed)",
-      "Paraquat (directed)",
-      "Glyphosate (directed with a shield)"
+      "Glyphosate (directed with a shield)",
+      "Ametryn (directed)",
+      "Glufosinate ammonium (directed)"
      ],
      "short": "4 to 6 weeks",
-     "title": "4 to 6 weeks after planting"
+     "title": "4 to 6 weeks after planting",
+     "on": {
+      "Glyphosate (directed with a shield)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Ametryn (directed)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "Glufosinate ammonium (directed)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ],
+      "2,4 D amine (directed)": [
+       "corn_yellow",
+       "corn_sweet",
+       "corn_glutinous"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "Pamplona 1988, Weed control management in corn in the Philippines (AGRIS)",
-     "url": "https://agris.fao.org/search/fr/records/6471ccdd77fd37171a6fab32"
-    },
-    {
-     "label": "Kunjo and Manuel 1989, Mechanical and chemical weed control in sweet corn, Philippines (AGRIS)",
-     "url": "https://agris.fao.org/search/ar/records/6473642e08fd68d5460564a4"
-    },
-    {
-     "label": "Caasi Lit and Fernandez 2006, Alternate hosts of Asian corn borer in major Philippine corn areas (AGRIS)",
-     "url": "https://agris.fao.org/search/ar/records/64724af8e17b74d2224fa07d"
-    },
-    {
-     "label": "Pacific Pests, Pathogens and Weeds: Itch grass fact sheet",
-     "url": "https://apps.lucidcentral.org/ppp_v9/text/web_full/entities/itch_grass_458.htm"
-    },
-    {
-     "label": "UC IPM, Corn herbicide treatment table",
-     "url": "https://ipm.ucanr.edu/agriculture/corn/herbicide-treatment-table/"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "legumes",
@@ -549,6 +1187,40 @@
     "cotton"
    ],
    "after": "after planting",
+   "prevent": [
+    "Pick the field with the fewest weeds. Beans have few herbicides labelled for them here, so a clean start counts double.",
+    "Prepare the land well, then let the weeds sprout for a week and harrow once more before planting (the stale seedbed). After rice, plant into the stubble as soon as you can, before weeds start.",
+    "Sow good seed at a close, even spacing; beans grow slowly in their first weeks and a full stand covers the ground sooner.",
+    "Mulch with rice straw after planting in fields that cannot be cultivated; 3 to 5 cm of straw holds back most weeds.",
+    "Do not let weeds seed at the field edges or between seasons."
+   ],
+   "critical": {
+    "*": {
+     "from": 14,
+     "to": 42,
+     "say": "Keep the field free of weeds from about 2 to 6 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "mungbean": {
+     "from": 14,
+     "to": 30,
+     "say": "Keep the field free of weeds from about 14 to 30 days after planting; weeds cost the most yield in that stretch."
+    },
+    "peanut": {
+     "from": 21,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 3 to 8 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "pigeonpea": {
+     "from": 14,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 2 to 8 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "cotton": {
+     "from": 14,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 2 to 8 weeks after planting; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -556,25 +1228,33 @@
      "timing": "prep",
      "stage": "Field being prepared, or rice stubble after harvest",
      "steps": [
-      "Prepare the land well; beans grow slowly in the first weeks and lose to weeds on rough ground.",
-      "Choose the field with the fewest weeds, because beans have few safe herbicides.",
-      "For zero tillage after rice, spray the weeds and stubble with a burndown herbicide 3 to 7 days before dibbling the seed. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Plow and harrow, wait about a week for the weeds to sprout, then harrow once more just before planting.",
+      "For zero tillage after rice, spray the weeds and stubble with a burndown herbicide 3 to 7 days before dibbling the seed."
      ],
      "grasses": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Glyphosate": [
+       "stringbean",
+       "cowpea",
+       "wingedbean",
+       "limabean"
+      ],
+      "Glufosinate ammonium": []
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "pre_emergence",
@@ -583,24 +1263,55 @@
      "stage": "Seed sown; crop and weeds not up yet",
      "steps": [
       "Spray a pre emergence herbicide on moist soil within 3 days after planting, before the crop and the weeds come up.",
-      "None of these stop purple nutsedge; plow it out before planting and pull what comes back."
+      "Purple nutsedge sprouts from tubers that sprays here do not reach; plow it out before planting and pull what comes back."
      ],
      "grasses": [
-      "Pendimethalin",
-      "S metolachlor",
-      "Imazethapyr (soybean and peanut only)"
+      "Diuron",
+      "Metribuzin",
+      "Linuron",
+      "Pendimethalin"
      ],
      "sedges": [
-      "S metolachlor",
-      "Imazethapyr (soybean and peanut only)"
+      "S metolachlor"
      ],
      "broadleaves": [
-      "Pendimethalin",
-      "S metolachlor",
-      "Imazethapyr (soybean and peanut only)"
+      "Diuron",
+      "Metribuzin",
+      "Linuron",
+      "Pendimethalin"
      ],
      "short": "0 to 3 days",
-     "title": "0 to 3 days after planting"
+     "title": "0 to 3 days after planting",
+     "on": {
+      "Diuron": [
+       "cotton"
+      ],
+      "Metribuzin": [
+       "soybean"
+      ],
+      "Linuron": [
+       "mungbean",
+       "peanut",
+       "soybean",
+       "stringbean",
+       "cowpea"
+      ],
+      "Pendimethalin": [
+       "cotton"
+      ],
+      "S metolachlor": []
+     },
+     "abroad": [
+      "S metolachlor"
+     ],
+     "only": {
+      "Metribuzin": [
+       "soybean"
+      ],
+      "Diuron": [
+       "cotton"
+      ]
+     }
     },
     {
      "key": "early_post",
@@ -608,24 +1319,43 @@
      "timing": "early",
      "stage": "Crop at 2 to 4 leaves; first flush of weeds",
      "steps": [
-      "Weed control matters most 2 to 3 weeks after the crop comes up. About 15 days after planting, off bar between rows, hand weed what is left, then hill up right away.",
+      "Weed control matters most 2 to 4 weeks after the crop comes up. About 15 days after planting, off bar between rows, hand weed what is left, then hill up right away. A second weeding about 2 weeks later finishes the job for most beans.",
       "Hill up peanut before the pegs go into the soil, not after, so you do not break them.",
-      "Grass killers are safe over the top of all beans and cotton but do nothing to sedges or broadleaves."
+      "Grass killers are safe over the top of beans and cotton but do nothing to sedges or broadleaves."
      ],
      "grasses": [
-      "Fluazifop P butyl",
-      "Quizalofop P ethyl"
+      "Fluazifop P butyl"
      ],
      "sedges": [
-      "Bentazone (beans, soybean and peanut; not cotton)",
-      "Imazethapyr (soybean and peanut only)"
+      "Bentazone (not cotton)"
      ],
      "broadleaves": [
-      "Bentazone (beans, soybean and peanut; not cotton)",
-      "Imazethapyr (soybean and peanut only)"
+      "Bentazone (not cotton)"
      ],
      "short": "2 to 4 weeks",
-     "title": "2 to 4 weeks after planting"
+     "title": "2 to 4 weeks after planting",
+     "on": {
+      "Fluazifop P butyl": [
+       "soybean",
+       "cotton"
+      ],
+      "Bentazone (not cotton)": [
+       "soybean"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Bentazone (not cotton)": [
+       "mungbean",
+       "peanut",
+       "soybean",
+       "stringbean",
+       "cowpea",
+       "wingedbean",
+       "limabean",
+       "pigeonpea"
+      ]
+     }
     },
     {
      "key": "late_post",
@@ -634,36 +1364,49 @@
      "stage": "Crop flowering or pegging; leaves closing over the rows",
      "steps": [
       "Stop cultivating once peanut starts pegging and beans flower; spot weed by hand instead.",
-      "Directed sprays fit only tall or trellised crops such as cotton, pigeon pea and string bean: shield the nozzle and keep the spray off the leaves. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children.",
+      "Directed sprays fit only tall or trellised crops such as cotton, pigeon pea and string bean: shield the nozzle and keep the spray off the leaves.",
       "Pull weeds before they seed so they do not fill the next crop, and keep to the waiting days before harvest on the label."
      ],
      "grasses": [
+      "Diuron (directed)",
       "Fluazifop P butyl",
-      "Quizalofop P ethyl",
-      "Glufosinate ammonium (directed, tall crops only)",
-      "Paraquat (directed, tall crops only)"
+      "Glufosinate ammonium (directed, tall crops only)"
      ],
      "sedges": [
       "Glufosinate ammonium (directed, tall crops only)"
      ],
      "broadleaves": [
-      "Glufosinate ammonium (directed, tall crops only)",
-      "Paraquat (directed, tall crops only)"
+      "Diuron (directed)",
+      "Glufosinate ammonium (directed, tall crops only)"
      ],
      "short": "4 to 6 weeks",
-     "title": "4 to 6 weeks after planting"
+     "title": "4 to 6 weeks after planting",
+     "on": {
+      "Diuron (directed)": [
+       "cotton"
+      ],
+      "Fluazifop P butyl": [
+       "soybean",
+       "cotton"
+      ],
+      "Glufosinate ammonium (directed, tall crops only)": []
+     },
+     "abroad": [],
+     "only": {
+      "Diuron (directed)": [
+       "cotton"
+      ],
+      "Glufosinate ammonium (directed, tall crops only)": [
+       "cotton",
+       "pigeonpea",
+       "stringbean",
+       "wingedbean",
+       "limabean"
+      ]
+     }
     }
    ],
-   "sources": [
-    {
-     "label": "DA High Value Crops Development Program, Mungbean Production Guide",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mungbean-Production-Guide.pdf"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "root_crops",
@@ -679,6 +1422,44 @@
     "turmeric"
    ],
    "after": "after planting",
+   "prevent": [
+    "Plow, harrow and ridge the field, and pick out cogon and nutsedge runners and tubers by hand as you go; every piece left grows back.",
+    "Plant clean cuttings, setts and seed pieces, and plant them at a close, even spacing so the leaves cover the ground early.",
+    "Mulch ginger, turmeric, ubi and upland taro right after planting with rice straw, dried grass or coconut fronds; for these crops mulch and the hoe do most of the work.",
+    "Intercrop cassava with corn, peanut or mungbean in its first months; the second crop covers the ground the cassava leaves open."
+   ],
+   "critical": {
+    "*": {
+     "from": 14,
+     "to": 42,
+     "say": "Keep the field free of weeds from about 2 to 6 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "cassava": {
+     "from": 28,
+     "to": 84,
+     "say": "Keep the field free of weeds from about 4 to 12 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "taro": {
+     "from": 30,
+     "to": 90,
+     "say": "Keep the field free of weeds from about 1 to 3 months after planting; weeds cost the most yield in that stretch."
+    },
+    "ubi": {
+     "from": 30,
+     "to": 120,
+     "say": "Keep the field free of weeds from about 1 to 4 months after planting; weeds cost the most yield in that stretch."
+    },
+    "ginger": {
+     "from": 30,
+     "to": 120,
+     "say": "Keep the field free of weeds from about 1 to 4 months after planting; weeds cost the most yield in that stretch."
+    },
+    "turmeric": {
+     "from": 30,
+     "to": 120,
+     "say": "Keep the field free of weeds from about 1 to 4 months after planting; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -686,24 +1467,30 @@
      "timing": "prep",
      "stage": "Field being cleared, plowed and ridged",
      "steps": [
-      "Plow, harrow and ridge or bed the field; pick out cogon and nutsedge runners and tubers as you go.",
-      "Where cogon or other perennial grass covers the land, spray it with glyphosate while green and growing, then plow 2 weeks later when it browns. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Where cogon or other perennial grass covers the land, spray it with glyphosate while green and growing, then plow 2 weeks later when it browns.",
+      "Let a flush of weeds sprout after plowing and harrow them under before you ridge and plant."
      ],
      "grasses": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Glyphosate": [
+       "potato"
+      ],
+      "Glufosinate ammonium": []
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "pre_emergence",
@@ -711,28 +1498,51 @@
      "timing": "pre",
      "stage": "Cuttings, setts or seed pieces just planted; no weeds up",
      "steps": [
-      "Mulch ginger, turmeric, ubi and upland taro right after planting with rice straw, dried grass or coconut fronds. Mulch and hand weeding are the main weed tools for these crops; few herbicides are tested on them.",
       "Cassava grows slowly and loses most to weeds in its first 3 months; a pre emergence spray right after planting holds the first weeds back.",
-      "In potato, spray after planting and before the sprouts break the soil."
+      "In potato, spray after planting and before the sprouts break the soil.",
+      "Few herbicides are labelled for sweet potato, taro, ubi, ginger and turmeric here; mulch them and plan to hoe."
      ],
      "grasses": [
-      "Atrazine plus S metolachlor (cassava only)",
-      "Pendimethalin (cassava and potato)",
-      "S metolachlor (cassava, potato and sweet potato)",
-      "Metribuzin (potato only)"
+      "Metribuzin",
+      "Linuron",
+      "Flumioxazin",
+      "Pendimethalin"
      ],
      "sedges": [
-      "Atrazine plus S metolachlor (cassava only)",
-      "S metolachlor (cassava, potato and sweet potato)"
+      "Flumioxazin"
      ],
      "broadleaves": [
-      "Atrazine plus S metolachlor (cassava only)",
-      "Metribuzin (potato only)",
-      "Linuron (potato only)",
-      "Pendimethalin (cassava and potato)"
+      "Metribuzin",
+      "Linuron",
+      "Flumioxazin",
+      "Pendimethalin"
      ],
      "short": "0 to 3 days",
-     "title": "0 to 3 days after planting"
+     "title": "0 to 3 days after planting",
+     "on": {
+      "Metribuzin": [
+       "potato"
+      ],
+      "Linuron": [
+       "potato"
+      ],
+      "Flumioxazin": [
+       "cassava"
+      ],
+      "Pendimethalin": []
+     },
+     "abroad": [],
+     "only": {
+      "Flumioxazin": [
+       "cassava"
+      ],
+      "Metribuzin": [
+       "potato"
+      ],
+      "Linuron": [
+       "potato"
+      ]
+     }
     },
     {
      "key": "early_post",
@@ -740,20 +1550,33 @@
      "timing": "early",
      "stage": "Crop leafing out; first weeds growing between rows",
      "steps": [
-      "Hand weed or hoe at about 3 to 4 weeks and again at 6 to 8 weeks; cassava needs at least two weedings before its leaves shade the ground.",
+      "Hand weed or hoe at about 3 to 4 weeks and again at 6 to 8 weeks; cassava needs at least two weedings, and a third at about 12 weeks, before its leaves shade the ground.",
       "Hill up potato and sweet potato about a month after planting; hilling buries the small weeds. Top up thin mulch on ginger, turmeric and ubi.",
-      "Grass killers are safe over the top of these crops; broadleaves and sedges are pulled by hand."
+      "Weed sweet potato before the vines run; once they cover the ground, they hold the weeds back on their own."
      ],
      "grasses": [
-      "Fluazifop P butyl",
-      "Quizalofop P ethyl"
+      "Fluazifop P butyl"
      ],
      "sedges": [],
      "broadleaves": [
-      "Metribuzin (potato only, small weeds)"
+      "Metribuzin (small weeds)"
      ],
      "short": "3 to 8 weeks",
-     "title": "3 to 8 weeks after planting"
+     "title": "3 to 8 weeks after planting",
+     "on": {
+      "Fluazifop P butyl": [
+       "cassava"
+      ],
+      "Metribuzin (small weeds)": [
+       "potato"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Metribuzin (small weeds)": [
+       "potato"
+      ]
+     }
     },
     {
      "key": "late_post",
@@ -762,39 +1585,36 @@
      "stage": "Vines running or canopy closing; roots and tubers swelling",
      "steps": [
       "Pull the big weeds by hand; do not dig near swelling roots and tubers.",
-      "Between wide cassava rows, slash the weeds or use a directed spray with a shield, and keep it off the green stems and leaves. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children.",
+      "Between wide cassava rows, slash the weeds or use a directed spray with a shield, and keep it off the green stems and leaves.",
       "Once the canopy covers the ground, shade does most of the work."
      ],
      "grasses": [
       "Fluazifop P butyl",
-      "Glufosinate ammonium (directed, cassava only)",
-      "Paraquat (directed, cassava only)"
+      "Glufosinate ammonium (directed)"
      ],
      "sedges": [
-      "Glufosinate ammonium (directed, cassava only)"
+      "Glufosinate ammonium (directed)"
      ],
      "broadleaves": [
-      "Glufosinate ammonium (directed, cassava only)",
-      "Paraquat (directed, cassava only)"
+      "Glufosinate ammonium (directed)"
      ],
      "short": "From 2 months",
-     "title": "2 months after planting until the leaves cover the ground"
+     "title": "2 months after planting until the leaves cover the ground",
+     "on": {
+      "Fluazifop P butyl": [
+       "cassava"
+      ],
+      "Glufosinate ammonium (directed)": []
+     },
+     "abroad": [],
+     "only": {
+      "Glufosinate ammonium (directed)": [
+       "cassava"
+      ]
+     }
     }
    ],
-   "sources": [
-    {
-     "label": "IITA, Six Steps cassava weed management",
-     "url": "https://propas.iita.org/solutions/six-steps-cassava-weed-management/70/export/"
-    },
-    {
-     "label": "DA CAR Technoguide in the production and management of ginger",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-GINGER.pdf"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "vegetables_transplanted",
@@ -822,6 +1642,100 @@
     "strawberry"
    ],
    "after": "after planting",
+   "prevent": [
+    "Make the beds, water them and wait 1 to 2 weeks for the weed seeds to sprout, then rake or scrape them off shallowly and plant without digging again (the stale seedbed).",
+    "Lay plastic mulch, silver side up, over the beds before transplanting; it stops most weeds in the bed. Kill purple nutsedge first, because its shoots pierce the plastic.",
+    "On beds without plastic, rice straw, rice hull or coco coir dust 3 to 5 cm thick holds back weeds and keeps the soil moist.",
+    "Use well rotted compost and manure; fresh manure carries live weed seeds.",
+    "Transplant strong seedlings, so the crop starts weeks ahead of the weeds."
+   ],
+   "critical": {
+    "*": {
+     "from": 14,
+     "to": 42,
+     "say": "Keep the field free of weeds from about 2 to 6 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "eggplant": {
+     "from": 14,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 2 to 8 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "chili": {
+     "from": 14,
+     "to": 63,
+     "say": "Keep the field free of weeds from about 2 to 9 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "bellpepper": {
+     "from": 14,
+     "to": 63,
+     "say": "Keep the field free of weeds from about 2 to 9 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "cabbage": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "broccoli": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "cauliflower": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "celery": {
+     "from": 14,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 2 to 8 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "ampalaya": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "squash": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "cucumber": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "patola": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "upo": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "watermelon": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "melon": {
+     "from": 14,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 2 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "sayote": {
+     "from": 30,
+     "to": 90,
+     "say": "Keep the field free of weeds from about 1 to 3 months after planting; weeds cost the most yield in that stretch."
+    },
+    "strawberry": {
+     "from": 14,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 2 to 8 weeks after planting; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -829,25 +1743,47 @@
      "timing": "prep",
      "stage": "Beds being made; mulch not laid yet",
      "steps": [
-      "Make the beds, water them and wait 1 to 2 weeks for weed seeds to sprout, then rake or spray them off before you plant (stale seedbed).",
-      "Lay plastic mulch, silver side up, over the beds before transplanting; it stops most weeds in the bed. Kill purple nutsedge first, because its shoots can pierce the plastic.",
-      "Burndown sprays are only for weeds before the beds are made or the mulch is laid, never on the crop. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Make the beds and let the first weeds sprout, then rake or spray them off before you plant (the stale seedbed).",
+      "Burndown sprays are only for weeds before the beds are made or the mulch is laid, never on the crop."
      ],
      "grasses": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Glyphosate": [
+       "tomato",
+       "eggplant",
+       "chili",
+       "bellpepper",
+       "cabbage",
+       "broccoli",
+       "cauliflower",
+       "celery",
+       "ampalaya",
+       "squash",
+       "cucumber",
+       "patola",
+       "upo",
+       "sayote",
+       "watermelon",
+       "melon",
+       "okra",
+       "strawberry"
+      ],
+      "Glufosinate ammonium": []
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "pre_emergence",
@@ -856,28 +1792,61 @@
      "stage": "Seedlings just set out or seed just sown; weeds not up",
      "steps": [
       "On unmulched beds and in the paths, a pre emergence herbicide on moist soil holds weeds for the first weeks. Spray before transplanting, or on the soil only after it, as the label says.",
-      "Squash, gourds, melons and okra sown from seed are easily hurt; spray only the paths between their rows.",
-      "Rice straw, rice hull or coco coir dust 3 to 5 cm thick also holds weeds on beds without plastic."
+      "Squash, gourds, melons and okra sown from seed are easily hurt; spray only the paths between their rows."
      ],
      "grasses": [
-      "Pendimethalin",
-      "S metolachlor",
-      "Metribuzin (tomato only)",
-      "Oxyfluorfen (cabbage family, before transplanting)"
+      "Metribuzin",
+      "Linuron",
+      "Oxadiazon (before transplanting)",
+      "Pendimethalin"
      ],
      "sedges": [
-      "S metolachlor",
-      "Halosulfuron methyl (tomato, pepper and gourds)"
+      "Oxadiazon (before transplanting)",
+      "S metolachlor"
      ],
      "broadleaves": [
-      "Pendimethalin",
-      "S metolachlor",
-      "Metribuzin (tomato only)",
-      "Oxyfluorfen (cabbage family, before transplanting)",
-      "Halosulfuron methyl (tomato, pepper and gourds)"
+      "Metribuzin",
+      "Linuron",
+      "Oxadiazon (before transplanting)",
+      "Pendimethalin"
      ],
      "short": "0 to 3 days",
-     "title": "0 to 3 days after planting"
+     "title": "0 to 3 days after planting",
+     "on": {
+      "Metribuzin": [
+       "tomato"
+      ],
+      "Linuron": [
+       "celery",
+       "tobacco"
+      ],
+      "Oxadiazon (before transplanting)": [
+       "cabbage",
+       "broccoli",
+       "cauliflower"
+      ],
+      "Pendimethalin": [
+       "tobacco"
+      ],
+      "S metolachlor": []
+     },
+     "abroad": [
+      "S metolachlor"
+     ],
+     "only": {
+      "Metribuzin": [
+       "tomato"
+      ],
+      "Oxadiazon (before transplanting)": [
+       "cabbage",
+       "broccoli",
+       "cauliflower"
+      ],
+      "Linuron": [
+       "celery",
+       "tobacco"
+      ]
+     }
     },
     {
      "key": "early_post",
@@ -886,23 +1855,45 @@
      "stage": "Plants setting new leaves; vines starting to run",
      "steps": [
       "Pull weeds in the planting holes by hand. In unmulched fields, off bar about 2 weeks after planting and hill up a week later, then pull the weeds left in the row.",
+      "Weed gourds and melons before the vines run; after that, the vines cover the ground but are easily torn.",
       "Grass killers are safe over the top of these crops. For broadleaves and sedges in the paths, use only a shielded spray."
      ],
      "grasses": [
-      "Fluazifop P butyl",
-      "Quizalofop P ethyl"
+      "Fluazifop P butyl"
      ],
      "sedges": [
-      "Halosulfuron methyl (tomato, pepper and gourds)",
       "Glufosinate ammonium (shielded, paths only)"
      ],
      "broadleaves": [
-      "Metribuzin (tomato only, small weeds)",
-      "Glufosinate ammonium (shielded, paths only)",
-      "Paraquat (shielded, paths only)"
+      "Metribuzin (small weeds)",
+      "Linuron (small weeds)",
+      "Glufosinate ammonium (shielded, paths only)"
      ],
      "short": "2 to 4 weeks",
-     "title": "2 to 4 weeks after planting"
+     "title": "2 to 4 weeks after planting",
+     "on": {
+      "Fluazifop P butyl": [
+       "tomato"
+      ],
+      "Glufosinate ammonium (shielded, paths only)": [],
+      "Metribuzin (small weeds)": [
+       "tomato"
+      ],
+      "Linuron (small weeds)": [
+       "celery",
+       "tobacco"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Metribuzin (small weeds)": [
+       "tomato"
+      ],
+      "Linuron (small weeds)": [
+       "celery",
+       "tobacco"
+      ]
+     }
     },
     {
      "key": "late_post",
@@ -911,56 +1902,32 @@
      "stage": "Flowering and fruiting; leaves or vines covering the beds",
      "steps": [
       "Stop deep cultivation once fruits set so you do not cut the roots; hand weed instead.",
-      "Slash the paths, or spray them with a shield; never let drift reach leaves or fruit, and keep to the waiting days before harvest on the label. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children.",
+      "Slash the paths, or spray them with a shield; never let drift reach leaves or fruit, and keep to the waiting days before harvest on the label.",
       "Keep field edges clean; weeds there carry insects and viruses into the crop."
      ],
      "grasses": [
       "Fluazifop P butyl",
-      "Quizalofop P ethyl",
-      "Glufosinate ammonium (shielded, paths only)",
-      "Paraquat (shielded, paths only)"
+      "Glufosinate ammonium (shielded, paths only)"
      ],
      "sedges": [
       "Glufosinate ammonium (shielded, paths only)"
      ],
      "broadleaves": [
-      "Glufosinate ammonium (shielded, paths only)",
-      "Paraquat (shielded, paths only)"
+      "Glufosinate ammonium (shielded, paths only)"
      ],
      "short": "From 4 weeks",
-     "title": "4 weeks after planting until harvest"
+     "title": "4 weeks after planting until harvest",
+     "on": {
+      "Fluazifop P butyl": [
+       "tomato"
+      ],
+      "Glufosinate ammonium (shielded, paths only)": []
+     },
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "DA Regional Field Office 02, Eggplant Production Guide",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Eggplant.pdf"
-    },
-    {
-     "label": "DA Regional Field Office 02, Squash Production Guide",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Squash.pdf"
-    },
-    {
-     "label": "DA Regional Field Office 02, Upo Production Guide",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Upo.pdf"
-    },
-    {
-     "label": "DA Regional Field Office 02, Okra Production Guide",
-     "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Okra.pdf"
-    },
-    {
-     "label": "Abit, Dimas and Ramirez 2022, Weed survey of small scale vegetable farms in Ormoc City, Philippines (AGRIS)",
-     "url": "https://agris.fao.org/search/en/records/64eda2e62ac4a875e3f0b31e"
-    },
-    {
-     "label": "UC IPM, Tomato herbicide treatment table",
-     "url": "https://ipm.ucanr.edu/agriculture/tomato/herbicide-treatment-table/"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "onion_garlic",
@@ -973,6 +1940,29 @@
     "shallot"
    ],
    "after": "after planting",
+   "prevent": [
+    "Onion and garlic leaves shade almost nothing, so they lose to weeds more than any other crop. Start with the cleanest field you have.",
+    "In plowed fields, let the weeds sprout for a week or two between passes and plow again; repeated tillage wears down purple nutsedge, the hardest weed here.",
+    "After rice, cut the stubble low and plant into it with zero tillage, then cover the beds with 5 cm of rice straw; the straw holds weeds and keeps the soil moist.",
+    "Plant clean sets, cloves and seedlings, free of weed seed and soil from weedy beds."
+   ],
+   "critical": {
+    "*": {
+     "from": 14,
+     "to": 70,
+     "say": "Keep the field free of weeds from about 2 to 10 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "shallot": {
+     "from": 14,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 2 to 8 weeks after planting; weeds cost the most yield in that stretch."
+    },
+    "onion_spring": {
+     "from": 7,
+     "to": 35,
+     "say": "Keep the field free of weeds from about 1 to 5 weeks after planting; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -980,24 +1970,41 @@
      "timing": "prep",
      "stage": "Rice stubble after harvest, or a plowed field",
      "steps": [
-      "After rice, cut the stubble low and spray the weeds and volunteer rice with a burndown herbicide before planting with zero tillage.",
-      "In plowed fields, let the weeds sprout for a week or two between passes and plow again; repeated tillage wears down purple nutsedge, the hardest weed here. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "After rice, spray the weeds and volunteer rice with a burndown herbicide before planting with zero tillage.",
+      "In onion, oxyfluorfen can go on the bed before transplanting, as its label says."
      ],
      "grasses": [
-      "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Oxyfluorfen (before transplanting)",
+      "Glyphosate"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
-      "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Oxyfluorfen (before transplanting)",
+      "Glyphosate"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Oxyfluorfen (before transplanting)": [
+       "onion",
+       "shallot"
+      ],
+      "Glyphosate": [
+       "onion",
+       "onion_spring",
+       "garlic",
+       "shallot"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Oxyfluorfen (before transplanting)": [
+       "onion",
+       "shallot"
+      ]
+     }
     },
     {
      "key": "pre_emergence",
@@ -1006,21 +2013,65 @@
      "stage": "Sets, cloves or seedlings just planted; weeds not up",
      "steps": [
       "Spray a pre emergence herbicide on moist soil right after planting, then cover the beds with rice straw mulch.",
-      "In a Philippine trial, oxyfluorfen before emergence thinned the stand of some onion varieties; try it on a small area first."
+      "Oxyfluorfen before emergence can thin the stand of some onion varieties; try it on a small area first."
      ],
      "grasses": [
-      "Pendimethalin",
-      "Oxyfluorfen"
+      "Oxyfluorfen",
+      "Oxadiazon",
+      "Linuron",
+      "Pendimethalin"
      ],
      "sedges": [
-      "Oxyfluorfen"
+      "Oxyfluorfen",
+      "Oxadiazon"
      ],
      "broadleaves": [
       "Oxyfluorfen",
+      "Oxadiazon",
+      "Linuron",
       "Pendimethalin"
      ],
      "short": "0 to 3 days",
-     "title": "0 to 3 days after planting"
+     "title": "0 to 3 days after planting",
+     "on": {
+      "Oxyfluorfen": [
+       "onion",
+       "shallot"
+      ],
+      "Oxadiazon": [
+       "onion",
+       "shallot"
+      ],
+      "Linuron": [
+       "onion",
+       "garlic",
+       "shallot"
+      ],
+      "Pendimethalin": [
+       "onion",
+       "shallot"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Oxyfluorfen": [
+       "onion",
+       "shallot"
+      ],
+      "Oxadiazon": [
+       "onion",
+       "shallot"
+      ],
+      "Pendimethalin": [
+       "onion",
+       "shallot"
+      ],
+      "Linuron": [
+       "onion",
+       "shallot",
+       "garlic"
+      ]
+     }
     },
     {
      "key": "early_post",
@@ -1028,24 +2079,104 @@
      "timing": "early",
      "stage": "Crop at 2 to 5 leaves; first flush of weeds",
      "steps": [
-      "Hand weed at about 3 weeks and again at 5 to 6 weeks; thin onion and garlic leaves shade nothing, so weeds win fast.",
-      "Oxyfluorfen and pendimethalin can go over the crop once it has 2 true leaves or more, on small weeds only.",
+      "Hand weed at about 3 weeks and again at 5 to 6 weeks; keep the beds clean until the bulbs form.",
+      "Oxyfluorfen and pendimethalin can go over onion once it has 2 true leaves or more, on small weeds only.",
       "Grass killers take out grasses and volunteer rice; purple nutsedge has to be pulled."
      ],
      "grasses": [
       "Fluazifop P butyl",
-      "Quizalofop P ethyl",
-      "Pendimethalin (crop at 2 true leaves or more)"
+      "Clethodim",
+      "Pendimethalin (crop at 2 true leaves or more)",
+      "Propaquizafop",
+      "Sethoxydim",
+      "Oxyfluorfen plus fluazifop P butyl",
+      "Haloxyfop R methyl"
      ],
      "sedges": [
       "Oxyfluorfen (crop at 2 true leaves or more)"
      ],
      "broadleaves": [
       "Oxyfluorfen (crop at 2 true leaves or more)",
+      "Linuron (small weeds)",
       "Pendimethalin (crop at 2 true leaves or more)"
      ],
      "short": "2 to 5 weeks",
-     "title": "2 to 5 weeks after planting"
+     "title": "2 to 5 weeks after planting",
+     "on": {
+      "Fluazifop P butyl": [
+       "onion",
+       "shallot"
+      ],
+      "Clethodim": [
+       "onion",
+       "shallot"
+      ],
+      "Pendimethalin (crop at 2 true leaves or more)": [
+       "onion",
+       "shallot"
+      ],
+      "Propaquizafop": [
+       "onion",
+       "shallot"
+      ],
+      "Sethoxydim": [
+       "onion",
+       "shallot"
+      ],
+      "Oxyfluorfen plus fluazifop P butyl": [
+       "onion",
+       "shallot"
+      ],
+      "Haloxyfop R methyl": [
+       "onion",
+       "shallot"
+      ],
+      "Oxyfluorfen (crop at 2 true leaves or more)": [
+       "onion",
+       "shallot"
+      ],
+      "Linuron (small weeds)": [
+       "onion",
+       "garlic",
+       "shallot"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Fluazifop P butyl": [
+       "onion",
+       "shallot"
+      ],
+      "Haloxyfop R methyl": [
+       "onion",
+       "shallot"
+      ],
+      "Propaquizafop": [
+       "onion",
+       "shallot"
+      ],
+      "Sethoxydim": [
+       "onion",
+       "shallot"
+      ],
+      "Oxyfluorfen plus fluazifop P butyl": [
+       "onion",
+       "shallot"
+      ],
+      "Pendimethalin (crop at 2 true leaves or more)": [
+       "onion",
+       "shallot"
+      ],
+      "Oxyfluorfen (crop at 2 true leaves or more)": [
+       "onion",
+       "shallot"
+      ],
+      "Linuron (small weeds)": [
+       "onion",
+       "shallot",
+       "garlic"
+      ]
+     }
     },
     {
      "key": "late_post",
@@ -1059,28 +2190,59 @@
      ],
      "grasses": [
       "Fluazifop P butyl",
-      "Quizalofop P ethyl"
+      "Clethodim",
+      "Propaquizafop",
+      "Sethoxydim",
+      "Haloxyfop R methyl"
      ],
      "sedges": [],
      "broadleaves": [],
      "short": "From 6 weeks",
-     "title": "6 weeks after planting until harvest"
+     "title": "6 weeks after planting until harvest",
+     "on": {
+      "Fluazifop P butyl": [
+       "onion",
+       "shallot"
+      ],
+      "Clethodim": [
+       "onion",
+       "shallot"
+      ],
+      "Propaquizafop": [
+       "onion",
+       "shallot"
+      ],
+      "Sethoxydim": [
+       "onion",
+       "shallot"
+      ],
+      "Haloxyfop R methyl": [
+       "onion",
+       "shallot"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Fluazifop P butyl": [
+       "onion",
+       "shallot"
+      ],
+      "Haloxyfop R methyl": [
+       "onion",
+       "shallot"
+      ],
+      "Propaquizafop": [
+       "onion",
+       "shallot"
+      ],
+      "Sethoxydim": [
+       "onion",
+       "shallot"
+      ]
+     }
     }
    ],
-   "sources": [
-    {
-     "label": "Coloma 1987, Weed control in onions grown under three tillage systems, UPLB (AGRIS)",
-     "url": "https://agris.fao.org/search/en/records/6471c83c2a40512c710e401b"
-    },
-    {
-     "label": "UC IPM, Onion and garlic herbicide treatment table",
-     "url": "https://ipm.ucanr.edu/agriculture/onion-and-garlic/herbicide-treatment-table/"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "leafy_direct",
@@ -1097,6 +2259,29 @@
     "radish"
    ],
    "after": "after sowing",
+   "prevent": [
+    "Make the beds, water them and wait 7 to 10 days for weeds to sprout, then scrape them off shallowly and sow without digging again (the stale seedbed).",
+    "Use well rotted compost; raw manure carries weed seeds.",
+    "Sow in rows, not broadcast, so you can weed between them, and mulch the paths with rice straw or rice hull.",
+    "For lowland kangkong, a steady water level holds back most weeds."
+   ],
+   "critical": {
+    "*": {
+     "from": 7,
+     "to": 21,
+     "say": "Keep the field free of weeds from about 1 to 3 weeks after sowing; weeds cost the most yield in that stretch."
+    },
+    "carrot": {
+     "from": 14,
+     "to": 56,
+     "say": "Keep the field free of weeds from about 2 to 8 weeks after sowing; weeds cost the most yield in that stretch."
+    },
+    "radish": {
+     "from": 7,
+     "to": 28,
+     "say": "Keep the field free of weeds from about 1 to 4 weeks after sowing; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -1104,25 +2289,34 @@
      "timing": "prep",
      "stage": "Beds being prepared",
      "steps": [
-      "Make the beds, water them and wait 7 to 10 days for weeds to sprout, then scrape them off shallowly and sow without digging again (stale seedbed).",
-      "Use well rotted compost; raw manure carries weed seeds.",
-      "A burndown spray is only for weeds before the beds are made. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Let the first weeds sprout on the new beds, then scrape them off and sow (the stale seedbed).",
+      "A burndown spray is only for weeds before the beds are made."
      ],
      "grasses": [
-      "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glyphosate"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
-      "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glyphosate"
      ],
      "short": "Before sowing",
-     "title": "Before sowing"
+     "title": "Before sowing",
+     "on": {
+      "Glyphosate": [
+       "pechay",
+       "mustard",
+       "kangkong",
+       "lettuce",
+       "alugbati",
+       "saluyot",
+       "carrot",
+       "radish"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "pre_emergence",
@@ -1130,21 +2324,42 @@
      "timing": "pre",
      "stage": "Seed sown; nothing up yet",
      "steps": [
-      "Pechay, mustard, lettuce, kangkong, alugbati and saluyot have no herbicide that is safe for them; sow in rows, mulch the paths and plan to hand weed.",
+      "Kangkong, lettuce, alugbati and saluyot have no herbicide labelled for them here; sow in rows, mulch the paths and plan to hand weed.",
       "Carrot can take a pre emergence spray right after sowing, before it comes up.",
-      "For lowland kangkong, a steady water level holds back most weeds."
+      "Oxadiazon is labelled here for cabbage and the other crucifers; on pechay and mustard sown from seed, try it on a small bed first."
      ],
      "grasses": [
-      "Pendimethalin (carrot only)",
-      "Linuron (carrot only)"
+      "Linuron",
+      "Oxadiazon"
      ],
-     "sedges": [],
+     "sedges": [
+      "Oxadiazon"
+     ],
      "broadleaves": [
-      "Linuron (carrot only)",
-      "Pendimethalin (carrot only)"
+      "Linuron",
+      "Oxadiazon"
      ],
      "short": "0 to 3 days",
-     "title": "0 to 3 days after sowing"
+     "title": "0 to 3 days after sowing",
+     "on": {
+      "Linuron": [
+       "carrot"
+      ],
+      "Oxadiazon": [
+       "pechay",
+       "mustard"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Linuron": [
+       "carrot"
+      ],
+      "Oxadiazon": [
+       "pechay",
+       "mustard"
+      ]
+     }
     },
     {
      "key": "early_post",
@@ -1154,18 +2369,28 @@
      "steps": [
       "Thin the seedlings and pull weeds at the same time, then hand weed again a week or two later.",
       "Close spacing helps the crop shade the soil sooner.",
-      "In carrot, a grass killer and linuron on small weeds are the only sprays; leafy greens are hand weeded."
+      "In carrot, linuron on small weeds is the only spray; leafy greens are hand weeded."
      ],
      "grasses": [
-      "Fluazifop P butyl (carrot only)",
-      "Linuron (carrot only)"
+      "Linuron (small weeds)"
      ],
      "sedges": [],
      "broadleaves": [
-      "Linuron (carrot only)"
+      "Linuron (small weeds)"
      ],
      "short": "1 to 3 weeks",
-     "title": "1 to 3 weeks after sowing"
+     "title": "1 to 3 weeks after sowing",
+     "on": {
+      "Linuron (small weeds)": [
+       "carrot"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Linuron (small weeds)": [
+       "carrot"
+      ]
+     }
     },
     {
      "key": "late_post",
@@ -1181,19 +2406,13 @@
      "sedges": [],
      "broadleaves": [],
      "short": "From 3 weeks",
-     "title": "3 weeks after sowing until harvest"
+     "title": "3 weeks after sowing until harvest",
+     "on": {},
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "UC IPM, Carrot herbicide treatment table",
-     "url": "https://ipm.ucanr.edu/agriculture/carrot/herbicide-treatment-table/"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "sugarcane",
@@ -1203,6 +2422,19 @@
     "sugarcane"
    ],
    "after": "after planting or ratooning",
+   "prevent": [
+    "Plow, harrow and furrow well, and kill cogon, talahib and purple nutsedge before planting; they are hard to remove from standing cane.",
+    "Plant healthy setts close enough for a full stand, and fill the gaps within a month; gaps are where the weeds come in.",
+    "In ratoons, leave the cane trash on the rows as mulch; it holds back many weeds.",
+    "Cut climbing vines such as morning glory and mile a minute before they seed or pull the cane down."
+   ],
+   "critical": {
+    "*": {
+     "from": 30,
+     "to": 120,
+     "say": "Keep the field free of weeds from about 1 to 4 months after planting or ratooning; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -1210,25 +2442,27 @@
      "timing": "prep",
      "stage": "Field plowed and furrowed; old cane or grass to clear",
      "steps": [
-      "Plow, harrow and furrow well, and kill cogon, talahib and purple nutsedge before planting; they are hard to remove from standing cane.",
-      "Spray perennial grass with glyphosate while it is green and growing, then plow 2 weeks later. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Spray perennial grass with glyphosate while it is green and growing, then plow 2 weeks later.",
+      "Let a flush of weeds sprout after plowing and harrow them under before you furrow."
      ],
      "grasses": [
-      "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glyphosate"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
-      "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat",
-      "2,4 D amine"
+      "Glyphosate"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Glyphosate": [
+       "sugarcane"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "pre_emergence",
@@ -1237,27 +2471,90 @@
      "stage": "Setts planted or cane just cut; cane and weeds not up",
      "steps": [
       "Spray a pre emergence herbicide on moist soil right after planting, or right after the ratoon is cleaned up, before the weeds come up.",
-      "In ratoons, leave the cane trash on the rows as mulch; it holds back many weeds."
+      "Where purple nutsedge is the main weed, pick an ingredient that names it on the label."
      ],
      "grasses": [
-      "Ametryn",
       "Diuron",
       "Atrazine",
+      "Hexazinone plus diuron",
+      "Metribuzin",
+      "Ametryn",
+      "Ametryn plus atrazine",
+      "Linuron",
+      "Sulfentrazone",
       "Pendimethalin",
-      "S metolachlor"
+      "Flumioxazin",
+      "Flazasulfuron",
+      "Indaziflam",
+      "Imazapic"
      ],
      "sedges": [
-      "Ametryn",
-      "Halosulfuron methyl"
+      "Hexazinone plus diuron",
+      "Ametryn plus atrazine",
+      "Sulfentrazone",
+      "Flumioxazin",
+      "Flazasulfuron",
+      "Indaziflam"
      ],
      "broadleaves": [
-      "Ametryn",
       "Diuron",
       "Atrazine",
-      "2,4 D amine"
+      "Hexazinone plus diuron",
+      "Metribuzin",
+      "Ametryn",
+      "Ametryn plus atrazine",
+      "Linuron",
+      "Sulfentrazone",
+      "Flumioxazin",
+      "Flazasulfuron",
+      "Indaziflam",
+      "Imazapic"
      ],
      "short": "0 to 5 days",
-     "title": "0 to 5 days after planting or ratooning"
+     "title": "0 to 5 days after planting or ratooning",
+     "on": {
+      "Diuron": [
+       "sugarcane"
+      ],
+      "Atrazine": [
+       "sugarcane"
+      ],
+      "Hexazinone plus diuron": [
+       "sugarcane"
+      ],
+      "Metribuzin": [
+       "sugarcane"
+      ],
+      "Ametryn": [
+       "sugarcane"
+      ],
+      "Ametryn plus atrazine": [
+       "sugarcane"
+      ],
+      "Linuron": [
+       "sugarcane"
+      ],
+      "Sulfentrazone": [
+       "sugarcane"
+      ],
+      "Pendimethalin": [
+       "sugarcane"
+      ],
+      "Flumioxazin": [
+       "sugarcane"
+      ],
+      "Flazasulfuron": [
+       "sugarcane"
+      ],
+      "Indaziflam": [
+       "sugarcane"
+      ],
+      "Imazapic": [
+       "sugarcane"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "early_post",
@@ -1267,25 +2564,68 @@
      "steps": [
       "Spray small weeds early; ametryn and 2,4 D go over young cane, but read the label for the cane age limit.",
       "Off bar and cultivate between rows about 4 to 6 weeks after planting; it buries weeds and loosens the soil.",
-      "Itchgrass and nutsedge come in flushes; a second spray or cultivation 3 to 4 weeks later stops the next one. In a Philippine trial, glufosinate sprayed between the rows of 6 week old cane killed the weeds without hurting the cane."
+      "Itchgrass and nutsedge come in flushes; a second spray or cultivation 3 to 4 weeks later stops the next one."
      ],
      "grasses": [
+      "Atrazine (small grasses)",
+      "Hexazinone plus diuron",
       "Ametryn",
-      "Glufosinate ammonium (directed)"
+      "Ametryn plus atrazine",
+      "Flazasulfuron"
      ],
      "sedges": [
-      "Halosulfuron methyl",
       "2,4 D amine",
-      "Ametryn"
+      "2,4 D IBE",
+      "Hexazinone plus diuron",
+      "MCPA",
+      "Flazasulfuron"
      ],
      "broadleaves": [
       "2,4 D amine",
-      "Ametryn",
+      "2,4 D IBE",
       "Diuron",
-      "Glufosinate ammonium (directed)"
+      "Atrazine",
+      "Hexazinone plus diuron",
+      "Ametryn",
+      "Ametryn plus atrazine",
+      "MCPA"
      ],
      "short": "3 to 8 weeks",
-     "title": "3 to 8 weeks after planting or ratooning"
+     "title": "3 to 8 weeks after planting or ratooning",
+     "on": {
+      "Atrazine (small grasses)": [
+       "sugarcane"
+      ],
+      "Hexazinone plus diuron": [
+       "sugarcane"
+      ],
+      "Ametryn": [
+       "sugarcane"
+      ],
+      "Ametryn plus atrazine": [
+       "sugarcane"
+      ],
+      "Flazasulfuron": [
+       "sugarcane"
+      ],
+      "2,4 D amine": [
+       "sugarcane"
+      ],
+      "2,4 D IBE": [
+       "sugarcane"
+      ],
+      "MCPA": [
+       "sugarcane"
+      ],
+      "Diuron": [
+       "sugarcane"
+      ],
+      "Atrazine": [
+       "sugarcane"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "late_post",
@@ -1294,25 +2634,41 @@
      "stage": "Cane knee to waist high; rows not closed",
      "steps": [
       "Hill up and weed by hand or with an animal drawn cultivator before the rows close.",
-      "Use only directed sprays between the rows, with a shield, and keep them off the cane leaves. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children.",
+      "Use only directed sprays between the rows, with a shield, and keep them off the cane leaves.",
       "Pull or cut morning glory and other vines before they climb the stalks."
      ],
      "grasses": [
-      "Glufosinate ammonium (directed)",
-      "Paraquat (directed)",
-      "Glyphosate (directed with a shield)"
+      "Glyphosate (directed with a shield)",
+      "Ametryn (directed)"
      ],
      "sedges": [
-      "Halosulfuron methyl",
-      "Glyphosate (directed with a shield)"
+      "Glyphosate (directed with a shield)",
+      "2,4 D amine (directed)"
      ],
      "broadleaves": [
       "2,4 D amine (directed)",
-      "Glufosinate ammonium (directed)",
-      "Paraquat (directed)"
+      "2,4 D IBE (directed)",
+      "Glyphosate (directed with a shield)",
+      "Ametryn (directed)"
      ],
      "short": "2 to 4 months",
-     "title": "2 to 4 months after planting"
+     "title": "2 to 4 months after planting",
+     "on": {
+      "Glyphosate (directed with a shield)": [
+       "sugarcane"
+      ],
+      "Ametryn (directed)": [
+       "sugarcane"
+      ],
+      "2,4 D amine (directed)": [
+       "sugarcane"
+      ],
+      "2,4 D IBE (directed)": [
+       "sugarcane"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "established",
@@ -1329,27 +2685,17 @@
       "2,4 D amine (spot spray on vines)"
      ],
      "short": "From 4 months",
-     "title": "4 months after planting until harvest"
+     "title": "4 months after planting until harvest",
+     "on": {
+      "2,4 D amine (spot spray on vines)": [
+       "sugarcane"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "Fabro and Evangelista 1990, Glufosinate ammonium alone and with diuron for weed control in sugarcane (AGRIS)",
-     "url": "https://agris.fao.org/search/ar/records/6471e6c32a40512c710e917a"
-    },
-    {
-     "label": "JIRCAS, Status of herbicide utilization and its economical assessment in the Philippines",
-     "url": "https://www.jircas.go.jp/en/publication/tars/16/131"
-    },
-    {
-     "label": "Pacific Pests, Pathogens and Weeds: Itch grass fact sheet",
-     "url": "https://apps.lucidcentral.org/ppp_v9/text/web_full/entities/itch_grass_458.htm"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "pineapple",
@@ -1359,6 +2705,18 @@
     "pineapple"
    ],
    "after": "after planting",
+   "prevent": [
+    "Plow, harrow and bed the field, and kill cogon and nutsedge before planting; they are hard to remove later.",
+    "Plant through plastic mulch where you can, or mulch the beds with dried grass; pineapple is slow to cover the ground.",
+    "Plant crowns and suckers of one size together, so the field closes evenly."
+   ],
+   "critical": {
+    "*": {
+     "from": 30,
+     "to": 180,
+     "say": "Keep the field free of weeds from about 1 to 6 months after planting; weeds cost the most yield in that stretch."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -1366,24 +2724,28 @@
      "timing": "prep",
      "stage": "Field plowed and bedded; old crop chopped",
      "steps": [
-      "Plow, harrow and bed the field, and kill cogon and nutsedge before planting; they are hard to remove later.",
-      "If you use plastic mulch, lay it on the beds and plant through it. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Kill standing cogon and other perennial weeds with a burndown herbicide while they are green, then plow and bed.",
+      "If you use plastic mulch, lay it on the beds and plant through it."
      ],
      "grasses": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Glyphosate": [],
+      "Glufosinate ammonium": []
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "pre_emergence",
@@ -1391,25 +2753,70 @@
      "timing": "pre",
      "stage": "Crowns or suckers just planted; soil bare",
      "steps": [
-      "Spray a pre emergence herbicide over the newly planted field on moist soil. Bromacil with diuron is the standard plantation practice in the Philippines.",
+      "Spray a pre emergence herbicide over the newly planted field on moist soil. Bromacil with diuron is the usual plantation practice here.",
       "These herbicides hold weeds for about 2 to 3 months; repeat only as the label allows."
      ],
      "grasses": [
-      "Bromacil",
       "Diuron",
-      "Ametryn"
+      "Ametryn",
+      "Bromacil",
+      "Linuron",
+      "Hexazinone plus diuron",
+      "Sulfentrazone",
+      "Ametryn plus atrazine",
+      "Oxyfluorfen",
+      "Atrazine"
      ],
      "sedges": [
       "Bromacil",
-      "Ametryn"
+      "Hexazinone plus diuron",
+      "Sulfentrazone",
+      "Oxyfluorfen"
      ],
      "broadleaves": [
-      "Bromacil",
       "Diuron",
-      "Ametryn"
+      "Ametryn",
+      "Bromacil",
+      "Linuron",
+      "Hexazinone plus diuron",
+      "Sulfentrazone",
+      "Ametryn plus atrazine",
+      "Oxyfluorfen",
+      "Atrazine"
      ],
      "short": "0 to 7 days",
-     "title": "0 to 7 days after planting"
+     "title": "0 to 7 days after planting",
+     "on": {
+      "Diuron": [
+       "pineapple"
+      ],
+      "Ametryn": [
+       "pineapple"
+      ],
+      "Bromacil": [
+       "pineapple"
+      ],
+      "Linuron": [
+       "pineapple"
+      ],
+      "Hexazinone plus diuron": [
+       "pineapple"
+      ],
+      "Sulfentrazone": [
+       "pineapple"
+      ],
+      "Ametryn plus atrazine": [
+       "pineapple"
+      ],
+      "Oxyfluorfen": [
+       "pineapple"
+      ],
+      "Atrazine": [
+       "pineapple"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "early_post",
@@ -1419,24 +2826,58 @@
      "steps": [
       "Hand weed or hoe the paths between beds, and pull weeds out of the plant hearts carefully.",
       "Ametryn and diuron can go over young pineapple to kill small weeds and hold new ones. Never spray glyphosate on pineapple.",
-      "Keep the field clean until the leaves cover the ground."
+      "Keep the field clean until the leaves cover the ground; weeds cost pineapple the most yield in its first 6 months."
      ],
      "grasses": [
-      "Ametryn",
       "Diuron",
-      "Bromacil"
+      "Fluazifop P butyl",
+      "Ametryn",
+      "Bromacil",
+      "Hexazinone plus diuron",
+      "Quizalofop P ethyl",
+      "Sethoxydim"
      ],
      "sedges": [
-      "Ametryn",
-      "Bromacil"
+      "Bromacil",
+      "Hexazinone plus diuron",
+      "Sulfentrazone"
      ],
      "broadleaves": [
-      "Ametryn",
       "Diuron",
-      "Bromacil"
+      "Ametryn",
+      "Bromacil",
+      "Hexazinone plus diuron"
      ],
      "short": "1 to 4 months",
-     "title": "1 to 4 months after planting"
+     "title": "1 to 4 months after planting",
+     "on": {
+      "Diuron": [
+       "pineapple"
+      ],
+      "Fluazifop P butyl": [
+       "pineapple"
+      ],
+      "Ametryn": [
+       "pineapple"
+      ],
+      "Bromacil": [
+       "pineapple"
+      ],
+      "Hexazinone plus diuron": [
+       "pineapple"
+      ],
+      "Quizalofop P ethyl": [
+       "pineapple"
+      ],
+      "Sethoxydim": [
+       "pineapple"
+      ],
+      "Sulfentrazone": [
+       "pineapple"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "established",
@@ -1446,39 +2887,54 @@
      "steps": [
       "Spot weed by hand; keep vines and tall grasses out of the field.",
       "In ratoon crops, clean the paths after harvest and apply a pre emergence herbicide again as the label allows.",
-      "A burndown spray goes on the paths only, with a shield, never on pineapple leaves. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "A grass killer goes over the plants for grasses only; any other spray goes on the paths, never on pineapple leaves."
      ],
      "grasses": [
+      "Fluazifop P butyl",
       "Ametryn",
-      "Glufosinate ammonium (shielded, paths only)",
-      "Paraquat (shielded, paths only)"
+      "Quizalofop P ethyl",
+      "Sethoxydim"
      ],
      "sedges": [
-      "Ametryn"
+      "Bromacil",
+      "Hexazinone plus diuron"
      ],
      "broadleaves": [
+      "Diuron",
       "Ametryn",
-      "Glufosinate ammonium (shielded, paths only)",
-      "Paraquat (shielded, paths only)"
+      "Bromacil",
+      "Hexazinone plus diuron"
      ],
      "short": "From 5 months",
-     "title": "5 months after planting to forcing, and ratoons"
+     "title": "5 months after planting to forcing, and ratoons",
+     "on": {
+      "Fluazifop P butyl": [
+       "pineapple"
+      ],
+      "Ametryn": [
+       "pineapple"
+      ],
+      "Quizalofop P ethyl": [
+       "pineapple"
+      ],
+      "Sethoxydim": [
+       "pineapple"
+      ],
+      "Bromacil": [
+       "pineapple"
+      ],
+      "Hexazinone plus diuron": [
+       "pineapple"
+      ],
+      "Diuron": [
+       "pineapple"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "Sison 2000, Sulfentrazone for preplant weed control in pineapple, Del Monte Philippines, Bukidnon (ISHS)",
-     "url": "https://ishs.org/ishs-article/529_36/"
-    },
-    {
-     "label": "JIRCAS, Status of herbicide utilization and its economical assessment in the Philippines",
-     "url": "https://www.jircas.go.jp/en/publication/tars/16/131"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   },
   {
    "key": "plantation",
@@ -1516,6 +2972,18 @@
     "bamboo"
    ],
    "after": "after planting",
+   "prevent": [
+    "Clear the brush and slash the grass, but do not burn; burning destroys the organic matter in the soil.",
+    "Sow a legume cover crop such as Centrosema, Calopogonium or Pueraria between the rows as soon as the land is cleared; a good cover replaces cogon within a few months.",
+    "Grow short crops such as sweet potato, peanut, ginger or upland rice between young trees; they pay their way and keep the ground covered.",
+    "Mulch the ring around each young plant with cut grass, leaves, coconut husk or rice hull.",
+    "Cut out Siam weed, lantana and other shrubs, and pull climbing vines, before they seed."
+   ],
+   "critical": {
+    "*": {
+     "say": "Keep a clean ring around every young plant for its first 2 to 3 years, and weed young banana and papaya most carefully in their first 6 months."
+    }
+   },
    "windows": [
     {
      "key": "pre_plant",
@@ -1523,26 +2991,48 @@
      "timing": "prep",
      "stage": "Land being cleared; cogon or brush on the field",
      "steps": [
-      "Clear the brush and slash the grass. Do not burn; burning destroys the organic matter in the soil.",
       "Kill cogon and other perennial grass with glyphosate while it is green and growing, then plant 2 to 4 weeks later.",
-      "Sow a legume cover crop such as Centrosema, Calopogonium or Pueraria between the rows. In a Philippine coconut trial, cover crops replaced cogon in 4 to 7 months. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Sow the cover crop between the rows right after clearing, before the weeds come back."
      ],
      "grasses": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat"
+      "Glufosinate ammonium"
      ],
      "sedges": [
       "Glyphosate"
      ],
      "broadleaves": [
       "Glyphosate",
-      "Glufosinate ammonium",
-      "Paraquat",
-      "2,4 D amine"
+      "Glufosinate ammonium"
      ],
      "short": "Before planting",
-     "title": "Before planting"
+     "title": "Before planting",
+     "on": {
+      "Glyphosate": [
+       "coconut",
+       "banana",
+       "mango",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Glufosinate ammonium": [
+       "banana",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     },
     {
      "key": "young",
@@ -1551,25 +3041,100 @@
      "stage": "Young plants; sunlight reaches the ground between them",
      "steps": [
       "Ring weed a circle around each plant before every fertilizer application: about 60 to 75 cm wide for banana and 1 m for cacao, wider as trees grow. Slash the rows between plants every 2 to 3 months.",
-      "Grow a cover crop or an intercrop such as sweet potato, peanut, ginger or upland rice between the rows, and mulch the rings with cut grass, leaves or rice hull.",
-      "Keep every spray off green stems, young bark, leaves and suckers. Banana, papaya and dragon fruit soak up glyphosate through their green skin; hand weed young banana until about 6 months. The cacao guide advises slashing and mulching, not herbicide."
+      "Mulch the rings with cut grass, leaves or rice hull, and keep the cover crop or intercrop growing between the rows.",
+      "Keep every spray off green stems, young bark, leaves and suckers. Banana, papaya and dragon fruit take up glyphosate through their green skin; hand weed young banana until about 6 months. Cacao does best with slashing and mulch, not herbicide."
      ],
      "grasses": [
-      "Glufosinate ammonium (shielded, off green stems)",
       "Glyphosate (shielded, off green stems)",
-      "Paraquat (shielded, off green stems)",
-      "Fluazifop P butyl (grasses in cover crops)"
+      "Glufosinate ammonium (shielded, off green stems)",
+      "Fluazifop P butyl (grasses in cover crops)",
+      "Ametryn (rings)",
+      "Metamifop"
      ],
      "sedges": [
-      "Glyphosate (shielded, off green stems)"
+      "Glyphosate (shielded, off green stems)",
+      "Glufosinate ammonium (shielded, off green stems)",
+      "Ametryn plus atrazine (rings)"
      ],
      "broadleaves": [
+      "Glyphosate (shielded, off green stems)",
       "Glufosinate ammonium (shielded, off green stems)",
-      "Paraquat (shielded, off green stems)",
-      "Metsulfuron methyl (oil palm and rubber only)"
+      "Ametryn (rings)",
+      "Ametryn plus atrazine (rings)",
+      "Flumioxazin (rings, before weeds come up)"
      ],
      "short": "Years 1 to 3",
-     "title": "First 1 to 3 years after planting"
+     "title": "First 1 to 3 years after planting",
+     "on": {
+      "Glyphosate (shielded, off green stems)": [
+       "coconut",
+       "banana",
+       "mango",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Glufosinate ammonium (shielded, off green stems)": [
+       "banana",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Fluazifop P butyl (grasses in cover crops)": [
+       "banana",
+       "abaca",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Ametryn (rings)": [
+       "banana",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Metamifop": [
+       "banana"
+      ],
+      "Ametryn plus atrazine (rings)": [
+       "coconut",
+       "banana",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm"
+      ],
+      "Flumioxazin (rings, before weeds come up)": [
+       "banana"
+      ]
+     },
+     "abroad": [],
+     "only": {
+      "Metamifop": [
+       "banana"
+      ],
+      "Flumioxazin (rings, before weeds come up)": [
+       "banana"
+      ]
+     }
     },
     {
      "key": "established",
@@ -1579,55 +3144,105 @@
      "steps": [
       "Keep a clean ring around each trunk and slash the rest of the field 3 to 4 times a year. Cover crops, or animals grazing under coconut, also keep the grass down.",
       "Cut and pull climbing vines such as mile a minute and stinking passion flower, and cut out Siam weed, lantana and other shrubs before they seed.",
-      "Spot spray the rings and paths only, never the leaves, fruit or green bark; banana and papaya are hurt by any drift that touches them. Use glyphosate for cogon and glufosinate for mixed weeds. Paraquat is very poisonous to people: wear boots, gloves and a mask, never mix it by hand, and lock it away from children."
+      "Spot spray the rings and paths only, never the leaves, fruit or green bark; banana and papaya are hurt by any drift that touches them. Glyphosate is the one for cogon."
      ],
      "grasses": [
       "Glyphosate (shielded, off green stems)",
       "Glufosinate ammonium (shielded, off green stems)",
-      "Paraquat (shielded, off green stems)",
-      "Diuron (rings of banana, oil palm and rubber)"
+      "Diuron (rings)",
+      "Fluazifop P butyl (grasses in cover crops)",
+      "Ametryn (rings)",
+      "Ametryn plus atrazine (rings)",
+      "Indaziflam (rings, before weeds come up)"
      ],
      "sedges": [
-      "Glyphosate (shielded, off green stems)"
+      "Glyphosate (shielded, off green stems)",
+      "Glufosinate ammonium (shielded, off green stems)",
+      "Ametryn plus atrazine (rings)",
+      "Indaziflam (rings, before weeds come up)"
      ],
      "broadleaves": [
       "Glyphosate (shielded, off green stems)",
       "Glufosinate ammonium (shielded, off green stems)",
-      "Paraquat (shielded, off green stems)",
-      "2,4 D amine (vines and shrubs, away from banana and papaya)",
-      "Metsulfuron methyl (oil palm and rubber only)",
-      "Diuron (rings of banana, oil palm and rubber)"
+      "Diuron (rings)",
+      "Ametryn (rings)",
+      "Ametryn plus atrazine (rings)",
+      "Indaziflam (rings, before weeds come up)"
      ],
      "short": "Bearing trees",
-     "title": "Established and bearing trees"
+     "title": "Established and bearing trees",
+     "on": {
+      "Glyphosate (shielded, off green stems)": [
+       "coconut",
+       "banana",
+       "mango",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Glufosinate ammonium (shielded, off green stems)": [
+       "banana",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Diuron (rings)": [
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "oilpalm"
+      ],
+      "Fluazifop P butyl (grasses in cover crops)": [
+       "banana",
+       "abaca",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Ametryn (rings)": [
+       "banana",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm",
+       "rubber"
+      ],
+      "Ametryn plus atrazine (rings)": [
+       "coconut",
+       "banana",
+       "calamansi",
+       "citrus",
+       "pomelo",
+       "coffee",
+       "cacao",
+       "oilpalm"
+      ],
+      "Indaziflam (rings, before weeds come up)": [
+       "banana",
+       "oilpalm",
+       "rubber"
+      ]
+     },
+     "abroad": [],
+     "only": {}
     }
    ],
-   "sources": [
-    {
-     "label": "DA High Value Crops Development Program, Banana Production Guide",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Banana-Production-Manual.pdf"
-    },
-    {
-     "label": "DA High Value Crops Development Program, Cacao Production Guide",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/CACAO-Production-Guide.pdf"
-    },
-    {
-     "label": "DA High Value Crops Development Program, Rubber Production Guide",
-     "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Rubber-Production-Guide.pdf"
-    },
-    {
-     "label": "Abad and San Juan 1981, Replacing cogon under coconut with legume cover crops (AGRIS)",
-     "url": "https://agris.fao.org/search/ar/records/6471baf877fd37171a6d94e0"
-    },
-    {
-     "label": "JIRCAS, Status of herbicide utilization and its economical assessment in the Philippines",
-     "url": "https://www.jircas.go.jp/en/publication/tars/16/131"
-    },
-    {
-     "label": "HRAC herbicide mode of action groups, 2020 numbers (Wikipedia summary)",
-     "url": "https://en.wikipedia.org/wiki/HRAC_classification"
-    }
-   ]
+   "sources": []
   }
  ],
  "ingredients": {
@@ -1643,33 +3258,44 @@
   "2,4 D amine (spot spray on vines)": [
    4
   ],
-  "2,4 D amine (vines and shrubs, away from banana and papaya)": [
+  "2,4 D IBE": [
    4
   ],
-  "2,4 D IBE": [
+  "2,4 D IBE (directed)": [
+   4
+  ],
+  "2,4 D IBE (not sweet corn)": [
    4
   ],
   "Ametryn": [
    5
   ],
+  "Ametryn (directed)": [
+   5
+  ],
+  "Ametryn (rings)": [
+   5
+  ],
+  "Ametryn plus atrazine": [
+   5
+  ],
+  "Ametryn plus atrazine (rings)": [
+   5
+  ],
   "Atrazine": [
    5
   ],
-  "Atrazine plus S metolachlor (cassava only)": [
-   5,
-   15
+  "Atrazine (small grasses)": [
+   5
   ],
-  "Atrazine plus S metolachlor (corn only)": [
+  "Atrazine plus topramezone": [
    5,
-   15
-  ],
-  "Bensulfuron methyl": [
-   2
+   27
   ],
   "Bentazone": [
    6
   ],
-  "Bentazone (beans, soybean and peanut; not cotton)": [
+  "Bentazone (not cotton)": [
    6
   ],
   "Bispyribac sodium": [
@@ -1691,6 +3317,12 @@
   ],
   "Butachlor with safener": [
    15
+  ],
+  "Carfentrazone ethyl": [
+   14
+  ],
+  "Clethodim": [
+   1
   ],
   "Clomazone": [
    13
@@ -1714,20 +3346,30 @@
    1,
    4
   ],
+  "Cyhalofop butyl plus propanil": [
+   1,
+   5
+  ],
   "Diuron": [
    5
   ],
-  "Diuron (rings of banana, oil palm and rubber)": [
+  "Diuron (directed)": [
+   5
+  ],
+  "Diuron (rings)": [
    5
   ],
   "Fenoxaprop P ethyl plus ethoxysulfuron": [
    1,
    2
   ],
-  "Fluazifop P butyl": [
-   1
+  "Flazasulfuron": [
+   2
   ],
-  "Fluazifop P butyl (carrot only)": [
+  "Florpyrauxifen benzyl": [
+   4
+  ],
+  "Fluazifop P butyl": [
    1
   ],
   "Fluazifop P butyl (grasses in cover crops)": [
@@ -1736,19 +3378,19 @@
   "Flucetosulfuron": [
    2
   ],
+  "Flumioxazin": [
+   14
+  ],
+  "Flumioxazin (rings, before weeds come up)": [
+   14
+  ],
   "Glufosinate ammonium": [
    10
   ],
   "Glufosinate ammonium (directed)": [
    10
   ],
-  "Glufosinate ammonium (directed, cassava only)": [
-   10
-  ],
   "Glufosinate ammonium (directed, tall crops only)": [
-   10
-  ],
-  "Glufosinate ammonium (glufosinate tolerant corn only)": [
    10
   ],
   "Glufosinate ammonium (shielded, off green stems)": [
@@ -1769,95 +3411,85 @@
   "Glyphosate (shielded, off green stems)": [
    9
   ],
-  "Halosulfuron methyl": [
-   2
+  "Glyphosate plus 2,4 D amine": [
+   4,
+   9
   ],
-  "Halosulfuron methyl (tomato, pepper and gourds)": [
-   2
+  "Haloxyfop R methyl": [
+   1
   ],
-  "Imazethapyr (soybean and peanut only)": [
-   2
-  ],
-  "Linuron (carrot only)": [
+  "Hexazinone plus diuron": [
    5
   ],
-  "Linuron (potato only)": [
+  "Imazapic": [
+   2
+  ],
+  "Imazosulfuron": [
+   2
+  ],
+  "Indaziflam": [
+   29
+  ],
+  "Indaziflam (rings, before weeds come up)": [
+   29
+  ],
+  "Isoxaflutole plus thiencarbazone methyl": [
+   2,
+   27
+  ],
+  "Linuron": [
+   5
+  ],
+  "Linuron (small weeds)": [
    5
   ],
   "MCPA": [
    4
   ],
-  "Mesotrione (corn only)": [
+  "MCPA (not sweet corn)": [
+   4
+  ],
+  "Mesotrione plus glyphosate plus S metolachlor (herbicide tolerant corn only)": [
+   9,
+   15,
    27
   ],
   "Metamifop": [
    1
   ],
-  "Metamifop plus penoxsulam": [
+  "Metamifop plus bispyribac sodium": [
    1,
    2
   ],
-  "Metribuzin (potato only)": [
+  "Metribuzin": [
    5
   ],
-  "Metribuzin (potato only, small weeds)": [
+  "Metribuzin (small weeds)": [
    5
-  ],
-  "Metribuzin (tomato only)": [
-   5
-  ],
-  "Metribuzin (tomato only, small weeds)": [
-   5
-  ],
-  "Metsulfuron methyl (oil palm and rubber only)": [
-   2
   ],
   "Metsulfuron methyl plus chlorimuron ethyl": [
-   2
-  ],
-  "Nicosulfuron (yellow corn only)": [
    2
   ],
   "Oxadiazon": [
    14
   ],
+  "Oxadiazon (before transplanting)": [
+   14
+  ],
   "Oxyfluorfen": [
    14
   ],
-  "Oxyfluorfen (cabbage family, before transplanting)": [
+  "Oxyfluorfen (before transplanting)": [
    14
   ],
   "Oxyfluorfen (crop at 2 true leaves or more)": [
    14
   ],
-  "Paraquat": [
-   22
-  ],
-  "Paraquat (directed)": [
-   22
-  ],
-  "Paraquat (directed, cassava only)": [
-   22
-  ],
-  "Paraquat (directed, tall crops only)": [
-   22
-  ],
-  "Paraquat (shielded, off green stems)": [
-   22
-  ],
-  "Paraquat (shielded, paths only)": [
-   22
+  "Oxyfluorfen plus fluazifop P butyl": [
+   1,
+   14
   ],
   "Pendimethalin": [
-   3
-  ],
-  "Pendimethalin (carrot only)": [
-   3
-  ],
-  "Pendimethalin (cassava and potato)": [
-   3
-  ],
-  "Pendimethalin (corn only)": [
    3
   ],
   "Pendimethalin (crop at 2 true leaves or more)": [
@@ -1880,8 +3512,18 @@
   "Pretilachlor plus butachlor": [
    15
   ],
+  "Pretilachlor plus pyribenzoxim": [
+   2,
+   15
+  ],
   "Profoxydim": [
    1
+  ],
+  "Propaquizafop": [
+   1
+  ],
+  "Propyrisulfuron": [
+   2
   ],
   "Pyrazosulfuron ethyl plus pretilachlor": [
    2,
@@ -1900,17 +3542,35 @@
   "S metolachlor": [
    15
   ],
-  "S metolachlor (cassava, potato and sweet potato)": [
-   15
+  "Sethoxydim": [
+   1
   ],
-  "S metolachlor (corn only)": [
-   15
+  "Sulfentrazone": [
+   14
   ],
   "Tefuryltrione plus triafamone": [
    2,
    27
   ],
-  "Topramezone (corn only)": [
+  "Tembotrione": [
+   27
+  ],
+  "Tembotrione plus thiencarbazone methyl": [
+   2,
+   27
+  ],
+  "Tetflupyrolimet": [
+   28
+  ],
+  "Thiobencarb plus 2,4 D IBE": [
+   4,
+   15
+  ],
+  "Thiobencarb plus propanil": [
+   5,
+   15
+  ],
+  "Tolpyralate": [
    27
   ]
  }

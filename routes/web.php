@@ -210,6 +210,12 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
             // 2026-10-19: the lot and the season in the Seed Count and Distance Calculator.
             'seedField' => class_exists(\App\Support\SeedPenalty::class) && \Illuminate\Support\Facades\Route::has('seedcalc.context'),
+            // 2026-10-19: the weed plans checked against the Philippine registrations, crop by crop, with each crop's weed free stretch
+            // and the prevention lines (true once the migration has synced them).
+            'weedsRegistered' => method_exists(\App\Support\FieldCatalogue::class, 'forCrop')
+                && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_weed_plans', 'critical')
+                    && \Illuminate\Support\Facades\DB::table('as_weed_plans')->where('deleteStatus', 1)->whereNotNull('critical')->exists()
+                    && \Illuminate\Support\Facades\DB::table('as_weeds')->where('deleteStatus', 1)->whereNotNull('named')->exists(), false, false),
         ],
         // The guides, crop problems, blog and feature pages live per section:
         // whether the shipment migration ran and what the mother app left live.

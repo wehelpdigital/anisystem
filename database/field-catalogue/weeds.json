@@ -10,7 +10,127 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Sow clean seed, flood the field early and keep the water steady, and pull the plants that slip past before their heads open; it drops seed within about two months.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Clethodim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Cyhalofop butyl",
+    [
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Metamifop",
+    [
+     1
+    ],
+    [
+     "banana",
+     "rice"
+    ]
+   ],
+   [
+    "Pyribenzoxim plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl plus ethoxysulfuron",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Propyrisulfuron",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Oxyfluorfen plus fluazifop P butyl",
+    [
+     14,
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Florpyrauxifen benzyl",
+    [
+     4
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "weedy-rice",
@@ -23,7 +143,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Sow certified seed, never seed kept from a field that had it. Prepare the land twice so its seed sprouts and dies, transplant where it is bad, and pull plants that grow taller, flower early or carry red, awned grains before they shatter.",
+  "named": []
  },
  {
   "slug": "chinese-sprangletop",
@@ -36,7 +158,127 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It sprouts on moist soil but not under water, so keep water on the field from early on, and pull or spray it while young; older plants shrug off many grass killers.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl",
+    [
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Metamifop",
+    [
+     1
+    ],
+    [
+     "banana",
+     "rice"
+    ]
+   ],
+   [
+    "Pyribenzoxim plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl plus ethoxysulfuron",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Oxyfluorfen plus fluazifop P butyl",
+    [
+     14,
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Penoxsulam plus butachlor",
+    [
+     2,
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Florpyrauxifen benzyl",
+    [
+     4
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Profoxydim",
+    [
+     1
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "echinochloa-glabrescens",
@@ -49,7 +291,29 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Use clean seed and early, steady flooding, and hand pull plants that look like rice but have no ligule before they seed.",
+  "named": [
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "jungle-rice",
@@ -99,7 +363,82 @@
    "onion_spring",
    "shallot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It sprouts on moist, not flooded, soil: flood rice early, mulch or hoe upland crops, and do not let it seed on bunds and field edges.",
+  "named": [
+   [
+    "Fluazifop P butyl",
+    [
+     1
+    ],
+    [
+     "abaca",
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coffee",
+     "cotton",
+     "oilpalm",
+     "onion",
+     "pineapple",
+     "pomelo",
+     "rubber",
+     "shallot",
+     "soybean",
+     "tomato"
+    ]
+   ],
+   [
+    "Clethodim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Propyrisulfuron",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Oxyfluorfen plus fluazifop P butyl",
+    [
+     14,
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Profoxydim",
+    [
+     1
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "ischaemum-rugosum",
@@ -112,7 +451,87 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep standing water on the paddy early and level the field so no dry spots are left; pull it before the dark seed heads ripen.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl",
+    [
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Metamifop",
+    [
+     1
+    ],
+    [
+     "banana",
+     "rice"
+    ]
+   ],
+   [
+    "Pyribenzoxim plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus butachlor",
+    [
+     2,
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "pineapple"
+    ]
+   ]
+  ]
  },
  {
   "slug": "purple-nutsedge",
@@ -207,7 +626,42 @@
    "cacao",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Its tubers live for years in the soil: plow and harrow several times in the dry season so new shoots keep using up the tubers, then shade it with a crop that closes fast, mulch or plastic.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coconut",
+     "coffee",
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow",
+     "mango",
+     "oilpalm",
+     "pomelo",
+     "rubber",
+     "sugarcane"
+    ]
+   ],
+   [
+    "Sulfentrazone",
+    [
+     14
+    ],
+    [
+     "pineapple",
+     "sugarcane"
+    ]
+   ]
+  ]
  },
  {
   "slug": "smallflower-umbrella-sedge",
@@ -220,7 +674,67 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It sprouts on saturated soil before the field floods: flood early and deep enough to cover the soil, and pull it before the round heads ripen; one plant makes thousands of tiny seeds.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl plus ethoxysulfuron",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Propyrisulfuron",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "rice-flatsedge",
@@ -250,7 +764,77 @@
    "onion_spring",
    "shallot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood rice early and hoe it young in upland fields; it ripens seed fast, so pull it before the heads turn brown.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pyribenzoxim plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl plus ethoxysulfuron",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Propyrisulfuron",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "globe-fringerush",
@@ -263,7 +847,68 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep water on the field early and level it well; pull the tufts before the round brown heads drop their seed.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl plus ethoxysulfuron",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus butachlor",
+    [
+     2,
+     15
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "monochoria-vaginalis",
@@ -276,7 +921,49 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Its seeds sprout under water, so flooding alone does not stop it: pull it early, before it flowers, and level the field so a pre emergence herbicide covers it evenly.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus butachlor",
+    [
+     2,
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Florpyrauxifen benzyl",
+    [
+     4
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "gooseweed",
@@ -289,7 +976,96 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep the water on early and pull it young; it ripens seed in the paddy within weeks.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pretilachlor",
+    [
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pyribenzoxim plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl plus ethoxysulfuron",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Propyrisulfuron",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus butachlor",
+    [
+     2,
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Florpyrauxifen benzyl",
+    [
+     4
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "ludwigia-hyssopifolia",
@@ -302,7 +1078,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood the field early, pull it young, and spare the small black Altica beetle, which eats its leaves.",
+  "named": []
  },
  {
   "slug": "false-daisy",
@@ -334,7 +1112,9 @@
    "alugbati",
    "saluyot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It sprouts on moist, open soil: flood rice early, mulch upland crops and pull it before it seeds.",
+  "named": []
  },
  {
   "slug": "water-hyacinth",
@@ -347,7 +1127,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Rake it out of canals and ponds before it reaches the paddy, put a screen at the water inlet, and compost what you pull away from the water.",
+  "named": []
  },
  {
   "slug": "bermuda-grass",
@@ -426,7 +1208,33 @@
    "cacao",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It grows back from runners and buried stems: plow and dry the runners in the sun, plow once more before planting, and never carry soil with its runners into a clean field.",
+  "named": [
+   [
+    "Fluazifop P butyl",
+    [
+     1
+    ],
+    [
+     "abaca",
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coffee",
+     "cotton",
+     "oilpalm",
+     "onion",
+     "pineapple",
+     "pomelo",
+     "rubber",
+     "shallot",
+     "soybean",
+     "tomato"
+    ]
+   ]
+  ]
  },
  {
   "slug": "carabao-grass",
@@ -469,7 +1277,70 @@
    "dragonfruit",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It runs along the ground and roots at each joint: slash it often, grow a cover crop, and let the crop or the trees shade it out.",
+  "named": [
+   [
+    "Fluazifop P butyl",
+    [
+     1
+    ],
+    [
+     "abaca",
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coffee",
+     "cotton",
+     "oilpalm",
+     "onion",
+     "pineapple",
+     "pomelo",
+     "rubber",
+     "shallot",
+     "soybean",
+     "tomato"
+    ]
+   ],
+   [
+    "Glufosinate ammonium",
+    [
+     10
+    ],
+    [
+     "rubber"
+    ]
+   ],
+   [
+    "Sulfentrazone",
+    [
+     14
+    ],
+    [
+     "pineapple",
+     "sugarcane"
+    ]
+   ],
+   [
+    "Hexazinone plus diuron",
+    [
+     5
+    ],
+    [
+     "pineapple"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "pineapple"
+    ]
+   ]
+  ]
  },
  {
   "slug": "crowfoot-grass",
@@ -500,7 +1371,64 @@
    "onion_spring",
    "shallot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe or pull it while young, mulch the rows, and mow field edges before it seeds.",
+  "named": [
+   [
+    "Fluazifop P butyl",
+    [
+     1
+    ],
+    [
+     "abaca",
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coffee",
+     "cotton",
+     "oilpalm",
+     "onion",
+     "pineapple",
+     "pomelo",
+     "rubber",
+     "shallot",
+     "soybean",
+     "tomato"
+    ]
+   ],
+   [
+    "Clethodim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Oxyfluorfen plus fluazifop P butyl",
+    [
+     14,
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ]
+  ]
  },
  {
   "slug": "goosegrass",
@@ -587,7 +1515,74 @@
    "cacao",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Its tough roots hold on: pull or hoe it young, mulch the rows, and switch herbicide groups, since it learns to survive one group fast.",
+  "named": [
+   [
+    "Fluazifop P butyl",
+    [
+     1
+    ],
+    [
+     "abaca",
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coffee",
+     "cotton",
+     "oilpalm",
+     "onion",
+     "pineapple",
+     "pomelo",
+     "rubber",
+     "shallot",
+     "soybean",
+     "tomato"
+    ]
+   ],
+   [
+    "Clethodim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Hexazinone plus diuron",
+    [
+     5
+    ],
+    [
+     "pineapple"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "pineapple",
+     "shallot"
+    ]
+   ],
+   [
+    "Oxyfluorfen plus fluazifop P butyl",
+    [
+     14,
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ]
+  ]
  },
  {
   "slug": "knotgrass",
@@ -600,7 +1595,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It creeps by runners in wet ground: plow and leave the runners to dry in the sun at land preparation, keep bunds and canals clean, and hold deep water early.",
+  "named": []
  },
  {
   "slug": "paspalum-scrobiculatum",
@@ -613,7 +1610,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood early and keep the field level; pull plants on bunds and dry spots before they seed.",
+  "named": []
  },
  {
   "slug": "southern-crabgrass",
@@ -663,7 +1662,61 @@
    "onion_spring",
    "shallot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "A stale seedbed before planting kills its first flush; mulch or hoe the rows while it is small, and do not let it seed along the edges.",
+  "named": [
+   [
+    "Fluazifop P butyl",
+    [
+     1
+    ],
+    [
+     "abaca",
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coffee",
+     "cotton",
+     "oilpalm",
+     "onion",
+     "pineapple",
+     "pomelo",
+     "rubber",
+     "shallot",
+     "soybean",
+     "tomato"
+    ]
+   ],
+   [
+    "Clethodim",
+    [
+     1
+    ],
+    [
+     "onion",
+     "shallot"
+    ]
+   ],
+   [
+    "Sulfentrazone",
+    [
+     14
+    ],
+    [
+     "pineapple"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "pineapple"
+    ]
+   ]
+  ]
  },
  {
   "slug": "southern-cutgrass",
@@ -676,7 +1729,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It spreads by creeping stems in wet ground: rake out the runners and let them dry at land preparation, and keep canals and bunds free of it.",
+  "named": []
  },
  {
   "slug": "torpedo-grass",
@@ -689,7 +1744,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Its underground runners break and grow again: plow when the soil is dry, leave the runners to dry in the sun, repeat before planting, and keep it off the bunds.",
+  "named": []
  },
  {
   "slug": "cyperus-compactus",
@@ -702,7 +1759,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep the paddy flooded early and pull it while young; dig out older clumps with their base so they do not regrow.",
+  "named": []
  },
  {
   "slug": "cyperus-compressus",
@@ -732,7 +1791,9 @@
    "onion_spring",
    "shallot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe or pull it while young and keep the field edges clean; it seeds quickly in moist, open ground.",
+  "named": []
  },
  {
   "slug": "cyperus-digitatus",
@@ -745,7 +1806,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep the paddy flooded early and pull it while young; dig out older clumps with their base so they do not regrow.",
+  "named": []
  },
  {
   "slug": "cyperus-distans",
@@ -758,7 +1821,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep the paddy flooded early and pull it while young; dig out older clumps with their base so they do not regrow.",
+  "named": []
  },
  {
   "slug": "cyperus-haspan",
@@ -771,7 +1836,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep the paddy flooded early and pull it young, before the loose heads seed; dig out older clumps with their base.",
+  "named": []
  },
  {
   "slug": "cyperus-imbricatus",
@@ -784,7 +1851,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep the paddy flooded early and pull it while young; dig out older clumps with their base so they do not regrow.",
+  "named": []
  },
  {
   "slug": "forked-fimbry",
@@ -797,7 +1866,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood early and level the field; pull plants on bunds and high spots before they seed.",
+  "named": []
  },
  {
   "slug": "giant-bulrush",
@@ -810,7 +1881,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It spreads by thick underground runners in wet, low spots: dig out the clumps with their runners at land preparation, and level or drain the low spots.",
+  "named": []
  },
  {
   "slug": "scirpus-juncoides",
@@ -823,7 +1896,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hold water on the paddy early and pull it young; dig out old clumps with their base.",
+  "named": []
  },
  {
   "slug": "alyce-clover",
@@ -836,7 +1911,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe or pull it young on bunds and dry spots, before its jointed pods ripen.",
+  "named": []
  },
  {
   "slug": "ammannia-baccifera",
@@ -849,7 +1926,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep standing water early and pull it before the many small seed capsules along its stem ripen.",
+  "named": []
  },
  {
   "slug": "asian-spiderflower",
@@ -875,7 +1954,9 @@
    "pigeonpea",
    "cotton"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe or pull it young and mulch the rows; do not let its long pods ripen.",
+  "named": []
  },
  {
   "slug": "balloon-vine",
@@ -888,7 +1969,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull the vines before the papery balloons ripen, and keep the field edges clean where it climbs.",
+  "named": []
  },
  {
   "slug": "basilicum-polystachyon",
@@ -901,7 +1984,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it from bunds and moist edges before it seeds, and hoe it in upland fields.",
+  "named": []
  },
  {
   "slug": "benghal-dayflower",
@@ -976,7 +2061,21 @@
    "cacao",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it out whole and carry it off the field, since stem pieces root again; it even sets seed from flowers under the soil, so mulch and a crop that closes fast help most.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow"
+    ]
+   ]
+  ]
  },
  {
   "slug": "chamber-bitter",
@@ -1025,7 +2124,9 @@
    "onion_spring",
    "shallot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe it young and mulch the rows; it ripens seed within weeks under its branches.",
+  "named": []
  },
  {
   "slug": "climbing-dayflower",
@@ -1101,7 +2202,9 @@
    "dragonfruit",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull whole plants and carry them off the field, since stem pieces left on moist soil root again.",
+  "named": []
  },
  {
   "slug": "corchorus-aestuans",
@@ -1114,7 +2217,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull or hoe it while young on bunds and upland fields, before its pods split.",
+  "named": []
  },
  {
   "slug": "creeping-water-primrose",
@@ -1127,7 +2232,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull the floating stems out of canals and the paddy before transplanting; pieces root again, so carry them out of the field.",
+  "named": []
  },
  {
   "slug": "cutleaf-groundcherry",
@@ -1172,7 +2279,9 @@
    "tobacco",
    "strawberry"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it before the papery lanterns ripen, and keep it out of tomato, eggplant and pepper fields, where it carries the same insects and viruses.",
+  "named": []
  },
  {
   "slug": "doveweed",
@@ -1185,7 +2294,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It roots from its creeping stems: pull whole plants and carry them out of the field instead of leaving them on the soil.",
+  "named": []
  },
  {
   "slug": "eclipta-zippeliana",
@@ -1198,7 +2309,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It sprouts on moist, open soil: flood the paddy early and pull it before it seeds.",
+  "named": []
  },
  {
   "slug": "fringed-spiderflower",
@@ -1279,7 +2392,19 @@
    "cacao",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it before the long pods split; it seeds within a few weeks and comes back in flushes after rain, so mulch the rows.",
+  "named": [
+   [
+    "Hexazinone plus diuron",
+    [
+     5
+    ],
+    [
+     "pineapple"
+    ]
+   ]
+  ]
  },
  {
   "slug": "giant-salvinia",
@@ -1292,7 +2417,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Scoop it off the water, screen the inlet, and never move water plants from a pond that has it; a small piece starts a new mat.",
+  "named": []
  },
  {
   "slug": "giant-sensitive-plant",
@@ -1336,7 +2463,19 @@
    "cacao",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Slash it before it flowers and keep cutting the regrowth; a dense cover crop keeps the thorny tangles from coming back.",
+  "named": [
+   [
+    "Hexazinone plus diuron",
+    [
+     5
+    ],
+    [
+     "pineapple"
+    ]
+   ]
+  ]
  },
  {
   "slug": "hedyotis-biflora",
@@ -1349,7 +2488,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It grows on moist bunds and dry spots in the paddy: level the field, flood early and pull it before it seeds.",
+  "named": []
  },
  {
   "slug": "hedyotis-corymbosa",
@@ -1362,7 +2503,19 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It grows on moist bunds and dry spots in the paddy: level the field, flood early and pull it before it seeds.",
+  "named": [
+   [
+    "Hexazinone plus diuron",
+    [
+     5
+    ],
+    [
+     "pineapple"
+    ]
+   ]
+  ]
  },
  {
   "slug": "hedyotis-diffusa",
@@ -1375,7 +2528,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It grows on moist bunds and dry spots in the paddy: level the field, flood early and pull it before it seeds.",
+  "named": []
  },
  {
   "slug": "horse-purslane",
@@ -1424,7 +2579,9 @@
    "onion_spring",
    "shallot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe it while small, on a dry day, and carry it off; the fleshy stems root again if left on wet soil.",
+  "named": []
  },
  {
   "slug": "hydrolea-zeylanica",
@@ -1437,7 +2594,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it from wet edges and canals, and keep the paddy flooded early.",
+  "named": []
  },
  {
   "slug": "indian-heliotrope",
@@ -1464,7 +2623,9 @@
    "pigeonpea",
    "cotton"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull or hoe it young and mulch the rows; do not let the curled flower spikes seed.",
+  "named": []
  },
  {
   "slug": "indian-jointvetch",
@@ -1477,7 +2638,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it before its pods ripen; its seed mixes with harvested grain, so clean the seed you keep.",
+  "named": []
  },
  {
   "slug": "kangkong-weed",
@@ -1490,7 +2653,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull the runners out at land preparation and keep canals clean; stem pieces root again in wet soil.",
+  "named": []
  },
  {
   "slug": "lindernia-antipoda",
@@ -1503,7 +2668,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It thrives in saturated, not flooded, mud: keep water over the soil early and pull it young, before the tiny pods ripen.",
+  "named": []
  },
  {
   "slug": "lindernia-procumbens",
@@ -1516,7 +2683,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It thrives in saturated, not flooded, mud: keep water over the soil early and pull it young, before the tiny pods ripen.",
+  "named": []
  },
  {
   "slug": "littlebell",
@@ -1550,7 +2719,20 @@
    "ginger",
    "turmeric"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull the vines before they climb the crop and before the seed capsules ripen.",
+  "named": [
+   [
+    "Sulfentrazone",
+    [
+     14
+    ],
+    [
+     "pineapple",
+     "sugarcane"
+    ]
+   ]
+  ]
  },
  {
   "slug": "ludwigia-decurrens",
@@ -1563,7 +2745,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood the field early, pull it young, and spare the small black Altica beetle, which eats its leaves.",
+  "named": []
  },
  {
   "slug": "ludwigia-octovalvis",
@@ -1576,7 +2760,78 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood the field early, pull it young, and spare the small black Altica beetle, which eats its leaves.",
+  "named": [
+   [
+    "Cyhalofop butyl plus bispyribac sodium",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Pyribenzoxim plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus cyhalofop butyl",
+    [
+     2,
+     1
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Cyhalofop butyl plus ethoxysulfuron",
+    [
+     1,
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Propyrisulfuron",
+    [
+     2
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Penoxsulam plus butachlor",
+    [
+     2,
+     15
+    ],
+    [
+     "rice"
+    ]
+   ],
+   [
+    "Florpyrauxifen benzyl",
+    [
+     4
+    ],
+    [
+     "rice"
+    ]
+   ]
+  ]
  },
  {
   "slug": "ludwigia-perennis",
@@ -1589,7 +2844,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood the field early, pull it young, and spare the small black Altica beetle, which eats its leaves.",
+  "named": []
  },
  {
   "slug": "makahiya",
@@ -1644,7 +2901,9 @@
    "cacao",
    "malunggay"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Dig it out with its taproot while young; slashing alone lets it grow back. Gloves help with the thorns.",
+  "named": []
  },
  {
   "slug": "malachra-capitata",
@@ -1657,7 +2916,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it young from bunds and field edges; older plants turn woody and hard to pull.",
+  "named": []
  },
  {
   "slug": "malachra-fasciata",
@@ -1670,7 +2931,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it young from bunds and field edges; older plants turn woody and hard to pull.",
+  "named": []
  },
  {
   "slug": "melochia-concatenata",
@@ -1683,7 +2946,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Cut and dig it out of bunds and edges before it turns woody, and keep the field edges slashed.",
+  "named": []
  },
  {
   "slug": "merremia-emarginata",
@@ -1696,7 +2961,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull the creeping stems out with their roots before they spread along bunds and moist edges.",
+  "named": []
  },
  {
   "slug": "phyllanthus-debilis",
@@ -1741,7 +3008,9 @@
    "tobacco",
    "strawberry"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe it young and mulch the rows; it ripens seed within weeks under its branches.",
+  "named": []
  },
  {
   "slug": "purslane",
@@ -1798,7 +3067,9 @@
    "alugbati",
    "saluyot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe it on a dry, sunny day and take it off the field; fleshy pieces left on moist soil root again.",
+  "named": []
  },
  {
   "slug": "saluyot-weed",
@@ -1825,7 +3096,9 @@
    "pigeonpea",
    "cotton"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it young in upland fields, before the long pods ripen.",
+  "named": []
  },
  {
   "slug": "sessile-joyweed",
@@ -1876,7 +3149,9 @@
    "alugbati",
    "saluyot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it out with its creeping stems and keep bunds and wet edges clean; stem pieces root again.",
+  "named": []
  },
  {
   "slug": "slender-amaranth",
@@ -1933,7 +3208,9 @@
    "alugbati",
    "saluyot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe or pull it before it flowers; one plant drops many thousands of tiny seeds.",
+  "named": []
  },
  {
   "slug": "sphaeranthus-africanus",
@@ -1946,7 +3223,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it from moist edges and dry patches before it flowers; early flooding holds it back.",
+  "named": []
  },
  {
   "slug": "spiny-amaranth",
@@ -2011,7 +3290,9 @@
    "alugbati",
    "saluyot"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Hoe or pull it before it flowers, wearing gloves for the spines; one plant drops many thousands of tiny seeds.",
+  "named": []
  },
  {
   "slug": "texasweed",
@@ -2024,7 +3305,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Flood early and pull it young, before its seed pods ripen and mix into the harvest.",
+  "named": []
  },
  {
   "slug": "valley-redstem",
@@ -2037,7 +3320,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Keep standing water early and pull it before the many small seed capsules along its stem ripen.",
+  "named": []
  },
  {
   "slug": "water-clover",
@@ -2050,7 +3335,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "It spreads by creeping stems in shallow water: rake out the runners at land preparation and keep the water deep early.",
+  "named": []
  },
  {
   "slug": "water-lettuce",
@@ -2063,7 +3350,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Scoop it out of canals and ponds, screen the water inlet, and compost it away from the water; each plant sends out new ones on runners.",
+  "named": []
  },
  {
   "slug": "wild-bushbean",
@@ -2090,7 +3379,9 @@
    "pigeonpea",
    "cotton"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Pull it before its pods ripen and keep field edges clean.",
+  "named": []
  },
  {
   "slug": "yellow-velvetleaf",
@@ -2103,7 +3394,9 @@
   "crops": [
    "rice"
   ],
-  "sources": []
+  "sources": [],
+  "stop": "Dig out whole plants with their base before they flower, and screen the water inlet; its seed heads float into new fields.",
+  "named": []
  },
  {
   "slug": "itchgrass",
@@ -2136,23 +3429,61 @@
    "ginger",
    "turmeric"
   ],
-  "sources": [
-   {
-    "label": "Pamplona 1988, Weed control management in corn in the Philippines (AGRIS)",
-    "url": "https://agris.fao.org/search/fr/records/6471ccdd77fd37171a6fab32"
-   },
-   {
-    "label": "Kunjo and Manuel 1989, Mechanical and chemical weed control in sweet corn, Philippines (AGRIS)",
-    "url": "https://agris.fao.org/search/ar/records/6473642e08fd68d5460564a4"
-   },
-   {
-    "label": "Caasi Lit and Fernandez 2006, Alternate hosts of Asian corn borer in major Philippine corn areas (AGRIS)",
-    "url": "https://agris.fao.org/search/ar/records/64724af8e17b74d2224fa07d"
-   },
-   {
-    "label": "Pacific Pests, Pathogens and Weeds: Itch grass fact sheet",
-    "url": "https://apps.lucidcentral.org/ppp_v9/text/web_full/entities/itch_grass_458.htm"
-   }
+  "sources": [],
+  "stop": "Never let it set seed: pull or slash it before it flowers, clean the harrow, planter and sheller after a weedy field, and plant a crop or cover crop that closes over the ground fast.",
+  "named": [
+   [
+    "Fluazifop P butyl",
+    [
+     1
+    ],
+    [
+     "abaca",
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coffee",
+     "cotton",
+     "oilpalm",
+     "onion",
+     "pineapple",
+     "pomelo",
+     "rubber",
+     "shallot",
+     "soybean",
+     "tomato"
+    ]
+   ],
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow"
+    ]
+   ],
+   [
+    "Sulfentrazone",
+    [
+     14
+    ],
+    [
+     "pineapple"
+    ]
+   ],
+   [
+    "Sethoxydim",
+    [
+     1
+    ],
+    [
+     "pineapple"
+    ]
+   ]
   ]
  },
  {
@@ -2211,15 +3542,41 @@
    {
     "label": "Stuartxchange, Philippine Medicinal Plants: Kogon",
     "url": "https://stuartxchange.com/Kogon"
-   },
-   {
-    "label": "Abad and San Juan 1981, Replacing cogon under coconut with legume cover crops (AGRIS)",
-    "url": "https://agris.fao.org/search/ar/records/6471baf877fd37171a6d94e0"
-   },
-   {
-    "label": "DA High Value Crops Development Program, Rubber Production Guide",
-    "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Rubber-Production-Guide.pdf"
    }
+  ],
+  "stop": "Plow and harrow two or three times in the dry season to bring the runners up to dry, then shade it out with a crop, a legume cover crop or trees; it does not stand shade.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coconut",
+     "coffee",
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow",
+     "mango",
+     "oilpalm",
+     "pomelo",
+     "rubber",
+     "sugarcane"
+    ]
+   ],
+   [
+    "Glufosinate ammonium",
+    [
+     10
+    ],
+    [
+     "rubber"
+    ]
+   ]
   ]
  },
  {
@@ -2275,6 +3632,31 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Talahib",
     "url": "https://stuartxchange.com/Talahib"
    }
+  ],
+  "stop": "Cut the clumps low and dig out the base, then plant a crop or cover that shades the ground; burning only clears the top, and it comes back from the base.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coconut",
+     "coffee",
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow",
+     "mango",
+     "oilpalm",
+     "pomelo",
+     "rubber",
+     "sugarcane"
+    ]
+   ]
   ]
  },
  {
@@ -2292,12 +3674,9 @@
    "sorghum",
    "sugarcane"
   ],
-  "sources": [
-   {
-    "label": "Caasi Lit and Fernandez 2006, Alternate hosts of Asian corn borer in major Philippine corn areas (AGRIS)",
-    "url": "https://agris.fao.org/search/ar/records/64724af8e17b74d2224fa07d"
-   }
-  ]
+  "sources": [],
+  "stop": "Plow out the runners in dry weather and leave them to dry in the sun; never let it seed, and do not carry soil with its runners to another field.",
+  "named": []
  },
  {
   "slug": "para-grass",
@@ -2358,11 +3737,40 @@
    "cacao",
    "malunggay"
   ],
-  "sources": [
-   {
-    "label": "Caasi Lit and Fernandez 2006, Alternate hosts of Asian corn borer in major Philippine corn areas (AGRIS)",
-    "url": "https://agris.fao.org/search/ar/records/64724af8e17b74d2224fa07d"
-   }
+  "sources": [],
+  "stop": "Rake out and dry the creeping stems, drain wet spots where you can, and keep canals and edges slashed.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "banana",
+     "cacao",
+     "calamansi",
+     "citrus",
+     "coconut",
+     "coffee",
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow",
+     "mango",
+     "oilpalm",
+     "pomelo",
+     "rubber",
+     "sugarcane"
+    ]
+   ],
+   [
+    "Glufosinate ammonium",
+    [
+     10
+    ],
+    [
+     "rubber"
+    ]
+   ]
   ]
  },
  {
@@ -2446,7 +3854,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Korokorosan",
     "url": "https://stuartxchange.com/Korokorosan"
    }
-  ]
+  ],
+  "stop": "Hoe it young and mow field edges and roadsides before the feathery heads ripen.",
+  "named": []
  },
  {
   "slug": "whitehead-spikesedge",
@@ -2488,16 +3898,9 @@
    "dragonfruit",
    "malunggay"
   ],
-  "sources": [
-   {
-    "label": "Philippine Traditional Knowledge Digital Library on Health: Busikad",
-    "url": "https://mail.tkdlph.com/index.php/ct-menu-item-3/ct-menu-item-7/5952-busicad"
-   },
-   {
-    "label": "Philippine Traditional Knowledge Digital Library on Health: Uli uli, anuang, malabutones",
-    "url": "https://mail.tkdlph.com/index.php/ct-menu-item-3/ct-menu-item-7/20198-uli-uli-tagabawa-anuang-tagalog-malabutones-bisaya"
-   }
-  ]
+  "sources": [],
+  "stop": "It spreads by short runners: hoe it out with its base, mulch the rows, and keep paths mowed low.",
+  "named": []
  },
  {
   "slug": "siam-weed",
@@ -2552,7 +3955,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Hagonoy",
     "url": "https://stuartxchange.com/Hagonoy"
    }
-  ]
+  ],
+  "stop": "Slash it before it flowers and dig out the crowns; a legume cover crop or quick shade keeps it from coming back.",
+  "named": []
  },
  {
   "slug": "mile-a-minute",
@@ -2594,12 +3999,9 @@
    "dragonfruit",
    "malunggay"
   ],
-  "sources": [
-   {
-    "label": "PROSEA, Mikania cordata and Mikania micrantha",
-    "url": "https://prosea.prota4u.org/view.aspx?id=3030"
-   }
-  ]
+  "sources": [],
+  "stop": "Pull the vines off the crop and dig out the base; cut pieces root again, so do not leave them on moist ground.",
+  "named": []
  },
  {
   "slug": "billygoat-weed",
@@ -2682,11 +4084,21 @@
    {
     "label": "Stuartxchange, Philippine Medicinal Plants: Bulak manok",
     "url": "https://stuartxchange.com/Bulak"
-   },
-   {
-    "label": "Abit, Dimas and Ramirez 2022, Weed survey of small scale vegetable farms in Ormoc City, Philippines (AGRIS)",
-    "url": "https://agris.fao.org/search/en/records/64eda2e62ac4a875e3f0b31e"
    }
+  ],
+  "stop": "Hoe or pull it before it flowers; it seeds in about 6 weeks, so mulch and an early weeding stop the next flush.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow"
+    ]
+   ]
   ]
  },
  {
@@ -2766,11 +4178,21 @@
    {
     "label": "Stuartxchange, Philippine Medicinal Plants: Dadayem",
     "url": "https://stuartxchange.com/Dadayem"
-   },
-   {
-    "label": "UP Baguio Herbarium specimen of Bidens pilosa, La Trinidad, Benguet",
-    "url": "https://herbarium.upb.edu.ph/collection/specimen/1341"
    }
+  ],
+  "stop": "Pull it before the black, hooked seeds ripen; they stick to clothes and animals and travel to the next field.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow"
+    ]
+   ]
   ]
  },
  {
@@ -2817,12 +4239,9 @@
    "alugbati",
    "saluyot"
   ],
-  "sources": [
-   {
-    "label": "Abit, Dimas and Ramirez 2022, Weed survey of small scale vegetable farms in Ormoc City, Philippines (AGRIS)",
-    "url": "https://agris.fao.org/search/en/records/64eda2e62ac4a875e3f0b31e"
-   }
-  ]
+  "sources": [],
+  "stop": "Hoe or pull it while small and mulch the beds; it can seed within a month.",
+  "named": []
  },
  {
   "slug": "tropical-chickweed",
@@ -2897,12 +4316,9 @@
    "cacao",
    "malunggay"
   ],
-  "sources": [
-   {
-    "label": "Abit, Dimas and Ramirez 2022, Weed survey of small scale vegetable farms in Ormoc City, Philippines (AGRIS)",
-    "url": "https://agris.fao.org/search/en/records/64eda2e62ac4a875e3f0b31e"
-   }
-  ]
+  "sources": [],
+  "stop": "Pull the mats before they flower and mulch the beds; it thrives in cool, moist upland fields.",
+  "named": []
  },
  {
   "slug": "nodeweed",
@@ -2978,6 +4394,20 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Fantankuen",
     "url": "https://stuartxchange.com/Fantankuen"
    }
+  ],
+  "stop": "Hoe it young and mulch the rows; do not let the seeds tucked at the leaf joints ripen.",
+  "named": [
+   [
+    "Glyphosate",
+    [
+     9
+    ],
+    [
+     "corn_glutinous",
+     "corn_sweet",
+     "corn_yellow"
+    ]
+   ]
   ]
  },
  {
@@ -3062,7 +4492,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Gatas gatas",
     "url": "https://stuartxchange.com/GatasGatas"
    }
-  ]
+  ],
+  "stop": "Hoe or pull it young, before the tiny flower clusters seed, and mulch the beds.",
+  "named": []
  },
  {
   "slug": "coat-buttons",
@@ -3126,7 +4558,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Coat buttons",
     "url": "https://stuartxchange.com/CoatButtons"
    }
-  ]
+  ],
+  "stop": "Dig it out with its roots, since it spreads by creeping stems, and mulch the rows.",
+  "named": []
  },
  {
   "slug": "common-wireweed",
@@ -3185,7 +4619,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Escobilla",
     "url": "https://stuartxchange.com/Escobilla"
    }
-  ]
+  ],
+  "stop": "Pull or dig it out while young, before the stems turn woody, and slash plantation rows before it seeds.",
+  "named": []
  },
  {
   "slug": "caesar-weed",
@@ -3239,7 +4675,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Dalupang",
     "url": "https://stuartxchange.com/Dalupang"
    }
-  ]
+  ],
+  "stop": "Dig it out young and slash it before the hooked burrs ripen; they cling to animals and clothes.",
+  "named": []
  },
  {
   "slug": "lantana",
@@ -3286,7 +4724,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Kantutay",
     "url": "https://stuartxchange.com/Kantutay"
    }
-  ]
+  ],
+  "stop": "Cut it low and dig out the crowns, then keep slashing the regrowth; birds spread its berries, so take out fruiting plants first.",
+  "named": []
  },
  {
   "slug": "bush-mint",
@@ -3338,7 +4778,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Suob kabayo",
     "url": "https://stuartxchange.com/SuobKabayo"
    }
-  ]
+  ],
+  "stop": "Slash or pull it before it flowers and keep field edges clean; it seeds heavily on open, dry ground.",
+  "named": []
  },
  {
   "slug": "creeping-woodsorrel",
@@ -3393,7 +4835,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Taingang daga",
     "url": "https://stuartxchange.com/TaingangDaga"
    }
-  ]
+  ],
+  "stop": "Dig it out with its root, since it grows back from the base, and mulch the beds; its pods throw seed a long way.",
+  "named": []
  },
  {
   "slug": "little-ironweed",
@@ -3464,7 +4908,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Agas moro",
     "url": "https://stuartxchange.com/AgasMoro"
    }
-  ]
+  ],
+  "stop": "Hoe or pull it before its tiny purple heads turn to fluff.",
+  "named": []
  },
  {
   "slug": "lilac-tasselflower",
@@ -3534,6 +4980,18 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Tagulinaw",
     "url": "https://stuartxchange.com/Tagulinaw"
    }
+  ],
+  "stop": "Pull it before the tassels turn to fluff, which the wind carries to new fields.",
+  "named": [
+   [
+    "Hexazinone plus diuron",
+    [
+     5
+    ],
+    [
+     "pineapple"
+    ]
+   ]
   ]
  },
  {
@@ -3581,7 +5039,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Kandikandilaan",
     "url": "https://stuartxchange.com/Kandikandilaan"
    }
-  ]
+  ],
+  "stop": "Dig it out with its woody base and slash plantation paths before it seeds.",
+  "named": []
  },
  {
   "slug": "elephant-foot",
@@ -3627,7 +5087,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Dila dila",
     "url": "https://stuartxchange.com/DilaDila"
    }
-  ]
+  ],
+  "stop": "Dig out the flat rosettes with their roots; slashing misses them because they lie on the ground.",
+  "named": []
  },
  {
   "slug": "stinking-passion-flower",
@@ -3675,7 +5137,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Prutas baguio",
     "url": "https://stuartxchange.com/Prutas-baguio"
    }
-  ]
+  ],
+  "stop": "Pull the vines off the crop and dig out the base; birds spread its fruit.",
+  "named": []
  },
  {
   "slug": "black-nightshade",
@@ -3722,7 +5186,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Lubi lubi",
     "url": "https://stuartxchange.com/Lubi-lubi"
    }
-  ]
+  ],
+  "stop": "Pull it before the berries ripen, and keep it out of tomato, eggplant and pepper fields, where it carries the same pests and diseases.",
+  "named": []
  },
  {
   "slug": "spreading-hogweed",
@@ -3776,7 +5242,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Paanbalibis",
     "url": "https://stuartxchange.com/Paanbalibis"
    }
-  ]
+  ],
+  "stop": "Dig it out with its thick root before it seeds; the sticky seeds cling to clothes and tools.",
+  "named": []
  },
  {
   "slug": "sickle-senna",
@@ -3843,7 +5311,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Katandang aso",
     "url": "https://stuartxchange.com/Katanda"
    }
-  ]
+  ],
+  "stop": "Pull or slash it before its long pods ripen; the hard seeds last years in the soil.",
+  "named": []
  },
  {
   "slug": "cockscomb",
@@ -3900,7 +5370,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Kindayohan",
     "url": "https://stuartxchange.com/Kindayohan"
    }
-  ]
+  ],
+  "stop": "Pull it before the spikes seed, and keep it off the field edges.",
+  "named": []
  },
  {
   "slug": "kilob-fern",
@@ -3947,7 +5419,9 @@
     "label": "Stuartxchange, Philippine Medicinal Plants: Kilob",
     "url": "https://stuartxchange.com/Kilob"
    }
-  ]
+  ],
+  "stop": "Slash and dig out the tangles, then lime and feed the soil and plant a cover crop; it takes over where the soil is poor and sour.",
+  "named": []
  },
  {
   "slug": "chinese-violet",
@@ -3988,11 +5462,18 @@
    "dragonfruit",
    "malunggay"
   ],
-  "sources": [
-   {
-    "label": "PROTA, Asystasia gangetica",
-    "url": "https://uses.plantnet-project.org/en/Asystasia_gangetica_(PROTA)"
-   }
+  "sources": [],
+  "stop": "Pull or slash it before it seeds and grow a cover crop; stem pieces root again, so carry them off.",
+  "named": [
+   [
+    "Hexazinone plus diuron",
+    [
+     5
+    ],
+    [
+     "pineapple"
+    ]
+   ]
   ]
  }
 ]

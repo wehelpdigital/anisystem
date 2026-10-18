@@ -1194,6 +1194,7 @@
     .cr-ai b { color: var(--color-gray-900); }
     .cr-ai .g { display: inline-block; margin-left: .3rem; font-size: .64rem; font-weight: 900; padding: .05rem .4rem; border-radius: 999px; background: #e0f2fe; color: #075985; vertical-align: middle; }
     .cr-ai small { display: block; margin-top: .1rem; font-size: .7rem; color: var(--color-gray-500); overflow-wrap: anywhere; }
+    .cr-ai .g.is-mark { background: #fef3c7; color: #92400e; }
     .cr-note { margin-top: .4rem; font-size: .74rem; font-weight: 700; color: #92400e; }
     html.dark .cr-threat.is-insect, html.dark .cr-threat.is-other { background: #241a0e; border-color: #4a3416; }
     html.dark .cr-threat.is-disease { background: #24101c; border-color: #4a2040; }
@@ -1202,6 +1203,7 @@
     html.dark .cr-threat p { color: #cdd8c0; }
     html.dark .cr-stg span, html.dark .cr-ai { background: rgb(255 255 255 / .04); border-color: rgb(255 255 255 / .08); color: #cdd8c0; }
     html.dark .cr-ai .g { background: #0c2a3a; color: #7dd3fc; }
+    html.dark .cr-ai .g.is-mark { background: #3a2a0c; color: #fcd34d; }
     html.dark .cr-kind { background: rgb(255 255 255 / .08); color: #cdd8c0; }
     .cr-fold { margin-top: .6rem; }
     .cr-fold > summary { cursor: pointer; list-style: none; font-size: .82rem; font-weight: 800; color: var(--cq-gd); display: flex; align-items: center; gap: .35rem; }
@@ -2810,9 +2812,9 @@
             + (t.sameGroup ? '<p class="cr-note">Both are ' + esc(t.sameGroup) + ': use one, and switch to another group the next time.</p>' : '')
             + (t.noSpray ? '<p class="cr-note">' + esc(sweepT(t.noSpray)) + '</p>' : '')
             + (t.weather ? '<p><em>This season:</em> ' + esc(sweepT(t.weather)) + '</p>' : '') + '</div>';
-        const weeds = c.weeds && (c.weeds.windows || []).length ? '<details class="cr-fold"><summary>The weed control windows</summary><div class="cr-threats">' + c.weeds.windows.map((w) => '<div class="cr-threat is-weed"><div class="cr-th-h"><b>' + esc(w.title) + '</b><span class="cr-kind">' + esc(w.timing === 'pre' ? 'Before the weeds' : (w.timing === 'prep' ? 'Land preparation' : 'Weeds up')) + '</span></div>'
+        const weeds = c.weeds && (c.weeds.windows || []).length ? '<details class="cr-fold"><summary>The weed control windows</summary>' + (c.weeds.critical && c.weeds.critical.say ? '<p class="cp-note">' + esc(c.weeds.critical.say) + '</p>' : '') + '<div class="cr-threats">' + c.weeds.windows.map((w) => '<div class="cr-threat is-weed"><div class="cr-th-h"><b>' + esc(w.title) + '</b><span class="cr-kind">' + esc(w.timing === 'pre' ? 'Before the weeds' : (w.timing === 'prep' ? 'Land preparation' : 'Weeds up')) + '</span></div>'
             + (w.stage ? '<p><em>When:</em> ' + esc(w.stage) + '</p>' : '') + (w.steps || []).slice(0, 3).map((x) => '<p>' + esc(x) + '</p>').join('')
-            + (w.ingredients && w.ingredients.length ? '<div class="cr-ais">' + w.ingredients.slice(0, 6).map((i) => '<div class="cr-ai"><b>' + esc(i.name) + '</b>' + (i.hrac && i.hrac.length ? '<span class="g">HRAC ' + esc(i.hrac.join(', ')) + '</span>' : '') + '<small>' + esc((i.weeds || []).map((x) => ({ grass: 'grasses', sedge: 'sedges', broadleaf: 'broadleaves' })[x] || x).join(', ')) + (i.products && i.products.length ? ' · sold as ' + esc(i.products.map((p) => p.brand + (p.with ? ' with ' + p.with : '')).join(', ')) : '') + '</small></div>').join('') + '</div>' : '') + '</div>').join('') + '</div></details>' : '';
+            + (w.ingredients && w.ingredients.length ? '<div class="cr-ais">' + w.ingredients.slice(0, 6).map((i) => '<div class="cr-ai"><b>' + esc(i.name) + '</b>' + (i.hrac && i.hrac.length ? '<span class="g">HRAC ' + esc(i.hrac.join(', ')) + '</span>' : '') + (i.mark ? '<span class="g is-mark">' + (i.mark === 'abroad' ? 'Not registered here' : 'Not on a label for this crop') + '</span>' : '') + '<small>' + esc((i.weeds || []).map((x) => ({ grass: 'grasses', sedge: 'sedges', broadleaf: 'broadleaves' })[x] || x).join(', ')) + (i.products && i.products.length ? ' · sold as ' + esc(i.products.map((p) => p.brand + (p.with ? ' with ' + p.with : '')).join(', ')) : '') + '</small></div>').join('') + '</div>' : '') + '</div>').join('') + '</div></details>' : '';
         return '<h3 style="margin:1rem 0 .5rem;font-size:.92rem;font-weight:800">Protection, watch first' + (window.aneeTl ? window.aneeTl.flag('ipm') : '') + '</h3>'
             + '<div class="cr-warn" role="note"><span>🧑‍🌾</span><span><b>Spraying is your call, always</b>' + esc(r.disclaimer || pr.disclaimer || '') + '</span></div>'
             + (pr.intro ? '<p class="cr-say" style="margin-top:.6rem">' + esc(sweepT(pr.intro)) + '</p>' : '')

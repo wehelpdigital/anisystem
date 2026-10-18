@@ -4,6 +4,7 @@ namespace App\Support;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * The field catalogue (2026-10-08): the pests, diseases and weeds of every
@@ -40,7 +41,7 @@ final class FieldCatalogue
         'Onions & garlic' => 'onions', 'Industrial crops' => 'industrial', 'Fruit trees' => 'fruits', 'Other' => 'vegetables',
     ];
 
-    private const CACHE = 'field-catalogue:v2:';
+    private const CACHE = 'field-catalogue:v3:';
 
     private const TTL = 21600;
 
@@ -150,10 +151,50 @@ final class FieldCatalogue
         return self::weeds()[$slug] ?? null;
     }
 
-    /** The weed control plans: key => label, local, crops, after, windows (key => window), ingredients. */
+    /**
+     * The weed control plans: key => label, local, crops, after, windows
+     * (key => window), ingredients, prevent (what keeps weeds out before and
+     * through the season) and critical (crop or '*' => {from, to, say}, the
+     * stretch when weeds cost the most yield).
+     */
     public static function weedPlans(): array
     {
         return self::load('plans');
+    }
+
+    /**
+     * One window's active ingredients for one crop and weed group, as the
+     * helper and the Crop Protocol show them (2026-10-18): a name scoped to
+     * other crops (`only`) is left out; when any is on a product registered
+     * in the Philippines for this crop (`on`), only those are given; when
+     * none is, the rest come marked: 'abroad' (no product registered in the
+     * Philippines) or 'other' (registered here for other crops only).
+     * Returns [[name, mark|null], ...]. The helper's JS does the same.
+     */
+    public static function forCrop(array $window, string $crop, string $group): array
+    {
+        $on = (array) ($window['on'] ?? []);
+        $only = (array) ($window['only'] ?? []);
+        $abroad = array_flip((array) ($window['abroad'] ?? []));
+        $cand = array_values(array_filter((array) ($window[$group] ?? []), fn ($n) => ! isset($only[$n]) || in_array($crop, (array) $only[$n], true)));
+        if (! $on) {
+            // A plan written before the registrations were read: every name as it stands.
+            return array_map(fn ($n) => [$n, null], $cand);
+        }
+        $reg = array_values(array_filter($cand, fn ($n) => in_array($crop, (array) ($on[$n] ?? []), true)));
+        if ($reg) {
+            return array_map(fn ($n) => [$n, null], $reg);
+        }
+
+        return array_map(fn ($n) => [$n, isset($abroad[$n]) ? 'abroad' : 'other'], $cand);
+    }
+
+    /** A crop's weed free stretch in one plan: {from?, to?, say}, or null. */
+    public static function critical(array $plan, string $crop): ?array
+    {
+        $c = (array) ($plan['critical'] ?? []);
+
+        return $c[$crop] ?? $c['*'] ?? null;
     }
 
     /** Every active ingredient the plans name, with its HRAC group or groups. */
@@ -221,11 +262,14 @@ final class FieldCatalogue
                     'crops' => $j($r->crops), 'parts' => $j($r->parts), 'signs' => $j($r->signs), 'local' => $r->local, 'hint' => $r->hint,
                     'ai' => $j($r->ai), 'no' => $r->noSpray, 'sources' => $j($r->sources), 'ranks' => $j($r->ranks)]);
             } elseif ($what === 'weeds') {
+                // stop and named came with the registrations (2026-10-18); a row from before has neither.
                 $out[$r->slug] = self::weedShape(['name' => $r->name, 'sci' => $r->sci, 'group' => $r->wgroup, 'life' => $r->life, 'local' => $r->local,
-                    'hint' => $r->hint, 'crops' => $j($r->crops), 'sources' => $j($r->sources)]);
+                    'hint' => $r->hint, 'crops' => $j($r->crops), 'sources' => $j($r->sources),
+                    'stop' => $r->stop ?? '', 'named' => $j($r->named ?? null)]);
             } else {
                 $out[$r->planKey] = self::planShape(['label' => $r->label, 'local' => $r->local, 'crops' => $j($r->crops), 'after' => $r->after,
-                    'windows' => $j($r->windows), 'ingredients' => $j($r->ingredients), 'sources' => $j($r->sources)]);
+                    'windows' => $j($r->windows), 'ingredients' => $j($r->ingredients), 'sources' => $j($r->sources),
+                    'prevent' => $j($r->prevent ?? null), 'critical' => $j($r->critical ?? null)]);
             }
         }
 
@@ -295,23 +339,30 @@ final class FieldCatalogue
     {
         return ['name' => (string) $e['name'], 'sci' => (string) ($e['sci'] ?? ''), 'group' => (string) $e['group'], 'life' => (string) ($e['life'] ?? ''),
             'local' => (string) ($e['local'] ?? ''), 'hint' => (string) ($e['hint'] ?? ''), 'crops' => array_values((array) ($e['crops'] ?? [])),
-            'sources' => GovSource::keep((array) ($e['sources'] ?? []))];
+            'sources' => GovSource::keep((array) ($e['sources'] ?? [])),
+            // How to keep it out without a spray (2026-10-18), and the active ingredients whose
+            // Philippine labels name this weed: [[ingredient, [HRAC groups], [crops]], ...].
+            'stop' => (string) ($e['stop'] ?? ''), 'named' => array_values((array) ($e['named'] ?? []))];
     }
 
     private static function planShape(array $p): array
     {
         $windows = [];
         foreach ((array) ($p['windows'] ?? []) as $w) {
-            // label: as researched; short: the age button; title: the answer's heading
+            // label: as researched; short: the age button; title: the answer's heading;
+            // on: name => the plan's crops a Philippine registration names; abroad: no
+            // registration here; only: name => the crops it is meant for (forCrop()).
             $windows[$w['key']] = ['label' => (string) $w['label'], 'short' => (string) ($w['short'] ?? $w['label']), 'title' => (string) ($w['title'] ?? $w['label']),
                 'timing' => (string) ($w['timing'] ?? 'post'), 'stage' => (string) ($w['stage'] ?? ''),
                 'steps' => array_values((array) ($w['steps'] ?? [])), 'grasses' => array_values((array) ($w['grasses'] ?? [])),
-                'sedges' => array_values((array) ($w['sedges'] ?? [])), 'broadleaves' => array_values((array) ($w['broadleaves'] ?? []))];
+                'sedges' => array_values((array) ($w['sedges'] ?? [])), 'broadleaves' => array_values((array) ($w['broadleaves'] ?? [])),
+                'on' => (object) ($w['on'] ?? []), 'abroad' => array_values((array) ($w['abroad'] ?? [])), 'only' => (object) ($w['only'] ?? [])];
         }
 
         return ['label' => (string) $p['label'], 'local' => (string) ($p['local'] ?? ''), 'crops' => array_values((array) ($p['crops'] ?? [])),
             'after' => (string) ($p['after'] ?? 'after planting'), 'windows' => $windows, 'ingredients' => (array) ($p['ingredients'] ?? []),
-            'sources' => GovSource::keep((array) ($p['sources'] ?? []))];
+            'sources' => GovSource::keep((array) ($p['sources'] ?? [])),
+            'prevent' => array_values(array_filter(array_map('strval', (array) ($p['prevent'] ?? [])))), 'critical' => (array) ($p['critical'] ?? [])];
     }
 
     /* ---------------------------------------------------------------- */
@@ -352,6 +403,8 @@ final class FieldCatalogue
 
         // Weeds.
         $theirs = DB::table('as_weeds')->where('source', '!=', 'file')->pluck('slug')->flip();
+        // stop and named (2026-10-18) are written once their columns exist.
+        $wMore = Schema::hasColumn('as_weeds', 'named');
         $rows = [];
         foreach (self::file('weeds') as $i => $e) {
             if (isset($theirs[$e['slug']])) {
@@ -359,10 +412,12 @@ final class FieldCatalogue
             }
             $rows[] = ['slug' => $e['slug'], 'name' => $e['name'], 'sci' => $e['sci'] ?? '', 'wgroup' => $e['group'], 'life' => $e['life'] ?? '',
                 'local' => $e['local'] ?? '', 'hint' => $e['hint'] ?? '', 'crops' => $enc($e['crops'] ?? []), 'sources' => $enc($e['sources'] ?? []),
-                'sortOrder' => $i, 'source' => 'file', 'deleteStatus' => 1, 'created_at' => $now, 'updated_at' => $now];
+                'sortOrder' => $i, 'source' => 'file', 'deleteStatus' => 1, 'created_at' => $now, 'updated_at' => $now]
+                + ($wMore ? ['stop' => (string) ($e['stop'] ?? ''), 'named' => $enc($e['named'] ?? [])] : []);
         }
         foreach (array_chunk($rows, 40) as $chunk) {
-            DB::table('as_weeds')->upsert($chunk, ['slug'], ['name', 'sci', 'wgroup', 'life', 'local', 'hint', 'crops', 'sources', 'sortOrder', 'deleteStatus', 'updated_at']);
+            DB::table('as_weeds')->upsert($chunk, ['slug'], array_merge(['name', 'sci', 'wgroup', 'life', 'local', 'hint', 'crops', 'sources', 'sortOrder', 'deleteStatus', 'updated_at'],
+                $wMore ? ['stop', 'named'] : []));
         }
         DB::table('as_weeds')->where('source', 'file')->whereNotIn('slug', array_column($rows, 'slug') ?: [''])->update(['deleteStatus' => 0, 'updated_at' => $now]);
         $n['weeds'] = count($rows);
@@ -370,6 +425,8 @@ final class FieldCatalogue
         // Weed control plans.
         $f = self::file('plans');
         $theirs = DB::table('as_weed_plans')->where('source', '!=', 'file')->pluck('planKey')->flip();
+        // prevent and critical (2026-10-18) are written once their columns exist.
+        $pMore = Schema::hasColumn('as_weed_plans', 'critical');
         $rows = [];
         foreach ($f['plans'] ?? [] as $i => $p) {
             if (isset($theirs[$p['key']])) {
@@ -377,10 +434,12 @@ final class FieldCatalogue
             }
             $rows[] = ['planKey' => $p['key'], 'label' => $p['label'], 'local' => $p['local'] ?? '', 'crops' => $enc($p['crops'] ?? []), 'after' => $p['after'] ?? 'after planting',
                 'windows' => $enc($p['windows'] ?? []), 'ingredients' => json_encode((object) self::planIngredients($p, $f['ingredients'] ?? []), JSON_UNESCAPED_UNICODE),
-                'sources' => $enc($p['sources'] ?? []), 'sortOrder' => $i, 'source' => 'file', 'deleteStatus' => 1, 'created_at' => $now, 'updated_at' => $now];
+                'sources' => $enc($p['sources'] ?? []), 'sortOrder' => $i, 'source' => 'file', 'deleteStatus' => 1, 'created_at' => $now, 'updated_at' => $now]
+                + ($pMore ? ['prevent' => $enc($p['prevent'] ?? []), 'critical' => json_encode((object) ($p['critical'] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)] : []);
         }
         foreach (array_chunk($rows, 20) as $chunk) {
-            DB::table('as_weed_plans')->upsert($chunk, ['planKey'], ['label', 'local', 'crops', 'after', 'windows', 'ingredients', 'sources', 'sortOrder', 'deleteStatus', 'updated_at']);
+            DB::table('as_weed_plans')->upsert($chunk, ['planKey'], array_merge(['label', 'local', 'crops', 'after', 'windows', 'ingredients', 'sources', 'sortOrder', 'deleteStatus', 'updated_at'],
+                $pMore ? ['prevent', 'critical'] : []));
         }
         DB::table('as_weed_plans')->where('source', 'file')->whereNotIn('planKey', array_column($rows, 'planKey') ?: [''])->update(['deleteStatus' => 0, 'updated_at' => $now]);
         $n['plans'] = count($rows);

@@ -4,7 +4,8 @@
      window.FH holds them:
        FH.ing(name, group, mode, products)
                                   one active ingredient as a record
-                                  {name, group, mode, shop, products}
+                                  {name, group, mode, shop, products}; a
+                                  page may add flag (a caution line)
        FH.ingList(records)        the spray list: a row per ingredient, its
                                   group beside it, who sells it under it and
                                   the products sold here ("Sold as")
@@ -155,6 +156,8 @@
     html.dark .fh-mobx-herb p { color: #d5e3c5; }
     .fh-ing-mob { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .3rem; }
     .fh-ing-note { margin-top: .3rem; font-size: .72rem; line-height: 1.45; color: #5b6650; }
+    /* A caution under an ingredient (the weed helper: not on a Philippine label for this crop). */
+    .fh-ing-flag { margin-top: .35rem; padding: .3rem .5rem; border-radius: .55rem; background: #fff7e0; color: #7a4d00; font-size: .74rem; font-weight: 700; line-height: 1.4; }
     .fh-pcard .fh-mob { margin-top: .2rem; }
     .fh-psheet-mob { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin-top: .7rem; }
     .fh-psheet-mob .fh-mc { font-size: .72rem; }
@@ -234,6 +237,7 @@
     html.dark .fh-mob .fh-mc.is-translaminar { color: #b3cbff; background: rgb(59 120 240 / .2); border-color: rgb(59 120 240 / .42); }
     html.dark .fh-mob .fh-mc.is-contact { color: #f7cd7c; background: rgb(240 160 20 / .16); border-color: rgb(240 160 20 / .38); }
     html.dark .fh-ing-note { color: #b9caa8; }
+    html.dark .fh-ing-flag { background: #3a2c0c; color: #f8d58a; }
     html.dark .fh-mob-q { background: #151b12; border-color: #4a7c2a; color: #cfe3b8; }
     html.dark button.fh-mob-q:hover { background: #22301a; border-color: #6b9f3d; }
     html.dark .fh-mob-ask { background: #1c2616; border-color: #2b3a1c; color: #d5e3c5; }
@@ -792,6 +796,7 @@
     FH.ingRow = (i, seen, o) => { const s = seen && typeof seen.has === 'function' ? seen : new Set(), m = mobOf(i), mc = m ? FH.mobChips(m.c) : ''; return '<li class="fh-ing">'
         + '<div class="fh-ing-top"><b>' + esc(i.name) + '</b>' + (i.group ? '<i class="fh-grp"' + (i.mode ? ' title="' + esc(i.mode) + '"' : '') + tlAttr(FH.tlGroup(i.group)) + '>' + esc(i.group) + '</i>' : '') + '</div>'
         + (mc ? '<div class="fh-ing-mob">' + mc + FH.herbChips(m) + (o && o.help ? FH.mobHelpBtn() : '') + '</div>' + (o && o.notes && m.n ? '<p class="fh-ing-note">' + esc(m.n) + '</p>' : '') : '')
+        + (i.flag ? '<p class="fh-ing-flag">' + esc(i.flag) + '</p>' : '')
         + '<div class="fh-ing-foot">' + (i.mode ? '<small>' + esc(i.mode) + '</small>' : '')
         + FH.shopLinks(i.shop.shopee, i.shop.lazada, i.shop.q || i.name, 'fh-shop') + '</div>'
         + (i.products && i.products.length ? '<div class="fh-prods"><span class="fh-prods-l"' + tlAttr('sold-as', s) + '>Sold as</span>' + i.products.map((p) => FH.prodChip(p, s)).join('') + '</div>' : '')

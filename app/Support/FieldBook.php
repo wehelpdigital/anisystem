@@ -194,6 +194,8 @@ final class FieldBook
                 'hue' => $hue[$w['group']] ?? 98, 'life' => $w['life'], 'crops' => $w['crops'], 'hint' => $w['hint'],
                 'thumb' => $thumb, 'photo' => $photo ?: $thumb, 'alt' => $alt ?: $w['name'], 'credit' => $credit,
                 'sources' => self::sources($w['sources'] ?? []),
+                // How to keep it out, and the ingredients whose Philippine labels name it (2026-10-18).
+                'stop' => $w['stop'] ?? '', 'named' => $w['named'] ?? [],
             ];
         }
         $crops = collect(FieldCatalogue::crops())->filter(fn ($c, $k) => isset($used[$k]))->map(fn ($c, $k) => [...$c, $used[$k]])->all();
@@ -254,9 +256,23 @@ final class FieldBook
                         foreach ($w[$g] ?? [] as $ai) {
                             $n = ProductBook::norm($ai);
                             if (! isset($ip[$n][$c][$g])) {
-                                $ip[$n][$c][$g] = self::prodsFor($ai, $c, $g, 12);
+                                // "Pendimethalin (corn only)" is sold as pendimethalin: the bracket note is how, not what.
+                                $ip[$n][$c][$g] = self::herbFor($ai, $c, $g, 12);
                             }
                         }
+                    }
+                }
+            }
+        }
+        // The ingredients a weed's own labels name, on the crops they name (the catalogue's detail).
+        foreach (FieldCatalogue::weeds() as $wd) {
+            $g = (string) ($wd['group'] ?? '');
+            foreach ((array) ($wd['named'] ?? []) as $nm) {
+                $ai = (string) ($nm[0] ?? '');
+                foreach ((array) ($nm[2] ?? []) as $c) {
+                    $n = ProductBook::norm($ai);
+                    if ($ai !== '' && $g !== '' && ! isset($ip[$n][$c][$g])) {
+                        $ip[$n][$c][$g] = self::herbFor($ai, (string) $c, $g, 12);
                     }
                 }
             }
@@ -296,6 +312,67 @@ final class FieldBook
         }
 
         return $idx;
+    }
+
+    /**
+     * The herbicides sold for one of the weed helper's ingredient names, as
+     * keys (2026-10-18): the bracket note dropped and the parts of a mix in
+     * any order ("Penoxsulam plus cyhalofop butyl" is the product made of
+     * cyhalofop butyl and penoxsulam), on the crop and the weed group its
+     * label names, in ProductBook's order (Philippine companies first).
+     */
+    private static function herbFor(string $ai, ?string $crop, ?string $group, int $max): array
+    {
+        static $idx = null;
+        if ($idx === null) {
+            $idx = [];
+            foreach (ProductBook::all() as $k => $p) {
+                if (($p['kind'] ?? '') !== 'herbicide') {
+                    continue;
+                }
+                $names = (array) ($p['app_ai'] ?? []);
+                $names[] = implode(' plus ', (array) ($p['ai'] ?? []));
+                foreach ($names as $n) {
+                    $idx[self::mixKey((string) $n)][$k] = true;
+                }
+            }
+            $idx = array_map('array_keys', $idx);
+        }
+        $all = ProductBook::all();
+        $out = [];
+        foreach ($idx[self::mixKey($ai)] ?? [] as $k) {
+            $p = $all[$k];
+            if ($crop && ! in_array($crop, $p['crops'] ?? [], true)) {
+                continue;
+            }
+            if ($group && ! in_array($group, $p['weeds'] ?? [], true)) {
+                continue;
+            }
+            $out[] = $k;
+            if (count($out) >= $max) {
+                break;
+            }
+        }
+
+        return $out;
+    }
+
+    /** A mix's parts, bracket note dropped, each as ProductBook::norm writes it, sorted: one key whatever the order. */
+    private static function mixKey(string $ai): string
+    {
+        $parts = preg_split('/\s+plus\s+|\s*\+\s*/i', self::bare($ai)) ?: [$ai];
+        $parts = array_map(fn ($x) => ProductBook::norm($x), $parts);
+        sort($parts);
+
+        return implode(' + ', $parts);
+    }
+
+    /** An ingredient name without its bracket note: "Glyphosate (directed)" is glyphosate. */
+    private static function bare(string $ai): string
+    {
+        $b = trim((string) preg_replace('/\s*\([^)]*\)/', '', $ai));
+
+        return $b !== '' ? $b : $ai;
     }
 
     /** ProductBook::forIngredient, as keys. */

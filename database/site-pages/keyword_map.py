@@ -229,7 +229,7 @@ MAP = {
     'biostimulants': ['foliar', 'organic'],
     'termiticides': ['ant', 'karate'],
     'fertilizer computation': ['calc', 'frice'],
-    'sofit': ['weeds', 'pnp'],
+    'sofit': ['pnp'],  # a brand: the weeds pages name active ingredients only (2026-10-18)
     'example of inorganic fertilizer': ['inorg', 'organic'],
     'examples of inorganic fertilizer': ['inorg', 'fplants'],
     'pesticide in tagalog': ['words', 'fpa'],

@@ -136,7 +136,7 @@
     },
     {
       "type": "text",
-      "text": "If water and weeding cannot hold water lettuce down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the usual recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper in anee.io](/features/pest-and-disease-finders) finds the ingredients that cover all of them."
+      "text": "If water and weeding cannot hold water lettuce down, choose an active ingredient that works on broadleaves at the age of your rice. Each active ingredient in it is in a herbicide registered in the Philippines for rice. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper in anee.io](/features/pest-and-disease-finders) finds the ingredients that cover all of them."
     },
     {
       "type": "table",
@@ -149,23 +149,23 @@
         ],
         [
           "0 to 5 days",
-          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
-          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+          "Pretilachlor, Oxadiazon, Butachlor plus 2,4 D IBE, Pyrazosulfuron ethyl plus pretilachlor, Imazosulfuron, Penoxsulam plus butachlor, Tefuryltrione plus triafamone, Thiobencarb plus 2,4 D IBE",
+          "Pretilachlor, Oxadiazon, Pretilachlor plus butachlor, Butachlor plus 2,4 D IBE, Pendimethalin, Pyrazosulfuron ethyl plus pretilachlor, Butachlor with safener"
         ],
         [
           "6 to 10 days",
-          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
-          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Penoxsulam plus cyhalofop butyl, Pendimethalin, Cyhalofop butyl plus propanil, Imazosulfuron, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Cyhalofop butyl plus propanil, Pyrazosulfuron ethyl plus pretilachlor, Pendimethalin, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Pretilachlor plus pyribenzoxim, Penoxsulam, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl"
         ],
         [
           "11 to 20 days",
-          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
-          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Bentazone, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Carfentrazone ethyl, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Bentazone, Pyribenzoxim, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Carfentrazone ethyl, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl"
         ],
         [
           "21 to 30 days",
-          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
-          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+          "2,4 D amine, 2,4 D IBE, MCPA, Metamifop plus bispyribac sodium, Bentazone, Metsulfuron methyl plus chlorimuron ethyl, Fenoxaprop P ethyl plus ethoxysulfuron, Carfentrazone ethyl",
+          "2,4 D amine, 2,4 D IBE, Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, MCPA, Metamifop plus bispyribac sodium, Bentazone, Metsulfuron methyl plus chlorimuron ethyl, Pyribenzoxim, Carfentrazone ethyl"
         ],
         [
           "31 to 40 days",

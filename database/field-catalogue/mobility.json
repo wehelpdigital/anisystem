@@ -753,6 +753,154 @@
   },
   "Validamycin A": {
    "c": "contact"
+  },
+  "Carfentrazone ethyl": {
+   "c": "contact",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
+  },
+  "Clethodim": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
+  },
+  "Flazasulfuron": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
+  },
+  "Flumioxazin": {
+   "c": "contact",
+   "n": "Forms a layer on the soil that kills shoots as they come up",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
+  },
+  "Haloxyfop R methyl": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
+  },
+  "Hexazinone": {
+   "c": "systemic",
+   "n": "Taken up by roots and leaves",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
+  },
+  "Imazapic": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "post"
+   ]
+  },
+  "Imazosulfuron": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
+  },
+  "Indaziflam": {
+   "c": "systemic",
+   "n": "Works in the soil on sprouting weeds",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
+  },
+  "Isoxaflutole": {
+   "c": "systemic",
+   "n": "Taken up by roots and shoots from the soil",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
+  },
+  "Propaquizafop": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
+  },
+  "Propyrisulfuron": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
+  },
+  "Sethoxydim": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
+  },
+  "Sulfentrazone": {
+   "c": "systemic",
+   "n": "Taken up by the roots",
+   "s": "selective",
+   "w": [
+    "pre"
+   ]
+  },
+  "Tembotrione": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
+  },
+  "Tetflupyrolimet": {
+   "c": "systemic",
+   "n": "Taken up by sprouting weeds from the soil",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
+  },
+  "Thiencarbazone methyl": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
+  },
+  "Thiobencarb": {
+   "c": "systemic",
+   "n": "Taken up by sprouting weeds from the soil",
+   "s": "selective",
+   "w": [
+    "pre",
+    "early_post"
+   ]
+  },
+  "Tolpyralate": {
+   "c": "systemic",
+   "s": "selective",
+   "w": [
+    "post"
+   ]
   }
  }
 }

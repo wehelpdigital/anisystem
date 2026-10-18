@@ -6,7 +6,7 @@
   "category": "Weeds",
   "title": "Common Weeds in the Philippines: Grasses, Sedges and Broadleaves in Rice and Corn",
   "metaTitle": "Common Weeds in the Philippines: Names and Control",
-  "metaDescription": "Common weeds in the Philippines by group: grasses, sedges and broadleaves, their local names, and how to control them in rice and corn, including Sofit.",
+  "metaDescription": "Common weeds in the Philippines by group: grasses, sedges and broadleaves, their local names, and how to control them in rice and corn.",
   "focusKeyword": "common weeds in the Philippines",
   "keywords": [
     "common weeds in the philippines",
@@ -16,8 +16,7 @@
     "broadleaves",
     "broadleaves weeds",
     "weeds in tagalog",
-    "grass in tagalog",
-    "sofit"
+    "grass in tagalog"
   ],
   "excerpt": "The common weeds in the Philippines fall into three groups: grasses, sedges and broadleaves. In rice and corn fields they steal light, water and fertilizer, and they shelter pests. This guide names the main weeds of each group, with the local names farmers use, and shows how to control them before they cut your harvest.",
   "heroImage": {
@@ -33,7 +32,7 @@
     },
     {
       "type": "text",
-      "text": "Weeds take the sunlight, nutrients and water that should go to the palay. They also shelter insects, rats and diseases. For example, Ischaemum rugosum is an alternate host of tungro.\n\nTiming decides the damage. Keep the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, the most destructive period is the first 30 days."
+      "text": "Weeds take the sunlight, nutrients and water that should go to the palay. They also shelter insects, rats and diseases. For example, Ischaemum rugosum is an alternate host of tungro.\n\nTiming decides the damage. Keep the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, weeds cost the most from about 2 to 6 weeks after planting."
     },
     {
       "type": "text",
@@ -212,11 +211,11 @@
     {
       "type": "heading",
       "level": 3,
-      "text": "Pre emergence herbicides such as Sofit"
+      "text": "Pre emergence herbicides for rice"
     },
     {
       "type": "text",
-      "text": "A pre emergence herbicide stops weeds as they germinate, before you can even see them. Sofit 300 EC from Syngenta Philippines is a well known example. Its product page lists 300 grams per liter of pretilachlor, an emulsifiable concentrate in herbicide group K3. It targets grasses, sedges and broadleaves in both direct seeded and transplanted rice, including the hard to control Leptochloa chinensis.\n\nThe label window for Sofit is 0 to 4 days after sowing or transplanting, at 10 tablespoons per 16 liter tank. Still, follow the label on your own pack, since rates and conditions can change. Also remember that some barnyard grass populations already show cross resistance to pretilachlor. So rotate to a herbicide with a different mode of action in later seasons."
+      "text": "A pre emergence herbicide stops weeds as they sprout, before you can even see them. In rice, the ones registered here include pretilachlor, butachlor, oxadiazon and pendimethalin, and ready mixes such as pretilachlor plus butachlor. Pretilachlor works on grasses, sedges and broadleaves in transplanted and direct seeded rice, Chinese sprangletop among them, and goes on in the first days after sowing or transplanting. In wet seeded rice, pick a pretilachlor made with a safener, which protects the sprouting palay.\n\nThe label on your pack gives the rate and the days, so read it each time. Also remember that some barnyard grass already shows cross resistance to pretilachlor. So rotate to a herbicide from another group in later seasons."
     },
     {
       "type": "callout",
@@ -231,7 +230,7 @@
     },
     {
       "type": "text",
-      "text": "Corn needs clean rows in its first 30 days. For conventional hybrids and open pollinated varieties, do two cultivations, off barring and then hilling up, followed by spot weeding. Where aguingay dominates, use a recommended pre emergence herbicide. For fast growing broadleaves like kulitis and mara kamote, use 2,4 D.\n\nApply a pre emergence herbicide when the soil surface is moist, and do not disturb the soil after spraying. Spray post emergence herbicides before the corn reaches its reproductive stage. With paraquat or other contact herbicides, aim at the weeds only and keep the spray off the corn leaves. For glyphosate tolerant corn, follow the seed company's recommendation. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) covers the rest of the season."
+      "text": "Corn needs clean rows from about 2 to 6 weeks after planting. For conventional hybrids and open pollinated varieties, do two cultivations, off barring and then hilling up, followed by spot weeding. Where aguingay dominates, spray a pre emergence herbicide right after planting. Atrazine, pendimethalin, linuron, and isoxaflutole with thiencarbazone methyl are registered here for corn. Sorghum takes atrazine only.\n\nApply a pre emergence herbicide when the soil surface is moist, and do not disturb the soil after spraying. Once the corn is up, tembotrione, tolpyralate and topramezone with atrazine take grasses and broadleaves while they are small, and 2,4 D handles broadleaves like kulitis and mara kamote. Keep 2,4 D off sweet corn. Later, use only directed sprays such as glufosinate or glyphosate with a shield, aimed at the weeds and kept off the corn leaves. For glyphosate tolerant corn, follow the seed company's advice. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) covers the rest of the season."
     },
     {
       "type": "heading",
@@ -266,8 +265,8 @@
           "a": "Grasses have narrow leaves and round, hollow stems. Sedges look like grass but most have solid, triangular stems. Broadleaves have wide leaves with a net of veins."
         },
         {
-          "q": "What is Sofit herbicide used for?",
-          "a": "Sofit 300 EC is a pretilachlor pre emergence herbicide for direct seeded and transplanted rice. Its label covers grasses, sedges and broadleaves, applied 0 to 4 days after sowing or transplanting."
+          "q": "What is pretilachlor used for?",
+          "a": "Pretilachlor is a pre emergence herbicide for direct seeded and transplanted rice. It stops grasses, sedges and broadleaves as they sprout, in the first days after sowing or transplanting. Use one made with a safener in wet seeded rice."
         },
         {
           "q": "When should I control weeds in rice?",
@@ -322,15 +321,6 @@
         {
           "label": "Cropping calendar",
           "url": "/features/cropping-calendar"
-        }
-      ]
-    },
-    {
-      "type": "sources",
-      "items": [
-        {
-          "label": "Syngenta Philippines: Sofit 300 EC product page",
-          "url": "https://www.syngenta.com.ph/product/crop-protection/sofit-300-ec"
         }
       ]
     }

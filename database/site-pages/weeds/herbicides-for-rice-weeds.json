@@ -72,16 +72,17 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Group 1**, ACCase inhibitors, the grass killers: cyhalofop butyl, metamifop, profoxydim and fenoxaprop P ethyl.",
-        "**Group 2**, ALS inhibitors: bensulfuron methyl, bispyribac sodium, chlorimuron ethyl, ethoxysulfuron, flucetosulfuron, metsulfuron methyl, penoxsulam, pyrazosulfuron ethyl, pyribenzoxim and triafamone.",
+        "**Group 1**, ACCase inhibitors, the grass killers: cyhalofop butyl, fenoxaprop P ethyl, metamifop and profoxydim.",
+        "**Group 2**, ALS inhibitors: bispyribac sodium, chlorimuron ethyl, ethoxysulfuron, flucetosulfuron, imazosulfuron, metsulfuron methyl, penoxsulam, propyrisulfuron, pyrazosulfuron ethyl, pyribenzoxim and triafamone.",
         "**Group 3**, root and shoot growth inhibitors: pendimethalin.",
         "**Group 4**, synthetic auxins, the broadleaf killers: 2,4 D, MCPA and florpyrauxifen benzyl.",
         "**Group 5**, photosynthesis inhibitors: propanil.",
         "**Group 6**, photosynthesis inhibitors: bentazone.",
         "**Group 13**, pigment inhibitors: clomazone.",
-        "**Group 14**, PPO inhibitors: oxadiazon.",
-        "**Group 15**, seedling growth inhibitors: butachlor and pretilachlor.",
-        "**Group 27**, HPPD inhibitors: tefuryltrione."
+        "**Group 14**, PPO inhibitors: carfentrazone ethyl and oxadiazon.",
+        "**Group 15**, seedling growth inhibitors: butachlor, pretilachlor and thiobencarb.",
+        "**Group 27**, HPPD inhibitors: tefuryltrione.",
+        "**Group 28**, DHODH inhibitors, the newest group in rice: tetflupyrolimet."
       ]
     },
     {
@@ -113,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "Both tables follow the usual recommendations. Count the rice age in days after transplanting or seeding, and find that row. Then read the column for your weed group. Our guide to [types of weeds](/weeds/types-of-weeds) shows how to tell the groups apart."
+      "text": "Every active ingredient in both tables is in a herbicide registered in the Philippines for rice, and the ones Filipino companies sell most come first in each cell. Count the rice age in days after transplanting or seeding, and find that row. Then read the column for your weed group. Our guide to [types of weeds](/weeds/types-of-weeds) shows how to tell the groups apart."
     },
     {
       "type": "heading",
@@ -132,31 +133,31 @@
         ],
         [
           "0 to 5, pre emergence",
-          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
-          "Butachlor, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
-          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone"
+          "Butachlor, Pretilachlor, Oxadiazon, Butachlor plus 2,4 D IBE, Pendimethalin, Pyrazosulfuron ethyl plus pretilachlor, Clomazone, Penoxsulam plus butachlor, Tefuryltrione plus triafamone, Tetflupyrolimet, Thiobencarb plus 2,4 D IBE",
+          "Butachlor, Pretilachlor, Oxadiazon, Butachlor plus 2,4 D IBE, Pyrazosulfuron ethyl plus pretilachlor, Imazosulfuron, Penoxsulam plus butachlor, Tefuryltrione plus triafamone, Thiobencarb plus 2,4 D IBE",
+          "Pretilachlor, Oxadiazon, Butachlor plus 2,4 D IBE, Pyrazosulfuron ethyl plus pretilachlor, Imazosulfuron, Penoxsulam plus butachlor, Tefuryltrione plus triafamone, Thiobencarb plus 2,4 D IBE"
         ],
         [
           "6 to 10, early post emergence",
-          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
-          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Penoxsulam plus cyhalofop butyl",
-          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl"
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Penoxsulam plus cyhalofop butyl, Pendimethalin, Cyhalofop butyl plus propanil, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Penoxsulam plus cyhalofop butyl, Imazosulfuron, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Penoxsulam plus cyhalofop butyl, Pendimethalin, Cyhalofop butyl plus propanil, Imazosulfuron, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl"
         ],
         [
           "11 to 20, post emergence",
-          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
-          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
-          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl"
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl, Profoxydim",
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Bentazone, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Carfentrazone ethyl, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Bentazone, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Carfentrazone ethyl, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl"
         ],
         [
           "21 to 30, post emergence",
-          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
-          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
-          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl"
+          "Metamifop plus bispyribac sodium, Fenoxaprop P ethyl plus ethoxysulfuron",
+          "2,4 D amine, 2,4 D IBE, MCPA, Metamifop plus bispyribac sodium, Bentazone, Metsulfuron methyl plus chlorimuron ethyl, Fenoxaprop P ethyl plus ethoxysulfuron, Carfentrazone ethyl",
+          "2,4 D amine, 2,4 D IBE, MCPA, Metamifop plus bispyribac sodium, Bentazone, Metsulfuron methyl plus chlorimuron ethyl, Fenoxaprop P ethyl plus ethoxysulfuron, Carfentrazone ethyl"
         ],
         [
           "31 to 40, rescue only",
-          "None listed, pull by hand",
+          "None listed. Hand weed.",
           "Metsulfuron methyl plus chlorimuron ethyl",
           "Metsulfuron methyl plus chlorimuron ethyl"
         ]
@@ -179,27 +180,27 @@
         ],
         [
           "0 to 5, pre emergence",
-          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor",
-          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pretilachlor, Pretilachlor plus butachlor",
-          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+          "Butachlor, Pretilachlor, Oxadiazon, Pretilachlor plus butachlor, Butachlor plus 2,4 D IBE, Pendimethalin, Pyrazosulfuron ethyl plus pretilachlor, Butachlor with safener, Clomazone, Tetflupyrolimet",
+          "Butachlor, Pretilachlor, Oxadiazon, Pretilachlor plus butachlor, Butachlor plus 2,4 D IBE, Pyrazosulfuron ethyl plus pretilachlor, Butachlor with safener",
+          "Pretilachlor, Oxadiazon, Pretilachlor plus butachlor, Butachlor plus 2,4 D IBE, Pendimethalin, Pyrazosulfuron ethyl plus pretilachlor, Butachlor with safener"
         ],
         [
           "6 to 10, early post emergence",
-          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl",
-          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl",
-          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Cyhalofop butyl, Metamifop, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Cyhalofop butyl plus propanil, Pyrazosulfuron ethyl plus pretilachlor, Pendimethalin, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Pretilachlor plus pyribenzoxim, Penoxsulam, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Pyrazosulfuron ethyl plus pretilachlor, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Pretilachlor plus pyribenzoxim, Penoxsulam, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Butachlor plus propanil, Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Cyhalofop butyl plus propanil, Pyrazosulfuron ethyl plus pretilachlor, Pendimethalin, Propyrisulfuron, Clomazone plus propanil, Thiobencarb plus propanil, Pretilachlor plus pyribenzoxim, Penoxsulam, Flucetosulfuron, Cyhalofop butyl plus florpyrauxifen benzyl"
         ],
         [
           "11 to 20, post emergence",
-          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
-          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
-          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Cyhalofop butyl, Metamifop, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Pyribenzoxim, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl, Profoxydim",
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Bentazone, Pyribenzoxim, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Carfentrazone ethyl, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl",
+          "Cyhalofop butyl plus bispyribac sodium, Bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, Penoxsulam plus cyhalofop butyl, Metamifop plus bispyribac sodium, Bentazone, Pyribenzoxim, Cyhalofop butyl plus ethoxysulfuron, Propyrisulfuron, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Carfentrazone ethyl, Florpyrauxifen benzyl, Cyhalofop butyl plus florpyrauxifen benzyl"
         ],
         [
           "21 to 30, post emergence",
-          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
-          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
-          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim plus cyhalofop butyl, Metamifop plus bispyribac sodium, Pyribenzoxim",
+          "2,4 D amine, 2,4 D IBE, Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, MCPA, Metamifop plus bispyribac sodium, Bentazone, Metsulfuron methyl plus chlorimuron ethyl, Pyribenzoxim, Carfentrazone ethyl",
+          "2,4 D amine, 2,4 D IBE, Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim plus cyhalofop butyl, MCPA, Metamifop plus bispyribac sodium, Bentazone, Metsulfuron methyl plus chlorimuron ethyl, Pyribenzoxim, Carfentrazone ethyl"
         ]
       ]
     },
@@ -244,7 +245,7 @@
         },
         {
           "title": "Watch the rain",
-          "text": "A post emergence herbicide needs dry hours on the leaves. A University of Arkansas rice table puts that rain free time at 1 to 24 hours, by ingredient. So check the label and your forecast first."
+          "text": "A post emergence herbicide needs dry hours on the leaves, from 1 hour to a full day by ingredient. So check the label and your forecast first."
         },
         {
           "title": "Bring the water back",
@@ -252,7 +253,7 @@
         },
         {
           "title": "Triple rinse the container",
-          "text": "As the FPA teaches, drain the pack into the spray tank for 30 seconds. Rinse it at least 3 times, each time with water of at least a tenth of its volume. Pour every rinse into the tank, never into a canal. Then return it to your dealer, the FPA's collection point."
+          "text": "Drain the empty pack into the spray tank for 30 seconds. Rinse it at least 3 times, each time with water of at least a tenth of its volume, and pour every rinse into the tank, never into a canal. Then return it to your dealer or a collection point."
         },
         {
           "title": "Ask your municipal agriculturist",
@@ -338,10 +339,6 @@
         {
           "label": "HRAC Global: Herbicide mode of action classification",
           "url": "https://hracglobal.com/tools/2024-hrac-global-herbicide-moa-classification"
-        },
-        {
-          "label": "University of Arkansas Extension: Rainfall free periods for post emergence rice herbicides",
-          "url": "https://www.uaex.uada.edu/publications/pdf/MP44/rice-rainfall-free-periods-postemergence-herbicides.pdf"
         }
       ]
     }

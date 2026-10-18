@@ -149,6 +149,25 @@
                             <h2>How to tell it is {{ ['grasses' => 'a grass', 'sedges' => 'a sedge', 'broadleaves' => 'a broadleaf'][$e['group']] ?? 'this kind' }}</h2>
                             <p>{{ $W::GROUPS[$e['group']]['hint'] ?? '' }} The group decides what kills it, so check the stem and the leaf before you buy a herbicide.</p>
                         </section>
+                        @if (($e['stop'] ?? '') !== '')
+                            <section class="fs-box">
+                                <h2>How to keep it out</h2>
+                                <p>{{ $e['stop'] }}</p>
+                            </section>
+                        @endif
+                        @if (count($e['named'] ?? []))
+                            {{-- The active ingredients whose Philippine labels name this weed (2026-10-18): names only, never a brand or a rate. --}}
+                            <section class="fs-box">
+                                <h2>Active ingredients whose labels name it</h2>
+                                <ul class="fs-ais">
+                                    @foreach (array_slice($e['named'], 0, 8) as $nm)
+                                        <li class="{{ ($nm[1] ?? []) ? '' : 'is-plain' }}">{{ $nm[0] }}@if ($nm[1] ?? [])<i>HRAC {{ implode(', ', $nm[1]) }}</i>@endif</li>
+                                    @endforeach
+                                </ul>
+                                @php($namedOn = collect($e['named'])->flatMap(fn ($n) => $n[2] ?? [])->unique()->filter(fn ($c) => isset($F::crops()[$c]))->map(fn ($c) => $F::cropWord($c))->unique()->take(4))
+                                <p class="fs-legend">Herbicides registered in the Philippines with these active ingredients name this weed on their labels, each for the crops its label lists{{ $namedOn->isNotEmpty() ? ', such as ' . $namedOn->join(', ', ' and ') : '' }}. Use one only where the label names your crop, and follow it.</p>
+                            </section>
+                        @endif
                         <section class="fs-box">
                             <h2>How to control it</h2>
                             <p>What to do and which active ingredients work depend on your crop and how old it is. The weed control helper in anee.io gives both, for {{ $F::cropWord($firstCrop) }} and every other crop it grows in.</p>
