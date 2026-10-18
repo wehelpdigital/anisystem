@@ -260,7 +260,9 @@ final class FieldCatalogue
             if ($what === 'problems') {
                 $out[$r->section][$r->slug] = self::problemShape(['name' => $r->name, 'sci' => $r->sci, 'shelf' => $r->shelf, 'kind' => $r->kind,
                     'crops' => $j($r->crops), 'parts' => $j($r->parts), 'signs' => $j($r->signs), 'local' => $r->local, 'hint' => $r->hint,
-                    'ai' => $j($r->ai), 'no' => $r->noSpray, 'sources' => $j($r->sources), 'ranks' => $j($r->ranks)]);
+                    'ai' => $j($r->ai), 'no' => $r->noSpray, 'sources' => $j($r->sources), 'ranks' => $j($r->ranks)]
+                    // The registered ingredients by crop, prevention and the rest (2026-10-19); a row from before has none.
+                    + (is_string($r->advice ?? null) ? (json_decode($r->advice, true) ?: []) : []));
             } elseif ($what === 'weeds') {
                 // stop and named came with the registrations (2026-10-18); a row from before has neither.
                 $out[$r->slug] = self::weedShape(['name' => $r->name, 'sci' => $r->sci, 'group' => $r->wgroup, 'life' => $r->life, 'local' => $r->local,
@@ -332,7 +334,55 @@ final class FieldCatalogue
             'local' => (string) ($e['local'] ?? ''), 'hint' => (string) ($e['hint'] ?? ''), 'ai' => array_values((array) ($e['ai'] ?? [])),
             'no' => (string) ($e['no'] ?? ''), 'sources' => GovSource::keep((array) ($e['sources'] ?? [])),
             // crop => its place in that crop's own order of importance
-            'ranks' => array_map('intval', (array) ($e['ranks'] ?? []))];
+            'ranks' => array_map('intval', (array) ($e['ranks'] ?? []))]
+            + self::adviceShape($e);
+    }
+
+    /** The fields the sync keeps in one JSON column (advice), listed once. */
+    private const ADVICE = ['aiBy', 'avoid', 'prevent', 'bio', 'threshold', 'rotate', 'vector'];
+
+    /**
+     * What the registration list and our research add to a pest or disease
+     * (2026-10-19, the owner: "check for the pests solutions ... also ... how
+     * to prevent these and add it to the solution"):
+     *   aiBy       crop => [[ingredient, group, tier, products, companies, why], ...]:
+     *              the ingredients whose labels name it on that crop, best first
+     *              (tier A first choice, B works, C last resort); a crop not
+     *              listed falls back to `ai`
+     *   avoid      [[ingredient, why, [crops] or null], ...]: registered for it,
+     *              but not advised (resurgence, resistance, an adjuvant)
+     *   prevent    short lines: what keeps it out or controls it without a spray
+     *   bio        short lines: natural enemies and biological options
+     *   threshold  when it pays to act; rotate: the resistance and rotation line
+     *   vector     for a virus: the pests that carry it (their sprays are the vector's)
+     */
+    private static function adviceShape(array $e): array
+    {
+        $lines = fn ($v) => array_values(array_filter(array_map(fn ($s) => trim((string) $s), (array) $v), fn ($s) => $s !== ''));
+        $aiBy = [];
+        foreach ((array) ($e['aiBy'] ?? []) as $crop => $rows) {
+            $aiBy[(string) $crop] = array_values(array_filter((array) $rows, fn ($r) => is_array($r) && ($r[0] ?? '') !== ''));
+        }
+
+        return ['aiBy' => $aiBy, 'avoid' => array_values(array_filter((array) ($e['avoid'] ?? []), 'is_array')),
+            'prevent' => $lines($e['prevent'] ?? []), 'bio' => $lines($e['bio'] ?? []),
+            'threshold' => trim((string) ($e['threshold'] ?? '')), 'rotate' => trim((string) ($e['rotate'] ?? '')),
+            'vector' => array_values(array_map('strval', (array) ($e['vector'] ?? [])))];
+    }
+
+    /**
+     * The ingredients to show for one crop: the registered ones for that crop
+     * when the entry has them, else the entry's own list (as [ingredient, group]
+     * rows). Each row: [name, group, tier, products, companies, why].
+     */
+    public static function aiFor(array $e, ?string $crop): array
+    {
+        $by = (array) ($e['aiBy'] ?? []);
+        if ($crop && ! empty($by[$crop])) {
+            return array_values((array) $by[$crop]);
+        }
+
+        return array_map(fn ($a) => [(string) ($a[0] ?? ''), (string) ($a[1] ?? ''), '', 0, 0, ''], array_values(array_filter((array) ($e['ai'] ?? []), 'is_array')));
     }
 
     private static function weedShape(array $e): array
@@ -381,6 +431,8 @@ final class FieldCatalogue
         // Pests and diseases.
         $f = self::file('problems');
         $theirs = DB::table('as_crop_problems')->where('source', '!=', 'file')->get(['section', 'slug'])->map(fn ($r) => $r->section . '/' . $r->slug)->flip();
+        // advice (2026-10-19) is written once its column exists, whichever migration runs first.
+        $aMore = \Illuminate\Support\Facades\Schema::hasColumn('as_crop_problems', 'advice');
         foreach (['pests', 'diseases'] as $sec) {
             $rows = [];
             foreach ($f[$sec] ?? [] as $i => $e) {
@@ -390,11 +442,13 @@ final class FieldCatalogue
                 $rows[] = ['section' => $sec, 'slug' => $e['slug'], 'name' => $e['name'], 'sci' => $e['sci'] ?? '', 'shelf' => $e['shelf'], 'kind' => $e['kind'],
                     'crops' => $enc($e['crops'] ?? []), 'parts' => $enc($e['parts'] ?? []), 'signs' => $enc($e['signs'] ?? []), 'local' => $e['local'] ?? '',
                     'hint' => $e['hint'] ?? '', 'ai' => $enc($e['ai'] ?? []), 'noSpray' => $e['no'] ?? '', 'sources' => $enc($e['sources'] ?? []),
-                    'ranks' => json_encode((object) ($e['ranks'] ?? []), JSON_UNESCAPED_UNICODE), 'sortOrder' => $i, 'source' => 'file', 'deleteStatus' => 1, 'created_at' => $now, 'updated_at' => $now];
+                    'ranks' => json_encode((object) ($e['ranks'] ?? []), JSON_UNESCAPED_UNICODE), 'sortOrder' => $i, 'source' => 'file', 'deleteStatus' => 1, 'created_at' => $now, 'updated_at' => $now]
+                    + ($aMore ? ['advice' => json_encode((object) array_intersect_key(self::adviceShape($e), array_flip(self::ADVICE)), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)] : []);
             }
             foreach (array_chunk($rows, 40) as $chunk) {
                 DB::table('as_crop_problems')->upsert($chunk, ['section', 'slug'],
-                    ['name', 'sci', 'shelf', 'kind', 'crops', 'parts', 'signs', 'local', 'hint', 'ai', 'noSpray', 'sources', 'ranks', 'sortOrder', 'deleteStatus', 'updated_at']);
+                    array_merge(['name', 'sci', 'shelf', 'kind', 'crops', 'parts', 'signs', 'local', 'hint', 'ai', 'noSpray', 'sources', 'ranks', 'sortOrder', 'deleteStatus', 'updated_at'],
+                        $aMore ? ['advice'] : []));
             }
             DB::table('as_crop_problems')->where('source', 'file')->where('section', $sec)
                 ->whereNotIn('slug', array_column($rows, 'slug') ?: [''])->update(['deleteStatus' => 0, 'updated_at' => $now]);

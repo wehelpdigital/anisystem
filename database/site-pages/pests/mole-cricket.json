@@ -136,6 +136,27 @@
       "text": "Use an insecticide only as a last resort, and only as a bait on the bunds. It corrects a problem and does not prevent one. The sources we used do not name an active ingredient. Ask your local DA office which FPA registered product to use, and follow its label."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. 3 registered products name it on corn."
+        ]
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -149,10 +170,23 @@
     {
       "type": "list",
       "items": [
-        "Level the field and keep water control good from the start.",
-        "Shave and plaster the bunds before every season.",
-        "Flood the field for a few days before sowing where you can.",
-        "Check the seedbed at dusk and early morning for burrows and cut seedlings."
+        "Flood the field for 3 to 4 days before planting where you can. Water drives the crickets out and kills the eggs.",
+        "Level the field well, so it holds water evenly with no dry pockets for the crickets.",
+        "Shave the bunds and plaster them with fresh wet soil each season to kill eggs laid in the levees.",
+        "Pick nymphs and adults by hand during land preparation, and avoid dry, raised nursery beds.",
+        "In corn and upland fields, plow and harrow well before sowing so birds can pick the crickets from the turned soil."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Sphecid wasps, carabid beetles, nematodes and fungi attack mole crickets, and the crickets eat each other.",
+        "Birds, frogs and ducks catch the crickets that flooding drives to the surface."
       ]
     },
     {

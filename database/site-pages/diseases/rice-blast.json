@@ -139,34 +139,72 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Tricyclazole",
-          "FRAC 16.1",
-          "used for blast, protects the leaves and the neck"
+          "Isoprothiolane",
+          "FRAC 6",
+          "A first choice. 2 registered products name it on rice."
+        ],
+        [
+          "Mancozeb plus tricyclazole",
+          "FRAC M03 plus 16.1",
+          "A first choice. 1 registered product names it on rice."
+        ],
+        [
+          "Azoxystrobin plus difenoconazole",
+          "FRAC 11 plus 3",
+          "A sound second choice. 31 registered products name it on rice."
         ],
         [
           "Benomyl",
           "FRAC 1",
-          "used for blast, rotate it with another group"
+          "A sound second choice. 26 registered products name it on rice."
         ],
         [
-          "Pyroquilon",
-          "FRAC 16.1",
-          "used for blast, a melanin inhibitor like tricyclazole, so do not rotate between the two"
+          "Thiophanate methyl",
+          "FRAC 1",
+          "A sound second choice. 19 registered products name it on rice."
         ],
         [
-          "Azoxystrobin plus difenoconazole",
-          "FRAC 11 plus FRAC 3",
-          "a strobilurin with a triazole, the two classes used for blast, at heading"
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A sound second choice. 13 registered products name it on rice."
+        ],
+        [
+          "Fluoxastrobin plus tebuconazole",
+          "FRAC 11 plus 3",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Isotianil plus trifloxystrobin",
+          "FRAC P03 plus 11",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Plant essential oil plus difenoconazole",
+          "? plus FRAC 3",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Mancozeb",
+          "FRAC M03",
+          "Older or broad chemistry: a last resort. 85 registered products name it on rice."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 7 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Blast fungus in Japan and Vietnam already resists strobilurins (FRAC 11). Never spray group 11 alone or twice in a row. Rotate it with tricyclazole (16.1) or isoprothiolane (6), and pair it with a triazole (3)."
     },
     {
       "type": "callout",
@@ -182,11 +220,23 @@
     {
       "type": "list",
       "items": [
-        "Choose a blast resistant variety, and ask your local agriculture office for the current list.",
-        "Use clean, healthy seed.",
-        "Right after harvesting a blast hit field, plow under or burn the stubble, so the fungus dies and the stubble rots faster.",
-        "Rotate the field with mungo, pakwan, talong or mais when you can.",
-        "Feed the crop in split doses and keep the field flooded, instead of letting the soil dry out."
+        "Plant a blast resistant variety, and sow clean, healthy seed early, soon after the rains begin.",
+        "Split nitrogen into two or more doses and never pile it on.",
+        "Keep water on the field. Fields that dry out, above all rainfed ones, get much more blast.",
+        "Avoid close planting, and stay out of the crop while the leaves are wet.",
+        "On soils short of silicon, add calcium silicate or clean, blast free straw.",
+        "After a blast year, plow the stubble under at once, and rotate with mungo, corn or vegetables when you can."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Bacillus and Trichoderma products give only mild help. Resistant seed and water do far more."
       ]
     },
     {

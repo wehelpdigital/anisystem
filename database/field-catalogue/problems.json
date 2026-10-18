@@ -20,11 +20,287 @@
     [
      "Pymetrozine",
      "IRAC 9B"
+    ],
+    [
+     "Dinotefuran",
+     "IRAC 4A"
+    ],
+    [
+     "Pymetrozine plus dinotefuran",
+     "IRAC 9B plus 4A"
+    ],
+    [
+     "Triflumezopyrim",
+     "IRAC 4E"
+    ],
+    [
+     "Thiamethoxam",
+     "IRAC 4A"
+    ],
+    [
+     "Buprofezin",
+     "IRAC 16"
+    ],
+    [
+     "Chlorantraniliprole plus thiamethoxam",
+     "IRAC 28 plus 4A"
+    ],
+    [
+     "Clothianidin",
+     "IRAC 4A"
+    ],
+    [
+     "Cartap hydrochloride",
+     "IRAC 14"
+    ],
+    [
+     "Fipronil",
+     "IRAC 2B"
+    ],
+    [
+     "Carbofuran",
+     "IRAC 1A"
+    ],
+    [
+     "Phenthoate",
+     "IRAC 1B"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Pymetrozine",
+      "IRAC 9B",
+      "A",
+      26,
+      26,
+      "Stops the hoppers feeding at once, but they take two to four days to die, so do not spray again too soon."
+     ],
+     [
+      "Dinotefuran",
+      "IRAC 4A",
+      "A",
+      10,
+      10,
+      ""
+     ],
+     [
+      "Pymetrozine plus dinotefuran",
+      "IRAC 9B plus 4A",
+      "A",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Triflumezopyrim",
+      "IRAC 4E",
+      "A",
+      3,
+      2,
+      ""
+     ],
+     [
+      "Thiamethoxam",
+      "IRAC 4A",
+      "B",
+      23,
+      20,
+      "Same group 4A as imidacloprid, which this hopper resists, and some trials saw hoppers rebound after it. Toxic to bees."
+     ],
+     [
+      "Buprofezin",
+      "IRAC 16",
+      "B",
+      7,
+      7,
+      "Kills nymphs only, not adults, and works slowly. Resisted in parts of Asia, so use it once a crop."
+     ],
+     [
+      "Chlorantraniliprole plus thiamethoxam",
+      "IRAC 28 plus 4A",
+      "B",
+      6,
+      6,
+      "Only the thiamethoxam acts on hoppers. Worth it when stem borers need control at the same time."
+     ],
+     [
+      "Clothianidin",
+      "IRAC 4A",
+      "B",
+      3,
+      3,
+      "Same group 4A as imidacloprid, which this hopper resists. Toxic to bees. Switch groups after one spray."
+     ],
+     [
+      "Cartap hydrochloride",
+      "IRAC 14",
+      "C",
+      83,
+      83,
+      "Weak on planthoppers. Keep it for stem borers and whorl maggot."
+     ],
+     [
+      "Fipronil",
+      "IRAC 2B",
+      "C",
+      32,
+      32,
+      "Very toxic to fish, shrimp and bees and harsh on spiders, and resistance is rising in Asia. A last resort."
+     ],
+     [
+      "Carbofuran",
+      "IRAC 1A",
+      "C",
+      21,
+      20,
+      "Highly toxic to people, fish, ducks and birds, and linked to hopper resurgence. A last resort only."
+     ],
+     [
+      "Phenthoate",
+      "IRAC 1B",
+      "C",
+      10,
+      10,
+      "Kills the spiders and mirid bugs that eat hoppers. One spray at most, late in the crop."
+     ],
+     [
+      "Dimethoate",
+      "IRAC 1B",
+      "C",
+      6,
+      6,
+      "Kills the spiders and mirid bugs that eat hoppers. One spray at most, late in the crop."
+     ],
+     [
+      "Carbosulfan",
+      "IRAC 1A",
+      "C",
+      2,
+      2,
+      "Very toxic to fish, ducks and birds, and harsh on the hoppers' enemies. A last resort."
+     ],
+     [
+      "Buprofezin plus isoprocarb (MIPC)",
+      "IRAC 16 plus 1A",
+      "C",
+      1,
+      1,
+      "The isoprocarb half is of the same family as BPMC, which this hopper resists here. The buprofezin half works on nymphs only."
+     ],
+     [
+      "Imidacloprid plus fipronil",
+      "IRAC 4A plus 2B",
+      "C",
+      1,
+      1,
+      "Imidacloprid no longer controls this hopper well, and fipronil is very toxic to fish and shrimp."
+     ],
+     [
+      "Isoprocarb (MIPC)",
+      "IRAC 1A",
+      "C",
+      1,
+      1,
+      "Same family as BPMC, which planthoppers here resist strongly. Expect weak results."
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Diazinon",
+     "Known in trials to make brown planthopper come back worse after spraying.",
+     null
+    ],
+    [
+     "Fenobucarb (BPMC) plus chlorpyrifos",
+     "Hoppers here resist BPMC, and chlorpyrifos kills their enemies, so outbreaks can follow.",
+     null
+    ],
+    [
+     "Acephate",
+     "Trials in South Asia saw brown planthopper come back in bigger numbers after acephate sprays.",
+     null
+    ],
+    [
+     "Cypermethrin",
+     "Pyrethroids kill the spiders and bugs that eat hoppers, and planthoppers come back worse after the spray.",
+     null
+    ],
+    [
+     "Alpha cypermethrin",
+     "Pyrethroids kill the spiders and bugs that eat hoppers, and planthoppers come back worse after the spray.",
+     null
+    ],
+    [
+     "Chlorpyrifos",
+     "Field trials saw hoppers rise and their predators fall after chlorpyrifos sprays, ending above unsprayed rice.",
+     null
+    ],
+    [
+     "Lambda cyhalothrin plus thiamethoxam",
+     "The pyrethroid in it kills spiders and lets planthoppers come back worse.",
+     null
+    ],
+    [
+     "Chlorpyrifos plus cypermethrin",
+     "The pyrethroid and the organophosphate kill the hoppers' enemies, and planthoppers come back worse.",
+     null
+    ],
+    [
+     "Beta cypermethrin",
+     "Pyrethroids kill the spiders and bugs that eat hoppers, and planthoppers come back worse after the spray.",
+     null
+    ],
+    [
+     "Fenobucarb (BPMC)",
+     "Brown planthopper in the Philippines and much of Asia now resists BPMC strongly. It no longer pays.",
+     null
+    ],
+    [
+     "Bifenthrin plus clothianidin",
+     "The pyrethroid in it kills spiders and lets planthoppers come back worse.",
+     null
+    ],
+    [
+     "Phenthoate plus fenobucarb (BPMC)",
+     "Hoppers here resist BPMC, and the mix kills the spiders that hold them down.",
+     null
+    ],
+    [
+     "Acephate plus imidacloprid",
+     "Imidacloprid no longer controls this hopper well, and acephate can bring it back in bigger numbers.",
+     null
+    ],
+    [
+     "Esfenvalerate",
+     "Pyrethroids kill the spiders and bugs that eat hoppers, and planthoppers come back worse after the spray.",
+     null
+    ],
+    [
+     "Permethrin",
+     "Pyrethroids kill the spiders and bugs that eat hoppers, and planthoppers come back worse after the spray.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Plant a resistant variety, and plant together with your neighbors with a fallow of one to two months between crops.",
+    "Space hills about 20 by 20 cm, split the nitrogen into three doses and keep potassium enough. Dense, lush rice breeds hoppers.",
+    "Use alternate wetting and drying from about 21 to 30 days after transplanting. Hoppers like a wet, humid base.",
+    "No insecticide in the first 30 to 40 days after transplanting. Early sprays kill the spiders that keep hoppers down.",
+    "Keep seedbeds away from lights, flood the seedbed for a day to drown hoppers, and plow under ratoons after harvest."
+   ],
+   "bio": [
+    "Wolf spiders, mirid bugs (Cyrtorhinus), lady beetles and water striders eat hoppers and eggs. Count them before you spray.",
+    "The fungus Metarhizium anisopliae infects hoppers in humid weather.",
+    "Ducks let into the paddy once the plants are well rooted eat many hoppers."
+   ],
+   "threshold": "From 30 days after transplanting, tap 20 hills a week over the water and count hoppers and spiders. At 1 hopper per tiller or fewer, do nothing. Consider a spray only from booting on, when counts reach 25 or more per hill and hoppers outnumber spiders and mirid bugs.",
+   "rotate": "Brown planthopper in Asia resists imidacloprid and BPMC, and resistance to buprofezin, fipronil and thiamethoxam is rising. Use each group at most once a crop and switch among pymetrozine (9B), triflumezopyrim (4E), buprofezin (16) and dinotefuran (4A).",
+   "vector": []
   },
   {
    "slug": "rice-black-bug",
@@ -44,17 +320,120 @@
    "hint": "Dead hearts, whiteheads and bugburn patches. The bugs hide at the base of the hill by day.",
    "ai": [
     [
+     "Clothianidin",
+     "IRAC 4A"
+    ],
+    [
      "Lambda cyhalothrin",
      "IRAC 3A"
     ],
     [
-     "Chlorantraniliprole plus thiamethoxam",
-     "IRAC 28 plus 4A"
+     "Deltamethrin",
+     "IRAC 3A"
+    ],
+    [
+     "Beta cyfluthrin",
+     "IRAC 3A"
+    ],
+    [
+     "Esfenvalerate",
+     "IRAC 3A"
+    ],
+    [
+     "Bifenthrin",
+     "IRAC 3A"
+    ],
+    [
+     "Bifenthrin plus clothianidin",
+     "IRAC 3A plus 4A"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Clothianidin",
+      "IRAC 4A",
+      "A",
+      53,
+      53,
+      "Systemic, so it reaches bugs hiding at the base of the hill. Toxic to bees. Gives only short relief alone."
+     ],
+     [
+      "Lambda cyhalothrin",
+      "IRAC 3A",
+      "B",
+      91,
+      90,
+      "Raise the water first so the bugs climb, then spray in the cool hours. Kills spiders and is very toxic to fish."
+     ],
+     [
+      "Deltamethrin",
+      "IRAC 3A",
+      "C",
+      4,
+      4,
+      "A pyrethroid known to set off planthopper outbreaks, and very toxic to fish. A last resort."
+     ],
+     [
+      "Beta cyfluthrin",
+      "IRAC 3A",
+      "C",
+      3,
+      3,
+      "A pyrethroid: kills spiders and can make planthoppers flare. Very toxic to fish. A last resort."
+     ],
+     [
+      "Esfenvalerate",
+      "IRAC 3A",
+      "C",
+      2,
+      2,
+      "A pyrethroid: kills spiders and can make planthoppers flare. Very toxic to fish. A last resort."
+     ],
+     [
+      "Bifenthrin",
+      "IRAC 3A",
+      "C",
+      1,
+      1,
+      "A pyrethroid: kills spiders and can make planthoppers flare. Very toxic to fish. A last resort."
+     ],
+     [
+      "Bifenthrin plus clothianidin",
+      "IRAC 3A plus 4A",
+      "C",
+      1,
+      1,
+      ""
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Pymetrozine",
+     "Made for hoppers. It does little against stink bugs such as the black bug.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Plant varieties of the same maturity within a month of the barangay's usual date, over about 1 km around you.",
+    "Keep weeds down in the field and on the bunds, and apply nitrogen at the right rate in splits.",
+    "Raise the water to 8 to 10 cm for one to two days to stop eggs hatching, after checking the eggs for wasps.",
+    "Run bright light traps from two days before to three days after the full moon, and bury the catch.",
+    "Plow right after harvest and keep the stubble under water until it rots.",
+    "Tolerant varieties that replace lost tillers, and direct seeding with fewer tillers per hill, both help."
+   ],
+   "bio": [
+    "The fungus Metarhizium anisopliae kills young and grown bugs. Where it is sold, spray it on the base of the hills.",
+    "The egg wasp Telenomus triptus lives inside black bug eggs. Crickets, spiders, ground beetles, lady beetles and red ants help too.",
+    "Ducks herded into insecticide free fields from a month after transplanting to heading eat many bugs."
+   ],
+   "threshold": "Pick 20 hills across the field and count eggs, nymphs and adults at the base. At 5 bugs per hill or fewer, no insecticide: flood and use Metarhizium. Above 5 per hill, a spray may pay, after raising the water so the bugs climb the leaves.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-bug",
@@ -77,13 +456,241 @@
      "IRAC 3A"
     ],
     [
+     "Malathion",
+     "IRAC 1B"
+    ],
+    [
      "Lambda cyhalothrin plus thiamethoxam",
      "IRAC 3A plus 4A"
+    ],
+    [
+     "Thiamethoxam",
+     "IRAC 4A"
+    ],
+    [
+     "Dinotefuran",
+     "IRAC 4A"
+    ],
+    [
+     "Cypermethrin",
+     "IRAC 3A"
+    ],
+    [
+     "Beta cypermethrin",
+     "IRAC 3A"
+    ],
+    [
+     "Carbosulfan",
+     "IRAC 1A"
+    ],
+    [
+     "Esfenvalerate",
+     "IRAC 3A"
+    ],
+    [
+     "Alpha cypermethrin",
+     "IRAC 3A"
+    ],
+    [
+     "Bifenthrin",
+     "IRAC 3A"
+    ],
+    [
+     "Fipronil",
+     "IRAC 2B"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Lambda cyhalothrin",
+      "IRAC 3A",
+      "A",
+      91,
+      90,
+      "Fast on bugs, but very toxic to fish and kills spiders. Check for planthoppers first, since it can make them flare."
+     ],
+     [
+      "Malathion",
+      "IRAC 1B",
+      "B",
+      40,
+      40,
+      "Breaks down within days, so it is one of the milder choices, but it is still toxic to fish and bees."
+     ],
+     [
+      "Lambda cyhalothrin plus thiamethoxam",
+      "IRAC 3A plus 4A",
+      "B",
+      29,
+      29,
+      "The pyrethroid half is very toxic to fish and kills spiders. Use it only when the count calls for it."
+     ],
+     [
+      "Thiamethoxam",
+      "IRAC 4A",
+      "B",
+      19,
+      19,
+      ""
+     ],
+     [
+      "Dinotefuran",
+      "IRAC 4A",
+      "B",
+      9,
+      9,
+      "Systemic, so it reaches bugs feeding on the panicle. Toxic to bees, so spray late in the afternoon."
+     ],
+     [
+      "Cypermethrin",
+      "IRAC 3A",
+      "B",
+      6,
+      6,
+      "A pyrethroid: very toxic to fish and kills spiders. Check for planthoppers first, since it can make them flare."
+     ],
+     [
+      "Beta cypermethrin",
+      "IRAC 3A",
+      "B",
+      5,
+      5,
+      ""
+     ],
+     [
+      "Carbosulfan",
+      "IRAC 1A",
+      "B",
+      2,
+      2,
+      "Works well on the bugs but is very toxic to fish, ducks and birds. Keep ducks out and do not drain the water into fishponds."
+     ],
+     [
+      "Esfenvalerate",
+      "IRAC 3A",
+      "B",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Alpha cypermethrin",
+      "IRAC 3A",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Bifenthrin",
+      "IRAC 3A",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Fipronil",
+      "IRAC 2B",
+      "C",
+      30,
+      30,
+      "Very toxic to fish, shrimp and bees, and stronger than a rice bug needs. Keep it as a last resort."
+     ],
+     [
+      "Diazinon",
+      "IRAC 1B",
+      "C",
+      22,
+      20,
+      "An old organophosphate known to bring planthoppers back worse. A last resort only."
+     ],
+     [
+      "Dimethoate",
+      "IRAC 1B",
+      "C",
+      6,
+      6,
+      ""
+     ],
+     [
+      "Carbaryl",
+      "IRAC 1A",
+      "C",
+      4,
+      4,
+      "Very toxic to bees. If you must use it, spray late in the day when no bees visit the flowering rice."
+     ],
+     [
+      "Deltamethrin",
+      "IRAC 3A",
+      "C",
+      4,
+      4,
+      "The pyrethroid most often linked to planthopper outbreaks, and very toxic to fish. A last resort for rice bug."
+     ],
+     [
+      "Fenitrothion",
+      "IRAC 1B",
+      "C",
+      4,
+      4,
+      ""
+     ],
+     [
+      "Fenthion",
+      "IRAC 1B",
+      "C",
+      2,
+      2,
+      "Very toxic to birds and fish. An old product kept only as a last resort."
+     ],
+     [
+      "Phenthoate plus fenobucarb (BPMC)",
+      "IRAC 1B plus 1A",
+      "C",
+      2,
+      2,
+      "Broad spectrum mix that kills the spiders and egg wasps working for you. A last resort only."
+     ],
+     [
+      "Acephate",
+      "IRAC 1B",
+      "C",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      1,
+      1,
+      "Kills spiders and fish and can flare planthoppers late in the crop. A last resort only."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Cut grassy weeds on the pilapil, the canals and the field edges before the crop flowers, so the bugs have nowhere to breed and wait.",
+    "Plant in the same weeks as your neighbors after a fallow of a month or more, so bugs cannot move from early fields to late ones.",
+    "Level the field and give even water and fertilizer, so the whole lot flowers and passes the milk stage together.",
+    "While numbers are low, sweep a net through the crop at dawn, or set baits of rotting snail or crab to gather the bugs, then destroy them.",
+    "Where you can, grow an awned variety. Awns, and panicles that stay longer in the leaf sheath, give some protection."
+   ],
+   "bio": [
+    "Tiny egg wasps (Gryon) and long horned grasshoppers destroy rice bug eggs on the leaves.",
+    "Spiders, field crickets and lady beetles eat nymphs and adults. Skip broad sprays early in the crop so they build up.",
+    "The fungus Beauveria bassiana infects the bugs in wet, humid weather."
+   ],
+   "threshold": "From the start of flowering to hard dough, walk the field at dawn or late afternoon every few days and count bugs on 20 hills. Act only when you find more than 10 bugs in 20 hills, or more than 5 bugs per square meter at the milk stage.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-leaffolder",
@@ -106,13 +713,287 @@
      "IRAC 28"
     ],
     [
-     "Lambda cyhalothrin",
-     "IRAC 3A"
+     "Cartap hydrochloride",
+     "IRAC 14"
+    ],
+    [
+     "Chlorantraniliprole plus thiamethoxam",
+     "IRAC 28 plus 4A"
+    ],
+    [
+     "Flubendiamide",
+     "IRAC 28"
+    ],
+    [
+     "Indoxacarb",
+     "IRAC 22A"
+    ],
+    [
+     "Thiosultap (dimehypo)",
+     "IRAC 14"
+    ],
+    [
+     "Tetraniliprole",
+     "IRAC 28"
+    ],
+    [
+     "Cyclaniliprole",
+     "IRAC 28"
+    ],
+    [
+     "Isocycloseram",
+     "IRAC 30"
+    ],
+    [
+     "Lufenuron plus cyantraniliprole",
+     "IRAC 15 plus 28"
+    ],
+    [
+     "Tebufenozide",
+     "IRAC 18"
+    ],
+    [
+     "Tetraniliprole plus thiacloprid",
+     "IRAC 28 plus 4A"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Chlorantraniliprole",
+      "IRAC 28",
+      "A",
+      35,
+      32,
+      "Kind to spiders and wasps. Spray only to save the flag leaf, and do not use group 28 twice in a row."
+     ],
+     [
+      "Cartap hydrochloride",
+      "IRAC 14",
+      "A",
+      2,
+      2,
+      "Works on young caterpillars. Spray at the flag leaf stage only, never in the first 40 days."
+     ],
+     [
+      "Chlorantraniliprole plus thiamethoxam",
+      "IRAC 28 plus 4A",
+      "B",
+      6,
+      6,
+      "Only the chlorantraniliprole acts on leaffolder. Pay for the mix only when hoppers need control too."
+     ],
+     [
+      "Flubendiamide",
+      "IRAC 28",
+      "B",
+      2,
+      2,
+      "Same group 28 as chlorantraniliprole, so never use the two one after the other."
+     ],
+     [
+      "Indoxacarb",
+      "IRAC 22A",
+      "B",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Thiosultap (dimehypo)",
+      "IRAC 14",
+      "B",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Tetraniliprole",
+      "IRAC 28",
+      "B",
+      2,
+      1,
+      ""
+     ],
+     [
+      "Cyclaniliprole",
+      "IRAC 28",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Isocycloseram",
+      "IRAC 30",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Lufenuron plus cyantraniliprole",
+      "IRAC 15 plus 28",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Tebufenozide",
+      "IRAC 18",
+      "B",
+      1,
+      1,
+      "Makes caterpillars molt too early and die. Slow, but kind to spiders and wasps."
+     ],
+     [
+      "Tetraniliprole plus thiacloprid",
+      "IRAC 28 plus 4A",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Cypermethrin",
+      "IRAC 3A",
+      "C",
+      98,
+      97,
+      "Kills caterpillars, but also the spiders and wasps that hold leaffolder and planthoppers down. Never early."
+     ],
+     [
+      "Lambda cyhalothrin",
+      "IRAC 3A",
+      "C",
+      91,
+      90,
+      "Kills caterpillars, but also the spiders and wasps that hold leaffolder and planthoppers down. Never early."
+     ],
+     [
+      "Methomyl",
+      "IRAC 1A",
+      "C",
+      58,
+      58,
+      "Highly toxic to people and harsh on natural enemies. A last resort only."
+     ],
+     [
+      "Fipronil",
+      "IRAC 2B",
+      "C",
+      31,
+      31,
+      "Very toxic to fish, shrimp and bees. Far more than a leaffolder needs. A last resort."
+     ],
+     [
+      "Diazinon",
+      "IRAC 1B",
+      "C",
+      22,
+      20,
+      "Kills spiders and wasps and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Carbofuran",
+      "IRAC 1A",
+      "C",
+      21,
+      20,
+      "A granule that does little for caterpillars in folded leaves, and it is highly toxic to people, fish and birds."
+     ],
+     [
+      "Acephate",
+      "IRAC 1B",
+      "C",
+      17,
+      14,
+      ""
+     ],
+     [
+      "Bifenthrin plus imidacloprid",
+      "IRAC 3A plus 4A",
+      "C",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Fenobucarb (BPMC)",
+      "IRAC 1A",
+      "C",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Acephate plus imidacloprid",
+      "IRAC 1B plus 4A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Bifenthrin plus clothianidin",
+      "IRAC 3A plus 4A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Permethrin",
+      "IRAC 3A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Azadirachtin",
+      "IRAC UN",
+      "C",
+      1,
+      1,
+      "A neem product. Mild and short lived. It only slows young caterpillars."
+     ],
+     [
+      "Beta cypermethrin",
+      "IRAC 3A",
+      "C",
+      1,
+      1,
+      ""
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Clothianidin",
+     "Made for sucking insects such as hoppers. It does little against caterpillars inside the fold.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Keep every insecticide off the crop for the first 30 to 40 days. Early leaf damage rarely costs grain.",
+    "Plant at a moderate density and give balanced fertilizer. Lush, dark green rice draws the moths.",
+    "Remove grassy weeds in the field and on the bunds, and cut back branches that shade the paddy edge.",
+    "Follow rice with another crop or a fallow, avoid ratooning, and flood and plow the field after harvest.",
+    "Use a resistant variety where your technician has one."
+   ],
+   "bio": [
+    "Many small wasps lay their eggs in leaffolder eggs and caterpillars. Spiders and crickets eat the rest.",
+    "Flowering plants on the bunds feed the wasps with nectar and keep them in the field.",
+    "Where a Bt product for caterpillars is sold, it spares the wasps. Aim it at young caterpillars."
+   ],
+   "threshold": "Scout every week from tillering to flowering and open a few fresh folds. Before booting the crop regrows lost leaf, so do not spray. From booting on, act only when the flag leaf and the two leaves below it are heading toward more than half eaten and live caterpillars are in the folds.",
+   "rotate": "Leaffolder in China has grown less sensitive to chlorantraniliprole after heavy use. Do not spray group 28 twice in a row. Switch with cartap (14), indoxacarb (22A) or tebufenozide (18).",
+   "vector": []
   },
   {
    "slug": "rice-stem-borer",
@@ -132,17 +1013,317 @@
    "hint": "The central shoot dries up and pulls out easily, which is a deadheart.",
    "ai": [
     [
+     "Cartap hydrochloride",
+     "IRAC 14"
+    ],
+    [
      "Chlorantraniliprole",
      "IRAC 28"
     ],
     [
-     "Cartap hydrochloride",
+     "Chlorantraniliprole plus thiamethoxam",
+     "IRAC 28 plus 4A"
+    ],
+    [
+     "Flubendiamide",
+     "IRAC 28"
+    ],
+    [
+     "Thiosultap (dimehypo)",
      "IRAC 14"
+    ],
+    [
+     "Tetraniliprole",
+     "IRAC 28"
+    ],
+    [
+     "Cyclaniliprole",
+     "IRAC 28"
+    ],
+    [
+     "Isocycloseram",
+     "IRAC 30"
+    ],
+    [
+     "Tebufenozide",
+     "IRAC 18"
+    ],
+    [
+     "Tetraniliprole plus thiacloprid",
+     "IRAC 28 plus 4A"
+    ],
+    [
+     "Lambda cyhalothrin plus thiamethoxam",
+     "IRAC 3A plus 4A"
+    ],
+    [
+     "Fipronil",
+     "IRAC 2B"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Cartap hydrochloride",
+      "IRAC 14",
+      "A",
+      85,
+      83,
+      "Hits young larvae best, soon after the eggs hatch and before they bore deep into the stem."
+     ],
+     [
+      "Chlorantraniliprole",
+      "IRAC 28",
+      "A",
+      40,
+      35,
+      "Spray when the eggs hatch, before larvae bore in. Kind to spiders and wasps. Do not use group 28 on two crops in a row."
+     ],
+     [
+      "Chlorantraniliprole plus thiamethoxam",
+      "IRAC 28 plus 4A",
+      "B",
+      8,
+      8,
+      "The chlorantraniliprole does the borer work. Pay for the mix only when planthoppers need control too."
+     ],
+     [
+      "Flubendiamide",
+      "IRAC 28",
+      "B",
+      2,
+      2,
+      "Same group 28 as chlorantraniliprole, so never use the two one after the other."
+     ],
+     [
+      "Thiosultap (dimehypo)",
+      "IRAC 14",
+      "B",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Tetraniliprole",
+      "IRAC 28",
+      "B",
+      2,
+      1,
+      ""
+     ],
+     [
+      "Cyclaniliprole",
+      "IRAC 28",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Isocycloseram",
+      "IRAC 30",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Tebufenozide",
+      "IRAC 18",
+      "B",
+      1,
+      1,
+      "Acts only on larvae while they feed outside the stem. Slow, but kind to wasps and spiders."
+     ],
+     [
+      "Tetraniliprole plus thiacloprid",
+      "IRAC 28 plus 4A",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Lambda cyhalothrin plus thiamethoxam",
+      "IRAC 3A plus 4A",
+      "C",
+      50,
+      50,
+      "The pyrethroid half kills spiders and can bring planthoppers back worse. Not for the first 40 days."
+     ],
+     [
+      "Fipronil",
+      "IRAC 2B",
+      "C",
+      35,
+      33,
+      "Works on borers, but very toxic to fish, shrimp and bees, and harsh on natural enemies. A last resort."
+     ],
+     [
+      "Fenobucarb (BPMC) plus chlorpyrifos",
+      "IRAC 1A plus 1B",
+      "C",
+      30,
+      30,
+      ""
+     ],
+     [
+      "Diazinon",
+      "IRAC 1B",
+      "C",
+      22,
+      20,
+      "Kills spiders and wasps, and early use can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Carbofuran",
+      "IRAC 1A",
+      "C",
+      21,
+      20,
+      "Highly toxic to people, fish, ducks and birds. A last resort only, and never near fishponds."
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      18,
+      18,
+      "Kills spiders and wasps, and early use can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Acephate",
+      "IRAC 1B",
+      "C",
+      17,
+      14,
+      ""
+     ],
+     [
+      "Phenthoate",
+      "IRAC 1B",
+      "C",
+      10,
+      10,
+      ""
+     ],
+     [
+      "Chlorpyrifos plus cypermethrin",
+      "IRAC 1B plus 3A",
+      "C",
+      7,
+      7,
+      ""
+     ],
+     [
+      "Beta cypermethrin",
+      "IRAC 3A",
+      "C",
+      6,
+      6,
+      ""
+     ],
+     [
+      "Cypermethrin",
+      "IRAC 3A",
+      "C",
+      6,
+      6,
+      "Hardly reaches larvae inside the stem, and kills the spiders that keep planthoppers down."
+     ],
+     [
+      "Dimethoate",
+      "IRAC 1B",
+      "C",
+      6,
+      6,
+      ""
+     ],
+     [
+      "Deltamethrin",
+      "IRAC 3A",
+      "C",
+      4,
+      4,
+      "Hardly reaches larvae inside the stem, and is known to set off planthopper outbreaks."
+     ],
+     [
+      "Fenitrothion",
+      "IRAC 1B",
+      "C",
+      4,
+      4,
+      ""
+     ],
+     [
+      "Beta cyfluthrin",
+      "IRAC 3A",
+      "C",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Bifenthrin plus imidacloprid",
+      "IRAC 3A plus 4A",
+      "C",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Acephate plus imidacloprid",
+      "IRAC 1B plus 4A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Carbosulfan",
+      "IRAC 1A",
+      "C",
+      2,
+      2,
+      "Very toxic to fish, ducks and birds. A last resort only."
+     ],
+     [
+      "Esfenvalerate",
+      "IRAC 3A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Alpha cypermethrin",
+      "IRAC 3A",
+      "C",
+      1,
+      1,
+      ""
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "After harvest, plow and flood the field and cut stubble low, so the larvae resting in old stems die.",
+    "Plant in the same weeks as your neighbors and keep a fallow gap, so the moths find no young tillers between crops.",
+    "Pick egg masses off the seedlings before you pull them, and raise the water now and then to drown eggs laid low on the plant.",
+    "Split the nitrogen into doses. Heavy early nitrogen gives soft, lush tillers that the moths prefer.",
+    "Use a resistant or tolerant variety where your technician can supply one, and remove ratoons and volunteer rice."
+   ],
+   "bio": [
+    "Egg wasps (Trichogramma, Telenomus, Tetrastichus) destroy many egg masses. Protect them by not spraying early.",
+    "Where Trichogramma cards are sold, pin them in the field when the moths start laying.",
+    "Spiders, lady beetles, ground beetles, earwigs and dragonflies eat the larvae and moths."
+   ],
+   "threshold": "From tillering, check 20 hills a week for egg masses and deadhearts, and run a light trap from panicle initiation. Act only when you find about 1 egg mass per square meter or deadhearts on 10 percent of tillers, and the egg jar test hatches more larvae than wasps.",
+   "rotate": "Striped stem borer in China now resists the diamides (IRAC 28) after years of heavy use. Do not use group 28 on two crops in a row. Switch with cartap (IRAC 14).",
+   "vector": []
   },
   {
    "slug": "green-leafhopper",
@@ -160,10 +1341,414 @@
    "signs": [],
    "local": "",
    "hint": "Small green wedge shaped insects jump or run sideways when you disturb the hills.",
-   "ai": [],
+   "ai": [
+    [
+     "Thiamethoxam",
+     "IRAC 4A"
+    ],
+    [
+     "Dinotefuran",
+     "IRAC 4A"
+    ],
+    [
+     "Pymetrozine plus dinotefuran",
+     "IRAC 9B plus 4A"
+    ],
+    [
+     "Triflumezopyrim",
+     "IRAC 4E"
+    ],
+    [
+     "Pymetrozine",
+     "IRAC 9B"
+    ],
+    [
+     "Chlorantraniliprole plus thiamethoxam",
+     "IRAC 28 plus 4A"
+    ],
+    [
+     "Buprofezin",
+     "IRAC 16"
+    ],
+    [
+     "Clothianidin",
+     "IRAC 4A"
+    ],
+    [
+     "Imidacloprid",
+     "IRAC 4A"
+    ],
+    [
+     "Buprofezin plus isoprocarb (MIPC)",
+     "IRAC 16 plus 1A"
+    ],
+    [
+     "Sulfoxaflor",
+     "IRAC 4C"
+    ],
+    [
+     "Cypermethrin",
+     "IRAC 3A"
+    ]
+   ],
    "no": "Sprays often fail to stop tungro. Ask a technician before you spray.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Thiamethoxam",
+      "IRAC 4A",
+      "A",
+      23,
+      20,
+      "Toxic to bees. A spray kills leafhoppers but cannot stop tungro once the virus is in."
+     ],
+     [
+      "Dinotefuran",
+      "IRAC 4A",
+      "A",
+      10,
+      10,
+      "Works on leafhoppers and brown planthopper alike. Toxic to bees. A spray cannot stop tungro once the virus is in."
+     ],
+     [
+      "Pymetrozine plus dinotefuran",
+      "IRAC 9B plus 4A",
+      "A",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Triflumezopyrim",
+      "IRAC 4E",
+      "A",
+      3,
+      2,
+      ""
+     ],
+     [
+      "Pymetrozine",
+      "IRAC 9B",
+      "B",
+      25,
+      25,
+      "Stops feeding. Better on planthoppers than on leafhoppers. Kind to spiders."
+     ],
+     [
+      "Chlorantraniliprole plus thiamethoxam",
+      "IRAC 28 plus 4A",
+      "B",
+      8,
+      8,
+      ""
+     ],
+     [
+      "Buprofezin",
+      "IRAC 16",
+      "B",
+      7,
+      7,
+      "Kills nymphs only, not the adults that carry tungro. Slow but kind to spiders."
+     ],
+     [
+      "Clothianidin",
+      "IRAC 4A",
+      "B",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Imidacloprid",
+      "IRAC 4A",
+      "B",
+      3,
+      3,
+      "Still works on leafhoppers, though brown planthopper resists it. Toxic to bees."
+     ],
+     [
+      "Buprofezin plus isoprocarb (MIPC)",
+      "IRAC 16 plus 1A",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Sulfoxaflor",
+      "IRAC 4C",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Cypermethrin",
+      "IRAC 3A",
+      "C",
+      99,
+      98,
+      "Pyrethroids kill leafhoppers fast but also the spiders, and brown planthopper can come back worse."
+     ],
+     [
+      "Lambda cyhalothrin",
+      "IRAC 3A",
+      "C",
+      91,
+      90,
+      "Pyrethroids kill leafhoppers fast but also the spiders, and brown planthopper can come back worse."
+     ],
+     [
+      "Cartap hydrochloride",
+      "IRAC 14",
+      "C",
+      83,
+      83,
+      "Weak on leafhoppers. Keep it for stem borers and whorl maggot."
+     ],
+     [
+      "Methomyl",
+      "IRAC 1A",
+      "C",
+      58,
+      58,
+      "Highly toxic to people and harsh on natural enemies. A last resort only."
+     ],
+     [
+      "Malathion",
+      "IRAC 1B",
+      "C",
+      40,
+      40,
+      ""
+     ],
+     [
+      "Lambda cyhalothrin plus thiamethoxam",
+      "IRAC 3A plus 4A",
+      "C",
+      32,
+      32,
+      "The pyrethroid half kills spiders and can bring brown planthopper back worse."
+     ],
+     [
+      "Fenobucarb (BPMC) plus chlorpyrifos",
+      "IRAC 1A plus 1B",
+      "C",
+      30,
+      30,
+      ""
+     ],
+     [
+      "Carbaryl",
+      "IRAC 1A",
+      "C",
+      27,
+      27,
+      "Very toxic to bees and harsh on spiders. A last resort."
+     ],
+     [
+      "Carbofuran",
+      "IRAC 1A",
+      "C",
+      21,
+      20,
+      "Highly toxic to people, fish, ducks and birds. A last resort only, never near fishponds."
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      18,
+      18,
+      "Kills spiders and mirid bugs and can set off brown planthopper outbreaks. A last resort."
+     ],
+     [
+      "Acephate",
+      "IRAC 1B",
+      "C",
+      18,
+      15,
+      ""
+     ],
+     [
+      "Phenthoate",
+      "IRAC 1B",
+      "C",
+      10,
+      10,
+      ""
+     ],
+     [
+      "Chlorpyrifos plus cypermethrin",
+      "IRAC 1B plus 3A",
+      "C",
+      7,
+      7,
+      ""
+     ],
+     [
+      "Beta cypermethrin",
+      "IRAC 3A",
+      "C",
+      6,
+      6,
+      ""
+     ],
+     [
+      "Dimethoate",
+      "IRAC 1B",
+      "C",
+      6,
+      6,
+      ""
+     ],
+     [
+      "Deltamethrin",
+      "IRAC 3A",
+      "C",
+      4,
+      4,
+      "Known to set off brown planthopper outbreaks. Very toxic to fish. A last resort."
+     ],
+     [
+      "Beta cyfluthrin",
+      "IRAC 3A",
+      "C",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Bifenthrin plus clothianidin",
+      "IRAC 3A plus 4A",
+      "C",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Bifenthrin plus imidacloprid",
+      "IRAC 3A plus 4A",
+      "C",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Fenobucarb (BPMC)",
+      "IRAC 1A",
+      "C",
+      3,
+      3,
+      "Old carbamate. Leafhoppers in Asia have learned to survive this family. A last resort."
+     ],
+     [
+      "Acephate plus imidacloprid",
+      "IRAC 1B plus 4A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Carbosulfan",
+      "IRAC 1A",
+      "C",
+      2,
+      2,
+      "Very toxic to fish, ducks and birds. A last resort only."
+     ],
+     [
+      "Esfenvalerate",
+      "IRAC 3A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Permethrin",
+      "IRAC 3A",
+      "C",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Alpha cypermethrin",
+      "IRAC 3A",
+      "C",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Azadirachtin",
+      "IRAC UN",
+      "C",
+      1,
+      1,
+      "A neem product. Mild and short lived on leafhoppers."
+     ],
+     [
+      "Bifenthrin",
+      "IRAC 3A",
+      "C",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Diazinon",
+      "IRAC 1B",
+      "C",
+      1,
+      1,
+      "Known to set off brown planthopper outbreaks after spraying. A last resort."
+     ],
+     [
+      "Imidacloprid plus fipronil",
+      "IRAC 4A plus 2B",
+      "C",
+      1,
+      1,
+      "Fipronil is very toxic to fish, shrimp and bees. Imidacloprid alone does the leafhopper job."
+     ],
+     [
+      "Isoprocarb (MIPC)",
+      "IRAC 1A",
+      "C",
+      1,
+      1,
+      "Old carbamate. Leafhoppers in Asia have learned to survive this family. A last resort."
+     ],
+     [
+      "Phenthoate plus fenobucarb (BPMC)",
+      "IRAC 1B plus 1A",
+      "C",
+      1,
+      1,
+      ""
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Plant a tungro resistant or leafhopper resistant variety where tungro has struck before.",
+    "Plant at the same time across the barangay, and avoid the weeks when leafhoppers peaked in past seasons.",
+    "Transplant seedlings older than three weeks, and destroy stubble, ratoons and volunteer rice after harvest.",
+    "Use the right nitrogen rate, guided by the leaf color chart. Too much nitrogen invites outbreaks.",
+    "Keep weeds down, and run a light trap to see when the numbers rise."
+   ],
+   "bio": [
+    "Spiders, dragonflies, damselflies and mirid bugs eat leafhoppers. Avoid early sprays so they stay.",
+    "Ducks in the paddy once the plants are well rooted eat leafhoppers along with planthoppers."
+   ],
+   "threshold": "Tap or sweep 20 hills a week in the first 40 days. A common action level is 2 leafhoppers per hill in tungro areas and 5 per hill elsewhere in the vegetative stage. In tungro areas a spray often fails to stop infection, so ask a technician first and pull yellowing hills at once.",
+   "rotate": "Green leafhoppers in East Asia resist many organophosphates and carbamates after decades of use. If an old product stops working, switch to group 4A, 9B or 4E, and do not repeat one group in a crop.",
+   "vector": []
   },
   {
    "slug": "whitebacked-planthopper",
@@ -183,13 +1768,80 @@
    "hint": "Small pale brown insects with a white stripe on the back sit low on the plant.",
    "ai": [
     [
-     "Buprofezin",
-     "IRAC 16"
+     "Thiamethoxam",
+     "IRAC 4A"
+    ],
+    [
+     "Clothianidin",
+     "IRAC 4A"
+    ],
+    [
+     "Dimethoate",
+     "IRAC 1B"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Thiamethoxam",
+      "IRAC 4A",
+      "A",
+      23,
+      20,
+      "Still works on this hopper, but it is toxic to bees. Use it once a crop, then switch to another group."
+     ],
+     [
+      "Clothianidin",
+      "IRAC 4A",
+      "B",
+      2,
+      2,
+      "Same group 4A as thiamethoxam, so do not follow one with the other. Toxic to bees."
+     ],
+     [
+      "Dimethoate",
+      "IRAC 1B",
+      "C",
+      4,
+      4,
+      "Kills the mirid bugs and egg wasps that hold this hopper down. One spray at most, late in the crop."
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Cypermethrin",
+     "Pyrethroids kill the spiders and mirid bugs that eat hoppers, and planthoppers come back worse after the spray.",
+     null
+    ],
+    [
+     "Lambda cyhalothrin plus thiamethoxam",
+     "The pyrethroid in it kills spiders and lets planthoppers come back worse.",
+     null
+    ],
+    [
+     "Bifenthrin plus clothianidin",
+     "The pyrethroid in it kills spiders and lets planthoppers come back worse.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Plant within about three weeks of the farms around you, and grow no more than two rice crops a year.",
+    "Split the nitrogen into doses. Too much nitrogen, often on hybrid rice, builds up this hopper fast.",
+    "Drain the field for three to four days when the numbers climb.",
+    "Do not keep a ratoon crop, and plow the stubble in after harvest.",
+    "No insecticide in the first 30 to 40 days after transplanting unless the count passes the threshold."
+   ],
+   "bio": [
+    "The mirid bug Cyrtorhinus lividipennis and Anagrus egg wasps are its main enemies. Broad spectrum sprays wipe them out.",
+    "Wolf spiders and lady beetles eat the nymphs. Count them with the hoppers before you decide."
+   ],
+   "threshold": "Count it with brown planthopper: tap 20 hills a week over the water from 30 days after transplanting. It peaks earlier, from tillering to booting. At 1 hopper per tiller or fewer do nothing. Consider a spray only near 25 hoppers per hill when hoppers outnumber spiders and mirid bugs.",
+   "rotate": "Whitebacked planthopper in East and Southeast Asia resists fipronil (IRAC 2B), so do not lean on it. Rotate among groups 4A, 9B and 16, and never use one group twice in a row.",
+   "vector": []
   },
   {
    "slug": "rice-whorl-maggot",
@@ -207,10 +1859,199 @@
    "signs": [],
    "local": "",
    "hint": "Yellow spots or streaks appear on the inner edges of new leaves.",
-   "ai": [],
+   "ai": [
+    [
+     "Cartap hydrochloride",
+     "IRAC 14"
+    ],
+    [
+     "Chlorantraniliprole plus thiamethoxam",
+     "IRAC 28 plus 4A"
+    ],
+    [
+     "Imidacloprid",
+     "IRAC 4A"
+    ],
+    [
+     "Carbofuran",
+     "IRAC 1A"
+    ],
+    [
+     "Acephate",
+     "IRAC 1B"
+    ],
+    [
+     "Phenthoate",
+     "IRAC 1B"
+    ],
+    [
+     "Acephate plus imidacloprid",
+     "IRAC 1B plus 4A"
+    ],
+    [
+     "Carbosulfan",
+     "IRAC 1A"
+    ],
+    [
+     "Phenthoate plus fenobucarb (BPMC)",
+     "IRAC 1B plus 1A"
+    ],
+    [
+     "Imidacloprid plus fipronil",
+     "IRAC 4A plus 2B"
+    ]
+   ],
    "no": "No spray is needed. The rice usually grows out of the damage.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Cartap hydrochloride",
+      "IRAC 14",
+      "B",
+      80,
+      80,
+      "Rarely needed: rice outgrows this damage by maximum tillering. Use it only when a technician confirms heavy damage."
+     ],
+     [
+      "Chlorantraniliprole plus thiamethoxam",
+      "IRAC 28 plus 4A",
+      "B",
+      6,
+      6,
+      "Rarely needed for whorl maggot. Worth it only when stem borers also need control."
+     ],
+     [
+      "Imidacloprid",
+      "IRAC 4A",
+      "B",
+      3,
+      3,
+      "Rarely needed: rice outgrows this damage by maximum tillering. Toxic to bees."
+     ],
+     [
+      "Carbofuran",
+      "IRAC 1A",
+      "C",
+      21,
+      20,
+      "Highly toxic to people, fish, ducks and birds, and the damage seldom costs grain. A last resort only."
+     ],
+     [
+      "Acephate",
+      "IRAC 1B",
+      "C",
+      16,
+      13,
+      "Kills the spiders and wasps of the young crop, and the damage seldom costs grain. A last resort."
+     ],
+     [
+      "Phenthoate",
+      "IRAC 1B",
+      "C",
+      10,
+      10,
+      "Kills the spiders and wasps of the young crop, and the damage seldom costs grain. A last resort."
+     ],
+     [
+      "Acephate plus imidacloprid",
+      "IRAC 1B plus 4A",
+      "C",
+      2,
+      2,
+      "Kills the spiders and wasps of the young crop, and the damage seldom costs grain. A last resort."
+     ],
+     [
+      "Carbosulfan",
+      "IRAC 1A",
+      "C",
+      2,
+      2,
+      "Very toxic to fish, ducks and birds, and the damage seldom costs grain. A last resort only."
+     ],
+     [
+      "Phenthoate plus fenobucarb (BPMC)",
+      "IRAC 1B plus 1A",
+      "C",
+      2,
+      2,
+      "Kills the spiders and wasps of the young crop, and the damage seldom costs grain. A last resort."
+     ],
+     [
+      "Imidacloprid plus fipronil",
+      "IRAC 4A plus 2B",
+      "C",
+      1,
+      1,
+      "Fipronil is very toxic to fish, shrimp and bees, far more than this pest calls for."
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Deltamethrin",
+     "Early pyrethroid sprays kill spiders and set off planthopper outbreaks, for damage rice outgrows anyway.",
+     null
+    ],
+    [
+     "Diazinon",
+     "An early spray known to set off planthopper outbreaks, for damage that rice outgrows anyway.",
+     null
+    ],
+    [
+     "Beta cyfluthrin",
+     "Early pyrethroid sprays kill spiders and set off planthopper outbreaks, for damage rice outgrows anyway.",
+     null
+    ],
+    [
+     "Alpha cypermethrin",
+     "Early pyrethroid sprays kill spiders and set off planthopper outbreaks, for damage rice outgrows anyway.",
+     null
+    ],
+    [
+     "Lambda cyhalothrin plus thiamethoxam",
+     "The pyrethroid half kills the young crop's spiders and sets off planthopper outbreaks.",
+     null
+    ],
+    [
+     "Chlorpyrifos plus cypermethrin",
+     "Kills the young crop's spiders and sets off planthopper outbreaks, for damage rice outgrows anyway.",
+     null
+    ],
+    [
+     "Beta cypermethrin",
+     "Early pyrethroid sprays kill spiders and set off planthopper outbreaks, for damage rice outgrows anyway.",
+     null
+    ],
+    [
+     "Bifenthrin plus imidacloprid",
+     "The pyrethroid half kills the young crop's spiders and sets off planthopper outbreaks.",
+     null
+    ],
+    [
+     "Esfenvalerate",
+     "Early pyrethroid sprays kill spiders and set off planthopper outbreaks, for damage rice outgrows anyway.",
+     null
+    ],
+    [
+     "Permethrin",
+     "Early pyrethroid sprays kill spiders and set off planthopper outbreaks, for damage rice outgrows anyway.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Expect some streaked, torn young leaves in flooded transplanted fields. It is not an emergency.",
+    "Keep every insecticide off the crop for the first 30 to 40 days, so spiders and wasps settle in for later pests.",
+    "Plant healthy, well rooted seedlings and give balanced fertilizer, so the crop outgrows the damage quickly.",
+    "Write down how many hills show damage in each lot, so you can tell a true outbreak from the usual few leaves."
+   ],
+   "bio": [
+    "Small wasps attack the eggs and maggots, long legged flies eat the eggs, and spiders catch the adult flies."
+   ],
+   "threshold": "Check the youngest leaves of 20 hills in the first 30 days. Rice grows out of the damage by maximum tillering, so a spray almost never pays. Think of one only when more than about 20 percent of hills show fresh damage in a weak or late crop, and a technician agrees.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-caseworm",
@@ -228,10 +2069,144 @@
    "signs": [],
    "local": "",
    "hint": "Leaf tips are cut at right angles, as if with scissors.",
-   "ai": [],
+   "ai": [
+    [
+     "Tebufenozide",
+     "IRAC 18"
+    ],
+    [
+     "Malathion",
+     "IRAC 1B"
+    ],
+    [
+     "Carbaryl",
+     "IRAC 1A"
+    ],
+    [
+     "Isoprocarb (MIPC)",
+     "IRAC 1A"
+    ],
+    [
+     "Methomyl",
+     "IRAC 1A"
+    ],
+    [
+     "Fenobucarb (BPMC) plus chlorpyrifos",
+     "IRAC 1A plus 1B"
+    ],
+    [
+     "Carbofuran",
+     "IRAC 1A"
+    ],
+    [
+     "Chlorpyrifos",
+     "IRAC 1B"
+    ],
+    [
+     "Fenitrothion",
+     "IRAC 1B"
+    ]
+   ],
    "no": "Drain the field first. If you must spray, use a carbamate, never a pyrethroid.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Tebufenozide",
+      "IRAC 18",
+      "A",
+      1,
+      1,
+      "Kind to spiders and wasps. Larvae stop feeding within a day but die over a few days. Drain the field first."
+     ],
+     [
+      "Malathion",
+      "IRAC 1B",
+      "B",
+      40,
+      40,
+      "Breaks down in days, but it is toxic to fish. Drain the field first."
+     ],
+     [
+      "Carbaryl",
+      "IRAC 1A",
+      "B",
+      27,
+      27,
+      "A carbamate, the usual answer for caseworm. Very toxic to bees and harsh on spiders. Drain first."
+     ],
+     [
+      "Isoprocarb (MIPC)",
+      "IRAC 1A",
+      "B",
+      1,
+      1,
+      "A carbamate that works on caseworm. Drain the field first. Spray only if cutting goes on."
+     ],
+     [
+      "Methomyl",
+      "IRAC 1A",
+      "C",
+      58,
+      58,
+      "Highly toxic to people and harsh on natural enemies. A last resort only."
+     ],
+     [
+      "Fenobucarb (BPMC) plus chlorpyrifos",
+      "IRAC 1A plus 1B",
+      "C",
+      30,
+      30,
+      "The chlorpyrifos half kills spiders and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Carbofuran",
+      "IRAC 1A",
+      "C",
+      21,
+      20,
+      "Highly toxic to people, fish, ducks and birds. A last resort only, never near fishponds."
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      18,
+      18,
+      "Kills spiders and fish and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Fenitrothion",
+      "IRAC 1B",
+      "C",
+      4,
+      4,
+      "Known to set off planthopper outbreaks after spraying. A last resort."
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Deltamethrin",
+     "Caseworm has grown tolerant of pyrethroids, and deltamethrin is known to set off planthopper outbreaks.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Drain the field for a few days when you see floating cases. Caseworms cannot move between hills without water.",
+    "Fix drainage so water does not stand long in low spots, where caseworm is worst.",
+    "Plant early, use wider spacing and transplant older seedlings, which suffer less.",
+    "Keep the bunds and canals free of weeds, and plant together with the farms around you.",
+    "Apply fertilizer at the rate your variety needs, not more."
+   ],
+   "bio": [
+    "Water snails eat the eggs, water beetles eat the larvae, and spiders, dragonflies and birds catch the moths.",
+    "Ducks in the paddy pick up the floating cases."
+   ],
+   "threshold": "Check the seedbed and the first weeks of the crop for leaf tips cut square and for cases floating on the water. Drain the field for a few days first, since the larvae need standing water. Spray only if 1 to 2 live cases per hill remain and fresh cutting goes on after draining.",
+   "rotate": "Caseworm has grown tolerant of pyrethroids (IRAC 3A). If a spray is truly needed after draining, use a carbamate (1A) or tebufenozide (18).",
+   "vector": []
   },
   {
    "slug": "rice-hispa",
@@ -249,9 +2224,25 @@
    "local": "",
    "hint": "White streaks run along the leaf, parallel to the midrib.",
    "ai": [],
-   "no": "No insecticide is named for it here. Ask your municipal agriculturist first.",
+   "no": "No product names rice hispa on its label yet. Cultural steps and its natural enemies keep it down. Ask a technician before any spray.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {},
+   "avoid": [],
+   "prevent": [
+    "Do not over fertilize. Heavily fertilized, lush fields draw the beetles.",
+    "Use the recommended spacing, not closer, so the leaves stay less dense.",
+    "Remove grassy weeds in the field and along the bunds and canals. They are the beetle's other hosts.",
+    "Sweep a net over the seedbed and the young crop to catch the adults while numbers are low.",
+    "Keep insecticides off the crop for the first 30 to 40 days, so the beetle's enemies stay."
+   ],
+   "bio": [
+    "Small wasps attack the eggs and grubs inside the leaf, and reduviid bugs and spiders hunt the adults.",
+    "Fungi such as Beauveria and Metarhizium infect the beetles in humid weather."
+   ],
+   "threshold": "Walk the field before the end of tillering and count beetles, grubs and freshly streaked leaves on 20 hills. A common action level is 1 to 2 adults or freshly damaged leaves per hill. Below that, young rice regrows the lost leaf, and a technician should confirm before any spray.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-armyworm",
@@ -273,10 +2264,272 @@
    "signs": [],
    "local": "",
    "hint": "Leaves are chewed away, often including the veins, leaving only the midribs.",
-   "ai": [],
+   "ai": [
+    [
+     "Tetraniliprole",
+     "IRAC 28"
+    ],
+    [
+     "Tebufenozide",
+     "IRAC 18"
+    ],
+    [
+     "Lambda cyhalothrin",
+     "IRAC 3A"
+    ],
+    [
+     "Cypermethrin",
+     "IRAC 3A"
+    ],
+    [
+     "Fenobucarb (BPMC) plus chlorpyrifos",
+     "IRAC 1A plus 1B"
+    ],
+    [
+     "Carbaryl",
+     "IRAC 1A"
+    ],
+    [
+     "Chlorpyrifos",
+     "IRAC 1B"
+    ],
+    [
+     "Methomyl",
+     "IRAC 1A"
+    ],
+    [
+     "Malathion",
+     "IRAC 1B"
+    ],
+    [
+     "Clothianidin plus imidacloprid",
+     "IRAC 4A plus 4A"
+    ],
+    [
+     "Phenthoate plus fenobucarb (BPMC)",
+     "IRAC 1B plus 1A"
+    ]
+   ],
    "no": "Spray only at outbreak level, as the last resort.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Tebufenozide",
+      "IRAC 18",
+      "A",
+      1,
+      1,
+      "Kind to spiders and wasps. Caterpillars stop eating within a day but take a few days to die."
+     ],
+     [
+      "Lambda cyhalothrin",
+      "IRAC 3A",
+      "B",
+      91,
+      90,
+      "Fast on caterpillars, but kills spiders and is very toxic to fish. Early use can make planthoppers flare."
+     ],
+     [
+      "Cypermethrin",
+      "IRAC 3A",
+      "B",
+      4,
+      4,
+      "Fast on caterpillars, but kills spiders and is very toxic to fish. Early use can make planthoppers flare."
+     ],
+     [
+      "Methomyl",
+      "IRAC 1A",
+      "C",
+      58,
+      58,
+      "Highly toxic to people and harsh on natural enemies. A last resort only."
+     ],
+     [
+      "Malathion",
+      "IRAC 1B",
+      "C",
+      40,
+      40,
+      "Weak on big caterpillars, and toxic to fish. A last resort."
+     ],
+     [
+      "Fenobucarb (BPMC) plus chlorpyrifos",
+      "IRAC 1A plus 1B",
+      "C",
+      30,
+      30,
+      "Broad spectrum mix that kills spiders and wasps and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      18,
+      18,
+      "Kills spiders and fish and can set off planthopper outbreaks in rice. A last resort."
+     ],
+     [
+      "Phenthoate plus fenobucarb (BPMC)",
+      "IRAC 1B plus 1A",
+      "C",
+      2,
+      2,
+      "Broad spectrum mix that kills spiders and wasps and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Carbaryl",
+      "IRAC 1A",
+      "C",
+      1,
+      1,
+      "Very toxic to bees and harsh on spiders. A last resort."
+     ]
+    ],
+    "corn_yellow": [
+     [
+      "Tetraniliprole",
+      "IRAC 28",
+      "A",
+      1,
+      1,
+      "Corn label. Kind to most natural enemies. Do not follow it with another group 28 product."
+     ],
+     [
+      "Fenobucarb (BPMC) plus chlorpyrifos",
+      "IRAC 1A plus 1B",
+      "C",
+      30,
+      30,
+      "Broad spectrum mix that kills spiders and wasps and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Carbaryl",
+      "IRAC 1A",
+      "C",
+      27,
+      27,
+      "Very toxic to bees and harsh on spiders. A last resort."
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      18,
+      18,
+      "Kills spiders and fish and can set off planthopper outbreaks in rice. A last resort."
+     ],
+     [
+      "Clothianidin plus imidacloprid",
+      "IRAC 4A plus 4A",
+      "C",
+      1,
+      1,
+      "Corn seed treatment only. It guards seedlings for a few weeks and is weak on caterpillars."
+     ]
+    ],
+    "corn_sweet": [
+     [
+      "Tetraniliprole",
+      "IRAC 28",
+      "A",
+      1,
+      1,
+      "Corn label. Kind to most natural enemies. Do not follow it with another group 28 product."
+     ],
+     [
+      "Fenobucarb (BPMC) plus chlorpyrifos",
+      "IRAC 1A plus 1B",
+      "C",
+      30,
+      30,
+      "Broad spectrum mix that kills spiders and wasps and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Carbaryl",
+      "IRAC 1A",
+      "C",
+      27,
+      27,
+      "Very toxic to bees and harsh on spiders. A last resort."
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      18,
+      18,
+      "Kills spiders and fish and can set off planthopper outbreaks in rice. A last resort."
+     ],
+     [
+      "Clothianidin plus imidacloprid",
+      "IRAC 4A plus 4A",
+      "C",
+      1,
+      1,
+      "Corn seed treatment only. It guards seedlings for a few weeks and is weak on caterpillars."
+     ]
+    ],
+    "corn_glutinous": [
+     [
+      "Tetraniliprole",
+      "IRAC 28",
+      "A",
+      1,
+      1,
+      "Corn label. Kind to most natural enemies. Do not follow it with another group 28 product."
+     ],
+     [
+      "Fenobucarb (BPMC) plus chlorpyrifos",
+      "IRAC 1A plus 1B",
+      "C",
+      30,
+      30,
+      "Broad spectrum mix that kills spiders and wasps and can set off planthopper outbreaks. A last resort."
+     ],
+     [
+      "Carbaryl",
+      "IRAC 1A",
+      "C",
+      27,
+      27,
+      "Very toxic to bees and harsh on spiders. A last resort."
+     ],
+     [
+      "Chlorpyrifos",
+      "IRAC 1B",
+      "C",
+      18,
+      18,
+      "Kills spiders and fish and can set off planthopper outbreaks in rice. A last resort."
+     ],
+     [
+      "Clothianidin plus imidacloprid",
+      "IRAC 4A plus 4A",
+      "C",
+      1,
+      1,
+      "Corn seed treatment only. It guards seedlings for a few weeks and is weak on caterpillars."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Set the seedbed far from weedy ground, and plow fallow land before the next crop.",
+    "Remove weeds, above all grasses, in and around the field and on the bunds.",
+    "Flood the seedbed when caterpillars appear. It is the best defense and drowns or drives them up for picking.",
+    "Dig a trench with ashes across the path of marching caterpillars, and lay branches around the field to collect them by hand.",
+    "Plow the field after harvest and keep checking weekly, so you see the first caterpillars while they are small."
+   ],
+   "bio": [
+    "Wasps, tachinid flies, spiders and birds feed on armyworms. Early sprays kill them.",
+    "Where Bt or an armyworm virus (NPV) product is sold, aim it at young caterpillars."
+   ],
+   "threshold": "Check the seedbed and the young field every week, and every day after heavy rain that ends a dry spell. Spray only at outbreak level, when many caterpillars are marching in from one side and leaves are stripped to the midrib on large patches. Spray late in the afternoon, when the caterpillars come out to feed.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "golden-apple-snail",
@@ -298,18 +2551,79 @@
    "ai": [
     [
      "Niclosamide",
-     "Molluscicide"
+     ""
     ],
     [
      "Metaldehyde",
-     "Molluscicide"
+     ""
+    ],
+    [
+     "Saponin (tea seed)",
+     ""
+    ],
+    [
+     "Abamectin plus niclosamide",
+     "IRAC 6 plus ?"
     ]
    ],
    "no": "",
    "sources": [],
    "ranks": {
     "kangkong": 4
-   }
+   },
+   "aiBy": {
+    "rice": [
+     [
+      "Niclosamide",
+      "",
+      "B",
+      115,
+      102,
+      "Fast, but very toxic to fish, frogs and native snails. Never let the treated water flow into canals or fishponds."
+     ],
+     [
+      "Metaldehyde",
+      "",
+      "B",
+      49,
+      47,
+      "Gentler on fish than niclosamide and better where rain or strong irrigation may come. Pellets poison dogs, ducks and hens."
+     ],
+     [
+      "Saponin (tea seed)",
+      "",
+      "B",
+      1,
+      1,
+      "A plant product that breaks down within days, but it is also a fish poison. Keep fish and shrimp away from treated water."
+     ],
+     [
+      "Abamectin plus niclosamide",
+      "IRAC 6 plus ?",
+      "C",
+      2,
+      2,
+      "The abamectin adds little against snails and more harm to fish and shrimp. Plain niclosamide does the same job."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Put wire or woven bamboo screens on the water inlet and outlet to keep snails and hatchlings out and to trap them.",
+    "At the last harrowing, dig small canals about 25 cm wide and 5 cm deep along the edges. Snails gather there when you drain.",
+    "Keep the water at 2 to 3 cm from 3 days after transplanting, and drain now and then. Level the field so no deep pockets stay.",
+    "Where snails are many, transplant older seedlings, about 25 to 30 days old, with stems too thick for the snail.",
+    "Hand pick snails in the morning and late afternoon, set bamboo stakes for them to lay on, and crush the pink egg masses.",
+    "Lay gabi, papaya or banana leaves in the canals as bait, then collect the snails that gather under them."
+   ],
+   "bio": [
+    "Herd ducks into the field after harvest until the last harrowing, and again once the rice is past the danger stage. They eat young snails.",
+    "Red ants and long horned grasshoppers eat the eggs. Pick the big adults by hand, since ducks skip them.",
+    "Picked snails make duck or pig feed, or food when well cooked."
+   ],
+   "threshold": "Count snails and pink egg masses in the paddy and canals before you transplant. The danger window is the first 15 days after transplanting and the first 21 days after wet seeding. Rice about 30 days old resists the snail. Pick, drain and screen first, and treat only spots where snails stay many after that, the day after transplanting.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-field-rats",
@@ -320,7 +2634,10 @@
    "crops": [
     "rice",
     "sugarcane",
-    "oilpalm"
+    "oilpalm",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
    ],
    "parts": [
     "stems",
@@ -329,13 +2646,172 @@
    "signs": [],
    "local": "",
    "hint": "Tillers are cut at an angle and lie in the water, often in patches or in lines along the pilapil.",
-   "ai": [],
+   "ai": [
+    [
+     "Coumatetralyl",
+     ""
+    ],
+    [
+     "Zinc phosphide",
+     ""
+    ],
+    [
+     "Brodifacoum",
+     ""
+    ],
+    [
+     "Flocoumafen",
+     ""
+    ]
+   ],
    "no": "No poison is recommended in rice. Work with your neighbors on the steps that do work.",
    "sources": [],
    "ranks": {
     "sugarcane": 6,
     "oilpalm": 5
-   }
+   },
+   "aiBy": {
+    "rice": [
+     [
+      "Coumatetralyl",
+      "",
+      "B",
+      1,
+      1,
+      "A slow poison: rats must take it over several days. Safer for owls and pets than the strong baits, and vitamin K is the antidote."
+     ],
+     [
+      "Zinc phosphide",
+      "",
+      "C",
+      12,
+      12,
+      "Kills in one feed, but rats that survive shun the bait for weeks. Use it once, early, in stations. There is no antidote."
+     ],
+     [
+      "Brodifacoum",
+      "",
+      "C",
+      1,
+      1,
+      "Strong single feed bait. Owls, snakes, dogs and cats that eat poisoned rats can die too. Use it only in bait stations."
+     ]
+    ],
+    "sugarcane": [
+     [
+      "Coumatetralyl",
+      "",
+      "B",
+      1,
+      1,
+      "A slow poison: rats must take it over several days. Safer for owls and pets than the strong baits, and vitamin K is the antidote."
+     ],
+     [
+      "Zinc phosphide",
+      "",
+      "C",
+      12,
+      12,
+      "Kills in one feed, but rats that survive shun the bait for weeks. Use it once, early, in stations. There is no antidote."
+     ],
+     [
+      "Brodifacoum",
+      "",
+      "C",
+      1,
+      1,
+      "Strong single feed bait. Owls, snakes, dogs and cats that eat poisoned rats can die too. Use it only in bait stations."
+     ],
+     [
+      "Flocoumafen",
+      "",
+      "C",
+      1,
+      1,
+      "Strong single feed bait. Owls, snakes, dogs and cats that eat poisoned rats can die too. Use it only in bait stations."
+     ]
+    ],
+    "oilpalm": [
+     [
+      "Coumatetralyl",
+      "",
+      "B",
+      1,
+      1,
+      "A slow poison: rats must take it over several days. Safer for owls and pets than the strong baits, and vitamin K is the antidote."
+     ],
+     [
+      "Zinc phosphide",
+      "",
+      "C",
+      9,
+      9,
+      "Kills in one feed, but rats that survive shun the bait for weeks. Use it once, early, in stations. There is no antidote."
+     ],
+     [
+      "Brodifacoum",
+      "",
+      "C",
+      1,
+      1,
+      "Strong single feed bait. Owls, snakes, dogs and cats that eat poisoned rats can die too. Use it only in bait stations."
+     ],
+     [
+      "Flocoumafen",
+      "",
+      "C",
+      1,
+      1,
+      "Strong single feed bait. Owls, snakes, dogs and cats that eat poisoned rats can die too. Use it only in bait stations."
+     ]
+    ],
+    "corn_yellow": [
+     [
+      "Zinc phosphide",
+      "",
+      "C",
+      3,
+      3,
+      "Kills in one feed, but rats that survive shun the bait for weeks. Use it once, early, in stations. There is no antidote."
+     ]
+    ],
+    "corn_sweet": [
+     [
+      "Zinc phosphide",
+      "",
+      "C",
+      3,
+      3,
+      "Kills in one feed, but rats that survive shun the bait for weeks. Use it once, early, in stations. There is no antidote."
+     ]
+    ],
+    "corn_glutinous": [
+     [
+      "Zinc phosphide",
+      "",
+      "C",
+      3,
+      3,
+      "Kills in one feed, but rats that survive shun the bait for weeks. Use it once, early, in stations. There is no antidote."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Plant together: neighbors on about 10 hectares should plant in the same two weeks, so the crop ripens at once.",
+    "Keep pilapil and canal banks narrower than 20 cm and free of weeds, so rats cannot nest in them.",
+    "Clean up spilled grain, straw piles and rubbish at harvest. Sanitation is the longest lasting step.",
+    "Set a community trap barrier system: a 20 by 20 m plot planted 2 to 3 weeks early, fenced with plastic, with traps in the fence.",
+    "Dig out or flood burrows and hunt rats at night as a group at land preparation, before they breed.",
+    "If you bait, bait as a whole community, with sealed bait kept in stations for several days, never scattered once."
+   ],
+   "bio": [
+    "Barn owls, grass owls, snakes and monitor lizards eat many rats. Perches and nest boxes near the field bring owls in.",
+    "Prefer traps and slow baits where owls hunt, since strong baits pass on to the owls that eat poisoned rats."
+   ],
+   "threshold": "Walk the pilapil and field edges every week from land preparation, looking for fresh burrows, runways and tillers cut at an angle. Act as a group at the first fresh signs. Bait works best from land preparation to maximum tillering, before the rats have grain. The trap barrier system pays off once damage reaches 10 percent.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "mole-cricket",
@@ -344,7 +2820,10 @@
    "shelf": "rice",
    "kind": "Insect",
    "crops": [
-    "rice"
+    "rice",
+    "corn_yellow",
+    "corn_sweet",
+    "corn_glutinous"
    ],
    "parts": [
     "seedlings",
@@ -353,10 +2832,62 @@
    "signs": [],
    "local": "",
    "hint": "Seedlings are cut at the base and bare patches show in the seedbed or field.",
-   "ai": [],
-   "no": "Only a bait on the bunds, as the last resort. Ask your municipal agriculturist for a registered product.",
+   "ai": [
+    [
+     "Imidacloprid",
+     "IRAC 4A"
+    ]
+   ],
+   "no": "No product names mole cricket on a rice label yet. Flooding, leveling and bund plastering do the work in rice.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "corn_yellow": [
+     [
+      "Imidacloprid",
+      "IRAC 4A",
+      "B",
+      3,
+      3,
+      "Corn seed treatment only: it guards the seedlings for their first weeks. Toxic to bees. Keep treated seed away from birds."
+     ]
+    ],
+    "corn_sweet": [
+     [
+      "Imidacloprid",
+      "IRAC 4A",
+      "B",
+      3,
+      3,
+      "Corn seed treatment only: it guards the seedlings for their first weeks. Toxic to bees. Keep treated seed away from birds."
+     ]
+    ],
+    "corn_glutinous": [
+     [
+      "Imidacloprid",
+      "IRAC 4A",
+      "B",
+      3,
+      3,
+      "Corn seed treatment only: it guards the seedlings for their first weeks. Toxic to bees. Keep treated seed away from birds."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Flood the field for 3 to 4 days before planting where you can. Water drives the crickets out and kills the eggs.",
+    "Level the field well, so it holds water evenly with no dry pockets for the crickets.",
+    "Shave the bunds and plaster them with fresh wet soil each season to kill eggs laid in the levees.",
+    "Pick nymphs and adults by hand during land preparation, and avoid dry, raised nursery beds.",
+    "In corn and upland fields, plow and harrow well before sowing so birds can pick the crickets from the turned soil."
+   ],
+   "bio": [
+    "Sphecid wasps, carabid beetles, nematodes and fungi attack mole crickets, and the crickets eat each other.",
+    "Birds, frogs and ducks catch the crickets that flooding drives to the surface."
+   ],
+   "threshold": "Check the seedbed and the field at dusk and early morning for burrows, cut seedlings and bare patches, most often on high, dry spots. Flood and level first. Damage stops once the soil stays under water. Use a bait on the bunds only if cutting goes on after that.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-birds",
@@ -375,11 +2906,26 @@
    "local": "Maya is the name for all four species. Mayang simbahan is the tree sparrow.",
    "hint": "Flocks of small brown or chestnut birds land on the panicles at the milky stage.",
    "ai": [],
-   "no": "No chemical is recommended. Avicides harm other birds and wildlife.",
+   "no": "No spray or poison is advised. Bird poisons kill other birds and wildlife, and none is named for rice birds.",
    "sources": [],
    "ranks": {
     "sorghum": 4
-   }
+   },
+   "aiBy": {},
+   "avoid": [],
+   "prevent": [
+    "Plant together with the farms around you, so the ripening window is short and the flocks spread across many fields.",
+    "Guard the field at dawn and dusk from the milk stage to ripening, and change the scaring method often. Birds soon ignore one trick.",
+    "Net small plots and seedbeds where the crop is worth it. Only a net or a closed cover fully protects the grain.",
+    "Harvest on time, clean up spilled grain, and bird proof the grain store, where tree sparrows also live.",
+    "Cut tall weeds and bushes at the field edge where the birds roost."
+   ],
+   "bio": [
+    "Leave egrets, herons, harriers and owls alone: they eat insects, frogs and rats, not grain."
+   ],
+   "threshold": "Watch the field at dawn and late afternoon from the milk stage to harvest and make sure the flock really feeds on the panicles. Start guarding at the first flocks. Birds that settle into a habit of one field are hard to move.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "asian-corn-borer",
@@ -4539,21 +7085,386 @@
    "hint": "Oval, gray green spots on the sheath near the water that climb the plant.",
    "ai": [
     [
-     "Difenoconazole",
-     "FRAC 3"
+     "Difenoconazole plus propiconazole",
+     "FRAC 3 plus 3"
     ],
     [
-     "Propiconazole",
-     "FRAC 3"
+     "Azoxystrobin plus difenoconazole",
+     "FRAC 11 plus 3"
+    ],
+    [
+     "Tebuconazole plus trifloxystrobin",
+     "FRAC 3 plus 11"
     ],
     [
      "Azoxystrobin",
      "FRAC 11"
+    ],
+    [
+     "Difenoconazole",
+     "FRAC 3"
+    ],
+    [
+     "Fluoxastrobin",
+     "FRAC 11"
+    ],
+    [
+     "Carbendazim plus tebuconazole",
+     "FRAC 1 plus 3"
+    ],
+    [
+     "Azoxystrobin plus propiconazole",
+     "FRAC 11 plus 3"
+    ],
+    [
+     "Tetraconazole plus carbendazim",
+     "FRAC 3 plus 1"
+    ],
+    [
+     "Epoxiconazole",
+     "FRAC 3"
+    ],
+    [
+     "Plant essential oil plus difenoconazole",
+     "? plus FRAC 3"
+    ],
+    [
+     "Azoxystrobin plus mancozeb",
+     "FRAC 11 plus M03"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Azoxystrobin plus difenoconazole",
+      "FRAC 11 plus 3",
+      "A",
+      31,
+      31,
+      "Aim the spray at the lower sheaths, where the disease starts. Do not use group 11 twice in a row."
+     ],
+     [
+      "Difenoconazole plus propiconazole",
+      "FRAC 3 plus 3",
+      "A",
+      27,
+      26,
+      ""
+     ],
+     [
+      "Tebuconazole plus trifloxystrobin",
+      "FRAC 3 plus 11",
+      "A",
+      13,
+      12,
+      "Aim the spray at the lower sheaths, where the disease starts. Do not use group 11 twice in a row."
+     ],
+     [
+      "Difenoconazole",
+      "FRAC 3",
+      "B",
+      53,
+      51,
+      ""
+     ],
+     [
+      "Carbendazim plus tebuconazole",
+      "FRAC 1 plus 3",
+      "B",
+      5,
+      5,
+      ""
+     ],
+     [
+      "Azoxystrobin plus propiconazole",
+      "FRAC 11 plus 3",
+      "B",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Tetraconazole plus carbendazim",
+      "FRAC 3 plus 1",
+      "B",
+      3,
+      3,
+      ""
+     ],
+     [
+      "Epoxiconazole",
+      "FRAC 3",
+      "B",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Plant essential oil plus difenoconazole",
+      "? plus FRAC 3",
+      "B",
+      2,
+      2,
+      ""
+     ],
+     [
+      "Azoxystrobin plus mancozeb",
+      "FRAC 11 plus M03",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Difenoconazole plus isopyrazam",
+      "FRAC 3 plus 7",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Fluindapyr plus flutriafol",
+      "FRAC 7 plus 3",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Fluoxastrobin plus tebuconazole",
+      "FRAC 11 plus 3",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Hexaconazole",
+      "FRAC 3",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Hexaconazole plus mancozeb",
+      "FRAC 3 plus M03",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Mefentrifluconazole",
+      "FRAC 3",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Pyraclostrobin",
+      "FRAC 11",
+      "B",
+      1,
+      1,
+      "A strobilurin used alone: rotate it with a triazole so the fungus does not learn to survive it."
+     ],
+     [
+      "Tebuconazole",
+      "FRAC 3",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Benomyl",
+      "FRAC 1",
+      "C",
+      26,
+      26,
+      "Older and weaker than the triazoles on sheath blight, and many fungi have learned to survive this group."
+     ],
+     [
+      "Fluazinam",
+      "FRAC 29",
+      "C",
+      3,
+      3,
+      "Only partial control of sheath blight. The triazole mixes do better."
+     ],
+     [
+      "Iprodione",
+      "FRAC 2",
+      "C",
+      3,
+      2,
+      "Older and weaker than the triazole mixes on sheath blight. A second line choice."
+     ],
+     [
+      "Bacillus amyloliquefaciens",
+      "FRAC BM02",
+      "C",
+      1,
+      1,
+      "A friendly bacterium. It slows the disease a little but will not stop lesions climbing in wet weather."
+     ]
+    ],
+    "corn_yellow": [
+     [
+      "Difenoconazole plus propiconazole",
+      "FRAC 3 plus 3",
+      "A",
+      24,
+      23,
+      ""
+     ],
+     [
+      "Tebuconazole plus trifloxystrobin",
+      "FRAC 3 plus 11",
+      "A",
+      1,
+      1,
+      "Aim the spray at the lower sheaths, where the disease starts. Do not use group 11 twice in a row."
+     ],
+     [
+      "Azoxystrobin",
+      "FRAC 11",
+      "B",
+      20,
+      20,
+      "A strobilurin used alone: rotate it with a triazole so the fungus does not learn to survive it."
+     ],
+     [
+      "Fluoxastrobin",
+      "FRAC 11",
+      "B",
+      2,
+      2,
+      "A strobilurin used alone: rotate it with a triazole so the fungus does not learn to survive it."
+     ]
+    ],
+    "corn_sweet": [
+     [
+      "Difenoconazole plus propiconazole",
+      "FRAC 3 plus 3",
+      "A",
+      24,
+      23,
+      ""
+     ],
+     [
+      "Tebuconazole plus trifloxystrobin",
+      "FRAC 3 plus 11",
+      "A",
+      1,
+      1,
+      "Aim the spray at the lower sheaths, where the disease starts. Do not use group 11 twice in a row."
+     ],
+     [
+      "Azoxystrobin",
+      "FRAC 11",
+      "B",
+      20,
+      20,
+      "A strobilurin used alone: rotate it with a triazole so the fungus does not learn to survive it."
+     ],
+     [
+      "Fluoxastrobin",
+      "FRAC 11",
+      "B",
+      2,
+      2,
+      "A strobilurin used alone: rotate it with a triazole so the fungus does not learn to survive it."
+     ]
+    ],
+    "corn_glutinous": [
+     [
+      "Difenoconazole plus propiconazole",
+      "FRAC 3 plus 3",
+      "A",
+      24,
+      23,
+      ""
+     ],
+     [
+      "Tebuconazole plus trifloxystrobin",
+      "FRAC 3 plus 11",
+      "A",
+      1,
+      1,
+      "Aim the spray at the lower sheaths, where the disease starts. Do not use group 11 twice in a row."
+     ],
+     [
+      "Azoxystrobin",
+      "FRAC 11",
+      "B",
+      20,
+      20,
+      "A strobilurin used alone: rotate it with a triazole so the fungus does not learn to survive it."
+     ],
+     [
+      "Fluoxastrobin",
+      "FRAC 11",
+      "B",
+      2,
+      2,
+      "A strobilurin used alone: rotate it with a triazole so the fungus does not learn to survive it."
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Copper hydroxide",
+     "Copper does not control the sheath blight fungus.",
+     null
+    ],
+    [
+     "Mancozeb",
+     "A contact protectant that does not stop the sheath blight fungus spreading inside the canopy. Money wasted here.",
+     null
+    ],
+    [
+     "Thiram",
+     "A seed treatment. It does not stop sheath blight in the standing crop.",
+     null
+    ],
+    [
+     "Chlorothalonil",
+     "A contact protectant that does not control sheath blight. Money wasted here.",
+     null
+    ],
+    [
+     "Bordeaux mixture",
+     "Copper does not control the sheath blight fungus.",
+     null
+    ],
+    [
+     "Copper oxychloride plus copper hydroxide",
+     "Copper does not control the sheath blight fungus.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Use the right seeding rate and avoid close spacing, so air and light reach the base of the hills.",
+    "Use a moderate nitrogen rate for the season and split it. Too much nitrogen feeds the disease.",
+    "Keep weeds down in the paddy and on the bunds, since many grasses carry the fungus.",
+    "Drain the field for a few days at maximum tillering to dry the base of the hills.",
+    "After harvest, plow deep so sick stubble goes under, and skim floating trash from the water at land preparation.",
+    "In corn, strip the lowest leaves and sheaths that touch the soil, and do not plant too dense."
+   ],
+   "bio": [
+    "Trichoderma harzianum attacks the fungus. Where a Trichoderma product is sold, use it early, as field results are mixed.",
+    "Bacillus products give partial control when started at maximum tillering."
+   ],
+   "threshold": "From maximum tillering, part 20 hills a week and look at the sheaths near the water. Spray only when lesions keep climbing the plant and spread from hill to hill in hot, humid weather, mostly from panicle initiation to booting, and aim at the lower sheaths.",
+   "rotate": "The sheath blight fungus has learned to survive strobilurins (group 11) where they were sprayed alone, so far outside Asia. Use group 11 only in a mix, never twice in a row, and rotate with triazoles (3) or SDHIs (7).",
+   "vector": []
   },
   {
    "slug": "rice-blast",
@@ -4579,21 +7490,212 @@
    "hint": "Spindle or diamond shaped leaf spots with gray centers and reddish brown borders.",
    "ai": [
     [
-     "Tricyclazole",
-     "FRAC 16.1"
+     "Isoprothiolane",
+     "FRAC 6"
+    ],
+    [
+     "Mancozeb plus tricyclazole",
+     "FRAC M03 plus 16.1"
+    ],
+    [
+     "Azoxystrobin plus difenoconazole",
+     "FRAC 11 plus 3"
     ],
     [
      "Benomyl",
      "FRAC 1"
     ],
     [
-     "Azoxystrobin plus difenoconazole",
-     "FRAC 11 plus FRAC 3"
+     "Thiophanate methyl",
+     "FRAC 1"
+    ],
+    [
+     "Tebuconazole plus trifloxystrobin",
+     "FRAC 3 plus 11"
+    ],
+    [
+     "Fluoxastrobin plus tebuconazole",
+     "FRAC 11 plus 3"
+    ],
+    [
+     "Isotianil plus trifloxystrobin",
+     "FRAC P03 plus 11"
+    ],
+    [
+     "Plant essential oil plus difenoconazole",
+     "? plus FRAC 3"
+    ],
+    [
+     "Mancozeb",
+     "FRAC M03"
+    ],
+    [
+     "Chlorothalonil",
+     "FRAC M05"
+    ],
+    [
+     "Copper hydroxide",
+     "FRAC M01"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Isoprothiolane",
+      "FRAC 6",
+      "A",
+      2,
+      2,
+      "Systemic and made for blast. It protects the neck when sprayed at early heading."
+     ],
+     [
+      "Mancozeb plus tricyclazole",
+      "FRAC M03 plus 16.1",
+      "A",
+      1,
+      1,
+      "Tricyclazole works before infection: spray as panicles start to emerge, and again at half heading."
+     ],
+     [
+      "Azoxystrobin plus difenoconazole",
+      "FRAC 11 plus 3",
+      "B",
+      31,
+      31,
+      "Blast in Japan and Vietnam already resists strobilurins. Use it at most once a crop, then rotate."
+     ],
+     [
+      "Benomyl",
+      "FRAC 1",
+      "B",
+      26,
+      26,
+      "Fungi learn to survive this group quickly. Rotate it with tricyclazole or isoprothiolane."
+     ],
+     [
+      "Thiophanate methyl",
+      "FRAC 1",
+      "B",
+      19,
+      19,
+      "Fungi learn to survive this group quickly. Rotate it with tricyclazole or isoprothiolane."
+     ],
+     [
+      "Tebuconazole plus trifloxystrobin",
+      "FRAC 3 plus 11",
+      "B",
+      13,
+      12,
+      "Blast in Japan and Vietnam already resists strobilurins. Use it at most once a crop, then rotate."
+     ],
+     [
+      "Fluoxastrobin plus tebuconazole",
+      "FRAC 11 plus 3",
+      "B",
+      1,
+      1,
+      "Blast in Japan and Vietnam already resists strobilurins. Use it at most once a crop, then rotate."
+     ],
+     [
+      "Isotianil plus trifloxystrobin",
+      "FRAC P03 plus 11",
+      "B",
+      1,
+      1,
+      "Isotianil wakes the plant's own defenses. Spray before the disease shows. Do not repeat group 11."
+     ],
+     [
+      "Plant essential oil plus difenoconazole",
+      "? plus FRAC 3",
+      "B",
+      1,
+      1,
+      ""
+     ],
+     [
+      "Mancozeb",
+      "FRAC M03",
+      "C",
+      85,
+      78,
+      "Contact only: it guards the leaf surface for a few days and does little against neck blast."
+     ],
+     [
+      "Chlorothalonil",
+      "FRAC M05",
+      "C",
+      10,
+      10,
+      "Contact only, and some blast in Vietnam has grown less sensitive to it. Weak on neck blast."
+     ],
+     [
+      "Copper hydroxide",
+      "FRAC M01",
+      "C",
+      10,
+      10,
+      "Weak on blast, and copper can scorch rice at heading. Keep it for bacterial problems."
+     ],
+     [
+      "Bacillus amyloliquefaciens",
+      "FRAC BM02",
+      "C",
+      1,
+      1,
+      "A friendly bacterium with only mild effect on blast. It will not hold neck blast in wet weather."
+     ],
+     [
+      "Bordeaux mixture",
+      "FRAC M01",
+      "C",
+      1,
+      1,
+      "Weak on blast, and copper can scorch rice at heading. Keep it for bacterial problems."
+     ],
+     [
+      "Copper oxychloride plus copper hydroxide",
+      "FRAC M01 plus M01",
+      "C",
+      1,
+      1,
+      "Weak on blast, and copper can scorch rice at heading. Keep it for bacterial problems."
+     ],
+     [
+      "Picoxystrobin",
+      "FRAC 11",
+      "C",
+      1,
+      1,
+      "A strobilurin used alone: blast in Asia has already learned to survive this group. A last resort."
+     ],
+     [
+      "Pyraclostrobin",
+      "FRAC 11",
+      "C",
+      1,
+      1,
+      "A strobilurin used alone: blast in Asia has already learned to survive this group. A last resort."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Plant a blast resistant variety, and sow clean, healthy seed early, soon after the rains begin.",
+    "Split nitrogen into two or more doses and never pile it on.",
+    "Keep water on the field. Fields that dry out, above all rainfed ones, get much more blast.",
+    "Avoid close planting, and stay out of the crop while the leaves are wet.",
+    "On soils short of silicon, add calcium silicate or clean, blast free straw.",
+    "After a blast year, plow the stubble under at once, and rotate with mungo, corn or vegetables when you can."
+   ],
+   "bio": [
+    "Bacillus and Trichoderma products give only mild help. Resistant seed and water do far more."
+   ],
+   "threshold": "From tillering, check 20 hills a week for spindle shaped gray spots, more often after cool nights with long dew. Spray only when a susceptible variety meets wet, cloudy weather near heading, the field had neck blast before, or leaf blast showed at tillering: once as panicles start to emerge and again at about half heading.",
+   "rotate": "Blast fungus in Japan and Vietnam already resists strobilurins (FRAC 11). Never spray group 11 alone or twice in a row. Rotate it with tricyclazole (16.1) or isoprothiolane (6), and pair it with a triazole (3).",
+   "vector": []
   },
   {
    "slug": "bacterial-leaf-blight",
@@ -4616,10 +7718,113 @@
    ],
    "local": "Nauga nga dahon and natala nga tanum (Cebuano), nadurot nga tanum (Waray), naggapula (Ilonggo), and kresek for the seedling wilt",
    "hint": "Yellow to orange stripes that start at the leaf tip or edge and move down with a wavy margin.",
-   "ai": [],
-   "no": "Sprays do not pay. Use resistant seed, water control and balanced fertilizer.",
+   "ai": [
+    [
+     "Copper hydroxide",
+     "FRAC M01"
+    ],
+    [
+     "Bordeaux mixture",
+     "FRAC M01"
+    ],
+    [
+     "Thiodiazole copper",
+     "FRAC M01"
+    ],
+    [
+     "Cuprous oxide",
+     "FRAC M01"
+    ],
+    [
+     "Bacillus amyloliquefaciens",
+     "FRAC BM02"
+    ],
+    [
+     "Copper sulfate",
+     "FRAC M01"
+    ]
+   ],
+   "no": "No spray cures it: the bacteria live inside the leaf veins, and copper only slows the spread a little.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Copper hydroxide",
+      "FRAC M01",
+      "C",
+      4,
+      4,
+      "Only slows spread on the leaf surface. It cannot cure sick plants. Can scorch rice at flowering."
+     ],
+     [
+      "Bordeaux mixture",
+      "FRAC M01",
+      "C",
+      3,
+      3,
+      "Only slows spread on the leaf surface. It cannot cure sick plants. Can scorch rice at flowering."
+     ],
+     [
+      "Thiodiazole copper",
+      "FRAC M01",
+      "C",
+      2,
+      2,
+      "A copper made for rice bacterial diseases. It slows the spread when used early but cures nothing."
+     ],
+     [
+      "Cuprous oxide",
+      "FRAC M01",
+      "C",
+      2,
+      1,
+      "Only slows spread on the leaf surface. It cannot cure sick plants. Can scorch rice at flowering."
+     ],
+     [
+      "Bacillus amyloliquefaciens",
+      "FRAC BM02",
+      "C",
+      1,
+      1,
+      "A friendly bacterium. Mild help at best, and only before the disease spreads."
+     ],
+     [
+      "Copper sulfate",
+      "FRAC M01",
+      "C",
+      1,
+      1,
+      "Harsh on rice leaves and only slows the spread a little. A last resort."
+     ]
+    ]
+   },
+   "avoid": [
+    [
+     "Fosetyl aluminium",
+     "Made for water molds. It does not control this bacterium.",
+     null
+    ],
+    [
+     "Streptomycin plus oxytetracycline",
+     "Medical antibiotics: farm use breeds bacteria that resist them, and the blight sits inside the leaf veins.",
+     null
+    ]
+   ],
+   "prevent": [
+    "Plant a resistant variety, and change to another resistant variety if blight starts to break through.",
+    "Use clean seed from a healthy crop, and do not cut or bruise seedlings at pulling and transplanting.",
+    "Split nitrogen, never heavy, and keep potash enough. Lush, nitrogen rich rice is hit hardest.",
+    "Drain the field when blight shows, and keep water from a sick field from flowing into yours.",
+    "After harvest, plow under stubble, ratoons and volunteer rice, and keep grassy weeds off the bunds and canals.",
+    "Use wider spacing where blight is common, so leaves dry faster after rain."
+   ],
+   "bio": [
+    "Bacillus products help a little as prevention. They do not cure a sick crop."
+   ],
+   "threshold": "Scout from tillering, and right after storms, floods or strong winds, for wavy yellow stripes from the leaf tip or edge and milky drops on the leaf in the morning. At the first signs, act with water and fertilizer: drain the field, hold back nitrogen and add potash. Sprays will not turn it around.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-tungro",
@@ -4642,19 +7847,38 @@
    ],
    "local": "",
    "hint": "Leaves that turn yellow or orange yellow, starting at the tip and spreading down the blade.",
-   "ai": [
+   "ai": [],
+   "no": "No spray cures tungro. Pull out sick hills, plant resistant varieties and plant together after a fallow.",
+   "sources": [],
+   "ranks": {},
+   "aiBy": {},
+   "avoid": [
     [
      "Pymetrozine",
-     "IRAC 9B"
+     "A spray cannot cure tungro, and pymetrozine is weak on the green leafhopper. See the leafhopper's own list.",
+     null
     ],
     [
      "Buprofezin",
-     "IRAC 16"
+     "Kills leafhopper nymphs only, not the winged adults that bring tungro in. It cannot cure the virus.",
+     null
     ]
    ],
-   "no": "",
-   "sources": [],
-   "ranks": {}
+   "prevent": [
+    "Plant a tungro resistant or leafhopper resistant variety where tungro has struck, and change varieties every few seasons.",
+    "Plant together across the barangay after a fallow, and avoid the weeks when leafhoppers peaked before.",
+    "Plow under stubble, ratoons and volunteer rice right after harvest. They carry the virus to the next crop.",
+    "Pull and bury sick hills early, and never take seedlings from a seedbed that shows yellow orange plants.",
+    "Do not plant next to a field that has tungro, and keep nitrogen at the right rate."
+   ],
+   "bio": [
+    "Spiders, mirid bugs, dragonflies and damselflies eat green leafhoppers. Avoid early sprays so they stay."
+   ],
+   "threshold": "Watch the seedbed and the first 40 days for hills that turn yellow to orange from the leaf tips, stay short and make few tillers, with green leafhoppers on them. Pull and bury sick hills at once. Once tungro is in the area a leafhopper spray rarely stops it, so ask a technician before you spray.",
+   "rotate": "",
+   "vector": [
+    "green-leafhopper"
+   ]
   },
   {
    "slug": "rice-brown-spot",
@@ -4678,21 +7902,87 @@
    "hint": "Small, circular, dark brown to purple brown spots on the leaves from tillering on.",
    "ai": [
     [
-     "Propineb",
-     "FRAC M3"
-    ],
-    [
      "Tebuconazole plus trifloxystrobin",
-     "FRAC 3 plus FRAC 11"
+     "FRAC 3 plus 11"
     ],
     [
-     "Iprodione",
-     "FRAC 2"
+     "Mancozeb",
+     "FRAC M03"
+    ],
+    [
+     "Propineb",
+     "FRAC M03"
+    ],
+    [
+     "Chlorothalonil",
+     "FRAC M05"
+    ],
+    [
+     "Benomyl",
+     "FRAC 1"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Tebuconazole plus trifloxystrobin",
+      "FRAC 3 plus 11",
+      "A",
+      11,
+      11,
+      "Spray only if the spots keep coming after you fix the seed and soil. Do not use group 11 twice in a row."
+     ],
+     [
+      "Mancozeb",
+      "FRAC M03",
+      "B",
+      84,
+      78,
+      "A contact protectant: it guards new leaves and the panicle but cannot heal spots already there."
+     ],
+     [
+      "Propineb",
+      "FRAC M03",
+      "B",
+      13,
+      12,
+      "A contact protectant: it guards new leaves and the panicle but cannot heal spots already there."
+     ],
+     [
+      "Chlorothalonil",
+      "FRAC M05",
+      "B",
+      10,
+      10,
+      "A contact protectant: it guards new leaves and the panicle but cannot heal spots already there."
+     ],
+     [
+      "Benomyl",
+      "FRAC 1",
+      "C",
+      1,
+      1,
+      "Weak on the brown spot fungus. A triazole mix or a protectant does better."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Use clean seed, or treat your own seed in hot water at 53 to 54 degrees Celsius for 10 to 12 minutes, after an 8 hour cold soak.",
+    "Test the soil and give what it lacks, above all potash, and silicon on poor soils.",
+    "Keep water on the field where you can. Brown spot is worst in dry, unflooded soil.",
+    "Remove volunteer rice, crop debris and weeds that carry the fungus between seasons.",
+    "Plant a resistant variety, above all in direct seeded or rainfed fields."
+   ],
+   "bio": [
+    "Seed treated with Trichoderma, where sold, gives seedlings a cleaner start."
+   ],
+   "threshold": "Brown spot is a sign of hungry or dry soil more than a reason to spray. Check 20 hills from tillering. Spray only if spots keep spreading to the upper leaves and the flag leaf after you fix the soil, or the field had spotted grain before, at booting to heading.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-false-smut",
@@ -4723,7 +8013,20 @@
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {},
+   "avoid": [],
+   "prevent": [
+    "Use clean, certified seed. If unsure, treat it in hot water at 52 degrees Celsius for 10 minutes before sowing.",
+    "Keep nitrogen moderate and split it. Heavy nitrogen before heading invites the fungus.",
+    "Avoid close planting, and alternate flooding and drying where you can, to cut humidity in the crop.",
+    "Pick smut balls as soon as you see them, before they turn green black, and carry them out in a bag.",
+    "After harvest, remove or plow under straw and stubble, and time planting so flowering misses the rainiest weeks."
+   ],
+   "bio": [],
+   "threshold": "You cannot wait for the balls to decide: by then a spray is too late. Decide at late booting: spray only in a field that had false smut before, when humid, cloudy or rainy weather is forecast for flowering.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "bacterial-leaf-streak",
@@ -4743,10 +8046,63 @@
    ],
    "local": "",
    "hint": "Narrow, water soaked streaks run between the veins of the leaf, with straight sides.",
-   "ai": [],
-   "no": "No product cures it. Clean seed and resistant varieties keep it out.",
+   "ai": [
+    [
+     "Copper hydroxide",
+     "FRAC M01"
+    ],
+    [
+     "Cuprous oxide",
+     "FRAC M01"
+    ],
+    [
+     "Copper oxychloride plus copper hydroxide",
+     "FRAC M01 plus M01"
+    ]
+   ],
+   "no": "No product cures it. Clean seed, resistant varieties and drainage keep it out. Copper only slows it a little.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Copper hydroxide",
+      "FRAC M01",
+      "C",
+      10,
+      10,
+      "Only slows spread on the leaf surface after draining. It cures nothing. Can scorch rice at flowering."
+     ],
+     [
+      "Cuprous oxide",
+      "FRAC M01",
+      "C",
+      2,
+      1,
+      "Only slows spread on the leaf surface after draining. It cures nothing. Can scorch rice at flowering."
+     ],
+     [
+      "Copper oxychloride plus copper hydroxide",
+      "FRAC M01 plus M01",
+      "C",
+      1,
+      1,
+      "Only slows spread on the leaf surface after draining. It cures nothing. Can scorch rice at flowering."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Sow certified seed of a variety that has held up in your area, and never save seed from a field that had streak.",
+    "Pull out grassy weeds around the field and in the bunds. The bacterium lives on them between crops.",
+    "Split nitrogen into small doses and add potash in splits, so leaves stay firm and harder to wound.",
+    "Drain the field when streak shows, and do not let water from sick fields flow into healthy ones.",
+    "After harvest, plow under or remove the stubble, and rotate with another crop when you can."
+   ],
+   "bio": [],
+   "threshold": "Scout during tillering in wet, windy weeks for narrow, water soaked streaks between the veins that turn yellow with tiny amber drops. At the first streaks, drain the field and hold back nitrogen. A copper spray comes only after that, and only if the streaks keep spreading.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-sheath-rot",
@@ -4769,21 +8125,49 @@
    "hint": "Oblong or irregular spots form on the top leaf sheath, with dark reddish brown edges and gray centers.",
    "ai": [
     [
-     "Carbendazim",
-     "FRAC 1"
+     "Azoxystrobin plus difenoconazole",
+     "FRAC 11 plus 3"
     ],
     [
-     "Mancozeb",
-     "FRAC M3"
-    ],
-    [
-     "Copper oxychloride",
-     "FRAC M1"
+     "Copper oxychloride plus copper hydroxide",
+     "FRAC M01 plus M01"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Azoxystrobin plus difenoconazole",
+      "FRAC 11 plus 3",
+      "A",
+      4,
+      4,
+      "Spray at booting where sheath rot was bad before. Once the panicle is stuck, a spray cannot free it."
+     ],
+     [
+      "Copper oxychloride plus copper hydroxide",
+      "FRAC M01 plus M01",
+      "C",
+      1,
+      1,
+      "A protectant with only mild effect on sheath rot, and copper can scorch the emerging panicle."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Use healthy seed from a field free of the disease, and treat the seed before sowing if the field had sheath rot.",
+    "Do not plant too close. Sheath rot rises with planting density.",
+    "Split the nitrogen and add potash instead of more nitrogen.",
+    "Control stem borers and sheath mites, whose wounds let the fungus in, but keep insecticides off for the first 30 to 40 days.",
+    "Remove infected stubble and crop residue after harvest, and plow it under."
+   ],
+   "bio": [],
+   "threshold": "From booting, check the flag leaf sheath on 20 hills for oblong spots with gray centers and brown edges, and for panicles that fail to come out. Spray at booting only in fields with a history of sheath rot. After the panicle is trapped it is too late.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "narrow-brown-leaf-spot",
@@ -4806,13 +8190,73 @@
    "hint": "Thin, straight brown lines run parallel to the veins on the leaf and the upper sheath.",
    "ai": [
     [
-     "Propiconazole",
-     "FRAC 3"
+     "Mancozeb",
+     "FRAC M03"
+    ],
+    [
+     "Chlorothalonil",
+     "FRAC M05"
+    ],
+    [
+     "Benomyl",
+     "FRAC 1"
+    ],
+    [
+     "Cuprous oxide",
+     "FRAC M01"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Mancozeb",
+      "FRAC M03",
+      "B",
+      84,
+      78,
+      "Rarely needed: the disease is usually minor. Spray only a susceptible variety at panicle initiation or early boot."
+     ],
+     [
+      "Chlorothalonil",
+      "FRAC M05",
+      "B",
+      10,
+      10,
+      "Rarely needed: the disease is usually minor. Spray only a susceptible variety at panicle initiation or early boot."
+     ],
+     [
+      "Benomyl",
+      "FRAC 1",
+      "B",
+      1,
+      1,
+      "Rarely needed. Fungi learn to survive this group quickly, so use it once and rotate."
+     ],
+     [
+      "Cuprous oxide",
+      "FRAC M01",
+      "C",
+      2,
+      1,
+      "Weak on this leaf spot, and copper can scorch rice at heading."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Test the soil and fix a potassium shortage with potash. The disease follows potassium poor soils.",
+    "Use certified seed of a variety that shows less of the disease.",
+    "Follow the recommended nitrogen rate, or the leaf color chart, so you do not overfeed.",
+    "Keep weeds down in the field and on the bunds, and add organic matter to build the soil.",
+    "Plant at the best time for your area, and clear diseased straw and stubble after harvest."
+   ],
+   "bio": [],
+   "threshold": "Usually minor. Check the upper leaves and sheaths from panicle initiation. A spray pays only on a susceptible variety when thin brown streaks spread onto the flag leaf before heading.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "rice-grassy-stunt",
@@ -4834,9 +8278,27 @@
    "local": "",
    "hint": "Plants are severely stunted, with many thin tillers and a grassy, rosette look.",
    "ai": [],
-   "no": "No spray cures the virus. Control the brown planthopper that carries it.",
+   "no": "No spray cures the virus. Fight the brown planthopper that carries it, with resistant seed and planting together first.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {},
+   "avoid": [],
+   "prevent": [
+    "Plant a variety that resists the brown planthopper, or the virus, or both.",
+    "Plant together with the farms around you and keep a fallow, so hoppers cannot move from old fields onto young ones.",
+    "Pull out and bury sick plants early, and plow under stubble, ratoons and volunteer rice after harvest.",
+    "Flood the seedbed for a day when planthoppers are on it, so they drown.",
+    "No insecticide in the first 30 to 40 days, and never a pyrethroid: both bring planthoppers back worse.",
+    "Avoid close planting, and leave a narrow walking gap every few meters to scout."
+   ],
+   "bio": [
+    "Spiders, mirid bugs, water striders and egg wasps keep planthoppers in check. Spare them by not spraying early."
+   ],
+   "threshold": "Where grassy stunt showed before, tap 20 hills a week for brown planthoppers from the seedbed through tillering, and look for stunted hills with many thin, upright, pale tillers. The virus spreads at hopper counts far below hopperburn, so pull sick hills at once and use only the selective hopper sprays when counts climb.",
+   "rotate": "",
+   "vector": [
+    "brown-planthopper"
+   ]
   },
   {
    "slug": "rice-ragged-stunt",
@@ -4859,9 +8321,26 @@
    "local": "",
    "hint": "Plants are severely stunted in the early growth stages, with short, dark green leaves.",
    "ai": [],
-   "no": "No spray cures the virus. Control the brown planthopper that carries it.",
+   "no": "No spray cures the virus. Fight the brown planthopper that carries it, with resistant seed and planting together first.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {},
+   "avoid": [],
+   "prevent": [
+    "Plant a resistant variety: some resist the planthopper, some the virus, some both.",
+    "Plant at the same time as the farms around you, and leave a fallow or rotate so volunteer rice does not keep the virus.",
+    "Pull out and bury sick plants early, and destroy infected stubble and crop residue after harvest.",
+    "Flood the seedbed for a day when planthoppers are on it, so they drown.",
+    "No insecticide in the first 30 to 40 days, and never a pyrethroid: both bring planthoppers back worse."
+   ],
+   "bio": [
+    "Spiders, mirid bugs and egg wasps eat planthoppers. Spare them by not spraying early."
+   ],
+   "threshold": "Where ragged stunt showed before, tap 20 hills a week for brown planthoppers from the seedbed through tillering, and look for short, dark green hills with ragged, twisted leaf edges. The virus spreads at hopper counts far below hopperburn, so pull sick hills at once and use only the selective hopper sprays when counts climb.",
+   "rotate": "",
+   "vector": [
+    "brown-planthopper"
+   ]
   },
   {
    "slug": "bakanae",
@@ -4903,9 +8382,24 @@
      "FRAC M4"
     ]
    ],
-   "no": "",
+   "no": "A spray on the standing crop does not help. Treat the seed before sowing and pull the sick plants.",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {},
+   "avoid": [],
+   "prevent": [
+    "Buy certified, clean seed, and never save seed from a field that had tall, pale plants.",
+    "Float the seed in salt water or plain water and throw away the light seeds that float.",
+    "Soak seed you trust in hot water at 55 to 57 degrees Celsius before sowing. It fails on heavily infected seed.",
+    "Pull the tall seedlings out of the seedbed and the field, and bury them away from the paddy.",
+    "Plow in the straw and stubble right after harvest, and rotate away from rice for two years after a bad outbreak."
+   ],
+   "bio": [
+    "Seed treated with Trichoderma, where sold, lowers bakanae a little."
+   ],
+   "threshold": "Check the seedbed and the young field every week for seedlings taller, thinner and paler than the rest. Pull and bury them at once, before they shed spores at flowering. A few sick plants in a hundred is reason to change the seed source next season.",
+   "rotate": "Bakanae fungus in China, Japan and Korea has resisted benzimidazoles (carbendazim, thiophanate methyl) after long seed treatment use. Pair them with thiram or captan, and switch seed source when bakanae keeps coming back.",
+   "vector": []
   },
   {
    "slug": "rice-stem-rot",
@@ -4928,21 +8422,37 @@
    "hint": "Small, irregular black spots on the outer leaf sheath at the waterline.",
    "ai": [
     [
-     "Thiophanate methyl",
-     "FRAC 1"
-    ],
-    [
-     "Validamycin A",
-     "FRAC U18"
-    ],
-    [
-     "Azoxystrobin",
-     "FRAC 11"
+     "Chlorothalonil",
+     "FRAC M05"
     ]
    ],
    "no": "",
    "sources": [],
-   "ranks": {}
+   "ranks": {},
+   "aiBy": {
+    "rice": [
+     [
+      "Chlorothalonil",
+      "FRAC M05",
+      "C",
+      7,
+      7,
+      "A contact protectant with little effect on stem rot at the waterline. Drainage, potash and stubble removal do more."
+     ]
+    ]
+   },
+   "avoid": [],
+   "prevent": [
+    "Destroy the hard black resting bodies after harvest: plow straw and stubble deep, or remove them, and let the field dry.",
+    "Balance the fertilizer: too much nitrogen with too little potassium raises stem rot. Split doses of potash lower it.",
+    "Drain the field now and then during the crop, since floodwater carries the floating resting bodies.",
+    "Control stem borers and planthoppers that wound the stem, but keep sprays off for the first 30 to 40 days.",
+    "Rotate with a legume or forage crop when you can, since no variety is highly resistant."
+   ],
+   "bio": [],
+   "threshold": "From late tillering, part 20 hills and look at the outer sheath at the waterline for small black spots that grow and darken the stem. A spray seldom pays. In a field with a clear history of stem rot, act at the first lesions with drainage and potash, and spray only on a technician's advice.",
+   "rotate": "",
+   "vector": []
   },
   {
    "slug": "corn-downy-mildew",

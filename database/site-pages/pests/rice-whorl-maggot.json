@@ -135,6 +135,87 @@
       "text": "The sources we read give no insecticide for this pest. There is no cultural control, and the plants usually recover, so we do not list any ingredient. Early sprays also kill the spiders and wasps that protect the crop."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "A sound second choice. 80 registered products name it on rice."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 6 registered products name it on rice."
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. 3 registered products name it on rice."
+        ],
+        [
+          "Carbofuran",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 21 registered products name it on rice."
+        ],
+        [
+          "Acephate",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 16 registered products name it on rice."
+        ],
+        [
+          "Phenthoate",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 10 registered products name it on rice."
+        ],
+        [
+          "Acephate plus imidacloprid",
+          "IRAC 1B plus 4A",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ],
+        [
+          "Carbosulfan",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ],
+        [
+          "Phenthoate plus fenobucarb (BPMC)",
+          "IRAC 1B plus 1A",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ],
+        [
+          "Imidacloprid plus fipronil",
+          "IRAC 4A plus 2B",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Deltamethrin, beta cyfluthrin, alpha cypermethrin, beta cypermethrin, esfenvalerate and permethrin:** Early pyrethroid sprays kill spiders and set off planthopper outbreaks, for damage rice outgrows anyway.",
+        "**Diazinon:** An early spray known to set off planthopper outbreaks, for damage that rice outgrows anyway.",
+        "**Lambda cyhalothrin plus thiamethoxam and bifenthrin plus imidacloprid:** The pyrethroid half kills the young crop's spiders and sets off planthopper outbreaks.",
+        "**Chlorpyrifos plus cypermethrin:** Kills the young crop's spiders and sets off planthopper outbreaks, for damage rice outgrows anyway."
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -148,9 +229,21 @@
     {
       "type": "list",
       "items": [
-        "Expect some torn leaves in flooded transplanted fields, and do not treat them as an emergency.",
-        "Protect spiders and wasps by avoiding sprays in the first 30 to 40 days after transplanting.",
-        "Scout for pests as part of the [integrated pest management](/pests/integrated-pest-management) routine of the field."
+        "Expect some streaked, torn young leaves in flooded transplanted fields. It is not an emergency.",
+        "Keep every insecticide off the crop for the first 30 to 40 days, so spiders and wasps settle in for later pests.",
+        "Plant healthy, well rooted seedlings and give balanced fertilizer, so the crop outgrows the damage quickly.",
+        "Write down how many hills show damage in each lot, so you can tell a true outbreak from the usual few leaves."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small wasps attack the eggs and maggots, long legged flies eat the eggs, and spiders catch the adult flies."
       ]
     },
     {

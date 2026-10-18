@@ -136,6 +136,95 @@
       "text": "Apply a recommended fungicide only when you need it. Scout from maximum tillering and look low: part the hills and check the sheaths near the water. If lesions keep climbing the plants and spreading across hills in wet, humid weather, talk to your agricultural technician about a spray.\n\nCommon active ingredients against this disease include the triazoles difenoconazole and propiconazole and the strobilurin azoxystrobin. Two Syngenta products show how makers combine them. Armure 300 EC mixes difenoconazole and propiconazole, and its Philippine product page lists sheath blight on rice. Ortiva Top 325 SC mixes azoxystrobin and difenoconazole, and lists the same disease plus rice blast on rice.\n\nSheath blight starts low, so an Armure fungicide spray, or any other product, has to reach the lower sheaths. Follow the label for the rate, spray volume, timing and number of sprays. Use only FPA registered products, and rotate between fungicide groups so the fungus does not adapt. Our [fungicides guide](/blog/fungicides) explains the groups."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Azoxystrobin plus difenoconazole",
+          "FRAC 11 plus 3",
+          "A first choice. 31 registered products name it on rice."
+        ],
+        [
+          "Difenoconazole plus propiconazole",
+          "FRAC 3 plus 3",
+          "A first choice. Registered products name it on rice and corn."
+        ],
+        [
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A first choice. Registered products name it on rice and corn."
+        ],
+        [
+          "Difenoconazole",
+          "FRAC 3",
+          "A sound second choice. 53 registered products name it on rice."
+        ],
+        [
+          "Azoxystrobin",
+          "FRAC 11",
+          "A sound second choice. 20 registered products name it on corn."
+        ],
+        [
+          "Carbendazim plus tebuconazole",
+          "FRAC 1 plus 3",
+          "A sound second choice. 5 registered products name it on rice."
+        ],
+        [
+          "Azoxystrobin plus propiconazole",
+          "FRAC 11 plus 3",
+          "A sound second choice. 3 registered products name it on rice."
+        ],
+        [
+          "Tetraconazole plus carbendazim",
+          "FRAC 3 plus 1",
+          "A sound second choice. 3 registered products name it on rice."
+        ],
+        [
+          "Epoxiconazole",
+          "FRAC 3",
+          "A sound second choice. 2 registered products name it on rice."
+        ],
+        [
+          "Fluoxastrobin",
+          "FRAC 11",
+          "A sound second choice. 2 registered products name it on corn."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 14 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Copper hydroxide, bordeaux mixture and copper oxychloride plus copper hydroxide:** Copper does not control the sheath blight fungus.",
+        "**Mancozeb:** A contact protectant that does not stop the sheath blight fungus spreading inside the canopy. Money wasted here.",
+        "**Thiram:** A seed treatment. It does not stop sheath blight in the standing crop.",
+        "**Chlorothalonil:** A contact protectant that does not control sheath blight. Money wasted here."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** The sheath blight fungus has learned to survive strobilurins (group 11) where they were sprayed alone, so far outside Asia. Use group 11 only in a mix, never twice in a row, and rotate with triazoles (3) or SDHIs (7)."
+    },
+    {
       "type": "callout",
       "tone": "info",
       "title": "No insecticide stops this disease",

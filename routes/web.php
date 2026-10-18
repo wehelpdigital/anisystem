@@ -193,6 +193,11 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-18: the Crop Protocol for several lots, with the work calendar and the price by lots and crops.
             'protoLots' => class_exists(\App\Support\ProtocolCrew::class) && method_exists(\App\Http\Controllers\CropProtocolController::class, 'lotParams')
                 && \App\Support\AiPrices::of('protocolLot') > 0,
+            // 2026-10-19: pests and diseases answered from the registration list, crop by crop, Philippine companies first, with
+            // prevention (true once the migration has synced it: carbosulfan stands on the rice bug, the owner's own example).
+            'pestsRegistered' => method_exists(\App\Support\FieldCatalogue::class, 'aiFor') && method_exists(\App\Support\ProductBook::class, 'keysForProblemIngredient')
+                && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_crop_problems', 'advice')
+                    && \Illuminate\Support\Facades\DB::table('as_crop_problems')->where('section', 'pests')->where('slug', 'rice-bug')->where('advice', 'like', '%Carbosulfan%')->exists(), false, false),
             // 2026-10-18: the soil atlas (the area's typical soil, by province, town and barangay), loaded.
             'soilAtlas' => class_exists(\App\Support\SoilAtlas::class) && \App\Support\SoilAtlas::ready()
                 && rescue(fn () => \Illuminate\Support\Facades\DB::table('as_soil_fertility')->count() > 9000, false, false),

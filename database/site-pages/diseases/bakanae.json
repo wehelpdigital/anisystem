@@ -139,34 +139,38 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Thiram",
           "FRAC M3",
-          "seed treatment"
+          "No product sold here names it on its label yet. Ask your technician before you use it."
         ],
         [
           "Carbendazim",
           "FRAC 1",
-          "seed treatment"
+          "No product sold here names it on its label yet. Ask your technician before you use it."
         ],
         [
           "Thiophanate methyl",
           "FRAC 1",
-          "seed treatment, often paired with thiram"
+          "No product sold here names it on its label yet. Ask your technician before you use it."
         ],
         [
           "Captan",
           "FRAC M4",
-          "seed treatment"
+          "No product sold here names it on its label yet. Ask your technician before you use it."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Bakanae fungus in China, Japan and Korea has resisted benzimidazoles (carbendazim, thiophanate methyl) after long seed treatment use. Pair them with thiram or captan, and switch seed source when bakanae keeps coming back."
     },
     {
       "type": "callout",
@@ -182,11 +186,22 @@
     {
       "type": "list",
       "items": [
-        "Plant certified seed from a source you trust every season.",
-        "Inspect the seedbed each week for tall, thin seedlings and pull them at once.",
-        "Clear straw and stubble after harvest and keep weeds off the bunds.",
-        "Write down which lots had bakanae, so you can change the seed source next season.",
-        "Keep a season record so your seed source and any outbreak stay on the page."
+        "Buy certified, clean seed, and never save seed from a field that had tall, pale plants.",
+        "Float the seed in salt water or plain water and throw away the light seeds that float.",
+        "Soak seed you trust in hot water at 55 to 57 degrees Celsius before sowing. It fails on heavily infected seed.",
+        "Pull the tall seedlings out of the seedbed and the field, and bury them away from the paddy.",
+        "Plow in the straw and stubble right after harvest, and rotate away from rice for two years after a bad outbreak."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Seed treated with Trichoderma, where sold, lowers bakanae a little."
       ]
     },
     {

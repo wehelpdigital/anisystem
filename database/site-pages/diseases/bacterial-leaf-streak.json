@@ -136,6 +136,37 @@
       "text": "No product cures bacterial leaf streak, and sprays on a field that is already sick give little help. A copper based fungicide is allowed only when it is really needed, after draining and the steps above. Pick one whose FPA label lists rice, and ask your local agriculture office first. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) explains the timing for rice problems."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Copper hydroxide",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 10 registered products name it on rice."
+        ],
+        [
+          "Cuprous oxide",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ],
+        [
+          "Copper oxychloride plus copper hydroxide",
+          "FRAC M01 plus M01",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
+        ]
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -149,11 +180,11 @@
     {
       "type": "list",
       "items": [
-        "Use clean seed and a variety that holds up in your area, and ask your agriculture office for the current list.",
-        "Keep the field and its bunds free of grass weeds all season.",
-        "Feed in split doses, and avoid heavy nitrogen near heading.",
-        "Rotate the field with another crop when you can, so infected stubble breaks down.",
-        "Scout during tillering in wet weeks, and write down which lots had the streaks."
+        "Sow certified seed of a variety that has held up in your area, and never save seed from a field that had streak.",
+        "Pull out grassy weeds around the field and in the bunds. The bacterium lives on them between crops.",
+        "Split nitrogen into small doses and add potash in splits, so leaves stay firm and harder to wound.",
+        "Drain the field when streak shows, and do not let water from sick fields flow into healthy ones.",
+        "After harvest, plow under or remove the stubble, and rotate with another crop when you can."
       ]
     },
     {

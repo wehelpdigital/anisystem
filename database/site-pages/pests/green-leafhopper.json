@@ -136,6 +136,80 @@
       "text": "Do not spray in areas without a tungro source. Where tungro is present, an insecticide often cannot prevent infection. Leave the natural enemies alone and ask a technician before you decide."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Thiamethoxam",
+          "IRAC 4A",
+          "A first choice. 23 registered products name it on rice."
+        ],
+        [
+          "Dinotefuran",
+          "IRAC 4A",
+          "A first choice. 10 registered products name it on rice."
+        ],
+        [
+          "Pymetrozine plus dinotefuran",
+          "IRAC 9B plus 4A",
+          "A first choice. 3 registered products name it on rice."
+        ],
+        [
+          "Triflumezopyrim",
+          "IRAC 4E",
+          "A first choice. 3 registered products name it on rice."
+        ],
+        [
+          "Pymetrozine",
+          "IRAC 9B",
+          "A sound second choice. 25 registered products name it on rice."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 8 registered products name it on rice."
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "A sound second choice. 7 registered products name it on rice."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 3 registered products name it on rice."
+        ],
+        [
+          "Imidacloprid",
+          "IRAC 4A",
+          "A sound second choice. 3 registered products name it on rice."
+        ],
+        [
+          "Buprofezin plus isoprocarb (MIPC)",
+          "IRAC 16 plus 1A",
+          "A sound second choice. 1 registered product names it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 32 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Green leafhoppers in East Asia resist many organophosphates and carbamates after decades of use. If an old product stops working, switch to group 4A, 9B or 4E, and do not repeat one group in a crop."
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -149,10 +223,23 @@
     {
       "type": "list",
       "items": [
-        "Choose tungro resistant varieties for areas with a history of the disease.",
-        "Plant at the same time across the barangay.",
-        "Destroy stubble and volunteer rice after harvest so the virus has no bridge between crops.",
-        "Use the right nitrogen rate, and avoid early insecticide sprays."
+        "Plant a tungro resistant or leafhopper resistant variety where tungro has struck before.",
+        "Plant at the same time across the barangay, and avoid the weeks when leafhoppers peaked in past seasons.",
+        "Transplant seedlings older than three weeks, and destroy stubble, ratoons and volunteer rice after harvest.",
+        "Use the right nitrogen rate, guided by the leaf color chart. Too much nitrogen invites outbreaks.",
+        "Keep weeds down, and run a light trap to see when the numbers rise."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spiders, dragonflies, damselflies and mirid bugs eat leafhoppers. Avoid early sprays so they stay.",
+        "Ducks in the paddy once the plants are well rooted eat leafhoppers along with planthoppers."
       ]
     },
     {

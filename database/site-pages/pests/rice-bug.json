@@ -182,6 +182,76 @@
       "text": "Not sure whether the insect on your panicle is a rice bug or a black bug? Send a photo to Anee, the [smart farm technician](/features/ai-agricultural-technician) inside anee.io. She answers in Tagalog or English, and she checks the growth stage of your lot before she replies."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "A first choice. 91 registered products name it on rice."
+        ],
+        [
+          "Malathion",
+          "IRAC 1B",
+          "A sound second choice. 40 registered products name it on rice."
+        ],
+        [
+          "Lambda cyhalothrin plus thiamethoxam",
+          "IRAC 3A plus 4A",
+          "A sound second choice. 29 registered products name it on rice."
+        ],
+        [
+          "Thiamethoxam",
+          "IRAC 4A",
+          "A sound second choice. 19 registered products name it on rice."
+        ],
+        [
+          "Dinotefuran",
+          "IRAC 4A",
+          "A sound second choice. 9 registered products name it on rice."
+        ],
+        [
+          "Cypermethrin",
+          "IRAC 3A",
+          "A sound second choice. 6 registered products name it on rice."
+        ],
+        [
+          "Beta cypermethrin",
+          "IRAC 3A",
+          "A sound second choice. 5 registered products name it on rice."
+        ],
+        [
+          "Carbosulfan",
+          "IRAC 1A",
+          "A sound second choice. 2 registered products name it on rice."
+        ],
+        [
+          "Esfenvalerate",
+          "IRAC 3A",
+          "A sound second choice. 2 registered products name it on rice."
+        ],
+        [
+          "Alpha cypermethrin",
+          "IRAC 3A",
+          "A sound second choice. 1 registered product names it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 11 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
       "type": "cta",
       "title": "See the milky stage coming",
       "text": "anee.io dates every lot from its own day zero, shows its growth stage on any date, and lets you ask Anee about a photo of the bug you found.",

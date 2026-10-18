@@ -164,6 +164,101 @@
     {
       "type": "heading",
       "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Pymetrozine",
+          "IRAC 9B",
+          "A first choice. 26 registered products name it on rice."
+        ],
+        [
+          "Dinotefuran",
+          "IRAC 4A",
+          "A first choice. 10 registered products name it on rice."
+        ],
+        [
+          "Pymetrozine plus dinotefuran",
+          "IRAC 9B plus 4A",
+          "A first choice. 3 registered products name it on rice."
+        ],
+        [
+          "Triflumezopyrim",
+          "IRAC 4E",
+          "A first choice. 3 registered products name it on rice."
+        ],
+        [
+          "Thiamethoxam",
+          "IRAC 4A",
+          "A sound second choice. 23 registered products name it on rice."
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "A sound second choice. 7 registered products name it on rice."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 6 registered products name it on rice."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 3 registered products name it on rice."
+        ],
+        [
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "Older or broad chemistry: a last resort. 83 registered products name it on rice."
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "Older or broad chemistry: a last resort. 32 registered products name it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 7 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Diazinon:** Known in trials to make brown planthopper come back worse after spraying.",
+        "**Fenobucarb (BPMC) plus chlorpyrifos:** Hoppers here resist BPMC, and chlorpyrifos kills their enemies, so outbreaks can follow.",
+        "**Acephate:** Trials in South Asia saw brown planthopper come back in bigger numbers after acephate sprays.",
+        "**Cypermethrin, alpha cypermethrin, beta cypermethrin, esfenvalerate and permethrin:** Pyrethroids kill the spiders and bugs that eat hoppers, and planthoppers come back worse after the spray.",
+        "**Chlorpyrifos:** Field trials saw hoppers rise and their predators fall after chlorpyrifos sprays, ending above unsprayed rice.",
+        "**Lambda cyhalothrin plus thiamethoxam and bifenthrin plus clothianidin:** The pyrethroid in it kills spiders and lets planthoppers come back worse.",
+        "**Chlorpyrifos plus cypermethrin:** The pyrethroid and the organophosphate kill the hoppers' enemies, and planthoppers come back worse.",
+        "**Fenobucarb (BPMC):** Brown planthopper in the Philippines and much of Asia now resists BPMC strongly. It no longer pays.",
+        "**Phenthoate plus fenobucarb (BPMC):** Hoppers here resist BPMC, and the mix kills the spiders that hold them down.",
+        "**Acephate plus imidacloprid:** Imidacloprid no longer controls this hopper well, and acephate can bring it back in bigger numbers."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Brown planthopper in Asia resists imidacloprid and BPMC, and resistance to buprofezin, fipronil and thiamethoxam is rising. Use each group at most once a crop and switch among pymetrozine (9B), triflumezopyrim (4E), buprofezin (16) and dinotefuran (4A)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
       "text": "When to spray for brown planthopper"
     },
     {

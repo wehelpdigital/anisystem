@@ -138,27 +138,17 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Thiophanate methyl",
-          "FRAC 1",
-          "used for stem rot at disease onset"
-        ],
-        [
-          "Validamycin A",
-          "FRAC U18",
-          "used for stem rot"
-        ],
-        [
-          "Azoxystrobin",
-          "FRAC 11",
-          "applied at early heading, cut severity by about 20 to 30 percent in California trials"
+          "Chlorothalonil",
+          "FRAC M05",
+          "Older or broad chemistry: a last resort. 7 registered products name it on rice."
         ]
       ]
     },
@@ -176,10 +166,11 @@
     {
       "type": "list",
       "items": [
-        "Clear or bury straw and stubble right after harvest.",
-        "Keep nitrogen in balance with potassium, using the leaf color chart to time each dose.",
-        "Control stem borers and planthoppers before they wound the stems.",
-        "Keep a field record, so you know which lots had stem rot and can treat them first next season."
+        "Destroy the hard black resting bodies after harvest: plow straw and stubble deep, or remove them, and let the field dry.",
+        "Balance the fertilizer: too much nitrogen with too little potassium raises stem rot. Split doses of potash lower it.",
+        "Drain the field now and then during the crop, since floodwater carries the floating resting bodies.",
+        "Control stem borers and planthoppers that wound the stem, but keep sprays off for the first 30 to 40 days.",
+        "Rotate with a legume or forage crop when you can, since no variety is highly resistant."
       ]
     },
     {

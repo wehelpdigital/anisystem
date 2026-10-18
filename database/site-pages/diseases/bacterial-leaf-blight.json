@@ -138,6 +138,65 @@
       "text": "Chemicals to control bacterial leaf blight are neither economical nor effective as a routine, so prevention carries the load. There is one exception: a copper based fungicide, only if needed, once about 30 percent or more of the field is hit. Pick a product whose FPA label lists rice, follow the label, and ask your local agriculture office before you buy. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) shows how this line compares with other rice problems."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "FRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Copper hydroxide",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 4 registered products name it on rice."
+        ],
+        [
+          "Bordeaux mixture",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 3 registered products name it on rice."
+        ],
+        [
+          "Cuprous oxide",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ],
+        [
+          "Thiodiazole copper",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ],
+        [
+          "Bacillus amyloliquefaciens",
+          "FRAC BM02",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
+        ],
+        [
+          "Copper sulfate",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Fosetyl aluminium:** Made for water molds. It does not control this bacterium.",
+        "**Streptomycin plus oxytetracycline:** Medical antibiotics: farm use breeds bacteria that resist them, and the blight sits inside the leaf veins."
+      ]
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -151,11 +210,23 @@
     {
       "type": "list",
       "items": [
-        "Plant a BLB resistant variety, and ask your local agriculture office which ones hold up in your area.",
-        "Avoid heavy nitrogen and keep phosphorus and potassium up.",
-        "Keep seedbeds and fields from flooding, since a continuously flooded field favors the disease.",
-        "Clear stubble, straw, ratoons, volunteer rice and weeds that keep the bacteria alive between crops.",
-        "Let the field dry during the fallow, which suppresses the bacteria in the soil and the residue."
+        "Plant a resistant variety, and change to another resistant variety if blight starts to break through.",
+        "Use clean seed from a healthy crop, and do not cut or bruise seedlings at pulling and transplanting.",
+        "Split nitrogen, never heavy, and keep potash enough. Lush, nitrogen rich rice is hit hardest.",
+        "Drain the field when blight shows, and keep water from a sick field from flowing into yours.",
+        "After harvest, plow under stubble, ratoons and volunteer rice, and keep grassy weeds off the bunds and canals.",
+        "Use wider spacing where blight is common, so leaves dry faster after rain."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Bacillus products help a little as prevention. They do not cure a sick crop."
       ]
     },
     {

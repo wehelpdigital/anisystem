@@ -137,17 +137,32 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Propiconazole",
-          "FRAC 3",
-          "used in United States trials at panicle initiation or early boot, not a Philippine recommendation"
+          "Mancozeb",
+          "FRAC M03",
+          "A sound second choice. 84 registered products name it on rice."
+        ],
+        [
+          "Chlorothalonil",
+          "FRAC M05",
+          "A sound second choice. 10 registered products name it on rice."
+        ],
+        [
+          "Benomyl",
+          "FRAC 1",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Cuprous oxide",
+          "FRAC M01",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
         ]
       ]
     },
@@ -165,11 +180,11 @@
     {
       "type": "list",
       "items": [
-        "Keep potassium in balance with your nitrogen every season.",
-        "Plant certified seed of a variety that holds up in your area.",
-        "Control weeds on the bunds and in the field.",
-        "Plant at the best time for your area, since earlier planted fields had less disease in trials.",
-        "Remove infected straw and stubble after harvest."
+        "Test the soil and fix a potassium shortage with potash. The disease follows potassium poor soils.",
+        "Use certified seed of a variety that shows less of the disease.",
+        "Follow the recommended nitrogen rate, or the leaf color chart, so you do not overfeed.",
+        "Keep weeds down in the field and on the bunds, and add organic matter to build the soil.",
+        "Plant at the best time for your area, and clear diseased straw and stubble after harvest."
       ]
     },
     {

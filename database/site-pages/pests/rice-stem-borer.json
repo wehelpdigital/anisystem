@@ -164,24 +164,72 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
-        ],
-        [
-          "Chlorantraniliprole",
-          "IRAC 28",
-          "tested against yellow stem borer in rice trials in India"
+          "On Philippine labels"
         ],
         [
           "Cartap hydrochloride",
           "IRAC 14",
-          "tested against stem borers in rice trials in Asia"
+          "A first choice. 85 registered products name it on rice."
+        ],
+        [
+          "Chlorantraniliprole",
+          "IRAC 28",
+          "A first choice. 40 registered products name it on rice."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 8 registered products name it on rice."
+        ],
+        [
+          "Flubendiamide",
+          "IRAC 28",
+          "A sound second choice. 2 registered products name it on rice."
+        ],
+        [
+          "Tetraniliprole",
+          "IRAC 28",
+          "A sound second choice. 2 registered products name it on rice."
+        ],
+        [
+          "Thiosultap (dimehypo)",
+          "IRAC 14",
+          "A sound second choice. 2 registered products name it on rice."
+        ],
+        [
+          "Cyclaniliprole",
+          "IRAC 28",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Isocycloseram",
+          "IRAC 30",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Tebufenozide",
+          "IRAC 18",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Tetraniliprole plus thiacloprid",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 1 registered product names it on rice."
         ]
       ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 20 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Striped stem borer in China now resists the diamides (IRAC 28) after years of heavy use. Do not use group 28 on two crops in a row. Switch with cartap (IRAC 14)."
     },
     {
       "type": "callout",
@@ -197,11 +245,24 @@
     {
       "type": "list",
       "items": [
-        "Use resistant varieties where your technician can supply them.",
-        "Clear stubble, ratoon and volunteer rice right after harvest.",
-        "Plant the whole area in the same weeks, and keep a fallow gap between crops.",
-        "Scout the seedbed for egg masses before every transplanting.",
-        "Keep records of deadhearts and whiteheads by lot, so you see early which fields are repeat targets."
+        "After harvest, plow and flood the field and cut stubble low, so the larvae resting in old stems die.",
+        "Plant in the same weeks as your neighbors and keep a fallow gap, so the moths find no young tillers between crops.",
+        "Pick egg masses off the seedlings before you pull them, and raise the water now and then to drown eggs laid low on the plant.",
+        "Split the nitrogen into doses. Heavy early nitrogen gives soft, lush tillers that the moths prefer.",
+        "Use a resistant or tolerant variety where your technician can supply one, and remove ratoons and volunteer rice."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Egg wasps (Trichogramma, Telenomus, Tetrastichus) destroy many egg masses. Protect them by not spraying early.",
+        "Where Trichogramma cards are sold, pin them in the field when the moths start laying.",
+        "Spiders, lady beetles, ground beetles, earwigs and dragonflies eat the larvae and moths."
       ]
     },
     {

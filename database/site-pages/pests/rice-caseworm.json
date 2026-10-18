@@ -134,6 +134,83 @@
       "text": "Foliar sprays of carbamate insecticides work. Avoid pyrethroids, because the pest has become tolerant to them. Draining the field usually does the job first. The sources we read name no single carbamate for the Philippines, so ask a technician which registered product to use. Do not spray early in the crop without a true outbreak."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Tebufenozide",
+          "IRAC 18",
+          "A first choice. 1 registered product names it on rice."
+        ],
+        [
+          "Malathion",
+          "IRAC 1B",
+          "A sound second choice. 40 registered products name it on rice."
+        ],
+        [
+          "Carbaryl",
+          "IRAC 1A",
+          "A sound second choice. 27 registered products name it on rice."
+        ],
+        [
+          "Isoprocarb (MIPC)",
+          "IRAC 1A",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Methomyl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 58 registered products name it on rice."
+        ],
+        [
+          "Fenobucarb (BPMC) plus chlorpyrifos",
+          "IRAC 1A plus 1B",
+          "Older or broad chemistry: a last resort. 30 registered products name it on rice."
+        ],
+        [
+          "Carbofuran",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 21 registered products name it on rice."
+        ],
+        [
+          "Chlorpyrifos",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 18 registered products name it on rice."
+        ],
+        [
+          "Fenitrothion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 4 registered products name it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Deltamethrin:** Caseworm has grown tolerant of pyrethroids, and deltamethrin is known to set off planthopper outbreaks."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Caseworm has grown tolerant of pyrethroids (IRAC 3A). If a spray is truly needed after draining, use a carbamate (1A) or tebufenozide (18)."
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -147,10 +224,23 @@
     {
       "type": "list",
       "items": [
-        "Fix drainage so water does not stand in the field for long.",
-        "Plant together with the farms around you.",
-        "Keep the bunds and the canals clean of weeds.",
-        "Check the seedbed and the first weeks of the crop for floating cases."
+        "Drain the field for a few days when you see floating cases. Caseworms cannot move between hills without water.",
+        "Fix drainage so water does not stand long in low spots, where caseworm is worst.",
+        "Plant early, use wider spacing and transplant older seedlings, which suffer less.",
+        "Keep the bunds and canals free of weeds, and plant together with the farms around you.",
+        "Apply fertilizer at the rate your variety needs, not more."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Water snails eat the eggs, water beetles eat the larvae, and spiders, dragonflies and birds catch the moths.",
+        "Ducks in the paddy pick up the floating cases."
       ]
     },
     {

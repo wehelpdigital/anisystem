@@ -1,0 +1,3314 @@
+{
+ "v": 1,
+ "asOf": "2026-10-19",
+ "note": "Where each company on the registration lists comes from, for ranking products: Philippine companies first, then the Philippine companies of global groups, then the offices of foreign makers and traders. sure is false where only the name points to a local company.",
+ "order": {
+  "ph": 1,
+  "ph_arm": 2,
+  "import": 3
+ },
+ "words": {
+  "ph": "Philippine company",
+  "ph_arm": "Global company, Philippine office",
+  "import": "Foreign maker"
+ },
+ "companies": {
+  "Atlas Fertilizer": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 138
+  },
+  "Agway": {
+   "o": "ph",
+   "sure": false,
+   "pest": 87,
+   "fert": 48
+  },
+  "Modern Time": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 117
+  },
+  "Leads Agri": {
+   "o": "ph",
+   "sure": true,
+   "pest": 78,
+   "fert": 29
+  },
+  "Rainbow Agrosciences": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese maker (Shandong)",
+   "pest": 104,
+   "fert": 2
+  },
+  "Lichemphil": {
+   "o": "ph",
+   "sure": true,
+   "pest": 95,
+   "fert": 5
+  },
+  "Aljay Agro-industrial Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 40,
+   "fert": 54
+  },
+  "Zetryl.chem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 94
+  },
+  "Everland Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 30,
+   "fert": 60
+  },
+  "Zagro": {
+   "o": "import",
+   "sure": true,
+   "from": "Singapore group with a Philippine office",
+   "pest": 78,
+   "fert": 10
+  },
+  "Syngenta": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Syngenta",
+   "pest": 84,
+   "fert": 2
+  },
+  "La Filipina": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 85
+  },
+  "S&P Enterprises": {
+   "o": "ph",
+   "sure": false,
+   "pest": 76,
+   "fert": 9
+  },
+  "Bayer": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Bayer",
+   "pest": 76,
+   "fert": 3
+  },
+  "Itochu - Manila Branch": {
+   "o": "import",
+   "sure": true,
+   "from": "Japanese trader",
+   "pest": 0,
+   "fert": 78
+  },
+  "UPL": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "UPL",
+   "pest": 66,
+   "fert": 12
+  },
+  "Unilox Far East Resources": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 73
+  },
+  "Ezertech": {
+   "o": "ph",
+   "sure": false,
+   "pest": 61,
+   "fert": 11
+  },
+  "Universal Harvester": {
+   "o": "ph",
+   "sure": true,
+   "pest": 8,
+   "fert": 62
+  },
+  "Agchem": {
+   "o": "ph",
+   "sure": true,
+   "pest": 64,
+   "fert": 4
+  },
+  "Swire Agrotech": {
+   "o": "import",
+   "sure": false,
+   "from": "foreign trader",
+   "pest": 0,
+   "fert": 65
+  },
+  "Texicon Agri Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 56,
+   "fert": 8
+  },
+  "Jardine Distribution": {
+   "o": "ph",
+   "sure": true,
+   "pest": 58,
+   "fert": 5
+  },
+  "Radisson Agrochemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 59,
+   "fert": 4
+  },
+  "Agsmart": {
+   "o": "ph",
+   "sure": false,
+   "pest": 46,
+   "fert": 16
+  },
+  "Philippine Farmfix Solutions": {
+   "o": "ph",
+   "sure": true,
+   "pest": 54,
+   "fert": 7
+  },
+  "Tierra Agri Technologies": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 61
+  },
+  "Trans World": {
+   "o": "ph",
+   "sure": false,
+   "pest": 58,
+   "fert": 2
+  },
+  "Southland Consumers Cooperative": {
+   "o": "ph",
+   "sure": true,
+   "pest": 5,
+   "fert": 52
+  },
+  "Berris Agricultural": {
+   "o": "ph",
+   "sure": false,
+   "pest": 52,
+   "fert": 3
+  },
+  "FMC": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "FMC",
+   "pest": 49,
+   "fert": 3
+  },
+  "IVA": {
+   "o": "ph",
+   "sure": false,
+   "pest": 49,
+   "fert": 3
+  },
+  "Corteva": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Corteva",
+   "pest": 32,
+   "fert": 19
+  },
+  "Jynnsons": {
+   "o": "ph",
+   "sure": false,
+   "pest": 50,
+   "fert": 1
+  },
+  "Soiltech Agricultural Products": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 51
+  },
+  "Vann Hawk Agro Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 36,
+   "fert": 14
+  },
+  "Biostadt": {
+   "o": "import",
+   "sure": true,
+   "from": "Indian maker",
+   "pest": 43,
+   "fert": 5
+  },
+  "Sinochem": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese group",
+   "pest": 48,
+   "fert": 0
+  },
+  "Vast Agro Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 39,
+   "fert": 9
+  },
+  "Ferex Agrochem Development": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 47
+  },
+  "Aktiv Multi": {
+   "o": "ph",
+   "sure": false,
+   "pest": 38,
+   "fert": 8
+  },
+  "C.B. Andrew": {
+   "o": "ph",
+   "sure": false,
+   "pest": 45,
+   "fert": 1
+  },
+  "Hanearl Science": {
+   "o": "ph",
+   "sure": false,
+   "pest": 45,
+   "fert": 0
+  },
+  "Jocanima": {
+   "o": "ph",
+   "sure": false,
+   "pest": 40,
+   "fert": 4
+  },
+  "Aries Rne Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 40,
+   "fert": 2
+  },
+  "Taipan": {
+   "o": "ph",
+   "sure": false,
+   "pest": 40,
+   "fert": 2
+  },
+  "Kemistar": {
+   "o": "ph",
+   "sure": false,
+   "pest": 41,
+   "fert": 0
+  },
+  "Nexchem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 39,
+   "fert": 2
+  },
+  "Primestocks Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 38,
+   "fert": 3
+  },
+  "Elite Agrochemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 36,
+   "fert": 3
+  },
+  "Hailir Agroservice": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese maker (Hailir Philippines)",
+   "pest": 39,
+   "fert": 0
+  },
+  "Integrated Crop": {
+   "o": "ph",
+   "sure": false,
+   "pest": 34,
+   "fert": 5
+  },
+  "Oracle Chem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 33,
+   "fert": 6
+  },
+  "Yara": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Yara",
+   "pest": 0,
+   "fert": 39
+  },
+  "Asia Gold": {
+   "o": "ph",
+   "sure": false,
+   "pest": 27,
+   "fert": 11
+  },
+  "Ace Crop Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 36,
+   "fert": 1
+  },
+  "Agnewtek": {
+   "o": "ph",
+   "sure": false,
+   "pest": 34,
+   "fert": 0
+  },
+  "BASF": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "BASF",
+   "pest": 32,
+   "fert": 2
+  },
+  "Byter": {
+   "o": "ph",
+   "sure": false,
+   "pest": 29,
+   "fert": 5
+  },
+  "Indofil": {
+   "o": "import",
+   "sure": true,
+   "from": "Indian maker",
+   "pest": 31,
+   "fert": 3
+  },
+  "DCDM": {
+   "o": "ph",
+   "sure": false,
+   "pest": 33,
+   "fert": 0
+  },
+  "Donato C. Cruz": {
+   "o": "ph",
+   "sure": true,
+   "pest": 12,
+   "fert": 21
+  },
+  "NS Northern Organic Fertilizer": {
+   "o": "ph",
+   "sure": false,
+   "pest": 25,
+   "fert": 8
+  },
+  "Sumitomo Chemical": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Sumitomo Chemical",
+   "pest": 29,
+   "fert": 4
+  },
+  "Teamagro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 31,
+   "fert": 2
+  },
+  "Monarch Agricultural Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 30,
+   "fert": 2
+  },
+  "Planters Products": {
+   "o": "ph",
+   "sure": true,
+   "pest": 19,
+   "fert": 13
+  },
+  "United Agro Trade": {
+   "o": "ph",
+   "sure": false,
+   "pest": 32,
+   "fert": 0
+  },
+  "Advanced Agrisolutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 31,
+   "fert": 0
+  },
+  "Vetmate Farma": {
+   "o": "ph",
+   "sure": false,
+   "pest": 25,
+   "fert": 6
+  },
+  "Agro Technoproducts": {
+   "o": "ph",
+   "sure": false,
+   "pest": 30,
+   "fert": 0
+  },
+  "Sagrex": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 30
+  },
+  "Golden Farmers Agri Product": {
+   "o": "ph",
+   "sure": false,
+   "pest": 29,
+   "fert": 0
+  },
+  "Onegrain": {
+   "o": "ph",
+   "sure": false,
+   "pest": 28,
+   "fert": 1
+  },
+  "Jeels Masagana Farm Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 28,
+   "fert": 0
+  },
+  "Metroagri And General Merchandise": {
+   "o": "ph",
+   "sure": false,
+   "pest": 18,
+   "fert": 10
+  },
+  "Zhengbang Crop Protection (Philippine)": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese maker",
+   "pest": 28,
+   "fert": 0
+  },
+  "Agri-sprout": {
+   "o": "ph",
+   "sure": false,
+   "pest": 27,
+   "fert": 0
+  },
+  "Agro Iris": {
+   "o": "ph",
+   "sure": false,
+   "pest": 27,
+   "fert": 0
+  },
+  "Intersorora": {
+   "o": "ph",
+   "sure": false,
+   "pest": 26,
+   "fert": 1
+  },
+  "Agribase Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 26,
+   "fert": 0
+  },
+  "Agro Advanced": {
+   "o": "ph",
+   "sure": false,
+   "pest": 25,
+   "fert": 1
+  },
+  "Fka Agri Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 26,
+   "fert": 0
+  },
+  "Mindanao Agriplus": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 25
+  },
+  "Sharphil": {
+   "o": "import",
+   "sure": true,
+   "from": "Indian maker (Sharda)",
+   "pest": 26,
+   "fert": 0
+  },
+  "Tagchem Dragon": {
+   "o": "ph",
+   "sure": false,
+   "pest": 24,
+   "fert": 2
+  },
+  "Abg": {
+   "o": "ph",
+   "sure": false,
+   "pest": 22,
+   "fert": 3
+  },
+  "Aldiz": {
+   "o": "ph",
+   "sure": true,
+   "pest": 22,
+   "fert": 3
+  },
+  "Cropking Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 22,
+   "fert": 3
+  },
+  "Newman Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 25
+  },
+  "Zeal Ecological Nature (Zencor)": {
+   "o": "ph",
+   "sure": false,
+   "pest": 24,
+   "fert": 1
+  },
+  "Magan Agro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 22,
+   "fert": 2
+  },
+  "Ramgo": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 22
+  },
+  "Sure Crop Science Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 24,
+   "fert": 0
+  },
+  "Crop Protection Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 23,
+   "fert": 0
+  },
+  "MC Mai (Cebu)": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 23
+  },
+  "Plantcare": {
+   "o": "ph",
+   "sure": false,
+   "pest": 22,
+   "fert": 1
+  },
+  "Dole": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Dole",
+   "pest": 0,
+   "fert": 22
+  },
+  "Enfarm Crop Science": {
+   "o": "ph",
+   "sure": false,
+   "pest": 22,
+   "fert": 0
+  },
+  "Rbav Harvest": {
+   "o": "ph",
+   "sure": false,
+   "pest": 22,
+   "fert": 0
+  },
+  "Flagleaf Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 21,
+   "fert": 0
+  },
+  "Corvill Agricom": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 20
+  },
+  "E-tong Chemical ()": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese maker",
+   "pest": 20,
+   "fert": 0
+  },
+  "Edsel Agri And Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 19,
+   "fert": 1
+  },
+  "Envireau Pacific": {
+   "o": "ph",
+   "sure": false,
+   "pest": 10,
+   "fert": 10
+  },
+  "Gentradephil": {
+   "o": "ph",
+   "sure": false,
+   "pest": 19,
+   "fert": 1
+  },
+  "Iagri Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 16,
+   "fert": 4
+  },
+  "Philagrow": {
+   "o": "ph",
+   "sure": false,
+   "pest": 20,
+   "fert": 0
+  },
+  "Wealthy Grower Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 19,
+   "fert": 1
+  },
+  "Zenith Agrimax Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 11,
+   "fert": 9
+  },
+  "Laguna Agritechnology And Chemical Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 19,
+   "fert": 0
+  },
+  "Mighty Agricultural": {
+   "o": "ph",
+   "sure": false,
+   "pest": 19,
+   "fert": 0
+  },
+  "Yuumie Trade": {
+   "o": "ph",
+   "sure": false,
+   "pest": 19,
+   "fert": 0
+  },
+  "Altacrop Protection": {
+   "o": "ph",
+   "sure": false,
+   "pest": 17,
+   "fert": 1
+  },
+  "Cleveland Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 18
+  },
+  "Cultiva": {
+   "o": "ph",
+   "sure": false,
+   "pest": 16,
+   "fert": 2
+  },
+  "Gem Agrologic": {
+   "o": "ph",
+   "sure": false,
+   "pest": 18,
+   "fert": 0
+  },
+  "Grains Granted Agro-chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 18,
+   "fert": 0
+  },
+  "Grandia Agro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 18,
+   "fert": 0
+  },
+  "Universal Aquarius": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 18
+  },
+  "Vlmad": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 12
+  },
+  "Bacphil Planters Fertilizer": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 17
+  },
+  "Betterscientific Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 17,
+   "fert": 0
+  },
+  "Coromandel": {
+   "o": "import",
+   "sure": true,
+   "from": "Indian maker",
+   "pest": 17,
+   "fert": 0
+  },
+  "Goldstar Farm": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 17
+  },
+  "118 Agricultural": {
+   "o": "ph",
+   "sure": false,
+   "pest": 16,
+   "fert": 0
+  },
+  "Agrotiger": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 15
+  },
+  "Albert Joseph Agro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 16,
+   "fert": 0
+  },
+  "Chemrez Technologies": {
+   "o": "ph",
+   "sure": true,
+   "pest": 14,
+   "fert": 2
+  },
+  "Leads Enviromental Health Products": {
+   "o": "ph",
+   "sure": true,
+   "pest": 16,
+   "fert": 0
+  },
+  "Nutranta": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 16
+  },
+  "Petbowe": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 16
+  },
+  "Sino-monsanto": {
+   "o": "import",
+   "sure": false,
+   "from": "Chinese trader",
+   "pest": 16,
+   "fert": 0
+  },
+  "Unahco": {
+   "o": "ph",
+   "sure": true,
+   "pest": 16,
+   "fert": 0
+  },
+  "Verdant Lustercore": {
+   "o": "ph",
+   "sure": false,
+   "pest": 15,
+   "fert": 0
+  },
+  "4E Chemicals Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 14,
+   "fert": 0
+  },
+  "AVC Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 14,
+   "fert": 0
+  },
+  "Agri Bunch Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 14
+  },
+  "Albaugh": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Albaugh",
+   "pest": 12,
+   "fert": 2
+  },
+  "Goldenman": {
+   "o": "ph",
+   "sure": false,
+   "pest": 13,
+   "fert": 1
+  },
+  "Thaiphil Advance Agritech": {
+   "o": "import",
+   "sure": false,
+   "from": "Thai maker",
+   "pest": 14,
+   "fert": 0
+  },
+  "2HJL Development": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 4
+  },
+  "Allied Botanical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 10
+  },
+  "Aqua-hydroponic Prime Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 13
+  },
+  "Bio-life Sciences Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 1
+  },
+  "Farmtech Agriland": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 12
+  },
+  "Greenthumb Agrisolutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 13,
+   "fert": 0
+  },
+  "Kenso": {
+   "o": "import",
+   "sure": true,
+   "from": "Malaysian maker",
+   "pest": 13,
+   "fert": 0
+  },
+  "LTC Morita": {
+   "o": "ph",
+   "sure": false,
+   "pest": 13,
+   "fert": 0
+  },
+  "Old Town Agricultural Kinds": {
+   "o": "ph",
+   "sure": false,
+   "pest": 13,
+   "fert": 0
+  },
+  "Parafield": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 13
+  },
+  "Pilarquim": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese and Spanish maker",
+   "pest": 13,
+   "fert": 0
+  },
+  "Pioneer & Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 1
+  },
+  "R & A Agrofarm Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 13,
+   "fert": 0
+  },
+  "Shellhomes Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 13,
+   "fert": 0
+  },
+  "Ultra Bright": {
+   "o": "ph",
+   "sure": false,
+   "pest": 13,
+   "fert": 0
+  },
+  "Bioagro Agricultural Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 0
+  },
+  "Enasia Agro Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 4
+  },
+  "Full Green Agro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 0
+  },
+  "GNM Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 0
+  },
+  "Gamechanger Agriculture": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 11
+  },
+  "Gintong Ani": {
+   "o": "ph",
+   "sure": true,
+   "pest": 11,
+   "fert": 1
+  },
+  "Harbest": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 12
+  },
+  "Marpad Rhikeimher": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 0
+  },
+  "Palmtre": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 0
+  },
+  "Sankhem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 12,
+   "fert": 0
+  },
+  "Tradeton": {
+   "o": "ph",
+   "sure": false,
+   "pest": 10,
+   "fert": 2
+  },
+  "Arysta": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "UPL (Arysta)",
+   "pest": 11,
+   "fert": 0
+  },
+  "Crown Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 11,
+   "fert": 0
+  },
+  "Enviro Scope Synergy": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 10
+  },
+  "Green Action Brigade": {
+   "o": "ph",
+   "sure": false,
+   "pest": 11,
+   "fert": 0
+  },
+  "Mischa Agro Industrial": {
+   "o": "ph",
+   "sure": false,
+   "pest": 11,
+   "fert": 0
+  },
+  "Savewell Agriscience Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 11,
+   "fert": 0
+  },
+  "Suno Agrotech": {
+   "o": "ph",
+   "sure": false,
+   "pest": 10,
+   "fert": 1
+  },
+  "Top Agro Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 11,
+   "fert": 0
+  },
+  "Ada Manufacturing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 3
+  },
+  "Agri Biz OF GS": {
+   "o": "ph",
+   "sure": false,
+   "pest": 10,
+   "fert": 0
+  },
+  "Exome Life Sciences": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 10
+  },
+  "Famous Agricare": {
+   "o": "ph",
+   "sure": false,
+   "pest": 10,
+   "fert": 0
+  },
+  "Farm Edge Agro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 10,
+   "fert": 0
+  },
+  "Hi-yield Seed": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 10
+  },
+  "Joepabs Agrichem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 10,
+   "fert": 0
+  },
+  "Agfrontier": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 2
+  },
+  "Akme": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 9
+  },
+  "Angelex Agritrade": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Cyberth": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Cymejb": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Dow Agro Sciences B.V": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Corteva (Dow)",
+   "pest": 9,
+   "fert": 0
+  },
+  "Ecd Greengold Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Gemini Agri Farm Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 9
+  },
+  "Green Thumb Exfert Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 2
+  },
+  "Hextar Venture": {
+   "o": "import",
+   "sure": true,
+   "from": "Malaysian group",
+   "pest": 9,
+   "fert": 0
+  },
+  "Mars Agri Ventures And Commodities": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Marthdave": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Nac United Crop Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Philphos": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 9
+  },
+  "Plutous Nutrition Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 5
+  },
+  "SL Biotech": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Savers Alliance": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Sino-monsanto Oil": {
+   "o": "import",
+   "sure": false,
+   "from": "Chinese trader",
+   "pest": 9,
+   "fert": 0
+  },
+  "Total Farm Care Agri Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Tropi-cuke": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Twin Bamboo": {
+   "o": "ph",
+   "sure": false,
+   "pest": 9,
+   "fert": 0
+  },
+  "Vita Cropscience": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 1
+  },
+  "Agrifuture Chem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 0
+  },
+  "Bon Affaire": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 8
+  },
+  "Divine Agricultural": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 3
+  },
+  "Galdiv Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 0
+  },
+  "Golden Primestocks Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 3
+  },
+  "Goodfarms": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 3
+  },
+  "Karrat": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 1
+  },
+  "Manna Agrology Agri Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 0
+  },
+  "Manuchar Agro": {
+   "o": "import",
+   "sure": true,
+   "from": "Belgian trader",
+   "pest": 0,
+   "fert": 8
+  },
+  "Mindoro Sagana Merchandising": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 0
+  },
+  "Nutrihydro Fertilizer & Agri-products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 8
+  },
+  "Pine Valley": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 5
+  },
+  "Savewell Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 0
+  },
+  "Universal Leaf": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Universal Corporation",
+   "pest": 0,
+   "fert": 8
+  },
+  "Universal Scope": {
+   "o": "ph",
+   "sure": false,
+   "pest": 8,
+   "fert": 0
+  },
+  "Agspec": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Amway L.L.C": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Amway",
+   "pest": 0,
+   "fert": 7
+  },
+  "Bicol JL Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Cavilla Agri Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Dream Agro Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 1
+  },
+  "Du Pont Far East": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Corteva (DuPont)",
+   "pest": 7,
+   "fert": 0
+  },
+  "Eagle Stance": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 7
+  },
+  "Farm-aid": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 4
+  },
+  "G Chemtrading": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Levadia Holdings": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Link Agritech Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Managra": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Monarc Crop Solutions Provider": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Newtitan Agro - Industrial": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 7
+  },
+  "Plantmeds Agrisolutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "SCL Filipinas": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 7
+  },
+  "Suli Agroscience": {
+   "o": "ph",
+   "sure": false,
+   "pest": 7,
+   "fert": 0
+  },
+  "Sunjoy Agro ()": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese maker",
+   "pest": 6,
+   "fert": 1
+  },
+  "Agrigrowth": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 6
+  },
+  "Agroalternatives": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 6
+  },
+  "Altrade": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "Armory Agro Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "Gold Gen": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "HQ Agricare": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "Leb Legacy Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "MGB": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "Mega Booster Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "SBS": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 6
+  },
+  "Sorosoro Ibaba Development Cooperative": {
+   "o": "ph",
+   "sure": true,
+   "pest": 6,
+   "fert": 0
+  },
+  "United Agroscience": {
+   "o": "ph",
+   "sure": false,
+   "pest": 6,
+   "fert": 0
+  },
+  "6708 Crop Health Technologies": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 4
+  },
+  "Agrexplore": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Aims": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Del Monte": {
+   "o": "ph",
+   "sure": true,
+   "pest": 2,
+   "fert": 3
+  },
+  "Eja Agritech": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Enviro Cropvet Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Farmon Agri-community": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Giansan": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Green Acres Agri Tech": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 5
+  },
+  "Green Dragon Resources": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Inavet Nutrition Technologies": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 5
+  },
+  "Integro Agrochem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Jestin Prime": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 5
+  },
+  "Jp-bym Organic Feeds Manufacturing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 5
+  },
+  "NXN 800": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Philippine Orchard": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 5
+  },
+  "Polara Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Rom Roem Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Sabero Organics Asia": {
+   "o": "import",
+   "sure": true,
+   "from": "Indian maker",
+   "pest": 5,
+   "fert": 0
+  },
+  "Sumifru ()": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Sumitomo (Sumifru)",
+   "pest": 1,
+   "fert": 4
+  },
+  "Total Colours": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Trigreen": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Triple Diamonds Agriculture": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "VTL Agro Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 5,
+   "fert": 0
+  },
+  "Wellchem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 1
+  },
+  "Wilmar Edible Oils": {
+   "o": "import",
+   "sure": true,
+   "from": "Singapore group",
+   "pest": 0,
+   "fert": 5
+  },
+  "2201 R.e.n": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Agplanta": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Agrivesta Industrial": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Asia Fertilizers": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Biosolutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "CFS Agri-ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Caldic": {
+   "o": "import",
+   "sure": true,
+   "from": "Dutch trader",
+   "pest": 0,
+   "fert": 4
+  },
+  "Chemi-source Unlimited": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Classique Herbs": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Deeh": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Enasia Import Export": {
+   "o": "import",
+   "sure": false,
+   "from": "foreign trader",
+   "pest": 0,
+   "fert": 4
+  },
+  "Green Gems Farm Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "JS Binwag Agri Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Karpos Chemicals Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Laguna Agritechnology Chemical Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Le Firenze & Management": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Profarm": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Romarc": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Society Agri-venture": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 4
+  },
+  "Superagro Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Supreme Polymer Masterbatch Plastic Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 4,
+   "fert": 0
+  },
+  "Agric's": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 2
+  },
+  "Agrow Crop Care": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Alpachem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Ameer": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "B.M. Cusipag Agri Trade": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Behn Meyer Chemicals ()": {
+   "o": "import",
+   "sure": true,
+   "from": "German and Malaysian trader",
+   "pest": 0,
+   "fert": 3
+  },
+  "Chemical Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Chemplast": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Cropevo": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "DJ Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Darl Agricultural": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 1
+  },
+  "Docarmi Pest Management Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Dumangan Prime": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "E.s.i. Agricultural Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Elr Family": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Enlasa": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Excelag": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "First Planters Agri-solution": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Great Harvest Agrichemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "JCV Worldwide Traders": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "KCCT Agro Chem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 1
+  },
+  "Kudzu Seeds": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Lapanday Foods": {
+   "o": "ph",
+   "sure": true,
+   "pest": 2,
+   "fert": 1
+  },
+  "Leads Animal Health And Natural Solutions": {
+   "o": "ph",
+   "sure": true,
+   "pest": 3,
+   "fert": 0
+  },
+  "Malabing Valley Multipurpose Cooperative": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 3
+  },
+  "Mio Life Sciences Resource": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Nadiccia Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Nature-tech-innovation Group": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Nutribasics": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Nutriquest": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Red Buffalo Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "ST. Joseph Agrimarketing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Siglat": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Stockton Agrimor": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Sucsys Building Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Sumochem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 3,
+   "fert": 0
+  },
+  "Tag Life Science": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 3
+  },
+  "Tessenderlo Kerley": {
+   "o": "import",
+   "sure": true,
+   "from": "Belgian maker",
+   "pest": 3,
+   "fert": 0
+  },
+  "A.g. Tolentino Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "A6 Agrisource": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Agri Specialist": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Agrifix Farm Development And Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Ahcil Laboratories": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 1
+  },
+  "Alva Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Amri Agri-ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "B Y M": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Comprehensive Agri Innovations": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Crop Saver": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Cropcare Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Dole (Stanfilco Division)": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Dole",
+   "pest": 2,
+   "fert": 0
+  },
+  "Elanco": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Elanco",
+   "pest": 2,
+   "fert": 0
+  },
+  "Em Research": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Encam Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Esse Agrivet": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Essence Agroscience": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Experto Gamefowl Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Farmers Atlas": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Farmpoint": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Galchem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Genuflect": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Girasol Agrichem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Glycorn": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Hlyc": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 1
+  },
+  "Hurrah Agro-chemical Products Wholesaling": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Infinity Five Agrivet Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Isidore Agrochemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "KG Agri-ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "KPP Powers Commodities": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Koko Crop Care Supplies": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "La Trinidad Sunrise": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Mel-jay Agri Business": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Meljay Agri-business": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Nandin's Agro Sales": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Neo Crop Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Northstar Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Novellus Centris": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Optichem Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Oria Agrotech": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Parjv Grosolutions Miscellaneous Chemical Products Manufacturing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Philvin Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Rizric": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "ST. Ruiz Agro Farm Supply And General Merchandise": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Schippers": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Thomas Cowan &": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Transcend Phills": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Trion Management": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 2
+  },
+  "Venturosa Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Verostar": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Wishcrops": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "Wyncon": {
+   "o": "ph",
+   "sure": false,
+   "pest": 2,
+   "fert": 0
+  },
+  "2201 Ren": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "25SQM": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Abcris Fertilizers": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Agrelead": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Agresource": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Agri Ecologics": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Agri Go Pro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Agricrops Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Agrisagana": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Agritech Crop Protection Technology": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Agrotechno Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Alcoy Agro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Aldyxzie": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Amazing Farm Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Ap-jameg": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Apex 5 Gold Crop": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Archel Treatment": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Ariela": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Artemis Salt": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Arvin": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Asiaquest Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Ateretpaz Technologies": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Atformic": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "BB Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "BMF Agripro": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Binubusan Multi-purpose Cooperative": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 1
+  },
+  "Biomycrotek Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Bioprime Agri Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Biospark": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Bulls Agri Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Bulwarc Technologies": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "CMCS Agricultural Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Captain's Farm Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Chemisol": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Chiban Greencrop": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Cisbay": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Compania J.M": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "DM Agribiz": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "DONUMDEI-1": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "DTD Agricultural Organiques": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Davao Packaging": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "E.s.i Agricultural Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Earth Homecare Products ()": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Emp Feed Mix Manufacturing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Enasia Import/Export": {
+   "o": "import",
+   "sure": false,
+   "from": "foreign trader",
+   "pest": 1,
+   "fert": 0
+  },
+  "Enviro Safe Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "FGH Agricultura": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Fabrecorp Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Farm-lab Agricultural Services": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Farmcon": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Farmearn Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Farmers Agri Science": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Farmers-hub Agricultural Products Wholesaling": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Farmersmate Chemical Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Foliar Chemical Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Fullmight Agricultural": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "GCR Agricultural Supplies": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Gama Foods": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Gania Agri-business": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Global Green Organic Fertilizer": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Global Prime Agrichem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Green And Natural Links": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Green Saver Agri Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Greenthumb Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Growell Organic Solution": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Grupo Allied Agricultural Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "H&S Global Incorporation": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Haltec Crop Labs": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Happy Leaf Multi": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Hermusa Agriven": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Hi-grow 128": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Hunter And Development": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Inphilco": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Inspiro Agri Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Intelligrow Agri Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "J.M.C Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "JCS Chemical Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "JRPV Semicon Supplies": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "JS Union Oils &": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Jerolen": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Jjea Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Jjmo Fertilizer Manufacturing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Kabukiran Agri-business": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Kemargo": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Kemika Filipinas": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Lactobiotics Worldwide": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Liciada Innovations": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Limmaya Agricultural Services": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "M. Borja Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "MCJ Agritech": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "MT. Kalatungan Agri-ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "MT. Kitanglad Agri-ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Macondray Plastic Product": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Manalon Agri Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Manchem Industries": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Manna Agrology Agriventure": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Manupali Agri-development": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Marsman Estate Plantation": {
+   "o": "ph",
+   "sure": true,
+   "pest": 1,
+   "fert": 0
+  },
+  "Mau": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Merav Medical Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Mitplas Technology": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Monsanto": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Bayer (Monsanto)",
+   "pest": 1,
+   "fert": 0
+  },
+  "Noble Mercantile & Development": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Noelle Agri-products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Novatech Vet": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Nva Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Omrell Farm Systems": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Omya Chemical Merchants": {
+   "o": "import",
+   "sure": true,
+   "from": "Swiss maker",
+   "pest": 0,
+   "fert": 1
+  },
+  "Orsus Chemicals": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "P&D Medivet Distribution": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Pacific Fumigation": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Peg Agri-tech Ventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Phamc Agritrading": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Philclay Manufacturing Ent": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Philippine": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Plancare": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Powerbonz Fertilizer Manufacturing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Premier Agriventures": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Pro Agri Seed": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Provincial Government OF Pangasinan": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 1
+  },
+  "Purple Agri-business Network And Services": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "RKT King's Agri Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "RV Agri Natural Solutions Manufacturing": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "RZJR Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Reynald Farm Supply": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Ri Chemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Rosemeadows Farm": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Rotam": {
+   "o": "import",
+   "sure": true,
+   "from": "Hong Kong and Chinese maker",
+   "pest": 1,
+   "fert": 0
+  },
+  "SNM Deals Agricultural Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Santine": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Sarara Non-specialized Wholesale": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Solid Integrated Business": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Sterix": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Stoller": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Corteva (Stoller)",
+   "pest": 1,
+   "fert": 0
+  },
+  "Sunrise Dragon Jade Agri": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Superfab": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Sustainable Agri Solutions": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Tagum Agricultural Development": {
+   "o": "ph",
+   "sure": true,
+   "pest": 1,
+   "fert": 0
+  },
+  "Tamaraw Salt Producers Cooperative OF Occidental Mindoro (Tamaco)": {
+   "o": "ph",
+   "sure": true,
+   "pest": 0,
+   "fert": 1
+  },
+  "The Green Planet": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Tillermate": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Titan Agricultural Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Total ()": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Trevi Scion Development": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "United Agro-trade": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Upward Agro-industrial": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "VVZ": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Vannhawk Agrochemical": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Verca Agro Chem": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Vetremidica": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Vigour Seeds Dev": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Vizcaya Plantation": {
+   "o": "ph",
+   "sure": false,
+   "pest": 1,
+   "fert": 0
+  },
+  "Xanadu Agri Products": {
+   "o": "ph",
+   "sure": false,
+   "pest": 0,
+   "fert": 1
+  },
+  "Yun Cropcare": {
+   "o": "import",
+   "sure": true,
+   "from": "Chinese maker",
+   "pest": 1,
+   "fert": 0
+  },
+  "Zoetis": {
+   "o": "ph_arm",
+   "sure": true,
+   "group": "Zoetis",
+   "pest": 1,
+   "fert": 0
+  }
+ }
+}

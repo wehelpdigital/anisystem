@@ -40,7 +40,7 @@ final class FieldBook
                 'where' => $isPests ? $e['parts'] : $e['signs'], 'hint' => $e['hint'], 'ai' => $e['ai'], 'no' => $e['no'],
                 'ranks' => (object) $e['ranks'], 'thumb' => $e['thumb'], 'photo' => $photo ?: $e['thumb'], 'alt' => $e['alt'], 'credit' => $credit,
                 'sources' => self::sources($e['sources'] ?? []),
-            ];
+            ] + self::advice($e);
         }
         $kinds = collect($entries)->countBy('kind')->sortDesc();
 
@@ -221,24 +221,80 @@ final class FieldBook
        forProblem (the file's order, the crop on the label, the weed group
        for a herbicide), from one index instead of a pass per question. */
 
-    /** Pests or diseases: {cards, ip: ingredient => crop => keys, pp: slug => crop => keys}. */
+    /**
+     * What the registration list and our research add to one entry for the
+     * finders (2026-10-19): the registered ingredients by crop (aiBy, best
+     * first), the ones not advised (avoid), prevention, natural enemies, when
+     * to act, the rotation line, and for a virus the pests that carry it
+     * (vec: {k, name, local, ai: crop => the pest's own list on that crop}).
+     */
+    private static function advice(array $e): array
+    {
+        $vec = [];
+        foreach ((array) ($e['vector'] ?? []) as $slug) {
+            $v = FieldCatalogue::problem('pests', (string) $slug);
+            if (! $v) {
+                continue;
+            }
+            $by = [];
+            foreach ((array) $e['crops'] as $c) {
+                if (in_array($c, $v['crops'], true)) {
+                    $by[$c] = FieldCatalogue::aiFor($v, $c);
+                }
+            }
+            $vec[] = ['k' => (string) $slug, 'name' => $v['name'], 'local' => $v['local'], 'ai' => (object) $by, 'any' => FieldCatalogue::aiFor($v, null)];
+        }
+
+        return ['aiBy' => (object) ($e['aiBy'] ?? []), 'avoid' => array_values((array) ($e['avoid'] ?? [])),
+            'prevent' => array_values((array) ($e['prevent'] ?? [])), 'bio' => array_values((array) ($e['bio'] ?? [])),
+            'threshold' => (string) ($e['threshold'] ?? ''), 'rotate' => (string) ($e['rotate'] ?? ''), 'vec' => $vec];
+    }
+
+    /**
+     * Pests or diseases: {cards, pi: "p:slug" or "d:slug" => crop => ingredient
+     * => keys (products whose label names that very entry), ip: ingredient =>
+     * crop => keys (the ingredient on the crop's labels, for an entry no label
+     * names), pp: slug => crop => keys (every product labelled for it)}.
+     * Philippine companies first everywhere (ProductBook). A virus's vectors
+     * get their own lists too, so its card can show what controls them.
+     */
     private static function problemProducts(string $section, array $entries): array
     {
         $ip = [];
+        $pi = [];
         $pp = [];
+        $sold = function (string $sec, string $slug, string $c, array $rows) use (&$ip, &$pi) {
+            $crop = $c === '*' ? null : $c;
+            foreach ($rows as $a) {
+                $name = (string) ($a[0] ?? '');
+                $n = ProductBook::norm($name);
+                if ($name === '' || isset($pi[$sec[0] . ':' . $slug][$c][$n])) {
+                    continue;
+                }
+                $keys = ProductBook::keysForProblemIngredient($sec, $slug, $crop, $name, 3);
+                if ($keys) {
+                    $pi[$sec[0] . ':' . $slug][$c][$n] = $keys;
+                } elseif (! array_key_exists($c, $ip[$n] ?? [])) {
+                    // "Thiamethoxam (seed treatment)" is sold as thiamethoxam: the bracket note is how, not what.
+                    $plain = trim((string) preg_replace('/\s*\([^)]*\)/', '', $name));
+                    $ip[$n][$c] = ProductBook::keysForIngredient($plain !== '' ? $plain : $name, $crop, null, 3);
+                }
+            }
+        };
         foreach ($entries as $e) {
             foreach (array_merge($e['crops'], ['*']) as $c) {
-                foreach ($e['ai'] as $a) {
-                    $n = ProductBook::norm((string) ($a[0] ?? ''));
-                    if (! array_key_exists($c, $ip[$n] ?? [])) {
-                        $ip[$n][$c] = self::prodsFor((string) $a[0], $c === '*' ? null : $c, null, 4);
-                    }
+                $sold($section, $e['k'], $c, FieldCatalogue::aiFor($e, $c === '*' ? null : $c));
+                $pp[$e['k']][$c] = ProductBook::keysForProblem($section, $e['k'], $c === '*' ? null : $c, 6);
+            }
+            foreach ($e['vec'] ?? [] as $v) {
+                foreach ((array) $v['ai'] as $c => $rows) {
+                    $sold('pests', $v['k'], (string) $c, $rows);
                 }
-                $pp[$e['k']][$c] = self::prodsForProblem($section, $e['k'], $c === '*' ? null : $c, 6);
+                $sold('pests', $v['k'], '*', $v['any']);
             }
         }
 
-        return self::packProducts(['ip' => $ip, 'pp' => $pp]);
+        return self::packProducts(['ip' => $ip, 'pi' => $pi, 'pp' => $pp]);
     }
 
     /**

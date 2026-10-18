@@ -138,22 +138,22 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Propiconazole",
           "FRAC 3",
-          "an azole fungicide sprayed at booting"
+          "No product sold here names it on its label yet. Ask your technician before you use it."
         ],
         [
           "Copper fungicides",
           "FRAC M1",
-          "a protectant sprayed at booting"
+          "No product sold here names it on its label yet. Ask your technician before you use it."
         ]
       ]
     },
@@ -171,11 +171,11 @@
     {
       "type": "list",
       "items": [
-        "Plant clean, certified seed every season.",
-        "Choose varieties that your local agriculture office reports as less affected.",
-        "Split your nitrogen and avoid heavy doses before heading.",
-        "Remove straw and stubble from fields that had false smut.",
-        "Check the weather outlook before flowering, and scout the field a week after heading in wet seasons."
+        "Use clean, certified seed. If unsure, treat it in hot water at 52 degrees Celsius for 10 minutes before sowing.",
+        "Keep nitrogen moderate and split it. Heavy nitrogen before heading invites the fungus.",
+        "Avoid close planting, and alternate flooding and drying where you can, to cut humidity in the crop.",
+        "Pick smut balls as soon as you see them, before they turn green black, and carry them out in a bag.",
+        "After harvest, remove or plow under straw and stubble, and time planting so flowering misses the rainiest weeks."
       ]
     },
     {

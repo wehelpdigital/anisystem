@@ -150,10 +150,22 @@
     {
       "type": "list",
       "items": [
-        "Plant together with the farms around you so the ripening window stays short.",
-        "Harvest on time and clean up spilled grain, which draws flocks to the field and the store.",
-        "Bird proof your grain stores, since the tree sparrow also lives in warehouses.",
+        "Plant together with the farms around you, so the ripening window is short and the flocks spread across many fields.",
+        "Guard the field at dawn and dusk from the milk stage to ripening, and change the scaring method often. Birds soon ignore one trick.",
+        "Net small plots and seedbeds where the crop is worth it. Only a net or a closed cover fully protects the grain.",
+        "Harvest on time, clean up spilled grain, and bird proof the grain store, where tree sparrows also live.",
         "Cut tall weeds and bushes at the field edge where the birds roost."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Leave egrets, herons, harriers and owls alone: they eat insects, frogs and rats, not grain."
       ]
     },
     {

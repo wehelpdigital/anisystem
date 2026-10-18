@@ -226,6 +226,69 @@
       "text": "Insecticides alone give only temporary relief, cost a lot and harm other organisms. The Palawan campaign proved it. If your technician still advises a spray, pick an FPA registered product whose label lists black bug on rice.\n\nTwo Syngenta examples list black bug on rice on their Philippine product pages: Karate 2.5 EC, with lambda cyhalothrin, and Virtako 40 WG, with chlorantraniliprole and thiamethoxam. Use them only as examples, follow the label, and read our guide to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess)."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A first choice. 53 registered products name it on rice."
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "A sound second choice. 91 registered products name it on rice."
+        ],
+        [
+          "Deltamethrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 4 registered products name it on rice."
+        ],
+        [
+          "Beta cyfluthrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 3 registered products name it on rice."
+        ],
+        [
+          "Esfenvalerate",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ],
+        [
+          "Bifenthrin",
+          "IRAC 3A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
+        ],
+        [
+          "Bifenthrin plus clothianidin",
+          "IRAC 3A plus 4A",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Pymetrozine:** Made for hoppers. It does little against stink bugs such as the black bug."
+      ]
+    },
+    {
       "type": "callout",
       "tone": "tip",
       "title": "Work as a barangay",

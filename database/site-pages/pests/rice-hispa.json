@@ -148,10 +148,23 @@
     {
       "type": "list",
       "items": [
-        "Keep the bunds and canals free of grassy weeds.",
-        "Use the recommended spacing and fertilizer rate.",
-        "Avoid sprays in the first 30 to 40 days after transplanting unless there is a true outbreak.",
-        "Report an unusual outbreak to your municipal agriculture office."
+        "Do not over fertilize. Heavily fertilized, lush fields draw the beetles.",
+        "Use the recommended spacing, not closer, so the leaves stay less dense.",
+        "Remove grassy weeds in the field and along the bunds and canals. They are the beetle's other hosts.",
+        "Sweep a net over the seedbed and the young crop to catch the adults while numbers are low.",
+        "Keep insecticides off the crop for the first 30 to 40 days, so the beetle's enemies stay."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Small wasps attack the eggs and grubs inside the leaf, and reduviid bugs and spiders hunt the adults.",
+        "Fungi such as Beauveria and Metarhizium infect the beetles in humid weather."
       ]
     },
     {

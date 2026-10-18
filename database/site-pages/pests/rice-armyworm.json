@@ -136,6 +136,76 @@
       "text": "Spray only at outbreak level, since insecticide is the last resort for armyworm. The Pacific Pests fact sheet says synthetic pyrethroids are likely to be effective, but they also kill natural enemies. No source we opened names one ingredient for the Philippines, so ask your agriculture office which registered product to use. Never spray in the first 30 to 40 days after transplanting unless the outbreak is true."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients on Philippine Labels"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Tebufenozide",
+          "IRAC 18",
+          "A first choice. 1 registered product names it on rice."
+        ],
+        [
+          "Tetraniliprole",
+          "IRAC 28",
+          "A first choice. 1 registered product names it on corn."
+        ],
+        [
+          "Lambda cyhalothrin",
+          "IRAC 3A",
+          "A sound second choice. 91 registered products name it on rice."
+        ],
+        [
+          "Cypermethrin",
+          "IRAC 3A",
+          "A sound second choice. 4 registered products name it on rice."
+        ],
+        [
+          "Methomyl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. 58 registered products name it on rice."
+        ],
+        [
+          "Malathion",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 40 registered products name it on rice."
+        ],
+        [
+          "Fenobucarb (BPMC) plus chlorpyrifos",
+          "IRAC 1A plus 1B",
+          "Older or broad chemistry: a last resort. Registered products name it on rice and corn."
+        ],
+        [
+          "Carbaryl",
+          "IRAC 1A",
+          "Older or broad chemistry: a last resort. Registered products name it on rice and corn."
+        ],
+        [
+          "Chlorpyrifos",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. Registered products name it on rice and corn."
+        ],
+        [
+          "Phenthoate plus fenobucarb (BPMC)",
+          "IRAC 1B plus 1A",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 1 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -149,10 +219,23 @@
     {
       "type": "list",
       "items": [
-        "Keep fields and bunds free of grassy weeds.",
-        "Plow fallow land before the next crop.",
-        "Check the seedbed often, and flood it when caterpillars appear.",
-        "Watch the weather. A heavy rain after a dry spell is a signal to scout."
+        "Set the seedbed far from weedy ground, and plow fallow land before the next crop.",
+        "Remove weeds, above all grasses, in and around the field and on the bunds.",
+        "Flood the seedbed when caterpillars appear. It is the best defense and drowns or drives them up for picking.",
+        "Dig a trench with ashes across the path of marching caterpillars, and lay branches around the field to collect them by hand.",
+        "Plow the field after harvest and keep checking weekly, so you see the first caterpillars while they are small."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Wasps, tachinid flies, spiders and birds feed on armyworms. Early sprays kill them.",
+        "Where Bt or an armyworm virus (NPV) product is sold, aim it at young caterpillars."
       ]
     },
     {

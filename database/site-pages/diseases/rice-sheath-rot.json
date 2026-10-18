@@ -137,27 +137,22 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Carbendazim",
-          "FRAC 1",
-          "seed treatment"
+          "Azoxystrobin plus difenoconazole",
+          "FRAC 11 plus 3",
+          "A first choice. 4 registered products name it on rice."
         ],
         [
-          "Mancozeb",
-          "FRAC M3",
-          "seed treatment"
-        ],
-        [
-          "Copper oxychloride",
-          "FRAC M1",
-          "a foliar spray"
+          "Copper oxychloride plus copper hydroxide",
+          "FRAC M01 plus M01",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
         ]
       ]
     },
@@ -175,11 +170,11 @@
     {
       "type": "list",
       "items": [
-        "Plant clean seed, and treat it before sowing in fields with a history of the disease.",
-        "Keep your spacing wide enough for air to flow through the crop.",
-        "Split nitrogen, and keep potash in balance.",
-        "Scout for stem borers and other insects during panicle initiation.",
-        "Clear straw and stubble from the field after harvest."
+        "Use healthy seed from a field free of the disease, and treat the seed before sowing if the field had sheath rot.",
+        "Do not plant too close. Sheath rot rises with planting density.",
+        "Split the nitrogen and add potash instead of more nitrogen.",
+        "Control stem borers and sheath mites, whose wounds let the fungus in, but keep insecticides off for the first 30 to 40 days.",
+        "Remove infected stubble and crop residue after harvest, and plow it under."
       ]
     },
     {

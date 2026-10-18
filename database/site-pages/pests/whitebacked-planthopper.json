@@ -137,19 +137,46 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
-          "Buprofezin",
-          "IRAC 16",
-          "found effective against brown planthopper in rice trials in India"
+          "Thiamethoxam",
+          "IRAC 4A",
+          "A first choice. 23 registered products name it on rice."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 2 registered products name it on rice."
+        ],
+        [
+          "Dimethoate",
+          "IRAC 1B",
+          "Older or broad chemistry: a last resort. 4 registered products name it on rice."
         ]
       ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "On labels for it, but not advised",
+      "text": "These are on Philippine labels for it, but we leave them off the list above, for the reasons below."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Cypermethrin:** Pyrethroids kill the spiders and mirid bugs that eat hoppers, and planthoppers come back worse after the spray.",
+        "**Lambda cyhalothrin plus thiamethoxam and bifenthrin plus clothianidin:** The pyrethroid in it kills spiders and lets planthoppers come back worse."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "**Resistance.** Whitebacked planthopper in East and Southeast Asia resists fipronil (IRAC 2B), so do not lean on it. Rotate among groups 4A, 9B and 16, and never use one group twice in a row."
     },
     {
       "type": "callout",
@@ -165,10 +192,23 @@
     {
       "type": "list",
       "items": [
-        "Synchronize planting across the area.",
-        "Use tolerant varieties and the right amount of nitrogen.",
-        "Skip sprays in the first 30 to 40 days after transplanting unless there is a true outbreak.",
-        "Plow in the stubble and avoid ratoon crops."
+        "Plant within about three weeks of the farms around you, and grow no more than two rice crops a year.",
+        "Split the nitrogen into doses. Too much nitrogen, often on hybrid rice, builds up this hopper fast.",
+        "Drain the field for three to four days when the numbers climb.",
+        "Do not keep a ratoon crop, and plow the stubble in after harvest.",
+        "No insecticide in the first 30 to 40 days after transplanting unless the count passes the threshold."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "The mirid bug Cyrtorhinus lividipennis and Anagrus egg wasps are its main enemies. Broad spectrum sprays wipe them out.",
+        "Wolf spiders and lady beetles eat the nymphs. Count them with the hoppers before you decide."
       ]
     },
     {

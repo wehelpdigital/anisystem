@@ -136,6 +136,76 @@
       "text": "No spray cures a plant that has the virus, because infected plants cannot recover. A spray can only target the planthopper. Do not use insecticide in the first 30 to 40 days after transplanting unless a pest is truly at outbreak level. Early sprays kill the spiders and wasps and then cause planthopper outbreaks. If an outbreak is real, ask your local agriculture office which FPA registered product suits your field, and follow the label."
     },
     {
+      "type": "heading",
+      "level": 3,
+      "text": "What the Labels Name for the Brown Planthopper"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients whose Philippine labels name the brown planthopper on rice. They work on the insect that carries the virus, not on a sick plant. Always follow the label of an FPA registered product.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "On Philippine labels"
+        ],
+        [
+          "Pymetrozine",
+          "IRAC 9B",
+          "A first choice. 26 registered products name it on rice."
+        ],
+        [
+          "Dinotefuran",
+          "IRAC 4A",
+          "A first choice. 10 registered products name it on rice."
+        ],
+        [
+          "Pymetrozine plus dinotefuran",
+          "IRAC 9B plus 4A",
+          "A first choice. 3 registered products name it on rice."
+        ],
+        [
+          "Triflumezopyrim",
+          "IRAC 4E",
+          "A first choice. 3 registered products name it on rice."
+        ],
+        [
+          "Thiamethoxam",
+          "IRAC 4A",
+          "A sound second choice. 23 registered products name it on rice."
+        ],
+        [
+          "Buprofezin",
+          "IRAC 16",
+          "A sound second choice. 7 registered products name it on rice."
+        ],
+        [
+          "Chlorantraniliprole plus thiamethoxam",
+          "IRAC 28 plus 4A",
+          "A sound second choice. 6 registered products name it on rice."
+        ],
+        [
+          "Clothianidin",
+          "IRAC 4A",
+          "A sound second choice. 3 registered products name it on rice."
+        ],
+        [
+          "Cartap hydrochloride",
+          "IRAC 14",
+          "Older or broad chemistry: a last resort. 83 registered products name it on rice."
+        ],
+        [
+          "Fipronil",
+          "IRAC 2B",
+          "Older or broad chemistry: a last resort. 32 registered products name it on rice."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The table stops at the ten best. 7 more on Philippine labels for it are older or broad chemistry. The [Disease Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+    },
+    {
       "type": "callout",
       "tone": "warn",
       "title": "Spray safely",
@@ -149,11 +219,22 @@
     {
       "type": "list",
       "items": [
-        "Plant resistant varieties, and plant together with your neighbors.",
-        "Break the cycle by leaving the field fallow or rotating when you can, so volunteer rice does not keep the virus.",
-        "Scout the seedbed and the crop every week through tillering.",
-        "Hold off on early insecticide sprays, so the natural enemies can work.",
-        "Keep records of which lots had stunted patches, and plant them first with a resistant variety."
+        "Plant a resistant variety: some resist the planthopper, some the virus, some both.",
+        "Plant at the same time as the farms around you, and leave a fallow or rotate so volunteer rice does not keep the virus.",
+        "Pull out and bury sick plants early, and destroy infected stubble and crop residue after harvest.",
+        "Flood the seedbed for a day when planthoppers are on it, so they drown.",
+        "No insecticide in the first 30 to 40 days, and never a pyrethroid: both bring planthoppers back worse."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Spiders, mirid bugs and egg wasps eat planthoppers. Spare them by not spraying early."
       ]
     },
     {

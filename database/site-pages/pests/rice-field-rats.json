@@ -151,10 +151,24 @@
     {
       "type": "list",
       "items": [
-        "Clean the field and the pilapil right after harvest, and pick up spilled grain.",
-        "Plant together with the farms around you and keep the cropping window short.",
-        "Cut the weeds along banks and canals before the crop starts to boot.",
-        "Join the neighbors to set up a community trap barrier system, each season, on the same spot."
+        "Plant together: neighbors on about 10 hectares should plant in the same two weeks, so the crop ripens at once.",
+        "Keep pilapil and canal banks narrower than 20 cm and free of weeds, so rats cannot nest in them.",
+        "Clean up spilled grain, straw piles and rubbish at harvest. Sanitation is the longest lasting step.",
+        "Set a community trap barrier system: a 20 by 20 m plot planted 2 to 3 weeks early, fenced with plastic, with traps in the fence.",
+        "Dig out or flood burrows and hunt rats at night as a group at land preparation, before they breed.",
+        "If you bait, bait as a whole community, with sealed bait kept in stations for several days, never scattered once."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Barn owls, grass owls, snakes and monitor lizards eat many rats. Perches and nest boxes near the field bring owls in.",
+        "Prefer traps and slow baits where owls hunt, since strong baits pass on to the owls that eat poisoned rats."
       ]
     },
     {

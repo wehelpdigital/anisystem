@@ -138,22 +138,32 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "IRAC group",
-          "Use"
+          "On Philippine labels"
         ],
         [
           "Niclosamide",
-          "Molluscicide",
-          "For fields where water is scarce and no rain is expected. One of the registered molluscicides"
+          "Not grouped",
+          "A sound second choice. 115 registered products name it on rice."
         ],
         [
           "Metaldehyde",
-          "Molluscicide",
-          "For fields where irrigation is strong and hard to control, or sudden rain is likely. Sold as pellets and as a flowable"
+          "Not grouped",
+          "A sound second choice. 49 registered products name it on rice."
+        ],
+        [
+          "Saponin (tea seed)",
+          "Not grouped",
+          "A sound second choice. 1 registered product names it on rice."
+        ],
+        [
+          "Abamectin plus niclosamide",
+          "IRAC 6 plus ?",
+          "Older or broad chemistry: a last resort. 2 registered products name it on rice."
         ]
       ]
     },
@@ -171,10 +181,25 @@
     {
       "type": "list",
       "items": [
-        "Remove egg masses and snails from canals and pilapil before you flood and plant.",
-        "Level the paddy well, so no deep pockets stay flooded after you drain.",
-        "Keep the water shallow from 3 days after transplanting and drain now and then.",
-        "Herd ducks into the field after harvest and until final land preparation."
+        "Put wire or woven bamboo screens on the water inlet and outlet to keep snails and hatchlings out and to trap them.",
+        "At the last harrowing, dig small canals about 25 cm wide and 5 cm deep along the edges. Snails gather there when you drain.",
+        "Keep the water at 2 to 3 cm from 3 days after transplanting, and drain now and then. Level the field so no deep pockets stay.",
+        "Where snails are many, transplant older seedlings, about 25 to 30 days old, with stems too thick for the snail.",
+        "Hand pick snails in the morning and late afternoon, set bamboo stakes for them to lay on, and crush the pink egg masses.",
+        "Lay gabi, papaya or banana leaves in the canals as bait, then collect the snails that gather under them."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Herd ducks into the field after harvest until the last harrowing, and again once the rice is past the danger stage. They eat young snails.",
+        "Red ants and long horned grasshoppers eat the eggs. Pick the big adults by hand, since ducks skip them.",
+        "Picked snails make duck or pig feed, or food when well cooked."
       ]
     },
     {

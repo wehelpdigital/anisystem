@@ -139,27 +139,37 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients that work. Always follow the label of an FPA registered product.",
+      "caption": "Active ingredients whose Philippine labels name it, best first. Always follow the label of an FPA registered product.",
       "rows": [
         [
           "Active ingredient",
           "FRAC group",
-          "Use"
+          "On Philippine labels"
+        ],
+        [
+          "Tebuconazole plus trifloxystrobin",
+          "FRAC 3 plus 11",
+          "A first choice. 11 registered products name it on rice."
+        ],
+        [
+          "Mancozeb",
+          "FRAC M03",
+          "A sound second choice. 84 registered products name it on rice."
         ],
         [
           "Propineb",
           "FRAC M03",
-          "registered in the Philippines for brown leaf spot and dirty panicle on rice"
+          "A sound second choice. 13 registered products name it on rice."
         ],
         [
-          "Tebuconazole plus trifloxystrobin",
-          "FRAC 3 plus FRAC 11",
-          "registered for brown leaf spot, blast and sheath blight on rice"
+          "Chlorothalonil",
+          "FRAC M05",
+          "A sound second choice. 10 registered products name it on rice."
         ],
         [
-          "Iprodione",
-          "FRAC 2",
-          "a seed treatment against brown spot"
+          "Benomyl",
+          "FRAC 1",
+          "Older or broad chemistry: a last resort. 1 registered product names it on rice."
         ]
       ]
     },
@@ -177,11 +187,22 @@
     {
       "type": "list",
       "items": [
-        "Buy certified, clean seed, or treat your own seed with hot water.",
-        "Test the soil and correct what it lacks, potassium and silicon included.",
-        "Keep the field flooded where water allows, instead of letting it dry out.",
-        "Clear volunteer rice, stubble and weeds after harvest.",
-        "Choose a resistant variety, above all for direct seeded or rainfed fields where brown spot builds up."
+        "Use clean seed, or treat your own seed in hot water at 53 to 54 degrees Celsius for 10 to 12 minutes, after an 8 hour cold soak.",
+        "Test the soil and give what it lacks, above all potash, and silicon on poor soils.",
+        "Keep water on the field where you can. Brown spot is worst in dry, unflooded soil.",
+        "Remove volunteer rice, crop debris and weeds that carry the fungus between seasons.",
+        "Plant a resistant variety, above all in direct seeded or rainfed fields."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural Enemies and Biological Help"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Seed treated with Trichoderma, where sold, gives seedlings a cleaner start."
       ]
     },
     {

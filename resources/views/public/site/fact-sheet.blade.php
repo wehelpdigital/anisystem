@@ -70,6 +70,9 @@
         .fs-legend { margin-top: .7rem !important; font-size: .84rem !important; color: #6b7280 !important; }
         .fs-no { display: flex; gap: .55rem; align-items: flex-start; padding: .75rem .85rem; border-radius: .9rem; font-size: .93rem; line-height: 1.55; color: #6b4a00; background: #fff8e6; border: 1px solid #f5d98a; }
         .fs-no svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .15rem; color: #c79e00; }
+        .fs-list { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none; }
+        .fs-list li { position: relative; padding-left: 1.15rem; font-size: .97rem; line-height: 1.6; color: #374151; }
+        .fs-list li::before { content: ''; position: absolute; left: .25rem; top: .62em; width: .4rem; height: .4rem; border-radius: 999px; background: #86b556; }
         .fs-src { display: grid; gap: .35rem; margin: 0; padding: 0; list-style: none; }
         .fs-src a { font-size: .9rem; font-weight: 700; color: #3d6823; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
         .fs-more { display: grid; gap: .1rem; }
@@ -173,6 +176,15 @@
                             <p>What to do and which active ingredients work depend on your crop and how old it is. The weed control helper in anee.io gives both, for {{ $F::cropWord($firstCrop) }} and every other crop it grows in.</p>
                             <p class="mt-3"><a href="{{ $S::helperUrl('weeds', $firstCrop, $e['group']) }}" class="btn btn-outline btn-sm">Open the weed control helper</a></p>
                         </section>
+                    @else
+                        @if (trim((string) ($e['threshold'] ?? '')) !== '')
+                            <section class="fs-box">
+                                <h2>When to act</h2>
+                                <p>{{ $e['threshold'] }}</p>
+                            </section>
+                        @endif
+                    @endif
+                    @if ($isWeed)
                     @elseif (count($e['ai']))
                         <section class="fs-box">
                             <h2>What to spray</h2>
@@ -183,6 +195,7 @@
                                 @endforeach
                             </ul>
                             <p class="fs-legend">Active ingredients only, never brands. The {{ $isPest ? 'IRAC' : 'FRAC' }} group tells how it works: switch to a different group next time, so the {{ $noun }} does not learn to survive it. Spray only when the damage is worth the cost, and only with products registered with the <a href="{{ $S::url('blog', 'fertilizer-and-pesticide-authority') }}" class="underline">Fertilizer and Pesticide Authority</a> for your crop. Follow the label. The Shopee and Lazada links only show who sells something with that active ingredient, not a recommendation of any seller or product.</p>
+                            @if (trim((string) ($e['rotate'] ?? '')) !== '')<p class="fs-legend"><b>Resistance:</b> {{ $e['rotate'] }}</p>@endif
                             @if ($e['no'] !== '')<p class="fs-no mt-3"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span>{{ $e['no'] }}</span></p>@endif
                         </section>
                     @elseif ($e['no'] !== '')
@@ -191,6 +204,43 @@
                             <p class="fs-no"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span>{{ $e['no'] }}</span></p>
                         </section>
                     @endif
+
+                    @unless ($isWeed)
+                        {{-- 2026-10-19: what the labels name but we do not advise, the insect that carries a virus,
+                             and what prevents it without a spray. Active ingredients only, never a brand. --}}
+                        @if (count($e['avoid'] ?? []))
+                            <section class="fs-box">
+                                <h2>On labels for it, but not advised</h2>
+                                {{-- Ingredients that share a reason read as one line. --}}
+                                @php($avoidBy = collect($e['avoid'])->groupBy(fn ($a) => (string) ($a[1] ?? ''))->map(fn ($g) => $g->pluck(0)->values()->map(fn ($n, $k) => $k && ! preg_match('/^[A-Z]{2}/', (string) $n) ? lcfirst((string) $n) : (string) $n)))
+                                <ul class="fs-list">
+                                    @foreach ($avoidBy as $why => $ns)
+                                        <li><b>{{ $ns->join(', ', ' and ') }}</b>@if ($why !== ''): {{ $why }}@endif</li>
+                                    @endforeach
+                                </ul>
+                            </section>
+                        @endif
+                        @php($vecs = collect($e['vector'] ?? [])->map(fn ($v) => ($p = $F::problem('pests', $v)) ? ['slug' => $v, 'name' => $p['name']] : null)->filter()->values())
+                        @if ($vecs->count())
+                            <section class="fs-box">
+                                <h2>The insect that spreads it</h2>
+                                <p>No spray cures a sick plant. What slows the spread is keeping the {{ $vecs->pluck('name')->map(fn ($n) => mb_strtolower($n))->join(', ', ' and ') }} down, early, before it carries the {{ $noun }} to healthy plants.</p>
+                                <div class="fs-chips mt-3">@foreach ($vecs as $v)<a href="{{ $S::url('pests', $v['slug']) }}">{{ $v['name'] }}</a>@endforeach</div>
+                            </section>
+                        @endif
+                        @if (count($e['prevent'] ?? []))
+                            <section class="fs-box">
+                                <h2>How to prevent it</h2>
+                                <ul class="fs-list">@foreach ($e['prevent'] as $l)<li>{{ $l }}</li>@endforeach</ul>
+                            </section>
+                        @endif
+                        @if (count($e['bio'] ?? []))
+                            <section class="fs-box">
+                                <h2>Natural enemies and biological help</h2>
+                                <ul class="fs-list">@foreach ($e['bio'] as $l)<li>{{ $l }}</li>@endforeach</ul>
+                            </section>
+                        @endif
+                    @endunless
 
                     @if (count($e['sources']))
                         <section class="fs-box">

@@ -71,7 +71,12 @@ final class ProtocolCare
                 $rows[] = [
                     'id' => $key . ':' . $slug, 'section' => $section, 'slug' => $slug, 'name' => (string) ($p['name'] ?? $slug), 'kind' => (string) ($p['kind'] ?? ''),
                     'hint' => (string) ($p['hint'] ?? ''), 'local' => (string) ($p['local'] ?? ''),
-                    'ai' => array_values(array_filter(array_map(fn ($a) => is_array($a) ? ['name' => (string) $a[0], 'group' => (string) ($a[1] ?? '')] : null, (array) ($p['ai'] ?? [])))),
+                    // The ingredients whose labels name it on this crop, best first (2026-10-19), else the entry's own list.
+                    'ai' => array_values(array_filter(array_map(fn ($a) => ($a[0] ?? '') !== '' ? ['name' => (string) $a[0], 'group' => (string) ($a[1] ?? ''),
+                        'tier' => (string) ($a[2] ?? ''), 'why' => (string) ($a[5] ?? '')] : null, FieldCatalogue::aiFor($p, $fc)))),
+                    // On labels for it but not advised here; when it pays to act; what prevents it.
+                    'avoid' => array_values(array_filter(array_map(fn ($a) => is_array($a) && (empty($a[2]) || in_array($fc, (array) $a[2], true)) ? (string) $a[0] : null, (array) ($p['avoid'] ?? [])))),
+                    'threshold' => (string) ($p['threshold'] ?? ''), 'prevent' => array_values((array) ($p['prevent'] ?? [])),
                     'no' => (string) ($p['no'] ?? ''), 'had' => $had, 'rank' => $had ? -100 + $rank : $rank,
                 ];
             }
@@ -144,9 +149,20 @@ final class ProtocolCare
     {
         $line = function (array $t) use ($maxAi): string {
             $ai = array_slice($t['ai'], 0, $maxAi);
+            $tier = ['A' => 'first choice', 'C' => 'last resort'];
+            // A long line cut at the last whole word before $n characters.
+            $cut = fn (string $s, int $n) => mb_strlen($s) > $n ? rtrim((string) preg_replace('/\s+\S*$/u', '', mb_substr($s, 0, $n)), ' ,.;:') . '…' : rtrim($s, '.');
 
             return '  - ' . $t['name'] . ' (' . mb_strtolower($t['kind']) . ($t['had'] ? '; ' . implode(', ', $t['had']) . ' had it last season' : '') . '): '
-                . rtrim($t['hint'], '.') . '. Ingredients: ' . ($ai ? implode('; ', array_map(fn ($a) => $a['name'] . ($a['group'] !== '' ? ' (' . $a['group'] . ')' : ''), $ai)) : ($t['no'] !== '' ? 'none, ' . lcfirst(rtrim($t['no'], '.')) : 'none listed'));
+                . rtrim($t['hint'], '.') . '. Ingredients: ' . ($ai ? implode('; ', array_map(function ($a) use ($tier) {
+                    $about = array_filter([$a['group'] ?? '', $tier[$a['tier'] ?? ''] ?? '']);
+
+                    return $a['name'] . ($about ? ' (' . implode(', ', $about) . ')' : '');
+                }, $ai)) : ($t['no'] !== '' ? 'none, ' . lcfirst(rtrim($t['no'], '.')) : 'none listed'))
+                // Registered for it but not advised (2026-10-19): never suggest these; and when it pays to act.
+                . (! empty($t['avoid']) ? '. Not advised: ' . implode(', ', array_map('lcfirst', array_slice($t['avoid'], 0, 4))) : '')
+                . (($t['threshold'] ?? '') !== '' ? '. Act when: ' . $cut((string) $t['threshold'], 150) : '')
+                . (! empty($t['prevent']) ? '. Prevent: ' . $cut((string) $t['prevent'][0], 120) : '');
         };
         $out = "- Pests our catalogue lists for it:\n" . implode("\n", array_map($line, $threats['pests'] ?? [])) . "\n"
             . "- Diseases our catalogue lists for it:\n" . implode("\n", array_map($line, $threats['diseases'] ?? [])) . "\n";
@@ -225,7 +241,7 @@ final class ProtocolCare
                     $other[] = (string) $name;
                     continue;
                 }
-                $products = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form'], 'kind' => $p['kind'], 'with' => $p['with']], self::productsFor($hit['name'], $fc));
+                $products = array_map(fn ($p) => ['brand' => $p['brand'], 'company' => $p['company'], 'form' => $p['form'], 'kind' => $p['kind'], 'with' => $p['with']], self::productsFor($hit['name'], $fc, $cand));
                 $ai[$hit['name']] = ['name' => $hit['name'], 'group' => $hit['group'], 'products' => $products];
             }
             // A product the label names for this very pest, when no ingredient brought one.
@@ -258,10 +274,16 @@ final class ProtocolCare
         return ['intro' => trim((string) ($plan['intro'] ?? '')), 'threats' => $out, 'disclaimer' => self::DISCLAIMER];
     }
 
-    /** Up to two registered products for an ingredient on the crop's label; a name with a note ("Nicosulfuron (yellow corn only)") is tried bare too. */
-    private static function productsFor(string $ai, string $crop): array
+    /**
+     * Up to two registered products for an ingredient on the crop's label; a name with a note ("Nicosulfuron (yellow
+     * corn only)") is tried bare too. For a pest or disease ($cand), the products whose label names that very one on
+     * the crop come first (2026-10-19); Philippine companies first throughout (ProductBook).
+     */
+    private static function productsFor(string $ai, string $crop, ?array $cand = null): array
     {
-        $got = ProductBook::forIngredient($ai, $crop, null, 12);
+        $own = $cand && ! empty($cand['section']) && ! empty($cand['slug'])
+            ? array_map(fn ($k) => ProductBook::card(ProductBook::all()[$k]), ProductBook::keysForProblemIngredient($cand['section'], $cand['slug'], $crop, $ai, 12)) : [];
+        $got = $own ?: ProductBook::forIngredient($ai, $crop, null, 12);
         $bare = trim((string) preg_replace('/\s*\([^)]*\)/', '', $ai));
         if (! $got && $bare !== $ai && $bare !== '') {
             $got = ProductBook::forIngredient($bare, $crop, null, 12);
