@@ -144,7 +144,7 @@
   },
   {
    "type": "text",
-   "text": "Sulfur deficiency looks similar. Potassium shortage also makes the crop pale. To be sure, put urea on one or two rows and ammonium sulfate on another, at about 50 kg N per hectare (5 g N per mound at 1 by 1 meter). If both green up it is nitrogen."
+   "text": "Sulfur deficiency looks similar. Potassium shortage also makes the crop pale. To be sure, put urea on one or two rows and ammonium sulfate on another, at about 50 kg N per hectare (5 g N per mound at 1 by 1 meter). If both green up it is nitrogen. If only ammonium sulfate works, it is sulfur."
   },
   {
    "type": "heading",
@@ -153,7 +153,7 @@
   },
   {
    "type": "text",
-   "text": "Common rates are 50 to 200 kg N per hectare, half after the crop is established and half during rapid vine growth, buried in a shallow furrow or spread just before rain (ACIAR). Use Urea 46 0 0, Ammonium sulfate 21 0 0 or a complete fertilizer."
+   "text": "Common rates are 50 to 200 kg N per hectare, half after the crop is established and half during rapid vine growth, buried in a shallow furrow or spread just before rain. Use Urea 46 0 0, Ammonium sulfate 21 0 0 or a complete fertilizer."
   },
   {
    "type": "list",
@@ -166,11 +166,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+   "text": "Sold here with nitrogen: **Atlas Granular Urea (46 0 0)** by Atlas Fertilizer, **Amigo Planters Ammonium Chloride** by La Filipina (25 0 0), **Agripower 46 0 0 (Locally Blended) Coated** by Green Acres Agri Tech and **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
   },
   {
    "type": "text",
-   "text": "To keep it away, do not burn fallow vegetation, grow legumes in the rotation, and mulch with legume tree prunings such as kakawate (Gliricidia)."
+   "text": "To keep it away, do not burn fallow vegetation, grow legumes in the rotation, and mulch with legume tree prunings such as kakawate (Gliricidia). Let a soil test and the crop's color set the season's nitrogen. Split the nitrogen into two or three doses."
   },
   {
    "type": "heading",
@@ -189,7 +189,7 @@
   },
   {
    "type": "text",
-   "text": "Sandy soils, leached soils, and gardens cropped with root crops for many years. In Papua New Guinea surveys, potassium deficiency was the most common and severe problem of yam."
+   "text": "Sandy soils, leached soils, and gardens cropped with root crops for many years. Potassium shortage is among the most common and serious problems of yam."
   },
   {
    "type": "heading",
@@ -207,7 +207,7 @@
   },
   {
    "type": "text",
-   "text": "Apply 80 to 200 kg potassium per hectare, mostly as Muriate of potash 0 0 60. On sandy soils put half in the planting hole and broadcast half during rapid vine growth. On clay soils one dose at planting is enough (ACIAR)."
+   "text": "Apply 80 to 200 kg potassium per hectare, mostly as Muriate of potash 0 0 60. On sandy soils put half in the planting hole and broadcast half during rapid vine growth. On clay soils one dose at planting is enough."
   },
   {
    "type": "list",
@@ -219,11 +219,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+   "text": "Sold here with potassium: **Atlas Muriate of Potash (MOP)** by Atlas Fertilizer (0 0 60), **Simplot Sulfate 0 0 50** by Nutranta, **Potassium Nitrate** by Parafield (13 0 46) and **Qrop Mix Production 14 0 23 plus 13 Cao** by Farmtech Agriland (14 0 23 with 9.3 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, mulch with plant material and return crop waste."
+   "text": "To keep it away, mulch with plant material and return crop waste. Do not overdo potash, which can cause magnesium and calcium shortage. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -251,7 +251,7 @@
   },
   {
    "type": "text",
-   "text": "Unlike most crops, yam shows phosphorus shortage on young leaves. Boron deficiency also deforms young leaves. To be sure, leaf test (0.21 to 0.37 percent phosphorus is the critical range for ubi, ACIAR) and a soil test."
+   "text": "Unlike most crops, yam shows phosphorus shortage on young leaves. Boron deficiency also deforms young leaves. To be sure, leaf test (0.21 to 0.37 percent phosphorus is the critical range for ubi) and a soil test."
   },
   {
    "type": "heading",
@@ -260,7 +260,7 @@
   },
   {
    "type": "text",
-   "text": "Band or spot place single superphosphate, ammonium phosphate or an NPK fertilizer in the mound. On phosphorus binding soils 50 to 100 kg P per hectare placed in a band may be needed (ACIAR)."
+   "text": "Band or spot place single superphosphate, ammonium phosphate or an NPK fertilizer in the mound. On phosphorus binding soils 50 to 100 kg P per hectare placed in a band may be needed. Put it in at planting: phosphorus given late helps little."
   },
   {
    "type": "list",
@@ -273,11 +273,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+   "text": "Sold here with phosphorus: **Philphos 18 46 0 (Di Ammonium Phosphate)**, **Atlas Super Gro (16 20 0)** by Atlas Fertilizer, **Amigo Planters Granular Single Super Phosphate** by La Filipina (0 18 0 with 11 percent sulfur) and **Triple Super Phosphate** by Newman Chemicals (0 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, add manure or compost, which feeds the soil fungi that help yam take up phosphorus."
+   "text": "To keep it away, add manure or compost, which feeds the soil fungi that help yam take up phosphorus. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -305,7 +305,7 @@
   },
   {
    "type": "text",
-   "text": "Potassium deficiency browns the lowest leaves from tips and edges. Iron deficiency hits the youngest leaves. To be sure, leaf test (0.10 to 0.14 percent magnesium is the critical range, ACIAR)."
+   "text": "Potassium deficiency browns the lowest leaves from tips and edges. Iron deficiency hits the youngest leaves. To be sure, leaf test (0.10 to 0.14 percent magnesium is the critical range)."
   },
   {
    "type": "heading",
@@ -314,7 +314,7 @@
   },
   {
    "type": "text",
-   "text": "Mix Dolomite or magnesium oxide into acid soils at 20 to 50 kg magnesium per hectare, or band kieserite or magnesium sulfate at 10 to 40 kg magnesium per hectare. For a standing crop magnesium sulfate (Epsom salt) can be sprayed on the leaves (ACIAR)."
+   "text": "Mix Dolomite or magnesium oxide into acid soils at 20 to 50 kg magnesium per hectare, or band kieserite or magnesium sulfate at 10 to 40 kg magnesium per hectare. For a standing crop magnesium sulfate (Epsom salt) can be sprayed on the leaves. For quick help, spray Magnesium sulfate at 1 to 2 percent (160 to 320 grams in a 16 liter sprayer) two or three times, 10 to 14 days apart."
   },
   {
    "type": "list",
@@ -327,11 +327,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium), **DDDD Planter's Choice Magnesium Sulphate Monohydrate** by Modern Time (15.1 percent magnesium) and **Zetryl MAG 9** by Zetryl Chem (9 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, keep the potassium to magnesium balance and use dolomite on acid soils."
+   "text": "To keep it away, keep the potassium to magnesium balance and use dolomite on acid soils. Test the soil every two or three years. Lime acid soil with Dolomite rather than plain lime."
   },
   {
    "type": "heading",
@@ -359,7 +359,7 @@
   },
   {
    "type": "text",
-   "text": "Manganese and iron deficiency also hit young leaves on limey soils, often together with zinc. To be sure, paint half of a pale leaf with 0.5 percent zinc sulfate plus 0.25 percent hydrated lime. Regreening after a few days confirms it (ACIAR)."
+   "text": "Manganese and iron deficiency also hit young leaves on limey soils, often together with zinc. To be sure, paint half of a pale leaf with 0.5 percent zinc sulfate plus 0.25 percent hydrated lime. Regreening after a few days confirms it. A leaf test also works."
   },
   {
    "type": "heading",
@@ -368,7 +368,7 @@
   },
   {
    "type": "text",
-   "text": "Spray a 1 percent zinc sulfate mix at about 8 kg zinc sulfate per hectare (2 kg zinc), which cleared symptoms in Papua New Guinea (ACIAR). On neutral and acid soils apply zinc to the soil at or before planting."
+   "text": "Spray a 1 percent zinc sulfate mix at about 8 kg zinc sulfate per hectare (2 kg zinc), which clears the signs. On neutral and acid soils apply zinc to the soil at or before planting."
   },
   {
    "type": "list",
@@ -380,11 +380,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester (22 percent zinc), **Petbowe Zinc Sulphate Monohydrate** (33 percent zinc), **Tierramino ZN** by Unilox Far East Resources (7 0 0 with 10 percent zinc) and **Liquid Chelate Zinc with Sulfur** by Sagrex (10 percent zinc and 5 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, avoid over liming and heavy phosphorus on zinc poor soils."
+   "text": "To keep it away, avoid over liming and heavy phosphorus on zinc poor soils. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -412,7 +412,7 @@
   },
   {
    "type": "text",
-   "text": "Iron deficiency bleaches young leaves without the sunken spots. Zinc deficiency makes small, twisted leaves. To be sure, leaf test (10 to 15 mg per kg manganese is the critical range, ACIAR). Painting a leaf with manganese sulfate causes regreening."
+   "text": "Iron deficiency bleaches young leaves without the sunken spots. Zinc deficiency makes small, twisted leaves. To be sure, leaf test (10 to 15 mg per kg manganese is the critical range). Painting a leaf with manganese sulfate causes regreening."
   },
   {
    "type": "heading",
@@ -421,7 +421,7 @@
   },
   {
    "type": "text",
-   "text": "On alkaline soils, soil manganese gets locked up, so spray 0.1 percent manganese sulfate on the leaves (ACIAR). Build up soil organic matter."
+   "text": "On alkaline soils, soil manganese gets locked up, so spray 0.1 percent manganese sulfate on the leaves. Build up soil organic matter. Spray the young leaves in the cool of the day, soon after sunrise or near sunset."
   },
   {
    "type": "list",
@@ -432,11 +432,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl Chem (31 percent manganese), **Tierramino MN** by Unilox Far East Resources (7 0 0 with 12 percent manganese), **Multimate** by Agway (4 0 0 with 4.5 percent sulfur, 2.8 percent zinc and 1.8 percent manganese) and **Nutri Tabble Meta Foliar** by NS Northern Organic Fertilizer (12 percent zinc, 9 percent sulfur, 2 percent magnesium and 1.2 percent manganese). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, do not over lime, and keep organic matter high on coral soils."
+   "text": "To keep it away, do not over lime, and keep organic matter high on coral soils. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -464,7 +464,7 @@
   },
   {
    "type": "text",
-   "text": "Manganese deficiency gives sunken spots. Nitrogen deficiency pales the whole vine. To be sure, paint half of a pale leaf with 1 percent ferric ammonium sulfate. Regreening in 4 to 7 days confirms it (ACIAR)."
+   "text": "Manganese deficiency gives sunken spots. Nitrogen deficiency pales the whole vine. To be sure, paint half of a pale leaf with 1 percent ferric ammonium sulfate. Regreening in 4 to 7 days confirms it. A soil pH test and a leaf test of the young leaves confirm it."
   },
   {
    "type": "heading",
@@ -473,7 +473,7 @@
   },
   {
    "type": "text",
-   "text": "Soil iron does not work on limey soils. Spray chelated iron or a 1 to 2 percent ammonium ferric sulfate mix (ACIAR). Burying scrap iron such as old cans in the mound, away from the tubers, also helps."
+   "text": "Soil iron does not work on limey soils. Spray chelated iron or a 1 to 2 percent ammonium ferric sulfate mix. Burying scrap iron such as old cans in the mound, away from the tubers, also helps. Spray the young leaves in the cool of the day, soon after sunrise or near sunset."
   },
   {
    "type": "list",
@@ -485,11 +485,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+   "text": "Sold here with iron: **DDDD Planter's Choice Ferrous Sulphate Heptahydrate** by Modern Time (19 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl Chem (30 percent iron), **Ferrous Sulphate Monohydrate** by Newman Chemicals (30 percent iron) and **Liquid Chelate Iron with Sulfur** by Sagrex (5 percent iron and 3 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, build up organic matter with compost, the traditional fix on coral soils."
+   "text": "To keep it away, build up organic matter with compost, the traditional fix on coral soils. Test the soil every two or three years."
   },
   {
    "type": "callout",
@@ -518,7 +518,7 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in purple yam?",
-     "a": "Common rates are 50 to 200 kg N per hectare, half after the crop is established and half during rapid vine growth, buried in a shallow furrow or spread just before rain (ACIAR). Use Urea 46 0 0, Ammonium sulfate 21 0 0 or a complete fertilizer."
+     "a": "Common rates are 50 to 200 kg N per hectare, half after the crop is established and half during rapid vine growth, buried in a shallow furrow or spread just before rain. Use Urea 46 0 0, Ammonium sulfate 21 0 0 or a complete fertilizer."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in purple yam?",
@@ -526,7 +526,7 @@
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in purple yam?",
-     "a": "Band or spot place single superphosphate, ammonium phosphate or an NPK fertilizer in the mound. On phosphorus binding soils 50 to 100 kg P per hectare placed in a band may be needed (ACIAR)."
+     "a": "Band or spot place single superphosphate, ammonium phosphate or an NPK fertilizer in the mound. On phosphorus binding soils 50 to 100 kg P per hectare placed in a band may be needed."
     },
     {
      "q": "How do I know which nutrient my ubi lacks?",

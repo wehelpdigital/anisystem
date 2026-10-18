@@ -17,7 +17,7 @@
   "foliar fertilizer",
   "ammonium sulfate fertilizer"
  ],
- "excerpt": "Mungbean nutrient deficiency is one of the first things to check when the leaves of your monggo (mungbean) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, sulfur, zinc, iron and boron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "excerpt": "Mungbean nutrient deficiency is one of the first things to check when the leaves of your monggo (mungbean) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, sulfur, zinc, iron, boron and molybdenum. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
   "src": "/images/site/deficiencies/general-n.webp",
   "alt": "Nitrogen deficiency on a leaf, shown on another crop as a stand in for mungbean",
@@ -26,7 +26,7 @@
  "blocks": [
   {
    "type": "text",
-   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus and potassium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, zinc, iron and boron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which mungbean nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus, potassium and molybdenum move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, zinc, iron and boron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which mungbean nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
   },
   {
    "type": "heading",
@@ -65,6 +65,12 @@
      "old, lower leaves, leaf edges and tips",
      "Yellow patches on the edges of the lower leaves join up, with dark spots and curled edges.",
      "Muriate of potash 0 0 60, Complete 14 14 14"
+    ],
+    [
+     "Molybdenum",
+     "old, lower leaves, the whole plant",
+     "Pale, slow monggo on acid soil that looks short of nitrogen, with few nodules that are white inside.",
+     "Sodium molybdate, Agricultural lime"
     ]
    ]
   },
@@ -144,7 +150,7 @@
   },
   {
    "type": "text",
-   "text": "Sulfur deficiency also yellows the whole plant, but the young leaves first. Iron deficiency yellows the young leaves between green veins. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead."
+   "text": "Sulfur deficiency also yellows the whole plant, but the young leaves first. Iron deficiency yellows the young leaves between green veins. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead. Yellow plants with few or dead nodules point to a nodulation failure, not a lack of fertilizer."
   },
   {
    "type": "heading",
@@ -153,7 +159,7 @@
   },
   {
    "type": "text",
-   "text": "Nodules cannot be added to a standing crop, so feed it. Give 10 to 20 kg of nitrogen per hectare, or a 2 percent DAP 18 46 0 spray (20 g per liter) every week. Urea 46 0 0 beside the rows also works."
+   "text": "Nodules cannot be added to a standing crop, so feed it. Give 10 to 20 kg of nitrogen per hectare, or a 2 percent DAP 18 46 0 spray (20 g per liter, 320 g in a 16 liter sprayer) every week. Urea 46 0 0 beside the rows also works. Give it early, before flowering."
   },
   {
    "type": "list",
@@ -167,11 +173,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+   "text": "Sold here with nitrogen: **Atlas Granular Urea (46 0 0)** by Atlas Fertilizer, **Crown Champion Ammonium Sulfate** by Aqua Hydroponic Prime Ventures (21 0 0 with 24 percent sulfur), **Agripower 46 0 0 (Locally Blended) Coated** by Green Acres Agri Tech and **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
   },
   {
    "type": "text",
-   "text": "To keep it away, coat the seed with a mungbean Rhizobium inoculant just before planting and keep it out of the sun."
+   "text": "To keep it away, coat the seed with a mungbean Rhizobium inoculant just before planting and keep it out of the sun. Give only a small starter, about 20 kg of nitrogen per hectare from 150 kg of 14 14 14, because more nitrogen holds back nodules. Let a soil test and the crop's color set the season's nitrogen."
   },
   {
    "type": "heading",
@@ -208,7 +214,7 @@
   },
   {
    "type": "text",
-   "text": "Use 30 to 45 kg each of phosphorus and potassium per hectare before planting on poor soils, or, without a soil test, 3 bags of Complete 14 14 14 per hectare on heavy soils and 4 bags on light soils as a basal dose. For a standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
+   "text": "Use 30 to 45 kg each of phosphorus and potassium per hectare before planting on poor soils, or, without a soil test, 3 bags of Complete 14 14 14 per hectare on heavy soils and 4 bags on light soils as a basal dose. For a standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter, 320 g in a 16 liter sprayer) every 15 days for pulses."
   },
   {
    "type": "list",
@@ -221,7 +227,7 @@
   },
   {
    "type": "text",
-   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+   "text": "Sold here with phosphorus: **Philphos 18 46 0 (Di Ammonium Phosphate)**, **Atlas Super Gro (16 20 0)** by Atlas Fertilizer, **Amigo Planters Granular Single Super Phosphate** by La Filipina (0 18 0 with 11 percent sulfur) and **Triple Super Phosphate** by Newman Chemicals (0 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
   },
   {
    "type": "text",
@@ -274,11 +280,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+   "text": "Sold here with potassium: **Atlas Muriate of Potash (MOP)** by Atlas Fertilizer (0 0 60), **Simplot Sulfate 0 0 50** by Nutranta, **Potassium Nitrate** by Parafield (13 0 46) and **Qrop Mix Production 14 0 23 plus 13 Cao** by Farmtech Agriland (14 0 23 with 9.3 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, use Complete 14 14 14 at planting and return crop residues to the field."
+   "text": "To keep it away, use Complete 14 14 14 at planting and return crop residues to the field. Split the potash on sandy soil."
   },
   {
    "type": "heading",
@@ -297,7 +303,7 @@
   },
   {
    "type": "text",
-   "text": "Sandy soils low in organic matter and years of sulfur free fertilizer. Legumes need a lot of sulfur, so they show it before cereals do (UW)."
+   "text": "Sandy soils low in organic matter and years of sulfur free fertilizer. Legumes need a lot of sulfur, so they show it before cereals do."
   },
   {
    "type": "heading",
@@ -306,7 +312,7 @@
   },
   {
    "type": "text",
-   "text": "Nitrogen deficiency starts on the old leaves. Iron deficiency keeps the veins green on yellow young leaves. To be sure, note that the youngest leaves are the palest, then test soil and leaves for sulfur."
+   "text": "Nitrogen deficiency starts on the old leaves. Iron deficiency keeps the veins green on yellow young leaves. To be sure, note that the youngest leaves are the palest, then test soil and leaves for sulfur. A soil test for sulfur and a leaf test confirm it. In a soil test, less than 10 ppm of sulfate sulfur is low."
   },
   {
    "type": "heading",
@@ -315,7 +321,7 @@
   },
   {
    "type": "text",
-   "text": "Add a sulfur source such as Gypsum, which suits a legume because it adds no nitrogen. The University of Wisconsin finds about 11 kg of sulfur per hectare (10 pounds per acre) enough for row crops on sulfur poor soil."
+   "text": "Add a sulfur source such as Gypsum, which suits a legume because it adds no nitrogen. On soil poor in sulfur, about 11 kg of sulfur per hectare is enough for a row crop. Give it at planting or with the first side dress."
   },
   {
    "type": "list",
@@ -327,11 +333,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+   "text": "Sold here with sulfur: **Crown Champion Ammonium Sulfate** by Aqua Hydroponic Prime Ventures (21 0 0 with 24 percent sulfur), **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur), **Harvester Sulphate of Potash** by Universal Harvester (0 0 50 with 17.5 percent sulfur) and **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, use a fertilizer with sulfur, or gypsum, every few seasons on sandy soils."
+   "text": "To keep it away, use a fertilizer with sulfur, or gypsum, every few seasons on sandy soils. Test the soil every two or three years. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -359,7 +365,7 @@
   },
   {
    "type": "text",
-   "text": "Iron deficiency also yellows young leaves between the veins but turns the whole leaf yellow to white. Manganese deficiency is hard to tell apart. To be sure, soil test for zinc and pH, or a leaf test."
+   "text": "Iron deficiency also yellows young leaves between the veins but turns the whole leaf yellow to white. Manganese deficiency is hard to tell apart. To be sure, soil test for zinc and pH, or a leaf test. In a soil test, less than 0.8 ppm of zinc is low."
   },
   {
    "type": "heading",
@@ -368,7 +374,7 @@
   },
   {
    "type": "text",
-   "text": "Give 25 kg Zinc sulfate per hectare as a basal dose. A 0.5 percent zinc sulfate spray (5 g per liter) at 20, 30 and 40 days after sowing."
+   "text": "Give 25 kg Zinc sulfate per hectare as a basal dose. A 0.5 percent zinc sulfate spray (5 g per liter, 80 g in a 16 liter sprayer) at 20, 30 and 40 days after sowing."
   },
   {
    "type": "list",
@@ -379,11 +385,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester (22 percent zinc), **Petbowe Zinc Sulphate Monohydrate** (33 percent zinc), **Tierramino ZN** by Unilox Far East Resources (7 0 0 with 10 percent zinc) and **Liquid Chelate Zinc with Sulfur** by Sagrex (10 percent zinc and 5 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, on high pH soils, mix zinc sulfate into the basal fertilizer."
+   "text": "To keep it away, on high pH soils, mix zinc sulfate into the basal fertilizer. Test the soil every two or three years. Do not overdo phosphorus."
   },
   {
    "type": "heading",
@@ -411,7 +417,7 @@
   },
   {
    "type": "text",
-   "text": "Zinc deficiency also gives small leaves and dead spots. Nitrogen deficiency starts on the old leaves. To be sure, soil pH test and a leaf test."
+   "text": "Zinc deficiency also gives small leaves and dead spots. Nitrogen deficiency starts on the old leaves. To be sure, soil pH test and a leaf test. In a soil test, less than 4.5 ppm of iron is low."
   },
   {
    "type": "heading",
@@ -420,7 +426,7 @@
   },
   {
    "type": "text",
-   "text": "Give a 1 percent ferrous sulfate spray (10 g per liter) three times, 10 days apart. 25 kg ferrous sulfate per hectare as a basal dose."
+   "text": "Give a 1 percent ferrous sulfate spray (10 g per liter, 160 g in a 16 liter sprayer) three times, 10 days apart. 25 kg ferrous sulfate per hectare as a basal dose."
   },
   {
    "type": "list",
@@ -431,11 +437,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+   "text": "Sold here with iron: **DDDD Planter's Choice Ferrous Sulphate Heptahydrate** by Modern Time (19 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl Chem (30 percent iron), **Ferrous Sulphate Monohydrate** by Newman Chemicals (30 percent iron) and **Liquid Chelate Iron with Sulfur** by Sagrex (5 percent iron and 3 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, add compost and choose fields that are not limey for mungbean."
+   "text": "To keep it away, add compost and choose fields that are not limey for mungbean. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -463,7 +469,7 @@
   },
   {
    "type": "text",
-   "text": "Zinc deficiency also gives short internodes, but with yellow between the veins. To be sure, leaf or soil test for boron before treating."
+   "text": "Zinc deficiency also gives short internodes, but with yellow between the veins. To be sure, leaf or soil test for boron before treating. In a soil test, less than 0.5 ppm of boron is low."
   },
   {
    "type": "heading",
@@ -472,7 +478,7 @@
   },
   {
    "type": "text",
-   "text": "Give a 0.2 percent borax spray (2 g per liter) every 15 days. Do not put boron fertilizer in the seed row. The University of Wisconsin warns a band of boron is toxic to bean seed."
+   "text": "Give a 0.2 percent borax spray (2 g per liter, 32 g in a 16 liter sprayer) every 15 days. Do not put boron fertilizer in the seed row. Boron placed in a band poisons bean seed. A usual soil dose is 5 to 10 kg of Borax per hectare (0.5 to 1 kg of boron), mixed evenly with the basal fertilizer."
   },
   {
    "type": "list",
@@ -483,11 +489,65 @@
   },
   {
    "type": "text",
-   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+   "text": "Sold here with boron: **Etifert 11 (Borax Decahydrate)** by Zetryl Chem (11 percent boron), **Fertibagra 15G** by Unilox Far East Resources (14.6 percent boron), **B17 (Boric Acid)** by Newman Chemicals (17 percent boron) and **Better Yield** by Bacphil Planters Fertilizer (0 0 0.9 with 10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, keep organic matter up and water during flowering in dry spells."
+   "text": "To keep it away, keep organic matter up and water during flowering in dry spells. Test the soil every two or three years."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Molybdenum deficiency in mungbean",
+   "id": "molybdenum"
+  },
+  {
+   "type": "text",
+   "text": "Plants stay pale green to yellow and grow slowly, like a nitrogen shortage, since the nodules need molybdenum to fix nitrogen. Old leaves may curl and brown at the edges. The few nodules are small and white or green inside, not pink. You see it most at this stage: two to five weeks after the plants come up."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why molybdenum deficiency happens in monggo"
+  },
+  {
+   "type": "text",
+   "text": "Acid soil below pH 5.5, sandy and leached soil, and fields that were never limed."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "It looks the same as nitrogen shortage from failed nodules. Cut a few nodules open: pink means they fix nitrogen. To be sure, A soil pH test (below 5.5 is the warning sign) and a test spray of sodium molybdate on a few rows: they green up within one or two weeks. A soil pH test confirms the risk. A test spray of sodium molybdate on a few plants confirms the cause when they green up."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for molybdenum deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Sodium molybdate at 0.05 to 0.1 percent (8 to 16 grams in a 16 liter sprayer) once, two to three weeks after the plants come up. For the next crop, coat the seed with 2 to 4 grams of sodium molybdate per kilo of seed just before planting, with the inoculant. On acid soil, lime to pH 6 to 6.5. For the next crop, coat the seed with 2 to 4 grams of Sodium molybdate per kilo of seed just before planting."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sodium molybdate",
+    "Agricultural lime",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with molybdenum: **Tierramino Molybdenum** by Unilox Far East Resources (16 percent molybdenum) and **YaraVita Teprosyn Mo** (0 15 0 with 15.3 percent molybdenum). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [molybdenum deficiency](/nutrient-deficiencies/molybdenum-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soil to pH 6 to 6.5. Treat the seed with molybdenum and a Rhizobium inoculant on fields that have shown it before. Test the soil every two or three years."
   },
   {
    "type": "callout",
@@ -516,11 +576,11 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in mungbean?",
-     "a": "Nodules cannot be added to a standing crop, so feed it. Give 10 to 20 kg of nitrogen per hectare, or a 2 percent DAP 18 46 0 spray (20 g per liter) every week."
+     "a": "Nodules cannot be added to a standing crop, so feed it. Give 10 to 20 kg of nitrogen per hectare, or a 2 percent DAP 18 46 0 spray (20 g per liter, 320 g in a 16 liter sprayer) every week."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in mungbean?",
-     "a": "Use 30 to 45 kg each of phosphorus and potassium per hectare before planting on poor soils, or, without a soil test, 3 bags of Complete 14 14 14 per hectare on heavy soils and 4 bags on light soils as a basal dose. For a standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter) every 15 days for pulses."
+     "a": "Use 30 to 45 kg each of phosphorus and potassium per hectare before planting on poor soils, or, without a soil test, 3 bags of Complete 14 14 14 per hectare on heavy soils and 4 bags on light soils as a basal dose. For a standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter, 320 g in a 16 liter sprayer) every 15 days for pulses."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in mungbean?",

@@ -29,9 +29,11 @@ final class DeficiencyCatalogue
     public const SECTION = 'nutrient-deficiencies';
 
     /**
-     * The twelve nutrients: name, symbol, Tagalog name, whether the plant moves
-     * it from old leaves to new ones (so the old leaves show it first), hue,
-     * and what it does, in a line.
+     * The nutrients: name, symbol, Tagalog name, whether the plant moves it
+     * from old leaves to new ones (so the old leaves show it first), hue,
+     * and what it does, in a line. Silicon (2026-10-19) is a helpful element,
+     * not a required one, as NPK Plus counts it: rice and sugarcane take up
+     * a great deal of it.
      */
     public const NUTRIENTS = [
         'n' => ['Nitrogen', 'N', 'Nitroheno', true, 98, 'Makes the leaves green and the plant grow.'],
@@ -46,6 +48,7 @@ final class DeficiencyCatalogue
         'b' => ['Boron', 'B', 'Boron', false, 350, 'Feeds the growing tip, the flowers and the fruit set.'],
         'cu' => ['Copper', 'Cu', 'Tanso', false, 24, 'Keeps new leaves and the grain healthy.'],
         'mo' => ['Molybdenum', 'Mo', 'Molibdenum', true, 250, 'Lets legumes and leafy crops use their nitrogen.'],
+        'si' => ['Silicon', 'Si', 'Silikon', false, 160, 'Stiffens the leaves and stems of rice and sugarcane against lodging, pests and blast.'],
     ];
 
     /** The finder's step two: where it shows first. */
@@ -189,6 +192,45 @@ final class DeficiencyCatalogue
 
     /* ---- fertilizers sold here ------------------------------------------ */
 
+    /**
+     * The order of kinds per nutrient: for N, P and K the bags for the soil
+     * first; for sulfur its own (ammonium sulfate, sulfate of potash and
+     * gypsum before a zinc spray); for calcium, magnesium and silicon the
+     * liming materials first; for the trace elements the products made for
+     * them.
+     */
+    private const KIND_ORDER = [
+        'npk' => ['straight' => 0, 'compound' => 0, 'organic' => 2, 'foliar' => 3, 'micronutrient' => 4, 'liming' => 5],
+        's' => ['straight' => 0, 'compound' => 1, 'liming' => 2, 'micronutrient' => 3, 'foliar' => 4, 'organic' => 5],
+        'camg' => ['liming' => 0, 'straight' => 1, 'micronutrient' => 2, 'foliar' => 3, 'compound' => 4, 'organic' => 5],
+        'micro' => ['micronutrient' => 0, 'straight' => 1, 'liming' => 2, 'foliar' => 3, 'compound' => 4, 'organic' => 5],
+    ];
+
+    /** The materials, the surest fix first, per nutrient (anything else after). */
+    private const MATS = [
+        'n' => ['urea', 'ammosul', 'amcl', 'urea_slow', 'canitrate', 'n_slow', 'urea_zn', 'kno3', 'n_other', 'nk', 'aps', 'n_liquid'],
+        'p' => ['dap', 'aps', 'ssp', 'tsp', 'rockp', 'map', 'np', 'mkp', 'npk_p'],
+        'k' => ['mop', 'sop', 'kno3', 'nk', 'kmag', 'k_other', 'mop_sol', 'mkp', 'npk_k', 'k_liquid', 'polysulphate'],
+        'ca' => ['lime', 'dolomite', 'canitrate', 'gypsum', 'canitrate_b', 'cacl2', 'ca_soil', 'ssp', 'silicate', 'cab', 'ca_liquid'],
+        'mg' => ['dolomite', 'kieserite', 'mgso4', 'mgo', 'mg_soil', 'kmag', 'mgnitrate', 'mg_liquid'],
+        's' => ['ammosul', 'gypsum', 'sop', 'kieserite', 'sulfur', 'ssp', 'mgso4', 'aps', 'kmag', 'polysulphate'],
+        'zn' => ['znso4', 'zn_soil', 'zno', 'zn_liquid', 'multi_micro'],
+        'b' => ['borax', 'borate_gran', 'solubor', 'boric', 'b_soil', 'b_liquid', 'cab', 'canitrate_b'],
+        'fe' => ['feso4', 'fe_liquid', 'fe_soil', 'multi_micro'],
+        'mn' => ['mnso4', 'mn_liquid', 'mn_soil', 'multi_micro'],
+        'cu' => ['cuso4', 'cu_liquid', 'cu_soil', 'multi_micro'],
+        'mo' => ['molybdate', 'mo_liquid', 'multi_micro'],
+        'si' => ['silicate', 'si_liquid'],
+    ];
+
+    /** The owner's order (2026-10-19): a Philippine company's own brand, a global maker's, then a trading house's product. */
+    private const MAKER = ['ph' => 0, 'ph_arm' => 1, 'import' => 2];
+
+    /** Nitrate is lost in a flooded paddy; chloride hurts the leaf of tobacco. */
+    private const NO_NITRATE = ['rice'];
+
+    private const NO_CHLORIDE = ['tobacco'];
+
     /** Every product, key => product (without its register line). */
     public static function fertilizers(): array
     {
@@ -207,80 +249,131 @@ final class DeficiencyCatalogue
         return self::$memo['fert'] = $out;
     }
 
+    /** One nutrient's products in the file's order, read once a request. */
+    private static function forN(string $n): array
+    {
+        if (! isset(self::$memo['byN'])) {
+            $by = [];
+            $i = 0;
+            foreach (self::fertilizers() as $p) {
+                $i++;
+                foreach ((array) ($p['roles'] ?? []) as $k => $role) {
+                    $by[$k][] = [$i, $p];
+                }
+            }
+            self::$memo['byN'] = $by;
+        }
+
+        return self::$memo['byN'][$n] ?? [];
+    }
+
+    /** One nutrient's products with their order keys (no crop yet), sorted once a request. */
+    private static function ranked(string $n): array
+    {
+        if (isset(self::$memo['ranked'][$n])) {
+            return self::$memo['ranked'][$n];
+        }
+        $order = in_array($n, ['n', 'p', 'k'], true) ? self::KIND_ORDER['npk']
+            : ($n === 's' ? self::KIND_ORDER['s'] : (in_array($n, ['ca', 'mg', 'si'], true) ? self::KIND_ORDER['camg'] : self::KIND_ORDER['micro']));
+        $mats = self::MATS[$n] ?? [];
+        $rows = [];
+        foreach (self::forN($n) as [$i, $p]) {
+            $role = (string) ($p['roles'][$n] ?? '');
+            $mi = array_search((string) ($p['mat'] ?? ''), $mats, true);
+            $rows[] = ['k' => [
+                $role === 'main' ? 0 : 1, $order[$p['kind'] ?? ''] ?? 9, $mi === false ? count($mats) : $mi, self::MAKER[$p['maker'] ?? ''] ?? 2,
+                min(count((array) $p['roles']), 5), 1, empty($p['pop']) ? 1 : 0, empty($p['local']) ? 1 : 0,
+                -(int) ($p['w'] ?? 0), -(float) ($p['pct'][$n] ?? 0), $i,
+            ], 'p' => $p, 'role' => $role, 'named' => false];
+        }
+        usort($rows, fn ($a, $b) => $a['k'] <=> $b['k']);
+
+        return self::$memo['ranked'][$n] = $rows;
+    }
+
     /**
-     * The products that supply one nutrient, the likeliest help first: for
-     * nitrogen, phosphorus and potassium the straight and compound
-     * fertilizers, for the others the products made for that nutrient before
-     * the mixed foliars that carry a trace of it; among equals, a label that
-     * names the crop before one that does not.
+     * The registered products that really supply one nutrient for one crop,
+     * the likeliest help first (2026-10-19, the owner: "prioritize on local
+     * companies in ph"). The order, first key first:
+     *  1. made for the nutrient (roles main) before a mix that only carries
+     *     a share of it;
+     *  2. the kind, in the nutrient's own order (KIND_ORDER);
+     *  3. the material, the surest fix first (MATS);
+     *  4. the maker: a Philippine company's own brand, then a global maker's,
+     *     then a trading house's product with no maker named;
+     *  5. fewer nutrients before many;
+     *  6. the crop on the label;
+     *  7. the brands most stores carry, made or packed here, the larger
+     *     registrant, the stronger product, the file's order.
+     * The list then takes the best of each kind (soil, soluble, spray), the
+     * best of each material, one mix whose label names the crop, then the
+     * rest, never more than two from one company. A product labelled only
+     * for other crops is left out, as is nitrate for palay and chloride for
+     * tobacco. The scratchpad nd2/rank.py is the twin the public pages use:
+     * change both.
      *
      * @return list<array>
      */
     public static function productsFor(string $n, ?string $crop = null, int $max = 6): array
     {
-        $order = in_array($n, ['n', 'p', 'k'], true)
-            ? ['straight' => 0, 'compound' => 1, 'organic' => 2, 'foliar' => 3, 'micronutrient' => 4, 'liming' => 5]
-            : ['micronutrient' => 0, 'straight' => 1, 'liming' => 2, 'foliar' => 3, 'compound' => 4, 'organic' => 5];
-        if ($n === 's') {
-            // Sulfur comes with ammonium sulfate, sulfate of potash and gypsum, not with a zinc spray.
-            $order = ['straight' => 0, 'compound' => 1, 'liming' => 2, 'micronutrient' => 3, 'foliar' => 4, 'organic' => 5];
+        $memoKey = 'pf|' . $n . '|' . $crop . '|' . $max;
+        if (isset(self::$memo[$memoKey])) {
+            return self::$memo[$memoKey];
         }
-        if ($n === 'ca' || $n === 'mg') {
-            $order = ['liming' => 0, 'straight' => 1, 'micronutrient' => 2, 'foliar' => 3, 'compound' => 4, 'organic' => 5];
-        }
-        $label = self::cropWords($crop);
-        $list = [];
-        $i = 0;
-        foreach (self::fertilizers() as $p) {
-            $i++;
-            $ns = (array) ($p['nutrients'] ?? []);
-            if (! in_array($n, $ns, true)) {
+        $rows = [];
+        $renamed = false;
+        foreach (self::ranked($n) as $r) {
+            $ck = (array) ($r['p']['cropKeys'] ?? []);
+            if ($crop && $ck && ! in_array($crop, $ck, true)) {
                 continue;
             }
-            $crops = array_map('strtolower', (array) ($p['crops'] ?? []));
-            // A product labelled only for other crops is left out for this one.
-            $fits = ! $crops || ! $label || (bool) array_filter($crops, fn ($c) => (bool) array_filter($label, fn ($w) => str_contains($c, $w)));
-            if (! $fits) {
+            $p = $r['p'];
+            if ($crop && ((in_array($crop, self::NO_NITRATE, true) && ! empty($p['nitrate'])) || (in_array($crop, self::NO_CHLORIDE, true) && ! empty($p['chloride'])))) {
                 continue;
             }
-            $named = $crops && $label && $fits;
-            // The kind first, then a product made for few nutrients before a blend that only carries a trace, then the crop on the label.
-            $list[] = [$order[$p['kind'] ?? ''] ?? 9, min(count($ns), 5), $named ? 0 : 1, $i, $p];
+            // The crop on the label moves a product up among its equals.
+            $r['named'] = $crop && $ck && in_array($crop, $ck, true);
+            if ($r['named']) {
+                $r['k'][5] = 0;
+                $renamed = true;
+            }
+            $rows[] = $r;
         }
-        usort($list, fn ($a, $b) => array_slice($a, 0, 4) <=> array_slice($b, 0, 4));
-        // Two a company at most, so the list shows the choice there is.
-        $out = [];
+        if ($renamed) {
+            usort($rows, fn ($a, $b) => $a['k'] <=> $b['k']);
+        }
+        $taken = [];
         $per = [];
-        foreach (array_column($list, 4) as $p) {
-            $c = strtolower((string) ($p['company'] ?? '')) ?: $p['key'];
-            if (($per[$c] ?? 0) >= 2) {
-                continue;
+        $seen = [];
+        $carried = false;
+        foreach ([['main', 'kind'], ['main', 'mat'], ['carries', 'named'], ['main', 'rest'], ['carries', 'mat'], ['carries', 'rest']] as [$role, $step]) {
+            foreach ($rows as $idx => $r) {
+                if (count($taken) >= $max) {
+                    break 2;
+                }
+                if ($r['role'] !== $role || isset($taken[$idx])) {
+                    continue;
+                }
+                $p = $r['p'];
+                if ($step === 'named' && (! $r['named'] || $carried)) {
+                    continue;
+                }
+                if (($step === 'kind' && isset($seen['k|' . $role . '|' . ($p['kind'] ?? '')])) || ($step === 'mat' && isset($seen['m|' . $role . '|' . ($p['mat'] ?? '')]))) {
+                    continue;
+                }
+                $c = mb_strtolower((string) ($p['company'] ?? '')) ?: $p['key'];
+                if (($per[$c] ?? 0) >= 2) {
+                    continue;
+                }
+                $per[$c] = ($per[$c] ?? 0) + 1;
+                $taken[$idx] = true;
+                $seen['k|' . $role . '|' . ($p['kind'] ?? '')] = true;
+                $seen['m|' . $role . '|' . ($p['mat'] ?? '')] = true;
+                $carried = $carried || $role === 'carries';
             }
-            $per[$c] = ($per[$c] ?? 0) + 1;
-            $out[] = $p;
-            if (count($out) >= $max) {
-                break;
-            }
         }
+        ksort($taken);
 
-        return $out;
-    }
-
-    /** The words a label may use for a crop ("rice", "palay"). */
-    private static function cropWords(?string $crop): array
-    {
-        if (! $crop) {
-            return [];
-        }
-        $c = FieldCatalogue::crops()[$crop] ?? null;
-        if (! $c) {
-            return [];
-        }
-        $words = [strtolower((string) $c[0]), strtolower(preg_replace('/\s*,.*$/', '', (string) $c[1]) ?? '')];
-        if (str_starts_with($crop, 'corn')) {
-            $words[] = 'corn';
-        }
-
-        return array_values(array_filter(array_unique($words)));
+        return self::$memo[$memoKey] = array_values(array_map(fn ($idx) => $rows[$idx]['p'], array_keys($taken)));
     }
 }

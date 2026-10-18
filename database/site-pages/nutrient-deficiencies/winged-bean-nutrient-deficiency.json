@@ -121,7 +121,7 @@
   },
   {
    "type": "text",
-   "text": "Red, acid, phosphorus poor soils. Okinawa trials found poor growth there came from phosphorus shortage, not from acidity, and lime alone did not help."
+   "text": "Red, acid, phosphorus poor soils. On such soils the vines grow poorly from lack of phosphorus, not from the acid, so lime alone does not help."
   },
   {
    "type": "heading",
@@ -139,7 +139,7 @@
   },
   {
    "type": "text",
-   "text": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 at planting, following the soil test. Phosphorus fed vines grew much better than limed ones in the Okinawa trials."
+   "text": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 at planting, following the soil test. Vines given phosphorus grow far better than vines given only lime. A usual basal dose is 2 to 3 bags of Complete 14 14 14, or 1 to 2 bags of Diammonium phosphate 18 46 0, per hectare in the furrow at planting."
   },
   {
    "type": "list",
@@ -152,11 +152,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+   "text": "Sold here with phosphorus: **Philphos 18 46 0 (Di Ammonium Phosphate)**, **Atlas Super Gro (16 20 0)** by Atlas Fertilizer, **Amigo Planters Granular Single Super Phosphate** by La Filipina (0 18 0 with 11 percent sulfur) and **Triple Super Phosphate** by Newman Chemicals (0 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
   },
   {
    "type": "text",
-   "text": "To keep it away, put phosphorus in the planting rows each season."
+   "text": "To keep it away, put phosphorus in the planting rows each season. Lime only if the soil test calls for it."
   },
   {
    "type": "heading",
@@ -184,7 +184,7 @@
   },
   {
    "type": "text",
-   "text": "Phosphorus shortage stunts the vine but keeps leaves dark. Sulfur deficiency yellows the young leaves first. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead."
+   "text": "Phosphorus shortage stunts the vine but keeps leaves dark. Sulfur deficiency yellows the young leaves first. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead. Yellow plants with few or dead nodules point to a nodulation failure, not a lack of fertilizer."
   },
   {
    "type": "heading",
@@ -193,7 +193,7 @@
   },
   {
    "type": "text",
-   "text": "Feed the vines with a light sidedress of Urea 46 0 0 or Complete 14 14 14, following the soil test. Correct phosphorus and potassium so the nodules can work."
+   "text": "Feed the vines with a light sidedress of Urea 46 0 0 or Complete 14 14 14, following the soil test. Correct phosphorus and potassium so the nodules can work. If the nodules failed, 10 to 20 kg of nitrogen per hectare is enough: about half a bag of Urea 46 0 0 beside the rows, before flowering."
   },
   {
    "type": "list",
@@ -206,11 +206,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
+   "text": "Sold here with nitrogen: **Atlas Granular Urea (46 0 0)** by Atlas Fertilizer, **Amigo Planters Ammonium Chloride** by La Filipina (25 0 0), **Agripower 46 0 0 (Locally Blended) Coated** by Green Acres Agri Tech and **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, inoculate seed with a cowpea group Rhizobium inoculant, keep it shaded, and fertilize with phosphorus and potassium at planting."
+   "text": "To keep it away, inoculate seed with a cowpea group Rhizobium inoculant, keep it shaded, and fertilize with phosphorus and potassium at planting. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -220,7 +220,7 @@
   },
   {
    "type": "text",
-   "text": "Older leaves yellow or scorch at the margins, starting on the lower leaves. A Brazilian study found potassium, like phosphorus, strongly raised nitrogen fixation in winged bean, so short vines and pale leaves can follow. You see it most at this stage: mid growth to pod filling."
+   "text": "Older leaves yellow or scorch at the margins, starting on the lower leaves. Winged bean fixes much less nitrogen when short of potassium, as with phosphorus, so the vines may stay short with pale leaves. You see it most at this stage: mid growth to pod filling."
   },
   {
    "type": "heading",
@@ -247,7 +247,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test."
+   "text": "Apply Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test. A usual dose is 1 bag of Muriate of potash 0 0 60 per hectare at planting."
   },
   {
    "type": "list",
@@ -259,11 +259,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+   "text": "Sold here with potassium: **Atlas Muriate of Potash (MOP)** by Atlas Fertilizer (0 0 60), **Simplot Sulfate 0 0 50** by Nutranta, **Potassium Nitrate** by Parafield (13 0 46) and **Qrop Mix Production 14 0 23 plus 13 Cao** by Farmtech Agriland (14 0 23 with 9.3 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, include potash at planting and return vines to the soil."
+   "text": "To keep it away, include potash at planting and return vines to the soil. Keep organic matter up with compost, manure or crop residues. Split the potash on sandy soil."
   },
   {
    "type": "heading",
@@ -273,7 +273,7 @@
   },
   {
    "type": "text",
-   "text": "The buds at the vine ends and the root tips stop growing, so the vines stall and the roots stay short. Added calcium raised nitrogen fixation in winged bean trials. You see it most at this stage: early growth."
+   "text": "The buds at the vine ends and the root tips stop growing, so the vines stall and the roots stay short. Winged bean short of calcium also fixes less nitrogen in its root nodules. You see it most at this stage: early growth."
   },
   {
    "type": "heading",
@@ -282,7 +282,7 @@
   },
   {
    "type": "text",
-   "text": "Very acid soils, usually below pH 5, low in organic matter."
+   "text": "Very acid soils, usually below pH 5, low in organic matter. Heavy potash or ammonium fertilizer, salty soil and dry spells keep calcium from reaching fruit and young leaves."
   },
   {
    "type": "heading",
@@ -291,7 +291,7 @@
   },
   {
    "type": "text",
-   "text": "Boron deficiency also kills growing tips but crinkles young leaves. To be sure, soil pH and calcium test."
+   "text": "Boron deficiency also kills growing tips but crinkles young leaves. To be sure, soil pH and calcium test. A soil test for calcium and pH, and a leaf test, confirm it."
   },
   {
    "type": "heading",
@@ -300,7 +300,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Agricultural lime or Dolomite on acid soils, or Gypsum where pH is fine, following the soil test."
+   "text": "Apply Agricultural lime or Dolomite on acid soils, or Gypsum where pH is fine, following the soil test. On acid soil, lime by the soil test: usually 1 to 3 tons of Agricultural lime or Dolomite per hectare, mixed in 2 to 4 weeks before planting. On soil that is not acid, use 200 to 500 kg of Gypsum per hectare."
   },
   {
    "type": "list",
@@ -313,11 +313,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+   "text": "Sold here with calcium: **Planters Products Lifelime** (36.2 percent calcium), **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium) and **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, test the soil and lime well ahead of planting if it is very acid."
+   "text": "To keep it away, test the soil and lime well ahead of planting if it is very acid. Keep potash in balance with magnesium and calcium."
   },
   {
    "type": "heading",
@@ -345,7 +345,7 @@
   },
   {
    "type": "text",
-   "text": "Nitrogen deficiency from poor inoculation looks the same. Check the soil pH. To be sure, soil pH test and a look at the nodules."
+   "text": "Nitrogen deficiency from poor inoculation looks the same. Check the soil pH. To be sure, soil pH test and a look at the nodules. A soil pH test confirms the risk. A test spray of sodium molybdate on a few plants confirms the cause when they green up."
   },
   {
    "type": "heading",
@@ -354,7 +354,7 @@
   },
   {
    "type": "text",
-   "text": "Liming to pH 6.0 or above often fixes it (UW). Otherwise treat seed with about 35 g of molybdenum per hectare, or spray about 140 to 210 g of sodium or ammonium molybdate per hectare."
+   "text": "Liming to pH 6.0 or above often fixes it. Otherwise treat seed with about 35 g of molybdenum per hectare, or spray about 140 to 210 g of sodium or ammonium molybdate per hectare. Spray Sodium molybdate at 0.05 to 0.1 percent (8 to 16 grams in a 16 liter sprayer) once or twice on young plants."
   },
   {
    "type": "list",
@@ -367,11 +367,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with molybdenum: **Tierramino Molybdenum** by Unilox Far East Resources Inc. (16 percent molybdenum), **YaraVita Teprosyn Mo** by Yara Fertilizers Philippines, Inc. (15 percent P2O5 and 15.3 percent molybdenum), **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo) and **Grow More Liquid Chelate General Purpose** by Sagrex Corporation (2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [molybdenum deficiency](/nutrient-deficiencies/molybdenum-deficiency) in every crop."
+   "text": "Sold here with molybdenum: **Tierramino Molybdenum** by Unilox Far East Resources (16 percent molybdenum) and **YaraVita Teprosyn Mo** (0 15 0 with 15.3 percent molybdenum). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [molybdenum deficiency](/nutrient-deficiencies/molybdenum-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, lime very acid soils before planting legumes."
+   "text": "To keep it away, lime very acid soils before planting legumes. Test the soil every two or three years."
   },
   {
    "type": "callout",
@@ -400,7 +400,7 @@
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in winged bean?",
-     "a": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 at planting, following the soil test. Phosphorus fed vines grew much better than limed ones in the Okinawa trials."
+     "a": "Apply a phosphorus fertilizer such as 16 20 0, Complete 14 14 14 or Superphosphate 0 18 0 at planting, following the soil test. Vines given phosphorus grow far better than vines given only lime."
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in winged bean?",
@@ -408,7 +408,7 @@
     },
     {
      "q": "What fertilizer fixes potassium deficiency in winged bean?",
-     "a": "Apply Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test."
+     "a": "Apply Muriate of potash 0 0 60 or Complete 14 14 14 following the soil test. A usual dose is 1 bag of Muriate of potash 0 0 60 per hectare at planting."
     },
     {
      "q": "How do I know which nutrient my sigarilyas lacks?",

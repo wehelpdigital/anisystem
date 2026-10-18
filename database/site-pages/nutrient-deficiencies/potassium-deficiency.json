@@ -32,7 +32,7 @@
   },
   {
    "type": "text",
-   "text": "The edges and tips of older leaves turn yellow, then brown and dry, as if burned. While the middle of the leaf stays green. Brown spots may appear on the leaves, stems grow thin and weak, and plants lodge more easily. Rice plants look dark green with brown leaf edges, and many grains stay empty. In banana the old leaves yellow and die early, the midrib tip bends down, and bunches and fingers stay small."
+   "text": "The edges and tips of older leaves turn yellow, then brown and dry, as if burned. But the middle of the leaf stays green. Brown spots may appear on the leaves, stems grow thin and weak, and plants lodge more easily. Rice plants look dark green with brown leaf edges, and many grains stay empty. In banana the old leaves yellow and die early, the midrib tip bends down, and bunches and fingers stay small."
   },
   {
    "type": "heading",
@@ -623,52 +623,52 @@
      "Use"
     ],
     [
-     "Atlas Muriate of Potash",
-     "Atlas Fertilizer Corporation",
+     "Atlas Muriate of Potash (MOP)",
+     "Atlas Fertilizer",
      "0 0 60",
      "On the soil"
     ],
     [
-     "Philphos Muriate of Potash",
-     "Philippine Phosphate Fertilizer Corporation",
-     "0 0 60",
-     "On the soil"
-    ],
-    [
-     "Harbest Granular Muriate of Potash",
-     "Harbest Agribusiness Corporation",
-     "0 0 60",
-     "On the soil"
-    ],
-    [
-     "Swire Muriate of Potash",
-     "Swire Agrotech Agricultural Products Inc.",
-     "0 0 60",
-     "On the soil"
-    ],
-    [
-     "Haifa MKP",
-     "ABG Trading Corporation",
-     "0 52 34 (mono potassium phosphate)",
-     "Soil or leaves"
-    ],
-    [
-     "YaraTera KRISTA SOP",
-     "Yara Fertilizers Philippines, Inc.",
-     "0 0 51 with 18 percent sulfur",
-     "Soil or leaves"
-    ],
-    [
-     "Harvester Planters' Choice Sulphate of Potash",
-     "Universal Harvester, Inc.",
+     "Simplot Sulfate 0 0 50",
+     "Nutranta",
      "0 0 50",
      "On the soil"
     ],
     [
-     "Potassium Nitrate",
-     "Parafield Enterprises, Inc.",
-     "13 0 46",
+     "Crown Champion Nitrogen Potassium Compound Fertilizer (Mango Inducer)",
+     "Aqua Hydroponic Prime Ventures",
+     "13.5 0 46",
      "Soil or leaves"
+    ],
+    [
+     "Qrop Mix Production 14 0 23 plus 13 Cao",
+     "Farmtech Agriland",
+     "14 0 23 with 9.3 percent calcium",
+     "On the soil"
+    ],
+    [
+     "Cambiar K",
+     "Donato C. Cruz",
+     "0 0 48",
+     "On the soil"
+    ],
+    [
+     "Nova Ferti K 0 0 61",
+     "Allied Botanical",
+     "0 0 61",
+     "Soil or leaves"
+    ],
+    [
+     "Haifa MKP",
+     "ABG",
+     "0 52 34",
+     "Soil or leaves"
+    ],
+    [
+     "Extra 4 0 48 Foliar",
+     "Everland Agri",
+     "4 0 48",
+     "On the leaves"
     ]
    ]
   },

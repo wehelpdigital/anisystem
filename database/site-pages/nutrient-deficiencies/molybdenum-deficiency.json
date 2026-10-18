@@ -41,7 +41,7 @@
   },
   {
    "type": "text",
-   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [molybdenum in soybean](/nutrient-deficiencies/soybean-nutrient-deficiency#molybdenum)."
+   "text": "Each crop shows it its own way. So find yours in the tables below, then open its page for the photo and the full fix, like the one for [molybdenum in mungbean](/nutrient-deficiencies/mungbean-nutrient-deficiency#molybdenum)."
   },
   {
    "type": "heading",
@@ -56,6 +56,16 @@
      "Crop",
      "The first sign",
      "Fix with"
+    ],
+    [
+     "[Monggo](/nutrient-deficiencies/mungbean-nutrient-deficiency#molybdenum)",
+     "Pale, slow monggo on acid soil that looks short of nitrogen, with few nodules that are white inside.",
+     "Sodium molybdate, Agricultural lime"
+    ],
+    [
+     "[Mani](/nutrient-deficiencies/peanut-nutrient-deficiency#molybdenum)",
+     "Pale yellow plants that look short of nitrogen on acid soil, with small nodules that are white or green inside.",
+     "Sodium molybdate, Agricultural lime"
     ],
     [
      "[Utaw](/nutrient-deficiencies/soybean-nutrient-deficiency#molybdenum)",
@@ -157,51 +167,21 @@
      "Use"
     ],
     [
-     "Liquid Chelate Molybdenum",
-     "Sagrex Corporation",
-     "5 percent molybdenum",
-     "On the leaves"
-    ],
-    [
      "Tierramino Molybdenum",
-     "Unilox Far East Resources Inc.",
+     "Unilox Far East Resources",
      "16 percent molybdenum",
      "On the leaves"
     ],
     [
+     "Liquid Chelate Molybdenum",
+     "Sagrex",
+     "5 percent molybdenum",
+     "On the leaves"
+    ],
+    [
      "YaraVita Teprosyn Mo",
-     "Yara Fertilizers Philippines, Inc.",
-     "15 percent P2O5 and 15.3 percent molybdenum",
-     "On the leaves"
-    ],
-    [
-     "Biozome",
-     "Manchem Industries, Inc.",
-     "12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo",
-     "On the soil"
-    ],
-    [
-     "Grow More Liquid Chelate General Purpose",
-     "Sagrex Corporation",
-     "2 percent Fe, 0.5 percent Mn, 1 percent Mg, 3 percent S with Cu, Zn, B, Mo",
-     "On the leaves"
-    ],
-    [
-     "Nutriplant SL",
-     "Amway Philippines L.L.C.",
-     "2 percent Fe, 2 percent Zn, 1 percent Mg, 0.5 percent Mn, 0.15 percent Cu, 3 percent S with a trace of Mo",
-     "On the leaves"
-    ],
-    [
-     "Bayfolan",
-     "Bayer CropScience, Inc.",
-     "11 8 6 with traces of Fe, Cu, Mn, Mo, B, Zn",
-     "On the leaves"
-    ],
-    [
-     "Ambition Complete Foliar",
-     "Bayer CropScience, Inc.",
-     "8 8 6 with traces of B, Cu, Fe, Mn, Mo, Zn",
+     "Yara",
+     "0 15 0 with 15.3 percent molybdenum",
      "On the leaves"
     ]
    ]

@@ -32,7 +32,7 @@
   },
   {
    "type": "text",
-   "text": "The whole plant turns pale green to yellowish green and grows short and thin. The lower leaves yellow first, from the tip back, and dry up when the shortage is bad. In corn the yellow runs down the midrib of old leaves in a V shape. While rice leaves stand narrow and upright with few tillers. Flowering drops, grain and fruit stay small, and some crops ripen early with a lower yield."
+   "text": "The whole plant turns pale green to yellowish green and grows short and thin. The lower leaves yellow first, from the tip back, and dry up when the shortage is bad. In corn the yellow runs down the midrib of old leaves in a V shape. But rice leaves stand narrow and upright with few tillers. Flowering drops, grain and fruit stay small, and some crops ripen early with a lower yield."
   },
   {
    "type": "heading",
@@ -623,52 +623,52 @@
      "Use"
     ],
     [
-     "Atlas Granular Urea",
-     "Atlas Fertilizer Corporation",
+     "Atlas Granular Urea (46 0 0)",
+     "Atlas Fertilizer",
      "46 0 0",
      "On the soil"
     ],
     [
-     "Atlas Prilled Urea",
-     "Atlas Fertilizer Corporation",
-     "46 0 0",
+     "Atlas Ammosul 21 0 0",
+     "Atlas Fertilizer",
+     "21 0 0 with 24 percent sulfur",
      "On the soil"
     ],
     [
-     "YaraVera Viking Ship Granular Urea",
-     "Yara Fertilizers Philippines, Inc.",
-     "46 0 0",
-     "On the soil"
-    ],
-    [
-     "Planters Products Granular Urea",
-     "Planters Products, Inc.",
-     "46 0 0",
-     "On the soil"
-    ],
-    [
-     "Harbest Granular Urea",
-     "Harbest Agribusiness Corporation",
-     "46 0 0",
-     "On the soil"
-    ],
-    [
-     "Swire Granular Urea",
-     "Swire Agrotech Agricultural Products Inc.",
-     "46 0 0",
-     "On the soil"
-    ],
-    [
-     "Atlas Ammonium Chloride",
-     "Atlas Fertilizer Corporation",
+     "Amigo Planters Ammonium Chloride",
+     "La Filipina",
      "25 0 0",
      "On the soil"
     ],
     [
-     "Atlas Ammosul",
-     "Atlas Fertilizer Corporation",
-     "21 0 0 with 24 percent sulfur",
+     "Hyfer Urea Max (Locally Blended Coated)",
+     "Agrotiger",
+     "44 0 0",
      "On the soil"
+    ],
+    [
+     "Calcipro",
+     "Ramgo",
+     "15.5 0 0 with 18.8 percent calcium",
+     "Soil or leaves"
+    ],
+    [
+     "Agripower 25 0 0 (Locally Blended) Coated",
+     "Green Acres Agri Tech",
+     "25 0 0",
+     "On the soil"
+    ],
+    [
+     "Amigo Planters Sabic Zinc Coated Urea",
+     "La Filipina",
+     "46 0 0 with 0.1 percent zinc",
+     "On the soil"
+    ],
+    [
+     "Forcrop N",
+     "Leads Agri",
+     "32.9 0 0 with 0.12 percent copper, 0.06 percent zinc and 0.06 percent manganese",
+     "On the leaves"
     ]
    ]
   },

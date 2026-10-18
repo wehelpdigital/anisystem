@@ -156,7 +156,7 @@
   },
   {
    "type": "text",
-   "text": "Mealybug wilt turns leaves red then pink, with tips dying and curling down and rotten roots. Look for mealybugs and ants at the base. To be sure, leaf color is the quickest guide: healthy pineapple is an intense green, and pale or yellowish green means low nitrogen. For a lab test, send D leaves (the longest, youngest fully grown leaves) at 6 to 8 months."
+   "text": "Mealybug wilt turns leaves red then pink, with tips dying and curling down and rotten roots. Look for mealybugs and ants at the base. To be sure, leaf color is the quickest guide: healthy pineapple is an intense green, and pale or yellowish green means low nitrogen. For a lab test, send D leaves (the longest, youngest fully grown leaves) at 6 to 8 months. A D leaf below about 1.7 percent N is low."
   },
   {
    "type": "heading",
@@ -165,7 +165,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 on a split schedule. Per hill for Formosa, give 10 g Ammonium phosphate 16 20 0 and 5 g Muriate of potash 0 0 60 one month after planting, then 5 g urea at 3, 5 and 7 months. For a quick fix, spray 1 to 2 percent urea (10 to 20 g per liter) every two weeks. From about 12 months, place fertilizer in the axils of the old leaves."
+   "text": "Apply Urea 46 0 0 or Ammonium sulfate 21 0 0 on a split schedule. Per hill for Formosa, give 10 g Ammonium phosphate 16 20 0 and 5 g Muriate of potash 0 0 60 one month after planting, then 5 g urea at 3, 5 and 7 months. For a quick fix, spray 1 to 2 percent urea (10 to 20 g per liter, 160 to 320 g in a 16 liter sprayer) every two weeks. From about 12 months, place fertilizer in the axils of the old leaves. Spray Urea 46 0 0 at 2 to 3 percent (320 to 480 grams in a 16 liter sprayer) every month during leaf growth, and stop at flower forcing."
   },
   {
    "type": "list",
@@ -178,11 +178,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+   "text": "Sold here with nitrogen: **Atlas Granular Urea (46 0 0)** by Atlas Fertilizer, **Amigo Planters Ammonium Chloride** by La Filipina (25 0 0), **Agripower 46 0 0 (Locally Blended) Coated** by Green Acres Agri Tech and **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
   },
   {
    "type": "text",
-   "text": "To keep it away, do not cut doses or skip splits."
+   "text": "To keep it away, do not cut doses or skip splits. Use the free soil test at the DA regional soils laboratory before planting. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -210,7 +210,7 @@
   },
   {
    "type": "text",
-   "text": "Mealybug wilt also reddens the leaves, but it starts about halfway up the plant, turns pink and wilts, and the roots rot. Magnesium shortage yellows the old leaves between the veins without the orange spotting and dead tips. To be sure, send D leaves at 6 to 8 months. ICL counts below about 2.2 percent K as low."
+   "text": "Mealybug wilt also reddens the leaves, but it starts about halfway up the plant, turns pink and wilts, and the roots rot. Magnesium shortage yellows the old leaves between the veins without the orange spotting and dead tips. To be sure, send D leaves at 6 to 8 months. A D leaf reading below about 2.2 percent K means the plant is short. A soil test helps too: little potash is needed where the soil has over 140 ppm exchangeable K."
   },
   {
    "type": "heading",
@@ -219,7 +219,7 @@
   },
   {
    "type": "text",
-   "text": "Keep potash in the schedule. Give 5 g Muriate of potash 0 0 60 per hill at one month and again at about five months for Formosa. Haifa notes pineapple gives better yield and fruit quality with Sulfate of potash 0 0 50 than with the chloride form. For a quick fix, spray potassium sulfate at 1 percent (10 g per liter) every two weeks."
+   "text": "Keep potash in the schedule. Give 5 g Muriate of potash 0 0 60 per hill at one month and again at about five months for Formosa. Sulfate of potash 0 0 50 gives a bigger harvest and better fruit than the chloride form, Muriate of potash. For a quick fix, spray potassium sulfate at 1 percent (10 g per liter, 160 g in a 16 liter sprayer) every two weeks."
   },
   {
    "type": "list",
@@ -232,11 +232,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+   "text": "Sold here with potassium: **Atlas Muriate of Potash (MOP)** by Atlas Fertilizer (0 0 60), **Simplot Sulfate 0 0 50** by Nutranta, **Potassium Nitrate** by Parafield (13 0 46) and **Qrop Mix Production 14 0 23 plus 13 Cao** by Farmtech Agriland (14 0 23 with 9.3 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, set potash from a soil test, and balance it with magnesium because high potassium holds back magnesium uptake."
+   "text": "To keep it away, set potash from a soil test, and balance it with magnesium because high potassium holds back magnesium uptake. Keep organic matter up with compost, manure or crop residues. Split the potash on sandy soil."
   },
   {
    "type": "heading",
@@ -264,7 +264,7 @@
   },
   {
    "type": "text",
-   "text": "Nitrogen deficiency yellows the older leaves first, while iron starts in the young heart leaves. Zinc deficiency gives yellow spots and a bent heart (crookneck). To be sure, test soil pH and manganese. A test spray of ferrous sulfate on a few plants that greens the new heart leaves confirms it."
+   "text": "Nitrogen deficiency yellows the older leaves first, while iron starts in the young heart leaves. Zinc deficiency gives yellow spots and a bent heart (crookneck). To be sure, test soil pH and manganese. A test spray of ferrous sulfate on a few plants that greens the new heart leaves confirms it. A soil pH test and a leaf test of the young leaves confirm it."
   },
   {
    "type": "heading",
@@ -273,7 +273,7 @@
   },
   {
    "type": "text",
-   "text": "Spray Ferrous sulfate at 2 to 3 percent (20 to 30 g per liter) monthly or as needed, best mixed into the urea spray, as Haifa advises. Queensland growers add 3 percent ferrous sulfate to the urea spray. Vikaspedia gives a milder 0.5 to 1 percent spray, so try the lower rate first on young plants. Do not lime to fix it: in Hawaii, lime raised root and heart rot. Without iron sprays no calcium source stopped the yellowing."
+   "text": "Spray Ferrous sulfate at 2 to 3 percent (20 to 30 g per liter, 320 to 480 g in a 16 liter sprayer) once a month or when needed. It works best mixed into the urea spray. A common mix is 3 percent ferrous sulfate in the urea spray (480 grams in a 16 liter sprayer). A milder spray of 0.5 to 1 percent (80 to 160 grams in a 16 liter sprayer) also works. So try the lower rate first on young plants. Do not lime to fix it, because lime makes root and heart rot more likely. Without iron sprays no calcium source stopped the yellowing."
   },
   {
    "type": "list",
@@ -285,11 +285,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+   "text": "Sold here with iron: **DDDD Planter's Choice Ferrous Sulphate Heptahydrate** by Modern Time (19 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl Chem (30 percent iron), **Ferrous Sulphate Monohydrate** by Newman Chemicals (30 percent iron) and **Liquid Chelate Iron with Sulfur** by Sagrex (5 percent iron and 3 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, on high manganese soils, plan regular iron sprays from the start of the crop."
+   "text": "To keep it away, on high manganese soils, plan regular iron sprays from the start of the crop. Test the soil every two or three years. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -317,7 +317,7 @@
   },
   {
    "type": "text",
-   "text": "Copper deficiency gives narrow young leaves folded into a U shape with drooping tips, but the heart does not bend over. Mealybug wilt makes leaves curl down and turn red to pink. To be sure, look for the bent heart in young plants. Send D leaves for a zinc test."
+   "text": "Copper deficiency gives narrow young leaves folded into a U shape with drooping tips, but the heart does not bend over. Mealybug wilt makes leaves curl down and turn red to pink. To be sure, look for the bent heart in young plants. Send D leaves for a zinc test. Healthy plants test at about 19 mg/kg zinc."
   },
   {
    "type": "heading",
@@ -326,7 +326,7 @@
   },
   {
    "type": "text",
-   "text": "Spray Zinc sulfate at 1 percent (10 g per liter), once or twice, as Haifa advises. Vikaspedia gives 0.5 percent (5 g per liter). Where crookneck keeps coming back, mix Zinc sulfate into the soil before planting. Give about 20 kg per hectare (8 kg per acre). Do not mix zinc with phosphate fertilizer in one application."
+   "text": "Spray Zinc sulfate at 1 percent (10 g per liter, 160 g in a 16 liter sprayer) one or two times. A lighter 0.5 percent spray (5 g per liter, 80 grams in a 16 liter sprayer) also works. Where crookneck keeps coming back, mix Zinc sulfate into the soil before planting. Give about 20 kg per hectare. Do not mix zinc with phosphate fertilizer in one application."
   },
   {
    "type": "list",
@@ -337,11 +337,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester (22 percent zinc), **Petbowe Zinc Sulphate Monohydrate** (33 percent zinc), **Tierramino ZN** by Unilox Far East Resources (7 0 0 with 10 percent zinc) and **Liquid Chelate Zinc with Sulfur** by Sagrex (10 percent zinc and 5 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, on fields with past crookneck, add zinc sulfate at planting and spray young plants once."
+   "text": "To keep it away, on fields with past crookneck, add zinc sulfate at planting and spray young plants once. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -351,7 +351,7 @@
   },
   {
    "type": "text",
-   "text": "Older leaves turn yellow between the veins while the young leaves stay green. On fruiting plants, the leaves at the base of the fruit crown can die. Yield drops: in Brazilian trials, plants given no magnesium bore less fruit than fully fed plants. You see it most at this stage: grand growth and fruit development."
+   "text": "Older leaves turn yellow between the veins while the young leaves stay green. On fruiting plants, the leaves at the base of the fruit crown can die. Yield falls, since plants short of magnesium bear less fruit than well fed ones. You see it most at this stage: grand growth and fruit development."
   },
   {
    "type": "heading",
@@ -369,7 +369,7 @@
   },
   {
    "type": "text",
-   "text": "Potassium deficiency also starts on old leaves, but it shows orange spots and dry tips. Nitrogen deficiency yellows the whole leaf evenly rather than between the veins. To be sure, send D leaves at 6 to 8 months. ICL counts below about 0.25 percent Mg as low."
+   "text": "Potassium deficiency also starts on old leaves, but it shows orange spots and dry tips. Nitrogen deficiency yellows the whole leaf evenly rather than between the veins. To be sure, send D leaves at 6 to 8 months. A reading below about 0.25 percent magnesium is low. Ask for exchangeable magnesium on the soil test."
   },
   {
    "type": "heading",
@@ -378,7 +378,7 @@
   },
   {
    "type": "text",
-   "text": "Where soil magnesium is low, Haifa gives 50 to 120 kg MgO per hectare from a magnesium fertilizer such as Kieserite or magnesium sulfate, keeping MgO to K2O at about 1 to 2.5. ICL notes foliar magnesium works during fast fruit growth. Use magnesium sulfate at the label rate."
+   "text": "Where soil magnesium is low, give 50 to 120 kg MgO per hectare as Kieserite or magnesium sulfate. Keep the MgO to K2O ratio near 1 to 2.5. Leaf sprays of magnesium help most while the fruit is growing fast. Use magnesium sulfate at the label rate. For quick help, spray Magnesium sulfate at 1 to 2 percent (160 to 320 grams in a 16 liter sprayer) two or three times, 10 to 14 days apart."
   },
   {
    "type": "list",
@@ -390,11 +390,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium), **Magnesium Sulphate Anhydrous** by Newman Chemicals (20 percent magnesium) and **Zetryl MAG 9** by Zetryl Chem (9 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, do not pile on potash without magnesium, and test the soil before each crop."
+   "text": "To keep it away, do not pile on potash without magnesium, and test the soil before each crop. Lime acid soil with Dolomite rather than plain lime."
   },
   {
    "type": "heading",
@@ -422,7 +422,7 @@
   },
   {
    "type": "text",
-   "text": "Strong sun and drought also redden pineapple leaves, but the plant keeps growing. Phosphorus shortage comes with small, narrow leaves and poor growth. To be sure, send D leaves to a lab. ICL gives 0.2 to 0.3 percent P as the target."
+   "text": "Strong sun and drought also redden pineapple leaves, but the plant keeps growing. Phosphorus shortage comes with small, narrow leaves and poor growth. To be sure, send D leaves to a lab. A good reading is 0.2 to 0.3 percent phosphorus. A soil test before planting shows available phosphorus."
   },
   {
    "type": "heading",
@@ -431,7 +431,7 @@
   },
   {
    "type": "text",
-   "text": "Give phosphate early: use 10 g Ammonium phosphate 16 20 0 per hill one month after planting. For a quick fix, Vikaspedia gives a 2 percent DAP spray (20 g of 18 46 0 per liter)."
+   "text": "Give phosphate early: use 10 g Ammonium phosphate 16 20 0 per hill one month after planting. For a quick fix, spray DAP 18 46 0 at 2 percent (20 g per liter, 320 grams in a 16 liter sprayer)."
   },
   {
    "type": "list",
@@ -444,7 +444,7 @@
   },
   {
    "type": "text",
-   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+   "text": "Sold here with phosphorus: **Philphos 18 46 0 (Di Ammonium Phosphate)**, **Atlas Super Gro (16 20 0)** by Atlas Fertilizer, **Amigo Planters Granular Single Super Phosphate** by La Filipina (0 18 0 with 11 percent sulfur) and **Triple Super Phosphate** by Newman Chemicals (0 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
   },
   {
    "type": "text",
@@ -476,7 +476,7 @@
   },
   {
    "type": "text",
-   "text": "Fruit borers and fruit rots also make brown spots in fruit. But borers leave holes and gum, while boron gives corky lines and cracks between the eyes. To be sure, send D leaves for a boron test. Haifa lists about 14 mg/kg B as optimum in Red Spanish."
+   "text": "Fruit borers and fruit rots also make brown spots in fruit. But borers leave holes and gum, while boron gives corky lines and cracks between the eyes. To be sure, send D leaves for a boron test. Red Spanish pineapple does best at about 14 mg/kg boron in the leaf. Test soil boron."
   },
   {
    "type": "heading",
@@ -485,7 +485,7 @@
   },
   {
    "type": "text",
-   "text": "Spray Borax at 0.3 percent (3 g per liter) two or three times late in grand growth, as Haifa advises. Give 1 g per liter and Vikaspedia 0.5 percent. Give soil borax at about 10 kg per hectare (4 kg per acre). Do not overdo boron, because too much is toxic to the plant."
+   "text": "Spray Borax at 0.3 percent (3 g per liter, 48 g in a 16 liter sprayer) two or three times toward the end of grand growth. Sprays from 1 to 5 g per liter (16 to 80 grams in a 16 liter sprayer) are also used. Give soil borax at about 10 kg per hectare. Do not overdo boron, because too much is toxic to the plant. Give boron before flowering: flowers and fruit set need it most."
   },
   {
    "type": "list",
@@ -497,11 +497,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+   "text": "Sold here with boron: **Etifert 11 (Borax Decahydrate)** by Zetryl Chem (11 percent boron), **Fertibagra 15G** by Unilox Far East Resources (14.6 percent boron), **B17 (Boric Acid)** by Newman Chemicals (17 percent boron) and **Better Yield** by Bacphil Planters Fertilizer (0 0 0.9 with 10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, add compost to sandy fields, and give one or two boron sprays before fruiting on fields that showed cracked fruit."
+   "text": "To keep it away, add compost to sandy fields, and give one or two boron sprays before fruiting on fields that showed cracked fruit. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -520,7 +520,7 @@
   },
   {
    "type": "text",
-   "text": "Very acid, leached soils. Growers keep the pH low to avoid rot, so calcium can run short."
+   "text": "Very acid, leached soils. Growers keep the pH low to avoid rot, so calcium can run short. Heavy potash or ammonium fertilizer, salty soil and dry spells keep calcium from reaching fruit and young leaves."
   },
   {
    "type": "heading",
@@ -529,7 +529,7 @@
   },
   {
    "type": "text",
-   "text": "Mealybug wilt also reddens and curls the leaves, but it starts halfway up the plant and the roots rot. Copper deficiency gives narrow U shaped young leaves with drooping tips. To be sure, send D leaves to a lab. ICL gives 0.4 to 0.7 percent Ca as the target."
+   "text": "Mealybug wilt also reddens and curls the leaves, but it starts halfway up the plant and the roots rot. Copper deficiency gives narrow U shaped young leaves with drooping tips. To be sure, send D leaves to a lab. A good reading is 0.4 to 0.7 percent calcium. Test soil pH and calcium."
   },
   {
    "type": "heading",
@@ -538,7 +538,7 @@
   },
   {
    "type": "text",
-   "text": "Use Gypsum to add calcium without raising the pH. In a Hawaii trial gypsum raised calcium in the leaves and fruit and cut translucent flesh. While lime raised the risk of root and heart rot. ICL notes foliar calcium works during fast fruit growth. Use a calcium foliar product at the label rate."
+   "text": "Use Gypsum to add calcium without raising the pH. Gypsum lifts the calcium in leaves and fruit, so less of the flesh turns translucent. But lime raised the risk of root and heart rot. Leaf sprays of calcium help most while the fruit is growing fast. Use a calcium foliar product at the label rate. On acid soil, lime by the soil test: usually 1 to 3 tons of Agricultural lime or Dolomite per hectare, mixed in 2 to 4 weeks before planting. On soil that is not acid, use 200 to 500 kg of Gypsum per hectare. For quick help on fruit and young leaves, spray Calcium nitrate at 0.5 to 1 percent (80 to 160 grams in a 16 liter sprayer) every 7 to 10 days from fruit set."
   },
   {
    "type": "list",
@@ -550,11 +550,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+   "text": "Sold here with calcium: **Planters Products Lifelime** (36.2 percent calcium), **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium) and **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, use gypsum rather than lime on pineapple fields, and keep boron and calcium in the program."
+   "text": "To keep it away, use gypsum rather than lime on pineapple fields, and keep boron and calcium in the program. Keep potash in balance with magnesium and calcium."
   },
   {
    "type": "heading",
@@ -582,7 +582,7 @@
   },
   {
    "type": "text",
-   "text": "Zinc deficiency bends the whole heart over (crookneck), while copper folds each young leaf into a U with a drooping tip. Mealybug wilt makes leaves curl down and turn red to pink. To be sure, send the white basal part of D leaves to a lab: in a Queensland trial, deficient plants had about 3 ppm Cu while healthy plants in other studies had 8 ppm or more."
+   "text": "Zinc deficiency bends the whole heart over (crookneck), while copper folds each young leaf into a U with a drooping tip. Mealybug wilt makes leaves curl down and turn red to pink. To be sure, send the white base of the D leaves to a lab. About 3 ppm copper means the plant is short, and healthy plants carry 8 ppm or more."
   },
   {
    "type": "heading",
@@ -591,7 +591,7 @@
   },
   {
    "type": "text",
-   "text": "Use copper sulfate in the soil at 30 kg per hectare, because copper sprays can burn the leaves. Haifa gives Bordeaux mixture carrying 7 to 11 kg copper sulfate per hectare."
+   "text": "Use copper sulfate in the soil at 30 kg per hectare, because copper sprays can burn the leaves. Bordeaux mixture carrying 7 to 11 kg copper sulfate per hectare also works. Spray Copper sulfate at 0.1 percent (16 grams in a 16 liter sprayer) with as much hydrated lime, once or twice. Spray the young leaves in the cool of the day, soon after sunrise or near sunset."
   },
   {
    "type": "list",
@@ -603,11 +603,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with copper: **Omex Zynergy** by Jardine Distribution, Inc. (3.75 percent zinc and 2.11 percent copper), **Grower's Choice Copper Sulphate Pentahydrate** by Zetryl.Chem Phils., Inc. (25 percent copper and 12 percent sulfur), **Agsmart Copper Sulphate** by AgSmart Corporation (25 percent copper and 12 percent sulfur) and **Liquid Chelate Copper w/ Sulfur** by Sagrex Corporation (5 percent copper and 2 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [copper deficiency](/nutrient-deficiencies/copper-deficiency) in every crop."
+   "text": "Sold here with copper: **Grower's Choice Copper Sulphate Pentahydrate** by Zetryl Chem (25 percent copper and 12 percent sulfur), **Liquid Chelate Copper with Sulfur** by Sagrex (5 percent copper and 2 percent sulfur), **Indra** by Farmtech Agriland (2 percent zinc, 2 percent manganese and 2 percent copper) and **Biozome** by Manchem Industries (12 percent sulfur, 12 percent zinc, 3 percent manganese, 1 percent magnesium and traces of iron, copper, boron, molybdenum). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [copper deficiency](/nutrient-deficiencies/copper-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, on acid sandy soils, include copper in the basal fertilizer when a soil or leaf test shows it is low."
+   "text": "To keep it away, on acid sandy soils, include copper in the basal fertilizer when a soil or leaf test shows it is low. Test the soil every two or three years. Never repeat copper without a test: it stays in the soil for years."
   },
   {
    "type": "callout",
@@ -644,7 +644,7 @@
     },
     {
      "q": "What fertilizer fixes iron deficiency in pineapple?",
-     "a": "Spray Ferrous sulfate at 2 to 3 percent (20 to 30 g per liter) monthly or as needed, best mixed into the urea spray, as Haifa advises. Queensland growers add 3 percent ferrous sulfate to the urea spray."
+     "a": "Spray Ferrous sulfate at 2 to 3 percent (20 to 30 g per liter, 320 to 480 g in a 16 liter sprayer) once a month or when needed. It works best mixed into the urea spray."
     },
     {
      "q": "How do I know which nutrient my pinya lacks?",

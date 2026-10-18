@@ -100,7 +100,7 @@
                     <p class="sp-lead mt-4">{{ $meta['intro'] }}</p>
                     <div class="wk-jump mt-6">
                         <a href="#catalogue"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg>Find a deficiency</a>
-                        <a href="#nutrients"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20c0-7 4-13 13-15-1 9-6 14-13 15zm0 0c2-4 5-7 9-10"/></svg>The 12 nutrients</a>
+                        <a href="#nutrients"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20c0-7 4-13 13-15-1 9-6 14-13 15zm0 0c2-4 5-7 9-10"/></svg>The {{ count($D::NUTRIENTS) }} nutrients</a>
                         @if ($hg)
                             <a href="#spGateCard" class="hg-chip"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>See them all with Libre + Anee</a>
                         @elseif ($member)
@@ -134,17 +134,17 @@
         </div>
     </section>
 
-    {{-- The twelve nutrients, each to its own page when it has one. --}}
+    {{-- The nutrients (twelve, and silicon since 2026-10-19), each to its own page when it has one. --}}
     <section class="bg-white" id="nutrients" style="scroll-margin-top: 5rem">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
-                <h2>The 12 Nutrients Your Crop Needs</h2>
-                <p>Where the change starts tells you a lot. Nitrogen, phosphorus, potassium, magnesium and molybdenum move inside the plant, so the old, lower leaves show it first. The others stay where they are, so the young leaves and the growing tip show it first.</p>
+                <h2>The {{ count($D::NUTRIENTS) }} Nutrients Your Crop Needs</h2>
+                <p>Where the change starts tells you a lot. Nitrogen, phosphorus, potassium, magnesium and molybdenum move inside the plant, so the old, lower leaves show it first. The others stay where they are, so the young leaves and the growing tip show it first. Silicon, a helpful element for rice and sugarcane, shows on the whole plant.</p>
             </div>
             <div class="nd-nuts mt-8">
                 @foreach ($D::NUTRIENTS as $n => [$nName, $nSym, $nTl, $nMobile, $nHue, $nRole])
                     @php $nPage = $live->get($D::nutrientSlug($n)); $nCount = count($D::forNutrient($n)); @endphp
-                    @php $nIn = '<i aria-hidden="true">' . e($nSym) . '</i><span><b>' . e($nName) . ' deficiency</b><small>' . e($nTl) . ' · ' . ($nMobile ? 'old leaves first' : 'young leaves first') . '</small><p>' . e($nRole) . ($nCount ? ' In ' . $nCount . ' ' . ($nCount === 1 ? 'crop' : 'crops') . ' here.' : '') . '</p></span>'; @endphp
+                    @php $nIn = '<i aria-hidden="true">' . e($nSym) . '</i><span><b>' . e($nName) . ' deficiency</b><small>' . e($nTl) . ' · ' . ($n === 'si' ? 'the whole plant' : ($nMobile ? 'old leaves first' : 'young leaves first')) . '</small><p>' . e($nRole) . ($nCount ? ' In ' . $nCount . ' ' . ($nCount === 1 ? 'crop' : 'crops') . ' here.' : '') . '</p></span>'; @endphp
                     @if ($nPage)
                         <a href="{{ $S::pageUrl($nPage) }}" class="nd-nut" style="--g: {{ $nHue }}">{!! $nIn !!}</a>
                     @else

@@ -18,7 +18,7 @@
   "complete fertilizer",
   "ammonium sulfate fertilizer"
  ],
- "excerpt": "Corn nutrient deficiency is one of the first things to check when the leaves of your mais (corn) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, zinc, sulfur, magnesium, calcium, boron, copper and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "excerpt": "Corn nutrient deficiency is one of the first things to check when the leaves of your mais (corn) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, phosphorus, potassium, zinc, sulfur, boron, magnesium, calcium, copper and iron. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
   "src": "/images/site/deficiencies/corn-yellow-nitrogen-deficiency.webp",
   "alt": "Maize leaf yellowing in a broad band along the midrib while the edges stay green, from nitrogen shortage",
@@ -27,7 +27,7 @@
  "blocks": [
   {
    "type": "text",
-   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus, potassium and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, sulfur, calcium, boron, copper and iron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which corn nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, phosphorus, potassium and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But zinc, sulfur, boron, calcium, copper and iron stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which corn nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
   },
   {
    "type": "heading",
@@ -103,16 +103,16 @@
      "Ammonium sulfate 21 0 0, Gypsum"
     ],
     [
-     "Calcium",
-     "young leaves and the tip, leaf edges and tips",
-     "Tips of the young leaves stick together like a ladder, on very acid soil.",
-     "Agricultural lime, Dolomite"
-    ],
-    [
      "Boron",
      "young leaves and the tip",
      "Upper leaves have white spots and waxy brown streaks, and tassels and ears fail to come out.",
      "Borax"
+    ],
+    [
+     "Calcium",
+     "young leaves and the tip, leaf edges and tips",
+     "Tips of the young leaves stick together like a ladder, on very acid soil.",
+     "Agricultural lime, Dolomite"
     ],
     [
      "Copper",
@@ -168,7 +168,7 @@
   },
   {
    "type": "text",
-   "text": "Too little fertilizer, nitrogen washed out by heavy rain or irrigation, nitrogen lost from dry or hard soil, sandy soil. Fields flooded in hot weather."
+   "text": "Too little fertilizer, nitrogen washed out by heavy rain or irrigation, nitrogen lost from dry or hard soil, sandy soil. Fields flooded in hot weather. Plowing in a lot of dry crop residue also ties up nitrogen."
   },
   {
    "type": "heading",
@@ -186,7 +186,7 @@
   },
   {
    "type": "text",
-   "text": "Sidedress Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the row and cover it with soil, then irrigate or wait for rain. Follow the soil test for the rate. For quick help, give a 1 percent urea spray (10 g per liter) twice, 15 days apart. Nitrogen given after the ears start filling helps much less."
+   "text": "Sidedress Urea 46 0 0 or Ammonium sulfate 21 0 0 beside the row and cover it with soil, then irrigate or wait for rain. Follow the soil test for the rate. For quick help, give a 1 percent urea spray (10 g per liter, 160 g in a 16 liter sprayer) twice, 15 days apart. Nitrogen given after the ears start filling helps much less. A usual side dress is 2 to 3 bags of Urea 46 0 0 per hectare at 25 to 30 days after planting, hilled in, and the rest before tasseling."
   },
   {
    "type": "list",
@@ -199,11 +199,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+   "text": "Sold here with nitrogen: **Atlas Granular Urea (46 0 0)** by Atlas Fertilizer, **Amigo Planters Ammonium Chloride** by La Filipina (25 0 0), **Agripower 46 0 0 (Locally Blended) Coated** by Green Acres Agri Tech and **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
   },
   {
    "type": "text",
-   "text": "To keep it away, test the soil before planting, split nitrogen between planting and knee high, and avoid packing the soil hard."
+   "text": "To keep it away, test the soil before planting, split nitrogen between planting and knee high, and avoid packing the soil hard. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -236,7 +236,7 @@
   },
   {
    "type": "text",
-   "text": "Acid soils and very alkaline soils that hold phosphorus tightly, cold wet soil, hard packed soil. Roots hurt by insects or fertilizer."
+   "text": "Acid soils and very alkaline soils that hold phosphorus tightly, cold wet soil, hard packed soil. Roots hurt by insects or fertilizer. Acid upland soils often run short of phosphorus, and very acid fields may need lime before it works."
   },
   {
    "type": "heading",
@@ -254,7 +254,7 @@
   },
   {
    "type": "text",
-   "text": "Phosphorus works best at planting. For the standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter). For the next crop, put 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test."
+   "text": "Phosphorus works best at planting. For the standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter, 320 g in a 16 liter sprayer). For the next crop, put 16 20 0, Complete 14 14 14 or DAP in the furrow at planting, following the soil test. A usual basal dose is 2 to 4 bags of Complete 14 14 14 or Ammonium phosphate 16 20 0 per hectare, placed 5 cm beside and below the seed."
   },
   {
    "type": "list",
@@ -268,7 +268,7 @@
   },
   {
    "type": "text",
-   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+   "text": "Sold here with phosphorus: **Philphos 18 46 0 (Di Ammonium Phosphate)**, **Atlas Super Gro (16 20 0)** by Atlas Fertilizer, **Amigo Planters Granular Single Super Phosphate** by La Filipina (0 18 0 with 11 percent sulfur) and **Triple Super Phosphate** by Newman Chemicals (0 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
   },
   {
    "type": "text",
@@ -323,7 +323,7 @@
   },
   {
    "type": "text",
-   "text": "Sidedress Muriate of potash 0 0 60 beside the row early, following the soil test. Give a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) twice, 15 days apart."
+   "text": "Sidedress Muriate of potash 0 0 60 beside the row early, following the soil test. Give a 1 percent potassium chloride or potassium sulfate spray (10 g per liter, 160 g in a 16 liter sprayer) twice, 15 days apart. A usual dose is 1 to 2 bags of Muriate of potash 0 0 60 per hectare at planting or with the first side dress."
   },
   {
    "type": "list",
@@ -335,11 +335,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+   "text": "Sold here with potassium: **Atlas Muriate of Potash (MOP)** by Atlas Fertilizer (0 0 60), **Simplot Sulfate 0 0 50** by Nutranta, **Potassium Nitrate** by Parafield (13 0 46) and **Qrop Mix Production 14 0 23 plus 13 Cao** by Farmtech Agriland (14 0 23 with 9.3 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, return stalks and leaves to the field, and give potash at planting when the soil test is low."
+   "text": "To keep it away, return stalks and leaves to the field, and give potash at planting when the soil test is low. Keep organic matter up with compost, manure or crop residues. Split the potash on sandy soil."
   },
   {
    "type": "heading",
@@ -355,7 +355,7 @@
   },
   {
    "type": "text",
-   "text": "Pale yellow to white bands appear between the veins, starting at the base of the leaf and running toward the tip. While the edges, tip and midrib stay green. Internodes stay short, so plants look stunted with bunched leaves. In severe cases the new leaves come out almost white (white bud), and leaf edges and stems turn reddish. You see it most at this stage: seedling to knee high. Plants often outgrow mild cases."
+   "text": "Pale yellow to white bands appear between the veins, starting at the base of the leaf and running toward the tip. But the edges, tip and midrib stay green. Internodes stay short, so plants look stunted with bunched leaves. In severe cases the new leaves come out almost white (white bud), and leaf edges and stems turn reddish. You see it most at this stage: seedling to knee high. Plants often outgrow mild cases."
   },
   {
    "type": "text",
@@ -372,7 +372,7 @@
   },
   {
    "type": "text",
-   "text": "High pH soils (pH 7.5 and up), low organic matter, cool wet soil. Heavy phosphorus on soils already low in zinc."
+   "text": "High pH soils (pH 7.5 and up), low organic matter, cool wet soil. Heavy phosphorus on soils already low in zinc. Zinc shortage is common on corn farms here."
   },
   {
    "type": "heading",
@@ -381,7 +381,7 @@
   },
   {
    "type": "text",
-   "text": "Magnesium deficiency stripes the old leaves, not a band at the base of young leaves. Iron deficiency stripes the full length of the young leaf. To be sure, soil test for zinc and pH, and a leaf tissue test."
+   "text": "Magnesium deficiency stripes the old leaves, not a band at the base of young leaves. Iron deficiency stripes the full length of the young leaf. To be sure, soil test for zinc and pH, and a leaf tissue test. In a soil test, less than 0.8 ppm of zinc is low."
   },
   {
    "type": "heading",
@@ -390,7 +390,7 @@
   },
   {
    "type": "text",
-   "text": "Spray 0.5 percent Zinc sulfate (5 g per liter) twice, 15 days apart. For the soil, give 20 to 25 kg zinc sulfate per hectare. The University of Kentucky bands about 19 kg zinc sulfate per hectare (17 pounds per acre) near the row."
+   "text": "Spray 0.5 percent Zinc sulfate (5 g per liter, 80 g in a 16 liter sprayer) twice, 15 days apart. For the soil, give 20 to 25 kg zinc sulfate per hectare. Band about 19 kg of zinc sulfate per hectare near the row."
   },
   {
    "type": "list",
@@ -401,11 +401,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester (22 percent zinc), **Petbowe Zinc Sulphate Monohydrate** (33 percent zinc), **Tierramino ZN** by Unilox Far East Resources (7 0 0 with 10 percent zinc) and **Liquid Chelate Zinc with Sulfur** by Sagrex (10 percent zinc and 5 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, on high pH or zinc poor soils, add zinc sulfate to the basal fertilizer."
+   "text": "To keep it away, on high pH or zinc poor soils, add zinc sulfate to the basal fertilizer. A broadcast dose lasts several seasons. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -447,7 +447,7 @@
   },
   {
    "type": "text",
-   "text": "Nitrogen deficiency starts on the old lower leaves. Zinc deficiency gives a white band at the leaf base. To be sure, note which leaves yellowed first, then test soil and leaves for sulfur."
+   "text": "Nitrogen deficiency starts on the old lower leaves. Zinc deficiency gives a white band at the leaf base. To be sure, note which leaves yellowed first, then test soil and leaves for sulfur. A soil test for sulfur and a leaf test confirm it. In a soil test, less than 10 ppm of sulfate sulfur is low."
   },
   {
    "type": "heading",
@@ -456,7 +456,7 @@
   },
   {
    "type": "text",
-   "text": "Use Ammonium sulfate 21 0 0 for the next nitrogen sidedress, and place a sulfur bearing fertilizer near the row. Follow the soil test for the rate."
+   "text": "Use Ammonium sulfate 21 0 0 for the next nitrogen sidedress, and place a sulfur bearing fertilizer near the row. Follow the soil test for the rate. A usual dose is 50 to 100 kg of Ammonium sulfate 21 0 0 per hectare (12 to 24 kg of sulfur), or 100 to 200 kg of Gypsum, at planting."
   },
   {
    "type": "list",
@@ -468,11 +468,71 @@
   },
   {
    "type": "text",
-   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+   "text": "Sold here with sulfur: **Atlas Ammosul 21 0 0** by Atlas Fertilizer (21 0 0 with 24 percent sulfur), **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur), **Harvester Sulphate of Potash** by Universal Harvester (0 0 50 with 17.5 percent sulfur) and **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
   },
   {
    "type": "text",
    "text": "To keep it away, include ammonium sulfate or another sulfur source in the program on sandy or low organic matter soils."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Boron deficiency in corn",
+   "id": "boron"
+  },
+  {
+   "type": "text",
+   "text": "Young leaves get small white or yellow spots and raised, waxy brown streaks, and turn brittle. Upper internodes stay short. Tassels and ear shoots are small and may not come out, so few kernels set. You see it most at this stage: before tasseling up to silking."
+  },
+  {
+   "type": "text",
+   "text": "In sweet corn, it looks much the same. Upper leaves have white spots and waxy brown streaks, and tassels and ears fail to come out."
+  },
+  {
+   "type": "text",
+   "text": "In white or glutinous corn, it looks much the same. Upper leaves have white spots and waxy brown streaks, and tassels and ears fail to come out."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why boron deficiency happens in mais"
+  },
+  {
+   "type": "text",
+   "text": "Rare. Sandy soils low in organic matter, high pH soils and drought."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Drought also delays ear shoots and spoils pollination, so both can happen together. Zinc gives bands, not spots. To be sure, test leaves and soil for boron before treating. A soil test for boron and a leaf test confirm it. In a soil test, less than 0.5 ppm of boron is low."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for boron deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Give a 0.5 percent borax spray (5 g per liter, 80 g in a 16 liter sprayer) every 15 days. Corn is very sensitive to too much boron. So never go above the advised rate and do not put boron in the seed row. A usual soil dose is 5 to 10 kg of Borax per hectare (0.5 to 1 kg of boron), mixed evenly with the basal fertilizer."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Borax"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with boron: **Etifert 11 (Borax Decahydrate)** by Zetryl Chem (11 percent boron), **Fertibagra 15G** by Unilox Far East Resources (14.6 percent boron), **B17 (Boric Acid)** by Newman Chemicals (17 percent boron) and **Better Yield** by Bacphil Planters Fertilizer (0 0 0.9 with 10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep organic matter up, and irrigate at tasseling during dry spells. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -523,7 +583,7 @@
   },
   {
    "type": "text",
-   "text": "Apply magnesium sulfate (Epsom salt) to the soil or as a leaf spray. Give a 2 percent spray (20 g per liter). On acid soils use Dolomite following the soil test."
+   "text": "Apply magnesium sulfate (Epsom salt) to the soil or as a leaf spray. Give a 2 percent spray (20 g per liter, 320 g in a 16 liter sprayer). On acid soils use Dolomite following the soil test. A usual dose is 100 to 150 kg of Kieserite or 150 to 200 kg of Magnesium sulfate per hectare at planting. On acid soil, 1 to 2 tons of Dolomite mixed in before planting both limes and feeds."
   },
   {
    "type": "list",
@@ -535,7 +595,7 @@
   },
   {
    "type": "text",
-   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium), **DDDD Planter's Choice Magnesium Sulphate Monohydrate** by Modern Time (15.1 percent magnesium) and **Zetryl MAG 9** by Zetryl Chem (9 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
   },
   {
    "type": "text",
@@ -568,7 +628,7 @@
   },
   {
    "type": "text",
-   "text": "Rare. It needs very acid soils (below pH 5), unlimed weathered uplands, or soils where magnesium and potassium crowd out calcium."
+   "text": "Rare. It needs very acid soils (below pH 5), unlimed weathered uplands, or soils where magnesium and potassium crowd out calcium. On such soils aluminum and manganese damage usually show first."
   },
   {
    "type": "heading",
@@ -577,7 +637,7 @@
   },
   {
    "type": "text",
-   "text": "Boron deficiency also hurts the growing tip but gives white spots and short upper internodes. Acid soil damage from aluminum stunts the roots. To be sure, soil pH and calcium test."
+   "text": "Boron deficiency also hurts the growing tip but gives white spots and short upper internodes. Acid soil damage from aluminum stunts the roots. To be sure, soil pH and calcium test. A soil test for calcium and pH, and a leaf test, confirm it."
   },
   {
    "type": "heading",
@@ -586,7 +646,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Agricultural lime or Dolomite following the soil test. One extremely acid farm in Isabela needed 3.6 tons of lime per hectare. Gypsum adds calcium without raising the pH."
+   "text": "Apply Agricultural lime or Dolomite following the soil test. A very acid field may need 3 to 4 tons of lime per hectare. Gypsum adds calcium without raising the pH. Lime 2 to 4 weeks before planting. Calcium sprays go on young fruit from fruit set."
   },
   {
    "type": "list",
@@ -599,71 +659,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+   "text": "Sold here with calcium: **Planters Products Lifelime** (36.2 percent calcium), **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium) and **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, lime acid uplands before planting, ahead of the rains."
-  },
-  {
-   "type": "heading",
-   "level": 2,
-   "text": "Boron deficiency in corn",
-   "id": "boron"
-  },
-  {
-   "type": "text",
-   "text": "Young leaves get small white or yellow spots and raised, waxy brown streaks, and turn brittle. Upper internodes stay short. Tassels and ear shoots are small and may not come out, so few kernels set. You see it most at this stage: before tasseling up to silking."
-  },
-  {
-   "type": "text",
-   "text": "In sweet corn, it looks much the same. Upper leaves have white spots and waxy brown streaks, and tassels and ears fail to come out."
-  },
-  {
-   "type": "text",
-   "text": "In white or glutinous corn, it looks much the same. Upper leaves have white spots and waxy brown streaks, and tassels and ears fail to come out."
-  },
-  {
-   "type": "heading",
-   "level": 3,
-   "text": "Why boron deficiency happens in mais"
-  },
-  {
-   "type": "text",
-   "text": "Rare. Sandy soils low in organic matter, high pH soils and drought."
-  },
-  {
-   "type": "heading",
-   "level": 3,
-   "text": "How to tell it apart"
-  },
-  {
-   "type": "text",
-   "text": "Drought also delays ear shoots and spoils pollination, so both can happen together. Zinc gives bands, not spots. To be sure, test leaves and soil for boron before treating."
-  },
-  {
-   "type": "heading",
-   "level": 3,
-   "text": "What to apply for boron deficiency"
-  },
-  {
-   "type": "text",
-   "text": "Give a 0.5 percent borax spray (5 g per liter) every 15 days. Corn is very sensitive to too much boron. So never go above the advised rate and do not put boron in the seed row."
-  },
-  {
-   "type": "list",
-   "ordered": false,
-   "items": [
-    "Borax"
-   ]
-  },
-  {
-   "type": "text",
-   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
-  },
-  {
-   "type": "text",
-   "text": "To keep it away, keep organic matter up, and irrigate at tasseling during dry spells."
+   "text": "To keep it away, lime acid uplands before planting, ahead of the rains. Keep potash in balance with magnesium and calcium."
   },
   {
    "type": "heading",
@@ -682,7 +682,7 @@
   },
   {
    "type": "text",
-   "text": "Rare. Seen on peat and other high organic matter soils and soils above pH 7.5."
+   "text": "Rare. Seen on peat and other high organic matter soils and soils above pH 7.5. A few corn farms here do run short of copper."
   },
   {
    "type": "heading",
@@ -691,7 +691,7 @@
   },
   {
    "type": "text",
-   "text": "Iron deficiency gives similar streaks. Nitrogen plus sulfur shortage in cool weather can look like mild copper deficiency. To be sure, soil and leaf test for copper."
+   "text": "Iron deficiency gives similar streaks. Nitrogen plus sulfur shortage in cool weather can look like mild copper deficiency. To be sure, soil and leaf test for copper. In a soil test, less than 0.2 ppm of copper is low."
   },
   {
    "type": "heading",
@@ -700,7 +700,7 @@
   },
   {
    "type": "text",
-   "text": "Give a 0.2 percent copper sulfate spray (2 g per liter). About 1 kg of copper per hectare was needed on one Cagayan soil, so follow the soil test."
+   "text": "Give a 0.2 percent copper sulfate spray (2 g per liter, 32 g in a 16 liter sprayer). A short soil may need about 1 kg of copper per hectare, so let the soil test set the rate. Spray the young leaves in the cool of the day, soon after sunrise or near sunset."
   },
   {
    "type": "list",
@@ -711,11 +711,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with copper: **Omex Zynergy** by Jardine Distribution, Inc. (3.75 percent zinc and 2.11 percent copper), **Grower's Choice Copper Sulphate Pentahydrate** by Zetryl.Chem Phils., Inc. (25 percent copper and 12 percent sulfur), **Agsmart Copper Sulphate** by AgSmart Corporation (25 percent copper and 12 percent sulfur) and **Liquid Chelate Copper w/ Sulfur** by Sagrex Corporation (5 percent copper and 2 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [copper deficiency](/nutrient-deficiencies/copper-deficiency) in every crop."
+   "text": "Sold here with copper: **Grower's Choice Copper Sulphate Pentahydrate** by Zetryl Chem (25 percent copper and 12 percent sulfur), **Liquid Chelate Copper with Sulfur** by Sagrex (5 percent copper and 2 percent sulfur), **Indra** by Farmtech Agriland (2 percent zinc, 2 percent manganese and 2 percent copper) and **Biozome** by Manchem Industries (12 percent sulfur, 12 percent zinc, 3 percent manganese, 1 percent magnesium and traces of iron, copper, boron, molybdenum). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [copper deficiency](/nutrient-deficiencies/copper-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, test for copper before planting on peat or alkaline soils."
+   "text": "To keep it away, test for copper before planting on peat or alkaline soils. Never repeat copper without a test: it stays in the soil for years."
   },
   {
    "type": "heading",
@@ -749,7 +749,7 @@
   },
   {
    "type": "text",
-   "text": "Magnesium also stripes leaves, but the old ones. Zinc gives a band at the base of the leaf, not stripes the full length. To be sure, soil pH test (calcareous soil is the warning sign) and a leaf test."
+   "text": "Magnesium also stripes leaves, but the old ones. Zinc gives a band at the base of the leaf, not stripes the full length. To be sure, soil pH test (calcareous soil is the warning sign) and a leaf test. In a soil test, less than 4.5 ppm of iron is low."
   },
   {
    "type": "heading",
@@ -758,7 +758,7 @@
   },
   {
    "type": "text",
-   "text": "Give 20 to 25 kg ferrous sulfate per hectare to the soil, or a 1 percent ferrous sulfate spray (10 g per liter) every week until new leaves come out green."
+   "text": "Give 20 to 25 kg ferrous sulfate per hectare to the soil, or a 1 percent ferrous sulfate spray (10 g per liter, 160 g in a 16 liter sprayer) every week until new leaves come out green. Spray the young leaves in the cool of the day, soon after sunrise or near sunset."
   },
   {
    "type": "list",
@@ -770,11 +770,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+   "text": "Sold here with iron: **DDDD Planter's Choice Ferrous Sulphate Heptahydrate** by Modern Time (19 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl Chem (30 percent iron), **Ferrous Sulphate Monohydrate** by Newman Chemicals (30 percent iron) and **Liquid Chelate Iron with Sulfur** by Sagrex (5 percent iron and 3 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, add manure and use an acid forming fertilizer such as ammonium sulfate on calcareous soil."
+   "text": "To keep it away, add manure and use an acid forming fertilizer such as ammonium sulfate on calcareous soil. Test the soil every two or three years."
   },
   {
    "type": "callout",
@@ -807,11 +807,11 @@
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in corn?",
-     "a": "Phosphorus works best at planting. For the standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter)."
+     "a": "Phosphorus works best at planting. For the standing crop, give a 2 percent DAP 18 46 0 spray (20 g per liter, 320 g in a 16 liter sprayer)."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in corn?",
-     "a": "Sidedress Muriate of potash 0 0 60 beside the row early, following the soil test. Give a 1 percent potassium chloride or potassium sulfate spray (10 g per liter) twice, 15 days apart."
+     "a": "Sidedress Muriate of potash 0 0 60 beside the row early, following the soil test. Give a 1 percent potassium chloride or potassium sulfate spray (10 g per liter, 160 g in a 16 liter sprayer) twice, 15 days apart."
     },
     {
      "q": "How do I know which nutrient my mais lacks?",

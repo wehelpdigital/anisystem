@@ -18,7 +18,7 @@
   "complete fertilizer",
   "ammonium sulfate fertilizer"
  ],
- "excerpt": "Sugarcane nutrient deficiency is one of the first things to check when the leaves of your tubo (sugarcane) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, sulfur, zinc, magnesium, calcium, iron and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "excerpt": "Sugarcane nutrient deficiency is one of the first things to check when the leaves of your tubo (sugarcane) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are nitrogen, potassium, phosphorus, sulfur, zinc, magnesium, calcium, iron, manganese and silicon. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
   "src": "/images/site/deficiencies/sugarcane-iron-deficiency.webp",
   "alt": "Sugarcane leaves striped pale yellow to white between green veins from iron shortage",
@@ -27,7 +27,7 @@
  "blocks": [
   {
    "type": "text",
-   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, zinc, calcium, iron and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which sugarcane nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium, phosphorus and magnesium move inside the plant, so a shortage shows on the old, lower leaves first. But sulfur, zinc, calcium, iron, manganese and silicon stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which sugarcane nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
   },
   {
    "type": "heading",
@@ -119,6 +119,12 @@
      "young leaves and the tip, between the veins",
      "Pale stripes on the young leaves start in the middle of the blade and run to the tip. The leaves split in the wind.",
      "Manganese sulfate"
+    ],
+    [
+     "Silicon",
+     "old, lower leaves, the whole plant",
+     "Older leaves dotted with tiny pale or white freckles on the sunny side, and ratoons that grow weaker each year.",
+     "Calcium silicate, Silicate slag"
     ]
    ]
   },
@@ -157,7 +163,7 @@
   },
   {
    "type": "text",
-   "text": "Sulfur deficiency also makes cane pale, but it starts on the youngest top leaves and does not dry the tips of old leaves. Yellow leaf virus starts as a yellow midrib on the underside of leaves 3 to 6 from the top, not as a pale lower canopy. To be sure, send the top visible dewlap leaf blade (the highest leaf with a visible collar) to a lab during the grand growth period. Below 1.8 percent N is deficient and 2.0 to 2.6 percent is the target."
+   "text": "Sulfur deficiency also makes cane pale, but it starts on the youngest top leaves and does not dry the tips of old leaves. Yellow leaf virus starts as a yellow midrib on the underside of leaves 3 to 6 from the top, not as a pale lower canopy. To be sure, send the top visible dewlap leaf blade (the highest leaf with a visible collar) to a lab during the grand growth period. Below 1.8 percent N is deficient and 2.0 to 2.6 percent is the target. Have the soil tested at a lab before planting and before each ratoon."
   },
   {
    "type": "heading",
@@ -166,7 +172,7 @@
   },
   {
    "type": "text",
-   "text": "Side dress Urea 46 0 0 or Ammonium sulfate 21 0 0 now, placed beside the row and covered with soil so it is not lost to the air. Split the nitrogen into two or more doses through tillering and early grand growth rather than one big dose. Set the total from the SRA soil analysis, since the right rate depends on the field. For a quick boost, give a 1 to 2 percent urea spray (10 to 20 g urea per liter of water) twice, one week apart."
+   "text": "Side dress Urea 46 0 0 or Ammonium sulfate 21 0 0 now, placed beside the row and covered with soil so it is not lost to the air. Split the nitrogen into two or more doses through tillering and early grand growth rather than one big dose. Base the total on a soil test, since the right rate changes from field to field. For a quick boost, give a 1 to 2 percent urea spray (10 to 20 g urea per liter of water, 160 to 320 g in a 16 liter sprayer) twice, one week apart. A usual dose is 3 to 5 bags of Urea 46 0 0 per hectare, split at 1 and 3 months after planting or ratooning."
   },
   {
    "type": "list",
@@ -179,11 +185,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+   "text": "Sold here with nitrogen: **Atlas Granular Urea (46 0 0)** by Atlas Fertilizer, **Amigo Planters Ammonium Chloride** by La Filipina (25 0 0), **Agripower 46 0 0 (Locally Blended) Coated** by Green Acres Agri Tech and **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
   },
   {
    "type": "text",
-   "text": "To keep it away, fertilize every crop, including each ratoon, from a soil analysis."
+   "text": "To keep it away, fertilize every crop, including each ratoon, from a soil analysis. Return cane trash and add mill mud or compost to build organic matter."
   },
   {
    "type": "heading",
@@ -220,7 +226,7 @@
   },
   {
    "type": "text",
-   "text": "Apply Muriate of potash 0 0 60 at the rate the soil test gives, split between planting and the side dressing. For a quick fix on a standing crop, give a 1 percent potassium chloride spray (10 g per liter) twice, two weeks apart. Do not overdo it: cane takes up more potash than it needs. Extra potassium raises ash in the juice and lowers sugar recovery."
+   "text": "Apply Muriate of potash 0 0 60 at the rate the soil test gives, split between planting and the side dressing. For a quick fix on a standing crop, give a 1 percent potassium chloride spray (10 g per liter, 160 g in a 16 liter sprayer) twice, two weeks apart. Do not overdo it: cane takes up more potash than it needs. Extra potassium raises ash in the juice and lowers sugar recovery. A usual dose is 2 to 4 bags of Muriate of potash 0 0 60 per hectare, half at planting and half at hilling up."
   },
   {
    "type": "list",
@@ -233,11 +239,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+   "text": "Sold here with potassium: **Atlas Muriate of Potash (MOP)** by Atlas Fertilizer (0 0 60), **Simplot Sulfate 0 0 50** by Nutranta, **Potassium Nitrate** by Parafield (13 0 46) and **Qrop Mix Production 14 0 23 plus 13 Cao** by Farmtech Agriland (14 0 23 with 9.3 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, test the soil at every new planting and keep cane trash in the field instead of burning it."
+   "text": "To keep it away, test the soil at every new planting and keep cane trash in the field instead of burning it. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -256,7 +262,7 @@
   },
   {
    "type": "text",
-   "text": "Acid soils that lock up phosphorus and fields that never got phosphate. Sugarcane farms in Bukidnon, for example, tested medium acid with very deficient phosphorus."
+   "text": "Acid soils that lock up phosphorus and fields that never got phosphate. Many sugarcane farms on medium acid soils test very low in phosphorus."
   },
   {
    "type": "heading",
@@ -265,7 +271,7 @@
   },
   {
    "type": "text",
-   "text": "Nitrogen deficiency makes leaves pale yellow, not dark bluish green. Potassium deficiency reddens the midrib rather than the leaf tips and edges, and it scorches the old leaves. To be sure, send the top visible dewlap leaf blade to a lab: below 0.19 percent P is deficient and 0.22 to 0.30 percent is the target. Soil test before planting."
+   "text": "Nitrogen deficiency makes leaves pale yellow, not dark bluish green. Potassium deficiency reddens the midrib rather than the leaf tips and edges, and it scorches the old leaves. To be sure, send the top visible dewlap leaf blade to a lab: below 0.19 percent P is deficient and 0.22 to 0.30 percent is the target. Soil test before planting. On acid soil the lab will also give a lime need."
   },
   {
    "type": "heading",
@@ -274,7 +280,7 @@
   },
   {
    "type": "text",
-   "text": "Phosphorus works best placed in the planting furrow at planting, using Ammonium phosphate 16 20 0, Ammonium phosphate 18 46 0 or Superphosphate 0 18 0 at the soil test rate. On a standing crop, give a 2 percent DAP spray (20 g of 18 46 0 per liter) twice, two weeks apart, to carry the cane until the next crop. Lime acid fields so the phosphate stays available."
+   "text": "Phosphorus works best placed in the planting furrow at planting, using Ammonium phosphate 16 20 0, Ammonium phosphate 18 46 0 or Superphosphate 0 18 0 at the soil test rate. On a standing crop, give a 2 percent DAP spray (20 g of 18 46 0 per liter) twice, two weeks apart, to carry the cane until the next crop. Lime acid fields so the phosphate stays available. A usual basal dose is 3 to 5 bags of Complete 14 14 14 or 1 to 2 bags of Diammonium phosphate 18 46 0 per hectare in the furrow at planting."
   },
   {
    "type": "list",
@@ -288,7 +294,7 @@
   },
   {
    "type": "text",
-   "text": "Sold here with phosphorus: **Triple Super Phosphate** by Newman Chemicals Corporation (0 46 0), **Sagrex Duofos Granular Guano Phosphate** by Sagrex Corporation (0 22 0 (guano phosphate)), **Philphos 18 46 0** by Philippine Phosphate Fertilizer Corporation (18 46 0 (diammonium phosphate)) and **Atlas Di Ammonium Phosphate** by Atlas Fertilizer Corporation (18 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
+   "text": "Sold here with phosphorus: **Philphos 18 46 0 (Di Ammonium Phosphate)**, **Atlas Super Gro (16 20 0)** by Atlas Fertilizer, **Amigo Planters Granular Single Super Phosphate** by La Filipina (0 18 0 with 11 percent sulfur) and **Triple Super Phosphate** by Newman Chemicals (0 46 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [16 20 0 fertilizer](/blog/16-20-0-fertilizer), and the page on [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) in every crop."
   },
   {
    "type": "text",
@@ -320,7 +326,7 @@
   },
   {
    "type": "text",
-   "text": "Nitrogen deficiency starts on the old leaves and dries their tips. Sulfur deficiency starts at the top and does not dry the tips. To be sure, send the top visible dewlap leaf blade to a lab: below 0.13 percent S is low. Ask for sulfate sulfur on the soil test."
+   "text": "Nitrogen deficiency starts on the old leaves and dries their tips. Sulfur deficiency starts at the top and does not dry the tips. To be sure, send the top visible dewlap leaf blade to a lab: below 0.13 percent S is low. Ask for sulfate sulfur on the soil test. A test row given ammonium sulfate should turn green again."
   },
   {
    "type": "heading",
@@ -329,7 +335,7 @@
   },
   {
    "type": "text",
-   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, since it carries sulfur as well. Gypsum or sulfur dust also add sulfur. Give sulfur dust at about 25 kg per hectare (10 kg per acre). For a quick fix give a 1 percent potassium sulfate spray (10 g per liter) twice, two weeks apart."
+   "text": "Use Ammonium sulfate 21 0 0 for part of the nitrogen, since it carries sulfur as well. Gypsum or sulfur dust also add sulfur. Give sulfur dust at about 25 kg per hectare. For a quick fix give a 1 percent potassium sulfate spray (10 g per liter, 160 g in a 16 liter sprayer) twice, two weeks apart."
   },
   {
    "type": "list",
@@ -342,11 +348,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+   "text": "Sold here with sulfur: **Atlas Ammosul 21 0 0** by Atlas Fertilizer (21 0 0 with 24 percent sulfur), **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur), **Harvester Sulphate of Potash** by Universal Harvester (0 0 50 with 17.5 percent sulfur) and **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, use ammonium sulfate for at least one nitrogen dose each crop and keep trash and organic matter in the field."
+   "text": "To keep it away, use ammonium sulfate for at least one nitrogen dose each crop and keep trash and organic matter in the field. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -356,7 +362,7 @@
   },
   {
    "type": "text",
-   "text": "Young, newly opened leaves turn light green to yellow in broad bands. While the midrib and leaf edges stay green until it is severe. The yellow tissue can get red spots, then dries and collapses between the veins. Leaves come out shorter and broader in their middle part, the internodes stay short and the cane is stunted. You see it most at this stage: young cane and early tillering."
+   "text": "Young, newly opened leaves turn light green to yellow in broad bands. But the midrib and leaf edges stay green until it is severe. The yellow tissue can get red spots, then dries and collapses between the veins. Leaves come out shorter and broader in their middle part, the internodes stay short and the cane is stunted. You see it most at this stage: young cane and early tillering."
   },
   {
    "type": "heading",
@@ -374,7 +380,7 @@
   },
   {
    "type": "text",
-   "text": "Iron deficiency stripes the whole length of the leaf from base to tip and can bleach it white. Manganese stripes begin halfway along the blade and reach to the tip, and the blades tear in the wind. To be sure, send the top visible dewlap leaf blade to a lab: below 15 mg/kg Zn is deficient and 17 to 32 mg/kg is the target. Test soil zinc and pH."
+   "text": "Iron deficiency stripes the whole length of the leaf from base to tip and can bleach it white. Manganese stripes begin halfway along the blade and reach to the tip, and the blades tear in the wind. To be sure, send the top visible dewlap leaf blade to a lab: below 15 mg/kg Zn is deficient and 17 to 32 mg/kg is the target. Test soil zinc and pH. Spray zinc sulfate on a few stools and watch whether the new leaves come out green."
   },
   {
    "type": "heading",
@@ -383,7 +389,7 @@
   },
   {
    "type": "text",
-   "text": "Spray Zinc sulfate at 0.5 percent (5 g per liter of water) on the leaves. Repeat if new leaves still show bands. For the next planting, mix Zinc sulfate into the soil. Give about 20 kg per hectare (8 kg per acre). Do not put zinc in the same application as phosphate fertilizer."
+   "text": "Spray Zinc sulfate at 0.5 percent (5 g per liter of water, 80 g in a 16 liter sprayer) on the leaves. Repeat if new leaves still show bands. For the next planting, mix Zinc sulfate into the soil. Give about 20 kg per hectare. Do not put zinc in the same application as phosphate fertilizer. Give the soil dose at planting or when the rains begin, and sprays on young growth."
   },
   {
    "type": "list",
@@ -394,7 +400,7 @@
   },
   {
    "type": "text",
-   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester (22 percent zinc), **Petbowe Zinc Sulphate Monohydrate** (33 percent zinc), **Tierramino ZN** by Unilox Far East Resources (7 0 0 with 10 percent zinc) and **Liquid Chelate Zinc with Sulfur** by Sagrex (10 percent zinc and 5 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
   },
   {
    "type": "text",
@@ -435,7 +441,7 @@
   },
   {
    "type": "text",
-   "text": "Apply magnesium sulfate (Epsom salt or kieserite) to the soil. Give 25 kg per hectare, or a 2 percent magnesium sulfate spray (20 g per liter) twice, two weeks apart. On acid soils, Dolomite raises the pH and adds magnesium. Use not to apply magnesium and potassium fertilizers together."
+   "text": "Apply magnesium sulfate (Epsom salt or kieserite) to the soil. Give 25 kg per hectare, or a 2 percent magnesium sulfate spray (20 g per liter, 320 g in a 16 liter sprayer) twice, two weeks apart. On acid soils, Dolomite raises the pH and adds magnesium. Use not to apply magnesium and potassium fertilizers together."
   },
   {
    "type": "list",
@@ -448,11 +454,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium), **YaraTera KRISTA MgS** by Yara Fertilizers Philippines, Inc. (16 percent MgO and 13 percent sulfur), **Magnepro** by Ramgo International Corporation (16 percent MgO and 12.8 percent sulfur) and **Lucky Planters Magnesium Sulphate Heptahydrate (Epsom Salt)** by Mindanao Agriplus Corporation (16.27 percent MgO and 13 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
+   "text": "Sold here with magnesium: **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium), **Magnesium Sulphate Anhydrous** by Newman Chemicals (20 percent magnesium) and **Zetryl MAG 9** by Zetryl Chem (9 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [complete fertilizer](/blog/complete-fertilizer-14-14-14), and the page on [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, use dolomite rather than plain lime when acid fields need liming."
+   "text": "To keep it away, use dolomite rather than plain lime when acid fields need liming. Do not apply much more potash than the soil test asks."
   },
   {
    "type": "heading",
@@ -471,7 +477,7 @@
   },
   {
    "type": "text",
-   "text": "Very acid soils, below about pH 5.2, where aluminum is high and calcium is low. It is uncommon on soils that are limed."
+   "text": "Very acid soils, below about pH 5.2, where aluminum is high and calcium is low. It is uncommon on soils that are limed. Heavy potash or ammonium fertilizer, salty soil and dry spells keep calcium from reaching fruit and young leaves."
   },
   {
    "type": "heading",
@@ -480,7 +486,7 @@
   },
   {
    "type": "text",
-   "text": "Magnesium deficiency also gives rusty spots on old leaves. A soil test for calcium, magnesium and pH tells them apart. To be sure, send the top visible dewlap leaf blade to a lab: below 0.20 percent Ca is low. Test soil pH and exchangeable calcium."
+   "text": "Magnesium deficiency also gives rusty spots on old leaves. A soil test for calcium, magnesium and pH tells them apart. To be sure, send the top visible dewlap leaf blade to a lab: below 0.20 percent Ca is low. Test soil pH and exchangeable calcium. A pH below 5.2 means the field needs lime."
   },
   {
    "type": "heading",
@@ -489,7 +495,7 @@
   },
   {
    "type": "text",
-   "text": "Lime acid fields with Agricultural lime or Dolomite at the soil test rate, worked in before planting. On fields where the pH is fine, give Gypsum at 100 kg per hectare. Lime needs vary a lot: one study on Bukidnon cane farms set 1.6 to 7 tons of lime per hectare. So always follow the soil test."
+   "text": "Lime acid fields with Agricultural lime or Dolomite at the soil test rate, worked in before planting. On fields where the pH is fine, give Gypsum at 100 kg per hectare. The lime a cane field needs can run from 1.6 to 7 tons per hectare. So always follow the soil test."
   },
   {
    "type": "list",
@@ -502,11 +508,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
+   "text": "Sold here with calcium: **Planters Products Lifelime** (36.2 percent calcium), **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium) and **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, check soil pH at every planting and lime before it falls below about 5.2."
+   "text": "To keep it away, check soil pH at every planting and lime before it falls below about 5.2. Keep potash in balance with magnesium and calcium."
   },
   {
    "type": "heading",
@@ -540,7 +546,7 @@
   },
   {
    "type": "text",
-   "text": "Manganese shortage stripes begin halfway along the blade and reach the tip, never from the base. Grassy shoot disease also gives white leaves, but the stool throws many thin, grassy tillers. To be sure, check soil pH first, since iron shortage is mostly a high pH problem. Below 50 mg/kg Fe in the top visible dewlap leaf is low."
+   "text": "Manganese shortage stripes begin halfway along the blade and reach the tip, never from the base. Grassy shoot disease also gives white leaves, but the stool throws many thin, grassy tillers. To be sure, check soil pH first, since iron shortage is mostly a high pH problem. Below 50 mg/kg Fe in the top visible dewlap leaf is low. A test spray on a few stools that turns the new leaves green confirms it."
   },
   {
    "type": "heading",
@@ -549,7 +555,7 @@
   },
   {
    "type": "text",
-   "text": "Spray Ferrous sulfate at 2.5 to 5 g per liter (250 to 500 g per 100 liters), or 5 kg ferrous sulfate plus 2.5 kg urea in 500 liters per hectare. Repeat every 7 to 10 days until new leaves are green. You can also give 25 kg ferrous sulfate per hectare to the soil, or 100 kg mixed with 12.5 tons of farm manure. Stop liming the field."
+   "text": "Spray Ferrous sulfate at 2.5 to 5 g per liter (40 to 80 g in a 16 liter sprayer) (250 to 500 g per 100 liters), or 5 kg ferrous sulfate plus 2.5 kg urea in 500 liters per hectare. Repeat every 7 to 10 days until new leaves are green. You can also give 25 kg ferrous sulfate per hectare to the soil, or 100 kg mixed with 12.5 tons of farm manure. Stop liming the field. Spray the young leaves in the cool of the day, soon after sunrise or near sunset."
   },
   {
    "type": "list",
@@ -561,7 +567,7 @@
   },
   {
    "type": "text",
-   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+   "text": "Sold here with iron: **DDDD Planter's Choice Ferrous Sulphate Heptahydrate** by Modern Time (19 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl Chem (30 percent iron), **Ferrous Sulphate Monohydrate** by Newman Chemicals (30 percent iron) and **Liquid Chelate Iron with Sulfur** by Sagrex (5 percent iron and 3 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
   },
   {
    "type": "text",
@@ -593,7 +599,7 @@
   },
   {
    "type": "text",
-   "text": "Iron shortage stripes cover the whole blade, base to tip. Zinc deficiency gives a broad yellow band with green edges and midrib. To be sure, send the top visible dewlap leaf blade to a lab: below 16 mg/kg Mn is deficient and 20 to 100 mg/kg is the target. Check soil pH."
+   "text": "Iron shortage stripes cover the whole blade, base to tip. Zinc deficiency gives a broad yellow band with green edges and midrib. To be sure, send the top visible dewlap leaf blade to a lab: below 16 mg/kg Mn is deficient and 20 to 100 mg/kg is the target. Check soil pH. Spray a few stools and watch the new leaves."
   },
   {
    "type": "heading",
@@ -602,7 +608,7 @@
   },
   {
    "type": "text",
-   "text": "Spray Manganese sulfate on the leaves. Give 1 to 2 percent (10 to 20 g per liter), or a milder 5 g per liter. So start with the lower rate on a few stools to check for leaf burn. Stop liming until the pH comes down."
+   "text": "Spray Manganese sulfate on the leaves. Give 1 to 2 percent (10 to 20 g per liter, 160 to 320 g in a 16 liter sprayer), or a milder 5 g per liter (80 g in a 16 liter sprayer). So start with the lower rate on a few stools to check for leaf burn. Stop liming until the pH comes down. Spray the young leaves in the cool of the day, soon after sunrise or near sunset."
   },
   {
    "type": "list",
@@ -613,11 +619,65 @@
   },
   {
    "type": "text",
-   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl Chem (31 percent manganese), **Tierramino MN** by Unilox Far East Resources (7 0 0 with 12 percent manganese), **Multimate** by Agway (4 0 0 with 4.5 percent sulfur, 2.8 percent zinc and 1.8 percent manganese) and **Nutri Tabble Meta Foliar** by NS Northern Organic Fertilizer (12 percent zinc, 9 percent sulfur, 2 percent magnesium and 1.2 percent manganese). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
   },
   {
    "type": "text",
    "text": "To keep it away, lime only to the rate the soil test gives."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Silicon deficiency in sugarcane",
+   "id": "silicon"
+  },
+  {
+   "type": "text",
+   "text": "Older leaves show many tiny pale to white dots, mostly on the side that faces the sun, and they dry early. Stalks are shorter and thinner, borers and leaf diseases do more damage, and each ratoon crop is weaker than the last. You see it most at this stage: grand growth, and the later ratoons."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why silicon deficiency happens in tubo"
+  },
+  {
+   "type": "text",
+   "text": "Old, leached and acid soils low in silicon, sandy soils, and fields ratooned for many years with the trash burned. Lime raises the pH but adds no silicon."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Eyespot and rust also mark the leaves, but their spots have a colored ring or an orange powder. Freckling from silicon shortage is many small, even pale dots with no ring and no powder. To be sure, A leaf test of the top visible dewlap leaf: less than about 1 percent silicon is low. A soil test for available silicon confirms it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for silicon deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spread 1 to 3 tons of a calcium silicate or silicate slag per hectare in the furrow at planting, or along the rows after harvest before the ratoon grows. It also lowers soil acidity the way lime does."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Calcium silicate",
+    "Silicate slag",
+    "Mill mud and boiler ash"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with silicon: **Primera Assist** by Donato C. Cruz (9.3 percent silicon, 0.25 percent zinc and 0.001 percent molybdenum), **Wokozim Xtrude Granules** by Biostadt (0.1 0 0 with 11.7 percent silicon, 5.7 percent calcium, 3 percent magnesium and 0.05 percent zinc), **Agrisil 200** by Agfrontier (0 0 10 with 9.3 percent silicon) and **Potassium Silicate** by Newman Chemicals (0 0 10 with 9.3 percent silicon). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for rice](/blog/fertilizer-for-rice), and the page on [silicon deficiency](/nutrient-deficiencies/silicon-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, keep the cane trash on the field instead of burning it, return mill mud and boiler ash. Test the soil before you replant."
   },
   {
    "type": "callout",
@@ -650,7 +710,7 @@
     },
     {
      "q": "What fertilizer fixes potassium deficiency in sugarcane?",
-     "a": "Apply Muriate of potash 0 0 60 at the rate the soil test gives, split between planting and the side dressing. For a quick fix on a standing crop, give a 1 percent potassium chloride spray (10 g per liter) twice, two weeks apart."
+     "a": "Apply Muriate of potash 0 0 60 at the rate the soil test gives, split between planting and the side dressing. For a quick fix on a standing crop, give a 1 percent potassium chloride spray (10 g per liter, 160 g in a 16 liter sprayer) twice, two weeks apart."
     },
     {
      "q": "What fertilizer fixes phosphorus deficiency in sugarcane?",

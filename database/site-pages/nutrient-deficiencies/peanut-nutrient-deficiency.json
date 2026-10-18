@@ -17,7 +17,7 @@
   "foliar fertilizer",
   "ammonium sulfate fertilizer"
  ],
- "excerpt": "Peanut nutrient deficiency is one of the first things to check when the leaves of your mani (peanut) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are calcium, nitrogen, potassium, boron, sulfur, iron, zinc and manganese. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
+ "excerpt": "Peanut nutrient deficiency is one of the first things to check when the leaves of your mani (peanut) turn yellow, purple or burnt at the edges. On Philippine farms the usual ones are calcium, nitrogen, potassium, boron, sulfur, iron, zinc, manganese and molybdenum. This guide shows where each one starts, how to be sure, and the fertilizer that fixes it.",
  "heroImage": {
   "src": "/images/site/deficiencies/peanut-nitrogen-deficiency.webp",
   "alt": "Peanut leaf from a nutrient trial turned pale yellow green (right) beside a dark green leaf from a fully fed plant (left), from nitrogen shortage",
@@ -26,7 +26,7 @@
  "blocks": [
   {
    "type": "text",
-   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen and potassium move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron, sulfur, iron, zinc and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which peanut nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
+   "text": "Start with one question: did the change begin on the old leaves or on the young ones? Nitrogen, potassium and molybdenum move inside the plant, so a shortage shows on the old, lower leaves first. But calcium, boron, sulfur, iron, zinc and manganese stay where the plant first put them, so the young leaves and the growing tip show it first. After that, the color and the pattern narrow down which peanut nutrient deficiency you have, and a soil test confirms it. Each one below has its signs, its causes and its fix."
   },
   {
    "type": "heading",
@@ -59,6 +59,12 @@
      "old, lower leaves, leaf edges and tips",
      "Lower leaves pale slightly between the veins, then the leaf edges turn yellow and dry.",
      "Muriate of potash 0 0 60"
+    ],
+    [
+     "Molybdenum",
+     "old, lower leaves, the whole plant",
+     "Pale yellow plants that look short of nitrogen on acid soil, with small nodules that are white or green inside.",
+     "Sodium molybdate, Agricultural lime"
     ]
    ]
   },
@@ -141,7 +147,7 @@
   },
   {
    "type": "text",
-   "text": "Pods take calcium straight from the soil around them, not through the roots. So a dry or calcium poor pegging zone causes it."
+   "text": "Pods take calcium straight from the soil around them, not through the roots. So a dry or calcium poor pegging zone causes it. Acid sandy soil, heavy potash and dry spells at pod fill make it worse."
   },
   {
    "type": "heading",
@@ -150,7 +156,7 @@
   },
   {
    "type": "text",
-   "text": "Boron deficiency gives hollow, discolored hearts in the kernels and stubby branches. Drought and poor pollination also leave empty pods. To be sure, crack open pods from a test row: many pops point to calcium. Test the top 8 cm of soil next to the row soon after emergence."
+   "text": "Boron deficiency gives hollow, discolored hearts in the kernels and stubby branches. Drought and poor pollination also leave empty pods. To be sure, crack open pods from a test row: many pops point to calcium. Test the top 8 cm of soil next to the row soon after emergence. A soil test for calcium and pH, and a leaf test, confirm it."
   },
   {
    "type": "heading",
@@ -159,7 +165,7 @@
   },
   {
    "type": "text",
-   "text": "Spread Gypsum over the rows at early flowering, 30 to 45 days after planting. Give 200 kg gypsum per hectare at 45 days. Give about 1,100 kg per hectare (1,000 pounds per acre) for seed crops and low testing soils. Gypsum after 100 days is too late."
+   "text": "Spread Gypsum over the rows at early flowering, 30 to 45 days after planting. Give 200 kg gypsum per hectare at 45 days. Give about 1,100 kg per hectare for seed crops and on soils that test low. Gypsum after 100 days is too late."
   },
   {
    "type": "list",
@@ -172,11 +178,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with calcium: **Planters Products Lifelime** by Planters Products, Inc. (50.59 percent CaO), **Macrock Limestone** by Donumdei 1 Corp. (36 to 42 percent calcium), **Calcic Lime** by Mindanao Agriplus Corporation (35.52 percent calcium) and **Dolomite** by A6 Agrisource Limited Corporation (24 percent calcium and 11 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
+   "text": "Sold here with calcium: **Planters Products Lifelime** (36.2 percent calcium), **Dolomite** by A6 Agrisource (24 percent calcium and 11 percent magnesium), **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium) and **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes), and the page on [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) in every crop. In anee.io, Anee, the [smart farm technician](/features/ai-agricultural-technician), reads a photo of the leaf and tells you which nutrient is short."
   },
   {
    "type": "text",
-   "text": "To keep it away, lime soils below pH 5.8 a few months before planting to reach pH 6.2 to 6.5."
+   "text": "To keep it away, lime soils below pH 5.8 a few months before planting to reach pH 6.2 to 6.5. Do not plow deep after liming. Keep the soil moist during pod fill."
   },
   {
    "type": "heading",
@@ -210,7 +216,7 @@
   },
   {
    "type": "text",
-   "text": "Sulfur deficiency also gives evenly pale plants. Check the nodules first. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead."
+   "text": "Sulfur deficiency also gives evenly pale plants. Check the nodules first. To be sure, dig, do not pull, a few plants 3 to 6 weeks after planting, wash the roots and cut some nodules open. Pink to red inside means they are working, white means not active yet, and brown, grey or mushy means dead. Yellow plants with few or dead nodules point to a nodulation failure, not a lack of fertilizer."
   },
   {
    "type": "heading",
@@ -219,7 +225,7 @@
   },
   {
    "type": "text",
-   "text": "Feed the crop, since new nodules cannot be added now. Give a 1 to 2 percent urea spray (10 to 20 g per liter) every 15 days. A light sidedress of Urea 46 0 0 also helps when nodules are poor."
+   "text": "Feed the crop, since new nodules cannot be added now. Give a 1 to 2 percent urea spray (10 to 20 g per liter, 160 to 320 g in a 16 liter sprayer) every 15 days. A light sidedress of Urea 46 0 0 also helps when nodules are poor. If the nodules failed, 10 to 20 kg of nitrogen per hectare is enough: about half a bag of Urea 46 0 0 beside the rows, before flowering."
   },
   {
    "type": "list",
@@ -231,11 +237,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with nitrogen: **Atlas Granular Urea** by Atlas Fertilizer Corporation (46 0 0), **YaraVera Viking Ship Granular Urea** by Yara Fertilizers Philippines, Inc. (46 0 0), **Planters Products Granular Urea** by Planters Products, Inc. (46 0 0) and **Harbest Granular Urea** by Harbest Agribusiness Corporation (46 0 0). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
+   "text": "Sold here with nitrogen: **Atlas Granular Urea (46 0 0)** by Atlas Fertilizer, **Crown Champion Ammonium Sulfate** by Aqua Hydroponic Prime Ventures (21 0 0 with 24 percent sulfur), **Agripower 46 0 0 (Locally Blended) Coated** by Green Acres Agri Tech and **Calcipro** by Ramgo (15.5 0 0 with 18.8 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [urea fertilizer](/blog/urea-fertilizer), and the page on [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, inoculate seed with a peanut Rhizobium inoculant at planting, keep it out of the sun, and avoid heavy nitrogen near the seed."
+   "text": "To keep it away, inoculate seed with a peanut Rhizobium inoculant at planting, keep it out of the sun, and avoid heavy nitrogen near the seed. Let a soil test and the crop's color set the season's nitrogen. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -272,7 +278,7 @@
   },
   {
    "type": "text",
-   "text": "Give a 1 to 2 percent potassium chloride spray (10 to 20 g Muriate of potash per liter) every 15 days. Give soil potash only as the soil test advises, because too much crowds calcium out of the pods."
+   "text": "Give a 1 to 2 percent potassium chloride spray (10 to 20 g Muriate of potash per liter) every 15 days. Give soil potash only as the soil test advises, because too much crowds calcium out of the pods. A usual dose is 1 bag of Muriate of potash 0 0 60 per hectare at planting."
   },
   {
    "type": "list",
@@ -283,11 +289,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with potassium: **Atlas Muriate of Potash** by Atlas Fertilizer Corporation (0 0 60), **Philphos Muriate of Potash** by Philippine Phosphate Fertilizer Corporation (0 0 60), **Harbest Granular Muriate of Potash** by Harbest Agribusiness Corporation (0 0 60) and **Swire Muriate of Potash** by Swire Agrotech Agricultural Products Inc. (0 0 60). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
+   "text": "Sold here with potassium: **Atlas Muriate of Potash (MOP)** by Atlas Fertilizer (0 0 60), **Simplot Sulfate 0 0 50** by Nutranta, **Potassium Nitrate** by Parafield (13 0 46) and **Qrop Mix Production 14 0 23 plus 13 Cao** by Farmtech Agriland (14 0 23 with 9.3 percent calcium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [potash fertilizer](/blog/potash-fertilizer), and the page on [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, balance potash with gypsum or lime so pods still get enough calcium."
+   "text": "To keep it away, balance potash with gypsum or lime so pods still get enough calcium. Keep organic matter up with compost, manure or crop residues. Split the potash on sandy soil."
   },
   {
    "type": "heading",
@@ -315,7 +321,7 @@
   },
   {
    "type": "text",
-   "text": "Calcium deficiency also gives pops, but kernels are shrunken with a dark germ rather than hollow. Check both in a soil test. To be sure, split kernels to look for the hollow heart. Test soil and leaves for boron."
+   "text": "Calcium deficiency also gives pops, but kernels are shrunken with a dark germ rather than hollow. Check both in a soil test. To be sure, split kernels to look for the hollow heart. Test soil and leaves for boron. A soil test for boron and a leaf test confirm it."
   },
   {
    "type": "heading",
@@ -336,11 +342,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with boron: **Solubor** by Caldic Philippines Inc. (21 percent boron), **Etifert 11 (Borax Decahydrate)** by Zetryl.Chem Phils., Inc. (11 percent boron), **YaraVita BORTRAC 150** by Yara Fertilizers Philippines, Inc. (11.1 percent boron) and **Grow More Liquid Chelate Boron** by Sagrex Corporation (10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
+   "text": "Sold here with boron: **Etifert 11 (Borax Decahydrate)** by Zetryl Chem (11 percent boron), **Fertibagra 15G** by Unilox Far East Resources (14.6 percent boron), **B17 (Boric Acid)** by Newman Chemicals (17 percent boron) and **Better Yield** by Bacphil Planters Fertilizer (0 0 0.9 with 10 percent boron). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [boron deficiency](/nutrient-deficiencies/boron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, test for boron on sandy soils before planting peanut."
+   "text": "To keep it away, test for boron on sandy soils before planting peanut. Test the soil every two or three years. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -359,7 +365,7 @@
   },
   {
    "type": "text",
-   "text": "Sandy soils low in organic matter and fields fed for years with sulfur free fertilizer. Legumes need more sulfur than cereals (UW)."
+   "text": "Sandy soils low in organic matter and fields fed for years with sulfur free fertilizer. Legumes need more sulfur than cereals."
   },
   {
    "type": "heading",
@@ -368,7 +374,7 @@
   },
   {
    "type": "text",
-   "text": "Nitrogen deficiency also gives pale plants. Check the nodules and whether the old leaves yellowed first. To be sure, soil and leaf test for sulfur."
+   "text": "Nitrogen deficiency also gives pale plants. Check the nodules and whether the old leaves yellowed first. To be sure, soil and leaf test for sulfur. In a soil test, less than 10 ppm of sulfate sulfur is low."
   },
   {
    "type": "heading",
@@ -377,7 +383,7 @@
   },
   {
    "type": "text",
-   "text": "Give 200 kg Gypsum per hectare to the soil, which also feeds the pods calcium."
+   "text": "Give 200 kg Gypsum per hectare to the soil, which also feeds the pods calcium. Give it at planting or with the first side dress."
   },
   {
    "type": "list",
@@ -388,11 +394,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with sulfur: **Farmfix Sulfur** by Philippine FarmFix, Inc. (99 percent sulfur), **VSI Sulfur Powder** by Newman Chemicals Corporation (99.5 percent sulfur), **Atlas Ammosul** by Atlas Fertilizer Corporation (21 0 0 with 24 percent sulfur) and **Philphos 21 0 0** by Philippine Phosphate Fertilizer Corporation (21 0 0 (ammonium sulfate)). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
+   "text": "Sold here with sulfur: **Crown Champion Ammonium Sulfate** by Aqua Hydroponic Prime Ventures (21 0 0 with 24 percent sulfur), **Philphos Gypsum** (22.2 percent calcium and 17.4 percent sulfur), **Harvester Sulphate of Potash** by Universal Harvester (0 0 50 with 17.5 percent sulfur) and **Agsmart Kieserite Granule** (20 percent sulfur and 16.3 percent magnesium). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0), and the page on [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, gypsum at flowering covers both sulfur and calcium needs."
+   "text": "To keep it away, gypsum at flowering covers both sulfur and calcium needs. Test the soil every two or three years. Keep organic matter up with compost, manure or crop residues."
   },
   {
    "type": "heading",
@@ -426,7 +432,7 @@
   },
   {
    "type": "text",
-   "text": "Manganese deficiency also yellows between the veins but is usually milder. Sulfur deficiency yellows the whole leaf evenly. To be sure, soil pH test and a young leaf test."
+   "text": "Manganese deficiency also yellows between the veins but is usually milder. Sulfur deficiency yellows the whole leaf evenly. To be sure, soil pH test and a young leaf test. In a soil test, less than 4.5 ppm of iron is low."
   },
   {
    "type": "heading",
@@ -435,7 +441,7 @@
   },
   {
    "type": "text",
-   "text": "Give a 1 percent ferrous sulfate spray (10 g per liter) at 30, 40 and 50 days after sowing."
+   "text": "Give a 1 percent ferrous sulfate spray (10 g per liter, 160 g in a 16 liter sprayer) at 30, 40 and 50 days after sowing."
   },
   {
    "type": "list",
@@ -446,11 +452,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with iron: **Ferrous Sulphate Heptahydrate** by Cleveland Industries Inc. (20 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl.Chem Phils., Inc. (30 percent iron), **Grow More Liquid Chelate Iron with Sulfur** by Sagrex Corporation (5 percent iron and 3 percent sulfur) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
+   "text": "Sold here with iron: **DDDD Planter's Choice Ferrous Sulphate Heptahydrate** by Modern Time (19 percent iron), **Ferrous Sulfate Monohydrate** by Zetryl Chem (30 percent iron), **Ferrous Sulphate Monohydrate** by Newman Chemicals (30 percent iron) and **Liquid Chelate Iron with Sulfur** by Sagrex (5 percent iron and 3 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [iron deficiency](/nutrient-deficiencies/iron-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, avoid over liming, and add compost to limey fields."
+   "text": "To keep it away, avoid over liming, and add compost to limey fields. Test the soil every two or three years."
   },
   {
    "type": "heading",
@@ -478,7 +484,7 @@
   },
   {
    "type": "text",
-   "text": "Iron deficiency starts on the youngest leaves with green veins and no stripes along the veins. To be sure, soil test for zinc and pH, or a leaf test."
+   "text": "Iron deficiency starts on the youngest leaves with green veins and no stripes along the veins. To be sure, soil test for zinc and pH, or a leaf test. In a soil test, less than 0.8 ppm of zinc is low."
   },
   {
    "type": "heading",
@@ -487,7 +493,7 @@
   },
   {
    "type": "text",
-   "text": "Give 25 kg Zinc sulfate per hectare as a basal dose, or a 1 percent zinc sulfate spray (10 g per liter) every 15 days."
+   "text": "Give 25 kg Zinc sulfate per hectare as a basal dose, or a 1 percent zinc sulfate spray (10 g per liter, 160 g in a 16 liter sprayer) every 15 days."
   },
   {
    "type": "list",
@@ -498,11 +504,11 @@
   },
   {
    "type": "text",
-   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester, Inc. (22 percent zinc), **Great Planters Zinc Sulphate Heptahydrate** by Agway Chemicals Corp. (21 percent zinc), **Zinc Sulphate Monohydrate** by Petbowe Trading Corporation (33 percent zinc) and **YaraVita ZINTRAC 700** by Yara Fertilizers Philippines, Inc. (40 percent zinc). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
+   "text": "Sold here with zinc: **Harvester Zinc Sulphate Heptahydrate** by Universal Harvester (22 percent zinc), **Petbowe Zinc Sulphate Monohydrate** (33 percent zinc), **Tierramino ZN** by Unilox Far East Resources (7 0 0 with 10 percent zinc) and **Liquid Chelate Zinc with Sulfur** by Sagrex (10 percent zinc and 5 percent sulfur). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [fertilizer with zinc](/blog/micronutrients-for-rice), and the page on [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, add zinc sulfate with the basal fertilizer on high pH soils."
+   "text": "To keep it away, add zinc sulfate with the basal fertilizer on high pH soils. Test the soil every two or three years. Do not overdo phosphorus."
   },
   {
    "type": "heading",
@@ -521,7 +527,7 @@
   },
   {
    "type": "text",
-   "text": "High pH soils, sandy soils that were limed too much, and soils high in organic matter (UW)."
+   "text": "High pH soils, sandy soils that were limed too much, and soils high in organic matter."
   },
   {
    "type": "heading",
@@ -530,7 +536,7 @@
   },
   {
    "type": "text",
-   "text": "Iron deficiency gives a stronger yellow on the newest leaves. Magnesium deficiency starts on the older leaves. To be sure, leaf test for manganese and a soil pH test."
+   "text": "Iron deficiency gives a stronger yellow on the newest leaves. Magnesium deficiency starts on the older leaves. To be sure, leaf test for manganese and a soil pH test. In a soil test, less than 1 ppm of manganese is low."
   },
   {
    "type": "heading",
@@ -539,7 +545,7 @@
   },
   {
    "type": "text",
-   "text": "Give a 0.5 percent manganese sulfate spray (5 g per liter) every 15 days, or 5 to 10 kg manganese sulfate per hectare to the soil."
+   "text": "Give a 0.5 percent manganese sulfate spray (5 g per liter, 80 g in a 16 liter sprayer) every 15 days, or 5 to 10 kg manganese sulfate per hectare to the soil."
   },
   {
    "type": "list",
@@ -550,11 +556,65 @@
   },
   {
    "type": "text",
-   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl.Chem Phils., Inc. (31 percent manganese), **Tierramino Mn** by Unilox Far East Resources Inc. (12 percent manganese and 7 percent N), **Multimate** by Agway Chemicals Corp. (1.8 percent Mn, 2.8 percent Zn, 4 percent N, 4.5 percent S (w/v)) and **Biozome** by Manchem Industries, Inc. (12 percent S, 12 percent Zn, 3 percent Mn, 1 percent Mg, 1 percent Fe, 1 percent Cu, 0.5 percent B, 0.05 percent Mo). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
+   "text": "Sold here with manganese: **Manganese Sulfate** by Zetryl Chem (31 percent manganese), **Tierramino MN** by Unilox Far East Resources (7 0 0 with 12 percent manganese), **Multimate** by Agway (4 0 0 with 4.5 percent sulfur, 2.8 percent zinc and 1.8 percent manganese) and **Nutri Tabble Meta Foliar** by NS Northern Organic Fertilizer (12 percent zinc, 9 percent sulfur, 2 percent magnesium and 1.2 percent manganese). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) in every crop."
   },
   {
    "type": "text",
-   "text": "To keep it away, do not lime above the target pH of 6.2 to 6.5."
+   "text": "To keep it away, do not lime above the target pH of 6.2 to 6.5. Test the soil every two or three years."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Molybdenum deficiency in peanut",
+   "id": "molybdenum"
+  },
+  {
+   "type": "text",
+   "text": "The whole plant turns pale green to yellow and stays small, much like a nitrogen shortage, because the nodules cannot fix nitrogen without molybdenum. The edges of old leaves may scorch. Nodules are few and small, and white or green inside instead of pink. You see it most at this stage: three to six weeks after planting, when the plant begins to live on its nodules."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Why molybdenum deficiency happens in mani"
+  },
+  {
+   "type": "text",
+   "text": "Acid soil below pH 5.5, which holds molybdenum fast, and sandy, leached soils. Heavy sulfate fertilizer can hold back its uptake."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "How to tell it apart"
+  },
+  {
+   "type": "text",
+   "text": "Nitrogen shortage from nodules that never formed looks the same. Dig a few plants and cut the nodules open: pink inside means they work. To be sure, A soil pH test (below 5.5 is the warning sign) and a test spray of sodium molybdate on a few rows: they green up within one or two weeks. A soil pH test confirms the risk. A test spray of sodium molybdate on a few plants confirms the cause when they green up."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "What to apply for molybdenum deficiency"
+  },
+  {
+   "type": "text",
+   "text": "Spray Sodium molybdate at 0.05 to 0.1 percent (8 to 16 grams in a 16 liter sprayer) once or twice on young plants. For the next crop, coat the seed with 2 to 4 grams of sodium molybdate per kilo of seed just before planting, with the Rhizobium inoculant. On acid soil, lime to pH 6 to 6.5. For the next crop, coat the seed with 2 to 4 grams of Sodium molybdate per kilo of seed just before planting."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sodium molybdate",
+    "Agricultural lime",
+    "Dolomite"
+   ]
+  },
+  {
+   "type": "text",
+   "text": "Sold here with molybdenum: **Liquid Chelate Molybdenum** by Sagrex (5 percent molybdenum), **Tierramino Molybdenum** by Unilox Far East Resources (16 percent molybdenum) and **YaraVita Teprosyn Mo** (0 15 0 with 15.3 percent molybdenum). Check the FPA registration on the bag and follow the label rate. For the how and when, see our guide to [foliar fertilizer](/blog/foliar-fertilizer), and the page on [molybdenum deficiency](/nutrient-deficiencies/molybdenum-deficiency) in every crop."
+  },
+  {
+   "type": "text",
+   "text": "To keep it away, lime acid soil to pH 6 to 6.5 with Agricultural lime or Dolomite. Treat the seed with molybdenum on fields that have shown it before. Test the soil every two or three years."
   },
   {
    "type": "callout",
@@ -587,7 +647,7 @@
     },
     {
      "q": "What fertilizer fixes nitrogen deficiency in peanut?",
-     "a": "Feed the crop, since new nodules cannot be added now. Give a 1 to 2 percent urea spray (10 to 20 g per liter) every 15 days."
+     "a": "Feed the crop, since new nodules cannot be added now. Give a 1 to 2 percent urea spray (10 to 20 g per liter, 160 to 320 g in a 16 liter sprayer) every 15 days."
     },
     {
      "q": "What fertilizer fixes potassium deficiency in peanut?",

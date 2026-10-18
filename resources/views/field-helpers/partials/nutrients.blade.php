@@ -39,6 +39,8 @@
     html.dark .nd-match { color: #bbf7d0; background: #14351f; }
     .nd-legend { display: flex; flex-wrap: wrap; gap: .4rem; }
     .nd-legend span { display: inline-flex; align-items: center; gap: .35rem; font-size: .74rem; color: var(--color-gray-600); }
+    /* Sold here, split by how it goes on (2026-10-19): the soil products, then the sprays. */
+    .nd-use { margin: .55rem 0 .3rem; font-size: .7rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-500); }
 </style>
 
 <button type="button" class="fh-cat-open" data-fh-cat>
@@ -129,6 +131,12 @@
     const NUT = D.nutrients || {};
     const symOf = (i) => '<span class="nd-sym" style="--g: ' + (i.hue || 98) + '" aria-hidden="true">' + esc(i.sym) + '</span>';
     const prods = (i) => (((P.nc || {})[i.n] || {})[i.crops[0]] || []).map((k) => FH.prodCards[k]).filter(Boolean);
+    // The products for the soil (granules, powders, salts that also dissolve for a spray), then the sprays for the leaves.
+    const strips = (ps) => {
+        const soil = ps.filter((p) => p.use !== 'foliar'), spray = ps.filter((p) => p.use === 'foliar');
+        if (!soil.length || !spray.length) return FH.prodStrip(ps);
+        return '<p class="nd-use">For the soil</p>' + FH.prodStrip(soil) + '<p class="nd-use">Sprays for the leaves</p>' + FH.prodStrip(spray);
+    };
     const mats = (i) => (i.materials || []).length ? '<div class="nd-mats">' + i.materials.map((m) => '<span>' + esc(m) + '</span>').join('') + '</div>' : '';
     const moves = (i) => {
         const n = NUT[i.n];
@@ -139,7 +147,7 @@
     const apply = (i, withProducts) => {
         const ps = prods(i);
         return (i.fix ? '<p>' + esc(i.fix) + '</p>' : '') + mats(i)
-            + (withProducts && ps.length ? '<p class="fh-spray-h" style="margin-top:.7rem">' + I.bag + 'Sold here</p>' + FH.prodStrip(ps) : '');
+            + (withProducts && ps.length ? '<p class="fh-spray-h" style="margin-top:.7rem">' + I.bag + 'Sold here</p>' + strips(ps) : '');
     };
 
     /* ---- One entry, in the catalogue's second pane ------------------- */
@@ -164,7 +172,7 @@
             + text(I.info, 'Easy to mistake for', i.confuse)
             + text(I.check || I.eye, 'How to be sure', i.confirm)
             + FH.sec(I.drop, 'What to apply', apply(i, false))
-            + (ps.length ? FH.sec(I.bag, 'Fertilizers sold here with ' + String(i.kind).toLowerCase(), FH.prodStrip(ps) + '<p class="fh-fine">Use the rate on the label and your soil test. The Shopee and Lazada links only search those shops for the name.</p>') : '')
+            + (ps.length ? FH.sec(I.bag, 'Fertilizers sold here with ' + String(i.kind).toLowerCase(), strips(ps) + '<p class="fh-fine">The brands of Philippine companies come first, then the global makers sold here.Use the rate on the label and your soil test. The Shopee and Lazada links only search those shops for the name.</p>') : '')
             + text(I.sprout, 'How to keep it away', i.prevent)
             + moves(i)
             + FH.sources(i.sources)
