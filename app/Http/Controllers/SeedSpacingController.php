@@ -38,7 +38,9 @@ class SeedSpacingController extends Controller
         $name = mb_substr(trim((string) $request->query('name', '')), 0, 120);
         $vy = array_key_exists($crop, SeedSpacing::CROPS) && $name !== '' ? SeedSpacing::varietyYield(['crop' => $crop, 'variety' => $name]) : null;
 
-        return $this->json(true, 'ok', ['yield' => $vy]);
+        $ok = array_key_exists($crop, SeedSpacing::CROPS) && $name !== '';
+
+        return $this->json(true, 'ok', ['yield' => $vy, 'trial' => $ok ? SeedSpacing::trial($crop, $name, $vy) : null]);
     }
 
     /**
@@ -72,6 +74,7 @@ class SeedSpacingController extends Controller
         }
         $res = SeedSpacing::compute($c, null, $ctx);
         $res['lot'] = $ctx['lot'] ?? null;
+        $res['trial'] = SeedSpacing::trial($c['crop'], $c['variety'], SeedSpacing::varietyYield($c));
         $title = mb_substr(SeedSpacing::title($c, $res, $ctx['lot']['name'] ?? null), 0, 190);
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => $title,

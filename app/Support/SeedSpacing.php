@@ -107,6 +107,14 @@ final class SeedSpacing
     /** The share of empty hills a seeds a hill count may leave. */
     public const SHORT_OK = 0.10;
 
+    /**
+     * A crop the guides sow one seed a hill and replant the gaps (oneSeed:
+     * hybrid corn, white and sweet corn, ampalaya from sprouted seed): up to
+     * this share of empty hills before a second seed is suggested; the replant
+     * reserve is sized to the empty share, and the replanted hills count.
+     */
+    public const SHORT_ONE = 0.15;
+
     /** For a crop kept 2 or more a hill: the share of hills that may come up with fewer. */
     public const SHORT_PART = 0.20;
 
@@ -159,21 +167,21 @@ final class SeedSpacing
             'testDays' => '5 to 10',
             'note' => 'A drum seeder or a seed drill on rows 20 to 25 cm apart takes about 40 to 60 kg a hectare. Broadcast seed has no rows to count: it takes about 60 to 80 kg.'],
         'corn_yellow' => ['name' => 'Yellow corn, hybrid', 'local' => 'Mais, dilaw', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows',
-            'row' => [60, 70, 90], 'plant' => [15, 20, 25], 'perHill' => [1, 1, 2], 'keep' => 1,
+            'row' => [60, 70, 90], 'plant' => [15, 20, 25], 'perHill' => [1, 1, 2], 'keep' => 1, 'oneSeed' => true,
             'germ' => [90, 85], 'loss' => 5, 'reserve' => 5, 'tgw' => [250, 350],
             'stand' => [60000, 91000], 'standBy' => 'plants',
             'yield' => ['model' => 'ear', 'ears' => 0.95, 'perEar' => 120, 'fresh' => false, 'loss' => 5, 'what' => 'dry grain', 'sack' => 50, 'word' => 'ears'],
             'testDays' => '4 to 7',
             'note' => 'One seed a hill in 70 cm rows with 18 to 20 cm between hills is the usual with hybrid seed: about 22 to 24 kg a hectare for 75,000 plants or more. Fill any gaps within a week.'],
         'corn_white' => ['name' => 'White or glutinous corn', 'local' => 'Mais, puti o lagkitan', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows', 'book' => 'corn_glutinous',
-            'row' => [60, 75, 90], 'plant' => [20, 25, 30], 'perHill' => [1, 1, 2], 'keep' => 1,
+            'row' => [60, 75, 90], 'plant' => [20, 25, 30], 'perHill' => [1, 1, 2], 'keep' => 1, 'oneSeed' => true,
             'germ' => [85, 85], 'loss' => 5, 'reserve' => 10, 'tgw' => [180, 320],
             'stand' => [40000, 60000], 'standBy' => 'plants',
             'yield' => ['model' => 'ear', 'ears' => 0.95, 'perEar' => 90, 'fresh' => false, 'loss' => 5, 'what' => 'dry grain', 'sack' => 50, 'word' => 'ears'],
             'testDays' => '4 to 7',
             'note' => 'About 20 kg of seed at 75 by 25 cm; 75 by 30 cm for bigger green ears to sell fresh. A fresh glutinous ear in its husk weighs about 150 to 250 g.'],
         'corn_sweet' => ['name' => 'Sweet corn', 'local' => 'Mais, matamis', 'group' => 'grain', 'methods' => ['direct'], 'layout' => 'rows',
-            'row' => [60, 75, 90], 'plant' => [20, 25, 30], 'perHill' => [1, 1, 2], 'keep' => 1,
+            'row' => [60, 75, 90], 'plant' => [20, 25, 30], 'perHill' => [1, 1, 2], 'keep' => 1, 'oneSeed' => true,
             'germ' => [85, 85], 'loss' => 5, 'reserve' => 10, 'tgw' => [100, 200],
             'stand' => [46000, 66667], 'standBy' => 'plants',
             'yield' => ['model' => 'ear', 'ears' => 0.9, 'perEar' => 300, 'fresh' => true, 'loss' => 5, 'what' => 'fresh ears', 'word' => 'ears'],
@@ -263,7 +271,7 @@ final class SeedSpacing
 
         // ---- Vines and gourds ----
         'ampalaya' => ['name' => 'Ampalaya', 'local' => 'Ampalaya', 'group' => 'vine', 'methods' => ['direct', 'transplant'], 'layout' => 'rows',
-            'row' => [150, 200, 300], 'plant' => [30, 50, 100], 'perHill' => [1, 2, 3], 'keep' => 1, 'transplant' => ['perHill' => [1, 1, 1]],
+            'row' => [150, 200, 300], 'plant' => [30, 50, 100], 'perHill' => [1, 2, 3], 'keep' => 1, 'oneSeed' => true, 'transplant' => ['perHill' => [1, 1, 1]],
             'germ' => [80, 60], 'fit' => 90, 'loss' => 5, 'reserve' => 10, 'tgw' => [130, 220],
             'stand' => [6000, 22222], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 2, 'unit' => 'kg', 'loss' => 10, 'what' => 'fresh fruit'],
@@ -395,7 +403,13 @@ final class SeedSpacing
             'germ' => [90, 80], 'loss' => 5, 'reserve' => 5, 'pieceWt' => null,
             'stand' => [1111, 2700], 'standBy' => 'plants',
             'yield' => ['model' => 'plant', 'perPlant' => 16, 'unit' => 'kg', 'loss' => 10, 'what' => 'fruit', 'perYear' => true],
-            'note' => 'Tissue culture plantlets or sword suckers at 2 by 2.5 m (2,000 mats) or 3 by 3 m (1,111). Cavendish bunches run heavier: change the harvest a plant.'],
+            'note' => 'Tissue culture plantlets or sword suckers at 2 by 2.5 m (2,000 mats) or 3 by 3 m (1,111). Cavendish has an entry of its own.'],
+        'banana_cavendish' => ['name' => 'Banana, Cavendish', 'local' => 'Saging, Cavendish', 'group' => 'tree', 'methods' => ['piece'], 'layout' => 'rows', 'piece' => ['plantlet', 'plantlets'], 'book' => 'banana',
+            'row' => [200, 230, 300], 'plant' => [180, 200, 250], 'perHill' => [1, 1, 1], 'keep' => null,
+            'germ' => [95, 85], 'loss' => 10, 'reserve' => 5, 'pieceWt' => null,
+            'stand' => [1700, 2500], 'standBy' => 'plants',
+            'yield' => ['model' => 'plant', 'perPlant' => 18, 'unit' => 'kg', 'loss' => 8, 'what' => 'fruit', 'perYear' => true],
+            'note' => 'Tissue culture plantlets, often in double rows, about 2,000 to 2,300 a hectare. A bunch weighs about 20 kg without its stalk, and a mat bears about once a year.'],
         'banana_saba' => ['name' => 'Banana, Saba or Cardaba', 'local' => 'Saging na saba', 'group' => 'tree', 'methods' => ['piece'], 'layout' => 'rows', 'piece' => ['plantlet', 'plantlets'], 'book' => 'banana',
             'row' => [300, 400, 700], 'plant' => [300, 400, 500], 'perHill' => [1, 1, 1], 'keep' => null,
             'germ' => [90, 80], 'loss' => 10, 'reserve' => 5, 'pieceWt' => null,
@@ -579,6 +593,29 @@ final class SeedSpacing
         return is_array($v) && $v ? $v : null;
     }
 
+    /**
+     * What a variety gave in its trials, to say beside what the stand can
+     * carry (2026-10-19, the owner): the shelf's fitted average, else the
+     * variety book's average and top. Never multiplied into the count.
+     */
+    public static function trial(string $crop, ?string $name, ?array $vy): ?array
+    {
+        $name = trim((string) $name);
+        if ($name === '') {
+            return null;
+        }
+        $book = class_exists(\App\Support\VarietyYield::class) ? \App\Support\VarietyYield::bookKey($crop) : (self::CROPS[$crop]['book'] ?? $crop);
+        $rec = rescue(fn () => VarietyBook::match($book, $name), null, false);
+        $fy = $vy['extra']['fitYield'] ?? null;
+        $avg = is_numeric($fy) && (float) $fy > 0 ? (float) $fy : (isset($rec['yield']) && is_numeric($rec['yield']) && (float) $rec['yield'] > 0 ? (float) $rec['yield'] : null);
+        if ($avg === null) {
+            return null;
+        }
+        $top = isset($rec['yieldTop']) && is_numeric($rec['yieldTop']) && (float) $rec['yieldTop'] > $avg ? (float) $rec['yieldTop'] : null;
+
+        return ['name' => (string) ($rec['name'] ?? $vy['name'] ?? $name), 'avg' => $avg, 'top' => $top, 'unit' => (string) ($rec['yieldUnit'] ?? 't/ha') ?: 't/ha'];
+    }
+
     /** A variety part as [low, high], or null. */
     public static function span($o): ?array
     {
@@ -651,10 +688,10 @@ final class SeedSpacing
         return $s;
     }
 
-    /** Whether n a hill leaves few enough hills empty, and (kept 2 or more) few enough short. */
-    public static function enough(int $n, float $p, ?int $keep): bool
+    /** Whether n a hill leaves few enough hills empty (SHORT_OK, or SHORT_ONE for a crop sown one a hill), and (kept 2 or more) few enough short. */
+    public static function enough(int $n, float $p, ?int $keep, float $ok = self::SHORT_OK): bool
     {
-        if (((1 - $p) ** $n) > self::SHORT_OK + 1e-9) {
+        if (((1 - $p) ** $n) > $ok + 1e-9) {
             return false;
         }
 
@@ -669,8 +706,9 @@ final class SeedSpacing
             return ['n' => $ph[1], 'ok' => true];
         }
         $top = max($ph[2], $keep ?? 1);
+        $ok = ! empty($C['oneSeed']) ? self::SHORT_ONE : self::SHORT_OK;
         for ($n = max($keep ?? 1, $ph[0]); $n <= $top; $n++) {
-            if (self::enough($n, $p, $keep)) {
+            if (self::enough($n, $p, $keep, $ok)) {
                 // A crop not thinned is sown for its stand: never fewer than its usual.
                 return ['n' => $keep === null ? max($n, $ph[1]) : $n, 'ok' => true];
             }
@@ -729,6 +767,12 @@ final class SeedSpacing
         $empty = (1 - $pCome) ** $n;
         $short = $c['keep'] !== null && $c['keep'] >= 2 ? self::shortShare($n, $pCome, min($c['keep'], $n)) : $empty;
         $filled = 1 - (1 - $pLive) ** $n;
+        // Sown one a hill, the gaps replanted within a week from the reserve: the reserve covers the empty share, and the hills replanted count.
+        $replant = ! empty($C['oneSeed']) && $method === 'direct' && $n === 1;
+        if ($replant) {
+            $res = max($res, $empty);
+            $kept = ($pCome + (1 - $pCome) * $pCome) * $post;
+        }
         $byHills = $C['standBy'] === 'hills';
         $perHillStand = $byHills ? $filled : $kept;
         // The weight of one seed or piece, g: the farmer's own, the variety's, or the crop's spread.
@@ -864,7 +908,7 @@ final class SeedSpacing
         if ($c['crop'] === 'rice' && $n > self::RICE_HILL_MAX) {
             $flags[] = ['rice-seedlings', $n >= self::RICE_HILL_BAD ? 'bad' : 'warn'];
         } elseif ($method !== 'transplant') {
-            if (! self::enough($n, $pCome, $c['keep'])) {
+            if (! self::enough($n, $pCome, $c['keep'], ! empty($C['oneSeed']) ? self::SHORT_ONE : self::SHORT_OK)) {
                 $flags[] = ['hill-short', $empty > self::SHORT_BAD ? 'bad' : 'warn'];
             } elseif ($c['keep'] !== null && $n > $sug['n'] + 1) {
                 $flags[] = ['hill-extra', 'warn'];
@@ -920,7 +964,8 @@ final class SeedSpacing
             'given' => $r($given, 1),
             'areaHill' => $r($areaHill, 1),
             'hillsHa' => $r($hillsHa, 1), 'hillsLot' => $r($lot($hillsHa), 1),
-            'perHill' => $n, 'suggest' => $sug['n'], 'suggestOk' => $sug['ok'], 'kept' => $k,
+            'perHill' => $n, 'suggest' => $sug['n'], 'suggestOk' => $sug['ok'], 'kept' => $k, 'reserve' => $r($res * 100, 2),
+            'replant' => $replant ? ['share' => $r($empty, 4), 'after' => $r((1 - $pCome) ** 2, 4), 'seedsHa' => $r($hillsHa * $empty, 1), 'kgHa' => $wts ? $r($hillsHa * $empty * $wts['mid'] / 1000, 3) : null] : null,
             'fieldHa' => $r($fieldHa, 1),
             'buyLo' => $r($needLo, 1), 'buyHi' => $r($needHi, 1),
             'buyLotLo' => $r($lot($needLo), 1), 'buyLotHi' => $r($lot($needHi), 1),
@@ -962,7 +1007,7 @@ final class SeedSpacing
         return [
             'crops' => self::CROPS, 'groups' => self::GROUPS, 'modes' => self::MODES, 'layouts' => self::LAYOUTS, 'methods' => self::METHODS,
             'rowSet' => self::ROWSET, 'hillMode' => self::HILLMODE, 'per' => self::PER, 'areaUnits' => self::AREA_UNITS, 'yieldKeys' => self::YIELD_KEYS,
-            'k' => ['thin' => self::THIN, 'crowd' => self::CROWD, 'shortOk' => self::SHORT_OK, 'shortPart' => self::SHORT_PART, 'shortBad' => self::SHORT_BAD, 'tri' => self::TRI,
+            'k' => ['thin' => self::THIN, 'crowd' => self::CROWD, 'shortOk' => self::SHORT_OK, 'shortOne' => self::SHORT_ONE, 'shortPart' => self::SHORT_PART, 'shortBad' => self::SHORT_BAD, 'tri' => self::TRI,
                 'bed' => self::BED, 'riceMax' => self::RICE_HILL_MAX, 'riceBad' => self::RICE_HILL_BAD],
             'varietyShelf' => class_exists(\App\Support\VarietyYield::class),
             'pen' => SeedPenalty::boot(),

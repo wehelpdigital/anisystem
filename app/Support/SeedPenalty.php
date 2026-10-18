@@ -181,17 +181,17 @@ final class SeedPenalty
         'tomato' => [2.5, 9.9], 'eggplant' => [1.1, 6.9], 'chili' => [1.5, 14], 'bellpepper' => [1.5, 14], 'squash' => [1.2, 13], 'cucumber' => [2.5, 13],
         'pechay' => [1.0, 10], 'cabbage' => [1.8, 9.7], 'lettuce' => [1.3, 13], 'onion' => [1.2, 16], 'carrot' => [1.0, 14], 'radish' => [1.2, 13],
         'garlic' => [3.9, 14.3], 'sweetpotato' => [1.5, 11], 'potato' => [1.7, 12], 'sugarcane' => [1.7, 5.9], 'coconut' => [4.0, 5], 'banana' => [1.0, 12],
-        'banana_saba' => [1.0, 12], 'calamansi' => [1.3, 13], 'mango' => [1.0, 15], 'cacao' => [1.0, 15], 'coffee' => [1.0, 15],
+        'banana_saba' => [1.0, 12], 'banana_cavendish' => [1.0, 12], 'calamansi' => [1.3, 13], 'mango' => [1.0, 15], 'cacao' => [1.0, 15], 'coffee' => [1.0, 15],
     ];
 
     /** Crops whose harvest is a root, tuber, corm or bulb in the soil: a hardpan or a shallow soil shows in the harvest. */
     public const ROOTS = ['carrot', 'radish', 'onion', 'garlic', 'sweetpotato', 'cassava', 'taro', 'potato'];
 
     /** The NPK Plus climate key a crop reads (NpkModel::CLIMATE), where it is not its own. */
-    public const CLIMATE_KEY = ['rice_dsr' => 'rice_dsr_wet', 'corn_white' => 'corn_yellow', 'bushsitaw' => 'stringbean', 'banana_saba' => 'banana'];
+    public const CLIMATE_KEY = ['rice_dsr' => 'rice_dsr_wet', 'corn_white' => 'corn_yellow', 'bushsitaw' => 'stringbean', 'banana_saba' => 'banana', 'banana_cavendish' => 'banana'];
 
     /** The crop catalog key a crop's days to harvest come from, where it is not its own. */
-    public const CATALOG_KEY = ['rice_dsr' => 'rice_dsr_wet', 'corn_white' => 'corn_glutinous', 'bushsitaw' => 'stringbean', 'banana_saba' => 'banana'];
+    public const CATALOG_KEY = ['rice_dsr' => 'rice_dsr_wet', 'corn_white' => 'corn_glutinous', 'bushsitaw' => 'stringbean', 'banana_saba' => 'banana', 'banana_cavendish' => 'banana'];
 
     /** What the page boots with. */
     public static function boot(): array

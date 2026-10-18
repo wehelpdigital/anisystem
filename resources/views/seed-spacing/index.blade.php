@@ -142,6 +142,7 @@
     .sc-yield h5, .sc-yield .sc-big b { color: #4a3500; }
     .sc-yield .sc-big span, .sc-yield p { color: #6b5212; }
     .sc-yield p { margin-top: .35rem; font-size: .76rem; line-height: 1.5; }
+    .sc-trial { margin-top: .85rem; padding-top: .75rem; border-top: 1px dashed #ecd99a; animation: scIn .35s var(--sc-e) both; }
     .sc-ybar { position: relative; height: .7rem; margin-top: .65rem; border-radius: 999px; background: #f6e8bb; overflow: hidden; }
     .sc-ybar span { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 999px; background: linear-gradient(90deg, #f5c518, #e0a43a); transition: left .7s var(--sc-e), width .7s var(--sc-e); }
     .sc-how { margin-top: .75rem; font-size: .76rem; color: var(--color-gray-600); }
@@ -241,6 +242,7 @@
     html.dark .sc-chip.is-good { background: #263a17; color: #cfe8b3; } html.dark .sc-chip.is-warn { background: #3d2f0d; color: #f6d68a; } html.dark .sc-chip.is-bad { background: #431818; color: #f7b4b4; } html.dark .sc-chip.is-info { background: #13294a; color: #a9c8f5; }
     html.dark .sc-yield { background: #2a240f; border-color: #4a3f17; } html.dark .sc-yield h5, html.dark .sc-yield .sc-big b { color: #f6e7b3; } html.dark .sc-yield .sc-big span, html.dark .sc-yield p { color: #e5d391; }
     html.dark .sc-ybar { background: #3d3415; }
+    html.dark .sc-trial { border-top-color: #5a4c1c; }
     html.dark .sc-opt.is-on { background: #1f2d16; }
     html.dark .sc-tab-n { background: #2b3a1c; color: #d5e3c5; }
     html.dark .sc-more { background: #22301a; color: #cfe3bd; }
@@ -254,6 +256,7 @@
     @media (prefers-reduced-motion: reduce) {
         .sc-drop, .sc-sprout, .sc-card, .sc-srow, .sc-head.is-pop, .sc-swap, .sc-flag, .sc-field .f-in, .sc-pl { animation: none !important; }
         .sc-fs-season { transition: none !important; }
+        .sc-trial { animation: none !important; }
         .sc-tab-ind, .sc-gbar span, .sc-gmark, .sc-gscale span, .sc-ybar span, .sc-dock, .sc-head, .sc-chip { transition: none !important; }
     }
     html.sm-still .sc-drop, html.sm-still .sc-sprout, html.sm-still .sc-field .f-in { animation: none !important; }
@@ -512,6 +515,11 @@
                     <div class="sc-big"><b id="scYBig"></b><span id="scYSub"></span></div>
                     <div class="sc-ybar" aria-hidden="true"><span id="scYBar"></span></div>
                     <p id="scYSay"></p>
+                    <div class="sc-trial" id="scTrial" hidden>
+                        <h5>What this variety gave in its trials</h5>
+                        <div class="sc-big"><b id="scTrialBig"></b><span id="scTrialSub"></span></div>
+                        <p id="scTrialSay" hidden></p>
+                    </div>
                 </div>
 
                 <details class="sc-how"><summary>How it was counted</summary><ol id="scHow"></ol></details>
@@ -577,7 +585,7 @@
     const val = (id) => { const s = $(id).value; return s === '' ? null : Number(s); };
     const LS = 'anee.seedcalc.last';
     const st = { crop: 'corn_yellow', method: 'direct', layout: 'rows', mode: 'seeds', areaUnit: 'ha', rowSet: 'set', amountUnit: 'kg', amountPer: 'ha', targetPer: 'ha', hillMode: 'auto', last: null, tone: null,
-        variety: '', vRec: null, vy: null, lotId: null, lot: null, month: null, ctx: null, ctxBusy: false };
+        variety: '', vRec: null, vy: null, trial: null, lotId: null, lot: null, month: null, ctx: null, ctxBusy: false };
     const crop = () => B.crops[st.crop];
 
     /* calc:start (App\Support\SeedSpacing: read, missing, enough, suggest, parts, core, compute; App\Support\SeedPenalty and SeasonFactors) */
@@ -587,13 +595,13 @@
     const choose = (n, x) => { let r = 1; for (let i = 1; i <= x; i++) r = r * (n - x + i) / i; return r; };
     const keptMean = (n, p, k) => { let s = 0; for (let x = 0; x <= n; x++) s += choose(n, x) * Math.pow(p, x) * Math.pow(1 - p, n - x) * Math.min(x, k); return s; };
     const shortShare = (n, p, k) => { let s = 0; for (let x = 0; x < Math.min(k, n + 1); x++) s += choose(n, x) * Math.pow(p, x) * Math.pow(1 - p, n - x); return s; };
-    const enough = (n, p, keep) => Math.pow(1 - p, n) <= K.shortOk + 1e-9 && (keep === null || keep < 2 || shortShare(n, p, keep) <= K.shortPart + 1e-9);
+    const enough = (n, p, keep, ok = K.shortOk) => Math.pow(1 - p, n) <= ok + 1e-9 && (keep === null || keep < 2 || shortShare(n, p, keep) <= K.shortPart + 1e-9);
     const suggest = (C, m, p, keep) => {
         const ph = perHillFor(C, m);
         if (m === 'transplant') return { n: ph[1], ok: true };
-        const top = Math.max(ph[2], keep ?? 1);
+        const top = Math.max(ph[2], keep ?? 1), ok = C.oneSeed ? K.shortOne : K.shortOk;
         for (let n = Math.max(keep ?? 1, ph[0]); n <= top; n++) {
-            if (enough(n, p, keep)) return { n: keep === null ? Math.max(n, ph[1]) : n, ok: true };
+            if (enough(n, p, keep, ok)) return { n: keep === null ? Math.max(n, ph[1]) : n, ok: true };
         }
         return { n: top, ok: false };
     };
@@ -657,15 +665,19 @@
     };
     const core = (c, vy, pen, forceN) => {
         const C = B.crops[c.crop], Y = C.yield, m = c.method, areaHa = areaHaOf(c);
-        const g = c.germ / 100, L = c.loss / 100, fit = c.fit / 100, res = c.reserve / 100;
+        const g = c.germ / 100, L = c.loss / 100, fit = c.fit / 100;
+        let res = c.reserve / 100;
         const nursery = m === 'transplant' && !!(C.tgw && C.tgw.length), hasGerm = m !== 'transplant' || nursery;
         // The field and the season at emergence lower the chance (SeedPenalty); the seedbed's temperature, its germination.
         const pCome = (m === 'transplant' ? 1 - L : g) * pen.emerge.k, post = m === 'transplant' ? 1 : 1 - L, pLive = pCome * post, gBed = g * pen.seedbed.k;
         const sug = suggest(C, m, pCome, c.keep);
         const n = forceN ?? (c.hillMode === 'auto' ? sug.n : c.perHill);
         const k = Math.min(c.keep ?? n, n);
-        const kept = keptMean(n, pCome, k) * post;
+        let kept = keptMean(n, pCome, k) * post;
         const empty = Math.pow(1 - pCome, n), short = c.keep !== null && c.keep >= 2 ? shortShare(n, pCome, Math.min(c.keep, n)) : empty, filled = 1 - Math.pow(1 - pLive, n);
+        // Sown one a hill, the gaps replanted within a week from the reserve: the reserve covers the empty share, and the hills replanted count.
+        const replant = !!C.oneSeed && m === 'direct' && n === 1;
+        if (replant) { res = Math.max(res, empty); kept = (pCome + (1 - pCome) * pCome) * post; }
         const byHills = C.standBy === 'hills', perHillStand = byHills ? filled : kept;
         let wts = null;
         if (weighs(C, m)) {
@@ -733,7 +745,7 @@
         const phMax = perHillFor(C, m)[2];
         if (c.crop === 'rice' && n > K.riceMax) flags.push(['rice-seedlings', n >= K.riceBad ? 'bad' : 'warn']);
         else if (m !== 'transplant') {
-            if (!enough(n, pCome, c.keep)) flags.push(['hill-short', empty > K.shortBad ? 'bad' : 'warn']);
+            if (!enough(n, pCome, c.keep, C.oneSeed ? K.shortOne : K.shortOk)) flags.push(['hill-short', empty > K.shortBad ? 'bad' : 'warn']);
             else if (c.keep !== null && n > sug.n + 1) flags.push(['hill-extra', 'warn']);
             else if (c.keep === null && n > phMax) flags.push(['hill-crowded', 'warn']);
             else flags.push(['hill-ok', 'good']);
@@ -749,7 +761,8 @@
             _row: row, _plant: plant, penK: { emerge: pen.emerge.k, seedbed: pen.seedbed.k, growth: pen.growth.k, flower: pen.flower },
             status, flags, variety: c.variety, varietyYield: !!vy, basis: vy ? vy.basis || null : null,
             areaHa, row, plant, effRow, square, plantSpan, given, areaHill, hillsHa, hillsLot: lot(hillsHa),
-            perHill: n, suggest: sug.n, suggestOk: sug.ok, kept: k, fieldHa, buyLo: needLo, buyHi: needHi, buyLotLo: lot(needLo), buyLotHi: lot(needHi),
+            perHill: n, suggest: sug.n, suggestOk: sug.ok, kept: k, reserve: res * 100,
+            replant: replant ? { share: empty, after: Math.pow(1 - pCome, 2), seedsHa: hillsHa * empty, kgHa: wts ? hillsHa * empty * wts.mid / 1000 : null } : null, fieldHa, buyLo: needLo, buyHi: needHi, buyLotLo: lot(needLo), buyLotHi: lot(needHi),
             kgLo, kgHi, kgLotLo: lot(kgLo), kgLotHi: lot(kgHi), nursery, emptyShare: empty, shortShare: short, keptPerHill: kept,
             plantsHa, plantsLot: lot(plantsHa), plantsM2: plantsHa / 10000, standHa, standLot: lot(standHa), goodPlant,
             parts: Object.assign({}, P, { gw }), panM2, panM2Lo, capped, plateau,
@@ -983,7 +996,7 @@
         st.crop = B.crops[key] ? key : 'corn_yellow';
         const C = crop();
         st.method = C.methods[0]; st.layout = C.layout; st.hillMode = 'auto';
-        st.variety = ''; st.vRec = null; st.vy = null;
+        st.variety = ''; st.vRec = null; st.vy = null; st.trial = null;
         fillCropDefaults();
         paint(true);
         if (st.lotId || st.month) ctxSoon(0);
@@ -1090,11 +1103,12 @@
     });
     /* ---- the variety: the shared pick (the records, or a typed name), then its own yield parts ---- */
     const loadVariety = async () => {
-        st.vy = null;
-        if (!st.variety || !B.varietyShelf) return;
+        st.vy = null; st.trial = null;
+        if (!st.variety) return;
         try {
             const res = await window.api(B.urls.variety + '?' + new URLSearchParams({ crop: st.crop, name: st.variety }), { method: 'GET' });
             st.vy = (res.data && res.data.yield) || null;
+            st.trial = (res.data && res.data.trial) || null;
         } catch (e) { st.vy = null; }
     };
     $('scVariety').addEventListener('click', async () => {
@@ -1165,6 +1179,7 @@
             case 'hill-crowded': return c.method === 'transplant' ? ['Too many in one hole', 'One ' + U[0] + ' a hole is enough for ' + nm + ': two in one hole fight for the same spot and both stay small.']
                 : ['Crowded hills', 'More than ' + perHillFor(C, c.method)[2] + ' ' + U[1] + ' in one hill fight each other for the same spot. Use ' + perHillFor(C, c.method)[2] + ' or fewer, or close the spacing instead.'];
             case 'hill-ok': return c.method === 'piece' ? ['Right for the take', r.perHill + ' ' + (r.perHill === 1 ? U[0] : U[1]) + ' a hill at ' + num(c.germ) + '% taking root: ' + oneIn(r.emptyShare) + '. Keep a few spare ' + U[1] + ' to fill the gaps.']
+                : r.replant ? ['Right for one seed a hill', '1 seed a hill at ' + num(c.germ) + '% germination: ' + oneIn(r.replant.share) + '. Replant those within a week: about ' + many(r.replant.seedsHa) + ' seeds' + (r.replant.kgHa ? ' (' + kgTxt(r.replant.kgHa) + ' kg)' : '') + ' a hectare are kept for it, and the stand counts them.']
                 : ['Right for your germination', r.perHill + ' ' + (r.perHill === 1 ? 'seed' : 'seeds') + ' a hill at ' + num(c.germ) + '% germination: ' + oneIn(r.emptyShare) + '.'];
             case 'hill-thin': return ['Thin to ' + k + ' a hill', C.thinNote || 'One to two weeks after they come up, keep the ' + (k === 1 ? 'strongest' : k + ' strongest') + ' and pinch or cut the rest at the soil. Do not pull them: it loosens the roots of the plant you keep.'];
             case 'rice-seedlings': return ['More seedlings than pays', r.perHill + ' seedlings a hill do not make more panicles: a hill fills out to about the same tillers either way, while the seed and the seedbed cost more and the hill gets crowded. Use 1 to 2 for hybrids, 2 to 3 for inbreds.'];
@@ -1188,7 +1203,7 @@
         let H, beds = 0;
         if (L === 'beds') { beds = 2; H = c.bed * beds; } else H = er * rowsN;
         const W = H * 1.8, band = H * 0.16, stroke = W / 400, rad = Math.max(Math.min(p, er) * 0.3, W / 160);
-        const gapShare = Math.pow(1 - r.pLive, r.perHill), dots = Math.min(3, Math.max(1, Math.round(r.keptPerHill / Math.max(0.01, 1 - gapShare)))) || 1;
+        const gapShare = r.replant ? Math.max(0, 1 - r.keptPerHill) : Math.pow(1 - r.pLive, r.perHill), dots = Math.min(3, Math.max(1, Math.round(r.keptPerHill / Math.max(0.01, 1 - gapShare)))) || 1;
         let s = '<svg viewBox="0 0 ' + W.toFixed(2) + ' ' + (H + band).toFixed(2) + '" role="img" aria-label="The spacing drawn to scale"><g class="f-in">';
         const rowsY = [];
         if (L === 'beds') {
@@ -1261,12 +1276,12 @@
         if (c.mode === 'seeds') {
             $('scHKick').textContent = cap(r.nursery ? 'seed' : U[1]) + ' you need, a hectare';
             $('scHBig').textContent = r.kgLo !== null ? kgRange(r.kgLo, r.kgHi) : seedsRange(r.buyLo, r.buyHi);
-            $('scHSub').textContent = (r.kgLo !== null ? seedsRange(r.buyLo, r.buyHi) + ' ' + buyWord + '. ' : '') + (r.nursery ? 'Sown in the seedbed for ' + many(r.fieldHa) + ' seedlings. ' : '') + 'The top keeps ' + num(c.reserve) + '% for replanting.' + lotLine;
+            $('scHSub').textContent = (r.kgLo !== null ? seedsRange(r.buyLo, r.buyHi) + ' ' + buyWord + '. ' : '') + (r.nursery ? 'Sown in the seedbed for ' + many(r.fieldHa) + ' seedlings. ' : '') + 'The top keeps ' + num(r.reserve) + '% for replanting' + (r.replant ? ' the empty hills' : '') + '.' + lotLine;
         } else if (c.mode === 'spacing') {
             $('scHKick').textContent = 'The spacing your ' + buyWord + ' fill';
             $('scHBig').textContent = spaceTxt();
             $('scHSub').textContent = (r.square && Math.abs(r.square - r.row) > 0.5 ? 'Or ' + cmTxt(r.square) + ' × ' + cmTxt(r.square) + ' cm square. ' : '') + (r.plantSpan ? 'By seed size, ' + cmTxt(r.plantSpan[0]) + ' to ' + cmTxt(r.plantSpan[1]) + ' cm between plants. ' : '')
-                + (c.amountUnit !== 'count' && r.given ? 'Your ' + num(c.amount, c.amount < 10 ? 2 : 0) + ' ' + (c.amountUnit === 'kg' ? 'kg' : 'g') + ' is about ' + many(r.given) + ' ' + buyWord + '. ' : '') + num(c.reserve) + '% kept for replanting.';
+                + (c.amountUnit !== 'count' && r.given ? 'Your ' + num(c.amount, c.amount < 10 ? 2 : 0) + ' ' + (c.amountUnit === 'kg' ? 'kg' : 'g') + ' is about ' + many(r.given) + ' ' + buyWord + '. ' : '') + num(r.reserve) + '% kept for replanting.';
         } else {
             $('scHKick').textContent = 'For ' + many(c.targetPer === 'lot' && r.areaHa ? c.target / r.areaHa : c.target) + ' ' + W + ' a hectare';
             $('scHBig').textContent = spaceTxt();
@@ -1285,7 +1300,9 @@
         const at = (v) => Math.max(2, Math.min(98, v / top * 100)) + '%';
         $('scGMark').style.left = at(r.standHa); $('scGLab').textContent = 'You: ' + many(r.standHa);
         $('scGLo').style.left = at(lo); $('scGLo').textContent = many(lo); $('scGHi').style.left = at(hi); $('scGHi').textContent = many(hi);
-        $('scEmptyLine').textContent = (c.method === 'direct' ? 'With ' + r.perHill + ' ' + (r.perHill === 1 ? 'seed' : 'seeds') + ' a hill at ' + num(c.germ) + '% germination, ' + oneIn(r.emptyShare) + '. '
+        $('scEmptyLine').textContent = (r.replant ? 'With 1 seed a hill at ' + num(c.germ) + '% germination, ' + oneIn(r.replant.share) + ': replant those within a week (about ' + many(r.replant.seedsHa) + ' seeds a hectare). The stand counts them, so '
+                + (r.replant.after <= 0.005 ? 'almost every hill is filled. ' : 'about 1 hill in ' + num(Math.round(1 / r.replant.after)) + ' stays empty. ')
+            : c.method === 'direct' ? 'With ' + r.perHill + ' ' + (r.perHill === 1 ? 'seed' : 'seeds') + ' a hill at ' + num(c.germ) + '% germination, ' + oneIn(r.emptyShare) + '. '
             : c.method === 'piece' ? 'With ' + r.perHill + ' ' + (r.perHill === 1 ? U[0] : U[1]) + ' a hill at ' + num(c.germ) + '% taking root, ' + oneIn(r.emptyShare) + '. '
             : 'With ' + num(c.loss) + '% lost after transplanting, ' + oneIn(r.emptyShare, true) + '. ')
             + (r.byHills ? '' : 'Each hill keeps ' + num(r.keptPerHill, 2) + ' plants on average' + (c.keep !== null && r.perHill > c.keep ? ' after thinning to ' + c.keep : '') + '.')
@@ -1322,7 +1339,24 @@
             say = lot ? 'For your ' + lot + ': ' + many(r.piecesLotLo) + ' to ' + many(r.piecesLot) + perYr + '. ' : '';
         }
         $('scYBig').textContent = big; $('scYSub').textContent = sub;
-        $('scYTitle').textContent = Y.perYear ? 'Potential harvest at full bearing' : 'Potential harvest';
+        const T = st.trial;
+        $('scYTitle').textContent = (T ? 'What this stand can carry' : 'Potential harvest') + (Y.perYear ? ', at full bearing' : '');
+        $('scTrial').hidden = !T;
+        if (T) {
+            // What the variety gave in its trials, beside the count: never multiplied into it.
+            const unit = String(T.unit || 't/ha').toLowerCase(), toKg = unit === 't/ha' ? 1000 : unit === 'kg/ha' ? 1 : null;
+            const aKg = toKg ? T.avg * toKg : null, tKg = toKg && T.top ? T.top * toKg : null;
+            $('scTrialBig').textContent = toKg ? massTxt(aKg) : num(T.avg, 1) + ' ' + T.unit;
+            $('scTrialSub').textContent = (toKg ? Y.what + ' a hectare on average' : 'on average') + (tKg ? ', up to ' + massTxt(tKg) + ' at best' : T.top && !toKg ? ', up to ' + num(T.top, 1) + ' at best' : '')
+                + (lot && toKg ? ' · ' + massTxt(aKg * r.areaHa) + ' on your ' + lot : '');
+            let ts = '';
+            if (toKg && r.kgHaHi) {
+                const q = (r.kgHaLo + r.kgHaHi) / 2 / aKg;
+                if (q > 1.35) ts = 'The count assumes every hill does its best. The trials show a real field, so a harvest nearer the trial figure is more likely.';
+                else if (q < 0.75) ts = 'The count is well under the trials: check the stand, and the numbers you typed.';
+            }
+            $('scTrialSay').textContent = ts; $('scTrialSay').hidden = !ts;
+        }
         const yIdeal = r.ideal ? (r.kgHaHi !== null && r.ideal.kgHaHi ? r.kgHaHi / r.ideal.kgHaHi : r.piecesHa !== null && r.ideal.piecesHa ? r.piecesHa / r.ideal.piecesHa : 1) : 1;
         $('scYSay').textContent = (yIdeal < 0.995 ? 'Your field and season take about ' + pctOff(yIdeal) + ' of it. ' : '') + (r.varietyYield ? 'Counted with the own yield parts of ' + st.variety + ', from its records. ' : '') + say + 'The top is what the ' + (r.byHills ? 'hills' : 'plants') + ' can carry' + (Y.model === 'tiller' ? ' (' + rng([r.panM2Lo, r.panM2]) + ' panicles a square meter × ' + rng(r.parts.grains) + ' grains × ' + rng(r.parts.filled) + '% filled)' : '') + '; the bottom ' + (Object.values(r.parts).some((v) => v && Math.abs(v[0] - v[1]) > 1e-9) ? 'counts the low end of each part and takes off' : 'takes off') + ' the ' + num(c.harvestLoss) + '% lost at harvest. Weather, pests and fertilizer decide where in between.';
         const yHi = r.kgHaHi ?? r.piecesHa ?? 0, yLo = r.kgHaLo ?? r.piecesHaLo ?? 0, ySc = Math.max(1, yHi * 1.12);
@@ -1335,7 +1369,7 @@
                 : cmTxt(r.row) + ' cm between rows × ' + cmTxt(r.plant) + ' cm between plants = ' + num(r.areaHill) + ' cm² a hill.',
             'A hectare is 100,000,000 cm², so it holds ' + many(r.hillsHa) + ' hills.',
             many(r.hillsHa) + ' hills × ' + r.perHill + ' ' + (r.perHill === 1 ? U[0] : U[1]) + ' = ' + many(r.fieldHa) + ' ' + U[1] + '.' + (r.nursery ? ' The seedbed gives ' + num(c.germ) + '% × ' + num(c.fit) + '% of its seeds as seedlings fit to plant, so sow ' + many(r.buyLo) + ' seeds.' : ''),
-            'Plus ' + num(c.reserve) + '% for replanting: ' + many(r.buyHi) + '.' + (r.kgLo !== null ? ' At ' + (r.wts.own ? num(r.wts.mid * (c.method === 'piece' ? 1 : 1000), 1) + ' g' : num(r.wts.lo * (c.method === 'piece' ? 1 : 1000), 1) + ' to ' + num(r.wts.hi * (c.method === 'piece' ? 1 : 1000), 1) + ' g') + (c.method === 'piece' ? ' a ' + U[0] : ' for 1,000 seeds') + ', that is ' + kgRange(r.kgLo, r.kgHi) + '.' : ''),
+            'Plus ' + num(r.reserve) + '% for replanting' + (r.replant ? ' the empty hills' : '') + ': ' + many(r.buyHi) + '.' + (r.kgLo !== null ? ' At ' + (r.wts.own ? num(r.wts.mid * (c.method === 'piece' ? 1 : 1000), 1) + ' g' : num(r.wts.lo * (c.method === 'piece' ? 1 : 1000), 1) + ' to ' + num(r.wts.hi * (c.method === 'piece' ? 1 : 1000), 1) + ' g') + (c.method === 'piece' ? ' a ' + U[0] : ' for 1,000 seeds') + ', that is ' + kgRange(r.kgLo, r.kgHi) + '.' : ''),
             (c.method === 'transplant' ? 'Each seedling lives with a chance of ' + num(100 - c.loss) + '%' : 'Each ' + U[0] + ' comes up with a chance of ' + num(c.germ) + '%') + '; a hill with none is empty (' + pct(r.emptyShare) + ').' + (c.keep !== null && r.perHill > c.keep ? ' Thinned to ' + c.keep + ', a hill keeps ' + num(r.keptPerHill, 2) + ' plants on average' : ' A hill keeps ' + num(r.keptPerHill, 2) + ' plants on average') + (c.method !== 'transplant' ? ', after ' + num(c.loss) + '% lost later.' : '.'),
             (r.byHills ? many(r.hillsHa) + ' hills × ' + pct(r.filled) + ' with plants = ' + many(r.standHa) + ' hills at harvest.' : many(r.hillsHa) + ' hills × ' + num(r.keptPerHill, 2) + ' = ' + many(r.plantsHa) + ' plants at harvest.') + ' The good range is ' + num(lo) + ' to ' + num(hi) + '.',
         ];
@@ -1517,7 +1551,7 @@
         st.amountUnit = ['count', 'kg', 'g'].includes(c.amountUnit) ? c.amountUnit : 'kg';
         st.amountPer = c.amountPer === 'lot' ? 'lot' : 'ha'; st.targetPer = c.targetPer === 'lot' ? 'lot' : 'ha';
         st.hillMode = c.hillMode === 'set' ? 'set' : 'auto';
-        st.variety = typeof c.variety === 'string' ? c.variety : ''; st.vRec = null; st.vy = null;
+        st.variety = typeof c.variety === 'string' ? c.variety : ''; st.vRec = null; st.vy = null; st.trial = null;
         st.lotId = Number(c.lotId) > 0 ? Number(c.lotId) : null; st.lot = null; st.ctx = null;
         st.month = /^\d{4}-(0[1-9]|1[0-2])$/.test(String(c.month || '')) ? c.month : null;
         fillCropDefaults();
@@ -1527,7 +1561,7 @@
         Object.entries(map).forEach(([k, id]) => { if (Object.prototype.hasOwnProperty.call(c, k)) setVal(id, c[k]); });
         st.tone = null; shown.clear();
         paint(true); calc();
-        if (st.variety && B.varietyShelf) loadVariety().then(() => { paint(); calc(); });
+        if (st.variety) loadVariety().then(() => { paint(); calc(); });
         setVal('scDay', c.day ?? ''); paintWhen();
         if (LOTP) LOTP.set(st.lotId);
         if (st.lotId || st.month) ctxSoon(0);
