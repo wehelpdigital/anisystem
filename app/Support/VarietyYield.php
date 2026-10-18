@@ -55,7 +55,7 @@ final class VarietyYield
     public const FILES = ['variety-yield/rice.json', 'variety-yield/corn.json', 'variety-yield/crops.json'];
 
     /** The variety book (VarietyBook's app crop key) a calculator crop reads, where it is not its own key. */
-    public const BOOK = ['rice_dsr' => 'rice', 'corn_white' => 'corn_glutinous', 'bushsitaw' => 'stringbean', 'banana_saba' => 'banana'];
+    public const BOOK = ['rice_dsr' => 'rice', 'corn_white' => 'corn_glutinous', 'bushsitaw' => 'stringbean', 'banana_saba' => 'banana', 'banana_cavendish' => 'banana'];
 
     /** The parts each yield model takes: SeedSpacing::CROPS[$key]['yield'] keys. */
     public const PARTS = [
