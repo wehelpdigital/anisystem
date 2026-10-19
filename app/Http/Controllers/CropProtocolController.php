@@ -484,6 +484,10 @@ class CropProtocolController extends Controller
         }
         $soil = (string) ($p['soil'] ?? '');
         $water = ['irrigated' => 'irrigated', 'limited' => 'partial', 'rainfed' => 'rainfed'][$p['water'] ?? ''] ?? 'irrigated';
+        // A lot that pumps its water (2026-10-20): NPK Plus's pump, which makes up most of a dry season's shortfall.
+        if (($L['waterNpk'] ?? '') === 'pump') {
+            $water = 'pump';
+        }
         $place = trim((string) ($p['location'] ?? ''));
 
         // The area's typical soil fills only what the lot left unknown (ProtocolFacts, the one door to the shelves).

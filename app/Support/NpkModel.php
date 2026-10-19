@@ -378,6 +378,10 @@ final class NpkModel
         'legumeN' => 25, 'strawK' => 25, 'creditFloor' => 0.5,
         'caps' => ['rainfed' => ['rice' => 0.8, 'other' => 0.9], 'partial' => ['rice' => 0.9, 'other' => 0.95], 'saline' => 0.9, 'sodic' => 0.9],
         'capFloor' => 0.75,
+        // A pump or a well (2026-10-20, the owner): it waters whenever the crop needs it, so it makes up most of
+        // what the rain leaves short, El Nino or not; a little is lost when the water table drops late in a dry
+        // season or the fuel runs out. A canal that runs only some of the time ('partial') makes up half.
+        'pumpCover' => 0.9, 'partialCover' => 0.5,
         'splits' => ['sandy' => 3, 'loam' => 2, 'clay' => 2, 'unsure' => 2],
         'acidPh' => 5.5, 'alkPh' => 7.5,
     ];

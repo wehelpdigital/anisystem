@@ -1386,7 +1386,7 @@
     ['npArea', 'npPotential', 'npTarget', 'npSeed', 'npGerm', 'npVariety', 'npPh'].forEach((id) => $(id).addEventListener('input', () => { hints(); calc(); }));
 
     /* ---- step 4: the place, the planting date, the water, and the season ---- */
-    const WATER_U = { irrigated: ['Irrigated', 'Irrigated', 'NIA, a pump or a canal, all season'], partial: ['Partly irrigated', 'Partly irrigated', 'Water some of the time, rain the rest'], rainfed: ['Rainfed only', 'Rainfed only', 'Only the rain'] };
+    const WATER_U = { irrigated: ['Irrigated', 'Irrigated', 'A canal or a system that runs all season'], pump: ['Pump or well', 'Pump or well', 'You pump water whenever the crop needs it, even in a dry El Nino season'], partial: ['Partly irrigated', 'Partly irrigated', 'Water some of the time, rain the rest'], rainfed: ['Rainfed only', 'Rainfed only', 'Only the rain'] };
     let PHL = null;
     const loadPh = async () => PHL ??= await (await fetch(U.ph)).json();
     const townName = (t) => String(t || '').replace(/\s*\(Capital\)\s*$/i, '');
@@ -1465,10 +1465,12 @@
         const rain = a.rain * t.rain, rad = a.rad * t.sun, tmean = a.tmean + t.temp, et0 = a.et0 * (t.rain < 1 ? 1 + (1 - t.rain) * 0.15 : 1);
         // Water: what the crop drinks against what it gets (FAO's yield response, ky).
         const need = et0 * K.kc + (K.extraMm || 0), eff = rain * 0.75;
-        const supply = st.water === 'irrigated' ? need : st.water === 'partial' ? eff + 0.5 * Math.max(0, need - eff) : eff;
+        // A pump makes up most of what the rain leaves short (FIELD pumpCover), a part time canal half (NpkNeed::seasonWater).
+        const cover = st.water === 'pump' ? M.field.pumpCover : st.water === 'partial' ? M.field.partialCover : 0;
+        const supply = st.water === 'irrigated' ? need : eff + cover * Math.max(0, need - eff);
         const wr = Math.min(1, supply / Math.max(1, need)), water = clamp(1 - K.ky * (1 - wr), 0.1, 1);
         const driest = S.years.reduce((m, y) => Math.min(m, y.rain), Infinity) * t.rain * 0.75;
-        const wrDry = Math.min(1, (st.water === 'irrigated' ? need : st.water === 'partial' ? driest + 0.5 * Math.max(0, need - driest) : driest) / Math.max(1, need));
+        const wrDry = Math.min(1, (st.water === 'irrigated' ? need : driest + cover * Math.max(0, need - driest)) / Math.max(1, need));
         // Sun: a full potential wants about K.rad MJ a day; less sun lowers the yield the season can carry.
         const fs = clamp(rad / K.rad, 0.2, 1.1), fw = water;
         // Temperature: the mean against the crop's best range, and the days too hot for flowers and fruit.
@@ -2423,7 +2425,7 @@
                 if (!SP) { rows.push({ state: 'dull', ratio: null, px: H, pct: '', note: 'Pick the place and the planting date' }); return; }
                 const r = SP[s.k], state = r < 0.97 ? 'short' : 'right', yu0 = Y_U[st.yUnit];
                 const note = (s.k === 'sun' ? fmt(SP.rad, 1) + ' MJ of sun a day against the ' + SP.K.rad + ' a full harvest wants'
-                    : s.k === 'water' ? (st.water === 'irrigated' ? 'Irrigated: the crop gets the ' + Math.round(SP.need) + ' mm it drinks' : 'About ' + Math.round(SP.supply) + ' of the ' + Math.round(SP.need) + ' mm the crop drinks')
+                    : s.k === 'water' ? (st.water === 'irrigated' ? 'Irrigated: the crop gets the ' + Math.round(SP.need) + ' mm it drinks' : (st.water === 'pump' ? 'The rain and your pump give about ' : 'About ') + Math.round(SP.supply) + ' of the ' + Math.round(SP.need) + ' mm the crop drinks')
                     : fmt(SP.tmean, 1) + '°C on average, ' + Math.round(SP.hotN) + ' days too hot for flowers')
                     + (SP.cap ? ', enough for about ' + fmt(SP.cap[s.k] / yu0[3]) + ' ' + yu0[1] : '');
                 rows.push({ state, ratio: r, yr: r, px: Math.max(22, Math.round(H * Math.min(1.22, r))), pct: Math.round(Math.min(1, r) * 100) + '%', note, season: true });

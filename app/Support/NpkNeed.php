@@ -131,7 +131,7 @@ final class NpkNeed
         if (($cls['OM'] ?? null) === 'low' && ! in_array('low_om', $f, true)) {
             $f[] = 'low_om';
         }
-        $water = in_array($in['water'] ?? '', ['irrigated', 'partial', 'rainfed'], true) ? $in['water'] : 'irrigated';
+        $water = in_array($in['water'] ?? '', ['irrigated', 'pump', 'partial', 'rainfed'], true) ? $in['water'] : 'irrigated';
         // How the lot is farmed (2026-10-19): two or three crops a year, zinc in the last two seasons, from the
         // lot's own answers when the caller did not say (NPK Plus's switches say it on the page).
         $fa = $fieldOn ? FieldProfile::normalize($profile) : [];
@@ -308,7 +308,8 @@ final class NpkNeed
         $et0 = (float) $a['et0'] * ($t['rain'] < 1 ? 1 + (1 - $t['rain']) * 0.15 : 1);
         $need = $et0 * (float) $K['kc'] + (float) ($K['extraMm'] ?? 0);
         $eff = $rain * 0.75;
-        $supply = $water === 'irrigated' ? $need : ($water === 'partial' ? $eff + 0.5 * max(0, $need - $eff) : $eff);
+        $cover = $water === 'pump' ? NpkModel::FIELD['pumpCover'] : ($water === 'partial' ? NpkModel::FIELD['partialCover'] : 0.0);
+        $supply = $water === 'irrigated' ? $need : $eff + $cover * max(0, $need - $eff);
 
         return ['rainMm' => $rain, 'waterShare' => min(1, $supply / max(1, $need)), 'needMm' => $need, 'water' => $water, 'avgRain' => (float) $a['rain'],
             'years' => count((array) ($hist['years'] ?? [])), 'tilt' => round($t['rain'], 3),
@@ -328,7 +329,7 @@ final class NpkNeed
         return 'In these weeks the last ' . (int) $s['years'] . ' years brought about ' . $mm($s['avgRain'] ?? $s['rainMm']) . ' mm of rain'
             . (abs($tilt - 1) >= 0.01 && ! empty($s['enso']) ? '. With ' . lcfirst((string) $s['enso']) . ' ahead, expect about ' . $mm($s['rainMm']) . ' mm this time' : '')
             . ', against the ' . $mm($s['needMm']) . ' mm the crop drinks'
-            . ($water !== 'irrigated' ? ', so ' . ($water === 'partial' ? 'the rain and the water source meet' : 'the rain meets') . ' about ' . round(min(1, (float) $s['waterShare']) * 100) . '% of it' : '') . '.'
+            . ($water !== 'irrigated' ? ', so ' . ($water === 'pump' ? 'the rain and the pump meet' : ($water === 'partial' ? 'the rain and the water source meet' : 'the rain meets')) . ' about ' . round(min(1, (float) $s['waterShare']) * 100) . '% of it' : '') . '.'
             . ($heavy ? ' That much rain washes calcium, magnesium and boron out, so the need holds more of them.' : '')
             . ($dry ? ' A season that dry makes boron and calcium harder for the roots to take up, so the need holds more of them.' : '');
     }

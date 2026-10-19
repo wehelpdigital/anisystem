@@ -920,7 +920,9 @@ final class FieldProfile
         return [
             'soilConditions' => $conditions, 'phValue' => $mid, 'phLow' => $lo, 'phHigh' => $hi ?? $lo,
             'soil' => $soil, 'phLevel' => $phWord ?? 'unsure', 'soilExtra' => $extras, 'lay' => $lay,
-            'water' => $w, 'waterNpk' => $w === 'limited' ? 'partial' : $w, 'waterAuto' => $auto,
+            // NPK Plus's water (2026-10-20): a pump or a well is its own source, topping up what the rain leaves
+            // short; a canal with no drought trouble is irrigated, the rest as before.
+            'water' => $w, 'waterNpk' => in_array('pump', $water, true) && ! (in_array('irrigation', $water, true) && ! $drought) ? 'pump' : ($w === 'limited' ? 'partial' : $w), 'waterAuto' => $auto,
             'problemsWhen' => $when, 'problemsVariety' => $variety, 'problemsAuto' => $autoProblems, 'soilSignsAuto' => $signs,
             'waterLook' => array_values(array_diff((array) ($a['waterLook'] ?? []), ['unsure'])), 'elevation' => $a['elevation'] ?? null, 'sun' => $a['sun'] ?? null,
             // The newest soil test, and its N, P and K as Crop Protocol's levels.

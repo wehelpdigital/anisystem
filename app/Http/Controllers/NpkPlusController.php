@@ -54,7 +54,7 @@ class NpkPlusController extends Controller
         'organic' => 'Organic', 'bio' => 'Biofertilizers (inoculants)', 'mine' => 'My products',
     ];
 
-    public const WATER = ['irrigated' => 'Irrigated', 'partial' => 'Partly irrigated', 'rainfed' => 'Rainfed only'];
+    public const WATER = ['irrigated' => 'Irrigated', 'pump' => 'Pump or well', 'partial' => 'Partly irrigated', 'rainfed' => 'Rainfed only'];
 
     public const TIMING = [
         'basal' => 'All at planting (basal)',
