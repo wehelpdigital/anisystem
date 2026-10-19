@@ -166,7 +166,12 @@ final class VarietyRegistry
         $rest = [];
         foreach (self::book($bookKey) as $r) {
             if (! empty($r['bookName'])) {
-                $by[$r['bookName']] ??= $r;
+                // A variety filed twice names one record with two rows (PAC 105, CW 159W, 2026-10-20): the
+                // fuller row speaks for it, so an empty one filed first never hides the trials.
+                $have = $by[$r['bookName']] ?? null;
+                if ($have === null || (int) ($r['quality'] ?? 0) > (int) ($have['quality'] ?? 0)) {
+                    $by[$r['bookName']] = $r;
+                }
             } else {
                 $rest[] = $r;
             }

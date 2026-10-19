@@ -451,7 +451,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "Parker",
+   "bookName": "Cepillo Green",
    "quality": 0,
    "ref": "NSIC 1995 Av02"
   },
@@ -832,7 +832,7 @@
    "ref": "NSIC 1995 Ps3"
   },
   {
-   "crop": "rubber",
+   "crop": "rambutan",
    "nameKey": "jmg5w",
    "name": "JMG-5w",
    "regNo": "NSIC 1995 Rb 6",
@@ -841,12 +841,12 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "PB 330",
+   "bookName": "JMG 5W",
    "quality": 0,
    "ref": "NSIC 1995 Rb06"
   },
   {
-   "crop": "rubber",
+   "crop": "rambutan",
    "nameKey": "jmg3",
    "name": "JMG 3",
    "regNo": "NSIC 1995 Rb 7",
@@ -855,7 +855,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "PB 311",
+   "bookName": "JMG 3",
    "quality": 0,
    "ref": "NSIC 1995 Rb07"
   },
@@ -1807,26 +1807,43 @@
    "ref": "NSIC 1996 Cn77 "
   },
   {
-   "crop": "corn",
+   "crop": "sorghum",
    "nameKey": "usmarc212usmsg4",
    "name": "USMARC 212 (USM Sg-4)",
    "aliases": [
-    "Sg 6-08 USMARC 212 et ee g ee"
+    "USMARC 212",
+    "USM Sg 4"
    ],
    "regNo": "NSIC 1996 Sg 3",
    "year": 1996,
-   "type": "hybrid",
-   "kind": "hybrid",
+   "days": 99,
+   "heightCm": 160,
+   "yieldAvg": 6.2,
    "facts": {
+    "daysBy": {
+     "dry": 99
+    },
     "daysUnit": "days",
     "yieldUnit": "t/ha",
+    "advantage": [
+     {
+      "over": "the check variety",
+      "pct": 18.8,
+      "season": "dry"
+     }
+    ],
+    "tested": {
+     "seasons": 3,
+     "years": "1991 to 1994"
+    },
     "areas": "fields in Mindanao",
     "islands": [
      "Mindanao"
     ]
    },
-   "notes": "Hybrid corn, registered in 1996. Suited to fields in Mindanao.",
-   "quality": 1,
+   "notes": "Sorghum, registered in 1996. It averaged 6.2 t/ha in its dry season trials, 18.8% more than the check variety. Ready in about 99 days, 160 cm tall. Suited to fields in Mindanao.",
+   "bookName": "IES Sor 4",
+   "quality": 5,
    "ref": "NSIC 1996 Sg03"
   },
   {
@@ -2643,7 +2660,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "Kennibec",
+   "bookName": "Igorota",
    "quality": 0,
    "ref": "NSIC 1997 Po3"
   },
@@ -2664,7 +2681,7 @@
     ]
    },
    "notes": "Potato, registered in 1997. Holds up against late blight.",
-   "bookName": "Igorota",
+   "bookName": "Solibao",
    "quality": 2,
    "ref": "NSIC 1997 Po4"
   },
@@ -4501,17 +4518,7 @@
     ]
    },
    "notes": "Potato, registered in 1999. It averaged 17.23 t/ha in its trials. That is 45% more than the check variety. Ready in about 83 days. Holds up against bacterial wilt, thrips.",
-   "bookName": "Solibao",
-   "conflicts": {
-    "days": {
-     "ours": 110,
-     "trials": 83
-    },
-    "yield": {
-     "ours": 24.4,
-     "trials": 17.23
-    }
-   },
+   "bookName": "Raniag",
    "quality": 5,
    "ref": "NSIC 1999 Po5"
   },
@@ -5458,7 +5465,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "ICGV 95390",
+   "bookName": "USM Pn1",
    "quality": 0,
    "ref": "NSIC 2011 Pn 17"
   },
@@ -5669,7 +5676,7 @@
    "ref": "NSIC 2012 Cn 268"
   },
   {
-   "crop": "pineapple",
+   "crop": "pili",
    "nameKey": "orbase",
    "name": "Orbase",
    "regNo": "NSIC 2012 Pi 12",
@@ -5679,6 +5686,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
+   "bookName": "Orbase",
    "quality": 1,
    "ref": "NSIC 2012 Pi 12"
   },
@@ -25385,6 +25393,9 @@
    "nameKey": "nsicrc696h",
    "name": "NSIC Rc 696H",
    "localName": "Mestiso 123",
+   "aliases": [
+    "LP 906"
+   ],
    "regNo": "NSIC 2022 Rc 696H",
    "year": 2022,
    "type": "hybrid",
@@ -25818,31 +25829,102 @@
    "name": "NSIC Rc 716H",
    "localName": "Mestiso 133",
    "aliases": [
-    "Hybrid"
+    "SAC 01",
+    "SACO 1"
    ],
    "regNo": "NSIC 2022 Rc 716H",
    "year": 2022,
    "type": "hybrid",
+   "company": "Springautumn",
    "envs": [
     "irrigated"
    ],
+   "days": 114,
+   "heightCm": 113,
+   "yieldTop": 8.81,
    "facts": {
+    "daysBy": {
+     "dry": 114,
+     "wet": 113
+    },
     "daysUnit": "days",
     "yieldUnit": "t/ha",
+    "advantage": [
+     {
+      "over": "Mestiso 6 in Western Visayas and Southern Luzon",
+      "pct": 22.8,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in Central Luzon",
+      "pct": 18.4,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in North West Luzon",
+      "pct": 17.3,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in Southern Luzon",
+      "pct": 9.9,
+      "season": "across"
+     }
+    ],
+    "tests": [
+     {
+      "where": "Central Luzon",
+      "yield": 7.66
+     },
+     {
+      "where": "Southern Luzon",
+      "yield": 6.75
+     },
+     {
+      "where": "Western Visayas and Southern Luzon",
+      "yield": 5.78
+     },
+     {
+      "where": "North West Luzon",
+      "yield": 4.86
+     }
+    ],
+    "tested": {
+     "seasons": 2,
+     "years": "2021 to 2022",
+     "locations": 23
+    },
     "ratings": {
+     "blast": "R",
+     "bacterial leaf blight": "I",
      "sheath blight": "I",
-     "stem borer": "I",
+     "tungro": "S",
+     "stem borer": "R",
+     "brown planthopper": "I",
      "green leafhopper": "I"
     },
     "grain": {
-     "amylose": "23.5% (intermediate)",
-     "milling": "69.2%"
+     "amylose": "20.8% (intermediate)",
+     "milling": "69.6% (grade 1)",
+     "head rice": "55.6% (grade 1)",
+     "chalky grains": "22.3%",
+     "grain": "6.9 mm, long"
     },
-    "areas": "irrigated lowlands"
+    "traits": [
+     "early maturing"
+    ],
+    "areas": "irrigated lowlands in North West Luzon, Central Luzon, Southern Luzon, Western Visayas and Southern Luzon",
+    "islands": [
+     "Luzon",
+     "Visayas"
+    ],
+    "limits": [
+     "weak against tungro"
+    ]
    },
-   "notes": "Hybrid rice, registered in 2022, bred for irrigated lowlands. Suited to irrigated lowlands.",
+   "notes": "Hybrid rice, registered in 2022, bred for irrigated lowlands. Its best site gave 8.81 t/ha, and it yielded 9.9 to 22.8% more than Mestiso 6 in the four regions it was tried in. Ready in about 114 days, 113 cm tall. Holds up against blast and stem borer. Weak against tungro. Suited to irrigated lowlands in Luzon and Western Visayas.",
    "bookName": "NSIC Rc 716H",
-   "quality": 3,
+   "quality": 9,
    "ref": "NSIC 2022 Rc 716H"
   },
   {
@@ -25850,9 +25932,6 @@
    "nameKey": "nsicrc718h",
    "name": "NSIC Rc 718H",
    "localName": "Mestiso 134",
-   "aliases": [
-    "Hybrid"
-   ],
    "regNo": "NSIC 2022 Rc 718H",
    "year": 2022,
    "type": "hybrid",
@@ -25860,26 +25939,67 @@
    "envs": [
     "irrigated"
    ],
+   "days": 113,
+   "yieldTop": 10.53,
    "facts": {
     "daysUnit": "days",
     "yieldUnit": "t/ha",
-    "tested": {
-     "locations": 28
-    },
+    "advantage": [
+     {
+      "over": "Mestiso 6 in North West Luzon",
+      "pct": 11.4,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in Central Luzon",
+      "pct": 10.2,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in Eastern Mindanao",
+      "pct": 7.1,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in Western Visayas and Southern Luzon",
+      "pct": 6.0,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in Southern Luzon",
+      "pct": 5.9,
+      "season": "across"
+     },
+     {
+      "over": "Mestiso 6 in North East Luzon",
+      "pct": 5.2,
+      "season": "across"
+     }
+    ],
     "ratings": {
+     "blast": "R",
      "sheath blight": "I",
      "stem borer": "I",
      "green leafhopper": "I"
     },
     "grain": {
-     "amylose": "23.5% (intermediate)",
-     "milling": "69.2%"
+     "amylose": "23.5% (high)",
+     "milling": "69.2% (grade 1)",
+     "grain": "7.0 mm, long"
     },
-    "areas": "irrigated lowlands"
+    "traits": [
+     "early maturing"
+    ],
+    "areas": "irrigated lowlands in North East Luzon, North West Luzon, Central Luzon, Southern Luzon, Western Visayas and Southern Luzon, and Eastern Mindanao",
+    "islands": [
+     "Luzon",
+     "Visayas",
+     "Mindanao"
+    ]
    },
-   "notes": "Hybrid rice, registered in 2022, bred for irrigated lowlands. Suited to irrigated lowlands.",
+   "notes": "Hybrid rice, registered in 2022, bred for irrigated lowlands. Its best site gave 10.53 t/ha, and it yielded 5.2 to 11.4% more than Mestiso 6 in the six regions it was tried in. Ready in about 113 days. Holds up against blast. Suited to irrigated lowlands across Luzon, Western Visayas and Eastern Mindanao.",
    "bookName": "NSIC Rc 718H",
-   "quality": 4,
+   "quality": 7,
    "ref": "NSIC 2022 Rc 718H"
   },
   {
@@ -30110,7 +30230,7 @@
     "color": "white"
    },
    "notes": "White hybrid corn, registered in 2003. Ready in about 102 days, 207 cm tall. Suited to fields in Visayas and Mindanao.",
-   "bookName": "Super Jumbo",
+   "bookName": "30W30",
    "quality": 5,
    "ref": "NSIC2003Cn143"
   },
@@ -32420,7 +32540,7 @@
    "ref": "NSIC2006Jf06"
   },
   {
-   "crop": "mungbean",
+   "crop": "mangosteen",
    "nameKey": "roxaspurple",
    "name": "Roxas Purple",
    "regNo": "NSIC 2006 Mg 2",
@@ -32429,7 +32549,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "Mabunga",
+   "bookName": "Roxas Purple",
    "quality": 0,
    "ref": "NSIC2006Mg02"
   },
@@ -34465,7 +34585,7 @@
     ]
    },
    "notes": "Potato, registered in 2007. Holds up against late blight.",
-   "bookName": "Raniag",
+   "bookName": "Bengueta Patatas",
    "quality": 3,
    "ref": "NSIC2007Po06"
   },
@@ -34489,7 +34609,7 @@
     ]
    },
    "notes": "Potato, registered in 2007. Holds up against late blight.",
-   "bookName": "Ganza",
+   "bookName": "Gloria Patatas",
    "quality": 3,
    "ref": "NSIC2007Po07"
   },
@@ -34813,10 +34933,10 @@
     ]
    },
    "notes": "Tomato, registered in 2007. It averaged 8.56 t/ha in its trials. That is 6.1% less than the check variety in the wet season. Ready in about 60 days, 77 cm tall. Holds up against bacterial wilt, virus, mosaic, early blight. Suited to fields in Bukidnon.",
-   "bookName": "Rica",
+   "bookName": "NOMIARC Tm 1",
    "conflicts": {
     "yield": {
-     "ours": 13.85,
+     "ours": 18.91,
      "trials": 8.56
     }
    },
@@ -35897,7 +36017,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "Mayon #2",
+   "bookName": "Lavesarez 01",
    "quality": 0,
    "ref": "NSIC2008Pl07"
   },
@@ -35911,7 +36031,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "Lavesarez 01",
+   "bookName": "Lavesarez 02",
    "quality": 0,
    "ref": "NSIC2008Pl08"
   },
@@ -35925,7 +36045,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "Lavesarez 02",
+   "bookName": "Allen 01",
    "quality": 0,
    "ref": "NSIC2008Pl09"
   },
@@ -37008,12 +37128,12 @@
     }
    },
    "notes": "Snapbean, registered in 2009. In its trials it yielded 41.08% more than the check variety. Holds up against rust, pod borer.",
-   "bookName": "Kapangan",
+   "bookName": "Tublay",
    "quality": 2,
    "ref": "NSIC2009PSnBn1"
   },
   {
-   "crop": "pineapple",
+   "crop": "pili",
    "nameKey": "allen02",
    "name": "Allen 02",
    "regNo": "NSIC 2009 Pi 11",
@@ -37022,6 +37142,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
+   "bookName": "Allen 02",
    "quality": 0,
    "ref": "NSIC2009Pi11"
   },
@@ -40724,7 +40845,7 @@
    "ref": "NSIC2010Rc236H"
   },
   {
-   "crop": "rubber",
+   "crop": "rambutan",
    "nameKey": "angelsweet",
    "name": "Angel Sweet",
    "regNo": "NSIC 2011 Rb 7",
@@ -40733,7 +40854,7 @@
     "daysUnit": "days",
     "yieldUnit": "t/ha"
    },
-   "bookName": "PB 311",
+   "bookName": "Angel Sweet",
    "quality": 0,
    "ref": "NSIC2011Rb07"
   },
