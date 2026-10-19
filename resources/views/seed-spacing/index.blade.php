@@ -487,6 +487,18 @@
                         <span class="sc-in"><input type="number" class="form-input" id="scPerPlant" min="0" step="any" inputmode="decimal"><em id="scPerPlantUnit">kg</em></span>
                         <small id="scPerPlantHint"></small></label>
                 </div>
+                {{-- Sugarcane (2026-10-20): the clumps x the tillers a clump x the share that grows into millable cane x a stalk's weight. --}}
+                <div class="sc-row is-3" id="scStalkBox" hidden>
+                    <label class="sc-f"><span>Tillers a clump</span>
+                        <span class="sc-in"><input type="number" class="form-input" id="scStalks" min="0" step="any" inputmode="decimal"><em>tillers</em></span>
+                        <small>Every shoot one sett sends up, counted when the clump is fullest, about 4 months after planting.</small></label>
+                    <label class="sc-f"><span>Grow into millable cane</span>
+                        <span class="sc-in"><input type="number" class="form-input" id="scMillable" min="1" max="100" step="any" inputmode="decimal"><em>%</em></span>
+                        <small>The tillers that become stalks the mill takes. The rest die back in the shade.</small></label>
+                    <label class="sc-f"><span>Weight of one stalk</span>
+                        <span class="sc-in"><input type="number" class="form-input" id="scStalkKg" min="0" step="any" inputmode="decimal"><em>kg</em></span>
+                        <small>A millable stalk, topped and stripped, as the mill weighs it.</small></label>
+                </div>
                 <p class="sc-usual" id="scHLossLine">{!! $infoIco !!}<span></span></p>
             </section>
         </div>
@@ -620,6 +632,9 @@
     // A count shown as people read it: 1,234 or 1.2 million.
     const many = (v) => !isFinite(v) ? '0' : v >= 1e6 ? num(v / 1e6, v >= 1e7 ? 1 : 2) + ' million' : num(Math.round(v));
     const cmTxt = (v) => num(v, v < 10 ? 1 : 0);
+    // A number with no trailing zeros ("4", "9.1", "1.42"), and a [low, high] the same way.
+    const dec = (v, d) => Number(v).toLocaleString('en-PH', { maximumFractionDigits: d });
+    const drng = (v, d) => v ? (Math.abs(v[0] - v[1]) < 1e-9 ? dec(v[0], d) : dec(v[0], d) + ' to ' + dec(v[1], d)) : '';
     const kgTxt = (v) => v >= 100 ? num(v, 0) : v >= 10 ? num(v, 1) : v >= 1 ? num(v, 2) : num(v, 3);
     const massTxt = (kg) => kg >= 1000 ? num(kg / 1000, kg >= 10000 ? 1 : 2) + ' t' : kgTxt(kg) + ' kg';
     const pct = (v) => num(v * 100, v < 0.1 ? 1 : 0) + '%';
@@ -649,16 +664,17 @@
     };
     const spanOf = (o) => Array.isArray(o) && o.length >= 2 && isFinite(Number(o[0])) && isFinite(Number(o[1])) && o[0] !== null && o[1] !== null
         ? [Math.min(Number(o[0]), Number(o[1])), Math.max(Number(o[0]), Number(o[1]))] : (o !== null && o !== undefined && o !== '' && !Array.isArray(o) && isFinite(Number(o)) ? [Number(o), Number(o)] : null);
+    // Sugarcane's tillers a clump and stalk weight: the variety's part, else what the shelf keeps beside its parts (SeedSpacing::STALK_EXTRA).
     const partsOf = (c, vy) => {
-        const Y = B.crops[c.crop].yield, out = {};
+        const Y = B.crops[c.crop].yield, out = {}, ex = vy && vy.extra && typeof vy.extra === 'object' && !Array.isArray(vy.extra) ? vy.extra : {};
         B.yieldKeys.forEach((k) => {
             if (c[k] !== null && c[k] !== undefined) { out[k] = [c[k], c[k]]; return; }
-            let v = spanOf(vy ? vy[k] : null);
+            let v = spanOf(vy ? vy[k] : null) || (B.stalkExtra[k] ? spanOf(ex[B.stalkExtra[k]]) : null);
             if (!v && k === 'perPlant' && vy) {
                 const f = spanOf(vy.fruits), w = spanOf(vy.fruitWt), u = Y.unit || 'kg';
                 if (f && (u === 'count' || w)) v = u === 'count' ? f : [f[0] * w[0] / (u === 'kg' ? 1000 : 1), f[1] * w[1] / (u === 'kg' ? 1000 : 1)];
             }
-            out[k] = v || (Y[k] !== undefined ? [Y[k], Y[k]] : null);
+            out[k] = v || (Y[k] !== undefined ? spanOf(Y[k]) : null);
         });
         return out;
     };
@@ -690,6 +706,7 @@
             pack: /^(kg|g|seeds)-\d+(\.\d+)?-[a-z]{1,12}$/.test(String(inp.pack ?? '')) ? String(inp.pack) : null,
             tillers: n('tillers', 0, 100), grains: n('grains', 1, 500), filled: n('filled', 1, 100),
             ears: n('ears', 0, 5), perEar: n('perEar', 0, 5000), perPlant: n('perPlant', 0, 100000),
+            stalks: n('stalks', 0, 100), millable: n('millable', 1, 100), stalkKg: n('stalkKg', 0, 20),
         };
         if (c.amountUnit !== 'count' && !weighs(C, method)) c.amountUnit = 'count';
         return c;
@@ -803,7 +820,7 @@
         const at = (s) => c.layout === 'triangle' ? Math.sqrt(1e8 * perHillStand / (s * K.tri)) : 1e8 * perHillStand / (s * effRow);
         const goodPlant = [at(hi), at(lo)];
         const P = partsOf(c, vy), keepShare = 1 - c.harvestLoss / 100;
-        let kgHa = null, kgHaLo = null, pieces = null, piecesLo = null, panM2 = null, panM2Lo = null, capped = false, plateau = false, plantsY = plantsHa, gw = null;
+        let kgHa = null, kgHaLo = null, pieces = null, piecesLo = null, panM2 = null, panM2Lo = null, stalks = null, stalksLo = null, capped = false, plateau = false, plantsY = plantsHa, gw = null;
         if (Y.model === 'tiller') {
             gw = c.weight ? [c.weight, c.weight] : (spanOf(vy ? vy.tgw : null) || [(C.tgw[0] + C.tgw[1]) / 2, (C.tgw[0] + C.tgw[1]) / 2]);
             const raw = hillsHa * filled * P.tillers[1] / 10000;
@@ -815,6 +832,12 @@
             if (Y.model === 'ear') {
                 kgHa = plantsY * P.ears[1] * P.perEar[1] / 1000; kgHaLo = plantsY * P.ears[0] * P.perEar[0] / 1000 * keepShare;
                 if (Y.fresh) { pieces = plantsY * P.ears[1]; piecesLo = plantsY * P.ears[0] * keepShare; }
+            } else if (Y.model === 'stalk') {
+                // Sugarcane: the clumps x the tillers a clump x the millable share, no more stalks than a field carries, x the weight of a stalk.
+                const max = Y.stalkMax, raw = plantsY * P.stalks[1] * P.millable[1] / 100;
+                stalks = Math.min(raw, max); stalksLo = Math.min(plantsY * P.stalks[0] * P.millable[0] / 100, max); capped = raw > max;
+                pieces = stalks; piecesLo = stalksLo * keepShare;
+                kgHa = stalks * P.stalkKg[1]; kgHaLo = stalksLo * P.stalkKg[0] * keepShare;
             } else if ((Y.unit || 'kg') === 'count') { pieces = plantsY * P.perPlant[1]; piecesLo = plantsY * P.perPlant[0] * keepShare; }
             else { const div = (Y.unit || 'kg') === 'g' ? 1000 : 1; kgHa = plantsY * P.perPlant[1] / div; kgHaLo = plantsY * P.perPlant[0] / div * keepShare; }
         }
@@ -834,7 +857,7 @@
         if (c.layout === 'rows') { if (row < C.row[0]) flags.push(['row-close', 'warn']); else if (row > C.row[2]) flags.push(['row-wide', 'info']); }
         if (plant < C.plant[0]) flags.push(['plant-close', 'warn']); else if (plant > C.plant[2]) flags.push(['plant-wide', 'info']);
         if (hasGerm && C.germ) { if (c.germ < c.germMin) flags.push(['germ-low', c.germ < c.germMin - 15 ? 'bad' : 'warn']); else if (c.germ > 98) flags.push(['germ-high', 'info']); }
-        if (capped) flags.push(['tiller-cap', 'warn']);
+        if (capped) flags.push([Y.model === 'stalk' ? 'stalk-cap' : 'tiller-cap', 'warn']);
         if (plateau) flags.push(['yield-plateau', 'info']);
         const lot = (v) => v === null || !areaHa ? null : v * areaHa;
         return {
@@ -847,7 +870,7 @@
             pack: packLo === null ? null : (({ seed, ...rest }) => rest)(pk), packLo, packHi, packLotLo: lot(packLo), packLotHi: lot(packHi), packEach,
             nursery, emptyShare: empty, shortShare: short, keptPerHill: kept,
             plantsHa, plantsLot: lot(plantsHa), plantsM2: plantsHa / 10000, standHa, standLot: lot(standHa), goodPlant,
-            parts: Object.assign({}, P, { gw }), panM2, panM2Lo, capped, plateau,
+            parts: Object.assign({}, P, { gw }), panM2, panM2Lo, capped, plateau, stalksHa: stalks, stalksHaLo: stalksLo,
             kgHaHi: kgHa, kgHaLo, yLotHi: lot(kgHa), yLotLo: lot(kgHaLo),
             piecesHa: pieces, piecesHaLo: piecesLo, piecesLot: lot(pieces), piecesLotLo: lot(piecesLo),
             // For the page only.
@@ -874,7 +897,9 @@
         const cl = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
         const rain = a.rain * t.rain, rad = a.rad * t.sun, tmean = a.tmean + t.temp, et0 = a.et0 * (t.rain < 1 ? 1 + (1 - t.rain) * 0.15 : 1);
         const need = et0 * K.kc + (K.extraMm || 0), eff = rain * 0.75;
-        const supply = water === 'irrigated' ? need : water === 'partial' ? eff + 0.5 * Math.max(0, need - eff) : eff;
+        // A pump or a well makes up most of what the rain leaves short, a part time source half (NpkModel::FIELD).
+        const cover = water === 'pump' ? B.pen.field.pumpCover : water === 'partial' ? B.pen.field.partialCover : 0;
+        const supply = water === 'irrigated' ? need : eff + cover * Math.max(0, need - eff);
         const wr = Math.min(1, supply / Math.max(1, need)), fw = cl(1 - K.ky * (1 - wr), 0.1, 1), fs = cl(rad / K.rad, 0.2, 1.1);
         const dev = Math.max(0, K.opt[0] - tmean, tmean - K.opt[1]), phase = (enso && enso.phase) || null;
         const hotRaw = K.hot >= 35 ? (a.hot35 || 0) : K.hot >= 32 ? (a.hot32 || 0) : (a.hot30 || 0);
@@ -906,7 +931,7 @@
         return { heavy, dry, tm, tw: (tm + tx) / 2, tx, rain, years: n, tilt: t, fc };
     };
     const cardinalOf = (T, t) => { const [b, o1, o2, x] = T; if (t <= b || t >= x) return 0; if (t < o1) return (t - b) / (o1 - b); if (t > o2) return (x - t) / (x - o2); return 1; };
-    // NpkNeed::fieldCap's caps (NpkModel::FIELD): water, salt, sodium.
+    // NpkNeed::fieldCap's caps (NpkModel::FIELD): water, salt, sodium. A pump or a well, like a canal, has no water cap.
     const fieldCapOf = (key, on, water, conds) => {
         if (!on) return [];
         const caps = B.pen.field.caps, kind = key.startsWith('rice') ? 'rice' : 'other', why = [];
@@ -948,7 +973,8 @@
             const poor = !!f && (['slow', 'stands'].includes(f.drainage || '') || ['clay', 'heavy_clay'].includes(f.texture || ''));
             const wR = (tp ? 0.33 : pc ? 0.7 : 1) * (poor ? 1.3 : 1);
             add(E, 'heavy', Math.max(0, 1 - PK.RAIN_ROT * W.heavy * wR), W.fc && W.fc.heavy ? 'forecast' : 'season', W.heavy);
-            if (wk !== 'irrigated' && !(rice && tp && wk === 'partial')) {
+            // A dry start: only where the field waits on the rain (a pump or a well waters at sowing).
+            if (wk !== 'irrigated' && wk !== 'pump' && !(rice && tp && wk === 'partial')) {
                 const tex = f ? f.texture : null, mult = tex === 'sandy' ? 1.4 : ['clay', 'heavy_clay'].includes(tex) ? 0.8 : 1;
                 const wD = (wk === 'partial' ? 0.5 : 1) * (tp ? 0.7 : 1) * mult;
                 add(E, 'dry', Math.max(0, 1 - PK.DRY_LOSS * W.dry * wD), W.fc && W.fc.dry ? 'forecast' : 'season', W.dry);
@@ -1084,7 +1110,7 @@
         setVal('scPerHill', ph[1]); setVal('scKeep', C.keep);
         setVal('scWeight', '');
         // The yield parts start empty: empty counts the variety's own or the crop's usual (the faint numbers).
-        ['scTillers', 'scGrains', 'scFilled', 'scEars', 'scPerEar', 'scPerPlant'].forEach((id) => setVal(id, ''));
+        ['scTillers', 'scGrains', 'scFilled', 'scEars', 'scPerEar', 'scPerPlant', 'scStalks', 'scMillable', 'scStalkKg'].forEach((id) => setVal(id, ''));
         setVal('scTarget', '');
         if (!weighs(C, st.method)) st.amountUnit = 'count';
         else if (st.amountUnit === 'count' && $('scAmount').value === '') st.amountUnit = st.method === 'piece' ? 'kg' : 'kg';
@@ -1170,6 +1196,7 @@
         $('scTillerBox').hidden = Y.model !== 'tiller';
         $('scEarBox').hidden = Y.model !== 'ear';
         $('scPlantYBox').hidden = Y.model !== 'plant';
+        $('scStalkBox').hidden = Y.model !== 'stalk';
         if (Y.model === 'ear') {
             const wd = Y.word || 'ears';
             $('scEarsLabel').textContent = cap(wd) + ' a plant'; $('scEarsUnit').textContent = wd;
@@ -1186,8 +1213,9 @@
         const ph = (id, key, d) => { const v = Pd[key]; $(id).placeholder = v ? (v[0] === v[1] ? num(v[0], d) : num(v[0], d) + ' to ' + num(v[1], d)) : ''; };
         ph('scTillers', 'tillers', 0); ph('scGrains', 'grains', 0); ph('scFilled', 'filled', 0); ph('scEars', 'ears', 2); ph('scPerEar', 'perEar', 0);
         ph('scPerPlant', 'perPlant', (Y.unit || 'kg') === 'kg' && Pd.perPlant && Pd.perPlant[0] < 1 ? 3 : 1);
+        $('scStalks').placeholder = drng(Pd.stalks, 2); $('scMillable').placeholder = drng(Pd.millable, 0); $('scStalkKg').placeholder = drng(Pd.stalkKg, 2);
         $('scYieldSay').textContent = 'Leave a box empty to count ' + whose + ' (the faint numbers), or type what your own field shows.';
-        if (fresh) ['scSpaceBox', 'scAmountBox', 'scTargetBox'].forEach((id) => swap($(id)));
+        if (fresh) ['scSpaceBox', 'scAmountBox', 'scTargetBox', { tiller: 'scTillerBox', ear: 'scEarBox', plant: 'scPlantYBox', stalk: 'scStalkBox' }[Y.model]].forEach((id) => swap($(id)));
     };
 
     $('scMethod').addEventListener('click', () => {
@@ -1290,6 +1318,10 @@
                 + ' Test a handful before you sow (the steps are under Your seed), or buy fresh seed.'];
             case 'germ-high': return ['Very high germination', 'Few seed lots come up that well in the field: the number on the pack is from a lab test. Count on a few points less.'];
             case 'tiller-cap': return ['More tillers than a field holds', num(r.parts.tillers[1]) + ' tillers a hill at this spacing would be ' + num(r.hillsHa * r.filled * r.parts.tillers[1] / 10000) + ' panicles a square meter; a field rarely carries more than about ' + num(r.parts.ceiling[1]) + '. The yield counts ' + num(r.parts.ceiling[1]) + '.'];
+            case 'stalk-cap': {
+                const max = C.yield.stalkMax, raw = (r.plateau ? C.stand[1] : r.plantsHa) * r.parts.stalks[1] * r.parts.millable[1] / 100;
+                return ['More stalks than a field holds', dec(r.parts.stalks[1], 2) + ' tillers a clump at this stand would make ' + many(raw) + ' millable stalks a hectare; a field rarely carries more than about ' + num(max) + ', and the rest die back in the shade. The yield counts ' + num(max) + '.'];
+            }
             case 'yield-plateau': return ['Past the good range', 'Plants past ' + hi + ' a hectare do not add to the harvest: they share the same light, water and food. The yield counts ' + hi + ' plants.'];
         }
         return null;
@@ -1350,7 +1382,7 @@
             amount: val('scAmount'), amountUnit: st.amountUnit, amountPer: st.amountPer, target: val('scTarget'), targetPer: st.targetPer,
             hillMode: st.hillMode, perHill: val('scPerHill'), keep: val('scKeep'), seedType: st.seedType, pack: st.pack,
             weight: val('scWeight'), tillers: val('scTillers'), grains: val('scGrains'), filled: val('scFilled'), ears: val('scEars'), perEar: val('scPerEar'),
-            perPlant: val('scPerPlant'),
+            perPlant: val('scPerPlant'), stalks: val('scStalks'), millable: val('scMillable'), stalkKg: val('scStalkKg'),
         };
         const c = withSeed(readIn(raw), st.vy), why = missingOf(c);
         try { localStorage.setItem(LS, JSON.stringify(raw)); } catch (e) {}
@@ -1430,6 +1462,7 @@
             r.kgLo !== null ? ['Seeds a hectare', seedsRange(r.buyLo, r.buyHi), r.wts && r.wts.own ? 'by your seed weight' : 'by the usual seed sizes'] : ['With the reserve', many(r.buyHi), 'a hectare'],
         ];
         if (r.panM2 !== null) cells.push(['Panicles a square meter', rng([r.panM2Lo, r.panM2]), r.capped ? 'at the most a field holds' : rng(r.parts.tillers) + ' tillers a hill']);
+        if (r.stalksHa !== null) cells.push(['Millable stalks a hectare', rng([r.stalksHaLo, r.stalksHa]), r.capped ? 'at the most a field holds' : drng(r.parts.stalks, 2) + ' tillers a clump']);
         $('scNums').innerHTML = cells.map((x) => '<div>' + esc(x[0]) + '<b>' + esc(x[1]) + '</b>' + (x[2] ? '<small>' + esc(x[2]) + '</small>' : '') + '</div>').join('');
         // The harvest.
         const Y = C.yield, perYr = Y.perYear ? ' a year' : '';
@@ -1463,7 +1496,15 @@
             $('scTrialSay').textContent = ts; $('scTrialSay').hidden = !ts;
         }
         const yIdeal = r.usual ? (r.kgHaHi !== null && r.usual.kgHaHi ? r.kgHaHi / r.usual.kgHaHi : r.piecesHa !== null && r.usual.piecesHa ? r.piecesHa / r.usual.piecesHa : 1) : 1;
-        $('scYSay').textContent = (yIdeal < 0.995 ? 'Your field and season take about ' + pctOff(yIdeal) + ' of it. ' : '') + (hasParts(st.vy) ? 'Counted with the own yield parts of ' + st.variety + ', from its records. ' : '') + say + 'The top is what the ' + (r.byHills ? 'hills' : 'plants') + ' can carry' + (Y.model === 'tiller' ? ' (' + rng([r.panM2Lo, r.panM2]) + ' panicles a square meter × ' + rng(r.parts.grains) + ' grains × ' + rng(r.parts.filled) + '% filled)' : '') + '; the bottom ' + (Object.values(r.parts).some((v) => v && Math.abs(v[0] - v[1]) > 1e-9) ? 'counts the low end of each part and takes off' : 'takes off') + ' the ' + num(c.harvestLoss) + '% lost at harvest. Weather, pests and fertilizer decide where in between.';
+        // Sugarcane, said plainly: "About 2.3 millable stalks a clump of the 4 tillers, about 1.5 kg each."
+        const midOf = (v) => (v[0] + v[1]) / 2;
+        const caneSay = Y.model !== 'stalk' ? '' : (() => {
+            const t = midOf(r.parts.stalks), m = t * midOf(r.parts.millable) / 100;
+            return 'About ' + dec(m, 1) + ' millable ' + (dec(m, 1) === '1' ? 'stalk' : 'stalks') + ' a clump of the ' + dec(t, 1) + ' ' + (dec(t, 1) === '1' ? 'tiller' : 'tillers') + ', about ' + dec(midOf(r.parts.stalkKg), 2) + ' kg each'
+                + (r.capped ? '. That is more than a field carries, so the count stops at ' + num(Y.stalkMax) + ' millable stalks a hectare' : '') + '. ';
+        })();
+        $('scYSay').textContent = (yIdeal < 0.995 ? 'Your field and season take about ' + pctOff(yIdeal) + ' of it. ' : '') + (hasParts(st.vy) ? 'Counted with the own yield parts of ' + st.variety + ', from its records. ' : '') + say + caneSay + 'The top is what the ' + (Y.model === 'stalk' ? 'clumps' : r.byHills ? 'hills' : 'plants') + ' can carry'
+            + (Y.model === 'tiller' ? ' (' + rng([r.panM2Lo, r.panM2]) + ' panicles a square meter × ' + rng(r.parts.grains) + ' grains × ' + rng(r.parts.filled) + '% filled)' : Y.model === 'stalk' ? ' (' + rng([r.stalksHaLo, r.stalksHa]) + ' millable stalks a hectare)' : '') + '; the bottom ' + (Object.values(r.parts).some((v) => v && Math.abs(v[0] - v[1]) > 1e-9) ? 'counts the low end of each part and takes off' : 'takes off') + ' the ' + num(c.harvestLoss) + '% lost at harvest. Weather, pests and fertilizer decide where in between.';
         const yHi = r.kgHaHi ?? r.piecesHa ?? 0, yLo = r.kgHaLo ?? r.piecesHaLo ?? 0, ySc = Math.max(1, yHi * 1.12);
         $('scYBar').style.left = (yLo / ySc * 100) + '%'; $('scYBar').style.width = Math.max(3, (yHi - yLo) / ySc * 100) + '%';
         $('scYield').hidden = !big;
@@ -1483,6 +1524,8 @@
         if (r.kgHaHi !== null || r.piecesHa !== null) {
             steps.push(Y.model === 'tiller' ? rng([r.panM2Lo, r.panM2]) + ' panicles a square meter × ' + rng(r.parts.grains) + ' grains × ' + rng(r.parts.filled) + '% filled × ' + rng(r.parts.gw, 1) + ' g for 1,000 grains = up to ' + massTxt(r.kgHaHi) + ' a hectare.'
                 : Y.model === 'ear' ? many(r.plateau ? hi : r.plantsHa) + ' plants × ' + rng(r.parts.ears, 2) + ' ' + (Y.word || 'ears') + ' × ' + rng(r.parts.perEar) + ' g = up to ' + massTxt(r.kgHaHi) + ' a hectare.'
+                : Y.model === 'stalk' ? many(r.plateau ? hi : r.plantsHa) + ' clumps × ' + drng(r.parts.stalks, 2) + ' tillers × ' + drng(r.parts.millable, 1) + '% that grow into millable cane = ' + rng([r.stalksHaLo, r.stalksHa]) + ' millable stalks'
+                    + (r.capped ? ' (a field carries about ' + num(Y.stalkMax) + ' at the most)' : '') + ' × ' + drng(r.parts.stalkKg, 2) + ' kg = up to ' + massTxt(r.kgHaHi) + ' a hectare.'
                 : many(r.plateau ? hi : r.plantsHa) + ' plants × ' + rng(r.parts.perPlant, r.parts.perPlant[1] < 1 ? 3 : 1) + ' ' + ((Y.unit || 'kg') === 'count' ? Y.what : Y.unit) + ' = up to ' + (r.kgHaHi !== null ? massTxt(r.kgHaHi) : many(r.piecesHa) + ' ' + Y.what) + ' a hectare' + perYr + '.');
         }
         $('scHow').innerHTML = steps.map((x) => '<li>' + esc(x) + '</li>').join('');
@@ -1492,7 +1535,7 @@
         dock();
     };
     ['scArea', 'scRow', 'scPlant', 'scBed', 'scBedRows', 'scAmount', 'scTarget', 'scPerHill', 'scKeep', 'scWeight',
-        'scTillers', 'scGrains', 'scFilled', 'scEars', 'scPerEar', 'scPerPlant'].forEach((id) => $(id).addEventListener('input', calc));
+        'scTillers', 'scGrains', 'scFilled', 'scEars', 'scPerEar', 'scPerPlant', 'scStalks', 'scMillable', 'scStalkKg'].forEach((id) => $(id).addEventListener('input', calc));
 
     /* ---- the phone dock: shown while the answer is out of sight ---- */
     let resSeen = false;
@@ -1564,7 +1607,7 @@
         const bits = [T[f.texture] || '', { slow: 'drains slowly', stands: 'water stands for days' }[f.drainage] || '', f.flooding === 'often' ? 'floods most wet seasons' : '',
             f.saline || f.waterSalty ? 'signs of salt' : '', f.sodic ? 'a sodic crust' : '', f.sulfate ? 'acid sulfate' : f.ph !== null ? 'pH ' + num(f.ph, 1) : f.acidity === 'strong' ? 'strongly acidic' : '',
             f.hardpan === 'yes' ? 'a hardpan' : '', f.depth === 'shallow' ? 'shallow over rock' : '',
-            { irrigated: 'watered all season', partial: 'water part of the time', rainfed: 'rain only' }[f.water] || 'its water not answered'];
+            { irrigated: 'watered all season', pump: 'watered from a pump or a well', partial: 'water part of the time', rainfed: 'rain only' }[f.water] || 'its water not answered'];
         return bits.filter(Boolean).join(', ');
     };
     const penWords = (l, g, c, r) => {
@@ -1591,7 +1634,7 @@
             case 'cap-partial': return ['Water only part of the time', eff + '.' + seasonNext];
             case 'cap-saline': return ['Salty soil', eff + ', as NPK Plus counts it.'];
             case 'cap-sodic': return ['Sodic soil', eff + ', as NPK Plus counts it.'];
-            case 'season-water': return ["The season's water", eff + ': the rain' + (f && f.water === 'partial' ? ' and the water source meet' : ' meets') + ' about ' + pct(v) + ' of what the crop drinks.'];
+            case 'season-water': return ["The season's water", eff + ': the rain' + (f && f.water === 'pump' ? ' and your pump meet' : f && f.water === 'partial' ? ' and the water source meet' : ' meets') + ' about ' + pct(v) + ' of what the crop drinks.'];
             case 'season-sun': return ["The season's sun", eff + ': about ' + num(v, 1) + ' MJ a day, under the ' + (SF ? SF.K.rad : 17) + ' a full crop wants.'];
             case 'season-temp': return ["The season's heat", eff + ': about ' + num(v, 1) + '°C on average' + (SF && SF.hotN >= 1 ? ', with about ' + num(SF.hotN) + ' days too hot for its flowers' : '') + '.'];
             case 'hardpan': return ['A hard layer under the plow depth', eff + ': roots and tubers fork and stay small.'];
@@ -1709,7 +1752,8 @@
         const words = (a) => { const lo = upN(a[0]), hi = upN(a[1]); return (lo === hi ? num(hi) : num(lo) + ' to ' + num(hi)) + ' ' + packLabel(r.pack, hi); };
         return { ha, lot, haTxt: words(ha), lotTxt: lot ? words(lot) : null };
     };
-    const hasParts = (vy) => !!vy && ['tillers', 'grains', 'filled', 'tgw', 'ceiling', 'ears', 'perEar', 'perPlant', 'fruits', 'fruitWt'].some((k) => vy[k] !== undefined && vy[k] !== null);
+    const hasParts = (vy) => !!vy && (['tillers', 'grains', 'filled', 'tgw', 'ceiling', 'ears', 'perEar', 'perPlant', 'fruits', 'fruitWt', 'stalks', 'millable', 'stalkKg'].some((k) => vy[k] !== undefined && vy[k] !== null)
+        || (!!vy.extra && typeof vy.extra === 'object' && Object.values(B.stalkExtra).some((k) => vy.extra[k] !== undefined && vy.extra[k] !== null)));
     let buyLast = '';
     function paintBuy(c, r, lotWord) {
         const box = $('scBuy'), bg = bagsOf(r), on = !!bg && c.mode !== 'spacing';
@@ -1769,7 +1813,7 @@
         fillCropDefaults();
         const map = { area: 'scArea', row: 'scRow', plant: 'scPlant', bed: 'scBed', bedRows: 'scBedRows', amount: 'scAmount', target: 'scTarget', perHill: 'scPerHill', keep: 'scKeep',
             weight: 'scWeight', tillers: 'scTillers', grains: 'scGrains', filled: 'scFilled', ears: 'scEars',
-            perEar: 'scPerEar', perPlant: 'scPerPlant' };
+            perEar: 'scPerEar', perPlant: 'scPerPlant', stalks: 'scStalks', millable: 'scMillable', stalkKg: 'scStalkKg' };
         Object.entries(map).forEach(([k, id]) => { if (Object.prototype.hasOwnProperty.call(c, k)) setVal(id, c[k]); });
         st.tone = null; shown.clear();
         paint(true); calc();

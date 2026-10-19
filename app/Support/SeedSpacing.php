@@ -39,7 +39,10 @@ namespace App\Support;
  *  5. The yield, a range: rice from the hills with plants x the productive
  *     tillers a hill x the grains a panicle x the filled share x the weight of
  *     1,000 grains, no more panicles than a field carries; corn and sorghum
- *     from the plants x the ears (heads) a plant x the grain an ear; the rest
+ *     from the plants x the ears (heads) a plant x the grain an ear;
+ *     sugarcane from the clumps (the setts that took) x the tillers a clump x
+ *     the share that grows into millable cane x the weight of a stalk, no more
+ *     millable stalks than a field carries; the rest
  *     from the plants x the harvest a plant. Plants past the top of the good
  *     range add nothing more (they share the same light, water and food). The
  *     top of the range is that potential; the bottom is less the usual loss at
@@ -144,6 +147,28 @@ final class SeedSpacing
     public const RICE_HILL_MAX = 3;
 
     public const RICE_HILL_BAD = 5;
+
+    /*
+     * Sugarcane's stalk rule (2026-10-20, the owner: "yes, fix all"): the cane a
+     * hectare is the clumps (the setts that took) x the tillers a clump x the
+     * share of them that grows into millable cane x the weight of one stalk,
+     * never more millable stalks than a field carries. A variety's own tillers a
+     * hill (the registration list) and stalk weight (our books) come from the
+     * variety shelf (VarietyYield extra stalksClump and stalkKg). Researched
+     * 2026-10-20; the notes are in our own words and no source is named.
+     */
+
+    /** Tillers a clump at the peak: the registration list's tillers a hill for the Phil lines (2.2 to 5, middle 3.4); a 120 cm row trial counted 3.8 to 4.5 a sett. */
+    public const CANE_TILLERS = 4;
+
+    /** The share of those tillers that become millable cane, %: plant crops in 120 cm rows kept 52% and 66% of their peak (a ratoon 50%), a double row trial 49%, two seasons elsewhere 53% and 67%. */
+    public const CANE_MILLABLE = [50, 65];
+
+    /** One millable stalk, kg: the middle of the stalk weights of the 15 registered varieties in our books (1.23 to 2.48 kg, middle 1.48). */
+    public const CANE_STALK_KG = 1.5;
+
+    /** The most millable stalks a hectare a field carries, about 12 a meter of 1.2 m rows: a trial of Phil lines counted about 48,000 to 70,000, a double row trial about 80,000, thin cane in 60 to 120 cm rows 118,000 to 141,000. */
+    public const CANE_STALKS_MAX = 100000;
 
     /**
      * The crops. row, plant and perHill are [min, usual, max] (cm, and seeds,
@@ -472,8 +497,9 @@ final class SeedSpacing
             'row' => [100, 120, 150], 'plant' => [15, 25, 40], 'perHill' => [1, 1, 1], 'keep' => null,
             'germ' => [90, 75], 'loss' => 5, 'reserve' => 10, 'pieceWt' => null,
             'stand' => [25000, 45000], 'standBy' => 'plants',
-            'yield' => ['model' => 'plant', 'perPlant' => 2, 'unit' => 'kg', 'loss' => 5, 'what' => 'millable cane'],
-            'note' => 'Setts of 2 to 3 buds laid in furrows, about 30,000 to 40,000 a hectare.'],
+            'yield' => ['model' => 'stalk', 'stalks' => self::CANE_TILLERS, 'millable' => self::CANE_MILLABLE, 'stalkKg' => self::CANE_STALK_KG, 'stalkMax' => self::CANE_STALKS_MAX,
+                'loss' => 5, 'what' => 'millable cane', 'word' => 'millable stalks'],
+            'note' => 'Setts of 2 to 3 buds laid in furrows, about 30,000 to 40,000 a hectare. Each sett grows into a clump of tillers, and only about half to two thirds of them grow into cane the mill takes.'],
         'coconut' => ['name' => 'Coconut', 'local' => 'Niyog', 'group' => 'tree', 'methods' => ['transplant'], 'layout' => 'triangle',
             'row' => [700, 800, 1000], 'plant' => [800, 900, 1000], 'perHill' => [1, 1, 1], 'keep' => 1,
             'germ' => null, 'loss' => 5, 'reserve' => 5, 'tgw' => null,
@@ -507,7 +533,10 @@ final class SeedSpacing
     ];
 
     /** The yield parts a farmer can type; left empty, the variety's own or the crop's usual count. */
-    public const YIELD_KEYS = ['tillers', 'grains', 'filled', 'ceiling', 'ears', 'perEar', 'perPlant'];
+    public const YIELD_KEYS = ['tillers', 'grains', 'filled', 'ceiling', 'ears', 'perEar', 'perPlant', 'stalks', 'millable', 'stalkKg'];
+
+    /** Sugarcane's parts the variety shelf keeps beside its parts (VarietyYield extra), until a fold makes them parts. */
+    public const STALK_EXTRA = ['stalks' => 'stalksClump', 'stalkKg' => 'stalkKg'];
 
     /**
      * The kinds of seed a crop is sold as, [usual germination %, the least
@@ -741,6 +770,10 @@ final class SeedSpacing
             'ears' => $n('ears', 0, 5),
             'perEar' => $n('perEar', 0, 5000),
             'perPlant' => $n('perPlant', 0, 100000),
+            // Sugarcane: tillers a clump, the millable share %, the weight of one stalk kg.
+            'stalks' => $n('stalks', 0, 100),
+            'millable' => $n('millable', 1, 100),
+            'stalkKg' => $n('stalkKg', 0, 20),
         ];
         // A weighed amount needs a seed weight; with none to go on it is a count.
         if ($c['amountUnit'] !== 'count' && ! self::weighs($C, $method)) {
@@ -789,7 +822,8 @@ final class SeedSpacing
      * keeps them exists (App\Support\VarietyYield, researched once and kept):
      * keys as in a crop's yield (tillers, grains, filled, tgw, ceiling, ears,
      * perEar, perPlant, fruits, fruitWt), each a number or [low, high], with
-     * 'basis' and 'name'. Null when there is no variety, no shelf, or no row.
+     * 'basis' and 'name', and 'extra' (sugarcane's stalksClump and stalkKg).
+     * Null when there is no variety, no shelf, or no row.
      */
     public static function varietyYield(array $c): ?array
     {
@@ -816,13 +850,17 @@ final class SeedSpacing
         $book = class_exists(\App\Support\VarietyYield::class) ? \App\Support\VarietyYield::bookKey($crop) : (self::CROPS[$crop]['book'] ?? $crop);
         $rec = rescue(fn () => VarietyBook::match($book, $name), null, false);
         $fy = $vy['extra']['fitYield'] ?? null;
-        $avg = is_numeric($fy) && (float) $fy > 0 ? (float) $fy : (isset($rec['yield']) && is_numeric($rec['yield']) && (float) $rec['yield'] > 0 ? (float) $rec['yield'] : null);
+        $fromFit = is_numeric($fy) && (float) $fy > 0;
+        $avg = $fromFit ? (float) $fy : (isset($rec['yield']) && is_numeric($rec['yield']) && (float) $rec['yield'] > 0 ? (float) $rec['yield'] : null);
         if ($avg === null) {
             return null;
         }
-        $top = isset($rec['yieldTop']) && is_numeric($rec['yieldTop']) && (float) $rec['yieldTop'] > $avg ? (float) $rec['yieldTop'] : null;
+        // The shelf's fitted yield is always t/ha (a sugarcane book counts LKg of sugar: its top is another unit).
+        $recUnit = (string) ($rec['yieldUnit'] ?? 't/ha') ?: 't/ha';
+        $unit = $fromFit ? 't/ha' : $recUnit;
+        $top = $recUnit === $unit && isset($rec['yieldTop']) && is_numeric($rec['yieldTop']) && (float) $rec['yieldTop'] > $avg ? (float) $rec['yieldTop'] : null;
 
-        return ['name' => (string) ($rec['name'] ?? $vy['name'] ?? $name), 'avg' => $avg, 'top' => $top, 'unit' => (string) ($rec['yieldUnit'] ?? 't/ha') ?: 't/ha'];
+        return ['name' => (string) ($rec['name'] ?? $vy['name'] ?? $name), 'avg' => $avg, 'top' => $top, 'unit' => $unit];
     }
 
     /** A variety part as [low, high], or null. */
@@ -839,17 +877,20 @@ final class SeedSpacing
      * The yield parts the count runs on, each [low, high]: the farmer's own
      * number, else the variety's, else the crop's usual. A plant's harvest can
      * come from the variety's fruits a plant times the weight of one (g).
+     * Sugarcane's tillers a clump and stalk weight are the variety's part, else
+     * what the shelf keeps beside its parts (STALK_EXTRA).
      */
     public static function parts(array $c, ?array $vy): array
     {
         $Y = self::CROPS[$c['crop']]['yield'];
+        $ex = is_array($vy['extra'] ?? null) ? $vy['extra'] : [];
         $out = [];
         foreach (self::YIELD_KEYS as $k) {
             if (($c[$k] ?? null) !== null) {
                 $out[$k] = [(float) $c[$k], (float) $c[$k]];
                 continue;
             }
-            $v = self::span($vy[$k] ?? null);
+            $v = self::span($vy[$k] ?? null) ?? (isset(self::STALK_EXTRA[$k]) ? self::span($ex[self::STALK_EXTRA[$k]] ?? null) : null);
             if (! $v && $k === 'perPlant' && $vy) {
                 $f = self::span($vy['fruits'] ?? null);
                 $w = self::span($vy['fruitWt'] ?? null);
@@ -858,7 +899,7 @@ final class SeedSpacing
                     $v = $u === 'count' ? $f : [$f[0] * $w[0] / ($u === 'kg' ? 1000 : 1), $f[1] * $w[1] / ($u === 'kg' ? 1000 : 1)];
                 }
             }
-            $out[$k] = $v ?? (isset($Y[$k]) ? [(float) $Y[$k], (float) $Y[$k]] : null);
+            $out[$k] = $v ?? (isset($Y[$k]) ? self::span($Y[$k]) : null);
         }
 
         return $out;
@@ -1084,6 +1125,8 @@ final class SeedSpacing
         $piecesLo = null;
         $panM2 = null;
         $panM2Lo = null;
+        $stalks = null;
+        $stalksLo = null;
         $capped = false;
         $plateau = false;
         $plantsY = $plantsHa;
@@ -1109,6 +1152,17 @@ final class SeedSpacing
                     $pieces = $plantsY * $P['ears'][1];
                     $piecesLo = $plantsY * $P['ears'][0] * $keepShare;
                 }
+            } elseif ($Y['model'] === 'stalk') {
+                // Sugarcane: the clumps x the tillers a clump x the millable share, no more stalks than a field carries, x the weight of a stalk.
+                $max = (float) $Y['stalkMax'];
+                $raw = $plantsY * $P['stalks'][1] * $P['millable'][1] / 100;
+                $stalks = min($raw, $max);
+                $stalksLo = min($plantsY * $P['stalks'][0] * $P['millable'][0] / 100, $max);
+                $capped = $raw > $max;
+                $pieces = $stalks;
+                $piecesLo = $stalksLo * $keepShare;
+                $kgHa = $stalks * $P['stalkKg'][1];
+                $kgHaLo = $stalksLo * $P['stalkKg'][0] * $keepShare;
             } elseif (($Y['unit'] ?? 'kg') === 'count') {
                 $pieces = $plantsY * $P['perPlant'][1];
                 $piecesLo = $plantsY * $P['perPlant'][0] * $keepShare;
@@ -1168,7 +1222,7 @@ final class SeedSpacing
             }
         }
         if ($capped) {
-            $flags[] = ['tiller-cap', 'warn'];
+            $flags[] = [$Y['model'] === 'stalk' ? 'stalk-cap' : 'tiller-cap', 'warn'];
         }
         if ($plateau) {
             $flags[] = ['yield-plateau', 'info'];
@@ -1208,6 +1262,8 @@ final class SeedSpacing
             'goodPlant' => [$r($goodPlant[0], 2), $r($goodPlant[1], 2)],
             'parts' => array_map(fn ($v) => $v === null ? null : [round($v[0], 4), round($v[1], 4)], $P + ['gw' => $gw]),
             'panM2' => $r($panM2, 1), 'panM2Lo' => $r($panM2Lo, 1), 'capped' => $capped, 'plateau' => $plateau,
+            // Sugarcane: the millable stalks a hectare the clumps carry (before the field, the season and the harvest loss).
+            'stalksHa' => $r($stalks, 1), 'stalksHaLo' => $r($stalksLo, 1),
             'kgHaHi' => $r($kgHa, 1), 'kgHaLo' => $r($kgHaLo, 1),
             'yLotHi' => $r($lot($kgHa), 1), 'yLotLo' => $r($lot($kgHaLo), 1),
             'piecesHa' => $r($pieces, 1), 'piecesHaLo' => $r($piecesLo, 1),
@@ -1249,7 +1305,7 @@ final class SeedSpacing
     {
         return [
             'crops' => self::CROPS, 'groups' => self::GROUPS, 'modes' => self::MODES, 'layouts' => self::LAYOUTS, 'methods' => self::METHODS,
-            'rowSet' => self::ROWSET, 'hillMode' => self::HILLMODE, 'seedTypes' => self::SEED_TYPES, 'seedKinds' => self::SEED_KINDS, 'usualKeys' => self::USUAL_KEYS, 'packLabels' => self::PACK_LABELS, 'per' => self::PER, 'areaUnits' => self::AREA_UNITS, 'yieldKeys' => self::YIELD_KEYS,
+            'rowSet' => self::ROWSET, 'hillMode' => self::HILLMODE, 'seedTypes' => self::SEED_TYPES, 'seedKinds' => self::SEED_KINDS, 'usualKeys' => self::USUAL_KEYS, 'packLabels' => self::PACK_LABELS, 'per' => self::PER, 'areaUnits' => self::AREA_UNITS, 'yieldKeys' => self::YIELD_KEYS, 'stalkExtra' => self::STALK_EXTRA,
             'k' => ['thin' => self::THIN, 'crowd' => self::CROWD, 'shortOk' => self::SHORT_OK, 'shortOne' => self::SHORT_ONE, 'shortPart' => self::SHORT_PART, 'shortBad' => self::SHORT_BAD, 'tri' => self::TRI,
                 'bed' => self::BED, 'riceMax' => self::RICE_HILL_MAX, 'riceBad' => self::RICE_HILL_BAD],
             'varietyShelf' => class_exists(\App\Support\VarietyYield::class),

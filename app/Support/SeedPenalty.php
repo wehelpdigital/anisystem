@@ -235,7 +235,8 @@ final class SeedPenalty
             'salt' => $salt, 'signs' => array_values(array_diff(array_map('strval', (array) ($a['signs'] ?? [])), ['none'])),
             'waterSalty' => in_array('salty', $waterLook, true),
             'ph' => $ph, 'ec' => isset($test['ec']) && is_numeric($test['ec']) && (float) $test['ec'] > 0 ? (float) $test['ec'] : null,
-            'water' => in_array($L['waterNpk'] ?? null, ['irrigated', 'partial', 'rainfed'], true) ? $L['waterNpk'] : null,
+            // NPK Plus's water: a pump or a well is its own source (2026-10-20).
+            'water' => in_array($L['waterNpk'] ?? null, ['irrigated', 'pump', 'partial', 'rainfed'], true) ? $L['waterNpk'] : null,
             'saline' => in_array('saline', (array) $L['soilConditions'], true), 'sodic' => in_array('sodic', (array) $L['soilConditions'], true),
             'sulfate' => ($a['acidity'] ?? null) === 'sulfate',
         ];
@@ -483,8 +484,8 @@ final class SeedPenalty
             $poor = $f && (in_array($f['drainage'] ?? '', ['slow', 'stands'], true) || in_array($f['texture'] ?? '', ['clay', 'heavy_clay'], true));
             $wR = ($tp ? 0.33 : ($pc ? 0.7 : 1)) * ($poor ? 1.3 : 1);
             $add($E, 'heavy', max(0.0, 1 - self::RAIN_ROT * $W['heavy'] * $wR), ! empty($W['fc']['heavy']) ? 'forecast' : 'season', $W['heavy']);
-            // A dry start: only where the field waits on the rain.
-            if ($wk !== 'irrigated' && ! ($rice && $tp && $wk === 'partial')) {
+            // A dry start: only where the field waits on the rain (a pump or a well waters at sowing, as a canal does).
+            if ($wk !== 'irrigated' && $wk !== 'pump' && ! ($rice && $tp && $wk === 'partial')) {
                 $tex = $f['texture'] ?? null;
                 $mult = $tex === 'sandy' ? 1.4 : (in_array($tex, ['clay', 'heavy_clay'], true) ? 0.8 : 1);
                 $wD = ($wk === 'partial' ? 0.5 : 1) * ($tp ? 0.7 : 1) * $mult;

@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Cache;
  *    (the fresh ear for sweet corn).
  *  - plant (the rest): the harvest a plant, in the crop's own unit (g, kg
  *    or a count, as SeedSpacing::CROPS[$key]['yield']['unit']).
+ *  - stalk (sugarcane): tillers a clump and the weight of a stalk kg, kept
+ *    in extra as stalksClump and stalkKg; the millable share is the crop's.
  *
  * Each part is a number or [low, high], and carries where it rests (by:
  * papers = the registration trials, seller = the seed company's sheet,
@@ -68,6 +70,9 @@ final class VarietyYield
         'tiller' => ['tillers', 'grains', 'filled', 'tgw', 'ceiling'],
         'ear' => ['ears', 'perEar'],
         'plant' => ['perPlant', 'unit'],
+        // Sugarcane (2026-10-20): tillers a clump, the millable share %, a stalk's kg. The rows keep
+        // stalksClump and stalkKg in extra, which SeedSpacing::parts() reads (SeedSpacing::STALK_EXTRA).
+        'stalk' => ['stalks', 'millable', 'stalkKg'],
     ];
 
     public const BASES = ['papers', 'seller', 'breeder', 'study', 'type'];

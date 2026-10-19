@@ -11,7 +11,7 @@ namespace App\Support;
  *
  * $hist = ClimateStore::season() for the window, $window =
  * NpkNeed::seasonWindow(), $enso = ClimateStore::enso(), $water = irrigated,
- * partial or rainfed. Each factor is the share of a full potential the season
+ * pump (a pump or a well, 2026-10-20), partial or rainfed. Each factor is the share of a full potential the season
  * lets the crop carry: sun = clamp(rad / the crop's rad, 0.2, 1.1); water =
  * clamp(1 - ky x (1 - the share of the crop's drink the water meets), 0.1, 1);
  * temperature = clamp((1 - 0.07 x degrees off the crop's best range) x (1 -
@@ -37,7 +37,9 @@ final class SeasonFactors
         $et0 = (float) $a['et0'] * ($t['rain'] < 1 ? 1 + (1 - $t['rain']) * 0.15 : 1);
         $need = $et0 * (float) $K['kc'] + (float) ($K['extraMm'] ?? 0);
         $eff = $rain * 0.75;
-        $supply = $water === 'irrigated' ? $need : ($water === 'partial' ? $eff + 0.5 * max(0, $need - $eff) : $eff);
+        // A pump or a well makes up most of what the rain leaves short, a part time source half (NpkModel::FIELD, NpkNeed::seasonWater).
+        $cover = $water === 'pump' ? (float) NpkModel::FIELD['pumpCover'] : ($water === 'partial' ? (float) NpkModel::FIELD['partialCover'] : 0.0);
+        $supply = $water === 'irrigated' ? $need : $eff + $cover * max(0, $need - $eff);
         $wr = min(1, $supply / max(1, $need));
         $fw = $clamp(1 - (float) $K['ky'] * (1 - $wr), 0.1, 1);
         $fs = $clamp($rad / (float) $K['rad'], 0.2, 1.1);
