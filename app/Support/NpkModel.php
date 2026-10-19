@@ -386,6 +386,44 @@ final class NpkModel
         'acidPh' => 5.5, 'alkPh' => 7.5,
     ];
 
+    /**
+     * What a yield figure weighs (2026-10-20, the owner: say whether a yield is dry or wet, and show the
+     * other). A crop sold dried is counted dry, as its potential and the national averages are written;
+     * beside it, its weight at harvest: by moisture ('mc' => [dry %, at harvest %], wet = dry x (100 - dry)
+     * / (100 - wet)), or by a ratio where more than water goes ('x' => [lo, hi]: coffee's fresh cherry
+     * gives about a fifth of its weight in green beans; cacao's wet beans keep 34 to 40% once fermented
+     * and dried; onions lose about 5 to 9% curing, garlic about a quarter drying). Every other crop is
+     * counted fresh, as picked.
+     */
+    public const YIELD_BASIS = [
+        'rice' => ['dry' => 'dry palay', 'wet' => 'wet palay at harvest', 'mc' => [14, 24]],
+        'rice_dsr_wet' => ['dry' => 'dry palay', 'wet' => 'wet palay at harvest', 'mc' => [14, 24]],
+        'rice_dsr_dry' => ['dry' => 'dry palay', 'wet' => 'wet palay at harvest', 'mc' => [14, 24]],
+        'corn_yellow' => ['dry' => 'dry shelled corn', 'wet' => 'wet shelled corn at harvest', 'mc' => [14, 25]],
+        'sorghum' => ['dry' => 'dry grain', 'wet' => 'wet grain at harvest', 'mc' => [14, 22]],
+        'soybean' => ['dry' => 'dry beans', 'wet' => 'beans at harvest', 'mc' => [13, 18]],
+        'mungbean' => ['dry' => 'dry beans', 'wet' => 'beans at harvest', 'mc' => [12, 15]],
+        'peanut' => ['dry' => 'dry pods in the shell', 'wet' => 'freshly dug pods', 'mc' => [10, 35]],
+        'coffee' => ['dry' => 'green coffee beans', 'wet' => 'fresh red cherries', 'x' => [4.8, 6]],
+        'cacao' => ['dry' => 'dry fermented beans', 'wet' => 'wet beans from the pods', 'x' => [2.5, 2.9]],
+        'onion' => ['dry' => 'cured bulbs', 'wet' => 'bulbs at harvest, before curing', 'x' => [1.05, 1.1]],
+        'garlic' => ['dry' => 'dried bulbs', 'wet' => 'bulbs at harvest, before drying', 'x' => [1.3, 1.4]],
+    ];
+
+    /** The yield basis in words, for a prompt: "Yields are dry palay at 14% moisture; ..." */
+    public static function yieldBasisWords(?string $crop): string
+    {
+        $b = self::YIELD_BASIS[['corn' => 'corn_yellow'][(string) $crop] ?? (string) $crop] ?? null;
+        if (! $b) {
+            return 'Yields are the fresh weight, as picked.';
+        }
+        [$lo, $hi] = isset($b['mc']) ? array_fill(0, 2, (100 - $b['mc'][0]) / (100 - $b['mc'][1])) : $b['x'];
+
+        return 'Yields are ' . $b['dry'] . (isset($b['mc']) ? ' at ' . $b['mc'][0] . '% moisture' : '') . '; ' . $b['wet']
+            . (isset($b['mc']) ? ' (about ' . $b['mc'][1] . '% moisture)' : '') . ' weigh about ' . ($lo === $hi ? round($lo, 2) : round($lo, 2) . ' to ' . round($hi, 2))
+            . ' times as much. Say which you mean when you give a yield.';
+    }
+
     public static function forClient(): array
     {
         $conditions = [];
@@ -400,7 +438,7 @@ final class NpkModel
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
             'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
-            'field' => self::FIELD,
+            'field' => self::FIELD, 'yieldBasis' => self::YIELD_BASIS,
         ];
     }
 }

@@ -1288,6 +1288,18 @@
         }
         return out;
     };
+    // What a yield weighs (NpkModel::YIELD_BASIS, 2026-10-20, the owner: dry or wet, and the other beside it).
+    // A crop sold dried is counted dry, with its weight at harvest; any other crop fresh, as picked.
+    const basisOf = (c) => {
+        const b = c && M && M.yieldBasis ? M.yieldBasis[c.key] : null;
+        if (!b) return null;
+        const lo = b.mc ? (100 - b.mc[0]) / (100 - b.mc[1]) : b.x[0], hi = b.mc ? lo : b.x[1];
+        return { dry: b.dry + (b.mc ? ' at ' + b.mc[0] + '% moisture' : ''), wet: b.wet + (b.mc ? ', about ' + b.mc[1] + '% moisture' : ''), lo, hi };
+    };
+    const tPer = (t) => fmt(t / Y_U[st.yUnit][3]) + '\u00a0' + Y_U[st.yUnit][1];
+    const wetPer = (B, t) => B.hi - B.lo < 0.005 ? tPer(t * B.lo) : fmt(t * B.lo / Y_U[st.yUnit][3]) + ' to ' + tPer(t * B.hi);
+    // " of dry palay at 14% moisture (about 6.8 t/ha of wet palay at harvest, about 24% moisture)", or ", fresh as picked".
+    const basisSay = (c, t) => { const B = basisOf(c); return B ? ' of ' + B.dry + ' (about ' + wetPer(B, t) + ' of ' + B.wet + ')' : ', fresh as picked'; };
     const goalOf = (c) => {
         const f = Y_U[st.yUnit][3];
         const P = num('npPotential') * f, T = num('npTarget') * f, ty = c && c.typicalYield;
@@ -1308,7 +1320,7 @@
         if (!M) return;
         const c = cropOf(st.crop), g = goalOf(c), unit = Y_U[st.yUnit][1], f = Y_U[st.yUnit][3];
         $('npGoal').innerHTML = !c ? 'Pick the crop first; the goal is sized to it.'
-            : g.Y ? 'NPK Plus counts for <b>' + fmt(g.Y / f) + ' ' + esc(unit) + '</b>' + (st.yUnit !== 't' ? ' (' + fmt(g.Y) + ' t/ha)' : '') + ': ' + esc(g.why) + '.'
+            : g.Y ? 'NPK Plus counts for <b>' + fmt(g.Y / f) + ' ' + esc(unit) + '</b>' + (st.yUnit !== 't' ? ' (' + fmt(g.Y) + ' t/ha)' : '') + esc(basisSay(c, g.Y)) + ': ' + esc(g.why) + '.'
                 + (g.sd.sf < 1 ? ' Your stand is thin, so it counts for ' + fmt(g.Yeff / f) + ' ' + esc(unit) + '.' : '')
                 + (g.capped ? ' ' + esc(fieldWho()) + ' holds it to <b>' + fmt(g.Yeff / f) + ' ' + esc(unit) + '</b> (' + esc(capWords(g.cap)) + ').' : '')
                 + (g.warn ? '<br><span class="text-xs">' + esc(g.warn) + '</span>' : '')
@@ -2487,7 +2499,8 @@
         if (has && measured.length) { [, limIdx] = measured.reduce((a, b) => (b[0].px < a[0].px ? b : a)); level = Math.min(H, rows[limIdx].px); }
         BR.set(rows, level, limIdx);
         const yu = Y_U[st.yUnit];
-        $('lbTag').textContent = g.Yeff ? 'The rim is your goal, ' + fmt(g.Yeff / yu[3]) + ' ' + yu[1] + '.' : 'The rim is everything the crop needs.';
+        const B = basisOf(c);
+        $('lbTag').textContent = g.Yeff ? 'The rim is your goal, ' + fmt(g.Yeff / yu[3]) + ' ' + yu[1] + (B ? ' dry' : ' fresh') + '.' : 'The rim is everything the crop needs.';
         $('lbKey').innerHTML = STAVES.map((s, i) => {
             const r = rows[i];
             return '<button type="button" class="lb-k is-' + r.state + '" data-i="' + i + '" title="' + esc(r.note) + '"><i></i><b>' + esc(s.name || NAMES[s.k]) + (s.dull ? '' : ' <small>' + s.t + '</small>') + '</b>'
@@ -2501,10 +2514,13 @@
         const tons = (pc) => g.Yeff ? fmt(g.Yeff * pc / 100 / yu[3]) + ' ' + yu[1] : '';
         $('lbReach').hidden = reach === null;
         if (reach !== null) $('lbReach').innerHTML = '<b>' + reach + '%</b><span>of what your crop needs for your goal is met, at the shortest plank.'
-            + (harvest !== null && harvest > reach ? '<small class="lb-harvest">The harvest: about <b>' + harvest + '%</b> of your goal' + (g.Yeff ? ', near ' + esc(tons(harvest)) : '') + ', because the soil gives part of what is missing on its own.</small>' : '') + '</span>';
+            + (harvest !== null && harvest > reach ? '<small class="lb-harvest">The harvest: about <b>' + harvest + '%</b> of your goal' + (g.Yeff ? ', near ' + esc(tons(harvest) + basisSay(c, g.Yeff * harvest / 100)) : '') + ', because the soil gives part of what is missing on its own.</small>' : '') + '</span>';
         // The arrow says the need met and, under it, the yield it points to (2026-10-20, the owner: put the potential yield back).
         const yieldPc = harvest !== null ? Math.max(harvest, reach ?? 0) : reach;
-        $('lbALab').innerHTML = 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : '') + (yieldPc !== null && g.Yeff ? '<small>about ' + esc(tons(yieldPc)) + '</small>' : '');
+        // The yield it points to: dry and wet for a crop sold dried, fresh for the rest (basisOf).
+        const yt = yieldPc !== null && g.Yeff ? g.Yeff * yieldPc / 100 : null;
+        $('lbALab').innerHTML = 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : '')
+            + (yt ? (B ? '<small>Dry about ' + esc(tPer(yt)) + '</small><small>Wet about ' + esc(wetPer(B, yt)) + '</small>' : '<small>Fresh about ' + esc(tPer(yt)) + '</small>') : '');
         let say = '';
         const cName = c ? esc(cropShort(c).toLowerCase()) : '';
         if (!c) say = st.cropPicked ? 'No crop picked: the barrel needs the crop\'s numbers.' : 'Pick the crop in step 1: the planks are measured against what it needs.';

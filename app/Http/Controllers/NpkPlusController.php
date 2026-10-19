@@ -521,6 +521,7 @@ class NpkPlusController extends Controller
                 ? '; planted with ' . (float) $seed['amount'] . ' ' . mb_substr((string) ($seed['unit'] ?? ''), 0, 30) . ' for the whole area'
                     . (! empty($seed['perHa']) ? ' (' . round((float) $seed['perHa'], 1) . ' per hectare)' : '')
                 : '') . "\n"
+            . \App\Support\NpkModel::yieldBasisWords($calc->crop) . "\n"
             . "Fertilizers planned (for the whole area):\n" . $lines . "\n"
             . 'Totals per hectare (elemental unless named as oxide): ' . json_encode($res['perHa'] ?? []) . "\n"
             . 'N-P2O5-K2O per hectare: ' . ($res['npkPerHa'] ?? '?') . "\n"
