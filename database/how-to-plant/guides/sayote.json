@@ -24,7 +24,30 @@
      "day": -30,
      "title": "Sprout the seed fruits",
      "how": "Pick big, fully mature fruits from your best vine. Keep them in a shaded, airy place or set them half buried in a nursery bed until the shoot grows about 30 cm tall.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Choose the seed fruits",
+       "how": "Pick big, fully mature fruits from your best, heaviest bearing vine. Leave out fruits from vines with mottled or curled leaves, since that virus passes on through the fruit."
+      },
+      {
+       "title": "Keep them shaded and damp",
+       "how": "Set the fruits in a shaded place that stays cool and a little moist. In time the broad end splits and a shoot pushes out."
+      },
+      {
+       "title": "Or half bury them in a nursery bed",
+       "how": "Many farmers lay the fruits on their side in a shaded nursery bed, the broad end down and about a third of the fruit left above the soil, and water the bed lightly when it dries."
+      },
+      {
+       "title": "Grow the shoot to about 30 cm",
+       "how": "Let the shoot grow until it is about 30 cm tall, then carry the whole fruit with its shoot and roots to the field. Do not break the shoot off the fruit, because the young plant lives on the fruit at first.",
+       "time": "until the shoot is about 30 cm"
+      },
+      {
+       "title": "Planting a freshly sprouted fruit",
+       "how": "A fruit that has only just sprouted can go straight into the hill. Set it slanting, broad end down, and leave about a third of it above the soil."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -136,5 +159,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "chayote",
- "rev": "6774c19612e5"
+ "rev": "5a3e3623d62d"
 }

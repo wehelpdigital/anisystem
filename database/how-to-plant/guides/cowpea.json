@@ -87,7 +87,34 @@
      "day": 72,
      "title": "Dry, thresh and store",
      "how": "Sun dry the pods, beat out the seed, winnow, dry again and store in sealed containers.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Pick seed pods from good plants",
+       "how": "Take the seed pods from strong, healthy plants, from the middle of the plant where the pods are fullest. Leave them on the vine until they are dry and pale."
+      },
+      {
+       "title": "Sun dry the pods",
+       "how": "Spread the pods on mats or nets in the sun, or hang them in bunches in an airy shade, until they are brittle."
+      },
+      {
+       "title": "Beat out and winnow",
+       "how": "Beat the dry pods in a tied sack or on a mat with a light stick, then toss the seed on a bilao in the wind to blow off the hulls."
+      },
+      {
+       "title": "Dry the seed again",
+       "how": "Spread the clean seed in the sun once more, turning it, until it is hard. Throw out shriveled seed and seed with weevil holes."
+      },
+      {
+       "title": "Do the plastic bag test",
+       "how": "Seal about half a kilo of seed in a clear plastic bag and leave it in the sun. If drops of water form inside within about half an hour, dry the seed some more.",
+       "time": "about 30 minutes"
+      },
+      {
+       "title": "Store it sealed",
+       "how": "Keep the seed in a sealed jar, can or thick plastic bag, labeled with the date, in a cool, dry place. A little dry wood ash mixed in keeps weevils off."
+      }
+     ]
     }
    ],
    "note": "Day 70 is the dry seed harvest. Young pods for cooking are picked a few weeks earlier."
@@ -117,5 +144,5 @@
  "kind": "annual",
  "icon": "🫛",
  "slug": "cowpea",
- "rev": "d75cb4bc1433"
+ "rev": "6c90059f07bc"
 }

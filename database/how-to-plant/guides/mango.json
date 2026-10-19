@@ -106,6 +106,37 @@
      "task": "pruning"
     },
     {
+     "phase": "care",
+     "day": 1660,
+     "title": "Make the tree flower (pagpapabulak)",
+     "how": "Carabao and piko mango flower poorly on their own. Most growers spray the bearing tree with a potassium nitrate mix when its leaves are old enough, which brings out the flowers together and lets them time the harvest.",
+     "task": "other",
+     "parts": [
+      {
+       "title": "Wait for mature leaves",
+       "how": "Spray only when the tree's last flush of leaves has fully hardened and turned dark. Trees that flushed in the first three months of the year are usually ready seven to nine months later. Trees that flushed in the last three months are ready after four to six months.",
+       "time": "4 to 9 months after the last flush"
+      },
+      {
+       "title": "Mark the trees",
+       "how": "Tie a tag on each tree as you plan its spray date, so you can follow each one to harvest."
+      },
+      {
+       "title": "Mix the spray",
+       "how": "Weigh 1 kg of potassium nitrate for every 100 liters of water. Dissolve it first in 1 to 2 liters of water, pour that into the drum and fill to 100 liters."
+      },
+      {
+       "title": "Spray the whole canopy",
+       "how": "Spray the leaves all over the crown, working down from the top of the tree, and stir the drum often while spraying."
+      },
+      {
+       "title": "Watch for the flowers",
+       "how": "If the tree does not flower, or the flowers are lost to rain or disease, spray again one to two months later. Water the tree from flowering to fruit set in dry weather so fewer young fruits drop.",
+       "time": "1 to 2 months before a second spray"
+      }
+     ]
+    },
+    {
      "phase": "harvest",
      "day": 1800,
      "title": "First real harvest",
@@ -152,5 +183,5 @@
  "kind": "perennial",
  "icon": "🥭",
  "slug": "mango",
- "rev": "e1d0a822a729"
+ "rev": "677f9aea20fe"
 }

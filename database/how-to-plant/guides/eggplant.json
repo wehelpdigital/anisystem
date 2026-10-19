@@ -32,14 +32,60 @@
      "title": "Soak and sow the seed",
      "how": "Soak the seed overnight and let it dry in the air. Draw shallow lines 5 cm apart with a stick, drop the seed thinly along them and cover with fine soil, or sow one seed a hole about 1 cm deep in a tray filled with equal parts compost, burnt rice hull and garden soil. Water gently.",
      "task": "seedbed",
-     "tip": "A slanted roof of cogon, coconut leaves or old sacks over the bed keeps off hard sun and heavy rain."
+     "tip": "A slanted roof of cogon, coconut leaves or old sacks over the bed keeps off hard sun and heavy rain.",
+     "parts": [
+      {
+       "title": "Soak overnight, then air dry",
+       "how": "Soak the seed in clean water overnight so it sprouts sooner. Spread it on a cloth or paper in the shade until it no longer sticks together in the fingers.",
+       "time": "overnight"
+      },
+      {
+       "title": "Roast the soil for the trays",
+       "how": "For trays or small pots, roast the garden soil over a fire, stirring it, to kill the fungi, insects and weed seed in it. Let it cool, then a day later mix it with equal parts of compost and burnt rice hull."
+      },
+      {
+       "title": "Fill the trays",
+       "how": "Fill the cells of a tray with 100 or 104 holes with the mix and press it down lightly. Ready mixed seedling media from farm stores work too."
+      },
+      {
+       "title": "Sow one seed a cell, or in lines",
+       "how": "In trays, drop one seed in each cell about 1 cm deep, cover with fine soil and sprinkle with water. On a seedbed, water the bed first, mark lines about 5 cm apart with a stick, drop the seed evenly along them and cover with fine soil."
+      },
+      {
+       "title": "Water in the morning, not too much",
+       "how": "Give water early in the day and only enough that the soil stays damp. Too much water brings damping off and thin, weak seedlings."
+      },
+      {
+       "title": "Put up a slanted shade",
+       "how": "Build a simple roof of cogon, talahib, coconut leaves or old plastic sacks over the beds or trays. Make the east posts taller, about 120 cm, and the west posts about half that, around 60 cm, so the morning sun reaches the seedlings but the hot afternoon sun and hard rain do not."
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -24,
      "title": "Thin and prick out",
      "how": "A few days after the seedlings come up, or when they show 2 to 3 leaves, pull out the crowded ones. Move the extras into trays, banana leaf cups or another bed, water them and keep them in the shade until they perk up.",
-     "task": "thinning"
+     "task": "thinning",
+     "parts": [
+      {
+       "title": "Thin them early",
+       "how": "Three to five days after the seedlings come up, or when they show their first two or three leaves, pull out the crowded ones and keep the strongest. The extras go into cups or trays.",
+       "time": "3 to 5 days after they come up"
+      },
+      {
+       "title": "Make banana leaf cups",
+       "how": "Cut banana leaves into strips about two inches wide, roll each strip into a small ring and pin the ends with a broom stick (tingting) so it does not open. Stand the cups side by side inside a square wooden frame."
+      },
+      {
+       "title": "Fill the cups and move the seedlings",
+       "how": "Fill the cups with a mix of 2 parts compost, 1 part soil and 1 part burnt rice hull. Poke a hole in each, set one seedling in it, holding it by a leaf, and firm the soil around it."
+      },
+      {
+       "title": "Water and shade until they perk up",
+       "how": "Water the moved seedlings right away and keep them under the shade until they stand up again. At planting time each seedling leaves its cup with a whole ball of soil, so the roots are hardly disturbed."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -60,7 +106,26 @@
      "day": -7,
      "title": "Harden the seedlings",
      "how": "Take the shade off a little longer each day, starting with the morning sun, and water less often. By the end of the week the seedlings should stand the whole day of sun without wilting badly.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Start with the morning sun",
+       "how": "On the first day of the last week before planting, take the shade off and let the seedlings stand in the sun until about ten in the morning, then cover them again."
+      },
+      {
+       "title": "Add more sun each day",
+       "how": "Leave the cover off a little longer every day, until the seedlings can take the sun the whole day.",
+       "time": "about a week"
+      },
+      {
+       "title": "Give less water",
+       "how": "At the same time, water a little less and less often. Seedlings that are not soaked every day grow tougher stems and roots."
+      },
+      {
+       "title": "Do not let them wilt hard",
+       "how": "A little drooping at noon is normal. If the seedlings wilt badly, shade them and water them, then go on more slowly."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -148,6 +213,36 @@
      "task": "postharvest"
     },
     {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Keep seed from the best plants",
+     "how": "Farmers who keep their own seed of an open pollinated variety leave a few fruits on the best plants to ripen fully, then take out the seed, dry it slowly and store it dry and cool.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Mark the seed fruits",
+       "how": "Pick out strong, healthy plants that bear well and true to the variety. Tie a string on a few well shaped fruits and leave them on the plant past eating stage."
+      },
+      {
+       "title": "Wait for yellow to brown",
+       "how": "Pick the seed fruits only when the skin has turned yellow to brown and the fruit has gone soft. Seed from green fruit is not ripe and sprouts poorly."
+      },
+      {
+       "title": "Slice and scrape out the seed",
+       "how": "Press and roll the fruit to loosen the seed, slice it open lengthwise and scrape the seed out. Wash it in water and throw away the seeds that float with the pulp."
+      },
+      {
+       "title": "Air dry, then sun dry",
+       "how": "Spread the seed on a screen or put it in a net bag and dry it in the shade, where air moves, for at least three days. Then finish it in the sun for up to five days.",
+       "time": "at least 3 days in the shade, then up to 5 days in the sun"
+      },
+      {
+       "title": "Store it dry and cool",
+       "how": "Keep the dry seed in sealed plastic bags or glass jars, labeled with the variety and date, in the coolest, driest corner of the house."
+      }
+     ]
+    },
+    {
      "phase": "care",
      "day": 63,
      "title": "Feed again while it bears",
@@ -195,5 +290,5 @@
  "kind": "annual",
  "icon": "🍆",
  "slug": "eggplant",
- "rev": "a2d8bd72b6ae"
+ "rev": "89bf69a73ec7"
 }

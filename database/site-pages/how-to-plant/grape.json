@@ -85,7 +85,40 @@
    "items": [
     {
      "title": "2 months before planting: Root the cuttings in bags",
-     "text": "Stick each cutting upright in a bag of loose soil, sand and compost, burying two buds and leaving one or two above. Keep the bags in light shade and moist, not soggy. The buds push out in two to three weeks. Tip: Plant the cutting the right way up: the slanted top end stays above the soil."
+     "text": "Stick each cutting upright in a bag of loose soil, sand and compost, burying two buds and leaving one or two above. Keep the bags in light shade and moist, not soggy. The buds push out in two to three weeks. Tip: Plant the cutting the right way up: the slanted top end stays above the soil.",
+     "parts": [
+      {
+       "title": "Take canes at pruning time",
+       "text": "Choose sound, mature canes from healthy mother vines when you prune, a few weeks after a harvest. Use bare canes with no leaves left on them, and throw away any wood from a sick vine."
+      },
+      {
+       "title": "Cut pieces with three or four buds",
+       "text": "Cut each piece about 10 to 12 inches long with three or four plump buds. Four buds give a spare: if the bottom end rots, trim it back to the next bud and it can still root."
+      },
+      {
+       "title": "Soak them in bundles",
+       "text": "Tie the pieces in bundles, all with the bottom ends together, and stand them in clean water for four to five days so the buds and the base wake up.",
+       "time": "4 to 5 days"
+      },
+      {
+       "title": "Start the roots in damp sand or paper",
+       "text": "Wrap the bottom ends of each bundle in damp newspaper inside a plastic bag kept in the shade, or bury the bundles in damp river sand. Some growers leave them in the sand about three weeks until short roots show.",
+       "time": "about 21 days in sand"
+      },
+      {
+       "title": "Scrape the base and bag them",
+       "text": "Lightly scrape the brown skin off the lowest part of each cutting, then set it in a bag with a hole in the bottom, filled with loam or with equal parts of soil, compost and vermicast. Firm the soil around it."
+      },
+      {
+       "title": "Keep them bright and out of the rain",
+       "text": "Stand the bags in a bright spot where rain cannot reach them and water lightly. Leaves usually come out in two to three weeks.",
+       "time": "2 to 3 weeks to leaf"
+      },
+      {
+       "title": "Bring them into the sun slowly",
+       "text": "Farms that raise many vines give the young plants morning sun only for about 20 days, then most of the day's sun for about two months, and full sun for at least the last month before field planting."
+      }
+     ]
     }
    ]
   },
@@ -133,7 +166,30 @@
     },
     {
      "title": "Month 8: Fruit pruning",
-     "text": "When the canes are brown and mature and the dry season is near, cut each cane back to a short spur of a few buds, or to a longer cane of more buds as the grower prefers, and strip the old leaves. New shoots with flower bunches come out in one to two weeks. Tip: Time this so the fruit ripens in dry weather. Count back about three to four months."
+     "text": "When the canes are brown and mature and the dry season is near, cut each cane back to a short spur of a few buds, or to a longer cane of more buds as the grower prefers, and strip the old leaves. New shoots with flower bunches come out in one to two weeks. Tip: Time this so the fruit ripens in dry weather. Count back about three to four months.",
+     "parts": [
+      {
+       "title": "Wait about a month after harvest",
+       "text": "Let the vine rest and grow at least a month after the last picking before you prune again. Most farms here prune twice a year.",
+       "time": "at least 1 month after harvest"
+      },
+      {
+       "title": "Pick a dry spell",
+       "text": "Never prune on rainy days, because fresh cuts catch disease. If a typhoon is on its way, skip the pruning and let the vine rest until the weather turns."
+      },
+      {
+       "title": "Cut the fruited canes back",
+       "text": "Cut the canes that bore fruit back to short spurs of about two buds each. Growers who cane prune instead keep one or two long canes of about 8 to 12 buds and tie them along the wire."
+      },
+      {
+       "title": "Save the good cuttings",
+       "text": "Keep the healthy pieces you cut off to root new vines, and burn or bury those from sick vines."
+      },
+      {
+       "title": "Feed after pruning",
+       "text": "Spread chicken manure or vermicast under the vine after pruning and water it in, so the new shoots and flower bunches come out strong."
+      }
+     ]
     },
     {
      "title": "Month 9: Thin shoots and bunches",

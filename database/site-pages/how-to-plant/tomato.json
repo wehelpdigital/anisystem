@@ -70,7 +70,26 @@
     },
     {
      "title": "7 days before transplanting: Harden the seedlings",
-     "text": "Leave the seedlings in the sun a little longer each day and water them less often. By planting day they should stand the full sun without wilting badly."
+     "text": "Leave the seedlings in the sun a little longer each day and water them less often. By planting day they should stand the full sun without wilting badly.",
+     "parts": [
+      {
+       "title": "Start with the morning sun",
+       "text": "On the first day of the last week before planting, take the shade off and let the seedlings stand in the sun until about ten in the morning, then cover them again."
+      },
+      {
+       "title": "Add more sun each day",
+       "text": "Leave the cover off a little longer every day, until the seedlings can take the sun the whole day.",
+       "time": "about a week"
+      },
+      {
+       "title": "Give less water",
+       "text": "At the same time, water a little less and less often. Seedlings that are not soaked every day grow tougher stems and roots."
+      },
+      {
+       "title": "Do not let them wilt hard",
+       "text": "A little drooping at noon is normal. If the seedlings wilt badly, shade them and water them, then go on more slowly."
+      }
+     ]
     },
     {
      "title": "3 days before transplanting: Make the rows and add manure",
@@ -92,11 +111,57 @@
     },
     {
      "title": "30 days before transplanting: Soak and sow the seed",
-     "text": "Soak the seed overnight and dry it in the air. Sow thinly in shallow lines 5 cm apart and cover with fine soil, or drop one seed a hole about 1 cm deep in a tray. Water gently in the morning and keep the bed under a light shade."
+     "text": "Soak the seed overnight and dry it in the air. Sow thinly in shallow lines 5 cm apart and cover with fine soil, or drop one seed a hole about 1 cm deep in a tray. Water gently in the morning and keep the bed under a light shade.",
+     "parts": [
+      {
+       "title": "Soak overnight, then air dry",
+       "text": "Soak the seed in clean water overnight so it sprouts sooner. Spread it on a cloth or paper in the shade until it no longer sticks together in the fingers.",
+       "time": "overnight"
+      },
+      {
+       "title": "Roast the soil for the trays",
+       "text": "For trays or small pots, roast the garden soil over a fire, stirring it, to kill the fungi, insects and weed seed in it. Let it cool, then a day later mix it with equal parts of compost and burnt rice hull."
+      },
+      {
+       "title": "Fill the trays",
+       "text": "Fill the cells of a tray with 100 or 104 holes with the mix and press it down lightly. Ready mixed seedling media from farm stores work too."
+      },
+      {
+       "title": "Sow one seed a cell, or in lines",
+       "text": "In trays, drop one seed in each cell about 1 cm deep, cover with fine soil and sprinkle with water. On a seedbed, water the bed first, mark lines about 5 cm apart with a stick, drop the seed evenly along them and cover with fine soil."
+      },
+      {
+       "title": "Water in the morning, not too much",
+       "text": "Give water early in the day and only enough that the soil stays damp. Too much water brings damping off and thin, weak seedlings."
+      },
+      {
+       "title": "Put up a slanted shade",
+       "text": "Build a simple roof of cogon, talahib, coconut leaves or old plastic sacks over the beds or trays. Make the east posts taller, about 120 cm, and the west posts about half that, around 60 cm, so the morning sun reaches the seedlings but the hot afternoon sun and hard rain do not."
+      }
+     ]
     },
     {
      "title": "24 days before transplanting: Thin and prick out",
-     "text": "A few days after the seedlings come up, pull out the crowded ones and move the extras into trays or banana leaf cups. Keep them in the shade until they recover."
+     "text": "A few days after the seedlings come up, pull out the crowded ones and move the extras into trays or banana leaf cups. Keep them in the shade until they recover.",
+     "parts": [
+      {
+       "title": "Thin them early",
+       "text": "Three to five days after the seedlings come up, or when they show their first two or three leaves, pull out the crowded ones and keep the strongest. The extras go into cups or trays.",
+       "time": "3 to 5 days after they come up"
+      },
+      {
+       "title": "Make banana leaf cups",
+       "text": "Cut banana leaves into strips about two inches wide, roll each strip into a small ring and pin the ends with a broom stick (tingting) so it does not open. Stand the cups side by side inside a square wooden frame."
+      },
+      {
+       "title": "Fill the cups and move the seedlings",
+       "text": "Fill the cups with a mix of 2 parts compost, 1 part soil and 1 part burnt rice hull. Poke a hole in each, set one seedling in it, holding it by a leaf, and firm the soil around it."
+      },
+      {
+       "title": "Water and shade until they perk up",
+       "text": "Water the moved seedlings right away and keep them under the shade until they stand up again. At planting time each seedling leaves its cup with a whole ball of soil, so the roots are hardly disturbed."
+      }
+     ]
     },
     {
      "title": "20 days before transplanting: Give the seedlings a starter drink",

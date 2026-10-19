@@ -74,7 +74,25 @@
      "day": 120,
      "title": "Keep seed pods",
      "how": "Leave some pods on the vine to dry for seed.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Leave pods on the best vines",
+       "how": "Stop picking some full, well shaped pods on the strongest, healthiest vines and let them hang until they turn dry and papery."
+      },
+      {
+       "title": "Pick and dry the pods",
+       "how": "Pick the dry pods before they split, spread them on a mat in the sun until brittle, then break them open and take out the big seeds."
+      },
+      {
+       "title": "Sort and dry the seed",
+       "how": "Keep the big, plump, unspotted seeds and throw out wrinkled or holed ones. Sun dry them once more, turning them, until they are hard."
+      },
+      {
+       "title": "Store it sealed",
+       "how": "Keep the seed in a sealed jar or can in a cool, dry place until the next planting. A little dry wood ash mixed in keeps weevils off."
+      }
+     ]
     }
    ],
    "note": "Day 85 is about the first picking of green pods. The vine keeps bearing for months."
@@ -109,5 +127,5 @@
  "kind": "annual",
  "icon": "🫘",
  "slug": "lima-bean",
- "rev": "1760a4ce4236"
+ "rev": "2d1d0083cbb6"
 }

@@ -128,7 +128,25 @@
     },
     {
      "title": "Day 120: Keep seed pods",
-     "text": "Leave some pods on the vine until they turn brown and dry, then pick and keep the seed."
+     "text": "Leave some pods on the vine until they turn brown and dry, then pick and keep the seed.",
+     "parts": [
+      {
+       "title": "Leave pods on the best vines",
+       "text": "Stop picking a few well shaped pods on the strongest, healthiest vines and let them hang until they turn brown and dry."
+      },
+      {
+       "title": "Pick before they burst",
+       "text": "Check the drying pods every few days and pick them once they are brown and papery, before they split open on the vine."
+      },
+      {
+       "title": "Dry and shell",
+       "text": "Spread the pods on a mat in the sun until brittle, then break them open and take out the hard round seeds."
+      },
+      {
+       "title": "Dry the seed and store it",
+       "text": "Sun dry the seed once more until it is hard, then keep it in a sealed jar or can in a cool, dry place until the next planting."
+      }
+     ]
     }
    ]
   },

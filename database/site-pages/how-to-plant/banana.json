@@ -74,7 +74,34 @@
     },
     {
      "title": "3 days before planting: Choose and clean the suckers",
-     "text": "Pick sword suckers with narrow leaves, about 1 to 1.5 m tall, from a mat with no bunchy top or wilt. Dig each one out with the whole corm, trim the roots and any dark or rotten spots, and cut the leaves back so it loses less water. Tip: A sucker with wide, round leaves (water sucker) grows weak and gives a small bunch."
+     "text": "Pick sword suckers with narrow leaves, about 1 to 1.5 m tall, from a mat with no bunchy top or wilt. Dig each one out with the whole corm, trim the roots and any dark or rotten spots, and cut the leaves back so it loses less water. Tip: A sucker with wide, round leaves (water sucker) grows weak and gives a small bunch.",
+     "parts": [
+      {
+       "title": "Pick the mother mat",
+       "text": "Take suckers only from a vigorous mat that bears well and has never shown bunchy top, wilt or yellow, hanging leaves. One sick sucker carries the disease into the new field."
+      },
+      {
+       "title": "Tell a sword sucker from a water sucker",
+       "text": "A sword sucker (espada) has narrow, pointed leaves and a thick base, and grows deep from the mother corm. A water sucker has broad leaves while still small and a thin base, and grows into a weak plant. Take sword suckers about 1 to 1.5 m tall."
+      },
+      {
+       "title": "Dig it out with its corm",
+       "text": "Cut the joint between the sucker and the mother plant with a sharp spade or a bar, then lift the sucker out with its whole corm. Avoid tearing it off, which wounds the mother plant too."
+      },
+      {
+       "title": "Pare the corm",
+       "text": "With a sharp bolo, cut off the old roots and shave the outer skin of the corm. Cut away every brown, black or tunneled spot until only clean, white flesh shows, since those spots hide corm weevil grubs and root worms."
+      },
+      {
+       "title": "Cut back the leaves",
+       "text": "Cut off the big leaves and leave only the youngest ones, so the sucker loses less water while it grows new roots."
+      },
+      {
+       "title": "Keep tools clean and plant soon",
+       "text": "Wipe or wash the bolo between mats so disease does not pass from plant to plant. Keep the pared suckers in the shade and plant them within a few days.",
+       "time": "within a few days"
+      }
+     ]
     }
    ]
   },
@@ -118,7 +145,21 @@
     },
     {
      "title": "Day 120: Keep one follower sucker",
-     "text": "Suckers keep coming up around the mother plant. Cut the extra ones at ground level and keep only one strong sword sucker to bear the next bunch."
+     "text": "Suckers keep coming up around the mother plant. Cut the extra ones at ground level and keep only one strong sword sucker to bear the next bunch.",
+     "parts": [
+      {
+       "title": "Choose the follower",
+       "text": "Pick one strong sword sucker growing close to the mother plant to bear the next bunch. Some growers keep a second, younger one as well, but never more than two to a mat."
+      },
+      {
+       "title": "Cut the rest at the ground",
+       "text": "Cut every other sucker off at ground level with a bolo or sever it from the mother plant at the point where it joins."
+      },
+      {
+       "title": "Dig out the ones that come back",
+       "text": "Suckers that are only cut often sprout again. Wait until the first bunch has been harvested, then dig those out completely, corm and all."
+      }
+     ]
     },
     {
      "title": "Day 150: Take off dry leaves and watch for disease",

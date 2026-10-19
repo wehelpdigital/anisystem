@@ -23,6 +23,35 @@
    "days": 1440,
    "steps": [
     {
+     "phase": "nursery",
+     "day": -365,
+     "title": "Cleft graft your own seedlings",
+     "how": "Seedling tamarind does not come true, so growers who want a known sweet or sour type graft a shoot of that tree onto their own tamarind seedlings. Cleft grafting and budding are both used here.",
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Raise the rootstock",
+       "how": "Soak seeds of any healthy tamarind overnight and sow them in bags. They come up in about two weeks. Grow them on until the stem is about as thick as the shoots you will graft."
+      },
+      {
+       "title": "Graft in the cool, dry months",
+       "how": "Grafts take best from about November to January, when the weather is cool and dry."
+      },
+      {
+       "title": "Cut scions from the tree you want",
+       "how": "Early in the morning, cut healthy shoot tips from the sweet or sour tree you want to copy. Strip their leaves without hurting the buds and keep them shaded and moist until grafting, the same day."
+      },
+      {
+       "title": "Split, fit and tie",
+       "how": "Cut off the seedling top where the stem is still growing, split it down the middle about 2 to 3 cm, and push in the scion cut to a short wedge so the bark lines up. Bind the joint and the scion with a strip of thin plastic and cover the top with a small plastic bag."
+      },
+      {
+       "title": "Care for the new graft",
+       "how": "Rub off shoots that grow below the joint. When new leaves come from the scion, remove the bag and unwind the plastic, and move the plant to a bigger bag if needed. Plant it out at the start of the rains, about May to June."
+      }
+     ]
+    },
+    {
      "phase": "prep",
      "day": -30,
      "title": "Dig the holes far apart",
@@ -91,7 +120,25 @@
      "day": 1460,
      "title": "Dry and store the ripe pods",
      "how": "Spread ripe pods in the sun on mats for a few days, then keep them in clean sacks or jars in a dry place. Pulp for candy is peeled and seeded by hand.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Sun dry the pods",
+       "how": "Spread the ripe brown pods on mats in the sun for a few days, turning them, and bring them in at night or when rain comes."
+      },
+      {
+       "title": "Shell them by hand",
+       "how": "Crack and peel off the brittle shell, then pull away the tough strings that run along the pulp."
+      },
+      {
+       "title": "Take out the seeds for candy",
+       "how": "For sweets and paste, open the pulp and pick out the hard seeds by hand. Keep the best seed for sowing if you want more trees."
+      },
+      {
+       "title": "Pack it clean",
+       "how": "Pack the cleaned pulp in clean plastic containers or jars and keep it in a cool, dry place. Ripe pulp sells by weight."
+      }
+     ]
     },
     {
      "phase": "harvest",
@@ -195,5 +242,5 @@
  "kind": "perennial",
  "icon": "🫘",
  "slug": "tamarind",
- "rev": "2ee6a4bc1813"
+ "rev": "86ceac6c0db1"
 }

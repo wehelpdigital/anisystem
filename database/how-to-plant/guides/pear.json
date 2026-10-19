@@ -26,7 +26,29 @@
      "day": -14,
      "title": "Choose cool, sunny ground",
      "how": "Pick the coolest sunny spot you have, where water drains. Dig holes about 50 cm wide and deep with rotted manure or compost.",
-     "task": "land_prep"
+     "task": "land_prep",
+     "parts": [
+      {
+       "title": "Lay out the holes",
+       "how": "Stake the planting spots about 4 by 4 m apart, wider for big, spreading types."
+      },
+      {
+       "title": "Dig and keep the soils apart",
+       "how": "Dig each hole about 50 cm square and 60 cm deep, piling the dark topsoil on one side and the paler subsoil on the other. Break up the hard bottom with an iron bar."
+      },
+      {
+       "title": "Mix the subsoil",
+       "how": "Into the subsoil, mix about 500 g of agricultural lime, chicken manure or compost, about half a kerosene can, and about 500 g of complete fertilizer (14 14 14)."
+      },
+      {
+       "title": "Fill the hole in two layers",
+       "how": "Put the mixed subsoil into the hole first and the topsoil over it, then open a small hole in the middle for the tree."
+      },
+      {
+       "title": "Keep the bud union high",
+       "how": "When you plant, trim off broken roots, bury the tree only as deep as it sat in its bag, and keep the graft joint at least 15 cm above the soil. Crumble fine soil around the roots and tramp it firm."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -40,14 +62,39 @@
      "day": 180,
      "title": "Bend the long branches",
      "how": "Tie long upright branches down toward level so they form flower buds. Feed compost and a little complete fertilizer (14 14 14) every few months.",
-     "task": "pruning"
+     "task": "pruning",
+     "parts": [
+      {
+       "title": "Choose young branches full of buds",
+       "how": "Pick branches one to two years old that carry many sleeping buds along their length."
+      },
+      {
+       "title": "Pull them down level",
+       "how": "Bend each one gently out to the side until it lies flat, at a right angle to the trunk, and tie its tip with straw rope to a peg driven into the ground."
+      },
+      {
+       "title": "Let the spurs form",
+       "how": "Buds on the upper side of the bent branch push out shoots, and most of them stay short as fruiting spurs that flower the following year."
+      }
+     ]
     },
     {
      "phase": "care",
      "day": 365,
      "title": "Strip leaves after growth stops",
      "how": "Pick off the mature leaves by hand to push new flowers and leaves, and repeat after each crop.",
-     "task": "pruning"
+     "task": "pruning",
+     "parts": [
+      {
+       "title": "Strip every leaf from the bent branches",
+       "how": "When growth has stopped and the leaves are mature, pick off all the leaves on the bent branches by hand. It takes the place of the cold the highlands do not give."
+      },
+      {
+       "title": "Watch for flowers in about three weeks",
+       "how": "About three weeks after bending and stripping, the flower buds at the branch tips open and new shoots start from the sleeping buds.",
+       "time": "about 3 weeks"
+      }
+     ]
     },
     {
      "phase": "harvest",
@@ -82,5 +129,5 @@
  "kind": "perennial",
  "icon": "🍐",
  "slug": "pear",
- "rev": "adcb78f1ee83"
+ "rev": "49d6aec460d2"
 }

@@ -61,7 +61,30 @@
      "day": 14,
      "title": "Set up the poles",
      "how": "Before the vines start to run, set up bamboo or ipil ipil poles about two meters tall, tied in an A shape with a pole across the top, and run strings or twine for the vines to climb.",
-     "task": "propping"
+     "task": "propping",
+     "parts": [
+      {
+       "title": "Cut the poles",
+       "how": "Cut straight bamboo or ipil ipil poles, about two meters long or a little more, enough for every hill or every few hills along the row."
+      },
+      {
+       "title": "Tie the A frames",
+       "how": "For two rows close together, push a pole in beside the hills of each row, lean each pair together over the bed and tie them at the top in an A shape. Lay a long pole across the tops of the A frames and tie it fast."
+      },
+      {
+       "title": "Or build a straight fence for a single row",
+       "how": "For one row, stand bamboo posts about three meters apart along it and stretch a wire along their tops. Tie two or three lines of nylon string or plastic straw along the top too."
+      },
+      {
+       "title": "Hang the climbing strings",
+       "how": "Tie strings or plastic straw from the top line down to the base of the plants, about 25 cm apart, so each vine has its own line to climb.",
+       "tip": "Put the poles up while the plants are small, about two weeks after they come up, before the runners start looking for something to cling to."
+      },
+      {
+       "title": "Lead the vines up",
+       "how": "Every few days, wind the new runners around their strings so they climb instead of tangling on the ground."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -103,7 +126,39 @@
      "day": 85,
      "title": "Keep seed and clear the vines",
      "how": "Leave some pods on the best plants to dry for seed, then pull out the old vines.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Mark the best plants",
+       "how": "Choose strong, healthy plants with no pest or disease damage and true pods for the variety. Tie a string on them and stop picking their pods for the market."
+      },
+      {
+       "title": "Let the pods dry on the vine",
+       "how": "Leave the seed pods hanging until they dry and turn brown, about three weeks after the flowers open. Pods from the middle part of the plant give the best seed."
+      },
+      {
+       "title": "Hang the pods to dry more",
+       "how": "Pick the dry pods, tie them in bunches and hang them in an airy shade to dry further before shelling."
+      },
+      {
+       "title": "Shell and sun dry the seed",
+       "how": "Break the pods open, take out the seed and spread it in the sun on a mat, turning it, until it is hard."
+      },
+      {
+       "title": "Do the plastic bag test",
+       "how": "To know if the seed is dry enough, seal about half a kilo of it in a clear plastic bag and leave it in the sun. If drops of water form inside the bag within about half an hour, the seed needs more drying.",
+       "time": "about 30 minutes"
+      },
+      {
+       "title": "Store it sealed and labeled",
+       "how": "Keep the seed in a sealed jar, can or thick plastic bag with the variety and date written on it, in a cool, dry place. A little dry wood ash mixed in keeps weevils off. Seed kept this way stays good for up to two years.",
+       "time": "up to 2 years"
+      },
+      {
+       "title": "Clear the old vines",
+       "how": "When the seed pods are in, pull out the old vines, take down the strings and poles for the next crop, and compost the vines."
+      }
+     ]
     }
    ],
    "note": "Day 55 is about the first picking. Picking then goes on every few days for a month or more."
@@ -141,5 +196,5 @@
  "kind": "annual",
  "icon": "🫛",
  "slug": "string-bean",
- "rev": "eb1dc5339e36"
+ "rev": "eae2a9d1a958"
 }

@@ -80,7 +80,25 @@
      "day": 120,
      "title": "Keep seed pods",
      "how": "Leave some pods on the vine until they turn brown and dry, then pick and keep the seed.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Leave pods on the best vines",
+       "how": "Stop picking a few well shaped pods on the strongest, healthiest vines and let them hang until they turn brown and dry."
+      },
+      {
+       "title": "Pick before they burst",
+       "how": "Check the drying pods every few days and pick them once they are brown and papery, before they split open on the vine."
+      },
+      {
+       "title": "Dry and shell",
+       "how": "Spread the pods on a mat in the sun until brittle, then break them open and take out the hard round seeds."
+      },
+      {
+       "title": "Dry the seed and store it",
+       "how": "Sun dry the seed once more until it is hard, then keep it in a sealed jar or can in a cool, dry place until the next planting."
+      }
+     ]
     }
    ],
    "note": "Day 70 is about the first picking. Plants sown early in the year may wait for shorter days before they flower."
@@ -115,5 +133,5 @@
  "kind": "annual",
  "icon": "🫛",
  "slug": "winged-bean",
- "rev": "88b203a7d8d1"
+ "rev": "907dee79ffb9"
 }

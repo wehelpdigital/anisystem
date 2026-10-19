@@ -71,7 +71,26 @@
     },
     {
      "title": "2 days before sowing: Pick and soak the nuts",
-     "text": "Choose big, heavy nuts from the best trees, drop them in water, and throw away the ones that float. Soak the good ones for a day or two."
+     "text": "Choose big, heavy nuts from the best trees, drop them in water, and throw away the ones that float. Soak the good ones for a day or two.",
+     "parts": [
+      {
+       "title": "Choose the mother tree",
+       "text": "Take nuts from a known, outstanding tree that has borne well for many years, best an old tree of about 15 to 25 years. Gather them at the peak of the harvest, when the nuts are fully mature."
+      },
+      {
+       "title": "Use the nuts fresh",
+       "text": "Sow nuts gathered this season as soon as you can. Cashew seed loses its life quickly, so old nuts from last year sprout poorly."
+      },
+      {
+       "title": "Drop them in water",
+       "text": "Pour the nuts into a basin of water and throw away every nut that floats. The heavy nuts that sink make stronger, healthier seedlings."
+      },
+      {
+       "title": "Soak the good nuts",
+       "text": "Leave the nuts that sank in clean water for a day or two before sowing, so they swell and sprout faster.",
+       "time": "1 to 2 days"
+      }
+     ]
     }
    ]
   },
@@ -85,7 +104,22 @@
    "items": [
     {
      "title": "Sowing day: Sow two or three nuts a hole",
-     "text": "Once the rains are steady, push two or three nuts about 5 cm deep in each hole, a hand's width apart, with the end that held the stalk pointing up. Cover lightly and press the soil. Tip: Do not dig up and move young cashew. The long taproot breaks easily."
+     "text": "Once the rains are steady, push two or three nuts about 5 cm deep in each hole, a hand's width apart, with the end that held the stalk pointing up. Cover lightly and press the soil. Tip: Do not dig up and move young cashew. The long taproot breaks easily.",
+     "parts": [
+      {
+       "title": "Push them in slanting, stalk end up",
+       "text": "Set each nut about 5 to 10 cm deep, leaning a little, with the end that held the stalk pointing up. The shoot then comes out quickly, before rats, ants, snails and birds can eat the seed leaves."
+      },
+      {
+       "title": "Space three in a triangle",
+       "text": "When you sow three nuts in a hole, set them about 30 cm apart in a triangle so each seedling has room until thinning."
+      },
+      {
+       "title": "Fill with topsoil and keep it moist",
+       "text": "Cover the nuts with the dark topsoil, not the pale subsoil from the bottom of the hole. With enough moisture in the soil they come up in one to two weeks.",
+       "time": "1 to 2 weeks to sprout"
+      }
+     ]
     }
    ]
   },
@@ -137,7 +171,26 @@
     },
     {
      "title": "Year 3: Sun dry the nuts",
-     "text": "Spread the nuts on mats or a clean floor in the sun for a few days, turning them, until the kernel rattles inside. Store them in dry sacks off the floor. Tip: Never crack raw nuts with bare hands. The shell oil burns the skin, so they are roasted first."
+     "text": "Spread the nuts on mats or a clean floor in the sun for a few days, turning them, until the kernel rattles inside. Store them in dry sacks off the floor. Tip: Never crack raw nuts with bare hands. The shell oil burns the skin, so they are roasted first.",
+     "parts": [
+      {
+       "title": "Twist off and clean the nuts",
+       "text": "Twist each nut off its apple the day you gather it and wipe off the juice and dirt, so the nuts do not rot in a wet pile."
+      },
+      {
+       "title": "Spread them in the sun",
+       "text": "Spread the nuts in one layer on mats, nets or a clean floor in full sun for two days or more, turning them now and then and covering them at night.",
+       "time": "2 days or more"
+      },
+      {
+       "title": "Shake to test",
+       "text": "Shake a handful together: dry nuts sound brittle and rattle. By then their moisture is down to about 7 percent."
+      },
+      {
+       "title": "Store them dry",
+       "text": "Keep the dry nuts in sacks or bags, raised off the floor in a dry room, for use through the year. Nuts that soak up damp air grow mold and the kernels turn dark."
+      }
+     ]
     }
    ]
   },

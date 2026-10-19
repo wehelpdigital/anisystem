@@ -67,7 +67,29 @@
    "items": [
     {
      "title": "14 days before planting: Pick a cool, sunny, well drained spot",
-     "text": "Choose the coolest high ground you have, in full sun, where water never stands. Dig holes about 50 cm wide and deep and mix the topsoil with rotted manure or compost."
+     "text": "Choose the coolest high ground you have, in full sun, where water never stands. Dig holes about 50 cm wide and deep and mix the topsoil with rotted manure or compost.",
+     "parts": [
+      {
+       "title": "Lay out the holes",
+       "text": "Stake the planting spots about 3 by 3 m apart, wider for big, spreading types."
+      },
+      {
+       "title": "Dig and keep the soils apart",
+       "text": "Dig each hole about 50 cm square and 60 cm deep, piling the dark topsoil on one side and the paler subsoil on the other. Break up the hard bottom with an iron bar."
+      },
+      {
+       "title": "Mix the subsoil",
+       "text": "Into the subsoil, mix about 500 g of agricultural lime, chicken manure or compost, about half a kerosene can, and about 500 g of complete fertilizer (14 14 14)."
+      },
+      {
+       "title": "Fill the hole in two layers",
+       "text": "Put the mixed subsoil into the hole first and the topsoil over it, then open a small hole in the middle for the tree. Leave it to settle until planting."
+      },
+      {
+       "title": "Keep the bud union high",
+       "text": "When you plant, trim off broken roots, bury the tree only as deep as it sat in its bag, and keep the graft joint at least 15 cm above the soil. Crumble fine soil around the roots and tramp it firm so no air pockets stay."
+      }
+     ]
     }
    ]
   },
@@ -99,11 +121,41 @@
     },
     {
      "title": "Month 6: Bend the long branches",
-     "text": "Pull long upright branches down toward level and tie them with string to stakes or the trunk. Bent branches form flower buds instead of only leaves."
+     "text": "Pull long upright branches down toward level and tie them with string to stakes or the trunk. Bent branches form flower buds instead of only leaves.",
+     "parts": [
+      {
+       "title": "Choose young branches full of buds",
+       "text": "Pick branches one to two years old that carry many sleeping buds along their length."
+      },
+      {
+       "title": "Pull them down level",
+       "text": "Bend each one gently out to the side until it lies flat, at a right angle to the trunk, and tie its tip with straw rope to a peg driven into the ground."
+      },
+      {
+       "title": "Let the spurs form",
+       "text": "Buds on the upper side of the bent branch push out shoots, and most of them stay short as fruiting spurs. These spurs carry the flowers in the following year."
+      }
+     ]
     },
     {
      "title": "Month 12: Strip the leaves to force flowers",
-     "text": "When the leaves are mature and growth stops, pick off the leaves by hand. New leaves and flowers push out in the following weeks. Growers repeat this after each crop, about twice a year."
+     "text": "When the leaves are mature and growth stops, pick off the leaves by hand. New leaves and flowers push out in the following weeks. Growers repeat this after each crop, about twice a year.",
+     "parts": [
+      {
+       "title": "Strip every leaf from the bent branches",
+       "text": "When growth has stopped and the leaves are mature, pick off all the leaves on the bent branches by hand. In the highlands the trees never get enough cold to wake their buds, and leaf stripping does that job instead."
+      },
+      {
+       "title": "Watch for flowers in three weeks",
+       "text": "About three weeks after bending and stripping, the flower buds at the branch tips open and new shoots start from the sleeping buds.",
+       "time": "about 3 weeks"
+      },
+      {
+       "title": "Repeat on the spurs next year",
+       "text": "On older trees, strip the old leaves from the spurs after each crop. Their flower buds open two to three weeks later.",
+       "time": "2 to 3 weeks"
+      }
+     ]
     },
     {
      "title": "Month 13: Thin and watch the fruit",

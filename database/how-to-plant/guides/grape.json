@@ -27,7 +27,40 @@
      "title": "Root the cuttings in bags",
      "how": "Stick each cutting upright in a bag of loose soil, sand and compost, burying two buds and leaving one or two above. Keep the bags in light shade and moist, not soggy. The buds push out in two to three weeks.",
      "task": "seedbed",
-     "tip": "Plant the cutting the right way up: the slanted top end stays above the soil."
+     "tip": "Plant the cutting the right way up: the slanted top end stays above the soil.",
+     "parts": [
+      {
+       "title": "Take canes at pruning time",
+       "how": "Choose sound, mature canes from healthy mother vines when you prune, a few weeks after a harvest. Use bare canes with no leaves left on them, and throw away any wood from a sick vine."
+      },
+      {
+       "title": "Cut pieces with three or four buds",
+       "how": "Cut each piece about 10 to 12 inches long with three or four plump buds. Four buds give a spare: if the bottom end rots, trim it back to the next bud and it can still root."
+      },
+      {
+       "title": "Soak them in bundles",
+       "how": "Tie the pieces in bundles, all with the bottom ends together, and stand them in clean water for four to five days so the buds and the base wake up.",
+       "time": "4 to 5 days"
+      },
+      {
+       "title": "Start the roots in damp sand or paper",
+       "how": "Wrap the bottom ends of each bundle in damp newspaper inside a plastic bag kept in the shade, or bury the bundles in damp river sand. Some growers leave them in the sand about three weeks until short roots show.",
+       "time": "about 21 days in sand"
+      },
+      {
+       "title": "Scrape the base and bag them",
+       "how": "Lightly scrape the brown skin off the lowest part of each cutting, then set it in a bag with a hole in the bottom, filled with loam or with equal parts of soil, compost and vermicast. Firm the soil around it."
+      },
+      {
+       "title": "Keep them bright and out of the rain",
+       "how": "Stand the bags in a bright spot where rain cannot reach them and water lightly. Leaves usually come out in two to three weeks.",
+       "time": "2 to 3 weeks to leaf"
+      },
+      {
+       "title": "Bring them into the sun slowly",
+       "how": "Farms that raise many vines give the young plants morning sun only for about 20 days, then most of the day's sun for about two months, and full sun for at least the last month before field planting."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -91,7 +124,30 @@
      "title": "Fruit pruning",
      "how": "When the canes are brown and mature and the dry season is near, cut each cane back to a short spur of a few buds, or to a longer cane of more buds as the grower prefers, and strip the old leaves. New shoots with flower bunches come out in one to two weeks.",
      "task": "pruning",
-     "tip": "Time this so the fruit ripens in dry weather. Count back about three to four months."
+     "tip": "Time this so the fruit ripens in dry weather. Count back about three to four months.",
+     "parts": [
+      {
+       "title": "Wait about a month after harvest",
+       "how": "Let the vine rest and grow at least a month after the last picking before you prune again. Most farms here prune twice a year.",
+       "time": "at least 1 month after harvest"
+      },
+      {
+       "title": "Pick a dry spell",
+       "how": "Never prune on rainy days, because fresh cuts catch disease. If a typhoon is on its way, skip the pruning and let the vine rest until the weather turns."
+      },
+      {
+       "title": "Cut the fruited canes back",
+       "how": "Cut the canes that bore fruit back to short spurs of about two buds each. Growers who cane prune instead keep one or two long canes of about 8 to 12 buds and tie them along the wire."
+      },
+      {
+       "title": "Save the good cuttings",
+       "how": "Keep the healthy pieces you cut off to root new vines, and burn or bury those from sick vines."
+      },
+      {
+       "title": "Feed after pruning",
+       "how": "Spread chicken manure or vermicast under the vine after pruning and water it in, so the new shoots and flower bunches come out strong."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -162,5 +218,5 @@
  "kind": "perennial",
  "icon": "🍇",
  "slug": "grape",
- "rev": "959f93c08cdc"
+ "rev": "9e1f9650cc65"
 }

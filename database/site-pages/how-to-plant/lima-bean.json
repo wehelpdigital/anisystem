@@ -124,7 +124,25 @@
     },
     {
      "title": "Day 120: Keep seed pods",
-     "text": "Leave some pods on the vine to dry for seed."
+     "text": "Leave some pods on the vine to dry for seed.",
+     "parts": [
+      {
+       "title": "Leave pods on the best vines",
+       "text": "Stop picking some full, well shaped pods on the strongest, healthiest vines and let them hang until they turn dry and papery."
+      },
+      {
+       "title": "Pick and dry the pods",
+       "text": "Pick the dry pods before they split, spread them on a mat in the sun until brittle, then break them open and take out the big seeds."
+      },
+      {
+       "title": "Sort and dry the seed",
+       "text": "Keep the big, plump, unspotted seeds and throw out wrinkled or holed ones. Sun dry them once more, turning them, until they are hard."
+      },
+      {
+       "title": "Store it sealed",
+       "text": "Keep the seed in a sealed jar or can in a cool, dry place until the next planting. A little dry wood ash mixed in keeps weevils off."
+      }
+     ]
     }
    ]
   },
