@@ -1,0 +1,200 @@
+{
+ "crop": "taro",
+ "name": "Taro",
+ "local": "Gabi",
+ "aka": [
+  "aba",
+  "natong"
+ ],
+ "summary": "How Filipino farmers usually plant gabi from corm tops and side shoots, on upland furrows or in wet lowland fields, up to the harvest of the corms. For small farms and backyard growers who also pick the leaves for laing and the runners for takway.",
+ "season": "Gabi likes warm weather and rain spread through the year. Upland gabi is planted as the rains begin, around May to June, so it grows on the rains. Lowland gabi in wet fields, along creeks or in paddies can be planted in most months because the soil stays wet.",
+ "material": "Most farmers plant setts (the top of a harvested corm with the base of the stalks, about 100 to 120 g), side shoots (suckers) dug from around the mother plant, or small corms. For setts they scrape off the roots and cut the stalks back to about 30 cm. Bigger setts give bigger corms.",
+ "spacing": "Upland: furrows about 75 cm apart and plants 50 cm apart in the row. Lowland: 50 by 50 cm or 75 by 50 cm. One sett or shoot a hill.",
+ "water": "Upland gabi is rainfed and needs rain spread through its growth, so it is planted with the rains and mulched in dry spells. Lowland gabi grows in soaked or shallow flooded fields, along creeks and in paddies, where it keeps growing in the dry months.",
+ "fertilizer": "Many backyard growers use only manure or compost mixed into the soil one to two weeks before planting. Farmers who buy fertilizer often use complete fertilizer (14 14 14), half at planting and half at the hilling up. A common guide is about 60 kg each of N, P and K a hectare, which is roughly 8 to 9 bags of 14 14 14.",
+ "care": "Hand weeding or plowing between the rows during the first months, mulching upland gabi with dry grass, and hilling up so the corms stay under the soil. Farmers pick a few young leaves for laing and runners for takway along the way, but taking too many leaves makes the corms small.",
+ "harvest": "Most gabi is dug about seven to nine months after planting, when the leaves turn yellow, dry up and the stalks get short. Upland gabi usually comes earlier than gabi in wet fields. The plant is lifted gently, the soil knocked off and the tops cut off and kept for planting. Corms are sorted and kept in the shade.",
+ "ways": [
+  {
+   "key": "upland",
+   "label": "Upland in furrows (gabing lupa)",
+   "days": 210,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow twice",
+     "how": "Plow the field two times to loosen the soil deeply. Gabi does best in loose, rich loam that holds moisture.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Harrow and mix in manure",
+     "how": "Harrow crosswise to break the clods. Work in manure or compost now so it has one to two weeks to settle before planting.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Open the furrows",
+     "how": "Make furrows about 75 cm apart. On hilly or uneven ground, dig planting holes instead.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Ready the setts and shoots",
+     "how": "Cut the tops off good corms with the stalk bases, scrape off old roots and trim the stalks to about 30 cm. Dig healthy side shoots from mother plants.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant along the furrow",
+     "how": "Set one sett or shoot every 50 cm in the furrow, about 4 to 5 cm deep when the soil is wet and 8 to 10 cm when it is drier, and press soil around it. In holes, cover only partly and leave a small hollow around the plant.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "First fertilizer",
+     "how": "Farmers who use complete fertilizer put the first half beside the plants at planting and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Replace missing plants",
+     "how": "Fill gaps with spare shoots or setts where nothing came up.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed and mulch",
+     "how": "Hand pull weeds or plow lightly between the rows. Dry grass or leaves laid around the plants keep the soil moist in dry spells.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Second fertilizer and hilling up",
+     "how": "Put the second half of the fertilizer along the row and pull soil up to the base of the plants so the growing corms stay covered.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Weed again and watch the leaves",
+     "how": "Weed once more before the leaves close over the rows. Look for leaf eating caterpillars and leaf blight spots, and remove badly hit leaves.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 210,
+     "title": "Harvest when leaves yellow",
+     "how": "Gabi is ready when the leaves turn yellow, dry up and the stalks get shorter. Lift the mother plant carefully with a fork or bolo, knock off the soil and cut off the tops.",
+     "task": "harvest",
+     "tip": "Keep the corm tops and side shoots for your next planting."
+    },
+    {
+     "phase": "care",
+     "day": 211,
+     "title": "Clean and keep in the shade",
+     "how": "Brush off soil, separate the side corms from the mother corm, sort by size and keep them in a cool, airy, shaded place until sold.",
+     "task": "postharvest"
+    }
+   ]
+  },
+  {
+   "key": "lowland",
+   "label": "Lowland in wet fields (gabing tubig)",
+   "days": 240,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Clear and puddle the field",
+     "how": "Pull out weeds and stubble, flood the field and work the mud as you would for rice until it is soft and level.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Ready the setts",
+     "how": "Prepare setts or side shoots the same way as for upland gabi.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant in rows in the mud",
+     "how": "Push setts into the soft mud in rows, 50 by 50 cm or 75 by 50 cm apart, shallow enough that the buds stay above the mud.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Keep the field wet",
+     "how": "Keep the soil soaked or under shallow water. Let the water down a little while the plants are tiny so they are not drowned.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed and fertilize",
+     "how": "Pull the weeds by hand and put the fertilizer beside the plants when the water is low.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch for pests and blight",
+     "how": "Check the leaves for caterpillars, aphids and blight spots, and keep the field edges clean.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 240,
+     "title": "Drain and harvest",
+     "how": "When the leaves yellow and shorten, drain the field, lift the plants and cut off the tops.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Using small, weak setts or sick shoots, which give small corms however long you wait.",
+  "Planting upland gabi late in the rains, so it runs dry while the corms fill.",
+  "Leaving the corms uncovered instead of hilling up.",
+  "Stripping too many leaves for laing while the corms are still filling.",
+  "Harvesting before the leaves yellow, when the corms are watery and keep poorly."
+ ],
+ "better": [
+  "Pick big setts or strong side shoots from healthy, high yielding plants of a variety your buyers like.",
+  "Test the soil and give balanced fertilizer in two splits instead of one guess.",
+  "Keep the spacing even and fill gaps within three weeks.",
+  "Mulch upland gabi and give water in dry spells. In wet fields keep the water steady.",
+  "Scout every week or two for caterpillars and leaf blight, and remove sick leaves early.",
+  "Rotate fields and do not replant gabi on the same spot season after season."
+ ],
+ "video": {
+  "youtubeId": "QtW0Uk2VcHc",
+  "title": "PAANO MAGTANIM NG GABI | D' Green Thumb",
+  "channel": "D' Green Thumb",
+  "lang": "fil",
+  "minutes": 18,
+  "why": "A Filipino grower shows how to plant gabi, what to watch for and how to feed it with complete fertilizer, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng gabi",
+  "pagtatanim ng gabi",
+  "paano magtanim ng gabi para sa laing",
+  "how to plant taro in the philippines",
+  "gabi farming"
+ ],
+ "confidence": "medium",
+ "slug": "taro",
+ "rev": "7930e9381ad4"
+}

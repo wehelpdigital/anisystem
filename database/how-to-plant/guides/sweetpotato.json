@@ -1,0 +1,160 @@
+{
+ "crop": "sweetpotato",
+ "name": "Sweet potato",
+ "local": "Kamote",
+ "aka": [
+  "camote"
+ ],
+ "summary": "How most Filipino farmers grow kamote from vine tip cuttings on ridges, from cutting the tops to digging the roots three to four months later. For small farms and backyard growers who want the usual way first, then the changes that raise the harvest.",
+ "season": "Kamote can go in any month the soil holds enough moisture. Most farmers plant at the start of the rains (May to July) on upland fields, and toward the end of the rains or right after the rice harvest (October to January) in the lowlands, so the crop grows on stored moisture. Avoid fields that flood in the typhoon months.",
+ "material": "Vine tip cuttings (talbos) cut from a healthy kamote field, usually the top 25 to 35 cm with 6 to 8 nodes. Farmers strip most of the leaves, keep 2 or 3 at the tip, tie the cuttings in bundles and keep them in the shade for 1 to 3 days so they start rooting. Cuttings should be planted within about 5 days.",
+ "spacing": "Ridges 75 to 100 cm apart and hills 25 to 30 cm apart, one cutting a hill. That is about 33,000 to 44,000 cuttings a hectare.",
+ "water": "Mostly rainfed. Planting is timed so the soil is moist for the first weeks, and some farmers water by furrow if it turns dry before hilling up. Standing water is the bigger danger: cuttings and roots rot when the field stays flooded.",
+ "fertilizer": "Many traditional farmers put little or nothing and rely on the soil, or mix urea and complete fertilizer at less than the advised amount. The common guide without a soil test is 6 to 8 bags of 14 14 14 a hectare at planting, placed in holes beside the hill. Farmers with manure spread 5 to 10 tons a hectare before the last harrowing.",
+ "care": "One cultivation or off barring about two weeks after planting, hand weeding while the vines are young, and hilling up at two to four weeks before the vines close over the rows. After that the vines shade out most weeds.",
+ "harvest": "Most kamote is ready three to four months after planting, depending on the variety. Farmers dig a test hill, then harvest the field on a dry day with a fork, bolo or plow. Roots are brushed clean, never washed, kept out of the sun, sorted by size and handled gently because bruised roots spoil fast.",
+ "ways": [
+  {
+   "key": "cuttings",
+   "label": "Vine cuttings on ridges (tanim talbos)",
+   "days": 110,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow deep with a carabao or tractor when the soil is moist, not soggy and not dry. Harrow once for sandy soil and twice for clay loam to break clods and kill the weeds.",
+     "task": "land_prep",
+     "tip": "Pick a field that drains fast, because cuttings rot when water stands for a day."
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Mix in manure or compost",
+     "how": "If you have animal manure or compost, spread it before the last harrowing so it mixes into the soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Make the ridges",
+     "how": "Raise ridges about 15 to 20 cm high and 75 to 100 cm apart. On loose sandy soil many farmers skip the ridges and plant in shallow furrows.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -2,
+     "title": "Cut and ready the tops",
+     "how": "Cut the tips of healthy vines 25 to 35 cm long, take off most leaves and keep the bundles standing upright in the shade until planting.",
+     "task": "seed_treatment",
+     "tip": "Use only the young tip. Older vine pieces root slowly and may carry weevil eggs."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant one cutting a hill",
+     "how": "Push each cutting into the ridge at a slant, or bent in an L or U shape, burying about half of it, or two thirds if the soil is a bit dry. Space the hills 25 to 30 cm apart along the ridge.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Put the first fertilizer",
+     "how": "If you use complete fertilizer, drop it in small holes 10 to 15 cm from the cutting and about 5 to 10 cm deep, then cover it with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Replace missing hills",
+     "how": "Walk the rows one to two weeks after planting and fill the gaps with fresh cuttings so the stand stays full.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off bar and weed",
+     "how": "Run the plow or a hoe along the sides of the ridges to loosen the soil and bury the young weeds. Water first if the field is very dry.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 28,
+     "title": "Hill up before the vines close",
+     "how": "Pull soil back onto the ridges around the plants before the vines cover the ground. This keeps the soil loose for the roots and closes cracks where weevils enter.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Second fertilizer if split",
+     "how": "Farmers who split their fertilizer put the second half about a month after planting, beside the ridge, then cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Watch for weevil and curled leaves",
+     "how": "Look for small holes and tunnels in the vine base and exposed roots, and for yellow, curled or mottled leaves. Pull out badly sick plants and fill soil cracks.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 100,
+     "title": "Dig a sample hill",
+     "how": "From about three months, dig one or two hills to see if the roots are big enough for your market. Many farmers dig a little at a time for the home table.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 110,
+     "title": "Harvest on a sunny day",
+     "how": "Lift the roots with a fork, a bolo or an animal drawn plow, taking care not to cut or bruise them. Shake off the soil.",
+     "task": "harvest",
+     "tip": "Keep a corner unharvested or save healthy tops as cuttings for the next planting."
+    },
+    {
+     "phase": "care",
+     "day": 111,
+     "title": "Sort and pack in the shade",
+     "how": "Do not wash the roots and do not leave them in the sun. Throw out weevil damaged roots, sort the rest by size and pack them in sacks or crates lined with leaves or vines.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Using old, thick vine pieces instead of young tips, so the cuttings root slowly and bring weevil eggs.",
+  "Planting where water stands after rain, so cuttings and roots rot.",
+  "Skipping the hilling up, which leaves soil cracks for weevils to reach the roots.",
+  "Taking cuttings from the same sick field season after season until the yield keeps dropping.",
+  "Washing the roots or leaving them in the sun after digging.",
+  "Harvesting late, when roots crack and weevil damage climbs."
+ ],
+ "better": [
+  "Start with clean, healthy cuttings of a good yielding variety from a trusted nursery, and renew your planting stock every few seasons.",
+  "Have the soil tested and fertilize by the result. Split the dose into planting and one month after when the need is large.",
+  "Keep the right spacing and fill missing hills within two weeks so every meter of ridge yields.",
+  "Hill up on time, rotate kamote with other crops, and burn or bury weevil infested vines and roots after harvest.",
+  "Use pheromone traps for the weevil where they are sold.",
+  "Harvest on time at three to four months and handle roots gently to cut losses."
+ ],
+ "video": {
+  "youtubeId": "oO2UAvufq6E",
+  "title": "PAANO MAGTANIM NG KAMOTE NA MARAMI ANG LAMAN",
+  "channel": "Badz Maranan",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "Shows the whole field cycle the usual way in Tagalog: cutting the tops, preparing the land, planting and harvest of a 90 to 120 day kamote."
+ },
+ "keywords": [
+  "paano magtanim ng kamote",
+  "pagtatanim ng kamote",
+  "tamang pagtatanim ng kamote",
+  "how to plant sweet potato in the philippines",
+  "sweet potato planting guide philippines"
+ ],
+ "confidence": "high",
+ "slug": "sweet-potato",
+ "rev": "63e92c85cfa6"
+}

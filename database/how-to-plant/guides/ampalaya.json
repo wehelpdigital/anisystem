@@ -1,0 +1,283 @@
+{
+ "crop": "ampalaya",
+ "name": "Bitter gourd",
+ "local": "Ampalaya",
+ "aka": [
+  "paria",
+  "palia"
+ ],
+ "summary": "How Filipino farmers grow ampalaya on a trellis, from seed sown straight in the field or from tray seedlings, up to picking two or three times a week. It is for small farms growing ampalaya for its fruits, with the young tops sold as talbos on the side.",
+ "season": "Ampalaya can be planted any month in the lowlands, but most farmers prefer October to February, the cooler and drier months. A wet season crop is planted on raised rows with wider gaps between rows and a drainage canal, because the roots do not stand waterlogging.",
+ "material": "Seed, about 2 to 3 kg for a hectare. The hard seed is soaked in clean water overnight, then wrapped in a damp cloth for a few days until the seed coat cracks, or the tip is nicked carefully so water gets in. Farmers either drop the sprouted seed straight into the hills or raise one seedling a cell in trays for 7 to 10 days after it comes up.",
+ "spacing": "Rows about 2 meters apart in the dry season and up to 3 meters in the wet season, with hills about 30 cm apart along the row for a string trellis, one or two plants a hill. On an A frame trellis some farmers use rows about 1.5 meters apart with hills about 75 cm apart.",
+ "water": "Ampalaya needs steady moisture but cannot stand waterlogging. Farmers let water into the furrows between rows when the soil dries, and one good soaking lasts about a week. In the wet season a drainage canal carries the rain away.",
+ "fertilizer": "Lime or dolomite on acid soil after the first plowing, and 2 tons or more of compost or dried chicken manure a hectare two weeks before planting. About a tablespoon of 14 14 14 in each hill at planting, then about a tablespoon of urea a hill at 3 to 4 weeks, repeated every two weeks two or three more times, with muriate of potash added once the vines fruit.",
+ "care": "The trellis is the big job: an A frame or a flat roof of wire or nylon about 1.5 to 2 meters high on bamboo, ipil ipil or kakawate posts, with a string from each hill. Vines are tied to the strings, low side shoots and old leaves are taken off so the plant fruits on top, and the tops are sold as talbos. Off barring at about 7 to 10 days and hilling up at 15 to 20 days. Young fruits are wrapped in paper or plastic against fruit fly, and some farmers plant marigold or citronella around the field.",
+ "harvest": "Fruits are ready about 15 to 20 days after the flower opens, or 45 to 75 days after planting depending on the variety. They are picked full size, green and glossy with soft seeds, by cutting the stalk with a knife, two or three times a week for 2 to 3 months. They are sorted and packed in a kaing lined with fresh banana leaves. Fruits for seed are left to ripen and kept a few days before the seeds are taken out.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in the field (tanim buto)",
+   "days": 60,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow 15 to 20 cm deep and harrow two or three times, about a week apart, until the soil is loose and level.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Lime and manure",
+     "how": "On acid soil spread agricultural lime or dolomite after the first plowing. About two weeks before planting, work in compost or dried chicken manure, 2 tons or more for a hectare.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -4,
+     "title": "Soak and sprout the seed",
+     "how": "Soak the seed overnight, drain it and wrap it in a damp cloth in a shaded place. Plant the seeds once the coat cracks and a small root shows, usually after 3 to 4 days.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Make furrows about 2 meters apart in the dry season and about 3 meters apart in the wet season, with a canal at the low end to drain the rain.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the sprouted seed",
+     "how": "Mix about a tablespoon of 14 14 14 into the soil of each hill, then plant one or two sprouted seeds a hill, about 30 cm apart along the furrow. Cover with fine soil and water.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Fill gaps and thin",
+     "how": "Replant hills where nothing came up. Where two plants grew, keep the stronger one or both if they are healthy.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water by the furrows",
+     "how": "When the soil dries, let water into the furrows until it soaks the rows. One good soaking lasts about a week. Never leave water standing.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 9,
+     "title": "Off bar and weed",
+     "how": "About 7 to 10 days after planting, plow or hoe the soil away from the rows to kill young weeds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Put up the trellis",
+     "how": "When the vines are about 15 cm tall, set bamboo, ipil ipil or kakawate posts about every 3 meters and build either an A frame or a flat roof about 1.5 to 2 meters high. Stretch wire or nylon across the top and tie a string from each hill up to it.",
+     "task": "propping",
+     "tip": "Do not wait until the vines sprawl. Tangled vines break when you lift them."
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Hill up",
+     "how": "Between 15 and 20 days after planting, plow or hoe the soil back against the rows and pull the weeds left at the base.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 24,
+     "title": "First side dressing",
+     "how": "Three to four weeks after planting, put about a tablespoon of urea at each hill, a hand span from the stem, and cover it with soil. Repeat every two weeks two or three more times, adding muriate of potash once the vines start to fruit.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Train the vines and prune the base",
+     "how": "Tie the vines to the strings so they climb. Pinch off side shoots on the lower part of the vine when they are about a foot long, and strip old leaves near the ground, so the plant fruits up on the trellis.",
+     "task": "pruning",
+     "tip": "The pinched tops can be sold or cooked as talbos."
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Bag the young fruits",
+     "how": "As soon as the petals drop, wrap each young fruit in a paper or plastic bag so fruit flies cannot lay eggs in it. Pick up stung, yellowing fruits and bury them, and remove leaves with yellow spots.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Pick the green fruits",
+     "how": "Pick fruits that are full size, green and glossy, while the seeds are still soft, about 15 to 20 days after the flower opened. Hold the fruit and cut the stalk with a sharp knife, two or three times a week.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 61,
+     "title": "Sort and pack",
+     "how": "Sort by size and set aside damaged fruits. Pack them in a kaing lined with fresh banana leaves on the sides and bottom so they do not bruise.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "The first fruits come about 45 to 75 days after sowing, depending on the variety. Picking then goes on two or three times a week for 2 to 3 months."
+  },
+  {
+   "key": "transplanted",
+   "label": "Tray seedlings transplanted (lipat tanim)",
+   "days": 50,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow 15 to 20 cm deep and harrow two or three times, about a week apart, until the soil is loose and level.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -15,
+     "title": "Sow in trays",
+     "how": "Soak the seed overnight. Fill trays with equal parts garden soil, burnt rice hull and compost, and sow one seed a cell. Keep the trays in light shade and water in the morning.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Lime and manure",
+     "how": "On acid soil spread lime or dolomite after the first plowing. Work in compost or dried chicken manure, 2 tons or more for a hectare, about two weeks before transplanting.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -4,
+     "title": "Harden the seedlings",
+     "how": "Put the trays in full sun a little longer each day and water less often, so the seedlings are tough by planting day.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Make furrows about 2 meters apart in the dry season and about 3 meters apart in the wet season, with a canal to drain the rain.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in the late afternoon",
+     "how": "Set out the seedlings once they have true leaves, about 15 days from sowing, one a hill about 30 cm apart along the furrow. Mix a tablespoon of 14 14 14 into each hill first, plant with the root ball whole and water right away.",
+     "task": "planting",
+     "tip": "Do not keep the seedlings in the trays too long. Old seedlings grow poorly and many die."
+    },
+    {
+     "phase": "care",
+     "day": 4,
+     "title": "Replant missing hills",
+     "how": "Replace seedlings that died within the first few days with spares from the trays.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water and off bar",
+     "how": "Let water into the furrows when the soil dries, about once a week, and drain it off. Around 7 to 10 days after planting, hoe the soil away from the rows to kill young weeds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Put up the trellis",
+     "how": "When the vines are about 15 cm tall, build an A frame or a flat roof about 1.5 to 2 meters high on bamboo, ipil ipil or kakawate posts about every 3 meters. Run wire or nylon across the top and a string from each hill up to it.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Train the vines and prune the base",
+     "how": "About two weeks after transplanting, tie the vines to their strings and pinch off the low side shoots and old leaves near the ground. Keep doing this as the vines climb.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 16,
+     "title": "Hill up",
+     "how": "Hoe the soil back against the rows and pull the weeds left at the base of the plants.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Side dressing every two weeks",
+     "how": "Put about a tablespoon of urea at each hill and cover it, three weeks after transplanting. Repeat every two weeks two or three more times, adding muriate of potash once fruiting starts.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Bag the young fruits",
+     "how": "Wrap each young fruit in paper or a plastic bag once the petals drop. Bury fruits that turn yellow with holes and remove leaves with yellow spots.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 50,
+     "title": "Pick the green fruits",
+     "how": "Pick full size, green, glossy fruits with soft seeds, cutting the stalk with a sharp knife. Go through the field two or three times a week.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 51,
+     "title": "Sort and pack",
+     "how": "Sort by size, take out damaged fruits and pack the rest in a kaing lined with fresh banana leaves.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Seedlings go out about 15 days after sowing. Early hybrids give the first fruits about 45 to 60 days after transplanting and later kinds near 70 days."
+  }
+ ],
+ "mistakes": [
+  "Putting up the trellis late, so the vines tangle on the ground and the fruits curl or rot.",
+  "Leaving young fruits unbagged and stung fruits lying in the field, so fruit flies multiply.",
+  "Letting fruits turn yellow on the vine, which slows down new fruits.",
+  "Planting on low ground with no drainage in the rainy months, so the roots rot.",
+  "Keeping tray seedlings too long before transplanting, so they grow poorly and many die.",
+  "Leaving the base of the vine crowded with shoots and old leaves, which invites downy mildew."
+ ],
+ "better": [
+  "Have the soil tested and lime to bring it near pH 5.5 to 6.7. Feed by the result.",
+  "Buy good seed of a variety tolerant to downy mildew and virus, suited to your season.",
+  "Use raised beds with plastic mulch to save weeding and keep the fruits clean.",
+  "Fight fruit fly as a whole field: bag every young fruit, hang fruit fly traps and bury stung fruits each week.",
+  "Rotate away from other gourds such as squash, cucumber, patola and upo.",
+  "Keep side dressing in small doses through the picking months, with enough potash."
+ ],
+ "video": {
+  "youtubeId": "7aFr5kOYaLE",
+  "title": "Paano Magtanim ng Ampalaya? Direct Seeding Technique",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 18,
+  "why": "Filipino farmers prepare the field and sow ampalaya seed straight into the hills, explained step by step in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng ampalaya",
+  "pagtatanim ng ampalaya",
+  "balag ng ampalaya",
+  "abono sa ampalaya",
+  "how to plant ampalaya in the philippines",
+  "bitter gourd production guide philippines"
+ ],
+ "confidence": "high",
+ "slug": "bitter-gourd",
+ "rev": "3320fcbe1e0c"
+}

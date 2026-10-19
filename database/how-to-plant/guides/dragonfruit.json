@@ -1,0 +1,164 @@
+{
+ "crop": "dragonfruit",
+ "name": "Dragon fruit",
+ "local": "Dragon fruit",
+ "aka": [
+  "saniata",
+  "pitaya",
+  "pitahaya"
+ ],
+ "summary": "How Filipino growers, from the big farms of Ilocos and Pangasinan to backyard planters, raise dragon fruit from stem cuttings on posts until the first fruit. It covers the post, the cuttings, training the stems over the top, and picking the fruit in the rainy months.",
+ "season": "Most farmers plant at the start of the rains, about May to June, so the cuttings root fast. On low or heavy ground some wait until the heaviest rains ease, because wet soil rots new cuttings. Bearing plants flower and fruit through the rainy months, about May to October, with the peak around June to August.",
+ "material": "Stem cuttings about 30 to 45 cm long from healthy, mature plants that already bear well, cut from older green stems, not soft new tips. The cut end is left to dry in the shade for several days until it seals, so it does not rot. Some farmers first root the cuttings in bags of soil and compost for a few weeks before setting them at the post.",
+ "spacing": "Posts about 2 to 3 m apart in the row, with about 3 m between rows, a little over 1,100 to about 1,600 posts a hectare. Three to four cuttings around each post. Backyard growers often plant along a fence or wall.",
+ "water": "Mostly rain fed. Cuttings get light watering until they root, and plants on sandy soil are watered about once a week in long dry spells. Water must never stand around the posts. Raised mounds and canals keep the roots dry in the rains.",
+ "fertilizer": "Rotted chicken manure and compost are the base, a few kilos per post at planting and every few months. Farmers who buy fertilizer use complete fertilizer (14 14 14) every two to three months, and some give muriate of potash (0 0 60) before flowering for sweeter fruit.",
+ "care": "Mulching the mounds, hand weeding, tying the young stems up the post, removing low side shoots, cutting the tip at the top so it branches over the ring, and pruning crowded and old branches after each season. Some farmers hand pollinate at night.",
+ "harvest": "Fruits are cut when the skin is fully colored and the green flaps start turning, about a month after flowering, through the rainy months. Harvest goes every few days in the peak months. The fruit is cut with shears, kept in the shade, packed in crates without stacking too deep, and sold within a few days.",
+ "ways": [
+  {
+   "key": "cuttings",
+   "label": "Stem cuttings on posts (sanga sa poste)",
+   "days": 540,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Set up the posts",
+     "how": "Plant a concrete post, or a strong hardwood or live post, about 1.5 to 2 m above the ground with about half a meter buried, and fix an old tire, a concrete ring or a bamboo frame on top for the branches to hang over. Space posts about 2 to 3 m apart in rows about 3 m apart.",
+     "task": "land_prep",
+     "tip": "Concrete lasts. Soft wooden posts rot and fall once the plant gets heavy."
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Make a mound and feed it",
+     "how": "Around each post, loosen the soil and raise a low mound so rain drains away quickly. Mix in a few kilos of rotted chicken or animal manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Cure the cuttings",
+     "how": "Cut the stems, trim the bottom end, and lay the cuttings in a shaded, airy place for several days until the cut end dries and seals.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant three or four cuttings a post",
+     "how": "Set three or four cuttings around each post, the flat side against it, burying only the lower few centimeters, and tie each one loosely to the post with soft string or cloth strips. Water lightly once.",
+     "task": "planting",
+     "tip": "Plant the cutting the right way up: the end that was nearer the mother plant goes into the soil."
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Mulch the mound",
+     "how": "Cover the mound with rice straw, rice hull or dry grass to keep the soil damp and cool and the weeds down.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Water sparingly until rooted",
+     "how": "Water once or twice a week if no rain falls, only enough to keep the soil slightly moist. The cuttings root in a few weeks. Soggy soil makes them turn soft and yellow.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Replace the ones that rotted",
+     "how": "Pull out cuttings that turned soft, yellow or black at the base and plant fresh cured ones in their place.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Tie the stem up the post",
+     "how": "Keep one or two strong shoots per cutting and tie them to the post every so often as they climb. Break off the side shoots that come out low on the stem.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Feed every few months",
+     "how": "Every two to three months, spread compost or chicken manure around the mound, and farmers who buy fertilizer add a small amount of complete fertilizer (14 14 14) away from the stems.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Weed the mounds",
+     "how": "Pull weeds by hand around the posts, since the roots are shallow and a hoe cuts them. Slash the grass between rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Cut the tip at the top",
+     "how": "When the stem passes the ring on top, cut its tip so it branches out. Guide the new branches over the ring so they hang down on all sides, which is where the flowers come.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 330,
+     "title": "Watch the night flowers",
+     "how": "Flowers open at night and last only one night. Some farmers dust pollen from one flower onto another with a soft brush at night or early morning, which helps fruit set, especially on types that do not set well alone. Look out for ants, mealybugs and stem rot.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 540,
+     "title": "Pick the fully colored fruit",
+     "how": "The first real harvest comes at about 18 months, though some plants fruit at 12. Fruit is ready about a month after the flower opens, when the skin turns fully red or pink and the green flaps start to change color at the tips. Cut it off with shears, leaving a short stalk.",
+     "task": "harvest",
+     "tip": "Handle gently and keep in the shade. Bruised fruit spoils fast."
+    },
+    {
+     "phase": "harvest",
+     "day": 570,
+     "title": "Prune after the season",
+     "how": "After the last fruit of the season, cut out old, crowded, broken and diseased branches, keeping the healthy young ones that hang down. Burn or bury rotten stems away from the field.",
+     "task": "pruning"
+    }
+   ],
+   "note": "Cuttings usually give their first fruit at about 12 to 18 months. We count the first real harvest at 18 months (540 days)."
+  }
+ ],
+ "mistakes": [
+  "Planting in low spots where water stands, so the stems rot at the base.",
+  "Planting fresh cuttings without curing the cut end.",
+  "Burying the cutting too deep.",
+  "Using soft wooden posts that rot and fall under the weight.",
+  "Letting every side shoot grow, so the plant never reaches the top or flowers late.",
+  "Picking the fruit before it is fully colored, so it stays sour."
+ ],
+ "better": [
+  "Plant cuttings from a high yielding, self fruiting variety, and mix varieties for better fruit set.",
+  "Use concrete posts with a ring on top and raised beds with good drainage.",
+  "Test the soil and feed by the result, with more potash before flowering.",
+  "Hand pollinate at night when bees and moths are few, and keep pruning after every season.",
+  "Scout weekly for ants, mealybugs, stem rot and fruit rot, and use integrated pest management.",
+  "Some growers light the field at night in the cool months to get fruit out of season. Ask experienced growers before trying it."
+ ],
+ "video": {
+  "youtubeId": "Aas9yQ33R64",
+  "title": "Paano Magtanim ng Dragon Fruit?",
+  "channel": "Reyes Atipen Farm",
+  "lang": "fil",
+  "minutes": 11,
+  "why": "A Pangasinan dragon fruit farmer plants cuttings at the posts in his own field and explains each step in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng dragon fruit",
+  "pagtatanim ng dragon fruit",
+  "dragon fruit cuttings",
+  "how to plant dragon fruit in the philippines",
+  "dragon fruit farming philippines",
+  "saniata"
+ ],
+ "confidence": "medium",
+ "slug": "dragon-fruit",
+ "rev": "5492fb69b2d7"
+}

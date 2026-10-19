@@ -1,0 +1,162 @@
+{
+ "crop": "cassava",
+ "name": "Cassava",
+ "local": "Kamoteng kahoy",
+ "aka": [
+  "balinghoy",
+  "balanghoy"
+ ],
+ "summary": "How Filipino farmers usually grow kamoteng kahoy from stem stakes, from plowing to digging the roots after seven to twelve months. For upland and backyard growers who plant it for the table, for feed or for starch, and want to see what to improve.",
+ "season": "Cassava can be planted in any month as long as the soil stays moist for the first four to five weeks. Most farmers plant as the rains begin, around May to July, so the stakes root on the rains. Where rain falls through most of the year, planting goes on in many months.",
+ "material": "Stem stakes (tangkay) cut from healthy, pest free plants at least 8 months old. Farmers take the thicker lower and middle stem, which sprouts and yields better than the top, and cut it into pieces 20 to 25 cm long with several buds, using a sharp bolo. Stakes are best planted soon after cutting. Whole stems kept in a cool, shaded place stay usable for up to about three months.",
+ "spacing": "Ridges or furrows about 1 m apart and stakes about 75 cm apart in the row, one stake a hill, so roughly 10,000 to 13,000 stakes a hectare.",
+ "water": "Rainfed in most farms. The stakes need moist soil for the first four to five weeks, and where there is water, farmers irrigate in dry weather during the first three months. After that cassava takes dry spells well. Flooding stunts the young roots and rots the mature ones.",
+ "fertilizer": "On fresh or fertile land many farmers put nothing. A common guide is 6 bags of complete fertilizer (14 14 14) a hectare at planting and 2 bags of urea about two months later, in a band about 15 cm from the plants. Compost or dried manure, around 50 bags a hectare, is worked in during land preparation when there is some.",
+ "care": "Weed during the first two months, off bar at three to four weeks and hill up two to four weeks later. After the second month, stop hoeing near the plants and only cut tall weeds. Short crops are often grown between the rows in the first months.",
+ "harvest": "Most cassava is dug eight to ten months after planting. Table varieties often a little earlier, before the roots turn woody, and some feed and starch growers wait up to a year. Farmers test one plant first, harvest when the soil is dry, cut the roots off with a knife, keep them out of the sun, and sell or process them within a few days. Good stems are kept for the next planting.",
+ "ways": [
+  {
+   "key": "stakes",
+   "label": "Stem stakes (tanim tangkay)",
+   "days": 270,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "First plowing",
+     "how": "Plow the field to turn under grass and weeds. Leave it for about a week so the buried weed seeds sprout.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Second plowing",
+     "how": "Plow again to kill the new weeds, then leave it another week. Many farmers plow a third time or harrow before planting.",
+     "task": "land_prep",
+     "tip": "Choose loose soil that never stays flooded. Roots rot in waterlogged ground."
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Make furrows or ridges",
+     "how": "With the carabao or tractor, open furrows or ridges about 1 m apart and work in compost or dried manure. Plant in the furrows in the dry season and on top of the ridges in the rainy season.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Cut the stakes",
+     "how": "Cut healthy mature stems into pieces 20 to 25 cm long with a sharp bolo, without crushing or splitting them. Keep stakes from the base, middle and top of the stem in separate piles and plant each pile together so the stand grows even.",
+     "task": "seed_treatment",
+     "tip": "Mark which end is up. A stake planted upside down grows poorly."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant one stake a hill",
+     "how": "Set one stake every 75 cm along the row, buds pointing up. In wet soil or the rainy months, push it in upright with only a few cm showing. When the soil is just moist, plant at a slant. In dry soil lay the stake flat and cover it.",
+     "task": "planting",
+     "tip": "Plant in the cool of the morning or late afternoon in hot weather."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Base fertilizer",
+     "how": "If you fertilize, put complete fertilizer (14 14 14) along the row at planting and cover it lightly with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Fill the gaps",
+     "how": "About two weeks after planting, plant fresh stakes in the holes where nothing came up.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Off bar and weed",
+     "how": "Three to four weeks after planting, run the plow along the sides of the rows to loosen the soil and bury the weeds, and hoe around the young plants. Some farmers plant a short crop like mungbean or peanut between the rows at this time.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Hill up",
+     "how": "Two to four weeks after off barring, pull soil back up around the stems, as you do for corn.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Side dress urea and stop hoeing",
+     "how": "About two months after planting, put urea in a band about 15 cm from the plants and water it in if the soil is dry. From now on do not hoe near the plants. Just pull or cut tall weeds so the growing roots are not hurt.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Watch the tops and the field edges",
+     "how": "Look for spider mites and scale insects on the leaves and stems, bunched or curled tops, leaf spots and wilting from bacterial blight, and holes dug by rats or wild pigs. Pull out and burn badly sick plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 240,
+     "title": "Dig a test plant",
+     "how": "At about eight months, pull one or two plants to check the size of the roots. Table types are often dug at seven to eight months. Most others at eight to ten months, and some feed and starch growers wait up to a year.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 270,
+     "title": "Harvest on dry soil",
+     "how": "Cut the stem first, leaving a short piece as a handle. In loose soil pull the plant up by hand. In hard soil use a bar as a lever or run an animal drawn plow beside the row. Cut the roots off with a sharp bolo instead of breaking them.",
+     "task": "harvest",
+     "tip": "Save good mature stems in the shade for your next planting."
+    },
+    {
+     "phase": "care",
+     "day": 271,
+     "title": "Sort and sell fast",
+     "how": "Keep the roots in the shade, sort big from small and set aside bruised ones for cooking or feed. Fresh cassava spoils within a few days, so sell, cook or dry it quickly.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Using thin top pieces or old, dried stakes that sprout weakly.",
+  "Planting stakes upside down, with the buds pointing into the soil.",
+  "Letting weeds take over in the first two months, when cassava grows slowly.",
+  "Hoeing near the plants after the second month and cutting the young roots.",
+  "Digging in wet soil or yanking the plants, so bruised roots rot within days.",
+  "Leaving table cassava too long, until the roots turn fibrous and pests move in."
+ ],
+ "better": [
+  "Plant healthy stakes of a good yielding variety that suits your buyer, table, feed or starch.",
+  "Test the soil and give balanced fertilizer in two splits. Enough potash fills the roots.",
+  "Keep a steady spacing and fill missing hills within three weeks.",
+  "Keep the field weed free for the first three months and hill up on time.",
+  "Rotate fields, scout for mites, scale insects and blight, and remove sick plants before they spread.",
+  "Harvest at the right age and line up the buyer or the dryer before digging."
+ ],
+ "video": {
+  "youtubeId": "HnzKrT59xCk",
+  "title": "Paano mag tanim ng kamoteng kahoy || Planting and harvesting cassava || Buhay probinsya.",
+  "channel": "Alex Farmers",
+  "lang": "fil",
+  "minutes": 17,
+  "why": "A province farmer plants stakes in the field and later harvests, the plain traditional way, in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng kamoteng kahoy",
+  "pagtatanim ng kamoteng kahoy",
+  "paano magtanim ng balinghoy",
+  "how to plant cassava in the philippines",
+  "cassava farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "cassava",
+ "rev": "c419554b5fe4"
+}

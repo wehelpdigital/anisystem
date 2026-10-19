@@ -1,0 +1,141 @@
+{
+ "crop": "peanut",
+ "name": "Peanut",
+ "local": "Mani",
+ "aka": [
+  "groundnut"
+ ],
+ "summary": "How Filipino farmers grow mani on loose, sandy fields, as a dry season crop after rice and as a wet season crop on uplands. It follows the plow and furrow habits of corn, with care not to disturb the soil once the pods start forming.",
+ "season": "The dry season crop is planted after the rice harvest, from about November to January, on the moisture left in sandy fields (pang tag araw). The wet season crop is planted at the start of the rains, around May to June, on well drained upland fields. Cagayan Valley and Pangasinan are among the big peanut areas.",
+ "material": "Seed from pods kept from the last crop. The pods are shelled by hand only a few days before planting, and only full, unbroken kernels with their skins intact are planted.",
+ "spacing": "Rows about 50 to 60 cm apart, with one or two kernels every 10 to 20 cm.",
+ "water": "The wet season crop is rainfed. The dry season crop lives on the moisture left after rice, with furrow watering during dry spells, most of all at flowering and pod filling.",
+ "fertilizer": "Little: a small dose of complete fertilizer (14 14 14) or manure in the furrow at planting. Many farmers count on what is left from the rice crop.",
+ "care": "Off barring at about two weeks and hilling up at about three to four weeks, before pegging. After that, weeds are hand pulled without disturbing the soil near the plants.",
+ "harvest": "Ready at about 90 to 110 days, when the leaves yellow and the inside of most shells is dark. Plants are pulled by hand, the pods stripped and sun dried until the kernels rattle.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in furrows",
+   "days": 100,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow",
+     "how": "Plow once when the soil is moist enough. Peanut does best on loose, sandy or light soil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -10,
+     "title": "Harrow to loose soil",
+     "how": "Harrow two times to break every clod. The pods form underground, so the soil must be loose and crumbly.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open shallow furrows about 50 to 60 cm apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer in the furrow",
+     "how": "Drop a little complete fertilizer (14 14 14) or dried manure in the furrow and cover it with soil. After a well fed rice crop many farmers give little.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the kernels",
+     "how": "Drop one or two kernels every 10 to 20 cm and cover them with 3 to 5 cm of soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Replant the misses",
+     "how": "Replant spots where nothing came up within the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring and weeding",
+     "how": "Plow lightly along the rows with the soil thrown away from the plants, then hand pull the weeds in the row.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Hill up before pegging",
+     "how": "Plow back toward the rows to pile loose soil around the plants, before the flower stalks (pegs) bend down into the soil. After this, keep the plow and the hoe away from the plants.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Watch the leaves",
+     "how": "Check for leaf spots, rust, leaf eating caterpillars and leafhoppers. Hand pull the big weeds without digging near the plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Water during pod filling",
+     "how": "In the dry season crop, run water into the furrows if the soil dries out while the pods are filling.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 100,
+     "title": "Pull the plants",
+     "how": "Pull up a few plants to check. It is ready when the leaves are yellowing and most pods show dark marks inside the shell, with kernels that have colored skins. Pull the plants by hand while the soil is moist and shake off the soil.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 101,
+     "title": "Strip and dry the pods",
+     "how": "Strip the pods and sun dry them for several days until the kernels rattle inside. Throw out moldy pods and store the rest in dry sacks off the floor.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting on heavy, sticky soil, where pods form poorly and are hard to dig.",
+  "Shelling seed weeks ahead, so the kernels lose strength before planting.",
+  "Hilling up late or digging near the plants after pegging, which breaks the pegs.",
+  "Harvesting too early or too late: early gives shriveled kernels, late leaves pods in the ground.",
+  "Storing pods before they are fully dry, which brings mold."
+ ],
+ "better": [
+  "Use clean, fresh seed of a good variety and plant only full, unbroken kernels.",
+  "Test the soil, lime acid soil, and give calcium where the soil is poor in it.",
+  "Coat the seed with a legume inoculant on fields that have not grown peanut before.",
+  "Keep weeds out in the first month, then leave the soil around the plants alone.",
+  "Dry pods quickly and throw out moldy ones to keep the crop safe to eat."
+ ],
+ "video": {
+  "youtubeId": "6hVJ2C_7yfs",
+  "title": "PAANO MAGTANIM NG MANI NA PANG TAG ARAW",
+  "channel": "Badz Maranan",
+  "lang": "fil",
+  "minutes": 5,
+  "why": "Shows a dry season peanut crop planted by hand in furrows on a real Filipino farm."
+ },
+ "keywords": [
+  "paano magtanim ng mani",
+  "pagtatanim ng mani",
+  "mani pang tag araw",
+  "how to plant peanut in the philippines",
+  "peanut farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "peanut",
+ "rev": "a2b4b392308d"
+}

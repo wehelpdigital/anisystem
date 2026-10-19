@@ -1,0 +1,158 @@
+{
+ "crop": "oilpalm",
+ "name": "Oil palm",
+ "local": "Palma",
+ "aka": [
+  "palm oil tree",
+  "tenera"
+ ],
+ "summary": "Oil palm is grown here mostly in Mindanao, in Agusan, Sultan Kudarat and nearby provinces, and in Palawan, by plantations and by small growers who sell fruit bunches to a nearby mill. This guide shows how those growers usually plant tenera seedlings and care for them until the first bunches at about three years.",
+ "season": "Plant at the start of the rains, around May to June, or in any month where rain falls well through the year, as in much of Agusan. Oil palm does best where it rains often and there is no long dry season.",
+ "material": "Tenera hybrid seedlings (a cross of dura and pisifera palms) raised in plastic bags in a nursery for about a year. Growers buy them from a mill or a trusted nursery, because seedlings grown from fruit picked up under old palms give much less oil.",
+ "spacing": "Triangles 9 m apart, about 140 to 143 palms a hectare. Holes about 50 cm wide and deep.",
+ "water": "Rainfed. Oil palm wants rain spread through the year, so it is grown where the dry season is short. Fronds and empty bunches laid as mulch keep the soil damp, and drains carry off standing water.",
+ "fertilizer": "Complete fertilizer spread in the weeded circle around each palm two or three times a year while young. Bearing palms also need plenty of potash. Cut fronds are left to rot between rows, and some growers get empty fruit bunches back from the mill as mulch.",
+ "care": "Ring weeding and slashing, a legume cover crop, crops between rows in the first three years, replacing dead palms, mounding and propping, watching for rhinoceros beetles and rats, and pruning old fronds while keeping about 32 to 40 green ones.",
+ "harvest": "First bunches at about 30 to 36 months. A bunch is ripe when the fruits are reddish orange and a few loose fruits have fallen. Bunches are cut with a chisel or a pole sickle every 10 to 14 days, loose fruits are picked up, and everything goes to the mill within a day. Yields climb for several years and stay high into the second decade.",
+ "ways": [
+  {
+   "key": "nursery",
+   "label": "Bagged nursery seedlings (punla sa supot)",
+   "days": 1080,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -365,
+     "title": "Get the seedlings ready",
+     "how": "Raise or buy tenera seedlings in bags about a year before field planting. Keep them watered and weeded, and throw out stunted or odd looking ones.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear the land",
+     "how": "Cut the brush, pile the logs and branches between the future rows to rot, and burn as little as possible. Dig drains where water stands after rain.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Lay out the triangles",
+     "how": "Mark planting points 9 m apart in a triangle pattern with ropes and bamboo stakes, which fits about 140 palms a hectare.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig the holes",
+     "how": "Dig a hole about 50 cm wide and 50 cm deep at each stake, keeping the topsoil on one side to go back in first.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seedling",
+     "how": "On a rainy day, slit and remove the bag, set the seedling in the hole at the same depth it stood in the bag, fill with topsoil and press it firm.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed and slash",
+     "how": "Keep a clean circle around each young palm and slash the grass between rows. A creeping legume cover between rows holds the soil and feeds it.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Feed the young palm",
+     "how": "Spread complete fertilizer in the weeded circle around each palm, a little away from the base, two or three times a year while the palm is young.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Grow crops between the rows",
+     "how": "In the first three years, before the fronds meet, many growers plant corn, peanut, vegetables or banana between the rows for extra income.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Watch for beetles and rats",
+     "how": "Look for holes in the young spear and cut fronds, the sign of the rhinoceros beetle, and for rat damage at the base. Clear rotting logs and trash heaps where the beetles breed.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Replace, mound and prop",
+     "how": "Replace palms that died, pile soil around exposed roots, and prop palms that lean after strong winds.",
+     "task": "replanting"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "Cut the first ripe bunches",
+     "how": "A bunch is ripe when its fruits turn reddish orange and a few loose fruits have dropped on the ground. Cut it with a chisel on young palms, or with a sickle on a long pole when the palms are tall.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "Pick up loose fruits and haul",
+     "how": "Gather every loose fruit along with the bunches and bring them to the mill within a day, because the oil in cut fruit spoils fast.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 1092,
+     "title": "Harvest every 10 to 14 days",
+     "how": "Go around the whole farm every 10 to 14 days so no ripe bunch is left too long.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 1095,
+     "title": "Prune the old fronds",
+     "how": "Cut off dead and extra fronds below the bunches, but keep about 32 to 40 green fronds on each bearing palm. Stack the cut fronds between rows as mulch.",
+     "task": "pruning"
+    }
+   ],
+   "note": "The first ripe bunches come at about 30 to 36 months after planting in the field. Harvest then goes on every one to two weeks for over 20 years."
+  }
+ ],
+ "mistakes": [
+  "Planting seedlings grown from fruit under old palms instead of tenera seedlings.",
+  "Letting grass and vines fill the circle, which hides loose fruits and competes with the palm.",
+  "Cutting unripe bunches, or leaving ripe ones too long on the palm.",
+  "Cutting too many fronds, which lowers the next bunches.",
+  "Leaving cut bunches for days before they reach the mill.",
+  "Leaving rotting logs and trash heaps where rhinoceros beetles breed."
+ ],
+ "better": [
+  "Buy tenera seedlings from a trusted nursery or the mill you will sell to.",
+  "Have the soil and leaves tested every year or two and fertilize by the result.",
+  "Keep a strict 10 to 14 day harvest round and collect every loose fruit.",
+  "Keep about 32 to 40 fronds a palm and use the cut fronds as mulch.",
+  "Join a grower group tied to a mill for steady prices and hauling."
+ ],
+ "video": {
+  "youtubeId": "Z70Z4itqhaE",
+  "title": "PALM OIL PLANTING | Tanim ng Palm Oil | Tanum ug Palm Oil, Cebuano Vlog",
+  "channel": "Uncle Meloi",
+  "lang": "ceb",
+  "minutes": 6,
+  "why": "A Mindanao grower plants oil palm seedlings in his own field and explains it in Cebuano."
+ },
+ "keywords": [
+  "paano magtanim ng oil palm",
+  "pagtanom og palm oil",
+  "how to plant oil palm in the philippines",
+  "oil palm farming philippines",
+  "palm oil plantation agusan"
+ ],
+ "confidence": "low",
+ "slug": "oil-palm",
+ "rev": "97b1b5082568"
+}

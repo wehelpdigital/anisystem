@@ -308,6 +308,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.howtoplant' => [
+            'title' => 'How to Plant',
+            'blurb' => 'Pick a crop and see how traditional farmers plant it, step by step with the days, then what to change for a higher yield. Send it to your Protocol Builder to make it your own.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.seedcount' => [
             'title' => 'Seed Count and Distance Calculator',
             'blurb' => 'How many seeds for your spacing, or what spacing for your seeds? Set the rows and the distance between plants and see the seeds, the plants that will stand and the harvest they can carry.',
@@ -442,6 +448,7 @@ return [
         'lcc.page'      => 'tool.lcc',
         'bilad.page'    => 'tool.bilad',
         'seedcalc.page' => 'tool.seedcount',
+        'htp.page'      => 'tool.howtoplant',
         // One route for the field helpers: {tool} is the route's own parameter.
         'fh.page'        => 'tool.field.{tool}',
         'workers.global' => 'tool.workers',

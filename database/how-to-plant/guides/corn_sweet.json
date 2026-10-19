@@ -1,0 +1,148 @@
+{
+ "crop": "corn_sweet",
+ "name": "Corn, sweet",
+ "local": "Mais na matamis",
+ "aka": [
+  "sweet corn",
+  "sweetcorn"
+ ],
+ "summary": "How Filipino farmers grow sweet corn for fresh ears sold in markets and by the roadside. Most use hybrid seed bought each crop and pick the ears about two and a half months after planting.",
+ "season": "Grown all year where water is available. Rainfed growers plant at the start of the rains, around May to June, and many plant again from October to January, when there is less disease and the ears fill well with watering.",
+ "material": "Hybrid seed bought new every crop. The seed is small and wrinkled and needs moist, warm soil and a shallow planting. Some growers sow in seedling trays and set the young plants out after about two weeks to save on costly seed.",
+ "spacing": "Rows about 75 cm apart with one plant every 20 to 25 cm.",
+ "water": "Needs steady moisture. In the dry season growers run water into the furrows about once a week, more often in sandy soil, and never let the field dry out from tasseling to harvest.",
+ "fertilizer": "Chicken manure at land preparation if available, complete fertilizer (14 14 14) in the furrow at planting, and urea (46 0 0) at about three weeks before hilling up. Some growers give a little more urea at tasseling.",
+ "care": "Off barring at about two weeks and hilling up at about three to four weeks, with hand weeding in the rows. Growers check the whorls often for fall armyworm and corn borer, which hit sweet corn harder than field corn.",
+ "harvest": "Sweet corn is picked fresh, about 65 to 75 days after planting, when the silks are dry and brown and the kernels are full and milky. The ears are sold or cooked within a day.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in furrows",
+   "days": 75,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow and harrow",
+     "how": "Plow once and harrow two times to get a fine, loose seedbed. Many growers spread chicken manure before the last harrowing.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open furrows about 75 cm apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer in the furrow",
+     "how": "Drop complete fertilizer (14 14 14) in the furrow and cover it with a little soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seed shallow",
+     "how": "Drop one seed every 20 to 25 cm and cover it with only 2 to 3 cm of moist soil, since sweet corn seed rots if buried deep in wet ground.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water after planting",
+     "how": "If the soil is dry, run water into the furrows or water by hand so the seed comes up evenly.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Replant the misses",
+     "how": "Replant empty hills within the first week so the plants ripen together.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring and weeding",
+     "how": "Plow lightly between the rows with the soil thrown away from the plants, then hand pull the weeds in the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Look into the whorls",
+     "how": "Check the whorls for fall armyworm and corn borer damage every few days, since sweet corn is their favorite.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 22,
+     "title": "Side dress urea",
+     "how": "Drop urea (46 0 0) beside the plants on moist soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 24,
+     "title": "Hill up",
+     "how": "Plow toward the rows to cover the fertilizer and firm the plants against wind.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Water well through silking",
+     "how": "Keep the soil moist from tasseling until the ears fill. Dry soil now gives ears with missing kernels.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 70,
+     "title": "Pick the fresh ears",
+     "how": "Harvest about 18 to 22 days after the silks appear, when the silks are brown and dry and a pressed kernel gives milky juice. Pick in the cool early morning.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 70,
+     "title": "Sell or cool the same day",
+     "how": "Keep the picked ears in the shade and get them to the buyer the same day, since the sweetness fades quickly in the heat.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Burying the seed too deep in wet soil, so much of it rots before it comes up.",
+  "Planting next to field corn that flowers at the same time, which makes the kernels starchy and less sweet.",
+  "Letting the soil dry out at silking, which gives ears with gaps.",
+  "Picking too late, when the kernels have turned doughy and starchy.",
+  "Leaving picked ears in the sun for hours before selling."
+ ],
+ "better": [
+  "Buy fresh seed of a variety suited to your season and plant into moist, fine soil.",
+  "Keep sweet corn away from other corn, or plant it so it flowers at least two weeks apart.",
+  "Feed by a soil test and split the nitrogen into two or three doses.",
+  "Scout every few days for fall armyworm and act while the larvae are small.",
+  "Plant in small batches every two weeks so you have ears to sell over a longer time."
+ ],
+ "video": {
+  "youtubeId": "vC_L7CUWujw",
+  "title": "Sweet Corn Farming In The Philippines II Anu ang Tamang Diskarte sa Pag tanim ng Sweetcorn",
+  "channel": "Laagang Surang",
+  "lang": "fil",
+  "minutes": 10,
+  "why": "A sweet corn grower explains in his own field, in Filipino, how he plants and looks after the crop."
+ },
+ "keywords": [
+  "paano magtanim ng sweet corn",
+  "pagtatanim ng sweet corn",
+  "how to plant sweet corn in the philippines",
+  "sweet corn farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "corn-sweet",
+ "rev": "51d475ab5292"
+}

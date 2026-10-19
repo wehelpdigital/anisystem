@@ -1,0 +1,118 @@
+{
+ "crop": "cowpea",
+ "name": "Cowpea",
+ "local": "Paayap",
+ "aka": [
+  "cowpea"
+ ],
+ "summary": "How Filipino farmers grow paayap, the bush cowpea planted after rice for its dry seeds, young pods and tender tops. It is a hardy crop for the dry months and for poor soil.",
+ "season": "Mostly planted after the rice harvest in the dry season, from about November to February, on the moisture left in the field. On uplands it is planted at the start of the rains.",
+ "material": "Dry seed saved from the last crop, or bought. Farmers pick clean, plump seed.",
+ "spacing": "Rows about 50 to 60 cm apart with two plants a hill every 20 to 30 cm.",
+ "water": "Lives on the moisture left after rice or on the rains. Standing water hurts it.",
+ "fertilizer": "Usually none after rice. On poor soil a little complete fertilizer (14 14 14) or manure at planting.",
+ "care": "Off barring and hilling up in the first three weeks, then hand weeding. Farmers watch for aphids and pod borers.",
+ "harvest": "Young pods and tops are picked from about seven weeks for the kitchen. Dry pods are picked at about 65 to 75 days, sun dried, beaten and winnowed.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in furrows",
+   "days": 70,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow",
+     "how": "Plow once when the soil is moist enough, or plant straight into the cleared rice stubble.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Harrow",
+     "how": "Harrow once or twice to break clods and kill sprouting weeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open shallow furrows about 50 to 60 cm apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seed",
+     "how": "Drop two seeds a hill, with hills about 20 to 30 cm apart, and cover them with 2 to 3 cm of soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring and weeding",
+     "how": "Plow lightly along the rows with the soil thrown away from the plants and hand pull the weeds in the row.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Hill up",
+     "how": "Plow back toward the rows to pile soil at the base of the plants.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Watch for aphids and pod borers",
+     "how": "Check the tips for aphids and the flowers and pods for pod borers.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 50,
+     "title": "Pick young pods and tops",
+     "how": "Pick tender pods and young tops for cooking as they come.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 70,
+     "title": "Pick the dry pods",
+     "how": "Pick the pods for seed when they turn dry and pale, in a few rounds.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 72,
+     "title": "Dry, thresh and store",
+     "how": "Sun dry the pods, beat out the seed, winnow, dry again and store in sealed containers.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 70 is the dry seed harvest. Young pods for cooking are picked a few weeks earlier."
+  }
+ ],
+ "mistakes": [
+  "Sowing too late after rice, when the soil has dried out.",
+  "Planting where water stands.",
+  "Leaving dry pods too long in the field, where they split or get wet and mold.",
+  "Storing seed in open sacks where weevils get in."
+ ],
+ "better": [
+  "Use clean seed of a variety suited to your purpose, pods or dry seed.",
+  "Sow soon after the rice harvest while the soil is moist.",
+  "Scout at flowering for pod borers and act only when they are many.",
+  "Dry the seed well and keep it in sealed containers."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng paayap",
+  "pagtatanim ng paayap",
+  "how to plant cowpea in the philippines",
+  "cowpea after rice"
+ ],
+ "confidence": "low",
+ "slug": "cowpea",
+ "rev": "fcf71cfb2c6c"
+}

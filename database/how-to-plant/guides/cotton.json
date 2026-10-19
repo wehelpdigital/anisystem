@@ -1,0 +1,160 @@
+{
+ "crop": "cotton",
+ "name": "Cotton",
+ "local": "Bulak",
+ "aka": [
+  "kapas"
+ ],
+ "summary": "Cotton is a small crop here, grown mostly in Ilocos, Panay and a few Mindanao provinces, often under a buying or ginning program. This guide shows how those farmers usually plant it from seed after the rice or corn harvest and pick the bolls in the dry months.",
+ "season": "In rice areas of Luzon and the Visayas, cotton follows the wet season rice: the cropping season can start as early as September, most fields are sown from about October to December on the moisture left after the rice, and picking begins from about February or March. In uplands and much of Mindanao, cotton follows corn instead. Farmers in one area try to sow within the same month so pests do not build up on late fields.",
+ "material": "Fuzzy cotton seeds. Pureline seed is sown at about 15 kg a hectare in Luzon and the Visayas and about 10 kg in Mindanao, three seeds to a hill. Hybrid seed is sown one or two seeds a hill at only 2 to 3 kg a hectare. Farmers get the seed from the program or buyer each season, since saved seed loses vigor.",
+ "spacing": "Rows 75 to 100 cm apart and hills 30 to 40 cm apart, with two plants a hill after thinning for pureline varieties. Hybrids are grown one or two plants a hill, 90 to 100 cm between rows and 30 to 60 cm between hills.",
+ "water": "Sown on the moisture left after the rice, then watered down the furrows or by hose at the key weeks, about the 6th, 8th, 11th and 13th weeks, or when the plants droop at midday. Rice straw mulch cuts the watering where straw is free.",
+ "fertilizer": "A band of complete fertilizer (14 14 14), or 16 20 0 on heavy soils, along the furrow at sowing, then urea (46 0 0) side dressed at about 42 to 47 days and covered by hilling up. On sandy soil the urea is split into two smaller doses.",
+ "care": "Replanting by about three weeks, thinning to two plants a hill, off barring and hand weeding, hilling up after the urea, and weekly checks for bollworms, sucking insects and flower weevils. Fields in one area are sown close together, weevil flowers are picked off, and okra is grown on the border to draw pests.",
+ "harvest": "Picking starts at about 110 days and goes on for several weeks. Each boll is picked three to four days after it bursts open, on dry days, into cloth sacks or baskets. The seed cotton is sun dried for a day or two, packed in natural fiber sacks and sold to the gin. All stalks are cleared after the last picking.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in hills after rice",
+   "days": 165,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Ready the field after the rice",
+     "how": "Right after the rice harvest, cut the stubble close to the ground and pull the weeds if you sow without plowing. Otherwise plow about 15 cm deep, harrow two or three times and open furrows about 75 to 100 cm apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Band the first fertilizer",
+     "how": "Spread complete fertilizer (14 14 14), or 16 20 0 on heavy soil, in a band along the furrow and cover it thinly with soil. Keep it from touching the seed.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow the seeds",
+     "how": "Drop three seeds a hill, about 30 to 40 cm apart along the furrow, and cover them thinly. On unplowed rice land, poke holes 6 to 8 cm deep with a pointed stick, drop the seeds in and cover them. Water the field if the soil is dry.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Fill the missing hills",
+     "how": "Between about 10 and 22 days, plant again where no seeds came up, using spare seedlings raised in small soil blocks.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Thin to two plants a hill",
+     "how": "Before about 27 days, pull out the weak seedlings and leave the two strongest in each hill, or one or two for hybrids.",
+     "task": "thinning",
+     "tip": "Thinning late gives tall, thin, weak plants."
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Check the plants every week",
+     "how": "From about three weeks until the last bolls, look over ten plants across the field each week for bollworms, leafhoppers, aphids, thrips and flower weevils. Spray only when many plants are hit, and spare the red ants that eat flower weevils.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Off barring and weeding",
+     "how": "At about 22 to 27 days, plow lightly away from the rows to cut the weeds and loosen the soil, and hand pull the weeds between plants.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 42,
+     "title": "First irrigation",
+     "how": "Water at about the sixth week by running water down the furrows, or with a hose along the rows where water is short. Rice straw mulch keeps the soil damp longer.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Side dress with urea",
+     "how": "At about 42 to 47 days, drop urea (46 0 0) 3 to 5 cm from the base of each hill in the morning or afternoon, not at noon.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Hill up and water",
+     "how": "Plow soil back against the rows to cover the urea, then water the field right away so the fertilizer goes in.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 56,
+     "title": "Water at the key weeks",
+     "how": "Water again at about the 8th, 11th and 13th weeks, or whenever the plants droop at midday and the soil a hand deep will not hold a ball.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Pick off weevil flowers",
+     "how": "Once flowering starts, collect and crush flowers with weevil damage, and keep a border of okra around the field to draw the weevils away from the cotton.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 110,
+     "title": "Pick the open bolls",
+     "how": "Pick the fluffy cotton three to four days after each boll bursts, on dry days, into cloth or flour sacks or bamboo baskets. Never use plastic sacks.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 111,
+     "title": "Sun dry and pack the seed cotton",
+     "how": "Spread the picked cotton in the sun for one to two days, then pack it in jute or flour sacks. Keep plastic strings and scraps away from it.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 165,
+     "title": "Clear the stalks",
+     "how": "After the last picking, cut or pull up all the plants and burn them or plow them under so the bollworms and weevils have nothing to live on until next season.",
+     "task": "postharvest",
+     "tip": "Do not let the old stalks regrow for a second crop."
+    }
+   ],
+   "note": "Days from sowing. The first open bolls are picked from about 110 days, and picking goes on every few days until about 150 to 165 days."
+  }
+ ],
+ "mistakes": [
+  "Thinning late, which leaves tall, weak plants that fall over.",
+  "Sowing weeks after the neighbors, so the late field catches all the pests.",
+  "Spraying too early and too often, which kills the ants and other insects that eat the pests.",
+  "Picking wet cotton or packing it in plastic sacks that leave threads in the lint.",
+  "Leaving the old stalks standing or letting them regrow after the harvest."
+ ],
+ "better": [
+  "Use fresh certified seed of a recommended variety, or a hybrid where the buyer supplies it.",
+  "Sow with the rest of the cluster within about a month.",
+  "Scout every week and spray only when the count passes the danger level.",
+  "Have the soil tested and match the basal and urea doses to it.",
+  "Mulch with rice straw and water at the key weeks of flowering and boll filling.",
+  "Sun dry the seed cotton and keep it clean of plastic for a better price."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng bulak",
+  "pagtatanim ng bulak",
+  "panagmula ti kapas",
+  "how to plant cotton in the philippines",
+  "cotton farming philippines",
+  "cotton after rice ilocos"
+ ],
+ "confidence": "medium",
+ "slug": "cotton",
+ "rev": "4ddac59693e7"
+}

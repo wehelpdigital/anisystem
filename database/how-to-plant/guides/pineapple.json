@@ -1,0 +1,157 @@
+{
+ "crop": "pineapple",
+ "name": "Pineapple",
+ "local": "Pinya",
+ "aka": [
+  "piña",
+  "Formosa (Queen)",
+  "native red (Red Spanish)"
+ ],
+ "summary": "This guide shows how small Filipino pineapple farmers in Bicol, Cavite, Batangas, Bukidnon and other provinces usually plant pineapple from suckers, care for it, force it to flower and harvest the fruit. It fits the Queen (Formosa) and native red types grown on small farms and under coconuts.",
+ "season": "Small farms mostly plant from about March to August, and the start of the rains around May to July is the favorite time because the suckers root before the dry months. Where rain comes most of the year or water is at hand, farmers plant blocks at different times so the fruit comes over many months.",
+ "material": "Suckers that grow from the stem of a plant that has fruited are the usual planting material. Slips from just below the fruit and crowns are also used, but crowns take the longest to bear. Farmers pick medium to large suckers, about 50 to 70 cm long, strip a few of the lowest leaves, sort them by size and leave the bases to dry for about a week before planting so they do not rot.",
+ "spacing": "Single rows: 25 to 30 cm between plants and 80 to 100 cm between rows, about 33,000 to 50,000 plants a hectare. Double rows: 25 to 30 cm between plants, 50 cm between the two rows of a pair and about 100 cm between pairs, about 44,000 to 53,000 plants a hectare. Suckers go in 8 to 10 cm deep.",
+ "water": "Rainfed. Pineapple stands dry spells well, so farmers only water newly planted suckers when the soil is very dry. What they watch most is drainage, since standing water rots roots and hearts.",
+ "fertilizer": "Mostly nitrogen and potash: urea or ammonium sulfate near the base or into the lower leaf bases, and muriate of potash (0 0 60) for size and sweetness, given every two to three months until forcing. Phosphorus is seldom needed in most of our pineapple soils. Some farmers add chicken manure or compost at planting, and urea goes in with the flowering answer.",
+ "care": "About four weedings by hand pulling and hoeing, with the pulled weeds left as mulch. Many small farmers plant peanut, corn or taro between the young pineapple to earn while waiting, or grow pineapple under coconuts. Sick plants are dug out, and the fruit is shaded from strong sun.",
+ "harvest": "Ready about 4.5 to 5 months after forcing, when the base of the fruit turns yellow and the eyes flatten. Fruit for a far market is picked when just turning yellow at the base. Fruit for the local market can stay a little longer. Cut with a short stalk, keep the crown on, handle it gently and keep it in the shade.",
+ "ways": [
+  {
+   "key": "suckers",
+   "label": "Suckers (sucker planting)",
+   "days": 480,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear and loosen the field",
+     "how": "Slash the grass, take out stumps and roots, then plow and harrow until the soil is loose. Under coconuts or on slopes farmers just clear and dig the rows by hand.",
+     "task": "land_prep",
+     "tip": "Make small canals so rain does not stand between the rows."
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Sort and dry the suckers",
+     "how": "Pull a few of the lowest leaves off each sucker, sort them into small, medium and large, and lay them with the bases up to dry for about a week.",
+     "task": "seed_treatment",
+     "tip": "Plant each size in its own block so the plants grow, flower and ripen together."
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Mark the rows",
+     "how": "Stretch a line and mark single rows about 80 to 100 cm apart, or pairs of rows 50 cm apart with about 100 cm between pairs.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the suckers",
+     "how": "Set each sucker about 8 to 10 cm deep and 25 to 30 cm from the next in the row. Press the soil firm around the base so it stands straight, and keep soil out of the heart.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Replace the dead ones",
+     "how": "Walk the rows and put a new sucker of the same size where a plant has died or rotted.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "First weeding",
+     "how": "Hand pull and hoe the weeds in and between the rows. Leave the pulled weeds between rows as mulch to keep the soil damp.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "First fertilizer",
+     "how": "Put a small amount of urea or ammonium sulfate near the base of each plant or into the lowest leaf bases, and add muriate of potash (0 0 60) for bigger, sweeter fruit. Repeat every two to three months until forcing.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Second weeding",
+     "how": "Weed again before the grass grows tall. Most farmers weed about four times before the plants close over the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Watch for wilt and rot",
+     "how": "Look for plants turning red and limp with white mealybugs at the base, which ants carry from plant to plant, and for hearts that rot and pull out easily. Dig out and destroy sick plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 330,
+     "title": "Force the plants to flower",
+     "how": "When the plants are big and full of leaves, at about 10 to 12 months, pour a little carbide water or a flowering answer mixed with urea into the heart of each plant, early in the morning or at night.",
+     "task": "other",
+     "tip": "Force one block at a time so the harvest is spread out."
+    },
+    {
+     "phase": "care",
+     "day": 390,
+     "title": "Shade the young fruit",
+     "how": "When the fruit has formed, some farmers cover it with dry grass or tie the top leaves over it so the hot sun does not scorch one side.",
+     "task": "other"
+    },
+    {
+     "phase": "harvest",
+     "day": 480,
+     "title": "Pick the ripe fruit",
+     "how": "Harvest about 4.5 to 5 months after forcing, when the base of the fruit turns from green to yellow and the eyes look flat and full. Cut the stalk below the fruit with a sharp bolo and keep the crown on.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 481,
+     "title": "Handle and keep planting material",
+     "how": "Carry the fruit in boxes or baskets, not piled loose in a jeep, and keep them in the shade. Take the suckers and slips from the harvested plants for the next planting, or leave some on the plant for a smaller ratoon crop.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "From planting to the first harvest takes about 16 to 18 months for Queen planted from suckers, then about 4.5 to 5 months to a ripe fruit. Crowns can take 20 months or more before they even flower."
+  }
+ ],
+ "mistakes": [
+  "Planting fresh suckers without drying their bases, so they rot in wet soil.",
+  "Mixing small and big suckers in one block, so they flower and ripen at different times.",
+  "Letting soil fall into the heart of the young plant.",
+  "Planting where rain water stands, which brings heart and root rot.",
+  "Forcing plants that are still small, which gives small fruit.",
+  "Piling the fruit loose in a vehicle, which bruises it and shortens its shelf life."
+ ],
+ "better": [
+  "Use healthy suckers from a clean field and plant each size in its own block.",
+  "Have the soil tested. Pineapple likes acid soil, and fertilizer by the result gives bigger fruit.",
+  "Use double rows to fit more plants in each hectare.",
+  "Keep mealybugs and the ants that carry them in check to stop pineapple wilt.",
+  "Force blocks one after another so fruit comes all year and prices are steadier.",
+  "Pack fruit in lined boxes and keep it cool and shaded after picking."
+ ],
+ "video": {
+  "youtubeId": "q60pzpyJcvk",
+  "title": "PARAAN NG PAGTATANIM NG PINYA | Biyaherong Batangueno",
+  "channel": "Biyaherong Batangueno",
+  "lang": "fil",
+  "minutes": 17,
+  "why": "A Batangas farmer shows in Tagalog how he plants pineapple on his own field, the way small farmers here do it."
+ },
+ "keywords": [
+  "paano magtanim ng pinya",
+  "pagtatanim ng pinya",
+  "paano magpabunga ng pinya",
+  "how to plant pineapple in the philippines",
+  "pineapple farming philippines",
+  "formosa pineapple planting"
+ ],
+ "confidence": "medium",
+ "slug": "pineapple",
+ "rev": "23fbb4665b9c"
+}

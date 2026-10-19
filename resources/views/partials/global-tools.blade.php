@@ -428,6 +428,17 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        {{-- How to Plant (2026-10-19, the owner): how traditional farmers plant each crop, step by step, and into the Protocol Builder. --}}
+        @if (\Illuminate\Support\Facades\Route::has('htp.page'))
+        <a href="{{ route('htp.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/how-to-plant.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>How to Plant{{ \App\Support\Tagalog::flag('how-to-plant') }}</b>
+                <i>How traditional farmers plant every crop, step by step with the days, a video where there is one, and what to change for a higher yield. Send it to your Protocol Builder.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        @endif
 
             {{-- The farm tools, in the same group (2026-10-14, the owner). --}}
         {{-- Field helpers (2026-10-07): the public site's weed control helper

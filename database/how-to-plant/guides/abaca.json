@@ -1,0 +1,177 @@
+{
+ "crop": "abaca",
+ "name": "Abaca",
+ "local": "Abaka",
+ "aka": [
+  "Manila hemp"
+ ],
+ "summary": "This guide shows how Filipino abaca farmers in Bicol, Eastern Visayas, Davao, Caraga and other uplands usually set up an abaca farm from suckers or corm pieces and care for it until the first stalks are stripped for fiber. It also shows where the usual small farm differs from a well kept one.",
+ "season": "Plant as the rains begin so the young plants get steady water. Where rain falls well through the whole year, as on the Pacific side of Bicol, Samar and eastern Mindanao, planting can go on in any month. Clearing is best done in the dry months before.",
+ "material": "Most farmers dig suckers from healthy old mats: immature suckers about 9 to 11 months old and at least 1 m tall take best, while small sword suckers about half a meter tall die more often. Others plant corm pieces (seedpieces) with at least three good eyes, single eye pieces, or tissue culture plantlets bought from a nursery and hardened for about three months. Farmers trim the roots, clean off rotten parts, cut back the leaves and throw out any corm with weevil tunnels, and never take material from a mat with bunchy top or mosaic.",
+ "spacing": "Square planting, usually 2.5 m by 2.5 m (about 1,600 hills a hectare). 2 m by 2 m to 3 m by 3 m depending on the variety, and 1.5 m by 1.5 m (about 4,000 hills) for varieties that make few suckers. In coconut farms many plant in triangles about 2 m apart. Rows run east to west.",
+ "water": "Rainfed, on land with rain spread through the year and good drainage. Abaca does not like waterlogged soil. Shade trees and mulch keep the soil damp in the dry months, and some farmers water young plants once or twice a month in summer.",
+ "fertilizer": "On the usual small farm, little or none: farmers leave dry leaves, cut weeds and stripping waste to rot around the mats. Where they do put fertilizer, it is ammonium sulfate (21 0 0) or complete (14 14 14), a little in the hole at planting, more at about 8 months, and complete fertilizer later on, always spread 60 to 90 cm from the plants after ring weeding.",
+ "care": "Ring weeding about half a meter around each hill, strip weeding along the rows, and underbrushing every month or two on a well kept farm, but only now and then on most farms. Hilling up for more suckers, cutting dry leaves, keeping the shade at about half, and digging out hills sick with bunchy top or mosaic.",
+ "harvest": "The first stalks are ready at about 16 to 24 months, when the flag leaf appears. After that each mat gives stalks every 3 to 4 months, though many farmers cut only about twice a year. Stalks are topped with a sickle on a pole, felled with a slanting cut, peeled into tuxies the same day, hand stripped with a serrated knife, dried off the ground, bundled with abaca twine and kept dry until sold.",
+ "ways": [
+  {
+   "key": "suckers",
+   "label": "Suckers or corm pieces (saha)",
+   "days": 600,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear the land and keep the shade",
+     "how": "In the dry months, cut the shrubs and grass close to the ground and pile them to rot instead of burning. Keep or plant shade trees such as katuray, anii, dapdap, ipil ipil or coconut, since abaca wants about half shade.",
+     "task": "land_prep",
+     "tip": "Under coconuts, the coconut trees should stand at least 10 m apart or the abaca gets too dark."
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Plow where you can",
+     "how": "On open or coconut land that a plow can reach, plow deep once or twice, loosening the soil and breaking the thick coconut roots. On steep land, just clear and dig.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Lay out and stake the hills",
+     "how": "Run straight lines east to west and push a stick about 1 m long where each hill will go, usually in squares of 2.5 m by 2.5 m. Varieties that make few suckers go closer, at 1.5 m by 1.5 m.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Dig the holes",
+     "how": "Dig a hole deep enough for the sucker or corm, putting the dark topsoil on one side and the paler subsoil on the other.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Dig and clean the planting material",
+     "how": "Dig suckers or corms from healthy mats only. Trim the roots, cut away rotten parts and cut back the leaves so the plant loses less water.",
+     "task": "seed_treatment",
+     "tip": "Leave out any mat with yellow streaks, bunched leaves or a shrunken top. Those carry virus."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant and press the soil",
+     "how": "Put a little fertilizer, with compost if you have it, in the bottom of the hole and cover it with some topsoil. Set the sucker or corm in, fill first with topsoil then with subsoil, and press the soil firm so water does not pool in the hole.",
+     "task": "planting",
+     "tip": "Leave a stick beside every corm or eye piece so you can find it before it sprouts."
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Replace the missing hills",
+     "how": "Visit the field two to three weeks after planting and plant again where nothing grew, using immature suckers from healthy mats.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed every month or two",
+     "how": "Clear the weeds in a ring around each young plant so you can see the hills, and leave the cut weeds to rot as mulch.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "First fertilizer",
+     "how": "Between one and three months after planting, scatter fertilizer mixed with compost a little away from the base of each plant, on moist soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch for virus and weevils",
+     "how": "Walk the farm every month looking for bunchy top, mosaic and bract mosaic, and for aphids on the young leaves. Dig out a sick hill whole, corm and all, and chop it into small pieces so it cannot spread.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Hill up and clean the mats",
+     "how": "Pull soil against the base of each mat with a hoe or spade so it sends up more suckers. Cut off dry leaves and clear the brush between rows.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 240,
+     "title": "Second fertilizer",
+     "how": "At about eight months, ring weed first, then spread the fertilizer about 60 to 90 cm away from the plants at the start of the rains, never on dry soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 600,
+     "title": "Cut the mature stalks",
+     "how": "Cut only stalks whose flag leaf, the last small leaf before the flower, has come out. Cut the leaves first with a sickle tied to a bamboo pole, then fell the stalk with a bolo in a slanting cut about 8 cm above the ground so rain does not sit on the stump.",
+     "task": "harvest",
+     "tip": "Stalks that already show fruit are past their best and give weaker fiber."
+    },
+    {
+     "phase": "harvest",
+     "day": 600,
+     "title": "Peel the tuxies the same day",
+     "how": "Slip a thin knife between the outer and middle layers at the base of each leaf sheath and pull off the outer strips (tuxies), two or three fingers wide, keeping the layers from different sheaths apart.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 601,
+     "title": "Strip, dry and bundle the fiber",
+     "how": "Pull the tuxies under the stripping knife within a day. Dry the fiber in the sun for a day or in the air for two to three days, keeping it off the ground, then tie it in bundles and store it dry and raised.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 705,
+     "title": "Keep cutting every few months",
+     "how": "Come back every 3 to 4 months to cut the next mature stalks from each mat, so none grows too old and weeds have no room.",
+     "task": "harvest"
+    }
+   ],
+   "note": "The first stalks are cut at about 16 to 24 months. After that the same mat is harvested every 3 to 4 months for many years."
+  }
+ ],
+ "mistakes": [
+  "Taking suckers from mats with bunchy top or mosaic, which spreads the virus to the new farm.",
+  "Planting abaca next to corn or beans, which carry the aphids that spread virus.",
+  "Planting too few hills a hectare and leaving gaps where mats died.",
+  "Weeding and cutting only now and then, so stalks grow too old and the fiber is weak.",
+  "Leaving stalks or tuxies overnight before stripping, which spoils the fiber color.",
+  "Drying fiber on the bare ground where it gets dirty and moldy."
+ ],
+ "better": [
+  "Plant clean suckers or tissue culture plantlets of a good variety from a trusted nursery.",
+  "Fill every missing hill and keep the full number of hills a hectare.",
+  "Have the soil tested and fertilize on moist soil after ring weeding.",
+  "Check the mats every month and dig out virus sick hills at once.",
+  "Harvest every 3 to 4 months, cutting only stalks with the flag leaf out.",
+  "Strip within a day, dry the fiber well and store it raised in a dry shed."
+ ],
+ "video": {
+  "youtubeId": "Cjz84s1EQcI",
+  "title": "TAMANG PARAAN SA PAGTANIM NG ABACA",
+  "channel": "JOJO THE FARMER",
+  "lang": "fil",
+  "minutes": 12,
+  "why": "A Filipino abaca farmer shows in his own field how he plants abaca, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng abaka",
+  "pagtatanim ng abaka",
+  "paano magtanim ng abaca",
+  "how to plant abaca in the philippines",
+  "abaca farming philippines",
+  "abaca suckers planting distance"
+ ],
+ "confidence": "high",
+ "slug": "abaca",
+ "rev": "f0ec3ec2329f"
+}

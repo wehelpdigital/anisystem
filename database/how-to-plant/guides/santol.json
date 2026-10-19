@@ -1,0 +1,200 @@
+{
+ "crop": "santol",
+ "name": "Santol",
+ "local": "Santol",
+ "aka": [
+  "cotton fruit",
+  "Bangkok santol"
+ ],
+ "summary": "How Filipino growers plant santol, either the old way from seed in the backyard or as grafted Bangkok santol for bigger, sweeter fruit to sell. It covers raising the tree, giving it room, shaping it while young, and picking the fruit in the rainy months.",
+ "season": "Trees are planted as the rains begin, about May to July. Santol flowers in the dry months, about December to March, and the fruit is picked from about June to October, the peak in July and August.",
+ "material": "Backyard trees are often grown from seeds of a big, sweet fruit, but seedlings may give small or sour fruit and take five to seven years to bear. Growers who plant to sell buy grafted or budded seedlings of the Bangkok type, made on rootstocks one to two years old about as thick as a pencil. Before planting, the old leaves are removed and the big leaves cut by half so the plant loses less water.",
+ "spacing": "Grafted trees about 8 to 10 m apart each way. Seedling trees, which grow much bigger, about 12 to 14 m apart. One seedling a hole. Backyard trees are planted alone, well away from the house.",
+ "water": "Rain fed. Young trees are watered once or twice a week through their first dry season. Older trees grow on rain alone and stand dry spells well.",
+ "fertilizer": "Compost and rotted manure at planting and each year. Farmers who buy fertilizer give ammonium sulfate (21 0 0) in small amounts every six months in the first year, then complete fertilizer (14 14 14) twice a year, more as the tree grows, to about 2 kg a time on a big bearing tree.",
+ "care": "Ring weeding, mulch, watering young trees in the dry months, shaping the tree in its first two to three years, and after that pruning only dead, sick and tangled branches. Farmers rake and burn leaves with galls.",
+ "harvest": "Fruit is picked when fully golden yellow, ripened on the tree, from about June to October. It is picked by hand with a pole and net so it does not crack, and sold within a few days.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedlings (Bangkok santol, grafted)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Dig wide holes far apart",
+     "how": "Clear the spot and dig holes about 50 cm wide and deep, about 8 to 10 m apart, since santol grows into a big tree. Fill each hole back with topsoil mixed with rotted manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Trim the seedling",
+     "how": "Pull off the old leaves of the grafted seedling and cut the big leaves in half, so the young plant loses less water after planting. Water the bag well the day before.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "On a cloudy day, cut away the bag, set the seedling in the hole at the same depth with the graft joint above the soil, firm the soil and water it. Tie it to a stake against the wind.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Mulch the base",
+     "how": "Spread dry grass or leaves around the seedling, not touching the stem, to keep the soil damp and cool.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First feed",
+     "how": "A month after planting, scatter a small amount of ammonium sulfate (21 0 0), about 100 to 200 g a tree, in a ring away from the stem, and repeat every six months in the first year. Compost or manure works too.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Remove rootstock shoots",
+     "how": "Rub off any shoot that grows below the graft joint, and ring weed under the tree every month or two.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Water through the first dry season",
+     "how": "Water once or twice a week when the rain stops, until the tree has passed its first dry season.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Shape the young tree",
+     "how": "In the first two to three years, cut the tip and keep three or four well spaced main branches, so the tree grows wide and low. Remove branches that cross or rub.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 730,
+     "title": "Feed the growing tree",
+     "how": "Give complete fertilizer (14 14 14) twice a year, at the start and the end of the rains, increasing it each year as the tree grows, plus compost or manure around the edge of the leaves.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 1260,
+     "title": "Watch the flowers and leaves",
+     "how": "Flowers come in the dry months. Check new shoots for leaf galls made by mites and for twig borers, and rake and burn fallen sick leaves.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "Pick ripe fruit",
+     "how": "The first fruit usually comes at about four years. Let the fruit ripen fully on the tree until the skin turns golden yellow, then pick it with a pole and net or by climbing, so it does not drop and crack.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 1500,
+     "title": "Prune and feed after harvest",
+     "how": "After the season, cut out only dead, sick and tangled branches, and give the tree manure and complete fertilizer for the next crop.",
+     "task": "pruning"
+    }
+   ],
+   "note": "Grafted trees usually flower about three to four years after planting and give the first fruit about half a year later. We count the first harvest at 48 months (1,440 days)."
+  },
+  {
+   "key": "seed",
+   "label": "From seed (punla mula sa buto)",
+   "days": 1800,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -240,
+     "title": "Sow fresh seeds",
+     "how": "Take the seeds from a big, sweet, fully ripe fruit, wash off the pulp and sow them soon, about 2 cm deep, in bags of garden soil and compost under light shade. Keep them moist until they sprout.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -210,
+     "title": "Keep one strong seedling",
+     "how": "Leave the strongest seedling in each bag, water often and keep the bags weed free.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Dig wide holes very far apart",
+     "how": "Seedling trees grow very big, so dig holes about 50 cm wide and deep about 12 to 14 m apart. Fill them back with topsoil and rotted manure.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Set out seedlings about 30 to 50 cm tall on a cloudy day, at the same depth they grew in the bag. Firm the soil, water and mulch.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Feed lightly",
+     "how": "Give compost or manure, or a small amount of ammonium sulfate (21 0 0) away from the stem, and repeat every six months.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Weed and water",
+     "how": "Keep a clean ring under the tree and water once or twice a week in the first dry season.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Shape the young tree",
+     "how": "Cut the tip to make it branch and keep three or four main branches. Remove crossing branches.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1800,
+     "title": "Pick the first fruit",
+     "how": "Seedling trees bear at about five to seven years. Pick fruit when fully yellow and ripe on the tree. Taste the first crop, and if it is sour, the tree can be top worked with grafts of a sweet type.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Seedling trees take about five to seven years to bear. We count the first harvest at 60 months (1,800 days)."
+  }
+ ],
+ "mistakes": [
+  "Planting seedlings from unknown fruit and getting small, sour santol after years of waiting.",
+  "Planting too close to houses or other trees. Santol grows into a big tree.",
+  "Picking the fruit green. It does not sweeten off the tree.",
+  "Never shaping the young tree, so it grows tall and hard to pick.",
+  "Leaving galled leaves and fallen fruit under the tree."
+ ],
+ "better": [
+  "Plant grafted or budded Bangkok type seedlings from a known nursery for earlier, bigger, sweeter fruit.",
+  "Top work old sour trees with grafts of a sweet type.",
+  "Test the soil and feed by the result, twice a year.",
+  "Prune to keep the tree low and open for easy picking.",
+  "Scout new shoots for mites and borers and use integrated pest management."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng santol",
+  "pagtatanim ng santol",
+  "bangkok santol",
+  "how to plant santol in the philippines",
+  "santol grafting"
+ ],
+ "confidence": "medium",
+ "slug": "santol",
+ "rev": "ea40c1359cd6"
+}

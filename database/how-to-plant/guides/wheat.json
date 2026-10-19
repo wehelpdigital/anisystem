@@ -1,0 +1,109 @@
+{
+ "crop": "wheat",
+ "name": "Wheat",
+ "local": "Trigo",
+ "aka": [
+  "wheat"
+ ],
+ "summary": "Wheat is hardly grown in the Philippines, and nearly all the wheat for bread and noodles comes from abroad. A few highland growers and hobby farmers raise small plots in the cool dry months, and this short guide shows how they do it.",
+ "season": "In the highlands, small plots are sown at the end of the rains, around October to December, so the crop grows through the cool, dry months and ripens before the summer rains. Lowland heat gives weak plants and poor heads.",
+ "material": "Dry seed, usually brought in from abroad or shared among growers. It is sown dry without soaking.",
+ "spacing": "Rows about 20 to 25 cm apart with seed sown thinly, or broadcast evenly over the plot.",
+ "water": "Grown on the last of the rains and watered by hand or by hose on small plots during dry spells.",
+ "fertilizer": "Compost or manure with some complete fertilizer (14 14 14) at sowing and a light dose of urea (46 0 0) at tillering.",
+ "care": "Hand weeding in the first month and guarding the heads from birds. Rust is the main disease in warm, damp weather.",
+ "harvest": "Ready in about 100 to 120 days, when the straw is golden and the grain is hard. Cut by sickle, sun dried, threshed by beating and winnowed.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Sown direct in rows or broadcast",
+   "days": 115,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig or plow to a fine bed",
+     "how": "Plow or dig the plot, remove the weeds and rake it to a fine, level bed.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow the seed",
+     "how": "Sow the seed thinly in shallow rows about 20 to 25 cm apart and cover it with 3 to 5 cm of soil, or scatter it evenly and rake it in.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer at sowing",
+     "how": "Mix compost or manure and some complete fertilizer (14 14 14) into the rows at sowing.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Water if dry",
+     "how": "Water the plot if no rain falls, so the seed comes up evenly.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed",
+     "how": "Hand pull the weeds while the plants are young.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 28,
+     "title": "Urea at tillering",
+     "how": "Give a light side dressing of urea (46 0 0) as the plants start to tiller.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Watch for rust and birds",
+     "how": "Look for orange or brown rust spots on the leaves, and guard the ripening heads from birds.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 115,
+     "title": "Cut when golden and dry",
+     "how": "Harvest when the straw is golden and the grain is hard. Cut with a sickle and tie in bundles.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 117,
+     "title": "Dry and thresh",
+     "how": "Dry the bundles in the sun, then beat them to free the grain, winnow and dry the grain before storing.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting in the lowlands or in the rainy season, when heat and wet weather ruin the heads.",
+  "Sowing too thickly, which gives thin stems that fall over.",
+  "Harvesting late in the rains, so grain sprouts or molds in the head."
+ ],
+ "better": [
+  "Get seed of a variety bred for warm climates.",
+  "Sow only in the cool dry months in the highlands.",
+  "Test the soil and lime it if it is acid.",
+  "Keep the plot weed free for the first month."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng trigo",
+  "pagtatanim ng wheat sa pilipinas",
+  "can wheat grow in the philippines",
+  "how to plant wheat"
+ ],
+ "confidence": "low",
+ "slug": "wheat",
+ "rev": "2c9c1a7c5961"
+}

@@ -1,0 +1,89 @@
+{
+ "crop": "peach",
+ "name": "Peach",
+ "local": "Peach",
+ "aka": [
+  "melokoton",
+  "nectarine"
+ ],
+ "summary": "Peach is rare in the Philippines: there are no peach farms, only a few trees in gardens and trial plots in the cool highlands around Baguio and Benguet. Trials found that in the warm lowlands the trees grow well but almost never keep their fruit, so this short guide is for highland growers who want to try low chill types.",
+ "season": "Trees are planted at the start of the rains, about May to July. Without a winter, growers bring on flowers by stripping the leaves once growth stops. Fruit sets best in the cool, dry months.",
+ "material": "Grafted trees of low chill peach or nectarine types, bred for warm places, from a specialty nursery. Seedlings from store fruit seldom bear.",
+ "spacing": "About 3 to 4 m between trees. Trials used close rows of 3 m x 1 m.",
+ "water": "Rain fed, with watering in dry spells. Never in standing water.",
+ "fertilizer": "Compost, rotted manure and small amounts of complete fertilizer (14 14 14) every few months.",
+ "care": "Open bowl pruning, leaf stripping after each crop, fruit thinning and bagging.",
+ "harvest": "Fruit is picked when the ground color turns yellow and the flesh just softens. It bruises easily and is eaten within days.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted trees (grafted na punla)",
+   "days": 900,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Choose cool, well drained ground",
+     "how": "Pick a sunny, high and cool spot where water drains fast. Dig holes about 50 cm wide and deep with rotted manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Set the grafted tree at the same depth, graft joint above the soil, about 3 to 4 m apart. Firm, water, stake and mulch.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Prune to an open bowl",
+     "how": "Cut the tip at knee to waist height and keep three or four branches spreading outward, so sun reaches the middle. Feed compost and a little complete fertilizer (14 14 14) every few months.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Strip leaves to bring on flowers",
+     "how": "When growth stops and the leaves are mature, pick them off by hand so the tree pushes new flowers and leaves. Repeat after each crop.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 400,
+     "title": "Thin and bag the fruit",
+     "how": "Leave one fruit every hand's width along a branch, remove the rest, and bag them against fruit flies.",
+     "task": "thinning"
+    },
+    {
+     "phase": "harvest",
+     "day": 900,
+     "title": "Pick ripe fruit",
+     "how": "We count the first crop at about 30 months. Pick when the green under the red blush turns yellow and the fruit gives slightly when pressed.",
+     "task": "harvest"
+    }
+   ],
+   "note": "We count the first harvest at about 30 months (900 days). Many trees here bear little or nothing."
+  }
+ ],
+ "mistakes": [
+  "Planting peaches in the hot lowlands, where fruit drops before it ripens.",
+  "Buying high chill types that need a cold winter.",
+  "Leaving every fruit on, so all stay small."
+ ],
+ "better": [
+  "Try only low chill types, and only in cool highlands.",
+  "Strip leaves on a schedule and keep notes on what works.",
+  "Test the soil and feed by the result. Bag fruit against flies."
+ ],
+ "video": null,
+ "keywords": [
+  "peach sa pilipinas",
+  "paano magtanim ng peach",
+  "peach tree baguio",
+  "how to grow peach in the philippines"
+ ],
+ "confidence": "low",
+ "slug": "peach",
+ "rev": "092c8a47b4d9"
+}

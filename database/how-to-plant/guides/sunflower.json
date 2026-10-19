@@ -1,0 +1,179 @@
+{
+ "crop": "sunflower",
+ "name": "Sunflower",
+ "local": "Mirasol",
+ "aka": [
+  "girasol"
+ ],
+ "summary": "Sunflower is not yet a common field crop here. Most Filipino growers plant it for flower farms in Quezon, Laguna, Pangasinan and Ilocos, for bees and chickens, and a few for seed on rice land in the dry season. This guide shows how those growers usually sow it straight in the field or raise seedlings in trays, and how they harvest the seed heads.",
+ "season": "Best in the dry season, sown from about November to February on rice land after the wet season harvest or on upland fields with water, so the heads ripen in dry, sunny weather. Flower farms sow in batches through the year where water is at hand, but heavy rain at flowering rots the heads.",
+ "material": "Seed bought fresh each season, usually a hybrid for big single heads, or an open pollinated type for flowers and bird seed. Growers sow it dry and straight in the field, or raise seedlings in trays for flower farms and transplant them at about two to three weeks.",
+ "spacing": "Rows about 50 to 75 cm apart and one plant every 20 to 30 cm in the row, after thinning from two seeds a hill. Closer planting gives more seed a hectare but smaller heads.",
+ "water": "Mostly on the moisture left after the rice, then furrow or hose watering in dry spells, above all at budding and flowering. Water stops when the heads start to ripen.",
+ "fertilizer": "Complete fertilizer (14 14 14) or compost at sowing, then urea (46 0 0) side dressed at about three weeks and covered by hilling up. Manure or chicken dung is common on small flower farms.",
+ "care": "Thinning to one plant a hill, hoeing and hilling up, staking tall plants, watering in dry spells, and guarding the ripening heads from birds with nets, bags or watchers.",
+ "harvest": "Seed heads are ready at about 90 to 110 days, when the back of the head turns brown, the small leaves around it dry and the seeds are hard. Heads are cut, sun dried, beaten or rubbed to free the seeds, then cleaned and dried again before storage. Flower farms cut or show the blooms from about 55 to 70 days.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Sown straight in the field",
+   "days": 100,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow and harrow",
+     "how": "Plow and harrow the field once or twice until the soil is loose, and open shallow furrows about 50 to 75 cm apart. On wet rice land, make raised beds or drains so water does not stand.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Put the first fertilizer in the furrow",
+     "how": "Drop complete fertilizer (14 14 14) or compost along the furrow and cover it with a little soil before sowing.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow two seeds a hill",
+     "how": "Sow two seeds about 2 to 3 cm deep every 20 to 30 cm along the furrow and cover them. Water lightly if the soil is dry.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Thin to one plant",
+     "how": "When the seedlings have two to four leaves, pull out the weaker one in each hill so one strong plant is left. Fill empty hills with the extra seedlings.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed and side dress",
+     "how": "Hoe out the weeds, then put urea (46 0 0) beside the rows and cover it with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Hill up",
+     "how": "Pull soil against the stems to bury the fertilizer and the young weeds and keep the tall plants from falling over in the wind.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Water in dry spells",
+     "how": "Water by furrow or hose when the soil is dry, most of all at budding and flowering, and stop once the backs of the heads start to yellow.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Watch the heads",
+     "how": "Look for worms in the heads and on the leaves, and for gray or brown rot on the back of the head after rain. As the seeds fill, guard the field from birds or cover the heads with net or paper bags.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 100,
+     "title": "Cut the ripe heads",
+     "how": "Cut the heads when the back has turned from yellow to brown, the small leaves around the head have dried and the seeds are hard. Leave a short piece of stalk.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 101,
+     "title": "Dry and thresh",
+     "how": "Dry the heads face up in the sun for a few days, rub or beat out the seeds, clean them and dry them again until they crack when bitten before storing in sealed sacks.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Days from sowing. Flowers open at about 55 to 70 days, which is when flower farms open for visitors. Seed heads are ready at about 90 to 110 days."
+  },
+  {
+   "key": "transplanted",
+   "label": "Seedlings from trays (punla)",
+   "days": 80,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -18,
+     "title": "Sow in trays",
+     "how": "Fill seedling trays with a light mix of soil, compost and rice hull, sow one seed a cell and keep the trays watered in light shade.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant the seedlings",
+     "how": "In the late afternoon, set the seedlings with two to four true leaves into holes about 20 to 30 cm apart in rows 50 to 75 cm apart, press the soil and water them.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Weed and feed",
+     "how": "Hoe the weeds and side dress with urea or a complete fertilizer, then hill up the rows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Water and stake",
+     "how": "Water every few days in dry weather and tie tall plants to stakes in windy spots.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 45,
+     "title": "Cut or show the flowers",
+     "how": "For cut flowers, cut the stems in the early morning when the petals start to open. Flower farms leave the blooms standing for visitors.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 80,
+     "title": "Cut the seed heads",
+     "how": "For seed, wait until the backs of the heads turn brown and the seeds are hard, then cut, sun dry and thresh them.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Days from transplanting. The seedlings spend about 2 to 3 weeks in trays first. Blooms open at about 40 to 50 days after transplanting and seed heads ripen at about 80 days. Used mostly on flower farms for even rows of blooms."
+  }
+ ],
+ "mistakes": [
+  "Sowing in the rainy months so the heads ripen wet and rot.",
+  "Leaving two or three plants a hill, which gives small heads.",
+  "Skipping hilling up, so the heavy plants fall over in the wind.",
+  "Leaving the ripe heads in the field where birds eat the seeds.",
+  "Storing seed that is not fully dry, so it molds."
+ ],
+ "better": [
+  "Use fresh hybrid seed for seed crops and sow in the dry season after rice.",
+  "Have the soil tested. Sunflower needs enough potash and boron for well filled heads.",
+  "Keep one plant a hill at the right spacing.",
+  "Water at budding and flowering, the times sunflower needs it most.",
+  "Plan bird protection and drying space before the heads ripen."
+ ],
+ "video": {
+  "youtubeId": "1dTAng3o0Nw",
+  "title": "HOW TO PLANT SUNFLOWER| PART 2 | Transplanting and Management",
+  "channel": "Joni and Susan Agroshop Inc.",
+  "lang": "fil",
+  "minutes": 18,
+  "why": "A Laguna farm shows in Tagalog how it transplants and cares for sunflowers in the field."
+ },
+ "keywords": [
+  "paano magtanim ng sunflower",
+  "pagtatanim ng sunflower",
+  "paano magtanim ng mirasol",
+  "how to plant sunflower in the philippines",
+  "sunflower farming philippines",
+  "sunflower after rice"
+ ],
+ "confidence": "low",
+ "slug": "sunflower",
+ "rev": "12c00ecfb93c"
+}

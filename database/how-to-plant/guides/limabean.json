@@ -1,0 +1,110 @@
+{
+ "crop": "limabean",
+ "name": "Lima bean",
+ "local": "Patani",
+ "aka": [
+  "lima bean",
+  "butter bean"
+ ],
+ "summary": "How Filipino growers raise patani, the climbing lima bean grown along fences and on poles for its green seeds, a staple of pinakbet and ginataang gulay. It is seeded direct and bears for months.",
+ "season": "Planted at the start of the rains, around May to June, or from October to November. It is often grown along fences and backyard frames.",
+ "material": "Dry seed from fully mature pods. The big seed is planted direct, sometimes after a short soak.",
+ "spacing": "Hills about a meter apart along poles, a frame or a fence.",
+ "water": "Rainfed, with hand watering in long dry spells.",
+ "fertilizer": "Dried manure or compost at planting, with a side dressing of complete fertilizer (14 14 14) or more manure after about a month.",
+ "care": "Support for the vines, weeding around the hills, and checking for pod borers and aphids.",
+ "harvest": "Green pods are picked when the seeds are full but still green, every few days for months. Dry pods give next season's seed.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded on poles or a fence",
+   "days": 85,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig and add manure",
+     "how": "Dig the plot or spots along the fence and mix in dried manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seed",
+     "how": "Plant 2 to 3 seeds a hill, with hills about a meter apart, and cover them with 3 to 5 cm of soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Thin and put up poles",
+     "how": "Leave the strongest one or two plants and set up poles, a frame or strings to the fence for the vines.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed",
+     "how": "Hoe out the weeds around the hills.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Feed",
+     "how": "Side dress complete fertilizer (14 14 14) or more manure around the plants.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "Watch for pests",
+     "how": "Check the flowers and pods for pod borers and the leaves for aphids.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 85,
+     "title": "Pick the green pods",
+     "how": "Pick the pods when they are plump and the seeds inside are full but still green, every few days.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 120,
+     "title": "Keep seed pods",
+     "how": "Leave some pods on the vine to dry for seed.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 85 is about the first picking of green pods. The vine keeps bearing for months."
+  }
+ ],
+ "mistakes": [
+  "Planting the big seed too deep in wet soil, where it rots.",
+  "Giving the vines no support.",
+  "Letting the pods dry on the vine when green seeds are wanted."
+ ],
+ "better": [
+  "Plant fresh, whole seed into moist soil, not soggy soil.",
+  "Set up strong supports early.",
+  "Feed with compost and a side dressing and pick often.",
+  "Scout for pod borers at flowering."
+ ],
+ "video": {
+  "youtubeId": "s7yM5MBwnNk",
+  "title": "MAGTANIM TAYO NG PATANI! (Lima Bean Planting Tutorial) Napaka daling itanim! | Haydee's Garden",
+  "channel": "Haydee's Garden",
+  "lang": "fil",
+  "minutes": 12,
+  "why": "A Filipino grower plants patani in a backyard garden and shows the frame it climbs, the way most households grow it."
+ },
+ "keywords": [
+  "paano magtanim ng patani",
+  "pagtatanim ng patani",
+  "how to plant lima beans in the philippines"
+ ],
+ "confidence": "medium",
+ "slug": "lima-bean",
+ "rev": "670acd790ebf"
+}

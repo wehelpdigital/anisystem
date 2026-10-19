@@ -1,0 +1,151 @@
+{
+ "crop": "watermelon",
+ "name": "Watermelon",
+ "local": "Pakwan",
+ "aka": [
+  "sandiya"
+ ],
+ "summary": "How Filipino farmers grow pakwan in the dry months: seed dropped into widely spaced hills in loose, sandy, well drained ground, the vines left to run on the soil, and the fruits cut when they sound dull and their belly turns creamy. It is for small lowland farms, including fields that grow rice in the wet season.",
+ "season": "The main planting is from October to January, when the weather turns warm and dry, often in rice fields after the harvest and in sandy fields near rivers. Some farmers plant as early as August for an off season crop that fetches a better price, and growers with plastic mulch plant in other months too.",
+ "material": "Seed, sown straight in the field, three or four seeds to a hill. Hybrid and seedless seed is costly, so many growers now sow it in trays and set out the seedlings when they have about three leaves. Farmers choose a field that has not grown watermelon recently.",
+ "spacing": "Hills 1.5 by 1.5 meters for small fruited kinds up to 2.5 by 2.5 meters for big ones, one plant a hill after thinning. Some sow in a continuous row and thin the plants to 1.5 to 2 meters apart.",
+ "water": "Light irrigations, about 5 to 6 in the whole season, given by furrow or by hand at the hills. Too much water early keeps the roots shallow, and a long drought hurts the crop. Many farmers ease off the water as the fruits ripen.",
+ "fertilizer": "Well rotted manure, about 10 to 15 tons a hectare, worked in before planting. Complete fertilizer such as 14 14 14, about 100 to 150 kg a hectare, placed beside and below the seed at planting. A side dressing of nitrogen such as urea when the leaves turn pale.",
+ "care": "Thinning to one strong plant a hill, early weeding before the vines spread, and care not to cut the shallow roots. Straw is laid under the vines where the fruits will rest, wandering vine tips are turned back, and crooked or damaged young fruits are removed. The field is checked often in the first weeks, when insects attack the seedlings.",
+ "harvest": "Fruits ripen about 35 to 40 days after pollination. Farmers thump the fruit with a finger and listen for a dull, hollow sound, check that the ground spot has turned creamy yellow, and look at the tendril near the stalk. The stalk is cut with a sharp knife, and the fruits are carried, kept in the shade and packed on straw for the trip.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in hills (tanim buto)",
+   "days": 85,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow deep and harrow",
+     "how": "Plow at least 20 cm deep and harrow two or three times, a few weeks before planting, so the soil is loose and airy. Watermelon roots need air, so the field must drain well.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Work in manure and lay out the hills",
+     "how": "Spread well rotted manure, about 10 to 15 tons for a hectare, and mix it into the soil. Mark the hills 1.5 to 2.5 meters apart each way, closer for small fruited kinds and wider for big ones, and dig drainage canals.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilize and sow the hills",
+     "how": "Place complete fertilizer such as 14 14 14 about 5 to 8 cm deep and a few cm to the side of where the seeds go, about 100 to 150 kg for a hectare. Sow three or four seeds a hill, about 2.5 cm deep, and cover with fine soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Guard the seedlings",
+     "how": "Young seedlings are easily eaten by beetles and other insects. Walk the field every day or two in the first weeks and deal with pests early.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Water lightly",
+     "how": "Give light irrigations only. Too much water early keeps the roots shallow. Most farmers water 5 to 6 times in the whole season, more on very sandy soil or in a long dry spell.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Thin to the best plant",
+     "how": "Once the plants are well rooted, thin to one or two a hill, and when they have 3 to 4 leaves keep only the strongest one.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Weed before the vines run",
+     "how": "Hoe or hand pull the weeds while the vines are still short, taking care not to cut the shallow roots. Once the vines cover the ground there is little room to weed.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Side dress if the leaves pale",
+     "how": "If the plants turn yellowish, give a side dressing of nitrogen such as urea in a ring a hand span from the stem, and cover it or water it in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Lay straw where the fruits will sit",
+     "how": "Where rice straw or dry grass is at hand, spread it along the vines so the fruits do not lie on bare, wet soil. Turn wandering vine tips back into their lane.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Keep only the good fruits",
+     "how": "Remove crooked, cracked or stung fruits while they are small so the vine feeds the well shaped ones.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 70,
+     "title": "Ease off the water",
+     "how": "As the fruits near ripeness many farmers cut back on watering, which keeps the fruits from splitting and helps them sweeten.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 85,
+     "title": "Check ripeness and cut",
+     "how": "Tap the fruit with a finger: a dull, hollow sound means it is ripe. The best sign is the spot where the fruit touches the ground turning from white to creamy yellow. Many farmers also look for a dried curly tendril beside the fruit stalk. Cut the stalk with a sharp knife.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 86,
+     "title": "Handle with care",
+     "how": "Carry the fruits, do not throw them, and keep them in the shade. Load them on straw or sacks so they do not crack on the way to market.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "A fruit ripens about 35 to 40 days after its flower is pollinated, depending on the variety."
+  }
+ ],
+ "mistakes": [
+  "Planting watermelon in the same field year after year, so wilt and other soil diseases build up.",
+  "Planting in heavy, poorly drained ground, where the roots lack air and rot.",
+  "Watering heavily in the first weeks, which keeps the roots shallow.",
+  "Cutting fruits too early because of a good price, giving pale, bland fruits that buyers reject.",
+  "Leaving fruits on bare wet soil, so the underside rots or gets eaten by insects."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result. Watermelon grows in a wide pH range, about 5.0 to 6.8.",
+  "Buy good hybrid seed suited to the season and raise it in trays so no costly seed is wasted.",
+  "Use silver or black plastic mulch on raised beds to keep the fruits clean, save water and cut weeding.",
+  "Water by drip or careful furrow irrigation, steady through fruit growth and less near harvest.",
+  "Scout weekly and use integrated pest management for thrips, aphids and fruit fly. Keep bees safe by not spraying open flowers in the morning.",
+  "Rotate with rice, corn or beans, and keep away from fields that just grew melon, squash or other gourds."
+ ],
+ "video": {
+  "youtubeId": "aRvw87szEfU",
+  "title": "v91: Paano magtanim ng Pakwan/Watermelon part 1. (Land Prep+Planting+Irrigation+Fertilization Guide)",
+  "channel": "Farmer ang Magulang Ko",
+  "lang": "fil",
+  "minutes": 18,
+  "why": "Filipino farmers walk through land preparation, planting, watering and feeding of pakwan in an open field, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng pakwan",
+  "pagtatanim ng pakwan",
+  "kailan magtanim ng pakwan",
+  "abono sa pakwan",
+  "how to plant watermelon in the philippines",
+  "watermelon production guide philippines"
+ ],
+ "confidence": "medium",
+ "slug": "watermelon",
+ "rev": "c4659be85804"
+}

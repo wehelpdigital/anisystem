@@ -1,0 +1,127 @@
+{
+ "crop": "malunggay",
+ "name": "Moringa",
+ "local": "Malunggay",
+ "aka": [
+  "kamunggay",
+  "marunggay",
+  "moringa",
+  "horseradish tree"
+ ],
+ "summary": "How Filipino households and small farms plant malunggay the old way, from a thick branch cutting stuck into the ground by the fence or in rows, and keep it low for leaves and pods. It is for backyard growers and farmers who sell bundles of leaves and pods at the market.",
+ "season": "Best planted as the rains begin, about June to August, so the cutting roots before the dry months. With a little watering it can be planted almost any month, but cuttings set in the hot dry season often dry out.",
+ "material": "Most Filipinos plant a mature branch cut from a healthy tree that already bears pods, about 1 to 2 m long and as thick as a wrist, with the bark firm and brown, not green. Cuttings start bearing sooner than seedlings. Some growers let the cut end dry in the shade for a day or two before planting. Seeds from dry pods are also sown, soaked overnight first, but they take longer to become a bearing tree.",
+ "spacing": "Trees for pods and shade are set about 5 m apart each way, or 1 to 2 m apart as a living fence along the boundary. One cutting a pit. Leaf farms grown from seed are planted much closer, in beds, and cut often.",
+ "water": "Mostly rain fed. A new cutting needs moist but never wet soil until it roots. After that malunggay stands drought well. In a long dry season, a weekly watering keeps the leaves coming.",
+ "fertilizer": "Rotted manure and compost in the pit and around the base during the first year, often kitchen waste and ash too. Later many farmers give a little nitrogen, urea (46 0 0), once or twice a year after cutting back, or keep feeding manure.",
+ "care": "Clean ring weeding, topping the tree at about 1 m to keep it bushy and within reach, and cutting back old tall branches after the dry season. Farmers watch for caterpillars that strip the leaves and pick them off by hand.",
+ "harvest": "Leaves are picked as young sprigs every week or two from about three months. Pods from about six to eight months, green and tender for cooking. Leaves wilt fast, so they are picked in the cool morning, bundled and kept in the shade until sold. Dry pods are kept for seed.",
+ "ways": [
+  {
+   "key": "cuttings",
+   "label": "Branch cuttings (sanga)",
+   "days": 90,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Pick the spot and dig a pit",
+     "how": "Choose a sunny place where water never stands, such as a fence line or near the kitchen drain where the ground gets waste water but drains fast. Dig a pit about 50 cm wide and deep and fill it back with topsoil mixed with rotted manure and some sand.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Cut the branches",
+     "how": "Cut mature brown branches, about 1 to 2 m long and thick as a wrist, from a healthy tree that bears pods. Cut the bottom end at a slant and keep the cuttings in the shade until planting.",
+     "task": "seed_treatment",
+     "tip": "Remember which end was the bottom. A cutting planted upside down will not root."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the cutting upright",
+     "how": "Push or set the cutting straight up in the pit, no deeper than about 30 cm, and firm the soil hard around it so it does not wobble. Water it once if the soil is dry.",
+     "task": "planting",
+     "tip": "Do not move or twist the cutting after planting, or the new roots break."
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Watch for new shoots",
+     "how": "New shoots usually come out from the top and sides in about three weeks. Water lightly once or twice a week if no rain falls, but never keep the soil soggy, because the cutting rots.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Replace cuttings that failed",
+     "how": "Pull out cuttings that stay bare or turn soft and dark at the base, and plant fresh ones while it is still rainy.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed and feed",
+     "how": "Keep a clean ring around the base and pile on compost, chicken manure or rotted animal manure. In the first year farmers stick to manure and compost. Later some add a little urea once or twice a year.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 90,
+     "title": "First picking of leaves",
+     "how": "About three months after planting, break off the young leafy sprigs by hand or with a small knife, leaving some leaves on every branch. Pick a little at a time, every week or two.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Top the tree to keep it low",
+     "how": "Cut the tall main shoots back to about 1 m or the height you can reach, so the tree branches out into a bush with more young leaves. Repeat whenever the tree runs tall.",
+     "task": "pruning",
+     "tip": "The cut branches make new cuttings for planting."
+    },
+    {
+     "phase": "harvest",
+     "day": 210,
+     "title": "Pick the first pods",
+     "how": "Pods start at about six to eight months. For cooking, pick them green and still snapping, before they turn hard and stringy. Leave some to dry brown on the tree for seed.",
+     "task": "harvest"
+    }
+   ],
+   "note": "The first picking of leaves comes about 3 months (90 days) after planting the cutting. Pods start at about 6 to 8 months, and steady pod bearing from the second year."
+  }
+ ],
+ "mistakes": [
+  "Planting in a low spot where rain water stands, so the cutting rots.",
+  "Using thin green branches that dry up before rooting.",
+  "Planting the cutting upside down or shaking it after planting.",
+  "Letting the tree grow tall and never topping it, so the leaves are out of reach.",
+  "Stripping every leaf at once, which weakens the tree."
+ ],
+ "better": [
+  "Take cuttings only from heavy bearing, healthy trees, or grow a known leaf type from seed for a leaf farm.",
+  "Top the tree regularly and cut on a steady schedule for a steady supply of young leaves.",
+  "Feed compost after each heavy cutting, and test the soil if growth slows.",
+  "Water during long dry spells so picking does not stop.",
+  "Scout weekly for caterpillars and pod flies and use integrated pest management."
+ ],
+ "video": {
+  "youtubeId": "6JEHEHfIIYA",
+  "title": "Paano magtanim ng malunggay",
+  "channel": "Agri nihan",
+  "lang": "fil",
+  "minutes": 5,
+  "why": "Short Filipino backyard video showing two simple ways to plant malunggay in the yard soil."
+ },
+ "keywords": [
+  "paano magtanim ng malunggay",
+  "pagtatanim ng malunggay sa sanga",
+  "unsaon pagtanom ug kamunggay",
+  "how to plant malunggay",
+  "how to plant moringa from cuttings philippines"
+ ],
+ "confidence": "medium",
+ "slug": "moringa",
+ "rev": "1bdebe46d670"
+}

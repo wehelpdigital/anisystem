@@ -1,0 +1,166 @@
+{
+ "crop": "cabbage",
+ "name": "Cabbage",
+ "local": "Repolyo",
+ "aka": [
+  "kolis"
+ ],
+ "summary": "How Filipino farmers usually grow repolyo from seedlings raised in a seedbed and set out on beds or ridges, in the highlands all year and in the lowlands in the cool months. For small farms that want the usual routine first, then the changes that bring firmer, cleaner heads.",
+ "season": "In the highlands, such as Benguet, Mountain Province and the Bukidnon uplands, cabbage is grown in most months, with extra care in the heavy rain months. In the lowlands it is grown only in the cooler months, usually with seed sown around September to November and heads cut by February, using varieties that take some heat.",
+ "material": "Seed, about 200 to 250 g a hectare, sown in a seedbed or seed boxes. Seedlings are pricked out, fed lightly, hardened, and transplanted at about 25 to 35 days old, when they are short and sturdy.",
+ "spacing": "Lowland ridges about 50 cm apart with plants 40 cm apart. On raised beds two rows 50 by 40 cm. Highland growers on beds often plant 30 to 35 cm each way for smaller heads. One seedling a hill.",
+ "water": "Watered right after transplanting, then by furrow or sprinkler about every 8 to 12 days in dry weather, depending on the soil. Young plants need steady moisture. Once heads form farmers water less so the heads do not split or rot.",
+ "fertilizer": "Cabbage is a heavy feeder. Highland farmers are known for heavy use of chicken dung on the beds, about 2 to 3 tons a hectare or more, plus complete fertilizer and urea. A common lowland guide is 3 bags of 14 14 14 a hectare three to five days after transplanting and 3 bags of urea at about 30 days.",
+ "care": "Hand weeding and shallow cultivation from two to three weeks after transplanting until the plants are half grown, rice straw or plastic mulch, light hilling up with the side dressing, and frequent checks for diamondback moth and cabbage head borers.",
+ "harvest": "Lowland varieties are usually ready about 55 to 60 days after transplanting and many highland varieties at about 60 to 75 days, when the heads are firm. Heads are cut with a knife with some wrapper leaves left on, sorted, and packed in sacks or crates. Heads left too long, or pushed by too much water and fertilizer, split.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Seedbed then transplant (punla at lipat tanim)",
+   "days": 65,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -30,
+     "title": "Make the seedbed and sow",
+     "how": "Prepare a bed about 1 m by 10 m in full sun near water, or seed boxes with garden soil, rotted manure, sand and rice hull ash. Clean the soil by burning rice straw on top or pouring boiling water, then sow in shallow lines about 5 cm apart and cover lightly.",
+     "task": "seedbed",
+     "tip": "Highland growers often put a plastic roof over the seedbeds against hard rain."
+    },
+    {
+     "phase": "nursery",
+     "day": -23,
+     "title": "Prick out the seedlings",
+     "how": "About a week after the seedlings come up, move the sturdy, healthy ones to another bed or box about 5 by 5 cm apart.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow",
+     "how": "Clear the old crop and weeds, then plow and harrow two to three times about a week apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -16,
+     "title": "Feed the seedlings",
+     "how": "One week after pricking, water the seedlings with a weak mix of complete fertilizer in water, then sprinkle plain water so the leaves do not burn.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "In the last week, water the seedlings only when they start to wilt so they toughen up before transplanting.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Form ridges or beds and add manure",
+     "how": "Make ridges about 50 cm apart in the lowlands, or raised beds about 1 m wide where drainage is poor and in the highlands. Mix chicken dung or other manure into the soil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant late in the afternoon",
+     "how": "Set one hardened seedling a hill on moist soil, with the growing tip above the soil. On ridges plant 40 cm apart. On beds use two rows 50 by 40 cm, or about 30 to 35 cm each way for small heads. Water right away.",
+     "task": "planting",
+     "tip": "Shade newly set plants with pieces of banana stalk or leaves for a few days."
+    },
+    {
+     "phase": "care",
+     "day": 4,
+     "title": "First fertilizer",
+     "how": "Three to five days after transplanting, put complete fertilizer (14 14 14) a little away from the plants and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Replace dead seedlings",
+     "how": "Fill gaps with spare seedlings from the seedbed in the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Scout for worms and moths",
+     "how": "Check under the leaves for the small green larvae of the diamondback moth, webbed larvae at the growing tip, cutworms and aphids. Crush egg masses by hand.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Cultivate, weed and mulch",
+     "how": "Loosen the soil and pull weeds two to three weeks after transplanting. Rice straw laid between plants keeps weeds down and the soil moist.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Side dress urea",
+     "how": "About a month after transplanting, put urea 6 to 8 cm from the base of each plant and cover it with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Water by furrow as needed",
+     "how": "Water through the furrows every week or so in dry weather, then water less once the heads start to form so they do not crack or rot.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Cut the firm heads",
+     "how": "When the heads feel hard and compact, cut them with a sharp knife, leaving a few wrapper leaves to protect the head.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 61,
+     "title": "Sort and pack",
+     "how": "Throw rotten heads into the compost pit, dab the cut base with lime water against rot, and pack the heads in sacks or crates kept in the shade.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Transplanting old, leggy seedlings that were never hardened, so many die or head poorly.",
+  "Planting in the hot lowland months with a variety meant for the cool highlands.",
+  "Heavy watering once the heads form, which makes them crack and rot.",
+  "Spraying on a fixed calendar, which kills the small wasps that keep diamondback moth down.",
+  "Growing cabbage after cabbage family crops on the same beds year after year, so club root and soil pests build up.",
+  "Leaving firm heads in the field too long until they split."
+ ],
+ "better": [
+  "Choose a variety for your elevation and season, with heat tolerance for lowland planting.",
+  "Test the soil, lime acid soils and fertilize by the result instead of piling on dung and urea.",
+  "Raise clean, hardened seedlings in a covered seedbed or trays.",
+  "Scout twice a week and act only when worm counts climb, so natural enemies survive.",
+  "Rotate with crops outside the cabbage family and plow under old crop debris after harvest.",
+  "Harvest at the firm head stage and keep the heads shaded on the way to market."
+ ],
+ "video": {
+  "youtubeId": "rVL3SQ8ojR8",
+  "title": "PARAAN NG PAGTATANIM NAMIN NG REPOLYO",
+  "channel": "Kaps Farming",
+  "lang": "fil",
+  "minutes": 11,
+  "why": "Farmers show their own way of planting repolyo in the field, in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng repolyo",
+  "pagtatanim ng repolyo",
+  "tamang pagtatanim ng repolyo",
+  "how to plant cabbage in the philippines",
+  "cabbage farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "cabbage",
+ "rev": "cf2757b38dbd"
+}

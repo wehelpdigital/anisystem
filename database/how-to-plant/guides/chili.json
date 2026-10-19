@@ -1,0 +1,176 @@
+{
+ "crop": "chili",
+ "name": "Chili",
+ "local": "Sili",
+ "aka": [
+  "siling haba",
+  "siling panigang",
+  "siling labuyo"
+ ],
+ "summary": "How Filipino farmers grow sili, both the long finger kind for sinigang and pinakbet and the small, very hot labuyo: seedlings raised for about a month, set out in single or paired rows, and picked for many weeks. It is for small farms growing chili for the fresh market.",
+ "season": "Sili loves the sun. Farmers plant from May to September for a wet season crop on ridges or raised beds, and from October to February for a dry season crop with irrigation.",
+ "material": "Seed, about 100 to 200 grams for a hectare (one gram holds roughly 250 seeds). The seed is soaked overnight, dried in the air and sown in a seedbed or trays, and the seedlings go to the field 30 to 40 days after sowing. Labuyo growers often take seed from their own ripe red fruits.",
+ "spacing": "Furrows about 80 cm apart with 30 cm between hills, one seedling a hill. Many farmers use paired rows, 35 cm between the two rows of a pair and 75 cm between pairs, so the leaves shade the fruits.",
+ "water": "Irrigation at transplanting and again at about 14, 30 and 50 days, with a last watering a week before picking starts, more often on light soil in the dry months. Wet season crops go on ridges or raised beds so water does not stand.",
+ "fertilizer": "About 4 bags each of 14 14 14 and 16 20 0 a hectare along the furrows before planting. Side dressing with about 2 bags of ammonium sulfate at 10 days, then urea and muriate of potash, about 2 bags each, at 30 days and again at 50 days. Seedlings get a starter answer in the seedbed.",
+ "care": "Off barring at about 10 days and hilling up at about 30 days, with shallow cultivation and hand weeding between hills. Farmers pull and burn wilted plants and keep the field clean. Labuyo is often left to grow into a bush that bears for many months.",
+ "harvest": "Finger chili is picked mature green, full sized and glossy, from about 60 to 75 days after transplanting, about once a week. Labuyo is picked red ripe. The stalk is snapped with an upward twist or cut with a knife, and the fruits are sorted and packed in plastic bags or boxes.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Transplanted from a seedbed (lipat tanim)",
+   "days": 65,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -40,
+     "title": "Clean the seedbed soil",
+     "how": "Make beds about 1 meter wide and 15 cm high in full sun near water. Wet the bed, burn 3 to 5 cm of rice straw or rice hull over it, rake off the ash and wait a few days before sowing.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -35,
+     "title": "Soak and sow the seed",
+     "how": "Soak the seed overnight and dry it in the air. Sow it thinly in lines 5 cm apart and cover with fine soil, or sow one seed a cell about 1 cm deep in trays of compost, burnt rice hull and garden soil.",
+     "task": "seedbed",
+     "tip": "A slanted shade of cogon or coconut leaves keeps off hard sun and heavy rain."
+    },
+    {
+     "phase": "nursery",
+     "day": -26,
+     "title": "Thin and prick out",
+     "how": "When the seedlings have 2 to 3 leaves, pull out the crowded ones and move them to trays or another bed. Keep them shaded until they recover.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow and harrow two or three times, a week apart, until the soil is fine and the weeds are turned under.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -20,
+     "title": "Give a starter drink",
+     "how": "About 10 days after the seedlings come up, dissolve 2 tablespoons of 16 20 0 or 14 14 14 in 4 liters of water and pour it over them. Rinse the leaves with plain water after.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "Leave the seedlings in the sun a little longer each day and water them less, so they stand full sun by planting day.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Make the rows and put in the basal fertilizer",
+     "how": "Open furrows about 80 cm apart, or paired rows 35 cm apart with 75 cm between pairs. Spread complete fertilizer and 16 20 0 along the furrows, about 4 bags of each for a hectare, and cover it. Use ridges or raised beds in the wet season.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in the late afternoon",
+     "how": "Water the seedbed first, then lift the seedlings with the soil still on their roots. Set them 30 cm apart along the rows on a cloudy day or late afternoon, and irrigate right after.",
+     "task": "planting",
+     "tip": "Paired rows let the leaves shade the fruits from sunburn."
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Replant missing hills",
+     "how": "Replace dead or badly wilted seedlings with spares from the seedbed within the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "First side dressing and off bar",
+     "how": "About 10 days after planting, side dress with ammonium sulfate, about 2 bags for a hectare. Plow or hoe the soil away from the rows to kill weeds, but do not dig deep near the roots.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Irrigate on schedule",
+     "how": "Besides the watering at planting, irrigate the furrows at about 14, 30 and 50 days after transplanting, and once more a week before the first picking. Water more often if the soil dries fast.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Second side dressing and hill up",
+     "how": "About 30 days after planting, side dress with urea and muriate of potash, about 2 bags each for a hectare. Then hill up the rows to cover it, which also makes irrigation easier, and hand weed between hills.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Scout for pests and wilt",
+     "how": "Look under the leaves for aphids, mites, thrips and leafhoppers, and at the fruits for sunken dark spots. Pull and burn plants that wilt suddenly.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "Third side dressing",
+     "how": "About 50 days after planting, give another dose of urea and muriate of potash along the rows and water it in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 65,
+     "title": "Pick at the right stage",
+     "how": "Pick finger chili at the mature green stage, full sized, waxy and shiny, and labuyo when it turns red. Snap the stalk with an upward twist or cut it with a knife, about once a week.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 66,
+     "title": "Sort and pack",
+     "how": "Sort by size and ripeness and throw out damaged or rotten fruits. Pack in plastic bags or boxes for market.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Picking of green finger chili starts about 60 to 75 days after transplanting, depending on the variety, and goes on for weeks. Labuyo is usually picked red ripe and bears for many months."
+  }
+ ],
+ "mistakes": [
+  "Watering the seedbed too much, so the seedlings damp off and rot.",
+  "Planting sili again where pepper, tomato or eggplant just grew, so wilt and other soil diseases build up.",
+  "Plowing deep beside the plants, which cuts the roots.",
+  "Letting water stand in the rows in the rainy season, which rots the roots.",
+  "Picking fruits that are not yet full size, which lowers the weight sold."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result, with lime on acid soil.",
+  "Use good seed of a variety that resists wilt and anthracnose and that buyers in your area want.",
+  "Raise seedlings in trays with a clean mix for even, strong transplants.",
+  "Use silver plastic mulch on raised beds to keep weeds down and repel some insects.",
+  "Scout weekly for thrips, mites and aphids and use integrated pest management, spraying only when the count is high.",
+  "Rotate with rice, corn or beans, never with other members of the tomato family."
+ ],
+ "video": {
+  "youtubeId": "bcT9-3yC6f0",
+  "title": "Paano magtanim ng Siling Panigang? Part 1 Step by Step | Osepang Bukid",
+  "channel": "Joseph Landayan",
+  "lang": "fil",
+  "minutes": 13,
+  "why": "A Filipino farmer prepares the field, feeds the rows and plants siling panigang step by step on his farm, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng sili",
+  "paano magtanim ng siling panigang",
+  "pagtatanim ng siling labuyo",
+  "abono sa sili",
+  "how to plant chili in the philippines",
+  "hot pepper production guide philippines"
+ ],
+ "confidence": "medium",
+ "slug": "chili",
+ "rev": "b01ff2d07a4f"
+}

@@ -1,0 +1,137 @@
+{
+ "crop": "sayote",
+ "name": "Chayote",
+ "local": "Sayote",
+ "aka": [
+  "tsayote"
+ ],
+ "summary": "How upland Filipino farmers grow sayote: a whole mature fruit is sprouted, planted in a wide hill, and the vine is led onto a high overhead trellis that bears every week for over a year. It is for farms in cool mountain areas, where most of the country's sayote comes from, and for growers in other cool spots.",
+ "season": "Sayote likes cool weather and grows best in the mountains, about 1,000 to 1,500 meters up, as in Benguet. Farmers there plant mostly from October to January, and an established vine keeps bearing through the year.",
+ "material": "The planting material is the whole fruit. Farmers choose big, fully mature fruits from a healthy, heavy bearing vine and let them sprout in a shaded nursery or bed until the shoot is about 30 cm tall, then set them in the field. Some plant a fruit that has just sprouted straight into the hill, laid on its side with about a third left above the soil.",
+ "spacing": "Hills about 3 to 5 meters apart each way, with one to three sprouted fruits a hill. The vines are trained onto a continuous overhead trellis that covers the whole area.",
+ "water": "Sayote is mostly grown on rain in the mountains. The new plants are watered at planting and during dry spells until they take hold. After that the vines live on rain and morning dew.",
+ "fertilizer": "Compost mixed into each hole at planting. Complete fertilizer such as 14 14 14 with compost or dried chicken manure seven to eight weeks after planting, then again before and after each rainy season.",
+ "care": "A strong overhead trellis of posts and galvanized wire about 6 feet high, with a stake to lead each young vine up. A weed free circle about 2 meters wide around each hill. Vines grown for fruit are not pruned, so they spread and catch sun and dew. Vines grown for tops are cut back often to give young shoots. Farmers see few serious pests.",
+ "harvest": "The first fruits come about 120 days after planting. Fruits are picked young and tender, about 25 days after the flower opens, once or twice a week all year, and kept in the shade in baskets or sacks. A vine is replaced after about 15 months.",
+ "ways": [
+  {
+   "key": "sprouted_fruit",
+   "label": "Sprouted whole fruit (semilya)",
+   "days": 120,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -30,
+     "title": "Sprout the seed fruits",
+     "how": "Pick big, fully mature fruits from your best vine. Keep them in a shaded, airy place or set them half buried in a nursery bed until the shoot grows about 30 cm tall.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Clear and dig the hills",
+     "how": "Clear the area and dig holes about 30 cm deep and 30 cm wide, 3 to 5 meters apart. Mix compost well with the topsoil and put it back in each hole.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the sprouted fruit",
+     "how": "Set one to three sprouted fruits in each hole, with the shoot up, cover the fruit with soil and water it. On slopes, plant along the contour so the hills hold the soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water until it takes hold",
+     "how": "Water the new plants when the soil dries, until the roots take hold and the shoots grow strongly.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Keep a clean circle",
+     "how": "Keep a circle about 2 meters wide around each hill free of weeds. Once the vines spread over the trellis, weeds give less trouble.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Stake and build the overhead trellis",
+     "how": "When the shoot is about 30 cm tall, give it a stake to climb. Build a flat trellis of bamboo or wooden posts with galvanized wire stretched across about 6 feet above the ground, strong enough for heavy fruits.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "First side dressing",
+     "how": "Seven to eight weeks after planting, put compost or dried chicken manure and complete fertilizer such as 14 14 14 around the base of each hill and cover it lightly.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 120,
+     "title": "Start picking every week",
+     "how": "Pick the fruits while still young and tender, about 25 days after the flower opens, before they turn hard and fibrous. Most farmers pick once a week, or twice a week on big plantings.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 121,
+     "title": "Keep the harvest in the shade",
+     "how": "Gather the fruits in baskets or sacks and keep them in the shade until they go to market.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "care",
+     "day": 150,
+     "title": "Feed before and after the rains",
+     "how": "Side dress each hill again with manure and complete fertilizer before the rainy season starts and once more after it ends.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 450,
+     "title": "Renew old vines",
+     "how": "When a vine has borne for about 15 months and the fruits get small, pull it out and plant a new sprouted fruit in a freshly manured hill.",
+     "task": "replanting"
+    }
+   ],
+   "note": "The first fruits come about 120 days after planting. A fruit is ready about 25 days after its flower is pollinated, and Benguet farmers usually replace a vine after about 15 months."
+  }
+ ],
+ "mistakes": [
+  "Planting sayote in the hot lowlands, where it grows poorly and sets few fruits.",
+  "Using small or half ripe fruits as planting material, which give weak vines.",
+  "Building a low or weak trellis that sags or breaks under the weight of the fruits.",
+  "Picking late, when the fruits have turned hard and fibrous.",
+  "Letting weeds crowd the hills before the vines cover the trellis."
+ ],
+ "better": [
+  "Have the soil tested. Sayote does best in loose, fertile soil near pH 5.5 to 6.5.",
+  "Keep seed fruits only from your heaviest bearing, healthiest vines.",
+  "Feed by the soil test in small doses through the year, since the vine bears without a break.",
+  "On slopes, plant along the contour and mulch the hills to stop soil from washing away.",
+  "Plan your plantings and buyers ahead, since prices crash when every farm harvests at once.",
+  "Renew vines on a schedule so the fruits stay big and the yield stays high."
+ ],
+ "video": {
+  "youtubeId": "nQK7WynD21o",
+  "title": "The best way na pagtatanim ng sayote,isang beses na pagtatanim walang tigil na pagkukunan",
+  "channel": "Agmula tayo",
+  "lang": "fil",
+  "minutes": 13,
+  "why": "Shows how upland farmers plant sayote once and keep harvesting from the same vine, explained in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng sayote",
+  "pagtatanim ng sayote",
+  "balag ng sayote",
+  "sayote sa benguet",
+  "how to plant chayote in the philippines",
+  "sayote production guide"
+ ],
+ "confidence": "medium",
+ "slug": "chayote",
+ "rev": "5b67c9d79af1"
+}

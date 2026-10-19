@@ -1,0 +1,182 @@
+{
+ "crop": "jackfruit",
+ "name": "Jackfruit",
+ "local": "Langka",
+ "aka": [
+  "nangka",
+  "EVIARC sweet"
+ ],
+ "summary": "This guide shows how Filipino farmers usually plant jackfruit, either a grafted seedling of a sweet variety or a tree grown from the seed of a good fruit, and care for it until the first fruits. It is for backyards, coconut farms and small orchards.",
+ "season": "Planting is best as the rains begin, around May to July, so the young trees need little watering. With water on hand, farmers plant in any month when the soil is not very dry. Jackfruit flowers almost all year, and the main fruiting season runs about March to August.",
+ "material": "Many growers now buy grafted seedlings of a sweet, firm fleshed variety, such as EVIARC sweet, from a trusted nursery. In the old way farmers sow big, fresh seeds from a sweet, heavy bearing tree straight into bags and plant the seedling out, which costs nothing but takes years longer to bear and the fruit can differ from the mother.",
+ "spacing": "About 8 to 10 m between trees in squares or triangles. Some growers give 12 to 14 m. In backyards and coconut farms one or two trees are often planted wherever there is room.",
+ "water": "Planted at the start of the rains and watered by hand in dry spells after planting. Young trees are watered in the dry months of the first two years, after which mulch is usually enough. Jackfruit cannot stand waterlogging.",
+ "fertilizer": "Compost or manure in the hole. Young trees get about 100 to 150 g of ammonium sulfate (21 0 0) a month after planting and the same again about six months later, near the end of the rains. Bearing trees get about 0.5 to 1 kg of complete fertilizer at the start of the rains and again near their end, with more for big old trees, plus manure where available.",
+ "care": "Weeding a circle around young trees, mulching in the dry season, growing short crops or a legume cover between the trees while they are small, and pruning only dead, sick or crowded inner branches once the tree bears. Bagging young fruits against fruit flies and fruit borers, and burning infested fruit and borer damaged branches.",
+ "harvest": "Fruits are bagged with sacks, cement bags, dried banana sheaths or old newspaper soon after they form, and are ready about three months after bagging. A ripe fruit sounds dull and hollow when tapped, its spines spread apart and give a little when pressed, and its skin turns greenish yellow or brownish yellow. For home use the smell tells. The stalk is cut with a sharp knife or bolo, and big or high fruits are lowered by rope in a sack.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedling (grafted na langka)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear and mark the planting spots",
+     "how": "Clear the area and mark the spots about 8 to 10 m apart in squares or triangles, since jackfruit grows into a big tree. Avoid low spots where water stands, because the roots rot easily.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Dig the holes",
+     "how": "Dig each hole about twice as wide and deep as the seedling bag. Mix the topsoil with compost or dried manure and put some back in the hole.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seedling",
+     "how": "Remove the bag gently, set the seedling at the depth it grew and keep the graft union above the soil. Cut off extra shoots and cut the remaining leaves in half so the young tree loses less water, then firm the soil and water well.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water and mulch",
+     "how": "Water right after planting and by hand during any dry spell until the tree is well rooted. Mulch the base in the dry season, a little away from the trunk.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First fertilizer",
+     "how": "One month after planting, spread about 100 to 150 g of ammonium sulfate (21 0 0) around the tree and mix it lightly into the soil. Add compost or manure when you have it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed and plant cash crops between",
+     "how": "Keep a clean circle around the young tree. Short crops or a legume cover crop can grow in the open space between trees until they get in the way.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch for borers and rot",
+     "how": "Check the trunk and branches for bark borer holes and the base for dark, wet rot. Cut off and burn damaged branches and keep the base dry and clean.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 210,
+     "title": "Second fertilizer near the end of the rains",
+     "how": "About six months after the first, give the same amount of ammonium sulfate again, near the end of the rainy season. Give a little more each year as the tree grows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Water through the second dry season",
+     "how": "Keep watering in the dry months of the first and second years. After that, mulch is usually enough.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "First fruits",
+     "how": "Bag young fruits with sacks or old newspaper about a month after they appear. They are ready about three months after bagging, when tapping gives a dull, hollow sound, the spines spread apart and the skin turns yellowish. Cut the stalk with a sharp knife while a second person holds the fruit.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Grafted jackfruit usually bears at about 4 to 5 years."
+  },
+  {
+   "key": "seedling",
+   "label": "From seed (punla mula sa buto)",
+   "days": 2160,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -90,
+     "title": "Sow fresh seeds from a good fruit",
+     "how": "Take big, plump seeds from a ripe, sweet fruit of a heavy bearing tree, wash off the pulp and sow them within a few days, one or two to a bag of loose soil. Keep the bags in light shade and water them often.",
+     "task": "seedbed",
+     "tip": "Jackfruit seeds lose life quickly once they dry out, so sow them fresh."
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Mark and dig the holes",
+     "how": "Mark the spots about 8 to 10 m apart and dig holes about twice as wide as the bag. Mix compost or manure into the topsoil that goes back in.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant out young seedlings",
+     "how": "Plant out the seedlings while they are still young, since jackfruit has a long taproot that hates being disturbed. Set them at the same depth, firm the soil and water well.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Feed, weed and water the young tree",
+     "how": "Give about 100 to 150 g of ammonium sulfate a month after planting and again near the end of the rains. Keep the circle around the tree weeded and water in dry spells for the first two years.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch for borers and rot",
+     "how": "Check the trunk for borer holes and the base for rot, and cut and burn damaged parts. Keep the base mulched but dry.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 2160,
+     "title": "First fruits",
+     "how": "Bag the young fruits and cut them when tapping gives a dull, hollow sound and the spines spread apart.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Trees from seed usually bear at about 6 to 8 years or more. The nursery step is counted back from the planting day."
+  }
+ ],
+ "mistakes": [
+  "Planting in low, wet ground where the roots and trunk base rot.",
+  "Leaving seedlings too long in the bag, so the taproot coils and the tree stays weak.",
+  "Taking seed from a tree with poor or soft fruit.",
+  "Not bagging the young fruits, so fruit flies and borers ruin them.",
+  "Letting the trees crowd each other or other trees.",
+  "Leaving rotting fruits and borer damaged branches in the orchard."
+ ],
+ "better": [
+  "Plant grafted seedlings of a proven sweet variety from an accredited nursery.",
+  "Test the soil and feed by the result, more as the tree grows and bears.",
+  "Bag every young fruit on time and record the date to know when to pick.",
+  "Prune to keep the tree low and open once it bears, so fruits are easier to bag and pick.",
+  "Scout for borers, fruit flies and trunk rot every month and clean up fallen fruit.",
+  "Make contour canals on slopes and water young trees in dry months."
+ ],
+ "video": {
+  "youtubeId": "S4UDTzfU2XM",
+  "title": "PAANO MAGTANIM NG EVIARC SWEET JACKFRUIT (LANGKA)",
+  "channel": "Angel Farm",
+  "lang": "fil",
+  "minutes": 13,
+  "why": "A Filipino farm plants grafted EVIARC sweet langka in the field and explains each step in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng langka",
+  "pagtatanim ng langka",
+  "grafted na langka",
+  "how to plant jackfruit in the philippines",
+  "jackfruit farming"
+ ],
+ "confidence": "high",
+ "slug": "jackfruit",
+ "rev": "91ef092d505a"
+}

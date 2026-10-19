@@ -1,0 +1,83 @@
+{
+ "crop": "pear",
+ "name": "Pear",
+ "local": "Peras",
+ "aka": [
+  "peras",
+  "Asian pear",
+  "nashi"
+ ],
+ "summary": "Pear is rare in the Philippines: there are no pear farms, only a few hobby trees in cool highland gardens in Baguio and Benguet and some trees raised from seed elsewhere that seldom fruit. This short guide is for highland growers trying low chill pear types.",
+ "season": "Trees are planted at the start of the rains, about May to July, in the highlands. Without a winter, growers use the same tricks as for apple: stripping leaves and bending branches to bring on flowers.",
+ "material": "Grafted trees of low chill pear types from a specialty nursery. Trees from the seeds of store pears grow but take many years and seldom bear good fruit.",
+ "spacing": "About 4 m between trees.",
+ "water": "Rain fed, with watering in dry spells. Never in standing water.",
+ "fertilizer": "Compost, rotted manure and small amounts of complete fertilizer (14 14 14).",
+ "care": "Branch bending, leaf stripping after each crop, light pruning, bagging fruit against flies.",
+ "harvest": "Fruit is picked when it lifts off with a twist. Asian types ripen on the tree, other types soften after picking.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted trees (grafted na punla)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Choose cool, sunny ground",
+     "how": "Pick the coolest sunny spot you have, where water drains. Dig holes about 50 cm wide and deep with rotted manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Set the grafted tree at the same depth, graft joint above the soil, about 4 m apart. Firm, water, stake and mulch.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Bend the long branches",
+     "how": "Tie long upright branches down toward level so they form flower buds. Feed compost and a little complete fertilizer (14 14 14) every few months.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Strip leaves after growth stops",
+     "how": "Pick off the mature leaves by hand to push new flowers and leaves, and repeat after each crop.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "Pick mature fruit",
+     "how": "We count the first crop at about 48 months. Pick when the fruit lifts off easily with a twist and the skin color lightens.",
+     "task": "harvest"
+    }
+   ],
+   "note": "We count the first harvest at about 48 months (1,440 days). Many trees here bear little."
+  }
+ ],
+ "mistakes": [
+  "Growing pears from store seeds and waiting for fruit that seldom comes.",
+  "Planting high chill types that need a cold winter.",
+  "Planting in the hot lowlands."
+ ],
+ "better": [
+  "Buy grafted low chill types and plant only in cool highlands.",
+  "Bend branches and strip leaves on a schedule, and keep notes.",
+  "Test the soil and feed by the result."
+ ],
+ "video": null,
+ "keywords": [
+  "peras sa pilipinas",
+  "paano magtanim ng peras",
+  "pear tree baguio",
+  "how to grow pear in the philippines"
+ ],
+ "confidence": "low",
+ "slug": "pear",
+ "rev": "feceb1efc6bf"
+}

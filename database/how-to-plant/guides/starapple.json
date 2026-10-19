@@ -1,0 +1,139 @@
+{
+ "crop": "starapple",
+ "name": "Star apple",
+ "local": "Kaimito",
+ "aka": [
+  "caimito",
+  "star apple",
+  "purple kaimito",
+  "green kaimito"
+ ],
+ "summary": "How Filipino growers raise kaimito, the purple or green star apple of the cool months, from a seedling or a marcot to the first fruit. It is a big, slow, long lived backyard and orchard tree, so the guide is about good spacing, a low shape and careful picking.",
+ "season": "Trees are planted as the rains begin, about May to July. Kaimito flowers in the rainy months and the fruit ripens about four to five months later, from about late December to March or April.",
+ "material": "Many backyard trees grow from seeds of a big, sweet fruit. The seeds sprout in two to six weeks and the tree bears in five to six years or more. Growers who want early, true to type fruit plant marcotted or cleft grafted seedlings, grafted onto kaimito seedlings six to eight months old, bought from a nursery or made from their best tree.",
+ "spacing": "About 10 to 12 m between trees each way, since kaimito grows wide. One seedling or marcot a hole. In backyards, one tree well away from the house.",
+ "water": "Rain fed. Young trees get water once or twice a week in long dry spells. Old trees stand drought but bear better with water in very dry years.",
+ "fertilizer": "Compost and rotted manure at planting. Young trees get small amounts of ammonium sulfate (21 0 0) twice a year. Bearing trees get complete fertilizer (14 14 14), about half a kilo twice a year at first and more as the tree grows, at the start and near the end of the rains, spread in a ring under the edge of the leaves.",
+ "care": "Ring weeding, mulching, watering young trees in dry spells, keeping two or three main branches, removing drooping branches and water sprouts, and bagging young fruit against fruit flies. Birds and bats take ripe fruit, so it is picked often.",
+ "harvest": "Fruit is ready four to five months after flowering, mostly from late December to March or April. It is picked one by one when fully colored and slightly soft, cut with its stalk, because it does not ripen well once picked. Ripe fruit keeps only a few days at room temperature.",
+ "ways": [
+  {
+   "key": "nursery",
+   "label": "Seedlings in bags (punla, binhi o marcot)",
+   "days": 1800,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -240,
+     "title": "Sow seeds from ripe fruit",
+     "how": "Wash the seeds of a big, sweet, fully ripe fruit and sow them about 1 cm deep in a seedbox or bed of loose soil under light shade. Keep the soil damp. They come up in two to six weeks.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -200,
+     "title": "Move seedlings into bags",
+     "how": "When each seedling has three to five firm leaves, lift it with its soil and set it in a bag of garden soil and compost. Keep the bags in partial shade and water them often.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Dig holes with plenty of room",
+     "how": "Kaimito becomes a wide tree, so dig holes about 50 cm wide and deep about 10 to 12 m apart. Mix the topsoil with rotted manure or compost and put it back.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -30,
+     "title": "Harden the seedlings",
+     "how": "A month before planting, move the bags into more sun and water a little less.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "On a cloudy day, cut off the bag, set the seedling or marcot at the same depth it grew, firm the soil, water and tie it to a stake.",
+     "task": "planting",
+     "tip": "Keep a grafted seedling's graft joint above the soil."
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Mulch the base",
+     "how": "Lay dry grass or leaves around the young tree, a hand's width from the stem, to keep the soil damp and the weeds down.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Feed the young tree",
+     "how": "Scatter a small amount of ammonium sulfate (21 0 0), about 150 to 200 g a tree, in a ring away from the stem, at the start and near the end of the rains. Compost or manure also works.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Ring weed and water in dry spells",
+     "how": "Keep the ring under the tree clean, and water once or twice a week in long dry spells for the first year or two.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Shape two or three main branches",
+     "how": "Let only two or three strong main branches grow, and cut off drooping, crossing branches and upright water sprouts. A low, open tree is easier to pick.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 1650,
+     "title": "Wrap the young fruit",
+     "how": "Once the tree fruits, wrap young fruits in paper or net bags to keep fruit flies away, and gather and bury fallen, bored fruit.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1800,
+     "title": "Pick only fully ripe fruit",
+     "how": "The first crop comes at about five to six years for seedling trees. Pick only ripe fruit: purple types turn deep purple and green types turn shiny pale green, a little soft. Cut the stalk with clippers or use a bamboo pole with a net.",
+     "task": "harvest",
+     "tip": "Kaimito picked unripe stays gummy and puckery. Fruits ripen a few at a time, so pick often."
+    },
+    {
+     "phase": "harvest",
+     "day": 1830,
+     "title": "Feed and prune after the season",
+     "how": "After the last fruit, cut out dead and tangled branches and give complete fertilizer (14 14 14) and manure under the edge of the leaves.",
+     "task": "fertilizer"
+    }
+   ],
+   "note": "Seedling trees usually bear at about five to six years. We count the first harvest at 60 months (1,800 days). Grafted and marcotted trees bear years earlier."
+  }
+ ],
+ "mistakes": [
+  "Planting trees too close together or to the house.",
+  "Picking the fruit before it is ripe, so it stays gummy and sour.",
+  "Pulling fruit off without its stalk, so it bruises and leaks latex.",
+  "Letting the tree grow tall with many weak branches.",
+  "Leaving fallen, fly struck fruit under the tree."
+ ],
+ "better": [
+  "Plant grafted or marcotted seedlings of a known sweet type for fruit years sooner.",
+  "Test the soil and feed by the result, twice a year.",
+  "Keep the tree low with two or three main branches.",
+  "Bag young fruit, clean up fallen fruit, and use integrated pest management for fruit flies and twig borers."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng kaimito",
+  "pagtatanim ng kaimito",
+  "kaimito seedlings",
+  "how to plant star apple in the philippines",
+  "caimito tree care"
+ ],
+ "confidence": "medium",
+ "slug": "star-apple",
+ "rev": "889fba5c2ef9"
+}

@@ -1,0 +1,196 @@
+{
+ "crop": "eggplant",
+ "name": "Eggplant",
+ "local": "Talong",
+ "aka": [
+  "tarong"
+ ],
+ "summary": "How most Filipino farmers raise talong: seedlings grown in a seedbed for about a month, then set out in furrowed rows and picked twice a week for months. It is written for small farms in the lowlands and uplands that grow talong for the market or for the home.",
+ "season": "Talong grows all year in the Philippines wherever there is water for the dry months. In the lowlands the main crop is usually set out after the rice harvest and grown through the dry season, and a wet season crop is planted on raised rows with wider gaps between hills so water drains away.",
+ "material": "Seed, about 100 to 200 grams for a hectare (one gram holds roughly 250 seeds). Farmers soak the seed in clean water overnight, dry it in the air, and sow it in a seedbed or in trays, then move the seedlings to the field when they are about 30 to 35 days old with 3 to 4 true leaves. Many still make their own seedling cups by rolling strips of banana leaf and pinning them with a broom stick.",
+ "spacing": "Rows 75 to 100 cm apart and about 50 cm between hills, one seedling a hill. In the wet season many farmers widen the gap between hills to about 75 cm. Two rows are often set on one bed so the leaves shade the fruits.",
+ "water": "Furrow irrigation: water is let into the furrows and allowed to soak in, never left standing. In the dry season farmers water about a week after planting, near 21 and 30 days, then every 10 days or so. In the wet season only when the soil dries. Seedlings in the bed are watered each morning, only enough to keep the soil damp.",
+ "fertilizer": "Dried chicken manure or compost before planting, about 5 tons for a hectare, then a tablespoon of 14 14 14 in each hole at planting. Urea and muriate of potash, about 15 grams each a plant, between 10 and 15 days after planting, urea again near 30 days, and small doses of urea, potash or 14 14 14 every few weeks while the plants are bearing. Some pour the fertilizer as a answer, a sardine can full a hill.",
+ "care": "Off barring at 14 to 21 days and hilling up at 21 to 35 days, with hand weeding between plants. Low side shoots are pruned off below the first fork, and each plant gets a bamboo stake. Rice straw is spread as mulch where it is at hand. Farmers cut off wilted shoot tips and bored fruits every week, pull and burn plants that wilt and die, and some plant marigold or lemongrass at the edges of the field to keep insects away.",
+ "harvest": "The first fruits are ready about 46 to 50 days after transplanting for hybrids and closer to 70 days for open pollinated kinds. Pick young, shiny, firm fruits before the seeds harden, early in the morning, with a knife or shears, twice a week for 3 to 5 months. Sort out damaged fruits and pack the rest in a lined kaing, crate or pin holed plastic bag, out of the sun and rain.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Transplanted from a seedbed (lipat tanim)",
+   "days": 50,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -40,
+     "title": "Clean the seedbed soil",
+     "how": "Make beds about 1 meter wide and 15 cm high in a sunny spot near water. Wet the bed, cover it with 3 to 5 cm of rice straw or rice hull and burn it slowly to kill weed seeds and soil diseases. Rake off the ash and wait a few days before sowing.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -35,
+     "title": "Soak and sow the seed",
+     "how": "Soak the seed overnight and let it dry in the air. Draw shallow lines 5 cm apart with a stick, drop the seed thinly along them and cover with fine soil, or sow one seed a hole about 1 cm deep in a tray filled with equal parts compost, burnt rice hull and garden soil. Water gently.",
+     "task": "seedbed",
+     "tip": "A slanted roof of cogon, coconut leaves or old sacks over the bed keeps off hard sun and heavy rain."
+    },
+    {
+     "phase": "nursery",
+     "day": -24,
+     "title": "Thin and prick out",
+     "how": "A few days after the seedlings come up, or when they show 2 to 3 leaves, pull out the crowded ones. Move the extras into trays, banana leaf cups or another bed, water them and keep them in the shade until they perk up.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow 15 to 20 cm deep two or three times, a week apart, and harrow after each pass to break the clods. This gives old stubble and weeds time to rot.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -18,
+     "title": "Give the seedlings a starter drink",
+     "how": "Dissolve about 2 tablespoons of 16 20 0 or 14 14 14 in 4 liters of water and pour it over the seedlings. Rinse the leaves with plain water right after so they do not burn. Water only in the morning and only enough to keep the soil damp.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "Take the shade off a little longer each day, starting with the morning sun, and water less often. By the end of the week the seedlings should stand the whole day of sun without wilting badly.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Make the rows and work in manure",
+     "how": "Open furrows or raised rows 75 to 100 cm apart. Spread dried chicken manure or compost along them, about 5 tons for a hectare, and mix it into the soil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in the late afternoon",
+     "how": "Lift the seedlings with the soil still on their roots and set one in each hill, 50 cm apart in the dry season and up to 75 cm in the wet season. Mix about a tablespoon of 14 14 14 into the bottom of each hole first, then plant and water right away.",
+     "task": "planting",
+     "tip": "Many farmers set two rows on one bed so the leaves shade the hanging fruits from sun scald."
+    },
+    {
+     "phase": "care",
+     "day": 4,
+     "title": "Replant missing hills",
+     "how": "Walk the rows 3 to 5 days after planting and replace dead or badly wilted seedlings with spares from the seedbed.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "First furrow irrigation",
+     "how": "In the dry season let water run down the furrows about a week after planting, again near 21 and 30 days, then every 10 days or so. Do not let water stand around the stems.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "First side dressing",
+     "how": "Between 10 and 15 days after planting, give each plant about 15 grams of urea and 15 grams of muriate of potash. Drop it in a shallow groove a hand span from the stem and cover it with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off bar and pull weeds",
+     "how": "Plow or hoe the soil away from the rows between 14 and 21 days after planting to kill young weeds. Hand pull the weeds left between the plants.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "Prune the low shoots",
+     "how": "Remove the side shoots that grow below the first fork of the stem, keeping the one branch nearest the fork. Cut off old yellow leaves too, and do it in the morning so the cuts dry fast.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Hill up and stake",
+     "how": "Plow or hoe the soil back against the rows between 21 and 35 days after planting. Push a bamboo stake beside each plant and tie it loosely so the plant does not fall when it is heavy with fruit.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Check for borer and wilt every week",
+     "how": "Look for wilted shoot tips and fruits with small holes. Cut them off, gather them in a sack and destroy them away from the field. Pull and burn any plant that wilts suddenly and dies, since that is a soil disease.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Second side dressing",
+     "how": "About a month after planting, give each plant another 15 grams of urea in a groove beside the row and cover it. Water the furrow afterwards if the soil is dry.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 50,
+     "title": "Start picking",
+     "how": "Pick the fruits while they are young, glossy and firm, early in the morning, using a knife or shears so the branch is not torn. Pick every ready fruit twice a week to keep the plant bearing.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 51,
+     "title": "Sort and pack",
+     "how": "Set aside damaged and crooked fruits. Pack the good ones in a kaing or crate lined with old paper and dry banana leaves, or in plastic bags with two pin holes for each kilo, and keep them out of the sun.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "care",
+     "day": 63,
+     "title": "Feed again while it bears",
+     "how": "While picking goes on, give a small dose of urea or muriate of potash every few weeks, or about a tablespoon of 14 14 14 a plant later in the season. Some farmers dissolve the fertilizer in water and pour a sardine can full at each hill.",
+     "task": "fertilizer"
+    }
+   ],
+   "note": "Hybrids give the first fruits about 46 to 50 days after transplanting. Open pollinated kinds take closer to 70 days. Picking then goes on twice a week for about 3 to 5 months."
+  }
+ ],
+ "mistakes": [
+  "Watering the seedbed too much, which brings damping off and weak, leggy seedlings.",
+  "Leaving water standing in the furrows, which rots the roots and spreads wilt.",
+  "Planting talong again where talong, tomato or pepper just grew, so wilt builds up in the soil.",
+  "Spraying for fruit and shoot borer on a fixed calendar instead of cutting out the damaged shoots and fruits each week.",
+  "Skipping or delaying the side dressing, which gives weak plants and small fruits.",
+  "Leaving old fruits on the plant, which slows down new flowers and fruits."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result. Lime acid soil so it sits near pH 5.5 to 6.8.",
+  "Buy good seed of a variety that resists bacterial wilt, or use seedlings grafted onto a wilt resistant rootstock.",
+  "Raise seedlings in trays with a clean mix so every seedling has its own root ball and fewer die after transplanting.",
+  "Use silver plastic mulch or thick rice straw mulch to cut weeding and save water.",
+  "Fight fruit and shoot borer with weekly removal of damaged parts, sex pheromone traps and spraying only when the count is high.",
+  "Rotate with rice, corn or a bean crop, not with tomato, pepper or potato."
+ ],
+ "video": {
+  "youtubeId": "zvHnlG43jkU",
+  "title": "Paano magtanim ng TALONG PART 1",
+  "channel": "Joseph Landayan",
+  "lang": "fil",
+  "minutes": 17,
+  "why": "A Filipino farmer plants talong on his farm the usual way and explains each step in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng talong",
+  "pagtatanim ng talong",
+  "tamang pagitan ng talong",
+  "abono sa talong",
+  "how to plant eggplant in the philippines",
+  "eggplant production guide philippines"
+ ],
+ "confidence": "high",
+ "slug": "eggplant",
+ "rev": "77be709f8780"
+}

@@ -1,0 +1,97 @@
+{
+ "crop": "apple",
+ "name": "Apple",
+ "local": "Mansanas",
+ "aka": [
+  "low chill apple"
+ ],
+ "summary": "Apple is rare in the Philippines: there is no traditional apple farming here, only a few growers in cool highlands, best known a farm in Kapatagan, Digos City on the slopes of Mt. Apo, and hobby trees in Baguio and Benguet. This short guide shows how those few growers do it with grafted low chill types and by stripping leaves and bending branches to make the tree flower without a winter.",
+ "season": "Trees are planted at the start of the rains, about May to July. With no winter, growers make their own seasons: after each harvest they strip the leaves and bend the branches, and the tree flowers again, so some trees give two small crops a year.",
+ "material": "Grafted trees of low chill apple types, which need little cold, bought from a specialty nursery or grafted on hardy rootstock. Trees from the seeds of store apples grow but rarely bear good fruit, and take many years.",
+ "spacing": "About 3 to 4 m between trees for home and small farm plantings. Trials used close rows of 3 m x 1 m with small, bent trees.",
+ "water": "Rain fed, with watering in dry spells. Apples dislike waterlogged roots, so they go on sloping or raised ground.",
+ "fertilizer": "Compost and rotted manure, with small amounts of complete fertilizer (14 14 14) every few months. More potash as fruit fills.",
+ "care": "Branch bending, leaf stripping after each crop to bring on flowers, light pruning to keep the tree small and open, fruit thinning and bagging.",
+ "harvest": "Fruit is picked when colored and firm, with brown seeds, a few months after flowering. Crops are small, and most fruit is sold to visitors or eaten at home.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted trees (grafted na punla)",
+   "days": 1080,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Pick a cool, sunny, well drained spot",
+     "how": "Choose the coolest high ground you have, in full sun, where water never stands. Dig holes about 50 cm wide and deep and mix the topsoil with rotted manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Set the grafted tree at the same depth it grew, graft joint above the soil, firm the soil, water and stake it. Growers plant about 3 to 4 m apart. Trials used rows as close as 3 m x 1 m.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Mulch, water and feed lightly",
+     "how": "Mulch the base, water in dry spells, and give compost or manure with a little complete fertilizer (14 14 14) every few months.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Bend the long branches",
+     "how": "Pull long upright branches down toward level and tie them with string to stakes or the trunk. Bent branches form flower buds instead of only leaves.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Strip the leaves to force flowers",
+     "how": "When the leaves are mature and growth stops, pick off the leaves by hand. New leaves and flowers push out in the following weeks. Growers repeat this after each crop, about twice a year.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 400,
+     "title": "Thin and watch the fruit",
+     "how": "Keep one or two fruits per cluster and remove the rest so they size up. Watch for fruit flies and bag young fruits in paper or net bags.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "Pick colored, firm fruit",
+     "how": "We count the first real crop at about three years. Pick when the fruit has colored, comes off with a gentle lift and twist, and the seeds inside are brown.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Grafted trees in warm places can set a few fruits within a year, but we count the first real harvest at about 36 months (1,080 days)."
+  }
+ ],
+ "mistakes": [
+  "Planting seeds from store apples and expecting fruit.",
+  "Buying high chill types that never flower without a real winter.",
+  "Letting branches grow straight up, so the tree makes leaves and no flowers.",
+  "Planting in low, wet ground."
+ ],
+ "better": [
+  "Buy grafted low chill varieties from a nursery you trust.",
+  "Plant only on the coolest high ground you have.",
+  "Strip leaves and bend branches on a schedule after each crop.",
+  "Test the soil and feed by the result. Bag fruit against flies."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng mansanas",
+  "apple tree sa pilipinas",
+  "apple farm digos",
+  "how to grow apple in the philippines"
+ ],
+ "confidence": "low",
+ "slug": "apple",
+ "rev": "8b6595a9722a"
+}

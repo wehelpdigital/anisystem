@@ -1,0 +1,175 @@
+{
+ "crop": "patola",
+ "name": "Sponge gourd",
+ "local": "Patola",
+ "aka": [
+  "kabatiti",
+  "patolang kastila",
+  "luffa"
+ ],
+ "summary": "How Filipino farmers grow patola on an overhead trellis, from seed sown in hills to young fruits cut every few days. It covers both the ridged patola and the smooth kind called patolang kastila, for small farms that sell the young fruits as a vegetable.",
+ "season": "Patola grows all year and does well in humid weather. Most farmers plant from June to September in the wet season, and from February to May in the dry season where there is water for irrigation. Low, poorly drained fields give poor crops.",
+ "material": "Seed, about 1 to 2 kg for a hectare. Farmers soak the seed overnight, wrap it in a damp cloth in a cool, dark place until the root shows, and plant it straight in the hills. Costly hybrid seed is often raised in trays and set out 10 to 15 days after it comes up.",
+ "spacing": "Furrows 2.5 to 3 meters apart, with hills about 1 meter apart along the row. Some farmers space the hills as wide as 2.5 meters. One plant a hill after thinning.",
+ "water": "The first irrigation goes in about two weeks after the seedlings come up, then about every 7 days, by flooding the furrows in the dry season. In the wet season planting on ridges keeps water away from the stems.",
+ "fertilizer": "About a tablespoon of 14 14 14 a hill at planting. About four weeks after the seedlings come up, well rotted manure and a tablespoon of urea a hill. While the vines bear, at about 8, 10 and 12 weeks, bigger doses of urea and 14 14 14 a hill.",
+ "care": "An overhead trellis about 2 meters high on ipil ipil or bamboo posts, with a wire or twine roof and a pole or string for each plant. Vines are tied weekly, shoots and female buds below the roof are removed, and the vine tip is cut at the roof. Weeds are cut close to the ground every two weeks, never dug out, until the vines shade the ground.",
+ "harvest": "Young fruits are cut with a sharp knife a few days after they set, in the cool early morning or late afternoon, and packed in plastic bags to stay fresh. Fruits left to mature and dry on the vine give the fiber sponge and the seed for the next crop.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in hills (tanim buto)",
+   "days": 45,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow 15 to 20 cm deep two or three times, a week apart, harrowing after each pass to break the clods. Plowing early lets the old stubble and weeds rot.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Open the furrows",
+     "how": "Make furrows 2.5 to 3 meters apart. For a wet season crop, plant on the ridges or on raised beds so water does not stand around the seeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Soak and sprout the seed",
+     "how": "Soak the seed in clean water overnight. Wrap it in a damp cloth and keep it in a cool, dark place until the seed coat splits.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilize and plant the hills",
+     "how": "Mix about a tablespoon of 14 14 14 into each hill. Plant one or two sprouted seeds a hill in the dry season, two or three on the ridges in the wet season, and cover lightly with soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 6,
+     "title": "Replant missing hills",
+     "how": "Within the first week, replant hills where no seedling came up.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Build the overhead trellis",
+     "how": "Set ipil ipil or bamboo posts and build a flat roof about 2 meters high over rows 2 to 3 meters wide. Weave tie wire or nylon twine across and along the top, and give each plant its own pole or a ladder of string to climb.",
+     "task": "propping",
+     "tip": "The trellis keeps the fruits straight and off the ground, which matters most in the rainy months."
+    },
+    {
+     "phase": "care",
+     "day": 19,
+     "title": "Start weekly irrigation",
+     "how": "About two weeks after the seedlings come up, let water flood the furrows. Repeat about every 7 days through the season when it does not rain.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 19,
+     "title": "Cut the weeds, do not dig",
+     "how": "About two weeks after the seedlings come up, slash the weeds low to the ground, and repeat every two weeks. Do not uproot weeds or hoe between the rows, because patola roots are shallow and break easily.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Train the vines every week",
+     "how": "Tie the stem loosely to its pole or string each week until it reaches the roof. Pinch off side shoots and female buds that grow on the main stem below the roof.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Keep one plant a hill",
+     "how": "Three to four weeks after the seedlings come up, pull the weak or sick ones and leave one healthy plant in each hill.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 33,
+     "title": "First side dressing",
+     "how": "About four weeks after the seedlings come up, put well rotted manure and about a tablespoon of urea at each hill and cover it lightly.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Top the vine at the roof",
+     "how": "When the main vine reaches the top of the trellis, cut off its tip so it sends out fruiting branches across the roof. Remove the low side branches too.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Watch for fruit fly and mildew",
+     "how": "Patola resists most insects but fruit flies sting the young fruits and downy mildew spots the leaves. Pick up and bury stung fruits, remove spotted leaves and keep the field clean.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 45,
+     "title": "Cut the young fruits",
+     "how": "Cut the fruits while they are young and tender, about five days after they set, with a sharp knife. Harvest in the cool early morning or late afternoon so the sun does not dry the ridges.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 46,
+     "title": "Pack while fresh",
+     "how": "Pack the fruits in plastic bags of about 10 kg and keep them in the shade until they go to market.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "care",
+     "day": 61,
+     "title": "Feed while it bears",
+     "how": "About eight weeks after the seedlings come up, and again about two and four weeks later, give each hill a bigger dose of urea and 14 14 14 and cover it lightly.",
+     "task": "fertilizer"
+    }
+   ],
+   "note": "Many kinds give the first young fruits from about 40 days after planting. Each fruit is cut only a few days after it sets, so picking goes on every few days for months."
+  }
+ ],
+ "mistakes": [
+  "Hoeing or plowing between the rows after the vines are up, which cuts the shallow roots and lowers the yield.",
+  "Skipping the trellis in the wet season, so the fruits rot and grow crooked on the ground.",
+  "Leaving fruits too long on the vine, so they turn fibrous and cannot be sold as a vegetable.",
+  "Harvesting in the midday sun, which dries the ridges and makes the fruits look old.",
+  "Planting in poorly drained soil, where patola does poorly."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result in small, regular doses through the picking months.",
+  "Use good seed of a variety suited to your market and tolerant to downy mildew, and raise hybrid seed in trays.",
+  "Hang fruit fly traps and bury stung fruits every week. Bag young fruits when flies are many.",
+  "Mulch the rows with rice straw or plastic so you weed less and do not disturb the roots.",
+  "Rotate away from other gourds and melons so pests and soil diseases do not build up.",
+  "Water by drip or regular furrow irrigation so the vines never dry out while they bear."
+ ],
+ "video": {
+  "youtubeId": "9yLBZQFOKfM",
+  "title": "PATOLA MAGANDANG PAGKAKITAAN, KALAHATING TAON NA NAMUMUNGA PADIN | D' Green Thumb",
+  "channel": "D' Green Thumb",
+  "lang": "fil",
+  "minutes": 20,
+  "why": "A Filipino grower shows his patola field still bearing after half a year and talks through the care, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng patola",
+  "pagtatanim ng patola",
+  "balag ng patola",
+  "abono sa patola",
+  "how to plant patola in the philippines",
+  "sponge gourd production guide philippines"
+ ],
+ "confidence": "medium",
+ "slug": "sponge-gourd",
+ "rev": "5623d3fbb638"
+}

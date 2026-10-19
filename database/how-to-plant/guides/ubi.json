@@ -1,0 +1,159 @@
+{
+ "crop": "ubi",
+ "name": "Purple yam",
+ "local": "Ubi",
+ "aka": [
+  "ube",
+  "greater yam"
+ ],
+ "summary": "How Filipino farmers usually grow ubi from tuber pieces on ridges or mounds, staked so the vines can climb, and dug about ten months later for the holiday market. For small farms in the lowlands and mid elevations who want the usual way and what to change for bigger tubers.",
+ "season": "Most ubi goes in from March to May, at the end of the dry season or with the first rains, once the setts have sprouted. It grows through the rainy months, needs steady moisture while the tubers fill at about three to five months, and is dug from late November to February, when prices are best for the holidays.",
+ "material": "Setts cut from healthy tubers: head, middle or tail pieces of big tubers, or whole small tubers, usually 60 to 250 g each with plenty of skin. Farmers dip the cut sides in wood ash, let them dry in the air or sun, then let them sprout in the shade under a thin layer of sand or compost before planting.",
+ "spacing": "Ridges about 1 m apart and hills 50 to 60 cm apart, one sett a hill, which comes to roughly 20,000 to 28,000 setts a hectare.",
+ "water": "Mostly rainfed, planted so the rainy months fall on the tuber filling stage at three to five months. Mulch keeps the soil moist. Where the dry season is long, farmers water during tuber filling. The field must drain well.",
+ "fertilizer": "Traditional growers lean on compost or animal manure, about 2 to 5 tons a hectare mixed in at land preparation, with handfuls of manure along the hills every two months. Those who buy fertilizer often use about 6 bags of 14 14 14 a hectare in two splits, one and two months after the shoots come up.",
+ "care": "Mulching after planting, staking and training the vines before they run, weeding every one to two months, hilling up once at two to three months, and watching for leaf scorch in wet weather.",
+ "harvest": "Most ubi is dug 10 to 11 months after planting, when the leaves yellow and the vines dry, mainly from late November to February. Tubers are dug with care, cut near the base, cleaned, sorted, and kept in one layer in a dry, airy place, where they last for weeks to a few months.",
+ "ways": [
+  {
+   "key": "setts",
+   "label": "Sprouted setts on ridges with stakes (tanim piraso)",
+   "days": 300,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -35,
+     "title": "Cut and dry the setts",
+     "how": "Slice healthy tubers into pieces of about 60 to 250 g, each with a good patch of skin. Rub the cut sides with wood ash and let them dry.",
+     "task": "seed_treatment",
+     "tip": "Do not use tubers with odd bumps or hairy roots. They may carry nematodes."
+    },
+    {
+     "phase": "nursery",
+     "day": -30,
+     "title": "Sprout the setts in the shade",
+     "how": "Lay the setts side by side in a shaded spot, cover them lightly with river sand or compost and some mulch, and water two to three times a week until they sprout.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow deep and harrow",
+     "how": "Plow twice and harrow twice, along and across the field, so the soil is deep and loose for the tubers. Mix in compost or manure.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Make the ridges or mounds",
+     "how": "Raise ridges about 1 m apart, following the contour on sloping land. For small patches, mounds or hills make digging easier later.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the sprouted setts",
+     "how": "Plant one sett a hill, 50 to 60 cm apart on the ridge, about 10 to 15 cm deep, with the sprout pointing up. Trim very long sprouts first.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 1,
+     "title": "Mulch the rows",
+     "how": "Cover the rows right after planting with coconut fronds, corn stalks, rice straw or cut grass to keep the soil moist and cool and hold back weeds.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Set the stakes and train the vines",
+     "how": "Before the vines run, put up stakes of bamboo, wood, talahib or cassava stems set upside down. Guide the vines up the stakes, and again later when they cross the rows.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First fertilizer",
+     "how": "About a month after the shoots come up, put half of the complete fertilizer in a band about 10 cm from the stem and cover it lightly.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed",
+     "how": "Hand weed or use an animal drawn plow between the rows while the plants are short, lifting the vines out of the way. Repeat every one to two months.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Second fertilizer and replanting",
+     "how": "Put the other half of the fertilizer. Check hills with no shoots. Replace rotten setts, but leave sound ones, which may still sprout.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 75,
+     "title": "Hill up",
+     "how": "Two to three months after planting, pull soil onto the ridges to cover the growing tubers.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch for leaf scorch and beetles",
+     "how": "Look for black, burnt looking spots on leaves and vines, which spread fast in wet weather, and for beetles chewing the leaves. Remove badly sick vines.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 300,
+     "title": "Dig when the vines dry up",
+     "how": "Ubi is ready when the leaves turn yellow and the vines dry, about 10 to 11 months after planting. With a bolo, shovel or fork, loosen the ground around the tuber, lift it out and cut it near the base without wounding it.",
+     "task": "harvest",
+     "tip": "Some farmers dig early at six to seven months when the price is high."
+    },
+    {
+     "phase": "care",
+     "day": 301,
+     "title": "Store in a single layer",
+     "how": "Clean and sort the tubers, keep good ones for the next planting, and store them in one layer on a raised rack in a dry, airy shed, with straw or banana leaves between them. Rub ash on bruised spots.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting setts from sick or knobby tubers that carry nematodes and rot.",
+  "Leaving the vines to sprawl on the ground instead of staking them.",
+  "Planting late, so the tubers fill in the dry months without water.",
+  "Skipping mulch, which leaves the young plants in weeds and dry soil.",
+  "Wounding the tubers at harvest or piling them up, so they rot in storage."
+ ],
+ "better": [
+  "Choose setts from healthy, true to type plants of a good variety, and sprout them before planting for an even stand.",
+  "Stake every plant before the vines run. A trellis gives the highest yields.",
+  "Test the soil and fertilize by the result, with manure plus balanced fertilizer in splits.",
+  "Mulch well and water during tuber filling if the rains stop.",
+  "Scout for leaf scorch in wet weather, remove sick vines and rotate fields.",
+  "Handle tubers gently and store them in one layer in a dry, airy shed."
+ ],
+ "video": {
+  "youtubeId": "_XTXwDh2Uhs",
+  "title": "PAGTATANIM NG UBE, SEKRETO SA PAGLAKI NITO | TRES PLANTERS",
+  "channel": "Tres Planters",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "A Filipino farmer shows how ubi is planted in the field for big tubers, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng ube",
+  "pagtatanim ng ube",
+  "paano magtanim ng ubi",
+  "how to plant ube in the philippines",
+  "purple yam farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "purple-yam",
+ "rev": "a3d5eb200cdd"
+}

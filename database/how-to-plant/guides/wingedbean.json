@@ -1,0 +1,116 @@
+{
+ "crop": "wingedbean",
+ "name": "Winged bean",
+ "local": "Sigarilyas",
+ "aka": [
+  "kalamismis"
+ ],
+ "summary": "How Filipino farmers and backyard growers raise sigarilyas, the climbing bean with four winged pods. It is seeded direct beside poles or a fence and picked young for weeks once it starts bearing.",
+ "season": "Planted at the start of the rains, around May to July. Many plants only start flowering as the days get shorter late in the year, so the main pod season is the cooler months.",
+ "material": "Seed from fully dry pods. The seed coat is hard, so farmers soak the seed overnight or nick its coat before planting.",
+ "spacing": "Hills about a meter apart along a pole row, a frame or a fence, with one or two plants a hill.",
+ "water": "Rainfed in the wet season, with hand watering in long dry spells.",
+ "fertilizer": "Dried manure or compost at planting and a side dressing of complete fertilizer (14 14 14) or more manure after about a month.",
+ "care": "Poles or a frame set up early, weeding around the hills, and guiding the vines. Little else.",
+ "harvest": "Young pods are picked green and tender every few days once bearing starts. Some growers also dig the thick roots of older plants to eat.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded on poles",
+   "days": 70,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig and add manure",
+     "how": "Dig the plot or the spots along the fence and mix in dried manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": -1,
+     "title": "Soak the seed",
+     "how": "Soak the seed in water overnight so the hard coat softens.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seed",
+     "how": "Plant 2 to 3 seeds a hill, with hills about a meter apart, and cover them with 2 to 3 cm of soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Thin and put up poles",
+     "how": "Leave the strongest one or two plants and set up bamboo poles about two meters tall or an overhead frame (balag) for the vines.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed",
+     "how": "Hoe out the weeds around the hills and pull soil up to the base.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Feed",
+     "how": "Side dress complete fertilizer (14 14 14) or more manure around the plants.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Watch for pests",
+     "how": "Check the flowers and young pods for pod borers and the leaves for leaf spots.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 70,
+     "title": "Pick the young pods",
+     "how": "Pick the pods while still tender and green, about two to three weeks after flowering, every few days.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 120,
+     "title": "Keep seed pods",
+     "how": "Leave some pods on the vine until they turn brown and dry, then pick and keep the seed.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 70 is about the first picking. Plants sown early in the year may wait for shorter days before they flower."
+  }
+ ],
+ "mistakes": [
+  "Planting the hard seed without soaking, so it comes up slowly and unevenly.",
+  "Giving the vines no support, so they tangle on the ground.",
+  "Letting pods get old and stringy before picking."
+ ],
+ "better": [
+  "Soak or nick the seed and plant into moist, fed soil.",
+  "Set up strong poles or a frame before the vines run.",
+  "Pick young pods often to keep the plant bearing.",
+  "Plant at the start of the rains so the vines are big when the flowering season comes."
+ ],
+ "video": {
+  "youtubeId": "m_3DICNfiyI",
+  "title": "Matuto Paano magtanim ng Sigarilyas",
+  "channel": "Agri nihan",
+  "lang": "fil",
+  "minutes": 10,
+  "why": "A Filipino grower shows how sigarilyas is planted and trained on a small farm."
+ },
+ "keywords": [
+  "paano magtanim ng sigarilyas",
+  "pagtatanim ng sigarilyas",
+  "how to plant winged bean in the philippines"
+ ],
+ "confidence": "medium",
+ "slug": "winged-bean",
+ "rev": "afa1c45b4b81"
+}

@@ -1,0 +1,160 @@
+{
+ "crop": "cucumber",
+ "name": "Cucumber",
+ "local": "Pipino",
+ "aka": [
+  "kalabaga",
+  "kasimum"
+ ],
+ "summary": "How Filipino farmers grow pipino from seed sown in close hills, climbing an A frame trellis of poles, wire and twine, with the first fruits cut in about six weeks. It is for small farms growing slicing or pickling cucumber for the market.",
+ "season": "Pipino can be planted all year in the lowlands. It likes warm days and cool nights, so many farmers favor the cooler dry months, and a wet season crop goes on raised beds with drainage canals at the ends of the rows.",
+ "material": "Seed, about 2 kg for a hectare, sown straight in the field two or three seeds a hill. Some raise seedlings in trays or a seedbed of compost, soil and burnt rice hull and set them out about 15 days after they come up.",
+ "spacing": "Furrows 75 cm to 1 meter apart with hills about 30 cm apart along the row, one plant a hill after thinning. Many farmers plant two rows and leave the third empty as a path under the trellis. Some use wider gaps, about half a meter between hills.",
+ "water": "Irrigate right after sowing, then by furrow about every 7 to 10 days in the dry months, and only when needed in the rainy months. Drainage canals at the ends of the rows keep water from standing.",
+ "fertilizer": "About 200 grams of well rotted manure mixed into each hill a week before planting, then about 15 grams of 14 14 14 a hill at sowing with a handful of manure. About a month after sowing, roughly 20 grams a hill of two parts urea to one part muriate of potash. Some farmers add small doses of urea or potash every two weeks while picking.",
+ "care": "An A frame trellis of poles about 2.5 meters long, joined at the top and tied with wire at the top, middle and bottom, with a twine for each hill. Vines are wound onto the twine every few days. Thinning to one plant at two to three weeks, hand weeding in the rows, hand picking of yellow beetles, and removal of sick leaves and virus plants.",
+ "harvest": "Slicing fruits are ready about 38 to 45 days after planting and pickling kinds a few days earlier. They are cut every other day with a knife or scissors, leaving a short stalk, while still firm and green. Crooked and damaged fruits are removed so the vine keeps bearing, and the harvest is kept in the shade in woven baskets.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in hills (tanim buto)",
+   "days": 40,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Plow and harrow early",
+     "how": "Start about a month before planting. Plow and harrow two or three times, letting weed seeds sprout between passes so the next plowing kills them.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Make furrows and manure the hills",
+     "how": "Open furrows 75 cm to 1 meter apart, or raised beds about that wide in the wet season. Dig holes 30 cm apart along the rows and mix about 200 grams of well rotted manure into each.",
+     "task": "land_prep",
+     "tip": "Many farmers plant two rows and leave the third empty as a path, which makes trellising and picking easier."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilize and sow",
+     "how": "Put about 15 grams, a heaping tablespoon, of 14 14 14 in each hole with a handful of manure and cover it with soil. Sow two or three seeds a hill, cover lightly with soil, and irrigate right after so the seeds come up evenly.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Guard the seedlings from beetles",
+     "how": "Yellow squash beetles eat the new seedlings and tender leaves in the first month. Check the rows every day or two and pick them off by hand.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Water every 7 to 10 days",
+     "how": "In the dry months run water down the furrows about every 7 to 10 days, and in the rainy months only when the soil dries. Pipino needs plenty of water but rots in standing water.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Put up the A frame trellis",
+     "how": "Set poles about 2.5 meters long every 4 to 5 meters along two neighboring rows and lean them together at the top like a tent. Run wire along the top, middle and bottom, then tie a twine from top to bottom at every hill.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 17,
+     "title": "Thin to one plant",
+     "how": "Two to three weeks after planting, pull the weak seedlings and leave one healthy plant a hill.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Weed the rows",
+     "how": "Hand weed the planted rows well and slash or plow the wide spaces between them. Keep hoeing well away from the stems.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Train the vines up the twine",
+     "how": "Wind each vine around its twine, always in the same direction, every two days or so until it holds on by itself.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Side dressing",
+     "how": "About a month after sowing, give each hill about 20 grams of a mix of two parts urea and one part muriate of potash. Place it a hand span from the stem and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Help pollination",
+     "how": "Flowers open in the morning. If few bees visit, rub a male flower onto the female flowers, the ones with a small fruit behind them, early each morning.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 32,
+     "title": "Scout for thrips and mildew",
+     "how": "Look under the leaves for thrips, which turn leaves bronze, and for yellow spots or white powder on top. Remove sick leaves, pull plants with mottled, stunted tops, and keep fallen vines and fruits out of the field.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 40,
+     "title": "Pick every other day",
+     "how": "Pick slicing fruits while they are firm, green and still slim, and pickling kinds a little smaller. Cut with a knife or scissors leaving a short stalk, and remove crooked or damaged fruits so the vine sets new ones.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 41,
+     "title": "Keep them cool and unbruised",
+     "how": "Put the fruits in a woven basket in the shade and handle them gently. Sort out the damaged ones before packing for market.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Slicing kinds are ready about 38 to 45 days after planting and pickling kinds a few days earlier. Picking then goes on every other day for some weeks."
+  }
+ ],
+ "mistakes": [
+  "Letting fruits grow big and yellow on the vine, which slows new fruits and lowers the price.",
+  "Planting on flat ground in the rainy months without beds or canals, so the roots rot.",
+  "Ignoring yellow beetles in the first month, when they can wipe out the seedlings.",
+  "Leaving vines on the ground, so fruits curl, get dirty and rot.",
+  "Planting cucumber again where gourds or melons just grew, so diseases carry over."
+ ],
+ "better": [
+  "Have the soil tested. Pipino likes soil near pH 6.5 to 7.5, so lime acid soil.",
+  "Use good hybrid or open pollinated seed tolerant to downy mildew and mosaic virus.",
+  "Lay plastic mulch on raised beds to save water and weeding and keep fruits clean.",
+  "Scout twice a week and use integrated pest management for beetles, thrips and aphids. Pull virus plants early.",
+  "Rotate away from all gourds and melons for at least a season, longer where anthracnose struck.",
+  "Keep bees around by not spraying while the flowers are open in the morning."
+ ],
+ "video": {
+  "youtubeId": "36ZHnqfciyQ",
+  "title": "Paano Magtanim ng Pipino",
+  "channel": "DDT Nature Farm",
+  "lang": "fil",
+  "minutes": 10,
+  "why": "Filipino farmers show the planting distance and the trellis for pipino on their farm, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng pipino",
+  "pagtatanim ng pipino",
+  "balag ng pipino",
+  "abono sa pipino",
+  "how to plant cucumber in the philippines",
+  "cucumber production guide philippines"
+ ],
+ "confidence": "high",
+ "slug": "cucumber",
+ "rev": "7aa7f31acd2f"
+}

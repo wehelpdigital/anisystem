@@ -1,0 +1,140 @@
+{
+ "crop": "calamansi",
+ "name": "Calamansi",
+ "local": "Kalamansi",
+ "aka": [
+  "calamondin",
+  "limonsito",
+  "kalamunding"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant calamansi from a marcotted or grafted seedling and care for it through the first two years to the first good harvest. It suits backyards and small orchards.",
+ "season": "Seedlings are planted as the rains begin, around May to July, so they settle in with steady rain. Where there is water for the dry months, planting can be done in other months too.",
+ "material": "Most growers plant a marcotted (sanga na pinaugat) or grafted seedling from a healthy tree that bears heavily. A good seedling has dark green leaves, no gum on the bark and no curled leaves from pests, and has hardened in the sun for some days. Seeds also grow, but trees from seed are slower and less even.",
+ "spacing": "About 4 to 5 m between trees, one seedling a hole. Backyard trees are often planted closer or grown in big pots.",
+ "water": "Watered every morning after planting until new leaves show, then whenever the soil dries. In the dry months many growers give a full pail or more to each tree and keep a mulch of dry leaves. Calamansi dies in waterlogged soil, so low spots are raised or drained.",
+ "fertilizer": "Compost or dried manure in the hole at planting. One month after planting, about 50 to 100 g of ammonium sulfate (21 0 0) or urea (46 0 0) a tree, repeated every four months. In the second year, about 200 to 300 g a tree every four months. Bearing trees get complete fertilizer and potash, given before flowering, after fruit set and after harvest.",
+ "care": "Watering and mulching, pulling flowers off young seedlings, weeding around each tree, removing shoots from the base, light pruning to keep three or four main branches, and checking each new flush for aphids, leaf miners, scale and psyllids. Cutting and burning twigs with borer damage or gum.",
+ "harvest": "Trees start bearing one to two years after planting, and bearing trees give a heavy crop in the rainy months, about July to October, with smaller picks the rest of the year. Fruits are picked by hand or with small scissors when full sized, green to just turning yellow, with a bit of stem left on so they keep longer. They are packed in net sacks and kept in the shade.",
+ "ways": [
+  {
+   "key": "marcotted",
+   "label": "Marcotted or grafted seedling (marcot o grafted)",
+   "days": 720,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear the land and mark the spots",
+     "how": "Clear the grass and loosen the soil, working in compost or manure if you can. Mark the planting spots about 4 to 5 m apart, on a slightly raised spot where water drains off.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Dig the holes",
+     "how": "Dig each hole at least 40 cm wide and 40 cm deep, about twice as wide as the seedling bag. Put compost or dried manure at the bottom and cover it with some topsoil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seedling",
+     "how": "Remove the bag, loosen roots that circle around the soil ball and set the seedling no deeper than it grew in the bag. Fill in with soil mixed with compost, press firmly and water at once.",
+     "task": "planting",
+     "tip": "Planting too deep or leaving the roots coiled can stunt the tree for years."
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water every morning at first",
+     "how": "Water the new seedling every morning until it shows new leaves, then whenever the soil is dry. Lay dry leaves around the base to keep the soil moist.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Remove flowers and fruits",
+     "how": "Pick off any flowers or small fruits on the new seedling. This lets it put its strength into roots and leaves first.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First fertilizer",
+     "how": "One month after planting, spread about 50 to 100 g of ammonium sulfate (21 0 0) or urea (46 0 0) around each tree, a little away from the stem, and mix it into the soil. Repeat every four months in the first year.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed around the tree",
+     "how": "Pull or slash the weeds around each young tree from time to time so they do not take its food and water. Short crops like vegetables can grow between the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Check the new leaves for pests",
+     "how": "Look at every new flush for aphids, leaf miners, scale insects and citrus psyllids, and at the bark for gum or borer holes. Cut off and burn badly hit twigs.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Shape the young tree",
+     "how": "Cut off shoots that grow from the base or below the graft, and thin out weak, crossing or crowded branches. Keep three or four main branches so light reaches the inside.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Feed more in the second year",
+     "how": "From the second year, raise the dose to about 200 to 300 g a tree every four months. Before the trees start bearing, many growers switch to complete fertilizer with potash for fruit.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 720,
+     "title": "First good harvest",
+     "how": "Pick fruits that are full sized and still green or starting to turn yellow, by hand or with small scissors, leaving a bit of stem. Avoid breaking twigs and bruising the skin.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Calamansi starts to bear one to two years after planting. The first good harvest is taken here at 24 months or 720 days."
+  }
+ ],
+ "mistakes": [
+  "Planting in a low spot where water stands, which rots the roots.",
+  "Burying the seedling deeper than it grew in the bag, or leaving coiled roots.",
+  "Letting a young seedling fruit before it has grown a good frame.",
+  "Giving all the fertilizer at once instead of small doses through the year.",
+  "Ignoring aphids and psyllids on new leaves, which spread disease.",
+  "Taking marcots from a sick or poor bearing tree."
+ ],
+ "better": [
+  "Buy clean, healthy seedlings from an accredited nursery or a proven mother tree.",
+  "Test the soil and feed by the result, with complete fertilizer and potash once trees bear.",
+  "Prune every year after the main harvest to keep the tree open and low.",
+  "Scout each new flush for aphids, psyllids and leaf miners and act early.",
+  "Water during long dry spells and mulch, so flowering and fruit set stay even.",
+  "Keep the orchard clean of weeds and fallen fruit to cut pests and disease."
+ ],
+ "video": {
+  "youtubeId": "nScW5gq-bSU",
+  "title": "Paano Magtanim atMag alaga ng Marcot Calamansi | Distancing, Abono, Insecticide at Sekreto ng Farmer",
+  "channel": "DDT Nature Farm",
+  "lang": "fil",
+  "minutes": 18,
+  "why": "A Filipino farmer shows how he plants and cares for marcotted calamansi in his own orchard: the spacing, the fertilizer and when to give it."
+ },
+ "keywords": [
+  "paano magtanim ng kalamansi",
+  "pagtatanim ng calamansi",
+  "marcot na kalamansi",
+  "how to plant calamansi in the philippines",
+  "calamansi farming"
+ ],
+ "confidence": "high",
+ "slug": "calamansi",
+ "rev": "a6dd909723d1"
+}

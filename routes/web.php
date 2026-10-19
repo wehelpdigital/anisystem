@@ -222,6 +222,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
+            // 2026-10-19: How to Plant in Quick Tools (true once the guides are loaded into their table).
+            'howToPlant' => class_exists(\App\Support\HowToPlant::class) && \Illuminate\Support\Facades\Route::has('htp.page')
+                && rescue(fn () => \App\Support\HowToPlant::ready(), false, false),
             // 2026-10-19: the lot and the season in the Seed Count and Distance Calculator.
             'seedField' => class_exists(\App\Support\SeedPenalty::class) && \Illuminate\Support\Facades\Route::has('seedcalc.context'),
             // 2026-10-19: the weed plans checked against the Philippine registrations, crop by crop, with each crop's weed free stretch
@@ -881,6 +884,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/seed-count-distance/context', [App\Http\Controllers\SeedSpacingController::class, 'context'])->middleware('throttle:60,1')->name('seedcalc.context');
     Route::get('/app/seed-count-distance/one/{id}', [App\Http\Controllers\SeedSpacingController::class, 'one'])->whereNumber('id')->name('seedcalc.one');
     Route::delete('/app/seed-count-distance/{id}', [App\Http\Controllers\SeedSpacingController::class, 'destroy'])->whereNumber('id')->name('seedcalc.delete');
+    // How to Plant (2026-10-19, the owner): how traditional farmers plant each crop, and into the Protocol Builder.
+    Route::get('/app/how-to-plant', [App\Http\Controllers\HowToPlantController::class, 'page'])->name('htp.page');
+    Route::get('/app/how-to-plant/guide/{crop}', [App\Http\Controllers\HowToPlantController::class, 'guide'])->where('crop', '[a-z0-9_]+')->name('htp.guide');
+    Route::post('/app/how-to-plant/port', [App\Http\Controllers\HowToPlantController::class, 'port'])->middleware('throttle:20,1')->name('htp.port');
     Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
     Route::get('/app/variety-research/options', [App\Http\Controllers\VarietyAnalysisController::class, 'options'])->name('vary.options');
     Route::get('/app/variety-research/book', [App\Http\Controllers\VarietyAnalysisController::class, 'book'])->name('vary.book');

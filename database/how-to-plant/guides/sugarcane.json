@@ -1,0 +1,165 @@
+{
+ "crop": "sugarcane",
+ "name": "Sugarcane",
+ "local": "Tubo",
+ "aka": [
+  "unas",
+  "tubu",
+  "patdan (cane points)"
+ ],
+ "summary": "This guide shows how Filipino cane farmers in Negros, Panay, Tarlac, Batangas and Mindanao usually plant sugarcane from cane points laid in furrows, then care for it until the mill harvest and the ratoon crops after. It is for small and middle sized planters who sell their cane to a sugar mill.",
+ "season": "Planting follows the milling season, which runs from about October to May. Most farmers plant right after their field is cut, from about October to January, while the soil still holds water from the rains. Cane planted later in the dry months gets more cane points because fewer of them grow. Some upland farmers with no irrigation wait for the first rains in May or June. In parts of Mindanao where rain comes most of the year, planting is spread over more months.",
+ "material": "Cane points (patdan): pieces of the stalk with two or three good eyes, taken from the upper part of healthy cane about 8 to 10 months old, or from the tops cut off at harvest. Farmers cut them cleanly with a sharp cane knife, peel off the dry leaf sheaths with care so the eyes are not hurt, throw out pieces with dead eyes or red rot inside, and plant them within a few days. Many soak them in clean water overnight so they sprout faster.",
+ "spacing": "Furrows about 1 to 1.2 m apart, some farmers up to 1.5 m. Cane points are laid end to end or slightly overlapped in the furrow, about 40,000 pieces a hectare for planting after harvest and up to about 50,000 for late dry season planting.",
+ "water": "Mostly rainfed. Farmers plant when the soil is still moist from the rains and count on the wet season for growth. A few farms with pumps or canals run water down the furrows in the dry months, mainly in the first three months.",
+ "fertilizer": "A basal dose of complete fertilizer (14 14 14) in the furrow at planting, then urea (46 0 0) and muriate of potash (0 0 60) at off barring, about one to two months after planting. Near the mills, farmers add mill mud (mudpress) and boiler ash when they can get them. Small farmers often put less than the field needs or put it late because of cost.",
+ "care": "Gap filling at about one month, weeding by hoe and carabao plow until the canopy closes, off barring then hilling up once or twice to cover the fertilizer and hold the cane against wind. Smut clumps are pulled out and burned. Some farmers strip the dry leaves before cutting.",
+ "harvest": "Cane is ready at about 10 to 12 months, when growth slows, the lower leaves dry and the top of the stalk is as sweet as the base. Cutters take it by hand with a cane knife, close to the ground, remove the tops and leaves, bundle it and haul it to the mill within a day or two. Some fields are burned first to make cutting easier, but more farmers now cut it green. The tops are kept as cane points or fed to carabaos and cattle.",
+ "ways": [
+  {
+   "key": "cuttings",
+   "label": "Cane points in furrows (patdan)",
+   "days": 330,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear and plow the field",
+     "how": "Cut and pull out the stubble of the old crop, then plow two or three times with a carabao or tractor and harrow until the soil is loose and free of big clods.",
+     "task": "land_prep",
+     "tip": "Plowing across the slope keeps the rain from washing the soil away."
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Open the furrows",
+     "how": "Draw straight furrows about 1 to 1.2 m apart and about 20 to 30 cm deep with a furrowing plow. Cane farmers in Negros often keep them close, at about 1 m.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Cut and sort the cane points",
+     "how": "Cut the seed cane into pieces with two or three eyes each and peel off the dry sheaths. Keep only pieces with plump, unbroken eyes and clean white flesh, and keep them in the shade.",
+     "task": "seed_treatment",
+     "tip": "Cut ends that show red inside mean red rot. Burn those pieces."
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Soak the cane points",
+     "how": "Soak the sorted pieces in clean water overnight so the eyes wake up and sprout evenly.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Put the first fertilizer in the furrow",
+     "how": "Drop complete fertilizer (14 14 14) or mill mud along the bottom of the furrow and mix it in with a little soil so it does not burn the cane points.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Lay and cover the cane points",
+     "how": "Lay the pieces flat along the furrow, end to end or with a little overlap, eyes facing the sides. Cover them with about 5 cm of soil and press it lightly with the foot.",
+     "task": "planting",
+     "tip": "Plant a few more pieces at the end of each row to use for filling gaps later."
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Fill the gaps",
+     "how": "Walk the rows and replant spots where nothing came up, using the spare pieces or young shoots dug from thick spots.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First weeding",
+     "how": "Hoe or hand pull the weeds along the rows and run the carabao plow lightly between rows. Keep the field clean until the cane leaves close over the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Off barring and side dressing",
+     "how": "Plow the soil away from both sides of each cane row, then put urea (46 0 0) and muriate of potash (0 0 60) along the row while the soil is moist.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Hill up the cane",
+     "how": "Plow the soil back against the base of the cane to cover the fertilizer and bury young weeds. Many farmers hill up a second time at about four months, when the cane is nearly too tall for the plow to pass.",
+     "task": "earthing_up",
+     "tip": "Good hilling keeps the cane standing through strong winds."
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Watch for borers, grubs and rats",
+     "how": "Look for dead hearts and holes in the stalks, wilting clumps with grubs at the roots, gnawed stalks, and black whips of smut. Pull out and burn smut clumps early.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 330,
+     "title": "Cut the cane",
+     "how": "When the lower leaves are dry and the top of the stalk tastes as sweet as the bottom, cut each stalk close to the ground with a cane knife, chop off the green top and strip the leaves.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 331,
+     "title": "Bundle and haul to the mill",
+     "how": "Tie the stalks in bundles, load them on carts or trucks and bring them to the mill within a day or two. Cut cane left lying in the sun loses sugar every day.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 345,
+     "title": "Start the ratoon crop",
+     "how": "Cut off any high stubble near the ground, plow away the soil beside the rows, put fertilizer and hill up again so the stubble grows a new crop. Many farmers keep two or three ratoons before they plow the field and plant again.",
+     "task": "other"
+    }
+   ],
+   "note": "The plant cane is cut at about 10 to 12 months. Ratoon crops from the same stubble follow every 11 to 12 months after."
+  }
+ ],
+ "mistakes": [
+  "Planting dried out or damaged cane points whose eyes no longer sprout.",
+  "Covering the cane points too deep, or so thin that they dry out in the sun.",
+  "Putting too little fertilizer, or putting it late after the cane has already slowed.",
+  "Leaving weeds in the rows during the first three months.",
+  "Cutting the cane high, which leaves long stubble that weakens the ratoon.",
+  "Leaving cut cane in the field for days before it reaches the mill."
+ ],
+ "better": [
+  "Get cane points from a clean seed cane nursery of a variety the local mill recommends.",
+  "Have the soil tested and split the fertilizer by the result instead of guessing.",
+  "For varieties that tiller a lot, widen the furrows to about 1.2 to 1.5 m so the ratoons stay strong.",
+  "Plant early after harvest so the cane uses the last rains, and keep it weeded until the canopy closes.",
+  "Cut green cane close to the ground and leave the trash as mulch instead of burning it.",
+  "Scout every few weeks for borers, grubs, rats and smut, and plow out fields after the ratoons drop off."
+ ],
+ "video": {
+  "youtubeId": "zXMu4H2onU4",
+  "title": "EP36: SUGARCANE PLANTING METHODS | 10000 PCS KITA KA NG 800 PESOS",
+  "channel": "TONGS TV OFFICIAL",
+  "lang": "fil",
+  "minutes": 21,
+  "why": "A Filipino field vlog on how cane points are planted by hand in a real cane field, the way planters here hire workers to do it."
+ },
+ "keywords": [
+  "paano magtanim ng tubo",
+  "pagtatanim ng tubo",
+  "paano magtanim ng patdan",
+  "how to plant sugarcane in the philippines",
+  "sugarcane farming philippines",
+  "sugarcane cane points planting"
+ ],
+ "confidence": "medium",
+ "slug": "sugarcane",
+ "rev": "d45999a480fb"
+}

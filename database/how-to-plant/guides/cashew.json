@@ -1,0 +1,135 @@
+{
+ "crop": "cashew",
+ "name": "Cashew",
+ "local": "Kasoy",
+ "aka": [
+  "kasuy",
+  "balubad",
+  "casoy"
+ ],
+ "summary": "How Filipino growers, most of them in Palawan, plant kasoy the old way from nuts sown in the field or from bagged and grafted seedlings, and raise the trees to the first crop of nuts. It is a tough tree for dry, sandy and poor soils, often planted with upland rice or root crops between the young trees.",
+ "season": "Land is cleared in the dry months and the nuts or seedlings go in at the start of the rains, about May to July. Trees flower from about November to March and the nuts are gathered from about February to May, sometimes into early June. Rain at flowering brings poor nuts.",
+ "material": "Most old farms grew from nuts of good mother trees. Farmers pick big, heavy nuts from last season's best trees, drop them in water and keep only those that sink, then soak them a day or two before sowing. Because the taproot grows fast and hates being disturbed, nuts are sown straight in the field or in bags for only a short time. Grafted seedlings of recommended varieties are bought from nurseries for new farms.",
+ "spacing": "About 8 to 10 m apart each way in a square, from about 100 to 156 trees a hectare. Some farmers go as close as 5 m. Two or three nuts a hole, thinned to one plant.",
+ "water": "Rain fed. Planting waits for steady rain. After that cashew lives through long dry seasons. Young trees on very sandy soil may be watered in their first dry season if water is near.",
+ "fertilizer": "Most traditional farms give nothing. Farmers who do feed use manure or compost and complete fertilizer (14 14 14) at the start and near the end of the rains, in a ring under the edge of the leaves, more as the tree grows.",
+ "care": "Ring weeding and slashing, annual crops between the young trees, thinning to one plant a hole, clearing the lower trunk and shaping three or four main branches, and slashing undergrowth at flowering. Old, crowded farms are replanted rather than rebuilt.",
+ "harvest": "Nuts are ready when the fruit falls or the apple is fully colored and the nut gray and hard, from about February to May. Fallen fruits are gathered every day or two, the nuts twisted off, sun dried a few days until the kernel rattles, and stored dry in sacks for selling or roasting.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Nuts sown in the field (tanim buto)",
+   "days": 1080,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear and stake in the dry season",
+     "how": "Slash and clear the land before the rains. Stake the planting spots in a square, about 8 to 10 m apart each way, and dig holes about 30 to 60 cm wide and deep, refilled with topsoil and some manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Pick and soak the nuts",
+     "how": "Choose big, heavy nuts from the best trees, drop them in water, and throw away the ones that float. Soak the good ones for a day or two.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow two or three nuts a hole",
+     "how": "Once the rains are steady, push two or three nuts about 5 cm deep in each hole, a hand's width apart, with the end that held the stalk pointing up. Cover lightly and press the soil.",
+     "task": "planting",
+     "tip": "Do not dig up and move young cashew. The long taproot breaks easily."
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Check for sprouts",
+     "how": "The nuts come up in about two to three weeks. Resow any hole where nothing came up while the rains last, and watch for rats and ants digging up the nuts.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Keep the strongest plant",
+     "how": "When the seedlings have several leaves, cut off the weaker ones at the soil and keep one strong plant a hole.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 75,
+     "title": "Weed and plant crops between",
+     "how": "Ring weed around each young tree. Many farmers plant upland rice, cassava, peanuts or mungbean between the rows while the trees are small, which keeps the weeds down and earns money.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Feed if you can",
+     "how": "Few farmers fertilize kasoy, but young trees grow faster with a little manure or compost, or complete fertilizer (14 14 14), spread in a ring at the start and near the end of the rains.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Clean the trunk and shape the tree",
+     "how": "Cut off the low side branches so the trunk is clear for about half a meter to a meter, and keep three or four well spaced main branches. Cut out dead and crossing branches.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 900,
+     "title": "Clean the farm at flowering",
+     "how": "When the trees start to flower, slash the undergrowth to remove hiding places for pests. Watch the flowers and young nuts for tea mosquito bugs and for black spots of anthracnose in rainy spells.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "Gather the fallen nuts",
+     "how": "Trees start bearing in the third year. Gather the fruits that fall, or pick them when the apple is fully colored, every day or two, and twist the nut off the apple.",
+     "task": "harvest",
+     "tip": "Use or sell the apples for juice or feed instead of leaving them to rot."
+    },
+    {
+     "phase": "harvest",
+     "day": 1082,
+     "title": "Sun dry the nuts",
+     "how": "Spread the nuts on mats or a clean floor in the sun for a few days, turning them, until the kernel rattles inside. Store them in dry sacks off the floor.",
+     "task": "postharvest",
+     "tip": "Never crack raw nuts with bare hands. The shell oil burns the skin, so they are roasted first."
+    }
+   ],
+   "note": "Trees from nuts usually start bearing in the third year, about 36 months (1,080 days), and give a real crop from the fourth or fifth year. Grafted trees can start earlier."
+  }
+ ],
+ "mistakes": [
+  "Moving young seedlings and breaking the taproot, so they die or stall.",
+  "Sowing light nuts that float. Most of them fail.",
+  "Planting too close, so the trees shade each other and bear little.",
+  "Leaving the farm bushy at flowering, so pests build up.",
+  "Leaving fallen nuts on wet ground for days, so they spoil.",
+  "Cracking raw nuts by hand and burning the skin with the shell oil."
+ ],
+ "better": [
+  "Plant grafted seedlings of recommended high yielding varieties from accredited nurseries.",
+  "Feed young and bearing trees by a soil test, twice a year, instead of nothing.",
+  "Prune to an open shape and keep the farm clean, especially at flowering.",
+  "Gather nuts daily and dry them well to keep the quality and the price up.",
+  "Scout for tea mosquito bugs, borers and anthracnose and use integrated pest management.",
+  "Process the cashew apples into juice, wine or jam for extra income."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng kasoy",
+  "pagtatanim ng kasoy",
+  "kasoy palawan",
+  "how to plant cashew in the philippines",
+  "cashew farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "cashew",
+ "rev": "e2a2fd45eaac"
+}

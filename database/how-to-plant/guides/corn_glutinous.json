@@ -1,0 +1,136 @@
+{
+ "crop": "corn_glutinous",
+ "name": "Corn, white glutinous",
+ "local": "Mais na malagkit",
+ "aka": [
+  "lagkitan",
+  "puting mais",
+  "waxy corn"
+ ],
+ "summary": "How Filipino farmers grow white glutinous corn, the sticky kind boiled or roasted fresh and used in native snacks. Many still plant saved seed of native varieties with the carabao plow, on small lowland plots and on hillsides.",
+ "season": "Planted with the rains from April to June and again from September to December. Where water is available it is grown all year for the fresh ear market.",
+ "material": "Seed saved from the best, fully dried ears of the last crop, using the plump kernels from the middle of the ear, or bought hybrid glutinous seed. Saved seed is kept dry in a closed container until planting.",
+ "spacing": "Rows about 75 cm apart with one or two plants every 20 to 30 cm. On hillsides seed is dibbled in holes with a pointed stick.",
+ "water": "Mostly rainfed, planted to ride the rains. Growers who sell fresh ears in the dry season run water into the furrows during dry spells.",
+ "fertilizer": "Many farmers on native varieties use little fertilizer: some chicken or animal manure, complete fertilizer (14 14 14) at planting or at two weeks, and urea (46 0 0) at hilling up.",
+ "care": "Off barring at about two weeks and hilling up at about three to four weeks with the carabao plow, plus hand weeding. Farmers watch the whorls for armyworm and corn borer.",
+ "harvest": "Fresh ears are picked about 65 to 75 days after planting, when the kernels are white, full and soft. Seed ears are left until the husks dry, then sun dried and shelled.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in furrows",
+   "days": 72,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow the field",
+     "how": "Plow once with a carabao or a hand tractor when the soil is moist enough.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -10,
+     "title": "Harrow",
+     "how": "Harrow one or two times to break the clods and kill sprouting weeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open furrows about 75 cm apart with the carabao plow.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Drop the seed and cover",
+     "how": "Drop one or two seeds every 20 to 30 cm along the furrow and cover them with the foot. On hillsides farmers poke holes with a pointed stick and drop a few seeds in each.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Replant the misses",
+     "how": "Replant empty hills in the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring and weeding",
+     "how": "Plow along the rows with the soil thrown away from the plants to cut the weeds, then hand pull the weeds in the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "First fertilizer",
+     "how": "Farmers who did not fertilize at planting drop complete fertilizer (14 14 14) beside the plants now.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Look into the whorls",
+     "how": "Check the whorls for fall armyworm and corn borer, and pull out plants with pale striped leaves.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Urea and hilling up",
+     "how": "Drop urea (46 0 0) beside the plants, then plow toward the rows to cover it and pile soil at the base.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "harvest",
+     "day": 72,
+     "title": "Pick the fresh ears",
+     "how": "Pick for boiling about 20 days after silking, when the silks are dry and brown and the kernels are full, white and still soft when pressed with a thumbnail.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 95,
+     "title": "Leave seed ears to dry",
+     "how": "Leave the best ears on the best plants until the husks are dry, then pick, sun dry and keep the middle kernels for the next planting.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "The days count to the fresh ear harvest. Ears kept for seed stay on the plant until about 90 to 100 days."
+  }
+ ],
+ "mistakes": [
+  "Planting near yellow corn that flowers at the same time, which gives yellow, less sticky kernels.",
+  "Keeping seed from small or mixed ears year after year, so the crop gets weaker.",
+  "Picking too late, when the kernels have hardened and lost their soft bite.",
+  "Skipping hilling up, so plants lodge in strong wind."
+ ],
+ "better": [
+  "Plant away from yellow corn, or time planting so the two flower at least two weeks apart.",
+  "Use good seed: fresh hybrid seed, or saved seed from the best ears of many plants.",
+  "Feed by a soil test and split the nitrogen between planting and hilling up.",
+  "Scout weekly for fall armyworm and act while the plants are young.",
+  "Plant in batches a couple of weeks apart to sell fresh ears over a longer time."
+ ],
+ "video": {
+  "youtubeId": "zT6Tcm4En6I",
+  "title": "PAGTATANIM ng PUTING MAIS MALAGKIT Buhay Probinsya Cagayan Valley",
+  "channel": "Ka Tenung",
+  "lang": "fil",
+  "minutes": 4,
+  "why": "Shows white glutinous corn planted the old way in Cagayan Valley, with a carabao opening the furrows."
+ },
+ "keywords": [
+  "paano magtanim ng mais na malagkit",
+  "pagtatanim ng puting mais",
+  "lagkitan na mais",
+  "how to plant glutinous corn philippines",
+  "white corn farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "corn-white-glutinous",
+ "rev": "fd4b2573563b"
+}

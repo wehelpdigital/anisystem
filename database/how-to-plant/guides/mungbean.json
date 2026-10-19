@@ -1,0 +1,184 @@
+{
+ "crop": "mungbean",
+ "name": "Mungbean",
+ "local": "Monggo",
+ "aka": [
+  "balatong",
+  "munggo",
+  "mongo"
+ ],
+ "summary": "How Filipino farmers grow monggo, most often scattered into the paddy right after the rice harvest so it lives on the leftover moisture, and also in furrows on upland fields. It is a quick crop of about two months that needs little fertilizer.",
+ "season": "Mostly planted right after the rice harvest in the dry season, from about January to March, while the paddy soil is still moist, as farmers do across the Ilocos region and Central Luzon. It is also planted at the start of the rains, around May to June, on upland and rainfed fields, and after corn.",
+ "material": "Dry seed, kept from the last crop or bought. Farmers choose clean, plump seed and throw out shriveled grains and grains with weevil holes.",
+ "spacing": "Broadcast evenly after rice, or drilled thinly in furrows about 50 to 60 cm apart. In rows, farmers use about 25 to 30 kg of seed a hectare.",
+ "water": "After rice it lives on the moisture left in the paddy, with no watering. Upland crops are planted with the rains. Standing water kills monggo, so wet spots need a small drain.",
+ "fertilizer": "Little or none after rice, since monggo makes much of its own nitrogen. On poor soil farmers drop a little complete fertilizer (14 14 14) or manure in the furrow at planting.",
+ "care": "Hand weeding or off barring and hilling up in the first three weeks. Farmers watch for bean fly on young plants and pod borers at flowering. The rice straw mulch on broadcast fields keeps many weeds down.",
+ "harvest": "Pods are picked by hand as they turn black, starting at about 55 to 65 days, in two or three rounds. They are sun dried, beaten in sacks, winnowed and stored dry in sealed containers.",
+ "ways": [
+  {
+   "key": "broadcast",
+   "label": "Broadcast after rice (sabog sa pinag anihan)",
+   "days": 65,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Get the paddy ready after harvest",
+     "how": "Right after the rice harvest, cut the stubble low and rake the loose straw aside. The soil should be moist but firm enough to walk on without sinking.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Scatter the seed",
+     "how": "Scatter the seed evenly over the moist field, then spread rice straw thinly back over it to hold the moisture and keep weeds down.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Check the stand",
+     "how": "Look for bare patches and resow them while the soil is still moist. Ants and birds can take seed in the first days.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Pull the weeds",
+     "how": "Hand pull the weeds that push through the straw before the monggo covers the ground.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Watch for insects",
+     "how": "Check the young plants for bean fly and aphids, and the flowers and young pods for pod borers.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Pick the black pods",
+     "how": "Start picking when the pods turn black, at about 55 to 65 days. Pick in the cool morning, before dry pods split, and go back every few days for two or three pickings.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 66,
+     "title": "Dry, thresh and store",
+     "how": "Sun dry the pods for two to three days, beat them inside a sack with a stick, winnow out the hulls and dry the seed again. Store it in a sealed container, and some farmers mix in clean ash to keep weevils away.",
+     "task": "postharvest"
+    }
+   ]
+  },
+  {
+   "key": "direct",
+   "label": "Planted in furrows",
+   "days": 65,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow",
+     "how": "Plow once when the soil is moist enough, with a carabao or a tractor.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Harrow",
+     "how": "Harrow once or twice to break clods and kill sprouting weeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open shallow furrows about 50 to 60 cm apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer on poor soil",
+     "how": "On poor soil drop a little complete fertilizer (14 14 14) or manure in the furrow and cover it. On good soil many farmers give none.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Drill the seed",
+     "how": "Drop the seed thinly along the furrow and cover it with 2 to 3 cm of soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring",
+     "how": "Plow along the rows with the soil thrown away from the plants to cut the weeds, then hand pull weeds in the row.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Hill up",
+     "how": "Plow back toward the rows to pile soil at the base of the plants.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Watch for insects",
+     "how": "Check for bean fly, aphids and pod borers, especially at flowering.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Pick the black pods",
+     "how": "Pick the pods as they turn black, in the morning, every few days for two or three pickings.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 66,
+     "title": "Dry, thresh and store",
+     "how": "Sun dry, beat out the seed, winnow, dry again and keep it in sealed containers.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Sowing late after the rice harvest, when the soil has already dried out.",
+  "Planting where water stands after rain, which rots the roots.",
+  "Waiting too long to pick, so dry pods split in the heat and drop their seed.",
+  "Storing seed before it is fully dry, or in open sacks where weevils get in."
+ ],
+ "better": [
+  "Use clean seed of a variety that ripens evenly, so fewer pickings are needed.",
+  "Sow within a few days after the rice harvest and cover the seed with straw mulch.",
+  "Make shallow drains so no water stands in the field.",
+  "Scout at flowering for pod borers and act only when they are many.",
+  "Dry the seed well and store it in sealed containers."
+ ],
+ "video": {
+  "youtubeId": "906fZ8uKk-M",
+  "title": "Paano Magtanim Ng MONGGO Sa Palayan Para Mabilis Tumubo Ang Mga ITO?",
+  "channel": "Jose Autida Agri TV",
+  "lang": "fil",
+  "minutes": 11,
+  "why": "A farmer plants monggo in his paddy after the rice harvest, the common way in Luzon."
+ },
+ "keywords": [
+  "paano magtanim ng monggo",
+  "pagtatanim ng monggo sa palayan",
+  "monggo pagkatapos ng palay",
+  "how to plant mungbean in the philippines",
+  "mung bean after rice"
+ ],
+ "confidence": "medium",
+ "slug": "mungbean",
+ "rev": "b561e98f0232"
+}

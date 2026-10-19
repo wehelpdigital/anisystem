@@ -1,0 +1,172 @@
+{
+ "crop": "cacao",
+ "name": "Cacao",
+ "local": "Kakaw",
+ "aka": [
+  "cacao",
+  "kakaw",
+  "tsokolate",
+  "cocoa"
+ ],
+ "summary": "How Filipino growers set out cacao, most often in the shade of coconut, from a bagged or grafted seedling to the first steady pod harvest and home fermentation. It is for smallholders and backyard planters, mainly in Mindanao and the Visayas but also in Luzon farms that have shade and rain spread through the year.",
+ "season": "Seedlings go into the field as the rains begin, about May to July in Luzon and the Visayas. In much of Mindanao, where rain falls through most months, farmers plant any time the soil stays moist. Seeds are sown in the nursery four to five months before. Mature trees bear through the year, with heavier picking after the rains.",
+ "material": "Older farms were planted from seed of the best local trees. Today most farmers buy grafted seedlings of a known clone from an accredited nursery, or graft their own. Seed comes only from ripe, healthy pods and must be sown within about four days, because cacao seed dies if stored or dried. The rootstock seedling is grafted at two to three months, and the grafted plant is ready for the field at four to five months, with hard, dark green leaves.",
+ "spacing": "About 3 m x 3 m in open fields, a little over 1,100 trees a hectare, with banana or kakawate shade between. Under coconut, one or two rows of cacao go between the coconut rows, about 3 m apart along the row and kept a few meters away from the coconut trunks. One seedling a hole.",
+ "water": "Cacao here is almost always rain fed. Planting is timed to the start of the rains, and young trees planted late are hand watered in the first dry months. Mulch and shade keep the soil damp. Farms with long dry months struggle without water.",
+ "fertilizer": "Compost and chicken or animal manure in the planting hole and in a ring under the tree, mostly during the wet season. Farmers who buy fertilizer use complete fertilizer (14 14 14) or ammonium phosphate (16 20 0) at the start of the rains and again about three months later, with urea (46 0 0) for growth. Many old farms get little or no feeding.",
+ "care": "Hand weeding and slashing between rows, mulch under the trees, regular removal of suckers, and shaping the young tree to three or four main branches. Each year after the big harvest, about a month before the rains, farmers cut out dead, low and crossing branches, keep the tree short enough to reach, and trim the shade. Bagging young pods and burying sick pods and husks are the usual pest habits.",
+ "harvest": "Pods are ripe when they change color, from green to yellow or from red to orange, and sound hollow when tapped. They are cut every two weeks, opened within a few days, fermented in boxes or leaf lined baskets for about five to seven days, and sun dried until crisp. Some backyard growers skip fermenting and only dry and roast the beans to grind into tablea.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedlings (punla na grafted)",
+   "days": 900,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -365,
+     "title": "Get the shade ready",
+     "how": "Most farmers plant cacao under coconut, which gives the light shade it wants. In open land, plant banana suckers or kakawate stakes in rows six months to a year before the cacao, so the young trees will not stand in full sun.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -150,
+     "title": "Sow seeds from ripe pods",
+     "how": "Break open ripe, healthy pods with a wooden mallet, not a knife, and rub the beans in sawdust or coconut fiber to take off the sticky pulp, then wash them. Sow each bean about 1 cm deep in a bag of topsoil and compost under light shade, within four days of opening the pod.",
+     "task": "seedbed",
+     "tip": "Throw away flat, small or already sprouted beans."
+    },
+    {
+     "phase": "nursery",
+     "day": -90,
+     "title": "Graft the young rootstock",
+     "how": "At two to three months, side graft or patch bud each seedling with budwood cut from a high yielding, healthy clone. Keep the grafted plants under a plastic tent and extra shade for about three weeks, then let them rest before moving them into the open nursery.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Stake and dig the holes",
+     "how": "Slash the weeds, stake the rows, and dig holes about 30 to 50 cm wide and deep. Mix the topsoil with compost or rotted manure and put it back into the hole.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "About a week before planting, turn each bag a little to break roots growing into the ground, and water the plants well for the next few days. Leave behind small, crinkled or weak plants.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Water the seedling, cut away the bag without breaking the soil ball, and set it in the hole at the same depth it grew in the bag, with the graft joint above the soil. Fill in a little soil at a time and press it down gently, then water.",
+     "task": "planting",
+     "tip": "Do not plant in the dry months unless you can water."
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Mulch the base",
+     "how": "Spread dry leaves, rice hull or cut grass around the seedling to keep the soil damp and the weeds down, keeping it off the stem.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Fill the gaps",
+     "how": "Replace dead or weak seedlings while the rains still last, so the stand stays even.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Weed by hand",
+     "how": "Pull the weeds around each tree and cut the grass between the rows with a scythe or bolo, leaving the cuttings as mulch. Farmers do this every few months, more often in the wet season.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Remove suckers below the graft",
+     "how": "Cut off any shoot growing from the rootstock below the graft and the upright suckers (chupons) at the base, because they steal food from the tree.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Feed early and late in the rains",
+     "how": "Scatter compost, chicken manure or complete fertilizer in a ring under the edge of the leaves at the start of the rains and again about three months later, and cover it lightly with soil or mulch.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Shape the young tree",
+     "how": "Once the stem forks, keep three to four evenly spaced main branches and cut off the weak ones. Remove branches that hang low or cross through the middle, and thin the shade trees a little as the cacao grows.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 540,
+     "title": "Bag the young pods",
+     "how": "When the first flowers set into small green pods, many farmers slip a plastic sleeve or newspaper bag over each pod, open at the bottom, to keep the pod borer out. Pick off and bury rotting, black or bored pods every week.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 900,
+     "title": "Cut the ripe pods",
+     "how": "Steady harvest starts at about 30 months. Pods ripen five to six months after flowering. Cut ripe pods, yellow or orange or deep red by clone, with a sharp knife or pruning shears every two weeks, without pulling or damaging the flower cushion on the trunk.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 902,
+     "title": "Ferment and dry the beans",
+     "how": "Open the pods within a few days and heap the wet beans in a wooden box or a basket lined with banana leaves, covered, for about five to seven days, turning them every two days. Then sun dry them on raised trays or mats for about a week, until the beans are crisp and crack when pressed.",
+     "task": "postharvest",
+     "tip": "Bury or compost the empty husks so pests do not breed in them."
+    }
+   ],
+   "note": "Grafted trees give their first pods at about 18 to 24 months and a real harvest from about 30 months (900 days). Trees grown from seed usually start a year or more later."
+  }
+ ],
+ "mistakes": [
+  "Planting in full sun with no shade, so young trees scorch and stall.",
+  "Planting seedlings of unknown trees that bear few pods.",
+  "Pulling pods off by hand and tearing the flower cushions on the trunk.",
+  "Leaving rotting and bored pods on the tree, so black pod and pod borer spread.",
+  "Never pruning, so trees grow tall, dark and damp.",
+  "Drying beans without fermenting and selling them as fermented beans."
+ ],
+ "better": [
+  "Plant grafted seedlings of proven clones from an accredited nursery, and mix two or more clones for better pollination.",
+  "Test the soil and feed by the result, at the start of the rains and again three months later.",
+  "Prune every year after the main harvest and keep the shade light, about a third of the sky covered.",
+  "Harvest every two weeks, bag young pods, and keep the farm clean of sick pods and husks.",
+  "Ferment beans properly in boxes and dry them on raised beds to sell for a better price.",
+  "Use integrated pest management and scout weekly for pod borer, mirid bugs and black pod."
+ ],
+ "video": {
+  "youtubeId": "493cvJzMFEU",
+  "title": "How to prepare land for cacao farming? How to plant a cacao tree?",
+  "channel": "Bayani ng Cacao Farming",
+  "lang": "fil",
+  "minutes": 17,
+  "why": "A Filipino cacao farmer clears the spot, digs the hole and plants a seedling in the field, explained plainly."
+ },
+ "keywords": [
+  "paano magtanim ng cacao",
+  "pagtatanim ng cacao",
+  "paano magtanim ng kakaw",
+  "unsaon pagtanom ug cacao",
+  "how to plant cacao in the philippines",
+  "cacao farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "cacao",
+ "rev": "125a40874d5a"
+}

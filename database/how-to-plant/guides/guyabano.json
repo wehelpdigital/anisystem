@@ -1,0 +1,153 @@
+{
+ "crop": "guyabano",
+ "name": "Soursop",
+ "local": "Guyabano",
+ "aka": [
+  "guyabana",
+  "guanabana",
+  "soursop"
+ ],
+ "summary": "How Filipino backyard growers and small farms raise guyabano from seed or a grafted seedling to the first fruit, the way most trees here are planted. It is a hardy lowland tree, so the guide keeps to the simple habits that work: a good hole, light feeding, a low shape, and bagging the fruit.",
+ "season": "Seedlings are set out as the rains begin, about May to July, so they root before the dry months. Seeds are sown in the nursery about six months earlier. Trees flower and fruit on and off through the year, with most fruit in the rainy months.",
+ "material": "Most backyard trees come from seed of large, sweet, well shaped fruit. The seeds are washed clean of pulp, dried in the shade, and soaked in water overnight before sowing. They sprout in a few weeks. Growers who want early, true to type fruit buy grafted or marcotted seedlings of a known sweet or prolific type from a nursery.",
+ "spacing": "About 4 to 6 m between trees each way in an orchard. Backyard trees are planted alone, a few meters from the house or fence. One seedling a hole.",
+ "water": "Rain fed in most farms. Young trees are watered once or twice a week in their first dry season. Older trees get water only in long droughts. The tree does not like standing water.",
+ "fertilizer": "Rotted manure, compost and kitchen ash around the tree, at planting and each year at the start of the rains. Farmers who buy fertilizer give complete fertilizer (14 14 14) twice a year, a small handful for young trees and more as the tree grows. Many backyard trees get nothing and still bear, but smaller crops.",
+ "care": "Ring weeding and mulch, watering young trees in the dry season, cutting the tip to make a low tree with three or four main branches, removing water sprouts, pruning after the crop, hand pollinating in the morning, and bagging young fruit against borers.",
+ "harvest": "Fruit is mature when the skin turns from dark shiny green to dull yellowish green and the spines soften and spread apart. It is picked firm and ripened indoors in a few days, because a soft ripe fruit bruises and splits if it falls. Ripe fruit spoils fast, so it is sold or eaten quickly.",
+ "ways": [
+  {
+   "key": "nursery",
+   "label": "Bagged seedlings (punla sa supot)",
+   "days": 1080,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -180,
+     "title": "Sow the seeds in bags",
+     "how": "Wash the seeds from a good fruit, dry them in the shade, and soak them overnight. Sow one or two seeds about 1 to 2 cm deep in each bag of garden soil mixed with compost, and keep the bags in light shade and moist.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -150,
+     "title": "Thin to one seedling",
+     "how": "When the seedlings are up, keep the strongest one in each bag and pull out the rest. Water them every day or two and pull weeds from the bags.",
+     "task": "thinning"
+    },
+    {
+     "phase": "nursery",
+     "day": -30,
+     "title": "Harden the seedlings",
+     "how": "A month before planting, move the bags into fuller sun and water a little less so the leaves toughen. Seedlings about 30 to 50 cm tall are ready.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig the holes",
+     "how": "Clear the spot and dig a hole about 30 to 50 cm wide and deep for each tree, in a sunny place where rain water does not stand. Mix the topsoil with a few kilos of rotted manure or compost and fill it back.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "On a cloudy day or late afternoon, water the bag, cut it away, and set the seedling in the hole at the same depth it grew. Firm the soil, water it, and tie it loosely to a stake if the place is windy.",
+     "task": "planting",
+     "tip": "Keep a grafted seedling's graft joint above the soil."
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Mulch around the base",
+     "how": "Spread dry grass, leaves or rice straw around the young tree, keeping it a hand's width from the stem, to hold moisture and keep the weeds down.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Water in dry spells",
+     "how": "Water young trees once or twice a week when the rain stops, through the first dry season. Older trees live on rain.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Ring weed and feed",
+     "how": "Keep a clean ring under the tree and give compost or manure, and a small handful of complete fertilizer (14 14 14) for those who use it, spread around the edge of the leaves. Feed at the start and the end of the rains, a little more each year.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Shape a low tree",
+     "how": "When the tree is about 1 m tall, cut the tip so it branches, and keep three or four strong branches spread out. Remove shoots below them and upright water sprouts, so the tree stays low and easy to pick.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 900,
+     "title": "Help the flowers set",
+     "how": "Flowers come on the trunk and older branches. Some growers dust pollen from an open flower into others with a soft brush in the morning, because poorly pollinated fruit grows crooked and small.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 930,
+     "title": "Bag the young fruit",
+     "how": "When the fruit is small, about the size of an egg, wrap it in a net, paper or plastic bag open at the bottom to keep fruit borers and fruit flies out. Remove fruit that is badly misshapen or bored.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "Pick mature fruit",
+     "how": "The first fruit usually comes in the third year. Pick when the skin turns from dark, shiny green to a dull yellowish green and the soft spines spread apart. Cut the stalk and catch the fruit so it does not drop.",
+     "task": "harvest",
+     "tip": "Let it soften on a table for a few days before eating."
+    },
+    {
+     "phase": "harvest",
+     "day": 1110,
+     "title": "Prune after fruiting",
+     "how": "After the main crop, cut out dead, crossing and crowded branches and any water sprouts, and give the tree compost or manure to build the next crop.",
+     "task": "pruning"
+    }
+   ],
+   "note": "Seedling trees usually give their first fruit in the third year after planting out, about 36 months (1,080 days). Grafted or marcotted trees often fruit a year earlier."
+  }
+ ],
+ "mistakes": [
+  "Planting in a low spot where water stands after rain.",
+  "Sowing seeds from small or poorly shaped fruit.",
+  "Letting the tree grow tall with no pruning, so the fruit is out of reach.",
+  "Leaving young fruit unbagged, so borers and fruit flies spoil most of it.",
+  "Waiting for the fruit to soften on the tree, so it falls and bursts."
+ ],
+ "better": [
+  "Plant grafted or marcotted seedlings of a known sweet, prolific type for earlier, even fruit.",
+  "Test the soil and feed by the result, twice a year, more as the tree grows.",
+  "Hand pollinate in the morning to get round, full fruit.",
+  "Bag every young fruit and pick up fallen and bored fruit to break the pest cycle.",
+  "Prune every year after fruiting to keep the tree low and open, and use integrated pest management."
+ ],
+ "video": {
+  "youtubeId": "8sfwKYJkhJA",
+  "title": "PAGPAPATUBO AT PAGTATANIM NG GUYABANO!",
+  "channel": "Buhay Bukid Ni Maureen",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "A farm family raises guyabano seedlings and plants them out in their own field, explained in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng guyabano",
+  "pagtatanim ng guyabano",
+  "paano patubuin ang buto ng guyabano",
+  "how to plant guyabano in the philippines",
+  "soursop farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "soursop",
+ "rev": "3e927651b8b5"
+}

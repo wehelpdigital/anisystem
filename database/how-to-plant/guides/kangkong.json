@@ -1,0 +1,180 @@
+{
+ "crop": "kangkong",
+ "name": "Water spinach",
+ "local": "Kangkong",
+ "aka": [
+  "Chinese kangkong",
+  "upland kangkong"
+ ],
+ "summary": "How Filipino growers usually raise kangkong, either upland kangkong sown from seed on beds or water kangkong grown from cuttings in wet fields and ditches, and harvested in about a month. For backyard and small market growers who want the usual way and simple steps to harvest more often.",
+ "season": "Kangkong grows all year in the lowlands. Upland kangkong from seed is planted in any month with water nearby and does very well in the hot dry months. In the rainy months it needs raised beds. Water kangkong in paddies, pond edges and ditches grows the whole year where the ground stays wet.",
+ "material": "Upland kangkong is grown from seed, often soaked in water overnight before sowing so it comes up fast and even. Water kangkong is grown from stem cuttings about 20 to 30 cm long taken from healthy plants, sometimes stood in water for a week or so until roots show.",
+ "spacing": "Upland: four rows on a 1 m bed, 20 cm between rows and hills, 2 to 3 seeds a hill. Some growers use two rows 30 by 30 cm, or sow thick lines for pulling. Water kangkong cuttings are set close together in rows in the mud.",
+ "water": "Upland kangkong is watered every day by hand or hose, or by furrow on bigger farms. Water kangkong lives in wet ground with shallow water that is raised slowly as it grows.",
+ "fertilizer": "Chicken or pig manure is the usual base, mixed into the beds before sowing, with a little complete fertilizer (14 14 14) and urea. Many growers add a little urea or manure tea after sowing and again after each cutting.",
+ "care": "Daily watering, hand weeding in the first two weeks, light feeding after each cutting, and picking off caterpillars. Water kangkong fields are kept free of floating weeds.",
+ "harvest": "Ready about three to four weeks after sowing or planting. Upland kangkong is pulled whole or cut so it regrows. Water kangkong is cut again and again for many months. Shoots are bundled, kept wet and shaded, and sold fresh the same day.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Upland kangkong from seed (tanim buto)",
+   "days": 25,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow and harrow",
+     "how": "Plow and harrow two or three times about a week apart, 15 to 20 cm deep, to get fine, weed free soil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Make beds and put base fertilizer",
+     "how": "Form beds about 1 m wide. Mix chicken manure and a little complete fertilizer and urea into the bed and cover with soil.",
+     "task": "fertilizer",
+     "tip": "For a bed 1 m by 20 m a common guide is a sack of chicken manure, 1 kg of 14 14 14 and about 4 kg of urea."
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Soak the seed",
+     "how": "Soak the seed in clean water overnight and drain it before sowing.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow on the beds",
+     "how": "Drop 2 to 3 seeds a hill in four rows on the bed, 20 cm between rows and hills. Growers who sell whole plants often sow thicker in lines and pull them all at harvest.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water every day",
+     "how": "Water right after sowing and every day after that, in the morning or late afternoon. Kangkong grows fast only when the soil stays moist.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Weed and top dress",
+     "how": "Pull the weeds while they are small and give a light side dressing of urea or manure tea along the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Check the leaves",
+     "how": "Look for caterpillars, whiteflies and aphids under the leaves, and for white rust spots. Remove badly hit plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Bundle and keep wet",
+     "how": "Wash or wet the plants, tie them in bundles and keep them shaded and moist so they do not wilt before selling.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 25,
+     "title": "Pull or cut the shoots",
+     "how": "Three to four weeks after sowing, pull whole plants or cut the shoots a few nodes above the soil so they sprout again for a second and third cutting.",
+     "task": "harvest"
+    }
+   ]
+  },
+  {
+   "key": "cuttings",
+   "label": "Water kangkong from cuttings (kangkong tubig)",
+   "days": 30,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Ready the wet field",
+     "how": "Clear weeds from a paddy, a pond edge or a ditch and work the mud soft. Keep only shallow water at first.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Cut the stems",
+     "how": "Cut healthy stems about 20 to 30 cm long, each with several nodes.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Push the cuttings into the mud",
+     "how": "Press the lower nodes of each cutting into the soft mud, in rows, leaving the tips above the water.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Raise the water slowly",
+     "how": "Young plants cannot take deep water, so raise the water level little by little as the vines spread.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Weed and add manure",
+     "how": "Pull floating and creeping weeds and spread manure or a little urea when the water is low.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Tie in bundles",
+     "how": "Tie the shoots in bundles, keep them wet and shaded and sell them the same day.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 30,
+     "title": "First cutting",
+     "how": "About a month after planting, cut the young shoots, leaving the base and some nodes to regrow. Cut again each time the new shoots are long and tender.",
+     "task": "harvest",
+     "tip": "Feed lightly after each cutting so the regrowth stays thick."
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Sowing old seed without soaking, so the stand comes up thin and uneven.",
+  "Letting the beds dry out in hot months, which makes the stems tough.",
+  "Cutting too low on plants meant to regrow, leaving no nodes to sprout.",
+  "Flooding young water kangkong too deep before it has rooted.",
+  "Harvesting at midday and leaving bundles in the sun, so they wilt."
+ ],
+ "better": [
+  "Buy fresh seed of a good upland variety, or take cuttings only from healthy, vigorous plants.",
+  "Test the soil and give balanced fertilizer instead of urea alone, which keeps leaves tender and safe to eat.",
+  "Use raised beds and mulch in the rainy months and water every day in the dry months.",
+  "Feed lightly after each cutting and plan cuttings so the bed keeps producing.",
+  "Scout weekly for caterpillars and white rust and remove sick plants early.",
+  "Grow water kangkong only in clean water, away from drains and dirty canals."
+ ],
+ "video": {
+  "youtubeId": "eKCVsEhfzUM",
+  "title": "WOW! Kumikita Araw Araw sa Kangkong Farming, Puhunan 250 lang!!",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "Visits a small Filipino kangkong farm that plants and harvests every day, showing the usual field way and the income, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng kangkong",
+  "pagtatanim ng kangkong",
+  "paano magtanim ng upland kangkong",
+  "how to plant kangkong in the philippines",
+  "kangkong farming"
+ ],
+ "confidence": "high",
+ "slug": "water-spinach",
+ "rev": "87bf18fde920"
+}

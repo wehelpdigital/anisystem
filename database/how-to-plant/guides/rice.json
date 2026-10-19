@@ -1,0 +1,417 @@
+{
+ "crop": "rice",
+ "name": "Rice",
+ "local": "Palay",
+ "aka": [
+  "humay",
+  "pagay",
+  "paray"
+ ],
+ "summary": "How most Filipino farmers plant palay on irrigated and rainfed lowland fields, in the three common ways: transplanting, wet direct seeding (sabog tanim) and dry direct seeding. It follows the habits passed on from farmer to farmer, then lists the changes that bring a bigger harvest.",
+ "season": "The wet season crop goes in with the first steady rains, mostly from late May to July, and is harvested from September to November. On irrigated land a dry season crop is planted from November to January and cut from March to May. Rainfed farms plant once a year with the rains, and dry seeded fields are sown from late April to June, just before or right as the rains settle in. In Mindanao, where rain is spread more evenly through the year, planting dates differ more from province to province.",
+ "material": "Seed (binhi), often kept from the last harvest or bought from a neighbor or a seed grower. For transplanting and wet seeding, the seed is soaked in clean water for about a day, the floating empty grains are skimmed off, and the wet seed is kept in a sack in the shade for another one to two days until tiny white sprouts show (pagpapatubo). For dry seeding the seed goes in dry, without soaking. On average farmers here use about 70 kg of seed a hectare when transplanting and well over 100 kg when broadcasting.",
+ "spacing": "Transplanted rice is set by eye or in rows about 20 x 20 cm, with 3 to 5 seedlings a hill. Wet direct seeded rice is broadcast with no rows. Dry seeded rice is broadcast, or drilled in rows about 20 to 25 cm apart, and upland rice is dibbled in holes made with a pointed stick.",
+ "water": "Transplanted and wet seeded rice is kept flooded at about 2 to 5 cm from the time the plants stand up until the grains fill, with water from the canal or the rains, and drained about two weeks before harvest. Many farmers keep the field flooded all season, which uses more water than the crop needs. Wet seeded fields stay just moist, not flooded, for the first week. Dry seeded fields stay unflooded until the rains fill the paddies, about a month after sowing.",
+ "fertilizer": "The usual habit is two or three feedings: complete fertilizer (14 14 14) or 16 20 0 in the first two weeks, urea (46 0 0) at tillering, and urea with or without potash (0 0 60) when the panicle starts to form. A common total is about two to four bags of complete fertilizer and two to three bags of urea a hectare, though it varies a lot from farm to farm. Some farmers also spread chicken manure or carbonized rice hull during land preparation.",
+ "care": "Weeds are pulled by hand or with a push weeder at about three weeks and again at five to six weeks, though many farmers now spray a weed killer early instead. Missing hills are filled in the first week. Golden apple snails are picked by hand in the early weeks, and rats are trapped or hunted together by neighbors. Pest spraying is often done by the calendar rather than when the pests are really there.",
+ "harvest": "Rice is ready about 30 days after flowering, when most grains on the panicle are golden and hard and the upper leaves are drying. It is cut with a sickle and threshed with a threshing machine, or harvested with a combine. The grain is then sun dried in thin layers to about 14 percent moisture. Wet palay left piled for days turns yellow and loses value.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Transplanted (lipat tanim)",
+   "days": 95,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Soak the field and fix the dikes",
+     "how": "Let water into the paddy, or wait for the rains, until the soil softens. Patch the dikes (pilapil) and clean the canals so the field can hold water evenly.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -25,
+     "title": "First plowing",
+     "how": "Plow the soaked field with a carabao or a hand tractor and turn the stubble and weeds under. Keep water on the field so the stubble rots for about two weeks.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -23,
+     "title": "Soak and sprout the seed",
+     "how": "Soak the seed in clean water for about a day and skim off the grains that float. Drain it and keep it in a damp sack in the shade for one to two days until short white sprouts appear.",
+     "task": "seed_treatment",
+     "tip": "Sprouts no longer than a grain are easier to sow and do not break."
+    },
+    {
+     "phase": "nursery",
+     "day": -21,
+     "title": "Sow the seedbed (punlaan)",
+     "how": "Make raised mud beds about a meter wide in one corner of the field and scatter the sprouted seed evenly over them. Keep the beds moist at first, then let in shallow water as the seedlings grow.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Harrow the field",
+     "how": "Harrow once or twice, about a week apart, to break the clods and bury the weeds that came up after plowing.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Final harrowing and leveling",
+     "how": "Harrow a last time and drag a wooden plank over the mud so the water stands at the same depth everywhere. High spots grow weeds and low spots drown young seedlings.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Pull the seedlings and transplant",
+     "how": "Pull the seedlings at about 20 to 25 days old, wash off the mud and tie them in bundles. Push 3 to 5 seedlings into each hill, about 2 to 3 cm deep, in shallow water. Some farmers follow a marked string for straight rows, others plant by eye.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Fill the missing hills",
+     "how": "About a week after planting, walk the field and fill gaps with spare seedlings from the seedbed before the hills around them get ahead.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "First fertilizer",
+     "how": "Broadcast complete fertilizer (14 14 14) or 16 20 0 by hand while the water is shallow. Many farmers add a little urea at this time too.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "First weeding",
+     "how": "Pull the weeds between the hills by hand or push a rotary weeder along the rows and press the weeds into the mud. Many farmers now spray a weed killer in the first week instead.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Watch for snails, rats and insects",
+     "how": "Pick golden apple snails and crush their pink egg clusters in the first weeks. Check the field each week for stem borers, leaf folders, planthoppers and rat damage, and act when the damage is spreading.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 32,
+     "title": "Urea when the panicle starts to form",
+     "how": "When the young panicle begins forming inside the stem, about two months before harvest, topdress urea (46 0 0), often with potash (0 0 60). This feeding gives longer, fuller panicles.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 38,
+     "title": "Second weeding",
+     "how": "Pull the weeds that came back before the rice closes its canopy.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Keep water through flowering",
+     "how": "Keep about 3 to 5 cm of water from the booting stage until the grains fill. A dry field at flowering gives many empty grains.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 82,
+     "title": "Drain the field",
+     "how": "Drain the paddy about two weeks before harvest so the soil firms up for cutting and the grains ripen evenly.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 95,
+     "title": "Cut and thresh",
+     "how": "Harvest when most grains on the panicle have turned golden, about a month after flowering. Cut with a sickle (karit) or a combine and thresh the same day or the next, without leaving cut palay piled wet in the field.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 96,
+     "title": "Dry and store the grain",
+     "how": "Spread the grain thinly on a concrete floor, nets or mats in the sun and turn it often for two to three days, until it is dry enough to keep, about 14 percent moisture. Store it in clean sacks raised off the floor.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 0 is transplanting day. The seedlings are already about three weeks old by then, so a variety of about 115 days from sowing is ready roughly 95 days after transplanting."
+  },
+  {
+   "key": "direct_wet",
+   "label": "Wet direct seeding (sabog tanim)",
+   "days": 110,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Soak the field and plow",
+     "how": "Flood or soak the field, fix the dikes, and plow with a carabao or a hand tractor to bury the stubble. Keep water on so the stubble rots.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -10,
+     "title": "Harrow",
+     "how": "Harrow once or twice to break clods and kill the weeds that sprouted after plowing.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Soak and sprout the seed",
+     "how": "Soak the seed for about a day, skim off the floaters, then keep it in a damp sack for about a day until the tips just crack open. Short sprouts do not tangle or break when thrown.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Level well and cut drainage canals",
+     "how": "Harrow a last time and level the field very carefully, since sown seed in a low spot drowns. Dig small canals around and across the field so water can be drained off after sowing.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Broadcast the sprouted seed",
+     "how": "Drain the field until only soft wet mud is left, with no standing water. Walk in strips and scatter the sprouted seed evenly by hand, working the field twice in opposite directions so no patch is missed.",
+     "task": "planting",
+     "tip": "Many farmers throw 100 to 150 kg a hectare to make up for seed lost to birds and snails, far more than the crop needs."
+    },
+    {
+     "phase": "care",
+     "day": 2,
+     "title": "Keep the mud wet but not flooded",
+     "how": "For about the first week keep the soil moist without standing water so the seeds can root. Drain at once after heavy rain.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Early weed control",
+     "how": "Weeds come up with the rice because there is no water to hold them back. Many farmers spray a weed killer in the first week while the soil is moist, then hand pull what escapes.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Let in water slowly",
+     "how": "When the seedlings have about three leaves, let in a thin layer of water and raise it to 3 to 5 cm as they grow. Standing water also keeps many weeds down.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "First fertilizer",
+     "how": "Broadcast complete fertilizer (14 14 14) or 16 20 0 once the seedlings are standing well.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Thin crowded spots and fill gaps",
+     "how": "Pull clumps from crowded spots and push them into bare patches so the stand is even.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Hand weeding",
+     "how": "Pull the weeds by hand, especially grassy weeds that look like rice.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 28,
+     "title": "Urea at tillering",
+     "how": "Topdress urea (46 0 0) while the plants are tillering.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Watch for snails, rats and insects",
+     "how": "Check the field each week for golden apple snails, stem borers, leaf folders, planthoppers and rats, and act when the damage is spreading.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 48,
+     "title": "Urea when the panicle starts to form",
+     "how": "Give the last urea, often with potash (0 0 60), as the young panicle starts forming inside the stem, about two months before harvest.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 95,
+     "title": "Drain the field",
+     "how": "Drain the paddy about two weeks before harvest.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 110,
+     "title": "Cut and thresh",
+     "how": "Harvest when most grains are golden, about a month after flowering. Broadcast rice is denser and falls over more easily, so cut on time.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 111,
+     "title": "Dry and store the grain",
+     "how": "Thresh within a day, then sun dry in thin layers, turning often, until the grain is dry enough to keep, about 14 percent moisture.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 0 is sowing day. With no seedbed and no transplanting shock, the crop is ready about 110 days after sowing for a variety of that length."
+  },
+  {
+   "key": "direct_dry",
+   "label": "Dry direct seeding (dry seed on dry soil)",
+   "days": 115,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Plow the dry field",
+     "how": "At the end of the dry season, once a light rain softens the topsoil, plow the field dry with a carabao or a tractor.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Harrow to a fine seedbed",
+     "how": "Harrow two or three times to break the clods and kill the weeds that came up. A fine, even seedbed helps the seeds come up together.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow dry seed before the rains settle in",
+     "how": "Scatter dry, unsoaked seed by hand and harrow lightly to cover it, or drop it in shallow furrows about 20 to 25 cm apart and cover. On upland fields farmers poke holes with a pointed stick, drop a few seeds in each and close the hole with the foot.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Guard the seed",
+     "how": "Watch for birds, ants and rats feeding on the seed before the rains come and the seedlings get going.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Early weeding",
+     "how": "With no water on the field, weeds sprout with the rice. Hand pull or hoe them between the rows early, or spray a weed killer while they are small.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "First fertilizer",
+     "how": "Spread complete fertilizer (14 14 14) or 16 20 0 when the soil is moist after rain.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Hold the rainwater",
+     "how": "Once the rains fill the paddies, close the dike openings and keep a shallow layer of water on the field, which slows the weeds.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Second weeding",
+     "how": "Pull or hoe the weeds that came back before the rice closes its canopy.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 32,
+     "title": "Urea at tillering",
+     "how": "Topdress urea (46 0 0) on wet soil while the plants are tillering.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Watch for pests",
+     "how": "Check each week for stem borers, leaf folders, planthoppers and rats, and act when the damage is spreading.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "Urea when the panicle starts to form",
+     "how": "Give the last urea, often with potash (0 0 60), as the young panicle starts forming, about two months before harvest.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 100,
+     "title": "Drain the field",
+     "how": "Drain any standing water about two weeks before harvest.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 115,
+     "title": "Cut and thresh",
+     "how": "Harvest when most grains are golden, about a month after flowering. Old upland varieties are often longer and are cut panicle by panicle with a small blade.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 116,
+     "title": "Dry and store the grain",
+     "how": "Thresh and sun dry in thin layers until the grain is dry enough to keep, about 14 percent moisture.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 0 is sowing day. The seed may lie in dry soil for some days until the rain comes, so the crop counts from sowing."
+  }
+ ],
+ "mistakes": [
+  "Sowing far too much seed, which costs more and gives crowded, weak plants that tiller less.",
+  "Transplanting old seedlings, past about 25 days, that recover slowly and tiller little.",
+  "Poor leveling, so weeds take the high spots and seedlings drown in the low spots.",
+  "Weeding and feeding late, after the weeds have already taken the nutrients.",
+  "Spraying insecticide early by the calendar, which kills the spiders and other helpers and can bring planthopper outbreaks.",
+  "Planting seed saved from a hybrid crop, which does not grow true, or from the same mixed field year after year."
+ ],
+ "better": [
+  "Use certified seed of a variety suited to your area and season, about 40 kg a hectare for transplanting and 60 to 80 kg for direct seeding.",
+  "Transplant younger seedlings, about two to three weeks old, with 1 to 3 seedlings a hill in straight rows such as 20 x 20 cm or 30 x 15 cm.",
+  "Base fertilizer on a soil test and time the urea with a leaf color chart instead of by habit.",
+  "Keep the field weed free in the first 30 to 40 days, when weeds cost the most yield.",
+  "Scout every week and spray only when pests reach a level that hurts yield, and skip spraying in the first month.",
+  "Once plants are established, let the water drop to about 15 cm below the soil before flooding again, except around flowering, to save water without losing yield."
+ ],
+ "video": {
+  "youtubeId": "zo9IQdWBDTM",
+  "title": "PAANO MAGTANIM NG PALAY? | Rice Planting | Buhay Probinsya | Rhaf Channel",
+  "channel": "Rhaf Channel",
+  "lang": "fil",
+  "minutes": 12,
+  "why": "A real Filipino lowland farm showing land preparation, hand transplanting and fertilizing the way most farmers do it."
+ },
+ "keywords": [
+  "paano magtanim ng palay",
+  "pagtatanim ng palay",
+  "lipat tanim na palay",
+  "sabog tanim na palay",
+  "how to plant rice in the philippines",
+  "direct seeding rice philippines"
+ ],
+ "confidence": "high",
+ "slug": "rice",
+ "rev": "6b60cad6177a"
+}

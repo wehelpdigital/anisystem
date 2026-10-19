@@ -1,0 +1,75 @@
+{
+ "crop": "cherry",
+ "name": "Cherry",
+ "local": "Cherry",
+ "aka": [
+  "seresa",
+  "sweet cherry"
+ ],
+ "summary": "Sweet cherry is almost never grown in the Philippines: it needs a long cold winter, so only a few hobbyists in the coolest highland towns such as Baguio and Benguet keep potted trees, which rarely fruit. Farmers who want a cherry like fruit here grow aratiles or acerola, which bear easily in the lowlands. This short guide covers the few highland attempts.",
+ "season": "Trees are set out at the start of the rains, about May to July, in the highlands. Without enough cold, flowering is weak and irregular.",
+ "material": "Grafted trees of low chill cherry types from a specialty nursery, kept in big pots or planted on the coolest high ground. Trees from seed seldom bear.",
+ "spacing": "About 4 to 5 m between trees, or one to a large pot.",
+ "water": "Rain fed, with watering in dry spells. Never in standing water.",
+ "fertilizer": "Compost, rotted manure and small amounts of complete fertilizer (14 14 14).",
+ "care": "Light pruning, steady feeding, netting against birds.",
+ "harvest": "The few fruits are picked by hand with their stalks when fully colored.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted trees (grafted na punla)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Choose the coolest spot",
+     "how": "Pick the highest, coolest sunny ground, with fast drainage, or a large pot of loose soil and compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Set the grafted tree at the same depth, graft joint above the soil, about 4 to 5 m apart. Firm, water, stake and mulch.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Feed and prune lightly",
+     "how": "Give compost and a little complete fertilizer (14 14 14) every few months, and keep a few wide branches so light gets in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "Pick any ripe fruit",
+     "how": "We count the first crop at about 48 months. Pick cherries with their stalks when fully colored, and net the tree against birds.",
+     "task": "harvest"
+    }
+   ],
+   "note": "We count the first harvest at about 48 months (1,440 days). Most trees here never bear well."
+  }
+ ],
+ "mistakes": [
+  "Buying imported cherry trees for the lowlands, where they will not fruit.",
+  "Confusing sweet cherry with aratiles or acerola, which are different plants.",
+  "Planting in heavy, wet soil."
+ ],
+ "better": [
+  "For a sure crop, plant aratiles or acerola, which bear in the lowlands.",
+  "If you try sweet cherry, use only low chill types in cool highlands and keep notes.",
+  "Test the soil and feed by the result."
+ ],
+ "video": null,
+ "keywords": [
+  "cherry sa pilipinas",
+  "paano magtanim ng cherry",
+  "cherry tree baguio",
+  "can cherry grow in the philippines"
+ ],
+ "confidence": "low",
+ "slug": "cherry",
+ "rev": "31e838352c57"
+}

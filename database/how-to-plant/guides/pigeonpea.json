@@ -1,0 +1,103 @@
+{
+ "crop": "pigeonpea",
+ "name": "Pigeon pea",
+ "local": "Kadyos",
+ "aka": [
+  "kadios",
+  "kardis"
+ ],
+ "summary": "How Filipino farmers grow kadyos, the shrubby bean planted along dikes, fences and hillsides and cooked in the Ilonggo dish KBL. It needs little care and bears for months once it starts.",
+ "season": "Planted at the start of the rains, around May to July. It flowers as the days get shorter, so pods come from about November to March.",
+ "material": "Dry seed from the last harvest, picked clean and plump.",
+ "spacing": "Hills about a meter apart along dikes, fences and field borders, with one or two plants a hill.",
+ "water": "Rainfed. Its deep roots carry it through the dry months.",
+ "fertilizer": "Usually none. Some farmers put a little manure in the hole at planting.",
+ "care": "Thinning, weeding until the plants rise above the grass, and checking for pod borers at flowering.",
+ "harvest": "Pods are picked green for cooking or dry for seed from about five months, every week or so, through the cool months. Dry pods are sun dried and beaten to free the seed.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in hills",
+   "days": 150,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Clear the spots",
+     "how": "Clear the grass along the dike, fence or slope, or plow the field.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seed",
+     "how": "Poke holes with a pointed stick or a hoe, drop 2 to 3 seeds in each and cover with about 3 cm of soil. Hills are spaced about a meter apart.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Thin",
+     "how": "Leave the strongest one or two plants in each hill.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed around the plants",
+     "how": "Slash or hoe the weeds around the young plants until they grow above the grass.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 110,
+     "title": "Watch the flowers and pods",
+     "how": "Check the flowers and young pods for pod borers when flowering starts.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 150,
+     "title": "Pick the pods",
+     "how": "Pick green pods with full seeds for cooking, or dry brown pods for seed, every week or so.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 210,
+     "title": "Cut back for another season",
+     "how": "After the last picking, cut the plants back to about knee height so they sprout again for the next season.",
+     "task": "pruning"
+    }
+   ],
+   "note": "Day 150 is about the first pod picking. The plant can be cut back after harvest and kept for another season."
+  }
+ ],
+ "mistakes": [
+  "Planting too late in the rains, so the plants are small when flowering starts.",
+  "Letting grass smother the young plants.",
+  "Leaving dry pods out in the rain, where the seed molds."
+ ],
+ "better": [
+  "Plant early in the rains so the plants are big by flowering time.",
+  "Use clean seed of a good bearing line.",
+  "Keep the grass down in the first two months.",
+  "Scout for pod borers at flowering and pick often."
+ ],
+ "video": {
+  "youtubeId": "mFcPeuJotPg",
+  "title": "PIGEON PEA (KADYOS) PLANTING | Biyaherong Batangueno",
+  "channel": "Biyaherong Batangueno",
+  "lang": "fil",
+  "minutes": 14,
+  "why": "Shows kadyos planted by hand with a stick on a hillside farm, the old way."
+ },
+ "keywords": [
+  "paano magtanim ng kadyos",
+  "pagtatanim ng kadyos",
+  "how to plant pigeon pea in the philippines"
+ ],
+ "confidence": "medium",
+ "slug": "pigeon-pea",
+ "rev": "98cc17f5c038"
+}

@@ -1,0 +1,155 @@
+{
+ "crop": "sorghum",
+ "name": "Sorghum",
+ "local": "Batad",
+ "aka": [
+  "sorgo",
+  "sweet sorghum"
+ ],
+ "summary": "How Filipino farmers grow sorghum for grain and animal feed, a crop known as batad among Maguindanao and Ilocano farmers that takes drought better than corn. It is grown much like corn in furrows, and the stubble can give a second crop.",
+ "season": "Planted at the start of the rains, around May to June, or after the rice harvest in the dry season, around November to January, on the moisture left in the field. In Mindanao it is grown in both seasons.",
+ "material": "Dry seed, bought or saved from the heads of the best plants of open pollinated types. The seed is small, so it is sown shallow and thinly. When drilled in rows, farmers use about 8 to 10 kg of seed a hectare.",
+ "spacing": "Rows about 60 to 75 cm apart, with one plant every 10 to 15 cm after thinning.",
+ "water": "Rainfed. Sorghum rides out dry spells better than corn, so it is often the crop planted on the leftover moisture after rice.",
+ "fertilizer": "Complete fertilizer (14 14 14) in the furrow at planting and urea (46 0 0) at about four weeks before hilling up. Many farmers give it less fertilizer than corn, and the ratoon crop gets another side dressing of urea.",
+ "care": "Off barring and hilling up with the plow, hand weeding of the rows, and thinning at two to three weeks. Bird scaring is the big chore once the grain starts to fill.",
+ "harvest": "Grain sorghum is ready at about 100 to 115 days, when the grain is hard and the leaves below the head start drying. The heads are cut, sun dried and threshed. For silage, some growers cut the whole plant earlier while the grain is still soft.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in furrows",
+   "days": 105,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow the field",
+     "how": "Plow once when the soil is moist enough, with a carabao or a tractor.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Harrow",
+     "how": "Harrow one or two times to get a fine seedbed and kill sprouting weeds. Small sorghum seed needs fine soil to come up well.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open shallow furrows about 60 to 75 cm apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer in the furrow",
+     "how": "Drop complete fertilizer (14 14 14) along the furrow and cover it with a little soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Drill the seed",
+     "how": "Trickle the seed thinly along the furrow and cover it with only 2 to 3 cm of soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring and weeding",
+     "how": "Plow along the rows with the soil thrown away from the plants, then hand pull the weeds in the row. Young sorghum grows slowly and loses easily to weeds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Thin the plants",
+     "how": "Pull extra seedlings so one plant stands every 10 to 15 cm along the row.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Watch the young plants",
+     "how": "Check the whorls for armyworm and the leaves for aphids, and pull out sickly plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 27,
+     "title": "Side dress urea",
+     "how": "Drop urea (46 0 0) beside the plants on moist soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 28,
+     "title": "Hill up",
+     "how": "Plow toward the rows to cover the fertilizer and pile soil at the base of the plants.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 75,
+     "title": "Guard the heads from birds",
+     "how": "Birds go for the grain as it fills. Farmers chase them off in the morning and late afternoon, hang noisy cans and strips, and on small plots tie bags over the heads.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 105,
+     "title": "Cut the heads",
+     "how": "Harvest at about 100 to 115 days, when the grains are hard and can no longer be dented with a thumbnail. Cut the heads with a sickle or a knife.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 106,
+     "title": "Dry and thresh",
+     "how": "Sun dry the heads for a few days, thresh by beating or with a thresher, then dry the grain again before storing.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 108,
+     "title": "Ratoon the stubble",
+     "how": "Cut the old stalks close to the ground, weed and side dress, and the stubble sends up new shoots for a smaller second crop.",
+     "task": "other"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Sowing the small seed too deep, so few seedlings come up.",
+  "Not thinning, so crowded plants give small heads.",
+  "Letting weeds take over in the first month, when young sorghum grows slowly.",
+  "Leaving the ripening heads unguarded, so birds eat a big part of the harvest.",
+  "Storing grain before it is fully dry."
+ ],
+ "better": [
+  "Use a variety or hybrid suited to your purpose, grain or silage, and your season.",
+  "Prepare a fine seedbed, sow shallow and thin early to an even stand.",
+  "Feed by a soil test and split the nitrogen between planting and four weeks.",
+  "Plant with neighbors at the same time so bird pressure is shared.",
+  "Ratoon only a healthy first crop and feed the ratoon with urea."
+ ],
+ "video": {
+  "youtubeId": "rFeayq1aDoI",
+  "title": "Crop na feeds para sa Manok, Kambing, Baka, Kalabaw Atbp | Sorghum for livestock and poultry farming",
+  "channel": "Organiko Filipino Farm",
+  "lang": "fil",
+  "minutes": 24,
+  "why": "A Filipino grower gives planting tips from his own sorghum field, in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng sorghum",
+  "pagtatanim ng batad",
+  "sorghum farming philippines",
+  "how to plant sorghum in the philippines"
+ ],
+ "confidence": "medium",
+ "slug": "sorghum",
+ "rev": "53e3635f177f"
+}

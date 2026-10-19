@@ -1,0 +1,91 @@
+{
+ "crop": "blueberry",
+ "name": "Blueberry",
+ "local": "Blueberry",
+ "aka": [
+  "ayusip",
+  "native blueberry"
+ ],
+ "summary": "Blueberry is rare in the Philippines: there are no blueberry farms, only wild native blueberries such as ayusip in the Benguet mountains, now being raised in plots to save them, and a few hobby growers with imported bushes in pots in Baguio and other cool highland towns. This short guide covers how those few growers keep them alive, which comes down to cool air and very sour soil.",
+ "season": "Plants are set out at the start of the rains, about May to July, in the highlands. Bushes flower and fruit in the cool, drier months. Wild ayusip fruits in the mountains in season and is picked by locals and hikers.",
+ "material": "Nursery plants in pots, either imported low chill bush types or rooted cuttings, or native ayusip raised from cuttings. Plants are moved with a full ball of soil around the roots. Bare root plants bear less.",
+ "spacing": "About 1 to 1.5 m between bushes in beds, or one bush to a large pot. At least two types near each other for pollination.",
+ "water": "Kept evenly damp with rain water where possible. The shallow roots dry out fast and also rot in standing water.",
+ "fertilizer": "Pine needle compost and mulch, small amounts of ammonium sulfate (21 0 0). No lime, no ash, no fresh manure.",
+ "care": "Pine needle mulch, steady watering, removing first year flowers, pruning old canes after fruiting, netting against birds.",
+ "harvest": "Berries are picked a few days after turning fully blue, by hand, into shallow containers, and eaten or sold fresh within days. Wild ayusip is gathered in the mountains in small amounts.",
+ "ways": [
+  {
+   "key": "nursery",
+   "label": "Potted plants (punla sa paso)",
+   "days": 900,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Make very sour soil",
+     "how": "Blueberries need soil far more sour than most crops, about pH 4.5 to 5.5. Highland growers fill big pots or raised beds with composted pine needles, pine bark, rotted leaves and a little garden soil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant with the soil ball whole",
+     "how": "Set each plant at the same depth it grew, keeping the soil ball unbroken, about 1 to 1.5 m apart, and plant at least two types together so they pollinate each other. Mulch thickly with pine needles.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water with soft water",
+     "how": "Keep the soil evenly damp, never dry and never soggy. Rain water is best, since hard tap water slowly makes the soil less sour.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Feed lightly with sour feeds",
+     "how": "Top up the pine needle mulch and feed small amounts of ammonium sulfate (21 0 0) or acid compost now and then. Skip lime, ash and fresh manure.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Prune out old canes",
+     "how": "Pinch off flowers in the first year so the bush grows. From the second year, cut out weak, dead and very old canes after fruiting.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 900,
+     "title": "Pick fully blue berries",
+     "how": "The first real crop comes at about 30 months. Pick berries a few days after they turn fully blue, rolling them off gently with the thumb. Net the bushes against birds.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Bushes usually give their first real berries at about 30 months (900 days)."
+  }
+ ],
+ "mistakes": [
+  "Planting in ordinary garden soil that is not sour enough, so the leaves turn yellow and the plant dies.",
+  "Trying to grow them in the hot lowlands.",
+  "Adding lime, ash or manure as for other crops.",
+  "Planting a single type, so few berries set."
+ ],
+ "better": [
+  "Grow only in cool highlands and test the soil pH before planting.",
+  "Buy low chill types bred for warm places from a nursery you trust.",
+  "Raise native ayusip from cuttings instead of digging plants from the wild.",
+  "Keep records of flowering and fruiting. There is little local experience yet."
+ ],
+ "video": null,
+ "keywords": [
+  "blueberry sa pilipinas",
+  "paano magtanim ng blueberry",
+  "ayusip benguet",
+  "how to grow blueberry in the philippines"
+ ],
+ "confidence": "low",
+ "slug": "blueberry",
+ "rev": "04e01c646165"
+}

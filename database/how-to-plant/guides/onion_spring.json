@@ -1,0 +1,125 @@
+{
+ "crop": "onion_spring",
+ "name": "Spring onion",
+ "local": "Sibuyas na mura",
+ "aka": [
+  "dahon ng sibuyas",
+  "spring onion",
+  "bunching onion"
+ ],
+ "summary": "How Filipino growers raise spring onion for its green leaves, from small bulbs or from seed, on beds near markets and on highland farms. Whole plants are pulled in about seven weeks, or the leaves are cut so they grow back.",
+ "season": "Grown all year where there is water. It is easier in the dry months, since long heavy rain rots the plants. Highland farms grow it the year round.",
+ "material": "Small bulbs of the native sibuyas tagalog type, split into single bulbs with the tops trimmed off, or seed of bunching onion sown in a seedbed and transplanted after about a month.",
+ "spacing": "Raised beds about a meter wide, bulbs about 10 to 15 cm apart each way.",
+ "water": "Watered by hand or from a canal every morning in the first week, then every one to two days in dry weather. Beds must drain well in the rains.",
+ "fertilizer": "Plenty of dried manure or compost in the beds, then urea (46 0 0) or complete fertilizer (14 14 14) side dressed twice, often dissolved in water.",
+ "care": "Frequent hand weeding, steady watering, and watching for armyworm, thrips and leaf rot in wet weather.",
+ "harvest": "Whole plants are pulled at about 45 to 50 days, or leaves are cut for regrowth. They are washed, bundled and sold fresh.",
+ "ways": [
+  {
+   "key": "sets",
+   "label": "Planted from small bulbs",
+   "days": 50,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Make the beds",
+     "how": "Dig or plow the plot and make raised beds about a meter wide. Mix in plenty of dried manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Prepare the bulbs",
+     "how": "Split the clumps into single bulbs and cut off the top part of each bulb so it sprouts faster.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the bulbs",
+     "how": "Push the bulbs into the bed about 10 to 15 cm apart each way, with the cut top just at the surface. Water the bed.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water daily at first",
+     "how": "Water every morning in the first week, then every one to two days if there is no rain.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Weed",
+     "how": "Hand pull the weeds on the beds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "Feed",
+     "how": "Side dress urea (46 0 0) or complete fertilizer (14 14 14) between the plants and water it in. Some growers dissolve the fertilizer in the watering can.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Watch for armyworm and thrips",
+     "how": "Check the leaves for small caterpillars, egg masses and silvery streaks from thrips.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Second feeding",
+     "how": "Give another light side dressing of urea and water it in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 50,
+     "title": "Pull or cut",
+     "how": "Pull whole plants at about 45 to 50 days when the leaves are full and green, or cut the leaves above the base so they grow back for another cutting.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 50,
+     "title": "Wash and bundle",
+     "how": "Wash off the soil, trim the roots and old leaves, tie in bundles and sell fresh the same day.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting in beds that hold water, so the bulbs rot in the rains.",
+  "Letting the beds dry out, which gives thin, tough leaves.",
+  "Using bulbs from a diseased crop, which carries the disease along."
+ ],
+ "better": [
+  "Use clean, firm bulbs or fresh seed.",
+  "Raise the beds and add compost so they drain and hold moisture.",
+  "Feed little and often, and water in the mornings.",
+  "Plant in batches every couple of weeks for a steady supply."
+ ],
+ "video": {
+  "youtubeId": "xcmH1Yx87ks",
+  "title": "Simpleng paraan ng pagtatanim ng dahon ng sibuyas (spring onion)",
+  "channel": "AgriworksTV",
+  "lang": "fil",
+  "minutes": 5,
+  "why": "A Filipino grower plants spring onion bulbs in field rows, the simple way most growers do it."
+ },
+ "keywords": [
+  "paano magtanim ng dahon ng sibuyas",
+  "pagtatanim ng spring onion",
+  "sibuyas dahon",
+  "how to plant spring onion in the philippines"
+ ],
+ "confidence": "medium",
+ "slug": "spring-onion",
+ "rev": "7db3ca3d8503"
+}

@@ -1,0 +1,155 @@
+{
+ "crop": "coconut",
+ "name": "Coconut",
+ "local": "Niyog",
+ "aka": [
+  "lubi",
+  "niog",
+  "buko"
+ ],
+ "summary": "This guide shows how Filipino farmers usually raise coconut from a ripe seednut to a planted seedling and care for it until the first nuts. It is for small farms and backyards planting tall or dwarf coconut.",
+ "season": "Seedlings go into the field as the rains begin, around May to July in most of Luzon and the Visayas, so they root before the dry months. Where rain falls through most of the year, as in much of Mindanao, farmers plant in any wet month. Seednuts are sown in a shaded bed many months earlier.",
+ "material": "Ripe seednuts picked from a heavy bearing, healthy mother palm: brown, full sized nuts that slosh when shaken. Farmers lay them in a shaded sprouting bed, then plant the seedling when it is about 8 to 10 months old with several healthy leaves. Many now buy seedlings from accredited seed gardens, since dwarf and tall seedlings look alike.",
+ "spacing": "About 7 to 8 m between palms on open land, roughly 200 palms a hectare. About 10 m when other crops are grown between them, roughly 120 palms a hectare. Many farmers set the palms in a triangle so each one gets more room. One seedling a hole.",
+ "water": "Rain fed in most farms. Seedlings are planted at the start of the rains, shaded with cut fronds and watered by pail in the first dry season. Coconut husks and dried weeds around the base keep the soil moist.",
+ "fertilizer": "About half a sardine can of complete fertilizer (14 14 14) in the hole at planting. Young palms then get complete fertilizer or ammonium sulfate (21 0 0) in a ring around the base, often twice a year at the start and end of the rains. Many coconut farmers also spread common salt, which coconut uses for chlorine, and some use animal manure or ash.",
+ "care": "Ring weeding around each young palm, with mulch of husks and dried weeds kept a little off the stem. Shading the new seedling with fronds. Growing short crops between the rows while the palms are small. Checking young fronds for leaf beetles and the base for rhinoceros beetle holes, and clearing rotting logs where beetles breed. Replacing dead seedlings in the first year.",
+ "harvest": "Buko for drinking is cut green, about 7 to 8 months after the flower opened. Nuts for copra and seed are left until fully ripe and brown, about 12 months from the flower, and climbers or long poles with a hooked knife bring the bunches down. Tall palms give the first nuts at about 6 years and dwarf palms at about 3 to 4 years.",
+ "ways": [
+  {
+   "key": "seedlings",
+   "label": "Seedlings from seednuts (punla ng niyog)",
+   "days": 2160,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -300,
+     "title": "Pick ripe seednuts",
+     "how": "Choose nuts from a palm that bears many nuts every year, stands healthy and has no pests. Take only ripe, brown, heavy nuts that slosh when shaken.",
+     "task": "seed_treatment",
+     "tip": "Nuts from a weak palm give weak seedlings, however well you care for them."
+    },
+    {
+     "phase": "nursery",
+     "day": -300,
+     "title": "Lay the nuts in a sprouting bed",
+     "how": "In a shaded spot with loose soil, lay the nuts on their side close together and cover them about two thirds with soil or sawdust. Water the bed in dry weather.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -210,
+     "title": "Keep only strong sprouts",
+     "how": "Move nuts that sprouted early and strongly to a nursery row or to bags, with space between them. Throw out nuts that sprout late or grow weak, crooked shoots.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear the land and dig the holes",
+     "how": "Clear the field, mark the planting spots and dig holes about 50 cm wide and 50 cm deep at least two months before planting. Set the spots about 7 to 8 m apart on open land, or about 10 m if you will grow other crops between the palms.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seedling",
+     "how": "Put about half a sardine can of complete fertilizer (14 14 14) in the hole and cover it with topsoil. Set the seedling with the nut just at or a little below the surface, fill in and firm the soil around it.",
+     "task": "planting",
+     "tip": "Seedlings bought from far away should rest in the shade for 3 to 5 days before planting."
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Shade and water the young seedling",
+     "how": "Cover the seedling with a few cut fronds for shade during its first dry weeks. Water it when there is no rain until it shows new leaves.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed around each seedling",
+     "how": "Keep a clean circle around each seedling by hand or bolo every month or two in the first year. Lay dried weeds or coconut husks as mulch a little away from the stem.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Plant crops between the rows",
+     "how": "While the palms are small, many farmers grow corn, banana, root crops or vegetables in the open space between rows. Keep these crops out of the cleared circle around each palm.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch the young leaves for beetles",
+     "how": "Check the youngest leaves often for small leaf beetles that scrape the folded fronds, and the base for holes made by the big rhinoceros beetle. Remove beetles by hand and clean away rotting logs and piles where they breed.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Feed the young palm",
+     "how": "At the start of the next rains, scatter complete fertilizer or ammonium sulfate in a ring around the palm and cover it lightly. Many coconut farmers also give common salt, which coconut needs for chlorine.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Replace dead seedlings and keep feeding",
+     "how": "After the first year, replace any seedling that died, using one of the same age from the nursery. Keep feeding twice a year at the start and end of the rains, and widen the weeded circle as the palm grows.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 1080,
+     "title": "Dwarf palms begin to flower",
+     "how": "Dwarf coconut often flowers at about 3 years, and the first nuts follow within the next year. Tall palms are still growing their trunk at this age.",
+     "task": "other"
+    },
+    {
+     "phase": "harvest",
+     "day": 2160,
+     "title": "First harvest of tall coconut",
+     "how": "Cut buko for drinking when the nuts are still green, about 7 to 8 months after the flower opened, and let nuts for copra or seed ripen fully until brown.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Tall coconut gives the first nuts at about 6 years. Dwarf palms often start in about 3 years (1080 days). Nursery steps are counted back from the planting day."
+  }
+ ],
+ "mistakes": [
+  "Using nuts from a weak or poor bearing palm as seed.",
+  "Planting seedlings too close, so the palms shade each other and bear few nuts.",
+  "Planting deep in a soggy spot where water stands after rain.",
+  "Letting grass and vines choke the young seedling in its first year.",
+  "Ignoring beetle damage on the young fronds until the seedling dies.",
+  "Buying seedlings from an unknown seller, so a dwarf turns out to be a tall palm."
+ ],
+ "better": [
+  "Get seedlings from an accredited seed garden or a proven high bearing mother palm.",
+  "Test the soil and feed by the result, with salt or another chlorine source each year.",
+  "Keep the right spacing and a clean, mulched circle around every palm.",
+  "Grow crops or keep animals between the rows to earn while the palms grow.",
+  "Scout young palms every month for leaf beetles and rhinoceros beetles and clean breeding spots.",
+  "Water seedlings through the first dry season so fewer die and growth stays even."
+ ],
+ "video": {
+  "youtubeId": "TuBuoQSt0qE",
+  "title": "USAPANG NIYOG: Tips and Tricks sa Pagtatanim Ng Nyog/#coconutfarm",
+  "channel": "Rapas tv",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "A coconut farmer walks his own field and explains the old way the elders in his town plant coconut: spacing, choosing the seednut and planting twin palms."
+ },
+ "keywords": [
+  "paano magtanim ng niyog",
+  "pagtatanim ng niyog",
+  "paano magpasibol ng niyog",
+  "how to plant coconut in the philippines",
+  "coconut seedling planting"
+ ],
+ "confidence": "medium",
+ "slug": "coconut",
+ "rev": "c61386dfa2a3"
+}

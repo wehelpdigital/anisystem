@@ -1,0 +1,168 @@
+{
+ "crop": "upo",
+ "name": "Bottle gourd",
+ "local": "Upo",
+ "aka": [
+  "tabungaw",
+  "kandol"
+ ],
+ "summary": "How Filipino farmers grow upo on an overhead trellis, from sprouted seed in hills to young fruits cut about two weeks after they set. It is for small farms and backyards that sell or cook the young fruits and tops.",
+ "season": "Upo grows in both the wet and dry seasons but does best in warm, fairly dry weather. Wet season plantings go on ridges or raised beds with good drainage, since the vines dislike soggy soil, and dry season plantings need weekly irrigation.",
+ "material": "Seed, about 1 to 3 kg for a hectare. Farmers soak the seed in clean water overnight or up to a day, wrap it in a damp cloth and keep it somewhere cool and dark until the seed coat cracks, and plant it straight in the hills. Hybrid seed is often raised in trays and transplanted about 15 days after it comes up.",
+ "spacing": "Furrows 2 to 3 meters apart and hills about 1 meter apart along the row, one or two plants a hill.",
+ "water": "Upo dislikes soggy soil, which brings disease, so wet season fields need drainage canals and ridges. In the dry season the furrows are irrigated about once a week, and rice straw around each plant keeps the soil moist longer.",
+ "fertilizer": "Well rotted manure and about 20 grams of 14 14 14 a hill at planting, covered with soil. About 10 grams of urea a hill at 30 days, and about 20 grams of urea with 10 grams of muriate of potash a hill at 45 days, placed some 10 cm from the stem.",
+ "care": "An overhead trellis about 2 meters high on ipil ipil or bamboo, with a pole or string for each plant. Vines are tied as they climb, the shoots and female buds below the roof are removed, and the vine tip is cut at the roof. Hilling up at 15 to 20 days, then only hand weeding once the vines bear. Yellow beetles are picked by hand, and some farmers dust wood ash on the leaves.",
+ "harvest": "Fruits are cut about 15 days after they set, 60 to 80 days after sowing, with a sharp knife leaving about 5 cm of stalk. Because they grow fast the trellis is checked every day or two. Fruits are packed in woven baskets with banana leaves at the bottom and then into plastic bags or crates. Fully mature fruits with a hard rind are kept for seed or dried for containers and crafts.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in hills (tanim buto)",
+   "days": 65,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow 15 to 20 cm deep two or three times, a week apart, so weeds sprout and get turned under each time. Harrow after each plowing to break the clods.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Open the furrows",
+     "how": "Make furrows 2 to 3 meters apart. In the wet season plant on the ridges or on raised beds and dig canals so water drains away.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Soak and sprout the seed",
+     "how": "Soak the seed overnight in clean water, then wrap it in a damp cloth and keep it in a cool, dark place until the seed coat splits.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilize and plant the hills",
+     "how": "Put well rotted manure and about 20 grams of 14 14 14 in each hill and cover it with a little soil so it does not touch the seed. Plant one or two sprouted seeds a hill, about 1 meter apart along the furrow, and cover thinly.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Replant missing hills",
+     "how": "Replant hills where nothing came up within the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water weekly and mulch",
+     "how": "In the dry season irrigate the furrows about once a week. lay rice straw around each plant to hold moisture and cut down on watering.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Build the overhead trellis",
+     "how": "Build a flat roof about 2 meters high over rows 2 to 3 meters wide, on ipil ipil or bamboo posts, with tie wire or nylon twine woven across and along the top. Give each plant a pole or a string ladder to climb.",
+     "task": "propping",
+     "tip": "In the wet season the trellis keeps the fruits off the ground, where they rot and grow crooked."
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Hill up",
+     "how": "Between 15 and 20 days after the seedlings come up, push soil against the base of the plants and pull the weeds.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Train and prune the vines",
+     "how": "Tie the stem loosely to its pole until it reaches the roof. Remove side branches and female buds on the main stem below the roof, then cut the vine tip once it reaches the top so fruiting branches spread out.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First side dressing",
+     "how": "About 30 days after planting, put about 10 grams of urea at each hill, some 10 cm from the stem so it does not burn the plant, and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Watch for beetles and fruit rot",
+     "how": "Pick and crush the yellow leaf beetles, and some farmers dust wood ash on the leaves to keep them off. Collect and remove rotting fruits and keep the field clean.",
+     "task": "spraying_watch",
+     "tip": "Upo flowers open in the late afternoon, so never spray then. The insects that pollinate the flowers come at the same time."
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Hand weed only",
+     "how": "Once the vines bear, stop hoeing or plowing between rows so the spreading roots are not cut. Pull weeds by hand.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Second side dressing",
+     "how": "About 45 days after planting, give each hill about 20 grams of urea and 10 grams of muriate of potash, away from the stem, and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 65,
+     "title": "Cut the young fruits",
+     "how": "Upo fruits grow fast, so walk the trellis every day or two. Cut fruits that have reached market size, about 15 days after they set, with a sharp knife, leaving about 5 cm of stalk.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 66,
+     "title": "Pack without bruising",
+     "how": "Lay the fruits in a woven basket with banana leaves at the bottom, then pack the good ones in plastic bags or crates for market.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Fruits reach market size about 15 days after they set, which is about 60 to 80 days after sowing depending on the variety. Picking then goes on every few days."
+  }
+ ],
+ "mistakes": [
+  "Planting on flat, wet ground in the rainy months, which brings fruit rot and dying vines.",
+  "Spraying in the late afternoon, which kills the insects that pollinate the flowers.",
+  "Hoeing between rows while the vines bear, which cuts the spreading roots.",
+  "Letting fruits grow past market size, so they turn hard and do not sell.",
+  "Putting fertilizer right against the stem, which burns the young plant."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result, with potash in the fruiting weeks.",
+  "Choose a variety that sets fruit well in your season and that buyers in your market like.",
+  "Hand pollinate in the late afternoon when few insects visit, to get more fruits set.",
+  "Use yellow sticky traps and hand picking for leaf beetles, and remove rotting fruits every day.",
+  "Rotate away from other gourds and melons so pests and soil diseases do not build up.",
+  "Mulch every row with rice straw or plastic to save water and weeding."
+ ],
+ "video": {
+  "youtubeId": "elPwCqPPaR0",
+  "title": "GANITO SILA MAGTANIM NG UPO. Paano magtanim ng upo",
+  "channel": "Agri nihan",
+  "lang": "fil",
+  "minutes": 10,
+  "why": "A farmer in Puerto Princesa, Palawan shows how he plants and grows upo on his farm, explained in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng upo",
+  "pagtatanim ng upo",
+  "balag ng upo",
+  "abono sa upo",
+  "how to plant upo in the philippines",
+  "bottle gourd production guide philippines"
+ ],
+ "confidence": "high",
+ "slug": "bottle-gourd",
+ "rev": "2f9f51ada68f"
+}

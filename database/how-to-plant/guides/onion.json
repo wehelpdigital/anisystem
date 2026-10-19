@@ -1,0 +1,186 @@
+{
+ "crop": "onion",
+ "name": "Onion, bulb",
+ "local": "Sibuyas",
+ "aka": [
+  "sibuyas pula",
+  "red onion",
+  "bulb onion"
+ ],
+ "summary": "How Filipino farmers grow bulb onions, mostly red onion planted after rice in the dry season, as in Nueva Ecija, Pangasinan and Occidental Mindoro. Seedlings are raised in a seedbed and set out by hand on beds watered from canals.",
+ "season": "Seedbeds are sown mostly in October to November, and the seedlings go into the field from about November to January, after the rice harvest. Bulbs are pulled from about February to April, before the rains. The cool weeks of December and January help the bulbs form, while late planting meets the summer heat and the first rains.",
+ "material": "Seed, bought fresh each season, mostly of red onion varieties with some yellow types. Onion seed loses its strength within about a year. Seedlings are raised in a seedbed for about 30 to 45 days before transplanting.",
+ "spacing": "Beds about a meter wide with watering canals between them, seedlings about 10 cm apart in rows 10 to 15 cm apart.",
+ "water": "Watered by letting water into the canals between the beds until it soaks in, most often every 3 to 7 days and more than ten times in a season, then stopped about two weeks before harvest.",
+ "fertilizer": "Manure or compost while preparing the beds, complete fertilizer (14 14 14) before transplanting, urea (46 0 0) or ammonium sulfate (21 0 0) at about three weeks, and complete fertilizer with potash (0 0 60) when the bulbs start to swell.",
+ "care": "Hand weeding two or three times, sometimes rice straw mulch on the beds, and close watch for onion armyworm, thrips and leaf blotch. Many farmers spray often during armyworm season.",
+ "harvest": "Ready about 80 to 90 days after transplanting, when the tops fall over and the leaves yellow. Bulbs are pulled, cured in the field for a few days, trimmed, dried in the shade and stored in mesh sacks or cold storage.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Transplanted from a seedbed (lipat tanim)",
+   "days": 90,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -40,
+     "title": "Make the seedbed",
+     "how": "Make raised beds about a meter wide with fine, loose soil mixed with compost or carbonized rice hull.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -40,
+     "title": "Sow the seed",
+     "how": "Sow the seed thinly in shallow lines across the bed, cover it lightly with fine soil or rice hull, and lay rice straw on top to keep it moist. Water gently every day.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -33,
+     "title": "Uncover the seedlings",
+     "how": "Lift the straw once most seedlings are up, and keep watering lightly in the morning.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Prepare the field after rice",
+     "how": "After the rice harvest, clear the stubble, plow and harrow or dig, then form beds about a meter wide with canals between them for watering. Mix in manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Basal fertilizer",
+     "how": "Spread complete fertilizer (14 14 14) on the beds and rake it in. Some farmers then lay rice straw over the beds to hold moisture and keep weeds down.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Pull and transplant",
+     "how": "Water the seedbed, then pull seedlings about pencil thick. Many farmers trim the leaf tips and roots a little. Set them 2 to 3 cm deep, about 10 cm apart in rows 10 to 15 cm apart, and press the soil around them.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water the new plants",
+     "how": "Let water into the canals between the beds until it soaks in, then drain the rest.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Replace dead seedlings",
+     "how": "Fill gaps with spare seedlings from the seedbed in the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "First weeding",
+     "how": "Hand pull the weeds on the beds. Young onions lose easily to weeds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "First side dressing",
+     "how": "Side dress urea (46 0 0) or ammonium sulfate (21 0 0) between the rows and water it in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Water every few days",
+     "how": "Most farmers flood the canals every 3 to 7 days, depending on the soil and the weather.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Watch for armyworm and thrips",
+     "how": "Look for egg masses and small caterpillars feeding inside the leaves, the onion armyworm (harabas), and pick off egg masses by hand. Silvery streaks on the leaves mean thrips, and purple spots mean leaf blotch.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Feed as the bulbs swell",
+     "how": "Give a second side dressing of complete fertilizer (14 14 14), often with potash (0 0 60), when the bulbs start to swell.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Second weeding",
+     "how": "Hand pull the weeds again without hurting the bulbs.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 75,
+     "title": "Stop watering",
+     "how": "Stop watering about two weeks before harvest, when the leaves start to soften, so the bulbs firm up and keep longer.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 90,
+     "title": "Pull the bulbs",
+     "how": "Harvest when about half or more of the tops have fallen over and the leaves are yellowing. Pull the plants by hand on a dry morning.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 91,
+     "title": "Cure in the field",
+     "how": "Lay the plants in rows with the leaves covering the bulbs of the row before, so the sun does not scald them, and leave them for two to three days.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 94,
+     "title": "Trim, dry and store",
+     "how": "Cut the tops leaving a short neck, dry the bulbs further in the shade, sort out damaged ones, and store them in mesh sacks in a cool, airy place or in cold storage.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 0 is transplanting day. The seedlings are already 30 to 45 days old by then, and most farmers pull the bulbs about 80 to 90 days after transplanting."
+  }
+ ],
+ "mistakes": [
+  "Transplanting late, so the bulbs form in the summer heat and stay small.",
+  "Watering right up to harvest, which gives soft bulbs that rot in storage.",
+  "Spraying the same insecticide again and again for armyworm, so it stops working.",
+  "Storing bulbs before they are cured, or in closed sacks with no air.",
+  "Planting old seed that comes up poorly."
+ ],
+ "better": [
+  "Buy fresh seed of a variety suited to the season and transplant on time, by December.",
+  "Feed by a soil test and split the nitrogen, with potash at bulbing.",
+  "Fight armyworm early: pick egg masses, use light or pheromone traps, and switch between products of different kinds when spraying is needed.",
+  "Stop watering two weeks before harvest and cure the bulbs well before storing.",
+  "Rotate onion with rice and do not plant onion on the same field every year."
+ ],
+ "video": {
+  "youtubeId": "-NnpGgxmhsk",
+  "title": "Pagtatanim ng sibuyas",
+  "channel": "Karaniwang Tao TV",
+  "lang": "fil",
+  "minutes": 7,
+  "why": "Farm workers in Nueva Ecija transplant onion seedlings by hand on prepared beds, the way most onion farms do it."
+ },
+ "keywords": [
+  "paano magtanim ng sibuyas",
+  "pagtatanim ng sibuyas",
+  "lipat tanim na sibuyas",
+  "how to plant onion in the philippines",
+  "onion farming nueva ecija"
+ ],
+ "confidence": "medium",
+ "slug": "onion-bulb",
+ "rev": "64fccc83dfcd"
+}

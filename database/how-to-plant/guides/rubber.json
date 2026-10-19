@@ -1,0 +1,162 @@
+{
+ "crop": "rubber",
+ "name": "Rubber",
+ "local": "Goma",
+ "aka": [
+  "rubber tree",
+  "Para rubber"
+ ],
+ "summary": "This guide shows how Filipino rubber growers, most of them in Mindanao (Cotabato, Zamboanga, Basilan and Davao), usually plant budded rubber seedlings, care for the young trees for about six years and start tapping them for cup lumps. It is for smallholders setting up a new rubber lot or filling an old one.",
+ "season": "Plant when steady rain is coming, as the rains begin, so the young trees root before any dry spell. In much of Mindanao, where rain falls through most of the year, planting can go on in most months as long as the soil stays moist.",
+ "material": "Budded seedlings grown in plastic bags: a bud from a high yielding clone is grafted onto a seedling grown from rubber seed. They are ready to plant when the leaves of the second top flush are fully open, dark green and hard. Some small growers still plant ordinary seedlings grown from fallen seed, which cost less but give far less latex.",
+ "spacing": "On flat or rolling land, rectangles of 5 m by 4 m or 6 m by 3 m, about 500 to 555 trees a hectare. Where crops will be grown between the rows, wide avenues of 8 m by 2.25 m, 10 m by 2 m, 12 m by 2 m, or double rows 2 m apart with 24 m between pairs, about 416 to 555 trees. On hills the trees follow the contour. Many small growers plant closer, as close as 3 m by 3 m.",
+ "water": "Rainfed. Trees are planted when steady rain is expected, and cover crops, mulch and the terraces on slopes keep the soil damp. Tapping is lighter in very wet months because rain on the panel washes out the latex.",
+ "fertilizer": "Complete fertilizer (14 14 14) every year while the trees are young, split in two doses six months apart: about 125 g a tree in year one at 30 cm from the base, 250 g in year two at 60 cm, and 500 g in years three and four at 90 to 120 cm. Tapping trees get complete fertilizer about twice a year, after the new leaves come out following the dry season leaf fall, put in small holes around each tree.",
+ "care": "Weeds are kept down by slashing, by weeding along the rows or in a ring around each tree, with special care to keep cogon out, and legume cover crops between rows. Replanting gaps up to the second year, pruning to a clean trunk with 4 to 5 branches, crops between the rows in the early years, and fire lines in summer.",
+ "harvest": "Tapping starts at about 6 to 7 years, when the trunk is about 46 cm around at about 1.1 m. Most growers tap a half spiral cut every other day, about 15 days a month, early in the morning. The latex sets in the cups as cup lumps, which small growers gather and sell to traders or processors.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Budded seedlings in bags (budded goma)",
+   "days": 2160,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -90,
+     "title": "Clear the land",
+     "how": "Cut the undergrowth, take out useful trees as logs and pile the rest along the future rows to rot. Burn as little as you can, and dig out cogon grass completely, since it stunts young rubber. On flat farm land, plow twice.",
+     "task": "land_prep",
+     "tip": "On hills where plowing is hard, clear the cogon at least along the rows."
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Lay out the rows",
+     "how": "On flat land, run the rows east to west using two long ropes and bamboo stakes. On slopes, mark level lines with an A frame and cut small terraces about 1 to 1.5 m wide where each tree will stand.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig the holes",
+     "how": "Dig a hole at each stake a little bigger than the bag. Hard, packed soil needs bigger holes than loose loam, and big seedlings need bigger holes than small ones.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the budded seedling",
+     "how": "On a rainy day, cut off the bottom of the bag and slit its side without hurting the roots. Lower the seedling into the hole, pull the plastic up and off, fill with topsoil and press it firm, keeping the plant at the same depth it stood in the bag.",
+     "task": "planting",
+     "tip": "A seedling set too deep or too high can grow a swollen foot that is hard to tap later."
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed and plant a cover crop",
+     "how": "Slash or pull the weeds in a ring around each young tree and along the rows. Sow a creeping legume between rows to hold the soil and keep weeds down.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "First year fertilizer",
+     "how": "Give each tree about 125 g of complete fertilizer (14 14 14) in its first year, in two equal doses six months apart, spread about 30 cm from the base.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Plant crops between the rows",
+     "how": "While the trees are small, grow corn, peanut, upland rice, mungbean, sweet potato, pineapple or banana between the rows for food and cash. This works best with wide avenue spacing.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Replace the dead trees",
+     "how": "Fill missing spots with bagged budded seedlings of the same age, and only until the second year, so the new trees catch up before the shade closes.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Prune to a clean trunk",
+     "how": "Snap off side shoots until the trunk is clean up to about 2 to 2.5 m, then let 4 to 5 well spaced branches form the crown so the tree stands up to wind.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 730,
+     "title": "Feed more each year",
+     "how": "Raise the complete fertilizer to about 250 g a tree in the second year at about 60 cm from the base, then about 500 g in the third and fourth years at 90 to 120 cm, always split in two doses.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 1095,
+     "title": "Keep weeds and fire out",
+     "how": "Slash, line weed or ring weed until the trees shade the ground. Clear dry grass in summer, because cogon fires can kill a young rubber lot.",
+     "task": "weeding"
+    },
+    {
+     "phase": "harvest",
+     "day": 2160,
+     "title": "Open the tapping panel",
+     "how": "When the trunk measures about 46 cm around at about 1.1 m above the ground, mark a half spiral cut on the bark and fix the spout, wire hanger and cup below it.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 2160,
+     "title": "Tap early in the morning",
+     "how": "Shave a thin strip of bark along the cut with a sharp tapping knife, every other day, early in the morning when latex flows best. Do not cut into the wood, and skip tapping when the bark is wet.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 2161,
+     "title": "Gather the cup lumps",
+     "how": "Let the latex set in the cups into cup lumps, collect them, keep them free of leaves, soil and bark, and sell them to the buyer or processor.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Small growers usually open the first trees for tapping at about 6 to 7 years. Trees are then tapped for many years."
+  }
+ ],
+ "mistakes": [
+  "Planting ordinary seedlings from fallen seed instead of budded seedlings of a good clone.",
+  "Leaving cogon around the young trees, which stunts them and invites fire.",
+  "Starting to tap before the trunk is big enough.",
+  "Cutting too deep into the wood, which wounds the panel for good.",
+  "Tapping when the bark is wet, which wastes latex and invites panel disease.",
+  "Letting soil, leaves and bark get into the cup lumps."
+ ],
+ "better": [
+  "Plant budded seedlings of a high yielding clone from a trusted nursery.",
+  "Have the soil tested and fertilize every year while the trees are young.",
+  "Use avenue spacing if you want to earn from crops between the rows.",
+  "Keep the young lot weeded and the trunks pruned clean until the shade closes.",
+  "Train tappers to cut thin and even, and tap less often, such as every third day, in the rainiest months.",
+  "Keep cup lumps clean and sell them by grade for a better price."
+ ],
+ "video": {
+  "youtubeId": "GOZvlnesqEM",
+  "title": "Planting Budded Rubber tree.tara silipin natin kung paano ang tamang pagtanim.",
+  "channel": "Gha Agri Tv",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "A Filipino rubber grower plants budded rubber seedlings in the field and explains the steps in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng goma",
+  "paano magtanim ng rubber tree",
+  "pagtatanim ng rubber",
+  "how to plant rubber trees in the philippines",
+  "rubber farming philippines",
+  "rubber tapping philippines"
+ ],
+ "confidence": "medium",
+ "slug": "rubber",
+ "rev": "e82892ac6970"
+}

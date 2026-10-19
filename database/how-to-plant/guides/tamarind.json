@@ -1,0 +1,196 @@
+{
+ "crop": "tamarind",
+ "name": "Tamarind",
+ "local": "Sampalok",
+ "aka": [
+  "sampaloc",
+  "salamagi",
+  "sambag",
+  "tamarindo"
+ ],
+ "summary": "How Filipino growers plant sampalok, the sour kind for sinigang and candy and the sweet kind eaten fresh, either from seed the old way or from grafted seedlings that bear much sooner. It is a tough, long lived tree for dry corners, field edges, dikes and backyards.",
+ "season": "Trees are planted as the rains begin, about May to June. Grafting and budding are done in the cool dry months, about November to January. Trees flower in the rainy months. Green pods for cooking are picked as they fill, and the ripe brown pods come mostly in the dry months early in the year.",
+ "material": "Most old trees grew from seed, but seedlings do not come true: the fruit may be sour or sweet, small or big, and the tree takes many years to bear. Seeds from big, well filled pods are washed and soaked in water overnight before sowing. For sweet tamarind or a known sour type, farmers buy cleft grafted or budded seedlings from a nursery.",
+ "spacing": "Grafted trees about 8 to 10 m apart each way, about 100 to 150 trees a hectare. Seedling trees grow bigger and are planted farther apart, or alone along dikes, roads and boundaries. One seedling a hole.",
+ "water": "Rain fed. Young trees are watered once or twice a week in their first dry season. After that sampalok stands long droughts and bears with no watering at all.",
+ "fertilizer": "Rotted manure and compost at planting. Farmers who buy fertilizer give about 100 to 200 g of ammonium sulfate (21 0 0) a tree a month after planting and again at the end of the rains, then about 500 g twice a year once bearing, up to 2 kg a year on a big tree. Many trees get nothing and still bear.",
+ "care": "Ring weeding and mulch while young, watering only in the first dry season, shaping the tree to three or four main branches, removing rootstock shoots on grafted trees, and pruning after the harvest. Fallen, bored pods are gathered and buried.",
+ "harvest": "Green pods are picked for sinigang as soon as they fill. Ripe pods are picked when the shell is brown, brittle and loose and the pulp sticky. Sweet types are also sold half ripe. Bunches are clipped, not shaken down, so the pods do not crack, then sun dried on mats and kept dry in sacks or jars.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedlings (punla na grafted)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Dig the holes far apart",
+     "how": "Pick a sunny spot where water drains, and dig holes about 50 cm wide and deep about 8 to 10 m apart. Mix the topsoil with rotted manure or compost and fill it back.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "On a cloudy day, water the bag, cut it off, and set the seedling at the same depth it grew with the graft joint above the soil. Firm the soil, water, and tie the plant to a stake.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Mulch the base",
+     "how": "Spread dry grass or leaves around the seedling, not against the stem, to keep the soil damp.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First feed",
+     "how": "A month after planting, scatter about 100 to 200 g of ammonium sulfate (21 0 0) in a ring away from the stem, and give the same again as the rains end. Manure or compost works too.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Remove shoots below the graft",
+     "how": "Rub off any shoot that grows from the rootstock below the graft joint, and weed a ring under the tree every month or two.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 150,
+     "title": "Water through the first dry season",
+     "how": "Water once or twice a week when the rains stop, until the young tree has passed its first dry season. Older trees need no watering.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Shape a low, open tree",
+     "how": "Cut the tip to make it branch and keep three or four well spaced main branches. Remove low, crossing and crowded branches so light gets in and the pods are easy to reach.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 1200,
+     "title": "Watch the pods for borers",
+     "how": "Once the tree flowers and sets pods, look for holes and frass on the pods from borers and weevils, and pick up and bury fallen damaged pods.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "Pick the pods",
+     "how": "Grafted trees bear at about three to four years. Pick green, firm pods for sinigang as they fill. For ripe sampalok, wait until the shell turns brown, brittle and loose and the pulp turns sticky and brown, then clip the bunches so the pods do not crack.",
+     "task": "harvest",
+     "tip": "Sweet types are also picked half ripe, when the skin peels easily and the pulp is still crisp."
+    },
+    {
+     "phase": "harvest",
+     "day": 1460,
+     "title": "Dry and store the ripe pods",
+     "how": "Spread ripe pods in the sun on mats for a few days, then keep them in clean sacks or jars in a dry place. Pulp for candy is peeled and seeded by hand.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 1500,
+     "title": "Prune and feed after harvest",
+     "how": "After the ripe pods are in, cut out dead, crowded and crossing branches, and give manure plus about 500 g of ammonium sulfate or complete fertilizer twice a year, more as the tree grows.",
+     "task": "pruning"
+    }
+   ],
+   "note": "Grafted trees usually start bearing in three to four years, some as early as two. We count the first harvest at 48 months (1,440 days)."
+  },
+  {
+   "key": "seed",
+   "label": "From seed (punla mula sa buto)",
+   "days": 2160,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -240,
+     "title": "Soak and sow the seeds",
+     "how": "Wash the seeds of big, well filled pods and soak them in water overnight. Sow them about 2 cm deep in bags of garden soil and compost and keep them moist. They come up in one to two weeks.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -200,
+     "title": "Keep one strong seedling",
+     "how": "Leave the strongest seedling in each bag and keep the bags weeded and watered.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Dig the holes",
+     "how": "Dig holes about 50 cm wide and deep in a sunny, well drained place, far from houses, and mix the topsoil with manure.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Set out seedlings that have grown in the bag for up to a year, at the same depth. Firm the soil, water and mulch.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Feed and weed",
+     "how": "Give a small amount of ammonium sulfate (21 0 0) or manure a month after planting and at the end of the rains, and keep a clean ring under the tree.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Shape the young tree",
+     "how": "Cut the tip to make it branch and keep three or four main branches.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 2160,
+     "title": "Pick the first pods",
+     "how": "Seedling trees bear from about five years, often later. Taste the first pods. A tree with poor fruit can be top worked with grafts of a good sweet or sour type.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Seedling trees stay young and fruitless for five years or longer. We count the first harvest at 72 months (2,160 days)."
+  }
+ ],
+ "mistakes": [
+  "Planting seed from unknown pods and waiting many years for small or poor fruit.",
+  "Planting too close to houses, wells or other trees.",
+  "Shaking or beating the branches to drop pods, which cracks them and breaks the twigs.",
+  "Storing ripe pods damp, so they mold and draw weevils.",
+  "Never pruning, so the tree grows tall and dense and bears less."
+ ],
+ "better": [
+  "Plant grafted or budded seedlings of a known sweet or sour type for fruit in three to four years.",
+  "Top work old poor trees with grafts of a good type.",
+  "Prune after harvest to open the tree. Experienced growers also girdle branches before flowering, but learn it from them first.",
+  "Test the soil and feed by the result, twice a year.",
+  "Scout for pod borers and weevils, clean up fallen pods, and use integrated pest management."
+ ],
+ "video": {
+  "youtubeId": "6MESkihQ33E",
+  "title": "PAGTATANIM NG SWEET TAMARIND AT KING MANGO SA FARM",
+  "channel": "Katrabaho TV",
+  "lang": "fil",
+  "minutes": 20,
+  "why": "A Filipino farmer digs the holes and plants grafted sweet tamarind seedlings in his own farm. Plain and real, though a small channel."
+ },
+ "keywords": [
+  "paano magtanim ng sampalok",
+  "pagtatanim ng sampalok",
+  "sweet tamarind philippines",
+  "how to plant tamarind in the philippines",
+  "grafted sampalok"
+ ],
+ "confidence": "medium",
+ "slug": "tamarind",
+ "rev": "7caa75286b6a"
+}

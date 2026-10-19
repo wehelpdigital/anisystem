@@ -1,0 +1,163 @@
+{
+ "crop": "grape",
+ "name": "Grape",
+ "local": "Ubas",
+ "aka": [
+  "ubas",
+  "grapes",
+  "Red Cardinal"
+ ],
+ "summary": "How Filipino grape growers, best known in Bauang, La Union and spreading to Pangasinan, Cebu and backyards around the country, raise grapes from rooted cuttings on a trellis and time the pruning so the fruit ripens in the dry months. Red Cardinal is the usual variety. The vine needs more work than most fruit, mostly pruning and keeping the bunches dry.",
+ "season": "Rooted cuttings are planted at the end of the rains or early in the dry season, about October to January, and watered by hand. The main crop is timed by pruning so the bunches ripen in the dry, hot months, about February to May. Rain on ripening grapes splits and rots them. Some farms prune again for a second, smaller crop later in the year.",
+ "material": "Cuttings from mature, brown, pencil thick canes saved at pruning time, each about 20 to 30 cm long with three or four buds, cut straight below a bud at the bottom and slanted above a bud at the top. They are rooted in bags of soil, sand and compost under light shade for one to two months until the roots fill the bag and the shoots have several leaves. Many growers buy rooted cuttings from La Union farms.",
+ "spacing": "Vines about 2 to 3 m apart under an overhead trellis, or about 1.5 m apart in rows 3 m apart on a single wire. One rooted cutting a hole.",
+ "water": "Watered by hand, hose or furrow in the dry months, every two to three days on young vines, at the base and never on the leaves. Water matters most from flowering until the berries fill. Growers ease off as the fruit ripens. In the rains, raised beds and drains keep the roots out of standing water.",
+ "fertilizer": "Compost, vermicast and chicken manure every month or two are the base. Growers who buy fertilizer give complete fertilizer (14 14 14) in small doses through growth, then more potash, such as muriate of potash (0 0 60), as the bunches fill for color and sweetness.",
+ "care": "Training one stem up a stick, spreading arms on the trellis, fruit pruning timed for dry weather, thinning shoots and bunches, removing tendrils, tying shoots flat, bagging bunches, netting against birds, and cutting out sick leaves. Pruning is the habit that decides the crop.",
+ "harvest": "Bunches are ready about three to four months after fruit pruning, when every berry is fully colored and sweet. They are cut with scissors in the cool morning, handled by the stalk, packed in single layers in shallow crates, and sold quickly, often straight to visitors at the farm.",
+ "ways": [
+  {
+   "key": "cuttings",
+   "label": "Rooted cuttings on a trellis (sanga sa balag)",
+   "days": 360,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -60,
+     "title": "Root the cuttings in bags",
+     "how": "Stick each cutting upright in a bag of loose soil, sand and compost, burying two buds and leaving one or two above. Keep the bags in light shade and moist, not soggy. The buds push out in two to three weeks.",
+     "task": "seedbed",
+     "tip": "Plant the cutting the right way up: the slanted top end stays above the soil."
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Build the trellis",
+     "how": "Most farms build an overhead trellis (balag) of bamboo, wood or concrete posts and a grid of galvanized wire about 1.8 to 2 m high. Some use a single wire about 1.5 m high along the row. Make it strong, because a vine in fruit is heavy.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Raise beds and dig holes",
+     "how": "Grapes hate wet feet, so make raised beds or mounds on low ground. Dig holes about 50 cm wide and deep, about 2 to 3 m apart, and mix the topsoil with rotted manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the rooted cuttings",
+     "how": "Cut away the bag, set the rooted cutting in the hole at the same depth it grew, firm the soil and water well. Push a bamboo stick beside it reaching up to the trellis.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Mulch and water",
+     "how": "Mulch the bed with rice straw or dry grass. Water at the base every two to three days in the dry months, never on the leaves.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Train one main stem up",
+     "how": "Keep the strongest shoot and tie it loosely to the stick as it grows. Pinch off side shoots and tendrils on the lower stem so the vine climbs fast.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Feed every month",
+     "how": "Scatter compost, vermicast or chicken manure around the vine every month, and growers who buy fertilizer add a small amount of complete fertilizer (14 14 14) away from the stem. Water after feeding.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Weed the beds",
+     "how": "Pull weeds by hand around the vines. The roots are shallow, so do not dig deep.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Spread the arms on the trellis",
+     "how": "When the main stem reaches the top, cut its tip so it splits, and train two to four arms along the wires. Let the canes grow and harden until they turn brown.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 240,
+     "title": "Fruit pruning",
+     "how": "When the canes are brown and mature and the dry season is near, cut each cane back to a short spur of a few buds, or to a longer cane of more buds as the grower prefers, and strip the old leaves. New shoots with flower bunches come out in one to two weeks.",
+     "task": "pruning",
+     "tip": "Time this so the fruit ripens in dry weather. Count back about three to four months."
+    },
+    {
+     "phase": "care",
+     "day": 270,
+     "title": "Thin shoots and bunches",
+     "how": "Keep one or two bunches on each shoot and remove weak shoots, tendrils and small, poorly set bunches. Tie the fruiting shoots flat on the trellis so the bunches hang free.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 285,
+     "title": "Watch for mildew and pests",
+     "how": "Check the leaves and bunches often for white or downy mildew, anthracnose spots, mealybugs and thrips, and cut off sick parts. Many growers bag the young bunches in paper bags and net the trellis against birds and bats.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 360,
+     "title": "Cut ripe bunches",
+     "how": "The first crop comes at about a year, roughly three to four months after the fruit pruning. Cut bunches with scissors when all the berries are fully colored and taste sweet, in the cool morning, holding them by the stalk, not the berries.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 390,
+     "title": "Rest the vine, then prune again",
+     "how": "After harvest, feed the vine and let it rest and grow new canes for about a month or more before the next fruit pruning.",
+     "task": "fertilizer"
+    }
+   ],
+   "note": "Strong vines can give a first small crop at about 8 to 12 months. We count the first harvest at 12 months (360 days). Full crops come from the second year."
+  }
+ ],
+ "mistakes": [
+  "Pruning at the wrong time so the grapes ripen in the rains and split or rot.",
+  "Planting on low, wet ground with no raised beds.",
+  "Leaving too many bunches on the vine, so the berries stay small and sour.",
+  "Watering over the leaves, which spreads mildew.",
+  "Building a weak trellis that sags or falls once the vine fruits.",
+  "Picking before every berry is colored. Grapes do not sweeten after picking."
+ ],
+ "better": [
+  "Start from rooted cuttings of a proven variety for the lowlands, such as Red Cardinal, from a known farm.",
+  "Test the soil, add lime where it is very sour, and feed by the result.",
+  "Plan the fruit pruning calendar so harvest falls in the dry months.",
+  "Bag bunches, net the trellis, and keep leaves dry with drip or base watering.",
+  "Scout twice a week for mildew, anthracnose, mealybugs and thrips and use integrated pest management.",
+  "Ask an experienced grower before using bud forcing treatments at pruning."
+ ],
+ "video": {
+  "youtubeId": "LxRHbTaXpR8",
+  "title": "Paano Magtanim ng Grapes | Complete Guide from Seedlings to Harvest",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 24,
+  "why": "A Filipino grape grower walks through cuttings, planting, trellis, pruning and harvest on a working vineyard, in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng ubas",
+  "paano magtanim ng grapes",
+  "pagtatanim ng ubas",
+  "grapes farming philippines",
+  "how to plant grapes in the philippines",
+  "red cardinal grapes"
+ ],
+ "confidence": "medium",
+ "slug": "grape",
+ "rev": "64876ed1e344"
+}

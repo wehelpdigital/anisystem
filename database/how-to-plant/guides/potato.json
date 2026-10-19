@@ -1,0 +1,142 @@
+{
+ "crop": "potato",
+ "name": "Potato",
+ "local": "Patatas",
+ "aka": [
+  "white potato"
+ ],
+ "summary": "How Filipino farmers usually grow patatas from seed tubers, on raised beds in the Benguet highlands and in plowed furrows in Bukidnon and other uplands, to the harvest about three months later. For highland growers and lowland farmers who try a cool season crop, with the changes that raise the yield.",
+ "season": "In the highlands of Benguet, Mountain Province and Bukidnon the main plantings are March to April and October to November. In the lowlands potato is planted only in the coolest months, from November to mid December, and harvested before the hot months.",
+ "material": "Seed tubers, ideally healthy, well sprouted pieces of about 30 to 40 g that are two to three months past harvest. A hectare takes about 1,200 to 2,000 kg. Many farmers keep their own small tubers from the last crop and let them sprout in a shaded, airy shed before planting. Bigger tubers are cut into pieces, each with eyes.",
+ "spacing": "Benguet style beds: about 1 m wide with 50 cm paths, two rows 30 cm apart, plants 30 cm apart. Flat land: furrows 75 cm apart with plants 30 cm apart. Both come to about 44,000 plants a hectare.",
+ "water": "Lowland and dry season crops are watered by furrow or hose, first lightly at five to seven days and then every 7 to 15 days. Highland rainy season crops are mostly rainfed, but need drainage, since soggy soil brings wilt and rot.",
+ "fertilizer": "Highland farmers rely heavily on chicken manure, about 5 tons a hectare at land preparation, plus 3 to 5 bags of 14 14 14 in the planting holes. The rest of the nitrogen and potash (urea and 0 0 60) goes on at hilling up, about a month after planting. Too much nitrogen delays maturity and gives tubers that bruise easily.",
+ "care": "One main weeding, side dressing and hilling up at about a month, a second light hilling to cover exposed tubers, steady watering in dry weather, and close watch for late blight in cool, wet weather.",
+ "harvest": "Most potatoes are ready 75 to 90 days after planting, when most of the leaves turn yellow. Farmers cut the vines about a week before digging so the skins harden, dig with a fork, keep the tubers out of the sun, grade them by size and store them in a dark, cool, airy place.",
+ "ways": [
+  {
+   "key": "tubers",
+   "label": "Seed tubers on beds or furrows (tanim binhi)",
+   "days": 90,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Lime acid soil",
+     "how": "Where the soil is sour, spread lime about a month before planting and mix it in.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow twice",
+     "how": "Plow and harrow two times for a loose, crumbly soil. Spread chicken manure during land preparation.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -14,
+     "title": "Ready the seed tubers",
+     "how": "Keep the seed tubers in a shaded, airy place until they carry short, strong sprouts. If you cut big tubers, give each piece eyes and dust the cut with fine wood ash.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Make beds or furrows",
+     "how": "On slopes, as in Benguet, make raised beds about 1 m wide with 50 cm paths. On flat land, open furrows about 75 cm apart with a carabao drawn plow.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilize the holes and plant",
+     "how": "Put complete fertilizer and a handful of chicken manure in each hole and cover lightly with soil. Set one tuber on top and cover it with about 5 cm of soil. Beds take two rows 30 cm apart. Holes are 30 cm apart along the row.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 6,
+     "title": "First light watering",
+     "how": "Give a light irrigation five to seven days after planting, then water every 7 to 15 days depending on rain and soil. Potato roots are shallow, so the soil must not dry out.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed, hill up and side dress",
+     "how": "About a month after planting, before the leaves close, pull the weeds, add the rest of the nitrogen and potash fertilizer, and pull soil up around the stems in one go.",
+     "task": "earthing_up",
+     "tip": "Where plants wilt from bacterial wilt, hill up early and gently so roots are not torn."
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Scout for blight and pests",
+     "how": "In cool, wet weather look for dark, water soaked patches on leaves, the first sign of late blight. Check for cutworms, aphids, thrips and leaf miners, and pull out plants that wilt suddenly.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "Hill up again",
+     "how": "Cover any tubers showing at the surface with more soil, which keeps them from turning green and from tuber moth.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "harvest",
+     "day": 82,
+     "title": "Cut the vines",
+     "how": "When most leaves have yellowed, cut the stems 5 to 10 cm above the ground and wait five to seven days so the tuber skin hardens.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 88,
+     "title": "Dig the tubers",
+     "how": "Dig carefully with a spading fork or a pointed tool. Keep the tubers out of the sun so they do not turn green.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 89,
+     "title": "Grade and store in the dark",
+     "how": "Sort by size, set aside damaged tubers, and keep the rest in a dark, cool, airy place. Keep healthy small tubers as seed for the next planting.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Replanting small tubers from a sick crop season after season, so virus and wilt keep cutting the yield.",
+  "Planting seed that has not sprouted yet, or that is too old and weak.",
+  "Planting in poorly drained soil, which invites bacterial wilt and rot.",
+  "Forgetting to hill up, so tubers turn green or get tuber moth.",
+  "Leaving dug tubers in the sun."
+ ],
+ "better": [
+  "Buy clean seed tubers from a trusted seed grower every few seasons instead of replanting your own for years.",
+  "Test the soil, lime sour soils and fertilize by the result instead of guessing.",
+  "Rotate potato with crops outside the tomato family, such as cabbage, beans or corn.",
+  "Scout often in cool, wet weather and act at the first sign of late blight.",
+  "Cut the vines a week before harvest and store tubers in a dark, cool shed."
+ ],
+ "video": {
+  "youtubeId": "ZWZhJQLGfZM",
+  "title": "Paano Magtanim at Magpalaki ng Potato, Complete Farmer's Guide",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 24,
+  "why": "A Filipino potato farmer walks through planting and caring for patatas step by step in the field, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng patatas",
+  "pagtatanim ng patatas",
+  "patatas farming sa benguet",
+  "how to plant potato in the philippines",
+  "potato farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "potato",
+ "rev": "a533ed22d108"
+}

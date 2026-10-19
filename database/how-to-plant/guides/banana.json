@@ -1,0 +1,157 @@
+{
+ "crop": "banana",
+ "name": "Banana",
+ "local": "Saging",
+ "aka": [
+  "saba",
+  "kardaba",
+  "lakatan",
+  "latundan",
+  "dippig"
+ ],
+ "summary": "This guide shows how Filipino farmers usually plant banana from suckers, for saba, lakatan and latundan in backyards and small farms. It runs from digging the hole and picking a good sucker through the first year of care to the first bunch.",
+ "season": "Most farmers plant as the rains begin, around May to July in Luzon and the Visayas, so the young plants get steady rain. In much of Mindanao, where rain comes through most of the year, planting goes on in almost any month as long as the soil is moist.",
+ "material": "Sword suckers (espada) dug from a healthy mat: young shoots with narrow, pointed leaves, about 1 to 1.5 m tall, lifted with their corm. Farmers trim the old roots and any rotten part of the corm, cut the leaves back and plant within a few days. Some plant corm pieces of about half a kilo with at least one good bud, and more farmers now buy tissue culture plantlets from a nursery.",
+ "spacing": "Lakatan and latundan: about 2 m between plants and 2.5 m between rows, or 3 m by 3 m. Saba grows much bigger: commercial saba plantings use about 5 m by 7 m or 6 m by 6 m, while backyard growers often plant closer. One sucker a hole.",
+ "water": "Mostly rain fed: farmers plant when the rains start and rely on them. In long dry months they water by hose or pail where they can and keep a thick mulch of dry leaves and chopped trunks around the base. On low ground they dig canals so water does not stand around the roots.",
+ "fertilizer": "At planting, a few handfuls of dried chicken manure, animal manure or rice hull compost in the hole. About a month later, a handful of complete fertilizer (14 14 14). After that many farmers give urea (46 0 0) and muriate of potash (0 0 60), about a quarter kilo of each a plant every three months, spread in a ring when the soil is moist. Banana needs a lot of potash to fill big bunches. Many backyard saba plants get only manure and old leaves.",
+ "care": "Ring weeding by hand or bolo for the first four months, then slashing. Cutting off dry leaves and old leaf sheaths. Cutting extra suckers and keeping one follower for each mother. Snapping off the heart after the last hand. Propping heavy bunches with bamboo. Digging out and chopping plants with bunchy top or wilt.",
+ "harvest": "Ready when the fingers are plump and round with no sharp edges, the bunch is still light green and the old leaves begin to yellow. Lakatan comes about 80 to 90 days after the bunch shows, saba much later. One person cuts partway through the trunk so the bunch tips slowly while another catches it, so the fingers do not bruise. The bunch is kept in the shade and the hands are cut off for market. The old trunk is cut down after harvest.",
+ "ways": [
+  {
+   "key": "suckers",
+   "label": "Suckers (suwi)",
+   "days": 360,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear the area and mark the holes",
+     "how": "Slash the grass, take out stumps and mark where each mat will stand. Lakatan and latundan are set about 2 to 3 m apart, while saba grows much bigger and needs far wider room.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig the holes",
+     "how": "Dig each hole about 40 cm wide and 40 cm deep, deeper on hard soil. Pile the dark topsoil on one side so it goes back in first.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Choose and clean the suckers",
+     "how": "Pick sword suckers with narrow leaves, about 1 to 1.5 m tall, from a mat with no bunchy top or wilt. Dig each one out with the whole corm, trim the roots and any dark or rotten spots, and cut the leaves back so it loses less water.",
+     "task": "seed_treatment",
+     "tip": "A sucker with wide, round leaves (water sucker) grows weak and gives a small bunch."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the sucker",
+     "how": "Put a few handfuls of dried manure or rice hull compost in the hole and mix it with topsoil. Set the sucker upright with the corm about 10 to 15 cm under the surface, fill in and press the soil firmly. Water it if the ground is dry.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Give the first fertilizer",
+     "how": "When new leaves show, about a month after planting, scatter a handful of complete fertilizer (14 14 14) in a ring a little away from the base and cover it with soil. Many backyard growers use dried chicken manure instead.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed every month",
+     "how": "Pull or slash the weeds in a circle around each plant every month for the first four months, until the leaves shade the ground. Lay the cut grass and old leaves around the base as mulch.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Water in dry spells and drain wet spots",
+     "how": "Banana needs a lot of water, so water deeply when a dry month comes. On low ground, dig small canals so rainwater does not stand around the roots.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Feed every three months",
+     "how": "From the third month, give each plant about a quarter kilo of urea (46 0 0) and a quarter kilo of muriate of potash (0 0 60) every three months. Spread it in a ring when the soil is moist and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Keep one follower sucker",
+     "how": "Suckers keep coming up around the mother plant. Cut the extra ones at ground level and keep only one strong sword sucker to bear the next bunch.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 150,
+     "title": "Take off dry leaves and watch for disease",
+     "how": "Cut off dry, hanging leaves with a sharp knife on a pole. Look often for plants with narrow, stiff leaves bunched at the top or with yellow leaves hanging down like a skirt, and dig out and chop up sick plants before the disease spreads.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 240,
+     "title": "Remove the heart and prop the plant",
+     "how": "When the bunch is out and the last hand has opened, snap off the heart (puso) a little below the last hand. It can be cooked. Prop the plant with one or two bamboo poles so the heavy bunch does not pull it down in the wind.",
+     "task": "propping",
+     "tip": "Taking off the heart early helps keep bugtok out of saba."
+    },
+    {
+     "phase": "harvest",
+     "day": 360,
+     "title": "Cut the first bunch",
+     "how": "Harvest when the fingers are full and their edges have turned round. Cut partway through the trunk so the bunch tips down slowly, and catch it.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 361,
+     "title": "Cut down the old trunk",
+     "how": "Cut down the plant that bore fruit, chop the trunk and lay the pieces around the mat as mulch. The follower sucker takes over and gives the next bunch.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Lakatan and latundan give the first bunch at about 8 to 12 months. Saba usually needs 15 to 16 months."
+  }
+ ],
+ "mistakes": [
+  "Planting water suckers with broad leaves, which grow weak and give small bunches.",
+  "Taking suckers from a mat with bunchy top or wilt, which carries the disease into the new farm.",
+  "Leaving every sucker to grow, so the mat crowds itself and the bunches get smaller.",
+  "Leaving the heart on long after the last hand, which wastes food and invites bugtok in saba.",
+  "No propping, so a heavy bunch topples in the first strong wind.",
+  "Giving nitrogen only and no potash, so the fingers stay thin."
+ ],
+ "better": [
+  "Plant clean tissue culture plantlets, or suckers from a mat known to be free of disease.",
+  "Test the soil and feed by the result, with enough potash for the bunch.",
+  "Keep the right spacing for the variety and only one follower sucker for each mother.",
+  "Split the fertilizer into small doses every month or two instead of one big dose.",
+  "Walk the farm every week for bunchy top, wilt and bugtok, remove sick plants at once and clean tools between mats.",
+  "Water during dry months and bag the bunches for cleaner, heavier fruit."
+ ],
+ "video": {
+  "youtubeId": "b0c1Huoty_Y",
+  "title": "PAANO MAGTANIM NG SAGING | HOW TO PLANT BANANA | D' Green Thumb",
+  "channel": "D' Green Thumb",
+  "lang": "fil",
+  "minutes": 13,
+  "why": "A Filipino grower plants a latundan sucker in the ground with rice hull compost and manure, the simple backyard way, explained in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng saging",
+  "pagtatanim ng saging na saba",
+  "paano magtanim ng lakatan",
+  "how to plant banana in the philippines",
+  "banana sucker planting"
+ ],
+ "confidence": "medium",
+ "slug": "banana",
+ "rev": "dfa910571d9c"
+}

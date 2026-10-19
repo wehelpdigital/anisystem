@@ -1,0 +1,142 @@
+{
+ "crop": "stringbean",
+ "name": "String bean",
+ "local": "Sitaw",
+ "aka": [
+  "otong",
+  "batong",
+  "yardlong bean"
+ ],
+ "summary": "How Filipino farmers grow sitaw, the long podded bean on poles found on nearly every vegetable farm and in many backyards. It is seeded direct, trained up poles and strings, and picked every few days for weeks.",
+ "season": "Planted all year where there is water. Many farmers plant at the start of the rains, around May to June, and again from October to January, when there is less disease.",
+ "material": "Dry seed from fully ripe, dry pods of the best plants, or bought seed. Some farmers soak the seed in water for a few hours before planting.",
+ "spacing": "Rows or beds about a meter apart, hills about 30 to 50 cm apart with two plants each, every hill reaching a pole or string.",
+ "water": "Rainfed in the wet season. In the dry season farmers water by hand or run water into the furrows every few days, more when the plants are flowering.",
+ "fertilizer": "Dried manure or compost in the rows before planting, complete fertilizer (14 14 14) at about two weeks, and another side dressing of complete fertilizer or urea at flowering.",
+ "care": "Poles and strings set up at about two weeks, weeding and hilling up, and guiding the vines. Farmers watch for aphids, bean fly and pod borers.",
+ "harvest": "Picking starts at about 50 to 60 days and goes on every two to three days for a month or more. Pods are picked full length but still tender, bundled and sold fresh.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded on poles",
+   "days": 55,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow or dig",
+     "how": "Plow and harrow the field, or dig the plot, and remove the weeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Make the rows and add manure",
+     "how": "Make rows or raised beds about a meter apart and work dried manure or compost into them.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seed",
+     "how": "Plant 2 to 3 seeds a hill, with hills about 30 to 50 cm apart, and cover them with 2 to 3 cm of soil. Water if the soil is dry.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Replant the misses",
+     "how": "Replant empty hills in the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Thin to two plants",
+     "how": "Leave the two strongest plants in each hill.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Set up the poles",
+     "how": "Before the vines start to run, set up bamboo or ipil ipil poles about two meters tall, tied in an A shape with a pole across the top, and run strings or twine for the vines to climb.",
+     "task": "propping"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "First fertilizer",
+     "how": "Side dress complete fertilizer (14 14 14) a hand width from the plants and cover it with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed and hill up",
+     "how": "Hoe out the weeds and pull soil up to the base of the plants. Guide the vines onto the strings.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Watch for aphids and pod borers",
+     "how": "Check the tips and flowers for aphids and the flowers and young pods for pod borers, and pick off damaged pods.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Feed at flowering",
+     "how": "Give a second side dressing of complete fertilizer or urea when the plants start to flower.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 55,
+     "title": "Pick the young pods",
+     "how": "Pick pods that have reached full length but are still tender, before the seeds bulge, every two to three days.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 85,
+     "title": "Keep seed and clear the vines",
+     "how": "Leave some pods on the best plants to dry for seed, then pull out the old vines.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Day 55 is about the first picking. Picking then goes on every few days for a month or more."
+  }
+ ],
+ "mistakes": [
+  "Putting up the poles late, after the vines have tangled on the ground.",
+  "Letting pods get old and seedy on the vine, which also slows new pods.",
+  "Planting in a spot where water stands after rain.",
+  "Spraying by habit instead of checking for pests first."
+ ],
+ "better": [
+  "Use fresh seed of a good variety and plant into moist, well prepared soil.",
+  "Feed by a soil test, with compost before planting and split side dressings.",
+  "Pick every two to three days to keep the plants bearing.",
+  "Scout twice a week for aphids and pod borers and remove damaged pods.",
+  "Rotate with a crop that is not a bean to cut soil diseases."
+ ],
+ "video": {
+  "youtubeId": "uD7NmcKbjEI",
+  "title": "PAANO MAGTANIM AT MAG ALAGA NG SITAW",
+  "channel": "Tata Johnny's Tv",
+  "lang": "fil",
+  "minutes": 14,
+  "why": "A Filipino farmer shows planting, poling, care and harvest of sitaw in his own field."
+ },
+ "keywords": [
+  "paano magtanim ng sitaw",
+  "pagtatanim ng sitaw",
+  "sitaw farming",
+  "how to plant string beans in the philippines"
+ ],
+ "confidence": "medium",
+ "slug": "string-bean",
+ "rev": "875fc1c3d546"
+}

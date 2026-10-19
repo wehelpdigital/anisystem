@@ -1,0 +1,166 @@
+{
+ "crop": "bamboo",
+ "name": "Bamboo",
+ "local": "Kawayan",
+ "aka": [
+  "kawayan tinik",
+  "bolo",
+  "bayog",
+  "giant bamboo (botong)",
+  "kiling"
+ ],
+ "summary": "This guide shows how Filipino farmers usually start a bamboo stand from culm or branch cuttings, or from offsets dug from an old clump, and care for it until the first poles are cut at about three years. It fits kawayan tinik, bolo, bayog and giant bamboo grown for poles, crafts, shoots and riverbank protection.",
+ "season": "Plant as the rains begin, around May to July in most of Luzon and the Visayas, so the young clumps root well before the dry months. Cuttings for the nursery are cut and set a few months earlier. Where rain falls most of the year, as in much of Mindanao, planting can go on in most months.",
+ "material": "For kawayan tinik and bolo, pieces of a healthy culm about 1.5 to 2 years old: branches are trimmed off leaving short stubs, and the culm is cut into pieces with one node for the nursery, or longer two to three node pieces for planting straight in the field. Giant bamboo is grown from branch cuttings with two to three nodes and live buds, taken from culms about 3 to 4 years old. Some farmers dig offsets, a young culm cut short with its rhizome and roots, from an old clump. They are heavy to carry but take well.",
+ "spacing": "About 7 m by 7 m for a kawayan tinik pole stand (about 200 clumps a hectare), about 5 m by 5 m in a staggered pattern on riverbanks, and wider, up to about 10 m by 10 m, for giant bamboo.",
+ "water": "Rainfed. Clumps are planted at the start of the rains and mulched. Young plants are watered in long dry spells during the first year. Bamboo along creeks and riverbanks rarely needs watering once it is established.",
+ "fertilizer": "Traditionally little: compost, manure, ash and fallen bamboo leaves around the clump. Growers who want more poles or shoots add complete fertilizer around each clump at the start of the rains as part of yearly clump care.",
+ "care": "Ring weeding and mulching in the first years, replacing dead cuttings, keeping animals out, yearly mounding of soil over the rhizomes, and cleaning and thinning the clump by cutting dead, broken and twisted culms. Shoots for food (labong) are taken in moderation so enough grow into poles.",
+ "harvest": "The first poles are cut at about three years after planting, and each year after. Farmers cut only culms about three years old or more, in the dry months, just above a node near the ground, and leave the young culms. Poles are cured by soaking in water or mud or by leaving them standing with their leaves, then dried in the shade.",
+ "ways": [
+  {
+   "key": "cuttings",
+   "label": "Culm and branch cuttings",
+   "days": 1080,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -180,
+     "title": "Cut the planting pieces",
+     "how": "Choose a healthy culm about 1.5 to 2 years old, trim the branches leaving short stubs, and saw it into pieces with one node and a little internode on each side. For giant bamboo, take branch cuttings with two to three nodes from a culm about 3 to 4 years old.",
+     "task": "seed_treatment",
+     "tip": "Keep the pieces wet and in the shade. A cutting that dries out will not sprout."
+    },
+    {
+     "phase": "nursery",
+     "day": -175,
+     "title": "Set them in bags or a bed",
+     "how": "Set the pieces in bags or a nursery bed of loose, damp soil under shade and water them often. Shoots and roots come from the nodes within a few weeks.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -145,
+     "title": "Move rooted cuttings to the sun",
+     "how": "About a month after setting, move the cuttings that have rooted and sprouted into full sun so they toughen. Giant bamboo branch cuttings are ready to plant out in about 3 to 4 months, kawayan tinik node cuttings in about 6 to 12 months.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear and mark the planting spots",
+     "how": "Slash the grass and mark the spots about 7 m apart each way for a pole stand, or about 5 m apart in a staggered pattern along a riverbank. Giant bamboo can be set even wider.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig the holes",
+     "how": "Dig a hole a little bigger than the root ball at each spot and mix the topsoil with compost or rotted manure.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Set the rooted cutting or offset in the hole, cover the roots and the lowest node with soil and press it firm. Culm pieces planted straight in the field go in at a slant with at least one node under the soil.",
+     "task": "planting",
+     "tip": "Many farmers fill the hollow of a field cutting with water so it stays moist while it roots."
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed and mulch the young clump",
+     "how": "Keep a clean circle around each new clump and lay cut grass or leaves around it to keep the soil damp. Keep goats and carabaos away from the young shoots.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Replace the dead ones",
+     "how": "Plant a new rooted cutting wherever one has died, while the rains are still on.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Feed the clumps",
+     "how": "Spread compost, manure or a little complete fertilizer around each clump at the start of the rains, then once a year after that.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Mound and mulch each year",
+     "how": "Pile soil and mulch over the base of the clump to cover the rhizomes and help new shoots come up strong.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 730,
+     "title": "Clean and thin the clump",
+     "how": "Cut out dead, broken and twisted culms and trim low thorny branches so new shoots have room and you can get into the clump later.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "Cut the first mature poles",
+     "how": "Cut only culms about three years old or more, in the dry months, close to the ground just above a node. Leave all the young culms standing to feed the clump.",
+     "task": "harvest",
+     "tip": "Mark each new culm with the year it came up so you know its age at harvest."
+    },
+    {
+     "phase": "harvest",
+     "day": 1085,
+     "title": "Cure the poles",
+     "how": "Many farmers soak the cut poles in running water or mud for some weeks, or leave them standing upright in the clump with their leaves on for a while, so beetles bother them less. Dry them in the shade before selling or using them.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 1445,
+     "title": "Harvest every year",
+     "how": "Each dry season, cut the culms that have reached about three years and clean the clump again, always keeping enough young culms standing.",
+     "task": "harvest"
+    }
+   ],
+   "note": "The first poles are usually cut at about 3 years. Clumps are then harvested every year for decades. Nursery days are counted back from the field planting day."
+  }
+ ],
+ "mistakes": [
+  "Taking cuttings from culms that are too young or too old, which root poorly.",
+  "Letting the cuttings dry out in the sun before planting.",
+  "Cutting young, soft culms that crack and get eaten by beetles.",
+  "Clearing a whole clump at once, which leaves it too weak to send up new shoots.",
+  "Taking too many shoots for food, so few grow into poles.",
+  "Never cleaning the clump, until it is a tangle that cannot be harvested."
+ ],
+ "better": [
+  "Raise rooted cuttings in a nursery first for far better survival than bare field cuttings.",
+  "Pick the species for the purpose: tinik for poles and fences, bolo for crafts, giant bamboo for big poles and shoots.",
+  "Clean, thin, mound and mulch the clumps every year.",
+  "Harvest by age, marking each culm with its year, and always leave the young ones.",
+  "Cure or treat the poles before sale so they last longer and sell better.",
+  "Feed the clumps at the start of the rains, guided by a soil test."
+ ],
+ "video": {
+  "youtubeId": "t69PU_CUxTc",
+  "title": "PAGTATANIM NG KAWAYAN | ALIN ANG MAINAM NA ITANIM | D' GREEN THUMB",
+  "channel": "D' Green Thumb",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "A Filipino grower explains in Tagalog which bamboo planting material is best and shows how it is planted."
+ },
+ "keywords": [
+  "paano magtanim ng kawayan",
+  "pagtatanim ng kawayan",
+  "paano magpatubo ng kawayan",
+  "how to plant bamboo in the philippines",
+  "kawayan tinik planting",
+  "bamboo farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "bamboo",
+ "rev": "59404a4bb9f2"
+}

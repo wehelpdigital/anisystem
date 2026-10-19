@@ -1,0 +1,146 @@
+{
+ "crop": "shallot",
+ "name": "Shallot",
+ "local": "Sibuyas Tagalog",
+ "aka": [
+  "lasona",
+  "multiplier onion"
+ ],
+ "summary": "How Filipino farmers grow sibuyas tagalog, the small red multiplier onion called lasona in Ilocos, planted from bulbs in rice fields after the harvest. Each bulb splits into a clump of new bulbs in about three months.",
+ "season": "Planted after the rice harvest, from about October to December in the Ilocos Region and Central Luzon, and pulled from about January to March.",
+ "material": "Bulbs from the last harvest, cured and kept hanging in bundles until they are ready to sprout. Farmers split the clumps into single bulbs and often cut off the top part to make them sprout faster. About a ton of bulbs is planted on a hectare.",
+ "spacing": "Bulbs about 15 to 20 cm apart each way, in the field after rice or on beds.",
+ "water": "Watered by letting water into the field or canals and draining it, about every week in the dry months, and stopped two weeks before harvest.",
+ "fertilizer": "Manure or compost at land preparation, complete fertilizer (14 14 14) at planting, urea (46 0 0) or ammonium sulfate (21 0 0) at about three to four weeks, and complete fertilizer with potash (0 0 60) as the bulbs form.",
+ "care": "Light rice straw mulch, hand weeding, and watching for armyworm, thrips and leaf blotch.",
+ "harvest": "Ready at about 70 to 90 days, when most leaves yellow and fall over. Clumps are pulled, dried for a few days, bundled and hung to cure. The best bulbs are kept for the next planting.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Planted from bulbs after rice",
+   "days": 85,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Prepare the field",
+     "how": "After the rice harvest, cut the stubble close to the ground, or plow, harrow and make beds. Mix in manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Split and trim the bulbs",
+     "how": "Split the clumps into single firm bulbs, throw out soft or moldy ones, and cut off the top part of each bulb.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer before planting",
+     "how": "Spread complete fertilizer (14 14 14) over the field or beds.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the bulbs",
+     "how": "Push the bulbs into moist soil about 15 to 20 cm apart each way, with the cut top just at the surface.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Mulch with rice straw",
+     "how": "Spread rice straw thinly over the field to keep in moisture and hold back weeds.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 2,
+     "title": "Water",
+     "how": "Let water into the field or the canals until the soil is wet, then drain. Repeat every week or so in the dry months.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed",
+     "how": "Hand pull the weeds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Side dress",
+     "how": "Side dress urea (46 0 0) or ammonium sulfate (21 0 0) and water it in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Watch for armyworm and leaf diseases",
+     "how": "Check the leaves for caterpillars, egg masses, thrips and purple blotch, and pick off egg masses by hand.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Feed as the bulbs form",
+     "how": "Give complete fertilizer (14 14 14), often with potash (0 0 60), as the clumps start to swell.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 70,
+     "title": "Stop watering",
+     "how": "Stop watering about two weeks before harvest.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 85,
+     "title": "Pull the clumps",
+     "how": "Harvest when most leaves have yellowed and fallen over. Pull the clumps by hand.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 86,
+     "title": "Dry, bundle and hang",
+     "how": "Dry the clumps in the field for a few days, then tie them in bundles by the leaves and hang them in an airy shed. Keep the best bulbs for the next planting.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting bulbs from a diseased crop, which carries the disease into the new field.",
+  "Planting freshly harvested bulbs that are not yet ready to sprout.",
+  "Letting water stand in the field.",
+  "Storing clumps that are not fully cured."
+ ],
+ "better": [
+  "Use clean, firm planting bulbs, ideally from a disease free source.",
+  "Plant on time after the rice harvest so the crop ripens before the summer rains.",
+  "Feed by a soil test and keep the field well drained.",
+  "Pick armyworm egg masses early and scout every week."
+ ],
+ "video": {
+  "youtubeId": "W1K7RlNBpWA",
+  "title": "Paano makapagproduce ng malalaking multiplier onion (Lasona)?",
+  "channel": "Kasaka Mo",
+  "lang": "fil",
+  "minutes": 9,
+  "why": "A Filipino grower talks through growing lasona from his own field to the harvest."
+ },
+ "keywords": [
+  "paano magtanim ng sibuyas tagalog",
+  "pagtatanim ng lasona",
+  "sibuyas tagalog",
+  "how to plant shallots in the philippines"
+ ],
+ "confidence": "medium",
+ "slug": "shallot",
+ "rev": "5a41d6192a00"
+}

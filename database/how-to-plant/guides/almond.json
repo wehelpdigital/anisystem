@@ -1,0 +1,75 @@
+{
+ "crop": "almond",
+ "name": "Almond",
+ "local": "Almendras",
+ "aka": [
+  "almendras",
+  "sweet almond"
+ ],
+ "summary": "True almond is not grown in the Philippines: it needs a cold winter and a long dry summer, so only a rare hobby tree is kept in the cool highlands, such as around Baguio, and it seldom bears. The tree many Filipinos call almond or almendras is talisay, a different coastal tree that grows anywhere here. This short guide covers the few highland attempts with true almond.",
+ "season": "Trees are set out at the start of the rains, about May to July, in the highlands, on the driest, sunniest slope available. Rain at flowering spoils the nuts.",
+ "material": "Grafted trees of low chill almond types from a specialty nursery. Two types that flower together are needed, since most almonds need a partner to set nuts.",
+ "spacing": "About 5 m between trees, at least two types close together.",
+ "water": "Mostly rain fed. Almond dislikes wet soil and rain at flowering.",
+ "fertilizer": "Compost and small amounts of complete fertilizer (14 14 14).",
+ "care": "Open bowl pruning, light feeding, keeping the ground dry and weed free.",
+ "harvest": "Nuts are picked when the hulls split, dried in the sun, and shelled.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted trees (grafted na punla)",
+   "days": 1200,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Choose a dry, sunny slope",
+     "how": "Pick the sunniest, driest high ground with deep soil that drains fast. Dig holes about 50 cm wide and deep with compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant two types together",
+     "how": "Set two grafted trees of different types about 5 m apart at the same depth they grew, graft joint above the soil. Firm, water, stake and mulch.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Prune to an open bowl",
+     "how": "Keep three or four spreading branches, feed compost and a little complete fertilizer (14 14 14) every few months, and water only in long dry spells.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1200,
+     "title": "Gather the nuts",
+     "how": "We count the first crop at about 40 months. Pick nuts when the green hulls split open, and dry them in the sun before storing.",
+     "task": "harvest"
+    }
+   ],
+   "note": "We count the first harvest at about 40 months (1,200 days). Most trees here never bear well."
+  }
+ ],
+ "mistakes": [
+  "Confusing talisay with true almond.",
+  "Planting a single almond tree, which sets few or no nuts.",
+  "Planting in the wet lowlands."
+ ],
+ "better": [
+  "For a nut tree that bears here, consider pili or cashew instead.",
+  "If you try almond, use low chill grafted types on dry highland slopes and keep notes.",
+  "Test the soil and feed by the result."
+ ],
+ "video": null,
+ "keywords": [
+  "almond sa pilipinas",
+  "paano magtanim ng almond",
+  "almond tree philippines",
+  "talisay almond"
+ ],
+ "confidence": "low",
+ "slug": "almond",
+ "rev": "3f17e4bdf810"
+}

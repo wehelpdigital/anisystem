@@ -1,0 +1,136 @@
+{
+ "crop": "carrot",
+ "name": "Carrot",
+ "local": "Karot",
+ "aka": [
+  "carrots"
+ ],
+ "summary": "How Filipino farmers usually grow carrots, sown straight on raised beds in the highlands all year and in the lowlands only in the cool months, up to the harvest two to three months later. For highland vegetable growers and lowland farmers trying a cool season crop, with the changes that give straight, smooth roots.",
+ "season": "In the highlands, such as Benguet, Mountain Province, Ifugao, Nueva Vizcaya and Bukidnon, carrots are sown all year. In low and mid elevations they are sown only in the coolest months, from about the last week of October to February. In hot weather the roots turn pale, woody and misshapen.",
+ "material": "Seed, about 6 to 8 kg a hectare, sown straight on the bed. Most varieties grown here are short, thick Kuroda types. Growers in the lowlands pick strains that take some heat.",
+ "spacing": "Raised beds about 70 to 80 cm wide and 20 cm high with 30 cm paths. Seed sown in shallow furrows on the bed and thinned to about 10 cm between plants.",
+ "water": "Watered by sprinkler, hose or furrow every five to seven days, more in dry weather. The first 30 days need the most care. Uneven watering makes roots crack and fork.",
+ "fertilizer": "Highland growers rely on rotted chicken dung, about 3 to 5 tons a hectare, with 3 to 5 bags of complete fertilizer worked into the beds a week before sowing. The rest of the nitrogen and potash goes on at about 30 days, after thinning, and is covered during hilling up.",
+ "care": "Straw mulch at sowing, moved between rows after the seedlings come up, thinning to about 10 cm at a month, side dressing and hilling up after thinning, and a second weeding and hilling up about 45 days later.",
+ "harvest": "Most carrots are pulled two to three months after sowing, when the lower leaves yellow and the roots reach market size. Roots are loosened with a fork, pulled, topped, washed, air dried and sorted, and moved to the shade or packing house quickly.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Sown straight on raised beds (sabog o hilera)",
+   "days": 90,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow until fine",
+     "how": "Plow and harrow several times until the soil is fine and free of clods and stones, because lumps make forked, crooked roots.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Raise the beds and mix in manure",
+     "how": "Make beds about 20 cm high and 70 to 80 cm wide with 30 cm paths. Work rotted chicken dung and complete fertilizer into the bed about a week before sowing.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow in shallow furrows",
+     "how": "Spread the seed evenly along shallow furrows on the bed and cover with fine soil, no more than about 2 cm. Water the beds and lay rice straw over them.",
+     "task": "planting",
+     "tip": "Seedlings take up to two weeks to come up, so keep the bed moist the whole time."
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Water every few days",
+     "how": "Carrots need steady moisture in the first month. Water every five to seven days, or more often in dry spells, and keep it even so the roots do not crack or fork.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Move the mulch to the rows",
+     "how": "Once the seedlings are up, lift the straw off the rows and lay it between them to hold moisture and keep weeds down.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed and thin",
+     "how": "Pull the weeds and thin the seedlings so the plants stand about 10 cm apart.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 31,
+     "title": "Side dress and hill up",
+     "how": "Right after thinning, put the rest of the fertilizer along the rows and cover it as you pull soil up over the shoulders of the roots, which keeps them from turning green.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Scout the beds",
+     "how": "Look for cutworms and mole crickets at the base, aphids and armyworms on the leaves, and leaf blight spots. Remove rotting roots.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 75,
+     "title": "Second weeding and hilling up",
+     "how": "About 45 days after the first, weed again and hill up the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Trim, wash and sort",
+     "how": "Cut the tops 5 to 8 cm above the shoulder, wash and air dry the roots, and sort out cracked, forked and broken ones before packing. Bring them out of the sun right away.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 90,
+     "title": "Pull the roots",
+     "how": "Two to three months after sowing, once the lower leaves yellow and the roots have filled out, ease the soil loose with a spading fork and pull the carrots out carefully.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Sowing on cloddy or stony soil, which gives forked and crooked roots.",
+  "Fresh, unrotted manure in the beds, which also causes forking.",
+  "Skipping the thinning, so the roots stay thin and twisted.",
+  "Watering unevenly, dry then soaked, so the roots split.",
+  "Sowing in the hot months in the lowlands."
+ ],
+ "better": [
+  "Use fresh seed of a variety suited to your elevation and season.",
+  "Prepare deep, fine, raised beds and use only well rotted manure.",
+  "Test the soil and give potash enough, since carrots need more of it than most leafy crops.",
+  "Thin on time and keep the moisture even, with mulch between rows.",
+  "Rotate with corn or other crops outside the carrot family to keep root knot nematodes down.",
+  "Harvest on time and keep roots cool and shaded after digging."
+ ],
+ "video": {
+  "youtubeId": "fqRvhV2pthU",
+  "title": "Carrots Farming Tips and Technique",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 17,
+  "why": "A Filipino carrot farmer explains his field routine for planting carrots, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng carrots",
+  "pagtatanim ng carrots",
+  "paano magtanim ng karot",
+  "how to plant carrots in the philippines",
+  "carrot farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "carrot",
+ "rev": "ecb0ae04bcbc"
+}

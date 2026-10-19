@@ -1,0 +1,140 @@
+{
+ "crop": "papaya",
+ "name": "Papaya",
+ "local": "Papaya",
+ "aka": [
+  "kapayas"
+ ],
+ "summary": "This guide shows how Filipino farmers usually grow papaya from seed in bags, plant it out and care for it until the first ripe fruits, for backyards and small farms. It covers native types as well as Red Lady and other hybrids grown here.",
+ "season": "Many farmers sow seed near the end of the dry season and plant out at the start of the rains, around May to June, so the young plants get steady water. With water on hand papaya can be planted in any month, but planting just before the typhoon months risks broken plants.",
+ "material": "Seed from a ripe, well shaped fruit of a good bearing tree, washed of its jelly coat and dried in the shade, or bought hybrid seed such as Red Lady. Farmers sow 3 to 4 seeds a bag in loose soil, keep two seedlings a bag and plant out when the seedlings are about 15 cm tall or around 2 months old.",
+ "spacing": "About 2.5 m between plants and between rows. Holes about 45 cm wide and deep. Two seedlings planted a hole, later cut back to the single best plant.",
+ "water": "Seedlings in bags are watered every day. After planting out, daily watering until the plants take hold, then about weekly in dry months. In the rainy season the base is mounded or the rows ridged so water drains away, since standing water kills papaya quickly.",
+ "fertilizer": "Compost or dried manure mixed into the hole. A handful of complete fertilizer (14 14 14) about a month after planting out, then every month or two. Once the plants flower, many farmers add urea (46 0 0) and muriate of potash (0 0 60) or keep giving complete fertilizer so the fruits fill. Seedlings in bags sometimes get a pinch of urea every two weeks.",
+ "care": "Hand weeding and mulching, careful not to cut the shallow roots. Cutting extra plants and most male trees once the flowers show. Taking off old yellow leaves. Pulling and burying plants with ringspot. Mounding the base in the rainy season, and in windy places some farmers bend or prop young plants against typhoons.",
+ "harvest": "Flowers come about 3 to 4 months after planting out and fruit is ready 4 to 5 months later. Green fruit is picked for cooking. For eating, fruit is picked when yellow first shows at the tip and the sap turns clear, then ripened in the shade. Fruits are handled gently and never allowed to fall. A papaya stand bears well until about its third or fourth year.",
+ "ways": [
+  {
+   "key": "nursery",
+   "label": "Seedlings raised in bags (punla sa supot)",
+   "days": 240,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -60,
+     "title": "Sow the seeds in bags",
+     "how": "Fill small plastic bags with loose garden soil mixed with compost or rice hull. Sow 3 to 4 seeds a bag about 1 cm deep, water every day and keep the bags in light shade.",
+     "task": "seedbed",
+     "tip": "Seeds come up in about 15 to 20 days. Old or poorly dried seed comes up slowly."
+    },
+    {
+     "phase": "nursery",
+     "day": -40,
+     "title": "Thin to two seedlings a bag",
+     "how": "When the seedlings have a few true leaves, cut off the weakest so two are left in each bag. Keep watering every day and move the bags into fuller sun a week before planting out.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Clear the field and dig the holes",
+     "how": "Clear the weeds, loosen the soil and mark the spots about 2.5 m apart each way. Dig holes about 45 cm wide and 45 cm deep, and mix compost or dried manure into the soil that goes back in.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant out the seedlings",
+     "how": "Cut the bag away without breaking the soil and set the seedlings in the hole at the same depth they grew. Press the soil, water well and make a small mound so rain does not pool around the stem.",
+     "task": "planting",
+     "tip": "Papaya dies fast in standing water, so plant on a raised spot or a ridge in wet ground."
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water until the plants take hold",
+     "how": "Water the new plants every day for the first week or two, then about once a week in dry weather. Mulch with dried grass to keep the soil moist.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First side dressing",
+     "how": "About a month after planting out, scatter a handful of complete fertilizer (14 14 14) in a ring around each plant and cover it with soil. Many farmers repeat every month or two, adding urea and potash once the plants flower.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed by hand around the plants",
+     "how": "Pull or hoe the weeds carefully, since papaya roots stay near the surface. Keep the base clean and mulched.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Watch for ringspot and mites",
+     "how": "Look at the leaves often for yellow mottling, narrow leaves or ring spots on the fruit, and pull out and bury sick plants at once. Check the underside of old leaves for tiny red mites and cut off badly hit leaves.",
+     "task": "spraying_watch",
+     "tip": "Do not plant squash, cucumber or watermelon next to papaya, since they share the ringspot virus."
+    },
+    {
+     "phase": "care",
+     "day": 100,
+     "title": "Keep the best plant in each hole",
+     "how": "When the flowers show, about 3 to 4 months after planting out, keep the strongest plant with bisexual or female flowers and cut the others. With native papaya, cut out most of the male trees, the ones with long hanging flower stalks.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Feed the flowering plants",
+     "how": "Once flowering starts, give each plant complete fertilizer with potash every month or two so the fruits fill well. Water weekly in dry spells and earth up the base in the rainy season for drainage.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 240,
+     "title": "Pick the first fruits",
+     "how": "Pick green fruits for cooking, and for eating pick when yellow streaks show at the tip and the sap is no longer milky. Twist the fruit off by hand or with a pole and keep it from dropping.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Papaya flowers about 3 to 4 months after planting out and the first fruits ripen 4 to 5 months later. The seedling stage before that is about 2 months."
+  }
+ ],
+ "mistakes": [
+  "Planting in low, wet ground where the roots rot after heavy rain.",
+  "Saving seed from a sick or poor tree, which passes on weak plants.",
+  "Planting next to squash, cucumber or watermelon, which spreads ringspot.",
+  "Leaving every seedling in the hole and every male tree standing.",
+  "Hoeing deep near the trunk and cutting the shallow roots.",
+  "Leaving sick plants in the field, so the virus spreads to the rest."
+ ],
+ "better": [
+  "Use clean seed of a tolerant variety from a trusted seed company or a healthy mother tree.",
+  "Test the soil and feed by the result, with enough potash and lime where soil is sour.",
+  "Plant on ridges or mounds with drainage canals for the rainy season.",
+  "Scout every week for ringspot, mites and mealybugs and remove sick plants at once.",
+  "Water regularly in dry months and mulch for steady fruiting.",
+  "Plant a new block every year or two, since old stands lose vigor and catch disease."
+ ],
+ "video": {
+  "youtubeId": "rjEddJOCIxg",
+  "title": "Paano Magtanim Ng Papaya",
+  "channel": "Tata Johnny's Tv",
+  "lang": "fil",
+  "minutes": 15,
+  "why": "A well watched Tagalog video of a Filipino backyard grower planting papaya the simple way, from seedling to the ground."
+ },
+ "keywords": [
+  "paano magtanim ng papaya",
+  "pagpupunla ng papaya",
+  "pagtatanim ng red lady papaya",
+  "how to plant papaya in the philippines",
+  "papaya farming"
+ ],
+ "confidence": "medium",
+ "slug": "papaya",
+ "rev": "bab6f49ec50b"
+}

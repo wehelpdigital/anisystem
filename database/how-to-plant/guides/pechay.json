@@ -1,0 +1,200 @@
+{
+ "crop": "pechay",
+ "name": "Pechay",
+ "local": "Petsay",
+ "aka": [
+  "pechay Tagalog",
+  "bok choy"
+ ],
+ "summary": "How Filipino vegetable farmers usually grow pechay on beds, either sown in a seedbed and moved to the field or sown straight on the bed, up to the harvest about a month later. For backyard and small market growers who want the usual routine and what to change for more and cleaner leaves.",
+ "season": "Pechay grows all year in the lowlands but does best in the dry, cooler months, roughly November to April. In the rainy months farmers plant on raised beds and under light cover, because heavy rain tears the leaves and brings rot. It grows from the lowlands up to mid elevations.",
+ "material": "Seed, bought in small packs or cans. Farmers either sow it thinly in a seedbed or seedling tray and transplant the seedlings after two to three weeks, or broadcast or drill it straight on the bed and thin later.",
+ "spacing": "Beds about 1 m wide with 20 to 25 cm paths. Plants 10 cm apart in rows 20 cm apart, one plant a hill. Direct sown beds are thinned to about the same.",
+ "water": "Watered by hand every day with a watering can or hose in the morning or late afternoon, right after transplanting and until harvest. Larger fields are watered by furrow. Beds must drain well. Standing water rots the plants.",
+ "fertilizer": "Traditional growers lean on chicken manure mixed into the beds, plus a little complete fertilizer (14 14 14) at planting and urea after one to two weeks. One common plot guide for a bed 1 m by 20 m is a sack of chicken manure, 1 kg of 14 14 14 and about 4 kg of urea worked into the soil before transplanting.",
+ "care": "Daily watering, one or two hand weedings, thinning of direct sown beds, and close watch for leaf eating insects. Seedlings get a light shade and are hardened for a week before transplanting.",
+ "harvest": "Pechay is ready three to four weeks after transplanting, or 30 to 40 days after direct sowing, while the leaves are tender. Farmers cut the plant at the base or pull it with the roots in the cool hours, wash it, remove yellow leaves, tie it in bundles and keep it shaded and moist.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Seedbed then transplant (punla at lipat tanim)",
+   "days": 25,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow",
+     "how": "Plow and harrow two or three times, about a week apart, to a depth of 15 to 20 cm so the soil is fine and the weeds are gone.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -18,
+     "title": "Make the seedbed and sow",
+     "how": "Raise a seedbed about 1 m wide and 15 cm high with fine, clean soil. Sow the seed thinly in shallow lines or 2 to 3 seeds a hole in a seedling tray, cover lightly with fine soil and sprinkle with water.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -14,
+     "title": "Shade and water the seedlings",
+     "how": "Give the young seedlings a simple roof against strong sun and hard rain, and water them in the morning or late afternoon.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "Remove the cover bit by bit during the last week so the seedlings get used to full sun before they go to the field.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Form the beds and put the base fertilizer",
+     "how": "Make beds about 1 m wide with paths of 20 to 25 cm between them. Mix chicken manure and a little complete fertilizer into the bed and cover it with soil.",
+     "task": "fertilizer",
+     "tip": "Raise the beds higher in the rainy months so water runs off."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in the afternoon",
+     "how": "Move seedlings that are two to three weeks old to the beds, 10 cm apart in rows 20 cm apart. Water right after planting.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water every day",
+     "how": "Water daily with a watering can or hose in the morning or late afternoon, enough to keep the bed moist but not soggy.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Replace dead seedlings",
+     "how": "Fill any gaps with spare seedlings from the seedbed during the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Side dress and weed",
+     "how": "Many farmers give a little urea, often dissolved in water, along the rows about one to two weeks after transplanting, and pull the weeds at the same time.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Check for pests twice a week",
+     "how": "Look under the leaves for aphids, small holes from flea beetles and the green larvae of the diamondback moth. Pull out and bury plants with soft, smelly rot or swollen roots.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Wash, bundle and keep cool",
+     "how": "Wash off the soil, remove yellow leaves, tie in bundles and keep them in the shade, sprinkled with water, until they reach the market.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 25,
+     "title": "Harvest in the cool hours",
+     "how": "Three to four weeks after transplanting, cut the plants at the base with a sharp knife or pull them with the roots, in the cool early morning or late afternoon.",
+     "task": "harvest"
+    }
+   ]
+  },
+  {
+   "key": "direct",
+   "label": "Sown straight on the bed (sabog tanim)",
+   "days": 35,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Prepare the beds",
+     "how": "Plow, harrow and form beds about 1 m wide, then rake manure or compost into the top soil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow the seed",
+     "how": "Broadcast the seed thinly over the bed, or drop it in shallow lines about 20 cm apart. Cover lightly with fine soil or rice hull and water gently.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Keep the bed moist",
+     "how": "Sprinkle the bed every day until the seedlings are up, then water daily in the cool hours.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Thin the seedlings",
+     "how": "Pull out extra plants so the rest stand about 10 cm apart. The thinnings can be cooked or sold.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "Side dress and weed",
+     "how": "Give a light side dressing of urea or manure tea and pull the weeds.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Scout for leaf eaters",
+     "how": "Check the leaves for flea beetle holes, aphids and diamondback moth larvae, and remove rotting plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 35,
+     "title": "Harvest the whole plant",
+     "how": "About 30 to 40 days after sowing, while the leaves are still tender, pull or cut the plants in the cool of the day.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Sowing too thick and never thinning, so the plants come out thin and weak.",
+  "Watering at noon or letting water stand in the beds, which scorches leaves or brings soft rot.",
+  "Planting pechay right after cabbage, mustard or other cabbage family crops on the same bed again and again, so club root and diamondback moth build up.",
+  "Flat, low beds in the rainy months.",
+  "Harvesting at midday in the heat, so the leaves wilt before they reach the market."
+ ],
+ "better": [
+  "Buy fresh seed of a variety suited to the season, with heat or rain tolerance for the wet months.",
+  "Test the soil and lime acid soils. Feed by the result with compost plus balanced fertilizer.",
+  "Use raised beds and a mulch of rice straw or plastic to keep the leaves clean and the weeds down.",
+  "Rotate pechay with crops outside the cabbage family, such as beans, corn or squash.",
+  "Scout twice a week and protect the seedbed with a fine net against leaf eating insects.",
+  "Harvest in the cool hours and keep the bundles shaded and moist on the way to market."
+ ],
+ "video": {
+  "youtubeId": "GSt9W_RQj-k",
+  "title": "PECHAY FARMING|| DIRECT SEEDING|| HARVESTING|| COMPLETE GUIDE",
+  "channel": "DANTE'S FARM VLOG",
+  "lang": "fil",
+  "minutes": 12,
+  "why": "A Filipino farm shows pechay sown straight on the beds through to harvest in an open field, the common small farm way."
+ },
+ "keywords": [
+  "paano magtanim ng pechay",
+  "pagtatanim ng pechay",
+  "paano magtanim ng petsay sa bukid",
+  "how to plant pechay in the philippines",
+  "pechay farming"
+ ],
+ "confidence": "high",
+ "slug": "pechay",
+ "rev": "5f2c777b21f2"
+}

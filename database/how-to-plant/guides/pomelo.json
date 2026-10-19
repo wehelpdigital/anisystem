@@ -1,0 +1,140 @@
+{
+ "crop": "pomelo",
+ "name": "Pomelo",
+ "local": "Suha",
+ "aka": [
+  "lukban",
+  "buongon",
+  "pummelo",
+  "Magallanes"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant pomelo from a marcot or grafted seedling and care for it until it bears fruit worth selling. It is for backyards and small orchards, such as the Magallanes pomelo farms of Davao.",
+ "season": "Marcots and seedlings are planted as the rains begin, around May to July, so they root before the dry months. In Davao and other places where rain spreads through the year, planting goes on in most wet months.",
+ "material": "Most growers plant a marcot (air layer) taken from a heavy bearing tree with sweet, juicy fruit, or a grafted seedling on a hardy rootstock. Some growers prefer big marcots, over 1.5 m tall, because they survive well and may give a few fruits within a year. Trees grown from seed take long to bear and the fruit can differ from the mother tree.",
+ "spacing": "About 8 to 10 m between trees, often 10 m by 10 m, or 8 to 10 m between rows and 6 to 8 m in the row. Holes about 50 cm wide and deep, one plant a hole.",
+ "water": "Mostly rain fed. New trees are watered every few days in dry weather and mulched. Growers who can water during flowering and fruit growth in dry spells get better fruit set.",
+ "fertilizer": "Compost or dried manure in the hole at planting. Young trees get a little complete fertilizer or ammonium sulfate (21 0 0) every three to four months, more each year. Bearing trees get fertilizer with more potash, plus micronutrients, at the start and end of the rains. Growers note that the wrong feeding gives thick rind and dry, bland flesh.",
+ "care": "Staking, mulching and weeding around young trees, light pruning to remove water sprouts, dead twigs and branches that touch the ground, and heavier pruning right after the main harvest. Thinning fruits that come in clusters so the rest grow big. Checking new flushes for aphids and psyllids and the trunk for gum. Many growers bag the young fruits against fruit flies and rind borers.",
+ "harvest": "Pomelo needs no flower inducer and can give a main crop and a smaller off season crop each year. Fruit is picked when full sized, with lighter colored, smooth, shiny skin, by cutting the stem rather than pulling. The fruit keeps a month or more in a cool, shaded place, and is handled gently so the rind does not bruise.",
+ "ways": [
+  {
+   "key": "marcotted",
+   "label": "Marcot or grafted seedling (marcot o grafted)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear the land and mark the spots",
+     "how": "Clear the land and mark the planting spots about 8 to 10 m apart, since pomelo grows into a big tree. Pick ground that drains well. On slopes follow the contour.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Dig and fill the holes",
+     "how": "Dig each hole about 50 cm wide and 50 cm deep and keep the topsoil apart. Mix the topsoil with compost or dried manure and put it back to settle before planting.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Pick and harden the marcot",
+     "how": "Choose a marcot or grafted seedling with plenty of roots, healthy dark leaves and no gum on the bark. Keep it in light shade and water it daily for some days so it gets used to the field.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant and stake",
+     "how": "Remove the bag or wrapping without breaking the soil ball and set the plant at the depth it grew. Firm the soil, water well and tie the plant to a strong stake against the wind.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Shade, mulch and water",
+     "how": "Shade the new tree with fronds for a few weeks and mulch around it, a little away from the stem. Water every few days in dry weather until new leaves show.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First feeding",
+     "how": "About a month after planting, spread a small amount of complete fertilizer or ammonium sulfate around the tree and mix it lightly into the soil. Feed again every three to four months, a little more each year, with manure when you have it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed around the young tree",
+     "how": "Keep a clean circle around the tree by hand or bolo. Short crops can be grown between the young trees.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Check new leaves and bark",
+     "how": "Look at each new flush for aphids, psyllids and leaf miners, and at the trunk for gum oozing from the bark. Cut and burn badly hit twigs and keep the base dry and clean.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 270,
+     "title": "Shape the young tree",
+     "how": "Cut back the tips to make the tree branch, keep a few strong main branches and remove water sprouts and branches that touch the ground. Pick off early fruits so the tree builds its frame first.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Feed more as the tree grows",
+     "how": "From the second year, feed the tree at the start and the end of the rains, spreading the fertilizer under the outer leaves. Bearing trees need more potash for sweet, juicy fruit.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "First good harvest",
+     "how": "Pick when the fruit is full sized, the skin turns lighter green or yellowish and the oil glands look smooth and shiny. Cut the stem with a pruning knife or a pole cutter so the fruit does not drop.",
+     "task": "harvest"
+    }
+   ],
+   "note": "A pomelo tree gives enough fruit to sell at about 4 years from planting. Big marcots may give a few fruits in the first year or two."
+  }
+ ],
+ "mistakes": [
+  "Planting seedlings from seed, which bear late and give fruits unlike the mother tree.",
+  "Taking marcots from a sour or poor bearing tree.",
+  "Planting too close, so the big trees shade each other.",
+  "Letting every fruit in a cluster grow, so all stay small.",
+  "Giving the wrong fertilizer, which gives thick rind and dry flesh.",
+  "Leaving fruit flies and rind borers unchecked in the orchard."
+ ],
+ "better": [
+  "Buy marcots or grafted seedlings from an accredited nursery or a proven mother tree.",
+  "Test the soil and feed by the result, with enough potash and micronutrients.",
+  "Prune right after the main harvest and thin fruit clusters.",
+  "Bag young fruits and keep fallen fruit cleaned up against fruit flies and rind borers.",
+  "Water during flowering and fruit growth in long dry spells.",
+  "Scout every new flush for aphids and psyllids that spread citrus diseases."
+ ],
+ "video": {
+  "youtubeId": "WxRUFmTejkM",
+  "title": "PAGTATANIM NG SUHA/POMELO",
+  "channel": "Ang Magsasakang Reporter",
+  "lang": "fil",
+  "minutes": 14,
+  "why": "A Filipino grower shows how to plant and start caring for suha, explained plainly in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng suha",
+  "pagtatanim ng pomelo",
+  "marcot na suha",
+  "how to plant pomelo in the philippines",
+  "pomelo farming"
+ ],
+ "confidence": "medium",
+ "slug": "pomelo",
+ "rev": "9b48fc763606"
+}

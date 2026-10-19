@@ -1,0 +1,148 @@
+{
+ "crop": "garlic",
+ "name": "Garlic",
+ "local": "Bawang",
+ "aka": [
+  "ahos"
+ ],
+ "summary": "How Ilocano and other Filipino farmers grow native garlic in rice fields right after the harvest, without plowing, under a cover of rice straw. The small native bulbs are strong in flavor and keep for months when cured well.",
+ "season": "Planted from October to November in the Ilocos Region and other lowlands, right after the rice harvest, and pulled about four months later. Planting in December or later usually gives smaller bulbs. Garlic is also grown this way in Mindoro and in a few highland areas in the cool months.",
+ "material": "Cloves from bulbs kept from the last harvest and hung to dry. Bulbs are broken into cloves only a day or two before planting, and farmers use the big, firm outer cloves and throw out small, soft or damaged ones. Some soak the cloves in water overnight before planting.",
+ "spacing": "About 15 x 15 cm, or 20 x 10 cm, cloves pushed 2 to 3 cm deep.",
+ "water": "Watered by letting water from a canal or a pump flow over the field and draining it off quickly, about every week or two in the dry months, then stopped two to three weeks before harvest.",
+ "fertilizer": "Complete fertilizer (14 14 14) spread before planting, then urea (46 0 0) or ammonium sulfate (21 0 0) at about a month, sometimes with potash (0 0 60) as the bulbs form.",
+ "care": "The thick rice straw mulch does most of the weeding, and the rest is hand pulled. Farmers watch for thrips and leaf diseases, which are worse in humid weather.",
+ "harvest": "Ready about four months after planting, when most leaves have yellowed. Plants are pulled, dried in the field for a few days, then tied in bundles and hung in the shade to cure.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Planted after rice without plowing",
+   "days": 120,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Cut the stubble",
+     "how": "Right after the rice harvest, cut the rice stubble and any weeds down to ground level. The field is not plowed. If the soil is too dry, let water in briefly and drain it so the soil is moist but firm.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Prepare the cloves",
+     "how": "Break the bulbs into cloves and sort out the big, firm ones. Soak them in water overnight if you follow that habit.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer before planting",
+     "how": "Many farmers spread complete fertilizer (14 14 14) over the field before planting.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Push the cloves in",
+     "how": "Push each clove, pointed end up, about 2 to 3 cm into the soft soil, about 15 x 15 cm or 20 x 10 cm apart. A string or a marked stick keeps the rows straight.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Cover with rice straw",
+     "how": "Cover the whole field with a layer of rice straw about 3 to 5 cm deep. It keeps the soil moist and smothers most weeds.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 2,
+     "title": "First watering",
+     "how": "Let water flow into the field from a canal or a pump until the soil is wet, then drain it off quickly. Repeat about every week or two in the dry months, depending on the soil.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Side dress",
+     "how": "Scatter urea (46 0 0) or ammonium sulfate (21 0 0) over the mulch and water it in. Some farmers add potash (0 0 60) later as the bulbs form.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Pull the weeds",
+     "how": "Hand pull the weeds that come through the straw.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Watch the leaves",
+     "how": "Check for thrips (silvery streaks), purple blotch and leaf tip burn, which spread in humid weather, and for caterpillars on the leaves.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 100,
+     "title": "Stop watering",
+     "how": "Stop watering about two to three weeks before harvest so the bulbs mature firm.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 120,
+     "title": "Pull when the leaves yellow",
+     "how": "Harvest when most leaves have turned yellow or brown and the stems start to bend, about four months after planting. Pull the plants by hand.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 121,
+     "title": "Dry in the field",
+     "how": "Lay the plants in rows with the leaves covering the bulbs and leave them to dry for a few days.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 125,
+     "title": "Bundle and hang",
+     "how": "Tie the plants in bundles by their leaves and hang them under the house or in an airy shed to cure. Garlic is kept this way until it is sold or planted.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting late, in December or after, which gives small bulbs.",
+  "Planting small, soft or damaged cloves.",
+  "Leaving water standing in the field, which rots the cloves.",
+  "Watering up to harvest, so bulbs are soft and store poorly.",
+  "Harvesting too early, so the bulbs shrink as they dry."
+ ],
+ "better": [
+  "Plant only big, healthy cloves, ideally from a clean field without disease.",
+  "Plant on time, in October to November, right after the rice harvest.",
+  "Test the soil and match the fertilizer to it.",
+  "Keep the straw mulch even, 3 to 5 cm thick, and never let water stand.",
+  "Cure the bulbs well in the shade before storing or selling."
+ ],
+ "video": {
+  "youtubeId": "wXiFINyBSbA",
+  "title": "HOW WE PLANT GARLIC IN ILOCOS NORTE, PHILIPPINES",
+  "channel": "Glory Batuyong Baniaga vlogs",
+  "lang": "en",
+  "minutes": 5,
+  "why": "An Ilocano farm family plants garlic cloves into the rice field after harvest, the traditional Ilocos way."
+ },
+ "keywords": [
+  "paano magtanim ng bawang",
+  "pagtatanim ng bawang",
+  "bawang ilocos",
+  "how to plant garlic in the philippines",
+  "garlic after rice"
+ ],
+ "confidence": "high",
+ "slug": "garlic",
+ "rev": "1176a1de5358"
+}

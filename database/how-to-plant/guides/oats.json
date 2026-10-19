@@ -1,0 +1,96 @@
+{
+ "crop": "oats",
+ "name": "Oats",
+ "local": "Oats",
+ "aka": [
+  "avena"
+ ],
+ "summary": "Oats are rarely grown in the Philippines, where oatmeal is imported. A few highland farms sow small plots, mostly as green feed for animals or as a cover crop, and this short guide shows how they do it.",
+ "season": "Sown in the highlands at the end of the rains, around October to December, so the crop grows in the cool, dry months.",
+ "material": "Dry seed bought from feed or seed suppliers, sown without soaking.",
+ "spacing": "Rows about 20 to 25 cm apart, sown thinly, or broadcast.",
+ "water": "Grown on the last of the rains, with hand watering in dry spells.",
+ "fertilizer": "Compost or manure at sowing, with some complete fertilizer (14 14 14) on poor soil.",
+ "care": "Hand weeding in the first month. Plots grown for feed are cut and fed fresh.",
+ "harvest": "Grain is ready at about 90 to 110 days when the heads are pale and dry. Feed oats are cut green, before the heads ripen.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Sown direct in rows or broadcast",
+   "days": 95,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig or plow to a fine bed",
+     "how": "Plow or dig the plot, clear the weeds and rake it fine.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow the seed",
+     "how": "Sow thinly in shallow rows about 20 to 25 cm apart and cover with 3 to 5 cm of soil, or scatter and rake in.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Manure at sowing",
+     "how": "Work compost or manure into the bed, with some complete fertilizer (14 14 14) on poor soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Water if dry",
+     "how": "Water the plot if no rain falls in the first days.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed",
+     "how": "Hand pull the weeds while the plants are young.",
+     "task": "weeding"
+    },
+    {
+     "phase": "harvest",
+     "day": 95,
+     "title": "Cut when the heads are dry",
+     "how": "For grain, cut when the heads have turned pale and the grain is firm. For feed, cut the green plants before the heads ripen.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 97,
+     "title": "Dry and thresh",
+     "how": "Sun dry the bundles, beat out the grain and winnow it.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "The days count to a grain harvest. Oats cut green for animal feed are taken much earlier, before the heads ripen."
+  }
+ ],
+ "mistakes": [
+  "Sowing in the lowlands or in the rainy season.",
+  "Sowing too thickly, which gives weak stems.",
+  "Leaving ripe heads out in the rain."
+ ],
+ "better": [
+  "Use seed of a variety meant for warm highlands.",
+  "Sow only in the cool dry months.",
+  "Test the soil and add compost to poor ground.",
+  "Keep the plot weed free for the first month."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng oats",
+  "pagtatanim ng oats sa pilipinas",
+  "can oats grow in the philippines",
+  "how to plant oats"
+ ],
+ "confidence": "low",
+ "slug": "oats",
+ "rev": "ad90907b424f"
+}

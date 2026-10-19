@@ -1,0 +1,124 @@
+{
+ "crop": "soybean",
+ "name": "Soybean",
+ "local": "Utaw",
+ "aka": [
+  "soya"
+ ],
+ "summary": "Soybean is a minor crop in the Philippines, grown mostly in Mindanao and by a few cooperatives in Luzon for tofu, taho and feed. This guide shows how those growers usually plant it, after rice or at the start of the rains.",
+ "season": "In Luzon it is planted after rice in the dry season, around November to January. In Mindanao growers plant at the start of the rains and again late in the year.",
+ "material": "Dry seed from the last crop or bought. Soybean seed loses its strength fast in the heat, so seed kept for many months often comes up poorly. Many growers coat the seed with a legume inoculant just before planting.",
+ "spacing": "Rows about 50 to 60 cm apart, with the seed drilled thinly along the row.",
+ "water": "Rainfed in the wet season. After rice it lives on the leftover moisture, with furrow watering during pod filling if the soil dries.",
+ "fertilizer": "A little complete fertilizer (14 14 14) or manure at planting. Inoculated soybean makes much of its own nitrogen.",
+ "care": "Off barring and hilling up in the first three weeks, hand weeding, and watching for pod borers and stink bugs at pod filling.",
+ "harvest": "Dry beans are ready at about 85 to 100 days when the pods are brown and the leaves have dropped. The plants are cut, sun dried and beaten. For green soybean, pods are picked while still green and full, weeks earlier.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in furrows",
+   "days": 95,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow",
+     "how": "Plow once when the soil is moist enough.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Harrow",
+     "how": "Harrow once or twice to a fine seedbed and kill sprouting weeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open shallow furrows about 50 to 60 cm apart.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer on poor soil",
+     "how": "Drop a little complete fertilizer (14 14 14) or manure in the furrow and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Drill the seed",
+     "how": "Drop the seed thinly along the furrow and cover it with about 3 cm of moist soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring and weeding",
+     "how": "Plow lightly along the rows with the soil thrown away from the plants and hand pull the weeds in the row.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Hill up",
+     "how": "Plow back toward the rows to pile soil at the base of the plants.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Watch for insects",
+     "how": "Check for leaf eating caterpillars, pod borers and stink bugs from flowering to pod filling.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "Water during pod filling",
+     "how": "In the dry season, run water into the furrows if the soil dries out while the pods fill.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 95,
+     "title": "Cut the plants",
+     "how": "Harvest when nearly all pods have turned brown and most leaves have dropped. Cut the plants at the base and bundle them.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 97,
+     "title": "Dry and thresh",
+     "how": "Sun dry the bundles, beat out the beans, winnow and dry them again before storing in sealed containers.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting old seed that has lost its strength in storage.",
+  "Planting where water stands after rain.",
+  "Harvesting late, so dry pods split and drop the beans.",
+  "Skipping the inoculant on a field that has never grown soybean."
+ ],
+ "better": [
+  "Use fresh seed of a variety suited to your area and keep it cool and dry.",
+  "Coat the seed with a legume inoculant just before planting.",
+  "Test the soil and lime it if acid.",
+  "Keep weeds out in the first month and scout for pod borers at flowering."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng soybeans",
+  "pagtatanim ng utaw",
+  "soybean farming philippines",
+  "how to plant soybean in the philippines"
+ ],
+ "confidence": "low",
+ "slug": "soybean",
+ "rev": "d58e6465707d"
+}

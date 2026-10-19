@@ -1,0 +1,160 @@
+{
+ "crop": "corn_yellow",
+ "name": "Corn, yellow",
+ "local": "Mais",
+ "aka": [
+  "mais na dilaw",
+  "field corn",
+  "maize"
+ ],
+ "summary": "How Filipino farmers plant yellow corn for feed and grain on lowland fields and hillsides, mostly with hybrid seed, using the usual plow, furrow and hill up routine. It ends with the changes that bring a bigger harvest.",
+ "season": "The first crop goes in when the rains begin, from April to June. A second crop is planted from September to December on the moisture left at the end of the rains, and in Cagayan Valley this late crop is often the bigger one. In much of Mindanao farmers plant twice a year, around March to May and again around August to October.",
+ "material": "Seed, mostly hybrid bought new every season, since seed saved from a hybrid harvest does not grow true. Some upland farmers still keep seed of open pollinated varieties from the best, fully dried ears. Bought seed comes already treated and is planted dry, straight from the bag.",
+ "spacing": "Rows about 75 cm apart with one plant every 20 to 25 cm, which is about 53,000 to 66,000 plants a hectare. Some farmers plant two seeds a hill and thin to one plant after two weeks.",
+ "water": "Mostly rainfed. Farmers time planting so the rains carry the crop through, and the late crop lives on the moisture left in the soil. A few pump water into the furrows during dry spells, mostly around tasseling.",
+ "fertilizer": "The usual habit is complete fertilizer (14 14 14) in the furrow at planting, often about three bags a hectare, then urea (46 0 0) beside the plants at about 25 to 30 days, just before hilling up. Some farmers skip the basal feeding and put everything at side dressing, or spread chicken manure during land preparation.",
+ "care": "The carabao or tractor plow does most of the weeding: off barring at about two weeks and hilling up at about four weeks, with hand weeding of the rows after that. Misses are replanted in the first week and double hills thinned to one plant. Farmers look into the whorls for fall armyworm and corn borer and pull out plants with downy mildew.",
+ "harvest": "Yellow corn is ready when the husks are brown and dry and the kernels are hard and shiny, about 100 to 120 days after planting. Ears are picked by hand, sun dried, shelled and dried again to about 14 percent moisture, then stored in clean sacks off the floor.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Direct seeded in furrows",
+   "days": 110,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Clear and plow",
+     "how": "Cut and clear the old crop or the grass, then plow once when the soil has enough moisture, with a carabao, a tractor or a hand tractor.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -10,
+     "title": "Harrow twice",
+     "how": "Harrow two times, about a week apart, to break the clods and kill the weeds that sprout after plowing.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Open the furrows",
+     "how": "Open furrows about 75 cm apart with the plow. On slopes, run them across the slope so the rain does not wash the soil away.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer in the furrow",
+     "how": "Drop complete fertilizer (14 14 14) along the bottom of the furrow and rake a little soil over it so the seed does not sit on it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Drop the seed and cover",
+     "how": "Drop one seed every 20 to 25 cm, or two seeds a hill to be thinned later, and cover with about 3 to 5 cm of soil using the foot.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Replant the misses",
+     "how": "About a week after planting, replant hills where nothing came up so the stand stays full.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Thin to one plant a hill",
+     "how": "Where two seeds came up together, pull the weaker one and leave the strongest.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Off barring",
+     "how": "Run the plow along each row with the soil thrown away from the plants. This cuts the weeds between the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Look into the whorls",
+     "how": "Check the whorls of young plants for chewed leaves and fresh droppings, the sign of fall armyworm or corn borer. Pull out and burn plants with pale striped leaves, a sign of downy mildew.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 27,
+     "title": "Side dress urea",
+     "how": "Drop urea (46 0 0) about 5 cm from the base of each plant on moist soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 28,
+     "title": "Hill up",
+     "how": "Plow again with the soil thrown toward the rows to cover the fertilizer and pile soil at the base of the plants. This buries young weeds and helps the plants stand against wind.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 55,
+     "title": "Tasseling and silking",
+     "how": "The tassels and silks come out at about 50 to 60 days. Keep the field clean of weeds, since a dry spell or weeds now give poorly filled ears.",
+     "task": "other"
+    },
+    {
+     "phase": "harvest",
+     "day": 110,
+     "title": "Pick the dry ears",
+     "how": "Harvest when the husks have turned brown and dry and the kernels are hard, with a dark layer at their base, about 100 to 120 days after planting. In good weather many farmers leave the ears on the stalk a while longer to dry in the field.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 112,
+     "title": "Dry, shell and dry again",
+     "how": "Sun dry the ears for two to three days, shell them by hand or with a sheller, then dry the grain again to about 14 percent moisture before bagging.",
+     "task": "postharvest",
+     "tip": "Damp corn in sacks molds fast and becomes unsafe for feed."
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting seed saved from a hybrid harvest, which gives uneven plants and a much smaller harvest.",
+  "Planting late after the rains start, so the crop meets a dry spell at tasseling.",
+  "Skipping or delaying hilling up, which lets weeds win and plants fall over in strong wind.",
+  "Leaving urea on the soil surface without covering it, so much of it is lost to the air.",
+  "Storing shelled corn before it is fully dry, which brings mold.",
+  "Spraying for armyworm by habit without first checking the whorls."
+ ],
+ "better": [
+  "Choose a hybrid or variety suited to your area and season, and buy fresh seed every crop.",
+  "Test the soil and match the fertilizer to it, splitting the nitrogen into two or three feedings and covering it with soil.",
+  "Keep an even stand of about 60,000 plants a hectare with 75 x 20 to 25 cm spacing and early replanting.",
+  "Keep the field free of weeds for the first four to six weeks.",
+  "Scout every week for fall armyworm and act early, while the plants are young.",
+  "Dry the grain quickly to about 14 percent moisture and store it off the floor to keep it free of mold."
+ ],
+ "video": {
+  "youtubeId": "FDoiwfOdjtI",
+  "title": "PAANO MAGTANIM NG MAIS AT PARAAN NG PAG AALAGA NITO?",
+  "channel": "Virgilio Bunag",
+  "lang": "fil",
+  "minutes": 16,
+  "why": "A Filipino farmer plants corn by hand on a plowed field and follows the crop through its care, the usual way on small farms."
+ },
+ "keywords": [
+  "paano magtanim ng mais",
+  "pagtatanim ng mais",
+  "tamang pagtatanim ng mais",
+  "how to plant corn in the philippines",
+  "yellow corn farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "corn-yellow",
+ "rev": "e9820e0d6641"
+}

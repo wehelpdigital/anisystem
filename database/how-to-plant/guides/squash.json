@@ -1,0 +1,194 @@
+{
+ "crop": "squash",
+ "name": "Squash",
+ "local": "Kalabasa",
+ "aka": [
+  "karabasa"
+ ],
+ "summary": "How Filipino farmers grow kalabasa with the vines running on the ground: seed sown in widely spaced hills, often in a field left after rice with little or no plowing, and mature fruits cut for the market. It is for small farms and backyards growing kalabasa for its fruits, flowers and tops.",
+ "season": "Kalabasa wants warm, fairly dry weather when it flowers and sets fruit. In the lowlands it is usually planted from October to December, often in rice fields after the harvest, and in the highlands from May to July. A rainy season crop needs raised hills and drainage canals so the seeds and roots do not rot.",
+ "material": "Seed, about 2 to 2.5 kg for a hectare. Farmers soak the seed in clean water overnight, wrap it in a damp cloth and keep it in a cool, dark place until the root peeps out, then plant it straight in the hills. Hybrid seed is costly, so many raise it in trays and transplant at 10 to 15 days, and many farmers keep seed from their best ripe fruits of open pollinated kinds.",
+ "spacing": "Furrows 2 to 3 meters apart and hills about 1 meter apart along the row, one or two plants a hill. Where the field is not plowed, holes are dug about 3 meters apart each way.",
+ "water": "Water matters most at flowering and fruiting. Farmers run water down the furrows about once a week in the dry season, or pour about a liter a hill every other day in a small garden, and water after each fertilizer dose. Watering stops when the fruits reach the mature green stage. In the rainy months drainage canals keep water from standing.",
+ "fertilizer": "One to two kilos of well rotted manure or compost and about a tablespoon of 14 14 14 in each hill before planting. A tablespoon of urea a hill about a month after planting, a tablespoon of muriate of potash two weeks later, and more urea or potash every 15 days or so if the crop is weak.",
+ "care": "Hand weeding while the plants are small, then off barring at 15 to 20 days and hilling up about 10 days later in plowed fields. Side shoots and female buds on the first 8 joints are removed, the vine tips are turned back into the row, and crooked young fruits are cut off. Rice straw or rice hull goes under the good fruits. Many farmers hand pollinate early in the morning and pull out plants with virus.",
+ "harvest": "Young fruits for cooking are cut about 30 to 40 days after pollination. Mature fruits, with a hard rind and a whitish powder on the skin, are cut with a knife leaving part of the stalk, at about 85 days or later for most hybrids. They keep for weeks in a dry, shaded, airy shed, and fruits for seed are left to ripen fully on the vine.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in hills (tanim buto)",
+   "days": 85,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Clear and prepare the field",
+     "how": "Plow 15 to 20 cm deep and harrow two or three times, a week apart, until the soil is fine. In a field after rice many farmers skip plowing: they cut the weeds by hand, dig holes about 10 cm deep and loosen the soil in each hole.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Lay out the rows and canals",
+     "how": "Open furrows 2 to 3 meters apart. Dig drainage canals around the field, and in the rainy months raise each hill so water drains away.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Soak and sprout the seed",
+     "how": "Soak the seed overnight in clean water, then wrap it in a damp cloth and keep it in a cool, dark place until the seed coat splits and the root shows.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Feed each hill",
+     "how": "Mix 1 to 2 kg of well rotted manure or compost into each hill, with about a tablespoon of 14 14 14, and cover it with a little fine soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the sprouted seed",
+     "how": "Plant one or two sprouted seeds a hill, about 1 to 2 cm deep, with hills about 1 meter apart along the furrow. Cover with fine soil and water if the soil is dry.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Fill gaps and thin",
+     "how": "Replant hills where nothing came up and keep one or two strong plants in each hill.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water once a week",
+     "how": "In the dry season run water down the furrows about once a week, or pour about a liter at each hill every other day in a small garden. Water after every fertilizer dose too.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Hand weed around the hills",
+     "how": "Pull the weeds around each hill while the plants are small, between about 7 and 14 days after they come up.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Off bar",
+     "how": "In a plowed field, plow or hoe the soil away from the rows between 15 and 20 days after planting to kill weeds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 28,
+     "title": "Hill up",
+     "how": "About 10 days after off barring, push the soil back against the rows and pull the weeds left between plants.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First side dressing",
+     "how": "About a month after planting, or when the vines reach about a meter long, put a tablespoon of urea at each hill and cover it with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Prune the low shoots",
+     "how": "Pinch off the side shoots and any female buds on the first 8 joints of the main vine so the plant puts its strength into fruits further out. Turn the vine tips back so they stay in their lane.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Help the flowers set fruit",
+     "how": "Between 6 and 8 in the morning, pick a freshly opened male flower, pull off its petals and touch it to the center of an open female flower, the one with a tiny fruit under it. Do this when few bees visit the field.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Scout for pests and virus",
+     "how": "Check the leaves for aphids and spotted leaf beetles and for white powder. Pull and burn plants with mottled, curled leaves, since that virus spreads fast.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 44,
+     "title": "Potash for the fruits",
+     "how": "Two weeks after the first side dressing, put a tablespoon of muriate of potash at each hill. Give another tablespoon of urea or potash every 15 days or so if the vines look weak.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Thin and cushion the fruits",
+     "how": "Cut off crooked or damaged fruits while they are small. Slip 5 to 6 cm of rice straw or rice hull under the good fruits so they do not touch wet soil.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 70,
+     "title": "Stop watering near harvest",
+     "how": "When the fruits reach the mature green stage, stop irrigating, since water late in the season lowers fruit quality.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 85,
+     "title": "Cut the mature fruits",
+     "how": "Harvest fruits with a hard rind and a whitish powder on the skin. Cut the stalk with a knife and leave a short piece of it on the fruit.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 86,
+     "title": "Store in the shade",
+     "how": "Keep the fruits with their stalks in a dry, shaded and airy shed, off the ground. Set aside bruised fruits for home use, since they spoil first.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Days are to the mature fruit. Young fruits for cooking can be cut about 30 to 40 days after the flower is pollinated, and farmers pick flowers and tops as the vine grows."
+  }
+ ],
+ "mistakes": [
+  "Planting on flat, low ground in the rainy months, so the seeds rot and flowers drop.",
+  "Letting every side shoot grow, which gives many small fruits instead of a few good ones.",
+  "Leaving fruits on bare wet soil, so the underside rots.",
+  "Keeping virus infected plants in the field, so aphids spread the mosaic to the rest.",
+  "Watering heavily close to harvest, which lowers fruit quality.",
+  "Pulling fruits off by hand and tearing the stalk, so they rot in storage."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result. Kalabasa does best near pH 5.5 to 6.5.",
+  "Use good seed of a variety tolerant to virus and powdery mildew, and raise costly hybrid seed in trays.",
+  "Keep bees working: do not spray while the flowers are open in the morning, and hand pollinate when bees are few.",
+  "Manage aphids and leaf beetles early with a clean field, yellow sticky traps and quick removal of virus plants.",
+  "Rotate away from other gourds and melons so soil diseases do not build up.",
+  "Split the fertilizer into small doses, with enough potash once fruits start to form."
+ ],
+ "video": {
+  "youtubeId": "4RkftAws7FI",
+  "title": "PAANO MAGTANIM NG KALABASA, WALANG PAG ARARO, MABILIS AT TIPID SA PAGTANIM | D' GREEN THUMB",
+  "channel": "D' Green Thumb",
+  "lang": "fil",
+  "minutes": 13,
+  "why": "Shows the old no plowing way of planting kalabasa in hills in the field, with pruning tips, explained in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng kalabasa",
+  "pagtatanim ng kalabasa",
+  "tamang distansya ng kalabasa",
+  "abono sa kalabasa",
+  "how to plant squash in the philippines",
+  "squash production guide philippines"
+ ],
+ "confidence": "medium",
+ "slug": "squash",
+ "rev": "1cf8039f6e61"
+}

@@ -1,0 +1,153 @@
+{
+ "crop": "mango",
+ "name": "Mango",
+ "local": "Mangga",
+ "aka": [
+  "carabao mango",
+  "manggang kalabaw",
+  "piko"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant a grafted carabao mango and care for it until the first fruits. It is for backyards and small orchards, from the hole and the grafted seedling to the first harvest.",
+ "season": "Grafted seedlings are planted as the rains begin, around May to July, so they root before the dry months. Mango does best where there is a clear dry season of 3 to 4 months, as in Pangasinan, Zambales, Ilocos, Guimaras and much of Mindanao, since the dry months bring on the flowers.",
+ "material": "Most growers now plant a grafted seedling about 8 to 10 months old: a scion from a proven carabao mother tree joined to a sturdy native rootstock. Pick one with a healed graft union, dark green mature leaves and a firm ball of soil, and keep it in light shade a few days before planting. In the old way many farmers grew carabao mango straight from the seed, which comes true to type but takes many more years to bear.",
+ "spacing": "Carabao trees grow very wide, so traditional orchards set them about 10 to 15 m apart, often 10 m by 10 m or 12 m by 12 m. Closer spacing works only with yearly pruning to keep the trees low. One seedling a hole.",
+ "water": "Mostly rain fed. Young trees are watered about once a week in the dry months and mulched. Bearing trees are watered during flowering and fruit growth if the dry spell is long, and watering stops about a month before harvest.",
+ "fertilizer": "Manure or compost mixed into the hole at planting. In the first years, complete fertilizer or urea with manure, mostly for nitrogen, given at the start and again before the rains end in a ring under the leaves. Bearing trees get more phosphorus and potash.",
+ "care": "Shading and mulching the new seedling, weekly watering in dry months, weeding a clean circle, removing rootstock shoots, shaping the tree to three or four main branches, picking off early flowers and checking each leaf flush for pests. In the old days farmers brought on flowering of grown trees by smudging, keeping a smoky fire under the tree for some weeks. Now most spray a flower inducer when the tree is mature.",
+ "harvest": "Fruits are ready about 115 to 120 days after flowering in dry months and 120 to 130 days in the wet season. Signs: full, rounded shoulders, lighter green skin with a powdery bloom, a darker stem end and flesh starting to turn yellow. Many growers check that most sample fruits sink in water. Pick by hand or with a pole and net, keep a short stem, let the sap drain stem down, and never let fruit touch the bare ground. Many growers bag the young fruits with old newspaper about 50 to 60 days after flowering.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedling (dugtong)",
+   "days": 1800,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear the spot and dig the holes",
+     "how": "Mark the planting spots about 10 m apart or more, since a carabao tree grows wide. Dig each hole about 50 cm to 1 m wide and deep, keeping the topsoil on one side.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Fill the hole and pick the seedling",
+     "how": "Mix the topsoil with well rotted manure or compost and fill the hole back, then water it and let it settle. Choose a grafted seedling with a healed union, no pests and a firm soil ball, from a mother tree you know bears well.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the grafted seedling",
+     "how": "Cut the bag away without breaking the soil ball and set the seedling in the middle of the hole at the same depth it grew in the bag. Keep the graft union above the soil, firm the soil around it, water well and tie it to a stake.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Shade and mulch",
+     "how": "Shade the new tree with a few coconut fronds against the hot sun. Spread dried grass or leaves around the base, a little off the stem, to keep the soil moist.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Water in dry months",
+     "how": "Water the young tree about once a week in dry months, soaking the soil around it. Rain is enough in the wet months.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed around the tree",
+     "how": "Keep a clean circle around the young tree free of grass and vines. Low crops like mungbean, peanut or vegetables can grow farther out between the trees.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Rub off rootstock shoots",
+     "how": "Shoots that come out below the graft belong to the rootstock and steal food from the good variety. Rub or cut them off whenever they appear.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "First feeding while the soil is wet",
+     "how": "Give the young tree a little complete fertilizer or urea with manure or compost, spread in a ring under the leaves and covered with soil. Young mango needs mostly nitrogen to grow leaves and branches.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 150,
+     "title": "Second feeding before the rains end",
+     "how": "Feed again just before the rains end while the ground is still moist. Increase the amount a little each year as the tree grows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 210,
+     "title": "Shape the young tree",
+     "how": "Cut the top of a tall, single stem so it branches, then keep three or four strong branches spread around the trunk. Remove crossing, weak or sick branches.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 270,
+     "title": "Check new leaves for pests",
+     "how": "Look at each new flush of leaves for hoppers, twig borers, scale insects and black leaf spots. Cut off and burn badly hit twigs and keep fallen leaves cleaned up.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Pick off early flowers",
+     "how": "A young grafted tree may flower in its first or second year. Many growers pick these flowers off so the tree puts its strength into growing a bigger frame first.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1800,
+     "title": "First real harvest",
+     "how": "Fruits are ready about 115 to 130 days after flowering, when the shoulders fill out, the skin turns lighter with a powdery bloom and the stem end darkens. Pick by hand or with a pole and bag, leaving a short stem, and let the sap drain before packing.",
+     "task": "harvest"
+    }
+   ],
+   "note": "A grafted carabao mango usually gives its first real crop at about 4 to 5 years. A tree grown from seed takes several years longer."
+  }
+ ],
+ "mistakes": [
+  "Planting a seedling of unknown parentage, so the fruit is small or sour.",
+  "Burying the graft union under the soil or letting rootstock shoots take over.",
+  "Planting too close, so the grown trees shade each other and bear only on the top.",
+  "Letting a very young tree carry fruit before it has a good frame.",
+  "No water and no mulch in the first dry season, so many seedlings die.",
+  "Never pruning, so the canopy turns thick, dark and full of pests."
+ ],
+ "better": [
+  "Buy grafted seedlings from an accredited nursery with known carabao mother trees.",
+  "Test the soil and feed by the result, with more potash and phosphorus once the tree bears.",
+  "Shape and prune every year after harvest to keep the tree open and easy to spray and pick.",
+  "Bag the fruits early and keep the orchard floor clean to cut fruit fly and disease.",
+  "Scout each flush and flowering for hoppers, twig borers and leaf spots, and act early.",
+  "Water during flowering and fruit growth in long dry spells for better fruit set."
+ ],
+ "video": {
+  "youtubeId": "6lHS_aNhnsM",
+  "title": "Pagtatanim ng grafted mango guimaras variety",
+  "channel": "RUBRICO farm Art",
+  "lang": "fil",
+  "minutes": 17,
+  "why": "A Filipino grower plants a grafted Guimaras carabao mango in an open field, step by step, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng mangga",
+  "pagtatanim ng grafted na mangga",
+  "paano magtanim ng carabao mango",
+  "how to plant mango in the philippines",
+  "grafted mango planting"
+ ],
+ "confidence": "medium",
+ "slug": "mango",
+ "rev": "3945589d9b3f"
+}

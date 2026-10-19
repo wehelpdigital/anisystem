@@ -1,0 +1,193 @@
+{
+ "crop": "tomato",
+ "name": "Tomato",
+ "local": "Kamatis",
+ "aka": [],
+ "summary": "How Filipino farmers usually grow kamatis: seedlings raised for about a month, set out on rows, staked or trellised, and picked green, pink or red depending on how far the market is. It is for small lowland and upland farms growing table or processing tomato.",
+ "season": "Tomato likes cool, dry weather. In the lowlands the main crop is planted from about November to February, often in fields just cleared of rice, and in the hills from about September to January. Some farmers grow an off season crop from May to September for the higher price, on raised, well drained rows with stakes.",
+ "material": "Seed, about 150 to 200 grams for a hectare. The seed is soaked overnight in clean water, dried in the air and sown in a seedbed or in trays filled with compost, garden soil and burnt rice hull. Seedlings go to the field at about 25 to 30 days old, once they have two or more true leaves.",
+ "spacing": "Rows about 1 meter wide with furrows about half a meter wide between them, and 50 cm between plants along the row, one seedling a hole.",
+ "water": "Tomato does not stand flooding. Farmers let water run fast down the furrows to wet the roots and then drain, about 4 to 5 times from planting until two weeks before the last picking. Without a canal they pour about a liter a hill once a week. Seedlings are watered each morning, only enough to keep the soil damp.",
+ "fertilizer": "Decomposed animal manure or compost worked in before planting, then a tablespoon of 14 14 14 in each hole. About 15 grams each of urea and muriate of potash a plant at 10 to 15 days after planting, and 15 grams of urea again near 30 days.",
+ "care": "Low side shoots and old leaves are pruned at 10 to 20 days. Posts of bamboo or ipil ipil with wire or string hold the plants up, set at about 15 days. Off barring at 15 to 20 days and hilling up at 25 to 30 days, with hand weeding, and rice straw mulch where it is at hand. Many farmers plant marigold, lemongrass or basil at the edges to keep insects off, keep the field clean, and avoid smoking near the plants.",
+ "harvest": "Picking starts about 55 to 65 days after transplanting and goes on weekly until about 100 days. Fruits are taken mature green for a far market, pink for a near market, and red ripe for home use. They are sorted, wiped clean and dry with a soft cloth, and packed in lined kaing, crates or plastic bags with two pin holes for every kilo.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Transplanted from a seedbed (lipat tanim)",
+   "days": 60,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -35,
+     "title": "Clean the seedbed soil",
+     "how": "Make beds about 1 meter wide and 15 cm high in full sun near water. Burn a thin layer of rice straw or rice hull over the wet bed, or cover the wet bed with clear plastic and leave it in the sun for a whole day. Let the soil cool before sowing.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -30,
+     "title": "Soak and sow the seed",
+     "how": "Soak the seed overnight and dry it in the air. Sow thinly in shallow lines 5 cm apart and cover with fine soil, or drop one seed a hole about 1 cm deep in a tray. Water gently in the morning and keep the bed under a light shade.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -24,
+     "title": "Thin and prick out",
+     "how": "A few days after the seedlings come up, pull out the crowded ones and move the extras into trays or banana leaf cups. Keep them in the shade until they recover.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow 15 to 20 cm deep two or three times, a week apart, harrowing after each pass. For a wet season crop pick slightly higher ground where water drains off.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -20,
+     "title": "Give the seedlings a starter drink",
+     "how": "About 10 days after the seedlings come up, dissolve a tablespoon of urea or 21 0 0 in 4 liters of water and pour it over them. Rinse the leaves with plain water right after.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "Leave the seedlings in the sun a little longer each day and water them less often. By planting day they should stand the full sun without wilting badly.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Make the rows and add manure",
+     "how": "Form rows about 1 meter wide with furrows about half a meter wide between them. Mix compost or dried chicken manure into each row before the last harrowing.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in the late afternoon",
+     "how": "Set one seedling a hole, 50 cm apart along the row, with a tablespoon of 14 14 14 mixed into the soil at the bottom. Push the root in 3 to 5 cm deep, firm the soil and water. On hot days shade the new plants with pieces of banana trunk until they recover.",
+     "task": "planting",
+     "tip": "Do not smoke while handling seedlings. Tobacco carries a virus that tomato catches."
+    },
+    {
+     "phase": "care",
+     "day": 4,
+     "title": "Replant missing hills",
+     "how": "Three to five days after planting, replace dead or badly wilted seedlings with spares.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Quick furrow irrigation",
+     "how": "Let water run quickly down the furrows to wet the root zone, then let it drain. Most farmers water this way 4 to 5 times in the season, and where there is no canal they pour about a liter a hill once a week.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "First side dressing",
+     "how": "Between 10 and 15 days after planting, give each plant about 15 grams of urea and 15 grams of muriate of potash. Put it in a shallow groove beside the plant and cover with soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "Prune the low side shoots",
+     "how": "Remove the side shoots below the first fork and the old lower leaves. Prune in the morning so the cuts heal fast.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "Stake or build the trellis",
+     "how": "Drive posts of bamboo or ipil ipil about 1 meter tall every 2 to 3 meters along the row. Run wire or nylon string along the top and bottom and tie each main stem to it loosely.",
+     "task": "propping",
+     "tip": "A trellis matters most in the rainy months, when fruits that touch the soil rot."
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Off bar and pull weeds",
+     "how": "Between 15 and 20 days after planting, plow or hoe the soil away from the rows to kill weeds. Pull the weeds left between plants by hand.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Scout for pests every week",
+     "how": "Look under the leaves for whiteflies, thrips and leaf miners, and look in the fruits for fruitworm holes. Pull out plants with curled, mottled leaves or plants that wilt and die, and keep the field clean of weeds and old fruits.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 27,
+     "title": "Hill up",
+     "how": "Between 25 and 30 days after planting, plow or hoe the soil back against the rows. Pull any weeds left after hilling.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Second side dressing",
+     "how": "About a month after planting, give each plant another 15 grams of urea in a groove beside the row and cover it.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Start picking",
+     "how": "Pick once a week. For a far market, take fruits that are mature green with a creamy tip. For a near market, take them pink, and for home use, red ripe.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 61,
+     "title": "Sort and pack",
+     "how": "Sort by size and color and set aside damaged fruits. Wipe them clean and dry, then pack in a kaing or crate lined with old paper and dry banana leaves so they do not bruise.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "The first fruits are picked about 55 to 65 days after transplanting, or 15 to 20 days after flowering, and the crop keeps bearing until about 100 days after transplanting."
+  }
+ ],
+ "mistakes": [
+  "Planting the wet season crop on low ground where water stands, so the roots rot.",
+  "Leaving plants unstaked in the rainy months, so the fruits lie on wet soil and rot.",
+  "Smoking or handling tobacco in the field, which spreads a mosaic virus to tomato.",
+  "Planting tomato again where tomato, eggplant or pepper just grew, so wilt builds up in the soil.",
+  "Picking red ripe fruits for a far market, so they bruise and spoil on the way."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result, with enough potash and calcium when the plants fruit.",
+  "Choose a heat tolerant hybrid that resists wilt and leaf curl virus for wet season planting.",
+  "For the off season, use raised beds with plastic mulch, a rain shelter if you can, or seedlings grafted onto an eggplant rootstock that tolerates wet soil.",
+  "Use yellow sticky traps for whitefly and pull virus infected plants early, before the insects spread it.",
+  "Rotate with rice, corn or beans, never with eggplant, pepper or potato.",
+  "Water evenly, a little and often, so the fruits do not crack."
+ ],
+ "video": {
+  "youtubeId": "GEp2MzED_jE",
+  "title": "PAANO MAGTANIM NG KAMATIS? (300 TOMATOES SEEDLINGS!)",
+  "channel": "WORK FROM FARM PH",
+  "lang": "fil",
+  "minutes": 7,
+  "why": "A Filipino farm family grows kamatis from seed, transplants it and stakes it with posts and string, explained in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng kamatis",
+  "pagtatanim ng kamatis",
+  "pagbabalag ng kamatis",
+  "abono sa kamatis",
+  "how to plant tomato in the philippines",
+  "tomato production guide philippines"
+ ],
+ "confidence": "high",
+ "slug": "tomato",
+ "rev": "129069fad603"
+}

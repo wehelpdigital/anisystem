@@ -1,0 +1,135 @@
+{
+ "crop": "citrus",
+ "name": "Citrus (dalandan and ponkan)",
+ "local": "Dalandan, dalanghita at ponkan",
+ "aka": [
+  "dalanghita",
+  "ponkan",
+  "sintones",
+  "satsuma",
+  "kahel"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant budded or grafted dalandan, ponkan and other mandarins and oranges, and care for them until the first fruits. It is for small orchards, from the lowland dalandan of Luzon and the Visayas to the ponkan and satsuma farms of the cool uplands such as Nueva Vizcaya.",
+ "season": "Seedlings go in as the rains begin, around May to July, so they root with steady rain. Ponkan, satsuma and other mandarins do best in cool upland and midland areas with sunny days and cooler nights, while dalandan and sweet oranges also grow in the lowlands.",
+ "material": "A budded or grafted seedling: a bud from a good bearing variety joined to a hardy rootstock such as calamandarin, native pomelo or calamansi. Pick one from a nursery whose mother trees are checked for greening and tristeza, with dark green leaves, a healed bud union and no pests. Trees from seed are slow to bear and do not come true, so most growers avoid them.",
+ "spacing": "About 5 m by 5 m, one seedling a hole. Rows follow the contour on slopes. Some growers plant closer and prune more.",
+ "water": "Mostly rain fed. Young trees are watered every few days in dry weather after planting and mulched. Long dry spells make fruit drop, so growers who can water during flowering and fruit growth, some with small sprinklers.",
+ "fertilizer": "Chicken manure or compost in the hole at planting. Young trees get small doses of ammonium sulfate (21 0 0) or urea (46 0 0) every three to four months. Bearing trees in the uplands get chicken manure after harvest, around October or November, and complete fertilizer around December or January. Many growers now test the soil to guide the amounts.",
+ "care": "Weeding a clean circle, mulching, removing rootstock shoots, shaping to three or four main branches, pruning and weeding after each harvest, and checking every new flush for psyllids, aphids, leaf miners and borers. Trees with greening are pulled out so they do not spread it.",
+ "harvest": "Trees start bearing at about 4 to 5 years and keep bearing for many years. Fruits are picked by hand or with cutters when full sized and starting to color, leaving a very short stem so it does not poke other fruits. Many growers wash and dry the fruit before packing it in crates.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Budded or grafted seedling (dugtong o buding)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear the land and mark the spots",
+     "how": "Clear the land, and on slopes lay the rows along the contour. Mark the planting spots about 5 m apart each way on soil that drains well.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Dig and fill the holes",
+     "how": "Dig each hole about 50 cm to 75 cm wide and deep, keeping the topsoil apart. Mix the topsoil with well rotted chicken manure or compost and put it back in the hole to settle.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the budded seedling",
+     "how": "Cut the bag away, loosen roots that circle the soil ball and set the seedling at the depth it grew in the bag. Keep the bud union well above the ground, firm the soil, water and tie the seedling to a stake.",
+     "task": "planting",
+     "tip": "A bud union buried in soil can rot and kill the tree."
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Shade, mulch and water",
+     "how": "Shade the new tree for a few weeks with cut fronds or leaves and mulch around it, a little off the stem. Water every few days in dry weather until new leaves come out.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First feeding",
+     "how": "About a month after planting, spread a small amount of ammonium sulfate (21 0 0) or urea (46 0 0) around the tree a little away from the stem and mix it in. Repeat every three to four months in the first years, a little more each year.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed around the tree",
+     "how": "Keep a clean circle around the young tree by hand or bolo. Short crops can grow between the rows while the trees are small.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Remove shoots from the rootstock",
+     "how": "Rub off any shoot that grows below the bud union, since it comes from the rootstock and not the good variety. Check every month.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Check each new flush for psyllids and aphids",
+     "how": "Look at the soft new leaves for tiny psyllids, aphids and leaf miners, which spread greening and tristeza. Pull out trees with yellow, blotchy leaves that do not recover, and cut and burn twigs with borers.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 270,
+     "title": "Shape the young tree",
+     "how": "Keep three or four main branches spread around the trunk and cut off weak, crossing or low branches. Pick off flowers in the first two years so the tree grows first.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Feed and mulch through the dry months",
+     "how": "From the second year, give manure after the rains and complete fertilizer at the start of the rains, in a ring under the leaves. Mulch well before the dry months, since a long dry spell makes young fruit drop.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "First harvest",
+     "how": "Pick when the fruit is full sized and the skin starts to turn color, using cutters to snip the stem close to the fruit. In the uplands the main picking runs from about June to November.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Citrus trees usually start bearing at about 4 to 5 years."
+  }
+ ],
+ "mistakes": [
+  "Planting seedlings grown from seed, which bear late and give mixed fruit.",
+  "Buying budded seedlings from unchecked mother trees that carry greening or tristeza.",
+  "Burying the bud union or letting rootstock shoots grow.",
+  "Planting in heavy, waterlogged soil where roots rot.",
+  "Ignoring psyllids and aphids on new flushes.",
+  "Skipping pruning and weeding after harvest, so the trees get crowded and sick."
+ ],
+ "better": [
+  "Buy budded seedlings from an accredited nursery with clean, tested mother trees.",
+  "Test the soil and feed by the result, with lime where the soil is very sour.",
+  "Prune, weed and feed right after each harvest.",
+  "Scout every new flush for psyllids and aphids and remove trees with greening.",
+  "Water during flowering and fruit growth in long dry spells to stop fruit drop.",
+  "Match the variety to the place: mandarins in the cool uplands, dalandan and oranges lower down."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng dalandan",
+  "paano magtanim ng ponkan",
+  "pagtatanim ng citrus",
+  "how to plant citrus in the philippines",
+  "ponkan farming"
+ ],
+ "confidence": "medium",
+ "slug": "citrus",
+ "rev": "9570df0baad6"
+}

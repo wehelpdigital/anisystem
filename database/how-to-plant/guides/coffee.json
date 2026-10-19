@@ -1,0 +1,188 @@
+{
+ "crop": "coffee",
+ "name": "Coffee",
+ "local": "Kape",
+ "aka": [
+  "kapeng barako",
+  "kapeng tagalog",
+  "kapeng manipis",
+  "kapeng makapal"
+ ],
+ "summary": "How Filipino smallholders raise coffee from a bagged seedling to the first real picking, mostly Robusta in the lowlands and middle hills, Arabica in the cool uplands, and Liberica (barako) and Excelsa in between. It is written for backyard and small farm growers who plant a few hundred trees under coconut, fruit trees or kakawate shade.",
+ "season": "Trees go into the field as the rains begin, usually June to August in Luzon and the Visayas, on a cloudy day. In parts of Mindanao where rain falls through most of the year, farmers plant whenever the rains are steady. Seeds are sown in the nursery about a year earlier. The main picking months are the cool months, roughly November to March.",
+ "material": "Most farmers plant bagged seedlings about a year old, with six to eight pairs of leaves, raised from the seeds of ripe red berries picked from their best bearing trees, or bought from a known nursery. The berries are pulped, washed and the beans sown fresh, because old coffee seed loses its life fast. Some buy grafted or rooted Robusta and Arabica for even, early bearing. A month or two before planting, the seedlings are moved into more sun to toughen them.",
+ "spacing": "Robusta about 2 m x 3 m alone, or 3 m x 3 m when bananas or other crops share the field. Arabica about 2 m x 2 m alone, or 2 m x 3 m with vegetables between the rows. Liberica (barako) and Excelsa, the biggest trees, about 3 m x 4 m alone or 4 m x 4 m with other crops. One seedling a hole.",
+ "water": "Almost all coffee here is rain fed: planting is timed to the start of the rains so the young trees have months of water to root. Seedlings planted late are hand watered through the first dry months, and mulch keeps the soil damp. Older trees need a dry spell to flower and get no watering.",
+ "fertilizer": "Compost, chicken manure and rotted coffee pulp are the usual feeds, a few kilos a tree in the planting hole and again each year. Farmers who buy fertilizer use complete fertilizer (14 14 14) at planting, then complete fertilizer or urea (46 0 0) twice a year, early in the rains and near their end, spread in a ring under the edge of the leaves. Many smallholders give little or nothing, and their yields show it.",
+ "care": "Ring weeding three to four times a year, mulch under the trees, pulling off upright suckers from the trunk, and bending young stems to grow three or so trunks. After each harvest, farmers cut out dead and drooping branches. Old trees of 10 years and more are cut back low, about 30 cm from the ground, and a new sucker is grown into a fresh trunk.",
+ "harvest": "Berries are ready when they turn fully red, about eight to ten months after flowering. Trees first bear in the third year after planting. They are picked by hand over several rounds, kept off the ground, and sun dried whole on mats or raised trays until hard and rattling, then hulled to green beans and stored dry in clean sacks.",
+ "ways": [
+  {
+   "key": "nursery",
+   "label": "Bagged seedlings (punla sa supot)",
+   "days": 1080,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -365,
+     "title": "Set up shade a year ahead",
+     "how": "Where there are no coconut or fruit trees yet, plant kakawate stakes, banana or other shade trees about a year before the coffee. Coffee likes filtered light, not full open sun, especially in hot lowland farms.",
+     "task": "land_prep",
+     "tip": "Do not plant the shade at the same time as the coffee. It will not be big enough to help."
+    },
+    {
+     "phase": "nursery",
+     "day": -365,
+     "title": "Sow fresh seeds in a seedbed",
+     "how": "Pick fully red berries from your heaviest bearing trees, remove the pulp, wash the beans and sow them flat side down in a bed of sand or fine loam under shade. Keep the bed moist. Sprouts come up in about six to eight weeks.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -300,
+     "title": "Move sprouts into bags",
+     "how": "When the two round seed leaves open, lift the young plants gently and set each one in a plastic bag of garden soil mixed with compost or rotted manure. Keep the bags under partial shade and water them often.",
+     "task": "seedbed",
+     "tip": "Throw away seedlings with bent or curled roots. They grow poorly in the field."
+    },
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Clear, stake and dig the holes",
+     "how": "Slash the weeds, keep any tree that can give shade or break the wind, and stake a straight line along the edge of the field. Dig holes about 40 to 60 cm wide and deep, fill them back with the topsoil mixed with compost, and leave them to settle until planting.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -60,
+     "title": "Harden the seedlings",
+     "how": "One to two months before planting, move the bags into more sunlight and water a little less, so the leaves toughen before they face the field.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Pick a cloudy day once the rains are steady. Water the bag well, cut away the plastic, set the seedling straight up in the hole at the same depth it grew, and firm the soil around it with your feet.",
+     "task": "planting",
+     "tip": "Avoid hot, windy days and the middle of the day."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Give the first feed",
+     "how": "Many farmers mix 2 to 5 kg of compost into each hole, and those who use bought fertilizer add a small handful of complete fertilizer (14 14 14), about 75 g a tree, worked into the soil away from the stem.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Mulch around the young tree",
+     "how": "Spread rice straw, dry grass or coffee pulp about 5 to 8 cm deep in a circle around the seedling, leaving a small gap at the stem. It keeps the soil damp and holds weeds down, which matters most as the rains end.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Replace the dead ones",
+     "how": "Walk the rows a month after planting and fill any gaps with spare seedlings from the nursery while the rains still last.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Ring weed under each tree",
+     "how": "Pull or slash the weeds in a ring under each tree and leave them as mulch. Most farmers do this three to four times a year, more often in the wet season.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Pull off upright suckers",
+     "how": "Rub or cut off the upright shoots that keep coming from the main trunk, so the tree puts its strength into the side branches that will bear.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Feed again as the rains end",
+     "how": "Farmers who fertilize usually feed twice a year, once early in the rains and once near their end, scattering compost, manure or complete fertilizer in a ring under the edge of the leaves and covering it lightly.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 365,
+     "title": "Bend the stem for more trunks",
+     "how": "Many Robusta and barako growers bend the first young stem down and tie it to a stake, so three to five new upright shoots come up along it. When they reach about 30 cm, keep the three strongest as main trunks and cut off the old bent stem.",
+     "task": "pruning",
+     "tip": "Farmers who keep one trunk instead top it at about 1.6 m in the third year."
+    },
+    {
+     "phase": "care",
+     "day": 720,
+     "title": "Clean the lower branches",
+     "how": "Cut back branches that droop and touch the ground, and remove dead, weak or pest damaged twigs, so light and air reach inside the tree.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 800,
+     "title": "Watch the flowers and young berries",
+     "how": "The trees flower after a dry spell and the berries need about eight to ten months to ripen. Look for tiny holes at the tip of green berries, a sign of the berry borer, and pick up fallen berries so the pest has nowhere to breed.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "Pick only the red berries",
+     "how": "The first real picking comes in the third year, about 36 months after planting. Go through the trees several times in the season and pick only the fully red berries by hand, leaving the green ones to ripen. Twist each berry off without tearing the stalk so next year's flower buds stay.",
+     "task": "harvest",
+     "tip": "Keep picked berries in clean sacks or baskets, off the ground, and process them the same day."
+    },
+    {
+     "phase": "harvest",
+     "day": 1082,
+     "title": "Dry and hull the beans",
+     "how": "Most small farmers sun dry the whole berries on mats, nets or raised trays, turning them often and covering them at night and in rain, until the beans rattle inside the dry skin. Then they are hulled and kept in clean sacks off the floor in a dry room.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "The first real picking comes in the third year after field planting, about 36 months (1,080 days). Arabica on a good site can start a little earlier."
+  }
+ ],
+ "mistakes": [
+  "Planting in full open sun in hot lowland farms with no shade.",
+  "Leaving the plastic bag on, planting too deep, or setting the seedling at an angle.",
+  "Never pruning, so the trees grow tall, crowded and hard to pick.",
+  "Stripping green, red and dry berries together, which spoils the taste and the price.",
+  "Drying berries on bare soil or the roadside where they pick up dirt and mold.",
+  "Sowing seed from unknown or weak trees."
+ ],
+ "better": [
+  "Plant grafted or clonal seedlings of a good variety from an accredited nursery.",
+  "Test the soil and feed by the result, with lime where the soil is very sour.",
+  "Keep light shade, prune every year after harvest, and cut back old trees to renew them.",
+  "Pick only ripe red berries and dry them on raised beds to sell for a better price.",
+  "Scout for the berry borer and other pests, pick up fallen berries, and use integrated pest management.",
+  "Match the type to the place: Arabica in the cool uplands, Robusta, Liberica or Excelsa lower down."
+ ],
+ "video": {
+  "youtubeId": "meP4sHPfr7s",
+  "title": "VLOG Tamang Proseso sa pagtatanim ng Arabica na kape",
+  "channel": "Don's ka Farm",
+  "lang": "fil",
+  "minutes": 19,
+  "why": "A Filipino coffee farmer digs the holes and sets Arabica seedlings in his own upland farm, step by step, in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng kape",
+  "pagtatanim ng kape",
+  "unsaon pagtanom ug kape",
+  "how to plant coffee in the philippines",
+  "robusta coffee planting philippines",
+  "arabica coffee farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "coffee",
+ "rev": "432eae5c09ff"
+}

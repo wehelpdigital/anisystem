@@ -50,6 +50,7 @@ return [
         'npkPlus'           => false,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
+        'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => false,   // and so is the shed
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -116,6 +117,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
+        'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => false,
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -183,6 +185,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
+        'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => false,   // logins are the Owner tier's story
         'videoRecording'    => true,
@@ -251,6 +254,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
+        'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,
@@ -313,6 +317,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
+        'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,
         'workerLogins'      => true,
         'videoRecording'    => true,

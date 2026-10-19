@@ -1,0 +1,102 @@
+{
+ "crop": "barley",
+ "name": "Barley",
+ "local": "Sebada",
+ "aka": [
+  "barley"
+ ],
+ "summary": "Barley is grown for grain only in a few trial and hobby plots in the Philippines, mostly in the highlands, while many households grow it in trays only for barley grass. This short guide shows how the few grain growers plant it.",
+ "season": "Sown in the highlands at the end of the rains, around October to December, so it grows in the cool, dry months. It does poorly in lowland heat and wet weather.",
+ "material": "Dry seed brought in or shared among growers, sown without soaking.",
+ "spacing": "Rows about 20 to 25 cm apart, sown thinly, or broadcast.",
+ "water": "Grown on the last of the rains, with hand watering in dry spells on small plots.",
+ "fertilizer": "Compost or manure and some complete fertilizer (14 14 14) at sowing, with a light urea (46 0 0) dose at tillering. Too much nitrogen makes it fall over.",
+ "care": "Hand weeding in the first month and keeping birds off the ripening heads.",
+ "harvest": "Ready at about 90 to 110 days when the straw is golden and the grain hard. Cut, sun dried, threshed by beating and winnowed.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Sown direct in rows or broadcast",
+   "days": 100,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig or plow to a fine bed",
+     "how": "Plow or dig the plot, clear the weeds and rake it fine and level.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow the seed",
+     "how": "Sow thinly in shallow rows about 20 to 25 cm apart and cover with 3 to 5 cm of soil, or scatter and rake in.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilizer at sowing",
+     "how": "Work compost or manure and some complete fertilizer (14 14 14) into the rows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Water if dry",
+     "how": "Water the plot if no rain falls in the first days.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Weed",
+     "how": "Hand pull the weeds while the plants are small.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 28,
+     "title": "Light urea",
+     "how": "Give a light side dressing of urea (46 0 0) at tillering.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 100,
+     "title": "Cut when golden",
+     "how": "Harvest when the heads bend over, the straw is golden and the grain is hard. Cut with a sickle and bundle.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 102,
+     "title": "Dry and thresh",
+     "how": "Sun dry the bundles, beat out the grain, winnow and dry the grain before storing.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting in the lowlands or in the rainy season.",
+  "Giving too much urea, so the plants lodge.",
+  "Leaving ripe heads out in the rain, where the grain sprouts."
+ ],
+ "better": [
+  "Use seed of a variety meant for warm or tropical highlands.",
+  "Sow only in the cool dry months.",
+  "Test the soil and lime it if acid, since barley dislikes acid soil.",
+  "Keep the plot weed free for the first month."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng barley",
+  "pagtatanim ng barley sa pilipinas",
+  "can barley grow in the philippines",
+  "how to plant barley"
+ ],
+ "confidence": "low",
+ "slug": "barley",
+ "rev": "9d5fbb2ac14e"
+}

@@ -1,0 +1,184 @@
+{
+ "crop": "tobacco",
+ "name": "Tobacco",
+ "local": "Tabako",
+ "aka": [
+  "tabaco",
+  "Virginia",
+  "burley",
+  "batek (native leaf)"
+ ],
+ "summary": "This guide shows how Filipino tobacco growers in Ilocos, La Union, Abra, Pangasinan and Cagayan Valley usually raise tobacco: seedlings in a raised seedbed, transplanting into furrows after the rice harvest, topping, picking the leaves as they ripen and curing them. It covers Virginia (barn cured), burley (shed cured) and native tobacco (sun cured).",
+ "season": "Tobacco is a dry season crop. In Luzon, seeds are sown in seedbeds from about September to November, and seedlings go to the field from about November to mid January, mostly on rice land right after the wet season harvest. Leaves are picked from about February to May. Native tobacco in Luzon runs a little later, from about mid November to July. In the Visayas native tobacco is grown from about March to August or September, and in Mindanao from about April or May to October or November.",
+ "material": "Tiny seeds sown in a raised seedbed, then seedlings moved to the field. Growers under contract get seed of the variety the buying company wants. Many native tobacco growers keep their own seed. Seedlings are ready at about 45 to 60 days from sowing, when they are pencil thick and about a hand tall, and are hardened in full sun with less water for the last week.",
+ "spacing": "Virginia: furrows 1 to 1.2 m apart and plants 45 to 50 cm apart in the row, about 16,000 to 20,000 plants a hectare. Burley: rows 80 to 90 cm apart and plants 45 to 50 cm apart, about 24,000 to 25,000 plants. Native tobacco: about 90 cm to 1 m each way, about 10,000 to 12,000 plants.",
+ "water": "A dry season crop, so water is the main work. Each seedling gets about a liter at transplanting and again at about five days, then 2 to 3 liters at two weeks. After that growers run water down the furrows from shallow wells, pumps or canals every week or two, often in every other furrow, and stop near the end of picking.",
+ "fertilizer": "A band of tobacco grade fertilizer such as 10 18 24 in the furrow at transplanting, with sulfate of potash (0 0 50) because the chloride in muriate of potash spoils how the leaf burns. Ammonium sulfate (21 0 0) or urea is side dressed at about 10 to 28 days after transplanting. Native tobacco growers use more urea. Some add manure or compost to the seedbed.",
+ "care": "Replanting within five days, off barring at about 10 to 14 days, hilling up at about 25 and again at about 35 to 40 days, and hand weeding where needed. Topping at the button stage and snapping off side shoots every few days. Growers walk the field for cutworms, budworms, aphids and leaf eating worms, and pull up plants sick with mosaic or wilt.",
+ "harvest": "Leaves are picked from the bottom up as they ripen, from about 55 to 65 days after transplanting, two to four leaves a plant each week, until the top. Ripe leaves are yellow green with yellow tips and a pale midrib. Virginia is cured in a fired barn within the day of picking, burley in an airy curing shed, and native leaf in the sun on racks for about 10 to 14 days, then piled under weight and hung again until fully cured. Cured leaves are sorted, baled and sold to the company or to buyers by grade.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Seedbed and transplanting (punla at lipat tanim)",
+   "days": 105,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -55,
+     "title": "Make the raised seedbeds",
+     "how": "Make beds about 1 m wide and raised above the ground so they never flood, with fine, loose soil mixed with well rotted manure or compost. Put up a light roof of straw, nipa or net for shade and rain.",
+     "task": "seedbed",
+     "tip": "Pick high ground for the beds. Seedbeds in low spots drown in the last storms of the year."
+    },
+    {
+     "phase": "nursery",
+     "day": -55,
+     "title": "Sow the seeds",
+     "how": "Mix the tiny seeds with fine sand or ash so they spread thin and even, scatter them over the bed and water with a fine sprinkler morning and afternoon. Keep the bed damp but not wet until the seeds come up.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -35,
+     "title": "Thin and weed the bed",
+     "how": "Pull out the weeds and the crowded seedlings so each one has room to grow thick. Open the shade little by little as they grow.",
+     "task": "thinning"
+    },
+    {
+     "phase": "prep",
+     "day": -25,
+     "title": "Plow the field after the rice",
+     "how": "Once the rice is cut and the field has dried enough, plow and harrow it twice, the second time about a week before transplanting, until the soil is fine. Open furrows about 1 to 1.2 m apart on the day of transplanting or the day before.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "For the last week, remove the shade and give the bed less water so the seedlings toughen up. Water the bed well the evening before pulling.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Band the first fertilizer",
+     "how": "Drop the basal fertilizer, usually a tobacco grade like 10 18 24 with sulfate of potash (0 0 50), in a band along the bottom of the furrow and cover it with a little soil.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant the seedlings",
+     "how": "Plant the seedlings along the furrow about 45 to 50 cm apart, late in the afternoon. Press the soil around each root and pour about a liter of water on each plant.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Replant and water again",
+     "how": "Within five days, replace any seedling that died, then give each plant about another liter of water.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Look for cutworms and budworms",
+     "how": "Walk the rows early in the morning. Dig out cutworms near cut seedlings and pick off budworms from the shoot tips. Spray only when the damage is spreading.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Off barring and side dressing",
+     "how": "Plow lightly away from the rows to cut the weeds, then put ammonium sulfate (21 0 0) or urea beside the plants.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "First furrow irrigation",
+     "how": "Give each plant 2 to 3 liters of water, or let water run down the furrows from a shallow well or canal, then again every week or two as the soil dries.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 26,
+     "title": "Hill up the rows",
+     "how": "Plow soil back against the stems to form a ridge, bury the weeds and hold the plants up. Many growers hill up a second time at about 35 to 40 days.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "Top and desucker",
+     "how": "When the flower buds show, break off the top of each plant, leaving about 16 to 22 leaves. Snap off the side shoots by hand every few days so the leaves fill out.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 57,
+     "title": "First priming",
+     "how": "Pick the two or three lowest leaves that have turned from green to yellow green, with yellow tips and a pale midrib. Do not pick right after rain or watering.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 57,
+     "title": "Stick and cure the same day",
+     "how": "Lay the leaves butt down in the shade, sort them by ripeness and size and tie them onto sticks. Virginia goes into the flue barn and the fire starts within half a day. Burley hangs in an airy shed. Native leaf is sun dried on racks for about 10 to 14 days, covered at night and in rain.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 105,
+     "title": "Last priming",
+     "how": "Keep picking a few ripe leaves every week, working up the stalk, until the top leaves are taken, usually after five or six pickings.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 110,
+     "title": "Sort and bale the cured leaves",
+     "how": "Sort the cured leaves by place on the stalk, color, length and damage, and press them in bales of not more than 50 kg. Keep strings, plastic and other trash out, since buyers reject bales with foreign matter.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Days are counted from transplanting. Leaves are picked from about 55 to 60 days, a few at a time every week, until the last top leaves at about 100 to 110 days. Native tobacco starts a little later, at about 60 to 65 days."
+  }
+ ],
+ "mistakes": [
+  "Sowing the seedbed too thick, which gives thin, weak seedlings.",
+  "Transplanting seedlings that are too old or were never hardened.",
+  "Putting the nitrogen late, so leaves stay green and cure poorly.",
+  "Topping late or leaving the side shoots, which makes small, thin leaves.",
+  "Picking unripe leaves, or picking right after rain or irrigation.",
+  "Letting plastic, strings and other trash get into the cured leaves."
+ ],
+ "better": [
+  "Use seed of a variety that resists wilt and nematodes, and raise seedlings in trays or float beds for an even stand.",
+  "Have the soil tested and match the fertilizer to it, using sulfate of potash.",
+  "Transplant on time so the picking ends before the rains come back.",
+  "Scout every week and spray only when pests pass the level that really hurts the crop.",
+  "Top at the button stage and keep the plants free of side shoots.",
+  "Cure with a thermometer and humidity gauge, and keep every bale clean and dry."
+ ],
+ "video": {
+  "youtubeId": "_y8-yqnydsw",
+  "title": "GANITO PALA KAHIRAP ANG PROSESO SA PAGTANIM NG TABAKO",
+  "channel": "Lorry Aquino Talita",
+  "lang": "fil",
+  "minutes": 14,
+  "why": "Filipino farm vlog that follows the actual work of planting tobacco in the field, the way growers here do it by hand."
+ },
+ "keywords": [
+  "paano magtanim ng tabako",
+  "pagtatanim ng tabako",
+  "panagmula ti tabako",
+  "how to plant tobacco in the philippines",
+  "virginia tobacco farming ilocos",
+  "tobacco curing philippines"
+ ],
+ "confidence": "high",
+ "slug": "tobacco",
+ "rev": "ad891fd9498a"
+}
