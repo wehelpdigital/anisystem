@@ -102,21 +102,74 @@
      "day": 105,
      "title": "Cut the heads",
      "how": "Harvest at about 100 to 115 days, when the grains are hard and can no longer be dented with a thumbnail. Cut the heads with a sickle or a knife.",
-     "task": "harvest"
+     "task": "harvest",
+     "parts": [
+      {
+       "title": "Bite a grain",
+       "how": "From about a month after flowering, pinch or bite a few grains from the middle of the head. When they are hard and crack instead of squashing, the crop is ready. A dark spot where the grain joins the head is another sign."
+      },
+      {
+       "title": "Cut with a long stem",
+       "how": "Cut each head with a sickle or knife about a foot below its base. The long stem makes the heads easy to bundle, hang and beat later."
+      },
+      {
+       "title": "Harvest early if you will ratoon",
+       "how": "If you plan a second crop from the stubble, cut the heads a little sooner, at about 30 days after flowering. Plants left to overripen send up a poor ratoon.",
+       "time": "about 30 days after flowering"
+      }
+     ]
     },
     {
      "phase": "harvest",
      "day": 106,
      "title": "Dry and thresh",
      "how": "Sun dry the heads for a few days, thresh by beating or with a thresher, then dry the grain again before storing.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Sun dry the heads",
+       "how": "Lay the heads on canvas or a concrete floor in the full sun and turn them now and then. Sorghum is harder to thresh than palay, so the heads must be really dry first.",
+       "time": "a few sunny days"
+      },
+      {
+       "title": "Beat out the grain",
+       "how": "Put the dry heads in a sack or on a canvas and beat them with a stick, or feed them through a thresher, until the grain falls free."
+      },
+      {
+       "title": "Winnow and dry again",
+       "how": "Winnow off the chaff and bits of head, then spread the grain in the sun once more until it is hard and dry enough to keep, about 14 percent moisture or less."
+      },
+      {
+       "title": "Sack and store",
+       "how": "Pack the grain in clean sacks and pile them in an airy storeroom so the grain does not heat up. Keep seed for the next planting from the best heads of the best plants, apart from the rest."
+      }
+     ]
     },
     {
      "phase": "harvest",
      "day": 108,
      "title": "Ratoon the stubble",
      "how": "Cut the old stalks close to the ground, weed and side dress, and the stubble sends up new shoots for a smaller second crop.",
-     "task": "other"
+     "task": "other",
+     "parts": [
+      {
+       "title": "Cut the stalks at ground level",
+       "how": "Within three days of harvesting the heads, cut every old stalk right at the ground. The best new shoots come from buds below the soil. Stalks cut high sprout weak, uneven shoots from every node that the wind easily breaks.",
+       "time": "within 3 days of harvest"
+      },
+      {
+       "title": "Water right away",
+       "how": "Irrigate the field as soon as the stalks are cut. Cut stubble will not sprout without water."
+      },
+      {
+       "title": "Fertilize at once",
+       "how": "Spread the whole fertilizer dose for the regrowth as soon as the stalks are cut, because it ripens about 10 to 15 days ahead of the first crop."
+      },
+      {
+       "title": "Weed and watch it like the first crop",
+       "how": "Keep the weeds down with shallow cultivation and spot hand weeding, and watch for the same pests and birds as in the first crop."
+      }
+     ]
     }
    ]
   }
@@ -150,6 +203,9 @@
   "how to plant sorghum in the philippines"
  ],
  "confidence": "medium",
+ "shelf": "corn",
+ "kind": "annual",
+ "icon": "🌾",
  "slug": "sorghum",
- "rev": "53e3635f177f"
+ "rev": "3f1c30fc8520"
 }

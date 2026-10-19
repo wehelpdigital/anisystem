@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Session;
 class ContentGate
 {
     // Crop guides (/crops) stay open to everyone (the owner, 2026-10-14).
-    public const SECTIONS = ['crop-varieties', 'rice-varieties', 'land-preparation', 'pests', 'diseases', 'weeds', 'nutrient-deficiencies'];
+    // How to Plant (2026-10-19, the owner): gated, crawlable; it opens on registering (every plan has the tool).
+    public const SECTIONS = ['crop-varieties', 'rice-varieties', 'land-preparation', 'pests', 'diseases', 'weeds', 'nutrient-deficiencies', 'how-to-plant'];
 
     /**
      * The section front pages that are gated too (2026-10-14, the owner):

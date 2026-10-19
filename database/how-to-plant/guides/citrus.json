@@ -130,6 +130,9 @@
   "ponkan farming"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍊",
  "slug": "citrus",
- "rev": "9570df0baad6"
+ "rev": "215130d9f5fe"
 }

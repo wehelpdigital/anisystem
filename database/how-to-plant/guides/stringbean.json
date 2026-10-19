@@ -137,6 +137,9 @@
   "how to plant string beans in the philippines"
  ],
  "confidence": "medium",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🫛",
  "slug": "string-bean",
- "rev": "875fc1c3d546"
+ "rev": "eb1dc5339e36"
 }

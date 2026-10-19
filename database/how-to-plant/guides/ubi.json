@@ -7,7 +7,7 @@
   "greater yam"
  ],
  "summary": "How Filipino farmers usually grow ubi from tuber pieces on ridges or mounds, staked so the vines can climb, and dug about ten months later for the holiday market. For small farms in the lowlands and mid elevations who want the usual way and what to change for bigger tubers.",
- "season": "Most ubi goes in from March to May, at the end of the dry season or with the first rains, once the setts have sprouted. It grows through the rainy months, needs steady moisture while the tubers fill at about three to five months, and is dug from late November to February, when prices are best for the holidays.",
+ "season": "Most growers put ubi in the ground between March and May, at the tail of the dry season or with the first rains, once the setts have sprouted. It grows through the rainy months, needs steady moisture while the tubers fill at about three to five months, and is dug from late November to February, when prices are best for the holidays.",
  "material": "Setts cut from healthy tubers: head, middle or tail pieces of big tubers, or whole small tubers, usually 60 to 250 g each with plenty of skin. Farmers dip the cut sides in wood ash, let them dry in the air or sun, then let them sprout in the shade under a thin layer of sand or compost before planting.",
  "spacing": "Ridges about 1 m apart and hills 50 to 60 cm apart, one sett a hill, which comes to roughly 20,000 to 28,000 setts a hectare.",
  "water": "Mostly rainfed, planted so the rainy months fall on the tuber filling stage at three to five months. Mulch keeps the soil moist. Where the dry season is long, farmers water during tuber filling. The field must drain well.",
@@ -26,14 +26,62 @@
      "title": "Cut and dry the setts",
      "how": "Slice healthy tubers into pieces of about 60 to 250 g, each with a good patch of skin. Rub the cut sides with wood ash and let them dry.",
      "task": "seed_treatment",
-     "tip": "Do not use tubers with odd bumps or hairy roots. They may carry nematodes."
+     "tip": "Do not use tubers with odd bumps or hairy roots. They may carry nematodes.",
+     "parts": [
+      {
+       "title": "Choose the seed tubers",
+       "how": "Use tubers from healthy, strong plants, set aside at harvest for planting. Leave out tubers with knobby bumps or a hairy look that the variety does not normally have, because that is a sign of root knot worms.",
+       "tip": "Some growers soak doubtful tubers in hot water of 50 to 55 degrees for about 40 minutes, which kills the root knot worms without spoiling the tuber."
+      },
+      {
+       "title": "Know the four kinds of sett",
+       "how": "A big tuber gives a head piece (the top, nearest the vine), middle pieces and a tail piece. A small whole tuber is the fourth kind. Head pieces and whole tubers sprout first, so keep each kind in its own pile."
+      },
+      {
+       "title": "Cut them to size",
+       "how": "Slice big tubers into pieces of about 60 to 250 grams, each with a good patch of skin, since the sprouts come from just under the skin. Do not cut tubers smaller than about 60 grams. Plant those whole."
+      },
+      {
+       "title": "Rub ash on the cut faces",
+       "how": "Dust or rub wood ash on every cut side right after slicing. The ash dries the wet flesh and keeps rot from getting in.",
+       "tip": "Some growers use a fungicide on the cut faces instead of ash."
+      },
+      {
+       "title": "Dry them before sprouting",
+       "how": "Spread the setts in the open air or in light sun until the cut faces are dry and firm to the touch. Then sprout them, or plant them straight in the field."
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -30,
      "title": "Sprout the setts in the shade",
      "how": "Lay the setts side by side in a shaded spot, cover them lightly with river sand or compost and some mulch, and water two to three times a week until they sprout.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Dig a shallow sprouting bed",
+       "how": "In a shaded spot, dig a shallow trench or mark out a flat bed big enough to lay all the setts in one layer."
+      },
+      {
+       "title": "Lay them side by side, by kind",
+       "how": "Set the setts close together, each kind in its own group. Lay cut pieces with the skin up or on their side, and whole tubers with the top end up or on the side."
+      },
+      {
+       "title": "Cover them thinly",
+       "how": "Spread river sand, compost or fine soil thinly over them, just enough to hide them, then a little mulch to hold the moisture."
+      },
+      {
+       "title": "Water and wait",
+       "how": "Water the bed two to three times a week. Ubi rests for some weeks before it sprouts, longer or shorter by variety, so be patient.",
+       "time": "3 to 12 weeks"
+      },
+      {
+       "title": "Take out the sprouted ones",
+       "how": "When a sprout is about one to two inches long, lift that sett out and keep it on a raised rack in the shade, so the sprout does not grow long and tangled. Check the bed every week or two and plant in batches.",
+       "tip": "Cut back very long sprouts before carrying the setts to the field."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -68,13 +116,32 @@
      "day": 21,
      "title": "Set the stakes and train the vines",
      "how": "Before the vines run, put up stakes of bamboo, wood, talahib or cassava stems set upside down. Guide the vines up the stakes, and again later when they cross the rows.",
-     "task": "propping"
+     "task": "propping",
+     "parts": [
+      {
+       "title": "Gather the stakes",
+       "how": "Cut stakes about 1 to 2 m long from bamboo, wood, talahib or cassava stems, strong enough to hold the vines for at least seven months."
+      },
+      {
+       "title": "Set cassava stems upside down",
+       "how": "If you use cassava stems, push the young top end into the soil. Set upside down, the stem does not root and sprout into a new cassava plant."
+      },
+      {
+       "title": "Choose the stake set up",
+       "how": "Set one stake a plant before the vines start to crawl. Some farmers tie the stakes to posts and wire in a straight trellis, which leaves room to weed with an animal plow. Others lean the stakes of two rows together into arches or tie several into a pyramid, which stand firmer in the wind.",
+       "tip": "Arches and pyramids need fewer weedings once the leaves grow thick, but the plow cannot pass under them, and the pyramid usually yields less than the arch."
+      },
+      {
+       "title": "Train the vines to the right",
+       "how": "Ubi vines twine to the right, so wind each vine around its stake in that direction when it starts to run on the ground. Train them again when long branches reach across the rows, and before each weeding or hilling up."
+      }
+     ]
     },
     {
      "phase": "care",
      "day": 30,
      "title": "First fertilizer",
-     "how": "About a month after the shoots come up, put half of the complete fertilizer in a band about 10 cm from the stem and cover it lightly.",
+     "how": "About a month after the shoots come up, lay half of the complete fertilizer in a shallow strip a hand width from the vine, then rake a little soil over it.",
      "task": "fertilizer"
     },
     {
@@ -109,7 +176,7 @@
      "phase": "harvest",
      "day": 300,
      "title": "Dig when the vines dry up",
-     "how": "Ubi is ready when the leaves turn yellow and the vines dry, about 10 to 11 months after planting. With a bolo, shovel or fork, loosen the ground around the tuber, lift it out and cut it near the base without wounding it.",
+     "how": "Ubi is ready when the leaves turn yellow and the vines dry, about 10 to 11 months after planting. Dig around each hill with a bolo, shovel or fork until the tuber comes free, take it out whole and cut it off close to the vine, taking care not to wound it.",
      "task": "harvest",
      "tip": "Some farmers dig early at six to seven months when the price is high."
     },
@@ -118,7 +185,30 @@
      "day": 301,
      "title": "Store in a single layer",
      "how": "Clean and sort the tubers, keep good ones for the next planting, and store them in one layer on a raised rack in a dry, airy shed, with straw or banana leaves between them. Rub ash on bruised spots.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Sort and set aside seed tubers",
+       "how": "Clean off the soil and sort the tubers. Keep the healthy ones for the next planting apart from those for eating and selling."
+      },
+      {
+       "title": "Ash the bruised ones",
+       "how": "Separate the tubers with cuts or blemishes and rub wood ash on the hurt spots so mold does not start there."
+      },
+      {
+       "title": "Lay them on a raised rack",
+       "how": "Build a rack about three feet off the ground in a dry shed where air moves. Lay the tubers flat, one layer only, and put rice straw or banana leaf between them so they do not rub, and cover them with banana leaves, coconut fronds or straw.",
+       "time": "up to about 3 months"
+      },
+      {
+       "title": "Or bury them in a trench",
+       "how": "Some farmers keep tubers in a trench in the ground, covered with soil and then coconut leaves on top."
+      },
+      {
+       "title": "Keep the rats out",
+       "how": "Fence the storage place well and set traps or baits, because rats and other pests go straight for stored ubi."
+      }
+     ]
     }
    ]
   }
@@ -154,6 +244,9 @@
   "purple yam farming philippines"
  ],
  "confidence": "high",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🍠",
  "slug": "purple-yam",
- "rev": "a3d5eb200cdd"
+ "rev": "007413333b27"
 }

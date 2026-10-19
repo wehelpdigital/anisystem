@@ -135,6 +135,9 @@
   "papaya farming"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍈",
  "slug": "papaya",
- "rev": "bab6f49ec50b"
+ "rev": "07cd13353c05"
 }

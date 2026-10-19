@@ -208,7 +208,11 @@ class PageSchema
                     'name' => trim((string) ($s['title'] ?? '')) ?: Str::limit(SitePages::plain((string) ($s['text'] ?? '')), 80, ''),
                     'text' => SitePages::plain((string) ($s['text'] ?? $s['title'] ?? '')),
                     'url' => $heading ? $canonical . '#' . $heading['id'] : null,
-                ], fn ($v) => $v !== null && $v !== ''), $steps, array_keys($steps)),
+                    // A step done in parts (How to Plant, 2026-10-19): each part a direction inside it.
+                    'itemListElement' => ! empty($s['parts']) && is_array($s['parts']) ? array_values(array_map(fn ($pt) => ['@type' => 'HowToDirection',
+                        'text' => trim(SitePages::plain((string) ($pt['title'] ?? '')) . (! empty($pt['time']) ? ' (' . $pt['time'] . ')' : '') . ': ' . SitePages::plain((string) ($pt['text'] ?? '')))],
+                        array_filter($s['parts'], fn ($pt) => is_array($pt) && trim((string) ($pt['title'] ?? '')) !== ''))) : null,
+                ], fn ($v) => $v !== null && $v !== '' && $v !== []), $steps, array_keys($steps)),
             ];
         }
 

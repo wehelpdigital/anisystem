@@ -48,7 +48,31 @@
      "title": "Cut the stakes",
      "how": "Cut healthy mature stems into pieces 20 to 25 cm long with a sharp bolo, without crushing or splitting them. Keep stakes from the base, middle and top of the stem in separate piles and plant each pile together so the stand grows even.",
      "task": "seed_treatment",
-     "tip": "Mark which end is up. A stake planted upside down grows poorly."
+     "tip": "Mark which end is up. A stake planted upside down grows poorly.",
+     "parts": [
+      {
+       "title": "Choose the mother stems",
+       "how": "Take stems from healthy plants at least 8 months old, free of mites, scale insects and leaf spots. Use the thick lower and middle part of each stem. A stem thinner than about half the thickest part of the plant, or under about 1.5 cm across, has too little stored food to start a strong plant."
+      },
+      {
+       "title": "Store whole stems in the shade",
+       "how": "If you cannot plant yet, keep the stems whole and uncut, standing or stacked in a cool, shaded place. Kept this way they stay good for up to about three months, but fresh stems sprout best.",
+       "time": "up to about 3 months"
+      },
+      {
+       "title": "Cut the stakes to length",
+       "how": "With a sharp bolo, cut the stem straight across into pieces about 20 to 25 cm long, each carrying about 5 to 7 nodes. Cut cleanly in one stroke so the bark is not crushed or split."
+      },
+      {
+       "title": "Mark the top end",
+       "how": "As you cut, note which end of each stake was nearer the top of the plant, for example with a slanted cut on top. The buds must point up when you plant."
+      },
+      {
+       "title": "Keep cut stakes damp until planting",
+       "how": "Plant cut stakes within the week. Until then, wrap the bundles in a wet sack or cloth and keep them in an airy, shaded place so they do not dry out.",
+       "time": "up to about 10 days"
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -56,7 +80,21 @@
      "title": "Plant one stake a hill",
      "how": "Set one stake every 75 cm along the row, buds pointing up. In wet soil or the rainy months, push it in upright with only a few cm showing. When the soil is just moist, plant at a slant. In dry soil lay the stake flat and cover it.",
      "task": "planting",
-     "tip": "Plant in the cool of the morning or late afternoon in hot weather."
+     "tip": "Plant in the cool of the morning or late afternoon in hot weather.",
+     "parts": [
+      {
+       "title": "Poke the planting holes",
+       "how": "Along the row, make a hole about 18 cm deep every 75 cm with a pointed stick, one stake to each hole."
+      },
+      {
+       "title": "Bury most of the stake",
+       "how": "When you plant upright or slanting, bury about three quarters of the stake and leave only a few centimeters with buds above the soil. A stake laid flat in dry soil is covered completely."
+      },
+      {
+       "title": "Firm the soil around it",
+       "how": "Press the soil down around each stake with the foot so it stands firm and the buried nodes touch moist soil."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -120,7 +158,27 @@
      "day": 271,
      "title": "Sort and sell fast",
      "how": "Keep the roots in the shade, sort big from small and set aside bruised ones for cooking or feed. Fresh cassava spoils within a few days, so sell, cook or dry it quickly.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Sort as you harvest",
+       "how": "Keep the roots in the shade. Put the big, sound roots apart from the small and the bruised ones. Cook the bruised and broken roots first or give them to the animals, since they rot first."
+      },
+      {
+       "title": "Carry them in baskets",
+       "how": "Move the roots in firm baskets or crates instead of sacks, because roots knocked together in a sack bruise and spoil fast."
+      },
+      {
+       "title": "Store in a pit of sand",
+       "how": "On high, shaded ground that does not flood, dig a pit about 30 to 40 cm deep and about a meter wide, with a small drain at the low end for rain. Lay sound roots in layers and cover each layer with sand, or with soil that is not wet.",
+       "time": "keeps about 3 months"
+      },
+      {
+       "title": "Or pack them in a box",
+       "how": "Line a covered wooden box with damp, not wet, sand or wood shavings, lay the roots side by side and cover each layer the same way. Keep the boxes off the ground in a cool, dry place with air moving between them.",
+       "time": "keeps about 3 months"
+      }
+     ]
     }
    ]
   }
@@ -157,6 +215,9 @@
   "cassava farming philippines"
  ],
  "confidence": "high",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🥔",
  "slug": "cassava",
- "rev": "c419554b5fe4"
+ "rev": "a011b8f95296"
 }

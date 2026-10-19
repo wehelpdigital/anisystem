@@ -115,6 +115,9 @@
   "alfalfa for dairy philippines"
  ],
  "confidence": "low",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🌿",
  "slug": "alfalfa",
- "rev": "e0edbee5e826"
+ "rev": "0470fd6c5d20"
 }

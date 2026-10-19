@@ -1,0 +1,135 @@
+{
+ "crop": "mangosteen",
+ "name": "Mangosteen",
+ "local": "Mangostan",
+ "aka": [
+  "mangosteen",
+  "queen of fruits"
+ ],
+ "summary": "This guide shows how Filipino growers, especially in Mindanao and Sulu, usually raise mangosteen from seed, plant it out under partial shade and care for it through the long wait to the first fruits. It is for patient growers with humid land and good water.",
+ "season": "Seedlings are planted out once the rains have truly begun, around June to July in most places, or in any wet month where rain spreads through the year. Mangosteen wants a warm, humid place with rain spread through the year, deep soil that stays moist but drains, and does best below about 500 m.",
+ "material": "Most growers raise seedlings from the seeds of big, healthy fruits. Mangosteen seeds grow into trees like the mother, so seedlings are the usual planting material. Seeds sprout in a week or two and are kept in bags under partial shade for about two years, until they are about 25 to 30 cm tall, before planting out.",
+ "spacing": "About 8 m by 8 m, around 156 trees a hectare, often under or between coconut, banana, durian or lanzones. Holes about 60 cm wide and deep filled with farm manure.",
+ "water": "Mangosteen needs steady moisture. Young trees are watered right after planting and whenever rain is short, and growers water in the dry months. Seedlings die quickly if water stands over the roots, so the ground must drain.",
+ "fertilizer": "Farm manure in the hole and about 200 to 250 g of complete fertilizer at planting. Young trees get about 300 to 500 g of complete fertilizer (14 14 14 or 12 24 12) a year in two doses, at the start and end of the rains, plus about 200 to 300 g of urea. Bearing trees get about 1.5 to 3 kg of complete fertilizer with 200 to 300 g of muriate of potash (0 0 60) a year, also in two doses, placed in holes or a furrow under the edge of the canopy.",
+ "care": "Partial shade for young trees, ring weeding about 1 m around each tree, light loosening of the soil, intercrops in the early years, slow thinning of the shade, and checking for mites, mealybugs, scale insects and sooty mold.",
+ "harvest": "The main season runs about August to October. Fruits ripen 5 to 6 months after flowering and are ready when the skin turns reddish purple and slightly soft. They are picked by hand with the stalk on, or with a hooked pole and basket, since a dropped fruit bruises. In Sulu growers tie the fruits in clusters of about 15 for market.",
+ "ways": [
+  {
+   "key": "seedling",
+   "label": "Seedling from seed (punla mula sa buto)",
+   "days": 2880,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -720,
+     "title": "Sow the seeds under shade",
+     "how": "Take the plump seeds from fresh, ripe fruits and sow them right away in bags, pots or bamboo tubes of loose soil. Keep them under partial shade and water 3 to 4 times a week.",
+     "task": "seedbed",
+     "tip": "Mangosteen seeds die if they dry out, so never store them long."
+    },
+    {
+     "phase": "prep",
+     "day": -60,
+     "title": "Plant shade and mark the holes",
+     "how": "Plant banana, dapdap or other shade in the field ahead of time, or plan to plant under coconut or durian. Mark the planting spots about 8 m by 8 m.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig and fill the holes",
+     "how": "Dig holes about 60 cm wide and 60 cm deep and fill them with farm manure mixed with loose topsoil. Put about 200 to 250 g of complete fertilizer a little below and to the side of where the roots will sit.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the two year old seedling",
+     "how": "Take the seedling out of its container gently so the roots are not disturbed, and set it in the middle of the hole. Fill in loose topsoil and press gently until the plant stands firm, then water.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water and keep it shaded",
+     "how": "Water right after planting and whenever rain is short, keeping the soil moist but never letting water stand over the roots. Make sure the young tree gets only filtered light.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed one meter around",
+     "how": "Weed a circle about 1 m around each young tree and loosen the soil lightly. Peanut, other legumes, banana or abaca can grow between the rows in the early years.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Watch for mites, mealybugs and scale",
+     "how": "Check the leaves for mites, aphids, mealybugs, scale insects and caterpillars, and for black sooty mold. Remove badly hit leaves and keep ants away.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Feed twice a year",
+     "how": "At the start and at the end of the rains, give a young tree about 300 to 500 g of complete fertilizer (14 14 14) in a shallow furrow around it, plus some urea (46 0 0). Increase the amount every year and add manure when you can.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 720,
+     "title": "Thin the shade slowly",
+     "how": "As the tree gets bigger and stronger, cut back the temporary shade little by little so the tree gets more light. Keep weeding and feeding every year.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 2880,
+     "title": "First fruits",
+     "how": "The fruit ripens about 5 to 6 months after flowering, when the skin has changed to a deep reddish purple and gives a little to the touch. Pick by hand or with a hooked pole and basket, keeping the stalk on.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Mangosteen grown from seed usually flowers 10 to 15 years from sowing, and two of those years pass in the nursery. With good care trees can start about 8 years after planting out."
+  }
+ ],
+ "mistakes": [
+  "Letting the seeds dry out before sowing, so they never sprout.",
+  "Planting young trees in full sun, where they burn and stop growing.",
+  "Planting in low ground where water stands over the roots.",
+  "Planting out seedlings too small, before they are about two years old.",
+  "Giving up on the trees in the long years before bearing and letting weeds take over.",
+  "Picking fruits before they turn reddish purple, so they never get their full flavor."
+ ],
+ "better": [
+  "Raise seedlings from big, healthy fruits of a heavy bearing tree, or buy from an accredited nursery.",
+  "Test the soil and feed by the result every year, with manure or vermicast for organic matter.",
+  "Plan shade from the start and thin it slowly as the trees grow.",
+  "Water steadily in dry months so the trees grow faster and bear sooner.",
+  "Scout for mites, mealybugs and scale every few months and act early.",
+  "Grow cash crops between the rows to earn during the long wait."
+ ],
+ "video": {
+  "youtubeId": "RVYFkZGcoRk",
+  "title": "Paano itanim at alagaan ang mangosteen: Buhay Bukid 🌴ep.6",
+  "channel": "Efren Jr.",
+  "lang": "fil",
+  "minutes": 5,
+  "why": "A Filipino farmer shows on his own farm how he plants and cares for mangosteen, in Tagalog with some Bisaya."
+ },
+ "keywords": [
+  "paano magtanim ng mangosteen",
+  "pagtatanim ng mangostan",
+  "mangosteen seedling",
+  "how to plant mangosteen in the philippines",
+  "mangosteen farming"
+ ],
+ "confidence": "high",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🫐",
+ "slug": "mangosteen",
+ "rev": "34c87324ce65"
+}

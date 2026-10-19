@@ -1,0 +1,293 @@
+{
+ "section": "how-to-plant",
+ "slug": "lima-bean",
+ "lang": "en",
+ "category": "Legumes",
+ "sortOrder": 150,
+ "title": "Paano Magtanim ng Patani: How to Plant Lima Bean the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Patani: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng patani? See how traditional farmers plant patani step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng patani",
+ "keywords": [
+  "paano magtanim ng patani",
+  "how to plant lima bean"
+ ],
+ "excerpt": "Paano magtanim ng patani? Here is how traditional Filipino farmers usually plant patani (lima bean), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/land/legume-land-preparation.webp",
+  "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant patani. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino growers raise patani, the climbing lima bean grown along fences and on poles for its green seeds, a staple of pinakbet and ginataang gulay. It is seeded direct and bears for months.\n\nBefore you plant, get the field ready with our [land preparation guide for legumes](/land-preparation/legume-land-preparation). Then choose your seed or planting material with the [patani varieties sold here](/crop-varieties/lima-bean). If the leaves turn pale later on, the [patani nutrient deficiency guide](/nutrient-deficiencies/lima-bean-nutrient-deficiency) helps you find what is missing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant patani"
+  },
+  {
+   "type": "text",
+   "text": "Planted at the start of the rains, around May to June, or from October to November. It is often grown along fences and backyard frames."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Dry seed from fully mature pods. The big seed is planted direct, sometimes after a short soak."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng patani, step by step"
+  },
+  {
+   "type": "text",
+   "text": "Day 85 is about the first picking of green pods. The vine keeps bearing for months. The crop is ready about 85 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Dig and add manure",
+     "text": "Dig the plot or spots along the fence and mix in dried manure or compost."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Plant the seed",
+     "text": "Plant 2 to 3 seeds a hill, with hills about a meter apart, and cover them with 3 to 5 cm of soil."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 14: Thin and put up poles",
+     "text": "Leave the strongest one or two plants and set up poles, a frame or strings to the fence for the vines."
+    },
+    {
+     "title": "Day 21: Weed",
+     "text": "Hoe out the weeds around the hills."
+    },
+    {
+     "title": "Day 30: Feed",
+     "text": "Side dress complete fertilizer (14 14 14) or more manure around the plants."
+    },
+    {
+     "title": "Day 50: Watch for pests",
+     "text": "Check the flowers and pods for pod borers and the leaves for aphids."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 85: Pick the green pods",
+     "text": "Pick the pods when they are plump and the seeds inside are full but still green, every few days."
+    },
+    {
+     "title": "Day 120: Keep seed pods",
+     "text": "Leave some pods on the vine to dry for seed."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for patani"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Hills about a meter apart along poles, a frame or a fence."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Rainfed, with hand watering in long dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Dried manure or compost at planting, with a side dressing of complete fertilizer (14 14 14) or more manure after about a month. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Support for the vines, weeding around the hills, and checking for pod borers and aphids."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Green pods are picked when the seeds are full but still green, every few days for months. Dry pods give next season's seed."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting patani"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Planting the big seed too deep in wet soil, where it rots.",
+    "Giving the vines no support.",
+    "Letting the pods dry on the vine when green seeds are wanted."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of patani"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Plant fresh, whole seed into moist soil, not soggy soil.",
+    "Set up strong supports early.",
+    "Feed with compost and a side dressing and pick often.",
+    "Scout for pod borers at flowering."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=limabean) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your patani season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting patani"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng patani?",
+     "a": "How Filipino growers raise patani, the climbing lima bean grown along fences and on poles for its green seeds, a staple of pinakbet and ginataang gulay. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant patani in the Philippines?",
+     "a": "Planted at the start of the rains, around May to June, or from October to November. It is often grown along fences and backyard frames."
+    },
+    {
+     "q": "How far apart do you plant patani?",
+     "a": "Hills about a meter apart along poles, a frame or a fence."
+    },
+    {
+     "q": "How long before patani can be harvested?",
+     "a": "It is ready about 85 days after sowing. Green pods are picked when the seeds are full but still green, every few days for months."
+    },
+    {
+     "q": "What do you plant to grow patani?",
+     "a": "Dry seed from fully mature pods. The big seed is planted direct, sometimes after a short soak."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for legumes",
+     "url": "/land-preparation/legume-land-preparation"
+    },
+    {
+     "label": "Patani varieties sold here",
+     "url": "/crop-varieties/lima-bean"
+    },
+    {
+     "label": "Patani nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/lima-bean-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

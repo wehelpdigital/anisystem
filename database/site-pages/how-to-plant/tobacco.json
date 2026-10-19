@@ -1,0 +1,340 @@
+{
+ "section": "how-to-plant",
+ "slug": "tobacco",
+ "lang": "en",
+ "category": "Sugarcane and Industrial Crops",
+ "sortOrder": 580,
+ "title": "Paano Magtanim ng Tabako: How to Plant Tobacco the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Tabako: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng tabako? See how traditional farmers plant tabako step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng tabako",
+ "keywords": [
+  "paano magtanim ng tabako",
+  "how to plant tobacco"
+ ],
+ "excerpt": "Paano magtanim ng tabako? Here is how traditional Filipino farmers usually plant tabako (tobacco), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/photos/hero-planting.jpg",
+  "alt": "A farm worker planting in a field",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant tabako. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "This guide shows how Filipino tobacco growers in Ilocos, La Union, Abra, Pangasinan and Cagayan Valley usually raise tobacco: seedlings in a raised seedbed, transplanting into furrows after the rice harvest, topping, picking the leaves as they ripen and curing them. It covers Virginia (barn cured), burley (shed cured) and native tobacco (sun cured).\n\nBefore you plant, get the field ready with our [land preparation guide for every crop](/land-preparation/land-preparation-philippines). Then choose your seed or planting material with the [tabako nutrient deficiency guide](/nutrient-deficiencies/tobacco-nutrient-deficiency)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant tabako"
+  },
+  {
+   "type": "text",
+   "text": "Tobacco is a dry season crop. In Luzon, seeds are sown in seedbeds from about September to November, and seedlings go to the field from about November to mid January, mostly on rice land right after the wet season harvest. Leaves are picked from about February to May. Native tobacco in Luzon runs a little later, from about mid November to July. In the Visayas native tobacco is grown from about March to August or September, and in Mindanao from about April or May to October or November."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Tiny seeds sown in a raised seedbed, then seedlings moved to the field. Growers under contract get seed of the variety the buying company wants. Many native tobacco growers keep their own seed. Seedlings are ready at about 45 to 60 days from sowing, when they are pencil thick and about a hand tall, and are hardened in full sun with less water for the last week."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng tabako, step by step"
+  },
+  {
+   "type": "text",
+   "text": "Days are counted from transplanting. Leaves are picked from about 55 to 60 days, a few at a time every week, until the last top leaves at about 100 to 110 days. Native tobacco starts a little later, at about 60 to 65 days. The crop is ready about 105 days after transplanting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "25 days before transplanting: Plow the field after the rice",
+     "text": "Once the rice is cut and the field has dried enough, plow and harrow it twice, the second time about a week before transplanting, until the soil is fine. Open furrows about 1 to 1.2 m apart on the day of transplanting or the day before."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "The nursery (Punlaan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "55 days before transplanting: Make the raised seedbeds",
+     "text": "Make beds about 1 m wide and raised above the ground so they never flood, with fine, loose soil mixed with well rotted manure or compost. Put up a light roof of straw, nipa or net for shade and rain. Tip: Pick high ground for the beds. Seedbeds in low spots drown in the last storms of the year."
+    },
+    {
+     "title": "55 days before transplanting: Sow the seeds",
+     "text": "Mix the tiny seeds with fine sand or ash so they spread thin and even, scatter them over the bed and water with a fine sprinkler morning and afternoon. Keep the bed damp but not wet until the seeds come up."
+    },
+    {
+     "title": "35 days before transplanting: Thin and weed the bed",
+     "text": "Pull out the weeds and the crowded seedlings so each one has room to grow thick. Open the shade little by little as they grow."
+    },
+    {
+     "title": "7 days before transplanting: Harden the seedlings",
+     "text": "For the last week, remove the shade and give the bed less water so the seedlings toughen up. Water the bed well the evening before pulling."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Transplanting day: Band the first fertilizer",
+     "text": "Drop the basal fertilizer, usually a tobacco grade like 10 18 24 with sulfate of potash (0 0 50), in a band along the bottom of the furrow and cover it with a little soil."
+    },
+    {
+     "title": "Transplanting day: Transplant the seedlings",
+     "text": "Plant the seedlings along the furrow about 45 to 50 cm apart, late in the afternoon. Press the soil around each root and pour about a liter of water on each plant."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 5: Replant and water again",
+     "text": "Within five days, replace any seedling that died, then give each plant about another liter of water."
+    },
+    {
+     "title": "Day 7: Look for cutworms and budworms",
+     "text": "Walk the rows early in the morning. Dig out cutworms near cut seedlings and pick off budworms from the shoot tips. Spray only when the damage is spreading."
+    },
+    {
+     "title": "Day 12: Off barring and side dressing",
+     "text": "Plow lightly away from the rows to cut the weeds, then put ammonium sulfate (21 0 0) or urea beside the plants."
+    },
+    {
+     "title": "Day 14: First furrow irrigation",
+     "text": "Give each plant 2 to 3 liters of water, or let water run down the furrows from a shallow well or canal, then again every week or two as the soil dries."
+    },
+    {
+     "title": "Day 26: Hill up the rows",
+     "text": "Plow soil back against the stems to form a ridge, bury the weeds and hold the plants up. Many growers hill up a second time at about 35 to 40 days."
+    },
+    {
+     "title": "Day 50: Top and desucker",
+     "text": "When the flower buds show, break off the top of each plant, leaving about 16 to 22 leaves. Snap off the side shoots by hand every few days so the leaves fill out."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 57: First priming",
+     "text": "Pick the two or three lowest leaves that have turned from green to yellow green, with yellow tips and a pale midrib. Do not pick right after rain or watering."
+    },
+    {
+     "title": "Day 57: Stick and cure the same day",
+     "text": "Lay the leaves butt down in the shade, sort them by ripeness and size and tie them onto sticks. Virginia goes into the flue barn and the fire starts within half a day. Burley hangs in an airy shed. Native leaf is sun dried on racks for about 10 to 14 days, covered at night and in rain."
+    },
+    {
+     "title": "Day 105: Last priming",
+     "text": "Keep picking a few ripe leaves every week, working up the stalk, until the top leaves are taken, usually after five or six pickings."
+    },
+    {
+     "title": "Day 110: Sort and bale the cured leaves",
+     "text": "Sort the cured leaves by place on the stalk, color, length and damage, and press them in bales of not more than 50 kg. Keep strings, plastic and other trash out, since buyers reject bales with foreign matter."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for tabako"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Virginia: furrows 1 to 1.2 m apart and plants 45 to 50 cm apart in the row, about 16,000 to 20,000 plants a hectare. Burley: rows 80 to 90 cm apart and plants 45 to 50 cm apart, about 24,000 to 25,000 plants. Native tobacco: about 90 cm to 1 m each way, about 10,000 to 12,000 plants."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "A dry season crop, so water is the main work. Each seedling gets about a liter at transplanting and again at about five days, then 2 to 3 liters at two weeks. After that growers run water down the furrows from shallow wells, pumps or canals every week or two, often in every other furrow, and stop near the end of picking."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "A band of tobacco grade fertilizer such as 10 18 24 in the furrow at transplanting, with sulfate of potash (0 0 50) because the chloride in muriate of potash spoils how the leaf burns. Ammonium sulfate (21 0 0) or urea is side dressed at about 10 to 28 days after transplanting. Native tobacco growers use more urea. Some add manure or compost to the seedbed. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Replanting within five days, off barring at about 10 to 14 days, hilling up at about 25 and again at about 35 to 40 days, and hand weeding where needed. Topping at the button stage and snapping off side shoots every few days. Growers walk the field for cutworms, budworms, aphids and leaf eating worms, and pull up plants sick with mosaic or wilt."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Leaves are picked from the bottom up as they ripen, from about 55 to 65 days after transplanting, two to four leaves a plant each week, until the top. Ripe leaves are yellow green with yellow tips and a pale midrib. Virginia is cured in a fired barn within the day of picking, burley in an airy curing shed, and native leaf in the sun on racks for about 10 to 14 days, then piled under weight and hung again until fully cured. Cured leaves are sorted, baled and sold to the company or to buyers by grade."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting tabako"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sowing the seedbed too thick, which gives thin, weak seedlings.",
+    "Transplanting seedlings that are too old or were never hardened.",
+    "Putting the nitrogen late, so leaves stay green and cure poorly.",
+    "Topping late or leaving the side shoots, which makes small, thin leaves.",
+    "Picking unripe leaves, or picking right after rain or irrigation.",
+    "Letting plastic, strings and other trash get into the cured leaves."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of tabako"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Use seed of a variety that resists wilt and nematodes, and raise seedlings in trays or float beds for an even stand.",
+    "Have the soil tested and match the fertilizer to it, using sulfate of potash.",
+    "Transplant on time so the picking ends before the rains come back.",
+    "Scout every week and spray only when pests pass the level that really hurts the crop.",
+    "Top at the button stage and keep the plants free of side shoots.",
+    "Cure with a thermometer and humidity gauge, and keep every bale clean and dry."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=tobacco) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your tabako season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting tabako"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng tabako?",
+     "a": "This guide shows how Filipino tobacco growers in Ilocos, La Union, Abra, Pangasinan and Cagayan Valley usually raise tobacco: seedlings in a raised seedbed, transplanting into furrows after the rice harvest, topping, picking the leaves as they ripen and curing them. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant tabako in the Philippines?",
+     "a": "Tobacco is a dry season crop. In Luzon, seeds are sown in seedbeds from about September to November, and seedlings go to the field from about November to mid January, mostly on rice land right after the wet season harvest."
+    },
+    {
+     "q": "How far apart do you plant tabako?",
+     "a": "Virginia: furrows 1 to 1.2 m apart and plants 45 to 50 cm apart in the row, about 16,000 to 20,000 plants a hectare. Burley: rows 80 to 90 cm apart and plants 45 to 50 cm apart, about 24,000 to 25,000 plants."
+    },
+    {
+     "q": "How long before tabako can be harvested?",
+     "a": "It is ready about 105 days after transplanting. Leaves are picked from the bottom up as they ripen, from about 55 to 65 days after transplanting, two to four leaves a plant each week, until the top."
+    },
+    {
+     "q": "What do you plant to grow tabako?",
+     "a": "Tiny seeds sown in a raised seedbed, then seedlings moved to the field. Growers under contract get seed of the variety the buying company wants."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for every crop",
+     "url": "/land-preparation/land-preparation-philippines"
+    },
+    {
+     "label": "Tabako nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/tobacco-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

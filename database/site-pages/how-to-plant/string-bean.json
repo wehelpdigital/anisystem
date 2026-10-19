@@ -1,0 +1,311 @@
+{
+ "section": "how-to-plant",
+ "slug": "string-bean",
+ "lang": "en",
+ "category": "Legumes",
+ "sortOrder": 120,
+ "title": "Paano Magtanim ng Sitaw: How to Plant String Bean the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Sitaw: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng sitaw? See how traditional farmers plant sitaw step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng sitaw",
+ "keywords": [
+  "paano magtanim ng sitaw",
+  "how to plant string bean"
+ ],
+ "excerpt": "Paano magtanim ng sitaw? Here is how traditional Filipino farmers usually plant sitaw (string bean), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/guides/crops-vegetables-philippines.webp",
+  "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant sitaw. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers grow sitaw, the long podded bean on poles found on nearly every vegetable farm and in many backyards. It is seeded direct, trained up poles and strings, and picked every few days for weeks.\n\nBefore you plant, get the field ready with our [land preparation guide for legumes](/land-preparation/legume-land-preparation). Then choose your seed or planting material with the [sitaw varieties sold here](/crop-varieties/snap-bean). If the leaves turn pale later on, the [sitaw nutrient deficiency guide](/nutrient-deficiencies/string-bean-nutrient-deficiency) helps you find what is missing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant sitaw"
+  },
+  {
+   "type": "text",
+   "text": "Planted all year where there is water. Many farmers plant at the start of the rains, around May to June, and again from October to January, when there is less disease."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Dry seed from fully ripe, dry pods of the best plants, or bought seed. Some farmers soak the seed in water for a few hours before planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng sitaw, step by step"
+  },
+  {
+   "type": "text",
+   "text": "Day 55 is about the first picking. Picking then goes on every few days for a month or more. The crop is ready about 55 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Plow or dig",
+     "text": "Plow and harrow the field, or dig the plot, and remove the weeds."
+    },
+    {
+     "title": "3 days before sowing: Make the rows and add manure",
+     "text": "Make rows or raised beds about a meter apart and work dried manure or compost into them."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Plant the seed",
+     "text": "Plant 2 to 3 seeds a hill, with hills about 30 to 50 cm apart, and cover them with 2 to 3 cm of soil. Water if the soil is dry."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 7: Replant the misses",
+     "text": "Replant empty hills in the first week."
+    },
+    {
+     "title": "Day 10: Thin to two plants",
+     "text": "Leave the two strongest plants in each hill."
+    },
+    {
+     "title": "Day 14: Set up the poles",
+     "text": "Before the vines start to run, set up bamboo or ipil ipil poles about two meters tall, tied in an A shape with a pole across the top, and run strings or twine for the vines to climb."
+    },
+    {
+     "title": "Day 15: First fertilizer",
+     "text": "Side dress complete fertilizer (14 14 14) a hand width from the plants and cover it with soil."
+    },
+    {
+     "title": "Day 21: Weed and hill up",
+     "text": "Hoe out the weeds and pull soil up to the base of the plants. Guide the vines onto the strings."
+    },
+    {
+     "title": "Day 30: Watch for aphids and pod borers",
+     "text": "Check the tips and flowers for aphids and the flowers and young pods for pod borers, and pick off damaged pods."
+    },
+    {
+     "title": "Day 35: Feed at flowering",
+     "text": "Give a second side dressing of complete fertilizer or urea when the plants start to flower."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 55: Pick the young pods",
+     "text": "Pick pods that have reached full length but are still tender, before the seeds bulge, every two to three days."
+    },
+    {
+     "title": "Day 85: Keep seed and clear the vines",
+     "text": "Leave some pods on the best plants to dry for seed, then pull out the old vines."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for sitaw"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows or beds about a meter apart, hills about 30 to 50 cm apart with two plants each, every hill reaching a pole or string."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Rainfed in the wet season. In the dry season farmers water by hand or run water into the furrows every few days, more when the plants are flowering."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Dried manure or compost in the rows before planting, complete fertilizer (14 14 14) at about two weeks, and another side dressing of complete fertilizer or urea at flowering. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Poles and strings set up at about two weeks, weeding and hilling up, and guiding the vines. Farmers watch for aphids, bean fly and pod borers."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Picking starts at about 50 to 60 days and goes on every two to three days for a month or more. Pods are picked full length but still tender, bundled and sold fresh."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting sitaw"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Putting up the poles late, after the vines have tangled on the ground.",
+    "Letting pods get old and seedy on the vine, which also slows new pods.",
+    "Planting in a spot where water stands after rain.",
+    "Spraying by habit instead of checking for pests first."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of sitaw"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Use fresh seed of a good variety and plant into moist, well prepared soil.",
+    "Feed by a soil test, with compost before planting and split side dressings.",
+    "Pick every two to three days to keep the plants bearing.",
+    "Scout twice a week for aphids and pod borers and remove damaged pods.",
+    "Rotate with a crop that is not a bean to cut soil diseases."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=stringbean) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your sitaw season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting sitaw"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng sitaw?",
+     "a": "How Filipino farmers grow sitaw, the long podded bean on poles found on nearly every vegetable farm and in many backyards. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant sitaw in the Philippines?",
+     "a": "Planted all year where there is water. Many farmers plant at the start of the rains, around May to June, and again from October to January, when there is less disease."
+    },
+    {
+     "q": "How far apart do you plant sitaw?",
+     "a": "Rows or beds about a meter apart, hills about 30 to 50 cm apart with two plants each, every hill reaching a pole or string."
+    },
+    {
+     "q": "How long before sitaw can be harvested?",
+     "a": "It is ready about 55 days after sowing. Picking starts at about 50 to 60 days and goes on every two to three days for a month or more."
+    },
+    {
+     "q": "What do you plant to grow sitaw?",
+     "a": "Dry seed from fully ripe, dry pods of the best plants, or bought seed. Some farmers soak the seed in water for a few hours before planting."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for legumes",
+     "url": "/land-preparation/legume-land-preparation"
+    },
+    {
+     "label": "Sitaw varieties sold here",
+     "url": "/crop-varieties/snap-bean"
+    },
+    {
+     "label": "Sitaw nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/string-bean-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

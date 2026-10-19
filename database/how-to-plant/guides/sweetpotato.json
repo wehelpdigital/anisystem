@@ -12,7 +12,7 @@
  "water": "Mostly rainfed. Planting is timed so the soil is moist for the first weeks, and some farmers water by furrow if it turns dry before hilling up. Standing water is the bigger danger: cuttings and roots rot when the field stays flooded.",
  "fertilizer": "Many traditional farmers put little or nothing and rely on the soil, or mix urea and complete fertilizer at less than the advised amount. The common guide without a soil test is 6 to 8 bags of 14 14 14 a hectare at planting, placed in holes beside the hill. Farmers with manure spread 5 to 10 tons a hectare before the last harrowing.",
  "care": "One cultivation or off barring about two weeks after planting, hand weeding while the vines are young, and hilling up at two to four weeks before the vines close over the rows. After that the vines shade out most weeds.",
- "harvest": "Most kamote is ready three to four months after planting, depending on the variety. Farmers dig a test hill, then harvest the field on a dry day with a fork, bolo or plow. Roots are brushed clean, never washed, kept out of the sun, sorted by size and handled gently because bruised roots spoil fast.",
+ "harvest": "Most kamote is ready in three to four months, earlier or later by variety. Farmers dig a test hill, then harvest the field on a dry day with a fork, bolo or plow. Roots are brushed clean, never washed, kept out of the sun, sorted by size and handled gently because bruised roots spoil fast.",
  "ways": [
   {
    "key": "cuttings",
@@ -47,14 +47,54 @@
      "title": "Cut and ready the tops",
      "how": "Cut the tips of healthy vines 25 to 35 cm long, take off most leaves and keep the bundles standing upright in the shade until planting.",
      "task": "seed_treatment",
-     "tip": "Use only the young tip. Older vine pieces root slowly and may carry weevil eggs."
+     "tip": "Use only the young tip. Older vine pieces root slowly and may carry weevil eggs.",
+     "parts": [
+      {
+       "title": "Choose the mother vines",
+       "how": "Take cuttings only from a strong, healthy kamote field with no curled, yellow or mottled leaves and no weevil holes in the vines. Use the tender tip end of each vine, because weevils seldom lay eggs there and the tip roots faster than old stem."
+      },
+      {
+       "title": "Cut each tip to length",
+       "how": "Cut 25 to 35 cm back from the tip, long enough to carry at least 6 to 8 nodes. If the bundles must travel far, cut them longer, about 35 to 50 cm, so there is room to tie them.",
+       "tip": "Cutting a little shorter lets one long vine give a second and even a third cutting below the first."
+      },
+      {
+       "title": "Strip the leaves",
+       "how": "Pull off the leaves along the cutting and keep only two or three at the tip. A cutting with fewer leaves wilts less and is not crushed in the bundle."
+      },
+      {
+       "title": "Tie them and stand them in the shade",
+       "how": "Tie the cuttings in bundles with straw or string and stand them upright, cut ends down, in a cool shaded place. Most farmers cut one to two days before planting, and in the shade the lower nodes start to form small roots.",
+       "time": "1 to 3 days",
+       "tip": "Plant them within about five days of cutting. Older cuttings weaken and catch slowly."
+      },
+      {
+       "title": "Dip them if pests were a problem",
+       "how": "Where weevils or leaf scab troubled the last crop, some farmers dip the bundles in an insecticide and then in a fungicide, a few minutes in each, following the label, just before planting."
+      }
+     ]
     },
     {
      "phase": "planting",
      "day": 0,
      "title": "Plant one cutting a hill",
      "how": "Push each cutting into the ridge at a slant, or bent in an L or U shape, burying about half of it, or two thirds if the soil is a bit dry. Space the hills 25 to 30 cm apart along the ridge.",
-     "task": "planting"
+     "task": "planting",
+     "parts": [
+      {
+       "title": "Ridge in the rains, furrow in the dry",
+       "how": "In the rainy season set the cuttings slanting on top of the ridges so standing water cannot reach them. In the dry months many farmers plant down in the furrows instead, where the soil keeps more moisture."
+      },
+      {
+       "title": "Bury it to the right depth",
+       "how": "Push the cutting in about 10 to 15 cm deep when the soil is moist, and 15 to 20 cm deep when it is a little dry. Leave the top two or three leaves out in the air.",
+       "tip": "Laying the buried part flat in an L or U shape puts more nodes under the soil, and more buried nodes means more places for roots to form."
+      },
+      {
+       "title": "Keep spare bundles for the gaps",
+       "how": "Leave a few extra bundles standing in the shade after planting. Cuttings that have already rooted catch up quickly when you fill the missing hills."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -111,7 +151,21 @@
      "title": "Harvest on a sunny day",
      "how": "Lift the roots with a fork, a bolo or an animal drawn plow, taking care not to cut or bruise them. Shake off the soil.",
      "task": "harvest",
-     "tip": "Keep a corner unharvested or save healthy tops as cuttings for the next planting."
+     "tip": "Keep a corner unharvested or save healthy tops as cuttings for the next planting.",
+     "parts": [
+      {
+       "title": "Cut and roll the vines",
+       "how": "Before digging, cut the vines at the base of each hill and roll them back off the ridges like a long mat, so the hills are open and easy to see."
+      },
+      {
+       "title": "Loosen the ridge and pick by hand",
+       "how": "Loosen the ridge using a hoe or a spading fork, or pass a plow just under the ridge, then lift the roots out by hand. Dig wide of the hill so the blade does not slice the roots."
+      },
+      {
+       "title": "Handle them like eggs",
+       "how": "Lay the roots down gently and never throw them into the basket. Keep them in the shade as you work, since roots left in the sun and bruised roots spoil quickly."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -155,6 +209,9 @@
   "sweet potato planting guide philippines"
  ],
  "confidence": "high",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🍠",
  "slug": "sweet-potato",
- "rev": "63e92c85cfa6"
+ "rev": "7b707641d79e"
 }

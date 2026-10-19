@@ -41,14 +41,79 @@
      "title": "Soak and sprout the seed",
      "how": "Soak the seed in clean water for about a day and skim off the grains that float. Drain it and keep it in a damp sack in the shade for one to two days until short white sprouts appear.",
      "task": "seed_treatment",
-     "tip": "Sprouts no longer than a grain are easier to sow and do not break."
+     "tip": "Sprouts no longer than a grain are easier to sow and do not break.",
+     "parts": [
+      {
+       "title": "Float off the empty grains",
+       "how": "Pour the seed into a drum or a big basin of clean water and stir it by hand. The empty and half filled grains (tulyapis) rise to the top, so skim them off and keep only the heavy seed that sank. Wash that seed once."
+      },
+      {
+       "title": "Soak it for a day",
+       "how": "Leave the good seed under water for about a day, either in a sack dipped in a flowing canal or in a container. In a container, pour off the old water and fill it fresh every 12 hours so the seed does not sour.",
+       "time": "24 hours",
+       "tip": "In cool weather the seed drinks slowly and may need up to two days of soaking."
+      },
+      {
+       "title": "Rinse and drain",
+       "how": "Wash the soaked seed again, then put it in sacks filled only halfway so it has room to swell and breathe. Stand the sacks to one side until the extra water stops dripping."
+      },
+      {
+       "title": "Keep it warm in the sack (pagkukulob)",
+       "how": "Lay the sacks on a pallet or planks in the shade, so air moves under them, and cover them with rice straw, old sacks or plastic to hold the warmth. Keep the seed damp the whole time.",
+       "time": "about 24 hours, until it sprouts"
+      },
+      {
+       "title": "Turn the sacks and feel the heat",
+       "how": "After about 12 hours, turn the sacks over so the warmth spreads and all the seed sprouts together. Push a hand into the seed: if it feels hot rather than warm, open the cover and let it cool a little before covering it again.",
+       "time": "every 12 hours",
+       "tip": "Warm like the body, about 30 degrees, is right. Seed that gets too hot in the sack dies."
+      },
+      {
+       "title": "Check the sprouts and cool the seed",
+       "how": "The seed is ready when most grains show a short white tip at one end. Open the sacks and let the seed cool before you carry it to the seedbed."
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -21,
      "title": "Sow the seedbed (punlaan)",
      "how": "Make raised mud beds about a meter wide in one corner of the field and scatter the sprouted seed evenly over them. Keep the beds moist at first, then let in shallow water as the seedlings grow.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Pick the seedbed spot",
+       "how": "Choose a fertile corner that is easy to reach, close to the water source and easy to drain, where no disease showed last season. Keep it away from lamps at night, which pull in stem borers and planthoppers, and away from bushes where rats hide."
+      },
+      {
+       "title": "Size it for the field",
+       "how": "For one hectare, set aside about 400 square meters of seedbed and start getting it ready about a week before sowing.",
+       "time": "about a week before sowing"
+      },
+      {
+       "title": "Raise and level the beds",
+       "how": "Puddle the soil well and form beds 1 to 1.5 meters wide and about 4 to 5 cm high, as long as the paddy allows. Leave about 30 cm between beds as a small canal for draining. Make the tops flat so water spreads evenly.",
+       "tip": "Working about four bags of compost or decomposed manure into the beds loosens the soil, so the seedlings pull out easily later."
+      },
+      {
+       "title": "Sow the sprouted seed",
+       "how": "Scatter about a handful of sprouted seed on each square meter, as evenly as you can. In the dry season sow late in the afternoon, when the sun cannot burn the sprouts. In the rainy season keep water about half a thumb deep on the beds as you sow so rain does not wash the seed together."
+      },
+      {
+       "title": "Raise the water as they grow",
+       "how": "Hold the water at about half a thumb deep for the first three to five days, then raise it slowly to about a thumb deep and keep it there until the seedlings are pulled.",
+       "time": "3 to 5 days, then until pulling"
+      },
+      {
+       "title": "Feed the seedbed once",
+       "how": "About 7 to 10 days after sowing, scatter about 5 kg of urea (46 0 0) or 10 kg of ammonium sulfate (21 0 0) over the 400 square meters.",
+       "time": "7 to 10 days after sowing"
+      },
+      {
+       "title": "Guard the beds",
+       "how": "Put rat baits or traps around the beds and stretch strings or nets against birds. Walk the beds every few days and act early on pests or disease."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -69,7 +134,30 @@
      "day": 0,
      "title": "Pull the seedlings and transplant",
      "how": "Pull the seedlings at about 20 to 25 days old, wash off the mud and tie them in bundles. Push 3 to 5 seedlings into each hill, about 2 to 3 cm deep, in shallow water. Some farmers follow a marked string for straight rows, others plant by eye.",
-     "task": "planting"
+     "task": "planting",
+     "parts": [
+      {
+       "title": "Keep the bed wet and soft",
+       "how": "Keep water on the seedbed up to pulling day. Seedlings pulled from hard, dry mud lose many of their roots."
+      },
+      {
+       "title": "Pull a few at a time",
+       "how": "Pull on the day of transplanting or the day before. Take two or three seedlings between the thumb and the first finger, close to the roots, press down a little, then draw them gently toward you.",
+       "time": "the day before or the same day"
+      },
+      {
+       "title": "Wash and bundle",
+       "how": "Swish the roots in the water to shake off the mud and tie the seedlings in bundles small enough to hold in one hand, with a twist of straw."
+      },
+      {
+       "title": "Drop the bundles along the field",
+       "how": "Carry the bundles out and drop them at intervals across the paddy so each planter has seedlings within reach. Plant them the same day, because seedlings left lying around recover slowly or die."
+      },
+      {
+       "title": "Plant shallow, a few to a hill",
+       "how": "Hold the seedlings by the base and press the roots into the mud with the thumb and two fingers, only 2 to 3 cm deep. Deep planting slows the new tillers. Planting on a string at about 20 by 20 cm in the wet season, or 20 by 15 cm in the dry season, gives even rows."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -108,6 +196,31 @@
     },
     {
      "phase": "care",
+     "day": 35,
+     "title": "Clean out the off types in the seed patch",
+     "how": "If you will keep your own seed, choose the best stand in the field, with good water and no disease, and walk it to pull out every plant that does not look like the rest. Do it again at flowering and once more before harvest.",
+     "task": "other",
+     "parts": [
+      {
+       "title": "Mark the seed patch",
+       "how": "Pick a strip with even growth, steady water and no sign of disease or pests, away from a neighbor's different variety. Mark its corners with sticks."
+      },
+      {
+       "title": "Look for the plants that do not match",
+       "how": "Pull out plants that are clearly taller or shorter than the rest, with a leaf or stem of another color, or a flag leaf that points another way from the crowd."
+      },
+      {
+       "title": "Check again at flowering",
+       "how": "Pull the plants that flower much earlier or later than the others, and any that look sick or are badly hurt by insects."
+      },
+      {
+       "title": "Check once more before harvest",
+       "how": "Remove panicles whose grains have another shape or color, or grains with awns (sungot) where the rest have none."
+      }
+     ]
+    },
+    {
+     "phase": "care",
      "day": 38,
      "title": "Second weeding",
      "how": "Pull the weeds that came back before the rice closes its canopy.",
@@ -139,7 +252,61 @@
      "day": 96,
      "title": "Dry and store the grain",
      "how": "Spread the grain thinly on a concrete floor, nets or mats in the sun and turn it often for two to three days, until it is dry enough to keep, about 14 percent moisture. Store it in clean sacks raised off the floor.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Spread it thin",
+       "how": "Spread the threshed palay on mats, nets, canvas or a concrete floor in a layer only about two to four centimeters deep. A thick layer dries on top and stays wet below."
+      },
+      {
+       "title": "Turn it often",
+       "how": "Rake or turn the grain about every half hour through the day so it dries evenly. On a very hot noon, pile and cover it for a while so the grain does not crack.",
+       "time": "every 30 minutes"
+      },
+      {
+       "title": "Cover it fast when rain comes",
+       "how": "Keep a canvas or sacks at hand and cover the grain the moment rain starts. Grain that gets wet again after drying cracks and breaks at the mill. Keep chickens and animals off the drying floor."
+      },
+      {
+       "title": "Check that it is dry",
+       "how": "Many farmers bite a grain: dry palay snaps cleanly instead of bending. A moisture meter is surer. Grain for eating or selling keeps at about 14 percent moisture or less."
+      },
+      {
+       "title": "Store it off the floor",
+       "how": "Fill clean sacks and stack them on pallets in a swept, dry storeroom, away from the walls. Set traps or keep a cat for rats and look the sacks over every week for weevils."
+      }
+     ]
+    },
+    {
+     "phase": "harvest",
+     "day": 96,
+     "title": "Keep seed for the next season",
+     "how": "Cut the seed patch apart from the rest of the crop and handle that palay with extra care: quick threshing, slow even drying, cleaning, and a dry, safe place to wait for the next planting.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Cut the seed patch on time",
+       "how": "Harvest the marked strip when about 85 to 90 percent of the grains on the panicles have turned the color of straw. Keep it apart from the eating palay at every step."
+      },
+      {
+       "title": "Thresh it soon",
+       "how": "Thresh the seed palay within a day of cutting, on a clean mat or canvas, so it does not heat up in a wet pile.",
+       "time": "within 24 hours"
+      },
+      {
+       "title": "Dry it on a clean floor",
+       "how": "Spread it thinly on a clean mat, net or floor away from the eating palay and turn it often. Seed is dried a little further than grain, to about 12 to 14 percent moisture."
+      },
+      {
+       "title": "Winnow out the light seed",
+       "how": "Pour the seed slowly from about shoulder height in a steady breeze or in front of a fan. The heavy, full seed falls near you while chaff, weed seed and light grains blow away. Do it twice if needed."
+      },
+      {
+       "title": "Bag, label and store",
+       "how": "Fill clean sacks or, better, sealed containers, and write the variety and the harvest date on each. Keep them in a cool, dry, shaded place raised off the floor, safe from rats, and look them over every week for insects.",
+       "tip": "Seed kept dry and sealed stays good for about a year. In an open sack it soaks up the damp air and slowly loses its life."
+      }
+     ]
     }
    ],
    "note": "Day 0 is transplanting day. The seedlings are already about three weeks old by then, so a variety of about 115 days from sowing is ready roughly 95 days after transplanting."
@@ -168,7 +335,28 @@
      "day": -2,
      "title": "Soak and sprout the seed",
      "how": "Soak the seed for about a day, skim off the floaters, then keep it in a damp sack for about a day until the tips just crack open. Short sprouts do not tangle or break when thrown.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Float off the empty grains",
+       "how": "Pour the seed into a drum or a big basin of clean water and stir it by hand. The empty and half filled grains (tulyapis) rise to the top, so skim them off and keep only the heavy seed that sank. Wash that seed once."
+      },
+      {
+       "title": "Soak it",
+       "how": "Leave the good seed under water for 12 to 24 hours, in a flowing canal or in a container. In a container, change the water every 12 hours.",
+       "time": "12 to 24 hours",
+       "tip": "In cool weather it may need longer before the tips start to swell."
+      },
+      {
+       "title": "Drain and rest it in the shade",
+       "how": "Drain the seed and keep it in half filled sacks in a shaded place where air moves around them. Turn the sacks once and open them if they feel hot.",
+       "time": "about a day"
+      },
+      {
+       "title": "Stop at the first white tip",
+       "how": "For throwing on mud, the seed is ready as soon as the tips crack open and a tiny white point shows. Sow before the roots grow longer than about half a centimeter, or they tangle in the hand and break."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -183,7 +371,26 @@
      "title": "Broadcast the sprouted seed",
      "how": "Drain the field until only soft wet mud is left, with no standing water. Walk in strips and scatter the sprouted seed evenly by hand, working the field twice in opposite directions so no patch is missed.",
      "task": "planting",
-     "tip": "Many farmers throw 100 to 150 kg a hectare to make up for seed lost to birds and snails, far more than the crop needs."
+     "tip": "Many farmers throw 100 to 150 kg a hectare to make up for seed lost to birds and snails, far more than the crop needs.",
+     "parts": [
+      {
+       "title": "Drain to soft mud",
+       "how": "Drain the field until only soft, wet mud is left. If the water is muddy, wait a day or two for the mud to settle before you sow, so the seed is not buried.",
+       "time": "1 to 2 days"
+      },
+      {
+       "title": "Split the seed in two",
+       "how": "Weigh the seed for the field and split it into two equal lots, one for each pass. Mark strips across the field with sticks or rice straw so you know where you have walked."
+      },
+      {
+       "title": "Throw in two crossing passes",
+       "how": "Walk the first lot along the strips, throwing in wide, even swings. Walk the second lot across the first, so a patch missed in one pass is caught in the other."
+      },
+      {
+       "title": "Guard the seed",
+       "how": "Keep birds away for the first days and pick snails from the canals. If some patches stay bare after about two weeks, sow them again."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -243,6 +450,31 @@
     },
     {
      "phase": "care",
+     "day": 45,
+     "title": "Clean out the off types in the seed patch",
+     "how": "If you will keep your own seed, choose the best stand in the field, with good water and no disease, and walk it to pull out every plant that does not look like the rest. Do it again at flowering and once more before harvest.",
+     "task": "other",
+     "parts": [
+      {
+       "title": "Mark the seed patch",
+       "how": "Pick a strip with even growth, steady water and no sign of disease or pests, away from a neighbor's different variety. Mark its corners with sticks."
+      },
+      {
+       "title": "Look for the plants that do not match",
+       "how": "Pull out plants that are clearly taller or shorter than the rest, with a leaf or stem of another color, or a flag leaf that points another way from the crowd."
+      },
+      {
+       "title": "Check again at flowering",
+       "how": "Pull the plants that flower much earlier or later than the others, and any that look sick or are badly hurt by insects."
+      },
+      {
+       "title": "Check once more before harvest",
+       "how": "Remove panicles whose grains have another shape or color, or grains with awns (sungot) where the rest have none."
+      }
+     ]
+    },
+    {
+     "phase": "care",
      "day": 48,
      "title": "Urea when the panicle starts to form",
      "how": "Give the last urea, often with potash (0 0 60), as the young panicle starts forming inside the stem, about two months before harvest.",
@@ -267,7 +499,61 @@
      "day": 111,
      "title": "Dry and store the grain",
      "how": "Thresh within a day, then sun dry in thin layers, turning often, until the grain is dry enough to keep, about 14 percent moisture.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Spread it thin",
+       "how": "Spread the threshed palay on mats, nets, canvas or a concrete floor in a layer only about two to four centimeters deep. A thick layer dries on top and stays wet below."
+      },
+      {
+       "title": "Turn it often",
+       "how": "Rake or turn the grain about every half hour through the day so it dries evenly. On a very hot noon, pile and cover it for a while so the grain does not crack.",
+       "time": "every 30 minutes"
+      },
+      {
+       "title": "Cover it fast when rain comes",
+       "how": "Keep a canvas or sacks at hand and cover the grain the moment rain starts. Grain that gets wet again after drying cracks and breaks at the mill. Keep chickens and animals off the drying floor."
+      },
+      {
+       "title": "Check that it is dry",
+       "how": "Many farmers bite a grain: dry palay snaps cleanly instead of bending. A moisture meter is surer. Grain for eating or selling keeps at about 14 percent moisture or less."
+      },
+      {
+       "title": "Store it off the floor",
+       "how": "Fill clean sacks and stack them on pallets in a swept, dry storeroom, away from the walls. Set traps or keep a cat for rats and look the sacks over every week for weevils."
+      }
+     ]
+    },
+    {
+     "phase": "harvest",
+     "day": 111,
+     "title": "Keep seed for the next season",
+     "how": "Cut the seed patch apart from the rest of the crop and handle that palay with extra care: quick threshing, slow even drying, cleaning, and a dry, safe place to wait for the next planting.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Cut the seed patch on time",
+       "how": "Harvest the marked strip when about 85 to 90 percent of the grains on the panicles have turned the color of straw. Keep it apart from the eating palay at every step."
+      },
+      {
+       "title": "Thresh it soon",
+       "how": "Thresh the seed palay within a day of cutting, on a clean mat or canvas, so it does not heat up in a wet pile.",
+       "time": "within 24 hours"
+      },
+      {
+       "title": "Dry it on a clean floor",
+       "how": "Spread it thinly on a clean mat, net or floor away from the eating palay and turn it often. Seed is dried a little further than grain, to about 12 to 14 percent moisture."
+      },
+      {
+       "title": "Winnow out the light seed",
+       "how": "Pour the seed slowly from about shoulder height in a steady breeze or in front of a fan. The heavy, full seed falls near you while chaff, weed seed and light grains blow away. Do it twice if needed."
+      },
+      {
+       "title": "Bag, label and store",
+       "how": "Fill clean sacks or, better, sealed containers, and write the variety and the harvest date on each. Keep them in a cool, dry, shaded place raised off the floor, safe from rats, and look them over every week for insects.",
+       "tip": "Seed kept dry and sealed stays good for about a year. In an open sack it soaks up the damp air and slowly loses its life."
+      }
+     ]
     }
    ],
    "note": "Day 0 is sowing day. With no seedbed and no transplanting shock, the crop is ready about 110 days after sowing for a variety of that length."
@@ -296,7 +582,21 @@
      "day": 0,
      "title": "Sow dry seed before the rains settle in",
      "how": "Scatter dry, unsoaked seed by hand and harrow lightly to cover it, or drop it in shallow furrows about 20 to 25 cm apart and cover. On upland fields farmers poke holes with a pointed stick, drop a few seeds in each and close the hole with the foot.",
-     "task": "planting"
+     "task": "planting",
+     "parts": [
+      {
+       "title": "Use dry, clean seed",
+       "how": "Clean the seed of chaff and weed seed and keep it dry. Seed for dry soil is never soaked, because sprouted seed dies if the rain is late."
+      },
+      {
+       "title": "Broadcasting on a flat field",
+       "how": "Scatter the seed evenly by hand, or drop it in shallow furrows made by passing a furrower over the field, then drag a spike tooth harrow over it to cover the seed."
+      },
+      {
+       "title": "Dibbling on slopes",
+       "how": "On hillsides, where plowing is hard, poke shallow holes in rows with a long wooden or bamboo pole, often with a metal tip. Drop a few seeds in each hole and push the soil back with the foot."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -349,6 +649,31 @@
     },
     {
      "phase": "care",
+     "day": 45,
+     "title": "Clean out the off types in the seed patch",
+     "how": "If you will keep your own seed, choose the best stand in the field, with good water and no disease, and walk it to pull out every plant that does not look like the rest. Do it again at flowering and once more before harvest.",
+     "task": "other",
+     "parts": [
+      {
+       "title": "Mark the seed patch",
+       "how": "Pick a strip with even growth, steady water and no sign of disease or pests, away from a neighbor's different variety. Mark its corners with sticks."
+      },
+      {
+       "title": "Look for the plants that do not match",
+       "how": "Pull out plants that are clearly taller or shorter than the rest, with a leaf or stem of another color, or a flag leaf that points another way from the crowd."
+      },
+      {
+       "title": "Check again at flowering",
+       "how": "Pull the plants that flower much earlier or later than the others, and any that look sick or are badly hurt by insects."
+      },
+      {
+       "title": "Check once more before harvest",
+       "how": "Remove panicles whose grains have another shape or color, or grains with awns (sungot) where the rest have none."
+      }
+     ]
+    },
+    {
+     "phase": "care",
      "day": 50,
      "title": "Urea when the panicle starts to form",
      "how": "Give the last urea, often with potash (0 0 60), as the young panicle starts forming, about two months before harvest.",
@@ -373,7 +698,61 @@
      "day": 116,
      "title": "Dry and store the grain",
      "how": "Thresh and sun dry in thin layers until the grain is dry enough to keep, about 14 percent moisture.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Spread it thin",
+       "how": "Spread the threshed palay on mats, nets, canvas or a concrete floor in a layer only about two to four centimeters deep. A thick layer dries on top and stays wet below."
+      },
+      {
+       "title": "Turn it often",
+       "how": "Rake or turn the grain about every half hour through the day so it dries evenly. On a very hot noon, pile and cover it for a while so the grain does not crack.",
+       "time": "every 30 minutes"
+      },
+      {
+       "title": "Cover it fast when rain comes",
+       "how": "Keep a canvas or sacks at hand and cover the grain the moment rain starts. Grain that gets wet again after drying cracks and breaks at the mill. Keep chickens and animals off the drying floor."
+      },
+      {
+       "title": "Check that it is dry",
+       "how": "Many farmers bite a grain: dry palay snaps cleanly instead of bending. A moisture meter is surer. Grain for eating or selling keeps at about 14 percent moisture or less."
+      },
+      {
+       "title": "Store it off the floor",
+       "how": "Fill clean sacks and stack them on pallets in a swept, dry storeroom, away from the walls. Set traps or keep a cat for rats and look the sacks over every week for weevils."
+      }
+     ]
+    },
+    {
+     "phase": "harvest",
+     "day": 116,
+     "title": "Keep seed for the next season",
+     "how": "Cut the seed patch apart from the rest of the crop and handle that palay with extra care: quick threshing, slow even drying, cleaning, and a dry, safe place to wait for the next planting.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Cut the seed patch on time",
+       "how": "Harvest the marked strip when about 85 to 90 percent of the grains on the panicles have turned the color of straw. Keep it apart from the eating palay at every step."
+      },
+      {
+       "title": "Thresh it soon",
+       "how": "Thresh the seed palay within a day of cutting, on a clean mat or canvas, so it does not heat up in a wet pile.",
+       "time": "within 24 hours"
+      },
+      {
+       "title": "Dry it on a clean floor",
+       "how": "Spread it thinly on a clean mat, net or floor away from the eating palay and turn it often. Seed is dried a little further than grain, to about 12 to 14 percent moisture."
+      },
+      {
+       "title": "Winnow out the light seed",
+       "how": "Pour the seed slowly from about shoulder height in a steady breeze or in front of a fan. The heavy, full seed falls near you while chaff, weed seed and light grains blow away. Do it twice if needed."
+      },
+      {
+       "title": "Bag, label and store",
+       "how": "Fill clean sacks or, better, sealed containers, and write the variety and the harvest date on each. Keep them in a cool, dry, shaded place raised off the floor, safe from rats, and look them over every week for insects.",
+       "tip": "Seed kept dry and sealed stays good for about a year. In an open sack it soaks up the damp air and slowly loses its life."
+      }
+     ]
     }
    ],
    "note": "Day 0 is sowing day. The seed may lie in dry soil for some days until the rain comes, so the crop counts from sowing."
@@ -412,6 +791,9 @@
   "direct seeding rice philippines"
  ],
  "confidence": "high",
+ "shelf": "rice",
+ "kind": "annual",
+ "icon": "🌾",
  "slug": "rice",
- "rev": "6b60cad6177a"
+ "rev": "e7e2f285bb0a"
 }

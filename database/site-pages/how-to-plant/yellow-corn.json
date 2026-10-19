@@ -1,0 +1,376 @@
+{
+ "section": "how-to-plant",
+ "slug": "yellow-corn",
+ "lang": "en",
+ "category": "Corn and Sorghum",
+ "sortOrder": 20,
+ "title": "How to Plant Corn in the Philippines: Mais the Traditional Way, Step by Step",
+ "metaTitle": "How to Plant Corn in the Philippines: The Traditional Way",
+ "metaDescription": "How to plant corn in the Philippines? See how traditional farmers plant mais step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "how to plant corn in the Philippines",
+ "keywords": [
+  "how to plant corn in the Philippines",
+  "pagtatanim ng mais",
+  "how to plant corn in the philippines"
+ ],
+ "excerpt": "How to plant corn in the Philippines the traditional way: here is how most Filipino farmers plant mais, step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
+  "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant mais. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers plant yellow corn for feed and grain on lowland fields and hillsides, mostly with hybrid seed, using the usual plow, furrow and hill up routine. It ends with the changes that bring a bigger harvest.\n\nBefore you plant, get the field ready with our [land preparation guide for corn](/land-preparation/corn-land-preparation). Then choose your seed or planting material with the [mais varieties sold here](/crop-varieties/corn). If the leaves turn pale later on, the [mais nutrient deficiency guide](/nutrient-deficiencies/corn-nutrient-deficiency) helps you find what is missing. For more on the crop, read [pagtatanim ng mais, the full season guide in Tagalog](/crops/pagtatanim-ng-mais), [how to choose corn seeds](/crops/corn-seeds)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant mais"
+  },
+  {
+   "type": "text",
+   "text": "The first crop goes in when the rains begin, from April to June. A second crop is planted from September to December on the moisture left at the end of the rains, and in Cagayan Valley this late crop is often the bigger one. In much of Mindanao farmers plant twice a year, around March to May and again around August to October."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Seed, mostly hybrid bought new every season, since seed saved from a hybrid harvest does not grow true. Some upland farmers still keep seed of open pollinated varieties from the best, fully dried ears. Bought seed comes already treated and is planted dry, straight from the bag."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to plant corn in the Philippines, step by step"
+  },
+  {
+   "type": "text",
+   "text": "The crop is ready about 110 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "21 days before sowing: Clear and plow",
+     "text": "Cut and clear the old crop or the grass, then plow once when the soil has enough moisture, with a carabao, a tractor or a hand tractor."
+    },
+    {
+     "title": "10 days before sowing: Harrow twice",
+     "text": "Harrow two times, about a week apart, to break the clods and kill the weeds that sprout after plowing."
+    },
+    {
+     "title": "1 day before sowing: Open the furrows",
+     "text": "Open furrows about 75 cm apart with the plow. On slopes, run them across the slope so the rain does not wash the soil away."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Fertilizer in the furrow",
+     "text": "Drop complete fertilizer (14 14 14) along the bottom of the furrow and rake a little soil over it so the seed does not sit on it."
+    },
+    {
+     "title": "Sowing day: Drop the seed and cover",
+     "text": "Drop one seed every 20 to 25 cm, or two seeds a hill to be thinned later, and cover with about 3 to 5 cm of soil using the foot."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 7: Replant the misses",
+     "text": "About a week after planting, replant hills where nothing came up so the stand stays full."
+    },
+    {
+     "title": "Day 14: Thin to one plant a hill",
+     "text": "Where two seeds came up together, pull the weaker one and leave the strongest."
+    },
+    {
+     "title": "Day 14: Off barring",
+     "text": "Run the plow along each row with the soil thrown away from the plants. This cuts the weeds between the rows."
+    },
+    {
+     "title": "Day 20: Look into the whorls",
+     "text": "Check the whorls of young plants for chewed leaves and fresh droppings, the sign of fall armyworm or corn borer. Pull out and burn plants with pale striped leaves, a sign of downy mildew."
+    },
+    {
+     "title": "Day 27: Side dress urea",
+     "text": "Drop urea (46 0 0) about 5 cm from the base of each plant on moist soil."
+    },
+    {
+     "title": "Day 28: Hill up",
+     "text": "Plow again with the soil thrown toward the rows to cover the fertilizer and pile soil at the base of the plants. This buries young weeds and helps the plants stand against wind."
+    },
+    {
+     "title": "Day 55: Tasseling and silking",
+     "text": "The tassels and silks come out at about 50 to 60 days. Keep the field clean of weeds, since a dry spell or weeds now give poorly filled ears."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 110: Pick the dry ears",
+     "text": "Harvest when the husks have turned brown and dry and the kernels are hard, with a dark layer at their base, about 100 to 120 days after planting. In good weather many farmers leave the ears on the stalk a while longer to dry in the field."
+    },
+    {
+     "title": "Day 110: Keep seed of an open pollinated variety",
+     "text": "Farmers who plant an open pollinated variety pick their seed ears from the standing crop before the rest is harvested. Hybrid seed is never kept, since its plants do not grow true.",
+     "parts": [
+      {
+       "title": "Choose the mother plants",
+       "text": "Walk the middle of the field, away from the edges where pollen from a neighbor's corn blows in. Pick strong, upright plants with healthy leaves and one big, well filled ear whose husk closes tight over the tip."
+      },
+      {
+       "title": "Let the ears dry on the stalk",
+       "text": "Tie a string or a strip of cloth on each chosen plant and leave its ear on the stalk until the husk is brown and dry and the kernels are hard."
+      },
+      {
+       "title": "Keep the ears whole",
+       "text": "Pull back the husks, tie the ears in pairs or bunches by their husks and hang them under the roof or above the kitchen fire, where the smoke keeps weevils away. Ears kept whole stay alive longer than shelled seed. Tip: Keep only ears that are dry, clean and free of mold."
+      },
+      {
+       "title": "Shell the middle kernels at planting time",
+       "text": "A few days before planting, shell the ears and keep only the plump kernels from the middle of each ear. The small kernels at the tip and the odd ones at the base go to the chickens."
+      },
+      {
+       "title": "Store shelled seed sealed",
+       "text": "If the seed must be shelled early, dry it well in the sun and keep it in a closed bottle, can or jar in a cool, dry corner until planting."
+      }
+     ]
+    },
+    {
+     "title": "Day 112: Dry, shell and dry again",
+     "text": "Sun dry the ears for two to three days, shell them by hand or with a sheller, then dry the grain again to about 14 percent moisture before bagging. Tip: Damp corn in sacks molds fast and becomes unsafe for feed.",
+     "parts": [
+      {
+       "title": "Sort the ears",
+       "text": "Husk the ears and set aside any that are moldy, rotten or bored by insects so they do not spoil the good ones. Keep those apart for feed or a separate sale."
+      },
+      {
+       "title": "Sun dry the ears",
+       "text": "Spread the husked ears on a concrete floor, mats or nets in full sun and turn them a few times a day. Pile and cover them at night and before rain.",
+       "time": "2 to 3 days"
+      },
+      {
+       "title": "Shell the corn",
+       "text": "Shell by hand, by twisting two ears against each other, or with a hand or motor sheller once the kernels come off easily. Soft, damp kernels get crushed, so dry the ears well first."
+      },
+      {
+       "title": "Dry the grain again",
+       "text": "Spread the shelled grain thinly and turn it often until it is dry enough to keep, about 14 percent moisture. A dry kernel is hard and cracks sharply between the teeth."
+      },
+      {
+       "title": "Clean and bag",
+       "text": "Winnow or sift out bits of cob, silk and broken grain. Fill clean sacks and stack them on pallets in a dry room away from the walls, and check them often for weevils."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for mais"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows about 75 cm apart with one plant every 20 to 25 cm, which is about 53,000 to 66,000 plants a hectare. Some farmers plant two seeds a hill and thin to one plant after two weeks."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Mostly rainfed. Farmers time planting so the rains carry the crop through, and the late crop lives on the moisture left in the soil. A few pump water into the furrows during dry spells, mostly around tasseling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "The usual habit is complete fertilizer (14 14 14) in the furrow at planting, often about three bags a hectare, then urea (46 0 0) beside the plants at about 25 to 30 days, just before hilling up. Some farmers skip the basal feeding and put everything at side dressing, or spread chicken manure during land preparation. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/increase-corn-yield-per-hectare)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "The carabao or tractor plow does most of the weeding: off barring at about two weeks and hilling up at about four weeks, with hand weeding of the rows after that. Misses are replanted in the first week and double hills thinned to one plant. Farmers look into the whorls for fall armyworm and corn borer and pull out plants with downy mildew."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Yellow corn is ready when the husks are brown and dry and the kernels are hard and shiny, about 100 to 120 days after planting. Ears are picked by hand, sun dried, shelled and dried again to about 14 percent moisture, then stored in clean sacks off the floor."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting mais"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Planting seed saved from a hybrid harvest, which gives uneven plants and a much smaller harvest.",
+    "Planting late after the rains start, so the crop meets a dry spell at tasseling.",
+    "Skipping or delaying hilling up, which lets weeds win and plants fall over in strong wind.",
+    "Leaving urea on the soil surface without covering it, so much of it is lost to the air.",
+    "Storing shelled corn before it is fully dry, which brings mold.",
+    "Spraying for armyworm by habit without first checking the whorls."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of mais"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Choose a hybrid or variety suited to your area and season, and buy fresh seed every crop.",
+    "Test the soil and match the fertilizer to it, splitting the nitrogen into two or three feedings and covering it with soil.",
+    "Keep an even stand of about 60,000 plants a hectare with 75 x 20 to 25 cm spacing and early replanting.",
+    "Keep the field free of weeds for the first four to six weeks.",
+    "Scout every week for fall armyworm and act early, while the plants are young.",
+    "Dry the grain quickly to about 14 percent moisture and store it off the floor to keep it free of mold."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=corn_yellow) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your mais season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting mais"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "How to plant corn in the Philippines the traditional way?",
+     "a": "How Filipino farmers plant yellow corn for feed and grain on lowland fields and hillsides, mostly with hybrid seed, using the usual plow, furrow and hill up routine. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant mais in the Philippines?",
+     "a": "The first crop goes in when the rains begin, from April to June. A second crop is planted from September to December on the moisture left at the end of the rains, and in Cagayan Valley this late crop is often the bigger one."
+    },
+    {
+     "q": "How far apart do you plant mais?",
+     "a": "Rows about 75 cm apart with one plant every 20 to 25 cm, which is about 53,000 to 66,000 plants a hectare. Some farmers plant two seeds a hill and thin to one plant after two weeks."
+    },
+    {
+     "q": "How long before mais can be harvested?",
+     "a": "It is ready about 110 days after sowing. Yellow corn is ready when the husks are brown and dry and the kernels are hard and shiny, about 100 to 120 days after planting."
+    },
+    {
+     "q": "What do you plant to grow mais?",
+     "a": "Seed, mostly hybrid bought new every season, since seed saved from a hybrid harvest does not grow true. Some upland farmers still keep seed of open pollinated varieties from the best, fully dried ears."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for corn",
+     "url": "/land-preparation/corn-land-preparation"
+    },
+    {
+     "label": "Mais varieties sold here",
+     "url": "/crop-varieties/corn"
+    },
+    {
+     "label": "Mais nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/corn-nutrient-deficiency"
+    },
+    {
+     "label": "Pagtatanim ng mais, the full season guide in Tagalog",
+     "url": "/crops/pagtatanim-ng-mais"
+    },
+    {
+     "label": "How to choose corn seeds",
+     "url": "/crops/corn-seeds"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    }
+   ]
+  }
+ ]
+}

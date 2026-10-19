@@ -1,0 +1,106 @@
+{
+ "crop": "sugarbeet",
+ "name": "Sugar beet",
+ "local": "Sugar beet",
+ "aka": [
+  "tropical sugar beet"
+ ],
+ "summary": "Sugar beet is rarely grown in the Philippines: there is no beet sugar mill here, and only trial plots of tropical sugar beet types have been planted. This short guide shows how those few growers handle it, sown in the cool dry months and dug about five months later.",
+ "season": "Tropical sugar beet does best when sown at the start of the cool dry months, around November, in the lowlands or mid elevations, so the roots fill before the hot months. Late sowing gives smaller roots and less sugar.",
+ "material": "Seed of tropical sugar beet types, sown straight in the field, usually two seeds a hill, thinned later to one plant.",
+ "spacing": "Rows about 50 cm apart and hills about 20 cm apart, thinned to one plant a hill.",
+ "water": "Sown into moist soil after the rains and watered by furrow in long dry spells. Standing water rots the roots.",
+ "fertilizer": "Trial plots use balanced fertilizer by soil test, with about a third of the nitrogen at land preparation and the rest as urea in two top dressings at about 60 and 100 days. Beets need boron.",
+ "care": "Hand weeding at about 20, 40 and 60 days, thinning to one plant a hill at the second weeding, and earthing up at the top dressings.",
+ "harvest": "Dug about five to five and a half months after the seedlings come up, topped and sent to the buyer the same day or the next.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Sown straight in rows (tanim buto)",
+   "days": 160,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow deep and fertilize",
+     "how": "Plow and harrow until the soil is deep and fine. Work in the phosphorus, potash and boron with about a third of the nitrogen during the last harrowing.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow in rows",
+     "how": "Sow two seeds a hill in rows about 50 cm apart with hills about 20 cm apart, and water if the soil is dry.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "First weeding",
+     "how": "Hand weed the rows while the seedlings are small. Young beets cannot compete with weeds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Second weeding and thinning",
+     "how": "Weed again and pull the weaker seedling so one plant stays in each hill.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Top dress and earth up",
+     "how": "Give half of the remaining urea, weed for the last time and pull soil up around the roots.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 70,
+     "title": "Check for root rot",
+     "how": "Look for wilting plants with rotting crowns or white fungus at the base, and pull them out.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 100,
+     "title": "Last top dressing and earthing up",
+     "how": "Give the rest of the urea and earth up again. Water in long dry spells.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 160,
+     "title": "Dig the roots",
+     "how": "Roots are richest in sugar at about 150 to 165 days after the seedlings come up. Dig them out, cut off the tops and deliver them quickly, since sugar drops after digging.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting without a buyer or mill nearby to take the roots.",
+  "Sowing late in the cool season, which cuts root size and sugar.",
+  "Skipping thinning, so roots stay small.",
+  "Planting on poorly drained land, where root rot spreads."
+ ],
+ "better": [
+  "Plant only under contract or a trial program with a sure buyer.",
+  "Use tropical sugar beet seed, not temperate types.",
+  "Test the soil and include boron.",
+  "Sow on time at the start of the cool dry months and harvest on time."
+ ],
+ "video": null,
+ "keywords": [
+  "sugar beet philippines",
+  "paano magtanim ng sugar beet",
+  "tropical sugar beet",
+  "how to plant sugar beet in the philippines"
+ ],
+ "confidence": "low",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🫚",
+ "slug": "sugar-beet",
+ "rev": "5c7d65b6d144"
+}

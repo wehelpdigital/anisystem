@@ -161,6 +161,9 @@
   "bamboo farming philippines"
  ],
  "confidence": "medium",
+ "shelf": "industrial",
+ "kind": "perennial",
+ "icon": "🎋",
  "slug": "bamboo",
- "rev": "59404a4bb9f2"
+ "rev": "8ad4e576e2be"
 }

@@ -30,6 +30,7 @@
             : ['Read the whole guide and keep your field clean', $guide . 'how to tell the weeds apart, and what to do and spray at every age of your crop.'],
         'nutrient-deficiencies' => ['Find the missing nutrient and fix it', $guide . 'how to tell the deficiency from look alikes, how to be sure, what to apply, and the fertilizers sold here that supply it.'],
         'land-preparation' => ['Get every step of ' . \Illuminate\Support\Str::lower($name) . ' right', 'Register for free to read every step, then date each one on your own calendar with the Land Prep Planner, counted back from your planting day.'],
+        'how-to-plant' => ['See every step of planting it the traditional way', 'Register for free to read every step with its day, the spacing, water and fertilizer, the common mistakes and what to change for a higher yield. Then send it to your Protocol Builder in one tap.'],
         'crops' => ['Read the whole guide to ' . $name, 'Register for free to read the whole guide, then plan your season in anee.io with every task dated from your own planting day.'],
         default => ['Read the whole guide', null],
     };

@@ -225,6 +225,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-19: How to Plant in Quick Tools (true once the guides are loaded into their table).
             'howToPlant' => class_exists(\App\Support\HowToPlant::class) && \Illuminate\Support\Facades\Route::has('htp.page')
                 && rescue(fn () => \App\Support\HowToPlant::ready(), false, false),
+            // 2026-10-19: the How to Plant pages on the public site (true once their sync ran).
+            'howToPlantPages' => \Illuminate\Support\Facades\Route::has('site.howtoplant')
+                && rescue(fn () => \App\Models\AsSitePage::where('section', 'how-to-plant')->exists(), false, false),
             // 2026-10-19: the lot and the season in the Seed Count and Distance Calculator.
             'seedField' => class_exists(\App\Support\SeedPenalty::class) && \Illuminate\Support\Facades\Route::has('seedcalc.context'),
             // 2026-10-19: the weed plans checked against the Philippine registrations, crop by crop, with each crop's weed free stretch
@@ -378,6 +381,9 @@ Route::get('/nutrient-deficiencies/{slug}', [App\Http\Controllers\SitePageContro
 Route::get('/pests/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'pests')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.pests.show');
 Route::get('/diseases', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'diseases')->name('site.diseases');
 Route::get('/diseases/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'diseases')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.diseases.show');
+// How to Plant (2026-10-19): how traditional farmers plant every crop, the guides of the app's tool (no video), gated.
+Route::get('/how-to-plant', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'how-to-plant')->name('site.howtoplant');
+Route::get('/how-to-plant/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'how-to-plant')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.howtoplant.show');
 // Land preparation by crop and by soil (2026-10-07).
 Route::get('/land-preparation', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'land-preparation')->name('site.land');
 Route::get('/land-preparation/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'land-preparation')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.land.show');

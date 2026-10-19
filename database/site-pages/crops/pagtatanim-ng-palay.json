@@ -273,6 +273,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Paano magtanim ng palay?",
+          "a": "Sundin ang mga hakbang sa gabay na ito: ihanda ang binhi at ang punlaan, ihanda ang bukid, maglipat tanim habang bata pa ang punla, mag abono at magdamo sa tamang araw, at anihin kapag ginto na ang butil. Para sa tradisyonal na paraan, kasama ang araw ng bawat hakbang, basahin ang [how to plant rice the traditional way](/how-to-plant/rice)."
+        },
+        {
           "q": "Ilang araw ang punla bago ilipat?",
           "a": "18 hanggang 21 araw para sa manual na lipat tanim, at 14 hanggang 18 araw para sa mechanical transplanter. Mabagal makabawi ang punla na lampas 25 araw."
         },
@@ -317,6 +321,10 @@
         {
           "label": "anee.io cropping calendar",
           "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "How to plant rice the traditional way",
+          "url": "/how-to-plant/rice"
         }
       ]
     },

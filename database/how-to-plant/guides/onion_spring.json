@@ -120,6 +120,9 @@
   "how to plant spring onion in the philippines"
  ],
  "confidence": "medium",
+ "shelf": "onions",
+ "kind": "annual",
+ "icon": "🧅",
  "slug": "spring-onion",
- "rev": "7db3ca3d8503"
+ "rev": "c1cf6686f58c"
 }

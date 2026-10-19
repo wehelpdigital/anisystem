@@ -38,7 +38,21 @@
      "day": -1,
      "title": "Ready the seed pieces",
      "how": "Split the clumps into mother and finger pieces with buds, and set aside any that are soft, shriveled or discolored.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Keep seed clumps in the shade",
+       "how": "Set aside healthy clumps at harvest and keep them in a shaded, airy place under a cover of leaves until the first rains. Throw out any that turn soft, shriveled or discolored while they wait."
+      },
+      {
+       "title": "Split mothers from fingers",
+       "how": "Break each clump into the round mother rhizome and the long finger rhizomes. Big mothers can be split in two. Both kinds grow, as long as each piece is plump and carries buds."
+      },
+      {
+       "title": "Dip them if rot was a problem",
+       "how": "Where soft rot or scale insects showed last season, some growers dip the seed pieces in a fungicide or insecticide before storing them and again before planting, following the label. Badly hit pieces are thrown out, not stored."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -94,7 +108,30 @@
      "day": 271,
      "title": "Clean, keep seed and dry the rest",
      "how": "Soak off the soil and trim the roots. Keep healthy clumps in the shade for the next planting. For powder, many boil the rhizomes, then sun dry them for about a week before grinding.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Soak off the soil",
+       "how": "Put the clumps in water to loosen the soil, then rinse them and pull off the long roots and the dry leaf scales."
+      },
+      {
+       "title": "Keep the seed apart",
+       "how": "Choose the healthiest clumps for the next planting before anything else and store them in the shade. Only the rest goes on to be boiled and dried."
+      },
+      {
+       "title": "Boil until soft",
+       "how": "Boil the cleaned rhizomes in a big pot of water until a sharp stick pushes in easily. Boiled turmeric dries faster and keeps a more even color."
+      },
+      {
+       "title": "Sun dry for about a week",
+       "how": "Spread the boiled rhizomes thinly on mats or a clean floor in full sun and turn them often. Pile and cover them at night and when rain comes, until they are hard and snap cleanly.",
+       "time": "about 7 to 8 days"
+      },
+      {
+       "title": "Store dry, grind as needed",
+       "how": "Keep the dry pieces in sealed bags or jars in a dry place, and grind only what you will sell or use soon so the powder keeps its color and smell."
+      }
+     ]
     }
    ]
   }
@@ -129,6 +166,9 @@
   "turmeric farming philippines"
  ],
  "confidence": "medium",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🫚",
  "slug": "turmeric",
- "rev": "e48eb4d44421"
+ "rev": "9dbf15fb4dac"
 }

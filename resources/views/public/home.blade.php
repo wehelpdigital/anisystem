@@ -1979,6 +1979,7 @@
             </div>
             <div class="mt-6 flex flex-wrap justify-center gap-2 text-sm">
                 <a href="{{ url('/crops') }}" class="hc-link" style="--h: 100">Crop guides ›</a>
+                <a href="{{ url('/how-to-plant') }}" class="hc-link" style="--h: 75">How to plant ›</a>
                 <a href="{{ url('/pests') }}" class="hc-link" style="--h: 30">Crop pests ›</a>
                 <a href="{{ url('/weeds') }}" class="hc-link" style="--h: 80">Weeds and grasses ›</a>
                 <a href="{{ url('/nutrient-deficiencies') }}" class="hc-link" style="--h: 52">Nutrient deficiencies ›</a>

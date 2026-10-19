@@ -189,6 +189,9 @@
   "squash production guide philippines"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🎃",
  "slug": "squash",
- "rev": "1cf8039f6e61"
+ "rev": "d0017bc5dfd0"
 }

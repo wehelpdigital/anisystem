@@ -146,6 +146,9 @@
   "watermelon production guide philippines"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🍉",
  "slug": "watermelon",
- "rev": "09c1fa2f228a"
+ "rev": "f905d3474785"
 }

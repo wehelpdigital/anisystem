@@ -98,6 +98,9 @@
   "how to plant pigeon pea in the philippines"
  ],
  "confidence": "medium",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🫘",
  "slug": "pigeon-pea",
- "rev": "98cc17f5c038"
+ "rev": "1f4faed01d5a"
 }

@@ -45,7 +45,7 @@
      "phase": "care",
      "day": 1,
      "title": "Shade the new tree",
-     "how": "Shade the new tree with fronds or a net for two weeks to a few months, depending on the weather, so it recovers from planting. Water it in dry spells and mulch around the base.",
+     "how": "Shade the new tree with fronds or a net for its first weeks, and longer if the weather is hot and dry, so it recovers from planting. Water it in dry spells and mulch around the base.",
      "task": "irrigation"
     },
     {
@@ -133,6 +133,9 @@
   "rambutan farming"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍒",
  "slug": "rambutan",
- "rev": "2cc83592bbdf"
+ "rev": "08eb0d27eb2b"
 }

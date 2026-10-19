@@ -55,6 +55,36 @@
      "task": "planting"
     },
     {
+     "phase": "planting",
+     "day": 0,
+     "title": "Coat the seed with inoculant",
+     "how": "Many growers coat the seed with a soybean inoculant, a powder of the root nodule bacteria, about an hour before planting. The bacteria settle in the roots and feed the crop much of the nitrogen it needs.",
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Get the right inoculant",
+       "how": "Use an inoculant made for soybean. The one for soybean does not work on other beans, and theirs does not work on soybean. About five packets of 100 grams coat 50 kg of seed."
+      },
+      {
+       "title": "Wet the seed",
+       "how": "Put the seed in a clean basin or pail and sprinkle it with clean water, stirring, until every seed is damp but not dripping."
+      },
+      {
+       "title": "Mix in the powder",
+       "how": "Pour the inoculant over the damp seed and mix by hand until every seed carries an even coat."
+      },
+      {
+       "title": "Dry it in the shade",
+       "how": "Spread the coated seed on a sack in the shade to air dry, never in the sun.",
+       "time": "1 to 2 hours"
+      },
+      {
+       "title": "Plant it the same day",
+       "how": "Plant the coated seed as soon as it is dry. Keep it out of the sun and the heat, and do not let it touch the fertilizer in the furrow."
+      }
+     ]
+    },
+    {
      "phase": "care",
      "day": 14,
      "title": "Off barring and weeding",
@@ -87,14 +117,55 @@
      "day": 95,
      "title": "Cut the plants",
      "how": "Harvest when nearly all pods have turned brown and most leaves have dropped. Cut the plants at the base and bundle them.",
-     "task": "harvest"
+     "task": "harvest",
+     "parts": [
+      {
+       "title": "Check that the pods are ripe",
+       "how": "The crop is ready when the leaves have yellowed and dropped, the main stem is drying and nearly all the pods have turned yellow to brown. Do not mistake plants yellowed by disease for ripe ones."
+      },
+      {
+       "title": "Cut in the cool hours",
+       "how": "Cut in the morning or late afternoon. In the midday heat the dry pods turn brittle and burst, and beans fall to the ground."
+      },
+      {
+       "title": "Cut, do not uproot",
+       "how": "Cut each plant at the base with a sickle. Pulled plants bring soil on their roots, which gets mixed into the beans at threshing."
+      },
+      {
+       "title": "Dry before you stack",
+       "how": "Tie the plants in bundles and stand them in the sun to dry. Bundles piled up while still damp turn the beans moldy."
+      }
+     ]
     },
     {
      "phase": "harvest",
      "day": 97,
      "title": "Dry and thresh",
      "how": "Sun dry the bundles, beat out the beans, winnow and dry them again before storing in sealed containers.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Thresh within two days",
+       "how": "Beat out the beans one or two days after cutting, once the pods are dry. Waiting longer spoils beans and loses more from bursting pods.",
+       "time": "1 to 2 days after cutting"
+      },
+      {
+       "title": "Beat them on a mat",
+       "how": "Spread the bundles on a mat or canvas and beat them with a stick, or tread on them, until the beans fall free."
+      },
+      {
+       "title": "Sieve and winnow",
+       "how": "Shake the beans through a sieve to take out stems and leaves, then winnow off the chaff in the wind."
+      },
+      {
+       "title": "Sort by hand",
+       "how": "Pick out split, wrinkled, damaged and unripe beans. Sorted beans fetch a better price, and only the best ones are kept for seed."
+      },
+      {
+       "title": "Dry them gently and store",
+       "how": "Dry the beans in the sun, not over strong heat, which cracks them, until they are hard. Store them in clean sacks in a dry, airy room. Seed for planting keeps its strength only a few months in the heat, so plant the freshest seed you have."
+      }
+     ]
     }
    ]
   }
@@ -119,6 +190,9 @@
   "how to plant soybean in the philippines"
  ],
  "confidence": "low",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🫘",
  "slug": "soybean",
- "rev": "d58e6465707d"
+ "rev": "60ff03a31242"
 }

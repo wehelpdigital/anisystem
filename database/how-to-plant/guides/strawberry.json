@@ -152,6 +152,9 @@
   "strawberry farming la trinidad"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🍓",
  "slug": "strawberry",
- "rev": "1082e5e18e57"
+ "rev": "26578b431563"
 }

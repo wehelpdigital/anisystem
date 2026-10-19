@@ -1,0 +1,383 @@
+{
+ "section": "how-to-plant",
+ "slug": "mustard",
+ "lang": "en",
+ "category": "Vegetables",
+ "sortOrder": 320,
+ "title": "Paano Magtanim ng Mustasa: How to Plant Mustard Greens the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Mustasa: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng mustasa? See how traditional farmers plant mustasa step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng mustasa",
+ "keywords": [
+  "paano magtanim ng mustasa",
+  "how to plant mustard greens"
+ ],
+ "excerpt": "Paano magtanim ng mustasa? Here is how traditional Filipino farmers usually plant mustasa (mustard greens), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/guides/crops-pagtatanim-ng-gulay.webp",
+  "alt": "A farmer watering vegetable beds in Pulilan, Bulacan",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant mustasa. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers usually grow mustasa in the lowland cool months, sown straight in furrows or raised as seedlings and set out on beds, then picked for leaves or pulled whole. For small vegetable farms and backyard growers who sell it fresh or for burong mustasa.\n\nBefore you plant, get the field ready with our [land preparation guide for vegetables](/land-preparation/vegetable-land-preparation). Then choose your seed or planting material with the [mustasa varieties sold here](/crop-varieties/mustard). If the leaves turn pale later on, the [mustasa nutrient deficiency guide](/nutrient-deficiencies/mustard-nutrient-deficiency) helps you find what is missing. For more on the crop, read [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay), [vegetables in the Philippines](/crops/vegetables-philippines)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant mustasa"
+  },
+  {
+   "type": "text",
+   "text": "Mustasa is a lowland favorite of the cooler months, best sown from about September to February, often on rice land after the wet season harvest. It can be grown in other months with water and some shade, but heat and heavy rain make it bolt or rot."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Seed, sown straight in furrows or in a seedbed or seedling tray. Farmers pick seed of a variety known to resist pests and diseases. Seedlings are ready to transplant after about four weeks, at three to four true leaves."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng mustasa: sown in furrows"
+  },
+  {
+   "type": "text",
+   "text": "This is the sown in furrows way (Sown in furrows (tanim buto)). The crop is ready about 60 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sown in furrows: before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Plow twice",
+     "text": "Plow or dig the field two times so the soil is loose. Mustasa likes loose soil rich in organic matter, near water."
+    },
+    {
+     "title": "3 days before sowing: Add manure and open furrows",
+     "text": "Mix rotted chicken manure and carbonized rice hull into the soil, about 1 kg of manure and 300 g of rice hull a square meter, then open furrows 15 to 25 cm apart."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sown in furrows: planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Sow in the furrows",
+     "text": "Drop the seed in the furrows about 15 cm apart and cover with a little soil, then water."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sown in furrows: care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 3: Water two to three times a week",
+     "text": "Keep the soil moist, watering two to three times a week or more in dry spells."
+    },
+    {
+     "title": "Day 14: Thin and weed",
+     "text": "Pull extra seedlings where they crowd and pull the weeds so the plants get sun and food."
+    },
+    {
+     "title": "Day 20: Feed and scout",
+     "text": "Many growers water with fermented plant juice or manure tea once a week. Check under the leaves for aphids, caterpillars and diamondback moth larvae, and pull out plants with mottled, curled leaves."
+    },
+    {
+     "title": "Day 60: Wrap and keep fresh",
+     "text": "Wrap the bundles in banana leaves or plastic and keep them in the shade so they stay crisp."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sown in furrows: harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 60: Pick the leaves or pull the plants",
+     "text": "From about two months after sowing, pick the outer leaves or pull whole plants while the stalks are still crisp and firm."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Seedlings set out on beds, step by step"
+  },
+  {
+   "type": "text",
+   "text": "This is the seedlings set out on beds way (Seedlings set out on beds (lipat tanim)). The crop is ready about 25 days after transplanting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedlings set out on beds: before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "3 days before transplanting: Prepare the beds",
+     "text": "Plow twice, mix in rotted chicken manure and carbonized rice hull, and form beds."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedlings set out on beds: the nursery (Punlaan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "28 days before transplanting: Sow in a seedbed or tray",
+     "text": "Fill a seedling tray or seedbed with a mix of carbonized rice hull, compost and vermicast, sow one seed a hole and water lightly. Keep in light shade."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedlings set out on beds: planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Transplanting day: Transplant in the cool hours",
+     "text": "When the seedlings are about four weeks old with three to four true leaves, set one seedling a hole 15 to 20 cm apart, in the morning or late afternoon, and water."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedlings set out on beds: care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 3: Water and weed",
+     "text": "Water two to three times a week and pull weeds as they come."
+    },
+    {
+     "title": "Day 10: Scout for leaf eaters",
+     "text": "Check for aphids, caterpillars and diamondback moth larvae, and remove sick plants."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedlings set out on beds: harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 25: Harvest the leaves",
+     "text": "Leaves are ready about two to four weeks after transplanting, while the stalks are crisp."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for mustasa"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Furrows 15 to 25 cm apart with plants about 15 cm apart when sown straight. Transplanted seedlings 15 to 20 cm apart. One plant a hill."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Watered two to three times a week by hand, hose or furrow, more in dry weather. Rice land planted after the harvest still holds moisture for the first weeks."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Mostly organic: rotted chicken manure with carbonized rice hull mixed into the soil, plus weekly fermented plant juice or manure tea. Some farmers add a little urea after thinning. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-vegetables-philippines)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Thinning direct sown rows, hand weeding, regular watering and a close eye on leaf eating insects. Onion or cosmos planted around the field is used by some growers to keep pests away."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Leaves are picked from about two to four weeks after transplanting, or about two months after direct sowing, while the stalks are crisp. Farmers pick outer leaves over several rounds or pull the whole plant, then wrap the bundles in banana leaves to keep them fresh. Much of it goes to burong mustasa."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting mustasa"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sowing in the hottest months, when mustasa bolts and turns tough and bitter.",
+    "Never thinning, so plants stay small and weak.",
+    "Letting the soil dry out, which makes the leaves hot and fibrous.",
+    "Growing mustasa after pechay, cabbage or radish on the same plot again and again.",
+    "Leaving sick, mottled plants in the field where insects spread the virus."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of mustasa"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Use fresh seed of a pest and disease resistant variety and sow in the cool months.",
+    "Test the soil and add balanced fertilizer to the manure base by the result.",
+    "Thin on time and keep the moisture steady with mulch.",
+    "Rotate with crops outside the cabbage family and keep the field clean.",
+    "Scout twice a week and remove sick plants early."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=mustard) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your mustasa season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting mustasa"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng mustasa?",
+     "a": "How Filipino farmers usually grow mustasa in the lowland cool months, sown straight in furrows or raised as seedlings and set out on beds, then picked for leaves or pulled whole. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant mustasa in the Philippines?",
+     "a": "Mustasa is a lowland favorite of the cooler months, best sown from about September to February, often on rice land after the wet season harvest. It can be grown in other months with water and some shade, but heat and heavy rain make it bolt or rot."
+    },
+    {
+     "q": "How far apart do you plant mustasa?",
+     "a": "Furrows 15 to 25 cm apart with plants about 15 cm apart when sown straight. Transplanted seedlings 15 to 20 cm apart."
+    },
+    {
+     "q": "How long before mustasa can be harvested?",
+     "a": "Sown in furrows, it is ready about 60 days after sowing. Seedlings set out on beds, it is ready about 25 days after transplanting. Leaves are picked from about two to four weeks after transplanting, or about two months after direct sowing, while the stalks are crisp."
+    },
+    {
+     "q": "What do you plant to grow mustasa?",
+     "a": "Seed, sown straight in furrows or in a seedbed or seedling tray. Farmers pick seed of a variety known to resist pests and diseases."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for vegetables",
+     "url": "/land-preparation/vegetable-land-preparation"
+    },
+    {
+     "label": "Mustasa varieties sold here",
+     "url": "/crop-varieties/mustard"
+    },
+    {
+     "label": "Mustasa nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/mustard-nutrient-deficiency"
+    },
+    {
+     "label": "Pagtatanim ng gulay",
+     "url": "/crops/pagtatanim-ng-gulay"
+    },
+    {
+     "label": "Vegetables in the Philippines",
+     "url": "/crops/vegetables-philippines"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    }
+   ]
+  }
+ ]
+}

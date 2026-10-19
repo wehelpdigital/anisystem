@@ -35,14 +35,88 @@
      "title": "Sow seeds from ripe pods",
      "how": "Break open ripe, healthy pods with a wooden mallet, not a knife, and rub the beans in sawdust or coconut fiber to take off the sticky pulp, then wash them. Sow each bean about 1 cm deep in a bag of topsoil and compost under light shade, within four days of opening the pod.",
      "task": "seedbed",
-     "tip": "Throw away flat, small or already sprouted beans."
+     "tip": "Throw away flat, small or already sprouted beans.",
+     "parts": [
+      {
+       "title": "Mix the potting soil first",
+       "how": "Dry and crumble good loam topsoil, sieve out stones and lumps, and mix about eight parts of it with one part manure and one part compost. Many nurseries here use equal parts of sieved soil, carbonized rice hull, coco peat and sand instead. Sticky clay soil makes a poor mix.",
+       "tip": "Have the bags filled and waiting before you open any pod, because the seed cannot wait."
+      },
+      {
+       "title": "Heat the mix in the sun",
+       "how": "Spread the damp mix no deeper than about 7 cm on a clear plastic sheet, cover it tightly with more clear plastic and leave it in the sun for a day or two. The trapped heat kills fungi and weed seed that rot young seedlings.",
+       "time": "1 to 2 days"
+      },
+      {
+       "title": "Fill black bags and line them up",
+       "how": "Fill black plastic bags, never clear ones that grow green slime. For plants that will stay five months or longer, use the bigger bag of about 15 by 30 cm, since small bags bend and twist the taproot. Line the bags in beds about eight bags across with a walkway of about 40 cm between beds, under a net that cuts about a third of the sun."
+      },
+      {
+       "title": "Choose and open the pods",
+       "how": "Take only ripe, healthy pods from a strong tree with big, even seed, never green or diseased pods. Crack them with a wooden mallet, pull the beans off the core, and throw out flat, small, broken or already sprouted beans.",
+       "time": "use within 4 days of opening"
+      },
+      {
+       "title": "Clean the beans",
+       "how": "Rub the beans in sawdust, coconut fiber or sand to strip the sweet pulp, wash them in clean water and let them drain on a tray or sack in the shade for a few minutes.",
+       "tip": "Many nurseries also give the clean beans a quick fungicide dip before sprouting them."
+      },
+      {
+       "title": "Sprout them on a damp sack",
+       "how": "Lay the beans in one layer on a clean, damp jute sack out of the sun, wind and rain, and cover them with another damp sack. Look every day and take out the beans that show a small white tip, planting them right away. Throw out whatever has not sprouted by the fourth day, and any bean whose root has grown long and curly.",
+       "time": "up to 4 days"
+      },
+      {
+       "title": "Plant root tip down",
+       "how": "Poke a hole about 1 cm deep in each bag and set the sprouted bean in with the white root tip pointing down, leaving about half the bean above the mix. Water with a fine spray. The seedlings come up in about 10 to 14 days.",
+       "time": "10 to 14 days to come up"
+      },
+      {
+       "title": "Pull out the poor ones",
+       "how": "From about the second week, remove seedlings with twisted stems or bent necks, very slow growth, or white or very pale leaves. Expect to throw out about one in ten, so plant more seed than the plants you need."
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -90,
      "title": "Graft the young rootstock",
      "how": "At two to three months, side graft or patch bud each seedling with budwood cut from a high yielding, healthy clone. Keep the grafted plants under a plastic tent and extra shade for about three weeks, then let them rest before moving them into the open nursery.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Check the rootstock age",
+       "how": "Side grafting is done on rootstock about two to three months old and about 20 cm tall. Patch budding waits until the stem is about as thick as a pencil, usually from about three months. Water the bags fully the day before.",
+       "time": "2 to 3 months from sowing"
+      },
+      {
+       "title": "Cut budwood the same day",
+       "how": "Cut bud sticks from healthy, high yielding clone trees that are not worn out from a heavy crop. For grafting, take greenish brown wood just below a flush whose leaves have hardened, with live buds. Wrap the sticks in damp paper, keep them in the shade, label the clone and use them within a day or two."
+      },
+      {
+       "title": "Trim the rootstock",
+       "how": "Just before side grafting, cut the rootstock leaves back to about a third of their size and pinch off the growing tip. For patch budding, cut off only the tip."
+      },
+      {
+       "title": "Set the graft and tie it",
+       "how": "With a sharp knife used for nothing else and wiped with alcohol, cut a thin slit near the base of the stem and slip in a bud stick of one bud with a third of its leaf. Wrap it tightly with grafting tape or plastic twine so it cannot slip."
+      },
+      {
+       "title": "Keep them in a tent for three weeks",
+       "how": "Put the grafted plants under a well sealed tent of clear plastic, or in big plastic bags for a few plants, so the air stays humid. Lay an extra layer of shade net on top of the tent.",
+       "time": "21 days"
+      },
+      {
+       "title": "Let them rest, then line them out",
+       "how": "Open the tent and leave the plants resting inside for 10 to 15 days before moving them to the nursery beds. Keep two layers of shade over them for about a month, then take one away. Water carefully at the base without wetting the leaves.",
+       "time": "10 to 15 days of rest"
+      },
+      {
+       "title": "Throw out the failed grafts",
+       "how": "Remove plants whose graft slipped or died, whose bud stayed asleep, or whose new leaves come out white or deformed. Side grafted plants are ready for the field about four to five months after the seed was planted.",
+       "tip": "Patch budding needs no tent and uses older wood, but it is slower to learn and the plant needs about two more months in the nursery."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -56,7 +130,27 @@
      "day": -7,
      "title": "Harden the seedlings",
      "how": "About a week before planting, turn each bag a little to break roots growing into the ground, and water the plants well for the next few days. Leave behind small, crinkled or weak plants.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Stop feeding three weeks before",
+       "how": "Give no fertilizer or leaf spray in the last three weeks before the plants go to the field.",
+       "time": "3 weeks before planting"
+      },
+      {
+       "title": "Take the shade off",
+       "how": "About one to two weeks before planting, remove the shade over the plants so the leaves toughen in the open sun.",
+       "time": "1 to 2 weeks"
+      },
+      {
+       "title": "Turn the bags",
+       "how": "About a week before, twist each bag a little to snap the roots that grew through into the ground. Water well for the next few days so the plant recovers before the move."
+      },
+      {
+       "title": "Sort and water before the trip",
+       "how": "Leave behind small, crinkled and weak plants and any with a bad graft. Water the bags well before carrying them to the field, and carry them by the bag, not by the stem."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -128,7 +222,35 @@
      "title": "Ferment and dry the beans",
      "how": "Open the pods within a few days and heap the wet beans in a wooden box or a basket lined with banana leaves, covered, for about five to seven days, turning them every two days. Then sun dry them on raised trays or mats for about a week, until the beans are crisp and crack when pressed.",
      "task": "postharvest",
-     "tip": "Bury or compost the empty husks so pests do not breed in them."
+     "tip": "Bury or compost the empty husks so pests do not breed in them.",
+     "parts": [
+      {
+       "title": "Open the pods with a club",
+       "how": "Split the pods with a wooden club or a pod splitter, not a bolo, which cuts the beans and lets in mold and insects. Scoop out the beans, pull off the core strands, and leave out black or broken beans."
+      },
+      {
+       "title": "Choose a box, basket or heap",
+       "how": "A wooden box about 75 cm to 1 m square and 45 cm deep, with holes for draining, ferments about 200 to 400 kg of wet beans. Smaller lots of about 50 kg or more go in a basket lined with banana leaves, or in a heap on banana leaves or a mat with holes, set on wood above the ground."
+      },
+      {
+       "title": "Cover to keep the heat in",
+       "how": "Cover the beans with banana leaves or jute sacks, and keep the box or basket under a roof so no rain gets in. The heat inside the pile is what turns the beans."
+      },
+      {
+       "title": "Turn them every two days",
+       "how": "After two days, turn the whole mass so the outside beans go to the middle. Turn again two days later. Most lots are done in about five days, baskets in five to six.",
+       "time": "about 5 to 6 days"
+      },
+      {
+       "title": "Judge by smell and color",
+       "how": "Smell the pile and cut a few beans open as the days go by. Farmers judge when fermenting is done by the sour smell and by the color of the beans inside and out."
+      },
+      {
+       "title": "Sun dry on mats or trays",
+       "how": "Spread the fermented beans on bamboo mats, plastic sheets or screen trays, never on bare cement or soil where dust and dirt get in. Stir them often and cover them at night and in rain. Dry them down from very wet to about 7 percent moisture.",
+       "tip": "Where the weather is poor, sun dry for a day or two and finish in a dryer kept below 60 degrees, since fast, hot drying leaves the beans sour."
+      }
+     ]
     }
    ],
    "note": "Grafted trees give their first pods at about 18 to 24 months and a real harvest from about 30 months (900 days). Trees grown from seed usually start a year or more later."
@@ -167,6 +289,9 @@
   "cacao farming philippines"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍫",
  "slug": "cacao",
- "rev": "125a40874d5a"
+ "rev": "fad7777fddea"
 }

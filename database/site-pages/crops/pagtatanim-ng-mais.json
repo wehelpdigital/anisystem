@@ -231,6 +231,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Paano magtanim ng mais?",
+          "a": "Sundin ang bawat hakbang sa gabay na ito, mula sa paghahanda ng lupa at pagpili ng binhi hanggang sa abono, damo at pag aani. Para sa tradisyonal na paraan, kasama ang araw ng bawat hakbang, basahin ang [how to plant corn the traditional way](/how-to-plant/yellow-corn)."
+        },
+        {
           "q": "Ilang kilo ng binhi ng mais ang kailangan kada ektarya?",
           "a": "Karaniwang 22 hanggang 24 kg ng hybrid o mga 20 kg ng OPV kada ektarya. Tingnan din ang sako ng seed company."
         },
@@ -275,6 +279,10 @@
         {
           "label": "Karaniwang damo sa Pilipinas",
           "url": "/weeds/common-weeds-philippines"
+        },
+        {
+          "label": "How to plant corn the traditional way",
+          "url": "/how-to-plant/yellow-corn"
         }
       ]
     }

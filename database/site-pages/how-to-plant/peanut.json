@@ -1,0 +1,358 @@
+{
+ "section": "how-to-plant",
+ "slug": "peanut",
+ "lang": "en",
+ "category": "Legumes",
+ "sortOrder": 100,
+ "title": "Paano Magtanim ng Mani: How to Plant Peanut the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Mani: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng mani? See how traditional farmers plant mani step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng mani",
+ "keywords": [
+  "paano magtanim ng mani",
+  "how to plant peanut"
+ ],
+ "excerpt": "Paano magtanim ng mani? Here is how traditional Filipino farmers usually plant mani (peanut), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/land/legume-land-preparation.webp",
+  "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant mani. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers grow mani on loose, sandy fields, as a dry season crop after rice and as a wet season crop on uplands. It follows the plow and furrow habits of corn, with care not to disturb the soil once the pods start forming.\n\nBefore you plant, get the field ready with our [land preparation guide for legumes](/land-preparation/legume-land-preparation). Then choose your seed or planting material with the [mani varieties sold here](/crop-varieties/peanut). If the leaves turn pale later on, the [mani nutrient deficiency guide](/nutrient-deficiencies/peanut-nutrient-deficiency) helps you find what is missing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant mani"
+  },
+  {
+   "type": "text",
+   "text": "The dry season crop is planted after the rice harvest, from about November to January, on the moisture left in sandy fields (pang tag araw). The wet season crop is planted at the start of the rains, around May to June, on well drained upland fields. Cagayan Valley and Pangasinan are among the big peanut areas."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Seed from pods kept from the last crop. The pods are shelled by hand only a few days before planting, and only full, unbroken kernels with their skins intact are planted."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng mani, step by step"
+  },
+  {
+   "type": "text",
+   "text": "The crop is ready about 100 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "21 days before sowing: Plow",
+     "text": "Plow once when the soil is moist enough. Peanut does best on loose, sandy or light soil."
+    },
+    {
+     "title": "10 days before sowing: Harrow to loose soil",
+     "text": "Harrow two times to break every clod. The pods form underground, so the soil must be loose and crumbly."
+    },
+    {
+     "title": "3 days before sowing: Shell the seed pods",
+     "text": "Seed peanuts are kept in their shells until a few days before planting, then shelled by hand and sorted, kernel by kernel.",
+     "parts": [
+      {
+       "title": "Take out the seed pods",
+       "text": "Bring out the dry pods that were set aside from the best plants at the last harvest. Use full, clean pods and leave aside any that look moldy, stained or empty."
+      },
+      {
+       "title": "Shell by hand",
+       "text": "Crack each pod between the fingers and roll the kernels out gently. A sheller or a stick cracks and skins the seed, and a skinned or split kernel seldom comes up.",
+       "time": "a few days before planting"
+      },
+      {
+       "title": "Keep only whole kernels",
+       "text": "Plant only plump, unbroken kernels whose thin skin is still whole. Shriveled, split or bare kernels go to the kitchen, and moldy ones are thrown away."
+      },
+      {
+       "title": "Keep them cool until planting",
+       "text": "Hold the sorted kernels in a dry container in the shade until planting day. Kernels left in the sun or in a damp sack lose their life fast."
+      }
+     ]
+    },
+    {
+     "title": "1 day before sowing: Open the furrows",
+     "text": "Open shallow furrows about 50 to 60 cm apart."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Fertilizer in the furrow",
+     "text": "Drop a little complete fertilizer (14 14 14) or dried manure in the furrow and cover it with soil. After a well fed rice crop many farmers give little."
+    },
+    {
+     "title": "Sowing day: Plant the kernels",
+     "text": "Drop one or two kernels every 10 to 20 cm and cover them with 3 to 5 cm of soil."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 7: Replant the misses",
+     "text": "Replant spots where nothing came up within the first week."
+    },
+    {
+     "title": "Day 14: Off barring and weeding",
+     "text": "Plow lightly along the rows with the soil thrown away from the plants, then hand pull the weeds in the row."
+    },
+    {
+     "title": "Day 25: Hill up before pegging",
+     "text": "Plow back toward the rows to pile loose soil around the plants, before the flower stalks (pegs) bend down into the soil. After this, keep the plow and the hoe away from the plants."
+    },
+    {
+     "title": "Day 30: Watch the leaves",
+     "text": "Check for leaf spots, rust, leaf eating caterpillars and leafhoppers. Hand pull the big weeds without digging near the plants."
+    },
+    {
+     "title": "Day 45: Water during pod filling",
+     "text": "In the dry season crop, run water into the furrows if the soil dries out while the pods are filling."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 100: Pull the plants",
+     "text": "Pull up a few plants to check. It is ready when the leaves are yellowing and most pods show dark marks inside the shell, with kernels that have colored skins. Pull the plants by hand while the soil is moist and shake off the soil."
+    },
+    {
+     "title": "Day 101: Strip and dry the pods",
+     "text": "Strip the pods and sun dry them for several days until the kernels rattle inside. Throw out moldy pods and store the rest in dry sacks off the floor.",
+     "parts": [
+      {
+       "title": "Shake and turn the plants",
+       "text": "Shake the soil off the pulled plants and lay them in rows or small heaps with the pods turned up, so the pods start to dry while still on the plant."
+      },
+      {
+       "title": "Strip the pods",
+       "text": "Pull the pods off the plants by hand, leaving the stems and leaves for feed or compost."
+      },
+      {
+       "title": "Sun dry the pods",
+       "text": "Spread the pods thinly on mats, nets or a clean floor and turn them now and then. They are dry when the kernels rattle inside the shell when you shake a pod.",
+       "time": "several sunny days"
+      },
+      {
+       "title": "Throw out the bad pods",
+       "text": "Pick out pods that are moldy, rotten, cracked or bored by insects. Moldy peanuts can make people and animals sick and are never eaten, sold or planted."
+      },
+      {
+       "title": "Store them in the shell",
+       "text": "Keep the pods in their shells in dry sacks on a raised floor or pallets in an airy room. Set aside the best pods for seed and shell them only just before planting."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for mani"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows about 50 to 60 cm apart, with one or two kernels every 10 to 20 cm."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "The wet season crop is rainfed. The dry season crop lives on the moisture left after rice, with furrow watering during dry spells, most of all at flowering and pod filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Little: a small dose of complete fertilizer (14 14 14) or manure in the furrow at planting. Many farmers count on what is left from the rice crop. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Off barring at about two weeks and hilling up at about three to four weeks, before pegging. After that, weeds are hand pulled without disturbing the soil near the plants."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Ready at about 90 to 110 days, when the leaves yellow and the inside of most shells is dark. Plants are pulled by hand, the pods stripped and sun dried until the kernels rattle."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting mani"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Planting on heavy, sticky soil, where pods form poorly and are hard to dig.",
+    "Shelling seed weeks ahead, so the kernels lose strength before planting.",
+    "Hilling up late or digging near the plants after pegging, which breaks the pegs.",
+    "Harvesting too early or too late: early gives shriveled kernels, late leaves pods in the ground.",
+    "Storing pods before they are fully dry, which brings mold."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of mani"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Use clean, fresh seed of a good variety and plant only full, unbroken kernels.",
+    "Test the soil, lime acid soil, and give calcium where the soil is poor in it.",
+    "Coat the seed with a legume inoculant on fields that have not grown peanut before.",
+    "Keep weeds out in the first month, then leave the soil around the plants alone.",
+    "Dry pods quickly and throw out moldy ones to keep the crop safe to eat."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=peanut) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your mani season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting mani"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng mani?",
+     "a": "How Filipino farmers grow mani on loose, sandy fields, as a dry season crop after rice and as a wet season crop on uplands. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant mani in the Philippines?",
+     "a": "The dry season crop is planted after the rice harvest, from about November to January, on the moisture left in sandy fields (pang tag araw). The wet season crop is planted at the start of the rains, around May to June, on well drained upland fields."
+    },
+    {
+     "q": "How far apart do you plant mani?",
+     "a": "Rows about 50 to 60 cm apart, with one or two kernels every 10 to 20 cm."
+    },
+    {
+     "q": "How long before mani can be harvested?",
+     "a": "It is ready about 100 days after sowing. Ready at about 90 to 110 days, when the leaves yellow and the inside of most shells is dark."
+    },
+    {
+     "q": "What do you plant to grow mani?",
+     "a": "Seed from pods kept from the last crop. The pods are shelled by hand only a few days before planting, and only full, unbroken kernels with their skins intact are planted."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for legumes",
+     "url": "/land-preparation/legume-land-preparation"
+    },
+    {
+     "label": "Mani varieties sold here",
+     "url": "/crop-varieties/peanut"
+    },
+    {
+     "label": "Mani nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/peanut-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

@@ -331,6 +331,7 @@
                 <div class="sp-tabs">
                     <a href="{{ $S::url('questions') }}" class="{{ $isQuestion ? 'is-on' : '' }}">Farmers' questions</a>
                     <a href="{{ $S::url('crops') }}" class="{{ $page->section === 'crops' ? 'is-on' : '' }}">Crop guides</a>
+                    <a href="{{ $S::url('how-to-plant') }}" class="{{ $page->section === 'how-to-plant' ? 'is-on' : '' }}">How to plant</a>
                     <a href="{{ $S::url('crop-varieties') }}" class="{{ in_array($page->section, ['crop-varieties', 'rice-varieties'], true) ? 'is-on' : '' }}">Crop varieties</a>
                     <a href="{{ $S::url('land-preparation') }}" class="{{ $page->section === 'land-preparation' ? 'is-on' : '' }}">Land preparation</a>
                     <a href="{{ $S::url('pests') }}" class="{{ $page->section === 'pests' ? 'is-on' : '' }}">Crop pests</a>

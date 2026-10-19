@@ -158,6 +158,9 @@
   "red cardinal grapes"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍇",
  "slug": "grape",
- "rev": "64876ed1e344"
+ "rev": "959f93c08cdc"
 }

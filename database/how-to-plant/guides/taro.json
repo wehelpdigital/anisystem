@@ -46,7 +46,35 @@
      "day": -1,
      "title": "Ready the setts and shoots",
      "how": "Cut the tops off good corms with the stalk bases, scrape off old roots and trim the stalks to about 30 cm. Dig healthy side shoots from mother plants.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Pick the mother plants",
+       "how": "Take planting material only from strong gabi plants with clean leaves and firm corms, never from plants with rotting bases or blighted leaves. A big, heavy top makes a big corm later, so choose the larger ones.",
+       "tip": "Small setts never catch up with big ones, even when the crop is left longer in the field."
+      },
+      {
+       "title": "Cut off the corm top",
+       "how": "At harvest, slice off the top of the corm together with the base of the leaf stalks, so each piece weighs about 100 to 120 grams. The eating part below goes to the kitchen or the market."
+      },
+      {
+       "title": "Scrape off the roots",
+       "how": "With a sharp, curved knife or bolo, scrape the old roots and fiber off the bottom of the piece so fresh roots can push out cleanly."
+      },
+      {
+       "title": "Cut back the stalks",
+       "how": "Cut off the leaf blades and trim the stalks to about 30 cm above the corm. With no big leaves left, the sett loses less water and stands up easily in the soil."
+      },
+      {
+       "title": "Dig and trim the side shoots",
+       "how": "Side shoots that grow around the mother plant can be dug out with some roots, separated with a clean cut and trimmed the same way, with the leaves off and the stalks short."
+      },
+      {
+       "title": "Dry the cut faces or plant at once",
+       "how": "Many farmers plant the setts the same day or the next. Others leave them in the shade for a short while so the cut faces dry before planting, which helps against rot in wet soil.",
+       "tip": "Where leaf blight or corm rot was bad last season, some growers dip the setts in a fungicide before planting, following the label."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -124,7 +152,35 @@
      "day": -1,
      "title": "Ready the setts",
      "how": "Prepare setts or side shoots the same way as for upland gabi.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Pick the mother plants",
+       "how": "Take planting material only from strong gabi plants with clean leaves and firm corms, never from plants with rotting bases or blighted leaves. A big, heavy top makes a big corm later, so choose the larger ones.",
+       "tip": "Small setts never catch up with big ones, even when the crop is left longer in the field."
+      },
+      {
+       "title": "Cut off the corm top",
+       "how": "At harvest, slice off the top of the corm together with the base of the leaf stalks, so each piece weighs about 100 to 120 grams. The eating part below goes to the kitchen or the market."
+      },
+      {
+       "title": "Scrape off the roots",
+       "how": "With a sharp, curved knife or bolo, scrape the old roots and fiber off the bottom of the piece so fresh roots can push out cleanly."
+      },
+      {
+       "title": "Cut back the stalks",
+       "how": "Cut off the leaf blades and trim the stalks to about 30 cm above the corm. With no big leaves left, the sett loses less water and stands up easily in the soil."
+      },
+      {
+       "title": "Dig and trim the side shoots",
+       "how": "Side shoots that grow around the mother plant can be dug out with some roots, separated with a clean cut and trimmed the same way, with the leaves off and the stalks short."
+      },
+      {
+       "title": "Dry the cut faces or plant at once",
+       "how": "Many farmers plant the setts the same day or the next. Others leave them in the shade for a short while so the cut faces dry before planting, which helps against rot in wet soil.",
+       "tip": "Where leaf blight or corm rot was bad last season, some growers dip the setts in a fungicide before planting, following the label."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -195,6 +251,9 @@
   "gabi farming"
  ],
  "confidence": "medium",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🥔",
  "slug": "taro",
- "rev": "7930e9381ad4"
+ "rev": "30e535c86e81"
 }

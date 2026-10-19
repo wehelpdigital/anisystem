@@ -155,6 +155,9 @@
   "sweet pepper production guide philippines"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🫑",
  "slug": "bell-pepper",
- "rev": "b492a774fd10"
+ "rev": "17bb1388e7ad"
 }

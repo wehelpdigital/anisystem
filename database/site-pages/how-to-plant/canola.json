@@ -1,0 +1,282 @@
+{
+ "section": "how-to-plant",
+ "slug": "canola",
+ "lang": "en",
+ "category": "Sugarcane and Industrial Crops",
+ "sortOrder": 640,
+ "title": "Paano Magtanim ng Canola: How to Plant Canola the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Canola: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng canola? See how traditional farmers plant canola step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng canola",
+ "keywords": [
+  "paano magtanim ng canola",
+  "how to plant canola"
+ ],
+ "excerpt": "Paano magtanim ng canola? Here is how traditional Filipino farmers usually plant canola, step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/photos/hero-planting.jpg",
+  "alt": "A farm worker planting in a field",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant canola. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "Canola is hardly grown in the Philippines. The canola oil sold here comes from abroad. It wants cool weather, so the few who try it are highland growers in places like Benguet, Mountain Province and Bukidnon, who sow it in the cool dry months the way they sow its cousins mustasa and pechay. This short guide shows that way.\n\nBefore you plant, get the field ready with our [land preparation guide for every crop](/land-preparation/land-preparation-philippines)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant canola"
+  },
+  {
+   "type": "text",
+   "text": "Only in the highlands, sown at the end of the rains, around October to December, so it grows and flowers in the cool dry months and ripens before the hot months. The lowlands are too hot for it to set good seed."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Small round seed of a spring type canola. Winter types sold in cold countries need a long cold spell before they flower and will not flower well here. The seed is sown dry and shallow, like mustard seed."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng canola, step by step"
+  },
+  {
+   "type": "text",
+   "text": "Days from sowing, taken as about 100 days. The pods ripen over about six to eight weeks after flowering starts, and timing in our highlands still varies. The crop is ready about 100 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Make fine beds",
+     "text": "Dig or plow the plot, break the clods and make raised beds as for highland vegetables. Mix in well rotted manure or compost."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Sow in shallow rows",
+     "text": "Draw shallow lines across the bed, scatter the seed thinly along them and cover with a little fine soil. Water gently with a sprinkler."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 14: Thin and weed",
+     "text": "Pull out crowded seedlings so the plants stand a little apart, and pull the weeds while they are small."
+    },
+    {
+     "title": "Day 21: Side dress",
+     "text": "Put ammonium sulfate (21 0 0) beside the rows and water it in. Canola needs a lot of sulfur, which this fertilizer also gives."
+    },
+    {
+     "title": "Day 30: Watch for cabbage pests",
+     "text": "Check the leaves for the same worms, aphids and flea beetles that attack cabbage and mustard, and pick off what you can early."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 100: Cut before the pods split",
+     "text": "When most pods have turned from green to brown and the seeds inside are black and hard, cut the plants in the morning before the pods split open."
+    },
+    {
+     "title": "Day 102: Dry and thresh",
+     "text": "Dry the cut plants on a mat or tarp, beat them to free the seeds, winnow and dry the seed well before storing it."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for canola"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Sown in rows on raised beds and thinned so the plants stand a little apart. Growers here have no settled spacing yet."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Light sprinkling after sowing and in dry spells, as for highland vegetables. Too much water at the end delays ripening."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Manure or compost in the beds before sowing, then ammonium sulfate (21 0 0) as a side dress for nitrogen and sulfur. Canola also needs enough boron. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Thinning, hand weeding, light watering, and checking for the same pests that attack cabbage and mustard. Bees visiting the flowers help it set more seed."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Ready when most pods are brown and the seeds black and hard. Plants are cut in the morning before the pods split, dried on mats, threshed by beating, winnowed and dried again."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting canola"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Trying it in the hot lowlands, where it sets little seed.",
+    "Buying a winter type that needs cold to flower.",
+    "Leaving the pods until they split and drop the seed.",
+    "Giving no sulfur or boron, which leaves pods half empty."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of canola"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Try a small plot first in the cool months before planting more.",
+    "Use a spring type seed and have the soil tested.",
+    "Use ammonium sulfate or another sulfur source for nitrogen.",
+    "Keep bees nearby and harvest on time, before the pods split."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=canola) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your canola season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting canola"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng canola?",
+     "a": "Canola is hardly grown in the Philippines. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant canola in the Philippines?",
+     "a": "Only in the highlands, sown at the end of the rains, around October to December, so it grows and flowers in the cool dry months and ripens before the hot months. The lowlands are too hot for it to set good seed."
+    },
+    {
+     "q": "How far apart do you plant canola?",
+     "a": "Sown in rows on raised beds and thinned so the plants stand a little apart. Growers here have no settled spacing yet."
+    },
+    {
+     "q": "How long before canola can be harvested?",
+     "a": "It is ready about 100 days after sowing. Ready when most pods are brown and the seeds black and hard."
+    },
+    {
+     "q": "What do you plant to grow canola?",
+     "a": "Small round seed of a spring type canola. Winter types sold in cold countries need a long cold spell before they flower and will not flower well here."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for every crop",
+     "url": "/land-preparation/land-preparation-philippines"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

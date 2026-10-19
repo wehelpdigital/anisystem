@@ -87,6 +87,37 @@
      "title": "Pick the first pods",
      "how": "Pods start at about six to eight months. For cooking, pick them green and still snapping, before they turn hard and stringy. Leave some to dry brown on the tree for seed.",
      "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 240,
+     "title": "Keep seed from dry pods",
+     "how": "Leave some pods on your best tree until they dry brown on the branch, then pick, thresh, dry and store the seed for new trees. A seedling tree takes longer to bear than a cutting, but seed is easy to keep and share.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Let the pods dry on the tree",
+       "how": "Choose a healthy tree with long, well filled pods and leave its pods alone until they turn brown and dry while still hanging. Fence or watch the tree, because passersby like to pick long pods early."
+      },
+      {
+       "title": "Pick and thresh the dry pods",
+       "how": "Pick only fully dry pods, in the afternoon when they are driest, and split them open by hand the same day to free the winged seeds."
+      },
+      {
+       "title": "Sun dry the seed for a day",
+       "how": "Put the seed in a net bag and leave it in strong sun for a day so it dries well before storing.",
+       "time": "1 day"
+      },
+      {
+       "title": "Store it with ash",
+       "how": "Pour the dry seed into a jar and cover the top with a layer of wood ash, which keeps insects off, then close the jar and keep it in a dry place."
+      },
+      {
+       "title": "Soak the seed before sowing",
+       "how": "When you sow, soak the seed in water, or wrap it in a damp cloth, for about a day, and sow it in a bag of topsoil mixed with vermicast and carbonized rice hull, or straight in a sunny, well drained spot.",
+       "time": "about 24 hours"
+      }
+     ]
     }
    ],
    "note": "The first picking of leaves comes about 3 months (90 days) after planting the cutting. Pods start at about 6 to 8 months, and steady pod bearing from the second year."
@@ -122,6 +153,9 @@
   "how to plant moringa from cuttings philippines"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🌿",
  "slug": "moringa",
- "rev": "1bdebe46d670"
+ "rev": "9cec4d974933"
 }

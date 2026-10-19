@@ -172,6 +172,9 @@
   "abaca suckers planting distance"
  ],
  "confidence": "high",
+ "shelf": "industrial",
+ "kind": "perennial",
+ "icon": "🌿",
  "slug": "abaca",
- "rev": "1d854b39900b"
+ "rev": "c7c29d58999e"
 }

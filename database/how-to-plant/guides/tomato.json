@@ -188,6 +188,9 @@
   "tomato production guide philippines"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🍅",
  "slug": "tomato",
- "rev": "3961bae64ff5"
+ "rev": "e6c57722c3f4"
 }

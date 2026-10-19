@@ -35,6 +35,32 @@
     },
     {
      "phase": "prep",
+     "day": -3,
+     "title": "Shell the seed pods",
+     "how": "Seed peanuts are kept in their shells until a few days before planting, then shelled by hand and sorted, kernel by kernel.",
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Take out the seed pods",
+       "how": "Bring out the dry pods that were set aside from the best plants at the last harvest. Use full, clean pods and leave aside any that look moldy, stained or empty."
+      },
+      {
+       "title": "Shell by hand",
+       "how": "Crack each pod between the fingers and roll the kernels out gently. A sheller or a stick cracks and skins the seed, and a skinned or split kernel seldom comes up.",
+       "time": "a few days before planting"
+      },
+      {
+       "title": "Keep only whole kernels",
+       "how": "Plant only plump, unbroken kernels whose thin skin is still whole. Shriveled, split or bare kernels go to the kitchen, and moldy ones are thrown away."
+      },
+      {
+       "title": "Keep them cool until planting",
+       "how": "Hold the sorted kernels in a dry container in the shade until planting day. Kernels left in the sun or in a damp sack lose their life fast."
+      }
+     ]
+    },
+    {
+     "phase": "prep",
      "day": -1,
      "title": "Open the furrows",
      "how": "Open shallow furrows about 50 to 60 cm apart.",
@@ -101,7 +127,30 @@
      "day": 101,
      "title": "Strip and dry the pods",
      "how": "Strip the pods and sun dry them for several days until the kernels rattle inside. Throw out moldy pods and store the rest in dry sacks off the floor.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Shake and turn the plants",
+       "how": "Shake the soil off the pulled plants and lay them in rows or small heaps with the pods turned up, so the pods start to dry while still on the plant."
+      },
+      {
+       "title": "Strip the pods",
+       "how": "Pull the pods off the plants by hand, leaving the stems and leaves for feed or compost."
+      },
+      {
+       "title": "Sun dry the pods",
+       "how": "Spread the pods thinly on mats, nets or a clean floor and turn them now and then. They are dry when the kernels rattle inside the shell when you shake a pod.",
+       "time": "several sunny days"
+      },
+      {
+       "title": "Throw out the bad pods",
+       "how": "Pick out pods that are moldy, rotten, cracked or bored by insects. Moldy peanuts can make people and animals sick and are never eaten, sold or planted."
+      },
+      {
+       "title": "Store them in the shell",
+       "how": "Keep the pods in their shells in dry sacks on a raised floor or pallets in an airy room. Set aside the best pods for seed and shell them only just before planting."
+      }
+     ]
     }
    ]
   }
@@ -136,6 +185,9 @@
   "peanut farming philippines"
  ],
  "confidence": "medium",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🥜",
  "slug": "peanut",
- "rev": "a2b4b392308d"
+ "rev": "efc79b606141"
 }

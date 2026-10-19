@@ -33,7 +33,25 @@
      "day": -40,
      "title": "Sow the seed",
      "how": "Sow the seed thinly in shallow lines across the bed, cover it lightly with fine soil or rice hull, and lay rice straw on top to keep it moist. Water gently every day.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Measure the seed",
+       "how": "For a hectare of onion, farmers raise seedlings from about 3 to 4 kg of seed. Buy fresh seed for each season, since old onion seed comes up poorly."
+      },
+      {
+       "title": "Sow in shallow lines",
+       "how": "Draw shallow lines across the bed with a stick and trickle the seed thinly along them, so each seedling has room to grow thick."
+      },
+      {
+       "title": "Cover and mulch",
+       "how": "Cover the lines lightly with fine soil or rice hull and lay rice straw over the bed to keep it moist and shaded."
+      },
+      {
+       "title": "Water through the straw",
+       "how": "Water gently every morning with a sprinkler can, through the straw, until the seedlings are up."
+      }
+     ]
     },
     {
      "phase": "nursery",
@@ -61,7 +79,26 @@
      "day": 0,
      "title": "Pull and transplant",
      "how": "Water the seedbed, then pull seedlings about pencil thick. Many farmers trim the leaf tips and roots a little. Set them 2 to 3 cm deep, about 10 cm apart in rows 10 to 15 cm apart, and press the soil around them.",
-     "task": "planting"
+     "task": "planting",
+     "parts": [
+      {
+       "title": "Check the seedlings",
+       "how": "Seedlings are ready at about five to seven weeks old, when the stems are about as thick as a pencil.",
+       "time": "5 to 7 weeks after sowing"
+      },
+      {
+       "title": "Wet the seedbed and pull",
+       "how": "Water the seedbed well so the soil lets go, then pull the seedlings gently, a few at a time, keeping the roots whole."
+      },
+      {
+       "title": "Trim the leaves and roots",
+       "how": "Many farmers cut back the leaf tips and the longest roots a little. A trimmed seedling loses less water and is easier to set straight."
+      },
+      {
+       "title": "Set and firm",
+       "how": "Plant the same day: make a hole with a finger or a stick, set the seedling 2 to 3 cm deep and press the soil around it so it stands up. Water the beds right after planting."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -138,14 +175,58 @@
      "day": 91,
      "title": "Cure in the field",
      "how": "Lay the plants in rows with the leaves covering the bulbs of the row before, so the sun does not scald them, and leave them for two to three days.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Lay the plants in rows",
+       "how": "Lay the pulled plants in rows on the dry bed, the leaves of each row covering the bulbs of the row before, so the sun cannot scald the bulbs.",
+       "time": "2 to 3 days"
+      },
+      {
+       "title": "Keep them out of the rain",
+       "how": "If rain threatens, carry the plants under a roof. Bulbs that get soaked while curing rot at the neck in storage."
+      },
+      {
+       "title": "Finish on racks",
+       "how": "Many farmers then set the bulbs on racks of bamboo or wooden slats in an airy, shaded shed to finish curing.",
+       "time": "about a week"
+      }
+     ]
     },
     {
      "phase": "harvest",
      "day": 94,
      "title": "Trim, dry and store",
      "how": "Cut the tops leaving a short neck, dry the bulbs further in the shade, sort out damaged ones, and store them in mesh sacks in a cool, airy place or in cold storage.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Cut the tops and roots",
+       "how": "With a sharp knife or scythe, cut off the roots and the dry leaves, leaving a short neck on each bulb."
+      },
+      {
+       "title": "Dry slowly in the shade",
+       "how": "Keep the trimmed bulbs in a cool, clean, airy place until the necks are tight and dry and the outer skins rustle. Drying them fast in heat and damp brings rot and black mold later.",
+       "time": "1 to 2 weeks"
+      },
+      {
+       "title": "Sort before storing",
+       "how": "Take out bulbs that are soft, bruised, cut, sprouting or thick necked. Only firm, sound bulbs go into storage."
+      },
+      {
+       "title": "Store where air moves",
+       "how": "Keep the bulbs in mesh sacks or crates in a shed with a slatted bamboo floor, with space between them for air. Bulbs for cold storage go in crates or bags stacked with gaps so the cold air reaches every side."
+      },
+      {
+       "title": "Or hang them the old way",
+       "how": "Some farmers tie the dried onions in bundles and hang them on bamboo poles in an airy shade, or above an earthen kitchen stove, where the smoke dries the bulbs further and keeps insects off. Others pack the bulbs in layers of ash on a bed of rice hay.",
+       "tip": "In a farm trial in the Ilocos, bulbs hung in the smoke kept best over four months of storage."
+      },
+      {
+       "title": "Check them twice a month",
+       "how": "Look through stored bulbs about twice a month and take out any that are rotting or sprouting before they spoil the rest."
+      }
+     ]
     }
    ],
    "note": "Day 0 is transplanting day. The seedlings are already 30 to 45 days old by then, and most farmers pull the bulbs about 80 to 90 days after transplanting."
@@ -181,6 +262,9 @@
   "onion farming nueva ecija"
  ],
  "confidence": "medium",
- "slug": "onion-bulb",
- "rev": "64fccc83dfcd"
+ "shelf": "onions",
+ "kind": "annual",
+ "icon": "🧅",
+ "slug": "onion",
+ "rev": "a61911e069bc"
 }

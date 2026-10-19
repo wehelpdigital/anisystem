@@ -135,6 +135,9 @@
   "calamansi farming"
  ],
  "confidence": "high",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍋",
  "slug": "calamansi",
- "rev": "a6dd909723d1"
+ "rev": "5ef47116c849"
 }

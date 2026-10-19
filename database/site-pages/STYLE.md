@@ -251,6 +251,13 @@ Site: / (home), /features, /pricing, /about, /tutorial, /contact, /signup,
 /crops, /problems, /pests, /diseases, /weeds, /land-preparation, /blog,
 /rice-varieties
 
+How to plant (2026-10-19): /how-to-plant is the hub, and every crop has a page
+at /how-to-plant/{crop}, for example /how-to-plant/rice,
+/how-to-plant/yellow-corn, /how-to-plant/sweet-potato, /how-to-plant/mango.
+They are made by database/how-to-plant/build_pages.py from the app's guides:
+change the generator or the guides, not the files. Members' tool:
+/app/how-to-plant (a page may link it; a guest is asked to sign in).
+
 Rice varieties (2026-10-13): /rice-varieties is the variety finder, and every
 NSIC variety in PhilRice's seed database has a page at
 /rice-varieties/{slug}, for example /rice-varieties/nsic-rc-222,

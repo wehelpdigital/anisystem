@@ -153,6 +153,9 @@
   "palm oil plantation agusan"
  ],
  "confidence": "low",
+ "shelf": "industrial",
+ "kind": "perennial",
+ "icon": "🌴",
  "slug": "oil-palm",
- "rev": "97b1b5082568"
+ "rev": "71b3171c23a7"
 }

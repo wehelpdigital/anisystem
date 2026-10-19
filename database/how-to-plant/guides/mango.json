@@ -10,9 +10,9 @@
  "summary": "This guide shows how Filipino growers usually plant a grafted carabao mango and care for it until the first fruits. It is for backyards and small orchards, from the hole and the grafted seedling to the first harvest.",
  "season": "Grafted seedlings are planted as the rains begin, around May to July, so they root before the dry months. Mango does best where there is a clear dry season of 3 to 4 months, as in Pangasinan, Zambales, Ilocos, Guimaras and much of Mindanao, since the dry months bring on the flowers.",
  "material": "Most growers now plant a grafted seedling about 8 to 10 months old: a scion from a proven carabao mother tree joined to a sturdy native rootstock. Pick one with a healed graft union, dark green mature leaves and a firm ball of soil, and keep it in light shade a few days before planting. In the old way many farmers grew carabao mango straight from the seed, which comes true to type but takes many more years to bear.",
- "spacing": "Carabao trees grow very wide, so traditional orchards set them about 10 to 15 m apart, often 10 m by 10 m or 12 m by 12 m. Closer spacing works only with yearly pruning to keep the trees low. One seedling a hole.",
- "water": "Mostly rain fed. Young trees are watered about once a week in the dry months and mulched. Bearing trees are watered during flowering and fruit growth if the dry spell is long, and watering stops about a month before harvest.",
- "fertilizer": "Manure or compost mixed into the hole at planting. In the first years, complete fertilizer or urea with manure, mostly for nitrogen, given at the start and again before the rains end in a ring under the leaves. Bearing trees get more phosphorus and potash.",
+ "spacing": "Carabao trees grow very wide, so traditional orchards set them about 12 m by 12 m up to 20 m by 20 m. Some growers use about 10 m. Closer spacing works only with yearly pruning to keep the trees low. One seedling a hole.",
+ "water": "Mostly rain fed. Young trees are watered about once a week in the dry months of their first three years and mulched. Bearing trees are watered during flowering and fruit growth if the dry spell is long, which cuts fruit drop, and watering stops about a month before harvest.",
+ "fertilizer": "Manure or compost mixed into the hole at planting. Young trees get complete fertilizer or urea with manure, mostly for nitrogen, twice a year: at the start and again before the rains end, in three to six small holes or a ring trench around the tree. A common rule is about 100 g a tree a year in the second year, 150 g in the third, 200 g in the fourth and 250 g in the fifth, rising to several kilos for big old trees. Bearing trees get more phosphorus and potash.",
  "care": "Shading and mulching the new seedling, weekly watering in dry months, weeding a clean circle, removing rootstock shoots, shaping the tree to three or four main branches, picking off early flowers and checking each leaf flush for pests. In the old days farmers brought on flowering of grown trees by smudging, keeping a smoky fire under the tree for some weeks. Now most spray a flower inducer when the tree is mature.",
  "harvest": "Fruits are ready about 115 to 120 days after flowering in dry months and 120 to 130 days in the wet season. Signs: full, rounded shoulders, lighter green skin with a powdery bloom, a darker stem end and flesh starting to turn yellow. Many growers check that most sample fruits sink in water. Pick by hand or with a pole and net, keep a short stem, let the sap drain stem down, and never let fruit touch the bare ground. Many growers bag the young fruits with old newspaper about 50 to 60 days after flowering.",
  "ways": [
@@ -25,7 +25,7 @@
      "phase": "prep",
      "day": -60,
      "title": "Clear the spot and dig the holes",
-     "how": "Mark the planting spots about 10 m apart or more, since a carabao tree grows wide. Dig each hole about 50 cm to 1 m wide and deep, keeping the topsoil on one side.",
+     "how": "Mark the planting spots about 12 m apart or more, since a carabao tree grows very wide. Old orchards use 12 m to 20 m. Dig each hole about 50 cm to 1 m wide and deep, keeping the topsoil on one side.",
      "task": "land_prep"
     },
     {
@@ -53,7 +53,7 @@
      "phase": "care",
      "day": 30,
      "title": "Water in dry months",
-     "how": "Water the young tree about once a week in dry months, soaking the soil around it. Rain is enough in the wet months.",
+     "how": "Water the young tree about once a week in dry months for its first three years, soaking the soil around it. Rain is enough in the wet months.",
      "task": "irrigation"
     },
     {
@@ -74,14 +74,14 @@
      "phase": "care",
      "day": 90,
      "title": "First feeding while the soil is wet",
-     "how": "Give the young tree a little complete fertilizer or urea with manure or compost, spread in a ring under the leaves and covered with soil. Young mango needs mostly nitrogen to grow leaves and branches.",
+     "how": "Give the young tree a little complete fertilizer or urea with manure or compost, put in three to six small holes about 20 to 45 cm from the trunk and covered with soil. Young mango needs mostly nitrogen to grow leaves and branches.",
      "task": "fertilizer"
     },
     {
      "phase": "care",
      "day": 150,
      "title": "Second feeding before the rains end",
-     "how": "Feed again just before the rains end while the ground is still moist. Increase the amount a little each year as the tree grows.",
+     "how": "Feed again just before the rains end while the ground is still moist. A common rule is about 100 g a tree a year in the second year, rising each year to about 250 g in the fifth, split between the two feedings.",
      "task": "fertilizer"
     },
     {
@@ -148,6 +148,9 @@
   "grafted mango planting"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🥭",
  "slug": "mango",
- "rev": "3945589d9b3f"
+ "rev": "e1d0a822a729"
 }

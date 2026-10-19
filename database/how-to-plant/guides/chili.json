@@ -171,6 +171,9 @@
   "hot pepper production guide philippines"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🌶️",
  "slug": "chili",
- "rev": "b01ff2d07a4f"
+ "rev": "fe188a91e8a5"
 }

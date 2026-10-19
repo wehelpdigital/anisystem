@@ -191,6 +191,9 @@
   "eggplant production guide philippines"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🍆",
  "slug": "eggplant",
- "rev": "c0241ccdad6e"
+ "rev": "a2d8bd72b6ae"
 }

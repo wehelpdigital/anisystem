@@ -15,7 +15,7 @@
  "water": "Rain fed. Young trees get water once or twice a week in long dry spells. Old trees stand drought but bear better with water in very dry years.",
  "fertilizer": "Compost and rotted manure at planting. Young trees get small amounts of ammonium sulfate (21 0 0) twice a year. Bearing trees get complete fertilizer (14 14 14), about half a kilo twice a year at first and more as the tree grows, at the start and near the end of the rains, spread in a ring under the edge of the leaves.",
  "care": "Ring weeding, mulching, watering young trees in dry spells, keeping two or three main branches, removing drooping branches and water sprouts, and bagging young fruit against fruit flies. Birds and bats take ripe fruit, so it is picked often.",
- "harvest": "Fruit is ready four to five months after flowering, mostly from late December to March or April. It is picked one by one when fully colored and slightly soft, cut with its stalk, because it does not ripen well once picked. Ripe fruit keeps only a few days at room temperature.",
+ "harvest": "Fruit is ready four to five months after flowering, mostly between late December and March or April. It is picked one by one when fully colored and slightly soft, cut with its stalk, because it does not ripen well once picked. Ripe fruit keeps only a few days at room temperature.",
  "ways": [
   {
    "key": "nursery",
@@ -31,10 +31,84 @@
     },
     {
      "phase": "nursery",
+     "day": -240,
+     "title": "Marcot a branch of your best tree",
+     "how": "To get a tree that fruits like your best kaimito, and sooner than a seedling, root a branch while it is still on the tree, then cut it off and raise it in a bag before planting.",
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Pick the tree and the branch",
+       "how": "Choose a tree that bears good fruit every year, has no pest or disease and is not too old. On it, pick a branch of middle age, about as thick as a finger, pointing upward, out in the sun and without flowers or fruit."
+      },
+      {
+       "title": "Mix the wrapping soil",
+       "how": "Mix moist garden soil with rice hull, or use the mudpress from a sugar mill. It should hold together in the hand without dripping."
+      },
+      {
+       "title": "Peel a ring of bark",
+       "how": "With a clean, sharp knife, cut twice around the branch a short distance apart and peel off the bark between the cuts. Scrape away the slippery green layer under it, or the bark grows back over the wound instead of making roots."
+      },
+      {
+       "title": "Wrap and tie it",
+       "how": "Wrap a sheet of plastic around the ring, pack it with a ball of the moist soil mix, and tie both ends tight with plastic straw so the ball cannot slip or dry out."
+      },
+      {
+       "title": "Wait for the roots",
+       "how": "Leave it on the tree until white roots show plainly through the plastic. Kaimito marcots take about four to seven months to root.",
+       "time": "4 to 7 months",
+       "tip": "Some growers cut the branch halfway through first and finish the cut about two weeks later, so the new roots get used to living alone."
+      },
+      {
+       "title": "Cut it off and bag it",
+       "how": "Saw the branch below the root ball, take off the plastic without breaking the ball, and plant it in a 6 by 8 inch bag filled with two parts soil, one part compost and one part rice hull."
+      },
+      {
+       "title": "Nurse it in the shade",
+       "how": "Keep the new marcot in shade, out of the rain, for two weeks and water it every day. Then move it into the sun, pick off any flowers, and after about four weeks give it a pinch of complete fertilizer.",
+       "time": "2 weeks in shade"
+      }
+     ]
+    },
+    {
+     "phase": "nursery",
      "day": -200,
      "title": "Move seedlings into bags",
      "how": "When each seedling has three to five firm leaves, lift it with its soil and set it in a bag of garden soil and compost. Keep the bags in partial shade and water them often.",
      "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -60,
+     "title": "Cleft graft your seedlings",
+     "how": "Cleft grafting is the most common way kaimito is multiplied here and takes well. A cut shoot from your best tree is joined onto your own kaimito seedlings, so the new trees bear the same fruit and bear sooner.",
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Use seedlings six to eight months old",
+       "how": "Your bagged kaimito seedlings are ready as rootstock at about six to eight months, when the stem is firm and as thick as the shoots you will graft on.",
+       "time": "6 to 8 months from sowing"
+      },
+      {
+       "title": "Cut scions from your best tree",
+       "how": "Early in the morning, cut healthy shoot tips from a tree that bears heavily and has good fruit. Pull off their leaves without hurting the buds, keep them out of the sun so they do not dry, and graft them the same day."
+      },
+      {
+       "title": "Top and split the rootstock",
+       "how": "Cut off the seedling top where the stem is still growing actively, then split the stump straight down the middle about 2 to 3 cm with a sharp knife."
+      },
+      {
+       "title": "Shape the wedge and fit it",
+       "how": "Slice the base of the scion into a short wedge on two sides with smooth, clean cuts. Push it into the split so the bark of the scion lines up with the bark of the stock on at least one side."
+      },
+      {
+       "title": "Tie and cover the graft",
+       "how": "Bind the joint and the whole scion firmly with a strip of thin plastic, then slip a small plastic bag or ice candy wrapper over the top to keep water out. A good tie lets you lift the whole seedling by the scion without moving the joint."
+      },
+      {
+       "title": "Care for the new graft",
+       "how": "Keep the plants in light shade and rub off every shoot that grows below the joint. When new leaves push out of the scion, remove the cover and unwind the plastic strip, and move the plant to a bigger bag if it outgrows the first."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -134,6 +208,9 @@
   "caimito tree care"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍏",
  "slug": "star-apple",
- "rev": "889fba5c2ef9"
+ "rev": "f42974cc5ae4"
 }

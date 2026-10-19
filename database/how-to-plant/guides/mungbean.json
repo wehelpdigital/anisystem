@@ -33,7 +33,31 @@
      "day": 0,
      "title": "Scatter the seed",
      "how": "Scatter the seed evenly over the moist field, then spread rice straw thinly back over it to hold the moisture and keep weeds down.",
-     "task": "planting"
+     "task": "planting",
+     "parts": [
+      {
+       "title": "Sow while the paddy is still moist",
+       "how": "Broadcast the seed soon after the rice is cut, while the soil still holds the last rains. About 15 to 20 gantas of seed, roughly 36 to 48 kg, covers a hectare when thrown this way."
+      },
+      {
+       "title": "Shake the seed off the stubble",
+       "how": "Seed that lands on the cut stubble dries out there. Pass a pegtooth harrow once over the field to knock it down to the soil."
+      },
+      {
+       "title": "If you have water, flush first",
+       "how": "Where water is at hand, some farmers plow once, let the weeds dry, flush the field with water once, and broadcast the seed a few hours later. A light pass or two of the pegtooth harrow covers it.",
+       "time": "3 to 4 hours after flushing"
+      },
+      {
+       "title": "Or sow before the rice is cut",
+       "how": "Some farmers throw the seed into the standing rice about a week before harvest, while the mud is still soft, so the monggo is already up when the rice comes off.",
+       "time": "7 to 10 days before the rice harvest"
+      },
+      {
+       "title": "Lay back the straw",
+       "how": "Spread the rice straw thinly back over the sown field. It holds the moisture in the soil and keeps many weeds from coming through."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -68,7 +92,35 @@
      "day": 66,
      "title": "Dry, thresh and store",
      "how": "Sun dry the pods for two to three days, beat them inside a sack with a stick, winnow out the hulls and dry the seed again. Store it in a sealed container, and some farmers mix in clean ash to keep weevils away.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Dry the pods",
+       "how": "Spread the picked black pods on mats, a sawali sheet or old nylon fish nets in the sun and turn them now and then, until they are brittle and start to split by themselves. The mats catch the seed that pops out."
+      },
+      {
+       "title": "Beat out the seed",
+       "how": "Tread on the dry pods, or beat them with a light stick of wood or bamboo, on the mat or inside a tied sack so the seed does not fly off. Some farmers use a small thresher."
+      },
+      {
+       "title": "Winnow",
+       "how": "Toss the beaten seed on a bilao in the wind, or shake it through a sieve, so the hulls, bits of pod and dirt are left behind. Pick out stones and clods by hand."
+      },
+      {
+       "title": "Dry the seed again",
+       "how": "Spread the clean seed in the full sun once more, turning it, until it is hard and rattles when you shake it. Damp seed molds and draws weevils.",
+       "time": "2 to 3 sunny days"
+      },
+      {
+       "title": "Set aside seed for planting",
+       "how": "Most of the crop is sold. Keep a share of plump, clean seed from the best plants for the next planting, and throw out shriveled seed and seed with weevil holes."
+      },
+      {
+       "title": "Store it dry and clean",
+       "how": "Keep the seed in sacks or bins in a clean, airy room, or in a tightly closed jar or can in a cool corner. Seed dried well keeps for about six months at room heat. Some farmers mix in clean, dry ash before closing the jar to keep weevils off.",
+       "time": "about 6 months"
+      }
+     ]
     }
    ]
   },
@@ -145,7 +197,35 @@
      "day": 66,
      "title": "Dry, thresh and store",
      "how": "Sun dry, beat out the seed, winnow, dry again and keep it in sealed containers.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Dry the pods",
+       "how": "Spread the picked black pods on mats, a sawali sheet or old nylon fish nets in the sun and turn them now and then, until they are brittle and start to split by themselves. The mats catch the seed that pops out."
+      },
+      {
+       "title": "Beat out the seed",
+       "how": "Tread on the dry pods, or beat them with a light stick of wood or bamboo, on the mat or inside a tied sack so the seed does not fly off. Some farmers use a small thresher."
+      },
+      {
+       "title": "Winnow",
+       "how": "Toss the beaten seed on a bilao in the wind, or shake it through a sieve, so the hulls, bits of pod and dirt are left behind. Pick out stones and clods by hand."
+      },
+      {
+       "title": "Dry the seed again",
+       "how": "Spread the clean seed in the full sun once more, turning it, until it is hard and rattles when you shake it. Damp seed molds and draws weevils.",
+       "time": "2 to 3 sunny days"
+      },
+      {
+       "title": "Set aside seed for planting",
+       "how": "Most of the crop is sold. Keep a share of plump, clean seed from the best plants for the next planting, and throw out shriveled seed and seed with weevil holes."
+      },
+      {
+       "title": "Store it dry and clean",
+       "how": "Keep the seed in sacks or bins in a clean, airy room, or in a tightly closed jar or can in a cool corner. Seed dried well keeps for about six months at room heat. Some farmers mix in clean, dry ash before closing the jar to keep weevils off.",
+       "time": "about 6 months"
+      }
+     ]
     }
    ]
   }
@@ -179,6 +259,9 @@
   "mung bean after rice"
  ],
  "confidence": "medium",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🫘",
  "slug": "mungbean",
- "rev": "b561e98f0232"
+ "rev": "38a50a5482f3"
 }

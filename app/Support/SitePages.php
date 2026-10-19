@@ -68,6 +68,19 @@ class SitePages
             'intro' => 'Damo steals the light, water and fertilizer your crop needs. Find the weeds in your field by their look and their local names, then see what to do about them at every age of your palay, mais, gulay or orchard.',
             'kicker' => 'Weeds and grasses',
         ],
+        // How to Plant (2026-10-19, the owner): how traditional farmers plant each
+        // crop, step by step, one page per crop, from the guides of the app's
+        // tool (App\Support\HowToPlant) without the video. Gated like the other
+        // guides, every word in the HTML. Made by database/how-to-plant/build_pages.py.
+        'how-to-plant' => [
+            'label' => 'How to Plant',
+            'crumb' => 'How to plant',
+            'hubTitle' => 'How to Plant Crops in the Philippines, the Traditional Way',
+            'metaTitle' => 'How to Plant Crops in the Philippines: Step by Step Guides',
+            'metaDescription' => 'Paano magtanim? See how traditional Filipino farmers plant palay, mais, gulay, root crops and fruit trees step by step, and how to get a higher yield.',
+            'intro' => 'How most farms here still plant each crop, from getting the field ready to the harvest, with the day of every step. Each guide also says what to change for a higher yield, because the traditional way is a starting point, not the best a field can give.',
+            'kicker' => 'How to plant',
+        ],
         // Nutrient deficiencies (2026-10-16, the owner): one page per crop, every
         // deficiency of it a section, one page per nutrient, and the catalogue
         // at the front. See App\Support\DeficiencyCatalogue.

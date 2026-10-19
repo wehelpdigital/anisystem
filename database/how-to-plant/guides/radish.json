@@ -125,6 +125,9 @@
   "radish farming philippines"
  ],
  "confidence": "medium",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🥬",
  "slug": "radish",
- "rev": "7c8bf5ecbe00"
+ "rev": "2e31628a8cc7"
 }

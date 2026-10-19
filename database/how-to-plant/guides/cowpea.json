@@ -113,6 +113,9 @@
   "cowpea after rice"
  ],
  "confidence": "low",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🫛",
  "slug": "cowpea",
- "rev": "fcf71cfb2c6c"
+ "rev": "d75cb4bc1433"
 }

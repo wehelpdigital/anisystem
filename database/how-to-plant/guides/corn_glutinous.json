@@ -96,7 +96,29 @@
      "day": 95,
      "title": "Leave seed ears to dry",
      "how": "Leave the best ears on the best plants until the husks are dry, then pick, sun dry and keep the middle kernels for the next planting.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Choose the mother plants",
+       "how": "Before picking the fresh ears, walk the middle of the field and mark strong, upright plants with healthy leaves and a big, well filled ear closed tight at the tip. Plants at the edges catch pollen from other corn and are passed over."
+      },
+      {
+       "title": "Leave them standing",
+       "how": "Pick the fresh ears around the marked plants but leave their ears on the stalk until the husks are brown and dry and the kernels are hard."
+      },
+      {
+       "title": "Hang the ears in the smoke",
+       "how": "Pull back the husks, tie the ears in bunches by their husks and hang them above the kitchen fire or under the roof, where the smoke keeps weevils off. Ears kept whole stay alive longer than shelled seed."
+      },
+      {
+       "title": "Shell the middle kernels at planting time",
+       "how": "A few days before planting, shell the ears and keep only the full kernels from the middle of each ear. The small tip kernels and the odd base kernels go to the chickens."
+      },
+      {
+       "title": "Store shelled seed sealed",
+       "how": "Seed shelled early is sun dried well and kept in a closed bottle, can or jar in a cool, dry place until planting."
+      }
+     ]
     }
    ],
    "note": "The days count to the fresh ear harvest. Ears kept for seed stay on the plant until about 90 to 100 days."
@@ -131,6 +153,9 @@
   "white corn farming philippines"
  ],
  "confidence": "medium",
- "slug": "corn-white-glutinous",
- "rev": "fd4b2573563b"
+ "shelf": "corn",
+ "kind": "annual",
+ "icon": "🌽",
+ "slug": "glutinous-corn",
+ "rev": "d277c0feecb9"
 }

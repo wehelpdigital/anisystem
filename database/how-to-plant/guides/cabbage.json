@@ -25,14 +25,61 @@
      "title": "Make the seedbed and sow",
      "how": "Prepare a bed about 1 m by 10 m in full sun near water, or seed boxes with garden soil, rotted manure, sand and rice hull ash. Clean the soil by burning rice straw on top or pouring boiling water, then sow in shallow lines about 5 cm apart and cover lightly.",
      "task": "seedbed",
-     "tip": "Highland growers often put a plastic roof over the seedbeds against hard rain."
+     "tip": "Highland growers often put a plastic roof over the seedbeds against hard rain.",
+     "parts": [
+      {
+       "title": "Pick a sunny, level spot",
+       "how": "Set the seedbed on level ground in full sun and close to water. A bed about 1 m wide and 10 m long is the usual size. For a small planting, use wooden seed boxes instead."
+      },
+      {
+       "title": "Mix the seed box soil",
+       "how": "For boxes, take two parts each of garden soil, well rotted manure and rice hull ash, add one part each of sand and compost, and mix well. The mix stays loose, so the roots come out whole at pricking time."
+      },
+      {
+       "title": "Clean the soil",
+       "how": "Pour boiling water over the bed or the box mix and cover it with plastic until it cools, or spread dry rice straw over the bed and burn it. This kills the fungus that makes seedlings fall over at the base."
+      },
+      {
+       "title": "Water, then sow in lines",
+       "how": "Water the bed or box before sowing. Draw shallow lines across it about 5 cm apart, drop the seed thinly along each line and cover it lightly with fine soil.",
+       "tip": "About 200 to 250 grams of seed raises enough seedlings for one hectare."
+      },
+      {
+       "title": "Soak it for the first days",
+       "how": "Keep the bed fully wet for the first three days, then water less once the seedlings are up so the soil does not stay soggy.",
+       "time": "first 3 days"
+      },
+      {
+       "title": "Roof it against hard rain",
+       "how": "In the highlands and in the rainy months, set a simple plastic roof over the bed so heavy rain does not beat the seedlings down or wash the seed out."
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -23,
      "title": "Prick out the seedlings",
      "how": "About a week after the seedlings come up, move the sturdy, healthy ones to another bed or box about 5 by 5 cm apart.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Ready a second bed or box",
+       "how": "Fill another box or prepare another small bed with the same clean soil mix, and water it well before you start."
+      },
+      {
+       "title": "Choose the sturdy ones",
+       "how": "About a week after the seedlings come up, pick only the short, sturdy, healthy ones. Leave behind the thin, pale or spotted seedlings.",
+       "time": "about a week after they come up"
+      },
+      {
+       "title": "Lift and reset them",
+       "how": "Lift each seedling with a little soil on its roots, holding it by a leaf and not by the stem. Set them about 5 by 5 cm apart in the new bed and firm the soil around each one."
+      },
+      {
+       "title": "Water and shade",
+       "how": "Water them gently right after moving and keep them out of the hottest sun until they stand up again."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -68,7 +115,25 @@
      "title": "Transplant late in the afternoon",
      "how": "Set one hardened seedling a hill on moist soil, with the growing tip above the soil. On ridges plant 40 cm apart. On beds use two rows 50 by 40 cm, or about 30 to 35 cm each way for small heads. Water right away.",
      "task": "planting",
-     "tip": "Shade newly set plants with pieces of banana stalk or leaves for a few days."
+     "tip": "Shade newly set plants with pieces of banana stalk or leaves for a few days.",
+     "parts": [
+      {
+       "title": "Pick the right seedlings",
+       "how": "Use hardened seedlings about 25 to 35 days old that are short and stocky, with a good ball of roots. Tall, soft seedlings break and wilt in the field."
+      },
+      {
+       "title": "Plant on moist soil in the late afternoon",
+       "how": "Plant when the soil is moist and the sun is low, so the seedlings have the cool night to settle. Set them at the same depth they grew in the seedbed, with the growing tip above the soil."
+      },
+      {
+       "title": "Firm the soil and water",
+       "how": "Press the soil firmly around the roots so no air pockets are left, then water each plant right away."
+      },
+      {
+       "title": "Cover them for a few days",
+       "how": "Shade each new plant with a piece of banana stalk, a few leaves or a twig with leaves until it stops wilting at midday."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -161,6 +226,9 @@
   "cabbage farming philippines"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
  "slug": "cabbage",
- "rev": "cf2757b38dbd"
+ "rev": "6b25769796a8"
 }

@@ -1,0 +1,186 @@
+{
+ "crop": "celery",
+ "name": "Celery",
+ "local": "Kintsay",
+ "aka": [
+  "kinchay",
+  "apyo"
+ ],
+ "summary": "How Filipino farmers usually grow celery from slow growing seedlings set out on raised beds, the La Trinidad and Baguio way, up to pulling the plants with their roots about two months after transplanting. For highland growers of stalk celery and lowland growers of the thin soup type, kintsay, with the changes that give heavier, cleaner plants.",
+ "season": "Stalk celery is a cool season crop grown mainly in Baguio, La Trinidad and other Benguet towns, with some in Davao and Nueva Vizcaya highlands. It can be planted year round there, but the best quality comes from plantings made from January through April. The thin soup celery, kintsay, also grows close to sea level and is sown in the cooler, drier months.",
+ "material": "Seed, very small and slow to sprout. Farmers soak it in water overnight and sow it the next morning, thinly and shallow, on a seedbed kept moist under damp sacks. Seedlings are pricked once and are ready to transplant at about six weeks from emergence, or longer in cold weather, when about 15 cm tall.",
+ "spacing": "Beds about 90 cm to 1 m wide with two rows about 40 cm apart and plants about 20 cm apart. Some growers plant three seedlings across the bed in rows about 20 cm apart with plants 15 cm apart.",
+ "water": "Frequent watering is the rule: every two days for the first two weeks after transplanting, then about twice a week, by sprinkler, hose or furrow. Mulch keeps the shallow roots moist.",
+ "fertilizer": "Growers in Baguio and La Trinidad work roughly 100 sacks of chicken dung or compost and about 5 bags of complete fertilizer into each hectare of beds before transplanting, then side dress with a weak ammonium sulfate answer along the rows every 10 to 15 days. Celery takes up a lot of potash.",
+ "care": "A long, carefully watered and weeded seedbed stage, pricking, mulched raised beds, shallow cultivation only, frequent watering and regular side dressing.",
+ "harvest": "Usually pulled or cut about eight weeks after transplanting, longer for big stalk varieties. Plants are trimmed of side shoots and bad stalks, the roots washed, and bundles sold with roots on, kept cool and moist.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Seedbed then raised beds (punla at lipat tanim)",
+   "days": 60,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -45,
+     "title": "Soak and sow the seed",
+     "how": "Soak the seed overnight and sow it thinly and very shallow on a fine seedbed the next morning. Dust a little fine soil over it and spread damp sacks on the bed so watering does not wash the seed away.",
+     "task": "seedbed",
+     "tip": "Lift the sacks as soon as the seedlings show.",
+     "parts": [
+      {
+       "title": "Clean doubtful seed in hot water",
+       "how": "Celery blight can ride on the seed. Where it was a problem, growers soak new seed in hot water of about 48 degrees for 30 minutes, then dry it, or use seed two to three years old, in which the fungus has died.",
+       "time": "30 minutes"
+      },
+      {
+       "title": "Soak it overnight",
+       "how": "Celery seed is tiny and slow to wake. Soak it in plain water overnight and sow it early the next morning.",
+       "time": "overnight"
+      },
+      {
+       "title": "Sow thin and shallow",
+       "how": "Scatter the seed thinly over a fine, level seedbed and cover it with only a thin sprinkle of fine soil. Seed buried deep does not come up."
+      },
+      {
+       "title": "Lay damp sacks over the bed",
+       "how": "Spread pieces of wet sack or burlap over the sown bed. Water through them so the seed is not washed out and the top soil does not dry. Lift the sacks off once the first seedlings show."
+      },
+      {
+       "title": "Water every two days and weed",
+       "how": "Keep the bed close to fully moist, sprinkling every day or two with a can. The seedlings grow slowly, so pull the weeds early before they smother them."
+      }
+     ]
+    },
+    {
+     "phase": "nursery",
+     "day": -40,
+     "title": "Keep the seedbed wet and weeded",
+     "how": "Water every day or two with a sprinkling can so the bed never dries, and pull weeds early because the seedlings grow very slowly.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -24,
+     "title": "Prick out the seedlings",
+     "how": "About three weeks after they come up, move the seedlings to another bed with more space. This gives a bigger root system, and celery is sold with its roots.",
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Prick about three weeks after they come up",
+       "how": "When the seedlings are about three weeks old from emergence, lift them with a little soil on the roots and move them to another bed with more room.",
+       "time": "about 3 weeks after emergence"
+      },
+      {
+       "title": "Why it pays",
+       "how": "Moving the seedlings once makes them grow a bigger, bushier root ball. Celery here is sold with the roots on, so more roots means more weight and a better price."
+      },
+      {
+       "title": "Grow them on to transplant size",
+       "how": "Keep the pricked seedlings watered and weeded until they are about 15 cm tall, around six weeks from emergence, or longer in cold weather."
+      }
+     ]
+    },
+    {
+     "phase": "prep",
+     "day": -10,
+     "title": "Make raised beds with manure",
+     "how": "Clear the weeds and make beds about 90 cm to 1 m wide, about 15 cm high in the dry season and up to 30 cm in the rains. Mix in rotted chicken manure or compost and complete fertilizer.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant the sturdy seedlings",
+     "how": "Pick only good sized seedlings, about 15 cm tall, and throw away the small ones. Set two rows on each bed, about 40 cm apart with plants about 20 cm apart, or closer rows across the bed for small plants, and water right away.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water often",
+     "how": "Water every two days for the first two weeks, then about twice a week, enough to reach the roots. Celery that runs dry gets stringy and light.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Mulch between rows",
+     "how": "Lay dry grass or rice straw between the rows to hold moisture and smother weeds.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Feed in answer",
+     "how": "Benguet growers water a weak fertilizer answer along the rows, often ammonium sulfate, about every 10 to 15 days.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Scratch the soil and hill up",
+     "how": "About three weeks after transplanting, loosen only the top of the soil, since the roots are shallow, put fertilizer between the rows and hill up lightly.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Watch for leaf miners and blight",
+     "how": "Look for winding trails in the leaves, curled leaves from aphids, cutworms at night, and brown leaf spots of blight. Remove badly hit leaves.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Trim, wash and bundle",
+     "how": "Remove small side shoots and damaged or sick stalks, wash the roots and bundle the plants for market, keeping them cool and moist.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Pull or cut the plants",
+     "how": "About eight weeks after transplanting, or up to three months for big stalk types, pull the plants with their roots or cut them just below the soil with a large knife.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Letting the seedbed dry out, so the slow seed never comes up evenly.",
+  "Transplanting small, weak seedlings.",
+  "Deep hoeing that cuts the shallow roots.",
+  "Watering too little, which makes the stalks stringy and light.",
+  "Planting celery on the same beds again and again, which builds up blight and nematodes."
+ ],
+ "better": [
+  "Use fresh seed of a variety suited to your elevation and season.",
+  "Test the soil and give enough potash and calcium along with nitrogen, by the result.",
+  "Prick the seedlings for a strong root ball and transplant only sturdy ones.",
+  "Mulch and water on a steady schedule.",
+  "Rotate with crops outside the carrot and celery family and scout weekly for leaf miner and blight.",
+  "Harvest in the cool morning and keep the bundles moist and shaded."
+ ],
+ "video": {
+  "youtubeId": "IJ7SDMAqHwo",
+  "title": "Paano kumita at magtanim ng Kinchay.",
+  "channel": "AgriworksTV",
+  "lang": "fil",
+  "minutes": 8,
+  "why": "A Filipino grower shows how kinchay is planted, fed and watered in the field, and what it sells for at the farm gate, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng celery",
+  "paano magtanim ng kintsay",
+  "pagtatanim ng kinchay",
+  "how to plant celery in the philippines",
+  "celery farming benguet"
+ ],
+ "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
+ "slug": "celery",
+ "rev": "be592b43f5c5"
+}

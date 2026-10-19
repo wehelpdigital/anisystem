@@ -70,6 +70,9 @@
   "talisay almond"
  ],
  "confidence": "low",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🌰",
  "slug": "almond",
- "rev": "3f17e4bdf810"
+ "rev": "9be92c5b1f6a"
 }

@@ -278,6 +278,9 @@
   "bitter gourd production guide philippines"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥒",
  "slug": "bitter-gourd",
- "rev": "3320fcbe1e0c"
+ "rev": "2b3a4ed5b734"
 }

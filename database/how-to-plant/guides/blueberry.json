@@ -86,6 +86,9 @@
   "how to grow blueberry in the philippines"
  ],
  "confidence": "low",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🫐",
  "slug": "blueberry",
- "rev": "04e01c646165"
+ "rev": "252575ebdb60"
 }

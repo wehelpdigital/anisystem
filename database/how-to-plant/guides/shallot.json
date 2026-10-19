@@ -109,7 +109,30 @@
      "day": 86,
      "title": "Dry, bundle and hang",
      "how": "Dry the clumps in the field for a few days, then tie them in bundles by the leaves and hang them in an airy shed. Keep the best bulbs for the next planting.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Dry the clumps in the field",
+       "how": "Lay the pulled clumps on the dry field with the leaves of one row over the bulbs of the row before, so the sun does not scald them. Carry them under a roof if rain comes.",
+       "time": "a few days"
+      },
+      {
+       "title": "Tie bundles by the leaves",
+       "how": "When the leaves are dry and limp, shake off the soil and tie the clumps in bundles by their leaves."
+      },
+      {
+       "title": "Hang them in an airy shed",
+       "how": "Hang the bundles on bamboo poles under the house or in a shed where air moves, out of the sun and rain. Some hang them above the kitchen stove, where the smoke helps dry them and keeps insects off."
+      },
+      {
+       "title": "Keep the best for planting",
+       "how": "Set aside bundles of firm, medium to big bulbs from the healthiest clumps. They stay hanging until the bulbs begin to show sprouts, the sign they are ready to plant again."
+      },
+      {
+       "title": "Check the bundles",
+       "how": "Look the bundles over every couple of weeks and pull out bulbs that are soft, moldy or rotting before they spread to the rest."
+      }
+     ]
     }
    ]
   }
@@ -141,6 +164,9 @@
   "how to plant shallots in the philippines"
  ],
  "confidence": "medium",
+ "shelf": "onions",
+ "kind": "annual",
+ "icon": "🧅",
  "slug": "shallot",
- "rev": "5a41d6192a00"
+ "rev": "f418bdd86fa6"
 }

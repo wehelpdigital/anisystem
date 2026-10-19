@@ -1,0 +1,303 @@
+{
+ "section": "how-to-plant",
+ "slug": "cowpea",
+ "lang": "en",
+ "category": "Legumes",
+ "sortOrder": 130,
+ "title": "Paano Magtanim ng Paayap: How to Plant Cowpea the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Paayap: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng paayap? See how traditional farmers plant paayap step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng paayap",
+ "keywords": [
+  "paano magtanim ng paayap",
+  "cowpea after rice",
+  "how to plant cowpea"
+ ],
+ "excerpt": "Paano magtanim ng paayap? Here is how traditional Filipino farmers usually plant paayap (cowpea), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/land/legume-land-preparation.webp",
+  "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant paayap. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers grow paayap, the bush cowpea planted after rice for its dry seeds, young pods and tender tops. It is a hardy crop for the dry months and for poor soil.\n\nBefore you plant, get the field ready with our [land preparation guide for legumes](/land-preparation/legume-land-preparation). Then choose your seed or planting material with the [paayap varieties sold here](/crop-varieties/cowpea). If the leaves turn pale later on, the [paayap nutrient deficiency guide](/nutrient-deficiencies/cowpea-nutrient-deficiency) helps you find what is missing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant paayap"
+  },
+  {
+   "type": "text",
+   "text": "Mostly planted after the rice harvest in the dry season, from about November to February, on the moisture left in the field. On uplands it is planted at the start of the rains."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Dry seed saved from the last crop, or bought. Farmers pick clean, plump seed."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng paayap, step by step"
+  },
+  {
+   "type": "text",
+   "text": "Day 70 is the dry seed harvest. Young pods for cooking are picked a few weeks earlier. The crop is ready about 70 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Plow",
+     "text": "Plow once when the soil is moist enough, or plant straight into the cleared rice stubble."
+    },
+    {
+     "title": "7 days before sowing: Harrow",
+     "text": "Harrow once or twice to break clods and kill sprouting weeds."
+    },
+    {
+     "title": "1 day before sowing: Open the furrows",
+     "text": "Open shallow furrows about 50 to 60 cm apart."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Plant the seed",
+     "text": "Drop two seeds a hill, with hills about 20 to 30 cm apart, and cover them with 2 to 3 cm of soil."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 14: Off barring and weeding",
+     "text": "Plow lightly along the rows with the soil thrown away from the plants and hand pull the weeds in the row."
+    },
+    {
+     "title": "Day 21: Hill up",
+     "text": "Plow back toward the rows to pile soil at the base of the plants."
+    },
+    {
+     "title": "Day 25: Watch for aphids and pod borers",
+     "text": "Check the tips for aphids and the flowers and pods for pod borers."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 50: Pick young pods and tops",
+     "text": "Pick tender pods and young tops for cooking as they come."
+    },
+    {
+     "title": "Day 70: Pick the dry pods",
+     "text": "Pick the pods for seed when they turn dry and pale, in a few rounds."
+    },
+    {
+     "title": "Day 72: Dry, thresh and store",
+     "text": "Sun dry the pods, beat out the seed, winnow, dry again and store in sealed containers."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for paayap"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows about 50 to 60 cm apart with two plants a hill every 20 to 30 cm."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Lives on the moisture left after rice or on the rains. Standing water hurts it."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Usually none after rice. On poor soil a little complete fertilizer (14 14 14) or manure at planting. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Off barring and hilling up in the first three weeks, then hand weeding. Farmers watch for aphids and pod borers."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Young pods and tops are picked from about seven weeks for the kitchen. Dry pods are picked at about 65 to 75 days, sun dried, beaten and winnowed."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting paayap"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sowing too late after rice, when the soil has dried out.",
+    "Planting where water stands.",
+    "Leaving dry pods too long in the field, where they split or get wet and mold.",
+    "Storing seed in open sacks where weevils get in."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of paayap"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Use clean seed of a variety suited to your purpose, pods or dry seed.",
+    "Sow soon after the rice harvest while the soil is moist.",
+    "Scout at flowering for pod borers and act only when they are many.",
+    "Dry the seed well and keep it in sealed containers."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=cowpea) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your paayap season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting paayap"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng paayap?",
+     "a": "How Filipino farmers grow paayap, the bush cowpea planted after rice for its dry seeds, young pods and tender tops. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant paayap in the Philippines?",
+     "a": "Mostly planted after the rice harvest in the dry season, from about November to February, on the moisture left in the field. On uplands it is planted at the start of the rains."
+    },
+    {
+     "q": "How far apart do you plant paayap?",
+     "a": "Rows about 50 to 60 cm apart with two plants a hill every 20 to 30 cm."
+    },
+    {
+     "q": "How long before paayap can be harvested?",
+     "a": "It is ready about 70 days after sowing. Young pods and tops are picked from about seven weeks for the kitchen."
+    },
+    {
+     "q": "What do you plant to grow paayap?",
+     "a": "Dry seed saved from the last crop, or bought. Farmers pick clean, plump seed."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for legumes",
+     "url": "/land-preparation/legume-land-preparation"
+    },
+    {
+     "label": "Paayap varieties sold here",
+     "url": "/crop-varieties/cowpea"
+    },
+    {
+     "label": "Paayap nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/cowpea-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

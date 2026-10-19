@@ -160,6 +160,9 @@
   "sugarcane cane points planting"
  ],
  "confidence": "medium",
+ "shelf": "industrial",
+ "kind": "annual",
+ "icon": "🎋",
  "slug": "sugarcane",
- "rev": "d45999a480fb"
+ "rev": "1c4d67d06611"
 }

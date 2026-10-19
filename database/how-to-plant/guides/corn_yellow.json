@@ -114,11 +114,64 @@
     },
     {
      "phase": "harvest",
+     "day": 110,
+     "title": "Keep seed of an open pollinated variety",
+     "how": "Farmers who plant an open pollinated variety pick their seed ears from the standing crop before the rest is harvested. Hybrid seed is never kept, since its plants do not grow true.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Choose the mother plants",
+       "how": "Walk the middle of the field, away from the edges where pollen from a neighbor's corn blows in. Pick strong, upright plants with healthy leaves and one big, well filled ear whose husk closes tight over the tip."
+      },
+      {
+       "title": "Let the ears dry on the stalk",
+       "how": "Tie a string or a strip of cloth on each chosen plant and leave its ear on the stalk until the husk is brown and dry and the kernels are hard."
+      },
+      {
+       "title": "Keep the ears whole",
+       "how": "Pull back the husks, tie the ears in pairs or bunches by their husks and hang them under the roof or above the kitchen fire, where the smoke keeps weevils away. Ears kept whole stay alive longer than shelled seed.",
+       "tip": "Keep only ears that are dry, clean and free of mold."
+      },
+      {
+       "title": "Shell the middle kernels at planting time",
+       "how": "A few days before planting, shell the ears and keep only the plump kernels from the middle of each ear. The small kernels at the tip and the odd ones at the base go to the chickens."
+      },
+      {
+       "title": "Store shelled seed sealed",
+       "how": "If the seed must be shelled early, dry it well in the sun and keep it in a closed bottle, can or jar in a cool, dry corner until planting."
+      }
+     ]
+    },
+    {
+     "phase": "harvest",
      "day": 112,
      "title": "Dry, shell and dry again",
      "how": "Sun dry the ears for two to three days, shell them by hand or with a sheller, then dry the grain again to about 14 percent moisture before bagging.",
      "task": "postharvest",
-     "tip": "Damp corn in sacks molds fast and becomes unsafe for feed."
+     "tip": "Damp corn in sacks molds fast and becomes unsafe for feed.",
+     "parts": [
+      {
+       "title": "Sort the ears",
+       "how": "Husk the ears and set aside any that are moldy, rotten or bored by insects so they do not spoil the good ones. Keep those apart for feed or a separate sale."
+      },
+      {
+       "title": "Sun dry the ears",
+       "how": "Spread the husked ears on a concrete floor, mats or nets in full sun and turn them a few times a day. Pile and cover them at night and before rain.",
+       "time": "2 to 3 days"
+      },
+      {
+       "title": "Shell the corn",
+       "how": "Shell by hand, by twisting two ears against each other, or with a hand or motor sheller once the kernels come off easily. Soft, damp kernels get crushed, so dry the ears well first."
+      },
+      {
+       "title": "Dry the grain again",
+       "how": "Spread the shelled grain thinly and turn it often until it is dry enough to keep, about 14 percent moisture. A dry kernel is hard and cracks sharply between the teeth."
+      },
+      {
+       "title": "Clean and bag",
+       "how": "Winnow or sift out bits of cob, silk and broken grain. Fill clean sacks and stack them on pallets in a dry room away from the walls, and check them often for weevils."
+      }
+     ]
     }
    ]
   }
@@ -155,6 +208,9 @@
   "yellow corn farming philippines"
  ],
  "confidence": "high",
- "slug": "corn-yellow",
- "rev": "e9820e0d6641"
+ "shelf": "corn",
+ "kind": "annual",
+ "icon": "🌽",
+ "slug": "yellow-corn",
+ "rev": "8e0ef4e6a14a"
 }

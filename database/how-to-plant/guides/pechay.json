@@ -32,7 +32,29 @@
      "day": -18,
      "title": "Make the seedbed and sow",
      "how": "Raise a seedbed about 1 m wide and 15 cm high with fine, clean soil. Sow the seed thinly in shallow lines or 2 to 3 seeds a hole in a seedling tray, cover lightly with fine soil and sprinkle with water.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Build the bed",
+       "how": "Raise a bed about 1 m wide, 10 m long and 15 cm high in a sunny spot near water. Crush the clods and rake the soil until it is fine and loose."
+      },
+      {
+       "title": "Clean the soil",
+       "how": "Spread dry rice straw over the bed and burn it, or pour boiling water over it and cover it with plastic until the soil cools. This kills the damping off fungus, weed seed and soil insects before sowing."
+      },
+      {
+       "title": "Sow thinly in lines",
+       "how": "Water the bed first, then scratch shallow lines across it with a stick. Drop the seed thinly along the lines and cover it with a light sprinkle of fine soil."
+      },
+      {
+       "title": "Or sow in a seedling tray",
+       "how": "Fill the tray holes with a clean potting mix and press it down lightly with the palm. Drop two or three seeds in each hole, cover them with fine soil and sprinkle with water."
+      },
+      {
+       "title": "Keep it wet until they come up",
+       "how": "Sprinkle gently every morning or late afternoon so the top soil never dries out while the seed is sprouting. Use a can with a fine sprinkler head so the water does not wash the seed out."
+      }
+     ]
     },
     {
      "phase": "nursery",
@@ -40,6 +62,31 @@
      "title": "Shade and water the seedlings",
      "how": "Give the young seedlings a simple roof against strong sun and hard rain, and water them in the morning or late afternoon.",
      "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -12,
+     "title": "Prick out into small pots",
+     "how": "About five days after the seedlings come up, many growers move each one into its own small pot of rolled banana leaf, so it goes to the field with its roots in a ball of soil and does not wilt.",
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Roll the banana leaf pots",
+       "how": "Cut banana leaf into strips, roll each strip into a small cup and fill it with the same clean soil mix used for the seedbed. Stand the pots close together in a box or on the bed."
+      },
+      {
+       "title": "Lift the seedlings gently",
+       "how": "Loosen the seedbed soil with a small stick and lift the seedlings with a little soil on the roots. Hold them by a leaf, not by the thin stem, which bruises easily."
+      },
+      {
+       "title": "One seedling a pot",
+       "how": "Make a hole in each pot with a finger, set one seedling in it and press the soil around it. Water the pots right away with a weak starter fertilizer mixed in water, or plain water."
+      },
+      {
+       "title": "Shade them for a few days",
+       "how": "Keep the pots under the shed roof until the seedlings stand up again, then give them more sun each day until transplanting."
+      }
+     ]
     },
     {
      "phase": "nursery",
@@ -123,7 +170,7 @@
      "phase": "planting",
      "day": 0,
      "title": "Sow the seed",
-     "how": "Broadcast the seed thinly over the bed, or drop it in shallow lines about 20 cm apart. Cover lightly with fine soil or rice hull and water gently.",
+     "how": "Broadcast the seed thinly over the bed, or drop it in shallow lines about 20 cm apart. Dust a little fine soil or rice hull over the seed and water gently.",
      "task": "planting"
     },
     {
@@ -195,6 +242,9 @@
   "pechay farming"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
  "slug": "pechay",
- "rev": "5f2c777b21f2"
+ "rev": "dc003d5a012e"
 }

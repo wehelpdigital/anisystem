@@ -126,12 +126,12 @@
   "Water during long dry spells for steady fruiting through the year."
  ],
  "video": {
-  "youtubeId": "5kIMD6uw4ew",
-  "title": "GUAPOL-(GUAVA APPLE): PAGTATANIM MULA SA SANGA AT PAGPAPABUNGA",
-  "channel": "Ang Magsasakang Reporter",
+  "youtubeId": "IWltrNwD-tk",
+  "title": "Tips sa pagtatanim ng Bayabas (Guapple)",
+  "channel": "Ka Engie T.V",
   "lang": "fil",
-  "minutes": 17,
-  "why": "A Filipino grower plants guapple from a rooted branch and shows how he brings it to fruit, explained in Tagalog."
+  "minutes": 14,
+  "why": "A Filipino grower plants a bagged guapple seedling in the ground and gives his planting tips in Tagalog."
  },
  "keywords": [
   "paano magtanim ng bayabas",
@@ -141,6 +141,9 @@
   "guava farming"
  ],
  "confidence": "high",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍐",
  "slug": "guava",
- "rev": "e3cb27c79bda"
+ "rev": "16807699d136"
 }

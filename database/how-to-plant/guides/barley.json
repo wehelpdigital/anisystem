@@ -97,6 +97,9 @@
   "how to plant barley"
  ],
  "confidence": "low",
+ "shelf": "corn",
+ "kind": "annual",
+ "icon": "🌾",
  "slug": "barley",
- "rev": "9d5fbb2ac14e"
+ "rev": "11530fc91379"
 }

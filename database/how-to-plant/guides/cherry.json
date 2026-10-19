@@ -70,6 +70,9 @@
   "can cherry grow in the philippines"
  ],
  "confidence": "low",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍒",
  "slug": "cherry",
- "rev": "31e838352c57"
+ "rev": "1db847bd2317"
 }

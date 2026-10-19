@@ -152,6 +152,9 @@
   "formosa pineapple planting"
  ],
  "confidence": "medium",
+ "shelf": "industrial",
+ "kind": "annual",
+ "icon": "🍍",
  "slug": "pineapple",
- "rev": "23fbb4665b9c"
+ "rev": "8841aeacc027"
 }

@@ -10,9 +10,9 @@
  "summary": "This guide shows how Filipino growers, mostly in Mindanao, usually plant a grafted durian seedling under light shade and care for it until the first fruits. It is for small orchards and coconut farms.",
  "season": "Seedlings are planted as the rains begin, or in any wet month where rain spreads through the year as in Davao and much of Mindanao. Durian likes deep, loose, well drained soil with plenty of organic matter, from the lowlands up to about 800 m.",
  "material": "Most growers now plant a grafted seedling of a known variety such as Puyat, Arancillo, Duyaya or Alcon, joined to a seedling rootstock and planted about 5 months or more after grafting. Some growers prefer bigger, year old grafted plants. In the old way native durian was grown from the seed of a good fruit, which bears much later and gives mixed fruit.",
- "spacing": "About 8 m between trees in the row and 10 m between rows, one seedling a hole. Durian is also grown between coconut and other fruit trees.",
+ "spacing": "About 8 m by 8 m, one seedling a hole. Some growers plant 6 m by 6 m for a denser orchard. Between tall coconut trees, about 10 m by 10 m or more.",
  "water": "Mostly rain fed, with mulch in the dry season. Young trees are watered when the soil dries. Bearing trees need little water when new shoots come out, more at flowering and fruit set, and the most while the fruit grows.",
- "fertilizer": "About half a kilo of chicken dung, vermicast or animal manure in the hole at planting. In the first and second years, about four feedings a year of about 2 kg chicken dung with dolomite and vermicast a tree, rising to 3 kg in the third year and 4 kg from the fourth year with three feedings a year. Many growers also use complete fertilizer in small amounts, adjusted by tree age and soil test.",
+ "fertilizer": "About 50 g of complete fertilizer and half a kilo of chicken dung, vermicast or animal manure in the hole at planting. Young trees get about 100 g of complete fertilizer a tree at each feeding in the first five years, raised little by little to about 4 kg a tree by the twelfth year. Organic growers instead give about 2 kg of chicken dung with dolomite and vermicast a tree, about four times a year in the first two years, rising to 3 to 4 kg later. Weed around the tree before every feeding.",
  "care": "Half shade for new seedlings, mulching, ring weeding before each feeding, short crops between rows, pruning dead and sick branches and water shoots, bagging young fruits, and checking for psyllids, mealybugs, borers, canker and pink disease. Fruit fly traps and rat baits are set in bearing orchards.",
  "harvest": "A ripe fruit gives a sweet smell at its base and a loose, hollow sound when knocked. Many growers let ripe fruit drop onto nets or soft ground, saying it tastes best. Others cut the stalk close to the branch with a sharp knife. Fruit is carried in bamboo baskets and kept off the bare soil to avoid rot.",
  "ways": [
@@ -25,8 +25,9 @@
      "phase": "prep",
      "day": -30,
      "title": "Clear the land and mark the spots",
-     "how": "Clear the brush and stumps and loosen the soil, leaving new forest land untilled. Mark the planting spots about 8 m apart in the row and 10 m between rows.",
-     "task": "land_prep"
+     "how": "Clear the brush and stumps and loosen the soil, leaving new forest land untilled. Mark the planting spots about 8 m apart each way, or about 10 m by 10 m between tall coconut trees.",
+     "task": "land_prep",
+     "tip": "Plant lakatan banana a few months ahead so it can shade the young durian."
     },
     {
      "phase": "prep",
@@ -39,7 +40,7 @@
      "phase": "planting",
      "day": 0,
      "title": "Plant the grafted seedling",
-     "how": "Remove the bag without breaking the soil ball and set the seedling so the soil comes to about its old soil line, within an inch. Cover with topsoil and press gently.",
+     "how": "Mix about 50 g, or 5 tablespoons, of complete fertilizer into the hole, remove the bag without breaking the soil ball and set the seedling so the soil comes to about its old soil line, within an inch. Cover with topsoil and press gently.",
      "task": "planting",
      "tip": "Durian roots rot in standing water, so never plant in a low, wet spot."
     },
@@ -47,7 +48,7 @@
      "phase": "care",
      "day": 1,
      "title": "Shade the new seedling",
-     "how": "Give the new tree about half shade with fronds or a net for two weeks to a few months, depending on the weather, so it recovers and its leaves do not burn. Young trees keep doing best in partial shade.",
+     "how": "Give the new tree about half shade with fronds or a net for its first weeks, or a couple of months in hot weather, so it settles and its leaves do not burn. Young trees keep doing best in partial shade.",
      "task": "other"
     },
     {
@@ -88,12 +89,12 @@
     {
      "phase": "harvest",
      "day": 1800,
-     "title": "First good harvest",
-     "how": "Bag young fruits against borers and rats. The fruit is ready when it smells sweet at the base and sounds loose when knocked. Many growers let it drop onto nets, or cut the stalk close to the branch with a sharp knife.",
+     "title": "First harvest",
+     "how": "Fruit of local varieties is ready about 106 to 108 days after the flowers set, when the husk turns from green to light brown, the spines at the middle bend easily, it sounds dull and hollow when tapped and smells strong. Cut the stalk with a sharp knife before the fruit falls, or let it drop onto nets.",
      "task": "harvest"
     }
    ],
-   "note": "Grafted durian may give a few fruits from about the third year and comes into a good crop at about the fifth year."
+   "note": "A well cared grafted durian starts bearing at about 5 years. Some early varieties give a few fruits sooner."
   }
  ],
  "mistakes": [
@@ -128,6 +129,9 @@
   "durian farming"
  ],
  "confidence": "high",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍈",
  "slug": "durian",
- "rev": "7a9659ec15e3"
+ "rev": "8c4a9b5d18fc"
 }

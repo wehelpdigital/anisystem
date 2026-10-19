@@ -24,7 +24,34 @@
      "day": -21,
      "title": "Pick and sprout the seed pieces",
      "how": "Choose plump, healthy rhizomes with eyes and cut them into pieces with 3 to 4 buds. For an even stand, line them up close together in a raised bed, cover with compost and coir dust, and water as needed until the sprouts are 1 to 2 cm long.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Keep the seed ginger shaded",
+       "how": "From harvest until planting, keep the seed rhizomes in a shaded place under a cover of banana or coconut leaves. Look them over now and then and take out any that shrivel, soften or change color."
+      },
+      {
+       "title": "Choose mature, healthy hands",
+       "how": "Pick plump rhizomes from plants left to full age, about 9 to 10 months, with no rot, galls or soft spots and with eyes already swelling. Young ginger does not keep or sprout as well."
+      },
+      {
+       "title": "Break them into pieces",
+       "how": "Just before sprouting or planting, break or cut the hands into pieces that each carry 3 to 4 buds or eyes. Use a clean, sharp knife so the cut is smooth."
+      },
+      {
+       "title": "Let the cuts dry and seal",
+       "how": "Spread the fresh pieces in the shade on a clean, dry floor or mat until the cut faces dry and form a thin corky skin. Pieces planted with wet, fresh cuts rot easily in the soil."
+      },
+      {
+       "title": "Sprout them in a raised bed",
+       "how": "For an even stand, make a raised bed about 1 m wide and 20 cm high. Line the pieces up about 2 cm apart, cover them with a mix of compost and coir dust and water only as needed to keep it damp."
+      },
+      {
+       "title": "Move them at the first sprouts",
+       "how": "Lift the pieces and plant them in the furrows once the sprouts are about 1 to 2 cm long, before they grow long and break in handling.",
+       "time": "sprouts about 1 to 2 cm"
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -88,14 +115,52 @@
      "title": "Dig when the leaves wither",
      "how": "Ginger is ready when the leaves turn yellow and dry, about 8 to 10 months after planting. Dig each hill with a fork or hoe, lift the whole clump, shake off the soil and cut the stems without breaking the rhizomes.",
      "task": "harvest",
-     "tip": "Young ginger for pickling is dug much earlier. Mature ginger for salabat is left the longest."
+     "tip": "Young ginger for pickling is dug much earlier. Mature ginger for salabat is left the longest.",
+     "parts": [
+      {
+       "title": "Cut the tops first",
+       "how": "A few days before digging, cut off the dry stems and leaves so the skin of the rhizomes hardens in the soil and peels less at harvest.",
+       "time": "2 to 5 days before digging"
+      },
+      {
+       "title": "Loosen and lift each hill",
+       "how": "Push a spading fork or hoe in wide of the hill, loosen the soil and pull up the whole clump. Shake off the soil and lay the clumps on top of the bed."
+      },
+      {
+       "title": "Trim without breaking",
+       "how": "Cut the stems off close to the rhizomes. Every broken or skinned piece loses weight fast and starts to rot, so handle the clumps gently."
+      }
+     ]
     },
     {
      "phase": "care",
      "day": 271,
      "title": "Clean, dry and sort",
      "how": "Trim roots and shoots, wash off the soil, air dry, and sort by size, throwing out rotting pieces. Keep the best rhizomes in the shade for the next planting.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Trim and wash right away",
+       "how": "Cut off the shoots and roots soon after harvest. Wash the ginger in clean water, rubbing it gently by hand or with a soft brush so the hands do not break."
+      },
+      {
+       "title": "Spread it to dry",
+       "how": "Lay the rhizomes on a clean, dry surface in the shade where air moves, and turn them now and then until the surface water is gone."
+      },
+      {
+       "title": "Cure ginger you will keep",
+       "how": "Ginger for storage or for seed is left in the open air for several days more, so the skin thickens and every cut seals over. Cured ginger keeps much longer than fresh washed ginger.",
+       "time": "several days"
+      },
+      {
+       "title": "Sort by size",
+       "how": "Sort out rotting and damaged pieces first. Buyers who grade ginger usually take large hands over 300 grams, medium ones of 150 to 300 grams and small ones under 150 grams as separate classes."
+      },
+      {
+       "title": "Store in deep shade",
+       "how": "Keep only clean, healthy rhizomes. Without cold storage, farmers keep them in a well shaded, airy place, with the best hands set aside under leaves as seed for the next planting."
+      }
+     ]
     }
    ]
   }
@@ -130,6 +195,9 @@
   "ginger farming philippines"
  ],
  "confidence": "high",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🫚",
  "slug": "ginger",
- "rev": "5cc60f02ff08"
+ "rev": "0bdd608a111c"
 }

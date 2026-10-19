@@ -103,7 +103,22 @@
      "day": -1,
      "title": "Cut the stems",
      "how": "Cut healthy stems about 20 to 30 cm long, each with several nodes.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Pick the mother plants",
+       "how": "Take cuttings from a clean stand of water kangkong with thick green stems and no yellowing, rot or insect damage."
+      },
+      {
+       "title": "Cut pieces with several nodes",
+       "how": "Cut stem pieces about 20 to 30 cm long, each with several nodes, since the roots come out at the nodes. Pull off the leaves on the lower part that will go into the mud."
+      },
+      {
+       "title": "Root them in water if you have time",
+       "how": "Some growers stand the bundles in shallow water in the shade until short white roots show at the nodes, then plant. Rooted cuttings take hold faster in the field.",
+       "time": "about a week"
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -175,6 +190,9 @@
   "kangkong farming"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
  "slug": "water-spinach",
- "rev": "87bf18fde920"
+ "rev": "74440a609ab2"
 }

@@ -184,7 +184,8 @@
   "volume": 2400,
   "pages": [
    "crops/pagtatanim-ng-puno",
-   "crops/coconut-fertilizer"
+   "crops/coconut-fertilizer",
+   "how-to-plant/mango"
   ]
  },
  "corn scientific name": {
@@ -500,7 +501,8 @@
   "pages": [
    "crops/pagtatanim-ng-palay",
    "crops/palay",
-   "blog/alamat-ng-palay"
+   "blog/alamat-ng-palay",
+   "how-to-plant/rice"
   ]
  },
  "rice variety philippines": {
@@ -1266,7 +1268,8 @@
   "volume": 390,
   "pages": [
    "crops/banana-farming-philippines",
-   "diseases/fusarium-wilt"
+   "diseases/fusarium-wilt",
+   "how-to-plant/banana"
   ]
  },
  "top dressing fertilizer": {
@@ -1280,7 +1283,8 @@
   "volume": 390,
   "pages": [
    "crops/pagtatanim-ng-gulay",
-   "crops/vegetables-philippines"
+   "crops/vegetables-philippines",
+   "how-to-plant/tomato"
   ]
  },
  "biostimulants": {
@@ -1751,7 +1755,8 @@
   "volume": 140,
   "pages": [
    "crops/pagtatanim-ng-mais",
-   "crops/corn-kernel"
+   "crops/corn-kernel",
+   "how-to-plant/yellow-corn"
   ]
  },
  "corn seed grow a garden roblox": {
@@ -2348,6 +2353,1380 @@
   "pages": [
    "crops/corn-seeds",
    "crops/corn-kernel"
+  ]
+ },
+ "almond tree philippines": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/almond"
+  ]
+ },
+ "apple farm digos": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/apple"
+  ]
+ },
+ "ayusip benguet": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/blueberry"
+  ]
+ },
+ "bangkok santol": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/santol"
+  ]
+ },
+ "cherry tree baguio": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cherry"
+  ]
+ },
+ "cowpea after rice": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cowpea"
+  ]
+ },
+ "dragon fruit cuttings": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/dragon-fruit"
+  ]
+ },
+ "garlic after rice": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/garlic"
+  ]
+ },
+ "grafted na langka": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/jackfruit"
+  ]
+ },
+ "grafted sampalok": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/tamarind"
+  ]
+ },
+ "how to plant abaca": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/abaca"
+  ]
+ },
+ "how to plant alfalfa": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/alfalfa"
+  ]
+ },
+ "how to plant almond": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/almond"
+  ]
+ },
+ "how to plant apple": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/apple"
+  ]
+ },
+ "how to plant avocado": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/avocado"
+  ]
+ },
+ "how to plant bamboo": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bamboo"
+  ]
+ },
+ "how to plant banana": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/banana"
+  ]
+ },
+ "how to plant barley": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/barley"
+  ]
+ },
+ "how to plant bell pepper": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bell-pepper"
+  ]
+ },
+ "how to plant bitter gourd": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bitter-gourd"
+  ]
+ },
+ "how to plant blueberry": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/blueberry"
+  ]
+ },
+ "how to plant bottle gourd": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bottle-gourd"
+  ]
+ },
+ "how to plant broccoli": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/broccoli"
+  ]
+ },
+ "how to plant cabbage": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cabbage"
+  ]
+ },
+ "how to plant cacao": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cacao"
+  ]
+ },
+ "how to plant calamansi": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/calamansi"
+  ]
+ },
+ "how to plant canola": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/canola"
+  ]
+ },
+ "how to plant carrot": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/carrot"
+  ]
+ },
+ "how to plant cashew": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cashew"
+  ]
+ },
+ "how to plant cassava": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cassava"
+  ]
+ },
+ "how to plant cauliflower": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cauliflower"
+  ]
+ },
+ "how to plant celery": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/celery"
+  ]
+ },
+ "how to plant chayote": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/chayote"
+  ]
+ },
+ "how to plant cherry": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cherry"
+  ]
+ },
+ "how to plant chico": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/chico"
+  ]
+ },
+ "how to plant chili": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/chili"
+  ]
+ },
+ "how to plant citrus": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/citrus"
+  ]
+ },
+ "how to plant coconut": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/coconut"
+  ]
+ },
+ "how to plant coffee": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/coffee"
+  ]
+ },
+ "how to plant corn in the philippines": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/yellow-corn"
+  ]
+ },
+ "how to plant corn, sweet": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sweet-corn"
+  ]
+ },
+ "how to plant corn, white glutinous": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/glutinous-corn"
+  ]
+ },
+ "how to plant cotton": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cotton"
+  ]
+ },
+ "how to plant cowpea": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cowpea"
+  ]
+ },
+ "how to plant cucumber": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cucumber"
+  ]
+ },
+ "how to plant dragon fruit": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/dragon-fruit"
+  ]
+ },
+ "how to plant durian": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/durian"
+  ]
+ },
+ "how to plant eggplant": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/eggplant"
+  ]
+ },
+ "how to plant garlic": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/garlic"
+  ]
+ },
+ "how to plant ginger": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/ginger"
+  ]
+ },
+ "how to plant grape": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/grape"
+  ]
+ },
+ "how to plant guava": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/guava"
+  ]
+ },
+ "how to plant jackfruit": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/jackfruit"
+  ]
+ },
+ "how to plant jute mallow": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/jute-mallow"
+  ]
+ },
+ "how to plant lanzones": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/lanzones"
+  ]
+ },
+ "how to plant lettuce": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/lettuce"
+  ]
+ },
+ "how to plant lima bean": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/lima-bean"
+  ]
+ },
+ "how to plant malabar spinach": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/malabar-spinach"
+  ]
+ },
+ "how to plant malunggay": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/moringa"
+  ]
+ },
+ "how to plant mango": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mango"
+  ]
+ },
+ "how to plant mangosteen": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mangosteen"
+  ]
+ },
+ "how to plant melon": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/melon"
+  ]
+ },
+ "how to plant moringa": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/moringa"
+  ]
+ },
+ "how to plant mungbean": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mungbean"
+  ]
+ },
+ "how to plant mustard greens": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mustard"
+  ]
+ },
+ "how to plant oats": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/oats"
+  ]
+ },
+ "how to plant oil palm": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/oil-palm"
+  ]
+ },
+ "how to plant okra": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/okra"
+  ]
+ },
+ "how to plant onion, bulb": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/onion"
+  ]
+ },
+ "how to plant papaya": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/papaya"
+  ]
+ },
+ "how to plant peach": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/peach"
+  ]
+ },
+ "how to plant peanut": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/peanut"
+  ]
+ },
+ "how to plant pear": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pear"
+  ]
+ },
+ "how to plant pechay": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pechay"
+  ]
+ },
+ "how to plant pigeon pea": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pigeon-pea"
+  ]
+ },
+ "how to plant pineapple": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pineapple"
+  ]
+ },
+ "how to plant pomelo": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pomelo"
+  ]
+ },
+ "how to plant potato": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/potato"
+  ]
+ },
+ "how to plant purple yam": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/purple-yam"
+  ]
+ },
+ "how to plant radish": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/radish"
+  ]
+ },
+ "how to plant rambutan": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/rambutan"
+  ]
+ },
+ "how to plant rice": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/rice"
+  ]
+ },
+ "how to plant rice in the philippines": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/rice"
+  ]
+ },
+ "how to plant rubber": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/rubber"
+  ]
+ },
+ "how to plant santol": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/santol"
+  ]
+ },
+ "how to plant shallot": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/shallot"
+  ]
+ },
+ "how to plant sorghum": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sorghum"
+  ]
+ },
+ "how to plant soursop": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/soursop"
+  ]
+ },
+ "how to plant soybean": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/soybean"
+  ]
+ },
+ "how to plant sponge gourd": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sponge-gourd"
+  ]
+ },
+ "how to plant spring onion": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/spring-onion"
+  ]
+ },
+ "how to plant squash": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/squash"
+  ]
+ },
+ "how to plant star apple": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/star-apple"
+  ]
+ },
+ "how to plant strawberry": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/strawberry"
+  ]
+ },
+ "how to plant string bean": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/string-bean"
+  ]
+ },
+ "how to plant sugar apple": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugar-apple"
+  ]
+ },
+ "how to plant sugar beet": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugar-beet"
+  ]
+ },
+ "how to plant sugarcane": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugarcane"
+  ]
+ },
+ "how to plant sunflower": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sunflower"
+  ]
+ },
+ "how to plant sweet potato": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sweet-potato"
+  ]
+ },
+ "how to plant tamarind": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/tamarind"
+  ]
+ },
+ "how to plant taro": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/taro"
+  ]
+ },
+ "how to plant tobacco": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/tobacco"
+  ]
+ },
+ "how to plant tomato": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/tomato"
+  ]
+ },
+ "how to plant turmeric": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/turmeric"
+  ]
+ },
+ "how to plant water spinach": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/water-spinach"
+  ]
+ },
+ "how to plant watermelon": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/watermelon"
+  ]
+ },
+ "how to plant wheat": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/wheat"
+  ]
+ },
+ "how to plant winged bean": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/winged-bean"
+  ]
+ },
+ "kaimito seedlings": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/star-apple"
+  ]
+ },
+ "kasoy palawan": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cashew"
+  ]
+ },
+ "kawayan tinik planting": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bamboo"
+  ]
+ },
+ "mangosteen seedling": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mangosteen"
+  ]
+ },
+ "paano magtanim ng abaca": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/abaca"
+  ]
+ },
+ "paano magtanim ng abaka": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/abaca"
+  ]
+ },
+ "paano magtanim ng alfalfa": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/alfalfa"
+  ]
+ },
+ "paano magtanim ng almond": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/almond"
+  ]
+ },
+ "paano magtanim ng alugbati": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/malabar-spinach"
+  ]
+ },
+ "paano magtanim ng ampalaya": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bitter-gourd"
+  ]
+ },
+ "paano magtanim ng atis": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugar-apple"
+  ]
+ },
+ "paano magtanim ng atsal": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bell-pepper"
+  ]
+ },
+ "paano magtanim ng avocado": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/avocado"
+  ]
+ },
+ "paano magtanim ng barley": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/barley"
+  ]
+ },
+ "paano magtanim ng bawang": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/garlic"
+  ]
+ },
+ "paano magtanim ng bayabas": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/guava"
+  ]
+ },
+ "paano magtanim ng bell pepper": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bell-pepper"
+  ]
+ },
+ "paano magtanim ng blueberry": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/blueberry"
+  ]
+ },
+ "paano magtanim ng broccoli": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/broccoli"
+  ]
+ },
+ "paano magtanim ng bulak": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cotton"
+  ]
+ },
+ "paano magtanim ng cacao": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cacao"
+  ]
+ },
+ "paano magtanim ng canola": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/canola"
+  ]
+ },
+ "paano magtanim ng carrots": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/carrot"
+  ]
+ },
+ "paano magtanim ng cauliflower": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cauliflower"
+  ]
+ },
+ "paano magtanim ng celery": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/celery"
+  ]
+ },
+ "paano magtanim ng cherry": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cherry"
+  ]
+ },
+ "paano magtanim ng chico": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/chico"
+  ]
+ },
+ "paano magtanim ng dahon ng sibuyas": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/spring-onion"
+  ]
+ },
+ "paano magtanim ng dalandan": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/citrus"
+  ]
+ },
+ "paano magtanim ng dragon fruit": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/dragon-fruit"
+  ]
+ },
+ "paano magtanim ng durian": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/durian"
+  ]
+ },
+ "paano magtanim ng gabi": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/taro"
+  ]
+ },
+ "paano magtanim ng goma": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/rubber"
+  ]
+ },
+ "paano magtanim ng grapes": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/grape"
+  ]
+ },
+ "paano magtanim ng guyabano": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/soursop"
+  ]
+ },
+ "paano magtanim ng kadyos": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pigeon-pea"
+  ]
+ },
+ "paano magtanim ng kaimito": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/star-apple"
+  ]
+ },
+ "paano magtanim ng kakaw": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cacao"
+  ]
+ },
+ "paano magtanim ng kalabasa": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/squash"
+  ]
+ },
+ "paano magtanim ng kalamansi": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/calamansi"
+  ]
+ },
+ "paano magtanim ng kamatis": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/tomato"
+  ]
+ },
+ "paano magtanim ng kamote": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sweet-potato"
+  ]
+ },
+ "paano magtanim ng kamoteng kahoy": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cassava"
+  ]
+ },
+ "paano magtanim ng kangkong": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/water-spinach"
+  ]
+ },
+ "paano magtanim ng kape": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/coffee"
+  ]
+ },
+ "paano magtanim ng karot": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/carrot"
+  ]
+ },
+ "paano magtanim ng kasoy": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cashew"
+  ]
+ },
+ "paano magtanim ng kawayan": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bamboo"
+  ]
+ },
+ "paano magtanim ng kintsay": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/celery"
+  ]
+ },
+ "paano magtanim ng labanos": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/radish"
+  ]
+ },
+ "paano magtanim ng langka": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/jackfruit"
+  ]
+ },
+ "paano magtanim ng lanzones": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/lanzones"
+  ]
+ },
+ "paano magtanim ng lettuce": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/lettuce"
+  ]
+ },
+ "paano magtanim ng luya": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/ginger"
+  ]
+ },
+ "paano magtanim ng luyang dilaw": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/turmeric"
+  ]
+ },
+ "paano magtanim ng mais": {
+  "volume": 0,
+  "pages": [
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "paano magtanim ng mais na malagkit": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/glutinous-corn"
+  ]
+ },
+ "paano magtanim ng malunggay": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/moringa"
+  ]
+ },
+ "paano magtanim ng mangga": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mango"
+  ]
+ },
+ "paano magtanim ng mangosteen": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mangosteen"
+  ]
+ },
+ "paano magtanim ng mani": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/peanut"
+  ]
+ },
+ "paano magtanim ng mansanas": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/apple"
+  ]
+ },
+ "paano magtanim ng melon": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/melon"
+  ]
+ },
+ "paano magtanim ng mirasol": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sunflower"
+  ]
+ },
+ "paano magtanim ng monggo": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mungbean"
+  ]
+ },
+ "paano magtanim ng mustasa": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/mustard"
+  ]
+ },
+ "paano magtanim ng niyog": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/coconut"
+  ]
+ },
+ "paano magtanim ng oats": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/oats"
+  ]
+ },
+ "paano magtanim ng oil palm": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/oil-palm"
+  ]
+ },
+ "paano magtanim ng okra": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/okra"
+  ]
+ },
+ "paano magtanim ng paayap": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cowpea"
+  ]
+ },
+ "paano magtanim ng pakwan": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/watermelon"
+  ]
+ },
+ "paano magtanim ng palay": {
+  "volume": 0,
+  "pages": [
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "paano magtanim ng papaya": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/papaya"
+  ]
+ },
+ "paano magtanim ng patani": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/lima-bean"
+  ]
+ },
+ "paano magtanim ng patatas": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/potato"
+  ]
+ },
+ "paano magtanim ng patola": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sponge-gourd"
+  ]
+ },
+ "paano magtanim ng peach": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/peach"
+  ]
+ },
+ "paano magtanim ng pechay": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pechay"
+  ]
+ },
+ "paano magtanim ng peras": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pear"
+  ]
+ },
+ "paano magtanim ng pinya": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pineapple"
+  ]
+ },
+ "paano magtanim ng pipino": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cucumber"
+  ]
+ },
+ "paano magtanim ng rambutan": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/rambutan"
+  ]
+ },
+ "paano magtanim ng repolyo": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/cabbage"
+  ]
+ },
+ "paano magtanim ng saging": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/banana"
+  ]
+ },
+ "paano magtanim ng saluyot": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/jute-mallow"
+  ]
+ },
+ "paano magtanim ng sampalok": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/tamarind"
+  ]
+ },
+ "paano magtanim ng santol": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/santol"
+  ]
+ },
+ "paano magtanim ng sayote": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/chayote"
+  ]
+ },
+ "paano magtanim ng sibuyas": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/onion"
+  ]
+ },
+ "paano magtanim ng sibuyas tagalog": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/shallot"
+  ]
+ },
+ "paano magtanim ng sigarilyas": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/winged-bean"
+  ]
+ },
+ "paano magtanim ng sili": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/chili"
+  ]
+ },
+ "paano magtanim ng sitaw": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/string-bean"
+  ]
+ },
+ "paano magtanim ng sorghum": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sorghum"
+  ]
+ },
+ "paano magtanim ng soybeans": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/soybean"
+  ]
+ },
+ "paano magtanim ng strawberry": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/strawberry"
+  ]
+ },
+ "paano magtanim ng sugar beet": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugar-beet"
+  ]
+ },
+ "paano magtanim ng suha": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pomelo"
+  ]
+ },
+ "paano magtanim ng sunflower": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sunflower"
+  ]
+ },
+ "paano magtanim ng sweet corn": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sweet-corn"
+  ]
+ },
+ "paano magtanim ng tabako": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/tobacco"
+  ]
+ },
+ "paano magtanim ng talong": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/eggplant"
+  ]
+ },
+ "paano magtanim ng trigo": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/wheat"
+  ]
+ },
+ "paano magtanim ng tubo": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugarcane"
+  ]
+ },
+ "paano magtanim ng turmeric": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/turmeric"
+  ]
+ },
+ "paano magtanim ng ubas": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/grape"
+  ]
+ },
+ "paano magtanim ng ube": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/purple-yam"
+  ]
+ },
+ "paano magtanim ng ubi": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/purple-yam"
+  ]
+ },
+ "paano magtanim ng upland kangkong": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/water-spinach"
+  ]
+ },
+ "paano magtanim ng upo": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/bottle-gourd"
+  ]
+ },
+ "palm oil plantation agusan": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/oil-palm"
+  ]
+ },
+ "peach tree baguio": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/peach"
+  ]
+ },
+ "pear tree baguio": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/pear"
+  ]
+ },
+ "sibuyas dahon": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/spring-onion"
+  ]
+ },
+ "sibuyas tagalog": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/shallot"
+  ]
+ },
+ "strawberry runners": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/strawberry"
+  ]
+ },
+ "sugar beet philippines": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugar-beet"
+  ]
+ },
+ "talisay almond": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/almond"
+  ]
+ },
+ "tropical sugar beet": {
+  "volume": 0,
+  "pages": [
+   "how-to-plant/sugar-beet"
   ]
  }
 }

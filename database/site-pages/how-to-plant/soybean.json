@@ -1,0 +1,374 @@
+{
+ "section": "how-to-plant",
+ "slug": "soybean",
+ "lang": "en",
+ "category": "Legumes",
+ "sortOrder": 110,
+ "title": "Paano Magtanim ng Soybeans: How to Plant Soybean the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Soybeans: The Traditional Way",
+ "metaDescription": "Paano magtanim ng soybeans? See how traditional farmers plant utaw step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng soybeans",
+ "keywords": [
+  "paano magtanim ng soybeans",
+  "how to plant soybean"
+ ],
+ "excerpt": "Paano magtanim ng soybeans? Here is how traditional Filipino farmers usually plant utaw (soybean), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/land/legume-land-preparation.webp",
+  "alt": "Young mungbean rows beside paddy fields in Candaba, Pampanga",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant utaw. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "Soybean is a minor crop in the Philippines, grown mostly in Mindanao and by a few cooperatives in Luzon for tofu, taho and feed. This guide shows how those growers usually plant it, after rice or at the start of the rains.\n\nBefore you plant, get the field ready with our [land preparation guide for legumes](/land-preparation/legume-land-preparation). Then choose your seed or planting material with the [utaw varieties sold here](/crop-varieties/soybean). If the leaves turn pale later on, the [utaw nutrient deficiency guide](/nutrient-deficiencies/soybean-nutrient-deficiency) helps you find what is missing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant utaw"
+  },
+  {
+   "type": "text",
+   "text": "In Luzon it is planted after rice in the dry season, around November to January. In Mindanao growers plant at the start of the rains and again late in the year."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Dry seed from the last crop or bought. Soybean seed loses its strength fast in the heat, so seed kept for many months often comes up poorly. Many growers coat the seed with a legume inoculant just before planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng soybeans, step by step"
+  },
+  {
+   "type": "text",
+   "text": "The crop is ready about 95 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Plow",
+     "text": "Plow once when the soil is moist enough."
+    },
+    {
+     "title": "7 days before sowing: Harrow",
+     "text": "Harrow once or twice to a fine seedbed and kill sprouting weeds."
+    },
+    {
+     "title": "1 day before sowing: Open the furrows",
+     "text": "Open shallow furrows about 50 to 60 cm apart."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Fertilizer on poor soil",
+     "text": "Drop a little complete fertilizer (14 14 14) or manure in the furrow and cover it."
+    },
+    {
+     "title": "Sowing day: Drill the seed",
+     "text": "Drop the seed thinly along the furrow and cover it with about 3 cm of moist soil."
+    },
+    {
+     "title": "Sowing day: Coat the seed with inoculant",
+     "text": "Many growers coat the seed with a soybean inoculant, a powder of the root nodule bacteria, about an hour before planting. The bacteria settle in the roots and feed the crop much of the nitrogen it needs.",
+     "parts": [
+      {
+       "title": "Get the right inoculant",
+       "text": "Use an inoculant made for soybean. The one for soybean does not work on other beans, and theirs does not work on soybean. About five packets of 100 grams coat 50 kg of seed."
+      },
+      {
+       "title": "Wet the seed",
+       "text": "Put the seed in a clean basin or pail and sprinkle it with clean water, stirring, until every seed is damp but not dripping."
+      },
+      {
+       "title": "Mix in the powder",
+       "text": "Pour the inoculant over the damp seed and mix by hand until every seed carries an even coat."
+      },
+      {
+       "title": "Dry it in the shade",
+       "text": "Spread the coated seed on a sack in the shade to air dry, never in the sun.",
+       "time": "1 to 2 hours"
+      },
+      {
+       "title": "Plant it the same day",
+       "text": "Plant the coated seed as soon as it is dry. Keep it out of the sun and the heat, and do not let it touch the fertilizer in the furrow."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 14: Off barring and weeding",
+     "text": "Plow lightly along the rows with the soil thrown away from the plants and hand pull the weeds in the row."
+    },
+    {
+     "title": "Day 21: Hill up",
+     "text": "Plow back toward the rows to pile soil at the base of the plants."
+    },
+    {
+     "title": "Day 35: Watch for insects",
+     "text": "Check for leaf eating caterpillars, pod borers and stink bugs from flowering to pod filling."
+    },
+    {
+     "title": "Day 50: Water during pod filling",
+     "text": "In the dry season, run water into the furrows if the soil dries out while the pods fill."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 95: Cut the plants",
+     "text": "Harvest when nearly all pods have turned brown and most leaves have dropped. Cut the plants at the base and bundle them.",
+     "parts": [
+      {
+       "title": "Check that the pods are ripe",
+       "text": "The crop is ready when the leaves have yellowed and dropped, the main stem is drying and nearly all the pods have turned yellow to brown. Do not mistake plants yellowed by disease for ripe ones."
+      },
+      {
+       "title": "Cut in the cool hours",
+       "text": "Cut in the morning or late afternoon. In the midday heat the dry pods turn brittle and burst, and beans fall to the ground."
+      },
+      {
+       "title": "Cut, do not uproot",
+       "text": "Cut each plant at the base with a sickle. Pulled plants bring soil on their roots, which gets mixed into the beans at threshing."
+      },
+      {
+       "title": "Dry before you stack",
+       "text": "Tie the plants in bundles and stand them in the sun to dry. Bundles piled up while still damp turn the beans moldy."
+      }
+     ]
+    },
+    {
+     "title": "Day 97: Dry and thresh",
+     "text": "Sun dry the bundles, beat out the beans, winnow and dry them again before storing in sealed containers.",
+     "parts": [
+      {
+       "title": "Thresh within two days",
+       "text": "Beat out the beans one or two days after cutting, once the pods are dry. Waiting longer spoils beans and loses more from bursting pods.",
+       "time": "1 to 2 days after cutting"
+      },
+      {
+       "title": "Beat them on a mat",
+       "text": "Spread the bundles on a mat or canvas and beat them with a stick, or tread on them, until the beans fall free."
+      },
+      {
+       "title": "Sieve and winnow",
+       "text": "Shake the beans through a sieve to take out stems and leaves, then winnow off the chaff in the wind."
+      },
+      {
+       "title": "Sort by hand",
+       "text": "Pick out split, wrinkled, damaged and unripe beans. Sorted beans fetch a better price, and only the best ones are kept for seed."
+      },
+      {
+       "title": "Dry them gently and store",
+       "text": "Dry the beans in the sun, not over strong heat, which cracks them, until they are hard. Store them in clean sacks in a dry, airy room. Seed for planting keeps its strength only a few months in the heat, so plant the freshest seed you have."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for utaw"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows about 50 to 60 cm apart, with the seed drilled thinly along the row."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Rainfed in the wet season. After rice it lives on the leftover moisture, with furrow watering during pod filling if the soil dries."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "A little complete fertilizer (14 14 14) or manure at planting. Inoculated soybean makes much of its own nitrogen. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Off barring and hilling up in the first three weeks, hand weeding, and watching for pod borers and stink bugs at pod filling."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Dry beans are ready at about 85 to 100 days when the pods are brown and the leaves have dropped. The plants are cut, sun dried and beaten. For green soybean, pods are picked while still green and full, weeks earlier."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting utaw"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Planting old seed that has lost its strength in storage.",
+    "Planting where water stands after rain.",
+    "Harvesting late, so dry pods split and drop the beans.",
+    "Skipping the inoculant on a field that has never grown soybean."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of utaw"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Use fresh seed of a variety suited to your area and keep it cool and dry.",
+    "Coat the seed with a legume inoculant just before planting.",
+    "Test the soil and lime it if acid.",
+    "Keep weeds out in the first month and scout for pod borers at flowering."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=soybean) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your utaw season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting utaw"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng soybeans?",
+     "a": "Soybean is a minor crop in the Philippines, grown mostly in Mindanao and by a few cooperatives in Luzon for tofu, taho and feed. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant utaw in the Philippines?",
+     "a": "In Luzon it is planted after rice in the dry season, around November to January. In Mindanao growers plant at the start of the rains and again late in the year."
+    },
+    {
+     "q": "How far apart do you plant utaw?",
+     "a": "Rows about 50 to 60 cm apart, with the seed drilled thinly along the row."
+    },
+    {
+     "q": "How long before utaw can be harvested?",
+     "a": "It is ready about 95 days after sowing. Dry beans are ready at about 85 to 100 days when the pods are brown and the leaves have dropped."
+    },
+    {
+     "q": "What do you plant to grow utaw?",
+     "a": "Dry seed from the last crop or bought. Soybean seed loses its strength fast in the heat, so seed kept for many months often comes up poorly."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for legumes",
+     "url": "/land-preparation/legume-land-preparation"
+    },
+    {
+     "label": "Utaw varieties sold here",
+     "url": "/crop-varieties/soybean"
+    },
+    {
+     "label": "Utaw nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/soybean-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

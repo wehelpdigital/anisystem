@@ -120,12 +120,12 @@
   "Scout every new flush for aphids and psyllids that spread citrus diseases."
  ],
  "video": {
-  "youtubeId": "WxRUFmTejkM",
-  "title": "PAGTATANIM NG SUHA/POMELO",
-  "channel": "Ang Magsasakang Reporter",
+  "youtubeId": "lwZGOnp46Mk",
+  "title": "Life at Wefarm (Episode 9): How to Plant Pomelo",
+  "channel": "Wefarm TV",
   "lang": "fil",
-  "minutes": 14,
-  "why": "A Filipino grower shows how to plant and start caring for suha, explained plainly in Tagalog."
+  "minutes": 16,
+  "why": "A small Filipino farm plants pomelo in the field with rotted chicken dung, the plain organic way, explained in Tagalog."
  },
  "keywords": [
   "paano magtanim ng suha",
@@ -135,6 +135,9 @@
   "pomelo farming"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍊",
  "slug": "pomelo",
- "rev": "9b48fc763606"
+ "rev": "eb8777b69998"
 }

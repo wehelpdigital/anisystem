@@ -179,6 +179,9 @@
   "tobacco curing philippines"
  ],
  "confidence": "high",
+ "shelf": "industrial",
+ "kind": "annual",
+ "icon": "🌿",
  "slug": "tobacco",
- "rev": "ad891fd9498a"
+ "rev": "1e09ee62df94"
 }

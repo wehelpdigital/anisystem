@@ -95,7 +95,7 @@ class HowToPlantController extends Controller
         $p = AsProtocol::create([
             'userId' => (int) Auth::id(),
             'title' => mb_substr($title, 0, 190),
-            'description' => mb_substr('From How to Plant: how traditional farmers usually plant ' . ($local !== '' && $local !== $name ? $local . ' (' . mb_strtolower($name) . ')' : mb_strtolower($name))
+            'description' => mb_substr('From How to Plant: how traditional farmers usually plant ' . ($local !== '' && $local !== $name ? mb_strtolower(mb_substr($local, 0, 1)) . mb_substr($local, 1) . ' (' . mb_strtolower($name) . ')' : mb_strtolower($name))
                 . ', ' . mb_strtolower(HowToPlant::wayShort($way)) . '. It is a starting point: update it for a higher yield with certified seed, a soil test, the right spacing and fertilizer.', 0, 2000),
             'tags' => [],
             'crop' => $pbCrop,

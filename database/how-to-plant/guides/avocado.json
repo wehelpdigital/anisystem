@@ -133,6 +133,9 @@
   "avocado farming"
  ],
  "confidence": "high",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🥑",
  "slug": "avocado",
- "rev": "3019bba6e5a1"
+ "rev": "1bf61ed16588"
 }

@@ -62,7 +62,8 @@
   "*palay seeder",
   "*palay sa bukid",
   "pang ani ng palay",
-  "*palay farming"
+  "*palay farming",
+  "*paano magtanim ng palay"
  ],
  "blog/palay-price-philippines": [
   "palay",
@@ -371,7 +372,8 @@
   "*maisan",
   "seeds corn",
   "grasses weeds",
-  "*pagtatanim ng mais"
+  "*pagtatanim ng mais",
+  "*paano magtanim ng mais"
  ],
  "blog/fertilizer-for-orchids": [
   "fertilizer for plants",
@@ -527,6 +529,11 @@
   "*fertilizer for coconut tree",
   "*fertilizer for coconut",
   "*fertilizer for coconut tree in philippines"
+ ],
+ "how-to-plant/mango": [
+  "pagtatanim ng puno",
+  "*how to plant mango",
+  "*paano magtanim ng mangga"
  ],
  "blog/fertilizer-and-pesticide-authority": [
   "*fertilizer pesticide authority",
@@ -700,6 +707,11 @@
   "*asian corn borer",
   "*asiatic corn borer"
  ],
+ "how-to-plant/rice": [
+  "pagtatanim ng palay",
+  "*how to plant rice",
+  "*how to plant rice in the philippines"
+ ],
  "pests/rice-leaffolder": [
   "virtako insecticide",
   "rice insect",
@@ -761,6 +773,16 @@
   "fertilizer for potatoes",
   "organic fertilizer for vegetables"
  ],
+ "how-to-plant/banana": [
+  "banana farming philippines",
+  "*how to plant banana",
+  "*paano magtanim ng saging"
+ ],
+ "how-to-plant/tomato": [
+  "pagtatanim ng gulay",
+  "*how to plant tomato",
+  "*paano magtanim ng kamatis"
+ ],
  "rice-varieties/nsic-rc-216": [
   "*rice variety 216"
  ],
@@ -785,6 +807,10 @@
   "fertilizer bag",
   "*fertilizer store near me",
   "*fertilizer company in the philippines"
+ ],
+ "how-to-plant/yellow-corn": [
+  "pagtatanim ng mais",
+  "*how to plant corn in the philippines"
  ],
  "rice-varieties/nsic-rc-402": [
   "*402 rice variety characteristics"
@@ -829,5 +855,407 @@
  ],
  "blog/multiple-cropping": [
   "*palay at mais"
+ ],
+ "how-to-plant/almond": [
+  "*almond tree philippines",
+  "*how to plant almond",
+  "*paano magtanim ng almond",
+  "*talisay almond"
+ ],
+ "how-to-plant/apple": [
+  "*apple farm digos",
+  "*how to plant apple",
+  "*paano magtanim ng mansanas"
+ ],
+ "how-to-plant/blueberry": [
+  "*ayusip benguet",
+  "*how to plant blueberry",
+  "*paano magtanim ng blueberry"
+ ],
+ "how-to-plant/santol": [
+  "*bangkok santol",
+  "*how to plant santol",
+  "*paano magtanim ng santol"
+ ],
+ "how-to-plant/cherry": [
+  "*cherry tree baguio",
+  "*how to plant cherry",
+  "*paano magtanim ng cherry"
+ ],
+ "how-to-plant/cowpea": [
+  "*cowpea after rice",
+  "*how to plant cowpea",
+  "*paano magtanim ng paayap"
+ ],
+ "how-to-plant/dragon-fruit": [
+  "*dragon fruit cuttings",
+  "*how to plant dragon fruit",
+  "*paano magtanim ng dragon fruit"
+ ],
+ "how-to-plant/garlic": [
+  "*garlic after rice",
+  "*how to plant garlic",
+  "*paano magtanim ng bawang"
+ ],
+ "how-to-plant/jackfruit": [
+  "*grafted na langka",
+  "*how to plant jackfruit",
+  "*paano magtanim ng langka"
+ ],
+ "how-to-plant/tamarind": [
+  "*grafted sampalok",
+  "*how to plant tamarind",
+  "*paano magtanim ng sampalok"
+ ],
+ "how-to-plant/abaca": [
+  "*how to plant abaca",
+  "*paano magtanim ng abaca",
+  "*paano magtanim ng abaka"
+ ],
+ "how-to-plant/alfalfa": [
+  "*how to plant alfalfa",
+  "*paano magtanim ng alfalfa"
+ ],
+ "how-to-plant/avocado": [
+  "*how to plant avocado",
+  "*paano magtanim ng avocado"
+ ],
+ "how-to-plant/bamboo": [
+  "*how to plant bamboo",
+  "*kawayan tinik planting",
+  "*paano magtanim ng kawayan"
+ ],
+ "how-to-plant/barley": [
+  "*how to plant barley",
+  "*paano magtanim ng barley"
+ ],
+ "how-to-plant/bell-pepper": [
+  "*how to plant bell pepper",
+  "*paano magtanim ng atsal",
+  "*paano magtanim ng bell pepper"
+ ],
+ "how-to-plant/bitter-gourd": [
+  "*how to plant bitter gourd",
+  "*paano magtanim ng ampalaya"
+ ],
+ "how-to-plant/bottle-gourd": [
+  "*how to plant bottle gourd",
+  "*paano magtanim ng upo"
+ ],
+ "how-to-plant/broccoli": [
+  "*how to plant broccoli",
+  "*paano magtanim ng broccoli"
+ ],
+ "how-to-plant/cabbage": [
+  "*how to plant cabbage",
+  "*paano magtanim ng repolyo"
+ ],
+ "how-to-plant/cacao": [
+  "*how to plant cacao",
+  "*paano magtanim ng cacao",
+  "*paano magtanim ng kakaw"
+ ],
+ "how-to-plant/calamansi": [
+  "*how to plant calamansi",
+  "*paano magtanim ng kalamansi"
+ ],
+ "how-to-plant/canola": [
+  "*how to plant canola",
+  "*paano magtanim ng canola"
+ ],
+ "how-to-plant/carrot": [
+  "*how to plant carrot",
+  "*paano magtanim ng carrots",
+  "*paano magtanim ng karot"
+ ],
+ "how-to-plant/cashew": [
+  "*how to plant cashew",
+  "*kasoy palawan",
+  "*paano magtanim ng kasoy"
+ ],
+ "how-to-plant/cassava": [
+  "*how to plant cassava",
+  "*paano magtanim ng kamoteng kahoy"
+ ],
+ "how-to-plant/cauliflower": [
+  "*how to plant cauliflower",
+  "*paano magtanim ng cauliflower"
+ ],
+ "how-to-plant/celery": [
+  "*how to plant celery",
+  "*paano magtanim ng celery",
+  "*paano magtanim ng kintsay"
+ ],
+ "how-to-plant/chayote": [
+  "*how to plant chayote",
+  "*paano magtanim ng sayote"
+ ],
+ "how-to-plant/chico": [
+  "*how to plant chico",
+  "*paano magtanim ng chico"
+ ],
+ "how-to-plant/chili": [
+  "*how to plant chili",
+  "*paano magtanim ng sili"
+ ],
+ "how-to-plant/citrus": [
+  "*how to plant citrus",
+  "*paano magtanim ng dalandan"
+ ],
+ "how-to-plant/coconut": [
+  "*how to plant coconut",
+  "*paano magtanim ng niyog"
+ ],
+ "how-to-plant/coffee": [
+  "*how to plant coffee",
+  "*paano magtanim ng kape"
+ ],
+ "how-to-plant/sweet-corn": [
+  "*how to plant corn, sweet",
+  "*paano magtanim ng sweet corn"
+ ],
+ "how-to-plant/glutinous-corn": [
+  "*how to plant corn, white glutinous",
+  "*paano magtanim ng mais na malagkit"
+ ],
+ "how-to-plant/cotton": [
+  "*how to plant cotton",
+  "*paano magtanim ng bulak"
+ ],
+ "how-to-plant/cucumber": [
+  "*how to plant cucumber",
+  "*paano magtanim ng pipino"
+ ],
+ "how-to-plant/durian": [
+  "*how to plant durian",
+  "*paano magtanim ng durian"
+ ],
+ "how-to-plant/eggplant": [
+  "*how to plant eggplant",
+  "*paano magtanim ng talong"
+ ],
+ "how-to-plant/ginger": [
+  "*how to plant ginger",
+  "*paano magtanim ng luya"
+ ],
+ "how-to-plant/grape": [
+  "*how to plant grape",
+  "*paano magtanim ng grapes",
+  "*paano magtanim ng ubas"
+ ],
+ "how-to-plant/guava": [
+  "*how to plant guava",
+  "*paano magtanim ng bayabas"
+ ],
+ "how-to-plant/jute-mallow": [
+  "*how to plant jute mallow",
+  "*paano magtanim ng saluyot"
+ ],
+ "how-to-plant/lanzones": [
+  "*how to plant lanzones",
+  "*paano magtanim ng lanzones"
+ ],
+ "how-to-plant/lettuce": [
+  "*how to plant lettuce",
+  "*paano magtanim ng lettuce"
+ ],
+ "how-to-plant/lima-bean": [
+  "*how to plant lima bean",
+  "*paano magtanim ng patani"
+ ],
+ "how-to-plant/malabar-spinach": [
+  "*how to plant malabar spinach",
+  "*paano magtanim ng alugbati"
+ ],
+ "how-to-plant/moringa": [
+  "*how to plant malunggay",
+  "*how to plant moringa",
+  "*paano magtanim ng malunggay"
+ ],
+ "how-to-plant/mangosteen": [
+  "*how to plant mangosteen",
+  "*mangosteen seedling",
+  "*paano magtanim ng mangosteen"
+ ],
+ "how-to-plant/melon": [
+  "*how to plant melon",
+  "*paano magtanim ng melon"
+ ],
+ "how-to-plant/mungbean": [
+  "*how to plant mungbean",
+  "*paano magtanim ng monggo"
+ ],
+ "how-to-plant/mustard": [
+  "*how to plant mustard greens",
+  "*paano magtanim ng mustasa"
+ ],
+ "how-to-plant/oats": [
+  "*how to plant oats",
+  "*paano magtanim ng oats"
+ ],
+ "how-to-plant/oil-palm": [
+  "*how to plant oil palm",
+  "*paano magtanim ng oil palm",
+  "*palm oil plantation agusan"
+ ],
+ "how-to-plant/okra": [
+  "*how to plant okra",
+  "*paano magtanim ng okra"
+ ],
+ "how-to-plant/onion": [
+  "*how to plant onion, bulb",
+  "*paano magtanim ng sibuyas"
+ ],
+ "how-to-plant/papaya": [
+  "*how to plant papaya",
+  "*paano magtanim ng papaya"
+ ],
+ "how-to-plant/peach": [
+  "*how to plant peach",
+  "*paano magtanim ng peach",
+  "*peach tree baguio"
+ ],
+ "how-to-plant/peanut": [
+  "*how to plant peanut",
+  "*paano magtanim ng mani"
+ ],
+ "how-to-plant/pear": [
+  "*how to plant pear",
+  "*paano magtanim ng peras",
+  "*pear tree baguio"
+ ],
+ "how-to-plant/pechay": [
+  "*how to plant pechay",
+  "*paano magtanim ng pechay"
+ ],
+ "how-to-plant/pigeon-pea": [
+  "*how to plant pigeon pea",
+  "*paano magtanim ng kadyos"
+ ],
+ "how-to-plant/pineapple": [
+  "*how to plant pineapple",
+  "*paano magtanim ng pinya"
+ ],
+ "how-to-plant/pomelo": [
+  "*how to plant pomelo",
+  "*paano magtanim ng suha"
+ ],
+ "how-to-plant/potato": [
+  "*how to plant potato",
+  "*paano magtanim ng patatas"
+ ],
+ "how-to-plant/purple-yam": [
+  "*how to plant purple yam",
+  "*paano magtanim ng ube",
+  "*paano magtanim ng ubi"
+ ],
+ "how-to-plant/radish": [
+  "*how to plant radish",
+  "*paano magtanim ng labanos"
+ ],
+ "how-to-plant/rambutan": [
+  "*how to plant rambutan",
+  "*paano magtanim ng rambutan"
+ ],
+ "how-to-plant/rubber": [
+  "*how to plant rubber",
+  "*paano magtanim ng goma"
+ ],
+ "how-to-plant/shallot": [
+  "*how to plant shallot",
+  "*paano magtanim ng sibuyas tagalog",
+  "*sibuyas tagalog"
+ ],
+ "how-to-plant/sorghum": [
+  "*how to plant sorghum",
+  "*paano magtanim ng sorghum"
+ ],
+ "how-to-plant/soursop": [
+  "*how to plant soursop",
+  "*paano magtanim ng guyabano"
+ ],
+ "how-to-plant/soybean": [
+  "*how to plant soybean",
+  "*paano magtanim ng soybeans"
+ ],
+ "how-to-plant/sponge-gourd": [
+  "*how to plant sponge gourd",
+  "*paano magtanim ng patola"
+ ],
+ "how-to-plant/spring-onion": [
+  "*how to plant spring onion",
+  "*paano magtanim ng dahon ng sibuyas",
+  "*sibuyas dahon"
+ ],
+ "how-to-plant/squash": [
+  "*how to plant squash",
+  "*paano magtanim ng kalabasa"
+ ],
+ "how-to-plant/star-apple": [
+  "*how to plant star apple",
+  "*kaimito seedlings",
+  "*paano magtanim ng kaimito"
+ ],
+ "how-to-plant/strawberry": [
+  "*how to plant strawberry",
+  "*paano magtanim ng strawberry",
+  "*strawberry runners"
+ ],
+ "how-to-plant/string-bean": [
+  "*how to plant string bean",
+  "*paano magtanim ng sitaw"
+ ],
+ "how-to-plant/sugar-apple": [
+  "*how to plant sugar apple",
+  "*paano magtanim ng atis"
+ ],
+ "how-to-plant/sugar-beet": [
+  "*how to plant sugar beet",
+  "*paano magtanim ng sugar beet",
+  "*sugar beet philippines",
+  "*tropical sugar beet"
+ ],
+ "how-to-plant/sugarcane": [
+  "*how to plant sugarcane",
+  "*paano magtanim ng tubo"
+ ],
+ "how-to-plant/sunflower": [
+  "*how to plant sunflower",
+  "*paano magtanim ng mirasol",
+  "*paano magtanim ng sunflower"
+ ],
+ "how-to-plant/sweet-potato": [
+  "*how to plant sweet potato",
+  "*paano magtanim ng kamote"
+ ],
+ "how-to-plant/taro": [
+  "*how to plant taro",
+  "*paano magtanim ng gabi"
+ ],
+ "how-to-plant/tobacco": [
+  "*how to plant tobacco",
+  "*paano magtanim ng tabako"
+ ],
+ "how-to-plant/turmeric": [
+  "*how to plant turmeric",
+  "*paano magtanim ng luyang dilaw",
+  "*paano magtanim ng turmeric"
+ ],
+ "how-to-plant/water-spinach": [
+  "*how to plant water spinach",
+  "*paano magtanim ng kangkong",
+  "*paano magtanim ng upland kangkong"
+ ],
+ "how-to-plant/watermelon": [
+  "*how to plant watermelon",
+  "*paano magtanim ng pakwan"
+ ],
+ "how-to-plant/wheat": [
+  "*how to plant wheat",
+  "*paano magtanim ng trigo"
+ ],
+ "how-to-plant/winged-bean": [
+  "*how to plant winged bean",
+  "*paano magtanim ng sigarilyas"
  ]
 }

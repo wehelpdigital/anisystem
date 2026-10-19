@@ -92,6 +92,9 @@
   "how to grow apple in the philippines"
  ],
  "confidence": "low",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍎",
  "slug": "apple",
- "rev": "8b6595a9722a"
+ "rev": "5bd0a09be952"
 }

@@ -49,7 +49,17 @@
         @case('steps')
             <div class="sp-steps">
                 @foreach ((array) ($b['items'] ?? []) as $it)
-                    <div class="sp-step"><b>{{ $it['title'] ?? '' }}</b><p>{!! $S::inline($it['text'] ?? '') !!}</p></div>
+                    <div class="sp-step"><b>{{ $it['title'] ?? '' }}</b><p>{!! $S::inline($it['text'] ?? '') !!}</p>
+                        {{-- A step done in parts (How to Plant, 2026-10-19): numbered under it, each with its time. --}}
+                        @if (! empty($it['parts']) && is_array($it['parts']))
+                            <ol class="sp-parts">
+                                @foreach ($it['parts'] as $pt)
+                                    @continue(! is_array($pt) || trim((string) ($pt['title'] ?? '')) === '')
+                                    <li><b>{{ $pt['title'] }}</b>@if (! empty($pt['time']))<span class="sp-ptime">{{ $pt['time'] }}</span>@endif<span>{!! $S::inline($pt['text'] ?? '') !!}</span></li>
+                                @endforeach
+                            </ol>
+                        @endif
+                    </div>
                 @endforeach
             </div>
             @break

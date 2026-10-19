@@ -13,7 +13,7 @@
  "water": "Upo dislikes soggy soil, which brings disease, so wet season fields need drainage canals and ridges. In the dry season the furrows are irrigated about once a week, and a ring of rice straw at the foot of each plant keeps the soil damp longer.",
  "fertilizer": "Well rotted manure and about 20 grams of 14 14 14 a hill at planting, covered with soil. About 10 grams of urea a hill at 30 days, and about 20 grams of urea with 10 grams of muriate of potash a hill at 45 days, placed some 10 cm from the stem.",
  "care": "An overhead trellis about 2 meters high on ipil ipil or bamboo, with a pole or string for each plant. Vines are tied as they climb, the shoots and female buds below the roof are removed, and the vine tip is cut at the roof. Hilling up at 15 to 20 days, then only hand weeding once the vines bear. Yellow beetles are picked by hand, and some farmers dust wood ash on the leaves.",
- "harvest": "Fruits are cut about 15 days after they set, 60 to 80 days after sowing, with a sharp knife leaving about 5 cm of stalk. Because they grow fast the trellis is checked every day or two. Fruits are laid in bamboo baskets lined with banana leaves, then packed in plastic bags or crates. Fully mature fruits with a hard rind are kept for seed or dried for containers and crafts.",
+ "harvest": "Fruits are cut about 15 days after they set, 60 to 80 days after sowing, with a sharp knife leaving about 5 cm of stalk. Because they grow fast the trellis is checked every day or two. Fruits are laid in bamboo baskets with banana leaves at the bottom, then packed in plastic bags or crates. Fully mature fruits with a hard rind are kept for seed or dried for containers and crafts.",
  "ways": [
   {
    "key": "direct",
@@ -163,6 +163,9 @@
   "bottle gourd production guide philippines"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥒",
  "slug": "bottle-gourd",
- "rev": "812f641b22ca"
+ "rev": "20e02f6dec37"
 }

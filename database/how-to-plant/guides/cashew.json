@@ -130,6 +130,9 @@
   "cashew farming philippines"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🥜",
  "slug": "cashew",
- "rev": "e2a2fd45eaac"
+ "rev": "e6ecec96a36e"
 }

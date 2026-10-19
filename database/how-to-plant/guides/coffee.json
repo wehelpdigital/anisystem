@@ -35,7 +35,41 @@
      "day": -365,
      "title": "Sow fresh seeds in a seedbed",
      "how": "Pick fully red berries from your heaviest bearing trees, remove the pulp, wash the beans and sow them flat side down in a bed of sand or fine loam under shade. Keep the bed moist. Sprouts come up in about six to eight weeks.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Pick seed berries from your best trees",
+       "how": "Choose fully red, sound berries from healthy trees that bear heavily and show no pest or disease. About three quarters of a kilo of seed plants a hectare, so gather about half again as much to cover seed that fails and gaps to refill later."
+      },
+      {
+       "title": "Pulp and soak the beans",
+       "how": "Squeeze the skins off by hand or pass the berries through a pulper, then leave the beans under clean water for about a day so the slippery coat loosens.",
+       "time": "about 24 hours"
+      },
+      {
+       "title": "Wash and throw out the floaters",
+       "how": "Rub and wash the beans clean, stir them in fresh water and skim off every bean that floats. Keep only the heavy seed that stays at the bottom."
+      },
+      {
+       "title": "Dry the seed in the shade",
+       "how": "Spread the washed seed thinly on a raised tray or in a shaded, airy room and let it air dry for about four days, with its parchment skin still on. Never dry seed in hot sun.",
+       "time": "at least 4 days",
+       "tip": "Sow it soon after: coffee seed loses its life within a few months of picking."
+      },
+      {
+       "title": "Make a raised seedbed",
+       "how": "In a shaded spot, raise a bed about 1 m wide and about 15 cm high. Fill the top with loose soil mixed about half and half with river sand, because heavy red soil alone packs too hard for the sprouts."
+      },
+      {
+       "title": "Sow flat side down",
+       "how": "Water the bed, then draw shallow lines about 1 cm deep and about 10 cm apart across it. Lay the beans flat side down about 2 cm apart along each line and cover them thinly with the same mix."
+      },
+      {
+       "title": "Mulch and keep it damp",
+       "how": "Cover the bed with rice straw and water it gently so the seed stays damp but never soggy. The first roots push out after about three to four weeks, and the stems lift the seed caps out of the soil some weeks later.",
+       "time": "about 25 days to the first sprouts"
+      }
+     ]
     },
     {
      "phase": "nursery",
@@ -43,21 +77,82 @@
      "title": "Move sprouts into bags",
      "how": "When the two round seed leaves open, lift the young plants gently and set each one in a plastic bag of garden soil mixed with compost or rotted manure. Keep the bags under partial shade and water them often.",
      "task": "seedbed",
-     "tip": "Throw away seedlings with bent or curled roots. They grow poorly in the field."
+     "tip": "Throw away seedlings with bent or curled roots. They grow poorly in the field.",
+     "parts": [
+      {
+       "title": "Mix fresh potting soil",
+       "how": "Sieve fertile topsoil and mix about five parts of it with one part of dry manure or compost. Use new soil each time, never soil from old bags, which can carry the fungus that makes young seedlings fall over and die."
+      },
+      {
+       "title": "Fill and wet the bags",
+       "how": "Fill black plastic bags of about 6 by 8 inches that have small holes for drainage. Water them well before moving the seedlings, so the soil settles."
+      },
+      {
+       "title": "Lift them at the butterfly stage",
+       "how": "Move the seedlings when the two round seed leaves have just opened, or earlier while the stem still stands straight like a matchstick. Lift each one with a stick or trowel so the roots do not tear, and keep only those with a straight taproot and plenty of fine roots.",
+       "tip": "A root bent like the letter J never straightens, and that tree stays weak in the field."
+      },
+      {
+       "title": "Plant at the same depth",
+       "how": "On a cool, cloudy day, poke a hole about 5 cm deep in each bag, set the seedling in and lift it a little so the root hangs straight. Firm the soil at the same depth it grew in the bed and water it."
+      },
+      {
+       "title": "Line the bags up under shade",
+       "how": "Stand the bags in rows inside a bamboo or wooden frame so they do not tip over, under a roof of bamboo slats, branches or shade net that cuts about half the sun. Pull weeds and water to keep the soil damp, never soggy."
+      },
+      {
+       "title": "Give the seedlings room",
+       "how": "As the plants grow, move the bags apart so the leaves do not crowd each other, or the seedlings grow tall and thin. Take out any bag with a sick or dead plant."
+      }
+     ]
     },
     {
      "phase": "prep",
      "day": -60,
      "title": "Clear, stake and dig the holes",
      "how": "Slash the weeds, keep any tree that can give shade or break the wind, and stake a straight line along the edge of the field. Dig holes about 40 to 60 cm wide and deep, fill them back with the topsoil mixed with compost, and leave them to settle until planting.",
-     "task": "land_prep"
+     "task": "land_prep",
+     "parts": [
+      {
+       "title": "Run a base line",
+       "how": "Stretch a straight line along one edge of the field and stake every planting spot from it at your spacing, for example 2 by 3 m for Robusta grown alone."
+      },
+      {
+       "title": "Dig the holes",
+       "how": "Dig each hole about 40 cm wide, long and deep, or up to about 60 cm each way, so the young roots spread easily. Keep the dark topsoil on one side."
+      },
+      {
+       "title": "Fill back with topsoil and compost",
+       "how": "Mix the topsoil with compost and return it to the hole, so the seedling roots into loose, fed soil."
+      },
+      {
+       "title": "Let the holes settle",
+       "how": "Leave the filled holes for about two months before planting, so the soil settles and the compost starts to feed the soil.",
+       "time": "about 2 months"
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -60,
      "title": "Harden the seedlings",
      "how": "One to two months before planting, move the bags into more sunlight and water a little less, so the leaves toughen before they face the field.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Open the shade little by little",
+       "how": "About two months before field planting, start thinning the shade a little at a time, so the seedlings get used to full light over several weeks.",
+       "time": "1 to 2 months"
+      },
+      {
+       "title": "Water a little less",
+       "how": "Give the bags less water than before, enough to keep the plants from wilting, so the leaves and stems toughen."
+      },
+      {
+       "title": "Check that they are ready",
+       "how": "A seedling is ready for the field when it has six to eight pairs of leaves, which takes about a year from sowing."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -144,7 +239,46 @@
      "day": 1082,
      "title": "Dry and hull the beans",
      "how": "Most small farmers sun dry the whole berries on mats, nets or raised trays, turning them often and covering them at night and in rain, until the beans rattle inside the dry skin. Then they are hulled and kept in clean sacks off the floor in a dry room.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Sort the berries the same day",
+       "how": "Pour the picked berries into water and skim off the ones that float, which are light, dry or bored by insects. Pick out green, black and overripe berries by hand.",
+       "tip": "Never mix fresh berries with yesterday's berries that have started to ferment, or the whole lot spoils."
+      },
+      {
+       "title": "Start drying within 12 hours",
+       "how": "Spread the berries to dry within about half a day of picking, so they do not sour in the sack.",
+       "time": "within 12 hours"
+      },
+      {
+       "title": "Spread them thin and off the ground",
+       "how": "Lay the berries on raised bamboo or net trays, or on a clean cement floor, never on bare soil, in a layer no deeper than about an inch. Beans dried on the ground pick up dirt and taste of grass."
+      },
+      {
+       "title": "Rake two or three times a day",
+       "how": "Stir or rake the berries two or three times a day so they dry evenly, and pile and cover them at night and whenever rain comes.",
+       "time": "2 to 3 times a day"
+      },
+      {
+       "title": "Dry for two to three weeks",
+       "how": "Sun drying takes about two to three weeks for Robusta and Arabica, and about three weeks for the big Liberica (barako) and Excelsa berries. The moisture should come down to about 12 to 14 percent.",
+       "time": "10 days to 3 weeks"
+      },
+      {
+       "title": "Shake to test",
+       "how": "Shake a handful of berries: when they rattle, the beans are dry. Stop there, because overdried beans turn brittle and break at the huller, and damp ones grow mold in storage."
+      },
+      {
+       "title": "Hull, sort and store",
+       "how": "Hull the dry berries, then pick out black, broken and moldy beans by hand. Keep the green beans in clean sacks on pallets in a cool, dry room."
+      },
+      {
+       "title": "Or make washed coffee",
+       "how": "Farmers who sell washed coffee remove the pulp within a day of picking, let the wet beans ferment in a tank of water for about 18 to 24 hours, wash them clean and then dry them the same way.",
+       "time": "18 to 24 hours of fermenting"
+      }
+     ]
     }
    ],
    "note": "The first real picking comes in the third year after field planting, about 36 months (1,080 days). Arabica on a good site can start a little earlier."
@@ -183,6 +317,9 @@
   "arabica coffee farming philippines"
  ],
  "confidence": "high",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "☕",
  "slug": "coffee",
- "rev": "432eae5c09ff"
+ "rev": "6b2d0f7d03e0"
 }

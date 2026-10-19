@@ -91,6 +91,9 @@
   "how to plant oats"
  ],
  "confidence": "low",
+ "shelf": "corn",
+ "kind": "annual",
+ "icon": "🌾",
  "slug": "oats",
- "rev": "ad90907b424f"
+ "rev": "be6abdf559a8"
 }

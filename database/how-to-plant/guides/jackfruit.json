@@ -177,6 +177,9 @@
   "jackfruit farming"
  ],
  "confidence": "high",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍈",
  "slug": "jackfruit",
- "rev": "91ef092d505a"
+ "rev": "ed6ed2466e93"
 }

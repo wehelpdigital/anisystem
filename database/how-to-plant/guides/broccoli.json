@@ -1,0 +1,175 @@
+{
+ "crop": "broccoli",
+ "name": "Broccoli",
+ "local": "Brokoli",
+ "aka": [],
+ "summary": "How Filipino highland farmers usually grow brokoli from seedlings set out on beds, from the seedbed to cutting the green heads about two months after transplanting. For growers in Benguet, Bukidnon and other cool uplands, and for lowland farmers trying it in the coolest months.",
+ "season": "Broccoli is a cool weather crop. In mid and high elevations such as Benguet, Ilocos Sur uplands and Bukidnon it is grown through the year. In the lowlands it only does well in the coolest months, roughly November to February. In heat the heads stay small and loose.",
+ "material": "Seed, about 280 g a hectare, sown in a seedbed of about 50 to 70 square meters for each hectare. Seedlings are ready to transplant about four weeks after sowing, after a week of hardening in full sun.",
+ "spacing": "Rows 50 to 75 cm apart with plants 30 to 50 cm apart, or double rows on 75 cm to 1 m beds with holes about 30 by 40 cm. One seedling a hole.",
+ "water": "Watered before and right after transplanting, then by furrow every 7 to 10 days or by sprinkler two to three times a week in dry weather. Mulch cuts the watering.",
+ "fertilizer": "Rotted chicken manure with carbonized rice hull worked into the beds, a little 14 14 14 in each hole at transplanting, and a side dressing of urea, often mixed with potash, two to three weeks later. Many growers add manure tea or fermented plant juice every week or two.",
+ "care": "Raising seedlings under a net tunnel, mulching the beds, weeding before each side dressing, intercropping with onion family crops or marigold, and close watch for diamondback moth.",
+ "harvest": "Heads are cut while tight and green, usually 50 to 70 days after transplanting, with a piece of stem and some leaves. Growers cut early in the morning and keep the heads cool. Side shoots give a smaller second picking.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Seedbed then transplant (punla at lipat tanim)",
+   "days": 60,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -28,
+     "title": "Sow the seedbed",
+     "how": "Make a seedbed 1 m wide, work in manure plus some ash from rice hull or wood, draw lines across the bed 7 to 10 cm apart and sow thinly. Spread rice hull or cut grass over the lines and keep the bed moist.",
+     "task": "seedbed",
+     "tip": "A net tunnel over the seedbed gives shade and keeps off hard rain.",
+     "parts": [
+      {
+       "title": "Size the seedbed",
+       "how": "For one hectare, a seedbed about 1 m wide and long enough to make 50 to 70 square meters raises the seedlings, from about 280 grams of seed."
+      },
+      {
+       "title": "Work in manure and ash",
+       "how": "Mix rotted manure and some rice hull ash or wood ash into the bed and rake it fine and level."
+      },
+      {
+       "title": "Sow thinly in cross lines",
+       "how": "Draw shallow lines across the bed about 7 to 10 cm apart and sow thinly along them. Crowded seedlings stay damp at the base and fall over from damping off."
+      },
+      {
+       "title": "Mulch, water and cover",
+       "how": "Spread rice hull or grass clippings lightly over the lines and water regularly. A tunnel of nylon net over the bed shades the seedlings and breaks the force of heavy rain."
+      },
+      {
+       "title": "Ready in about four weeks",
+       "how": "Take the net off for the last week so the seedlings toughen in full sun. They are ready to transplant about four weeks from sowing.",
+       "time": "about 4 weeks"
+      }
+     ]
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow and harrow well",
+     "how": "Plow and harrow several times until the soil is fine and free of weeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "Take the cover off and give the seedlings full sun in their last week.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Make beds or furrows with manure",
+     "how": "In the highlands make beds 75 cm to 1 m wide. In lower areas make deep furrows about 50 cm wide. Mix in about 1 kg of rotted chicken manure and 300 g of carbonized rice hull a square meter.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilize the holes and transplant",
+     "how": "Make holes 30 to 50 cm apart, in rows 50 to 75 cm apart or in double rows on beds. Wet the holes, put a little 14 14 14 in each and cover lightly, then set one seedling a hole and water.",
+     "task": "planting",
+     "parts": [
+      {
+       "title": "Water the seedbed first",
+       "how": "Water the seedbed well before lifting, and pull the seedlings out gently so most roots come up with soil on them."
+      },
+      {
+       "title": "Water the holes before and after",
+       "how": "In dry weather, wet the field before planting, set one seedling a hole and water again right after, so the roots sit in moist soil from the start."
+      },
+      {
+       "title": "Plant in the cool hours",
+       "how": "Move and plant the seedlings in the late afternoon or on a cloudy day, and keep the lifted seedlings shaded until each one is in the ground."
+      }
+     ]
+    },
+    {
+     "phase": "planting",
+     "day": 1,
+     "title": "Mulch the beds",
+     "how": "Lay rice straw, rice hull or plastic mulch to hold moisture and stop weeds. Many growers plant onion, garlic, kutsay or marigold along the rows to help keep insects away.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water on schedule",
+     "how": "In dry weather water by furrow every 7 to 10 days, or two to three times a week by sprinkler.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Scout for worms and moths",
+     "how": "Check the leaves and growing tip for diamondback moth larvae, loopers, webworms and aphids. Clear old crop debris from the field edges.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Weed, then side dress",
+     "how": "Pull the weeds first, then give each plant a small side dressing of urea, or urea mixed with muriate of potash, two to three weeks after transplanting.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Keep it cold and shaded",
+     "how": "Harvest early in the morning and keep the heads out of the heat. They turn yellow fast when warm.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Cut the main head",
+     "how": "Cut the head while the buds are tight, dark green and before any yellow flowers open, about 50 to 70 days after transplanting depending on the variety. Leave some stem and a few leaves on.",
+     "task": "harvest",
+     "tip": "Small side heads that grow after the main cut can be picked later."
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting in the warm months in the lowlands, so the heads stay small and loose.",
+  "Sowing the seedbed too thick, which brings damping off.",
+  "Fertilizing over weeds instead of weeding first.",
+  "Growing broccoli after cabbage family crops on the same beds again and again.",
+  "Cutting late, after the buds open into yellow flowers."
+ ],
+ "better": [
+  "Choose a variety for your elevation and season and buy fresh seed.",
+  "Test the soil, lime sour soils and feed by the result.",
+  "Raise clean seedlings under a net tunnel and harden them before transplanting.",
+  "Rotate with crops outside the cabbage family and remove old crop debris to cut diamondback moth.",
+  "Scout twice a week and act only when pests build up.",
+  "Harvest on time in the cool morning and keep heads cold to market."
+ ],
+ "video": {
+  "youtubeId": "B4QT3huzf1k",
+  "title": "Broccoli Farm, Ideas Para sa Pagpa farm ng Broccoli.",
+  "channel": "Jose Farming Solo",
+  "lang": "fil",
+  "minutes": 13,
+  "why": "A Filipino grower shows a broccoli field and how seedlings are raised and planted, by hand or by machine, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng broccoli",
+  "pagtatanim ng broccoli",
+  "broccoli farming sa benguet",
+  "how to plant broccoli in the philippines",
+  "broccoli farming philippines"
+ ],
+ "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥦",
+ "slug": "broccoli",
+ "rev": "faa5b3b3ea28"
+}

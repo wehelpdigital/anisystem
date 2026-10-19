@@ -1,0 +1,287 @@
+{
+ "section": "how-to-plant",
+ "slug": "apple",
+ "lang": "en",
+ "category": "Fruits and Plantation Crops",
+ "sortOrder": 910,
+ "title": "Paano Magtanim ng Mansanas: How to Plant Apple the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Mansanas: The Traditional Way",
+ "metaDescription": "Paano magtanim ng mansanas? See how traditional farmers plant mansanas step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng mansanas",
+ "keywords": [
+  "paano magtanim ng mansanas",
+  "apple farm digos",
+  "how to plant apple"
+ ],
+ "excerpt": "Paano magtanim ng mansanas? Here is how traditional Filipino farmers usually plant mansanas (apple), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/photos/hero-planting.jpg",
+  "alt": "A farm worker planting in a field",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant mansanas. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "Apple is rare in the Philippines: there is no traditional apple farming here, only a few growers in cool highlands, best known a farm in Kapatagan, Digos City on the slopes of Mt. Apo, and hobby trees in Baguio and Benguet. This short guide shows how those few growers do it with grafted low chill types and by stripping leaves and bending branches to make the tree flower without a winter.\n\nBefore you plant, get the field ready with our [land preparation guide for fruit and plantation trees](/land-preparation/fruit-tree-land-preparation). For more on the crop, read [pagtatanim ng puno](/crops/pagtatanim-ng-puno)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant mansanas"
+  },
+  {
+   "type": "text",
+   "text": "Trees are planted at the start of the rains, about May to July. With no winter, growers make their own seasons: after each harvest they strip the leaves and bend the branches, and the tree flowers again, so some trees give two small crops a year."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Grafted trees of low chill apple types, which need little cold, bought from a specialty nursery or grafted on hardy rootstock. Trees from the seeds of store apples grow but rarely bear good fruit, and take many years."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng mansanas, step by step"
+  },
+  {
+   "type": "text",
+   "text": "Grafted trees in warm places can set a few fruits within a year, but we count the first real harvest at about 36 months (1,080 days). The crop is ready about 3 years after planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before planting: Pick a cool, sunny, well drained spot",
+     "text": "Choose the coolest high ground you have, in full sun, where water never stands. Dig holes about 50 cm wide and deep and mix the topsoil with rotted manure or compost."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Planting day: Plant at the start of the rains",
+     "text": "Set the grafted tree at the same depth it grew, graft joint above the soil, firm the soil, water and stake it. Growers plant about 3 to 4 m apart. Trials used rows as close as 3 m x 1 m."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 7: Mulch, water and feed lightly",
+     "text": "Mulch the base, water in dry spells, and give compost or manure with a little complete fertilizer (14 14 14) every few months."
+    },
+    {
+     "title": "Month 6: Bend the long branches",
+     "text": "Pull long upright branches down toward level and tie them with string to stakes or the trunk. Bent branches form flower buds instead of only leaves."
+    },
+    {
+     "title": "Month 12: Strip the leaves to force flowers",
+     "text": "When the leaves are mature and growth stops, pick off the leaves by hand. New leaves and flowers push out in the following weeks. Growers repeat this after each crop, about twice a year."
+    },
+    {
+     "title": "Month 13: Thin and watch the fruit",
+     "text": "Keep one or two fruits per cluster and remove the rest so they size up. Watch for fruit flies and bag young fruits in paper or net bags."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Year 3: Pick colored, firm fruit",
+     "text": "We count the first real crop at about three years. Pick when the fruit has colored, comes off with a gentle lift and twist, and the seeds inside are brown."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for mansanas"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "About 3 to 4 m between trees for home and small farm plantings. Trials used close rows of 3 m x 1 m with small, bent trees."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Rain fed, with watering in dry spells. Apples dislike waterlogged roots, so they go on sloping or raised ground."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Compost and rotted manure, with small amounts of complete fertilizer (14 14 14) every few months. More potash as fruit fills. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-fruit-trees)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Branch bending, leaf stripping after each crop to bring on flowers, light pruning to keep the tree small and open, fruit thinning and bagging."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Fruit is picked when colored and firm, with brown seeds, a few months after flowering. Crops are small, and most fruit is sold to visitors or eaten at home."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting mansanas"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Planting seeds from store apples and expecting fruit.",
+    "Buying high chill types that never flower without a real winter.",
+    "Letting branches grow straight up, so the tree makes leaves and no flowers.",
+    "Planting in low, wet ground."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of mansanas"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Buy grafted low chill varieties from a nursery you trust.",
+    "Plant only on the coolest high ground you have.",
+    "Strip leaves and bend branches on a schedule after each crop.",
+    "Test the soil and feed by the result. Bag fruit against flies."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=apple) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your mansanas season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting mansanas"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng mansanas?",
+     "a": "Apple is rare in the Philippines: there is no traditional apple farming here, only a few growers in cool highlands, best known a farm in Kapatagan, Digos City on the slopes of Mt. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant mansanas in the Philippines?",
+     "a": "Trees are planted at the start of the rains, about May to July. With no winter, growers make their own seasons: after each harvest they strip the leaves and bend the branches, and the tree flowers again, so some trees give two small crops a year."
+    },
+    {
+     "q": "How far apart do you plant mansanas?",
+     "a": "About 3 to 4 m between trees for home and small farm plantings. Trials used close rows of 3 m x 1 m with small, bent trees."
+    },
+    {
+     "q": "How long before mansanas can be harvested?",
+     "a": "It is ready about 3 years after planting. Fruit is picked when colored and firm, with brown seeds, a few months after flowering."
+    },
+    {
+     "q": "What do you plant to grow mansanas?",
+     "a": "Grafted trees of low chill apple types, which need little cold, bought from a specialty nursery or grafted on hardy rootstock. Trees from the seeds of store apples grow but rarely bear good fruit, and take many years."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for fruit and plantation trees",
+     "url": "/land-preparation/fruit-tree-land-preparation"
+    },
+    {
+     "label": "Pagtatanim ng puno",
+     "url": "/crops/pagtatanim-ng-puno"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

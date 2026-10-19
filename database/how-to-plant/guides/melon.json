@@ -152,6 +152,9 @@
   "muskmelon farming philippines"
  ],
  "confidence": "low",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🍈",
  "slug": "melon",
- "rev": "f601fb7093dd"
+ "rev": "10919d5edea4"
 }

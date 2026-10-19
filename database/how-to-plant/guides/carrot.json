@@ -94,7 +94,7 @@
      "phase": "harvest",
      "day": 90,
      "title": "Pull the roots",
-     "how": "Two to three months after sowing, once the lower leaves yellow and the roots have filled out, ease the soil loose with a spading fork and pull the carrots out carefully.",
+     "how": "Two to three months after sowing, once the lower leaves start to yellow and the roots have reached market size, push a spading fork in beside the row to free the soil, then lift the carrots out gently.",
      "task": "harvest"
     }
    ]
@@ -131,6 +131,9 @@
   "carrot farming philippines"
  ],
  "confidence": "high",
+ "shelf": "roots",
+ "kind": "annual",
+ "icon": "🥕",
  "slug": "carrot",
- "rev": "ecb0ae04bcbc"
+ "rev": "29988828b579"
 }

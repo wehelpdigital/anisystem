@@ -25,14 +25,56 @@
      "day": -36,
      "title": "Sow in the seedbed",
      "how": "Make seedbeds about 1 by 10 m, mix in rotted chicken manure and carbonized rice hull, wet the bed and draw shallow lines 7 to 10 cm apart. Sow the soaked seed thinly, cover lightly and mulch with rice hull or chopped straw.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Soak the seed, then air dry it",
+       "how": "Soak the seed in warm water for a few hours so it sprouts quickly and evenly. Spread it on paper or a cloth in the shade to dry a little, so the tiny seeds do not stick together in the hand.",
+       "time": "a few hours"
+      },
+      {
+       "title": "Ready the beds",
+       "how": "For one hectare of lettuce, about five seedbeds of 1 by 10 m are enough. Crush the soil fine and mix in about 1 kg of rotted chicken manure and 300 grams of carbonized rice hull for every square meter."
+      },
+      {
+       "title": "Clean the soil if you can",
+       "how": "Some growers wet the seedbed with wood vinegar or a homemade microbe mix before sowing to keep down the fungi that kill young seedlings."
+      },
+      {
+       "title": "Wet the bed and sow in lines",
+       "how": "Water the bed first, then draw shallow lines across it about 7 to 10 cm apart. Sprinkle the seed thinly along the lines and cover it with only a light dusting of soil."
+      },
+      {
+       "title": "Mulch and water daily",
+       "how": "Cover the lines thinly with coir fiber, fine rice hull or straw chopped short to keep the top moist, and water every day with a fine sprinkler can."
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -21,
      "title": "Prick out the seedlings",
      "how": "At the two leaf stage, about two weeks after sowing, move the seedlings to another bed or to trays so each has room. Give light shade in hot weather and a plastic roof in the rains.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Wait for two leaves",
+       "how": "Prick the seedlings when they show their first two leaves, about two weeks after sowing."
+      },
+      {
+       "title": "Fill the trays",
+       "how": "Fill nursery trays or another bed with a loose mix that has vermicompost in it. The rich, soft mix helps the moved seedlings recover quickly."
+      },
+      {
+       "title": "Move one seedling a cell",
+       "how": "Lift the seedlings with a little soil on the roots, holding them by a leaf, and set one in each tray cell. Firm the mix around it and water gently."
+      },
+      {
+       "title": "Shade in the dry months, roof in the rains",
+       "how": "Keep the trays under light shade in the hot season and under a plastic roof in the rainy season, and water every day. They go to the field about three weeks after pricking.",
+       "time": "about 3 weeks"
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -137,6 +179,9 @@
   "lettuce farming benguet"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
  "slug": "lettuce",
- "rev": "6996737a1033"
+ "rev": "e7bb7bf53699"
 }

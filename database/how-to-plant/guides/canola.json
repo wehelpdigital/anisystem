@@ -93,6 +93,9 @@
   "rapeseed philippines highlands"
  ],
  "confidence": "low",
+ "shelf": "industrial",
+ "kind": "annual",
+ "icon": "🌼",
  "slug": "canola",
- "rev": "33a128b62554"
+ "rev": "898cede19891"
 }

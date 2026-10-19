@@ -155,6 +155,9 @@
   "cotton after rice ilocos"
  ],
  "confidence": "medium",
+ "shelf": "industrial",
+ "kind": "annual",
+ "icon": "🌾",
  "slug": "cotton",
- "rev": "4ddac59693e7"
+ "rev": "a9ff8ea06b7d"
 }

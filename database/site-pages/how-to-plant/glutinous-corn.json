@@ -1,0 +1,333 @@
+{
+ "section": "how-to-plant",
+ "slug": "glutinous-corn",
+ "lang": "en",
+ "category": "Corn and Sorghum",
+ "sortOrder": 40,
+ "title": "Paano Magtanim ng Mais na Malagkit: How to Plant Corn, White Glutinous the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Mais na Malagkit: The Traditional Way",
+ "metaDescription": "Paano magtanim ng mais na malagkit? See how traditional farmers plant mais na malagkit step by step, with the days and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng mais na malagkit",
+ "keywords": [
+  "paano magtanim ng mais na malagkit",
+  "how to plant corn, white glutinous"
+ ],
+ "excerpt": "Paano magtanim ng mais na malagkit? Here is how traditional Filipino farmers usually plant mais na malagkit (corn, white glutinous), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
+  "alt": "A cornfield on a hillside in Pilar, Capiz, its leaves drying close to harvest",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant mais na malagkit. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers grow white glutinous corn, the sticky kind boiled or roasted fresh and used in native snacks. Many still plant saved seed of native varieties with the carabao plow, on small lowland plots and on hillsides.\n\nBefore you plant, get the field ready with our [land preparation guide for corn](/land-preparation/corn-land-preparation). Then choose your seed or planting material with the [mais na malagkit varieties sold here](/crop-varieties/corn). If the leaves turn pale later on, the [mais na malagkit nutrient deficiency guide](/nutrient-deficiencies/corn-nutrient-deficiency) helps you find what is missing. For more on the crop, read [pagtatanim ng mais in Tagalog](/crops/pagtatanim-ng-mais)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant mais na malagkit"
+  },
+  {
+   "type": "text",
+   "text": "Planted with the rains from April to June and again from September to December. Where water is available it is grown all year for the fresh ear market."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Seed saved from the best, fully dried ears of the last crop, using the plump kernels from the middle of the ear, or bought hybrid glutinous seed. Saved seed is kept dry in a closed container until planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng mais na malagkit, step by step"
+  },
+  {
+   "type": "text",
+   "text": "The days count to the fresh ear harvest. Ears kept for seed stay on the plant until about 90 to 100 days. The crop is ready about 72 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "21 days before sowing: Plow the field",
+     "text": "Plow once with a carabao or a hand tractor when the soil is moist enough."
+    },
+    {
+     "title": "10 days before sowing: Harrow",
+     "text": "Harrow one or two times to break the clods and kill sprouting weeds."
+    },
+    {
+     "title": "1 day before sowing: Open the furrows",
+     "text": "Open furrows about 75 cm apart with the carabao plow."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Drop the seed and cover",
+     "text": "Drop one or two seeds every 20 to 30 cm along the furrow and cover them with the foot. On hillsides farmers poke holes with a pointed stick and drop a few seeds in each."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 7: Replant the misses",
+     "text": "Replant empty hills in the first week."
+    },
+    {
+     "title": "Day 14: Off barring and weeding",
+     "text": "Plow along the rows with the soil thrown away from the plants to cut the weeds, then hand pull the weeds in the rows."
+    },
+    {
+     "title": "Day 14: First fertilizer",
+     "text": "Farmers who did not fertilize at planting drop complete fertilizer (14 14 14) beside the plants now."
+    },
+    {
+     "title": "Day 20: Look into the whorls",
+     "text": "Check the whorls for fall armyworm and corn borer, and pull out plants with pale striped leaves."
+    },
+    {
+     "title": "Day 25: Urea and hilling up",
+     "text": "Drop urea (46 0 0) beside the plants, then plow toward the rows to cover it and pile soil at the base."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 72: Pick the fresh ears",
+     "text": "Pick for boiling about 20 days after silking, when the silks are dry and brown and the kernels are full, white and still soft when pressed with a thumbnail."
+    },
+    {
+     "title": "Day 95: Leave seed ears to dry",
+     "text": "Leave the best ears on the best plants until the husks are dry, then pick, sun dry and keep the middle kernels for the next planting.",
+     "parts": [
+      {
+       "title": "Choose the mother plants",
+       "text": "Before picking the fresh ears, walk the middle of the field and mark strong, upright plants with healthy leaves and a big, well filled ear closed tight at the tip. Plants at the edges catch pollen from other corn and are passed over."
+      },
+      {
+       "title": "Leave them standing",
+       "text": "Pick the fresh ears around the marked plants but leave their ears on the stalk until the husks are brown and dry and the kernels are hard."
+      },
+      {
+       "title": "Hang the ears in the smoke",
+       "text": "Pull back the husks, tie the ears in bunches by their husks and hang them above the kitchen fire or under the roof, where the smoke keeps weevils off. Ears kept whole stay alive longer than shelled seed."
+      },
+      {
+       "title": "Shell the middle kernels at planting time",
+       "text": "A few days before planting, shell the ears and keep only the full kernels from the middle of each ear. The small tip kernels and the odd base kernels go to the chickens."
+      },
+      {
+       "title": "Store shelled seed sealed",
+       "text": "Seed shelled early is sun dried well and kept in a closed bottle, can or jar in a cool, dry place until planting."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for mais na malagkit"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows about 75 cm apart with one or two plants every 20 to 30 cm. On hillsides seed is dibbled in holes with a pointed stick."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Mostly rainfed, planted to ride the rains. Growers who sell fresh ears in the dry season run water into the furrows during dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Many farmers on native varieties use little fertilizer: some chicken or animal manure, complete fertilizer (14 14 14) at planting or at two weeks, and urea (46 0 0) at hilling up. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/increase-corn-yield-per-hectare)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Off barring at about two weeks and hilling up at about three to four weeks with the carabao plow, plus hand weeding. Farmers watch the whorls for armyworm and corn borer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Fresh ears are picked about 65 to 75 days after planting, when the kernels are white, full and soft. Seed ears are left until the husks dry, then sun dried and shelled."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting mais na malagkit"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Planting near yellow corn that flowers at the same time, which gives yellow, less sticky kernels.",
+    "Keeping seed from small or mixed ears year after year, so the crop gets weaker.",
+    "Picking too late, when the kernels have hardened and lost their soft bite.",
+    "Skipping hilling up, so plants lodge in strong wind."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of mais na malagkit"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Plant away from yellow corn, or time planting so the two flower at least two weeks apart.",
+    "Use good seed: fresh hybrid seed, or saved seed from the best ears of many plants.",
+    "Feed by a soil test and split the nitrogen between planting and hilling up.",
+    "Scout weekly for fall armyworm and act while the plants are young.",
+    "Plant in batches a couple of weeks apart to sell fresh ears over a longer time."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=corn_glutinous) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your mais na malagkit season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting mais na malagkit"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng mais na malagkit?",
+     "a": "How Filipino farmers grow white glutinous corn, the sticky kind boiled or roasted fresh and used in native snacks. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant mais na malagkit in the Philippines?",
+     "a": "Planted with the rains from April to June and again from September to December. Where water is available it is grown all year for the fresh ear market."
+    },
+    {
+     "q": "How far apart do you plant mais na malagkit?",
+     "a": "Rows about 75 cm apart with one or two plants every 20 to 30 cm. On hillsides seed is dibbled in holes with a pointed stick."
+    },
+    {
+     "q": "How long before mais na malagkit can be harvested?",
+     "a": "It is ready about 72 days after sowing. Fresh ears are picked about 65 to 75 days after planting, when the kernels are white, full and soft."
+    },
+    {
+     "q": "What do you plant to grow mais na malagkit?",
+     "a": "Seed saved from the best, fully dried ears of the last crop, using the plump kernels from the middle of the ear, or bought hybrid glutinous seed. Saved seed is kept dry in a closed container until planting."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for corn",
+     "url": "/land-preparation/corn-land-preparation"
+    },
+    {
+     "label": "Mais na malagkit varieties sold here",
+     "url": "/crop-varieties/corn"
+    },
+    {
+     "label": "Mais na malagkit nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/corn-nutrient-deficiency"
+    },
+    {
+     "label": "Pagtatanim ng mais in Tagalog",
+     "url": "/crops/pagtatanim-ng-mais"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

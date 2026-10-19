@@ -1,0 +1,134 @@
+{
+ "crop": "atis",
+ "name": "Sugar apple",
+ "local": "Atis",
+ "aka": [
+  "sweetsop",
+  "sugar apple"
+ ],
+ "summary": "This guide shows how Filipino growers usually raise atis from the seed of a good fruit, plant it out and care for it until the first fruits. Atis is mostly a backyard tree here, though some farms grow it in rows with vegetables between.",
+ "season": "Seedlings are planted as the rains begin, around May to July. Atis flowers from about February to April and the fruits mature from about July to September. It grows well in warm places below about 1,000 m and in most soils that drain well.",
+ "material": "Most growers sow seeds from big, sweet fruits of a heavy bearing tree. The seeds are washed, air dried and sown in sand or a sand and soil mix, and they come up in about 25 days. Seedlings go into bags when they have 4 to 6 leaves. Atis can also be grown from marcots, grafts or buds of a good tree.",
+ "spacing": "About 4 to 6 m between trees, often 4 m by 4 m in small orchards, one seedling a hole. Holes about 40 cm wide and deep.",
+ "water": "Mostly rain fed. Seedlings are watered after planting and mulched. Trees do better with extra water in the dry months, especially when new shoots come out, and steady moisture helps them keep their fruits.",
+ "fertilizer": "Two parts soil to one part manure or compost in the hole. About 50 to 100 g of ammonium sulfate (21 0 0) a plant a month after planting and again as the rains end, more each year. When the trees start fruiting, about 200 to 300 g of complete fertilizer (14 14 14) a tree twice a year, spread in a ring or dropped in shallow holes about 50 cm from the trunk.",
+ "care": "Ring weeding and loosening the soil, mulching in the dry season, replanting dead seedlings early, growing vegetables or legumes between rows, cutting and burning twigs with borers, and keeping fallen fruit cleaned up. Some growers hand pollinate the flowers with a soft brush to set more fruit.",
+ "harvest": "Fruits are picked while still firm, when the bumps spread far apart and the skin between them turns greenish yellow to creamy yellow. They are picked by hand, from a ladder or with a hooked pole and basket, packed in bamboo baskets or crates, and wrapped in newspaper for long trips. Ripe fruits keep only about a day at room temperature.",
+ "ways": [
+  {
+   "key": "seedling",
+   "label": "Seedling from seed (punla mula sa buto)",
+   "days": 1080,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -120,
+     "title": "Sow seeds from a good tree",
+     "how": "Take seeds from big, sweet fruits of a tree that bears well, wash them in water and let them dry in the air. Sow them in a bed of fine river sand, or two parts sand to one part garden soil. They sprout in about 25 days.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -90,
+     "title": "Move seedlings to bags",
+     "how": "When the seedlings have 4 to 6 leaves, move them into bags of soil rich in compost. Cut the leaves in half and pinch the tip of the main root so more side roots grow, and do not crowd the bags.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Dig and fill the holes",
+     "how": "Clear and loosen the land and mark the spots about 4 to 6 m apart. Dig holes about 40 cm wide and deep and refill them with two parts soil to one part manure or compost.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seedling",
+     "how": "Remove the bag, set the seedling in the hole at the same depth and press the soil around it. Water right after planting and lay mulch around the base.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First fertilizer",
+     "how": "About a month after planting, give each plant about 50 to 100 g of ammonium sulfate (21 0 0) around the base and mix it in. Give the same again as the rains end, a little more each year.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed and mulch",
+     "how": "Weed a circle around each young tree and loosen the soil lightly. Mulch well in the dry season to keep moisture in and weeds down.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Replant dead seedlings",
+     "how": "Replace any seedling that died as early as you can, so the trees grow evenly. Vegetables or legumes can be grown between the rows while the trees are small.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Water in the dry season",
+     "how": "Water the young trees in dry months, especially when new shoots are coming out. Steady moisture helps them grow and later hold their fruits.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Watch for borers and fruit flies",
+     "how": "Check twigs for borer holes and wilting tips and cut and burn infested twigs. Keep the ground clean of fallen and rotten fruit.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 1080,
+     "title": "First fruits",
+     "how": "Pick the fruits while still firm, when the bumps spread apart and the skin between them turns greenish yellow to creamy yellow. Pick by hand or with a hooked pole and basket. The fruits soften in 2 to 5 days.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Atis starts to bear 2 to 4 years after planting. The nursery steps are counted back from the planting day."
+  }
+ ],
+ "mistakes": [
+  "Taking seed from small or sour fruits.",
+  "Crowding the seedlings in the nursery so they grow thin and weak.",
+  "Planting in low ground where water stands.",
+  "Picking fruits too early, before the bumps spread and the skin turns yellow.",
+  "Letting fallen, rotten fruits pile up under the trees.",
+  "Leaving twig borer damage on the tree."
+ ],
+ "better": [
+  "Use seed, marcots or grafts from a proven sweet, heavy bearing tree or an accredited nursery.",
+  "Test the soil and feed by the result, with complete fertilizer once the trees bear.",
+  "Hand pollinate flowers with a soft brush for more and bigger fruits.",
+  "Water in the dry months when new shoots come out.",
+  "Scout for borers, fruit flies and mealybugs and keep the orchard clean.",
+  "Prune lightly after harvest to keep the trees low and easy to pick."
+ ],
+ "video": {
+  "youtubeId": "zZw-ubivQJk",
+  "title": "Sugar Apple (Atis) + Vegetables + Legumes Farming System",
+  "channel": "Mag Agri Tayo",
+  "lang": "fil",
+  "minutes": 16,
+  "why": "A Filipino atis farm grows the trees in rows with vegetables and legumes between, and the farmer shows his care and harvest in his own field."
+ },
+ "keywords": [
+  "paano magtanim ng atis",
+  "pagtatanim ng atis",
+  "atis mula sa buto",
+  "how to plant sugar apple in the philippines",
+  "atis farming"
+ ],
+ "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍏",
+ "slug": "sugar-apple",
+ "rev": "4cae77edbd8f"
+}

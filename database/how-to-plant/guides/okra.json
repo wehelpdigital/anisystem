@@ -152,6 +152,9 @@
   "okra production guide philippines"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🌿",
  "slug": "okra",
- "rev": "7884a3d68834"
+ "rev": "07e27528ee46"
 }

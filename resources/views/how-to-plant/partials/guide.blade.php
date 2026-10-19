@@ -31,7 +31,7 @@
         <span class="hg-warn-ic" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L2.4 17.5A2 2 0 004.1 20.5h15.8a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg></span>
         <div>
             <b>This is the traditional way{{ $T::flag('traditional-way') }}</b>
-            <p>This is how traditional farmers usually plant {{ mb_strtolower($local) === mb_strtolower($name) ? mb_strtolower($name) : $local }}. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer.</p>
+            <p>This is how traditional farmers usually plant {{ mb_strtolower($local) === mb_strtolower($name) ? mb_strtolower($name) : mb_strtolower(mb_substr($local, 0, 1)) . mb_substr($local, 1) }}. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer.</p>
             <a href="#hgBetter" class="hg-warn-go" data-hg-jump>How to get a higher yield {!! $go !!}</a>
         </div>
     </aside>

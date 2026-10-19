@@ -150,6 +150,9 @@
   "coconut seedling planting"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🥥",
  "slug": "coconut",
- "rev": "c61386dfa2a3"
+ "rev": "e8cc1ec3e9e6"
 }

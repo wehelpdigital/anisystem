@@ -105,6 +105,9 @@
   "how to plant lima beans in the philippines"
  ],
  "confidence": "medium",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🫘",
  "slug": "lima-bean",
- "rev": "670acd790ebf"
+ "rev": "1760a4ce4236"
 }

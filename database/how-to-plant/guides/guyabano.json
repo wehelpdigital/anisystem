@@ -148,6 +148,9 @@
   "soursop farming philippines"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍏",
  "slug": "soursop",
- "rev": "3e927651b8b5"
+ "rev": "8ae242bbbd11"
 }

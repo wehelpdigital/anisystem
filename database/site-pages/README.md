@@ -18,6 +18,7 @@ Sections and their addresses:
 | section  | hub        | page                 |
 |----------|------------|----------------------|
 | crops    | /crops     | /crops/{slug}        |
+| how-to-plant | /how-to-plant | /how-to-plant/{slug} (made by database/how-to-plant/build_pages.py) |
 | pests    | /pests     | /pests/{slug}        |
 | diseases | /diseases  | /diseases/{slug}     |
 | weeds    | /weeds     | /weeds/{slug}        |

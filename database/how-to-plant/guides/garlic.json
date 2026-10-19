@@ -31,7 +31,27 @@
      "day": -1,
      "title": "Prepare the cloves",
      "how": "Break the bulbs into cloves and sort out the big, firm ones. Soak them in water overnight if you follow that habit.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Take down the seed bulbs",
+       "how": "Take down the bundles of big, firm bulbs that were set aside and kept hanging since the last harvest. Pass over bulbs that are soft, moldy or already shriveled."
+      },
+      {
+       "title": "Break them just before planting",
+       "how": "Separate the cloves only a day or two before planting, by pressing the bulb apart with the thumbs. Cloves broken apart too early dry out and come up weak.",
+       "time": "1 to 2 days before planting"
+      },
+      {
+       "title": "Sort the cloves",
+       "how": "Keep the big, firm outer cloves with their skins on. Set aside the small inner cloves for the kitchen and throw out any that are soft, bruised or moldy."
+      },
+      {
+       "title": "Soak them if that is your habit",
+       "how": "Some farmers soak the sorted cloves in clean water overnight and plant them the next morning, so they root quickly in the moist soil.",
+       "time": "overnight"
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -108,7 +128,30 @@
      "day": 125,
      "title": "Bundle and hang",
      "how": "Tie the plants in bundles by their leaves and hang them under the house or in an airy shed to cure. Garlic is kept this way until it is sold or planted.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Tie bundles by the leaves",
+       "how": "Once the leaves have dried in the field, gather the plants in handfuls and tie them in bundles by their leaves, bulbs hanging down."
+      },
+      {
+       "title": "Hang them in an airy shade",
+       "how": "Hang the bundles on poles under the house or in a shed where air moves freely, out of the sun and the rain. Garlic keeps best in a warm, dry place, not a damp one."
+      },
+      {
+       "title": "Keep the best for planting",
+       "how": "Set aside bundles of the biggest, firmest bulbs from the healthiest plants as next season's seed. They stay hanging until planting time."
+      },
+      {
+       "title": "Guard the stored bulbs",
+       "how": "Look the bundles over now and then and take out bulbs that rot or sprout. Some Ilocos farmers dry the bulbs on a cement floor before storing and lay dried lagundi leaves among them to keep off the small beetles that bore into stored garlic.",
+       "time": "7 to 10 days on the cement floor"
+      },
+      {
+       "title": "Trim when you sell",
+       "how": "When the garlic goes to market, cut off the roots and the dry leaves, leaving a short neck on each bulb."
+      }
+     ]
     }
    ]
   }
@@ -143,6 +186,9 @@
   "garlic after rice"
  ],
  "confidence": "high",
+ "shelf": "onions",
+ "kind": "annual",
+ "icon": "🧄",
  "slug": "garlic",
- "rev": "1176a1de5358"
+ "rev": "0f2f069fe4a1"
 }

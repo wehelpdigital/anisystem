@@ -132,6 +132,9 @@
   "sayote production guide"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥒",
  "slug": "chayote",
- "rev": "5b67c9d79af1"
+ "rev": "6774c19612e5"
 }

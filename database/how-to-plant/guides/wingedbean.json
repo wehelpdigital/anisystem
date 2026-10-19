@@ -111,6 +111,9 @@
   "how to plant winged bean in the philippines"
  ],
  "confidence": "medium",
+ "shelf": "legumes",
+ "kind": "annual",
+ "icon": "🫛",
  "slug": "winged-bean",
- "rev": "afa1c45b4b81"
+ "rev": "88b203a7d8d1"
 }

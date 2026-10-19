@@ -1,0 +1,139 @@
+{
+ "crop": "alugbati",
+ "name": "Malabar spinach",
+ "local": "Alugbati",
+ "aka": [
+  "libato"
+ ],
+ "summary": "How Filipino growers usually raise alugbati from tip cuttings or seed, on the ground in rows for market or on a simple trellis in the backyard, and pick the shoots from about a month after planting. For small farms and home gardens, with the changes that keep the shoots coming week after week.",
+ "season": "Alugbati loves heat and grows all year in the lowlands. It does best from the start of the rains through the warm months. From about November to February the short days push it to flower, and leaf growth slows. In the dry season it needs regular water.",
+ "material": "Most growers plant fresh, healthy tip cuttings about 20 to 25 cm long with the leaves stripped off, soaked in water overnight or kept in a damp, dark place for a day or two before planting. Seed is also used. Its hard coat is nicked with a knife or rubbed on sandpaper so it sprouts faster.",
+ "spacing": "Rows 20 to 30 cm apart with cuttings about 20 cm apart, or small hills 15 to 20 cm apart with three or four cuttings each. Market growers plant on the ground without a trellis. Backyard growers often use a trellis.",
+ "water": "Needs plenty of water. In the dry season farmers water by furrow every five to seven days or by sprinkler daily, with mulch to hold moisture. In the wet season they dig canals so rain water drains fast, since soggy soil and too much watering bring leaf disease.",
+ "fertilizer": "Mostly organic: about 3 to 5 tons of compost or manure a hectare worked in before planting, then a side dressing of manure or compost about once a month. Many growers also use manure tea or fermented plant juice.",
+ "care": "Early weeding, mulching, regular picking, monthly feeding and enough water. Alugbati has few serious pests. Leaf miners and cutworms are kept down by frequent harvest, and rotating with corn or planting marigold helps against root knot nematodes.",
+ "harvest": "Ready about 30 to 45 days after planting. Growers either cut the whole plant once, or pick 15 to 25 cm shoots every week for months. Shoots wilt fast, so they are picked late in the day, bundled, sprinkled or wrapped in banana leaves and sold quickly.",
+ "ways": [
+  {
+   "key": "cuttings",
+   "label": "Tip cuttings in rows or hills (tanim sanga)",
+   "days": 40,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Prepare rich, loose plots",
+     "how": "Plow or dig the plot and mix in plenty of compost or rotted manure. Alugbati grows best in loose, moist soil full of organic matter.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Cut and soak the tips",
+     "how": "Cut healthy tips 20 to 25 cm long, strip off the leaves, and soak the cuttings in water overnight.",
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Cut fresh tips",
+       "how": "Cut young, healthy tip shoots about 20 to 25 cm long from strong, healthy plants. Fresh tips root far better than old, woody stem."
+      },
+      {
+       "title": "Strip the leaves",
+       "how": "Pull off the leaves along the cutting. A bare cutting loses less water while it is making new roots."
+      },
+      {
+       "title": "Soak overnight or keep damp and dark",
+       "how": "Stand the cuttings in a basin of water overnight, or wrap them in a wet sack and keep them in a dark, damp corner for a day or two. Then plant them right away.",
+       "time": "overnight, or 1 to 2 days"
+      }
+     ]
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the cuttings",
+     "how": "Plant in rows 20 to 30 cm apart with cuttings about 20 cm apart, or in small hills 15 to 20 cm apart with three or four cuttings a hill. Water right away.",
+     "task": "planting",
+     "tip": "In the backyard, set a slanting or flat trellis of bamboo so the vines climb and save space."
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Keep the soil moist",
+     "how": "Water often in the first weeks. In the dry season water by furrow every five to seven days or by sprinkler daily, and lay grass clippings or rice straw as mulch.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Weed early",
+     "how": "Hoe or hand pull weeds while the plants are young so they get a head start.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Watch the leaves",
+     "how": "Look for leaf miner trails, cutworms and leaf spots. Regular picking keeps most pests down.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 40,
+     "title": "Pick the shoots",
+     "how": "From about 30 to 45 days after planting, cut shoots 15 to 25 cm long, then keep picking every week. For a single harvest, cut the stems near the ground. Pick late in the afternoon.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 41,
+     "title": "Feed after picking",
+     "how": "Once a month, side dress with compost or rotted manure along the rows, or water with manure tea, so the plants keep sprouting new shoots.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 41,
+     "title": "Keep the bundles fresh",
+     "how": "Tie the shoots in bundles, sprinkle them with water or wrap them in banana leaves, and keep them in the shade. Bundles with roots stay fresh for days standing in a basin of water.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Letting the soil dry out, which makes the plants flower and the leaves bitter.",
+  "Planting in soil poor in organic matter and never feeding after picking.",
+  "Overwatering or poor drainage in the rainy months, which brings leaf spots and rot.",
+  "Planting alugbati on the same plot for years, so root knot nematodes build up.",
+  "Picking at midday and leaving bundles in the sun."
+ ],
+ "better": [
+  "Start from healthy, vigorous cuttings of a good green or red type that your buyers like.",
+  "Test the soil and add compost and balanced fertilizer by the result, feeding lightly after picking rounds.",
+  "Keep water steady with mulch in the dry months and good drainage in the wet months.",
+  "Rotate with corn or other crops and plant marigold to cut root knot nematodes.",
+  "Pick on a regular weekly schedule and keep the shoots cool and moist to market."
+ ],
+ "video": {
+  "youtubeId": "OiqftXO7Ucs",
+  "title": "HARVESTING AND PLANTING ALUGBATI | PAANO MAGTANIM NG ALUGBATI | D' Green Thumb",
+  "channel": "D' Green Thumb",
+  "lang": "fil",
+  "minutes": 14,
+  "why": "A Filipino grower harvests alugbati and replants it from cuttings in the ground, the usual way, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng alugbati",
+  "pagtatanim ng alugbati",
+  "alugbati farming",
+  "how to plant alugbati in the philippines",
+  "malabar spinach philippines"
+ ],
+ "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
+ "slug": "malabar-spinach",
+ "rev": "b618e2aca519"
+}

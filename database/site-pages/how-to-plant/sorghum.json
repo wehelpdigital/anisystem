@@ -1,0 +1,373 @@
+{
+ "section": "how-to-plant",
+ "slug": "sorghum",
+ "lang": "en",
+ "category": "Corn and Sorghum",
+ "sortOrder": 50,
+ "title": "Paano Magtanim ng Sorghum: How to Plant Sorghum the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Sorghum: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng sorghum? See how traditional farmers plant batad step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng sorghum",
+ "keywords": [
+  "paano magtanim ng sorghum",
+  "how to plant sorghum"
+ ],
+ "excerpt": "Paano magtanim ng sorghum? Here is how traditional Filipino farmers usually plant batad (sorghum), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/land/corn-land-preparation.webp",
+  "alt": "Young corn seedlings in rows on freshly plowed ground in Bulacan",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant batad. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers grow sorghum for grain and animal feed, a crop known as batad among Maguindanao and Ilocano farmers that takes drought better than corn. It is grown much like corn in furrows, and the stubble can give a second crop.\n\nBefore you plant, get the field ready with our [land preparation guide for corn](/land-preparation/corn-land-preparation). Then choose your seed or planting material with the [batad varieties sold here](/crop-varieties/sorghum). If the leaves turn pale later on, the [batad nutrient deficiency guide](/nutrient-deficiencies/sorghum-nutrient-deficiency) helps you find what is missing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant batad"
+  },
+  {
+   "type": "text",
+   "text": "Planted at the start of the rains, around May to June, or after the rice harvest in the dry season, around November to January, on the moisture left in the field. In Mindanao it is grown in both seasons."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Dry seed, bought or saved from the heads of the best plants of open pollinated types. The seed is small, so it is sown shallow and thinly. When drilled in rows, farmers use about 8 to 10 kg of seed a hectare."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng sorghum, step by step"
+  },
+  {
+   "type": "text",
+   "text": "The crop is ready about 105 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Plow the field",
+     "text": "Plow once when the soil is moist enough, with a carabao or a tractor."
+    },
+    {
+     "title": "7 days before sowing: Harrow",
+     "text": "Harrow one or two times to get a fine seedbed and kill sprouting weeds. Small sorghum seed needs fine soil to come up well."
+    },
+    {
+     "title": "1 day before sowing: Open the furrows",
+     "text": "Open shallow furrows about 60 to 75 cm apart."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Fertilizer in the furrow",
+     "text": "Drop complete fertilizer (14 14 14) along the furrow and cover it with a little soil."
+    },
+    {
+     "title": "Sowing day: Drill the seed",
+     "text": "Trickle the seed thinly along the furrow and cover it with only 2 to 3 cm of soil."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 14: Off barring and weeding",
+     "text": "Plow along the rows with the soil thrown away from the plants, then hand pull the weeds in the row. Young sorghum grows slowly and loses easily to weeds."
+    },
+    {
+     "title": "Day 18: Thin the plants",
+     "text": "Pull extra seedlings so one plant stands every 10 to 15 cm along the row."
+    },
+    {
+     "title": "Day 20: Watch the young plants",
+     "text": "Check the whorls for armyworm and the leaves for aphids, and pull out sickly plants."
+    },
+    {
+     "title": "Day 27: Side dress urea",
+     "text": "Drop urea (46 0 0) beside the plants on moist soil."
+    },
+    {
+     "title": "Day 28: Hill up",
+     "text": "Plow toward the rows to cover the fertilizer and pile soil at the base of the plants."
+    },
+    {
+     "title": "Day 75: Guard the heads from birds",
+     "text": "Birds go for the grain as it fills. Farmers chase them off in the morning and late afternoon, hang noisy cans and strips, and on small plots tie bags over the heads."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 105: Cut the heads",
+     "text": "Harvest at about 100 to 115 days, when the grains are hard and can no longer be dented with a thumbnail. Cut the heads with a sickle or a knife.",
+     "parts": [
+      {
+       "title": "Bite a grain",
+       "text": "From about a month after flowering, pinch or bite a few grains from the middle of the head. When they are hard and crack instead of squashing, the crop is ready. A dark spot where the grain joins the head is another sign."
+      },
+      {
+       "title": "Cut with a long stem",
+       "text": "Cut each head with a sickle or knife about a foot below its base. The long stem makes the heads easy to bundle, hang and beat later."
+      },
+      {
+       "title": "Harvest early if you will ratoon",
+       "text": "If you plan a second crop from the stubble, cut the heads a little sooner, at about 30 days after flowering. Plants left to overripen send up a poor ratoon.",
+       "time": "about 30 days after flowering"
+      }
+     ]
+    },
+    {
+     "title": "Day 106: Dry and thresh",
+     "text": "Sun dry the heads for a few days, thresh by beating or with a thresher, then dry the grain again before storing.",
+     "parts": [
+      {
+       "title": "Sun dry the heads",
+       "text": "Lay the heads on canvas or a concrete floor in the full sun and turn them now and then. Sorghum is harder to thresh than palay, so the heads must be really dry first.",
+       "time": "a few sunny days"
+      },
+      {
+       "title": "Beat out the grain",
+       "text": "Put the dry heads in a sack or on a canvas and beat them with a stick, or feed them through a thresher, until the grain falls free."
+      },
+      {
+       "title": "Winnow and dry again",
+       "text": "Winnow off the chaff and bits of head, then spread the grain in the sun once more until it is hard and dry enough to keep, about 14 percent moisture or less."
+      },
+      {
+       "title": "Sack and store",
+       "text": "Pack the grain in clean sacks and pile them in an airy storeroom so the grain does not heat up. Keep seed for the next planting from the best heads of the best plants, apart from the rest."
+      }
+     ]
+    },
+    {
+     "title": "Day 108: Ratoon the stubble",
+     "text": "Cut the old stalks close to the ground, weed and side dress, and the stubble sends up new shoots for a smaller second crop.",
+     "parts": [
+      {
+       "title": "Cut the stalks at ground level",
+       "text": "Within three days of harvesting the heads, cut every old stalk right at the ground. The best new shoots come from buds below the soil. Stalks cut high sprout weak, uneven shoots from every node that the wind easily breaks.",
+       "time": "within 3 days of harvest"
+      },
+      {
+       "title": "Water right away",
+       "text": "Irrigate the field as soon as the stalks are cut. Cut stubble will not sprout without water."
+      },
+      {
+       "title": "Fertilize at once",
+       "text": "Spread the whole fertilizer dose for the regrowth as soon as the stalks are cut, because it ripens about 10 to 15 days ahead of the first crop."
+      },
+      {
+       "title": "Weed and watch it like the first crop",
+       "text": "Keep the weeds down with shallow cultivation and spot hand weeding, and watch for the same pests and birds as in the first crop."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for batad"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows about 60 to 75 cm apart, with one plant every 10 to 15 cm after thinning."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Rainfed. Sorghum rides out dry spells better than corn, so it is often the crop planted on the leftover moisture after rice."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Complete fertilizer (14 14 14) in the furrow at planting and urea (46 0 0) at about four weeks before hilling up. Many farmers give it less fertilizer than corn, and the ratoon crop gets another side dressing of urea. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/increase-corn-yield-per-hectare)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Off barring and hilling up with the plow, hand weeding of the rows, and thinning at two to three weeks. Bird scaring is the big chore once the grain starts to fill."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Grain sorghum is ready at about 100 to 115 days, when the grain is hard and the leaves below the head start drying. The heads are cut, sun dried and threshed. For silage, some growers cut the whole plant earlier while the grain is still soft."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting batad"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Sowing the small seed too deep, so few seedlings come up.",
+    "Not thinning, so crowded plants give small heads.",
+    "Letting weeds take over in the first month, when young sorghum grows slowly.",
+    "Leaving the ripening heads unguarded, so birds eat a big part of the harvest.",
+    "Storing grain before it is fully dry."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of batad"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Use a variety or hybrid suited to your purpose, grain or silage, and your season.",
+    "Prepare a fine seedbed, sow shallow and thin early to an even stand.",
+    "Feed by a soil test and split the nitrogen between planting and four weeks.",
+    "Plant with neighbors at the same time so bird pressure is shared.",
+    "Ratoon only a healthy first crop and feed the ratoon with urea."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=sorghum) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your batad season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting batad"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng sorghum?",
+     "a": "How Filipino farmers grow sorghum for grain and animal feed, a crop known as batad among Maguindanao and Ilocano farmers that takes drought better than corn. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant batad in the Philippines?",
+     "a": "Planted at the start of the rains, around May to June, or after the rice harvest in the dry season, around November to January, on the moisture left in the field. In Mindanao it is grown in both seasons."
+    },
+    {
+     "q": "How far apart do you plant batad?",
+     "a": "Rows about 60 to 75 cm apart, with one plant every 10 to 15 cm after thinning."
+    },
+    {
+     "q": "How long before batad can be harvested?",
+     "a": "It is ready about 105 days after sowing. Grain sorghum is ready at about 100 to 115 days, when the grain is hard and the leaves below the head start drying."
+    },
+    {
+     "q": "What do you plant to grow batad?",
+     "a": "Dry seed, bought or saved from the heads of the best plants of open pollinated types. The seed is small, so it is sown shallow and thinly."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for corn",
+     "url": "/land-preparation/corn-land-preparation"
+    },
+    {
+     "label": "Batad varieties sold here",
+     "url": "/crop-varieties/sorghum"
+    },
+    {
+     "label": "Batad nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/sorghum-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

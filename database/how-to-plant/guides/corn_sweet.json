@@ -143,6 +143,9 @@
   "sweet corn farming philippines"
  ],
  "confidence": "medium",
- "slug": "corn-sweet",
- "rev": "51d475ab5292"
+ "shelf": "corn",
+ "kind": "annual",
+ "icon": "🌽",
+ "slug": "sweet-corn",
+ "rev": "2daca9449512"
 }

@@ -293,7 +293,7 @@ class HowItWorks
                     self::item('howToPlant', 'How to Plant', 'How traditional farmers plant every crop', 'icons/how-to-plant.svg', false,
                         'Pick a crop and see how traditional farmers here plant it, step by step from getting the field ready to the harvest, each step on its day, with a video where there is a good one. Then see what to change for a higher yield, and send it to your Protocol Builder to make it your own.',
                         ['Every crop and fruit tree, step by step with the days', 'What to change for a higher yield', 'One tap into your Protocol Builder'],
-                        null, 'htp.page'),
+                        null, 'htp.page', '/how-to-plant'),
                     self::item('schedule', 'Cropping schedule', 'The whole season on one board', 'icons/calendar.png', false,
                         "Start a season from your protocol or from scratch. Every task, irrigation, hired service and payroll day sits on one board, dated from each lot's own day zero.",
                         ['Drag a task to move it', 'Drafts and versions to try other plans', 'Undo that still works after you log out'],

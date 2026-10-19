@@ -155,6 +155,9 @@
   "cucumber production guide philippines"
  ],
  "confidence": "high",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥒",
  "slug": "cucumber",
- "rev": "7aa7f31acd2f"
+ "rev": "764ce8b3300f"
 }

@@ -157,6 +157,9 @@
   "mustasa sa bukid"
  ],
  "confidence": "medium",
- "slug": "mustard-greens",
- "rev": "8d1fc1d64924"
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
+ "slug": "mustard",
+ "rev": "6101b2d29400"
 }

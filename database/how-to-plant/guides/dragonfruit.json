@@ -27,21 +27,68 @@
      "title": "Set up the posts",
      "how": "Plant a concrete post, or a strong hardwood or live post, about 1.5 to 2 m above the ground with about half a meter buried, and fix an old tire, a concrete ring or a bamboo frame on top for the branches to hang over. Space posts about 2 to 3 m apart in rows about 3 m apart.",
      "task": "land_prep",
-     "tip": "Concrete lasts. Soft wooden posts rot and fall once the plant gets heavy."
+     "tip": "Concrete lasts. Soft wooden posts rot and fall once the plant gets heavy.",
+     "parts": [
+      {
+       "title": "Cast or buy strong posts",
+       "how": "Concrete lasts the longest. One Cagayan farm cast its own posts about 5 inches square and 7 feet long, with four iron bars left sticking out of the top to hold the ring."
+      },
+      {
+       "title": "Set them deep and in line",
+       "how": "Stretch a line along the row and stand each post straight about 2 feet deep in the ground. Many farms set posts about 2 m apart in rows about 2.5 to 3 m apart."
+      },
+      {
+       "title": "Fix the ring on top",
+       "how": "Slip an old motorcycle or tricycle tire over the iron bars and hold it with two crossing slats of wood or anahaw, so the branches can hang over it later."
+      }
+     ]
     },
     {
      "phase": "prep",
      "day": -14,
      "title": "Make a mound and feed it",
      "how": "Around each post, loosen the soil and raise a low mound so rain drains away quickly. Mix in a few kilos of rotted chicken or animal manure or compost.",
-     "task": "land_prep"
+     "task": "land_prep",
+     "parts": [
+      {
+       "title": "Dig a hole for each cutting",
+       "how": "Dig about four holes around each post, each about 6 inches out from the post and about 2 feet wide and deep."
+      },
+      {
+       "title": "Fill with a loose, fed mix",
+       "how": "Fill the holes back with topsoil mixed with old sawdust and dried chicken manure, which holds some water for the new roots but still drains."
+      },
+      {
+       "title": "Heap it toward the post",
+       "how": "Pile the loose soil a little higher at the post so rain runs off and never stands at the base of the cuttings."
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -7,
      "title": "Cure the cuttings",
      "how": "Cut the stems, trim the bottom end, and lay the cuttings in a shaded, airy place for several days until the cut end dries and seals.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Take stems from good plants",
+       "how": "Cut from plants that bear well and show no stem rot, or buy from a farm you trust, since sick cuttings carry the disease into a new field. Use mature green stems, not soft new tips."
+      },
+      {
+       "title": "Cut pieces to length",
+       "how": "Farms here plant pieces about 8 to 12 inches long, and some use longer ones. Cut the bottom end at a slant so you know which end goes into the soil."
+      },
+      {
+       "title": "Dry the cut end in the shade",
+       "how": "Lay the pieces in a dry, shaded, airy spot for about a week, until the cut end dries and closes over. Many growers dip the cut end in a fungicide first.",
+       "time": "about 7 days"
+      },
+      {
+       "title": "Or root them in bags first",
+       "how": "Some farmers set the cured pieces in bags of soil and compost for a few weeks and move them to the post only once they have rooted."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -49,7 +96,22 @@
      "title": "Plant three or four cuttings a post",
      "how": "Set three or four cuttings around each post, the flat side against it, burying only the lower few centimeters, and tie each one loosely to the post with soft string or cloth strips. Water lightly once.",
      "task": "planting",
-     "tip": "Plant the cutting the right way up: the end that was nearer the mother plant goes into the soil."
+     "tip": "Plant the cutting the right way up: the end that was nearer the mother plant goes into the soil.",
+     "parts": [
+      {
+       "title": "Plant them shallow and leaning",
+       "how": "Set each cured piece about 3 inches deep in its hole, leaning in so its flat side rests against one face of the post."
+      },
+      {
+       "title": "Tie each one on",
+       "how": "Tie the cutting loosely to the post with soft string, cloth strips or plastic straw so wind cannot rock it while it roots."
+      },
+      {
+       "title": "Water only a little",
+       "how": "In soil with some clay the cuttings need very little water while they root. New growth usually shows after about two weeks.",
+       "time": "about 15 days to root"
+      }
+     ]
     },
     {
      "phase": "care",
@@ -159,6 +221,9 @@
   "saniata"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🐉",
  "slug": "dragon-fruit",
- "rev": "5492fb69b2d7"
+ "rev": "6b896d0dc28c"
 }

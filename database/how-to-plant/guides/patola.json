@@ -170,6 +170,9 @@
   "sponge gourd production guide philippines"
  ],
  "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥒",
  "slug": "sponge-gourd",
- "rev": "05843ad633a6"
+ "rev": "3c87233a72f4"
 }

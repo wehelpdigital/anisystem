@@ -104,6 +104,9 @@
   "how to plant wheat"
  ],
  "confidence": "low",
+ "shelf": "corn",
+ "kind": "annual",
+ "icon": "🌾",
  "slug": "wheat",
- "rev": "2c9c1a7c5961"
+ "rev": "509472b8f7f9"
 }

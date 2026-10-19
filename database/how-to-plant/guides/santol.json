@@ -195,6 +195,9 @@
   "santol grafting"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍑",
  "slug": "santol",
- "rev": "ea40c1359cd6"
+ "rev": "9f7724c6c230"
 }

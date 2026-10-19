@@ -1,0 +1,129 @@
+{
+ "crop": "chico",
+ "name": "Chico (sapodilla)",
+ "local": "Tsiko",
+ "aka": [
+  "chico",
+  "sapodilla",
+  "Pineras",
+  "Ponderosa"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant chico from a marcot or a grafted seedling and care for it until the first fruits. It is for backyards and small orchards, mostly with the common Pineras and the big fruited Ponderosa.",
+ "season": "Marcots and grafted seedlings are planted as the rains begin, around May to July. Chico stands drier places better than most fruit trees, and in the Philippines it flowers most around April to June, with the main harvest about December to February.",
+ "material": "In the old way growers make their own marcots: in the rainy season they girdle a fairly upright branch about 1 cm thick on a good bearing tree, wrap it in moist coir or soil and plastic, and cut it once roots fill the wrap, which can take 4 to 12 months. Many nurseries now sell cleft grafted seedlings on seedling rootstock. Trees from seed are slow to bear and many give poor crops.",
+ "spacing": "About 6 to 10 m between trees, one plant a hole. Some growers use about 9 m between rows and 6 to 7 m in the row. Planting two varieties near each other helps fruit set, since some kinds need pollen from another tree.",
+ "water": "Mostly rain fed. New trees are watered in dry spells until they take hold. Bearing trees in dry places do better with water during flowering and fruit growth, since flowers and young fruits drop when the soil is too dry.",
+ "fertilizer": "Compost or manure in the hole. Young trees get a little complete fertilizer or manure at the start and again before the end of the rains, more each year. Grown trees need a lot of nitrogen with some phosphorus and potash, spread in a ring under the edge of the canopy at the same two times.",
+ "care": "Staking and mulching young trees, weeding a circle around them, very light pruning, removing sagging low branches, and checking for mealybugs, scale and fruit borers. Bees help set fruit, so growers avoid harming them.",
+ "harvest": "Fruits take about 6 to 8 months from flowering to maturity, and the main crop in the Philippines comes about December to February. Mature fruits are yellowish brown, the brown bloom rubs off easily, and little sap flows when the fruit is pulled off. Growers test a few first. After picking, the fruits are soaked so the sap bleeds out, scrubbed, dried stalk end down and left to ripen in 3 to 7 days.",
+ "ways": [
+  {
+   "key": "marcotted",
+   "label": "Marcot or grafted seedling (marcot o grafted)",
+   "days": 1440,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -240,
+     "title": "Make the marcot",
+     "how": "In the rainy season, pick a healthy, fairly upright branch about 1 cm thick on a heavy bearing tree. Peel a ring of bark, wrap the cut with moist coir or soil in plastic and tie both ends.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "nursery",
+     "day": -60,
+     "title": "Cut and pot the rooted marcot",
+     "how": "When roots show all through the wrap, cut the branch below it, remove the plastic and plant it in a bag of loose soil. Keep it in light shade and water it until new leaves come.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Mark and dig the holes",
+     "how": "Mark the planting spots about 6 to 10 m apart, wider for big trees. Dig holes wider than the bag and mix the topsoil with compost or manure for filling back.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant at the start of the rains",
+     "how": "Remove the bag without breaking the soil ball and set the plant at the same depth. Fill in, press the soil, water well and tie the young tree to a stake against wind.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Water in dry spells",
+     "how": "Water the new tree whenever a dry spell comes until it is well rooted, and mulch around the base. Shade it lightly for the first weeks if the sun is harsh.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed and give the first feeding",
+     "how": "Keep a clean circle around the tree and give it a little complete fertilizer or manure, spread in a ring and covered. Feed at the start and again before the end of the rains each year, more as it grows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Check for pests",
+     "how": "Look at new shoots and fruits for mealybugs, scale insects and fruit borers, and cut off and burn badly hit twigs. Keep fallen leaves and fruit cleaned up.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Light shaping only",
+     "how": "Chico needs little pruning since flowers come near the shoot tips. On upright trees cut back the main leader early so side branches form, and later remove low branches that touch the ground.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1440,
+     "title": "First fruits",
+     "how": "Pick when the skin turns from green to yellowish brown, the brown powder rubs off easily with the thumb and little sap flows when the fruit is pulled off. Soak the fruits in water so the sap bleeds out, scrub off the powder and let them ripen in 3 to 7 days.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Marcotted chico usually starts bearing at about 3 to 4 years and grafted trees at about 4 to 6 years. Fruits take about 6 to 8 months from flowering to maturity."
+  }
+ ],
+ "mistakes": [
+  "Planting seedlings from seed, which take many years and often bear poorly.",
+  "Picking fruits that are still green under the bloom, so they never ripen sweet.",
+  "Skipping the soak after picking, so sap hardens inside the fruit.",
+  "Pruning hard, which cuts off the shoot tips where flowers form.",
+  "Planting a lone Ponderosa tree with no other variety nearby for pollen.",
+  "Letting young trees dry out in their first dry season."
+ ],
+ "better": [
+  "Use marcots or grafted seedlings from a proven, heavy bearing tree or an accredited nursery.",
+  "Test the soil and feed by the result, twice a year at the start and end of the rains.",
+  "Water during flowering and fruit growth in dry places to stop flower and fruit drop.",
+  "Plant two or more varieties near each other for better fruit set.",
+  "Scout for mealybugs, scale and fruit borers and clean up fallen fruit.",
+  "Sort and bleed the fruits right after picking for a better price."
+ ],
+ "video": {
+  "youtubeId": "3mzpLMd6sI4",
+  "title": "5 easy steps how to Marcot Chico tree or sapodilla tree. English Subtitle",
+  "channel": "aJun's Plant Nursery",
+  "lang": "fil",
+  "minutes": 14,
+  "why": "A Filipino nursery shows on a real chico tree how to make a marcot, the usual way to get planting material, in five clear steps with English subtitles."
+ },
+ "keywords": [
+  "paano magtanim ng chico",
+  "pagmamarcot ng chico",
+  "pagtatanim ng tsiko",
+  "how to plant chico in the philippines",
+  "sapodilla planting"
+ ],
+ "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🥔",
+ "slug": "chico",
+ "rev": "acdd54c0e7ca"
+}

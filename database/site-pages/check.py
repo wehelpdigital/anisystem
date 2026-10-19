@@ -44,10 +44,12 @@ TRANSITIONS = [
     "in other words", "for this reason", "that means", "this means", "above", "besides that", "on top of that",
 ]
 
-SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features", "rice-varieties", "crop-varieties", "nutrient-deficiencies"}
+SECTIONS = {"crops", "pests", "diseases", "weeds", "land-preparation", "blog", "features", "rice-varieties", "crop-varieties", "nutrient-deficiencies", "how-to-plant"}
 BLOCK_TYPES = {"heading", "text", "list", "steps", "table", "callout", "image", "quote", "faq", "cta", "links", "sources"}
 
-SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/nutrient-deficiencies", "/land-preparation", "/blog", "/rice-varieties", "/crop-varieties"}
+SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/nutrient-deficiencies", "/land-preparation", "/blog", "/rice-varieties", "/crop-varieties",
+             # How to Plant (2026-10-19): the hub, and the members' tool a page opens (guests are asked to sign in).
+             "/how-to-plant", "/app/how-to-plant"}
 
 
 def url_map():
@@ -67,7 +69,7 @@ def url_map():
                  "starapple": "star-apple", "pigeonpea": "pigeon-pea"}
         n = Counter(v["crop"] for v in json.load(open(vf, encoding="utf-8")))
         hubs = set("/crop-varieties/%s" % slugs.get(k, k) for k, c in n.items() if c >= 3)
-    return SITE_URLS | pages | hubs | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog|rice-varieties|crop-varieties|nutrient-deficiencies)/[a-z0-9\-]+)", part))
+    return SITE_URLS | pages | hubs | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|land-preparation|blog|rice-varieties|crop-varieties|nutrient-deficiencies|how-to-plant)/[a-z0-9\-]+)", part))
 
 
 LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -136,6 +138,10 @@ def texts(page):
             for i in b.get("items", []):
                 out.append(("h4", i.get("title", "")))
                 out.append(("para", i.get("text", "")))
+                # A step done in parts (How to Plant, 2026-10-19): each part read like a step.
+                for pt in i.get("parts", []) or []:
+                    out.append(("h4", pt.get("title", "")))
+                    out.append(("para", pt.get("text", "")))
         elif t == "table":
             out += [("cell", " ".join(str(c) for c in row)) for row in b.get("rows", [])]
             out.append(("cell", b.get("caption", "")))
@@ -258,7 +264,8 @@ def check(path, urls, focus_seen):
     if mt and fk and not has_phrase(" ".join(words(mt)[:max(3, len(words(fk)) + 2)]), fk):
         warns.append("keyphrase is not at the start of the SEO title")
     slug_words = set(norm(w) for w in slug.replace("-", " ").split())
-    if not all(norm(w) in slug_words for w in words(fk)) and lang == "en":
+    # A How to Plant page lives at /how-to-plant/<crop>: its address is the crop, its keyphrase often Filipino.
+    if not all(norm(w) in slug_words for w in words(fk)) and lang == "en" and sec != "how-to-plant":
         warns.append("keyphrase not in the slug")
 
     pieces = texts(page)
@@ -280,7 +287,7 @@ def check(path, urls, focus_seen):
     profile = (sec == "weeds" and page.get("category") in ("Grasses", "Sedges", "Broadleaves")) or (sec in ("pests", "diseases") and page.get("profile"))
     # A rice variety page is a spec sheet with its meaning spelled out (2026-10-13).
     # A crop's nutrient deficiency page holds every deficiency of that crop, a section each (2026-10-16).
-    lo, hi = (600, 1100) if sec == "features" else (450, 1200) if sec in ("rice-varieties", "crop-varieties") else (650, 1700) if profile else (900, 5200) if sec == "nutrient-deficiencies" else (900, 1800)
+    lo, hi = (600, 1100) if sec == "features" else (450, 1200) if sec in ("rice-varieties", "crop-varieties") else (650, 1700) if profile else (900, 5200) if sec == "nutrient-deficiencies" else (650, 3800) if sec == "how-to-plant" else (900, 1800)
     if all_words < lo:
         errs.append("only %d words (at least %d)" % (all_words, lo))
     elif all_words > hi:

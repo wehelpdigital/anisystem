@@ -84,6 +84,9 @@
   "how to grow peach in the philippines"
  ],
  "confidence": "low",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🍑",
  "slug": "peach",
- "rev": "092c8a47b4d9"
+ "rev": "b9c88d75b685"
 }

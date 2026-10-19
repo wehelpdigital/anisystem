@@ -127,6 +127,9 @@
   "longkong farming"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "perennial",
+ "icon": "🫒",
  "slug": "lanzones",
- "rev": "1f54057f2afd"
+ "rev": "487e0e61ce65"
 }

@@ -152,6 +152,9 @@
   "banana sucker planting"
  ],
  "confidence": "medium",
+ "shelf": "fruits",
+ "kind": "annual",
+ "icon": "🍌",
  "slug": "banana",
- "rev": "dfa910571d9c"
+ "rev": "1978583091da"
 }

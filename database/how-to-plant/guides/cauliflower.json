@@ -1,0 +1,183 @@
+{
+ "crop": "cauliflower",
+ "name": "Cauliflower",
+ "local": "Koliplor",
+ "aka": [
+  "cauli"
+ ],
+ "summary": "How Filipino farmers usually grow koliplor from seedlings on beds or furrows, with the outer leaves tied over the head to keep it white, up to the harvest about two months after transplanting. For highland growers and lowland farmers planting it in the cool months.",
+ "season": "Cauliflower grows best in cool places. In mid and high elevations such as Benguet, the Ilocos Sur uplands and Bukidnon it is grown through the year. In the lowlands it is planted only in the coolest months, roughly November to February, using varieties that take some heat.",
+ "material": "Seed, about 280 g a hectare, raised in a seedbed of about 50 to 70 square meters for each hectare. Seedlings are transplanted about four weeks after sowing, after a week of hardening.",
+ "spacing": "Rows 50 to 75 cm apart with plants 30 to 50 cm apart, or double rows on beds 75 cm to 1 m wide. One seedling a hole.",
+ "water": "Watered before and right after transplanting, then about every 7 to 10 days by furrow or two to three times a week by sprinkler in dry weather. Steady moisture is key. Mulch helps.",
+ "fertilizer": "Rotted chicken manure and carbonized rice hull in the beds, a little 14 14 14 in each hole at transplanting, then a side dressing of urea, often mixed with potash, two to three weeks later. Many growers also use manure tea or fermented plant juice.",
+ "care": "Seedlings raised under a net tunnel, mulched beds, weeding before side dressing, companion rows of onion family crops or marigold, scouting for diamondback moth, and tying the outer leaves over the young head.",
+ "harvest": "Heads are cut when firm, white and tight, mostly about two months after transplanting and about a week or so after the leaves are tied. Growers cut early in the morning with some stem and leaves, and keep the heads cool and shaded.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Seedbed then transplant (punla at lipat tanim)",
+   "days": 60,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -28,
+     "title": "Sow the seedbed",
+     "how": "Make a seedbed 1 m wide and work in manure plus some ash from rice hull or wood. Sow thinly in lines 7 to 10 cm apart across the bed, mulch with rice hull and water regularly.",
+     "task": "seedbed",
+     "tip": "Sow thin. Crowded, overwatered seedbeds bring damping off.",
+     "parts": [
+      {
+       "title": "Size the seedbed",
+       "how": "For one hectare, a seedbed about 1 m wide and long enough to make 50 to 70 square meters raises the seedlings, from about 280 grams of seed."
+      },
+      {
+       "title": "Work in manure and ash",
+       "how": "Mix rotted manure and some rice hull ash or wood ash into the bed and rake it fine and level."
+      },
+      {
+       "title": "Sow thinly in cross lines",
+       "how": "Draw shallow lines across the bed about 7 to 10 cm apart and sow thinly along them. Crowded seedlings stay damp at the base and fall over from damping off."
+      },
+      {
+       "title": "Mulch, water and cover",
+       "how": "Spread rice hull or grass clippings lightly over the lines and water regularly. A tunnel of nylon net over the bed shades the seedlings and breaks the force of heavy rain."
+      },
+      {
+       "title": "Ready in about four weeks",
+       "how": "Take the net off for the last week so the seedlings toughen in full sun. They are ready to transplant about four weeks from sowing.",
+       "time": "about 4 weeks"
+      }
+     ]
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow and harrow well",
+     "how": "Plow and harrow several times until the soil is fine.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "Remove the shade or net cover so the seedlings get full sun for their last week.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Make beds or furrows with manure",
+     "how": "Use beds 75 cm to 1 m wide in the highlands or deep furrows about 50 cm wide in lower areas. Mix in rotted chicken manure and carbonized rice hull.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Fertilize the holes and transplant",
+     "how": "Make holes 30 to 50 cm apart in rows 50 to 75 cm apart. Wet them, add a little 14 14 14, cover lightly, then plant one seedling a hole and water.",
+     "task": "planting",
+     "parts": [
+      {
+       "title": "Water the seedbed first",
+       "how": "Water the seedbed well before lifting, and pull the seedlings out gently so most roots come up with soil on them."
+      },
+      {
+       "title": "Water the holes before and after",
+       "how": "In dry weather, wet the field before planting, set one seedling a hole and water again right after, so the roots sit in moist soil from the start."
+      },
+      {
+       "title": "Plant in the cool hours",
+       "how": "Move and plant the seedlings in the late afternoon or on a cloudy day, and keep the lifted seedlings shaded until each one is in the ground."
+      }
+     ]
+    },
+    {
+     "phase": "planting",
+     "day": 1,
+     "title": "Mulch and plant helpers",
+     "how": "Cover the bed with straw, rice hull or plastic sheet. Onion, garlic, kutsay or marigold along the rows helps keep insects down.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water steadily",
+     "how": "In dry weather water by furrow every 7 to 10 days or by sprinkler two to three times a week. Cauliflower that dries out forms small, early heads.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Scout for worms and rot",
+     "how": "Look for diamondback moth larvae, loopers, webworms and aphids, and for black veined yellow patches or soft rot. Remove and bury rotting plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 18,
+     "title": "Weed, then side dress",
+     "how": "Weed first, then side dress with a little urea, or urea mixed with muriate of potash, two to three weeks after transplanting.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Tie the leaves over the curd",
+     "how": "When the white head is about the size of an egg, gather the big outer leaves over it and tie them loosely, on a dry day, so the head stays white.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 55,
+     "title": "Keep cool and covered",
+     "how": "Harvest in the early morning, keep the leaves around the head to protect it, and store in the shade.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 55,
+     "title": "Cut the firm white heads",
+     "how": "About a week or so after tying, when the head is firm, white and still tight, cut it with part of the stem and some leaves. Most heads are ready about two months after transplanting.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting in the warm lowland months, so the heads come out small, loose or yellowish.",
+  "Not tying the leaves, so sun turns the head yellow.",
+  "Letting the plants dry out, which makes them head too early and too small.",
+  "Fertilizing over weeds instead of weeding first.",
+  "Leaving the heads too long, until they open and turn grainy."
+ ],
+ "better": [
+  "Choose a variety for your elevation and season, with heat tolerance for the lowlands.",
+  "Test the soil and feed by the result, with enough boron and lime on sour soils.",
+  "Raise clean seedlings under a net tunnel and harden them before transplanting.",
+  "Keep the moisture even with mulch and steady watering.",
+  "Rotate with crops outside the cabbage family and scout twice a week.",
+  "Tie the leaves on time and harvest firm heads in the cool morning."
+ ],
+ "video": {
+  "youtubeId": "zwlZglSINLA",
+  "title": "Dapat Gawin sa Pagtanim ng Cauliflower para Mabilis Lumaki",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 11,
+  "why": "An awarded Filipino farmer shows how to plant cauliflower properly, from the seedlings to the field, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng cauliflower",
+  "pagtatanim ng cauliflower",
+  "cauliflower farming",
+  "how to plant cauliflower in the philippines",
+  "cauliflower farming philippines"
+ ],
+ "confidence": "medium",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥦",
+ "slug": "cauliflower",
+ "rev": "9acc4c91daaa"
+}

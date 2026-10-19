@@ -125,6 +125,13 @@
         display: grid; place-items: center; background: #4a7c2a; color: #fff; font-weight: 800; font-size: .9rem; }
     .sp-step b { display: block; font-family: var(--font-heading); color: #14210c; font-size: 1.02rem; }
     .sp-step p { margin-top: .25rem; font-size: .97rem; color: #374151; }
+    .sp-parts { margin-top: .6rem; display: grid; gap: .45rem; counter-reset: sp-part; }
+    .sp-parts li { position: relative; padding: .55rem .7rem .55rem 2.3rem; border-radius: .8rem; background: #fff; border: 1px solid #e5ebdf; counter-increment: sp-part; font-size: .92rem; color: #374151; }
+    .sp-parts li::before { content: counter(sp-part); position: absolute; left: .6rem; top: .6rem; width: 1.25rem; height: 1.25rem; border-radius: .4rem; display: grid; place-items: center;
+        font-size: .7rem; font-weight: 800; color: #2d5016; background: #e4efd4; }
+    .sp-parts li b { display: inline; font-size: .93rem; margin-right: .35rem; }
+    .sp-parts li > span:last-child { display: block; margin-top: .1rem; }
+    .sp-ptime { display: inline-block; padding: .05rem .45rem; border-radius: 999px; font-size: .72rem; font-weight: 700; color: #6b4a00; background: #fff3c4; }
     .sp-table-wrap { overflow-x: auto; border: 1px solid #e5ebdf; border-radius: 1rem; }
     .sp-table { width: 100%; border-collapse: collapse; font-size: .92rem; line-height: 1.5; }
     .sp-table th { text-align: left; background: #f3f8ec; color: #2d5016; font-weight: 800; padding: .65rem .8rem; border-bottom: 1px solid #e4efd4; white-space: nowrap; }

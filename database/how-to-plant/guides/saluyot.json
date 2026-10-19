@@ -1,0 +1,125 @@
+{
+ "crop": "saluyot",
+ "name": "Jute mallow",
+ "local": "Saluyot",
+ "aka": [
+  "tugabang",
+  "salsaluyot"
+ ],
+ "summary": "How Filipino growers, Ilocanos above all, usually raise saluyot from seed scattered at the start of the rains and pick the young tops again and again for weeks. For backyard and small market growers who want the usual way and simple steps for more tender leaves.",
+ "season": "Saluyot loves warm, humid weather and is usually sown when the rains come, around May to June, often near rivers and creeks. With water it can be grown in other months. Cold spells and long droughts stunt or kill it. The biggest growing areas are in Ilocos and Western Visayas.",
+ "material": "Seed, from a plant left to ripen its pods. The seed is tiny and has a hard coat, so many growers pour hot water over it briefly, then cool it, before sowing so it sprouts evenly. There is a purplish type (pula) and a light green type (puti). The green one is preferred by many city buyers.",
+ "spacing": "Seed is scattered thinly or drilled in shallow rows, and crowded seedlings are thinned by hand so each plant has room to branch. Many backyard plots also come up on their own from seed dropped by last year's plants.",
+ "water": "Rainfed in the wet season. Watered every day or two in dry spells. Saluyot takes heat but not long droughts, and it grows best on moist ground near water.",
+ "fertilizer": "Mostly compost or rotted manure in the soil, with manure tea or a little urea after the picking rounds to keep new tops coming.",
+ "care": "Thinning, a weeding or two while the plants are small, steady moisture, and frequent picking of the tops, which keeps the plants bushy and tender. Some plants are left to flower and pod for next season's seed.",
+ "harvest": "The first tops are picked about five to six weeks after sowing, then every week or two for as long as the plants stay leafy. Growers pick in the cool hours, tie the tops in bundles and keep them shaded and moist.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed scattered on the plot (sabog tanim)",
+   "days": 40,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Loosen the soil and add manure",
+     "how": "Dig or plow the plot and mix in compost or rotted manure. Loam or silty loam near water is best, but saluyot grows in most soils.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Treat the seed",
+     "how": "Put the seed in a cloth, dip it briefly in hot water, then in cool water, and let it dry a little so it is easy to scatter.",
+     "task": "seed_treatment",
+     "tip": "Mix the tiny seed with fine sand so it spreads thinly."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Scatter or drill the seed",
+     "how": "Scatter the seed thinly over the plot or drop it in shallow rows, rake lightly and water, or sow right after a good rain.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Keep the plot moist",
+     "how": "Water every day or two until the seedlings are up and growing well. Do not let the young plants dry out.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Thin and weed",
+     "how": "Pull out crowded seedlings, which can be cooked, and the weeds, so the rest have room to branch.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Check the leaves",
+     "how": "Look for leaf eating caterpillars, beetles and mites under the leaves and pick off badly damaged shoots.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 40,
+     "title": "Pick the young tops",
+     "how": "When the plants are knee high, about five to six weeks after sowing, pinch or cut the tender tops and young leaves. This makes the plant branch out.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 41,
+     "title": "Feed and keep picking",
+     "how": "After each picking, side dress with compost, manure tea or a little urea, water, and come back for the new tops every week or two.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 41,
+     "title": "Bundle and keep cool",
+     "how": "Tie the tops in bundles and keep them shaded and sprinkled with water, because the leaves wilt fast.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Sowing the hard seed untreated, so it comes up thin and uneven.",
+  "Sowing too thick and never thinning, so the plants grow tall and spindly with few tops.",
+  "Letting the plants dry out, which makes them flower early and the leaves tough.",
+  "Letting the plants run tall without picking, so leaves get fewer and harder.",
+  "Picking in the noon heat and leaving the bundles in the sun."
+ ],
+ "better": [
+  "Use seed from your best, leafiest plants or a good variety, and treat it before sowing.",
+  "Add compost and a balanced fertilizer by soil test instead of urea alone.",
+  "Sow in steps every few weeks so there are tops to sell all season.",
+  "Keep moisture steady with mulch and water in dry spells.",
+  "Pick tops on a regular schedule and keep the bundles cool to market."
+ ],
+ "video": {
+  "youtubeId": "qFVA-WIlR5c",
+  "title": "Kumikita ng P5,000 every 2 weeks Sa Saluyot Farming, Kapital P250 Lang",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 12,
+  "why": "Visits a small Filipino saluyot farm and shows how the grower plants it and picks the tops every two weeks, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng saluyot",
+  "pagtatanim ng saluyot",
+  "paano patubuin ang buto ng saluyot",
+  "how to plant saluyot in the philippines",
+  "saluyot farming"
+ ],
+ "confidence": "low",
+ "shelf": "vegetables",
+ "kind": "annual",
+ "icon": "🥬",
+ "slug": "jute-mallow",
+ "rev": "1146250495fb"
+}

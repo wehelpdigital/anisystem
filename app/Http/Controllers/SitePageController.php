@@ -41,6 +41,14 @@ class SitePageController extends Controller
                 'pages' => SitePages::inSection($section),
             ]);
         }
+        // How to Plant (2026-10-19): every crop's traditional planting guide, shelf by shelf.
+        if ($section === 'how-to-plant') {
+            return view('public.site.how-to-plant-hub', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+                'pages' => SitePages::inSection($section),
+            ]);
+        }
         // Nutrient deficiencies (2026-10-16): the catalogue of every crop's, the crop and nutrient pages.
         if ($section === 'nutrient-deficiencies') {
             return view('public.site.deficiency-hub', [
@@ -180,7 +188,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
+        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/how-to-plant', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
         // Each crop's variety finder (2026-10-13).
         foreach (\App\Support\CropVarieties::crops() as $c) {
             if ($c['hasHub']) {
@@ -238,7 +246,7 @@ class SitePageController extends Controller
             }
             $out[] = '';
         }
-        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties', 'crop-varieties' => 'Crop varieties', 'features' => 'Feature pages'];
+        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'how-to-plant' => 'How to plant, the traditional way, crop by crop', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties', 'crop-varieties' => 'Crop varieties', 'features' => 'Feature pages'];
         try {
             $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);
             foreach ($names as $section => $name) {

@@ -1,0 +1,289 @@
+{
+ "section": "how-to-plant",
+ "slug": "wheat",
+ "lang": "en",
+ "category": "Corn and Sorghum",
+ "sortOrder": 60,
+ "title": "Paano Magtanim ng Trigo: How to Plant Wheat the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Trigo: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng trigo? See how traditional farmers plant trigo step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng trigo",
+ "keywords": [
+  "paano magtanim ng trigo",
+  "how to plant wheat"
+ ],
+ "excerpt": "Paano magtanim ng trigo? Here is how traditional Filipino farmers usually plant trigo (wheat), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/photos/hero-planting.jpg",
+  "alt": "A farm worker planting in a field",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant trigo. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "Wheat is hardly grown in the Philippines, and nearly all the wheat for bread and noodles comes from abroad. A few highland growers and hobby farmers raise small plots in the cool dry months, and this short guide shows how they do it.\n\nBefore you plant, get the field ready with our [land preparation guide for corn](/land-preparation/corn-land-preparation)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant trigo"
+  },
+  {
+   "type": "text",
+   "text": "In the highlands, small plots are sown at the end of the rains, around October to December, so the crop grows through the cool, dry months and ripens before the summer rains. Lowland heat gives weak plants and poor heads."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Dry seed, usually brought in from abroad or shared among growers. It is sown dry without soaking."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng trigo, step by step"
+  },
+  {
+   "type": "text",
+   "text": "The crop is ready about 115 days after sowing."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before sowing: Dig or plow to a fine bed",
+     "text": "Plow or dig the plot, remove the weeds and rake it to a fine, level bed."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Sowing day: Sow the seed",
+     "text": "Sow the seed thinly in shallow rows about 20 to 25 cm apart and cover it with 3 to 5 cm of soil, or scatter it evenly and rake it in."
+    },
+    {
+     "title": "Sowing day: Fertilizer at sowing",
+     "text": "Mix compost or manure and some complete fertilizer (14 14 14) into the rows at sowing."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 3: Water if dry",
+     "text": "Water the plot if no rain falls, so the seed comes up evenly."
+    },
+    {
+     "title": "Day 21: Weed",
+     "text": "Hand pull the weeds while the plants are young."
+    },
+    {
+     "title": "Day 28: Urea at tillering",
+     "text": "Give a light side dressing of urea (46 0 0) as the plants start to tiller."
+    },
+    {
+     "title": "Day 60: Watch for rust and birds",
+     "text": "Look for orange or brown rust spots on the leaves, and guard the ripening heads from birds."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 115: Cut when golden and dry",
+     "text": "Harvest when the straw is golden and the grain is hard. Cut with a sickle and tie in bundles."
+    },
+    {
+     "title": "Day 117: Dry and thresh",
+     "text": "Dry the bundles in the sun, then beat them to free the grain, winnow and dry the grain before storing."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for trigo"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Rows about 20 to 25 cm apart with seed sown thinly, or broadcast evenly over the plot."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Grown on the last of the rains and watered by hand or by hose on small plots during dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Compost or manure with some complete fertilizer (14 14 14) at sowing and a light dose of urea (46 0 0) at tillering. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/increase-corn-yield-per-hectare)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "Hand weeding in the first month and guarding the heads from birds. Rust is the main disease in warm, damp weather."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Ready in about 100 to 120 days, when the straw is golden and the grain is hard. Cut by sickle, sun dried, threshed by beating and winnowed."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting trigo"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Planting in the lowlands or in the rainy season, when heat and wet weather ruin the heads.",
+    "Sowing too thickly, which gives thin stems that fall over.",
+    "Harvesting late in the rains, so grain sprouts or molds in the head."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of trigo"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Get seed of a variety bred for warm climates.",
+    "Sow only in the cool dry months in the highlands.",
+    "Test the soil and lime it if it is acid.",
+    "Keep the plot weed free for the first month."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=wheat) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your trigo season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting trigo"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng trigo?",
+     "a": "Wheat is hardly grown in the Philippines, and nearly all the wheat for bread and noodles comes from abroad. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant trigo in the Philippines?",
+     "a": "In the highlands, small plots are sown at the end of the rains, around October to December, so the crop grows through the cool, dry months and ripens before the summer rains. Lowland heat gives weak plants and poor heads."
+    },
+    {
+     "q": "How far apart do you plant trigo?",
+     "a": "Rows about 20 to 25 cm apart with seed sown thinly, or broadcast evenly over the plot."
+    },
+    {
+     "q": "How long before trigo can be harvested?",
+     "a": "It is ready about 115 days after sowing. Ready in about 100 to 120 days, when the straw is golden and the grain is hard."
+    },
+    {
+     "q": "What do you plant to grow trigo?",
+     "a": "Dry seed, usually brought in from abroad or shared among growers. It is sown dry without soaking."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for corn",
+     "url": "/land-preparation/corn-land-preparation"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,369 @@
+{
+ "section": "how-to-plant",
+ "slug": "potato",
+ "lang": "en",
+ "category": "Root Crops",
+ "sortOrder": 220,
+ "title": "Paano Magtanim ng Patatas: How to Plant Potato the Traditional Way",
+ "metaTitle": "Paano Magtanim ng Patatas: The Traditional Way, Step by Step",
+ "metaDescription": "Paano magtanim ng patatas? See how traditional farmers plant patatas step by step, with the days, the spacing and what to change for a higher yield.",
+ "focusKeyword": "paano magtanim ng patatas",
+ "keywords": [
+  "paano magtanim ng patatas",
+  "how to plant potato"
+ ],
+ "excerpt": "Paano magtanim ng patatas? Here is how traditional Filipino farmers usually plant patatas (potato), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
+ "heroImage": {
+  "src": "/images/site/guides/crops-vegetables-philippines.webp",
+  "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet",
+  "credit": ""
+ },
+ "blocks": [
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "This is the traditional way",
+   "text": "This guide shows how traditional farmers usually plant patatas. Use it as a starting point. For a higher yield, update it: plant certified seed or clean planting material, test your soil, and follow the right spacing and fertilizer."
+  },
+  {
+   "type": "text",
+   "text": "How Filipino farmers usually grow patatas from seed tubers, on raised beds in the Benguet highlands and in plowed furrows in Bukidnon and other uplands, to the harvest about three months later. For highland growers and lowland farmers who try a cool season crop, with the changes that raise the yield.\n\nBefore you plant, get the field ready with our [land preparation guide for root crops](/land-preparation/root-crop-land-preparation). Then choose your seed or planting material with the [patatas varieties sold here](/crop-varieties/potato). If the leaves turn pale later on, the [patatas nutrient deficiency guide](/nutrient-deficiencies/potato-nutrient-deficiency) helps you find what is missing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "When to plant patatas"
+  },
+  {
+   "type": "text",
+   "text": "In the highlands of Benguet, Mountain Province and Bukidnon the main plantings are March to April and October to November. In the lowlands potato is planted only in the coolest months, from November to mid December, and harvested before the hot months."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "What you plant"
+  },
+  {
+   "type": "text",
+   "text": "Seed tubers, ideally healthy, well sprouted pieces of about 30 to 40 g that are two to three months past harvest. A hectare takes about 1,200 to 2,000 kg. Many farmers keep their own small tubers from the last crop and let them sprout in a shaded, airy shed before planting. Bigger tubers are cut into pieces, each with eyes."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Paano magtanim ng patatas, step by step"
+  },
+  {
+   "type": "text",
+   "text": "The crop is ready about 90 days after planting."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Before planting (Bago magtanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "30 days before planting: Lime acid soil",
+     "text": "Where the soil is sour, spread lime about a month before planting and mix it in."
+    },
+    {
+     "title": "21 days before planting: Plow and harrow twice",
+     "text": "Plow and harrow two times for a loose, crumbly soil. Spread chicken manure during land preparation."
+    },
+    {
+     "title": "2 days before planting: Make beds or furrows",
+     "text": "On slopes, as in Benguet, make raised beds about 1 m wide with 50 cm paths. On flat land, open furrows about 75 cm apart with a carabao drawn plow."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "The nursery (Punlaan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "14 days before planting: Ready the seed tubers",
+     "text": "Keep the seed tubers in a shaded, airy place until they carry short, strong sprouts. If you cut big tubers, give each piece eyes and dust the cut with fine wood ash.",
+     "parts": [
+      {
+       "title": "Choose clean seed tubers",
+       "text": "Use small to medium tubers, about 30 to 60 grams, from a field that had no wilt, no leaf roll and no blight. Seed tubers about two to three months past their own harvest sprout best."
+      },
+      {
+       "title": "Wake them from their rest",
+       "text": "Freshly dug potatoes rest for weeks before they can sprout. Keep the seed tubers in an airy shed where days are warm and nights cool, which breaks the rest faster, or choose a variety with a short rest. Tip: In a shed that swings between about 20 and 30 degrees, most seed tubers wake within a month or a little more.",
+       "time": "about 30 to 45 days"
+      },
+      {
+       "title": "Sprout them in soft light",
+       "text": "Spread the tubers in thin layers on racks or the floor of a shaded shed, where light comes in but no direct sun falls on them. In soft light the sprouts grow short, thick and green, which break less than long white sprouts grown in the dark."
+      },
+      {
+       "title": "Plant at the right sprout length",
+       "text": "The seed is ready when the sprouts are about 2 to 3 cm long. Sort the tubers so pieces of the same size, age and sprout length go into the same rows, and the stand comes up even.",
+       "time": "sprouts about 2 to 3 cm"
+      },
+      {
+       "title": "Cut big tubers with care",
+       "text": "Cut large tubers into pieces so that every piece carries strong eyes or sprouts. Dust the cut faces with fine wood ash, and plant cut pieces as soon as you can in moist soil, kept out of the sun and drying wind. Tip: Some growers dust the seed with a fungicide before sprouting where rot was a problem, following the label."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Planting day (Pagtatanim)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Planting day: Fertilize the holes and plant",
+     "text": "Drop complete fertilizer and a handful of chicken manure into each hole and bury them under a little soil so they do not touch the seed. Lay one tuber on that and bury it about 5 cm deep. Beds take two rows 30 cm apart. Holes are 30 cm apart along the row."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows (Pag aalaga)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 6: First light watering",
+     "text": "Give a light irrigation five to seven days after planting, then water every 7 to 15 days depending on rain and soil. Potato roots are shallow, so the soil must not dry out."
+    },
+    {
+     "title": "Day 30: Weed, hill up and side dress",
+     "text": "About a month after planting, before the leaves close, pull the weeds, add the rest of the nitrogen and potash fertilizer, and pull soil up around the stems in one go. Tip: Where plants wilt from bacterial wilt, hill up early and gently so roots are not torn."
+    },
+    {
+     "title": "Day 35: Scout for blight and pests",
+     "text": "In cool, wet weather look for dark, water soaked patches on leaves, the first sign of late blight. Check for cutworms, aphids, thrips and leaf miners, and pull out plants that wilt suddenly."
+    },
+    {
+     "title": "Day 50: Hill up again",
+     "text": "Cover any tubers showing at the surface with more soil, which keeps them from turning green and from tuber moth."
+    },
+    {
+     "title": "Day 89: Grade and store in the dark",
+     "text": "Sort by size, set aside damaged tubers, and keep the rest in a dark, cool, airy place. Keep healthy small tubers as seed for the next planting."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Harvest (Anihan)"
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": "Day 82: Cut the vines",
+     "text": "When most leaves have yellowed, cut the stems 5 to 10 cm above the ground and wait five to seven days so the tuber skin hardens."
+    },
+    {
+     "title": "Day 88: Dig the tubers",
+     "text": "Dig carefully with a spading fork or a pointed tool. Keep the tubers out of the sun so they do not turn green."
+    },
+    {
+     "title": "Day 88: Cure the tubers in a cool shed",
+     "text": "Fresh potatoes have thin skin and fresh cuts where rot can get in. A week of rest in a cool, shaded pile lets the skin set and small wounds heal, so the tubers keep much longer.",
+     "parts": [
+      {
+       "title": "Pick them up quickly",
+       "text": "Gather the tubers soon after digging and never leave them lying in the sun. Cart them to the shade, or pile them and cover them right away."
+      },
+      {
+       "title": "Pile them in a cool, shaded shed",
+       "text": "Heap the tubers in a cool shed or shaded place where some air moves but wind does not dry them out. Handle them gently, as every bruise is a door for rot."
+      },
+      {
+       "title": "Leave them for a week",
+       "text": "Let the tubers rest in the pile for about seven days so the skin firms up and the cuts close.",
+       "time": "about 7 days"
+      },
+      {
+       "title": "Grade them in the field and the shed",
+       "text": "Sort by size, shape and soundness, and throw out diseased, cut and green tubers. Pack the good ones in wooden crates so they do not bruise on the way."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Spacing, water and fertilizer for patatas"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Spacing"
+  },
+  {
+   "type": "text",
+   "text": "Benguet style beds: about 1 m wide with 50 cm paths, two rows 30 cm apart, plants 30 cm apart. Flat land: furrows 75 cm apart with plants 30 cm apart. Both come to about 44,000 plants a hectare."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Water"
+  },
+  {
+   "type": "text",
+   "text": "Lowland and dry season crops are watered by furrow or hose, first lightly at five to seven days and then every 7 to 15 days. Highland rainy season crops are mostly rainfed, but need drainage, since soggy soil brings wilt and rot."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Fertilizer"
+  },
+  {
+   "type": "text",
+   "text": "Highland farmers rely heavily on chicken manure, about 5 tons a hectare at land preparation, plus 3 to 5 bags of 14 14 14 in the planting holes. The rest of the nitrogen and potash (urea and 0 0 60) goes on at hilling up, about a month after planting. Too much nitrogen delays maturity and gives tubers that bruise easily. To read what a bag really gives, see our guide to [fertilizer for this crop](/blog/fertilizer-for-plants)."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Care and harvest"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Care while it grows"
+  },
+  {
+   "type": "text",
+   "text": "One main weeding, side dressing and hilling up at about a month, a second light hilling to cover exposed tubers, steady watering in dry weather, and close watch for late blight in cool, wet weather."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "When and how to harvest"
+  },
+  {
+   "type": "text",
+   "text": "Most potatoes are ready 75 to 90 days after planting, when most of the leaves turn yellow. Farmers cut the vines about a week before digging so the skins harden, dig with a fork, keep the tubers out of the sun, grade them by size and store them in a dark, cool, airy place."
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Common mistakes when planting patatas"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Replanting small tubers from a sick crop season after season, so virus and wilt keep cutting the yield.",
+    "Planting seed that has not sprouted yet, or that is too old and weak.",
+    "Planting in poorly drained soil, which invites bacterial wilt and rot.",
+    "Forgetting to hill up, so tubers turn green or get tuber moth.",
+    "Leaving dug tubers in the sun."
+   ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "How to get a higher yield of patatas"
+  },
+  {
+   "type": "text",
+   "text": "The traditional way gets a crop, but small changes add up. These are the first things to change, one season at a time."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "Buy clean seed tubers from a trusted seed grower every few seasons instead of replanting your own for years.",
+    "Test the soil, lime sour soils and fertilize by the result instead of guessing.",
+    "Rotate potato with crops outside the tomato family, such as cabbage, beans or corn.",
+    "Scout often in cool, wet weather and act at the first sign of late blight.",
+    "Cut the vines a week before harvest and store tubers in a dark, cool shed."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "anee.io helps with each of these. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your fertilizer plan feeds the yield you want, the [pest and disease finders](/features/pest-and-disease-finders) tell you what is on the leaves before you spray, and [Anee, the smart farm technician](/features/ai-agricultural-technician) answers your questions in Tagalog or English."
+  },
+  {
+   "type": "callout",
+   "tone": "tip",
+   "title": "Use this guide in anee.io",
+   "text": "Members open this guide in the [How to Plant](/app/how-to-plant?crop=potato) tool and send every step to the [Protocol Builder](/features/protocol-builder) in one tap, each on its own day. There you can change the seed, the spacing and the fertilizer, then turn it into a cropping calendar for your lots."
+  },
+  {
+   "type": "cta",
+   "title": "Plan your patatas season in anee.io",
+   "text": "Start from the traditional way, make it better, and let anee.io date every task from your own planting day. Free to start.",
+   "label": "Start free",
+   "url": "/signup"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Questions about planting patatas"
+  },
+  {
+   "type": "faq",
+   "items": [
+    {
+     "q": "Paano magtanim ng patatas?",
+     "a": "How Filipino farmers usually grow patatas from seed tubers, on raised beds in the Benguet highlands and in plowed furrows in Bukidnon and other uplands, to the harvest about three months later. Follow the steps above in order, from getting the field ready to the harvest, then change one thing at a time for a higher yield."
+    },
+    {
+     "q": "When do farmers plant patatas in the Philippines?",
+     "a": "In the highlands of Benguet, Mountain Province and Bukidnon the main plantings are March to April and October to November. In the lowlands potato is planted only in the coolest months, from November to mid December, and harvested before the hot months."
+    },
+    {
+     "q": "How far apart do you plant patatas?",
+     "a": "Benguet style beds: about 1 m wide with 50 cm paths, two rows 30 cm apart, plants 30 cm apart. Flat land: furrows 75 cm apart with plants 30 cm apart."
+    },
+    {
+     "q": "How long before patatas can be harvested?",
+     "a": "It is ready about 90 days after planting. Most potatoes are ready 75 to 90 days after planting, when most of the leaves turn yellow."
+    },
+    {
+     "q": "What do you plant to grow patatas?",
+     "a": "Seed tubers, ideally healthy, well sprouted pieces of about 30 to 40 g that are two to three months past harvest. A hectare takes about 1,200 to 2,000 kg."
+    }
+   ]
+  },
+  {
+   "type": "links",
+   "title": "Read next",
+   "items": [
+    {
+     "label": "Land preparation guide for root crops",
+     "url": "/land-preparation/root-crop-land-preparation"
+    },
+    {
+     "label": "Patatas varieties sold here",
+     "url": "/crop-varieties/potato"
+    },
+    {
+     "label": "Patatas nutrient deficiency guide",
+     "url": "/nutrient-deficiencies/potato-nutrient-deficiency"
+    },
+    {
+     "label": "Every crop, the traditional way",
+     "url": "/how-to-plant"
+    },
+    {
+     "label": "Pests of every crop",
+     "url": "/pests"
+    }
+   ]
+  }
+ ]
+}

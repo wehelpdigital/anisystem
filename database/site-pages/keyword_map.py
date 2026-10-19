@@ -57,6 +57,10 @@ P = {
     'palayisda': 'blog/palayisdaan', 'drying': 'blog/palay-drying', 'drawing': 'blog/palay-drawing',
     # One page per rice variety (2026-10-13), from PhilRice's seed database.
     'rv216': 'rice-varieties/nsic-rc-216', 'rv222': 'rice-varieties/nsic-rc-222', 'rv402': 'rice-varieties/nsic-rc-402',
+    # How to Plant (2026-10-19): a page per crop, the traditional way. The crop guides above keep their
+    # Tagalog keywords as primary; these pages carry them second, with a link back.
+    'htprice': 'how-to-plant/rice', 'htpcorn': 'how-to-plant/yellow-corn', 'htpbanana': 'how-to-plant/banana',
+    'htptomato': 'how-to-plant/tomato', 'htpmango': 'how-to-plant/mango',
 }
 
 # keyword -> page keys, primary first
@@ -80,7 +84,7 @@ MAP = {
     'thrips': ['thrips', 'veg', 'hanip'],
     'foliar fertilizer': ['foliar', 'apply', 'veg'],
     'alitangya': ['ricebug', 'words'],
-    'pagtatanim ng puno': ['puno', 'coco'],
+    'pagtatanim ng puno': ['puno', 'coco', 'htpmango'],
     'corn scientific name': ['kernel', 'cseeds'],
     'fertilizer pesticide authority': ['fpa', 'brands'],
     'fertilizer and pesticide authority': ['fpa', 'riceinsect', 'karate'],
@@ -120,7 +124,7 @@ MAP = {
     'atlas fertilizer': ['brands', 'p1620'],
     'alika insecticide': ['riceinsect', 'ricebug'],
     'rice black bug': ['blackbug', 'riceins'],
-    'pagtatanim ng palay': ['pnp', 'palay', 'alamat'],
+    'pagtatanim ng palay': ['pnp', 'palay', 'alamat', 'htprice'],
     'rice variety philippines': ['var', 'palay'],
     'virtako insecticide': ['riceinsect', 'lf'],
     'urea fertilizer price': ['urea', 'brands'],
@@ -223,9 +227,9 @@ MAP = {
     'banghay ng alamat ng palay': ['alamat'],
     'fertilizer for flowering plants': ['fplants', 'potash'],
     'ammonia nitrate fertilizer': ['as', 'inorg'],
-    'banana farming philippines': ['banana', 'fus'],
+    'banana farming philippines': ['banana', 'fus', 'htpbanana'],
     'top dressing fertilizer': ['apply', 'urea'],
-    'pagtatanim ng gulay': ['png', 'veg'],
+    'pagtatanim ng gulay': ['png', 'veg', 'htptomato'],
     'biostimulants': ['foliar', 'organic'],
     'termiticides': ['ant', 'karate'],
     'fertilizer computation': ['calc', 'frice'],
@@ -277,7 +281,7 @@ MAP = {
     'mais rice benefits': ['maisrice'],
     'jackpot rice variety maturity': ['var'],
     'palay seedlings': ['pnp', 'palay'],
-    'pagtatanim ng mais': ['pnm', 'kernel'],
+    'pagtatanim ng mais': ['pnm', 'kernel', 'htpcorn'],
     'corn seed grow a garden roblox': ['cseeds'],
     'palay seeds': ['palay', 'var'],
     'fertilizer high in phosphorus': ['p1620', 'fplants'],
@@ -444,6 +448,15 @@ def main():
               open(os.path.join(HERE, 'keywords_skipped.json'), 'w', encoding='utf-8'), indent=1)
     vol = {k: v for k, v in vol.items() if k not in SKIP}
     out = {k: {'volume': vol[k], 'pages': [P[p] for p in MAP[k]]} for k in sorted(vol, key=lambda k: -vol[k])}
+    # The How to Plant searches (2026-10-19): the research's own keywords per crop, written by
+    # database/how-to-plant/build_pages.py with their primary page first (a crop guide when it owns
+    # the search). No volume in the owner's research yet: they sort last.
+    extra = os.path.join(os.path.dirname(HERE), 'how-to-plant', 'keywords.json')
+    if os.path.exists(extra):
+        for k, pages in json.load(open(extra, encoding='utf-8')).items():
+            k = ' '.join(k.strip().lower().split())
+            if k and k not in out and k not in SKIP:
+                out[k] = {'volume': 0, 'pages': pages}
     json.dump(out, open(os.path.join(HERE, 'keywords.json'), 'w', encoding='utf-8'), indent=1)
     by_page = {}
     for k, v in out.items():
