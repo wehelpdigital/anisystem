@@ -124,6 +124,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering peach, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The few peach trees here live on rain, with a pail of water in dry spells, on high ground that drains fast. A pail or hose into a ring basin, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let peach go dry at these stages",
+   "text": "Flowering to about four weeks after bloom. The final swell, the last weeks before picking."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for peach, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Month 3 to 12",
+     "Only in dry spells, when the soil a hand deep is dry",
+     "A deep soak of the ring, never leaving water standing"
+    ],
+    [
+     "Leaf stripping to new shoots and flowers (each crop cycle)",
+     "Month 12 to 13",
+     "Keep the soil moist after stripping the leaves. Water if a dry spell comes",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Flowering to four weeks after bloom",
+     "Month 13 to 14",
+     "Never let the soil dry out",
+     "A deep soak whenever the soil a hand deep is dry"
+    ],
+    [
+     "Final swell to harvest (first real crop)",
+     "Month 28 to 30",
+     "Steady water in dry spells in the last weeks before picking",
+     "A deep soak of the ring"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin on sunny, cool, well drained ground and mulch the ring. Most trees get by on rain, with a pail of water in dry spells at flowering and final swell.\n\n**In the dry season.** Water when the soil a hand deep is dry, above all at flowering and in the last weeks before picking.\n\n**In the rainy season.** Peach roots rot in standing water: plant on raised or sloping ground and keep the trunk dry."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and curl, few fruits set, and fruits stay small.",
+    "**Too much water:** Yellow leaves, gum on the trunk and dying roots on soggy ground."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water steadily from flowering for four weeks and again in the final weeks before picking. The middle weeks need less."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for peach"
   },
   {
@@ -248,6 +321,10 @@
     {
      "q": "How long before peach can be harvested?",
      "a": "It is ready about 30 months after planting. Fruit is picked when the ground color turns yellow and the flesh just softens."
+    },
+    {
+     "q": "How often do you water peach?",
+     "a": "Planting to 3 months, planting day to month 3: Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing. Rest of the first year, month 3 to 12: Only in dry spells, when the soil a hand deep is dry. Leaf stripping to new shoots and flowers (each crop cycle), month 12 to 13: Keep the soil moist after stripping the leaves. Water if a dry spell comes. Water when the soil a hand deep is dry, above all at flowering and in the last weeks before picking."
     },
     {
      "q": "What do you plant to grow peach?",

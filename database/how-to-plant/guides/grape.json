@@ -197,6 +197,100 @@
   "Scout twice a week for mildew, anthracnose, mealybugs and thrips and use integrated pest management.",
   "Ask an experienced grower before using bud forcing treatments at pruning."
  ],
+ "watering": {
+  "traditional": "Grapes here are grown for the dry months and watered by hand, hose or furrow, every two to three days on young vines, always at the base and never on the leaves. Growers water most from flowering until the berries fill, ease off as the fruit ripens, and in the rains rely on raised beds and drains to keep the roots out of standing water.",
+  "method": "A watering can, hose or furrow along the raised beds on most farms. Drip lines along the rows on a few. Water in the early morning, at the base of the vine and never over the leaves.",
+  "rainfed": "Grapes cannot carry a good crop on rain alone here, because the crop is timed for the dry months to keep rain off the ripening berries. A grower without a pump plants near a well or stores water in drums, mulches the beds with rice straw or dry grass, and plants the rooted cuttings at the end of the rains so the soil still holds water.",
+  "dryseason": "Young vines every 2 to 3 days. Established vines about once a week, every 5 to 7 days while berries grow, and none in the last one to two weeks before harvest and the two weeks before fruit pruning. Water when leaves droop at midday or the soil a finger deep is dry.",
+  "wet": "Grapes hate wet feet: plant on raised beds or mounds and keep drains open. Rain on ripening grapes splits and rots them, and wet leaves and heavy watering at flowering bring downy mildew, so water only at the base and never late in the day.",
+  "schedule": [
+   {
+    "stage": "Rooting cuttings in bags",
+    "from": -60,
+    "to": 0,
+    "often": "Every day or two in light shade",
+    "amount": "Enough to keep the bag moist, never soggy",
+    "why": "The buds push out in two to three weeks, and wet bags rot the cut end."
+   },
+   {
+    "stage": "Planting to the first month",
+    "from": 0,
+    "to": 30,
+    "often": "Soak at planting, again on the third day, then every 2 to 3 days in the dry months",
+    "amount": "A soak at the base of the vine, never on the leaves",
+    "why": "The young roots are still close to the bag soil."
+   },
+   {
+    "stage": "Young vine climbing and spreading its arms",
+    "from": 30,
+    "to": 225,
+    "often": "About once a week once the vine is growing well, every 2 to 3 days on sandy soil in hot weeks",
+    "amount": "A deep soak of the bed along the vine",
+    "why": "Strong, brown canes grown now carry the first crop."
+   },
+   {
+    "stage": "Before fruit pruning",
+    "from": 225,
+    "to": 240,
+    "often": "Hold back water for about two weeks before pruning",
+    "amount": "None",
+    "why": "Drier soil hardens the canes so the buds break evenly after pruning."
+   },
+   {
+    "stage": "Fruit pruning to flowering",
+    "from": 240,
+    "to": 260,
+    "often": "Water right after pruning and feeding, then moderately, about once a week",
+    "amount": "A deep soak of the bed after pruning, lighter after that",
+    "why": "Water wakes the buds, but too much pushes leaves instead of bunches."
+   },
+   {
+    "stage": "Flowering to pea size berries",
+    "from": 260,
+    "to": 285,
+    "often": "Moderate and steady, about once a week. Avoid frequent heavy watering",
+    "amount": "A soak at the base only",
+    "why": "Wet, heavy watering now brings downy mildew to the flowers and young bunches."
+   },
+   {
+    "stage": "Berry growth",
+    "from": 285,
+    "to": 345,
+    "often": "Every 5 to 7 days",
+    "amount": "A deep soak of the bed along the row",
+    "why": "The berries swell with water now. A dry spell gives small berries and loose bunches."
+   },
+   {
+    "stage": "Ripening, the last one to two weeks",
+    "from": 345,
+    "to": 360,
+    "often": "Stop watering about 8 to 15 days before cutting",
+    "amount": "None",
+    "why": "Drier soil gives sweeter, firmer berries that do not split."
+   },
+   {
+    "stage": "Rest after harvest",
+    "from": 360,
+    "to": 420,
+    "often": "Water with the after harvest feeding, then about once a week while new canes grow, every 10 to 12 days in the rains if the soil dries",
+    "amount": "A deep soak of the bed",
+    "why": "The vine rebuilds canes for the next fruit pruning."
+   }
+  ],
+  "critical": [
+   "The first month after planting the rooted cutting.",
+   "Berry growth, from pea size berries until they start to color."
+  ],
+  "signs": {
+   "dry": "Leaves droop at midday and their edges brown and dry, berries stay small, and bunches come loose and uneven.",
+   "wet": "Long, soft shoots with big leaves and few bunches, mildew on leaves and flowers, yellow leaves on soggy beds, and berries that split."
+  },
+  "better": [
+   "Drip along the row under a straw mulch gives steady water while berries grow and keeps the leaves dry, which means bigger bunches and less mildew.",
+   "Time the water to the pruning: hold back two weeks before fruit pruning and one to two weeks before harvest, and water well in between."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "LxRHbTaXpR8",
   "title": "Paano Magtanim ng Grapes | Complete Guide from Seedlings to Harvest",
@@ -218,5 +312,5 @@
  "kind": "perennial",
  "icon": "🍇",
  "slug": "grape",
- "rev": "9e1f9650cc65"
+ "rev": "8b024b56d3b0"
 }

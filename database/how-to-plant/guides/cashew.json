@@ -174,6 +174,84 @@
   "Scout for tea mosquito bugs, borers and anthracnose and use integrated pest management.",
   "Process the cashew apples into juice, wine or jam for extra income."
  ],
+ "watering": {
+  "traditional": "Kasoy here is rain fed: the nuts are sown once the rains are steady, and after that the trees live through the long dry season on their deep taproot. Only young trees on very sandy soil get a pail of water in their first dry season, where a well or creek is near.",
+  "method": "A pail or hose into a ring basin for young trees. A few farms use small sprinklers under the trees or drip lines. Water the soil in the early morning, not the flowers.",
+  "rainfed": "Sow once the rains are steady and cover the holes with straw mulch. Cashew does best on deep, well drained sand or loam with a clear dry season, where its taproot reaches deep water. It needs as little as about 1,000 mm of rain a year. A clear dry season brings one strong flowering, and rain fed trees give their nuts from about February to May.",
+  "dryseason": "Grown trees need no water to survive. Young trees on sandy soil: every week or two in their first dry seasons. Bearing trees, where water is at hand: a deep soak every week or two from flowering to nut growth, stopping when the nuts fall. Water a young tree when its leaves droop and its older leaves yellow and fall.",
+  "wet": "On shallow or waterlogged soil cashew grows a poor root system and the trees blow over in the wet season, so plant on deep ground that drains. Rain at flowering brings black spot and flower drop, and rain on the growing nuts rots them. Never sprinkle water over a tree in flower.",
+  "schedule": [
+   {
+    "stage": "Sowing to sprouting",
+    "from": 0,
+    "to": 21,
+    "often": "Sow only when the rains are steady. Water lightly only if a dry week comes",
+    "amount": "A light soak of each hole",
+    "why": "The nuts sprout in two to three weeks in moist soil and rot in soggy soil."
+   },
+   {
+    "stage": "Seedlings in the first rains",
+    "from": 21,
+    "to": 150,
+    "often": "Rain is enough. No watering",
+    "amount": "None",
+    "why": "The taproot races down while the soil is wet."
+   },
+   {
+    "stage": "First dry season",
+    "from": 150,
+    "to": 360,
+    "often": "Every week or two for young trees on sandy soil, where water is near",
+    "amount": "A deep soak of a ring basin around the stem",
+    "why": "Watering young cashew through the dry season can double its growth."
+   },
+   {
+    "stage": "Years 2 and 3, before bearing",
+    "from": 360,
+    "to": 900,
+    "often": "Rain fed. In a long dry season, a deep soak every two weeks or so for trees that wilt",
+    "amount": "A deep soak of the ring, widened as the tree grows",
+    "why": "Trees that keep growing through the dry months bear sooner."
+   },
+   {
+    "stage": "Flowering and nut set (about November to March)",
+    "from": 900,
+    "to": 990,
+    "often": "Rain fed trees get none. Where water is at hand, a deep soak at the base every week or two",
+    "amount": "About 200 liters a grown tree every two weeks, or about 20 liters a tree a day on drip, always on the soil and never over the flowers",
+    "why": "Steady soil moisture holds the young nuts, while wet flowers catch black spot and drop."
+   },
+   {
+    "stage": "Nut and apple growth",
+    "from": 990,
+    "to": 1060,
+    "often": "The same deep soak every week or two where water is at hand",
+    "amount": "About 200 liters a grown tree each time",
+    "why": "Dry soil now makes many young nuts fall early."
+   },
+   {
+    "stage": "Nut fall and harvest (about February to May)",
+    "from": 1060,
+    "to": 1140,
+    "often": "Stop watering once the nuts begin to fall",
+    "amount": "None",
+    "why": "Fallen nuts rot on wet ground."
+   }
+  ],
+  "critical": [
+   "The first dry season after sowing, while the taproot is still short.",
+   "Flowering to nut growth, when a dry spell makes young nuts drop early."
+  ],
+  "signs": {
+   "dry": "Young trees stop growing and drop their older leaves. Bearing trees drop many small nuts before they fill.",
+   "wet": "Seedlings rot at the base in soggy soil, leaves yellow on waterlogged ground, and flowers turn black and drop in rainy spells."
+  },
+  "better": [
+   "Water young trees through their first dry seasons. They grow much faster and start bearing sooner.",
+   "Where a pond or well is near, a deep soak at the base every week or two from flowering to nut growth cuts early nut drop. Stop as the nuts begin to fall."
+  ],
+  "confidence": "medium"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng kasoy",
@@ -187,5 +265,5 @@
  "kind": "perennial",
  "icon": "🥜",
  "slug": "cashew",
- "rev": "5b8b7e4c6b39"
+ "rev": "103e5bc04680"
 }

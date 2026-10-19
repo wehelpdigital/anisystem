@@ -222,6 +222,84 @@
   "Prune to keep the tree low and open for easy picking.",
   "Scout new shoots for mites and borers and use integrated pest management."
  ],
+ "watering": {
+  "traditional": "Santol here grows on rain: young trees are watered once or twice a week through their first dry season and mulched, and grown trees are left to the weather. It is one of the hardiest fruit trees in the lowlands and bears even where the dry months are long.",
+  "method": "A pail or hose into a ring basin for young trees. Grown trees live on rain. Water in the early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin and keep a mulch of dry grass or leaves around the young tree, off the stem. Santol grows in both dry and moist lowlands and bears without any watering even where the dry season is long. Only its first dry season needs carried water.",
+  "dryseason": "Young trees: once or twice a week through the first dry season. Bearing trees: nothing needed, or a deep soak every week or two from flowering to fruit growth where water is near. Water a young tree when its leaves droop in the afternoon and stay limp.",
+  "wet": "Santol wants soil that drains. On low, flat ground, plant on ridges with ditches between the rows, as lowland orchards do. Long rains bring pink crusts of a bark disease on the branches. Cut out the cankers in the dry months so the trees enter the rains clean. Seedlings in wet nursery bags can collapse from blight.",
+  "schedule": [
+   {
+    "stage": "Trimmed seedling before planting",
+    "from": -7,
+    "to": 0,
+    "often": "Water the bag well the day before planting",
+    "amount": "Enough to soak the bag right through",
+    "why": "A wet soil ball holds together and the roots do not dry while planting."
+   },
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Water at planting, then once or twice a week whenever no rain falls",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "The new roots are few and the trimmed leaves are regrowing."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 90,
+    "to": 360,
+    "often": "Once or twice a week when the rain stops, until the first dry season is over",
+    "amount": "A deep soak of the mulched ring",
+    "why": "Regular water in the year after planting is what makes a santol tree take."
+   },
+   {
+    "stage": "Years 2 and 3, before bearing",
+    "from": 360,
+    "to": 1200,
+    "often": "Left to the rain. Water only young trees that wilt in a long dry spell. Trees from seed stay at this stage until about year 5 to 7",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "The roots are deep enough now to carry the tree through dry months."
+   },
+   {
+    "stage": "Bearing trees: short leaf drop in the dry months (each year)",
+    "from": 1200,
+    "to": 1260,
+    "often": "No water needed",
+    "amount": "None",
+    "why": "The tree sheds part of its leaves for a while, then flushes and flowers on the new shoots."
+   },
+   {
+    "stage": "Flowering and fruit set (about December to March)",
+    "from": 1260,
+    "to": 1320,
+    "often": "Where water is at hand, a deep soak every week or two in the dry months",
+    "amount": "A deep soak of the ground under the crown",
+    "why": "Water while flowers and young fruits grow helps the tree hold more of them."
+   },
+   {
+    "stage": "Fruit growth to harvest (about June to October)",
+    "from": 1320,
+    "to": 1440,
+    "often": "Every week or two until the rains come, then the rain does the work",
+    "amount": "A deep soak under the crown",
+    "why": "Fruits fill better when the end of the dry season is not too harsh."
+   }
+  ],
+  "critical": [
+   "The first year after planting, above all the first dry season.",
+   "Flowering and young fruits in the dry months, where water is at hand."
+  ],
+  "signs": {
+   "dry": "Young leaves droop and stay limp, a young tree drops leaves early and stops growing, and a bearing tree drops many small fruits.",
+   "wet": "Yellow leaves and slow growth on soggy ground, and nursery seedlings that rot and fall over in wet bags."
+  },
+  "better": [
+   "Water the young tree faithfully through its first dry season. It is the one watering santol cannot do without.",
+   "Where a well or creek is near, a deep soak every week or two from flowering to fruit growth helps the tree hold more fruit."
+  ],
+  "confidence": "medium"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng santol",
@@ -235,5 +313,5 @@
  "kind": "perennial",
  "icon": "🍑",
  "slug": "santol",
- "rev": "33e283fc23ea"
+ "rev": "3fee71f375c1"
 }

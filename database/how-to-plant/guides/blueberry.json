@@ -78,6 +78,51 @@
   "Raise native ayusip from cuttings instead of digging plants from the wild.",
   "Keep records of flowering and fruiting. There is little local experience yet."
  ],
+ "watering": {
+  "traditional": "The few blueberry growers in the highlands keep the beds or pots evenly damp, with rain water where they can, under a thick pine needle mulch. Wild ayusip lives on mountain rain.",
+  "method": "A watering can with rain water on the bed or pot, in the morning. Hard tap water slowly makes the soil less sour.",
+  "rainfed": "Plant as the rains begin and keep a thick pine needle mulch. In the misty highlands rain and fog carry the bushes much of the year, with hand watering in dry weeks. Rain water also keeps the soil sour, which blueberry needs.",
+  "dryseason": "Every day or two, more often for pots. Water when the top of the bed or pot feels dry or the young leaves droop.",
+  "wet": "Blueberry roots rot in standing water: use raised beds or pots that drain freely, and never let water pool.",
+  "schedule": [
+   {
+    "stage": "Planting to new growth",
+    "from": 0,
+    "to": 60,
+    "often": "Every day or two in dry weather. Pots may need water every day",
+    "amount": "Enough to wet the whole root ball, never soggy",
+    "why": "Blueberry roots are shallow, fine and without root hairs, so they dry out fast."
+   },
+   {
+    "stage": "First and second year",
+    "from": 60,
+    "to": 720,
+    "often": "Whenever the top of the bed or pot is dry, a little often rather than a lot at once",
+    "amount": "About 2.5 to 4 cm of water a week in total in dry weather",
+    "why": "Steady damp soil grows the new canes that will bear."
+   },
+   {
+    "stage": "Flowering and berry growth to harvest",
+    "from": 780,
+    "to": 900,
+    "often": "Keep evenly damp. Pots every day in dry, sunny weeks",
+    "amount": "About 2.5 to 4 cm of water a week in total",
+    "why": "Thirst while berries grow gives small, few berries."
+   }
+  ],
+  "critical": [
+   "The first two months after planting.",
+   "Berry growth, from flowering to picking."
+  ],
+  "signs": {
+   "dry": "Young leaves droop, leaf edges turn brown and dry, and berries stay small.",
+   "wet": "Yellow leaves, dying roots and a sour smell in a bed or pot that does not drain."
+  },
+  "better": [
+   "Water a little and often with rain water under a thick pine needle mulch, so the shallow roots stay evenly damp."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "blueberry sa pilipinas",
@@ -90,5 +135,5 @@
  "kind": "perennial",
  "icon": "🫐",
  "slug": "blueberry",
- "rev": "252575ebdb60"
+ "rev": "b747cd6eec52"
 }

@@ -282,6 +282,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering santol, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Santol here grows on rain: young trees are watered once or twice a week through their first dry season and mulched, and grown trees are left to the weather. It is one of the hardiest fruit trees in the lowlands and bears even where the dry months are long. A pail or hose into a ring basin for young trees. Grown trees live on rain. Water in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let santol go dry at these stages",
+   "text": "The first year after planting, above all the first dry season. Flowering and young fruits in the dry months, where water is at hand."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for santol, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Trimmed seedling before planting",
+     "7 days before planting to planting day",
+     "Water the bag well the day before planting",
+     "Enough to soak the bag right through"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Water at planting, then once or twice a week whenever no rain falls",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Month 3 to 12",
+     "Once or twice a week when the rain stops, until the first dry season is over",
+     "A deep soak of the mulched ring"
+    ],
+    [
+     "Years 2 and 3, before bearing",
+     "Month 12 to 40",
+     "Left to the rain. Water only young trees that wilt in a long dry spell. Trees from seed stay at this stage until about year 5 to 7",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Bearing trees: short leaf drop in the dry months (each year)",
+     "Month 40 to 42",
+     "No water needed",
+     "None"
+    ],
+    [
+     "Flowering and fruit set (about December to March)",
+     "Month 42 to 44",
+     "Where water is at hand, a deep soak every week or two in the dry months",
+     "A deep soak of the ground under the crown"
+    ],
+    [
+     "Fruit growth to harvest (about June to October)",
+     "Month 44 to 48",
+     "Every week or two until the rains come, then the rain does the work",
+     "A deep soak under the crown"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin and keep a mulch of dry grass or leaves around the young tree, off the stem. Santol grows in both dry and moist lowlands and bears without any watering even where the dry season is long. Only its first dry season needs carried water.\n\n**In the dry season.** Young trees: once or twice a week through the first dry season. Bearing trees: nothing needed, or a deep soak every week or two from flowering to fruit growth where water is near. Water a young tree when its leaves droop in the afternoon and stay limp.\n\n**In the rainy season.** Santol wants soil that drains. On low, flat ground, plant on ridges with ditches between the rows, as lowland orchards do. Long rains bring pink crusts of a bark disease on the branches. Cut out the cankers in the dry months so the trees enter the rains clean. Seedlings in wet nursery bags can collapse from blight."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Young leaves droop and stay limp, a young tree drops leaves early and stops growing, and a bearing tree drops many small fruits.",
+    "**Too much water:** Yellow leaves and slow growth on soggy ground, and nursery seedlings that rot and fall over in wet bags."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water the young tree faithfully through its first dry season. It is the one watering santol cannot do without. Where a well or creek is near, a deep soak every week or two from flowering to fruit growth helps the tree hold more fruit."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for santol"
   },
   {
@@ -410,6 +495,10 @@
     {
      "q": "How long before santol can be harvested?",
      "a": "Grafted seedlings, it is ready about 4 years after planting. From seed, it is ready about 5 years after planting. Fruit is picked when fully golden yellow, ripened on the tree, from about June to October."
+    },
+    {
+     "q": "How often do you water santol?",
+     "a": "Trimmed seedling before planting, 7 days before planting to planting day: Water the bag well the day before planting. Planting to 3 months, planting day to month 3: Water at planting, then once or twice a week whenever no rain falls. Rest of the first year, month 3 to 12: Once or twice a week when the rain stops, until the first dry season is over. Young trees: once or twice a week through the first dry season."
     },
     {
      "q": "What do you plant to grow santol?",

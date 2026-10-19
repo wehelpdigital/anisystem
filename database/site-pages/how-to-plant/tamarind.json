@@ -285,6 +285,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sampalok, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Sampalok here is rain fed: young trees get a pail of water once or twice a week in their first dry season, and after that the tree is never watered. It stands long droughts on its deep, wide roots and bears with no watering at all. A pail or hose into a ring basin for young trees in their first dry season. Grown trees get rain only. Water in the cool early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sampalok go dry at these stages",
+   "text": "Seedlings in the nursery bags, which must not dry out. The first dry season after planting, the only time a tamarind tree needs carried water."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sampalok, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedlings in bags, for trees raised at home",
+     "8 months before planting to planting day",
+     "Every day or two, keeping the bags moist",
+     "Enough to wet each bag through"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Water at planting, then only in a dry week",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "First dry season",
+     "Month 3 to 12",
+     "Once or twice a week once the rains stop, until the dry season ends",
+     "A deep soak of the mulched ring"
+    ],
+    [
+     "Years 2 and 3, before bearing",
+     "Month 12 to 40",
+     "No watering needed. Trees from seed stay at this stage until about year 5 or later",
+     "None"
+    ],
+    [
+     "Flowering and pod set (in the rainy months)",
+     "Month 40 to 42",
+     "Rain does the work. No watering",
+     "None"
+    ],
+    [
+     "Pod filling",
+     "Month 42 to 46",
+     "No watering in a normal year",
+     "None"
+    ],
+    [
+     "Ripening and harvest (in the dry months)",
+     "Month 46 to 49",
+     "Never water ripening pods",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant in May or June as the rains begin, in a sunny, well drained spot, and keep a mulch of dry grass on the ring through the first dry season. After that tamarind needs no watering: it does well both where rain is spread through the year and in places with a long, harsh dry season, thanks to its deep, wide roots.\n\n**In the dry season.** First dry season: once or twice a week, a deep soak of the mulched ring. Older trees: none. Water a young tree when its leaves droop in the afternoon and stay limp by evening, or when it drops leaves early.\n\n**In the rainy season.** Tamarind needs soil that drains and does not like long wet spells. In very wet places it grows leaves but hardly flowers, and rain at the end of pod ripening spoils the pods, so pick ripe pods promptly and dry them on mats under cover."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** On a young tree, leaves droop in the afternoon, turn yellow and fall early, and new shoots stop.",
+    "**Too much water:** Yellow leaves and slow growth on soggy ground, and ripe pods that crack or mold in rainy weather."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water young trees faithfully once or twice a week through their first dry season and keep them weeded. With enough water a young tree reaches about 120 cm by its second year. Never water a bearing tree while its pods ripen. Dry weather then gives the best pulp."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sampalok"
   },
   {
@@ -413,6 +498,10 @@
     {
      "q": "How long before sampalok can be harvested?",
      "a": "Grafted seedlings, it is ready about 4 years after planting. From seed, it is ready about 6 years after planting. Green pods are picked for sinigang as soon as they fill."
+    },
+    {
+     "q": "How often do you water sampalok?",
+     "a": "Seedlings in bags, for trees raised at home, 8 months before planting to planting day: Every day or two, keeping the bags moist. Planting to 3 months, planting day to month 3: Water at planting, then only in a dry week. First dry season, month 3 to 12: Once or twice a week once the rains stop, until the dry season ends. First dry season: once or twice a week, a deep soak of the mulched ring."
     },
     {
      "q": "What do you plant to grow sampalok?",

@@ -222,6 +222,103 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering ubas, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Grapes here are grown for the dry months and watered by hand, hose or furrow, every two to three days on young vines, always at the base and never on the leaves. Growers water most from flowering until the berries fill, ease off as the fruit ripens, and in the rains rely on raised beds and drains to keep the roots out of standing water. A watering can, hose or furrow along the raised beds on most farms. Drip lines along the rows on a few. Water in the early morning, at the base of the vine and never over the leaves."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let ubas go dry at these stages",
+   "text": "The first month after planting the rooted cutting. Berry growth, from pea size berries until they start to color."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for ubas, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Rooting cuttings in bags",
+     "2 months before planting to planting day",
+     "Every day or two in light shade",
+     "Enough to keep the bag moist, never soggy"
+    ],
+    [
+     "Planting to the first month",
+     "Planting day to day 30",
+     "Soak at planting, again on the third day, then every 2 to 3 days in the dry months",
+     "A soak at the base of the vine, never on the leaves"
+    ],
+    [
+     "Young vine climbing and spreading its arms",
+     "Day 30 to month 8",
+     "About once a week once the vine is growing well, every 2 to 3 days on sandy soil in hot weeks",
+     "A deep soak of the bed along the vine"
+    ],
+    [
+     "Before fruit pruning",
+     "Month 8 to 8",
+     "Hold back water for about two weeks before pruning",
+     "None"
+    ],
+    [
+     "Fruit pruning to flowering",
+     "Month 8 to 9",
+     "Water right after pruning and feeding, then moderately, about once a week",
+     "A deep soak of the bed after pruning, lighter after that"
+    ],
+    [
+     "Flowering to pea size berries",
+     "Month 9 to 10",
+     "Moderate and steady, about once a week. Avoid frequent heavy watering",
+     "A soak at the base only"
+    ],
+    [
+     "Berry growth",
+     "Month 10 to 12",
+     "Every 5 to 7 days",
+     "A deep soak of the bed along the row"
+    ],
+    [
+     "Ripening, the last one to two weeks",
+     "Month 12 to 12",
+     "Stop watering about 8 to 15 days before cutting",
+     "None"
+    ],
+    [
+     "Rest after harvest",
+     "Month 12 to 14",
+     "Water with the after harvest feeding, then about once a week while new canes grow, every 10 to 12 days in the rains if the soil dries",
+     "A deep soak of the bed"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Grapes cannot carry a good crop on rain alone here, because the crop is timed for the dry months to keep rain off the ripening berries. A grower without a pump plants near a well or stores water in drums, mulches the beds with rice straw or dry grass, and plants the rooted cuttings at the end of the rains so the soil still holds water.\n\n**In the dry season.** Young vines every 2 to 3 days. Established vines about once a week, every 5 to 7 days while berries grow, and none in the last one to two weeks before harvest and the two weeks before fruit pruning. Water when leaves droop at midday or the soil a finger deep is dry.\n\n**In the rainy season.** Grapes hate wet feet: plant on raised beds or mounds and keep drains open. Rain on ripening grapes splits and rots them, and wet leaves and heavy watering at flowering bring downy mildew, so water only at the base and never late in the day."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop at midday and their edges brown and dry, berries stay small, and bunches come loose and uneven.",
+    "**Too much water:** Long, soft shoots with big leaves and few bunches, mildew on leaves and flowers, yellow leaves on soggy beds, and berries that split."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip along the row under a straw mulch gives steady water while berries grow and keeps the leaves dry, which means bigger bunches and less mildew. Time the water to the pruning: hold back two weeks before fruit pruning and one to two weeks before harvest, and water well in between."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for ubas"
   },
   {
@@ -352,6 +449,10 @@
     {
      "q": "How long before ubas can be harvested?",
      "a": "It is ready about 12 months after planting. Bunches are ready about three to four months after fruit pruning, when every berry is fully colored and sweet."
+    },
+    {
+     "q": "How often do you water ubas?",
+     "a": "Rooting cuttings in bags, 2 months before planting to planting day: Every day or two in light shade. Planting to the first month, planting day to day 30: Soak at planting, again on the third day, then every 2 to 3 days in the dry months. Young vine climbing and spreading its arms, day 30 to month 8: About once a week once the vine is growing well, every 2 to 3 days on sandy soil in hot weeks. Young vines every 2 to 3 days."
     },
     {
      "q": "What do you plant to grow ubas?",

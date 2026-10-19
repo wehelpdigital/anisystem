@@ -225,6 +225,97 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kaimito, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Kaimito here is a rain fed backyard tree: young trees get a pail of water once or twice a week in long dry spells for their first year or two, and old trees are left to the rain. In the provinces with a long, harsh dry season, owners with a well water bearing trees while the fruits fill. A pail or hose into a ring basin around the tree, the usual way in backyards. Water in the cool early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kaimito go dry at these stages",
+   "text": "The first six months after planting. Flowering, when a dry break lowers fruit set. Fruit filling once the rains stop, in places with a long, harsh dry season."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kaimito, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbox or seedbed",
+     "8 to 7 months before planting",
+     "Every day or every other day, keeping the soil damp",
+     "A light sprinkle over the box or bed"
+    ],
+    [
+     "Seedlings in bags",
+     "7 months before planting to 30 days before planting",
+     "Every day or two in partial shade",
+     "Enough to wet each bag through"
+    ],
+    [
+     "Hardening in more sun",
+     "30 days before planting to planting day",
+     "A little less often, every 2 to 3 days. Soak the bag the day before planting",
+     "Enough to keep the leaves firm"
+    ],
+    [
+     "Planting to 6 months",
+     "Planting day to month 6",
+     "About once a week, more often in hot, dry weeks",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "Years 1 and 2",
+     "Month 6 to 24",
+     "Once or twice a week in long dry spells",
+     "A deep soak of the mulched ring"
+    ],
+    [
+     "Years 3 to 5, before bearing",
+     "Month 24 to 54",
+     "Only in long rainless periods. Grafted and marcotted trees reach bearing years sooner",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Flowering and fruit set (in the rainy months)",
+     "Month 54 to 56",
+     "Rain usually does it. In a dry break, water about once a week",
+     "A deep soak of the ground under the crown"
+    ],
+    [
+     "Fruit growth into the dry months, to harvest (about December to April)",
+     "Month 56 to 60",
+     "Every week or two once the rains stop, above all in provinces with a harsh dry season",
+     "A deep soak under the crown"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin and keep the ring mulched. Kaimito thrives in the lowlands, even with a clear dry season: it flowers in the rainy months and fills its fruit as the dry months begin, so most rain fed trees bear well. Where the dry season is harsh, plan a few deep waterings for the months the fruit is filling.\n\n**In the dry season.** Young trees: about once a week for the first six months, then once or twice a week in long dry spells. Bearing trees: a deep soak every week or two while the fruit fills. Water when the tree drops too many leaves or the fruits feel less juicy and start to shrivel.\n\n**In the rainy season.** Kaimito needs soil that drains perfectly. Plant on ground where rain water never stands, or on a low mound on flat land, and keep drains open in the rainy months."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** The tree drops too many leaves, and the fruits come less juicy or shrivel on the branch.",
+    "**Too much water:** Yellowing leaves and poor growth on soil that stays wet."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Give bearing trees a deep soak every week or two from the end of the rains until harvest. The fruits stay juicy and full. Water young trees weekly for their first six months and keep the ring mulched, so they grow without a break."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kaimito"
   },
   {
@@ -352,6 +443,10 @@
     {
      "q": "How long before kaimito can be harvested?",
      "a": "It is ready about 5 years after planting. Fruit is ready four to five months after flowering, mostly between late December and March or April."
+    },
+    {
+     "q": "How often do you water kaimito?",
+     "a": "Seedbox or seedbed, 8 to 7 months before planting: Every day or every other day, keeping the soil damp. Seedlings in bags, 7 months before planting to 30 days before planting: Every day or two in partial shade. Hardening in more sun, 30 days before planting to planting day: A little less often, every 2 to 3 days. Soak the bag the day before planting. Young trees: about once a week for the first six months, then once or twice a week in long dry spells."
     },
     {
      "q": "What do you plant to grow kaimito?",

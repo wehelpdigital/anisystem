@@ -76,6 +76,67 @@
   "Strip leaves on a schedule and keep notes on what works.",
   "Test the soil and feed by the result. Bag fruit against flies."
  ],
+ "watering": {
+  "traditional": "The few peach trees here live on rain, with a pail of water in dry spells, on high ground that drains fast.",
+  "method": "A pail or hose into a ring basin, in the morning.",
+  "rainfed": "Plant as the rains begin on sunny, cool, well drained ground and mulch the ring. Most trees get by on rain, with a pail of water in dry spells at flowering and final swell.",
+  "dryseason": "Water when the soil a hand deep is dry, above all at flowering and in the last weeks before picking.",
+  "wet": "Peach roots rot in standing water: plant on raised or sloping ground and keep the trunk dry.",
+  "schedule": [
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "The roots are still in the bag ball and the tree is not yet established."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 90,
+    "to": 360,
+    "often": "Only in dry spells, when the soil a hand deep is dry",
+    "amount": "A deep soak of the ring, never leaving water standing",
+    "why": "These trees grow in cool, wet uplands, where rain usually covers them."
+   },
+   {
+    "stage": "Leaf stripping to new shoots and flowers (each crop cycle)",
+    "from": 365,
+    "to": 395,
+    "often": "Keep the soil moist after stripping the leaves. Water if a dry spell comes",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "The timing of water and pruning affects how evenly the buds break."
+   },
+   {
+    "stage": "Flowering to four weeks after bloom",
+    "from": 395,
+    "to": 425,
+    "often": "Never let the soil dry out",
+    "amount": "A deep soak whenever the soil a hand deep is dry",
+    "why": "Stress now cuts fruit set and final size."
+   },
+   {
+    "stage": "Final swell to harvest (first real crop)",
+    "from": 850,
+    "to": 900,
+    "often": "Steady water in dry spells in the last weeks before picking",
+    "amount": "A deep soak of the ring",
+    "why": "Peaches gain most of their size in the last weeks."
+   }
+  ],
+  "critical": [
+   "Flowering to about four weeks after bloom.",
+   "The final swell, the last weeks before picking."
+  ],
+  "signs": {
+   "dry": "Leaves droop and curl, few fruits set, and fruits stay small.",
+   "wet": "Yellow leaves, gum on the trunk and dying roots on soggy ground."
+  },
+  "better": [
+   "Water steadily from flowering for four weeks and again in the final weeks before picking. The middle weeks need less."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "peach sa pilipinas",
@@ -88,5 +149,5 @@
  "kind": "perennial",
  "icon": "🍑",
  "slug": "peach",
- "rev": "b9c88d75b685"
+ "rev": "c63d41428045"
 }

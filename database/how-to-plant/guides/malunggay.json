@@ -137,6 +137,68 @@
   "Water during long dry spells so picking does not stop.",
   "Scout weekly for caterpillars and pod flies and use integrated pest management."
  ],
+ "watering": {
+  "traditional": "Malunggay is planted as the rains begin and then mostly left to the rain, often on a fence line or near the kitchen where it gets some waste water. A new cutting is kept moist but never wet until it roots, and in a long dry season many households give it a weekly watering to keep the leaves coming.",
+  "method": "A watering can, a pail or kitchen waste water poured around the base, the usual way in backyards. A few leaf farms use furrows or drip lines. Water in the morning, deeply and not too often.",
+  "rainfed": "Plant between June and August so the cutting roots before the dry months. Cuttings set in the hot dry season often dry out. Choose a sunny spot where water never stands, and in a place with heavy rain plant on a low mound. Once rooted, malunggay lives through dry months on rain alone, though it drops many leaves until the rain returns.",
+  "dryseason": "A deep watering about once a week keeps a leaf tree green and picking. Water when the leaflets turn yellow and fall, when new shoots stop, or when the soil a hand deep is dry.",
+  "wet": "Malunggay roots and the base of new cuttings rot in waterlogged or heavy, wet soil. Plant on a mound, a slope or sandy loam, open a drain from any spot where rain water stands, and never water a cutting that is still bare.",
+  "schedule": [
+   {
+    "stage": "Cutting to first shoots",
+    "from": 0,
+    "to": 21,
+    "often": "Water once at planting if the soil is dry, then lightly once or twice a week when no rain falls",
+    "amount": "A light watering, just enough to dampen the soil around the cutting",
+    "why": "The cutting has no roots yet and rots in soggy soil."
+   },
+   {
+    "stage": "Rooting and early growth",
+    "from": 21,
+    "to": 60,
+    "often": "Regularly in dry weather, about once or twice a week, letting the top soil dry in between",
+    "amount": "A soak of the ring around the stem",
+    "why": "The first two months decide whether the cutting takes."
+   },
+   {
+    "stage": "Leaf picking begins",
+    "from": 60,
+    "to": 210,
+    "often": "About once a week in dry spells. Not needed in steady rain",
+    "amount": "A deep soak of the ring around the tree",
+    "why": "A thirsty tree gives small, few leaves and drops its leaflets."
+   },
+   {
+    "stage": "Flowering and pods",
+    "from": 210,
+    "to": 360,
+    "often": "About once a week in dry spells",
+    "amount": "A deep soak of the ring around the tree",
+    "why": "Malunggay flowers and sets pods whenever it has enough water."
+   },
+   {
+    "stage": "Bearing tree, years 2 and on",
+    "from": 360,
+    "to": 720,
+    "often": "Only in a long dry season, about once a week for trees picked for leaves. Others only when they clearly suffer",
+    "amount": "A deep soak of the ring",
+    "why": "An established tree stands drought, but it stops giving leaves without water."
+   }
+  ],
+  "critical": [
+   "The first two months after planting the cutting: moist soil, never wet.",
+   "Long dry spells on trees picked for leaves, when the leaves turn small and few."
+  ],
+  "signs": {
+   "dry": "Leaflets turn yellow and fall, new sprigs come small and few, and the tree goes nearly bare.",
+   "wet": "A cutting turns soft and dark at the base, leaves yellow and wilt, and the roots rot."
+  },
+  "better": [
+   "Water deeply once a week through the dry months and feed with manure, so leaves and pods keep coming all year.",
+   "Keep a mulch on the ring and plant on a mound, so the soil stays damp in dry weeks and drains fast in the rains."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "6JEHEHfIIYA",
   "title": "Paano magtanim ng malunggay",
@@ -157,5 +219,5 @@
  "kind": "perennial",
  "icon": "🌿",
  "slug": "moringa",
- "rev": "9cec4d974933"
+ "rev": "56f1183c4111"
 }

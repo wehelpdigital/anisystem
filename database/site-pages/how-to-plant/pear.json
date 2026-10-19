@@ -167,6 +167,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering peras, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The few pear trees here, in the highlands, live on rain with a pail of water in dry spells, on ground where water never stands. A pail or hose into a ring basin around the tree, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let peras go dry at these stages",
+   "text": "Flowering to about four weeks after bloom. The last weeks of fruit growth before picking."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for peras, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Month 3 to 12",
+     "Only in dry spells, when the soil a hand deep is dry",
+     "A deep soak of the ring, never leaving water standing"
+    ],
+    [
+     "Leaf stripping to new shoots and flowers (each crop cycle)",
+     "Month 12 to 13",
+     "Keep the soil moist after stripping the leaves. Water if a dry spell comes",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Flowering to four weeks after bloom",
+     "Month 13 to 14",
+     "Never let the soil dry out",
+     "A deep soak whenever the soil a hand deep is dry"
+    ],
+    [
+     "Fruit growth to harvest (first real crop)",
+     "Month 45 to 48",
+     "Steady water in dry spells up to picking",
+     "A deep soak of the ring"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin on cool, sunny, well drained high ground and mulch the ring. Rain carries the tree, with a pail of water in dry spells while it flowers and fills fruit.\n\n**In the dry season.** Water when the soil a hand deep is dry, most of all from leaf stripping to fruit growth.\n\n**In the rainy season.** Pears must never stand in water: plant on slopes or mounds and keep drains open."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and brown at the edges, few fruits set, and fruits stay small.",
+    "**Too much water:** Yellow leaves and rotting roots on soggy ground."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep the soil steadily moist from leaf stripping until four weeks after bloom, and in the last weeks before picking."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for peras"
   },
   {
@@ -291,6 +364,10 @@
     {
      "q": "How long before peras can be harvested?",
      "a": "It is ready about 4 years after planting. Fruit is picked when it lifts off with a twist."
+    },
+    {
+     "q": "How often do you water peras?",
+     "a": "Planting to 3 months, planting day to month 3: Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing. Rest of the first year, month 3 to 12: Only in dry spells, when the soil a hand deep is dry. Leaf stripping to new shoots and flowers (each crop cycle), month 12 to 13: Keep the soil moist after stripping the leaves. Water if a dry spell comes. Water when the soil a hand deep is dry, most of all from leaf stripping to fruit growth."
     },
     {
      "q": "What do you plant to grow peras?",

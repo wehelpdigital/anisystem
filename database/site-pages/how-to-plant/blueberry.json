@@ -124,6 +124,67 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering blueberry, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The few blueberry growers in the highlands keep the beds or pots evenly damp, with rain water where they can, under a thick pine needle mulch. Wild ayusip lives on mountain rain. A watering can with rain water on the bed or pot, in the morning. Hard tap water slowly makes the soil less sour."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let blueberry go dry at these stages",
+   "text": "The first two months after planting. Berry growth, from flowering to picking."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for blueberry, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to new growth",
+     "Planting day to month 2",
+     "Every day or two in dry weather. Pots may need water every day",
+     "Enough to wet the whole root ball, never soggy"
+    ],
+    [
+     "First and second year",
+     "Month 2 to 24",
+     "Whenever the top of the bed or pot is dry, a little often rather than a lot at once",
+     "About 2.5 to 4 cm of water a week in total in dry weather"
+    ],
+    [
+     "Flowering and berry growth to harvest",
+     "Month 26 to 30",
+     "Keep evenly damp. Pots every day in dry, sunny weeks",
+     "About 2.5 to 4 cm of water a week in total"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin and keep a thick pine needle mulch. In the misty highlands rain and fog carry the bushes much of the year, with hand watering in dry weeks. Rain water also keeps the soil sour, which blueberry needs.\n\n**In the dry season.** Every day or two, more often for pots. Water when the top of the bed or pot feels dry or the young leaves droop.\n\n**In the rainy season.** Blueberry roots rot in standing water: use raised beds or pots that drain freely, and never let water pool."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Young leaves droop, leaf edges turn brown and dry, and berries stay small.",
+    "**Too much water:** Yellow leaves, dying roots and a sour smell in a bed or pot that does not drain."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water a little and often with rain water under a thick pine needle mulch, so the shallow roots stay evenly damp."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for blueberry"
   },
   {
@@ -250,6 +311,10 @@
     {
      "q": "How long before blueberry can be harvested?",
      "a": "It is ready about 30 months after planting. Berries are picked a few days after turning fully blue, by hand, into shallow containers, and eaten or sold fresh within days."
+    },
+    {
+     "q": "How often do you water blueberry?",
+     "a": "Planting to new growth, planting day to month 2: Every day or two in dry weather. Pots may need water every day. First and second year, month 2 to 24: Whenever the top of the bed or pot is dry, a little often rather than a lot at once. Flowering and berry growth to harvest, month 26 to 30: Keep evenly damp. Pots every day in dry, sunny weeks. Every day or two, more often for pots."
     },
     {
      "q": "What do you plant to grow blueberry?",

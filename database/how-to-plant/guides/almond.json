@@ -62,6 +62,59 @@
   "If you try almond, use low chill grafted types on dry highland slopes and keep notes.",
   "Test the soil and feed by the result."
  ],
+ "watering": {
+  "traditional": "The rare almond trees here are planted on the driest, sunniest slopes of the highlands and live on rain. Almond dislikes wet soil and rain at flowering, so growers water only in long dry spells.",
+  "method": "A pail or hose into a ring basin, on the soil only, in the morning.",
+  "rainfed": "Plant as the rains begin on a dry, sunny slope with deep soil that drains fast, and mulch the ring. Almond is drought hardy and lives on rain, with a deep soak only in long dry spells.",
+  "dryseason": "Water only when the soil a hand deep is dry, most of all while the nuts fill.",
+  "wet": "Almond hates wet soil and rain at flowering. Plant on the driest ground you have and never let water stand around the trunk.",
+  "schedule": [
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "The roots are still in the bag ball and the tree is not yet established."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 90,
+    "to": 360,
+    "often": "Only in dry spells, when the soil a hand deep is dry",
+    "amount": "A deep soak of the ring, never leaving water standing",
+    "why": "These trees grow in cool, wet uplands, where rain usually covers them."
+   },
+   {
+    "stage": "Flowering (in a year it flowers)",
+    "from": 1000,
+    "to": 1030,
+    "often": "Water only at the base if the soil is dry. Never sprinkle over the tree",
+    "amount": "A deep soak of the ring",
+    "why": "Wet flowers set few nuts, but stress now also cuts the set."
+   },
+   {
+    "stage": "Nut filling to hull split",
+    "from": 1030,
+    "to": 1200,
+    "often": "A deep soak in long dry spells. Stop once the hulls start to split",
+    "amount": "A deep soak of the ring",
+    "why": "Dry soil gives small kernels, while wet soil at hull split spoils the nuts."
+   }
+  ],
+  "critical": [
+   "Flowering to about four weeks after bloom, when nut set is decided.",
+   "Nut filling in a long dry spell."
+  ],
+  "signs": {
+   "dry": "Leaves droop and drop early, and the nuts stay small.",
+   "wet": "Yellow leaves, gum on the trunk and rotting roots on soggy ground."
+  },
+  "better": [
+   "Water at the base in long dry spells from flowering to nut filling, and keep the ground dry once the hulls split."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "almond sa pilipinas",
@@ -74,5 +127,5 @@
  "kind": "perennial",
  "icon": "🌰",
  "slug": "almond",
- "rev": "9be92c5b1f6a"
+ "rev": "7d7ee2fe225e"
 }

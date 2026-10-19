@@ -180,6 +180,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mansanas, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The few apple trees here, mostly in the highlands and in trial plots, live on rain and get a pail of water in dry spells. Growers plant them on sloping or raised ground so the roots never stand in water. A pail or hose into a ring basin around the tree. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mansanas go dry at these stages",
+   "text": "Flowering to about four weeks after bloom, when fruit set and size are decided. The last two months before picking, when the fruits swell."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mansanas, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Month 3 to 12",
+     "Only in dry spells, when the soil a hand deep is dry",
+     "A deep soak of the ring, never leaving water standing"
+    ],
+    [
+     "Leaf stripping to new shoots and flowers (each crop cycle)",
+     "Month 12 to 13",
+     "Keep the soil moist after the leaves are stripped and the branches bent. Water if a dry spell comes",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Flowering to four weeks after bloom",
+     "Month 13 to 14",
+     "Never let the soil dry out in these weeks",
+     "A deep soak whenever the soil a hand deep is dry"
+    ],
+    [
+     "Fruit growth to harvest (first real crop)",
+     "Month 33 to 36",
+     "Steady water in dry spells right up to picking",
+     "A deep soak of the ring"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin on the coolest, sunniest high ground with fast drainage, and mulch the ring. Most highland trees get by on rain, with a pail of water in dry spells around flowering and fruit growth.\n\n**In the dry season.** Water when the soil a hand deep is dry, most of all from leaf stripping through flowering and fruit growth.\n\n**In the rainy season.** Apples dislike waterlogged roots: plant on slopes or raised ground and never let water stand around the trunk."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and edges brown, few fruits set, and fruits stay small.",
+    "**Too much water:** Yellow leaves, poor growth and rotting roots on soggy ground."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep the soil steadily moist from leaf stripping until four weeks after bloom, and again in the last two months before picking."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mansanas"
   },
   {
@@ -306,6 +379,10 @@
     {
      "q": "How long before mansanas can be harvested?",
      "a": "It is ready about 3 years after planting. Fruit is picked when colored and firm, with brown seeds, a few months after flowering."
+    },
+    {
+     "q": "How often do you water mansanas?",
+     "a": "Planting to 3 months, planting day to month 3: Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing. Rest of the first year, month 3 to 12: Only in dry spells, when the soil a hand deep is dry. Leaf stripping to new shoots and flowers (each crop cycle), month 12 to 13: Keep the soil moist after the leaves are stripped and the branches bent. Water if a dry spell comes. Water when the soil a hand deep is dry, most of all from leaf stripping through flowering and fruit growth."
     },
     {
      "q": "What do you plant to grow mansanas?",

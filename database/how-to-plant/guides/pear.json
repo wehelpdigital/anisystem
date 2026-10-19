@@ -117,6 +117,67 @@
   "Bend branches and strip leaves on a schedule, and keep notes.",
   "Test the soil and feed by the result."
  ],
+ "watering": {
+  "traditional": "The few pear trees here, in the highlands, live on rain with a pail of water in dry spells, on ground where water never stands.",
+  "method": "A pail or hose into a ring basin around the tree, in the morning.",
+  "rainfed": "Plant as the rains begin on cool, sunny, well drained high ground and mulch the ring. Rain carries the tree, with a pail of water in dry spells while it flowers and fills fruit.",
+  "dryseason": "Water when the soil a hand deep is dry, most of all from leaf stripping to fruit growth.",
+  "wet": "Pears must never stand in water: plant on slopes or mounds and keep drains open.",
+  "schedule": [
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "The roots are still in the bag ball and the tree is not yet established."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 90,
+    "to": 360,
+    "often": "Only in dry spells, when the soil a hand deep is dry",
+    "amount": "A deep soak of the ring, never leaving water standing",
+    "why": "These trees grow in cool, wet uplands, where rain usually covers them."
+   },
+   {
+    "stage": "Leaf stripping to new shoots and flowers (each crop cycle)",
+    "from": 365,
+    "to": 395,
+    "often": "Keep the soil moist after stripping the leaves. Water if a dry spell comes",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "New shoots and flowers push out in the weeks after stripping."
+   },
+   {
+    "stage": "Flowering to four weeks after bloom",
+    "from": 395,
+    "to": 425,
+    "often": "Never let the soil dry out",
+    "amount": "A deep soak whenever the soil a hand deep is dry",
+    "why": "Stress now cuts fruit set and final fruit size."
+   },
+   {
+    "stage": "Fruit growth to harvest (first real crop)",
+    "from": 1360,
+    "to": 1440,
+    "often": "Steady water in dry spells up to picking",
+    "amount": "A deep soak of the ring",
+    "why": "The fruits swell over the last weeks and stay small if the soil dries."
+   }
+  ],
+  "critical": [
+   "Flowering to about four weeks after bloom.",
+   "The last weeks of fruit growth before picking."
+  ],
+  "signs": {
+   "dry": "Leaves droop and brown at the edges, few fruits set, and fruits stay small.",
+   "wet": "Yellow leaves and rotting roots on soggy ground."
+  },
+  "better": [
+   "Keep the soil steadily moist from leaf stripping until four weeks after bloom, and in the last weeks before picking."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "peras sa pilipinas",
@@ -129,5 +190,5 @@
  "kind": "perennial",
  "icon": "🍐",
  "slug": "pear",
- "rev": "49d6aec460d2"
+ "rev": "a7051985df2b"
 }

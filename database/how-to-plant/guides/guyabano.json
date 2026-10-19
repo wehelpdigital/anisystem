@@ -132,6 +132,93 @@
   "Bag every young fruit and pick up fallen and bored fruit to break the pest cycle.",
   "Prune every year after fruiting to keep the tree low and open, and use integrated pest management."
  ],
+ "watering": {
+  "traditional": "Guyabano here is mostly a backyard tree on rain: young trees get a pail of water once or twice a week in their first dry season, and older trees are watered only in a long drought. Growers mulch the base, because the roots stay near the surface.",
+  "method": "A pail or hose into a mulched ring basin around the tree, the usual way in backyards. Water early in the morning, on the soil and not over the leaves and flowers.",
+  "rainfed": "Plant as the rains begin, in a sunny spot where rain water does not stand, and keep the ring mulched all year so the shallow roots stay damp. Most fruit comes in the rainy months. A clear dry season makes the tree drop leaves and then flush and flower all together, so a rain fed tree gives a fair crop, but it bears more where a few deep waterings carry it through the dry months.",
+  "dryseason": "Young trees: once or twice a week. Bearing trees: a deep soak every week or two, more often while flowering and with fruit. Water when the tree drops many old leaves before new ones show, or when the soil under the mulch is dry a hand deep.",
+  "wet": "Guyabano does not like standing water, so plant on ground that drains and open a drain from low spots. In long, very wet spells the flowers and young fruits rot or shrivel and drop from fungus, so prune crowded branches for air, pick off and bury rotten fruits, and bag the young fruits.",
+  "schedule": [
+   {
+    "stage": "Seedlings in bags",
+    "from": -180,
+    "to": -30,
+    "often": "Every day or two in light shade",
+    "amount": "Enough to wet each bag right through",
+    "why": "Seeds sprout in a few weeks only in moist soil, and bag roots dry fast."
+   },
+   {
+    "stage": "Hardening in full sun",
+    "from": -30,
+    "to": 0,
+    "often": "A little less often, every 2 to 3 days",
+    "amount": "Enough to keep the leaves from wilting. Soak the bag on planting day",
+    "why": "Tougher leaves stand the field sun better."
+   },
+   {
+    "stage": "Planting to new leaves",
+    "from": 0,
+    "to": 60,
+    "often": "Water at planting, then about twice a week in dry spells",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "The roots are still in the bag ball."
+   },
+   {
+    "stage": "First dry season",
+    "from": 60,
+    "to": 360,
+    "often": "Once or twice a week whenever the rain stops",
+    "amount": "A deep soak of the mulched ring",
+    "why": "The roots are shallow and fine, and dry, hot weeks dehydrate them."
+   },
+   {
+    "stage": "Years 2 and 3, before fruiting",
+    "from": 360,
+    "to": 870,
+    "often": "Only in long droughts, a deep soak every week or two when the tree starts dropping old leaves",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "A tree that sheds too many leaves loses a season of growth."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 870,
+    "to": 960,
+    "often": "In a dry spell, about once a week. Water the soil, never over the tree",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "Moist soil and humid air help the flowers set, while wet flowers rot."
+   },
+   {
+    "stage": "Fruit growth to the first harvest",
+    "from": 960,
+    "to": 1080,
+    "often": "Every week or two in dry weather",
+    "amount": "A deep soak of the mulched ring",
+    "why": "Weekly water with mulch gives heavier fruits and a bigger crop."
+   },
+   {
+    "stage": "Bearing trees, flowering and fruiting on and off all year",
+    "from": 1080,
+    "to": 1440,
+    "often": "In the dry months a deep soak every week or two. None in the rains",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "The tree carries flowers and fruits of all sizes at once."
+   }
+  ],
+  "critical": [
+   "The first dry season after planting, when the shallow roots dry out.",
+   "Flowering and fruit set in a dry spell.",
+   "Fruit growth, when dry soil gives small, light fruits."
+  ],
+  "signs": {
+   "dry": "The tree sheds many old leaves before new ones come, leaves droop in the afternoon, flowers dry up, and fruits stay small and light.",
+   "wet": "Yellow leaves and slow decline on waterlogged soil, and flowers and young fruits with dark rot that shrivel and fall in wet weather."
+  },
+  "better": [
+   "A deep watering every week through the dry months, with a thick mulch on the ring, gives heavier fruits and a bigger crop.",
+   "Water the soil only and keep the canopy open by pruning, so the flowers set without catching rot."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "8sfwKYJkhJA",
   "title": "PAGPAPATUBO AT PAGTATANIM NG GUYABANO!",
@@ -152,5 +239,5 @@
  "kind": "perennial",
  "icon": "🍏",
  "slug": "soursop",
- "rev": "8ae242bbbd11"
+ "rev": "8eee237c68d0"
 }

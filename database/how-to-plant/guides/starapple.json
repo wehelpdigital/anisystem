@@ -199,6 +199,93 @@
   "Keep the tree low with two or three main branches.",
   "Bag young fruit, clean up fallen fruit, and use integrated pest management for fruit flies and twig borers."
  ],
+ "watering": {
+  "traditional": "Kaimito here is a rain fed backyard tree: young trees get a pail of water once or twice a week in long dry spells for their first year or two, and old trees are left to the rain. In the provinces with a long, harsh dry season, owners with a well water bearing trees while the fruits fill.",
+  "method": "A pail or hose into a ring basin around the tree, the usual way in backyards. Water in the cool early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin and keep the ring mulched. Kaimito thrives in the lowlands, even with a clear dry season: it flowers in the rainy months and fills its fruit as the dry months begin, so most rain fed trees bear well. Where the dry season is harsh, plan a few deep waterings for the months the fruit is filling.",
+  "dryseason": "Young trees: about once a week for the first six months, then once or twice a week in long dry spells. Bearing trees: a deep soak every week or two while the fruit fills. Water when the tree drops too many leaves or the fruits feel less juicy and start to shrivel.",
+  "wet": "Kaimito needs soil that drains perfectly. Plant on ground where rain water never stands, or on a low mound on flat land, and keep drains open in the rainy months.",
+  "schedule": [
+   {
+    "stage": "Seedbox or seedbed",
+    "from": -240,
+    "to": -200,
+    "often": "Every day or every other day, keeping the soil damp",
+    "amount": "A light sprinkle over the box or bed",
+    "why": "Seeds sprout in two to six weeks only in damp soil."
+   },
+   {
+    "stage": "Seedlings in bags",
+    "from": -200,
+    "to": -30,
+    "often": "Every day or two in partial shade",
+    "amount": "Enough to wet each bag through",
+    "why": "Bagged seedlings dry out quickly."
+   },
+   {
+    "stage": "Hardening in more sun",
+    "from": -30,
+    "to": 0,
+    "often": "A little less often, every 2 to 3 days. Soak the bag the day before planting",
+    "amount": "Enough to keep the leaves firm",
+    "why": "Tougher leaves stand the field sun."
+   },
+   {
+    "stage": "Planting to 6 months",
+    "from": 0,
+    "to": 180,
+    "often": "About once a week, more often in hot, dry weeks",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "A young tree needs steady water for its first half year."
+   },
+   {
+    "stage": "Years 1 and 2",
+    "from": 180,
+    "to": 720,
+    "often": "Once or twice a week in long dry spells",
+    "amount": "A deep soak of the mulched ring",
+    "why": "Water in rainless weeks keeps the tree growing without a break."
+   },
+   {
+    "stage": "Years 3 to 5, before bearing",
+    "from": 720,
+    "to": 1620,
+    "often": "Only in long rainless periods. Grafted and marcotted trees reach bearing years sooner",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "The roots now reach deep enough for normal dry months."
+   },
+   {
+    "stage": "Flowering and fruit set (in the rainy months)",
+    "from": 1620,
+    "to": 1680,
+    "often": "Rain usually does it. In a dry break, water about once a week",
+    "amount": "A deep soak of the ground under the crown",
+    "why": "Water during flowering raises fruit set."
+   },
+   {
+    "stage": "Fruit growth into the dry months, to harvest (about December to April)",
+    "from": 1680,
+    "to": 1800,
+    "often": "Every week or two once the rains stop, above all in provinces with a harsh dry season",
+    "amount": "A deep soak under the crown",
+    "why": "The fruits fill as the dry season starts, and drought leaves them dry or shrivelled."
+   }
+  ],
+  "critical": [
+   "The first six months after planting.",
+   "Flowering, when a dry break lowers fruit set.",
+   "Fruit filling once the rains stop, in places with a long, harsh dry season."
+  ],
+  "signs": {
+   "dry": "The tree drops too many leaves, and the fruits come less juicy or shrivel on the branch.",
+   "wet": "Yellowing leaves and poor growth on soil that stays wet."
+  },
+  "better": [
+   "Give bearing trees a deep soak every week or two from the end of the rains until harvest. The fruits stay juicy and full.",
+   "Water young trees weekly for their first six months and keep the ring mulched, so they grow without a break."
+  ],
+  "confidence": "medium"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng kaimito",
@@ -212,5 +299,5 @@
  "kind": "perennial",
  "icon": "🍏",
  "slug": "star-apple",
- "rev": "f42974cc5ae4"
+ "rev": "48e8b6fbc3dc"
 }

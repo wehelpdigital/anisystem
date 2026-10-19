@@ -117,6 +117,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering almendras, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The rare almond trees here are planted on the driest, sunniest slopes of the highlands and live on rain. Almond dislikes wet soil and rain at flowering, so growers water only in long dry spells. A pail or hose into a ring basin, on the soil only, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let almendras go dry at these stages",
+   "text": "Flowering to about four weeks after bloom, when nut set is decided. Nut filling in a long dry spell."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for almendras, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Month 3 to 12",
+     "Only in dry spells, when the soil a hand deep is dry",
+     "A deep soak of the ring, never leaving water standing"
+    ],
+    [
+     "Flowering (in a year it flowers)",
+     "Month 33 to 34",
+     "Water only at the base if the soil is dry. Never sprinkle over the tree",
+     "A deep soak of the ring"
+    ],
+    [
+     "Nut filling to hull split",
+     "Month 34 to 40",
+     "A deep soak in long dry spells. Stop once the hulls start to split",
+     "A deep soak of the ring"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin on a dry, sunny slope with deep soil that drains fast, and mulch the ring. Almond is drought hardy and lives on rain, with a deep soak only in long dry spells.\n\n**In the dry season.** Water only when the soil a hand deep is dry, most of all while the nuts fill.\n\n**In the rainy season.** Almond hates wet soil and rain at flowering. Plant on the driest ground you have and never let water stand around the trunk."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and drop early, and the nuts stay small.",
+    "**Too much water:** Yellow leaves, gum on the trunk and rotting roots on soggy ground."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water at the base in long dry spells from flowering to nut filling, and keep the ground dry once the hulls split."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for almendras"
   },
   {
@@ -241,6 +308,10 @@
     {
      "q": "How long before almendras can be harvested?",
      "a": "It is ready about 40 months after planting. Nuts are picked when the hulls split, dried in the sun, and shelled."
+    },
+    {
+     "q": "How often do you water almendras?",
+     "a": "Planting to 3 months, planting day to month 3: Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing. Rest of the first year, month 3 to 12: Only in dry spells, when the soil a hand deep is dry. Flowering (in a year it flowers), month 33 to 34: Water only at the base if the soil is dry. Never sprinkle over the tree. Water only when the soil a hand deep is dry, most of all while the nuts fill."
     },
     {
      "q": "What do you plant to grow almendras?",

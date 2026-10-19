@@ -116,6 +116,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering cherry, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The rare cherry trees here grow in big pots or on the coolest high ground and live on rain, with a pail of water in dry spells. A pail or hose into a ring basin, or a watering can for pots, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let cherry go dry at these stages",
+   "text": "Flowering to about four weeks after bloom. The last three weeks before picking."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for cherry, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Month 3 to 12",
+     "Only in dry spells, when the soil a hand deep is dry",
+     "A deep soak of the ring, never leaving water standing"
+    ],
+    [
+     "Flowering to four weeks after bloom (in a year it flowers)",
+     "Month 43 to 44",
+     "Never let the soil dry out",
+     "A deep soak whenever the soil a hand deep is dry. A pot every day or two"
+    ],
+    [
+     "Final swell, the last three weeks before picking",
+     "Month 47 to 48",
+     "Steady water in dry spells",
+     "A deep soak of the ring"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin on the coolest sunny ground with fast drainage, or in a big pot of loose soil and compost. In the ground, rain carries the tree with a pail of water in dry spells.\n\n**In the dry season.** Trees in the ground when the soil a hand deep is dry. Trees in pots every day or two in dry, sunny weather.\n\n**In the rainy season.** Cherry roots rot in wet soil: never plant where water stands, and make sure pots drain freely."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and brown at the edges, and fruits drop or stay small.",
+    "**Too much water:** Yellow leaves and dying roots in soggy soil or a pot that does not drain."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep the soil steadily moist at flowering and in the last three weeks before picking."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for cherry"
   },
   {
@@ -240,6 +307,10 @@
     {
      "q": "How long before cherry can be harvested?",
      "a": "It is ready about 4 years after planting. The few fruits are picked by hand with their stalks when fully colored."
+    },
+    {
+     "q": "How often do you water cherry?",
+     "a": "Planting to 3 months, planting day to month 3: Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing. Rest of the first year, month 3 to 12: Only in dry spells, when the soil a hand deep is dry. Flowering to four weeks after bloom (in a year it flowers), month 43 to 44: Never let the soil dry out. Trees in the ground when the soil a hand deep is dry."
     },
     {
      "q": "What do you plant to grow cherry?",

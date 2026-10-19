@@ -110,6 +110,93 @@
   "Scout for borers, fruit flies and mealybugs and keep the orchard clean.",
   "Prune lightly after harvest to keep the trees low and easy to pick."
  ],
+ "watering": {
+  "traditional": "Atis here is grown on rain: seedlings are watered at planting and mulched, and grown trees drop many leaves in the dry months and wake up with new shoots and flowers when the first rains or a watering come. Backyard growers with a well water in the dry season when new shoots appear, which helps the tree hold its fruits.",
+  "method": "A pail or hose into a ring basin around the tree, the usual way in backyards and small orchards. Water in the early morning, wetting the mulch and the soil under it.",
+  "rainfed": "Plant as the rains begin, mulch the ring and keep weeds off. Atis is very drought hardy: it drops leaves and rests through the dry months and comes back with the rains, so rain fed trees flower late and fruit mostly in the rainy months. A few deep waterings when the buds break and while fruits grow give a bigger, earlier crop.",
+  "dryseason": "Young trees: a deep soak now and then when the soil a hand deep is dry. Bearing trees: rest without water while leafless, then about once a week from bud break through fruit growth. Water when leaves droop and fall early on a tree that should be in leaf.",
+  "wet": "Atis cannot stand waterlogged soil: a week or so of standing water can rot the roots and kill the tree. Plant on ground that drains or on a low mound, open drains from low spots, and never water a leafless tree in wet soil. Heavy rain on ripening fruits makes them split.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -120,
+    "to": -90,
+    "often": "Every day or every other day in dry weather",
+    "amount": "A light sprinkle, enough to keep the sand damp",
+    "why": "Seeds take about 25 days to come up and stop if the bed dries."
+   },
+   {
+    "stage": "Seedlings in bags",
+    "from": -90,
+    "to": 0,
+    "often": "Every day or two in dry weather, less in cloudy weeks",
+    "amount": "Enough to wet each bag through, never soggy",
+    "why": "The roots are confined to the bag and rot in wet soil."
+   },
+   {
+    "stage": "Planting to the first week",
+    "from": 0,
+    "to": 7,
+    "often": "Soak at planting, then on alternate days through the first seven days",
+    "amount": "A good soak of a ring basin around the stem",
+    "why": "The roots have not yet grown out of the bag soil."
+   },
+   {
+    "stage": "First months",
+    "from": 7,
+    "to": 120,
+    "often": "About twice a week until the rains are steady. Skip it after a good rain",
+    "amount": "A soak of the mulched ring around the stem",
+    "why": "A small tree needs about 1 cm of rain every 3 to 4 days, so water when none fell."
+   },
+   {
+    "stage": "Young tree, years 1 to 3",
+    "from": 120,
+    "to": 900,
+    "often": "A deep soak now and then in long dry spells, most of all when new shoots are coming out",
+    "amount": "A deep soak of the ring, widened as the tree grows",
+    "why": "Steady growth now builds the wood that will flower."
+   },
+   {
+    "stage": "Bearing trees: leafless rest in the dry months (each year)",
+    "from": 900,
+    "to": 960,
+    "often": "Do not water a tree that has dropped most of its leaves",
+    "amount": "None",
+    "why": "A dry rest before flowering helps, and wet soil under a leafless tree rots the roots."
+   },
+   {
+    "stage": "New shoots and flowering (about February to April)",
+    "from": 960,
+    "to": 1020,
+    "often": "Start watering in dry weather when the buds break, then about once a week if no rain falls",
+    "amount": "A deep soak of the ground under the crown",
+    "why": "Flowers come on the new shoots, and watering brings more shoots, more flowers and more fruits."
+   },
+   {
+    "stage": "Fruit set and growth to harvest",
+    "from": 1020,
+    "to": 1110,
+    "often": "Every week or two in dry weather, keeping the soil moist but not wet",
+    "amount": "A deep soak under the crown",
+    "why": "Drought gives small fruits with a hard skin that split when the rain comes."
+   }
+  ],
+  "critical": [
+   "The first weeks after planting, until the seedling is growing.",
+   "Flowering and fruit set, when drought cuts the few fruits atis sets.",
+   "Fruit growth, when a dry spell gives small, hard fruits that split after rain."
+  ],
+  "signs": {
+   "dry": "Leaves droop, yellow and drop early, the tree goes bare before its time, few fruits set, and fruits stay small with a hard skin.",
+   "wet": "Yellow leaves, short, stunted shoots, leaves that wilt and brown, leaf drop and twigs dying back from the tips."
+  },
+  "better": [
+   "Prune and start watering together at the end of the dry rest. New shoots and flowers come sooner, and the fruits are more and bigger.",
+   "Keep the soil moist, never soggy, from bud break to harvest, and let the tree rest dry when its leaves are down."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "zZw-ubivQJk",
   "title": "Sugar Apple (Atis) + Vegetables + Legumes Farming System",
@@ -130,5 +217,5 @@
  "kind": "perennial",
  "icon": "🍏",
  "slug": "sugar-apple",
- "rev": "4cae77edbd8f"
+ "rev": "f91fdaeb9e85"
 }

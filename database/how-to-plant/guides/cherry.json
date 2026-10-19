@@ -62,6 +62,59 @@
   "If you try sweet cherry, use only low chill types in cool highlands and keep notes.",
   "Test the soil and feed by the result."
  ],
+ "watering": {
+  "traditional": "The rare cherry trees here grow in big pots or on the coolest high ground and live on rain, with a pail of water in dry spells.",
+  "method": "A pail or hose into a ring basin, or a watering can for pots, in the morning.",
+  "rainfed": "Plant as the rains begin on the coolest sunny ground with fast drainage, or in a big pot of loose soil and compost. In the ground, rain carries the tree with a pail of water in dry spells.",
+  "dryseason": "Trees in the ground when the soil a hand deep is dry. Trees in pots every day or two in dry, sunny weather.",
+  "wet": "Cherry roots rot in wet soil: never plant where water stands, and make sure pots drain freely.",
+  "schedule": [
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Soak at planting, then whenever the soil dries in a dry spell, until the tree is clearly growing",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "The roots are still in the bag ball and the tree is not yet established."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 90,
+    "to": 360,
+    "often": "Only in dry spells, when the soil a hand deep is dry",
+    "amount": "A deep soak of the ring, never leaving water standing",
+    "why": "These trees grow in cool, wet uplands, where rain usually covers them."
+   },
+   {
+    "stage": "Flowering to four weeks after bloom (in a year it flowers)",
+    "from": 1300,
+    "to": 1330,
+    "often": "Never let the soil dry out",
+    "amount": "A deep soak whenever the soil a hand deep is dry. A pot every day or two",
+    "why": "Stress now cuts fruit set and size."
+   },
+   {
+    "stage": "Final swell, the last three weeks before picking",
+    "from": 1420,
+    "to": 1440,
+    "often": "Steady water in dry spells",
+    "amount": "A deep soak of the ring",
+    "why": "Cherries gain most of their size in the last three weeks."
+   }
+  ],
+  "critical": [
+   "Flowering to about four weeks after bloom.",
+   "The last three weeks before picking."
+  ],
+  "signs": {
+   "dry": "Leaves droop and brown at the edges, and fruits drop or stay small.",
+   "wet": "Yellow leaves and dying roots in soggy soil or a pot that does not drain."
+  },
+  "better": [
+   "Keep the soil steadily moist at flowering and in the last three weeks before picking."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "cherry sa pilipinas",
@@ -74,5 +127,5 @@
  "kind": "perennial",
  "icon": "🍒",
  "slug": "cherry",
- "rev": "1db847bd2317"
+ "rev": "90818de26139"
 }

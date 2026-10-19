@@ -197,6 +197,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kasoy, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Kasoy here is rain fed: the nuts are sown once the rains are steady, and after that the trees live through the long dry season on their deep taproot. Only young trees on very sandy soil get a pail of water in their first dry season, where a well or creek is near. A pail or hose into a ring basin for young trees. A few farms use small sprinklers under the trees or drip lines. Water the soil in the early morning, not the flowers."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kasoy go dry at these stages",
+   "text": "The first dry season after sowing, while the taproot is still short. Flowering to nut growth, when a dry spell makes young nuts drop early."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kasoy, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to sprouting",
+     "Sowing day to day 21",
+     "Sow only when the rains are steady. Water lightly only if a dry week comes",
+     "A light soak of each hole"
+    ],
+    [
+     "Seedlings in the first rains",
+     "Day 21 to month 5",
+     "Rain is enough. No watering",
+     "None"
+    ],
+    [
+     "First dry season",
+     "Month 5 to 12",
+     "Every week or two for young trees on sandy soil, where water is near",
+     "A deep soak of a ring basin around the stem"
+    ],
+    [
+     "Years 2 and 3, before bearing",
+     "Month 12 to 30",
+     "Rain fed. In a long dry season, a deep soak every two weeks or so for trees that wilt",
+     "A deep soak of the ring, widened as the tree grows"
+    ],
+    [
+     "Flowering and nut set (about November to March)",
+     "Month 30 to 33",
+     "Rain fed trees get none. Where water is at hand, a deep soak at the base every week or two",
+     "About 200 liters a grown tree every two weeks, or about 20 liters a tree a day on drip, always on the soil and never over the flowers"
+    ],
+    [
+     "Nut and apple growth",
+     "Month 33 to 35",
+     "The same deep soak every week or two where water is at hand",
+     "About 200 liters a grown tree each time"
+    ],
+    [
+     "Nut fall and harvest (about February to May)",
+     "Month 35 to 38",
+     "Stop watering once the nuts begin to fall",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow once the rains are steady and cover the holes with straw mulch. Cashew does best on deep, well drained sand or loam with a clear dry season, where its taproot reaches deep water. It needs as little as about 1,000 mm of rain a year. A clear dry season brings one strong flowering, and rain fed trees give their nuts from about February to May.\n\n**In the dry season.** Grown trees need no water to survive. Young trees on sandy soil: every week or two in their first dry seasons. Bearing trees, where water is at hand: a deep soak every week or two from flowering to nut growth, stopping when the nuts fall. Water a young tree when its leaves droop and its older leaves yellow and fall.\n\n**In the rainy season.** On shallow or waterlogged soil cashew grows a poor root system and the trees blow over in the wet season, so plant on deep ground that drains. Rain at flowering brings black spot and flower drop, and rain on the growing nuts rots them. Never sprinkle water over a tree in flower."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Young trees stop growing and drop their older leaves. Bearing trees drop many small nuts before they fill.",
+    "**Too much water:** Seedlings rot at the base in soggy soil, leaves yellow on waterlogged ground, and flowers turn black and drop in rainy spells."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water young trees through their first dry seasons. They grow much faster and start bearing sooner. Where a pond or well is near, a deep soak at the base every week or two from flowering to nut growth cuts early nut drop. Stop as the nuts begin to fall."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kasoy"
   },
   {
@@ -327,6 +412,10 @@
     {
      "q": "How long before kasoy can be harvested?",
      "a": "It is ready about 3 years after sowing. Nuts are ready when the fruit falls or the apple is fully colored and the nut gray and hard, from about February to May."
+    },
+    {
+     "q": "How often do you water kasoy?",
+     "a": "Sowing to sprouting, sowing day to day 21: Sow only when the rains are steady. Water lightly only if a dry week comes. Seedlings in the first rains, day 21 to month 5: Rain is enough. No watering. First dry season, month 5 to 12: Every week or two for young trees on sandy soil, where water is near. Grown trees need no water to survive."
     },
     {
      "q": "What do you plant to grow kasoy?",

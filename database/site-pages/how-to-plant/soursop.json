@@ -161,6 +161,97 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering guyabano, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Guyabano here is mostly a backyard tree on rain: young trees get a pail of water once or twice a week in their first dry season, and older trees are watered only in a long drought. Growers mulch the base, because the roots stay near the surface. A pail or hose into a mulched ring basin around the tree, the usual way in backyards. Water early in the morning, on the soil and not over the leaves and flowers."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let guyabano go dry at these stages",
+   "text": "The first dry season after planting, when the shallow roots dry out. Flowering and fruit set in a dry spell. Fruit growth, when dry soil gives small, light fruits."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for guyabano, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedlings in bags",
+     "6 months before planting to 30 days before planting",
+     "Every day or two in light shade",
+     "Enough to wet each bag right through"
+    ],
+    [
+     "Hardening in full sun",
+     "30 days before planting to planting day",
+     "A little less often, every 2 to 3 days",
+     "Enough to keep the leaves from wilting. Soak the bag on planting day"
+    ],
+    [
+     "Planting to new leaves",
+     "Planting day to month 2",
+     "Water at planting, then about twice a week in dry spells",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "First dry season",
+     "Month 2 to 12",
+     "Once or twice a week whenever the rain stops",
+     "A deep soak of the mulched ring"
+    ],
+    [
+     "Years 2 and 3, before fruiting",
+     "Month 12 to 29",
+     "Only in long droughts, a deep soak every week or two when the tree starts dropping old leaves",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Flowering and fruit set",
+     "Month 29 to 32",
+     "In a dry spell, about once a week. Water the soil, never over the tree",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Fruit growth to the first harvest",
+     "Month 32 to 36",
+     "Every week or two in dry weather",
+     "A deep soak of the mulched ring"
+    ],
+    [
+     "Bearing trees, flowering and fruiting on and off all year",
+     "Year 3 to 4",
+     "In the dry months a deep soak every week or two. None in the rains",
+     "A deep soak of the ring under the leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, in a sunny spot where rain water does not stand, and keep the ring mulched all year so the shallow roots stay damp. Most fruit comes in the rainy months. A clear dry season makes the tree drop leaves and then flush and flower all together, so a rain fed tree gives a fair crop, but it bears more where a few deep waterings carry it through the dry months.\n\n**In the dry season.** Young trees: once or twice a week. Bearing trees: a deep soak every week or two, more often while flowering and with fruit. Water when the tree drops many old leaves before new ones show, or when the soil under the mulch is dry a hand deep.\n\n**In the rainy season.** Guyabano does not like standing water, so plant on ground that drains and open a drain from low spots. In long, very wet spells the flowers and young fruits rot or shrivel and drop from fungus, so prune crowded branches for air, pick off and bury rotten fruits, and bag the young fruits."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** The tree sheds many old leaves before new ones come, leaves droop in the afternoon, flowers dry up, and fruits stay small and light.",
+    "**Too much water:** Yellow leaves and slow decline on waterlogged soil, and flowers and young fruits with dark rot that shrivel and fall in wet weather."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A deep watering every week through the dry months, with a thick mulch on the ring, gives heavier fruits and a bigger crop. Water the soil only and keep the canopy open by pruning, so the flowers set without catching rot."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for guyabano"
   },
   {
@@ -289,6 +380,10 @@
     {
      "q": "How long before guyabano can be harvested?",
      "a": "It is ready about 3 years after planting. Fruit is mature when the skin turns from dark shiny green to dull yellowish green and the spines soften and spread apart."
+    },
+    {
+     "q": "How often do you water guyabano?",
+     "a": "Seedlings in bags, 6 months before planting to 30 days before planting: Every day or two in light shade. Hardening in full sun, 30 days before planting to planting day: A little less often, every 2 to 3 days. Planting to new leaves, planting day to month 2: Water at planting, then about twice a week in dry spells. Young trees: once or twice a week."
     },
     {
      "q": "What do you plant to grow guyabano?",
