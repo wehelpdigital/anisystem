@@ -68,6 +68,103 @@ FIX_WORDS = {'Yielg': 'Yield', 'Pupl': 'Pulp', 'Pant ': 'Plant ', 'Eariness': 'E
              'Hyrbrid': 'Hybrid', 'neckled': 'necked', 'obaservation': 'observation', 'Pangansinan': 'Pangasinan'}
 BANNED_BITS = re.compile(r'\b(robust|world|dynamic|significant\w*|specific\w*|crucial|vital|superior|excellent|best|unique|premium)\b', re.I)
 
+# ---- Fixes of the registry list's own slips (2026-10-20, the owner: "yes, fix all"), each settled
+# from the registration papers or the crop's sane range. Applied on every build (apply_fixes).
+# A trait the list names wrongly, and the traits its cells cannot be trusted for.
+TRAIT_LABEL = {('cacao', 'Pod index (cm)'): 'Pod index (pods for 1 kg of dry beans)'}
+TRAIT_DROP = {
+    # Fresh to dry ratios of 1.1 and 233.57 side by side: the column mixes weights, ratios and percents.
+    ('cacao', 'Bean fresh wt to dry weight ratio.'), ('coffee', 'Bean fresh wt to dry wt ratio (percent)'),
+}
+# Root crops can pass 40 t/ha (PSB Cv 10 gave 44.8): the 40 t/ha ceiling that catches a kg/ha
+# figure in a t/ha column is 80 for them.
+ROOT_YIELD = {'cassava', 'ubi', 'tugi', 'taro', 'sweetpotato', 'potato'}
+# One cell, by crop, variety and trait: the right figure, or None where it cannot be settled (the
+# figure leaves the page; nothing is put in its place). '@height' and '@yield' are the record's own.
+FIGURE_FIX = {
+    # A decimal point lost, or centimeters written in a millimeter column and back.
+    ('sugarcane', 'UPLB LUZONFED G6', 'Stalk diameter (cm)'): '2.32',
+    ('banana', 'Lakatan', 'Fruit width (cm)'): '3.5',
+    ('banana', 'Latundan', 'Fruit width (cm)'): '2.5',
+    ('cashew', 'Dayap', 'Nut length (mm)'): '33', ('cashew', 'Dayap', 'Nut width (mm)'): '25',
+    ('cashew', 'Farinas', 'Nut length (mm)'): '33', ('cashew', 'Farinas', 'Nut width (mm)'): '25',
+    ('chico', 'Gonzales', 'Flesh sweetness (brix)'): '22', ('chico', 'Pineras', 'Flesh sweetness (brix)'): '22',
+    ('coffee', 'CvSU Barako', 'Tree length of longest lateral (cm)'): '110',
+    ('coffee', 'CvSU Kapeng Manipis', 'Tree length of longest lateral (cm)'): '140',
+    ('durian', 'GD 69', 'Seed width (cm)'): '4', ('durian', 'GD 69', 'Skin thickness (mm)'): '12',
+    ('durian', 'Lacson Uno', 'Skin thickness (mm)'): '16', ('durian', 'Oboza', 'Skin thickness (mm)'): '14',
+    ('jackfruit', 'Jo 2', 'Seed length (cm)'): '3.5', ('jackfruit', 'Jo 2', 'Seed width (cm)'): '1.5',
+    ('jackfruit', 'Bat.-Jf 0 4', 'Whole fruit length (cm)'): '59', ('jackfruit', 'Bat.-Jf 0 4', 'Whole fruit width (cm)'): '31.2',
+    ('rambutan', 'JMD RRR', 'Seed length (cm)'): '2.47', ('rambutan', 'JMD RRR', 'Seed width (cm)'): '1.44',
+    ('cacao', 'K1', 'Pod wall thickness (cm)'): '0.87',
+    ('pili', 'Lavesarez 01', 'Whole Fruit Size length (mm)'): '76',
+    ('mungbean', 'Pagasa 13', '@height'): 54.0,
+    # Far outside the crop and no way to tell the right figure: left out.
+    ('cacao', 'USM CH 1', 'Tree canopy diameter (cm)'): None, ('cacao', 'USM CH 2', 'Tree canopy diameter (cm)'): None,
+    ('cashew', 'R2T3 QP Recto', 'Kernel weight (g)'): None,
+    ('chico', 'Chikok', 'Seed length (cm)'): None,
+    ('jackfruit', 'Baybay Sweet', 'Seed weight (g)'): None,
+    ('mango', 'MMSU Gold', 'Peel thickness (mm)'): None,
+    ('mungbean', 'Mabunga 4', 'Seed crude fat'): None,   # its crude protein again
+    ('mungbean', 'VC 6510 151', 'Seed crude fat'): None,  # 0.04, a twentieth of the others
+    ('mungbean', 'Kinang', 'Seed crude protein'): None,
+    ('mungbean', 'Mabunga 3', 'Seed crude protein'): None, ('mungbean', 'Mabunga 3', 'Seed carbohydrates'): None,
+    # The papers give 118 and 116 cm (the trial rows keep them for the analyses).
+    ('cotton', 'CRD 50 95 4 1 3 B', 'Plant height (cm)'): None, ('cotton', 'Bioseed 6527', 'Plant height (cm)'): None,
+    ('soybean', 'AGS 191 (BPI #4)', '@yield'): None,   # 8.55 and 14.76 t/ha of soybean
+}
+# Other names: SG 94 17 17 (NSIC 2000 Sp 23) is UPL Sp 14 in its nomination papers and the papers'
+# index; the list's UPL Sp 13 for it is the name of SG02 07 5 (NSIC 2011 Sp 32). The list also gives
+# UPL Sp 14 to SG 96 35 03 (NSIC 2001 Sp 24), whose papers are not online: one name cannot be two
+# varieties', so it leaves SG 96 35 03 until its papers settle it.
+ALIAS_FIX = {
+    ('sweetpotato', 'SG 94 17 17'): {'drop': ['UPL Sp 13'], 'add': ['UPL Sp 14']},
+    ('sweetpotato', 'SG 96 35 03'): {'drop': ['UPL Sp 14']},
+    ('cassava', 'PSB Cv 10'): {'add': ['MCol 1684']},
+}
+# One variety held twice: VC 5 is PSB Cv 10 (its breeder's page: "PSB Cv-10 (VC-5)(MCol 1684)",
+# released 1993, for starch). The research note named VC 5 joins the registered record.
+SAME = {('cassava', 'VC 5'): 'PSB Cv 10'}
+
+
+def apply_fixes(recs):
+    """The fixes above on the finished records (also run on varieties.json as it stands): the
+    variety held twice merged, the names, then the cells. Safe to run again."""
+    by = {(r['crop'], r['name']): r for r in recs}
+    for (crop, name), into in SAME.items():
+        a, b = by.get((crop, name)), by.get((crop, into))
+        if a and b:
+            if a.get('research') and not b.get('research'):
+                b['research'] = a['research']
+            b['aliases'] = list(dict.fromkeys(b['aliases'] + [x for x in [a['name']] + a['aliases'] if key_name(x) != key_name(b['name'])]))[:6]
+            recs = [r for r in recs if r is not a]
+    by = {(r['crop'], r['name']): r for r in recs}
+    for k, fx in ALIAS_FIX.items():
+        r = by.get(k)
+        if not r:
+            continue
+        old = list(r['aliases'])
+        al = [a for a in r['aliases'] if key_name(a) not in [key_name(d) for d in fx.get('drop', [])]]
+        for a in fx.get('add', []):
+            if key_name(a) not in [key_name(x) for x in al]:
+                # In the place of the name it replaces, else last.
+                at = next((i for i, x in enumerate(old) if key_name(x) in [key_name(d) for d in fx.get('drop', [])]), len(al))
+                al.insert(min(at, len(al)), a)
+        r['aliases'] = al
+    for (crop, name, label), val in FIGURE_FIX.items():
+        r = by.get((crop, name))
+        if not r:
+            continue
+        if label == '@height':
+            if r.get('height'):
+                r['height'] = dict(r['height'], value=val) if val is not None else None
+        elif label == '@yield':
+            if val is None:
+                r['yield'] = None
+        else:
+            r['traits'] = [[l, val if l == label else v] for l, v in r['traits'] if not (l == label and val is None)]
+    return recs
+
 
 def fixwords(s):
     for a, b in FIX_WORDS.items():
@@ -305,6 +402,15 @@ def normalize(r):
             if c or text:
                 rec['reactions'].append([pest_name(sub), c or text])
             continue
+        # Cacao's "Yield (kg/tree/year)" holds kilograms of dry beans a hectare, not a tree
+        # (2026-10-20): the registration papers print each clone's dry beans a tree, and this
+        # column is that times the trees a hectare (1,111, or 888 for BR 25). Read as tonnes of
+        # dry beans a hectare a year.
+        if crop == 'cacao' and re.search(r'yield \(kg/tree/year\)', bl):
+            n = [x for x in num(val) if x > 0]
+            if n:
+                rec['yield'] = {'value': round(n[0] / 1000, 2), 'unit': 't dry beans/ha', 'regional': None, 'seasons': None}
+            continue
         if re.search(r'maturity|days to mature|days to harvest|days to first harvest|1st harvest', bl) and not re.search(r'last harvest|flowering', bl):
             mats.setdefault(base, {})[s or 'all'] = val
             continue
@@ -317,6 +423,9 @@ def normalize(r):
         if re.search(r'^no\. \| 1|plant stand|grade index|nicotine', bl):
             continue
         pct = '%' in label or 'percent' in label.lower() or bool(re.search(r'recovery|content|portion|drying method|dry matter', bl))
+        # Mungbean seed holds about 1 percent fat: its 0.51 is 0.51 percent, never a share to multiply (it read "51 percent").
+        if crop == 'mungbean' and 'crude fat' in bl:
+            pct = False
         v = clean(val, percent=pct)
         if v and not BANNED_BITS.search(v) and len(v) <= 80:
             rec['traits'].append([pretty(base) + (', %s' % {'DS': 'dry season', 'WS': 'wet season'}[s] if s else ''), v])
@@ -347,7 +456,7 @@ def normalize(r):
             regional = re.findall(r'(Luzon|Visayas|Mindanao)\s*[:=\-]?\s*(\d+\.?\d*)', raw)
             if regional:
                 vals = [float(x) for _, x in regional]
-            vals = [x for x in vals if (x < 40 if unit in ('t/ha', 't copra/ha') else True)]
+            vals = [x for x in vals if (x < (80 if crop in ROOT_YIELD else 40) if unit in ('t/ha', 't copra/ha') else True)]
             if not vals:
                 continue
             rec['yield'] = {'value': round(statistics.mean(vals), 2), 'unit': unit or 't/ha',
@@ -366,7 +475,7 @@ def normalize(r):
     # Corn's own domain column, when the text named none.
     if crop == 'corn' and not rec['domain']:
         rec['domain'] = adaptation(cols.get('Recommendation Domain', ''))['domain']
-    rec['traits'] = [t for t in rec['traits'] if t[1]][:30]
+    rec['traits'] = [[TRAIT_LABEL.get((crop, t[0]), t[0]), t[1]] for t in rec['traits'] if t[1] and (crop, t[0]) not in TRAIT_DROP][:30]
     # The registry's own type column (mango: Carabao; coffee: Robusta) names its kind.
     if not rec['kind']:
         for lab, val in rec['traits']:
@@ -451,6 +560,8 @@ def main():
     for x in load_research():
         crop = CROP_OF_RESEARCH.get(x['crop'], x['crop'])
         hit = regidx.get(key_reg(x.get('nsic'))) if x.get('nsic') and any(ch.isdigit() for ch in x['nsic']) else None
+        if not hit and (crop, nice_name(x['name'])[0]) in SAME:
+            hit = nameidx.get((crop, key_name(SAME[(crop, nice_name(x['name'])[0])])))
         if not hit:
             for nm in [x['name']] + (x.get('aliases') or []):
                 hit = nameidx.get((crop, key_name(nm)))
@@ -481,6 +592,7 @@ def main():
             nameidx[(crop, key_name(main))] = r
             added += 1
 
+    recs = apply_fixes(recs)
     # A page needs something to say: trial numbers, traits, or research.
     keep = [r for r in recs if r.get('research') or r['maturity'] or r['yield'] or len(r['traits']) >= 4]
     seen = set()

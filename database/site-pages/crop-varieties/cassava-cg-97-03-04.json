@@ -7,7 +7,7 @@
   "profile": true,
   "title": "CG 97 03 04 cassava (Sultan 10): Yield, Maturity and Characteristics",
   "metaTitle": "CG 97 03 04 cassava: Yield, Maturity and Characteristics",
-  "metaDescription": "CG 97 03 04 cassava is a cassava variety. About 10 months to harvest. See its ratings and traits. Compare it with others.",
+  "metaDescription": "CG 97 03 04 cassava is a cassava variety. About 10 months to harvest, 40 t/ha in trials. See its pest ratings and traits.",
   "focusKeyword": "CG 97 03 04 cassava",
   "keywords": [
     "CG 97 03 04 cassava",
@@ -17,7 +17,7 @@
     "cassava variety philippines",
     "NSIC 2006 Cv 40"
   ],
-  "excerpt": "CG 97 03 04 is a registered cassava variety, also sold or known as Sultan 10. It was registered with the National Seed Industry Council in 2006 as NSIC 2006 Cv 40. It takes about 10 months from planting to harvest.",
+  "excerpt": "CG 97 03 04 is a registered cassava variety, also sold or known as Sultan 10. It was registered with the National Seed Industry Council in 2006 as NSIC 2006 Cv 40. It takes about 10 months from planting to harvest, with 40 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where CG 97 03 04 cassava is grown",
@@ -33,6 +33,7 @@
       "ordered": false,
       "items": [
         "**Days to harvest:** about 10 months from planting to harvest.",
+        "**Yield:** 40 tonnes per hectare on average in the trials.",
         "**Recommended for:** anywhere in the country."
       ]
     },
@@ -64,6 +65,10 @@
         [
           "Months to harvest",
           "about 10 months"
+        ],
+        [
+          "Average yield",
+          "40 t/ha"
         ],
         [
           "Recommended area",
@@ -102,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "CG 97 03 04 cassava takes about 10 months from planting to harvest. That is 0.5 months faster than the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "CG 97 03 04 cassava takes about 10 months from planting to harvest. That is 0.5 months faster than the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nIts average yield of 40 t/ha beats the average of its group, 33.84. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -201,7 +206,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[CG02 01 01](/crop-varieties/cassava-cg02-01-01): about 10 months, 2010",
+        "[CG02 01 01](/crop-varieties/cassava-cg02-01-01): about 10 months, 40 t/ha, 2010",
         "[CG 97 01r 04](/crop-varieties/cassava-cg-97-01r-04): about 10 months, 33.4 t/ha, 2007",
         "[CG 97 05r 01](/crop-varieties/cassava-cg-97-05r-01): about 10 months, 37 t/ha, 2006",
         "[CG 97 09 23](/crop-varieties/cassava-cg-97-09-23): about 10 months, 36.5 t/ha, 2006"
@@ -217,6 +222,10 @@
         {
           "q": "How long does it take to harvest?",
           "a": "It takes about 10 months from planting to harvest. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows 40 tonnes per hectare on average in the trials. Your own yield depends on the soil, water, fertilizer and pests on your farm."
         },
         {
           "q": "Where does it grow best?",

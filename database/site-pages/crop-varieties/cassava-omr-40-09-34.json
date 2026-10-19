@@ -7,7 +7,7 @@
   "profile": true,
   "title": "OMR 40 09 34 cassava (VSU Cv 24): Yield, Maturity and Characteristics",
   "metaTitle": "OMR 40 09 34 cassava: Yield, Maturity and Characteristics",
-  "metaDescription": "OMR 40 09 34 cassava is a cassava variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
+  "metaDescription": "OMR 40 09 34 cassava is a cassava variety. 10 to 12 months to harvest, 42.8 t/ha in trials. See its pest ratings and traits.",
   "focusKeyword": "OMR 40 09 34 cassava",
   "keywords": [
     "OMR 40 09 34 cassava",
@@ -17,7 +17,7 @@
     "cassava variety philippines",
     "NSIC 2009 Cv 46"
   ],
-  "excerpt": "OMR 40 09 34 is a registered cassava variety, also sold or known as VSU Cv 24. It was registered with the National Seed Industry Council in 2009 as NSIC 2009 Cv 46. It takes 10 to 12 months from planting to harvest.",
+  "excerpt": "OMR 40 09 34 is a registered cassava variety, also sold or known as VSU Cv 24. It was registered with the National Seed Industry Council in 2009 as NSIC 2009 Cv 46. It takes 10 to 12 months from planting to harvest, with 42.8 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where OMR 40 09 34 cassava is grown",
@@ -33,6 +33,7 @@
       "ordered": false,
       "items": [
         "**Days to harvest:** 10 to 12 months from planting to harvest.",
+        "**Yield:** 42.8 tonnes per hectare on average in the trials.",
         "**Recommended for:** anywhere in the country."
       ]
     },
@@ -64,6 +65,10 @@
         [
           "Months to harvest",
           "10 to 12 months"
+        ],
+        [
+          "Average yield",
+          "42.8 t/ha"
         ],
         [
           "Recommended area",
@@ -102,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "OMR 40 09 34 cassava takes 10 to 12 months from planting to harvest. That is about the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "OMR 40 09 34 cassava takes 10 to 12 months from planting to harvest. That is about the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nIts average yield of 42.8 t/ha beats the average of its group, 33.84. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -217,6 +222,10 @@
         {
           "q": "How long does it take to harvest?",
           "a": "It takes 10 to 12 months from planting to harvest. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows 42.8 tonnes per hectare on average in the trials. Your own yield depends on the soil, water, fertilizer and pests on your farm."
         },
         {
           "q": "Where does it grow best?",

@@ -100,7 +100,7 @@
         ],
         [
           "Seed crude fat",
-          "62 percent"
+          "0.62"
         ],
         [
           "Seed carbohydrates",
@@ -157,7 +157,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit mungbean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew), [thrips](/pests/thrips). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit mungbean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew), [anthracnose](/diseases/anthracnose), [Corn earworm](/pests/corn-earworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

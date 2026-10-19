@@ -303,6 +303,9 @@ def yield_text(v):
     if y.get('value') is None:
         t = safe(y.get('text'))
         return ('a recorded yield of %s' % t[:1].lower() + t[1:]) if t else None
+    if y['unit'] == 't dry beans/ha':
+        # Cacao (2026-10-20): a mother tree's dry beans, counted over a hectare of such trees; no trial plots.
+        return 'about %s tonnes of dry beans per hectare a year' % fmt(y['value'], 2)
     unit = {'t/ha': 'tonnes per hectare', 'LKg/ha': 'LKg of sugar per hectare', 't copra/ha': 'tonnes of copra per hectare',
             'kg/ha': 'kilograms per hectare'}.get(y['unit'], y['unit'])
     if y.get('regional') and len(y['regional']) > 1:
@@ -513,6 +516,8 @@ def build(v, allv, st):
     # ---- the head of the page
     has = has_nums(v)
     tail = 'Yield, Maturity and Characteristics' if has else ('Fruit and Tree Characteristics' if c.get('group') == 'fruit' else 'Characteristics')
+    if has and not v.get('maturity') and (v.get('yield') or {}).get('unit') == 't dry beans/ha':
+        tail = 'Yield and Characteristics'   # a cacao clone's record has no day count
     title = '%s%s: %s' % (fk if fk != n else n, (' (%s)' % aliases[0]) if aliases and len(aliases[0]) <= 18 else '', tail)
     if fk == n and cw not in n.lower():
         title = '%s %s Variety: %s' % (n, crop_n, tail)
@@ -654,7 +659,7 @@ def build(v, allv, st):
                 para.append('That is %s %s %s than the average of the %s, %s %s.' % (fmt(abs(diff)), v['maturity']['unit'], 'faster' if diff < 0 else 'longer', who_, fmt(avg), v['maturity']['unit']))
         para.append('A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.' if v['maturity']['unit'] == 'days'
                     else 'Count the months from planting, and plan the harvest for a dry stretch when you can.')
-    if y.get('value') is not None:
+    if y.get('value') is not None and y.get('unit') != 't dry beans/ha':
         para.append('\n\n')
         pool = s_kind if len(s_kind.get('yld', [])) >= 5 else s_all
         if len(pool.get('yld', [])) >= 3 and pool.get('unit') == y.get('unit'):

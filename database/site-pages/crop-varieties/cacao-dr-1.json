@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cacao",
   "profile": true,
-  "title": "DR 1 cacao: Characteristics",
-  "metaTitle": "DR 1 cacao: Characteristics",
+  "title": "DR 1 cacao: Yield and Characteristics",
+  "metaTitle": "DR 1 cacao: Yield and Characteristics",
   "metaDescription": "DR 1 cacao is a cacao variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "DR 1 cacao",
   "keywords": [
@@ -16,7 +16,7 @@
     "cacao variety philippines",
     "NSIC 1999 Cc 03"
   ],
-  "excerpt": "DR 1 is a registered cacao variety. It was registered with the National Seed Industry Council in 1844 as NSIC 1999 Cc 03.",
+  "excerpt": "DR 1 is a registered cacao variety. It was registered with the National Seed Industry Council in 1999 as NSIC 1999 Cc 03. Its record notes about 1.84 tonnes of dry beans per hectare a year.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where DR 1 cacao is grown",
@@ -31,6 +31,7 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "**Yield:** about 1.84 tonnes of dry beans per hectare a year.",
         "**Plant height:** about 374 cm."
       ]
     },
@@ -53,7 +54,11 @@
         ],
         [
           "Year approved",
-          "1844"
+          "1999"
+        ],
+        [
+          "Average yield",
+          "1.84 t dry beans/ha"
         ],
         [
           "Plant height",
@@ -64,7 +69,7 @@
           "345"
         ],
         [
-          "Pod index (cm)",
+          "Pod index (pods for 1 kg of dry beans)",
           "17.8"
         ],
         [
@@ -116,7 +121,7 @@
     },
     {
       "type": "text",
-      "text": "A registered tree variety is described from its mother tree, not from trial plots. It first bore pods about 14 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
+      "text": "A registered tree variety is described from its mother tree, not from trial plots. Its record notes about 1.84 tonnes of dry beans per hectare a year. It first bore pods about 14 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
     },
     {
       "type": "heading",
@@ -210,15 +215,19 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[P7](/crop-varieties/cacao-p7): 1966",
-        "[K1](/crop-varieties/cacao-k1)",
-        "[K2](/crop-varieties/cacao-k2)",
-        "[BR 25](/crop-varieties/cacao-br-25): 1633"
+        "[ICS 40](/crop-varieties/cacao-ics-40): 2.2 t dry beans/ha, 1999",
+        "[BR 25](/crop-varieties/cacao-br-25): 1.63 t dry beans/ha, 1999",
+        "[P7](/crop-varieties/cacao-p7): 2 t dry beans/ha, 1999",
+        "[UIT 1](/crop-varieties/cacao-uit-1): 1.26 t dry beans/ha, 1999"
       ]
     },
     {
       "type": "faq",
       "items": [
+        {
+          "q": "What is its yield?",
+          "a": "The record shows about 1.84 tonnes of dry beans per hectare a year. Your own yield depends on the soil, water, fertilizer and pests on your farm."
+        },
         {
           "q": "Where can I buy planting material of DR 1?",
           "a": "Buy grafted, budded or marcotted trees from a nursery accredited by the Bureau of Plant Industry, so you get the true variety. Ask your provincial agriculture office for the nearest one."

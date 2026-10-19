@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cacao",
   "profile": true,
-  "title": "K9 cacao (NSIC Cc 10): Characteristics",
-  "metaTitle": "K9 cacao: Characteristics",
+  "title": "K9 cacao (NSIC Cc 10): Yield and Characteristics",
+  "metaTitle": "K9 cacao: Yield and Characteristics",
   "metaDescription": "K9 cacao is a cacao variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "K9 cacao",
   "keywords": [
@@ -17,7 +17,7 @@
     "cacao variety philippines",
     "NSIC 2008 Cc 10"
   ],
-  "excerpt": "K9 is a registered cacao variety, also sold or known as NSIC Cc 10. It was registered with the National Seed Industry Council in 2444 as NSIC 2008 Cc 10. Marwabempco bred it.",
+  "excerpt": "K9 is a registered cacao variety, also sold or known as NSIC Cc 10. It was registered with the National Seed Industry Council in 2008 as NSIC 2008 Cc 10. Marwabempco bred it. Its record notes about 2.44 tonnes of dry beans per hectare a year.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where K9 cacao is grown",
@@ -32,6 +32,7 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "**Yield:** about 2.44 tonnes of dry beans per hectare a year.",
         "**Plant height:** about 630 cm."
       ]
     },
@@ -54,7 +55,7 @@
         ],
         [
           "Year approved",
-          "2444"
+          "2008"
         ],
         [
           "Breeder or owner",
@@ -65,6 +66,10 @@
           "NSIC Cc 10"
         ],
         [
+          "Average yield",
+          "2.44 t dry beans/ha"
+        ],
+        [
           "Plant height",
           "630 cm"
         ],
@@ -73,7 +78,7 @@
           "422"
         ],
         [
-          "Pod index (cm)",
+          "Pod index (pods for 1 kg of dry beans)",
           "22"
         ],
         [
@@ -125,7 +130,7 @@
     },
     {
       "type": "text",
-      "text": "A registered tree variety is described from its mother tree, not from trial plots. It first bore pods about 23 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
+      "text": "A registered tree variety is described from its mother tree, not from trial plots. Its record notes about 2.44 tonnes of dry beans per hectare a year. It first bore pods about 23 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
     },
     {
       "type": "heading",
@@ -239,10 +244,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[S5](/crop-varieties/cacao-s5): 2413",
-        "[USM CH 2](/crop-varieties/cacao-usm-ch-2): 2350",
-        "[PBC123](/crop-varieties/cacao-pbc123): 2235",
-        "[ICS 40](/crop-varieties/cacao-ics-40): 2199"
+        "[UF 18](/crop-varieties/cacao-uf-18): 3.11 t dry beans/ha, 2008",
+        "[S5](/crop-varieties/cacao-s5): 2.41 t dry beans/ha, 2008",
+        "[PBC123](/crop-varieties/cacao-pbc123): 2.23 t dry beans/ha, 2014",
+        "[ICS 40](/crop-varieties/cacao-ics-40): 2.2 t dry beans/ha, 1999"
       ]
     },
     {
@@ -251,6 +256,10 @@
         {
           "q": "Is NSIC Cc 10 the same as K9?",
           "a": "Yes. NSIC Cc 10 is another name for K9, registered as NSIC 2008 Cc 10. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows about 2.44 tonnes of dry beans per hectare a year. Your own yield depends on the soil, water, fertilizer and pests on your farm."
         },
         {
           "q": "Where can I buy planting material of K9?",

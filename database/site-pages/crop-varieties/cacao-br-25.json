@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cacao",
   "profile": true,
-  "title": "BR 25 cacao (NSIC Cc 05): Characteristics",
-  "metaTitle": "BR 25 cacao: Characteristics",
+  "title": "BR 25 cacao (NSIC Cc 05): Yield and Characteristics",
+  "metaTitle": "BR 25 cacao: Yield and Characteristics",
   "metaDescription": "BR 25 cacao is a cacao variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "BR 25 cacao",
   "keywords": [
@@ -17,7 +17,7 @@
     "cacao variety philippines",
     "NSIC 1999 Cc 05"
   ],
-  "excerpt": "BR 25 is a registered cacao variety, also sold or known as NSIC Cc 05. It was registered with the National Seed Industry Council in 1633 as NSIC 1999 Cc 05.",
+  "excerpt": "BR 25 is a registered cacao variety, also sold or known as NSIC Cc 05. It was registered with the National Seed Industry Council in 1999 as NSIC 1999 Cc 05. Its record notes about 1.63 tonnes of dry beans per hectare a year.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where BR 25 cacao is grown",
@@ -32,6 +32,7 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "**Yield:** about 1.63 tonnes of dry beans per hectare a year.",
         "**Plant height:** about 515 cm."
       ]
     },
@@ -54,11 +55,15 @@
         ],
         [
           "Year approved",
-          "1633"
+          "1999"
         ],
         [
           "Also known as",
           "NSIC Cc 05"
+        ],
+        [
+          "Average yield",
+          "1.63 t dry beans/ha"
         ],
         [
           "Plant height",
@@ -69,7 +74,7 @@
           "285"
         ],
         [
-          "Pod index (cm)",
+          "Pod index (pods for 1 kg of dry beans)",
           "23.1"
         ],
         [
@@ -121,7 +126,7 @@
     },
     {
       "type": "text",
-      "text": "A registered tree variety is described from its mother tree, not from trial plots. It first bore pods about 16.1 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
+      "text": "A registered tree variety is described from its mother tree, not from trial plots. Its record notes about 1.63 tonnes of dry beans per hectare a year. It first bore pods about 16.1 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
     },
     {
       "type": "heading",
@@ -234,10 +239,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[DR 1](/crop-varieties/cacao-dr-1): 1844",
-        "[P7](/crop-varieties/cacao-p7): 1966",
-        "[K1](/crop-varieties/cacao-k1)",
-        "[K2](/crop-varieties/cacao-k2)"
+        "[ICS 40](/crop-varieties/cacao-ics-40): 2.2 t dry beans/ha, 1999",
+        "[P7](/crop-varieties/cacao-p7): 2 t dry beans/ha, 1999",
+        "[DR 1](/crop-varieties/cacao-dr-1): 1.84 t dry beans/ha, 1999",
+        "[UIT 1](/crop-varieties/cacao-uit-1): 1.26 t dry beans/ha, 1999"
       ]
     },
     {
@@ -246,6 +251,10 @@
         {
           "q": "Is NSIC Cc 05 the same as BR 25?",
           "a": "Yes. NSIC Cc 05 is another name for BR 25, registered as NSIC 1999 Cc 05. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows about 1.63 tonnes of dry beans per hectare a year. Your own yield depends on the soil, water, fertilizer and pests on your farm."
         },
         {
           "q": "Where can I buy planting material of BR 25?",

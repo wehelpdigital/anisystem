@@ -101,7 +101,7 @@
     },
     {
       "type": "text",
-      "text": "Yoshida 1 soybean takes about 70 days from sowing to harvest. That is 12.6 days faster than the average of the 22 soybean varieties with a day count, 82.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8 t/ha beats the average of its group, 2.94. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Yoshida 1 soybean takes about 70 days from sowing to harvest. That is 12.6 days faster than the average of the 22 soybean varieties with a day count, 82.6 days. A shorter crop frees the field sooner and dodges more of the weather, while a longer one often fills more.\n\nIts average yield of 8 t/ha beats the average of its group, 2.52. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit soybean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit soybean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm), [root knot nematode](/diseases/root-knot-nematode). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -181,7 +181,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[AGS 191 (BPI #4)](/crop-varieties/soybean-ags-191-bpi-4): about 70 days, 11.66 t/ha, 1996",
+        "[AGS 191 (BPI #4)](/crop-varieties/soybean-ags-191-bpi-4): about 70 days, 1996",
         "[Vesoy #4](/crop-varieties/soybean-vesoy-4): about 70 days, 8.47 t/ha, 1996",
         "[Select Manchuria](/crop-varieties/soybean-select-manchuria): about 70 days, 2 t/ha, 2020",
         "[Select Tudela Black](/crop-varieties/soybean-select-tudela-black): about 74 days, 2 t/ha, 2020"

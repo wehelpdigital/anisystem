@@ -5,18 +5,21 @@
   "lang": "en",
   "category": "Cassava",
   "profile": true,
-  "title": "PSB Cv 10 cassava: Yield, Maturity and Characteristics",
+  "title": "PSB Cv 10 cassava (VC 5): Yield, Maturity and Characteristics",
   "metaTitle": "PSB Cv 10 cassava: Yield, Maturity and Characteristics",
-  "metaDescription": "PSB Cv 10 cassava is a cassava variety for Mindanao. 8 to 10 months to harvest. See its ratings and traits. Compare it with others.",
+  "metaDescription": "PSB Cv 10 cassava is a cassava variety for Mindanao. 8 to 10 months to harvest, 44.8 t/ha in trials. See its ratings and traits.",
   "focusKeyword": "PSB Cv 10 cassava",
   "keywords": [
     "PSB Cv 10 cassava",
     "PSB Cv 10",
+    "VC 5",
+    "VC 5 cassava",
+    "MCol 1684",
     "PSB Cv 10 cassava variety",
     "cassava variety philippines",
     "Philippine Seed Board"
   ],
-  "excerpt": "PSB Cv 10 is a registered cassava variety. The Philippine Seed Board approved it in 1993. It takes 8 to 10 months from planting to harvest.",
+  "excerpt": "PSB Cv 10 is a registered cassava variety, also sold or known as VC 5 or VC 5 cassava. The Philippine Seed Board approved it in 1993. It takes 8 to 10 months from planting to harvest, with 44.8 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where PSB Cv 10 cassava is grown",
@@ -25,13 +28,14 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Compare it with the others in our [cassava variety finder](/crop-varieties/cassava), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
+      "text": "If you came here looking for VC 5 or VC 5 cassava, this is the same cassava. Its seller and farm sources add notes, listed at the end. Compare it with the others in our [cassava variety finder](/crop-varieties/cassava), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [Land preparation for root crops](/land-preparation/root-crop-land-preparation)."
     },
     {
       "type": "list",
       "ordered": false,
       "items": [
         "**Days to harvest:** 8 to 10 months from planting to harvest.",
+        "**Yield:** 44.8 tonnes per hectare on average in the trials.",
         "**Recommended for:** Mindanao."
       ]
     },
@@ -57,8 +61,16 @@
           "1993"
         ],
         [
+          "Also known as",
+          "VC 5, VC 5 cassava, MCol 1684"
+        ],
+        [
           "Months to harvest",
           "8 to 10 months"
+        ],
+        [
+          "Average yield",
+          "44.8 t/ha"
         ],
         [
           "Recommended area",
@@ -89,7 +101,7 @@
     },
     {
       "type": "text",
-      "text": "PSB Cv 10 cassava takes 8 to 10 months from planting to harvest. That is 1.5 months faster than the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "PSB Cv 10 cassava takes 8 to 10 months from planting to harvest. That is 1.5 months faster than the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nIts average yield of 44.8 t/ha beats the average of its group, 33.84. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -137,6 +149,24 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Fruit:** High HCN (bitter), starch millers prefer high cyanide types.",
+        "**Where:** Mindanao (Lanao).",
+        "**Uses:** Starch."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why farmers know it: the starch mills' variety: over 3,000 ha in Lanao in the 1990s, planted for its high yield. Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where and when to plant PSB Cv 10 cassava"
     },
     {
@@ -179,17 +209,25 @@
       "ordered": false,
       "items": [
         "[UPL Cv 4](/crop-varieties/cassava-upl-cv-4): 8 to 10 months, 30.1 t/ha, 1988",
-        "[CG02 01 01](/crop-varieties/cassava-cg02-01-01): about 10 months, 2010",
+        "[CG02 01 01](/crop-varieties/cassava-cg02-01-01): about 10 months, 40 t/ha, 2010",
         "[CG 97 01r 04](/crop-varieties/cassava-cg-97-01r-04): about 10 months, 33.4 t/ha, 2007",
-        "[CG 97 03 04](/crop-varieties/cassava-cg-97-03-04): about 10 months, 2006"
+        "[CG 97 03 04](/crop-varieties/cassava-cg-97-03-04): about 10 months, 40 t/ha, 2006"
       ]
     },
     {
       "type": "faq",
       "items": [
         {
+          "q": "Is VC 5 the same as PSB Cv 10?",
+          "a": "Yes. VC 5 is another name for PSB Cv 10. Seed sellers use both, so ask for either one."
+        },
+        {
           "q": "How long does it take to harvest?",
           "a": "It takes 8 to 10 months from planting to harvest. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows 44.8 tonnes per hectare on average in the trials. Your own yield depends on the soil, water, fertilizer and pests on your farm."
         },
         {
           "q": "Where does it grow best?",
@@ -220,6 +258,19 @@
         {
           "label": "Rice varieties of the Philippines",
           "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Notes on PSB Cv 10 from cgspace.cgiar.org",
+          "url": "https://cgspace.cgiar.org/items/ca11d384-c112-4750-9d97-664bee8f81ed"
+        },
+        {
+          "label": "Notes on PSB Cv 10 from cgspace.cgiar.org",
+          "url": "https://cgspace.cgiar.org/items/9ce25905-4850-4ef5-8132-5970dcffed5b"
         }
       ]
     }

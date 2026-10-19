@@ -68,10 +68,6 @@
           "5.1"
         ],
         [
-          "Plant height (cm)",
-          "13.84"
-        ],
-        [
           "Fiber length (mm)",
           "28.72"
         ],
@@ -130,7 +126,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit cotton fields most often: [eggplant leafhopper](/pests/eggplant-leafhopper), [Corn earworm](/pests/corn-earworm), [Fusarium wilt](/diseases/fusarium-wilt). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit cotton fields most often: [eggplant leafhopper](/pests/eggplant-leafhopper), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm), [Fusarium wilt](/diseases/fusarium-wilt), [thrips](/pests/thrips). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

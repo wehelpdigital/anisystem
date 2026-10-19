@@ -95,12 +95,8 @@
           "Glossy green"
         ],
         [
-          "Seed crude protein",
-          "3.34"
-        ],
-        [
           "Seed crude fat",
-          "68 percent"
+          "0.68"
         ],
         [
           "Seed carbohydrates",
@@ -158,7 +154,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit mungbean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew), [thrips](/pests/thrips). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit mungbean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew), [anthracnose](/diseases/anthracnose), [Corn earworm](/pests/corn-earworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -167,7 +163,7 @@
     },
     {
       "type": "text",
-      "text": "A hundred seeds weigh about 6.6 grams, so the higher this number, the bigger the seed. The seed coat is glossy green. The seed holds 3.34 percent crude protein."
+      "text": "A hundred seeds weigh about 6.6 grams, so the higher this number, the bigger the seed. The seed coat is glossy green."
     },
     {
       "type": "heading",

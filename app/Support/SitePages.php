@@ -291,6 +291,8 @@ class SitePages
      */
     public const MOVED = [
         'blog/palaycheck-key-checks' => 'blog/increase-rice-yield-per-hectare',
+        // VC 5 is PSB Cv 10, one cassava held twice (2026-10-20).
+        'crop-varieties/cassava-vc-5' => 'crop-varieties/cassava-psb-cv-10',
     ];
 
     /** Where a page taken off the site sends its reader now, or null. */

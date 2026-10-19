@@ -2703,7 +2703,7 @@
    ],
    [
     "Fruit width (cm)",
-    "35"
+    "3.5"
    ],
    [
     "Fruit shape",
@@ -2792,7 +2792,7 @@
    ],
    [
     "Fruit width (cm)",
-    "25"
+    "2.5"
    ],
    [
     "Fruit shape",
@@ -4413,14 +4413,19 @@
    "NSIC Cc 08"
   ],
   "reg": "NSIC 2008 Cc 08",
-  "year": 3110,
+  "year": 2008,
   "owner": "Puentespina Farm",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 3.11,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 483.0,
    "unit": "cm"
@@ -4463,7 +4468,7 @@
     "9.63"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "20"
    ],
    [
@@ -4513,10 +4518,6 @@
    [
     "Bean weight of 100 beans at 11percent MC",
     "166 g"
-   ],
-   [
-    "Bean fresh wt to dry weight ratio.",
-    "182.8"
    ]
   ],
   "reactions": [
@@ -4565,14 +4566,19 @@
    "NSIC Cc 10"
   ],
   "reg": "NSIC 2008 Cc 10",
-  "year": 2444,
+  "year": 2008,
   "owner": "Marwabempco",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 2.44,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 630.0,
    "unit": "cm"
@@ -4615,7 +4621,7 @@
     "11.54"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "22"
    ],
    [
@@ -4665,10 +4671,6 @@
    [
     "Bean weight of 100 beans at 11percent MC",
     "166 g"
-   ],
-   [
-    "Bean fresh wt to dry weight ratio.",
-    "162.85"
    ]
   ],
   "reactions": [
@@ -4718,14 +4720,19 @@
    "NSIC Cc 09"
   ],
   "reg": "NSIC 2008 Cc 09",
-  "year": 2413,
+  "year": 2008,
   "owner": "Marwabempco",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 2.41,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 520.0,
    "unit": "cm"
@@ -4768,7 +4775,7 @@
     "13.32"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "18"
    ],
    [
@@ -4818,10 +4825,6 @@
    [
     "Bean weight of 100 beans at 11percent MC",
     "161 g"
-   ],
-   [
-    "Bean fresh wt to dry weight ratio.",
-    "233.57"
    ]
   ],
   "reactions": [
@@ -4867,14 +4870,19 @@
   "name": "USM CH 2",
   "aliases": [],
   "reg": "NSIC 2014 Cc 13",
-  "year": 2350,
+  "year": 2014,
   "owner": "PICRI USM",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 2.35,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 470.0,
    "unit": "cm"
@@ -4883,10 +4891,6 @@
    [
     "Tree age (months)",
     "110"
-   ],
-   [
-    "Tree canopy diameter (cm)",
-    "34"
    ],
    [
     "Tree age at first flowering (months)",
@@ -4913,7 +4917,7 @@
     "14.11"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "25"
    ],
    [
@@ -4963,10 +4967,6 @@
    [
     "Bean weight of 100 beans at 11percent MC",
     "112.80 g"
-   ],
-   [
-    "Bean fresh wt to dry weight ratio.",
-    "1.1"
    ]
   ],
   "reactions": [
@@ -4998,14 +4998,19 @@
    "NSIC Cc 11"
   ],
   "reg": "NSIC 2014 Cc 11",
-  "year": 2235,
+  "year": 2014,
   "owner": "Malaysia, PICRI USM",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 2.23,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 480.0,
    "unit": "cm"
@@ -5044,7 +5049,7 @@
     "10.2"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "22.21"
    ],
    [
@@ -5094,10 +5099,6 @@
    [
     "Bean weight of 100 beans at 11percent MC",
     "124.80 g"
-   ],
-   [
-    "Bean fresh wt to dry weight ratio.",
-    "1.31 g"
    ]
   ],
   "reactions": [
@@ -5146,14 +5147,19 @@
    "NSIC Cc 01"
   ],
   "reg": "NSIC 1999 Cc 01",
-  "year": 2199,
+  "year": 1999,
   "owner": "UPLB",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 2.2,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 331.0,
    "unit": "cm"
@@ -5196,7 +5202,7 @@
     "10.01"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "16.2"
    ],
    [
@@ -5287,14 +5293,19 @@
   "name": "USM CH 1",
   "aliases": [],
   "reg": "NSIC 2014 Cc 12",
-  "year": 2186,
+  "year": 2014,
   "owner": "PICRI USM",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 2.19,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 490.0,
    "unit": "cm"
@@ -5303,10 +5314,6 @@
    [
     "Tree age (months)",
     "110"
-   ],
-   [
-    "Tree canopy diameter (cm)",
-    "23"
    ],
    [
     "Tree age at first flowering (months)",
@@ -5333,7 +5340,7 @@
     "14.19"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "22.5"
    ],
    [
@@ -5383,10 +5390,6 @@
    [
     "Bean weight of 100 beans at 11percent MC",
     "118.20 g"
-   ],
-   [
-    "Bean fresh wt to dry weight ratio.",
-    "1.25 g"
    ]
   ],
   "reactions": [
@@ -5416,14 +5419,19 @@
   "name": "P7",
   "aliases": [],
   "reg": "NSIC 1999 Cc 04",
-  "year": 1966,
+  "year": 1999,
   "owner": "UPLB",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 1.97,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 311.0,
    "unit": "cm"
@@ -5466,7 +5474,7 @@
     "10.08"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "26.82"
    ],
    [
@@ -5541,14 +5549,19 @@
   "name": "DR 1",
   "aliases": [],
   "reg": "NSIC 1999 Cc 03",
-  "year": 1844,
+  "year": 1999,
   "owner": "UPLB",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 1.84,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 374.0,
    "unit": "cm"
@@ -5591,7 +5604,7 @@
     "9.7"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "17.8"
    ],
    [
@@ -5668,14 +5681,19 @@
    "NSIC Cc 05"
   ],
   "reg": "NSIC 1999 Cc 05",
-  "year": 1633,
+  "year": 1999,
   "owner": "UPLB",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 1.63,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 515.0,
    "unit": "cm"
@@ -5718,7 +5736,7 @@
     "4.04"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "23.1"
    ],
    [
@@ -5809,14 +5827,19 @@
   "name": "UIT 1",
   "aliases": [],
   "reg": "NSIC 1999 Cc 02",
-  "year": 1255,
+  "year": 1999,
   "owner": "PCEC",
   "kind": null,
   "color": null,
   "localName": null,
   "uses": null,
   "maturity": null,
-  "yield": null,
+  "yield": {
+   "value": 1.26,
+   "unit": "t dry beans/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": {
    "value": 452.0,
    "unit": "cm"
@@ -5859,7 +5882,7 @@
     "8.13"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "21.69"
    ],
    [
@@ -5934,7 +5957,7 @@
   "name": "K1",
   "aliases": [],
   "reg": "NSIC 2001 Cc 06",
-  "year": null,
+  "year": 2001,
   "owner": "BIAO Coop",
   "kind": null,
   "color": null,
@@ -5984,7 +6007,7 @@
     "13.44"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "19.2"
    ],
    [
@@ -6005,7 +6028,7 @@
    ],
    [
     "Pod wall thickness (cm)",
-    "8.67"
+    "0.87"
    ],
    [
     "Bean color",
@@ -6059,7 +6082,7 @@
   "name": "K2",
   "aliases": [],
   "reg": "NSIC 2001 Cc 07",
-  "year": null,
+  "year": 2001,
   "owner": "BIAO Coop",
   "kind": null,
   "color": null,
@@ -6109,7 +6132,7 @@
     "12.52"
    ],
    [
-    "Pod index (cm)",
+    "Pod index (pods for 1 kg of dry beans)",
     "18.6"
    ],
    [
@@ -7702,11 +7725,11 @@
    ],
    [
     "Nut length (mm)",
-    "3.3"
+    "33"
    ],
    [
     "Nut width (mm)",
-    "2.5"
+    "25"
    ],
    [
     "Nut shape",
@@ -7811,11 +7834,11 @@
    ],
    [
     "Nut length (mm)",
-    "3.3"
+    "33"
    ],
    [
     "Nut width (mm)",
-    "2.5"
+    "25"
    ],
    [
     "Nut shape",
@@ -7865,10 +7888,6 @@
    [
     "Nut weight (g)",
     "14"
-   ],
-   [
-    "Kernel weight (g)",
-    "53.6"
    ]
   ],
   "reactions": [],
@@ -8120,7 +8139,12 @@
    "first": false,
    "text": "10"
   },
-  "yield": null,
+  "yield": {
+   "value": 40.0,
+   "unit": "t/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": null,
   "traits": [
    [
@@ -8197,7 +8221,12 @@
    "first": false,
    "text": "10 to 12"
   },
-  "yield": null,
+  "yield": {
+   "value": 42.8,
+   "unit": "t/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": null,
   "traits": [
    [
@@ -8602,7 +8631,12 @@
    "first": false,
    "text": "10"
   },
-  "yield": null,
+  "yield": {
+   "value": 40.0,
+   "unit": "t/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": null,
   "traits": [
    [
@@ -9419,7 +9453,12 @@
    "first": false,
    "text": "10 to 12"
   },
-  "yield": null,
+  "yield": {
+   "value": 44.7,
+   "unit": "t/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": null,
   "traits": [
    [
@@ -10426,7 +10465,12 @@
    "first": false,
    "text": "10"
   },
-  "yield": null,
+  "yield": {
+   "value": 40.3,
+   "unit": "t/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": null,
   "traits": [
    [
@@ -11019,7 +11063,11 @@
  {
   "crop": "cassava",
   "name": "PSB Cv 10",
-  "aliases": [],
+  "aliases": [
+   "VC 5",
+   "VC 5 cassava",
+   "MCol 1684"
+  ],
   "reg": "Philippine Seed Board",
   "year": 1993,
   "owner": null,
@@ -11035,7 +11083,12 @@
    "first": false,
    "text": "8 to 10"
   },
-  "yield": null,
+  "yield": {
+   "value": 44.8,
+   "unit": "t/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": null,
   "traits": [
    [
@@ -11073,7 +11126,21 @@
   "sources": [
    "https://nsic.buplant.da.gov.ph/registry.php"
   ],
-  "slug": "cassava-psb-cv-10"
+  "slug": "cassava-psb-cv-10",
+  "research": {
+   "company": "ViSCA (now VSU)",
+   "kind": "industrial cassava, high cyanide",
+   "popular": "The starch mills' variety: over 3,000 ha in Lanao in the 1990s, planted for its high yield.",
+   "facts": {
+    "fruit": "high HCN (bitter); starch millers prefer high-cyanide types",
+    "uses": "starch",
+    "areas": "Mindanao (Lanao)"
+   },
+   "sources": [
+    "https://cgspace.cgiar.org/items/ca11d384-c112-4750-9d97-664bee8f81ed",
+    "https://cgspace.cgiar.org/items/9ce25905-4850-4ef5-8132-5970dcffed5b"
+   ]
+  }
  },
  {
   "crop": "cassava",
@@ -11296,7 +11363,12 @@
    "first": false,
    "text": "10"
   },
-  "yield": null,
+  "yield": {
+   "value": 40.0,
+   "unit": "t/ha",
+   "regional": null,
+   "seasons": null
+  },
   "height": null,
   "traits": [
    [
@@ -11442,44 +11514,6 @@
    ]
   },
   "slug": "cassava-lakan-1"
- },
- {
-  "crop": "cassava",
-  "name": "VC 5",
-  "aliases": [
-   "VC 5 cassava"
-  ],
-  "reg": null,
-  "year": null,
-  "owner": "ViSCA (now VSU)",
-  "kind": "industrial cassava, high cyanide",
-  "color": null,
-  "localName": null,
-  "uses": "starch",
-  "maturity": null,
-  "yield": null,
-  "height": null,
-  "traits": [],
-  "reactions": [],
-  "domain": [],
-  "seasons": [],
-  "elevation": [],
-  "sources": [],
-  "research": {
-   "company": "ViSCA (now VSU)",
-   "kind": "industrial cassava, high cyanide",
-   "popular": "The starch mills' variety: over 3,000 ha in Lanao in the 1990s, planted for its high yield.",
-   "facts": {
-    "fruit": "high HCN (bitter); starch millers prefer high-cyanide types",
-    "uses": "starch",
-    "areas": "Mindanao (Lanao)"
-   },
-   "sources": [
-    "https://cgspace.cgiar.org/items/ca11d384-c112-4750-9d97-664bee8f81ed",
-    "https://cgspace.cgiar.org/items/9ce25905-4850-4ef5-8132-5970dcffed5b"
-   ]
-  },
-  "slug": "cassava-vc-5"
  },
  {
   "crop": "cauliflower",
@@ -12049,10 +12083,6 @@
    [
     "Seed weight (g/seed)",
     "0.8"
-   ],
-   [
-    "Seed length (cm)",
-    "9.96"
    ],
    [
     "Seed width (cm)",
@@ -12633,7 +12663,7 @@
    ],
    [
     "Flesh sweetness (brix)",
-    "0.22"
+    "22"
    ],
    [
     "Seed number",
@@ -12700,7 +12730,7 @@
    ],
    [
     "Flesh sweetness (brix)",
-    "0.22"
+    "22"
    ],
    [
     "Seed number",
@@ -17400,10 +17430,6 @@
     "32.86"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "4.1"
-   ],
-   [
     "Cup grade",
     "ComRob2"
    ],
@@ -17418,6 +17444,10 @@
    [
     "Cup body",
     "Medium"
+   ],
+   [
+    "Cup taste",
+    "Medium High Bitter taste"
    ]
   ],
   "reactions": [
@@ -17577,10 +17607,6 @@
     "28.19"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "4.1"
-   ],
-   [
     "Cup grade",
     "ComRob2"
    ],
@@ -17595,6 +17621,10 @@
    [
     "Cup body",
     "Medium"
+   ],
+   [
+    "Cup taste",
+    "Medium High Bitter taste"
    ]
   ],
   "reactions": [
@@ -17751,10 +17781,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "20"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "4.1:1"
    ],
    [
     "Cup grade",
@@ -17941,10 +17967,6 @@
     "17.4"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "4.5"
-   ],
-   [
     "Cup grade",
     "Grade 1"
    ],
@@ -18114,10 +18136,6 @@
     "18.9"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "4.6"
-   ],
-   [
     "Cup grade",
     "Grade 2"
    ],
@@ -18285,10 +18303,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "20"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "4.34"
    ],
    [
     "Cup grade",
@@ -19211,10 +19225,6 @@
     "20.47"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "110"
-   ],
-   [
     "Cup grade",
     "Class A"
    ],
@@ -19233,6 +19243,10 @@
    [
     "Cup body",
     "Moderate"
+   ],
+   [
+    "Cup taste",
+    "Very Good"
    ]
   ],
   "reactions": [
@@ -19434,10 +19448,6 @@
     "22.25"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "1.41"
-   ],
-   [
     "Cup grade",
     "Class A"
    ],
@@ -19456,6 +19466,10 @@
    [
     "Cup body",
     "Moderate"
+   ],
+   [
+    "Cup taste",
+    "Very Good"
    ]
   ],
   "reactions": [
@@ -19655,10 +19669,6 @@
     "19.13"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "86 percent"
-   ],
-   [
     "Cup grade",
     "Class A"
    ],
@@ -19677,6 +19687,10 @@
    [
     "Cup body",
     "Moderate"
+   ],
+   [
+    "Cup taste",
+    "Very Good"
    ]
   ],
   "reactions": [
@@ -19811,7 +19825,7 @@
    ],
    [
     "Tree length of longest lateral (cm)",
-    "1.1"
+    "110"
    ],
    [
     "Tree no. of laterals tree",
@@ -19882,10 +19896,6 @@
     "28"
    ],
    [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "22"
-   ],
-   [
     "Cup grade",
     "Class A"
    ],
@@ -19904,6 +19914,10 @@
    [
     "Cup body",
     "Heavy"
+   ],
+   [
+    "Cup taste",
+    "Very Good"
    ]
   ],
   "reactions": [
@@ -20014,7 +20028,7 @@
    ],
    [
     "Tree length of longest lateral (cm)",
-    "1.4"
+    "140"
    ],
    [
     "Tree no. of laterals tree",
@@ -20083,10 +20097,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "17"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "34"
    ],
    [
     "Cup grade",
@@ -20282,10 +20292,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "38.1"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "186.2"
    ]
   ],
   "reactions": [
@@ -20443,10 +20449,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "36.2"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "191.2"
    ]
   ],
   "reactions": [
@@ -20604,10 +20606,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "37.32"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "195.47"
    ]
   ],
   "reactions": [
@@ -20765,10 +20763,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "40.89"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "190.7"
    ]
   ],
   "reactions": [
@@ -20926,10 +20920,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "41.2"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "177.63"
    ]
   ],
   "reactions": [
@@ -21087,10 +21077,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "49.24"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "178.78"
    ]
   ],
   "reactions": [
@@ -21248,10 +21234,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "30.6"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "206.23"
    ]
   ],
   "reactions": [
@@ -21409,10 +21391,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "4.59"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "223.02"
    ]
   ],
   "reactions": [
@@ -21570,10 +21548,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "30.64"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "185.93"
    ]
   ],
   "reactions": [
@@ -21731,10 +21705,6 @@
    [
     "Bean weight of 100 beans at 11percent MC (g)",
     "31.36"
-   ],
-   [
-    "Bean fresh wt to dry wt ratio (percent)",
-    "171.33"
    ]
   ],
   "reactions": [
@@ -52116,10 +52086,6 @@
     "5.13"
    ],
    [
-    "Plant height (cm)",
-    "34.36"
-   ],
-   [
     "No. of bolls per plant",
     "25.8"
    ],
@@ -52193,10 +52159,6 @@
    [
     "Weight per boll (g)",
     "5.1"
-   ],
-   [
-    "Plant height (cm)",
-    "13.84"
    ],
    [
     "Fiber length (mm)",
@@ -55449,7 +55411,7 @@
    ],
    [
     "Skin thickness (mm)",
-    "1.6"
+    "16"
    ],
    [
     "Skin weight (g)",
@@ -55570,7 +55532,7 @@
    ],
    [
     "Skin thickness (mm)",
-    "1.4"
+    "14"
    ],
    [
     "Skin weight (g)",
@@ -55840,7 +55802,7 @@
    ],
    [
     "Skin thickness (mm)",
-    "1.2"
+    "12"
    ],
    [
     "Skin weight (g)",
@@ -55884,7 +55846,7 @@
    ],
    [
     "Seed width (cm)",
-    "40"
+    "4"
    ],
    [
     "Seed shape",
@@ -58845,10 +58807,6 @@
     "44.24"
    ],
    [
-    "Seed weight (g)",
-    "758.1"
-   ],
-   [
     "Seed number",
     "147.3"
    ],
@@ -59634,11 +59592,11 @@
    ],
    [
     "Whole fruit length (cm)",
-    "5.9"
+    "59"
    ],
    [
     "Whole fruit width (cm)",
-    "3.12"
+    "31.2"
    ],
    [
     "Skin color",
@@ -59946,11 +59904,11 @@
    ],
    [
     "Seed length (cm)",
-    "0.35"
+    "3.5"
    ],
    [
     "Seed width (cm)",
-    "0.15"
+    "1.5"
    ]
   ],
   "reactions": [],
@@ -64082,10 +64040,6 @@
     "Smooth"
    ],
    [
-    "Peel thickness (mm)",
-    "0.01"
-   ],
-   [
     "Peel weight (g)",
     "45.06"
    ],
@@ -65817,7 +65771,7 @@
    ],
    [
     "Seed crude fat",
-    "51 percent"
+    "0.51"
    ],
    [
     "Seed ash",
@@ -65918,7 +65872,7 @@
    ],
    [
     "Seed crude fat",
-    "60 percent"
+    "0.6"
    ]
   ],
   "reactions": [
@@ -66015,7 +65969,7 @@
    ],
    [
     "Seed crude fat",
-    "111"
+    "1.11"
    ],
    [
     "Seed ash",
@@ -66116,7 +66070,7 @@
    ],
    [
     "Seed crude fat",
-    "88 percent"
+    "0.88"
    ],
    [
     "Seed ash",
@@ -66197,7 +66151,7 @@
    ],
    [
     "Seed crude fat",
-    "86 percent"
+    "0.86"
    ],
    [
     "Seed ash",
@@ -66277,10 +66231,6 @@
     "20.47"
    ],
    [
-    "Seed crude fat",
-    "4 percent"
-   ],
-   [
     "Seed carbohydrates",
     "66.95"
    ],
@@ -66357,10 +66307,6 @@
    ],
    [
     "Seed crude protein",
-    "24.12"
-   ],
-   [
-    "Seed crude fat",
     "24.12"
    ],
    [
@@ -66464,16 +66410,8 @@
     "glossy green"
    ],
    [
-    "Seed crude protein",
-    "12.1"
-   ],
-   [
     "Seed crude fat",
-    "51 percent"
-   ],
-   [
-    "Seed carbohydrates",
-    "11.2"
+    "0.51"
    ],
    [
     "Seed ash",
@@ -66550,12 +66488,8 @@
     "glossy green"
    ],
    [
-    "Seed crude protein",
-    "3.34"
-   ],
-   [
     "Seed crude fat",
-    "68 percent"
+    "0.68"
    ],
    [
     "Seed carbohydrates",
@@ -66642,7 +66576,7 @@
    ],
    [
     "Seed crude fat",
-    "64 percent"
+    "0.64"
    ],
    [
     "Seed carbohydrates",
@@ -66731,7 +66665,7 @@
    ],
    [
     "Seed crude fat",
-    "91 percent"
+    "0.91"
    ],
    [
     "Seed carbohydrates",
@@ -66833,7 +66767,7 @@
    ],
    [
     "Seed crude fat",
-    "66 percent"
+    "0.66"
    ],
    [
     "Seed carbohydrates",
@@ -66916,7 +66850,7 @@
    ],
    [
     "Seed crude fat",
-    "62 percent"
+    "0.62"
    ],
    [
     "Seed carbohydrates",
@@ -67068,7 +67002,7 @@
    }
   },
   "height": {
-   "value": 5.4,
+   "value": 54.0,
    "unit": "cm"
   },
   "traits": [
@@ -67342,7 +67276,7 @@
    ],
    [
     "Seed crude fat",
-    "95 percent"
+    "0.95"
    ],
    [
     "Seed carbohydrates",
@@ -67512,7 +67446,7 @@
    ],
    [
     "Seed crude fat",
-    "113"
+    "1.13"
    ],
    [
     "Seed carbohydrates",
@@ -72439,7 +72373,7 @@
    ],
    [
     "Whole Fruit Size length (mm)",
-    "7.60"
+    "76"
    ],
    [
     "Whole Fruit Size width (mm)",
@@ -75372,11 +75306,11 @@
    ],
    [
     "Seed length (cm)",
-    "24.66"
+    "2.47"
    ],
    [
     "Seed width (cm)",
-    "14.4"
+    "1.44"
    ],
    [
     "Seed shape",
@@ -80743,15 +80677,7 @@
    "first": false,
    "text": "70"
   },
-  "yield": {
-   "value": 11.66,
-   "unit": "t/ha",
-   "regional": null,
-   "seasons": {
-    "DS": 8.55,
-    "WS": 14.76
-   }
-  },
+  "yield": null,
   "height": {
    "value": 38.0,
    "unit": "cm"
@@ -83966,7 +83892,7 @@
    ],
    [
     "Stalk diameter (cm)",
-    "232"
+    "2.32"
    ],
    [
     "Stalk weight (kg)",
@@ -86563,9 +86489,7 @@
  {
   "crop": "sweetpotato",
   "name": "SG 96 35 03",
-  "aliases": [
-   "UPL Sp 14"
-  ],
+  "aliases": [],
   "reg": "NSIC 2001 Sp 24",
   "year": 2001,
   "owner": null,
@@ -86704,7 +86628,7 @@
   "crop": "sweetpotato",
   "name": "SG 94 17 17",
   "aliases": [
-   "UPL Sp 13",
+   "UPL Sp 14",
    "NSIC Sp 23",
    "PSB Sp 23"
   ],

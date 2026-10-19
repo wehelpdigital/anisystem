@@ -16,7 +16,7 @@
     "cacao variety philippines",
     "NSIC 2001 Cc 06"
   ],
-  "excerpt": "K1 is a registered cacao variety. It is registered with the NSIC as NSIC 2001 Cc 06. BIAO Coop bred it.",
+  "excerpt": "K1 is a registered cacao variety. It was registered with the National Seed Industry Council in 2001 as NSIC 2001 Cc 06. BIAO Coop bred it.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where K1 cacao is grown",
@@ -52,6 +52,10 @@
           "NSIC 2001 Cc 06"
         ],
         [
+          "Year approved",
+          "2001"
+        ],
+        [
           "Breeder or owner",
           "BIAO Coop"
         ],
@@ -64,7 +68,7 @@
           "380"
         ],
         [
-          "Pod index (cm)",
+          "Pod index (pods for 1 kg of dry beans)",
           "19.2"
         ],
         [
@@ -85,7 +89,7 @@
         ],
         [
           "Pod wall thickness (cm)",
-          "8.67"
+          "0.87"
         ],
         [
           "Bean color",
@@ -210,10 +214,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[K2](/crop-varieties/cacao-k2)",
-        "[P7](/crop-varieties/cacao-p7): 1966",
-        "[DR 1](/crop-varieties/cacao-dr-1): 1844",
-        "[USM CH 1](/crop-varieties/cacao-usm-ch-1): 2186"
+        "[ICS 40](/crop-varieties/cacao-ics-40): 2.2 t dry beans/ha, 1999",
+        "[BR 25](/crop-varieties/cacao-br-25): 1.63 t dry beans/ha, 1999",
+        "[K2](/crop-varieties/cacao-k2): 2001",
+        "[UF 18](/crop-varieties/cacao-uf-18): 3.11 t dry beans/ha, 2008"
       ]
     },
     {

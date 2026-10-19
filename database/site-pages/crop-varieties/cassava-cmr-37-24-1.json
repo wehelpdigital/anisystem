@@ -7,7 +7,7 @@
   "profile": true,
   "title": "CMR 37 24 1 cassava (LSU Cv 18): Yield, Maturity and Characteristics",
   "metaTitle": "CMR 37 24 1 cassava: Yield, Maturity and Characteristics",
-  "metaDescription": "CMR 37 24 1 cassava is a cassava variety. 10 to 12 months to harvest. See its ratings and traits. Compare it with others.",
+  "metaDescription": "CMR 37 24 1 cassava is a cassava variety. 10 to 12 months to harvest, 44.7 t/ha in trials. See its pest ratings and traits.",
   "focusKeyword": "CMR 37 24 1 cassava",
   "keywords": [
     "CMR 37 24 1 cassava",
@@ -17,7 +17,7 @@
     "cassava variety philippines",
     "NSIC 2005 Cv 35"
   ],
-  "excerpt": "CMR 37 24 1 is a registered cassava variety, also sold or known as LSU Cv 18. It was registered with the National Seed Industry Council in 2005 as NSIC 2005 Cv 35. It takes 10 to 12 months from planting to harvest.",
+  "excerpt": "CMR 37 24 1 is a registered cassava variety, also sold or known as LSU Cv 18. It was registered with the National Seed Industry Council in 2005 as NSIC 2005 Cv 35. It takes 10 to 12 months from planting to harvest, with 44.7 tonnes per hectare on average in the trials.",
   "heroImage": {
     "src": "/images/site/land/root-crop-land-preparation.webp",
     "alt": "Kamote vines on long raised ridges in San Rafael, Bulacan, the kind of farm where CMR 37 24 1 cassava is grown",
@@ -33,6 +33,7 @@
       "ordered": false,
       "items": [
         "**Days to harvest:** 10 to 12 months from planting to harvest.",
+        "**Yield:** 44.7 tonnes per hectare on average in the trials.",
         "**Recommended for:** anywhere in the country."
       ]
     },
@@ -64,6 +65,10 @@
         [
           "Months to harvest",
           "10 to 12 months"
+        ],
+        [
+          "Average yield",
+          "44.7 t/ha"
         ],
         [
           "Recommended area",
@@ -102,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "CMR 37 24 1 cassava takes 10 to 12 months from planting to harvest. That is about the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "CMR 37 24 1 cassava takes 10 to 12 months from planting to harvest. That is about the average of the 42 cassava varieties with a day count, 10.5 months. Count the months from planting, and plan the harvest for a dry stretch when you can.\n\nIts average yield of 44.7 t/ha beats the average of its group, 33.84. It sits in the top quarter of its group. Trial yields come from well managed plots, so your own will depend on water, fertilizer, pests and timing.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -202,7 +207,7 @@
       "ordered": false,
       "items": [
         "[Rayong 72](/crop-varieties/cassava-rayong-72): 10 to 12 months, 31.5 t/ha, 2013",
-        "[OMR 40 09 34](/crop-varieties/cassava-omr-40-09-34): 10 to 12 months, 2009",
+        "[OMR 40 09 34](/crop-varieties/cassava-omr-40-09-34): 10 to 12 months, 42.8 t/ha, 2009",
         "[CMR 39 50 18](/crop-varieties/cassava-cmr-39-50-18): 10 to 12 months, 29.7 t/ha, 2007",
         "[OMR 39 48 02](/crop-varieties/cassava-omr-39-48-02): 10 to 12 months, 29.5 t/ha, 2007"
       ]
@@ -217,6 +222,10 @@
         {
           "q": "How long does it take to harvest?",
           "a": "It takes 10 to 12 months from planting to harvest. Then the weather and your care decide the exact day."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows 44.7 tonnes per hectare on average in the trials. Your own yield depends on the soil, water, fertilizer and pests on your farm."
         },
         {
           "q": "Where does it grow best?",

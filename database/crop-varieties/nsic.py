@@ -128,7 +128,10 @@ def sheet_records(fname, sheet, rows, rowno, merges):
         return None
     c_name = find(r'variety\s*name|name of variety|^variety|^cultivar')
     c_reg = find(r'registration')
-    c_year = find(r'year')
+    # The year approved, never a figure counted per year: the cacao sheet has
+    # no year column, and its "Yield (kg/tree/year)" once passed for one
+    # (2026-10-20: cacao clones "approved" in 2199 and 3110).
+    c_year = next((c for c, l in enumerate(labels) if re.search(r'year', l, re.I) and not re.search(r'/\s*year|per\s+year|yield', l, re.I)), None)
     c_owner = find(r'owner|breeder|originator|source')
     c_no = find(r'^no\.?$')
     out = []

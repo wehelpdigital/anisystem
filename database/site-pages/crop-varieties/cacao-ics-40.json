@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cacao",
   "profile": true,
-  "title": "ICS 40 cacao (NSIC Cc 01): Characteristics",
-  "metaTitle": "ICS 40 cacao: Characteristics",
+  "title": "ICS 40 cacao (NSIC Cc 01): Yield and Characteristics",
+  "metaTitle": "ICS 40 cacao: Yield and Characteristics",
   "metaDescription": "ICS 40 cacao is a cacao variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "ICS 40 cacao",
   "keywords": [
@@ -17,7 +17,7 @@
     "cacao variety philippines",
     "NSIC 1999 Cc 01"
   ],
-  "excerpt": "ICS 40 is a registered cacao variety, also sold or known as NSIC Cc 01. It was registered with the National Seed Industry Council in 2199 as NSIC 1999 Cc 01.",
+  "excerpt": "ICS 40 is a registered cacao variety, also sold or known as NSIC Cc 01. It was registered with the National Seed Industry Council in 1999 as NSIC 1999 Cc 01. Its record notes about 2.2 tonnes of dry beans per hectare a year.",
   "heroImage": {
     "src": "/images/site/land/fruit-tree-land-preparation.webp",
     "alt": "Young fruit trees planted in straight rows on cleared red soil, the kind of farm where ICS 40 cacao is grown",
@@ -32,6 +32,7 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "**Yield:** about 2.2 tonnes of dry beans per hectare a year.",
         "**Plant height:** about 331 cm."
       ]
     },
@@ -54,11 +55,15 @@
         ],
         [
           "Year approved",
-          "2199"
+          "1999"
         ],
         [
           "Also known as",
           "NSIC Cc 01"
+        ],
+        [
+          "Average yield",
+          "2.2 t dry beans/ha"
         ],
         [
           "Plant height",
@@ -69,7 +74,7 @@
           "195"
         ],
         [
-          "Pod index (cm)",
+          "Pod index (pods for 1 kg of dry beans)",
           "16.2"
         ],
         [
@@ -121,7 +126,7 @@
     },
     {
       "type": "text",
-      "text": "A registered tree variety is described from its mother tree, not from trial plots. It first bore pods about 17.6 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
+      "text": "A registered tree variety is described from its mother tree, not from trial plots. Its record notes about 2.2 tonnes of dry beans per hectare a year. It first bore pods about 17.6 months after planting. A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.\n\nanee.io keeps the records of each block of trees, from fertilizer to harvest, with [the growth stages and weather](/features/growth-stages-and-weather) beside them."
     },
     {
       "type": "heading",
@@ -234,10 +239,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[USM CH 1](/crop-varieties/cacao-usm-ch-1): 2186",
-        "[PBC123](/crop-varieties/cacao-pbc123): 2235",
-        "[USM CH 2](/crop-varieties/cacao-usm-ch-2): 2350",
-        "[K1](/crop-varieties/cacao-k1)"
+        "[BR 25](/crop-varieties/cacao-br-25): 1.63 t dry beans/ha, 1999",
+        "[P7](/crop-varieties/cacao-p7): 2 t dry beans/ha, 1999",
+        "[DR 1](/crop-varieties/cacao-dr-1): 1.84 t dry beans/ha, 1999",
+        "[UIT 1](/crop-varieties/cacao-uit-1): 1.26 t dry beans/ha, 1999"
       ]
     },
     {
@@ -246,6 +251,10 @@
         {
           "q": "Is NSIC Cc 01 the same as ICS 40?",
           "a": "Yes. NSIC Cc 01 is another name for ICS 40, registered as NSIC 1999 Cc 01. Seed sellers use both, so ask for either one."
+        },
+        {
+          "q": "What is its yield?",
+          "a": "The record shows about 2.2 tonnes of dry beans per hectare a year. Your own yield depends on the soil, water, fertilizer and pests on your farm."
         },
         {
           "q": "Where can I buy planting material of ICS 40?",
