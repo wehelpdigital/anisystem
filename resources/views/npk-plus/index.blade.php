@@ -425,6 +425,7 @@
     .lb-arrow .lb-ah { opacity: 0; transition: opacity .3s var(--np-ease) .85s; }
     .lb-arrow.is-drawn .lb-ah { opacity: 1; }
     .lb-alab b { display: block; margin-top: .15rem; font-size: .84rem; font-style: normal; line-height: 1.15; }
+    .lb-alab small { display: block; margin-top: .1rem; font-size: .7rem; font-style: normal; font-weight: 800; line-height: 1.15; }
     .lb-alab { position: absolute; right: .45rem; top: 42%; width: 5.8rem; padding: .25rem .35rem; border-radius: .55rem; text-align: center; pointer-events: none;
         font-family: var(--font-heading); font-style: italic; font-weight: 800; font-size: .74rem; line-height: 1.15; color: #1d6fd1; background: rgb(255 255 255 / .82);
         transform: rotate(-5deg) scale(.9); opacity: 0; transition: opacity .4s var(--np-ease), transform .4s var(--np-ease); }
@@ -2501,7 +2502,9 @@
         $('lbReach').hidden = reach === null;
         if (reach !== null) $('lbReach').innerHTML = '<b>' + reach + '%</b><span>of what your crop needs for your goal is met, at the shortest plank.'
             + (harvest !== null && harvest > reach ? '<small class="lb-harvest">The harvest: about <b>' + harvest + '%</b> of your goal' + (g.Yeff ? ', near ' + esc(tons(harvest)) : '') + ', because the soil gives part of what is missing on its own.</small>' : '') + '</span>';
-        $('lbALab').innerHTML = 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : '');
+        // The arrow says the need met and, under it, the yield it points to (2026-10-20, the owner: put the potential yield back).
+        const yieldPc = harvest !== null ? Math.max(harvest, reach ?? 0) : reach;
+        $('lbALab').innerHTML = 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : '') + (yieldPc !== null && g.Yeff ? '<small>about ' + esc(tons(yieldPc)) + '</small>' : '');
         let say = '';
         const cName = c ? esc(cropShort(c).toLowerCase()) : '';
         if (!c) say = st.cropPicked ? 'No crop picked: the barrel needs the crop\'s numbers.' : 'Pick the crop in step 1: the planks are measured against what it needs.';

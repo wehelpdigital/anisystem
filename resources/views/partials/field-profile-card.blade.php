@@ -215,7 +215,8 @@
         return {
             soilConditions: keep([phWord, sodic && 'sodic', saline && 'saline', sulfate && 'acid_sulfate']), phValue: mid, phLow: lo, phHigh: hi ?? lo,
             soil, phLevel: phWord || 'unsure', soilExtra: keep([sodic && 'sodic', saline && 'saline', sulfate && 'acid_sulfate']), lay,
-            water: w, waterNpk: w === 'limited' ? 'partial' : w, waterAuto: auto,
+            // NPK Plus's water (2026-10-20): a pump or a well is its own source; a canal with no drought trouble stays irrigated.
+            water: w, waterNpk: water.includes('pump') && !(water.includes('irrigation') && !drought) ? 'pump' : (w === 'limited' ? 'partial' : w), waterAuto: auto,
             problemsWhen: keep([floods && 'floods', texture === 'heavy_clay' && 'cracking', texture === 'sandy' && 'sandy', limitedWater && 'water_source', rainOnly && 'rainfed',
                 salt.includes('sea') && 'sea', isPest && 'pests', weedy && 'weeds', poorDrain && 'drainage',
                 hazards.includes('river') && 'river', hazards.includes('wind') && 'wind', shaded && 'shade']),
