@@ -50,7 +50,7 @@ final class GovSource
 
     /** A source naming one of them: names, acronyms (as written) and addresses. */
     private const WORDS = '/philrice|phil\s+rice\b|philippine rice research|bswm|bureau\s+of\s+(?:soils|plant\s+industry|agricultural|animal\s+industry|fisheries)'
-        . '|pagasa|philmech|philfida|pcaarrd|agricultural\s+training\s+institute|national\s+irrigation\s+admin|philippine\s+coconut\s+authority'
+        . '|pagasa|philmech|philfida|pcaa?rrd|agricultural\s+training\s+institute|national\s+irrigation\s+admin|philippine\s+coconut\s+authority'
         . '|fertilizer\s+and\s+pesticide\s+authority|sugar\s+regulatory|national\s+seed\s+industry\s+council|nsic\s+registry|philippine\s+statistics\s+authority'
         . '|university\s+of\s+the\s+philippines|state\s+university|regional\s+field\s+office|ndrrmc|\.gov\.ph\b|\bgov\.ph\b'
         . '|\b(?:uplb|up|clsu|vsu|cmu|isu|bsu|mmsu|usm|cvsu|cbsua|wvsu|nvsu|bpsu|tau|ssu|dmmmsu|cagsu)\.edu\.ph\b'
@@ -131,7 +131,7 @@ final class GovSource
     private static function item(): string
     {
         $names = '(?:PhilRice|Phil\s?Rice|Philippine\s+Rice\s+Research\s+Institute|BSWM|Bureau\s+of\s+Soils(?:\s+and\s+Water\s+Management)?'
-            . '|Bureau\s+of\s+Plant\s+Industry|Department\s+of\s+Agriculture|PAGASA|PhilMech|PhilFIDA|DOST\s?PCAARRD|PCAARRD'
+            . '|Bureau\s+of\s+Plant\s+Industry|Department\s+of\s+Agriculture|PAGASA|PhilMech|PhilFIDA|DOST[\s-]?PCAA?RRD|PCAA?RRD'
             . '|Agricultural\s+Training\s+Institute|Philippine\s+Coconut\s+Authority'
             . '|National\s+Irrigation\s+Administration|Philippine\s+Statistics\s+Authority|National\s+Seed\s+Industry\s+Council'
             . '|(?:Sistemang\s+)?Palay\s?Check(?:\s+[Ss]ystem)?|NSIC\s+registry|(?:the\s+)?(?:national\s+)?(?:variety|seed)\s+registry|NSIC(?!\s*(?:\d{4}\s*)?(?:[A-Z][a-z]{0,3}\s*-?\s*\d|Rice|\d))|UPLB|International\s+Rice\s+Research\s+Institute|Food\s+and\s+Agriculture\s+Organi[sz]ation'
@@ -194,6 +194,8 @@ final class GovSource
         $text = preg_replace('/\b(from|in|at|of|on|during)\s+' . $one . '\s+(?-i:(?=(?:corn|rice|palay|yield|derb\w*|techno\w*|demo\w*|trial\w*|contests?|harvests?|stations?|seed|national|regional|wet|dry|multi\w*)\b))/iu', '$1 the ', $text);
         // "using good management and the PalayCheck system" -> "using good management".
         $text = preg_replace('/\s+(?:and|with|following|under|through|from)\s+the\s+Palay\s?Check(?:\s+[Ss]ystem)?\b(?!\s+(?:mobile\s+)?app)/iu', '', $text);
+        // "the pechay guide reprinted by DA Caraga" -> "the pechay guide".
+        $text = preg_replace('/,?\s+(?:reprinted|republished|reproduced)\s+by\s+' . $many . '/iu', '', $text);
         // ", declared by PAGASA," -> "".
         $text = preg_replace('/,?\s+(?:as\s+)?(?:declared|issued|announced|reported)\s+by\s+' . $many . '\s*,?(?=\s)/iu', '', $text);
         // "PAGASA and climate models project" -> "Climate models project".
@@ -209,7 +211,7 @@ final class GovSource
         $text = preg_replace_callback('/\b' . $many . '(?:\s+(?:Regional\s+)?(?:Field\s+)?Office(?:\s+\d+)?)?(?:\s*\(\d{4}\))?\s+(reported|recorded|estimated|counted|found|showed|reports|records|estimates|finds|shows)\b/iu',
             fn ($m) => "\x01" . (preg_match('/ed$|wn$|nd$/', $m[1]) || in_array(strtolower($m[1]), ['found', 'showed'], true) ? 'reports showed' : 'records show'), $text);
         // "PAGASA data", "PhilRice's catalogue", "BSWM soil maps" -> "the data", "the catalogue", "the soil maps".
-        $text = preg_replace('/\b(?:the\s+)?' . $one . '(?:\'s)?\s+((?:climatological\s+|climate\s+|soil\s+|seasonal\s+|weather\s+|official\s+)?(?:data|records?|figures|normals|numbers|tables?|forecasts?|outlooks?|advisories|catalogue|catalog|database|lists?|maps?|surveys?|tests|trials|studies|reports?)\b)/iu', "\x01the $1", $text);
+        $text = preg_replace('/\b(?:the\s+)?' . $one . '(?:\'s)?\s+((?:climatological\s+|climate\s+|soil\s+|seasonal\s+|weather\s+|official\s+)?(?:data|records?|figures|normals|numbers|tables?|forecasts?|outlooks?|advisories|catalogue|catalog|database|lists?|maps?|surveys?|tests|trials|studies|reports?|guides?|manuals?)\b)/iu', "\x01the $1", $text);
         // "Data from PhilRice show 5 t/ha" -> "Data show 5 t/ha" (2026-10-19): only where the clause ends or a
         // verb follows, so "results of the DA corn derby" is left to the rule above it.
         $text = preg_replace('/\b((?:climate\s+|soil\s+|yield\s+|trial\s+|official\s+)?(?:data|records|figures|numbers|statistics|surveys?|studies|trials|results|research))\s+(?:from|by|of)\s+' . $many
@@ -258,7 +260,7 @@ final class GovSource
     /** Whether a text might name one at all: the quick test that spares the rest. */
     public static function mightName(string $text): bool
     {
-        return (bool) (preg_match('/philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaarrd|uplb|nsic\s+registry|authority|institute|administration|organi[sz]ation|seed\s+industry|knowledge\s+bank|vegetable\s+center|cimmyt|avrdc|cabi|registry|\.gov\.ph|irri\.org|fao\.org|tnau|ifas|kerala|phivolcs|ndrrmc|noaa|jtwc|meteorological|palay[\s_-]?check/i', $text)
+        return (bool) (preg_match('/philrice|phil\s+rice|bswm|bureau\s+of|department\s+of\s+agriculture|pagasa|philmech|philfida|pcaa?rrd|uplb|nsic\s+registry|authority|institute|administration|organi[sz]ation|seed\s+industry|knowledge\s+bank|vegetable\s+center|cimmyt|avrdc|cabi|registry|\.gov\.ph|irri\.org|fao\.org|tnau|ifas|kerala|phivolcs|ndrrmc|noaa|jtwc|meteorological|palay[\s_-]?check/i', $text)
             || preg_match('/\b(?:DA|BPI|ATI|NIA|PCA|FPA|PSA|SRA|IRRI|FAO|NSIC|KAU|OCD|JMA)\b/', $text));
     }
 

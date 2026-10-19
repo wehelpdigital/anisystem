@@ -39945,7 +39945,7 @@
     "yield": "about 5.5 t/ha",
     "traits": [
      "white grain for food",
-     "rated resistant to corn borer, earworm and leaf diseases in the DA Region 2 guide"
+     "rated resistant to corn borer, earworm and leaf diseases in a Cagayan Valley growing guide"
     ],
     "areas": "registered for Luzon",
     "season": "wet and dry"
@@ -40041,7 +40041,7 @@
     "yield": "about 5.5 t/ha",
     "traits": [
      "white grain for food",
-     "rated resistant to corn borer, earworm and leaf diseases in the DA Region 2 guide"
+     "rated resistant to corn borer, earworm and leaf diseases in a Cagayan Valley growing guide"
     ],
     "areas": "registered for Luzon",
     "season": "wet and dry"
@@ -71621,7 +71621,7 @@
   "research": {
    "company": "B.M. Domingo (Seed Board registrant); sold today by Ramgo and Allied Botanical",
    "kind": "open pollinated",
-   "popular": "the only pechay on the old Philippine Seed Board list (1970), first in the list of varieties in the IPB-UPLB/PCARRD pechay guide reprinted by DA Caraga, and still carried by both Ramgo and Allied Botanical (as Black Behi White Stem)",
+   "popular": "the only pechay on the old Philippine Seed Board list (1970), first among the varieties of the old pechay growing guides, and still carried by both Ramgo and Allied Botanical (as Black Behi White Stem)",
    "facts": {
     "maturityDays": "30 to 35 days in the Seed Board record; Ramgo gives 25 to 30 days after sowing and Allied 25 to 30 days after transplanting",
     "yield": "Ramgo states a potential of about 30 t/ha",
@@ -71752,7 +71752,7 @@
   "research": {
    "company": "Ramgo",
    "kind": "pak choi type (no F1 label)",
-   "popular": "listed among the five pechay varieties in the IPB-UPLB/PCARRD pechay guide reprinted by DA Caraga; Ramgo sells it on its professional pak choi line",
+   "popular": "one of the five pechay varieties an old and widely used growing guide recommends; Ramgo sells it on its professional pak choi line",
    "facts": {
     "maturityDays": "25 to 30 days after transplanting (Ramgo)",
     "yield": "about 18 t/ha potential (Ramgo)",
@@ -71798,7 +71798,7 @@
   "research": {
    "company": "Allied Botanical",
    "kind": "pak choi type (no F1 label)",
-   "popular": "a Shin Kang pechay is among the five varieties in the IPB-UPLB/PCARRD pechay guide reprinted by DA Caraga; Allied Botanical sells it as Green Shingkang",
+   "popular": "a Shin Kang pechay is one of the five varieties an old and widely used growing guide recommends; Allied Botanical sells it as Green Shingkang",
    "facts": {
     "maturityDays": "25 to 30 days after transplanting (Allied)",
     "fruit": "leaves: spoon shaped, on thick mid-green stalks; whole plant about 220 to 225 g",
@@ -71842,7 +71842,7 @@
   "research": {
    "company": "Ramgo",
    "kind": "open pollinated (no F1 label)",
-   "popular": "named right after Black Behi in the IPB-UPLB/PCARRD pechay guide reprinted by DA Caraga; Ramgo still sells it on its professional line",
+   "popular": "named right after Black Behi in an old and widely used pechay growing guide; Ramgo still sells it on its professional line",
    "facts": {
     "maturityDays": "about 30 days after sowing (Ramgo)",
     "yield": "25 to 38 t/ha potential (Ramgo)",
@@ -86033,7 +86033,7 @@
   "research": {
    "company": "UPLB",
    "kind": "improved clone, dark purple skin, white flesh",
-   "popular": "Kept by Central Luzon growers after a 24-variety trial and featured in DA Caraga's kamote guide as a flour type.",
+   "popular": "Kept by Central Luzon growers after a 24-variety trial, and named as a flour type in a Mindanao kamote growing guide.",
    "facts": {
     "maturityDays": "about 120 days; 105 to 120 days",
     "yield": "16.3 t/ha",
@@ -86697,10 +86697,10 @@
   "research": {
    "company": "IPB-UPLB",
    "kind": "improved clone, purple skin, yellow flesh",
-   "popular": "Kept by Central Luzon growers after a participatory trial of 24 varieties, and one of three varieties in DA Caraga's kamote guide.",
+   "popular": "Kept by Central Luzon growers after a participatory trial of 24 varieties, and one of three varieties a Mindanao kamote growing guide recommends.",
    "facts": {
     "maturityDays": "about 120 days; 105 to 120 days",
-    "yield": "13 t/ha in registry trials; DA Caraga guide cites about 16 t/ha",
+    "yield": "13 t/ha in registry trials; a Mindanao growing guide gives about 16 t/ha",
     "fruit": "purple skin, yellow flesh, elliptical roots; dry matter 33%, flour 25.9%",
     "traits": [
      "resistant to scab and weevil"
@@ -91356,7 +91356,7 @@
   "research": {
    "company": "traditional Bohol cultivar",
    "kind": "traditional cultivar, purple yam",
-   "popular": "A commercial Bohol ube evaluated with Kinampay and Kabus-ok in DOST-PCAARRD's year-round planting project.",
+   "popular": "A commercial Bohol ube tried alongside Kinampay and Kabus-ok in a year-round planting project.",
    "facts": {
     "traits": [
      "suited to year-round planting with DOST propagation methods",
