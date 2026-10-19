@@ -137,6 +137,68 @@
   "Scout weekly for fall armyworm and act while the plants are young.",
   "Plant in batches a couple of weeks apart to sell fresh ears over a longer time."
  ],
+ "watering": {
+  "traditional": "White glutinous corn is mostly rainfed, planted to ride the rains. Growers who sell fresh ears in the dry season run water into the furrows during dry spells, mostly from tasseling until the ears are picked.",
+  "method": "Rain does most of it. Where water is at hand, a pump or canal fills the furrows one at a time, best in the morning or late afternoon.",
+  "rainfed": "Plant with the rains, from April to June or from September, so silking comes while the soil is still wet. Run furrows across slopes, keep weeds down, and on hillsides plant in holes that catch the rain.",
+  "dryseason": "For fresh ears in the dry months, water about once a week on sandy soil and every week or two on heavier soil, and more often from tasseling on. Water when the leaves roll before noon.",
+  "wet": "Make ridges on low ground and keep the furrow ends open, because water standing a day or two around young plants yellows and stunts them.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Plant into soil moist from rain. If it is dry and you have water, wet the furrows once before or right after planting",
+    "amount": "Enough to wet the soil around the seed, with no water left standing",
+    "why": "Seed in moist soil comes up together."
+   },
+   {
+    "stage": "Young plants and fast growth",
+    "from": 7,
+    "to": 45,
+    "often": "Usually no watering in the rainy months. In dry weeks, water about once a week on sandy soil and every week or two on heavier soil, and soon after the urea and hilling up",
+    "amount": "One furrow watering that soaks in",
+    "why": "Steady growth now gives a strong stalk to carry the ear."
+   },
+   {
+    "stage": "Tasseling and silking",
+    "from": 45,
+    "to": 55,
+    "often": "Keep the soil moist the whole time. If no rain falls for about a week, run water down the furrows",
+    "amount": "A full furrow watering",
+    "why": "The kernels set now, and a dry spell gives ears with gaps."
+   },
+   {
+    "stage": "Ear filling to fresh picking",
+    "from": 55,
+    "to": 72,
+    "often": "Water in dry spells until picking",
+    "amount": "A furrow watering when the soil dries",
+    "why": "Moist soil keeps the kernels full and soft for boiling."
+   },
+   {
+    "stage": "Seed ears drying",
+    "from": 72,
+    "to": 95,
+    "often": "Stop watering on the plants kept for seed",
+    "amount": "No water",
+    "why": "The seed ears need to dry on the stalk."
+   }
+  ],
+  "critical": [
+   "Tasseling and silking, about day 45 to 55: never let the soil dry, or many kernels do not form.",
+   "Ear filling, about day 55 to 70: drought gives small ears with shrunken kernels."
+  ],
+  "signs": {
+   "dry": "Leaves roll before noon and turn dull gray green, silks come late and ears fill only partly.",
+   "wet": "Yellow lower leaves, short pale plants and dead seedlings where water stands."
+  },
+  "better": [
+   "If water is short, save it for tasseling, silking and ear filling, the weeks that decide how full the ears are.",
+   "Rice straw or cut grass between the rows keeps the soil moist longer between waterings."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "zT6Tcm4En6I",
   "title": "PAGTATANIM ng PUTING MAIS MALAGKIT Buhay Probinsya Cagayan Valley",
@@ -157,5 +219,5 @@
  "kind": "annual",
  "icon": "🌽",
  "slug": "glutinous-corn",
- "rev": "d277c0feecb9"
+ "rev": "52120c591d44"
 }

@@ -205,6 +205,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mais, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Most yellow corn here is never watered at all: farmers plant when the rains start or on the moisture left after the rains, and the crop lives on rain. A few with a shallow well and a pump, or near a canal, run water down the furrows during dry spells, mostly around tasseling. Furrow watering: water from a pump on a shallow well or from a canal is let into the top of each furrow until it reaches the far end, then turned to the next one. Water in the morning or late afternoon so less is lost in the heat."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mais go dry at these stages",
+   "text": "Tasseling and silking, about day 50 to 65: the soil must not dry, or many kernels never form. Early grain filling, about day 65 to 85: drought now gives small, light grain. Planting: plant into moist soil, since seed sown into dry soil comes up patchy."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mais, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 7",
+     "Plant only into soil that is moist from rain. If it is dry and you have water, run it down the furrows once before or right after planting",
+     "Enough to wet the soil around the seed, with no water left standing"
+    ],
+    [
+     "Young plants",
+     "Day 7 to 30",
+     "Usually no watering. In a long dry spell, water when the soil a hand deep feels dry and the leaves roll before noon",
+     "One furrow watering, letting the water reach the end of the row and soak in"
+    ],
+    [
+     "Fast growth, knee high to tasseling",
+     "Day 30 to 50",
+     "In dry weeks, water about once a week on sandy soil and every week or two on heavier soil. Water soon after the urea and hilling up if no rain comes",
+     "Fill the furrows and let the water soak in, not over the ridges"
+    ],
+    [
+     "Tasseling and silking",
+     "Day 50 to 65",
+     "Keep the soil moist the whole time. If no rain falls for about a week, run water down the furrows",
+     "A full furrow watering that wets the soil a hand deep or more"
+    ],
+    [
+     "Grain filling",
+     "Day 65 to 95",
+     "Water in long dry spells until the kernels are firm and dented",
+     "A furrow watering when the soil dries"
+    ],
+    [
+     "Drying down",
+     "Day 95 to 110",
+     "Stop watering",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant with the first steady rains so tasseling falls in the wettest weeks, and for the late crop plant early enough that silking comes before the soil dries out. Run the furrows across the slope to hold rain, keep the field weed free so weeds do not drink the moisture, and choose an early variety for the late crop.\n\n**In the dry season.** A dry season crop after rice lives on the water left in the soil, and where the water table is shallow it may need little watering. Where the water table is deep, water about once a week on sandy soil and every week or two on heavier soil, and never skip the waterings around silking. Water when the leaves roll before noon.\n\n**In the rainy season.** Corn hates standing water. On flat or low fields make ridges and open a drain at the end of the furrows, since water that stands a day or two around young plants turns them yellow and can kill them. Too much rain also washes away fertilizer, so side dress on moist soil, not before a downpour."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll up like onion leaves before noon and turn a dull gray green, the silks come out late after the tassel, and the ears fill only partly with bare tips.",
+    "**Too much water:** Lower leaves turn yellow, plants stay short and pale or purplish, and roots rot in low spots where water stands."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If you can water only once or twice, give it at tasseling and silking and again in early grain filling, the waterings that pay back the most grain. Shorter furrows that end in a small drain wet the field evenly and save pump fuel, and rice straw between the rows keeps the soil moist longer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mais"
   },
   {
@@ -335,6 +414,10 @@
     {
      "q": "How long before mais can be harvested?",
      "a": "It is ready about 110 days after sowing. Yellow corn is ready when the husks are brown and dry and the kernels are hard and shiny, about 100 to 120 days after planting."
+    },
+    {
+     "q": "How often do you water mais?",
+     "a": "Planting and coming up, sowing day to day 7: Plant only into soil that is moist from rain. If it is dry and you have water, run it down the furrows once before or right after planting. Young plants, day 7 to 30: Usually no watering. In a long dry spell, water when the soil a hand deep feels dry and the leaves roll before noon. Fast growth, knee high to tasseling, day 30 to 50: In dry weeks, water about once a week on sandy soil and every week or two on heavier soil. Water soon after the urea and hilling up if no rain comes. A dry season crop after rice lives on the water left in the soil, and where the water table is shallow it may need little watering."
     },
     {
      "q": "What do you plant to grow mais?",

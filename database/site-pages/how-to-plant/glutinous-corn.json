@@ -165,6 +165,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mais na malagkit, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "White glutinous corn is mostly rainfed, planted to ride the rains. Growers who sell fresh ears in the dry season run water into the furrows during dry spells, mostly from tasseling until the ears are picked. Rain does most of it. Where water is at hand, a pump or canal fills the furrows one at a time, best in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mais na malagkit go dry at these stages",
+   "text": "Tasseling and silking, about day 45 to 55: never let the soil dry, or many kernels do not form. Ear filling, about day 55 to 70: drought gives small ears with shrunken kernels."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mais na malagkit, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 7",
+     "Plant into soil moist from rain. If it is dry and you have water, wet the furrows once before or right after planting",
+     "Enough to wet the soil around the seed, with no water left standing"
+    ],
+    [
+     "Young plants and fast growth",
+     "Day 7 to 45",
+     "Usually no watering in the rainy months. In dry weeks, water about once a week on sandy soil and every week or two on heavier soil, and soon after the urea and hilling up",
+     "One furrow watering that soaks in"
+    ],
+    [
+     "Tasseling and silking",
+     "Day 45 to 55",
+     "Keep the soil moist the whole time. If no rain falls for about a week, run water down the furrows",
+     "A full furrow watering"
+    ],
+    [
+     "Ear filling to fresh picking",
+     "Day 55 to 72",
+     "Water in dry spells until picking",
+     "A furrow watering when the soil dries"
+    ],
+    [
+     "Seed ears drying",
+     "Day 72 to 95",
+     "Stop watering on the plants kept for seed",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant with the rains, from April to June or from September, so silking comes while the soil is still wet. Run furrows across slopes, keep weeds down, and on hillsides plant in holes that catch the rain.\n\n**In the dry season.** For fresh ears in the dry months, water about once a week on sandy soil and every week or two on heavier soil, and more often from tasseling on. Water when the leaves roll before noon.\n\n**In the rainy season.** Make ridges on low ground and keep the furrow ends open, because water standing a day or two around young plants yellows and stunts them."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll before noon and turn dull gray green, silks come late and ears fill only partly.",
+    "**Too much water:** Yellow lower leaves, short pale plants and dead seedlings where water stands."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If water is short, save it for tasseling, silking and ear filling, the weeks that decide how full the ears are. Rice straw or cut grass between the rows keeps the soil moist longer between waterings."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mais na malagkit"
   },
   {
@@ -292,6 +365,10 @@
     {
      "q": "How long before mais na malagkit can be harvested?",
      "a": "It is ready about 72 days after sowing. Fresh ears are picked about 65 to 75 days after planting, when the kernels are white, full and soft."
+    },
+    {
+     "q": "How often do you water mais na malagkit?",
+     "a": "Planting and coming up, sowing day to day 7: Plant into soil moist from rain. If it is dry and you have water, wet the furrows once before or right after planting. Young plants and fast growth, day 7 to 45: Usually no watering in the rainy months. In dry weeks, water about once a week on sandy soil and every week or two on heavier soil, and soon after the urea and hilling up. Tasseling and silking, day 45 to 55: Keep the soil moist the whole time. If no rain falls for about a week, run water down the furrows. For fresh ears in the dry months, water about once a week on sandy soil and every week or two on heavier soil, and more often from tasseling on."
     },
     {
      "q": "What do you plant to grow mais na malagkit?",

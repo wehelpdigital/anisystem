@@ -755,6 +755,254 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering palay, stage by stage"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Transplanted: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Most farmers let water from the canal or the rains into the paddy through a cut in the dike and keep the field flooded from planting until about two weeks before harvest. Many keep it deeper and longer than the rice needs, topping it up whenever the water goes down. Water flows from the canal or a pump into the paddy through a cut in the dike, often from one paddy to the next, and the opening is closed with mud when the depth is right. Walk the field in the morning to check the depth at the high and the low spots."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let palay go dry at these stages",
+   "text": "First week after transplanting: keep the mud wet, since the roots are still taking hold. Booting and flowering, about day 55 to 70: never let the field dry, or many grains stay empty. Grain filling, about day 70 to 82: keep water on until the grains are firm, or they fill light."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for palay, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Soaking, plowing and harrowing",
+     "30 to 2 days before transplanting",
+     "Keep water on the field the whole time the soil is worked",
+     "Enough to soften the soil and cover the stubble, then about 2 to 5 cm at the last leveling"
+    ],
+    [
+     "Seedbed",
+     "21 days before transplanting to transplanting day",
+     "Keep the beds wet from sowing day until pulling day",
+     "About half a thumb deep for the first 3 to 5 days, then about a thumb deep, 2 to 3 cm"
+    ],
+    [
+     "First week after transplanting",
+     "Transplanting day to day 7",
+     "Keep the soil soaked, with only a thin layer of water",
+     "Less than 3 cm, just enough to keep the mud wet"
+    ],
+    [
+     "Early tillering",
+     "Day 7 to 30",
+     "Keep water standing and top it up as it goes down",
+     "About 3 to 5 cm"
+    ],
+    [
+     "Late tillering and panicle forming",
+     "Day 30 to 55",
+     "Let the water go down and wait about 3 to 5 days after the surface dries before flooding again, or flood each time the water in a field tube drops about 15 cm below the soil",
+     "About 2 to 3 cm, or about 5 cm when you flood again"
+    ],
+    [
+     "Booting, flowering and grain filling",
+     "Day 55 to 82",
+     "Keep the field flooded every day, with no dry spell at all",
+     "About 5 cm of standing water"
+    ],
+    [
+     "Ripening",
+     "Day 82 to 95",
+     "Stop letting water in and open the dike outlets",
+     "No standing water. Drain about one week before harvest on sandy soil and about two weeks on heavy clay"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant with the steady rains and only transplant once the paddy holds water. Fix the dikes before the season, close every outlet so each rain is kept, and choose an early variety so the crop flowers before the rains stop. A small pond dug in a corner of the farm keeps rainwater for watering at flowering if a dry spell comes.\n\n**In the dry season.** On irrigated land, take water whenever your turn on the canal comes and flood the field again before the cracks get wide. Water when the soil surface shows hairline cracks or the water in a field tube has dropped about 15 cm, and never wait during booting and flowering. Deep cracks that stay open for more than three days mean the crop is already suffering.\n\n**In the rainy season.** Keep low openings in the dikes so a big rain spills out instead of piling up, and let excess water out after a typhoon. Seedlings kept under water for several days can rot or die, and water deeper than 5 cm for a week or more gives fewer tillers. If bacterial leaf blight shows, drain the field at once to slow its spread."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll up tight like needles in the heat of the day, leaf tips dry and turn brown, the plants stay short, and the soil cracks deep. At flowering, a dry field shows panicles that stay half inside the leaf and many empty grains.",
+    "**Too much water:** Few tillers, usually under ten a hill, narrow leaves and tall, weak stems that fall over easily. Pulled roots are dark instead of reddish brown or white."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Alternate wetting and drying: bury a 25 cm piece of bamboo or plastic pipe with holes along its sides, leaving about 5 cm above the soil, and take out the soil inside. Flood to about 5 cm and flood again only when the water in the tube has dropped out of sight, about 15 cm below the soil. Start 21 to 30 days after transplanting, flood 3 to 5 cm a day before each fertilizer, and keep 5 cm at flowering. Level the field well under water before planting, so a thin layer covers every spot and no low corner drowns the seedlings."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Wet direct seeding: how to water"
+  },
+  {
+   "type": "text",
+   "text": "After broadcasting sprouted seed on drained mud, farmers keep the field wet but without standing water for about the first week and a half, then let water in from the canal or the rains as the seedlings stand up. From then on the field is kept flooded much like transplanted rice, until about two weeks before harvest. Water comes from the canal or a pump through a cut in the dike, and small canals inside the field carry it in and out. Drain and flood through these canals, and walk the field in the morning to check that no low spot holds water in the first week."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let palay go dry at these stages",
+   "text": "The first 10 days: the mud must stay moist without standing water, or the seed rots under water or dries out on cracked soil. Booting and flowering, about day 68 to 85: never let the field dry, or many grains stay empty. Grain filling, about day 85 to 95: keep water on until the grains are firm."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for palay, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Soaking, plowing and leveling",
+     "21 to 1 days before sowing",
+     "Keep water on the field while the soil is worked, then dig small canals around and across it",
+     "Enough to soften the soil and rot the stubble"
+    ],
+    [
+     "Sowing to about three leaves",
+     "Sowing day to day 10",
+     "Keep the mud moist with no standing water. If the soil starts to crack, let a little water in and drain it the same day",
+     "No standing water, the mud just wet and soft"
+    ],
+    [
+     "Seedlings standing",
+     "Day 10 to 35",
+     "Let in a thin layer and raise it slowly as the plants grow, topping it up as it goes down",
+     "From a thin layer up to about 3 to 5 cm"
+    ],
+    [
+     "Tillering and panicle forming",
+     "Day 35 to 68",
+     "Let the water go down and wait about 3 to 5 days after the surface dries before flooding again, or flood each time the water in a field tube drops about 15 cm below the soil. Flood a day before each fertilizer",
+     "About 2 to 3 cm, or about 5 cm when you flood again"
+    ],
+    [
+     "Booting, flowering and grain filling",
+     "Day 68 to 95",
+     "Keep the field flooded every day, with no dry spell at all",
+     "About 5 cm of standing water"
+    ],
+    [
+     "Ripening",
+     "Day 95 to 110",
+     "Stop letting water in and open the dike outlets",
+     "No standing water. Drain about one week before harvest on sandy soil and about two weeks on heavy clay"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow only when the rains have settled and the paddy is full, so the field can be drained for sowing and flooded again later. Cut drainage canals before sowing so a heavy rain does not drown the seed, close the outlets once the seedlings stand, and keep a small pond in a corner of the farm for watering at flowering.\n\n**In the dry season.** With canal or pump water, keep the mud moist through the first ten days and flood again before the cracks widen. After that, flood when the soil shows hairline cracks or the water in a field tube has dropped about 15 cm, and never skip a turn during booting and flowering.\n\n**In the rainy season.** Heavy rain right after sowing washes the seed into the low spots and drowns it, so open the canals at once and resow bare patches. Later on, keep spillways in the dikes, drain after a typhoon, and remember that broadcast rice is dense and falls over more easily in a field kept deep all season."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll up tight in the heat of the day, tips dry brown, the stand stays short and the soil cracks deep. At flowering, a dry field gives many empty grains.",
+    "**Too much water:** Seed or young seedlings rotting in patches under water, few tillers, tall weak stems and dark roots instead of reddish brown ones."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Level the field very well before sowing and cut drainage canals, so you can drain fast in the first days and flood evenly later. Alternate wetting and drying with a field tube from about 21 to 30 days after sowing, once the weeds are under control, keeping 5 cm of water at flowering, saves water and pumping cost without losing yield."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Dry direct seeding: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Dry seeded fields are sown on dry, plowed soil just before or as the rains begin and get no water but the rain for about the first month. Once the rains fill the paddies, farmers close the dike openings and hold a shallow layer of water on the field until about two weeks before harvest. The rains do most of the watering. Dikes are kept closed to hold the rain, and where a canal, a shallow well with a pump or a farm pond is close, water is let in through a cut in the dike during dry spells."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let palay go dry at these stages",
+   "text": "Right after the seeds sprout: a long dry spell now kills the seedlings, so a pump or a nearby pond matters most here. Booting and flowering, about day 72 to 90: the field must not dry, or many grains stay empty. Grain filling, about day 90 to 100: keep the soil wet until the grains are firm."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for palay, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Plowing and harrowing",
+     "30 days before sowing to sowing day",
+     "Work the soil after a light rain softens the topsoil",
+     "No standing water"
+    ],
+    [
+     "Sowing to emergence",
+     "Sowing day to day 10",
+     "Wait for the rain. If you have a pump and the soil stays dry, give one light watering that wets the soil and drains away",
+     "Enough to wet the top few centimeters, with no water left standing"
+    ],
+    [
+     "Seedlings in moist soil",
+     "Day 10 to 25",
+     "Keep the soil moist with the rains. In a long dry spell, give a quick watering and drain it",
+     "Moist soil, no standing water while the plants are small"
+    ],
+    [
+     "Paddies filled by the rains",
+     "Day 25 to 72",
+     "Close the dike openings and hold the rainwater, topping up from a canal or pump if there is one",
+     "About 2 to 5 cm, and wet soil before each fertilizer"
+    ],
+    [
+     "Booting, flowering and grain filling",
+     "Day 72 to 100",
+     "Keep the field wet every day, with no dry spell",
+     "About 5 cm of standing water where you can hold it"
+    ],
+    [
+     "Ripening",
+     "Day 100 to 115",
+     "Drain any standing water",
+     "No standing water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This way is made for rainfed fields. Sow when the rains are about to settle in, keep the dikes whole so the first heavy rains are held, and use an early variety so the crop flowers before the rains end. A small pond in a corner of the farm, filled by the rains, can carry the crop through a dry spell at flowering.\n\n**In the dry season.** Dry seeding is a start of the rains method and is not used for a dry season crop without irrigation. If the rains pause for more than a week after the seeds sprout, water once with a pump or from a pond, and water whenever the leaves roll in the morning.\n\n**In the rainy season.** A heavy downpour right after sowing can pool on the low spots and rot the seed, so level well and cut a few drains. Once the plants have four or more leaves they stand a shallow flood well, but drain off water that rises over the young plants after a typhoon."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves rolled tight in the morning, not only at noon, yellowing and brown tips, and a stand that stops growing. At flowering, many empty grains.",
+    "**Too much water:** Yellow, weak seedlings in the low spots where water pools after rain, and plants that turn pale for a while when a dry field is flooded suddenly."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Dig a small pond in a corner of the farm to catch rain for watering at flowering, the stage that loses the most grain to drought. Level the field and keep the dikes whole before sowing, so the first rains spread evenly and the field starts holding water early."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for palay"
   },
   {
@@ -885,6 +1133,10 @@
     {
      "q": "How long before palay can be harvested?",
      "a": "Transplanted, it is ready about 95 days after transplanting. Wet direct seeding, it is ready about 110 days after sowing. Dry direct seeding, it is ready about 115 days after sowing. Rice is ready about 30 days after flowering, when most grains on the panicle are golden and hard and the upper leaves are drying."
+    },
+    {
+     "q": "How often do you water palay?",
+     "a": "Soaking, plowing and harrowing, 30 to 2 days before transplanting: Keep water on the field the whole time the soil is worked. Seedbed, 21 days before transplanting to transplanting day: Keep the beds wet from sowing day until pulling day. First week after transplanting, transplanting day to day 7: Keep the soil soaked, with only a thin layer of water. On irrigated land, take water whenever your turn on the canal comes and flood the field again before the cracks get wide."
     },
     {
      "q": "What do you plant to grow palay?",

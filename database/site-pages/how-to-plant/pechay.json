@@ -278,6 +278,157 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering petsay, stage by stage"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedbed then transplant: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Pechay is watered by hand every day, with a watering can or a hose, in the early morning or late afternoon, from the seedbed until the day it is cut. Bigger lowland plots let water into the furrows between the beds instead, and the beds are kept raised so no water stands. A watering can with a fine head or a hose with a sprinkler nozzle, watering the soil and the base of the plants, is the usual way. Larger plots use furrows between the beds. Water in the early morning or late afternoon, never at noon, and early enough that the leaves dry before night."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let petsay go dry at these stages",
+   "text": "The days the seed is sprouting: the top soil must never dry out. The first days after transplanting, until the seedlings stand up again. The whole leaf growth: pechay is harvested in about three weeks, so even two or three dry days show in the harvest."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for petsay, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seed sprouting",
+     "18 to 14 days before transplanting",
+     "Sprinkle the seedbed every morning or late afternoon so the top soil never dries",
+     "A light sprinkle from a can with a fine head, just enough to darken the soil"
+    ],
+    [
+     "Seedlings under shade",
+     "14 to 7 days before transplanting",
+     "Water every morning or late afternoon",
+     "Enough to moisten the bed or the pots, never soggy"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water a little less often while the shade comes off. Water at once if the seedlings wilt hard",
+     "Light waterings"
+    ],
+    [
+     "Transplanting",
+     "Transplanting day to day 1",
+     "Water the beds right after setting the seedlings in the afternoon",
+     "Soak the soil around each plant"
+    ],
+    [
+     "Leaf growth",
+     "Day 1 to 22",
+     "Every day in the morning or late afternoon. Give a second light watering on very hot days if the plants still droop in the late afternoon",
+     "Enough to keep the bed moist to the roots but not soggy. A 10 liter can covers a short stretch of bed, so walk it slowly"
+    ],
+    [
+     "Last days to harvest",
+     "Day 22 to 25",
+     "Keep watering every day and harvest in the cool hours",
+     "The usual daily watering"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Pechay is seldom grown on rain alone, because it needs water every day. Without a pump, plant near a well, a creek or a rain barrel and keep the plot small enough to water by can. Mulch the beds with rice straw or rice hull to keep the soil moist longer, and grow it in the rainy months under a simple cover.\n\n**In the dry season.** In the dry months water every day, in the cool early morning or late afternoon, and a second time on very hot days if the plants droop. Water when the top soil feels dry to the touch. On sandy soil that is every day without fail.\n\n**In the rainy season.** Raise the beds higher and keep the paths open so rain runs off, and put a simple plastic roof over the beds if you can, because hard rain tears the leaves. Skip the watering on days the beds are already wet. Standing water rots the base of the plants and brings soft rot that smells bad."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and stay limp after the sun goes down, the leaves stay small and turn tough or bitter, and plants send up flower stalks early.",
+    "**Too much water:** Lower leaves yellow, the base of the stem turns soft, brown and smelly, and seedlings fall over at the soil line."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the beds with rice straw or rice hull to keep the soil moist, cut the watering and stop rain from splashing soil on the leaves. A drip line or a hose with a fine sprinkler gives even water to every plant and wastes less than splashing from a pail."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sown straight on the bed: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Seed sown straight on the bed is sprinkled every day until it comes up, then watered daily by can or hose in the cool hours until harvest. Larger plots are watered through the furrows between raised beds. A watering can with a fine head, or a hose with a sprinkler nozzle, is the usual way. Bigger plots water through the furrows between beds. Water in the early morning or late afternoon, never at noon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let petsay go dry at these stages",
+   "text": "Sowing to coming up: the top soil must stay damp every day. The whole leaf growth: a few dry days make tough leaves and early flower stalks."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for petsay, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing and sprouting",
+     "Sowing day to day 5",
+     "Sprinkle the bed every day, morning or late afternoon, until the seedlings are up",
+     "A light sprinkle from a can with a fine head, just enough to keep the top soil damp"
+    ],
+    [
+     "Young plants",
+     "Day 5 to 12",
+     "Water daily in the cool hours. Water before thinning so the extra plants pull out easily",
+     "Enough to moisten the bed, never soggy"
+    ],
+    [
+     "Leaf growth",
+     "Day 12 to 32",
+     "Every day in the morning or late afternoon. A second light watering on very hot days if the plants droop in the late afternoon",
+     "Enough to keep the bed moist to the roots but not soggy"
+    ],
+    [
+     "Last days to harvest",
+     "Day 32 to 35",
+     "Keep watering daily and harvest in the cool of the day",
+     "The usual daily watering"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Direct sown pechay needs water every day, so it is seldom left to rain alone. Without a pump, keep the bed close to a well or a rain barrel, cover the seed with rice hull, and mulch the bed with straw once the plants are up.\n\n**In the dry season.** Water every day in the dry months, morning or late afternoon, and a second time on very hot days if the plants droop. Water whenever the top soil feels dry. Sandy beds need it daily without fail.\n\n**In the rainy season.** Sow on higher raised beds and keep the paths open so rain drains away. Hard rain can wash the seed out of a fresh bed, so a light cover of rice hull or a simple roof helps. Skip the watering on wet days. Standing water brings soft rot at the base."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Seedlings come up patchy, leaves droop and stay limp after sundown, and the plants stay small, tough and send up flowers early.",
+    "**Too much water:** Seedlings fall over at the soil line, lower leaves yellow, and the base of the plant goes soft and smells bad."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Cover the sown bed with rice hull and mulch the young plants with straw to keep the soil moist and cut the watering. A fine sprinkler or drip line gives even water and keeps the seed from washing out."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for petsay"
   },
   {
@@ -407,6 +558,10 @@
     {
      "q": "How long before petsay can be harvested?",
      "a": "Seedbed then transplant, it is ready about 25 days after transplanting. Sown straight on the bed, it is ready about 35 days after sowing. Pechay is ready three to four weeks after transplanting, or 30 to 40 days after direct sowing, while the leaves are tender."
+    },
+    {
+     "q": "How often do you water petsay?",
+     "a": "Seed sprouting, 18 to 14 days before transplanting: Sprinkle the seedbed every morning or late afternoon so the top soil never dries. Seedlings under shade, 14 to 7 days before transplanting: Water every morning or late afternoon. Hardening, 7 days before transplanting to transplanting day: Water a little less often while the shade comes off. Water at once if the seedlings wilt hard. In the dry months water every day, in the cool early morning or late afternoon, and a second time on very hot days if the plants droop."
     },
     {
      "q": "What do you plant to grow petsay?",

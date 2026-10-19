@@ -210,6 +210,85 @@
   "Rotate with crops outside the cabbage family and plow under old crop debris after harvest.",
   "Harvest at the firm head stage and keep the heads shaded on the way to market."
  ],
+ "watering": {
+  "traditional": "Lowland growers water cabbage right after transplanting and then run water down the furrows about once every week or two in dry weather. In the highlands many farmers water with sprinklers fed by long hoses from springs and creeks, and everyone waters less once the heads are nearly firm so they do not crack.",
+  "method": "Lowland farms run water down the furrows from a canal or a small pump. Highland farms mostly use sprinklers fed by hoses from springs, and backyard growers use a watering can. Water in the morning so the leaves dry before night.",
+  "rainfed": "Lowland cabbage goes in toward the end of the rains so it grows on the moisture left in the soil during the cool months. Without a pump, keep the plot near a well or creek, lay rice straw between the plants right after transplanting to hold moisture and keep weeds down, and water by can at the base of each plant when the soil dries.",
+  "dryseason": "In the dry months water by furrow about every 8 days on light soil and every 10 to 12 days on heavy soil, more often on very sandy soil or in hot wind. Water when the soil a few cm down is dry or the leaves droop and stay limp into the late afternoon.",
+  "wet": "Plant on raised beds about 1 m wide or on high ridges where drainage is poor, and keep the furrows open to a drain. Skip watering when the rains come. Soaked soil brings stem and root rot, and heavy rain on nearly mature heads makes them crack and rot.",
+  "schedule": [
+   {
+    "stage": "Sowing in the seedbed",
+    "from": -30,
+    "to": -27,
+    "often": "Water the bed before sowing, then keep it fully wet for the first three days",
+    "amount": "Soak the bed or seed box each time with a fine can",
+    "why": "The seed needs steady wet soil to come up evenly."
+   },
+   {
+    "stage": "Seedlings and pricking out",
+    "from": -27,
+    "to": -7,
+    "often": "Once the seedlings are up, water lightly in the morning only when the top soil starts to dry. Water and shade them right after pricking out",
+    "amount": "Light sprinkles, never soggy. Rinse with plain water after the fertilizer drench",
+    "why": "Soggy seedbeds bring damping off, and fertilizer left on the leaves burns them."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water only when the seedlings start to wilt",
+    "amount": "A light watering, just enough for them to perk up",
+    "why": "Seedlings that go a little thirsty grow tough and stand the move to the field."
+   },
+   {
+    "stage": "Transplanting and settling",
+    "from": 0,
+    "to": 7,
+    "often": "Water each plant right after transplanting, then every day or two if no rain falls until new leaves show",
+    "amount": "Soak the soil around each hill. The field should be moist, not muddy",
+    "why": "Newly set plants lose water fast and die or stall if the soil dries."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 7,
+    "to": 35,
+    "often": "Furrow water about every 8 days on light soil and every 10 to 12 days on heavy soil in dry weather. Water after each side dressing",
+    "amount": "Fill the furrows until the ridge or bed is wet through, then let them drain",
+    "why": "A cabbage builds its big frame of outer leaves now, and only a large frame makes a large head."
+   },
+   {
+    "stage": "Head forming and filling",
+    "from": 35,
+    "to": 55,
+    "often": "Keep to the same steady schedule until the heads are full and firm, but with lighter waterings",
+    "amount": "Moist soil, never flooded. Avoid a long dry spell followed by a heavy soaking",
+    "why": "Dry soil gives small, loose heads, while a sudden flood of water makes the heads split or rot."
+   },
+   {
+    "stage": "Firm heads to harvest",
+    "from": 55,
+    "to": 60,
+    "often": "Stop watering once the heads are firm and cut them on a dry day",
+    "amount": "No water",
+    "why": "Extra water on ripe heads makes them crack and rot in the field and in the sack."
+   }
+  ],
+  "critical": [
+   "The first three days in the seedbed, which must stay fully wet.",
+   "The first week after transplanting, until the plants stand up and put out new leaves.",
+   "Head forming and filling: steady moisture, with no long dry spell and no sudden flooding."
+  ],
+  "signs": {
+   "dry": "Leaves droop and turn dull, the plants stay small and the heads come out small, loose or late.",
+   "wet": "Lower leaves yellow and wilt, the stem base rots, and the heads split or decay at the core."
+  },
+  "better": [
+   "Rice straw mulch laid right after transplanting keeps the soil moist and cool, saves water and keeps weeds down.",
+   "Keep the watering regular and lighter as the heads fill instead of letting the field dry and then flooding it, to avoid split heads."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "rVL3SQ8ojR8",
   "title": "PARAAN NG PAGTATANIM NAMIN NG REPOLYO",
@@ -230,5 +309,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "cabbage",
- "rev": "6b25769796a8"
+ "rev": "5b0565513cd7"
 }

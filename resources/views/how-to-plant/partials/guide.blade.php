@@ -100,6 +100,10 @@
                 $byPhase = [];
                 foreach ($w['steps'] as $s) { $byPhase[$s['phase']][] = $s; }
                 $hw = $H::harvestWords($w, $months);
+                // Watering (2026-10-19): the way's own schedule, else the guide's; a step inside a stage wears a drop chip.
+                $water = $H::watering($guide, $w);
+                $wid = 'hgw-' . $crop . '-' . $w['key'];
+                $nurWay = $H::nurseryWay($w);
             @endphp
             <div class="hg-pane" data-way="{{ $w['key'] }}" role="tabpanel" @if (count($ways) > 1) aria-labelledby="hgTab-{{ $crop }}-{{ $w['key'] }}" @endif @unless ($on) hidden @endunless>
                 <div class="hg-way-head">
@@ -136,6 +140,13 @@
                                         </div>
                                         <h4>{{ $s['title'] }}</h4>
                                         <p>{{ $s['how'] }}</p>
+                                        @php $ws = $water ? $H::stageAt($water, (int) $s['day'], (string) $s['phase'], $nurWay) : null; $wsSay = $ws ? (trim((string) ($ws[1]['often'] ?? '')) ?: trim((string) ($ws[1]['amount'] ?? ''))) : ''; @endphp
+                                        @if ($wsSay !== '')
+                                            <button type="button" class="hg-wchip" data-wjump="{{ $wid }}-{{ $ws[0] }}" aria-label="Watering now: {{ $wsSay }}. See the watering schedule">
+                                                <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c3.5 4.5 6 8 6 11a6 6 0 01-12 0c0-3 2.5-6.5 6-11z"/></svg>
+                                                <span><b>Water:</b> {{ $wsSay }}</span>
+                                            </button>
+                                        @endif
                                         @if (! empty($s['tip']))
                                             <p class="hg-tip"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.7 17h4.6M12 3a6 6 0 00-3.6 10.8c.4.3.6.8.6 1.3V16h6v-.9c0-.5.2-1 .6-1.3A6 6 0 0012 3zm-2 17h4"/></svg><span>{{ $s['tip'] }}</span></p>
                                         @endif
@@ -170,6 +181,9 @@
                         </li>
                     @endforeach
                 </ol>
+                @if ($water)
+                    @include('how-to-plant.partials.watering', ['water' => $water, 'w' => $w, 'months' => $months, 'crop' => $crop])
+                @endif
             </div>
         @endforeach
     </section>

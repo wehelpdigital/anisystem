@@ -200,6 +200,93 @@
   "Scout each flush and flowering for hoppers, twig borers and leaf spots, and act early.",
   "Water during flowering and fruit growth in long dry spells for better fruit set."
  ],
+ "watering": {
+  "traditional": "Mango here is mostly rain fed: young trees get a pail or a hose about once a week in the dry months of their first three years, and grown trees are left to the rain. Growers with a creek or a well nearby water bearing trees only when a dry spell runs into flowering and fruiting.",
+  "method": "Pails or a hose into a ring basin around young trees, and basin or furrow watering for bearing trees where a creek or well is near. A few orchards use small sprinklers under the trees or drip lines with two drippers for each young tree. Water in the cool early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin, shade the new tree with fronds and keep a mulch of dried grass around it, off the stem. In the first three years carry a pail or two to each tree about once a week in the dry months. A grown tree roots deep and needs no water in a normal year. A long dry season even helps it flower, but if the dry spell runs on into flowering and fruiting, a few deep soakings save the crop.",
+  "dryseason": "Young trees: about once a week, or every 2 to 3 days in the first weeks and on sandy soil. Bearing trees: no water in the 2 to 3 months before flowering, then every 10 to 15 days from flowering through fruit growth when no rain falls, stopping 2 to 4 weeks before picking. Water a young tree when its new leaves droop in the afternoon and are still limp by evening.",
+  "wet": "Mango does not like wet feet: plant on well drained ground or a low mound and open a drain from any low spot. Rain during flowering spreads the black rot of flowers and washes off pollen, so fruit sets poorly, which is why growers time the flower spray for the dry months. Heavy rain or watering in the months before flowering pushes new leaves instead of flowers.",
+  "schedule": [
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Soak on planting day, then every 2 to 3 days when no rain falls for the first weeks, easing to about once a week",
+    "amount": "Half to one watering can (5 to 10 liters) a tree each time, into a small basin around the stem",
+    "why": "The roots are still in the old bag ball and dry out fast."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 90,
+    "to": 360,
+    "often": "About once a week in the dry months, every 2 to 3 days on sandy soil. Not needed in the rains",
+    "amount": "One to two watering cans a tree each time, soaked into the basin",
+    "why": "A tree that keeps growing through its first dry season roots deeper."
+   },
+   {
+    "stage": "Years 2 to 5, growing the frame",
+    "from": 360,
+    "to": 1570,
+    "often": "Every 4 to 5 days in the dry months where water is near, at least once a week otherwise",
+    "amount": "A deep soak that wets the soil about a forearm deep. Widen the basin to the edge of the leaves as the tree grows",
+    "why": "Steady growth now builds the branches that will carry fruit."
+   },
+   {
+    "stage": "Bearing trees: dry rest before flowering (each year)",
+    "from": 1570,
+    "to": 1660,
+    "often": "Do not water for 2 to 3 months before flowering, or before the flower spray",
+    "amount": "None. Let the soil dry",
+    "why": "Dry soil holds back new leaves and helps the tree flower well and all at once."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 1660,
+    "to": 1720,
+    "often": "Start watering when most of the flower buds show, then every 10 to 15 days if no rain falls",
+    "amount": "A deep soak that wets the ground under the whole crown, not just near the trunk, to about 60 to 80 cm deep",
+    "why": "Water now sets more fruit and cuts the drop of young fruits."
+   },
+   {
+    "stage": "Fruit growth",
+    "from": 1720,
+    "to": 1770,
+    "often": "Every 10 to 15 days in dry weather, keeping the soil evenly moist",
+    "amount": "The same deep soak under the crown. A big bearing tree uses about 50 to 120 liters a day in hot weather",
+    "why": "Even moisture gives bigger fruits and fewer drops."
+   },
+   {
+    "stage": "Before harvest",
+    "from": 1770,
+    "to": 1800,
+    "often": "Ease off and stop watering about 2 to 4 weeks before picking",
+    "amount": "None in the last weeks",
+    "why": "Fruits firm up and keep better, but stopping much earlier keeps them small."
+   },
+   {
+    "stage": "After harvest, new leaves",
+    "from": 1800,
+    "to": 1890,
+    "often": "Water with the after harvest feeding if the rains have not come, then leave it to the rain",
+    "amount": "One deep soak of the basin",
+    "why": "The new leaf flush grown now carries next year's flowers."
+   }
+  ],
+  "critical": [
+   "The first year after planting, when the roots are small and one dry month can kill the tree.",
+   "Flowering and fruit set, when a dry spell makes flowers and young fruits fall.",
+   "The first weeks of fruit growth, when most of the fruit drop happens."
+  ],
+  "signs": {
+   "dry": "Young leaves droop in the afternoon and stay limp by evening, older leaves turn dull and roll, a young tree stops putting out new leaves, and a bearing tree drops many small fruits.",
+   "wet": "Yellow leaves, twigs dying back from the tips, rotting roots and a sour smell in a waterlogged basin. Wet soil before flowering gives a flush of leaves and few flowers."
+  },
+  "better": [
+   "Stop watering before flowering and start again when most flower buds show. This gives more even flowering and better fruit set than watering all year round.",
+   "Wet the ground under the whole crown, not just a small ring at the trunk, with drip or a wide mulched basin, for bigger fruits with less water."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "6lHS_aNhnsM",
   "title": "Pagtatanim ng grafted mango guimaras variety",
@@ -220,5 +307,5 @@
  "kind": "perennial",
  "icon": "🥭",
  "slug": "mango",
- "rev": "fbb633cb7af7"
+ "rev": "332002b71216"
 }

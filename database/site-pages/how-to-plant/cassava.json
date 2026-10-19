@@ -223,6 +223,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kamoteng kahoy, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Kamoteng kahoy is a rain crop on most farms: the stakes go in as the rains begin and the plants are rarely watered after that. Farmers with a canal or a pump water the furrows only in a dry spell during the first three months, and leave the older plants to ride out the dry season on their own. Most cassava gets no water but the rain. Where water is near, farmers on flat land run it down the furrows, and small growers pour water at each hill with a can or hose. Water in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kamoteng kahoy go dry at these stages",
+   "text": "The first four to five weeks, while the stakes root and sprout. The first three months after planting, when dry soil cuts the harvest the most. Any time water stands in the field: it stunts young roots and rots the mature ones."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kamoteng kahoy, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting day",
+     "Planting day",
+     "Plant into moist soil. If the soil is dry, water the furrow right after setting the stakes",
+     "Enough to wet the soil around the buried part of the stake, then let it drain"
+    ],
+    [
+     "Rooting and first leaves",
+     "Planting day to day 35",
+     "Keep the soil moist. Water by furrow or at each hill when about a week passes with no rain",
+     "Wet the soil around each stake, never leave water standing in the row"
+    ],
+    [
+     "Leafy growth",
+     "Day 35 to 90",
+     "In dry months water by furrow when a week or more goes by without rain. Water before the urea side dressing at about two months if the soil is dry",
+     "One furrow watering that soaks the ridge, then drain"
+    ],
+    [
+     "Roots filling",
+     "Day 90 to 240",
+     "Rain alone is usually enough. Water only in a long drought if you have water",
+     "An occasional deep furrow watering, no standing water"
+    ],
+    [
+     "Before digging",
+     "Day 240 to 270",
+     "No watering. Dig when the soil is dry enough to crumble",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, around May to July, so the stakes root on the rains. Plant on ridges in the rainy months and in the furrows in drier months, set the stakes upright in wet soil, at a slant when the soil is just moist, and lay them flat and covered in dry soil. Keep the field weeded in the first months and leave the cut weeds or straw between the rows to hold moisture.\n\n**In the dry season.** A dry season planting needs water in its first three months: water by furrow or at the hill whenever about a week passes with no rain. After three months, older cassava takes dry spells well and needs water only in a long drought. Water when the leaves droop through the day or the young plants stop putting out new leaves.\n\n**In the rainy season.** Plant on ridges and keep a drain at the low end of the field. Never plant in soil that stays flooded: waterlogging stunts the young roots and rots the mature ones. Avoid planting in the month of heaviest rain, and dig the roots before a long rainy spell if they are ready."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and fold through the day, few new leaves come out, and the lower leaves turn yellow and fall. In a long drought the plant drops most of its leaves.",
+    "**Too much water:** Stakes rot without sprouting, the leaves turn pale or yellow, and the roots go soft and smell sour."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Where water is at hand, watering through dry spells in the first three months pays well. In one trial, full watering during droughts doubled the root yield. Drip lines along the rows give about the same yield as flooding the furrows with about half the water, and they water the cassava instead of the weeds."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kamoteng kahoy"
   },
   {
@@ -353,6 +426,10 @@
     {
      "q": "How long before kamoteng kahoy can be harvested?",
      "a": "It is ready about 270 days after planting. Most cassava is dug eight to ten months after planting."
+    },
+    {
+     "q": "How often do you water kamoteng kahoy?",
+     "a": "Planting day, planting day: Plant into moist soil. If the soil is dry, water the furrow right after setting the stakes. Rooting and first leaves, planting day to day 35: Keep the soil moist. Water by furrow or at each hill when about a week passes with no rain. Leafy growth, day 35 to 90: In dry months water by furrow when a week or more goes by without rain. Water before the urea side dressing at about two months if the soil is dry. A dry season planting needs water in its first three months: water by furrow or at the hill whenever about a week passes with no rain."
     },
     {
      "q": "What do you plant to grow kamoteng kahoy?",

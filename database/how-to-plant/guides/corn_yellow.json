@@ -192,6 +192,77 @@
   "Scout every week for fall armyworm and act early, while the plants are young.",
   "Dry the grain quickly to about 14 percent moisture and store it off the floor to keep it free of mold."
  ],
+ "watering": {
+  "traditional": "Most yellow corn here is never watered at all: farmers plant when the rains start or on the moisture left after the rains, and the crop lives on rain. A few with a shallow well and a pump, or near a canal, run water down the furrows during dry spells, mostly around tasseling.",
+  "method": "Furrow watering: water from a pump on a shallow well or from a canal is let into the top of each furrow until it reaches the far end, then turned to the next one. Water in the morning or late afternoon so less is lost in the heat.",
+  "rainfed": "Plant with the first steady rains so tasseling falls in the wettest weeks, and for the late crop plant early enough that silking comes before the soil dries out. Run the furrows across the slope to hold rain, keep the field weed free so weeds do not drink the moisture, and choose an early variety for the late crop.",
+  "dryseason": "A dry season crop after rice lives on the water left in the soil, and where the water table is shallow it may need little watering. Where the water table is deep, water about once a week on sandy soil and every week or two on heavier soil, and never skip the waterings around silking. Water when the leaves roll before noon.",
+  "wet": "Corn hates standing water. On flat or low fields make ridges and open a drain at the end of the furrows, since water that stands a day or two around young plants turns them yellow and can kill them. Too much rain also washes away fertilizer, so side dress on moist soil, not before a downpour.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Plant only into soil that is moist from rain. If it is dry and you have water, run it down the furrows once before or right after planting",
+    "amount": "Enough to wet the soil around the seed, with no water left standing",
+    "why": "Seed in dry soil comes up unevenly, and seed in waterlogged soil rots."
+   },
+   {
+    "stage": "Young plants",
+    "from": 7,
+    "to": 30,
+    "often": "Usually no watering. In a long dry spell, water when the soil a hand deep feels dry and the leaves roll before noon",
+    "amount": "One furrow watering, letting the water reach the end of the row and soak in",
+    "why": "Young corn stands a short dry spell, but a long one stunts it for good."
+   },
+   {
+    "stage": "Fast growth, knee high to tasseling",
+    "from": 30,
+    "to": 50,
+    "often": "In dry weeks, water about once a week on sandy soil and every week or two on heavier soil. Water soon after the urea and hilling up if no rain comes",
+    "amount": "Fill the furrows and let the water soak in, not over the ridges",
+    "why": "The plant grows fastest now and the urea only works in moist soil."
+   },
+   {
+    "stage": "Tasseling and silking",
+    "from": 50,
+    "to": 65,
+    "often": "Keep the soil moist the whole time. If no rain falls for about a week, run water down the furrows",
+    "amount": "A full furrow watering that wets the soil a hand deep or more",
+    "why": "This is when the ear sets its kernels, and a dry spell now gives bare ears."
+   },
+   {
+    "stage": "Grain filling",
+    "from": 65,
+    "to": 95,
+    "often": "Water in long dry spells until the kernels are firm and dented",
+    "amount": "A furrow watering when the soil dries",
+    "why": "Moist soil fills the kernels heavy, while drought gives light, shrunken grain."
+   },
+   {
+    "stage": "Drying down",
+    "from": 95,
+    "to": 110,
+    "often": "Stop watering",
+    "amount": "No water",
+    "why": "The ears dry on the stalk and wet soil only slows the harvest."
+   }
+  ],
+  "critical": [
+   "Tasseling and silking, about day 50 to 65: the soil must not dry, or many kernels never form.",
+   "Early grain filling, about day 65 to 85: drought now gives small, light grain.",
+   "Planting: plant into moist soil, since seed sown into dry soil comes up patchy."
+  ],
+  "signs": {
+   "dry": "Leaves roll up like onion leaves before noon and turn a dull gray green, the silks come out late after the tassel, and the ears fill only partly with bare tips.",
+   "wet": "Lower leaves turn yellow, plants stay short and pale or purplish, and roots rot in low spots where water stands."
+  },
+  "better": [
+   "If you can water only once or twice, give it at tasseling and silking and again in early grain filling, the waterings that pay back the most grain.",
+   "Shorter furrows that end in a small drain wet the field evenly and save pump fuel, and rice straw between the rows keeps the soil moist longer."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "FDoiwfOdjtI",
   "title": "PAANO MAGTANIM NG MAIS AT PARAAN NG PAG AALAGA NITO?",
@@ -212,5 +283,5 @@
  "kind": "annual",
  "icon": "🌽",
  "slug": "yellow-corn",
- "rev": "8e0ef4e6a14a"
+ "rev": "d371779be385"
 }

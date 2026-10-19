@@ -123,6 +123,60 @@ def when(day, way, months):
     return "Day %d" % day
 
 
+def span_words(fr, to, way, months):
+    """A watering stage's stretch: "Day 7 to 40", "21 to 1 days before transplanting". The twin of HowToPlant::spanWords."""
+    if fr == to:
+        return when(fr, way, months)
+    a, b = when(fr, way, months), when(to, way, months)
+    for p in ("Day ", "Month ", "Year "):
+        if a.startswith(p) and b.startswith(p):
+            return a + " to " + b[len(p):]
+    my, ny = re.match(r"^(Month|Year) (\d+)$", a), re.match(r"^(Month|Year) (\d+)$", b)
+    if my and ny:
+        m = lambda x: int(x.group(2)) * (12 if x.group(1) == "Year" else 1)
+        return "Month %d to %d" % (m(my), m(ny))
+    rx =r"^(\d+) (days?|months|years) before (\w+)$"
+    ma, mb = re.match(rx, a), re.match(rx, b)
+    if ma and mb and ma.group(3) == mb.group(3) and ma.group(2).rstrip("s") == mb.group(2).rstrip("s"):
+        return "%s to %s %ss before %s" % (ma.group(1), mb.group(1), ma.group(2).rstrip("s"), ma.group(3))
+    return a + " to " + b[0].lower() + b[1:]
+
+
+def watering_of(g, way):
+    """The watering a way follows: its own, else the guide's (HowToPlant::watering)."""
+    ok = lambda w: isinstance(w, dict) and (w.get("schedule") or (w.get("traditional") or "").strip())
+    if ok(way.get("watering")):
+        return way["watering"]
+    return g["watering"] if ok(g.get("watering")) else None
+
+
+def water_blocks(water, way, months, say, H, blocks, lead=None):
+    """One watering: how it is done, the stages that must not dry out, the schedule as a table, the seasons, the signs."""
+    first = " ".join(x for x in [lead, (water.get("traditional") or "").strip(), (water.get("method") or "").strip()] if x)
+    if first:
+        blocks.append({"type": "text", "text": first})
+    if water.get("critical"):
+        blocks.append({"type": "callout", "tone": "warn", "title": "Never let %s go dry at these stages" % say, "text": " ".join(c if c.endswith(".") else c + "." for c in water["critical"])})
+    sched = [s for s in (water.get("schedule") or []) if isinstance(s, dict)]
+    if sched:
+        rows = [["Stage", "When", "How often", "How much"]]
+        for s in sched:
+            rows.append([s["stage"], span_words(int(s["from"]), int(s["to"]), way, months), s.get("often") or "As needed", s.get("amount") or "Enough to wet the root zone"])
+        blocks.append({"type": "table", "caption": "Watering schedule for %s, stage by stage" % say, "rows": rows})
+    seasons = [("rainfed", "Without irrigation"), ("dryseason", "In the dry season"), ("wet", "In the rainy season")]
+    paras = ["**%s.** %s" % (label, water[k].strip()) for k, label in seasons if (water.get(k) or "").strip()]
+    if paras:
+        blocks.append({"type": "text", "text": "\n\n".join(paras)})
+    signs = water.get("signs") or {}
+    items = [("**Too little water:** " + signs["dry"]) if (signs.get("dry") or "").strip() else None,
+             ("**Too much water:** " + signs["wet"]) if (signs.get("wet") or "").strip() else None]
+    items = [x for x in items if x]
+    if items:
+        blocks.append({"type": "list", "ordered": False, "items": items})
+    if water.get("better"):
+        blocks.append({"type": "text", "text": "To water better for a higher yield: " + " ".join(b if b.endswith(".") else b + "." for b in water["better"])})
+
+
 def harvest_words(way, months):
     d = int(way.get("days") or 0)
     if d <= 0:
@@ -316,6 +370,19 @@ def page_of(g, order, heroes, hubs, used):
                 items.append(it)
             blocks.append({"type": "steps", "items": items})
 
+    # Watering (the owner, 2026-10-19): one H2 after the steps; a way with its own schedule gets an H3.
+    waters = [(w, watering_of(g, w)) for w in ways]
+    waters = [(w, x) for w, x in waters if x]
+    if waters:
+        H(2, "Watering %s, stage by stage" % say)
+        shared = all(x is waters[0][1] for _, x in waters) and len(waters) == len(ways)
+        if shared:
+            water_blocks(waters[0][1], waters[0][0], months, say, H, blocks)
+        else:
+            for w, x in waters:
+                H(3, "%s: how to water" % way_short(w) if len(ways) > 1 else "How and when to water")
+                water_blocks(x, w, months, say, H, blocks)
+
     H(2, "Spacing, water and fertilizer for %s" % say)
     for key, label in (("spacing", "Spacing"), ("water", "Water"), ("fertilizer", "Fertilizer")):
         if (g.get(key) or "").strip():
@@ -361,13 +428,28 @@ def page_of(g, order, heroes, hubs, used):
         if g.get("harvest"):
             a += " " + first_sentences(g["harvest"], 1)
         faq.append({"q": "How long before %s can be harvested?" % say, "a": a})
+    if waters:
+        x = waters[0][1]
+        rows = [s for s in (x.get("schedule") or []) if isinstance(s, dict) and s.get("often")]
+        said = []
+        for s in rows[:3]:
+            sp = span_words(int(s["from"]), int(s["to"]), waters[0][0], months)
+            said.append("%s, %s: %s." % (s["stage"], sp[0].lower() + sp[1:], s["often"].rstrip(".")))
+        a = " ".join(said)
+        if not a:
+            a = first_sentences(x.get("traditional") or "", 2)
+        if (x.get("dryseason") or "").strip():
+            a += " " + first_sentences(x["dryseason"], 1)
+        if a.strip():
+            faq.append({"q": "How often do you water %s?" % say, "a": a.strip()})
     if g.get("material"):
         faq.append({"q": "What do you plant to grow %s?" % say, "a": first_sentences(g["material"], 2)})
     if g.get("better"):
         faq.append({"q": "How can I get a higher yield of %s?" % say, "a": " ".join(g["better"][:2])})
     if faq:
         H(2, "Questions about planting %s" % say)
-        blocks.append({"type": "faq", "items": faq[:5]})
+        # Six with the watering question (2026-10-19), five as before without it.
+        blocks.append({"type": "faq", "items": faq[:6] if waters else faq[:5]})
 
     rel = [{"label": l[0].upper() + l[1:], "url": u} for u, l in links + guides]
     rel.append({"label": "Every crop, the traditional way", "url": "/how-to-plant"})

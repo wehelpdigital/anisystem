@@ -228,6 +228,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-19: the How to Plant pages on the public site (true once their sync ran).
             'howToPlantPages' => \Illuminate\Support\Facades\Route::has('site.howtoplant')
                 && rescue(fn () => \App\Models\AsSitePage::where('section', 'how-to-plant')->exists(), false, false),
+            // 2026-10-19: How to Plant's watering: how many guides in the table carry a watering schedule (0 until synced).
+            'howToPlantWater' => rescue(fn () => method_exists(\App\Support\HowToPlant::class, 'watering')
+                ? count(array_filter(\App\Support\HowToPlant::index(), fn ($g) => ! empty($g['water']))) : 0, 0, false),
             // 2026-10-19: the lot and the season in the Seed Count and Distance Calculator.
             'seedField' => class_exists(\App\Support\SeedPenalty::class) && \Illuminate\Support\Facades\Route::has('seedcalc.context'),
             // 2026-10-19: the weed plans checked against the Philippine registrations, crop by crop, with each crop's weed free stretch

@@ -223,6 +223,97 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mangga, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Mango here is mostly rain fed: young trees get a pail or a hose about once a week in the dry months of their first three years, and grown trees are left to the rain. Growers with a creek or a well nearby water bearing trees only when a dry spell runs into flowering and fruiting. Pails or a hose into a ring basin around young trees, and basin or furrow watering for bearing trees where a creek or well is near. A few orchards use small sprinklers under the trees or drip lines with two drippers for each young tree. Water in the cool early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mangga go dry at these stages",
+   "text": "The first year after planting, when the roots are small and one dry month can kill the tree. Flowering and fruit set, when a dry spell makes flowers and young fruits fall. The first weeks of fruit growth, when most of the fruit drop happens."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mangga, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Soak on planting day, then every 2 to 3 days when no rain falls for the first weeks, easing to about once a week",
+     "Half to one watering can (5 to 10 liters) a tree each time, into a small basin around the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Month 3 to 12",
+     "About once a week in the dry months, every 2 to 3 days on sandy soil. Not needed in the rains",
+     "One to two watering cans a tree each time, soaked into the basin"
+    ],
+    [
+     "Years 2 to 5, growing the frame",
+     "Month 12 to 52",
+     "Every 4 to 5 days in the dry months where water is near, at least once a week otherwise",
+     "A deep soak that wets the soil about a forearm deep. Widen the basin to the edge of the leaves as the tree grows"
+    ],
+    [
+     "Bearing trees: dry rest before flowering (each year)",
+     "Month 52 to 55",
+     "Do not water for 2 to 3 months before flowering, or before the flower spray",
+     "None. Let the soil dry"
+    ],
+    [
+     "Flowering and fruit set",
+     "Month 55 to 57",
+     "Start watering when most of the flower buds show, then every 10 to 15 days if no rain falls",
+     "A deep soak that wets the ground under the whole crown, not just near the trunk, to about 60 to 80 cm deep"
+    ],
+    [
+     "Fruit growth",
+     "Month 57 to 59",
+     "Every 10 to 15 days in dry weather, keeping the soil evenly moist",
+     "The same deep soak under the crown. A big bearing tree uses about 50 to 120 liters a day in hot weather"
+    ],
+    [
+     "Before harvest",
+     "Month 59 to 60",
+     "Ease off and stop watering about 2 to 4 weeks before picking",
+     "None in the last weeks"
+    ],
+    [
+     "After harvest, new leaves",
+     "Month 60 to 63",
+     "Water with the after harvest feeding if the rains have not come, then leave it to the rain",
+     "One deep soak of the basin"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, shade the new tree with fronds and keep a mulch of dried grass around it, off the stem. In the first three years carry a pail or two to each tree about once a week in the dry months. A grown tree roots deep and needs no water in a normal year. A long dry season even helps it flower, but if the dry spell runs on into flowering and fruiting, a few deep soakings save the crop.\n\n**In the dry season.** Young trees: about once a week, or every 2 to 3 days in the first weeks and on sandy soil. Bearing trees: no water in the 2 to 3 months before flowering, then every 10 to 15 days from flowering through fruit growth when no rain falls, stopping 2 to 4 weeks before picking. Water a young tree when its new leaves droop in the afternoon and are still limp by evening.\n\n**In the rainy season.** Mango does not like wet feet: plant on well drained ground or a low mound and open a drain from any low spot. Rain during flowering spreads the black rot of flowers and washes off pollen, so fruit sets poorly, which is why growers time the flower spray for the dry months. Heavy rain or watering in the months before flowering pushes new leaves instead of flowers."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Young leaves droop in the afternoon and stay limp by evening, older leaves turn dull and roll, a young tree stops putting out new leaves, and a bearing tree drops many small fruits.",
+    "**Too much water:** Yellow leaves, twigs dying back from the tips, rotting roots and a sour smell in a waterlogged basin. Wet soil before flowering gives a flush of leaves and few flowers."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Stop watering before flowering and start again when most flower buds show. This gives more even flowering and better fruit set than watering all year round. Wet the ground under the whole crown, not just a small ring at the trunk, with drip or a wide mulched basin, for bigger fruits with less water."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mangga"
   },
   {
@@ -353,6 +444,10 @@
     {
      "q": "How long before mangga can be harvested?",
      "a": "It is ready about 5 years after planting. Fruits are ready about 115 to 120 days after flowering in dry months and 120 to 130 days in the wet season."
+    },
+    {
+     "q": "How often do you water mangga?",
+     "a": "Planting to 3 months, planting day to month 3: Soak on planting day, then every 2 to 3 days when no rain falls for the first weeks, easing to about once a week. Rest of the first year, month 3 to 12: About once a week in the dry months, every 2 to 3 days on sandy soil. Not needed in the rains. Years 2 to 5, growing the frame, month 12 to 52: Every 4 to 5 days in the dry months where water is near, at least once a week otherwise. Young trees: about once a week, or every 2 to 3 days in the first weeks and on sandy soil."
     },
     {
      "q": "What do you plant to grow mangga?",

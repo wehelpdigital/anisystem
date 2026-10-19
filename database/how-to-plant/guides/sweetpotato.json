@@ -193,6 +193,69 @@
   "Use pheromone traps for the weevil where they are sold.",
   "Harvest on time at three to four months and handle roots gently to cut losses."
  ],
+ "watering": {
+  "traditional": "Most kamote is grown on rain alone, planted at the start of the rains on upland fields or right after the rice harvest in the lowlands so the crop lives on the water left in the soil. Where a canal, creek or small pump is near, farmers run water down the furrows between the ridges when a dry spell hits, mostly before hilling up.",
+  "method": "Furrow watering from a canal, a creek or a small pump is the usual way: water runs along the furrows between the ridges and is drained the same day. Small plots are watered with a hose or a watering can at the base of the hills. Water in the early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin on upland fields, or right after the rice harvest in the lowlands while the soil is still moist. In the drier months set the cuttings down in the furrows instead of on the ridges and bury them deeper, so they sit in the moist soil. Keep the weeds down early so they do not drink the moisture, and lay rice straw between the rows if you have it.",
+  "dryseason": "On sandy or light soil, water by furrow about every 7 to 14 days from planting until about a week before harvest. A trial on sandy fields in Zambales gave clearly more large roots this way than rain alone. On heavier lowland soil after rice, one good watering at or right after planting is often enough. Water when the leaves are still limp in the early morning or when the soil a finger deep is dry.",
+  "wet": "Plant on top of high ridges and keep the furrows open to a drain at the field edge. Cuttings rot when the soil stays soaked for more than a day, and older roots rot or stop forming in waterlogged ground. Raise the ridges higher on heavy clay and skip fields that flood in the typhoon months.",
+  "schedule": [
+   {
+    "stage": "Cuttings in the shade",
+    "from": -2,
+    "to": 0,
+    "often": "Keep the bundles standing in a cool, shaded spot. On hot dry days cover them with a damp sack",
+    "amount": "Only enough to keep the leaves from wilting, never soak the bundles",
+    "why": "Cool, fresh cuttings start small roots at the lower nodes and catch faster."
+   },
+   {
+    "stage": "Planting and rooting",
+    "from": 0,
+    "to": 14,
+    "often": "Plant into moist soil. If the soil is dry, water the furrows on the planting day or the day after, then about once a week in dry weather until new leaves show",
+    "amount": "One furrow watering that wets the ridge, then let the furrow drain the same day",
+    "why": "The cuttings have no roots yet and dry out fast, but they also rot when water stands for more than a day."
+   },
+   {
+    "stage": "Vines running and roots starting",
+    "from": 14,
+    "to": 45,
+    "often": "In a dry spell, water by furrow about every 7 to 14 days. Water the day before off barring or hilling up if the field is very dry",
+    "amount": "Run water along the furrows until the ridges are moist, then drain",
+    "why": "The storage roots begin in these weeks, and both a dry ridge and a soaked one leave fewer roots."
+   },
+   {
+    "stage": "Roots filling",
+    "from": 45,
+    "to": 100,
+    "often": "On sandy soil keep watering about every 7 to 14 days when no rain falls. On lowland fields after rice the stored moisture is often enough",
+    "amount": "Even waterings that wet the ridge, never a long dry spell followed by a flood",
+    "why": "Steady moisture gives big, smooth roots. Soil that goes bone dry and then gets soaked makes the roots crack."
+   },
+   {
+    "stage": "Before digging",
+    "from": 100,
+    "to": 110,
+    "often": "Stop watering about a week before the harvest",
+    "amount": "No water",
+    "why": "Drier soil makes digging easier and the skins firmer, so the roots bruise and rot less."
+   }
+  ],
+  "critical": [
+   "The first two weeks after planting, while the cuttings put out roots.",
+   "The first month to six weeks, when the storage roots begin. A dry spell or a flooded ridge now means fewer roots a hill.",
+   "At any stage, water must never stand around the hills for more than a day."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and stay limp into the late afternoon, the vines stop running, the plants look small and pale, and the roots come out short, thin or crooked.",
+   "wet": "Lower leaves turn yellow, the vines grow slowly, few storage roots form, and roots rot or smell sour at harvest."
+  },
+  "better": [
+   "In dry season plantings on light soil, a furrow watering every 7 to 14 days instead of rain alone raises the number of large roots.",
+   "Keep the moisture even with lighter, regular waterings and a straw mulch, rather than letting the field dry hard and then flooding it, which cracks the roots."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "oO2UAvufq6E",
   "title": "PAANO MAGTANIM NG KAMOTE NA MARAMI ANG LAMAN",
@@ -213,5 +276,5 @@
  "kind": "annual",
  "icon": "🍠",
  "slug": "sweet-potato",
- "rev": "7b707641d79e"
+ "rev": "8f4abe69481c"
 }

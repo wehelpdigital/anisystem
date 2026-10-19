@@ -132,6 +132,8 @@ final class HowToPlant
                 $out[$k] = [
                     'name' => $g['name'] ?? $k, 'local' => $g['local'] ?? '', 'aka' => $g['aka'] ?? [], 'slug' => $g['slug'] ?? str_replace('_', '-', $k),
                     'video' => ! empty($g['video']['youtubeId']), 'summary' => $g['summary'] ?? '',
+                    // Whether a watering schedule is written for it (the guide's own or a way's).
+                    'water' => (bool) self::watering($g) || (bool) array_filter((array) ($g['ways'] ?? []), fn ($w) => is_array($w) && self::watering([], $w)),
                     'ways' => array_map(fn ($w) => ['key' => $w['key'], 'label' => $w['label'], 'days' => $w['days'] ?? null], (array) ($g['ways'] ?? [])),
                     'rev' => $g['rev'] ?? '',
                 ];
@@ -367,6 +369,129 @@ final class HowToPlant
         return 'About ' . $d . ' days after ' . $word;
     }
 
+    /**
+     * A stage's stretch in words: "Day 7 to 40", "21 to 1 days before transplanting",
+     * "Month 3 to 12", "Transplanting day to day 10". The twin of build_pages.py span_words.
+     */
+    public static function spanWords(int $from, int $to, array $way, bool $months = false): string
+    {
+        if ($from === $to) {
+            return self::when($from, $way, $months);
+        }
+        $a = self::when($from, $way, $months);
+        $b = self::when($to, $way, $months);
+        foreach (['Day ', 'Month ', 'Year '] as $p) {
+            if (str_starts_with($a, $p) && str_starts_with($b, $p)) {
+                return $a . ' to ' . substr($b, strlen($p));
+            }
+        }
+        // Months and years mixed: both ends in months ("Month 59 to 60", "Month 3 to 24").
+        if (preg_match('/^(Month|Year) (\d+)$/', $a, $ma) && preg_match('/^(Month|Year) (\d+)$/', $b, $mb)) {
+            $m = fn ($x) => $x[1] === 'Year' ? (int) $x[2] * 12 : (int) $x[2];
+
+            return 'Month ' . $m($ma) . ' to ' . $m($mb);
+        }
+        $re = '/^(\d+) (days?|months|years) before (\w+)$/';
+        if (preg_match($re, $a, $ma) && preg_match($re, $b, $mb) && $ma[3] === $mb[3] && rtrim($ma[2], 's') === rtrim($mb[2], 's')) {
+            return $ma[1] . ' to ' . $mb[1] . ' ' . rtrim($ma[2], 's') . 's before ' . $ma[3];
+        }
+
+        return $a . ' to ' . lcfirst($b);
+    }
+
+    /* ------------------------------------------------------------ watering */
+
+    /**
+     * The watering a way follows (2026-10-19, the owner: "include watering
+     * recommendations and schedules"): the way's own when it has one (rice's
+     * paddy is not a direct seeded field), else the guide's. Null while none is
+     * written. Shape: traditional, method, schedule [{stage, from, to, often,
+     * amount, why}] on the guide's own day count, critical [lines], rainfed,
+     * dryseason, wet, signs {dry, wet}, better [lines].
+     */
+    public static function watering(array $guide, ?array $way = null): ?array
+    {
+        $ok = fn ($w) => is_array($w) && (! empty($w['schedule']) || trim((string) ($w['traditional'] ?? '')) !== '');
+        if ($way && $ok($way['watering'] ?? null)) {
+            return $way['watering'];
+        }
+
+        return $ok($guide['watering'] ?? null) ? $guide['watering'] : null;
+    }
+
+    /** A stage that waters the seedbed or the nursery, not the field. */
+    public const NURSERY_STAGE = '/seed ?beds?\b|nursery|punlaan|\btrays?\b|in (?:the )?(?:plastic )?bags|cutting bed|plant bed/i';
+
+    /**
+     * The schedule's stage a step's day falls in, as [index, stage], or null.
+     * The seedbed and the field are watered side by side (the paddy soaks while
+     * the beds stay wet), so a nursery step reads only the nursery's stages and
+     * every other step only the field's. Where two overlap, the later one.
+     */
+    public static function stageAt(?array $water, int $day, ?string $phase = null, bool $nurseryWay = true): ?array
+    {
+        $hit = null;
+        $best = 0;
+        foreach (array_values((array) ($water['schedule'] ?? [])) as $i => $s) {
+            if (! is_array($s) || $day < (int) ($s['from'] ?? 0) || $day > (int) ($s['to'] ?? 0)) {
+                continue;
+            }
+            $name = (string) ($s['stage'] ?? '');
+            $nur = (bool) preg_match(self::NURSERY_STAGE, $name);
+            $prep = (bool) preg_match(self::PREP_STAGE, $name);
+            // A nursery step: the seedbed's own stages first, else one before planting that is not the field's work.
+            // Getting the field ready beside a nursery: only the field's stages. Anything else: never the nursery's.
+            $score = match (true) {
+                $phase === null => 1,
+                $phase === 'nursery' => $nur ? 2 : ((! $prep && (int) ($s['to'] ?? 0) <= 0) ? 1 : 0),
+                $phase === 'prep' && $nurseryWay => ($prep && ! $nur) ? 1 : 0,
+                default => $nur ? 0 : 1,
+            };
+            if ($score > 0 && $score >= $best) {
+                $hit = [$i, $s];
+                $best = $score;
+            }
+        }
+
+        return $hit;
+    }
+
+    /** A stage of getting the field ready (plowing, soaking the paddy, digging holes), not the nursery. */
+    public const PREP_STAGE = '/plow|harrow|soak|level|land|field|clear|furrow|ridg|\bholes?\b|dig|prepar/i';
+
+    /** Whether a way raises its plants in a nursery first (its stages before planting may be the seedbed's). */
+    public static function nurseryWay(array $way): bool
+    {
+        return (bool) array_filter((array) ($way['steps'] ?? []), fn ($s) => is_array($s) && ($s['phase'] ?? '') === 'nursery');
+    }
+
+    /** Words a stage's name shares with every other, which say nothing about which one it is. */
+    private const STAGE_WORDS = ['after', 'before', 'planting', 'transplanting', 'sowing', 'until', 'first', 'second', 'third', 'stage', 'stages',
+        'month', 'months', 'weeks', 'years', 'early', 'later', 'young', 'plant', 'plants', 'water', 'field', 'harvest', 'every', 'trees'];
+
+    /** Whether a stage is one the guide says must never go dry: its name, or a telling word of it, is in a critical line. */
+    public static function critical(?array $water, array $stage): bool
+    {
+        $name = mb_strtolower(trim((string) ($stage['stage'] ?? '')));
+        if ($name === '' || empty($water['critical'])) {
+            return false;
+        }
+        $words = array_filter(preg_split('/[^\p{L}]+/u', $name) ?: [], fn ($x) => mb_strlen($x) >= 5 && ! in_array($x, self::STAGE_WORDS, true));
+        foreach ((array) $water['critical'] as $line) {
+            $line = mb_strtolower((string) $line);
+            if (str_contains($line, $name)) {
+                return true;
+            }
+            foreach ($words as $w) {
+                if (preg_match('/\b' . preg_quote($w, '/') . '/u', $line)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     /** The way's name without its Tagalog: "Transplanted (lipat tanim)" gives "Transplanted". */
     public static function wayShort(array $way): string
     {
@@ -516,6 +641,46 @@ final class HowToPlant
                 'groups' => [],
                 'note' => mb_substr((string) ($s['tip'] ?? ''), 0, 2000),
                 'priority' => in_array($s['task'] ?? '', ['planting', 'harvest', 'seedbed'], true) ? 'high' : 'medium',
+                'workers' => null,
+                'pos' => $pos,
+            ];
+            $pos += 10;
+        }
+        // Watering (2026-10-19, the owner): one task per stage of the schedule,
+        // on the stage's first day. The builder keeps no span on a task, so the
+        // stage's last day is said in its subtitle, description and note.
+        $water = self::watering($guide, $way);
+        foreach (array_values((array) ($water['schedule'] ?? [])) as $i => $st) {
+            if (! is_array($st) || trim((string) ($st['stage'] ?? '')) === '') {
+                continue;
+            }
+            $fromD = (int) ($st['from'] ?? 0);
+            $toD = max($fromD, (int) ($st['to'] ?? $fromD));
+            [$counter, $day] = $where($fromD);
+            $span = self::spanWords($fromD, $toD, $way, $months);
+            $crit = self::critical($water, $st);
+            $often = trim((string) ($st['often'] ?? ''));
+            $much = trim((string) ($st['amount'] ?? ''));
+            if ($day > 999) {
+                $later[] = $span . ': Watering, ' . $st['stage'] . '. ' . trim($often . ' ' . $much);
+                continue;
+            }
+            $until = $toD > $fromD ? 'Keep this up until ' . lcfirst(self::when($toD, $way, $months)) . '.' : '';
+            $out[] = [
+                'id' => $base . '_w' . $i,
+                'counter' => $counter,
+                'day' => max(-365, min(999, $day)),
+                'title' => mb_substr('Watering: ' . $st['stage'], 0, 160),
+                'subtitle' => mb_substr('Water · ' . $span, 0, 200),
+                'description' => mb_substr($from . "\n\n" . 'Watering, ' . $st['stage'] . ': ' . $span . '.'
+                    . ($often !== '' ? "\nHow often: " . $often : '') . ($much !== '' ? "\nHow much: " . $much : '')
+                    . (! empty($st['why']) ? "\n\nWhy: " . trim((string) $st['why']) : '')
+                    . ($crit ? "\n\nThis stage must never go dry." : ''), 0, 4000),
+                'type' => 'irrigation',
+                'spray' => [],
+                'groups' => [],
+                'note' => mb_substr(trim($until . ($crit ? ' Never let it go dry now.' : '')), 0, 2000),
+                'priority' => $crit ? 'high' : 'medium',
                 'workers' => null,
                 'pos' => $pos,
             ];

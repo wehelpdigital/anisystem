@@ -151,6 +151,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mais na matamis, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Sweet corn growers water more than field corn growers, because the ears sell on their size and sweetness. In the dry season most run water into the furrows about once a week, or water by hose on small plots, and never let the field dry from tasseling to harvest. Furrow watering from a pump or canal on bigger fields, and a hose or watering can on small plots. Water in the cool early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mais na matamis go dry at these stages",
+   "text": "Tasseling and silking, about day 45 to 55: a dry spell now leaves gaps of missing kernels on the ear. Ear filling, about day 55 to 68: the kernels fill with sugar and water, so drought gives small, less sweet ears. Coming up: the seedbed must stay moist until the seedlings are out."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mais na matamis, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 7",
+     "Water right after planting if the soil is dry, then every few days until the seedlings are up",
+     "Enough to wet the soil around the seed, never soggy"
+    ],
+    [
+     "Young plants",
+     "Day 7 to 22",
+     "About once a week in dry weather, more often on sandy soil",
+     "One furrow watering, or a slow soaking along the row by hose on small plots"
+    ],
+    [
+     "Fast growth",
+     "Day 22 to 45",
+     "About once a week, and soon after the urea and hilling up",
+     "Fill the furrows and let the water soak in"
+    ],
+    [
+     "Tasseling, silking and ear filling",
+     "Day 45 to 68",
+     "Keep the soil moist all the time, watering at least once a week in dry weather and more often on sandy soil",
+     "A full furrow watering each time"
+    ],
+    [
+     "Picking",
+     "Day 68 to 75",
+     "Keep the soil just moist until the ears are picked",
+     "A light watering only if the soil is dry"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains so the ears fill during the wet weeks, and on raised ridges if the field is low. Mulch with rice straw to keep moisture between rains, and plant only what you can water if the rains stop early.\n\n**In the dry season.** The dry season crop from October to January needs watering about once a week, more often on sandy soil and in the hot months. Water when the soil a few centimeters down feels dry or the leaves start to roll before noon, and never miss a watering from tasseling to picking.\n\n**In the rainy season.** Make ridges and keep the furrow ends open so rain drains away, since standing water yellows and stunts the plants. Wet weather also brings more leaf diseases and rotting of the ear tips, so do not water on top of the rain."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll in the morning and look gray green, the silks dry before they catch pollen, and the ears come out short with gaps and few kernels at the tip.",
+    "**Too much water:** Yellow lower leaves, pale stunted plants in the low spots, and seed that rots before it comes up."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip lines along the rows with rice straw mulch use far less water than furrows and keep the soil evenly moist through silking. Plant in blocks a week or two apart only as fast as you can water them, so no block is short of water at silking."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mais na matamis"
   },
   {
@@ -279,6 +352,10 @@
     {
      "q": "How long before mais na matamis can be harvested?",
      "a": "It is ready about 75 days after sowing. Sweet corn is picked fresh, about 65 to 75 days after planting, when the silks are dry and brown and the kernels are full and milky."
+    },
+    {
+     "q": "How often do you water mais na matamis?",
+     "a": "Planting and coming up, sowing day to day 7: Water right after planting if the soil is dry, then every few days until the seedlings are up. Young plants, day 7 to 22: About once a week in dry weather, more often on sandy soil. Fast growth, day 22 to 45: About once a week, and soon after the urea and hilling up. The dry season crop from October to January needs watering about once a week, more often on sandy soil and in the hot months."
     },
     {
      "q": "What do you plant to grow mais na matamis?",

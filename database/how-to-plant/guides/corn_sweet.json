@@ -128,6 +128,69 @@
   "Scout every few days for fall armyworm and act while the larvae are small.",
   "Plant in small batches every two weeks so you have ears to sell over a longer time."
  ],
+ "watering": {
+  "traditional": "Sweet corn growers water more than field corn growers, because the ears sell on their size and sweetness. In the dry season most run water into the furrows about once a week, or water by hose on small plots, and never let the field dry from tasseling to harvest.",
+  "method": "Furrow watering from a pump or canal on bigger fields, and a hose or watering can on small plots. Water in the cool early morning or late afternoon.",
+  "rainfed": "Plant at the start of the rains so the ears fill during the wet weeks, and on raised ridges if the field is low. Mulch with rice straw to keep moisture between rains, and plant only what you can water if the rains stop early.",
+  "dryseason": "The dry season crop from October to January needs watering about once a week, more often on sandy soil and in the hot months. Water when the soil a few centimeters down feels dry or the leaves start to roll before noon, and never miss a watering from tasseling to picking.",
+  "wet": "Make ridges and keep the furrow ends open so rain drains away, since standing water yellows and stunts the plants. Wet weather also brings more leaf diseases and rotting of the ear tips, so do not water on top of the rain.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Water right after planting if the soil is dry, then every few days until the seedlings are up",
+    "amount": "Enough to wet the soil around the seed, never soggy",
+    "why": "Sweet corn seed is weak and rots in soggy soil, but needs moisture to come up evenly."
+   },
+   {
+    "stage": "Young plants",
+    "from": 7,
+    "to": 22,
+    "often": "About once a week in dry weather, more often on sandy soil",
+    "amount": "One furrow watering, or a slow soaking along the row by hose on small plots",
+    "why": "Even growth now gives plants that tassel together."
+   },
+   {
+    "stage": "Fast growth",
+    "from": 22,
+    "to": 45,
+    "often": "About once a week, and soon after the urea and hilling up",
+    "amount": "Fill the furrows and let the water soak in",
+    "why": "The plant is building the leaves and stalk that will feed the ear."
+   },
+   {
+    "stage": "Tasseling, silking and ear filling",
+    "from": 45,
+    "to": 68,
+    "often": "Keep the soil moist all the time, watering at least once a week in dry weather and more often on sandy soil",
+    "amount": "A full furrow watering each time",
+    "why": "Dry soil now gives short ears with missing kernels and less sweetness."
+   },
+   {
+    "stage": "Picking",
+    "from": 68,
+    "to": 75,
+    "often": "Keep the soil just moist until the ears are picked",
+    "amount": "A light watering only if the soil is dry",
+    "why": "Moist soil keeps the kernels juicy and tender up to picking."
+   }
+  ],
+  "critical": [
+   "Tasseling and silking, about day 45 to 55: a dry spell now leaves gaps of missing kernels on the ear.",
+   "Ear filling, about day 55 to 68: the kernels fill with sugar and water, so drought gives small, less sweet ears.",
+   "Coming up: the seedbed must stay moist until the seedlings are out."
+  ],
+  "signs": {
+   "dry": "Leaves roll in the morning and look gray green, the silks dry before they catch pollen, and the ears come out short with gaps and few kernels at the tip.",
+   "wet": "Yellow lower leaves, pale stunted plants in the low spots, and seed that rots before it comes up."
+  },
+  "better": [
+   "Drip lines along the rows with rice straw mulch use far less water than furrows and keep the soil evenly moist through silking.",
+   "Plant in blocks a week or two apart only as fast as you can water them, so no block is short of water at silking."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "vC_L7CUWujw",
   "title": "Sweet Corn Farming In The Philippines II Anu ang Tamang Diskarte sa Pag tanim ng Sweetcorn",
@@ -147,5 +210,5 @@
  "kind": "annual",
  "icon": "🌽",
  "slug": "sweet-corn",
- "rev": "2daca9449512"
+ "rev": "a9d749cfa33a"
 }

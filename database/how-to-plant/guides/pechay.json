@@ -152,7 +152,78 @@
      "how": "Three to four weeks after transplanting, cut the plants at the base with a sharp knife or pull them with the roots, in the cool early morning or late afternoon.",
      "task": "harvest"
     }
-   ]
+   ],
+   "watering": {
+    "traditional": "Pechay is watered by hand every day, with a watering can or a hose, in the early morning or late afternoon, from the seedbed until the day it is cut. Bigger lowland plots let water into the furrows between the beds instead, and the beds are kept raised so no water stands.",
+    "method": "A watering can with a fine head or a hose with a sprinkler nozzle, watering the soil and the base of the plants, is the usual way. Larger plots use furrows between the beds. Water in the early morning or late afternoon, never at noon, and early enough that the leaves dry before night.",
+    "rainfed": "Pechay is seldom grown on rain alone, because it needs water every day. Without a pump, plant near a well, a creek or a rain barrel and keep the plot small enough to water by can. Mulch the beds with rice straw or rice hull to keep the soil moist longer, and grow it in the rainy months under a simple cover.",
+    "dryseason": "In the dry months water every day, in the cool early morning or late afternoon, and a second time on very hot days if the plants droop. Water when the top soil feels dry to the touch. On sandy soil that is every day without fail.",
+    "wet": "Raise the beds higher and keep the paths open so rain runs off, and put a simple plastic roof over the beds if you can, because hard rain tears the leaves. Skip the watering on days the beds are already wet. Standing water rots the base of the plants and brings soft rot that smells bad.",
+    "schedule": [
+     {
+      "stage": "Seed sprouting",
+      "from": -18,
+      "to": -14,
+      "often": "Sprinkle the seedbed every morning or late afternoon so the top soil never dries",
+      "amount": "A light sprinkle from a can with a fine head, just enough to darken the soil",
+      "why": "The tiny seed sits near the surface and dies if the top soil dries even once, but a hard stream washes it out."
+     },
+     {
+      "stage": "Seedlings under shade",
+      "from": -14,
+      "to": -7,
+      "often": "Water every morning or late afternoon",
+      "amount": "Enough to moisten the bed or the pots, never soggy",
+      "why": "Soil that stays wet in the shade brings damping off, which makes seedlings fall over at the base."
+     },
+     {
+      "stage": "Hardening",
+      "from": -7,
+      "to": 0,
+      "often": "Water a little less often while the shade comes off. Water at once if the seedlings wilt hard",
+      "amount": "Light waterings",
+      "why": "Seedlings used to full sun and less water stand the move to the field better."
+     },
+     {
+      "stage": "Transplanting",
+      "from": 0,
+      "to": 1,
+      "often": "Water the beds right after setting the seedlings in the afternoon",
+      "amount": "Soak the soil around each plant",
+      "why": "Water settles the soil around the roots so the plants stand up by the next morning."
+     },
+     {
+      "stage": "Leaf growth",
+      "from": 1,
+      "to": 22,
+      "often": "Every day in the morning or late afternoon. Give a second light watering on very hot days if the plants still droop in the late afternoon",
+      "amount": "Enough to keep the bed moist to the roots but not soggy. A 10 liter can covers a short stretch of bed, so walk it slowly",
+      "why": "Pechay has short roots and grows fast only with steady moisture. Dry days make small, tough leaves."
+     },
+     {
+      "stage": "Last days to harvest",
+      "from": 22,
+      "to": 25,
+      "often": "Keep watering every day and harvest in the cool hours",
+      "amount": "The usual daily watering",
+      "why": "Well watered plants are heavy and crisp and do not wilt on the way to market."
+     }
+    ],
+    "critical": [
+     "The days the seed is sprouting: the top soil must never dry out.",
+     "The first days after transplanting, until the seedlings stand up again.",
+     "The whole leaf growth: pechay is harvested in about three weeks, so even two or three dry days show in the harvest."
+    ],
+    "signs": {
+     "dry": "Leaves droop and stay limp after the sun goes down, the leaves stay small and turn tough or bitter, and plants send up flower stalks early.",
+     "wet": "Lower leaves yellow, the base of the stem turns soft, brown and smelly, and seedlings fall over at the soil line."
+    },
+    "better": [
+     "Mulch the beds with rice straw or rice hull to keep the soil moist, cut the watering and stop rain from splashing soil on the leaves.",
+     "A drip line or a hose with a fine sprinkler gives even water to every plant and wastes less than splashing from a pail."
+    ],
+    "confidence": "high"
+   }
   },
   {
    "key": "direct",
@@ -208,7 +279,61 @@
      "how": "About 30 to 40 days after sowing, while the leaves are still tender, pull or cut the plants in the cool of the day.",
      "task": "harvest"
     }
-   ]
+   ],
+   "watering": {
+    "traditional": "Seed sown straight on the bed is sprinkled every day until it comes up, then watered daily by can or hose in the cool hours until harvest. Larger plots are watered through the furrows between raised beds.",
+    "method": "A watering can with a fine head, or a hose with a sprinkler nozzle, is the usual way. Bigger plots water through the furrows between beds. Water in the early morning or late afternoon, never at noon.",
+    "rainfed": "Direct sown pechay needs water every day, so it is seldom left to rain alone. Without a pump, keep the bed close to a well or a rain barrel, cover the seed with rice hull, and mulch the bed with straw once the plants are up.",
+    "dryseason": "Water every day in the dry months, morning or late afternoon, and a second time on very hot days if the plants droop. Water whenever the top soil feels dry. Sandy beds need it daily without fail.",
+    "wet": "Sow on higher raised beds and keep the paths open so rain drains away. Hard rain can wash the seed out of a fresh bed, so a light cover of rice hull or a simple roof helps. Skip the watering on wet days. Standing water brings soft rot at the base.",
+    "schedule": [
+     {
+      "stage": "Sowing and sprouting",
+      "from": 0,
+      "to": 5,
+      "often": "Sprinkle the bed every day, morning or late afternoon, until the seedlings are up",
+      "amount": "A light sprinkle from a can with a fine head, just enough to keep the top soil damp",
+      "why": "The seed lies near the surface and dies if the top soil dries, while a hard stream washes it into clumps."
+     },
+     {
+      "stage": "Young plants",
+      "from": 5,
+      "to": 12,
+      "often": "Water daily in the cool hours. Water before thinning so the extra plants pull out easily",
+      "amount": "Enough to moisten the bed, never soggy",
+      "why": "Young plants in a crowded bed rot at the base if the soil stays wet."
+     },
+     {
+      "stage": "Leaf growth",
+      "from": 12,
+      "to": 32,
+      "often": "Every day in the morning or late afternoon. A second light watering on very hot days if the plants droop in the late afternoon",
+      "amount": "Enough to keep the bed moist to the roots but not soggy",
+      "why": "Steady moisture makes big, tender leaves. Dry days make small, tough ones and early flowers."
+     },
+     {
+      "stage": "Last days to harvest",
+      "from": 32,
+      "to": 35,
+      "often": "Keep watering daily and harvest in the cool of the day",
+      "amount": "The usual daily watering",
+      "why": "Plants full of water are crisp and keep longer after cutting."
+     }
+    ],
+    "critical": [
+     "Sowing to coming up: the top soil must stay damp every day.",
+     "The whole leaf growth: a few dry days make tough leaves and early flower stalks."
+    ],
+    "signs": {
+     "dry": "Seedlings come up patchy, leaves droop and stay limp after sundown, and the plants stay small, tough and send up flowers early.",
+     "wet": "Seedlings fall over at the soil line, lower leaves yellow, and the base of the plant goes soft and smells bad."
+    },
+    "better": [
+     "Cover the sown bed with rice hull and mulch the young plants with straw to keep the soil moist and cut the watering.",
+     "A fine sprinkler or drip line gives even water and keeps the seed from washing out."
+    ],
+    "confidence": "high"
+   }
   }
  ],
  "mistakes": [
@@ -246,5 +371,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "pechay",
- "rev": "dc003d5a012e"
+ "rev": "cb435a30ffe9"
 }

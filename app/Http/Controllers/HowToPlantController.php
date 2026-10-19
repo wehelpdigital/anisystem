@@ -111,10 +111,11 @@ class HowToPlantController extends Controller
             'rules' => null, 'files' => [], 'history' => ['undo' => [], 'redo' => []], 'rev' => 1, 'sortOrder' => 0, 'deleteStatus' => 1,
         ]);
         $p->forceFill(['versionId' => $ver->id])->save();
-        $steps = count(array_filter($tasks, fn ($t) => ! isset($t['kind'])));
+        $watering = count(array_filter($tasks, fn ($t) => ! isset($t['kind']) && preg_match('/_w\d+$/', (string) $t['id'])));
+        $steps = count(array_filter($tasks, fn ($t) => ! isset($t['kind']))) - $watering;
 
-        return $this->json(true, 'A new protocol was made with ' . $steps . ' steps.', [
-            'protocolId' => (int) $p->id, 'title' => $p->title, 'steps' => $steps, 'url' => route('pb.open', ['id' => $p->id]),
+        return $this->json(true, 'A new protocol was made with ' . $steps . ' steps' . ($watering ? ' and ' . $watering . ' watering ' . ($watering === 1 ? 'task' : 'tasks') : '') . '.', [
+            'protocolId' => (int) $p->id, 'title' => $p->title, 'steps' => $steps, 'watering' => $watering, 'url' => route('pb.open', ['id' => $p->id]),
         ]);
     }
 

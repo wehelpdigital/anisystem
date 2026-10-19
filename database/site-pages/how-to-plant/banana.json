@@ -192,6 +192,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering saging, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Most banana here is rain fed: farmers plant when the rains begin and seldom water after the first weeks, except with a hose or pails for backyard mats in a long dry spell. Big commercial farms run overhead sprinklers or drip lines, and farms on low ground dig canals to carry the extra rain away. Rain does most of the work. Where farmers water, they use a hose or pails into a shallow basin around each mat, furrows between rows on flat land, and sprinklers or drip lines on big farms. Water in the cool early morning or late afternoon, and soak the soil deeply instead of wetting the top a little every day."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let saging go dry at these stages",
+   "text": "The first month after planting, while the sucker grows its first roots. Four to seven months, when the bunch is forming inside the trunk and the number of hands is set. Shooting, from the day the bunch shows until all the hands have opened. Bunch filling, the last two to three months before harvest."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for saging, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to first new leaves",
+     "Planting day to day 30",
+     "Water on planting day if the soil is dry, then every 2 days when no rain falls",
+     "About one watering can (about 10 liters) a plant each time, or 4 to 6 liters a plant a day on drip"
+    ],
+    [
+     "Young plant, leaves unfolding",
+     "Day 30 to 120",
+     "Every 3 to 4 days in hot dry weather, about once a week in cool or cloudy weeks, and not at all after a good rain",
+     "About 2 watering cans a plant each time, poured into a shallow basin around the base, or 5 to 8 liters a plant a day on drip"
+    ],
+    [
+     "Fast growth, bunch forming inside the trunk",
+     "Day 120 to 210",
+     "Every 3 to 4 days in dry weather. Do not let the soil around the mat dry out for long",
+     "About 3 to 4 watering cans a plant each time, or 8 to 12 liters a plant a day on drip"
+    ],
+    [
+     "Bunch comes out and hands open (flowering)",
+     "Day 210 to 270",
+     "Every 2 to 3 days in hot dry weather. Keep the soil evenly moist. Saba reaches this stage later, often at 11 to 12 months",
+     "About 4 to 5 watering cans a plant each time, or 15 to 20 liters a plant a day on drip"
+    ],
+    [
+     "Bunch filling to harvest (fruiting)",
+     "Day 270 to 360",
+     "Every 3 days in dry weather until the bunch is cut",
+     "About 5 watering cans a plant every 3 days, or 15 to 20 liters a plant a day on drip"
+    ],
+    [
+     "After harvest, the follower sucker",
+     "Day 360 to 450",
+     "Go back to the young plant rhythm, every 3 to 4 days in dry weather",
+     "About 2 to 3 watering cans a mat each time"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin so the first months get steady rain. Keep a thick mulch of dried leaves, chopped trunks and cut grass on the ring, and on slopes shape a low bank on the downhill side of each mat so rain soaks in instead of running off. Banana does best with about 20 cm of rain spread through each month and slows down badly when a month brings less than about 10 cm, so a few cans of water at shooting and bunch filling pay back the most in a dry spell.\n\n**In the dry season.** In the hot months, March to May, water every 3 to 4 days. In the cooler months, December to February, about once a week is enough. Water when the soil a finger deep under the mulch feels dry, when the leaves fold down along the middle rib by midday, or when new leaves come out slowly.\n\n**In the rainy season.** Banana roots need air, and even a short spell of standing water can kill them. Dig canals between rows and around low spots, keep them clear, and in heavy soil plant on a low mound. Wet, crowded mats get more leaf spot, so cut old leaves, keep the spacing, and lead drain water away from healthy mats so it does not carry wilt from a sick one."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves fold down along the middle rib by midday and stay folded, older leaves yellow and dry early from the edges, new leaves open slowly, and the bunch stays small with thin fingers.",
+    "**Too much water:** Limp yellow leaves, a trunk that goes soft near the base, brown rotting roots, slow growth, and more leaf spots in wet, closed stands."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip lines with one or two emitters a mat, run daily or every other day in the dry months, save water and labor and give bigger, more even bunches. Fertilizer can be fed through the same lines. Keep the thick mulch on all year and save the most water for the stretch from bunch forming to bunch filling, which sets the size of the harvest."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for saging"
   },
   {
@@ -322,6 +401,10 @@
     {
      "q": "How long before saging can be harvested?",
      "a": "It is ready about 360 days after planting. Ready when the fingers are plump and round with no sharp edges, the bunch is still light green and the old leaves begin to yellow."
+    },
+    {
+     "q": "How often do you water saging?",
+     "a": "Planting to first new leaves, planting day to day 30: Water on planting day if the soil is dry, then every 2 days when no rain falls. Young plant, leaves unfolding, day 30 to 120: Every 3 to 4 days in hot dry weather, about once a week in cool or cloudy weeks, and not at all after a good rain. Fast growth, bunch forming inside the trunk, day 120 to 210: Every 3 to 4 days in dry weather. Do not let the soil around the mat dry out for long. In the hot months, March to May, water every 3 to 4 days."
     },
     {
      "q": "What do you plant to grow saging?",

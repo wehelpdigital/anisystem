@@ -233,6 +233,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering repolyo, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Lowland growers water cabbage right after transplanting and then run water down the furrows about once every week or two in dry weather. In the highlands many farmers water with sprinklers fed by long hoses from springs and creeks, and everyone waters less once the heads are nearly firm so they do not crack. Lowland farms run water down the furrows from a canal or a small pump. Highland farms mostly use sprinklers fed by hoses from springs, and backyard growers use a watering can. Water in the morning so the leaves dry before night."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let repolyo go dry at these stages",
+   "text": "The first three days in the seedbed, which must stay fully wet. The first week after transplanting, until the plants stand up and put out new leaves. Head forming and filling: steady moisture, with no long dry spell and no sudden flooding."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for repolyo, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing in the seedbed",
+     "30 to 27 days before transplanting",
+     "Water the bed before sowing, then keep it fully wet for the first three days",
+     "Soak the bed or seed box each time with a fine can"
+    ],
+    [
+     "Seedlings and pricking out",
+     "27 to 7 days before transplanting",
+     "Once the seedlings are up, water lightly in the morning only when the top soil starts to dry. Water and shade them right after pricking out",
+     "Light sprinkles, never soggy. Rinse with plain water after the fertilizer drench"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water only when the seedlings start to wilt",
+     "A light watering, just enough for them to perk up"
+    ],
+    [
+     "Transplanting and settling",
+     "Transplanting day to day 7",
+     "Water each plant right after transplanting, then every day or two if no rain falls until new leaves show",
+     "Soak the soil around each hill. The field should be moist, not muddy"
+    ],
+    [
+     "Leaf growth",
+     "Day 7 to 35",
+     "Furrow water about every 8 days on light soil and every 10 to 12 days on heavy soil in dry weather. Water after each side dressing",
+     "Fill the furrows until the ridge or bed is wet through, then let them drain"
+    ],
+    [
+     "Head forming and filling",
+     "Day 35 to 55",
+     "Keep to the same steady schedule until the heads are full and firm, but with lighter waterings",
+     "Moist soil, never flooded. Avoid a long dry spell followed by a heavy soaking"
+    ],
+    [
+     "Firm heads to harvest",
+     "Day 55 to 60",
+     "Stop watering once the heads are firm and cut them on a dry day",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Lowland cabbage goes in toward the end of the rains so it grows on the moisture left in the soil during the cool months. Without a pump, keep the plot near a well or creek, lay rice straw between the plants right after transplanting to hold moisture and keep weeds down, and water by can at the base of each plant when the soil dries.\n\n**In the dry season.** In the dry months water by furrow about every 8 days on light soil and every 10 to 12 days on heavy soil, more often on very sandy soil or in hot wind. Water when the soil a few cm down is dry or the leaves droop and stay limp into the late afternoon.\n\n**In the rainy season.** Plant on raised beds about 1 m wide or on high ridges where drainage is poor, and keep the furrows open to a drain. Skip watering when the rains come. Soaked soil brings stem and root rot, and heavy rain on nearly mature heads makes them crack and rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and turn dull, the plants stay small and the heads come out small, loose or late.",
+    "**Too much water:** Lower leaves yellow and wilt, the stem base rots, and the heads split or decay at the core."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Rice straw mulch laid right after transplanting keeps the soil moist and cool, saves water and keeps weeds down. Keep the watering regular and lighter as the heads fill instead of letting the field dry and then flooding it, to avoid split heads."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for repolyo"
   },
   {
@@ -363,6 +448,10 @@
     {
      "q": "How long before repolyo can be harvested?",
      "a": "It is ready about 65 days after transplanting. Lowland varieties are usually ready about 55 to 60 days after transplanting and many highland varieties at about 60 to 75 days, when the heads are firm."
+    },
+    {
+     "q": "How often do you water repolyo?",
+     "a": "Sowing in the seedbed, 30 to 27 days before transplanting: Water the bed before sowing, then keep it fully wet for the first three days. Seedlings and pricking out, 27 to 7 days before transplanting: Once the seedlings are up, water lightly in the morning only when the top soil starts to dry. Water and shade them right after pricking out. Hardening, 7 days before transplanting to transplanting day: Water only when the seedlings start to wilt. In the dry months water by furrow about every 8 days on light soil and every 10 to 12 days on heavy soil, more often on very sandy soil or in hot wind."
     },
     {
      "q": "What do you plant to grow repolyo?",

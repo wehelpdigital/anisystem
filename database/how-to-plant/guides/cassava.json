@@ -199,6 +199,69 @@
   "Rotate fields, scout for mites, scale insects and blight, and remove sick plants before they spread.",
   "Harvest at the right age and line up the buyer or the dryer before digging."
  ],
+ "watering": {
+  "traditional": "Kamoteng kahoy is a rain crop on most farms: the stakes go in as the rains begin and the plants are rarely watered after that. Farmers with a canal or a pump water the furrows only in a dry spell during the first three months, and leave the older plants to ride out the dry season on their own.",
+  "method": "Most cassava gets no water but the rain. Where water is near, farmers on flat land run it down the furrows, and small growers pour water at each hill with a can or hose. Water in the early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin, around May to July, so the stakes root on the rains. Plant on ridges in the rainy months and in the furrows in drier months, set the stakes upright in wet soil, at a slant when the soil is just moist, and lay them flat and covered in dry soil. Keep the field weeded in the first months and leave the cut weeds or straw between the rows to hold moisture.",
+  "dryseason": "A dry season planting needs water in its first three months: water by furrow or at the hill whenever about a week passes with no rain. After three months, older cassava takes dry spells well and needs water only in a long drought. Water when the leaves droop through the day or the young plants stop putting out new leaves.",
+  "wet": "Plant on ridges and keep a drain at the low end of the field. Never plant in soil that stays flooded: waterlogging stunts the young roots and rots the mature ones. Avoid planting in the month of heaviest rain, and dig the roots before a long rainy spell if they are ready.",
+  "schedule": [
+   {
+    "stage": "Planting day",
+    "from": 0,
+    "to": 0,
+    "often": "Plant into moist soil. If the soil is dry, water the furrow right after setting the stakes",
+    "amount": "Enough to wet the soil around the buried part of the stake, then let it drain",
+    "why": "The buried nodes must touch moist soil to put out roots."
+   },
+   {
+    "stage": "Rooting and first leaves",
+    "from": 0,
+    "to": 35,
+    "often": "Keep the soil moist. Water by furrow or at each hill when about a week passes with no rain",
+    "amount": "Wet the soil around each stake, never leave water standing in the row",
+    "why": "The stakes live on their own stored food until roots form, and they dry out or rot if the soil swings either way."
+   },
+   {
+    "stage": "Leafy growth",
+    "from": 35,
+    "to": 90,
+    "often": "In dry months water by furrow when a week or more goes by without rain. Water before the urea side dressing at about two months if the soil is dry",
+    "amount": "One furrow watering that soaks the ridge, then drain",
+    "why": "The first three months are when cassava is most hurt by dry soil, and a short plant here gives a small harvest."
+   },
+   {
+    "stage": "Roots filling",
+    "from": 90,
+    "to": 240,
+    "often": "Rain alone is usually enough. Water only in a long drought if you have water",
+    "amount": "An occasional deep furrow watering, no standing water",
+    "why": "Older cassava drops leaves in a dry spell and grows them back when the rain returns, so it seldom needs watering now."
+   },
+   {
+    "stage": "Before digging",
+    "from": 240,
+    "to": 270,
+    "often": "No watering. Dig when the soil is dry enough to crumble",
+    "amount": "No water",
+    "why": "Roots dug from dry soil break less and keep better, and roots harvested in the dry months hold the most starch."
+   }
+  ],
+  "critical": [
+   "The first four to five weeks, while the stakes root and sprout.",
+   "The first three months after planting, when dry soil cuts the harvest the most.",
+   "Any time water stands in the field: it stunts young roots and rots the mature ones."
+  ],
+  "signs": {
+   "dry": "Leaves droop and fold through the day, few new leaves come out, and the lower leaves turn yellow and fall. In a long drought the plant drops most of its leaves.",
+   "wet": "Stakes rot without sprouting, the leaves turn pale or yellow, and the roots go soft and smell sour."
+  },
+  "better": [
+   "Where water is at hand, watering through dry spells in the first three months pays well. In one trial, full watering during droughts doubled the root yield.",
+   "Drip lines along the rows give about the same yield as flooding the furrows with about half the water, and they water the cassava instead of the weeds."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "HnzKrT59xCk",
   "title": "Paano mag tanim ng kamoteng kahoy || Planting and harvesting cassava || Buhay probinsya.",
@@ -219,5 +282,5 @@
  "kind": "annual",
  "icon": "🥔",
  "slug": "cassava",
- "rev": "a011b8f95296"
+ "rev": "3f7221cdb113"
 }

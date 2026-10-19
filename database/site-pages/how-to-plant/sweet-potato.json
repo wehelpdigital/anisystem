@@ -216,6 +216,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kamote, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Most kamote is grown on rain alone, planted at the start of the rains on upland fields or right after the rice harvest in the lowlands so the crop lives on the water left in the soil. Where a canal, creek or small pump is near, farmers run water down the furrows between the ridges when a dry spell hits, mostly before hilling up. Furrow watering from a canal, a creek or a small pump is the usual way: water runs along the furrows between the ridges and is drained the same day. Small plots are watered with a hose or a watering can at the base of the hills. Water in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kamote go dry at these stages",
+   "text": "The first two weeks after planting, while the cuttings put out roots. The first month to six weeks, when the storage roots begin. A dry spell or a flooded ridge now means fewer roots a hill. At any stage, water must never stand around the hills for more than a day."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kamote, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Cuttings in the shade",
+     "2 days before planting to planting day",
+     "Keep the bundles standing in a cool, shaded spot. On hot dry days cover them with a damp sack",
+     "Only enough to keep the leaves from wilting, never soak the bundles"
+    ],
+    [
+     "Planting and rooting",
+     "Planting day to day 14",
+     "Plant into moist soil. If the soil is dry, water the furrows on the planting day or the day after, then about once a week in dry weather until new leaves show",
+     "One furrow watering that wets the ridge, then let the furrow drain the same day"
+    ],
+    [
+     "Vines running and roots starting",
+     "Day 14 to 45",
+     "In a dry spell, water by furrow about every 7 to 14 days. Water the day before off barring or hilling up if the field is very dry",
+     "Run water along the furrows until the ridges are moist, then drain"
+    ],
+    [
+     "Roots filling",
+     "Day 45 to 100",
+     "On sandy soil keep watering about every 7 to 14 days when no rain falls. On lowland fields after rice the stored moisture is often enough",
+     "Even waterings that wet the ridge, never a long dry spell followed by a flood"
+    ],
+    [
+     "Before digging",
+     "Day 100 to 110",
+     "Stop watering about a week before the harvest",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin on upland fields, or right after the rice harvest in the lowlands while the soil is still moist. In the drier months set the cuttings down in the furrows instead of on the ridges and bury them deeper, so they sit in the moist soil. Keep the weeds down early so they do not drink the moisture, and lay rice straw between the rows if you have it.\n\n**In the dry season.** On sandy or light soil, water by furrow about every 7 to 14 days from planting until about a week before harvest. A trial on sandy fields in Zambales gave clearly more large roots this way than rain alone. On heavier lowland soil after rice, one good watering at or right after planting is often enough. Water when the leaves are still limp in the early morning or when the soil a finger deep is dry.\n\n**In the rainy season.** Plant on top of high ridges and keep the furrows open to a drain at the field edge. Cuttings rot when the soil stays soaked for more than a day, and older roots rot or stop forming in waterlogged ground. Raise the ridges higher on heavy clay and skip fields that flood in the typhoon months."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and stay limp into the late afternoon, the vines stop running, the plants look small and pale, and the roots come out short, thin or crooked.",
+    "**Too much water:** Lower leaves turn yellow, the vines grow slowly, few storage roots form, and roots rot or smell sour at harvest."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: In dry season plantings on light soil, a furrow watering every 7 to 14 days instead of rain alone raises the number of large roots. Keep the moisture even with lighter, regular waterings and a straw mulch, rather than letting the field dry hard and then flooding it, which cracks the roots."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kamote"
   },
   {
@@ -346,6 +419,10 @@
     {
      "q": "How long before kamote can be harvested?",
      "a": "It is ready about 110 days after planting. Most kamote is ready in three to four months, earlier or later by variety."
+    },
+    {
+     "q": "How often do you water kamote?",
+     "a": "Cuttings in the shade, 2 days before planting to planting day: Keep the bundles standing in a cool, shaded spot. On hot dry days cover them with a damp sack. Planting and rooting, planting day to day 14: Plant into moist soil. If the soil is dry, water the furrows on the planting day or the day after, then about once a week in dry weather until new leaves show. Vines running and roots starting, day 14 to 45: In a dry spell, water by furrow about every 7 to 14 days. Water the day before off barring or hilling up if the field is very dry. On sandy or light soil, water by furrow about every 7 to 14 days from planting until about a week before harvest."
     },
     {
      "q": "What do you plant to grow kamote?",
