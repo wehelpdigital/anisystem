@@ -1928,7 +1928,7 @@
     });
 
     // A product from its label.
-    $('npCGrid').innerHTML = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si'].map((n) => '<label>' + lab(n) + ' %<input type="number" class="form-input" min="0" max="100" step="any" inputmode="decimal" data-n="' + n + '"></label>').join('');
+    $('npCGrid').innerHTML = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Co'].map((n) => '<label>' + lab(n) + ' %<input type="number" class="form-input" min="0" max="100" step="any" inputmode="decimal" data-n="' + n + '"></label>').join('');
     const paintForm = () => {
         $('npCForm').innerHTML = Object.entries(FORMS).map(([k, v]) => '<button type="button" class="np-pill" data-f="' + k + '" aria-pressed="' + (k === st.form) + '">' + v + '</button>').join('');
         // A liquid is sold by volume, a solid by weight; the label's percent follows.

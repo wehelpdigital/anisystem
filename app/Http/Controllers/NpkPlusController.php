@@ -46,7 +46,8 @@ class NpkPlusController extends Controller
     /** The most fertilizer lines a calculation holds: the one price the page shows is the engine's quote at this size. */
     private const PRICE_LINES = 60;
 
-    public const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl'];
+    // Cobalt (2026-10-20): a column of the shelf since cobalt sulfate joined it.
+    public const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl', 'Co'];
 
     public const CATEGORIES = [
         'nitrogen' => 'Nitrogen', 'phosphate' => 'Phosphate', 'potash' => 'Potash', 'complete' => 'Complete and blends',
@@ -111,7 +112,7 @@ class NpkPlusController extends Controller
             'form' => $p->form, 'unit' => $p->unit, 'bagKg' => $p->bagKg !== null ? (float) $p->bagKg : null, 'density' => $p->densityKgL !== null ? (float) $p->densityKgL : null,
             'note' => $p->note, 'own' => (bool) $p->userId, 'estimate' => json_decode((string) $p->estimate, true) ?: null, 'pct' => []];
         foreach (self::NUTRIENTS as $n) {
-            if ((float) $p->{$n} > 0) {
+            if ((float) ($p->{$n} ?? 0) > 0) {
                 $out['pct'][$n] = (float) $p->{$n};
             }
         }

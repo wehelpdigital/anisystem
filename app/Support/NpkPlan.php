@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
  */
 final class NpkPlan
 {
-    public const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl'];
+    public const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl', 'Co'];
 
     /** Words to shelf slugs, the longer and surer phrases first. */
     private const WORDS = [
@@ -38,7 +38,7 @@ final class NpkPlan
         'rock phosphate' => 'rock-phosphate', 'muriate' => 'mop', 'potassium chloride' => 'mop',
         'zinc sulfate hepta' => 'zinc-sulfate-7', 'zinc sulphate hepta' => 'zinc-sulfate-7', 'zinc sulfate' => 'zinc-sulfate', 'zinc sulphate' => 'zinc-sulfate',
         'ferrous sulfate' => 'ferrous-sulfate', 'iron sulfate' => 'ferrous-sulfate', 'manganese sulfate' => 'manganese-sulfate',
-        'copper sulfate' => 'copper-sulfate', 'molybdate' => 'sodium-molybdate', 'boric acid' => 'boric-acid', 'borax' => 'borax',
+        'copper sulfate' => 'copper-sulfate', 'cobalt sulfate' => 'cobalt-sulfate', 'cobalt sulphate' => 'cobalt-sulfate', 'molybdate' => 'sodium-molybdate', 'boric acid' => 'boric-acid', 'borax' => 'borax',
         'magnesium sulfate' => 'epsom', 'epsom' => 'epsom', 'kieserite' => 'kieserite', 'calcium sulfate anhydrous' => 'gypsum-anhydrous', 'anhydrous calcium sulfate' => 'gypsum-anhydrous', 'calcium sulphate anhydrous' => 'gypsum-anhydrous', 'anhydrous calcium sulphate' => 'gypsum-anhydrous', 'anhydrous gypsum' => 'gypsum-anhydrous', 'gypsum anhydrous' => 'gypsum-anhydrous', 'anhydrite' => 'gypsum-anhydrous', 'calcium sulfate' => 'gypsum', 'calcium sulphate' => 'gypsum', 'gypsum' => 'gypsum', 'dolomite' => 'dolomite',
         'agricultural lime' => 'lime', 'apog' => 'lime', 'calcitic' => 'lime', 'elemental sulfur' => 'sulfur',
         'chicken manure' => 'chicken-manure', 'chicken dung' => 'chicken-manure', 'ipot ng manok' => 'chicken-manure', 'poultry manure' => 'chicken-manure',
@@ -78,7 +78,7 @@ final class NpkPlan
     {
         $pct = [];
         foreach (self::NUTRIENTS as $n) {
-            if ((float) $p->{$n} > 0) {
+            if ((float) ($p->{$n} ?? 0) > 0) {
                 $pct[$n] = (float) $p->{$n};
             }
         }
