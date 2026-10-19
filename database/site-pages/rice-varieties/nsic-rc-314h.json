@@ -5,20 +5,18 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "Arize Bigante Plus (NSIC Rc 314H) Hybrid Rice: Yield, Maturity and Characteristics",
-  "metaTitle": "Arize Bigante Plus (NSIC Rc 314H) Rice: Yield and Maturity",
-  "metaDescription": "Arize Bigante Plus is NSIC Rc 314H, a hybrid rice for irrigated lowland: about 118 days and 5.9 tonnes per hectare on average. See its ratings.",
+  "title": "NSIC Rc 314H (Mestiso 46) Rice Variety: Yield, Maturity and Characteristics",
+  "metaTitle": "NSIC Rc 314H (Mestiso 46): Yield, Maturity, Characteristics",
+  "metaDescription": "NSIC Rc 314H is a hybrid rice for irrigated lowland: about 118 days and 5.9 tonnes per hectare on average. See its pest ratings and grain quality.",
   "focusKeyword": "NSIC Rc 314H",
   "keywords": [
     "NSIC Rc 314H",
     "rice variety 314H",
     "rc 314H",
     "314H rice variety characteristics",
-    "Mestiso 46",
-    "Arize Bigante Plus",
-    "Bigante Plus"
+    "Mestiso 46"
   ],
-  "excerpt": "NSIC Rc 314H is a hybrid rice variety for irrigated lowland, sold as Arize Bigante Plus or Bigante Plus and known locally as Mestiso 46. The NSIC approved it in 2013. Bayer bred it. It matures in about 118 days and averages 5.9 tonnes per hectare, with a top yield of 11.3 tonnes in trials.",
+  "excerpt": "NSIC Rc 314H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 46. The NSIC approved it in 2013. Bayer bred it. It matures in about 118 days and averages 5.9 tonnes per hectare, with a top yield of 11.3 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 314H is bred to fill",
@@ -27,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for Arize Bigante Plus or Bigante Plus, or rice variety 314H, this is the one. Compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for rice variety 314H, or Rc 314H, this is the one. Compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -60,10 +58,6 @@
         [
           "Bred by",
           "Bayer"
-        ],
-        [
-          "Sold as",
-          "Arize Bigante Plus, Bigante Plus"
         ],
         [
           "Local name",
@@ -238,30 +232,6 @@
     {
       "type": "heading",
       "level": 2,
-      "text": "What Bayer says about it"
-    },
-    {
-      "type": "list",
-      "ordered": false,
-      "items": [
-        "**Days to harvest:** 111 to 115 days after sowing, a medium maturing hybrid.",
-        "**Yield:** 8.8 t/ha at the 16th National Rice Technology Forum in Hagonoy, Davao del Sur, second of 24 hybrids.",
-        "**How it is planted:** Direct seeded or transplanted.",
-        "**Seed:** 21 to 24 kg per hectare direct seeded, 15 kg transplanted.",
-        "About 114 cm tall, with 13 to 17 productive tillers.",
-        "Medium slender grain, with a milling recovery of 60 percent.",
-        "Cooks white, soft and fragrant.",
-        "Bred to tolerate bacterial leaf blight.",
-        "Bayer calls it its steadiest medium maturing hybrid across places and seasons."
-      ]
-    },
-    {
-      "type": "text",
-      "text": "These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual variety on the same ground."
-    },
-    {
-      "type": "heading",
-      "level": 2,
       "text": "Where should you plant it?"
     },
     {
@@ -298,10 +268,6 @@
       "type": "faq",
       "items": [
         {
-          "q": "Is Arize Bigante Plus the same as NSIC Rc 314H?",
-          "a": "Yes. Arize Bigante Plus is the name it is sold under, and NSIC Rc 314H is its registration with the National Seed Industry Council, where its local name is Mestiso 46. The numbers on this page are for NSIC Rc 314H."
-        },
-        {
           "q": "What is the local name of NSIC Rc 314H?",
           "a": "It is known as Mestiso 46. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -320,6 +286,10 @@
         {
           "q": "Is this variety a hybrid?",
           "a": "Yes. So buy new seed each season, because seed saved from a hybrid crop does not grow true and yields less."
+        },
+        {
+          "q": "What should I watch for when I plant it?",
+          "a": "In trials it was weak against tungro, green leafhopper, stem borer, sheath blight. So scout from the early weeks and act at the first signs."
         }
       ]
     },
@@ -352,14 +322,6 @@
     {
       "type": "sources",
       "items": [
-        {
-          "label": "Where Arize Bigante Plus is named as NSIC Rc 314H",
-          "url": "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html"
-        },
-        {
-          "label": "Bayer: Arize Bigante Plus, product page",
-          "url": "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_bigante%E2%84%A2_plus.html"
-        },
         {
           "label": "Wikipedia: Hybrid rice, and why its seed is bought each season",
           "url": "https://en.wikipedia.org/wiki/Hybrid_rice"

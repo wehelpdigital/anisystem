@@ -5,18 +5,20 @@
   "lang": "en",
   "category": "Hybrid rice",
   "profile": true,
-  "title": "NSIC Rc 548H (Mestiso 101) Rice Variety: Yield, Maturity and Characteristics",
-  "metaTitle": "NSIC Rc 548H (Mestiso 101): Yield, Maturity, Characteristics",
-  "metaDescription": "NSIC Rc 548H is a hybrid rice for irrigated lowland: about 115 days and 5.7 tonnes per hectare on average. See its pest ratings and grain quality.",
+  "title": "Arize Bigante Plus (NSIC Rc 548H) Hybrid Rice: Yield, Maturity and Characteristics",
+  "metaTitle": "Arize Bigante Plus (NSIC Rc 548H) Rice: Yield and Maturity",
+  "metaDescription": "Arize Bigante Plus is NSIC Rc 548H, a hybrid rice for irrigated lowland: about 115 days and 5.7 tonnes per hectare on average. See its ratings.",
   "focusKeyword": "NSIC Rc 548H",
   "keywords": [
     "NSIC Rc 548H",
     "rice variety 548H",
     "rc 548H",
     "548H rice variety characteristics",
-    "Mestiso 101"
+    "Mestiso 101",
+    "Arize Bigante Plus",
+    "Bigante Plus"
   ],
-  "excerpt": "NSIC Rc 548H is a hybrid rice variety for irrigated lowland, known locally as Mestiso 101. The NSIC approved it in 2018. Bayer bred it. It matures in about 115 days and averages 5.7 tonnes per hectare, with a top yield of 9.8 tonnes in trials.",
+  "excerpt": "NSIC Rc 548H is a hybrid rice variety for irrigated lowland, sold as Arize Bigante Plus or Bigante Plus and known locally as Mestiso 101. The NSIC approved it in 2018. Bayer bred it. It matures in about 115 days and averages 5.7 tonnes per hectare, with a top yield of 9.8 tonnes in trials.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
     "alt": "Ripe palay heads, the harvest a hybrid like NSIC Rc 548H is bred to fill",
@@ -25,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "If you came here looking for rice variety 548H, or Rc 548H, this is the one. Compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
+      "text": "If you came here looking for Arize Bigante Plus or Bigante Plus, or rice variety 548H, this is the one. Compare it with the other varieties in our [rice variety finder](/rice-varieties) before you buy seed. Also read our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) for how inbreds, hybrids and special rice differ."
     },
     {
       "type": "list",
@@ -57,6 +59,10 @@
         [
           "Bred by",
           "Bayer"
+        ],
+        [
+          "Sold as",
+          "Arize Bigante Plus, Bigante Plus"
         ],
         [
           "Local name",
@@ -219,6 +225,30 @@
     {
       "type": "heading",
       "level": 2,
+      "text": "What Bayer says about it"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Days to harvest:** 111 to 115 days after sowing, a medium maturing hybrid.",
+        "**Yield:** 8.8 t/ha at the 16th National Rice Technology Forum in Hagonoy, Davao del Sur, second of 24 hybrids.",
+        "**How it is planted:** Direct seeded or transplanted.",
+        "**Seed:** 21 to 24 kg per hectare direct seeded, 15 kg transplanted.",
+        "About 114 cm tall, with 13 to 17 productive tillers.",
+        "Medium slender grain, with a milling recovery of 60 percent.",
+        "Cooks white, soft and fragrant.",
+        "Bred to tolerate bacterial leaf blight.",
+        "Bayer calls it its steadiest medium maturing hybrid across places and seasons."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These are the seller's own figures, from its own trials. So plant a small area first, and compare it with your usual variety on the same ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
       "text": "Where should you plant it?"
     },
     {
@@ -255,6 +285,10 @@
       "type": "faq",
       "items": [
         {
+          "q": "Is Arize Bigante Plus the same as NSIC Rc 548H?",
+          "a": "Yes. Arize Bigante Plus is the name it is sold under, and NSIC Rc 548H is its registration with the National Seed Industry Council, where its local name is Mestiso 101. The numbers on this page are for NSIC Rc 548H."
+        },
+        {
           "q": "What is the local name of NSIC Rc 548H?",
           "a": "It is known as Mestiso 101. Seed sellers and agriculturists use both names, so ask for either one."
         },
@@ -273,10 +307,6 @@
         {
           "q": "What should I watch for when I plant it?",
           "a": "In trials it was weak against green leafhopper, brown planthopper, stem borer, tungro. So scout from the early weeks and act at the first signs."
-        },
-        {
-          "q": "Is it soft when cooked?",
-          "a": "It has intermediate amylose, 20.5 percent. So it cooks soft but not sticky."
         }
       ]
     },
@@ -309,6 +339,14 @@
     {
       "type": "sources",
       "items": [
+        {
+          "label": "Bayer: Arize Bigante Plus, product page",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_bigante%E2%84%A2_plus.html"
+        },
+        {
+          "label": "Bayer: Arize Bigante Plus, product page",
+          "url": "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html"
+        },
         {
           "label": "Wikipedia: Hybrid rice, and why its seed is bought each season",
           "url": "https://en.wikipedia.org/wiki/Hybrid_rice"

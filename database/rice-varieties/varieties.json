@@ -11979,7 +11979,39 @@
   "new": true,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=307"
-  ]
+  ],
+  "tradeNames": [
+   "Arize Bigante Plus",
+   "Bigante Plus"
+  ],
+  "tradeSources": [
+   "https://ppmu.bohol.gov.ph/notice-to-proceed-for-jedeco-trading-corporation-opa-crops-2022-0228-pr2022-0570-procurement-of-hybrid-rice-seeds-nsic-rc-490h-hatao-548h-bigante-plus-for-distribution-to-ri",
+   "https://nsic.buplant.da.gov.ph/downloadables/nsic-registered_rice.xlsx",
+   "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_bigante%E2%84%A2_plus.html"
+  ],
+  "seller": {
+   "company": "Bayer",
+   "kind": "hybrid",
+   "facts": {
+    "maturityDays": "111 to 115 days after sowing, a medium maturing hybrid",
+    "yield": "8.8 t/ha at the 16th National Rice Technology Forum in Hagonoy, Davao del Sur, second of 24 hybrids",
+    "traits": [
+     "About 114 cm tall, with 13 to 17 productive tillers",
+     "Medium slender grain, with a milling recovery of 60 percent",
+     "Cooks white, soft and fragrant",
+     "Bred to tolerate bacterial leaf blight",
+     "Bayer calls it its steadiest medium maturing hybrid across places and seasons"
+    ],
+    "establishment": "Direct seeded or transplanted",
+    "seedRate": "21 to 24 kg per hectare direct seeded, 15 kg transplanted"
+   },
+   "claims": true,
+   "sources": [
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_bigante%E2%84%A2_plus.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
+    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize.html"
+   ]
+  }
  },
  {
   "slug": "nsic-rc-31sr",
@@ -19037,39 +19069,7 @@
   "new": false,
   "sources": [
    "https://dbmp.philrice.gov.ph/seeds/content/seed_characteristics/varietychar.php?Vchars=213"
-  ],
-  "tradeNames": [
-   "Arize Bigante Plus",
-   "Bigante Plus"
-  ],
-  "tradeSources": [
-   "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
-   "https://ilocos.da.gov.ph/?p=46408",
-   "https://sunstar.com.ph/article/1866672/Bacolod/Business/DA-completes-hybrid-seeds-distribution-in-Western-Visayas"
-  ],
-  "seller": {
-   "company": "Bayer",
-   "kind": "hybrid",
-   "facts": {
-    "maturityDays": "111 to 115 days after sowing, a medium maturing hybrid",
-    "yield": "8.8 t/ha at the 16th National Rice Technology Forum in Hagonoy, Davao del Sur, second of 24 hybrids",
-    "traits": [
-     "About 114 cm tall, with 13 to 17 productive tillers",
-     "Medium slender grain, with a milling recovery of 60 percent",
-     "Cooks white, soft and fragrant",
-     "Bred to tolerate bacterial leaf blight",
-     "Bayer calls it its steadiest medium maturing hybrid across places and seasons"
-    ],
-    "establishment": "Direct seeded or transplanted",
-    "seedRate": "21 to 24 kg per hectare direct seeded, 15 kg transplanted"
-   },
-   "claims": true,
-   "sources": [
-    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_bigante%E2%84%A2_plus.html",
-    "https://www.cropscience.bayer.com.ph/en-ph/resources-and-tools/stories/bayer-prevails-as-highest-yielder-in-16th-nrtf-hybrid-rice-seed-category.html",
-    "https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize.html"
-   ]
-  }
+  ]
  },
  {
   "slug": "nsic-rc-316h",

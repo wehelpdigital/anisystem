@@ -32,8 +32,13 @@ TRADE = sys.argv[3] if len(sys.argv) > 3 else None
 GENERIC_TRADE = {'jackpot', 'hatao', 'mestizo', 'hyvar', 'frontline', 'kimbee', 'biorice'}
 # Trade names whose sources disagree on the NSIC number (2026-10-13): kept on
 # the better supported number only, or left off when the registry names the
-# number for another variety.
-DOUBTFUL_TRADE = {('NSIC Rc 548H', 'arizebiganteplus'), ('NSIC Rc 548H', 'biganteplus'),
+# number for another variety. Bigante Plus is Rc 548H, not Rc 314H
+# (2026-10-20): the Rc 548H registration papers name the hybrid "Bigante Plus
+# (essentially derived from Mestiso 4)", Mestiso 4 being Rc 124H, Arize
+# Bigante; the registry list says the same, and Bayer's own figures for it
+# (111 to 115 days, 114 cm) are Rc 548H's (115 days, 114 cm), not Rc 314H's
+# (118 days, 110 cm). The Rc 314H papers name only its line, INH10001.
+DOUBTFUL_TRADE = {('NSIC Rc 314H', 'arizebiganteplus'), ('NSIC Rc 314H', 'biganteplus'),
                   ('NSIC Rc 410H', 'arizehabilisplus'), ('NSIC Rc 410H', 'habilisplus'),
                   ('NSIC Rc 176H', 'phb73'), ('NSIC Rc 692H', 'pompyang2323'),
                   ('NSIC Rc 408H', 'sl68'), ('NSIC Rc 408H', 'sl68h')}
@@ -136,7 +141,19 @@ TRADE_FIX = {
     'NSIC Rc 406H': (['Batari Indra 01', 'Batari Indra'], ['https://gsr.irri.org/presidents-farm-feature-newly-released-and-high-yielding-rice-varieties/',
                                                      'https://www.mmsu.edu.ph/news/presidents-farm-highlights-agri-technologies',
                                                      'https://www.youtube.com/watch?v=6PtyYBclgDc']),
+    # Bigante Plus is Rc 548H (2026-10-20, see DOUBTFUL_TRADE): its registration papers and the registry
+    # list name it so, and a seed buyer's notice names "548H Bigante Plus".
+    # The two that name the number come first (the page labels the first two "where it is named as");
+    # Bayer's own page names no number.
+    'NSIC Rc 548H': (['Arize Bigante Plus', 'Bigante Plus'], [
+        'https://ppmu.bohol.gov.ph/notice-to-proceed-for-jedeco-trading-corporation-opa-crops-2022-0228-pr2022-0570-procurement-of-hybrid-rice-seeds-nsic-rc-490h-hatao-548h-bigante-plus-for-distribution-to-ri',
+        REGISTRY_URL,
+        'https://www.cropscience.bayer.com.ph/en-ph/products/arize-hybrid-rice-seeds/choose-your-arize/arize-product-detail-template.html/arize%C2%AE_bigante%E2%84%A2_plus.html']),
 }
+# A seller's profile filed under the wrong number in the trade names folder
+# (2026-10-20): Bayer's Arize Bigante Plus profile was filed as Rc 314H; it is
+# Rc 548H's (see DOUBTFUL_TRADE). Keyed by (filed number, a name in the profile).
+SELLER_MOVE = {('NSIC Rc 314H', 'biganteplus'): 'NSIC Rc 548H'}
 
 
 # A tie between ratings (2026-10-15) is settled by this fixed order, MS and
@@ -279,6 +296,7 @@ def main():
                 if not t.get('nsic') or not t.get('facts') or not t.get('sources'):
                     continue
                 key = display(t['nsic'])
+                key = next((to for (was, nm), to in SELLER_MOVE.items() if was == key and nm in [flat(str(n)) for n in t.get('tradeNames') or []]), key)
                 srcs = [u for u in t['sources'] if u.startswith('http') and 'pinoyrice.com' not in u][:3]
                 sellers[key] = {'company': t.get('company'), 'kind': t.get('kind'), 'names': [re.sub(r'\s+', ' ', str(n)).strip() for n in t.get('tradeNames') or []],
                                 'facts': t['facts'], 'claims': bool(t.get('claims', True)), 'sources': srcs}
