@@ -85,7 +85,26 @@
    "items": [
     {
      "title": "6 months before planting: Cut the planting pieces",
-     "text": "Choose a healthy culm about 1.5 to 2 years old, trim the branches leaving short stubs, and saw it into pieces with one node and a little internode on each side. For giant bamboo, take branch cuttings with two to three nodes from a culm about 3 to 4 years old. Tip: Keep the pieces wet and in the shade. A cutting that dries out will not sprout."
+     "text": "Choose a healthy culm about 1.5 to 2 years old, trim the branches leaving short stubs, and saw it into pieces with one node and a little internode on each side. For giant bamboo, take branch cuttings with two to three nodes from a culm about 3 to 4 years old. Tip: Keep the pieces wet and in the shade. A cutting that dries out will not sprout.",
+     "parts": [
+      {
+       "title": "Choose the mother culm",
+       "text": "For kawayan tinik and bolo, pick a healthy culm about one and a half to two years old. For giant bamboo, use a culm about three to four years old, which gives the best branch cuttings."
+      },
+      {
+       "title": "Trim off the branches",
+       "text": "Cut the side branches off the culm, leaving short stubs at each node so the buds there are not hurt."
+      },
+      {
+       "title": "Saw one node pieces",
+       "text": "Saw the culm into pieces that each hold one node in the middle, with an equal length of the hollow stem left above and below it, about 4 to 6 cm on each side."
+      },
+      {
+       "title": "Take branch cuttings for giant bamboo",
+       "text": "From a giant bamboo culm, cut at least ten side branches, each with two to three nodes carrying live buds. Potted branch cuttings usually sprout in about 7 to 10 days.",
+       "time": "7 to 10 days to sprout"
+      }
+     ]
     },
     {
      "title": "6 months before planting: Set them in bags or a bed",

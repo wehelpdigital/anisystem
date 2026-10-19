@@ -61,7 +61,25 @@
      "day": 12,
      "title": "Put up the A frame trellis",
      "how": "Set poles about 2.5 meters long every 4 to 5 meters along two neighboring rows and lean them together at the top like a tent. Run wire along the top, middle and bottom, then tie a twine from top to bottom at every hill.",
-     "task": "propping"
+     "task": "propping",
+     "parts": [
+      {
+       "title": "Lay out the poles",
+       "how": "Lay poles about 2.5 meters long along the planted rows, one every 4 to 5 meters."
+      },
+      {
+       "title": "Lean them into a tent",
+       "how": "Push the poles of two neighboring rows into the ground and draw their tops together so each pair forms an A, like a tent over the space between the rows."
+      },
+      {
+       "title": "Run the wires and anchor them",
+       "how": "Tie a wire along the tops where the poles cross, and fasten its ends to a strong stake driven in at each end of the row so the whole line stands firm in the wind. Run more wire along the middle and the bottom of the poles."
+      },
+      {
+       "title": "Tie a twine at every hill",
+       "how": "Cut abaca twine or twisted plastic twine and tie one piece upright from the top wire down to the bottom wire at every hill. The vines climb these strings."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -159,5 +177,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "cucumber",
- "rev": "764ce8b3300f"
+ "rev": "0a21b1211093"
 }

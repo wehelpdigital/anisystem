@@ -35,7 +35,30 @@
      "title": "Sort and dry the suckers",
      "how": "Pull a few of the lowest leaves off each sucker, sort them into small, medium and large, and lay them with the bases up to dry for about a week.",
      "task": "seed_treatment",
-     "tip": "Plant each size in its own block so the plants grow, flower and ripen together."
+     "tip": "Plant each size in its own block so the plants grow, flower and ripen together.",
+     "parts": [
+      {
+       "title": "Take suckers from healthy plants",
+       "how": "Twist the suckers off plants that have already fruited and look healthy, never from plants that turned red and limp from wilt."
+      },
+      {
+       "title": "Pick the right size",
+       "how": "Medium to large suckers, about 51 to 70 cm long and weighing about 200 to 400 g, give the biggest fruit. Very large suckers often flower early on their own and give smaller fruit."
+      },
+      {
+       "title": "Strip the lowest leaves",
+       "how": "Pull off a few of the dry lowest leaves so the base of the sucker is bare and clean."
+      },
+      {
+       "title": "Sort them into lots",
+       "how": "Divide the suckers into small, medium and large piles, and keep slips and crowns apart from suckers, so each lot is planted in its own block."
+      },
+      {
+       "title": "Dry the bases in the sun for a week",
+       "how": "Lay the suckers with their bases facing the sun for about a week, so the cut base dries and seals before it goes into the soil. Some growers also spray or dip the bases in a fungicide during this curing.",
+       "time": "about 7 days"
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -92,7 +115,30 @@
      "title": "Force the plants to flower",
      "how": "When the plants are big and full of leaves, at about 10 to 12 months, pour a little carbide water or a flowering answer mixed with urea into the heart of each plant, early in the morning or at night.",
      "task": "other",
-     "tip": "Force one block at a time so the harvest is spread out."
+     "tip": "Force one block at a time so the harvest is spread out.",
+     "parts": [
+      {
+       "title": "Wait until the plants are big",
+       "how": "Force only plants about 10 to 12 months old and full of leaves."
+      },
+      {
+       "title": "Mix the carbide water",
+       "how": "Dissolve about 2 kg of calcium carbide in a kerosene can full of water, outdoors and far from any flame, since it gives off a gas that burns."
+      },
+      {
+       "title": "Pour it into the heart",
+       "how": "Pour about 30 ml, around three tablespoons, into the center of each plant, late in the afternoon or early in the morning when it is cool."
+      },
+      {
+       "title": "Or drop a small lump",
+       "how": "Some farmers drop a lump of carbide about the size of a sitao seed into the water held in the heart of each plant, in the morning."
+      },
+      {
+       "title": "Count the days to harvest",
+       "how": "Mark the date for each block. Fruit is usually ready about four and a half to five months after forcing. Many growers now force with a ripening hormone mixed with urea instead of carbide.",
+       "time": "4.5 to 5 months"
+      }
+     ]
     },
     {
      "phase": "care",
@@ -156,5 +202,5 @@
  "kind": "annual",
  "icon": "🍍",
  "slug": "pineapple",
- "rev": "8841aeacc027"
+ "rev": "21a102b4505c"
 }

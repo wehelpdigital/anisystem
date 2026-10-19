@@ -126,7 +126,36 @@
      "day": 57,
      "title": "Stick and cure the same day",
      "how": "Lay the leaves butt down in the shade, sort them by ripeness and size and tie them onto sticks. Virginia goes into the flue barn and the fire starts within half a day. Burley hangs in an airy shed. Native leaf is sun dried on racks for about 10 to 14 days, covered at night and in rain.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Haul and pile in the shade",
+       "how": "Carry the primed leaves out of the sun right away and lay them on bamboo slats, cheesecloth or a buri mat, never on bare ground. Stand them upright in piles with the butt ends down."
+      },
+      {
+       "title": "Sort before sticking",
+       "how": "Sort the leaves by ripeness, damage and length, so each stick holds leaves that cure alike. Prime only as many leaves as you can stick in one day."
+      },
+      {
+       "title": "Tie the leaves on sticks",
+       "how": "String or tie the leaves by their butts along the curing sticks. For the flue barn, a 60 cm stick holds about 46 leaves. A stick of native batek holds about 28 to 30 leaves."
+      },
+      {
+       "title": "Virginia: fire the barn within 12 hours",
+       "how": "Hang the sticks in the tight flue barn the same day and light the furnace within 12 hours of loading. Follow the curing chart stage by stage, from yellowing to leaf drying, watching the thermometer. When done, open all vents and doors, let the leaves cool and soften, then unload.",
+       "time": "start within 12 hours"
+      },
+      {
+       "title": "Burley: hang in the air shed",
+       "how": "Hang the sticks about 15 to 25 cm apart in the shed. Keep the walls closed until the leaves have yellowed, then open the sides when the air inside is very damp, above about 70 percent, and close them when it dries below about 65. Burley is never sun dried.",
+       "tip": "A hygrometer in the shed tells you when to open and close the sides."
+      },
+      {
+       "title": "Native: sun wilt, then cure",
+       "how": "Hang batek sticks in full sun for 10 to 14 days, or until the leaf blades turn brown, covering them with black plastic at night and in rain. When the blades are brown but the midribs still green, pile them under a weight for a day and put them back on the racks for about 14 to 21 more days, until the whole leaf is cured. Cigar filler is sun wilted on racks about 1.5 m high for no more than 5 to 7 days, then air cured in a shed until the midribs are dry, at least 25 to 30 days.",
+       "time": "about 3 to 5 weeks"
+      }
+     ]
     },
     {
      "phase": "harvest",
@@ -137,10 +166,60 @@
     },
     {
      "phase": "harvest",
+     "day": 108,
+     "title": "Ferment cigar filler in a mandala",
+     "how": "Native cigar filler is fermented after curing, in a big covered pile called a mandala, and turned whenever the pile heats up, for about a month.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Moisten the butts",
+       "how": "Spray the butt ends of the cured leaves lightly with water, or leave them out in the morning dew, so they are pliable before piling."
+      },
+      {
+       "title": "Build the mandala",
+       "how": "Pile the leaves of each priming in a round heap with the butt ends facing out. Stand a small bamboo pole with holes in the middle and keep a thermometer inside it, then lay cheesecloth or buri mats over the heap and weigh it down."
+      },
+      {
+       "title": "Read the heat twice a day",
+       "how": "Check the thermometer every day at about 7 in the morning and 5 in the afternoon.",
+       "time": "twice a day"
+      },
+      {
+       "title": "Turn the pile as it heats",
+       "how": "Rebuild the mandala the first time when it reaches about 46 to 48 degrees, the second time at about 49 to 51 degrees, and the third time at about 52 to 54 degrees."
+      },
+      {
+       "title": "Finish after a month",
+       "how": "Fermenting takes about 30 to 35 days in all. Then classify the leaves and bundle them for sale.",
+       "time": "30 to 35 days"
+      }
+     ]
+    },
+    {
+     "phase": "harvest",
      "day": 110,
      "title": "Sort and bale the cured leaves",
      "how": "Sort the cured leaves by place on the stalk, color, length and damage, and press them in bales of not more than 50 kg. Keep strings, plastic and other trash out, since buyers reject bales with foreign matter.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Unload when the leaves are soft",
+       "how": "Take the cured leaves down early in the morning, when they are soft and bend without breaking, and pile them by priming under cheesecloth or a buri mat."
+      },
+      {
+       "title": "Rest the piles",
+       "how": "Let air cured leaves rest in the pile for about a week to ten days so they condition evenly. If the leaves are not sold within a week, rebuild the pile once a week so it does not heat and burn.",
+       "time": "7 to 10 days"
+      },
+      {
+       "title": "Classify the leaves",
+       "how": "Strip the leaves off the sticks and sort them by place on the stalk, color, length and damage, keeping each class in its own pile."
+      },
+      {
+       "title": "Bundle and bale dry leaf",
+       "how": "Tie the sorted leaves in small bundles and pack them into bales as the buyer asks. The leaf should hold no more than about 18 percent moisture, and the bale must be free of strings, plastic and other trash."
+      }
+     ]
     }
    ],
    "note": "Days are counted from transplanting. Leaves are picked from about 55 to 60 days, a few at a time every week, until the last top leaves at about 100 to 110 days. Native tobacco starts a little later, at about 60 to 65 days."
@@ -183,5 +262,5 @@
  "kind": "annual",
  "icon": "🌿",
  "slug": "tobacco",
- "rev": "1e09ee62df94"
+ "rev": "de8d5c4388cd"
 }

@@ -42,14 +42,51 @@
      "title": "Cut and sort the cane points",
      "how": "Cut the seed cane into pieces with two or three eyes each and peel off the dry sheaths. Keep only pieces with plump, unbroken eyes and clean white flesh, and keep them in the shade.",
      "task": "seed_treatment",
-     "tip": "Cut ends that show red inside mean red rot. Burn those pieces."
+     "tip": "Cut ends that show red inside mean red rot. Burn those pieces.",
+     "parts": [
+      {
+       "title": "Choose the seed cane",
+       "how": "Take seed cane from a healthy, even stand about 8 to 10 months old, with no black smut whips, no stunted clumps and no stalks red inside. The tops cut off at harvest can also be used if they are fresh and sound."
+      },
+      {
+       "title": "Cut clean pieces of two or three eyes",
+       "how": "Lay the stalk on a wooden block and cut it with one sharp stroke of the cane knife, so the ends are clean and not crushed. Each piece should carry two or three eyes, with the cut a little away from the nearest eye."
+      },
+      {
+       "title": "Peel the sheaths gently",
+       "how": "Pull the dry leaf sheaths off by hand, slowly, without rubbing or knocking the eyes, since a bruised eye will not sprout."
+      },
+      {
+       "title": "Sort out the bad pieces",
+       "how": "Keep pieces with plump, whole eyes and white, clean flesh at both cut ends. Throw out pieces with dead or broken eyes, and burn any that show red inside, the sign of red rot."
+      },
+      {
+       "title": "Keep them shaded and plant soon",
+       "how": "Pile the sorted pieces in the shade under cane leaves so they stay fresh, and plant them within a few days. Pieces that dry out sprout poorly and unevenly."
+      }
+     ]
     },
     {
      "phase": "prep",
      "day": -1,
      "title": "Soak the cane points",
      "how": "Soak the sorted pieces in clean water overnight so the eyes wake up and sprout evenly.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Soak them overnight",
+       "how": "Put the sorted pieces in clean water overnight, in a drum or a big tub, so the eyes take up water and sprout together.",
+       "time": "overnight"
+      },
+      {
+       "title": "Treat against rot if you can",
+       "how": "Farmers who want fewer rotten pieces dip the cut ends in a fungicide after soaking, and some mills give seed cane a hot water treatment against diseases carried in the cane."
+      },
+      {
+       "title": "Plant them while still wet",
+       "how": "Carry the soaked pieces to the field and plant them the same day, keeping them covered so they do not dry in the sun on the way."
+      }
+     ]
     },
     {
      "phase": "planting",
@@ -164,5 +201,5 @@
  "kind": "annual",
  "icon": "🎋",
  "slug": "sugarcane",
- "rev": "1c4d67d06611"
+ "rev": "c2e0d17bdbc1"
 }

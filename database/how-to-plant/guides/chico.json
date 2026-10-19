@@ -27,14 +27,48 @@
      "day": -240,
      "title": "Make the marcot",
      "how": "In the rainy season, pick a healthy, fairly upright branch about 1 cm thick on a heavy bearing tree. Peel a ring of bark, wrap the cut with moist coir or soil in plastic and tie both ends.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Choose the mother tree and the branch",
+       "how": "Pick a tree that bears every year, with good fruit and no pests or disease, and not too old. On it choose a branch about 1 cm thick, neither too young nor too old, growing upward in the sun, with no flowers or fruit on it."
+      },
+      {
+       "title": "Mix the rooting ball",
+       "how": "Mix garden soil with rice hull, or with mudpress from a sugar mill or coir dust where you can get it. Wet it until it holds together when squeezed but does not drip."
+      },
+      {
+       "title": "Peel a ring of bark",
+       "how": "With a clean, sharp knife, cut twice around the branch a short distance apart and peel off the bark between the cuts. Scrape off the slippery green layer under the bark too, or the bark heals over instead of making roots."
+      },
+      {
+       "title": "Wrap and tie",
+       "how": "Hold a piece of clear plastic around the branch below the ring, pack a ball of the moist mix over the whole ring, close the plastic around it and tie both ends tightly with plastic straw."
+      },
+      {
+       "title": "Wait for the roots",
+       "how": "Chico roots slowly. Leave the wrap on the tree and look at it every few weeks, adding a little water at the top if the ball dries. It is ready when roots fill the ball and show all around through the plastic.",
+       "time": "4 to 12 months"
+      }
+     ]
     },
     {
      "phase": "nursery",
      "day": -60,
      "title": "Cut and pot the rooted marcot",
      "how": "When roots show all through the wrap, cut the branch below it, remove the plastic and plant it in a bag of loose soil. Keep it in light shade and water it until new leaves come.",
-     "task": "seedbed"
+     "task": "seedbed",
+     "parts": [
+      {
+       "title": "Cut it and bag it",
+       "how": "Cut the branch just below the ball with sharp shears or a saw. Take off the plastic gently, without breaking the ball, and plant it in a 6 by 8 inch bag of two parts soil, one part compost and one part rice hull."
+      },
+      {
+       "title": "Nurse it in the shade",
+       "how": "Keep the new plant in the shade, out of the rain, and water it daily. After two weeks move it where it gets some sun, and pick off any flowers so it grows roots and leaves first.",
+       "time": "2 weeks in the shade"
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -125,5 +159,5 @@
  "kind": "perennial",
  "icon": "🥔",
  "slug": "chico",
- "rev": "acdd54c0e7ca"
+ "rev": "31a6ae7fff4a"
 }

@@ -67,6 +67,34 @@
     {
      "title": "14 days before sowing: Ready the field after the rice",
      "text": "Right after the rice harvest, cut the stubble close to the ground and pull the weeds if you sow without plowing. Otherwise plow about 15 cm deep, harrow two or three times and open furrows about 75 to 100 cm apart."
+    },
+    {
+     "title": "1 day before sowing: Soak and warm the seed",
+     "text": "Where the soil is moist, cotton seed is soaked and kept warm for a short while before sowing so it comes up fast and even. Where rain is doubtful, it is sown dry instead.",
+     "parts": [
+      {
+       "title": "Use fresh seed of the season",
+       "text": "Get the seed from the program or the buyer each season, since saved cotton seed loses its strength."
+      },
+      {
+       "title": "Soak it for half a day",
+       "text": "Soak the fuzzy seed in water with a fungicide mixed in, to guard against seedling rot, for about 6 to 10 hours.",
+       "time": "6 to 10 hours"
+      },
+      {
+       "title": "Drain and keep it warm",
+       "text": "Drain the seed and keep it in a warm, moist place out of the sun for no more than 12 hours.",
+       "time": "up to 12 hours"
+      },
+      {
+       "title": "Sow it right away",
+       "text": "Sow the soaked seed as soon as the warming is over, before the sprouts dry out or grow long."
+      },
+      {
+       "title": "In dry fields, sow dry seed",
+       "text": "When rain is uncertain and the field is dry, do not soak. Mix the dry seed well with a dry fungicide powder and sow it as it is."
+      }
+     ]
     }
    ]
   },
@@ -148,7 +176,22 @@
     },
     {
      "title": "Day 111: Sun dry and pack the seed cotton",
-     "text": "Spread the picked cotton in the sun for one to two days, then pack it in jute or flour sacks. Keep plastic strings and scraps away from it."
+     "text": "Spread the picked cotton in the sun for one to two days, then pack it in jute or flour sacks. Keep plastic strings and scraps away from it.",
+     "parts": [
+      {
+       "title": "Spread it in the sun",
+       "text": "Spread the picked seed cotton thinly on clean mats or canvas in the sun for one to two days, turning it now and then, and keep it off bare soil.",
+       "time": "1 to 2 days"
+      },
+      {
+       "title": "Dry it enough to keep",
+       "text": "Drying brings the moisture down to about 10 to 12 percent and also kills the pink bollworm larvae hiding in the cotton."
+      },
+      {
+       "title": "Pack it in natural sacks",
+       "text": "Pack the dry seed cotton in jute or flour sacks tied with natural string. Plastic sacks and nylon strings leave fibers in the lint, and buyers pay less for it."
+      }
+     ]
     },
     {
      "title": "Day 165: Clear the stalks",

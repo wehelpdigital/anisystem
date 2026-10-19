@@ -87,7 +87,34 @@
      "day": 101,
      "title": "Dry and thresh",
      "how": "Dry the heads face up in the sun for a few days, rub or beat out the seeds, clean them and dry them again until they crack when bitten before storing in sealed sacks.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Cut the heads with a stalk",
+       "how": "Cut each brown, dry head with sharp shears or a bolo about six inches below it, so you have a handle to carry and turn it."
+      },
+      {
+       "title": "Dry the heads face up",
+       "how": "Lay the heads face up on mats or a clean floor in the sun for a few days, and bring them in or cover them at night and when rain comes.",
+       "time": "a few days"
+      },
+      {
+       "title": "Rub out the seeds",
+       "how": "Rub the palm of your hand hard across the face of each head, or beat it against a board or inside a sack, until the seeds fall free."
+      },
+      {
+       "title": "Clean the seed",
+       "how": "Winnow out the dry flower bits, chaff and empty seeds in the wind or in front of a fan."
+      },
+      {
+       "title": "Dry again and bite to test",
+       "how": "Spread the clean seed in the sun again until a seed cracks when you bite it instead of bending."
+      },
+      {
+       "title": "Store it sealed",
+       "how": "Keep seed for the next planting in a tightly closed container in a cool, dry place, and pack seed for sale in sealed sacks raised off the floor."
+      }
+     ]
     }
    ],
    "note": "Days from sowing. Flowers open at about 55 to 70 days, which is when flower farms open for visitors. Seed heads are ready at about 90 to 110 days."
@@ -178,5 +205,5 @@
  "kind": "annual",
  "icon": "🌻",
  "slug": "sunflower",
- "rev": "3b91e1e4b67c"
+ "rev": "a7750e62ad17"
 }

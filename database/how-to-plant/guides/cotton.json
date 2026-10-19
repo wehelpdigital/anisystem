@@ -27,6 +27,37 @@
      "task": "land_prep"
     },
     {
+     "phase": "prep",
+     "day": -1,
+     "title": "Soak and warm the seed",
+     "how": "Where the soil is moist, cotton seed is soaked and kept warm for a short while before sowing so it comes up fast and even. Where rain is doubtful, it is sown dry instead.",
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Use fresh seed of the season",
+       "how": "Get the seed from the program or the buyer each season, since saved cotton seed loses its strength."
+      },
+      {
+       "title": "Soak it for half a day",
+       "how": "Soak the fuzzy seed in water with a fungicide mixed in, to guard against seedling rot, for about 6 to 10 hours.",
+       "time": "6 to 10 hours"
+      },
+      {
+       "title": "Drain and keep it warm",
+       "how": "Drain the seed and keep it in a warm, moist place out of the sun for no more than 12 hours.",
+       "time": "up to 12 hours"
+      },
+      {
+       "title": "Sow it right away",
+       "how": "Sow the soaked seed as soon as the warming is over, before the sprouts dry out or grow long."
+      },
+      {
+       "title": "In dry fields, sow dry seed",
+       "how": "When rain is uncertain and the field is dry, do not soak. Mix the dry seed well with a dry fungicide powder and sow it as it is."
+      }
+     ]
+    },
+    {
      "phase": "planting",
      "day": 0,
      "title": "Band the first fertilizer",
@@ -116,7 +147,22 @@
      "day": 111,
      "title": "Sun dry and pack the seed cotton",
      "how": "Spread the picked cotton in the sun for one to two days, then pack it in jute or flour sacks. Keep plastic strings and scraps away from it.",
-     "task": "postharvest"
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Spread it in the sun",
+       "how": "Spread the picked seed cotton thinly on clean mats or canvas in the sun for one to two days, turning it now and then, and keep it off bare soil.",
+       "time": "1 to 2 days"
+      },
+      {
+       "title": "Dry it enough to keep",
+       "how": "Drying brings the moisture down to about 10 to 12 percent and also kills the pink bollworm larvae hiding in the cotton."
+      },
+      {
+       "title": "Pack it in natural sacks",
+       "how": "Pack the dry seed cotton in jute or flour sacks tied with natural string. Plastic sacks and nylon strings leave fibers in the lint, and buyers pay less for it."
+      }
+     ]
     },
     {
      "phase": "harvest",
@@ -159,5 +205,5 @@
  "kind": "annual",
  "icon": "🌾",
  "slug": "cotton",
- "rev": "a9ff8ea06b7d"
+ "rev": "f9da903d0622"
 }

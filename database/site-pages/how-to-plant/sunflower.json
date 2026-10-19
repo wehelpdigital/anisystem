@@ -133,7 +133,34 @@
     },
     {
      "title": "Day 101: Dry and thresh",
-     "text": "Dry the heads face up in the sun for a few days, rub or beat out the seeds, clean them and dry them again until they crack when bitten before storing in sealed sacks."
+     "text": "Dry the heads face up in the sun for a few days, rub or beat out the seeds, clean them and dry them again until they crack when bitten before storing in sealed sacks.",
+     "parts": [
+      {
+       "title": "Cut the heads with a stalk",
+       "text": "Cut each brown, dry head with sharp shears or a bolo about six inches below it, so you have a handle to carry and turn it."
+      },
+      {
+       "title": "Dry the heads face up",
+       "text": "Lay the heads face up on mats or a clean floor in the sun for a few days, and bring them in or cover them at night and when rain comes.",
+       "time": "a few days"
+      },
+      {
+       "title": "Rub out the seeds",
+       "text": "Rub the palm of your hand hard across the face of each head, or beat it against a board or inside a sack, until the seeds fall free."
+      },
+      {
+       "title": "Clean the seed",
+       "text": "Winnow out the dry flower bits, chaff and empty seeds in the wind or in front of a fan."
+      },
+      {
+       "title": "Dry again and bite to test",
+       "text": "Spread the clean seed in the sun again until a seed cracks when you bite it instead of bending."
+      },
+      {
+       "title": "Store it sealed",
+       "text": "Keep seed for the next planting in a tightly closed container in a cool, dry place, and pack seed for sale in sealed sacks raised off the floor."
+      }
+     ]
     }
    ]
   },

@@ -83,7 +83,33 @@
     },
     {
      "title": "2 days before planting: Dig and clean the planting material",
-     "text": "Dig suckers or corms from healthy mats only. Trim the roots, cut away rotten parts and cut back the leaves so the plant loses less water. Tip: Leave out any mat with yellow streaks, bunched leaves or a shrunken top. Those carry virus."
+     "text": "Dig suckers or corms from healthy mats only. Trim the roots, cut away rotten parts and cut back the leaves so the plant loses less water. Tip: Leave out any mat with yellow streaks, bunched leaves or a shrunken top. Those carry virus.",
+     "parts": [
+      {
+       "title": "Go only to healthy mats",
+       "text": "Take planting material only from mats of strong, healthy mother plants in a farm free of virus. Walk the mats first and pass by any with yellow streaks, bunched leaves or a stunted top."
+      },
+      {
+       "title": "Choose immature suckers",
+       "text": "The best suckers are immature ones about 9 to 11 months old and at least 1 m tall. Leave the small sword suckers of about half a meter, which die often after planting."
+      },
+      {
+       "title": "Or cut corm pieces",
+       "text": "Where suckers are few, dig a healthy corm and cut it into seedpieces that each carry at least three good eyes, or into single eye pieces with one plump bud each."
+      },
+      {
+       "title": "Trim and clean",
+       "text": "Cut off the old roots and every rotten or dark part, and cut back the leaves so the plant loses less water. Throw out any corm with weevil tunnels in it."
+      },
+      {
+       "title": "Guard against corm weevil",
+       "text": "Where corm weevil is a problem, many farmers soak the seedpieces or suckers in an insecticide dip before planting."
+      },
+      {
+       "title": "Keep your tools clean",
+       "text": "Wash and wipe the bolo, knife and spade between mats, since dirty tools carry disease from one hill to the next."
+      }
+     ]
     }
    ]
   },
@@ -149,11 +175,57 @@
     },
     {
      "title": "Month 20: Peel the tuxies the same day",
-     "text": "Slip a thin knife between the outer and middle layers at the base of each leaf sheath and pull off the outer strips (tuxies), two or three fingers wide, keeping the layers from different sheaths apart."
+     "text": "Slip a thin knife between the outer and middle layers at the base of each leaf sheath and pull off the outer strips (tuxies), two or three fingers wide, keeping the layers from different sheaths apart.",
+     "parts": [
+      {
+       "title": "Tuxy within a day of felling",
+       "text": "Pull the felled stalk apart into its leaf sheaths and take off the tuxies the same day, or within 24 hours at most, before the sheaths turn dark and the fiber loses grade.",
+       "time": "within 24 hours"
+      },
+      {
+       "title": "The locnit way",
+       "text": "With the sheath still on the stalk, slip the thin tuxying knife between the outer and middle layers at the bottom end, grip the loosened strip and pull it off along the whole length, in two or three strips per sheath."
+      },
+      {
+       "title": "The bacnis way",
+       "text": "Or first peel the whole sheath off the stalk and split it into two or three pieces as wide as you can handle. Make a slanting cut through the inner layer about 2 feet from the butt end, hold it and pull the inner layer away from the tuxy."
+      },
+      {
+       "title": "Keep the layers apart",
+       "text": "Pile the tuxies by where their sheath sat on the stalk, outer, middle and inner, since each gives a different grade of fiber."
+      }
+     ]
     },
     {
      "title": "Month 20: Strip, dry and bundle the fiber",
-     "text": "Pull the tuxies under the stripping knife within a day. Dry the fiber in the sun for a day or in the air for two to three days, keeping it off the ground, then tie it in bundles and store it dry and raised."
+     "text": "Pull the tuxies under the stripping knife within a day. Dry the fiber in the sun for a day or in the air for two to three days, keeping it off the ground, then tie it in bundles and store it dry and raised.",
+     "parts": [
+      {
+       "title": "Strip under the knife",
+       "text": "Place each tuxy under the stripping knife on its block, press the knife down and pull the tuxy through with a pulling aid. A knife with no teeth gives the cleanest, best paid fiber, and toothed knives give coarser grades. Tip: Keep the knife teeth even by redenting it now and then, or the grade drops."
+      },
+      {
+       "title": "Hang it in thin layers",
+       "text": "Hang the wet fiber thinly over bamboo poles on sturdy posts, or lay it on a clean cement floor, keeping the tips off the soil. Turn it over after about two hours."
+      },
+      {
+       "title": "Dry it a day, not longer",
+       "text": "A day of sun, or two to three days of air drying, brings the fiber dry enough to keep, at about 15 percent moisture or less. Drying much longer makes the fiber brittle and weak.",
+       "time": "1 day of sun or 2 to 3 days in air"
+      },
+      {
+       "title": "Sort by sheath and color",
+       "text": "Before bundling, sort the dry fiber by the part of the stalk it came from, how clean it is and its color, and never mix grades in one bundle."
+      },
+      {
+       "title": "Tie the bundles",
+       "text": "Lay two or three twists of abaca fiber side by side on a clean floor, lay the hanks across them and fold them in half until the bundle is the size you can carry, then tie it tight. Use a twist of the same grade as the bundle."
+      },
+      {
+       "title": "Store it dry and raised",
+       "text": "Keep the bundles on pallets in a cool, dry shed, away from leaves, twigs and trash. Wrap them in plastic bags when hauling them in the rainy season."
+      }
+     ]
     },
     {
      "title": "Year 2: Keep cutting every few months",

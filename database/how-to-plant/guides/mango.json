@@ -22,6 +22,43 @@
    "days": 1800,
    "steps": [
     {
+     "phase": "nursery",
+     "day": -300,
+     "title": "Graft your own seedlings (cleft grafting)",
+     "how": "Some growers graft their own seedlings instead of buying them. Cleft or wedge grafting is the way most used here: a twig of a proven carabao tree is set into a split native seedling.",
+     "task": "other",
+     "parts": [
+      {
+       "title": "Raise the rootstock",
+       "how": "Sow seeds of native or carabao mango in bags and grow them into sturdy seedlings with a thick stem and plenty of roots. These carry the new tree."
+      },
+      {
+       "title": "Take the scion from a proven tree",
+       "how": "Cut a healthy twig from a tree that bears well every year, early in the morning. Pull off its leaves without hurting the buds and keep it wrapped and out of the sun so it does not dry."
+      },
+      {
+       "title": "Split the rootstock",
+       "how": "Cut off the top of the seedling where the stem is still growing actively, then split the stump down the middle with a clean, sharp knife."
+      },
+      {
+       "title": "Shape the scion into a wedge",
+       "how": "Cut the base of the scion into a short wedge with two smooth, slanting strokes. A rough cut leaves gaps, and the graft heals slowly or fails."
+      },
+      {
+       "title": "Set the wedge and bind it",
+       "how": "Push the wedge into the split so the bark edges of scion and stock meet. Wrap the joint and the whole scion firmly with a strip of thin plastic. The graft is tight enough when you can lift the seedling by the scion without moving the joint."
+      },
+      {
+       "title": "Cover and care for it",
+       "how": "Cover the scion with a small plastic bag or an ice candy wrapper so water cannot get into the joint, and keep the seedling in light shade. Rub off any shoot that grows below the graft."
+      },
+      {
+       "title": "Unwrap when it sprouts",
+       "how": "Once the scion pushes out fresh green leaves, the graft has taken. Remove the bag, unwind the plastic strip and cut the tie, and move the seedling to a bigger bag when it needs one."
+      }
+     ]
+    },
+    {
      "phase": "prep",
      "day": -60,
      "title": "Clear the spot and dig the holes",
@@ -183,5 +220,5 @@
  "kind": "perennial",
  "icon": "🥭",
  "slug": "mango",
- "rev": "677f9aea20fe"
+ "rev": "fbb633cb7af7"
 }

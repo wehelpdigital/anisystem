@@ -74,7 +74,17 @@
     },
     {
      "title": "14 days before planting: Dig the holes",
-     "text": "Dig a hole at each stake a little bigger than the bag. Hard, packed soil needs bigger holes than loose loam, and big seedlings need bigger holes than small ones."
+     "text": "Dig a hole at each stake a little bigger than the bag. Hard, packed soil needs bigger holes than loose loam, and big seedlings need bigger holes than small ones.",
+     "parts": [
+      {
+       "title": "Size the hole to the soil",
+       "text": "In soft, fertile soil, a hole about 25 to 30 cm wide and 40 to 45 cm deep is enough. In ordinary or hard soil, dig wider and deeper, about 40 to 45 cm across and 50 to 60 cm deep, so the young roots can push out quickly."
+      },
+      {
+       "title": "Clear out old tree roots",
+       "text": "On land that grew gmelina, falcata, acacia, mangium or other trees, dig or plow deep and pull out the old roots, which harbor the fungus of root disease. Keep root pieces out of the soil you will put back."
+      }
+     ]
     }
    ]
   },
@@ -88,7 +98,34 @@
    "items": [
     {
      "title": "Planting day: Plant the budded seedling",
-     "text": "On a rainy day, cut off the bottom of the bag and slit its side without hurting the roots. Lower the seedling into the hole, pull the plastic up and off, fill with topsoil and press it firm, keeping the plant at the same depth it stood in the bag. Tip: A seedling set too deep or too high can grow a swollen foot that is hard to tap later."
+     "text": "On a rainy day, cut off the bottom of the bag and slit its side without hurting the roots. Lower the seedling into the hole, pull the plastic up and off, fill with topsoil and press it firm, keeping the plant at the same depth it stood in the bag. Tip: A seedling set too deep or too high can grow a swollen foot that is hard to tap later.",
+     "parts": [
+      {
+       "title": "Choose ready seedlings",
+       "text": "Plant only healthy budded seedlings whose newest flush of leaves has matured to dark green. Plant the bigger seedlings first and the smaller ones later."
+      },
+      {
+       "title": "Bring out only a day's planting",
+       "text": "Set beside the holes only as many seedlings as you can plant that day, and carry them by the bag. A bruised or broken seedling can stand still for about three months."
+      },
+      {
+       "title": "Measure the fertilizer with a sardine can",
+       "text": "An empty sardine can holds about 150 g. Use one can of rock phosphate (0 30 0) or another fertilizer high in phosphorus for each tree: half in the bottom of the hole and half after filling. Tip: Phosphorus at planting helps the new roots grow fast and strong."
+      },
+      {
+       "title": "Cut, set and fill",
+       "text": "Slit the bottom of the bag with a blade, set the seedling in the hole on the first half of the fertilizer, and pull the plastic halfway up. Fill in topsoil, pour in the rest of the fertilizer, then pull the plastic off completely and finish filling."
+      },
+      {
+       "title": "Keep the soil below the bud union",
+       "text": "Finish with the soil about 5 to 10 cm below the bud union, the joint of the bud and the rootstock. Soil piled higher makes the base swell into an elephant foot that is hard to tap."
+      },
+      {
+       "title": "Check after two weeks",
+       "text": "Two weeks after planting, walk the rows and replace seedlings that did not take. Keep replacing for up to six months.",
+       "time": "from 2 weeks, up to 6 months"
+      }
+     ]
     }
    ]
   },

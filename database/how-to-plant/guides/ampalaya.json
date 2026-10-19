@@ -39,7 +39,31 @@
      "day": -4,
      "title": "Soak and sprout the seed",
      "how": "Soak the seed overnight, drain it and wrap it in a damp cloth in a shaded place. Plant the seeds once the coat cracks and a small root shows, usually after 3 to 4 days.",
-     "task": "seed_treatment"
+     "task": "seed_treatment",
+     "parts": [
+      {
+       "title": "Soak overnight",
+       "how": "Put the seed in clean water and leave it overnight so the hard shell softens.",
+       "time": "overnight"
+      },
+      {
+       "title": "Nick very hard seed",
+       "how": "If the shell is very hard, carefully nick the tip of the shell with a sharp knife, without cutting into the white kernel inside, so water gets in faster."
+      },
+      {
+       "title": "Wrap it in a damp cloth",
+       "how": "Drain the seed, wrap it in a damp cloth or sack and keep it in a shaded place. Sprinkle the cloth when it starts to dry, but do not let water stand in it."
+      },
+      {
+       "title": "Check every day",
+       "how": "Open the cloth each day. The seed is ready when the shell cracks and a small white root shows, usually in 3 to 4 days.",
+       "time": "3 to 4 days"
+      },
+      {
+       "title": "Plant before the root grows long",
+       "how": "Plant the sprouted seed right away, root down, handling it gently. A long root breaks easily and the seedling then comes up weak or not at all."
+      }
+     ]
     },
     {
      "phase": "prep",
@@ -82,7 +106,29 @@
      "title": "Put up the trellis",
      "how": "When the vines are about 15 cm tall, set bamboo, ipil ipil or kakawate posts about every 3 meters and build either an A frame or a flat roof about 1.5 to 2 meters high. Stretch wire or nylon across the top and tie a string from each hill up to it.",
      "task": "propping",
-     "tip": "Do not wait until the vines sprawl. Tangled vines break when you lift them."
+     "tip": "Do not wait until the vines sprawl. Tangled vines break when you lift them.",
+     "parts": [
+      {
+       "title": "Start early",
+       "how": "Put the trellis up while the vines are still about 15 cm tall, before they start to run on the ground and tangle."
+      },
+      {
+       "title": "Set the posts",
+       "how": "Set bamboo, ipil ipil or kakawate posts about every 3 meters along the rows. Build the frame about 2.5 to 3 meters wide and 1.5 to 2 meters high, as long as the field."
+      },
+      {
+       "title": "Choose an A frame or a flat roof",
+       "how": "An A frame leans the posts of two rows together at the top like a tent. A flat roof, or table type, keeps the top level over the rows. Both work, and many farmers say ampalaya does best on the A frame."
+      },
+      {
+       "title": "Lay the top",
+       "how": "Tie bamboo crosspieces along the top and weave tie wire or nylon across them so the vines have a net to spread on. An old fishing net stretched over the top does the same job."
+      },
+      {
+       "title": "Give each hill a string",
+       "how": "Drive a short stake about 12 inches long beside each seedling and tie a wire, nylon or plastic string from the top of the trellis down to it. The young vine climbs the string up to the roof."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -126,6 +172,37 @@
      "title": "Sort and pack",
      "how": "Sort by size and set aside damaged fruits. Pack them in a kaing lined with fresh banana leaves on the sides and bottom so they do not bruise.",
      "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 61,
+     "title": "Keep seed from ripe fruits",
+     "how": "Growers of open pollinated ampalaya keep their own seed by leaving some fruits on the best vines to ripen fully, then cleaning, drying and storing the seed.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Leave seed fruits to ripen",
+       "how": "Choose healthy, heavy bearing vines that are true to the variety. Leave a few well shaped fruits on them past the green stage until they are fully ripe."
+      },
+      {
+       "title": "Rest the picked fruits",
+       "how": "Keep the ripe fruits in the shade for a few days after picking. This loosens the slimy pulp around the seed so it comes away easily.",
+       "time": "4 to 6 days"
+      },
+      {
+       "title": "Slice, scrape and wash",
+       "how": "Slice each fruit along its length, scrape out the seed and wash it in water, rubbing off the red pulp until the seed is clean."
+      },
+      {
+       "title": "Air dry, then sun dry",
+       "how": "Spread the seed on a screen or put it in a net bag and dry it in the shade, where air moves, for at least three days. Then finish it in the sun for up to five days.",
+       "time": "at least 3 days in the shade, then up to 5 days in the sun"
+      },
+      {
+       "title": "Store it dry and cool",
+       "how": "Keep the dry seed in sealed plastic bags or glass jars, labeled with the variety and date, in a cool, dry place."
+      }
+     ]
     }
    ],
    "note": "The first fruits come about 45 to 75 days after sowing, depending on the variety. Picking then goes on two or three times a week for 2 to 3 months."
@@ -197,7 +274,29 @@
      "day": 10,
      "title": "Put up the trellis",
      "how": "When the vines are about 15 cm tall, build an A frame or a flat roof about 1.5 to 2 meters high on bamboo, ipil ipil or kakawate posts about every 3 meters. Run wire or nylon across the top and a string from each hill up to it.",
-     "task": "propping"
+     "task": "propping",
+     "parts": [
+      {
+       "title": "Start early",
+       "how": "Put the trellis up while the vines are still about 15 cm tall, before they start to run on the ground and tangle."
+      },
+      {
+       "title": "Set the posts",
+       "how": "Set bamboo, ipil ipil or kakawate posts about every 3 meters along the rows. Build the frame about 2.5 to 3 meters wide and 1.5 to 2 meters high, as long as the field."
+      },
+      {
+       "title": "Choose an A frame or a flat roof",
+       "how": "An A frame leans the posts of two rows together at the top like a tent. A flat roof, or table type, keeps the top level over the rows. Both work, and many farmers say ampalaya does best on the A frame."
+      },
+      {
+       "title": "Lay the top",
+       "how": "Tie bamboo crosspieces along the top and weave tie wire or nylon across them so the vines have a net to spread on. An old fishing net stretched over the top does the same job."
+      },
+      {
+       "title": "Give each hill a string",
+       "how": "Drive a short stake about 12 inches long beside each seedling and tie a wire, nylon or plastic string from the top of the trellis down to it. The young vine climbs the string up to the roof."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -240,6 +339,37 @@
      "title": "Sort and pack",
      "how": "Sort by size, take out damaged fruits and pack the rest in a kaing lined with fresh banana leaves.",
      "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 51,
+     "title": "Keep seed from ripe fruits",
+     "how": "Growers of open pollinated ampalaya keep their own seed by leaving some fruits on the best vines to ripen fully, then cleaning, drying and storing the seed.",
+     "task": "postharvest",
+     "parts": [
+      {
+       "title": "Leave seed fruits to ripen",
+       "how": "Choose healthy, heavy bearing vines that are true to the variety. Leave a few well shaped fruits on them past the green stage until they are fully ripe."
+      },
+      {
+       "title": "Rest the picked fruits",
+       "how": "Keep the ripe fruits in the shade for a few days after picking. This loosens the slimy pulp around the seed so it comes away easily.",
+       "time": "4 to 6 days"
+      },
+      {
+       "title": "Slice, scrape and wash",
+       "how": "Slice each fruit along its length, scrape out the seed and wash it in water, rubbing off the red pulp until the seed is clean."
+      },
+      {
+       "title": "Air dry, then sun dry",
+       "how": "Spread the seed on a screen or put it in a net bag and dry it in the shade, where air moves, for at least three days. Then finish it in the sun for up to five days.",
+       "time": "at least 3 days in the shade, then up to 5 days in the sun"
+      },
+      {
+       "title": "Store it dry and cool",
+       "how": "Keep the dry seed in sealed plastic bags or glass jars, labeled with the variety and date, in a cool, dry place."
+      }
+     ]
     }
    ],
    "note": "Seedlings go out about 15 days after sowing. Early hybrids give the first fruits about 45 to 60 days after transplanting and later kinds near 70 days."
@@ -282,5 +412,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "bitter-gourd",
- "rev": "2b3a4ed5b734"
+ "rev": "207c240487cc"
 }

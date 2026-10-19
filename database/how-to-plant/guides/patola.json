@@ -62,7 +62,25 @@
      "title": "Build the overhead trellis",
      "how": "Set ipil ipil or bamboo posts and build a flat roof about 2 meters high over rows 2 to 3 meters wide. Weave tie wire or nylon twine across and along the top, and give each plant its own pole or a ladder of string to climb.",
      "task": "propping",
-     "tip": "The trellis keeps the fruits straight and off the ground, which matters most in the rainy months."
+     "tip": "The trellis keeps the fruits straight and off the ground, which matters most in the rainy months.",
+     "parts": [
+      {
+       "title": "Why the roof pays",
+       "how": "On an overhead trellis the fruits hang straight and clean. In the rainy season it keeps them off the wet ground, so far fewer rot or come out crooked."
+      },
+      {
+       "title": "Set the posts",
+       "how": "Set ipil ipil or bamboo poles along and between the rows so the roof covers rows about 2 to 3 meters wide and stands about 2 meters high."
+      },
+      {
+       "title": "Weave a strong roof",
+       "how": "Run tie wire or nylon twine across and along the top of the posts, both ways, to make a strong net. It must carry the weight of many hanging fruits."
+      },
+      {
+       "title": "A pole or ladder for each plant",
+       "how": "Beside each hill, set a single upright pole or a small ladder of sticks that reaches up to the roof, so the young vine has something to climb."
+      }
+     ]
     },
     {
      "phase": "care",
@@ -174,5 +192,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "sponge-gourd",
- "rev": "3c87233a72f4"
+ "rev": "f165e087854a"
 }
