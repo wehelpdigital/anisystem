@@ -634,7 +634,9 @@ class WhenToPlantController extends Controller
 
         return array_filter([
             'name' => $r['name'], 'alias' => $r['aliases'][0] ?? null, 'type' => $r['type'], 'days' => $r['days'], 'daysUnit' => $r['daysUnit'],
-            'where' => $r['where'] ?: null, 'yieldAvg' => $r['yield'], 'yieldTop' => $r['yieldTop'] ?? null, 'year' => $r['year'],
+            'where' => $r['where'] ?: null, 'yieldAvg' => $r['yield'], 'yieldTop' => $r['yieldTop'] ?? null,
+            // Its own unit (2026-10-20): cane is LKg of sugar, coconut tonnes of copra, cacao tonnes of dry beans.
+            'yieldUnit' => $r['yieldUnit'] ?? 't/ha', 'year' => $r['year'],
             'source' => $l ? 'Anee\'s own web research of ' . date('M Y', strtotime((string) $l['at'])) . ', kept by the app' : 'anee.io\'s variety records',
             // A kept variety's other facts reach the prompt too.
             'learnedId' => $l['id'] ?? null, 'facts' => $l ? ($r['learnedLine'] ?? null) : null,
@@ -755,7 +757,7 @@ class WhenToPlantController extends Controller
         return $v['name'] . (! empty($v['alias']) ? ' (sold as ' . $v['alias'] . ')' : '')
             . ': ' . ($v['type'] ?? '') . (! empty($v['days']) ? ', ' . (int) round($v['days']) . ' ' . ($v['daysUnit'] ?? 'days') . ' to harvest' : '')
             . (! empty($v['where']) ? ', bred for ' . $v['where'] : '')
-            . (! empty($v['yieldAvg']) ? ', ' . $v['yieldAvg'] . ' t/ha average in the national trials' . (! empty($v['yieldTop']) ? ' and ' . $v['yieldTop'] . ' at best' : '') : '')
+            . (! empty($v['yieldAvg']) ? ', ' . $v['yieldAvg'] . ' ' . ($v['yieldUnit'] ?? 't/ha') . ' average in the national trials' . (! empty($v['yieldTop']) ? ' and ' . $v['yieldTop'] . ' at best' : '') : '')
             . (! empty($v['year']) ? ', released ' . $v['year'] : '') . ' (' . ($v['source'] ?? 'the variety records') . ')'
             . (! empty($v['trials']) ? '; ' . $v['trials'] . '. Weigh its dry and wet season figures when you score the months' : '');
     }
