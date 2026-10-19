@@ -1,0 +1,160 @@
+{
+ "crop": "bellpepper",
+ "name": "Bell pepper",
+ "local": "Atsal",
+ "aka": [
+  "siling atsal",
+  "lara",
+  "kampana"
+ ],
+ "summary": "How Filipino farmers grow atsal: seedlings raised for three to four weeks, set out in double rows on mulched beds, fed every two weeks, and the whole fruit cut when it is full sized and firm. It is for small farms in the lowlands during the cool months and in the uplands most of the year.",
+ "season": "Atsal needs cool weather for good fruits. In the lowlands farmers plant from about October to December, and at mid and high elevations it can be planted in any month.",
+ "material": "Seed, about 100 to 200 grams for a hectare. Farmers sow it in a raised nursery bed or trays and move the seedlings to the field three to four weeks after sowing, after hardening them for about a week.",
+ "spacing": "Beds 70 cm to 1 meter wide with two rows of plants, the plants 30 to 50 cm apart. On plastic mulch, holes about 50 by 50 cm.",
+ "water": "Water or irrigation about once a week, more in hot, dry spells, with mulch to keep the beds moist. The beds must drain well.",
+ "fertilizer": "Five to 10 tons of animal manure and 5 to 7 bags of 14 14 14 a hectare worked into the beds before planting. Urea every two weeks, about 5 to 10 grams a plant, then an equal mix of urea and muriate of potash once the plants fruit. The nursery bed gets manure and burnt rice hull.",
+ "care": "Mulch of rice hull, rice straw or plastic on the beds, weeding two to three times, and garlic or marigold planted among the rows to keep insects down. Wilted plants are pulled out early.",
+ "harvest": "Picking starts about 80 to 100 days after transplanting, or 3 to 6 weeks after flowering. Whole fruits are cut with a knife or scissors when full sized, firm and glossy, green or colored as the buyer wants, then sorted and packed in the shade.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Transplanted from a seedbed (lipat tanim)",
+   "days": 85,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -30,
+     "title": "Prepare the nursery bed",
+     "how": "Make a raised bed about 1 meter wide. For every square meter mix in 2 to 4 kg of animal manure and 1 to 2 kg of burnt rice hull, then water the bed.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -28,
+     "title": "Sow the seed",
+     "how": "Draw lines 7 to 10 cm apart across the bed and sow the seed thinly along them, or one seed a cell in trays. Cover lightly with fine soil and water gently.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow and harrow until the soil is fine and free of clods and weeds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "A week before planting, give the seedlings more sun each day and water them less, so they are not shocked by the field.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Make beds, manure and mulch",
+     "how": "Make beds 70 cm to 1 meter wide for two rows of plants. Work in 5 to 10 tons of animal manure and 5 to 7 bags of 14 14 14 for a hectare. Cover the beds with rice hull, rice straw or plastic mulch, tucking the plastic edges under soil.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in two rows",
+     "how": "Set the seedlings 30 to 50 cm apart in two rows on each bed, through holes in the plastic if used, late in the afternoon. Water them right away.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Replant missing hills",
+     "how": "Replace seedlings that died or wilted badly with spares from the nursery within the first week.",
+     "task": "replanting"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water every week",
+     "how": "Water or irrigate the beds about once a week, more often in hot, dry spells, without leaving water standing.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Urea every two weeks",
+     "how": "Every two weeks, give each plant about 5 to 10 grams of urea, more for weak plants and less for strong ones. Place it a few cm from the stem and water it in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Weed the beds",
+     "how": "Pull or hoe the weeds two to three times while the plants grow, mainly where there is no mulch.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 25,
+     "title": "Scout for pests",
+     "how": "Check under the leaves for aphids, thrips and mites, and look for holes in the fruits. Many farmers plant garlic or marigold among the rows to keep insects down, and pull wilted plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Feed for the fruits",
+     "how": "Once the plants start to fruit, switch the two weekly dose to an equal mix of urea and muriate of potash.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "harvest",
+     "day": 85,
+     "title": "Cut full sized fruits",
+     "how": "Cut whole fruits that are full sized, firm and glossy, either green or after they turn the color your buyer wants. Use a knife or scissors so the branch does not break.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 86,
+     "title": "Sort and pack",
+     "how": "Sort by size and color, set aside damaged fruits, and pack the rest in boxes or crates in the shade.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Picking starts about 80 to 100 days after transplanting, or 3 to 6 weeks after the flowers open, depending on the variety and the color wanted."
+  }
+ ],
+ "mistakes": [
+  "Planting atsal in the hot lowland months, so flowers drop and fruits stay small.",
+  "Planting it where tomato, eggplant or chili just grew, so wilt builds up in the soil.",
+  "Pulling fruits off by hand, which breaks the brittle branches.",
+  "Feeding only urea through the fruiting weeks, which gives leafy plants and soft fruits.",
+  "Letting water stand on the beds after heavy rain, which rots the roots."
+ ],
+ "better": [
+  "Have the soil tested and keep the pH near 5.5 to 6.5, liming acid soil.",
+  "Use good hybrid seed suited to your elevation and season, raised in trays with a clean mix.",
+  "Use silver plastic mulch and drip irrigation on raised beds for steady moisture and fewer weeds.",
+  "Stake tall plants so the heavy fruits do not snap the branches.",
+  "Scout weekly and use integrated pest management for thrips, mites and aphids.",
+  "Rotate with rice, corn or beans, not with tomato family crops."
+ ],
+ "video": {
+  "youtubeId": "-zubLlTsqbs",
+  "title": "Paano Magtanim ng Atsal, From Seeds to Harvest ( Complete Guide )",
+  "channel": "Pinoy Palaboy",
+  "lang": "fil",
+  "minutes": 14,
+  "why": "Filipino farmers grow atsal from seed to harvest in the field and explain the care along the way, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng atsal",
+  "paano magtanim ng bell pepper",
+  "pagtatanim ng atsal",
+  "abono sa atsal",
+  "how to plant bell pepper in the philippines",
+  "sweet pepper production guide philippines"
+ ],
+ "confidence": "medium",
+ "slug": "bell-pepper",
+ "rev": "b492a774fd10"
+}

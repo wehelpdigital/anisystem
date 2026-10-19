@@ -1,0 +1,120 @@
+{
+ "crop": "alfalfa",
+ "name": "Alfalfa",
+ "local": "Alfalfa",
+ "aka": [
+  "lucerne"
+ ],
+ "summary": "Alfalfa is rarely grown in the Philippines: it is a cattle feed crop of temperate countries, and here it is mostly tried on a few dairy and trial farms in cooler uplands, such as in northern Mindanao, with imported seed of subtropical kinds. This short guide is for those few growers. Most Filipinos know alfalfa only as sprouts.",
+ "season": "There is no settled local season. Trial growers sow at the end of the heavy rains so the young stand is not drowned, on high, well drained ground, and irrigate through the dry months.",
+ "material": "Seed, all of it imported, since no local seed is produced. The tiny seed is coated with an alfalfa inoculant, a live root bacteria powder, just before sowing so the plants can make their own nitrogen. Some trial growers raise seedlings in trays and transplant them instead of sowing straight.",
+ "spacing": "Sown thickly in rows or broadcast. Trial growers here have not settled on a spacing.",
+ "water": "Light, frequent watering until the seedlings root, then deep, less frequent irrigation in the dry months. Alfalfa cannot stand waterlogged soil.",
+ "fertilizer": "Lime to bring acid soil close to neutral, and inoculant on the seed so the plant makes its own nitrogen. Phosphorus and potash are given by soil test. Little or no nitrogen is needed once the roots carry nodules.",
+ "care": "Frequent hand weeding while the stand is young, mulch between rows, steady irrigation in the dry months and checks for aphids, leafhoppers and caterpillars.",
+ "harvest": "Cut when the stand begins to flower, leaving stubble to regrow, and cut again each time the regrowth flowers. It is fed fresh, dried as hay or made into silage.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in rows (tanim buto)",
+   "days": 70,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Test and lime the soil",
+     "how": "Alfalfa wants well drained soil that is close to neutral. Have the soil tested and work in agricultural lime well ahead of sowing if it is acid.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Make a fine, firm seedbed",
+     "how": "Plow and harrow until the soil is fine and level, then firm it so the tiny seed sits in close contact with moist soil. Avoid low spots where water stands.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -1,
+     "title": "Inoculate the seed",
+     "how": "Just before sowing, mix the seed with alfalfa inoculant in the shade, with a little water so it sticks. Keep the treated seed out of the sun and sow it the same day.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow shallow",
+     "how": "Drill the seed thinly in rows or broadcast it evenly, and cover it only very lightly, since seed buried deep will not come up. Water gently.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Keep the soil moist",
+     "how": "Water lightly and often until the seedlings are well rooted. Later water deeply but less often, as alfalfa grows a long taproot, and never let water stand.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Weed the young stand",
+     "how": "Hand weed often in the first weeks, since young alfalfa grows slowly and weeds can smother it. Mulch between rows where you can.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Scout for insects",
+     "how": "Check the tops for aphids, leafhoppers and caterpillars, which stunt the plants and yellow the leaves.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 70,
+     "title": "Take the first cut",
+     "how": "Cut the stand when it begins to flower, leaving a short stubble so it can regrow. Cutting in strips leaves some cover for helpful insects.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 71,
+     "title": "Feed, dry or store",
+     "how": "Feed the cut alfalfa fresh, chopped, to cattle, goats or rabbits, or dry it into hay, or pack it tightly to ferment as silage.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 100,
+     "title": "Cut the regrowth",
+     "how": "Cut again each time the regrowth starts to flower, and water and weed between cuts. Do not sow new alfalfa into an old stand, since old plants hold back new seedlings.",
+     "task": "harvest"
+    }
+   ],
+   "note": "The first cut is taken when the stand starts to flower, about two months or more after sowing in warm places. After that the regrowth is cut each time it begins to flower again, which in hot weather can be about once a month."
+  }
+ ],
+ "mistakes": [
+  "Sowing on acid soil without lime, so the plants stay yellow and stunted.",
+  "Skipping the inoculant, so the roots make no nitrogen.",
+  "Burying the tiny seed too deep, so it never comes up.",
+  "Planting on low, wet ground, where the roots rot.",
+  "Reseeding into an old alfalfa stand, which holds back the new seedlings."
+ ],
+ "better": [
+  "Start with a small trial plot of a subtropical variety before planting more.",
+  "Test the soil and lime well ahead of sowing.",
+  "Buy fresh seed with a matching alfalfa inoculant and keep both cool.",
+  "Plant on raised, well drained ground with irrigation for the dry months.",
+  "Compare it with forages that already do well here before relying on it for feed."
+ ],
+ "video": null,
+ "keywords": [
+  "paano magtanim ng alfalfa",
+  "alfalfa sa pilipinas",
+  "how to grow alfalfa in the philippines",
+  "alfalfa for dairy philippines"
+ ],
+ "confidence": "low",
+ "slug": "alfalfa",
+ "rev": "e0edbee5e826"
+}

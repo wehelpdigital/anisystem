@@ -37,7 +37,7 @@
      "phase": "planting",
      "day": 0,
      "title": "Fertilize and sow the hills",
-     "how": "Place complete fertilizer such as 14 14 14 about 5 to 8 cm deep and a few cm to the side of where the seeds go, about 100 to 150 kg for a hectare. Sow three or four seeds a hill, about 2.5 cm deep, and cover with fine soil.",
+     "how": "Place complete fertilizer such as 14 14 14 about 5 to 8 cm deep and a few cm to the side of where the seeds go, about 100 to 150 kg for a hectare. Sow three or four seeds a hill, about 2.5 cm deep, and press loose soil over them.",
      "task": "planting"
     },
     {
@@ -147,5 +147,5 @@
  ],
  "confidence": "medium",
  "slug": "watermelon",
- "rev": "c4659be85804"
+ "rev": "09c1fa2f228a"
 }

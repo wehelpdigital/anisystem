@@ -1,0 +1,142 @@
+{
+ "crop": "lettuce",
+ "name": "Lettuce",
+ "local": "Litsugas",
+ "aka": [
+  "letsugas",
+  "green ice"
+ ],
+ "summary": "How Filipino farmers usually grow litsugas from seedlings on raised, mulched beds, the Benguet way, from sowing in a seedbed to cutting the heads or leaves about two months after transplanting. For highland growers and lowland farmers who plant it in the cool months, with the changes that give cleaner, heavier lettuce.",
+ "season": "In the highlands, such as La Trinidad, Atok and Buguias in Benguet, the Bukidnon uplands and the Cebu highlands, lettuce is grown all year, with rain shelters in the wettest months. In the lowlands it is grown in the cool dry months, mostly the loose leaf types, with light shade in hot weather.",
+ "material": "Seed, only about 150 to 200 g a hectare. Farmers soak the seed in warm water for a few hours, air dry it, and sow it thinly in seedbeds. Seedlings are pricked out once, hardened, and transplanted.",
+ "spacing": "Raised beds about 1 m wide with 75 cm paths. Holes 30 to 40 cm apart, two rows a bed for head types and three rows for leaf types. One seedling a hole.",
+ "water": "Seedbeds are watered daily. The field by sprinkler, hose or furrow, keeping the soil evenly moist. Mulch keeps the leaves clean and the soil from drying or splashing. Standing water brings rot.",
+ "fertilizer": "Beds get rotted chicken manure, about 1 kg a square meter, and carbonized rice hull before transplanting. At transplanting a little 14 14 14 goes in each hole, then urea, with potash for head lettuce, at about 15 and 30 days. Many highland growers also water with manure tea or fermented plant juice.",
+ "care": "Pricking and hardening of seedlings, raised beds under straw or plastic mulch, regular watering, one or two small side dressings, and close watch for loopers, aphids and rot.",
+ "harvest": "Leaf lettuce is cut from about a month after transplanting, before it bolts. Head lettuce at about 45 to 60 days, when the heads are firm. Farmers cut early in the morning, sort in the field and pack in boxes with holes, kept cool on the way to market.",
+ "ways": [
+  {
+   "key": "transplanted",
+   "label": "Seedbed, pricking, then mulched beds (punla at lipat tanim)",
+   "days": 50,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -36,
+     "title": "Sow in the seedbed",
+     "how": "Make seedbeds about 1 by 10 m, mix in rotted chicken manure and carbonized rice hull, wet the bed and draw shallow lines 7 to 10 cm apart. Sow the soaked seed thinly, cover lightly and mulch with rice hull or chopped straw.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "nursery",
+     "day": -21,
+     "title": "Prick out the seedlings",
+     "how": "At the two leaf stage, about two weeks after sowing, move the seedlings to another bed or to trays so each has room. Give light shade in hot weather and a plastic roof in the rains.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow and harrow twice",
+     "how": "Plow and harrow the field two times until the soil is fine.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -7,
+     "title": "Harden the seedlings",
+     "how": "In the last week, water less often and give the seedlings full sun so they do not wilt after transplanting.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Raise and mulch the beds",
+     "how": "Form raised beds about 1 m wide with 75 cm paths. Mix rotted chicken manure and carbonized rice hull into the bed, cover it with rice straw or plastic mulch, and punch holes 30 to 40 cm apart: two rows for head types, three rows for leaf types.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in the afternoon",
+     "how": "Water the holes, put a little complete fertilizer (14 14 14) in each, then set one seedling a hole and press the soil around it. Replace any that die right away.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Keep the beds moist",
+     "how": "Water regularly, enough to keep the soil damp but never soggy.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "First side dressing",
+     "how": "Give each plant a small pinch of urea, mixed half and half with muriate of potash (0 0 60) for head lettuce. Leaf lettuce needs only this one urea feeding.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Scout for loopers and rot",
+     "how": "Look for green loopers and aphids under the leaves and for soft, slimy rot at the base. Remove rotting plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Second side dressing for head lettuce",
+     "how": "Head lettuce gets a second small feeding of urea and potash about a month after transplanting.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 50,
+     "title": "Sort and pack cool",
+     "how": "Sort in the field, pack in boxes with holes, and keep them cool and shaded until they reach the buyer.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 50,
+     "title": "Harvest early in the morning",
+     "how": "Cut leaf lettuce when it reaches market size and before it bolts. Head lettuce is cut when the heads are firm, about 45 to 60 days after transplanting. Harvest early so the leaves do not wilt.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Transplanting soft seedlings that were never hardened, so many wilt.",
+  "Planting head types in the hot lowland months, so they bolt and turn bitter.",
+  "Leaving the beds bare, so rain splashes soil on the leaves and rot sets in.",
+  "Too much urea late in the crop, which gives soft, quick rotting leaves.",
+  "Harvesting at midday or packing in closed sacks."
+ ],
+ "better": [
+  "Choose varieties for your elevation and season, with heat tolerant leaf types for the lowlands.",
+  "Test the soil and feed by the result, with compost or rotted manure plus small, timed side dressings.",
+  "Raise seedlings under a rain shelter and harden them a week before transplanting.",
+  "Use raised, mulched beds and sun the prepared beds for a week to reduce rot.",
+  "Scout weekly and keep the plants cool from harvest to market."
+ ],
+ "video": {
+  "youtubeId": "K9Wjc3JoWIM",
+  "title": "HOW TO PLANT LETTUCE (GREEN ICE) IN PLASTIC MULCH| Lubas, La Trinidad, Benguet",
+  "channel": "Ayyaket Ul ulay",
+  "lang": "en",
+  "minutes": 11,
+  "why": "A La Trinidad farmer plants green ice lettuce on mulched beds the usual Benguet way, after sowing and pricking the seedlings."
+ },
+ "keywords": [
+  "paano magtanim ng lettuce",
+  "pagtatanim ng litsugas",
+  "paano magtanim ng lettuce sa lupa",
+  "how to plant lettuce in the philippines",
+  "lettuce farming benguet"
+ ],
+ "confidence": "high",
+ "slug": "lettuce",
+ "rev": "6996737a1033"
+}

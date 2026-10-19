@@ -1,0 +1,146 @@
+{
+ "crop": "guava",
+ "name": "Guava",
+ "local": "Bayabas",
+ "aka": [
+  "guapple",
+  "guapol"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant native bayabas and big fruited guapple from a marcot or grafted seedling, and care for it until the first fruits. It suits backyards and small orchards.",
+ "season": "Seedlings and marcots are planted as the rains begin, around May to July. Guava likes a dry climate with rain spread through the year and stands dry spells better than most fruit trees. Where water is on hand it fruits through much of the year.",
+ "material": "Most growers plant a marcot (air layer) from a branch about as thick as a finger, or a grafted seedling, taken from a tree with good fruit. Marcots are cut once roots show, grown on in a bag and kept in shade for at least two weeks before planting. Native bayabas also grows easily from seed, but the fruit varies and the tree bears later.",
+ "spacing": "About 3 m by 3 m for guapple orchards, about 1,100 trees a hectare, with the trees pruned low. Native bayabas left to grow tall is spaced wider, often 5 m or more.",
+ "water": "Guava stands dry spells well and is mostly rain fed. In places with a long dry season growers water every 5 to 7 days so the trees keep fruiting.",
+ "fertilizer": "Manure or compost and about 100 to 150 g of complete fertilizer (14 14 14) in the hole. Young trees get about 200 to 300 g of complete fertilizer a tree, given one month after planting and again six months later. Bearing trees get more, from about 300 g up to 1 kg of complete fertilizer with some muriate of potash (0 0 60) and 16 20 0, placed in a shallow furrow under the edge of the leaves. Many farmers use nitrogen while the tree is young and complete fertilizer once it fruits.",
+ "care": "Pinching the tips after planting for more branches, early shaping, removing root sprouts and low or dead branches, weeding and loosening the soil before each feeding, thinning young fruits, and wrapping fruits in newspaper and plastic against fruit flies. Many guapple farms keep trees pruned to about 2 m for easy bagging.",
+ "harvest": "Fruits mature about 90 to 150 days after flowering, or about two months after wrapping. They are picked by hand when full sized and the skin turns a lighter green. In peak season growers pick every day or two so fruits do not over ripen or get stung by flies.",
+ "ways": [
+  {
+   "key": "marcotted",
+   "label": "Marcot or grafted seedling (marcot o grafted)",
+   "days": 360,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear the land and mark the spots",
+     "how": "Plow or clear the land and loosen the soil, burning or removing brush on new land. Mark the planting spots about 3 m by 3 m for guapple, or wider for big native trees.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Harden the marcots",
+     "how": "Keep the bagged marcots or grafted seedlings in light shade for at least two weeks so they get used to the field. Water them daily.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Dig and fill the holes",
+     "how": "Dig holes about 50 to 60 cm wide and deep and refill them with topsoil mixed with manure or compost. Mix in about 100 to 150 g of complete fertilizer (14 14 14) at the bottom.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the seedling",
+     "how": "Cut the bag away without disturbing the roots and set the plant at the depth it grew. Fill in, press the soil and water at once if the ground is dry.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Pinch the tips",
+     "how": "When new leaves come out, pinch off the growing tips so the plant sends out more side branches. More branches mean more fruiting shoots later.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First feeding",
+     "how": "One month after planting, give about 100 to 150 g of complete fertilizer (14 14 14) in a shallow furrow around the plant. Feed again about six months later, a little more as the tree grows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed and plant crops between",
+     "how": "Loosen the soil lightly and weed under the young tree before each feeding. In the first year, vegetables, legumes, ginger or gabi can grow between the rows.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Water in long dry spells",
+     "how": "Guava needs little watering, but in a long dry season water every 5 to 7 days to keep it growing and fruiting.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 105,
+     "title": "Shape the young tree",
+     "how": "Within the first three to four months, cut off root sprouts, low branches and dead or sick twigs. Keep the tree low and open so it is easy to bag and pick.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 240,
+     "title": "Thin the first fruits and bag them",
+     "how": "The tree may flower from about 8 months. Leave only a few fruits on a young tree, about five on a one year old guapple, and wrap each in newspaper and a plastic bag when it is about the size of an egg.",
+     "task": "thinning",
+     "tip": "Bagging keeps out fruit flies and sunscald."
+    },
+    {
+     "phase": "care",
+     "day": 270,
+     "title": "Watch for fruit flies and leaf pests",
+     "how": "Check the young leaves for aphids and whiteflies and the fruits for fruit fly stings and dark spots. Pick up and bury fallen or rotten fruit and keep the ground weeded.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 360,
+     "title": "First harvest",
+     "how": "Pick by hand when the fruit is full sized and its green skin turns lighter. Guapple is often picked at about 300 to 500 g for market.",
+     "task": "harvest"
+    }
+   ],
+   "note": "A marcotted or grafted guava can flower from about 8 months after planting and fruits mature 90 to 150 days after flowering, so the first small harvest comes at about 12 months. Bigger crops follow from the second year."
+  }
+ ],
+ "mistakes": [
+  "Planting seedlings from seed when you want the same fruit as the mother tree.",
+  "Letting a young tree carry too many fruits, so they stay small.",
+  "Not bagging fruits, so fruit flies ruin most of the crop.",
+  "Leaving rotten and fallen fruits under the trees.",
+  "Letting the trees grow tall, which makes bagging and picking hard.",
+  "Planting in waterlogged ground."
+ ],
+ "better": [
+  "Plant marcots or grafted seedlings from a proven, healthy mother tree or an accredited nursery.",
+  "Test the soil and feed by the result, with more potash once the trees bear.",
+  "Prune lightly after each flush to keep trees low and open.",
+  "Bag every fruit at egg size and keep the orchard clean of fallen fruit.",
+  "Scout weekly for fruit flies, aphids, whiteflies and fruit spots.",
+  "Water during long dry spells for steady fruiting through the year."
+ ],
+ "video": {
+  "youtubeId": "5kIMD6uw4ew",
+  "title": "GUAPOL-(GUAVA APPLE): PAGTATANIM MULA SA SANGA AT PAGPAPABUNGA",
+  "channel": "Ang Magsasakang Reporter",
+  "lang": "fil",
+  "minutes": 17,
+  "why": "A Filipino grower plants guapple from a rooted branch and shows how he brings it to fruit, explained in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng bayabas",
+  "pagtatanim ng guapple",
+  "marcot na bayabas",
+  "how to plant guava in the philippines",
+  "guava farming"
+ ],
+ "confidence": "high",
+ "slug": "guava",
+ "rev": "e3cb27c79bda"
+}

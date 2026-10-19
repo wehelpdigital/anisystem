@@ -1,0 +1,130 @@
+{
+ "crop": "radish",
+ "name": "Radish",
+ "local": "Labanos",
+ "aka": [
+  "rabanos"
+ ],
+ "summary": "How Filipino vegetable farmers usually grow long white labanos, sown straight on a well prepared field and pulled about 40 to 45 days later. For lowland and highland growers who want the usual routine and the few changes that give straight, white, heavy roots.",
+ "season": "In the lowlands labanos does best in the cooler dry months, but growers in places like Laguna and Quezon plant it in both the dry and the wet season, choosing varieties that stand rain and do not bolt. In the highlands, such as Atok and Kibungan in Benguet, it is grown through most of the year.",
+ "material": "Seed, broadcast over the field or sown in shallow rows. Open pollinated seed is cheap but farmers use more of it. Growers in Laguna report about 4 kg of open pollinated seed against about 2 kg of hybrid seed for a quarter hectare.",
+ "spacing": "Most growers broadcast the seed over a well prepared field and thin crowded spots by hand. Others sow in shallow rows on beds and thin along the row so the roots do not touch.",
+ "water": "Watered daily at first, by hand, sprinkler or furrow, then kept evenly moist. In the rainy season farmers plant on raised beds so water does not stand around the roots.",
+ "fertilizer": "The traditional base is a lot of well rotted chicken manure spread before sowing. Urea goes on only while the plants are young. Experienced growers stop giving nitrogen at about 20 to 25 days, when the main root starts to form.",
+ "care": "Daily watering in the first days, thinning of crowded spots, one or two hand weedings, and a single early side dressing of urea.",
+ "harvest": "Long white labanos is ready about 40 to 45 days after sowing. Farmers pull the biggest roots first and go over the field in several rounds, then wash and sort the roots, keeping straight, smooth, white ones as first class.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Broadcast or row sown (sabog tanim)",
+   "days": 45,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow and harrow until fine",
+     "how": "Plow and harrow the field thoroughly so the soil is deep, loose and free of clods and stones. Lumps and stones make forked, crooked roots.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Spread rotted chicken manure",
+     "how": "Spread plenty of well rotted chicken manure over the field and mix it into the top soil. One Laguna grower uses about 60 sacks for half a hectare.",
+     "task": "fertilizer",
+     "tip": "Never use fresh manure. It burns the seedlings and forks the roots."
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Broadcast the seed",
+     "how": "Scatter the seed as evenly as you can over the field or the beds, or drop it in shallow rows, then rake in lightly and water.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Keep the soil moist",
+     "how": "Water every day until the seedlings are up, then keep the soil evenly moist. Dry spells followed by heavy watering make the roots crack.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Thin crowded spots",
+     "how": "Pull out extra seedlings where they come up too close together so each root has room. The young plants can be cooked.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 12,
+     "title": "Give urea early only",
+     "how": "Side dress with a little urea while the plants are young, before the main root starts to swell. Do not give urea or other nitrogen after about 20 days, or the plant makes leaves instead of root.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 15,
+     "title": "Weed by hand",
+     "how": "Pull the weeds once or twice while the plants are small.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Check leaves and roots",
+     "how": "Look for flea beetle holes, aphids and green caterpillars on the leaves, and for rotting at the root top in wet weather. Pull and remove rotting plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 40,
+     "title": "Pull the roots in rounds",
+     "how": "From about 40 days, pull the biggest roots first and come back for the rest in later rounds. Most of the field is harvested by about 45 days.",
+     "task": "harvest",
+     "tip": "Do not leave roots too long. They turn pithy, woody and hot tasting."
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Wash and sort",
+     "how": "Wash off the soil, sort the straight, smooth, white roots from the forked or cracked ones, and pack them in the shade for selling the same day or the next.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Giving urea after the root starts to swell, so the plant grows leaves and a thin root.",
+  "Sowing on cloddy or stony soil, or with fresh manure, which makes forked roots.",
+  "Sowing too thick and never thinning, so the roots stay small and twisted.",
+  "Uneven watering that makes the roots crack.",
+  "Leaving the roots in the ground too long until they turn pithy and woody."
+ ],
+ "better": [
+  "Use fresh seed of a variety suited to your season and elevation, with tolerance to rain and bolting.",
+  "Test the soil and lime sour soils. Feed with rotted manure plus balanced fertilizer by the result.",
+  "Prepare deep, fine, raised beds, especially in the rainy months.",
+  "Sow evenly and thin early so every root has room.",
+  "Rotate labanos with crops outside the cabbage family and keep the field clean of old roots.",
+  "Harvest on time and keep the roots shaded and cool after washing."
+ ],
+ "video": {
+  "youtubeId": "Cja61MmYi1k",
+  "title": "PAANO BA MAGTANIM NG LABANOS? SIMULA SA PAGLILINIS HANGANG PAGTATANIM",
+  "channel": "Kaps Farming",
+  "lang": "fil",
+  "minutes": 24,
+  "why": "Farmers show how they plant labanos in the field, from clearing the land to sowing, in Filipino."
+ },
+ "keywords": [
+  "paano magtanim ng labanos",
+  "pagtatanim ng labanos",
+  "sabog tanim ng labanos",
+  "how to plant radish in the philippines",
+  "radish farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "radish",
+ "rev": "7c8bf5ecbe00"
+}

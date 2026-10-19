@@ -7,7 +7,7 @@
  "season": "Tomato likes cool, dry weather. In the lowlands the main crop is planted from about November to February, often in fields just cleared of rice, and in the hills from about September to January. Some farmers grow an off season crop from May to September for the higher price, on raised, well drained rows with stakes.",
  "material": "Seed, about 150 to 200 grams for a hectare. The seed is soaked overnight in clean water, dried in the air and sown in a seedbed or in trays filled with compost, garden soil and burnt rice hull. Seedlings go to the field at about 25 to 30 days old, once they have two or more true leaves.",
  "spacing": "Rows about 1 meter wide with furrows about half a meter wide between them, and 50 cm between plants along the row, one seedling a hole.",
- "water": "Tomato does not stand flooding. Farmers let water run fast down the furrows to wet the roots and then drain, about 4 to 5 times from planting until two weeks before the last picking. Without a canal they pour about a liter a hill once a week. Seedlings are watered each morning, only enough to keep the soil damp.",
+ "water": "Tomato does not stand flooding. Farmers let water run fast down the furrows to wet the roots and then drain, about 4 to 5 times from planting until two weeks before the last picking. Without a canal they pour about a liter a hill once a week. In the seedbed, water early in the day and only enough to keep the soil from drying.",
  "fertilizer": "Decomposed animal manure or compost worked in before planting, then a tablespoon of 14 14 14 in each hole. About 15 grams each of urea and muriate of potash a plant at 10 to 15 days after planting, and 15 grams of urea again near 30 days.",
  "care": "Low side shoots and old leaves are pruned at 10 to 20 days. Posts of bamboo or ipil ipil with wire or string hold the plants up, set at about 15 days. Off barring at 15 to 20 days and hilling up at 25 to 30 days, with hand weeding, and rice straw mulch where it is at hand. Many farmers plant marigold, lemongrass or basil at the edges to keep insects off, keep the field clean, and avoid smoking near the plants.",
  "harvest": "Picking starts about 55 to 65 days after transplanting and goes on weekly until about 100 days. Fruits are taken mature green for a far market, pink for a near market, and red ripe for home use. They are sorted, wiped clean and dry with a soft cloth, and packed in lined kaing, crates or plastic bags with two pin holes for every kilo.",
@@ -142,7 +142,7 @@
      "phase": "harvest",
      "day": 60,
      "title": "Start picking",
-     "how": "Pick once a week. For a far market, take fruits that are mature green with a creamy tip. For a near market, take them pink, and for home use, red ripe.",
+     "how": "Pick once a week. For a far market take fruits that are full grown but still green with a creamy tip, at the pink stage for a near market, and red ripe for home use.",
      "task": "harvest"
     },
     {
@@ -189,5 +189,5 @@
  ],
  "confidence": "high",
  "slug": "tomato",
- "rev": "129069fad603"
+ "rev": "3961bae64ff5"
 }

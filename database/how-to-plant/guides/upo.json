@@ -8,12 +8,12 @@
  ],
  "summary": "How Filipino farmers grow upo on an overhead trellis, from sprouted seed in hills to young fruits cut about two weeks after they set. It is for small farms and backyards that sell or cook the young fruits and tops.",
  "season": "Upo grows in both the wet and dry seasons but does best in warm, fairly dry weather. Wet season plantings go on ridges or raised beds with good drainage, since the vines dislike soggy soil, and dry season plantings need weekly irrigation.",
- "material": "Seed, about 1 to 3 kg for a hectare. Farmers soak the seed in clean water overnight or up to a day, wrap it in a damp cloth and keep it somewhere cool and dark until the seed coat cracks, and plant it straight in the hills. Hybrid seed is often raised in trays and transplanted about 15 days after it comes up.",
+ "material": "Seed, about 1 to 3 kg for a hectare. Farmers soak the seed in clean water overnight or up to a day, wrap it in a damp cloth in a cool, dark corner until the shell cracks open, and plant it straight in the hills. Hybrid seed is often raised in trays and transplanted about 15 days after it comes up.",
  "spacing": "Furrows 2 to 3 meters apart and hills about 1 meter apart along the row, one or two plants a hill.",
- "water": "Upo dislikes soggy soil, which brings disease, so wet season fields need drainage canals and ridges. In the dry season the furrows are irrigated about once a week, and rice straw around each plant keeps the soil moist longer.",
+ "water": "Upo dislikes soggy soil, which brings disease, so wet season fields need drainage canals and ridges. In the dry season the furrows are irrigated about once a week, and a ring of rice straw at the foot of each plant keeps the soil damp longer.",
  "fertilizer": "Well rotted manure and about 20 grams of 14 14 14 a hill at planting, covered with soil. About 10 grams of urea a hill at 30 days, and about 20 grams of urea with 10 grams of muriate of potash a hill at 45 days, placed some 10 cm from the stem.",
  "care": "An overhead trellis about 2 meters high on ipil ipil or bamboo, with a pole or string for each plant. Vines are tied as they climb, the shoots and female buds below the roof are removed, and the vine tip is cut at the roof. Hilling up at 15 to 20 days, then only hand weeding once the vines bear. Yellow beetles are picked by hand, and some farmers dust wood ash on the leaves.",
- "harvest": "Fruits are cut about 15 days after they set, 60 to 80 days after sowing, with a sharp knife leaving about 5 cm of stalk. Because they grow fast the trellis is checked every day or two. Fruits are packed in woven baskets with banana leaves at the bottom and then into plastic bags or crates. Fully mature fruits with a hard rind are kept for seed or dried for containers and crafts.",
+ "harvest": "Fruits are cut about 15 days after they set, 60 to 80 days after sowing, with a sharp knife leaving about 5 cm of stalk. Because they grow fast the trellis is checked every day or two. Fruits are laid in bamboo baskets lined with banana leaves, then packed in plastic bags or crates. Fully mature fruits with a hard rind are kept for seed or dried for containers and crafts.",
  "ways": [
   {
    "key": "direct",
@@ -59,7 +59,7 @@
      "phase": "care",
      "day": 7,
      "title": "Water weekly and mulch",
-     "how": "In the dry season irrigate the furrows about once a week. lay rice straw around each plant to hold moisture and cut down on watering.",
+     "how": "In the dry season irrigate the furrows about once a week. Lay a ring of rice straw at the foot of each plant so the soil stays damp and you water less.",
      "task": "irrigation"
     },
     {
@@ -124,7 +124,7 @@
      "phase": "harvest",
      "day": 66,
      "title": "Pack without bruising",
-     "how": "Lay the fruits in a woven basket with banana leaves at the bottom, then pack the good ones in plastic bags or crates for market.",
+     "how": "Line a bamboo basket with banana leaves and lay the fruits in it, then pack the good ones in plastic bags or crates for market.",
      "task": "postharvest"
     }
    ],
@@ -164,5 +164,5 @@
  ],
  "confidence": "high",
  "slug": "bottle-gourd",
- "rev": "2f9f51ada68f"
+ "rev": "812f641b22ca"
 }

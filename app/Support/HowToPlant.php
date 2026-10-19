@@ -140,7 +140,7 @@ final class HowToPlant
             return $out;
         };
         try {
-            $index = Cache::remember(self::CACHE . 'index', self::TTL, $build);
+            $index = getenv('HTP_FILES') ? $build() : Cache::remember(self::CACHE . 'index', self::TTL, $build);
         } catch (\Throwable $e) {
             $index = $build();
         }
@@ -192,7 +192,7 @@ final class HowToPlant
             return self::file($key);
         };
         try {
-            $g = Cache::remember(self::CACHE . 'g:' . $key . ':' . (self::index()[$key]['rev'] ?? ''), self::TTL, $read);
+            $g = getenv('HTP_FILES') ? $read() : Cache::remember(self::CACHE . 'g:' . $key . ':' . (self::index()[$key]['rev'] ?? ''), self::TTL, $read);
         } catch (\Throwable $e) {
             $g = $read();
         }
@@ -228,6 +228,12 @@ final class HowToPlant
     public static function ready(): bool
     {
         if (! array_key_exists('ready', self::$memo)) {
+            // A local server started with HTP_FILES=1 reads the files in the
+            // tree, to look at a build before it ships (local dev shares the
+            // live database, whose table holds what shipped).
+            if (getenv('HTP_FILES')) {
+                return self::$memo['ready'] = false;
+            }
             try {
                 self::$memo['ready'] = Schema::hasTable(self::TABLE) && DB::table(self::TABLE)->where('deleteStatus', 1)->exists();
             } catch (\Throwable $e) {
@@ -504,7 +510,7 @@ final class HowToPlant
                 'day' => max(-365, min(999, $day)),
                 'title' => mb_substr((string) $s['title'], 0, 160),
                 'subtitle' => mb_substr($phase . ' · ' . $kindWord . ' · ' . self::when((int) $s['day'], $way, $months), 0, 200),
-                'description' => mb_substr($from . "\n\n" . trim((string) $s['how']), 0, 4000),
+                'description' => mb_substr($from . "\n\n" . trim((string) $s['how']) . self::partsText($s), 0, 4000),
                 'type' => $type,
                 'spray' => [],
                 'groups' => [],
@@ -522,6 +528,22 @@ final class HowToPlant
         }
 
         return $out;
+    }
+
+    /** A step's parts as numbered lines for a task's description: "1. Soak the seed (24 hours): ...". */
+    public static function partsText(array $step): string
+    {
+        $parts = array_values(array_filter((array) ($step['parts'] ?? []), 'is_array'));
+        if (! $parts) {
+            return '';
+        }
+        $lines = [];
+        foreach ($parts as $i => $p) {
+            $lines[] = ($i + 1) . '. ' . trim((string) ($p['title'] ?? '')) . (! empty($p['time']) ? ' (' . $p['time'] . ')' : '') . ': ' . trim((string) ($p['how'] ?? ''))
+                . (! empty($p['tip']) ? ' Tip: ' . trim((string) $p['tip']) : '');
+        }
+
+        return "\n\nPart by part:\n" . implode("\n", $lines);
     }
 
     /* ------------------------------------------------------------ loading */

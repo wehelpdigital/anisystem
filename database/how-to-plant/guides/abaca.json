@@ -31,7 +31,7 @@
      "phase": "prep",
      "day": -30,
      "title": "Plow where you can",
-     "how": "On open or coconut land that a plow can reach, plow deep once or twice, loosening the soil and breaking the thick coconut roots. On steep land, just clear and dig.",
+     "how": "Where a plow can get in, as on open land or under coconuts, plow deep one or two times so the soil turns loose and the mat of coconut roots is broken up. On steep land, just clear and dig.",
      "task": "land_prep"
     },
     {
@@ -173,5 +173,5 @@
  ],
  "confidence": "high",
  "slug": "abaca",
- "rev": "f0ec3ec2329f"
+ "rev": "1d854b39900b"
 }

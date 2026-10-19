@@ -161,6 +161,28 @@
     .hg-tip { display: flex; gap: .4rem; align-items: flex-start; margin-top: .5rem !important; padding: .45rem .55rem; border-radius: .7rem; background: #fffbea; color: #6b4a00 !important; font-size: .8rem !important; }
     .hg-tip svg { flex: none; width: .95rem; height: .95rem; margin-top: .15rem; color: #b7791f; }
 
+    /* A step done in parts: numbered, folded until tapped (max height, measured by the script). */
+    .hg-parts { margin-top: .55rem; border-radius: .85rem; background: var(--color-white); border: 1px solid var(--ph-soft, #e9f2de); }
+    .hg-parts-btn { width: 100%; min-height: 2.6rem; display: flex; align-items: center; gap: .5rem; padding: .4rem .65rem; border-radius: .85rem; text-align: left;
+        font-size: .8rem; font-weight: 900; color: var(--color-gray-800); transition: background-color .28s var(--e); }
+    .hg-parts-btn:hover { background: var(--color-gray-50, #f9fafb); }
+    .hg-parts-btn:focus-visible { outline: 2px solid #f5c518; outline-offset: 1px; }
+    .hg-parts-btn > span:nth-child(2) { flex: 1; }
+    .hg-parts-n { flex: none; min-width: 1.5rem; height: 1.5rem; padding: 0 .35rem; border-radius: 999px; display: grid; place-items: center; font-size: .72rem; font-weight: 900; color: #fff; background: var(--ph, #4a7c2a); }
+    .hg-parts-btn svg { flex: none; width: .95rem; height: .95rem; color: var(--color-gray-500); transition: transform .28s var(--e); }
+    .hg-parts.is-open .hg-parts-btn svg { transform: rotate(180deg); }
+    .hg-parts-fold { max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height .28s var(--e), opacity .28s var(--e), visibility 0s linear .28s; }
+    .hg-parts.is-open .hg-parts-fold { max-height: none; opacity: 1; visibility: visible; transition-delay: 0s; }
+    .hg-parts ol { display: grid; gap: .55rem; padding: .15rem .7rem .75rem; }
+    .hg-parts li { display: flex; gap: .55rem; align-items: flex-start; }
+    .hg-parts li > i { flex: none; width: 1.4rem; height: 1.4rem; margin-top: .05rem; border-radius: .45rem; display: grid; place-items: center; font-style: normal; font-size: .7rem; font-weight: 900; color: var(--ph, #4a7c2a); background: var(--ph-soft, #e9f2de); }
+    .hg-parts li b { font-size: .84rem; font-weight: 900; color: var(--color-gray-900); }
+    .hg-parts li p { margin-top: .12rem !important; font-size: .82rem !important; line-height: 1.55; }
+    .hg-time { display: inline-flex; align-items: center; gap: .2rem; margin-left: .4rem; padding: .08rem .45rem; border-radius: 999px; font-size: .66rem; font-weight: 800; vertical-align: .08em;
+        color: #6b4a00; background: #fff3c4; white-space: nowrap; }
+    .hg-time svg { width: .7rem; height: .7rem; }
+    .hg-ptip { color: #6b4a00 !important; font-style: italic; }
+
     /* The details. */
     .hg-details, .hg-mist, .hg-better { padding: 1rem; border-radius: 1.25rem; background: var(--color-white); border: 1px solid var(--color-gray-200); }
     .hg-dgrid { display: grid; gap: .6rem; margin-top: .7rem; }
@@ -214,10 +236,13 @@
     html.dark .hg-tool { background: #1a2614; border-color: #2f4520; color: #cfe6b8; }
     html.dark .hg-tool:hover { background: #22301a; }
     html.dark .hg-port.is-end { border-top-color: #2f4520; }
+    html.dark .hg-ptip { color: #e8cf7f !important; }
+    html.dark .hg-time { background: #3a3110; color: #f6dc8a; }
+    html.dark .hg-parts-btn:hover { background: #1c2616; }
 
     @media (prefers-reduced-motion: reduce) {
         .htp-sprout, .htp-hand, .htp-sun, .hg > *, .hg-pane, .hg-port-btn i { animation: none !important; }
-        .htp-guide, .hg-step, .hg-ways-ind, .hg-yt-btn img, .hg-yt iframe, .hg-port-btn, .hg-tool { transition: none !important; }
+        .htp-guide, .hg-step, .hg-ways-ind, .hg-yt-btn img, .hg-yt iframe, .hg-port-btn, .hg-tool, .hg-parts-fold, .hg-parts-btn svg { transition: none !important; }
         .hg-io .hg-step:not(.is-seen) { opacity: 1; transform: none; }
     }
     html.sm-still .htp-sprout, html.sm-still .htp-hand, html.sm-still .htp-sun, html.sm-still .hg > *, html.sm-still .hg-pane, html.sm-still .hg-port-btn i { animation: none !important; }
@@ -368,7 +393,32 @@
         }
     });
 
+    /* A step's parts fold open and shut by their measured height (a class alone would snap). */
+    function fold(wrap) {
+        const body = wrap.querySelector('.hg-parts-fold');
+        const btn = wrap.querySelector('.hg-parts-btn');
+        const open = !wrap.classList.contains('is-open');
+        btn.setAttribute('aria-expanded', String(open));
+        if (still()) { wrap.classList.toggle('is-open', open); body.style.maxHeight = ''; return; }
+        clearTimeout(body._t);
+        if (open) {
+            body.style.maxHeight = '0px';
+            wrap.classList.add('is-open');
+            void body.offsetHeight;
+            body.style.maxHeight = body.scrollHeight + 'px';
+            body._t = setTimeout(() => { body.style.maxHeight = ''; }, 320);
+        } else {
+            body.style.maxHeight = body.scrollHeight + 'px';
+            void body.offsetHeight;
+            wrap.classList.remove('is-open');
+            body.style.maxHeight = '0px';
+            body._t = setTimeout(() => { body.style.maxHeight = ''; }, 320);
+        }
+    }
+
     box.addEventListener('click', async (e) => {
+        const parts = e.target.closest('.hg-parts-btn');
+        if (parts) { fold(parts.closest('.hg-parts')); return; }
         const tab = e.target.closest('.hg-way');
         if (tab) { pickWay(tab.closest('.hg'), tab.dataset.way); return; }
         const yt = e.target.closest('.hg-yt-btn');

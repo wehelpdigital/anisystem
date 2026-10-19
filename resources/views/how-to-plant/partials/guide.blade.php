@@ -139,6 +139,31 @@
                                         @if (! empty($s['tip']))
                                             <p class="hg-tip"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.7 17h4.6M12 3a6 6 0 00-3.6 10.8c.4.3.6.8.6 1.3V16h6v-.9c0-.5.2-1 .6-1.3A6 6 0 0012 3zm-2 17h4"/></svg><span>{{ $s['tip'] }}</span></p>
                                         @endif
+                                        @if (! empty($s['parts']))
+                                            {{-- The owner (2026-10-19): a step done in parts (soak, incubate, sow ...) shows them numbered, folded until tapped. --}}
+                                            @php $pid = 'hgp-' . $crop . '-' . $w['key'] . '-' . $pk . '-' . $loop->index; @endphp
+                                            <div class="hg-parts">
+                                                <button type="button" class="hg-parts-btn" aria-expanded="false" aria-controls="{{ $pid }}">
+                                                    <span class="hg-parts-n">{{ count($s['parts']) }}</span>
+                                                    <span>{{ count($s['parts']) === 1 ? 'How to do it' : 'How to do it, in ' . count($s['parts']) . ' parts' }}</span>
+                                                    <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                                                </button>
+                                                <div class="hg-parts-fold" id="{{ $pid }}" role="region" aria-label="{{ $s['title'] }}, part by part">
+                                                    <ol>
+                                                        @foreach ($s['parts'] as $pt)
+                                                            <li>
+                                                                <i aria-hidden="true">{{ $loop->iteration }}</i>
+                                                                <div>
+                                                                    <b>{{ $pt['title'] }}</b>@if (! empty($pt['time']))<span class="hg-time"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" d="M12 8v4.5l3 1.8"/></svg>{{ $pt['time'] }}</span>@endif
+                                                                    <p>{{ $pt['how'] }}</p>
+                                                                    @if (! empty($pt['tip']))<p class="hg-ptip">{{ $pt['tip'] }}</p>@endif
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ol>

@@ -1,0 +1,134 @@
+{
+ "crop": "turmeric",
+ "name": "Turmeric",
+ "local": "Luyang dilaw",
+ "aka": [
+  "dilaw"
+ ],
+ "summary": "How Filipino growers usually raise luyang dilaw from rhizome pieces on beds or ridges, often in backyards and under coconut, and dig it seven to ten months later for cooking, salabat and powder. For small growers who want the usual way and what to change for a bigger, brighter harvest.",
+ "season": "Planted like ginger as the rains begin, around April to June, so the shoots grow on the rains. The leaves dry down in the cool dry months, when the rhizomes are dug.",
+ "material": "Whole or split mother rhizomes and finger rhizomes from a healthy clump, kept from the last harvest. Pick firm, plump, disease free pieces with buds. A full hectare needs a lot of seed, around 2,500 kg, which is why most growers start small and multiply their own.",
+ "spacing": "Beds about 1 m wide with plants about 25 by 30 cm apart, or ridges 45 to 60 cm apart with plants about 25 cm apart. One seed piece a hole.",
+ "water": "Rainfed in most farms, planted with the first rains. It needs steady moisture while leaves grow but cannot stand waterlogging, so beds or ridges are used. In long dry spells growers water by furrow or hose.",
+ "fertilizer": "Most backyard growers use only rotted manure or compost in the planting holes and as mulch. Larger plantings add complete fertilizer and potash in two or three splits during the weedings, since turmeric, like ginger, needs a lot of potash.",
+ "care": "Mulching after planting, weeding at about 45 to 60, 90 and 120 days, earthing up and fresh mulch with each fertilizer, and light shade at most. It is often grown between coconut trees or with corn or chili.",
+ "harvest": "Dug about 7 to 10 months after planting, when the leaves and stems dry. Clumps are lifted carefully, cleaned by soaking, and the best ones kept for seed. The rest are sold fresh or boiled, sun dried and ground into powder.",
+ "ways": [
+  {
+   "key": "rhizomes",
+   "label": "Rhizome pieces on beds or ridges (tanim binhi)",
+   "days": 270,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow until fine",
+     "how": "With the first rains, plow and harrow several times until the soil is loose and fine. Lime very sour soils.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Make beds or ridges",
+     "how": "Form beds about 1 m wide and 15 cm high with 50 cm paths, or ridges and furrows 45 to 60 cm apart. Pick land that never floods.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "nursery",
+     "day": -1,
+     "title": "Ready the seed pieces",
+     "how": "Split the clumps into mother and finger pieces with buds, and set aside any that are soft, shriveled or discolored.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant in small pits with manure",
+     "how": "Dig small holes about 25 by 30 cm apart on the beds, or 25 cm apart along the ridges. Put rotted manure or compost in each hole, set a seed piece on it and cover with soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 1,
+     "title": "Mulch with green leaves",
+     "how": "Cover the beds with cut leaves or grass right after planting to keep the soil moist and stop weeds.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 45,
+     "title": "Weed, fertilize and earth up",
+     "how": "Pull the weeds, put the first fertilizer along the rows, pull soil up around the shoots and add fresh mulch.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Watch for shoot borer and rot",
+     "how": "Look for holes with frass on the stems and a dead center shoot, brown leaf blotches, and soft, collapsing stems at the base. Pull and burn rotting plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Second weeding and earthing up",
+     "how": "Weed again, give the rest of the fertilizer, earth up and renew the mulch.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Last weeding",
+     "how": "Weed once more if needed. After this the leaves shade the beds.",
+     "task": "weeding"
+    },
+    {
+     "phase": "harvest",
+     "day": 270,
+     "title": "Dig when the leaves dry",
+     "how": "Turmeric is ready when the leaves and stems dry up, about 7 to 10 months after planting. Cut the dry leaves, loosen the soil and lift the clumps by hand without breaking them.",
+     "task": "harvest"
+    },
+    {
+     "phase": "care",
+     "day": 271,
+     "title": "Clean, keep seed and dry the rest",
+     "how": "Soak off the soil and trim the roots. Keep healthy clumps in the shade for the next planting. For powder, many boil the rhizomes, then sun dry them for about a week before grinding.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting soft or shriveled seed pieces, which spreads rhizome rot.",
+  "Planting in low spots that flood in heavy rain.",
+  "Leaving the beds bare, so weeds take over and the soil dries.",
+  "Too much shade under dense trees, which cuts the yield.",
+  "Digging before the leaves dry, so the rhizomes are watery and pale."
+ ],
+ "better": [
+  "Use healthy, firm seed rhizomes from clean clumps, and multiply your own stock before expanding.",
+  "Test the soil and fertilize by the result, with enough potash and plenty of compost.",
+  "Plant on raised beds or ridges and mulch after every weeding.",
+  "Grow it in light shade only and rotate with crops outside the ginger family.",
+  "Dry and grind in clean conditions if you sell powder, so the color and smell stay strong."
+ ],
+ "video": {
+  "youtubeId": "YqxCjuMdqyA",
+  "title": "TURMERIC PLANTING + BAGONG ARIENDO",
+  "channel": "Biyaherong Batangueno",
+  "lang": "fil",
+  "minutes": 20,
+  "why": "A Batangas farmer plants luyang dilaw in an open field, the common small farm way, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng luyang dilaw",
+  "pagtatanim ng luyang dilaw",
+  "paano magtanim ng turmeric",
+  "how to plant turmeric in the philippines",
+  "turmeric farming philippines"
+ ],
+ "confidence": "medium",
+ "slug": "turmeric",
+ "rev": "e48eb4d44421"
+}

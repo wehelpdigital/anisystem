@@ -1,0 +1,162 @@
+{
+ "crop": "mustard",
+ "name": "Mustard greens",
+ "local": "Mustasa",
+ "aka": [
+  "mustard"
+ ],
+ "summary": "How Filipino farmers usually grow mustasa in the lowland cool months, sown straight in furrows or raised as seedlings and set out on beds, then picked for leaves or pulled whole. For small vegetable farms and backyard growers who sell it fresh or for burong mustasa.",
+ "season": "Mustasa is a lowland favorite of the cooler months, best sown from about September to February, often on rice land after the wet season harvest. It can be grown in other months with water and some shade, but heat and heavy rain make it bolt or rot.",
+ "material": "Seed, sown straight in furrows or in a seedbed or seedling tray. Farmers pick seed of a variety known to resist pests and diseases. Seedlings are ready to transplant after about four weeks, at three to four true leaves.",
+ "spacing": "Furrows 15 to 25 cm apart with plants about 15 cm apart when sown straight. Transplanted seedlings 15 to 20 cm apart. One plant a hill.",
+ "water": "Watered two to three times a week by hand, hose or furrow, more in dry weather. Rice land planted after the harvest still holds moisture for the first weeks.",
+ "fertilizer": "Mostly organic: rotted chicken manure with carbonized rice hull mixed into the soil, plus weekly fermented plant juice or manure tea. Some farmers add a little urea after thinning.",
+ "care": "Thinning direct sown rows, hand weeding, regular watering and a close eye on leaf eating insects. Onion or cosmos planted around the field is used by some growers to keep pests away.",
+ "harvest": "Leaves are picked from about two to four weeks after transplanting, or about two months after direct sowing, while the stalks are crisp. Farmers pick outer leaves over several rounds or pull the whole plant, then wrap the bundles in banana leaves to keep them fresh. Much of it goes to burong mustasa.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Sown in furrows (tanim buto)",
+   "days": 60,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Plow twice",
+     "how": "Plow or dig the field two times so the soil is loose. Mustasa likes loose soil rich in organic matter, near water.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Add manure and open furrows",
+     "how": "Mix rotted chicken manure and carbonized rice hull into the soil, about 1 kg of manure and 300 g of rice hull a square meter, then open furrows 15 to 25 cm apart.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Sow in the furrows",
+     "how": "Drop the seed in the furrows about 15 cm apart and cover with a little soil, then water.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Water two to three times a week",
+     "how": "Keep the soil moist, watering two to three times a week or more in dry spells.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Thin and weed",
+     "how": "Pull extra seedlings where they crowd and pull the weeds so the plants get sun and food.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 20,
+     "title": "Feed and scout",
+     "how": "Many growers water with fermented plant juice or manure tea once a week. Check under the leaves for aphids, caterpillars and diamondback moth larvae, and pull out plants with mottled, curled leaves.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Wrap and keep fresh",
+     "how": "Wrap the bundles in banana leaves or plastic and keep them in the shade so they stay crisp.",
+     "task": "postharvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 60,
+     "title": "Pick the leaves or pull the plants",
+     "how": "From about two months after sowing, pick the outer leaves or pull whole plants while the stalks are still crisp and firm.",
+     "task": "harvest"
+    }
+   ]
+  },
+  {
+   "key": "transplanted",
+   "label": "Seedlings set out on beds (lipat tanim)",
+   "days": 25,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -28,
+     "title": "Sow in a seedbed or tray",
+     "how": "Fill a seedling tray or seedbed with a mix of carbonized rice hull, compost and vermicast, sow one seed a hole and water lightly. Keep in light shade.",
+     "task": "seedbed"
+    },
+    {
+     "phase": "prep",
+     "day": -3,
+     "title": "Prepare the beds",
+     "how": "Plow twice, mix in rotted chicken manure and carbonized rice hull, and form beds.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Transplant in the cool hours",
+     "how": "When the seedlings are about four weeks old with three to four true leaves, set one seedling a hole 15 to 20 cm apart, in the morning or late afternoon, and water.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Water and weed",
+     "how": "Water two to three times a week and pull weeds as they come.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 10,
+     "title": "Scout for leaf eaters",
+     "how": "Check for aphids, caterpillars and diamondback moth larvae, and remove sick plants.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 25,
+     "title": "Harvest the leaves",
+     "how": "Leaves are ready about two to four weeks after transplanting, while the stalks are crisp.",
+     "task": "harvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Sowing in the hottest months, when mustasa bolts and turns tough and bitter.",
+  "Never thinning, so plants stay small and weak.",
+  "Letting the soil dry out, which makes the leaves hot and fibrous.",
+  "Growing mustasa after pechay, cabbage or radish on the same plot again and again.",
+  "Leaving sick, mottled plants in the field where insects spread the virus."
+ ],
+ "better": [
+  "Use fresh seed of a pest and disease resistant variety and sow in the cool months.",
+  "Test the soil and add balanced fertilizer to the manure base by the result.",
+  "Thin on time and keep the moisture steady with mulch.",
+  "Rotate with crops outside the cabbage family and keep the field clean.",
+  "Scout twice a week and remove sick plants early."
+ ],
+ "video": {
+  "youtubeId": "19wdPKJkFik",
+  "title": "Part 2 PERA sa PECHAY at MUSTASA papano lalagu at kikita ng maganda?",
+  "channel": "GENEX ROSE AGRI FARM",
+  "lang": "fil",
+  "minutes": 19,
+  "why": "A Filipino farm shows the whole field process for pechay and mustasa, from land preparation to harvest and selling, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng mustasa",
+  "pagtatanim ng mustasa",
+  "mustasa farming",
+  "how to plant mustard greens in the philippines",
+  "mustasa sa bukid"
+ ],
+ "confidence": "medium",
+ "slug": "mustard-greens",
+ "rev": "8d1fc1d64924"
+}

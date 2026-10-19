@@ -9,7 +9,7 @@
  "season": "Talong grows all year in the Philippines wherever there is water for the dry months. In the lowlands the main crop is usually set out after the rice harvest and grown through the dry season, and a wet season crop is planted on raised rows with wider gaps between hills so water drains away.",
  "material": "Seed, about 100 to 200 grams for a hectare (one gram holds roughly 250 seeds). Farmers soak the seed in clean water overnight, dry it in the air, and sow it in a seedbed or in trays, then move the seedlings to the field when they are about 30 to 35 days old with 3 to 4 true leaves. Many still make their own seedling cups by rolling strips of banana leaf and pinning them with a broom stick.",
  "spacing": "Rows 75 to 100 cm apart and about 50 cm between hills, one seedling a hill. In the wet season many farmers widen the gap between hills to about 75 cm. Two rows are often set on one bed so the leaves shade the fruits.",
- "water": "Furrow irrigation: water is let into the furrows and allowed to soak in, never left standing. In the dry season farmers water about a week after planting, near 21 and 30 days, then every 10 days or so. In the wet season only when the soil dries. Seedlings in the bed are watered each morning, only enough to keep the soil damp.",
+ "water": "Furrow irrigation: water is let into the furrows and allowed to soak in, never left standing. In the dry season farmers water about a week after planting, near 21 and 30 days, then every 10 days or so. In the wet season only when the soil dries. In the seedbed, farmers water early in the day and only enough to keep the soil from drying.",
  "fertilizer": "Dried chicken manure or compost before planting, about 5 tons for a hectare, then a tablespoon of 14 14 14 in each hole at planting. Urea and muriate of potash, about 15 grams each a plant, between 10 and 15 days after planting, urea again near 30 days, and small doses of urea, potash or 14 14 14 every few weeks while the plants are bearing. Some pour the fertilizer as a answer, a sardine can full a hill.",
  "care": "Off barring at 14 to 21 days and hilling up at 21 to 35 days, with hand weeding between plants. Low side shoots are pruned off below the first fork, and each plant gets a bamboo stake. Rice straw is spread as mulch where it is at hand. Farmers cut off wilted shoot tips and bored fruits every week, pull and burn plants that wilt and die, and some plant marigold or lemongrass at the edges of the field to keep insects away.",
  "harvest": "The first fruits are ready about 46 to 50 days after transplanting for hybrids and closer to 70 days for open pollinated kinds. Pick young, shiny, firm fruits before the seeds harden, early in the morning, with a knife or shears, twice a week for 3 to 5 months. Sort out damaged fruits and pack the rest in a lined kaing, crate or pin holed plastic bag, out of the sun and rain.",
@@ -192,5 +192,5 @@
  ],
  "confidence": "high",
  "slug": "eggplant",
- "rev": "77be709f8780"
+ "rev": "c0241ccdad6e"
 }

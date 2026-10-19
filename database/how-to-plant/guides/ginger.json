@@ -1,0 +1,135 @@
+{
+ "crop": "ginger",
+ "name": "Ginger",
+ "local": "Luya",
+ "aka": [
+  "laya"
+ ],
+ "summary": "How Filipino farmers usually grow luya from rhizome pieces in furrows, often under coconut or coffee, and dig it eight to ten months later. For upland and backyard growers of native and bigger ginger types who want the usual way and what to change for heavier, cleaner rhizomes.",
+ "season": "Most farmers plant as the rains begin, around April to May, so the young shoots grow on the rains. Where there is water all year, ginger can be planted in any month.",
+ "material": "Seed rhizomes (binhi), about 800 to 1,500 kg a hectare. Farmers keep good rhizomes in the shade under banana or coconut leaves, then just before planting cut healthy, sprouting ones into pieces with 3 to 4 buds each. Some sprout the pieces first in a raised bed under compost and coconut coir dust.",
+ "spacing": "Furrows about 1 m apart and seed pieces about 30 cm apart in the row. Under coconut or with other crops the rows are set between the trees.",
+ "water": "Mostly rainfed, planted with the rains. Where rain is uneven, farmers water lightly every four to seven days during leaf growth. Ginger rots in soggy ground, so fields must drain well.",
+ "fertilizer": "Traditional growers rely on chicken or animal manure, about 3 to 5 tons a hectare, worked into the furrows. Ginger needs a lot of potash. A common guide adds about 11 bags of 14 14 14 and 4 bags of 0 0 60 a hectare, split as side dressings at 30 and 60 days.",
+ "care": "Mulching right after planting, hand weeding at a month and then as weeds come, two side dressings, and covering rhizomes that come up to the surface. Ginger takes some shade and is often grown under coconut, coffee or with papaya and pineapple.",
+ "harvest": "Most ginger for the local market is dug at 8 to 10 months, when the leaves yellow and wither. Clumps are dug with care, stems cut off, rhizomes trimmed, washed, air dried and sorted. Bruised or broken pieces lose weight and rot faster.",
+ "ways": [
+  {
+   "key": "rhizomes",
+   "label": "Rhizome pieces in furrows (tanim binhi)",
+   "days": 270,
+   "steps": [
+    {
+     "phase": "nursery",
+     "day": -21,
+     "title": "Pick and sprout the seed pieces",
+     "how": "Choose plump, healthy rhizomes with eyes and cut them into pieces with 3 to 4 buds. For an even stand, line them up close together in a raised bed, cover with compost and coir dust, and water as needed until the sprouts are 1 to 2 cm long.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Clear without burning",
+     "how": "Clear bushes and old crop stubble. Pile them for compost instead of burning.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Plow, harrow and open furrows",
+     "how": "Plow twice, harrow until fine, and open furrows about 1 m apart. Work rotted chicken manure into the furrows. Make sure rain water drains away.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the pieces",
+     "how": "Lay the sprouted pieces in the furrow about 30 cm apart, buds up, about 5 cm deep, and cover lightly with soil.",
+     "task": "planting"
+    },
+    {
+     "phase": "planting",
+     "day": 1,
+     "title": "Mulch",
+     "how": "Cover the rows with rice straw or coconut leaves to keep the soil moist and hold back weeds.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water lightly and often",
+     "how": "If the rains are uneven, give light watering every four to seven days during leaf growth.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed and first side dressing",
+     "how": "Hand weed about a month after planting and put the first half of the fertilizer along the rows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Second side dressing and cover the rhizomes",
+     "how": "Put the rest of the fertilizer, weed again, and pull soil or mulch over rhizomes that show at the surface.",
+     "task": "earthing_up"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch for rot and wilt",
+     "how": "Look for yellowing, wilting shoots and soft, smelly rhizomes at the base. Pull out and burn sick plants and do not move soil from those spots.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "harvest",
+     "day": 270,
+     "title": "Dig when the leaves wither",
+     "how": "Ginger is ready when the leaves turn yellow and dry, about 8 to 10 months after planting. Dig each hill with a fork or hoe, lift the whole clump, shake off the soil and cut the stems without breaking the rhizomes.",
+     "task": "harvest",
+     "tip": "Young ginger for pickling is dug much earlier. Mature ginger for salabat is left the longest."
+    },
+    {
+     "phase": "care",
+     "day": 271,
+     "title": "Clean, dry and sort",
+     "how": "Trim roots and shoots, wash off the soil, air dry, and sort by size, throwing out rotting pieces. Keep the best rhizomes in the shade for the next planting.",
+     "task": "postharvest"
+    }
+   ]
+  }
+ ],
+ "mistakes": [
+  "Planting pieces from rotting or shriveled rhizomes, which spreads rhizome rot.",
+  "Planting in a field that holds water after rain.",
+  "Planting ginger where tomato, pepper or eggplant just grew, or where wilt was seen before.",
+  "Skipping potash, so the rhizomes stay small.",
+  "Breaking and bruising the rhizomes at harvest."
+ ],
+ "better": [
+  "Use clean, healthy seed rhizomes from a field without rot or wilt, and sprout them before planting.",
+  "Test the soil and fertilize by the result, with enough potash.",
+  "Plant on well drained land and mulch to keep moisture even.",
+  "Rotate with crops outside the tomato family and pull and burn sick plants early.",
+  "Dig at the right age for your buyer and handle rhizomes gently."
+ ],
+ "video": {
+  "youtubeId": "hfnCTm73DWo",
+  "title": "PAANO MAGTANIM NG LUYA AT UMANI NG MARAMI",
+  "channel": "Badz Maranan",
+  "lang": "fil",
+  "minutes": 9,
+  "why": "A Filipino grower shows how luya is planted in the field and how much one planted piece yields at harvest, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng luya",
+  "pagtatanim ng luya",
+  "paano magparami ng luya",
+  "how to plant ginger in the philippines",
+  "ginger farming philippines"
+ ],
+ "confidence": "high",
+ "slug": "ginger",
+ "rev": "5cc60f02ff08"
+}

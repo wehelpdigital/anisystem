@@ -1,0 +1,133 @@
+{
+ "crop": "durian",
+ "name": "Durian",
+ "local": "Duryan",
+ "aka": [
+  "durian",
+  "Puyat",
+  "Arancillo"
+ ],
+ "summary": "This guide shows how Filipino growers, mostly in Mindanao, usually plant a grafted durian seedling under light shade and care for it until the first fruits. It is for small orchards and coconut farms.",
+ "season": "Seedlings are planted as the rains begin, or in any wet month where rain spreads through the year as in Davao and much of Mindanao. Durian likes deep, loose, well drained soil with plenty of organic matter, from the lowlands up to about 800 m.",
+ "material": "Most growers now plant a grafted seedling of a known variety such as Puyat, Arancillo, Duyaya or Alcon, joined to a seedling rootstock and planted about 5 months or more after grafting. Some growers prefer bigger, year old grafted plants. In the old way native durian was grown from the seed of a good fruit, which bears much later and gives mixed fruit.",
+ "spacing": "About 8 m between trees in the row and 10 m between rows, one seedling a hole. Durian is also grown between coconut and other fruit trees.",
+ "water": "Mostly rain fed, with mulch in the dry season. Young trees are watered when the soil dries. Bearing trees need little water when new shoots come out, more at flowering and fruit set, and the most while the fruit grows.",
+ "fertilizer": "About half a kilo of chicken dung, vermicast or animal manure in the hole at planting. In the first and second years, about four feedings a year of about 2 kg chicken dung with dolomite and vermicast a tree, rising to 3 kg in the third year and 4 kg from the fourth year with three feedings a year. Many growers also use complete fertilizer in small amounts, adjusted by tree age and soil test.",
+ "care": "Half shade for new seedlings, mulching, ring weeding before each feeding, short crops between rows, pruning dead and sick branches and water shoots, bagging young fruits, and checking for psyllids, mealybugs, borers, canker and pink disease. Fruit fly traps and rat baits are set in bearing orchards.",
+ "harvest": "A ripe fruit gives a sweet smell at its base and a loose, hollow sound when knocked. Many growers let ripe fruit drop onto nets or soft ground, saying it tastes best. Others cut the stalk close to the branch with a sharp knife. Fruit is carried in bamboo baskets and kept off the bare soil to avoid rot.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedling (grafted na durian)",
+   "days": 1800,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear the land and mark the spots",
+     "how": "Clear the brush and stumps and loosen the soil, leaving new forest land untilled. Mark the planting spots about 8 m apart in the row and 10 m between rows.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Dig the holes",
+     "how": "Dig holes about 30 cm wide and 30 cm deep. Put about half a kilo of dried chicken dung, vermicast or animal manure in each hole as a base.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the grafted seedling",
+     "how": "Remove the bag without breaking the soil ball and set the seedling so the soil comes to about its old soil line, within an inch. Cover with topsoil and press gently.",
+     "task": "planting",
+     "tip": "Durian roots rot in standing water, so never plant in a low, wet spot."
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Shade the new seedling",
+     "how": "Give the new tree about half shade with fronds or a net for two weeks to a few months, depending on the weather, so it recovers and its leaves do not burn. Young trees keep doing best in partial shade.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Mulch and water",
+     "how": "Mulch around the tree with cut grass, rice hull, coir dust, dried leaves or coconut husks, especially in the dry season. Water when the soil dries.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Ring weed, then feed",
+     "how": "Weed a circle around the tree before each feeding and leave the cut weeds as mulch. In the first year feed about four times, each time about 2 kg of chicken dung with dolomite and vermicast spread around the tree.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 60,
+     "title": "Plant short crops between the rows",
+     "how": "Grow cowpea, corn or other short crops between the durian rows while the trees are small. They earn some money and keep weeds down.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Watch young leaves and the trunk",
+     "how": "Check new shoots for beetles, psyllids and mealybugs and the trunk for borer holes or canker. Cut and burn damaged twigs and scrape canker spots on the bark.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Shape the young tree",
+     "how": "Remove dead, broken or sick branches and water shoots to build a good canopy shape. Keep feeding three to four times a year, a little more each year.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1800,
+     "title": "First good harvest",
+     "how": "Bag young fruits against borers and rats. The fruit is ready when it smells sweet at the base and sounds loose when knocked. Many growers let it drop onto nets, or cut the stalk close to the branch with a sharp knife.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Grafted durian may give a few fruits from about the third year and comes into a good crop at about the fifth year."
+  }
+ ],
+ "mistakes": [
+  "Planting in heavy clay or low, wet ground, where the roots rot.",
+  "Planting in full sun with no shade in the first months.",
+  "Planting seedlings of unknown variety, which bear late and give mixed fruit.",
+  "Not bagging the young fruits, so borers and rats ruin them.",
+  "Letting fallen fruit lie on bare soil, which spreads rot.",
+  "Never pruning, so the canopy turns dense and diseased."
+ ],
+ "better": [
+  "Plant grafted seedlings of a proven variety from an accredited nursery.",
+  "Test the soil and feed by the result, with lime or dolomite where the soil is sour.",
+  "Give half shade to young trees and mulch them every dry season.",
+  "Bag fruits early and set fruit fly traps and rat baits in bearing blocks.",
+  "Scout every month for psyllids, borers and stem canker and act early.",
+  "Water during flowering and fruit growth in dry spells for better fruit set."
+ ],
+ "video": {
+  "youtubeId": "4SPwAslKkhs",
+  "title": "PAANO MAGTANIM NG DURIAN.PUYAT VARIETY.DURIAN FARMING. INVESTMENT SA FARMING.",
+  "channel": "Angel Farm",
+  "lang": "fil",
+  "minutes": 16,
+  "why": "A Filipino farm plants grafted Puyat durian in the field and explains the steps in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng durian",
+  "pagtatanim ng durian",
+  "grafted na durian puyat",
+  "how to plant durian in the philippines",
+  "durian farming"
+ ],
+ "confidence": "high",
+ "slug": "durian",
+ "rev": "7a9659ec15e3"
+}

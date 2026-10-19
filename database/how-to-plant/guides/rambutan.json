@@ -1,0 +1,138 @@
+{
+ "crop": "rambutan",
+ "name": "Rambutan",
+ "local": "Rambutan",
+ "aka": [
+  "R5",
+  "Maharlika"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant a grafted rambutan of a good variety and care for it until the first fruits. It is for backyards and small orchards in warm, humid places.",
+ "season": "Grafted seedlings are planted as the rains begin, around May to July, so they settle in with steady rain. Rambutan likes a warm, humid place with rain spread through much of the year.",
+ "material": "A grafted seedling of a proven variety, such as R5, R162, Rongrien or another sweet, red fruited selection, joined to a seedling rootstock. Rootstocks are grown from fresh seed for about 8 to 12 months, grafted, and planted out about 6 months after grafting. Trees from seed take longer to bear and give mixed fruit, and many seedlings turn out to be male trees with few or no fruits.",
+ "spacing": "About 8 to 10 m between trees and between rows, one grafted seedling a hole. Holes about 30 cm wide and deep, wider on hard soil.",
+ "water": "Mostly rain fed. New trees are shaded and watered in dry spells, and the base is kept mulched. Growers with water on hand irrigate in long dry months so the trees flower and fruit well.",
+ "fertilizer": "Compost or dried manure in the hole. About 60 g of complete fertilizer (14 14 14) around a young tree at first, then about 200 g a tree in the second year, 300 g in the third and 400 g in the fourth, split between the start and the end of the rains. Bearing trees get more, with potash for sweet fruit.",
+ "care": "Shading new trees for the first weeks, ring weeding every three months, mulching, removing rootstock shoots, shaping to a low, open tree, and cutting and burning twigs hit by borers. Checking new shoots and fruits for mealybugs and fruit borers.",
+ "harvest": "Fruit is ready when the skin turns pinkish red to red, and the fruits in one bunch ripen at different times, so growers pick in rounds, often three times a week at the peak. Bunches are cut with shears or a hooked pole, kept in the shade, sorted by size and ripeness and packed in boxes with air holes.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedling (grafted na rambutan)",
+   "days": 1800,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -30,
+     "title": "Clear the land and mark the spots",
+     "how": "Clear the brush and stumps and loosen the soil. Mark the planting spots about 8 to 10 m apart each way, since rambutan grows into a wide tree.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -7,
+     "title": "Dig the holes",
+     "how": "Dig holes at least 30 cm wide and 30 cm deep, wider than the seedling bag on hard soil. Mix the topsoil with compost or dried manure for filling back.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the grafted seedling",
+     "how": "Remove the bag without breaking the soil ball and set the seedling in the hole with the graft above the soil. Fill in with topsoil, press it gently and water well.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 1,
+     "title": "Shade the new tree",
+     "how": "Shade the new tree with fronds or a net for two weeks to a few months, depending on the weather, so it recovers from planting. Water it in dry spells and mulch around the base.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "First fertilizer",
+     "how": "Put about 60 g, or 6 tablespoons, of complete fertilizer (14 14 14) around the base and cover it lightly with soil. Repeat a few times a year, a little more as the tree grows.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Ring weed every three months",
+     "how": "Weed a circle around each tree every three months or whenever the grass grows back. Lay the cut grass as mulch a little off the stem.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Remove rootstock shoots",
+     "how": "Rub off any shoot that comes from below the graft. Keep the good variety growing as the main stem.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Watch for twig borers and mealybugs",
+     "how": "Look for twigs that wilt or have small holes, and for white mealybugs on new shoots. Cut and burn damaged twigs.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Feed more in the second year",
+     "how": "From the second year, give about 200 g of complete fertilizer a tree, about 300 g in the third year and about 400 g in the fourth. Split each year's amount between the start and the end of the rains.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 540,
+     "title": "Shape the young tree",
+     "how": "Keep a few strong, well spread main branches and cut out weak, crossing or low branches. A low, open tree is easier to pick and to protect.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1800,
+     "title": "First fruits",
+     "how": "Pick when the skin turns pinkish red or fully red, going over the tree in rounds since the fruits ripen unevenly. Cut the bunches with shears or a pole hook without breaking the branches, which bear the next crop.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Rambutan usually starts bearing at about 4 to 5 years."
+  }
+ ],
+ "mistakes": [
+  "Planting seedlings from seed, which may turn out to be male trees with few fruits.",
+  "Planting in full sun with no shade in the first weeks.",
+  "Tearing branches when picking, which costs the next crop.",
+  "Picking whole bunches at once while many fruits are still green.",
+  "Leaving twig borer damage on the tree.",
+  "Planting in low, wet ground."
+ ],
+ "better": [
+  "Plant grafted seedlings of a proven variety from an accredited nursery.",
+  "Test the soil and feed by the result, raising the amount each year.",
+  "Water during long dry spells so flowering and fruit set stay even.",
+  "Prune lightly after each harvest to keep the tree low and open.",
+  "Scout for twig borers, fruit borers and mealybugs every month and clean up fallen fruit.",
+  "Pick in rounds with shears and sort the fruit for a better price."
+ ],
+ "video": {
+  "youtubeId": "1QqbuItqlbQ",
+  "title": "PAANO MAGTANIM NG RAMBUTAN 2024.",
+  "channel": "Angel Farm",
+  "lang": "fil",
+  "minutes": 11,
+  "why": "A Filipino farm plants grafted rambutan in the field and explains the steps in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng rambutan",
+  "pagtatanim ng rambutan",
+  "grafted na rambutan",
+  "how to plant rambutan in the philippines",
+  "rambutan farming"
+ ],
+ "confidence": "medium",
+ "slug": "rambutan",
+ "rev": "2cc83592bbdf"
+}

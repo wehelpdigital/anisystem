@@ -1,0 +1,132 @@
+{
+ "crop": "lanzones",
+ "name": "Lanzones",
+ "local": "Lansones",
+ "aka": [
+  "longkong",
+  "duku",
+  "Paete"
+ ],
+ "summary": "This guide shows how Filipino growers usually plant lanzones, today mostly grafted longkong or duku on native rootstock, under shade and care for it until the first fruits. It is for coconut farms, backyards and small orchards in places like Laguna, Camiguin and Mindanao.",
+ "season": "Seedlings are planted as the rains begin, around May to July, under shade that is already growing. Lanzones needs a humid place with rain spread through most of the year and does poorly in long dry seasons. In Laguna the fruit is sold from about August to early December.",
+ "material": "Most growers now plant grafted longkong or duku joined to a hardy native Paete or Jolo seedling rootstock. Grafted plants are ready for the field about 6 to 12 months after grafting. Buy from a trusted nursery, since longkong leaves taste bland while Paete and Jolo leaves taste bitter when chewed. In the old way farmers planted Paete seedlings from seed, which can take 15 to 20 years to bear.",
+ "spacing": "About 5 m by 5 m, one seedling a hole, or in the spaces between coconut trees. Holes about 25 cm wide and deep, or a little wider than the bag.",
+ "water": "Rain fed in most farms. Young trees are watered in dry spells and kept mulched and shaded. Growers with water on hand irrigate bearing trees in dry months for a better crop.",
+ "fertilizer": "About 50 to 100 g of complete fertilizer (14 14 14) or ammonium phosphate (16 20 0) in the hole at planting. Young trees get light feedings with complete fertilizer and manure, more each year. Some growers feed bearing trees with 17 0 17 and muriate of potash (0 0 60), giving the last dose about two months after the flowers come out.",
+ "care": "Planting under banana, kakawate, ipil ipil or coconut for shade, then thinning the shade as the tree grows. Weeding, mulching, keeping animals out, removing rootstock shoots, scraping loose bark and cutting borer damaged and dead twigs, and removing water sprouts.",
+ "harvest": "Fruits are ready when the bunch has turned evenly yellow and the fruits taste sweet. Picking too early gives sour fruit. Whole bunches are cut with shears or a knife, packed loosely in baskets or crates and kept in the shade. In Laguna the season runs from about August to early December.",
+ "ways": [
+  {
+   "key": "grafted",
+   "label": "Grafted seedling (grafted na lanzones)",
+   "days": 1800,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -180,
+     "title": "Grow shade first",
+     "how": "Lanzones needs shade when young, so plant banana, ipil ipil or kakawate in the field months before, or plant under coconut. The young trees should get filtered light, not full sun.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -14,
+     "title": "Mark and dig the holes",
+     "how": "Mark the planting spots about 5 m apart each way. Dig holes about 25 cm wide and deep, or a little wider than the seedling bag.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the grafted seedling",
+     "how": "Put about 50 to 100 g of complete fertilizer (14 14 14) or 16 20 0 in the hole and cover it with soil. Remove the bag, set the seedling at the depth it grew with the graft above the soil, firm the soil and water well.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 3,
+     "title": "Keep the seedling shaded and moist",
+     "how": "Make sure the young tree sits in light shade and mulch around it with dried leaves. Water in dry spells, since young lanzones dries out fast.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Weed around the tree",
+     "how": "Keep a clean circle around the young tree by hand. Keep grazing animals out so they do not pack the soil or eat the leaves.",
+     "task": "weeding"
+    },
+    {
+     "phase": "care",
+     "day": 90,
+     "title": "Feed the young tree",
+     "how": "Feed the young tree lightly with complete fertilizer or manure every few months, more as it grows. Test the soil when you can and follow the result.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 120,
+     "title": "Rub off rootstock shoots",
+     "how": "Remove any shoot that grows below the graft, since it comes from the rootstock. Check every month in the first year.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 180,
+     "title": "Check the bark for borers",
+     "how": "Look at the trunk and branches for bark borer damage and loose, dead bark, and brush or scrape it off. Cut out dead twigs.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 360,
+     "title": "Thin the shade and prune lightly",
+     "how": "As the tree grows, cut back the temporary shade little by little so the tree gets more light. Remove water sprouts and dead or crowded inner twigs.",
+     "task": "pruning"
+    },
+    {
+     "phase": "harvest",
+     "day": 1800,
+     "title": "First fruits",
+     "how": "Pick whole bunches when the fruits turn evenly yellow and taste sweet, cutting the stalk with a knife or shears. Handle the bunches gently and keep them in the shade.",
+     "task": "harvest"
+    }
+   ],
+   "note": "Well grown grafted longkong can bear at about 5 years. Many trees take longer, and Paete trees from seed take 15 to 20 years."
+  }
+ ],
+ "mistakes": [
+  "Planting in full sun with no shade, so the young trees scorch and die.",
+  "Buying cheap seedlings that turn out to be ungrafted Paete instead of longkong.",
+  "Planting from seed and waiting 15 years or more for the first fruits.",
+  "Letting goats and cattle graze under the trees and pack the soil.",
+  "Ignoring loose bark and borers on the trunk.",
+  "Picking the bunches before they are fully yellow and sweet."
+ ],
+ "better": [
+  "Plant grafted longkong or duku from an accredited nursery with known mother trees.",
+  "Test the soil and feed by the result, with potash for bearing trees.",
+  "Plan the shade: start with banana or kakawate and thin it as the trees grow.",
+  "Water during dry months so flowering and fruit set stay steady.",
+  "Scrape loose bark and scout for bark borers and scab every few months.",
+  "Prune water sprouts and crowded twigs after each harvest."
+ ],
+ "video": {
+  "youtubeId": "o1mqZTpwJMU",
+  "title": "Paano ba tamang paraan ng pagtatanim ng Lanzones? Ilang taon bago mamunga?",
+  "channel": "islandboychoy",
+  "lang": "fil",
+  "minutes": 19,
+  "why": "A Filipino grower plants longkong lanzones in the ground step by step and talks about how many years it takes to bear, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng lanzones",
+  "pagtatanim ng lansones",
+  "grafted na longkong",
+  "how to plant lanzones in the philippines",
+  "longkong farming"
+ ],
+ "confidence": "medium",
+ "slug": "lanzones",
+ "rev": "1f54057f2afd"
+}

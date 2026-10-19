@@ -7,7 +7,7 @@
  "season": "Okra likes a long, warm season and can be planted in any month in the lowlands. It needs irrigation in the dry months and well drained rows in the rainy months, and the seed will not sprout in cold soil.",
  "material": "Seed, about 5 kg for a hectare, sown straight in the field. Farmers soak the hard seed in water overnight so it sprouts evenly, and many keep seed from their own best dry pods.",
  "spacing": "Furrows about 1 meter apart and hills 30 cm apart along the row, two plants a hill after thinning.",
- "water": "Furrow irrigation every 7 to 14 days depending on the season and the soil, more often on sandy soil in the dry months. The rows must drain well in the rainy season.",
+ "water": "Water runs down the furrows once every one to two weeks, more often on sandy ground and in the dry months. The rows must drain well in the rainy season.",
  "fertilizer": "About 20 bags of organic fertilizer or well rotted manure and 2 to 3 bags of 14 14 14 for a hectare, spread in the furrows and covered before sowing. About 10 grams of urea a hill 30 days after planting, and again when the plants are cut back.",
  "care": "Thinning to two plants a hill at about 15 days, off barring at about two weeks after the seedlings come up and hilling up about two weeks later, with hand weeding between plants. Farmers keep the plough about 10 cm from the stems. Old plants are often cut back a foot above the ground and fed again for a second crop.",
  "harvest": "Pods are picked young and tender, about 3 to 4 inches long, 4 to 6 days after flowering, every two or three days in the morning or late afternoon. They are sorted and packed loosely in lined baskets, bags or crates so they do not bruise.",
@@ -56,7 +56,7 @@
      "phase": "care",
      "day": 7,
      "title": "Replant gaps and water",
-     "how": "A few days after the seedlings come up, replant hills where nothing grew. Irrigate by furrow every 7 to 14 days, depending on the weather and the soil.",
+     "how": "A few days after the seedlings come up, replant hills where nothing grew. Run water down the furrows once every one to two weeks, more often in hot weather or on sandy ground.",
      "task": "replanting"
     },
     {
@@ -153,5 +153,5 @@
  ],
  "confidence": "medium",
  "slug": "okra",
- "rev": "eeaf0c4b4a6e"
+ "rev": "7884a3d68834"
 }

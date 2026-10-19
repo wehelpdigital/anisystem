@@ -14,7 +14,7 @@
  "water": "The first irrigation goes in about two weeks after the seedlings come up, then about every 7 days, by flooding the furrows in the dry season. In the wet season planting on ridges keeps water away from the stems.",
  "fertilizer": "About a tablespoon of 14 14 14 a hill at planting. About four weeks after the seedlings come up, well rotted manure and a tablespoon of urea a hill. While the vines bear, at about 8, 10 and 12 weeks, bigger doses of urea and 14 14 14 a hill.",
  "care": "An overhead trellis about 2 meters high on ipil ipil or bamboo posts, with a wire or twine roof and a pole or string for each plant. Vines are tied weekly, shoots and female buds below the roof are removed, and the vine tip is cut at the roof. Weeds are cut close to the ground every two weeks, never dug out, until the vines shade the ground.",
- "harvest": "Young fruits are cut with a sharp knife a few days after they set, in the cool early morning or late afternoon, and packed in plastic bags to stay fresh. Fruits left to mature and dry on the vine give the fiber sponge and the seed for the next crop.",
+ "harvest": "Young fruits are cut with a sharp knife a few days after they set, at dawn or near sundown, and packed in plastic bags to stay fresh. Fruits left to mature and dry on the vine give the fiber sponge and the seed for the next crop.",
  "ways": [
   {
    "key": "direct",
@@ -75,7 +75,7 @@
      "phase": "care",
      "day": 19,
      "title": "Cut the weeds, do not dig",
-     "how": "About two weeks after the seedlings come up, slash the weeds low to the ground, and repeat every two weeks. Do not uproot weeds or hoe between the rows, because patola roots are shallow and break easily.",
+     "how": "About two weeks after the seedlings come up, slash the weeds low with a sickle or bolo, and do it again every two weeks. Do not uproot weeds or hoe between the rows, because patola roots are shallow and break easily.",
      "task": "weeding"
     },
     {
@@ -117,7 +117,7 @@
      "phase": "harvest",
      "day": 45,
      "title": "Cut the young fruits",
-     "how": "Cut the fruits while they are young and tender, about five days after they set, with a sharp knife. Harvest in the cool early morning or late afternoon so the sun does not dry the ridges.",
+     "how": "Cut the fruits while they are young and tender, about five days after they set, with a sharp knife. Pick at dawn or near sundown, because hot sun dries and darkens the ridges.",
      "task": "harvest"
     },
     {
@@ -171,5 +171,5 @@
  ],
  "confidence": "medium",
  "slug": "sponge-gourd",
- "rev": "5623d3fbb638"
+ "rev": "05843ad633a6"
 }

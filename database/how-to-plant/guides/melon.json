@@ -1,0 +1,157 @@
+{
+ "crop": "melon",
+ "name": "Melon",
+ "local": "Milon",
+ "aka": [
+  "melon",
+  "melong putok"
+ ],
+ "summary": "How Filipino farmers grow melon, both the netted kind and honeydew, in the dry months: seed sprouted and planted in hills or set out from trays, vines run on the ground over mulch, and fruits cut when they smell sweet and come away from the stalk. It is a short guide for small lowland farms, since fewer farmers grow melon than pakwan.",
+ "season": "Melon needs hot, dry weather while the fruits ripen, because rain at that time splits the fruits and makes them less sweet. Lowland farmers plant at the start of the dry season so the harvest falls in the driest months, on loose, well drained soil.",
+ "material": "Seed. Melon seed is costly, so most farmers sprout it first in a damp cloth and either plant it straight in the hills or raise it in trays and set out the seedlings once they have a few true leaves.",
+ "spacing": "Rows wide enough for the vines to run, often 1.5 to 2 meters apart, with one plant every half meter or so along the row. Big fruited kinds get more room.",
+ "water": "Light, even watering by hand or furrow, more while the fruits swell and less as they ripen. Water must never stand around the stems.",
+ "fertilizer": "Well rotted manure or compost and a basal dose of complete fertilizer such as 14 14 14 before planting, urea when the vines start to run, and muriate of potash or complete fertilizer once the fruits form.",
+ "care": "Thinning to one plant a hill, weeding by hand before the vines spread, plastic mulch or straw under the fruits, hand pollination when bees are few, and removal of crooked or stung fruits. Farmers check often for beetles and fruit flies.",
+ "harvest": "Netted melons are ripe when they smell sweet, turn tan under the net and slip from the stalk with a light push. Honeydew is cut when its skin turns creamy and waxy. Fruits are handled gently, kept in the shade and sold within a few days.",
+ "ways": [
+  {
+   "key": "direct",
+   "label": "Seed sown in hills (tanim buto)",
+   "days": 65,
+   "steps": [
+    {
+     "phase": "prep",
+     "day": -21,
+     "title": "Plow and harrow the field",
+     "how": "Plow and harrow two or three times until the soil is loose and airy. Pick a field that drains well and has not grown melon, pakwan or other gourds lately.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -5,
+     "title": "Manure the rows and lay mulch",
+     "how": "Work well rotted manure or compost into the rows with a basal dose of complete fertilizer such as 14 14 14. Many growers cover raised beds with plastic mulch and punch planting holes along the middle.",
+     "task": "land_prep"
+    },
+    {
+     "phase": "prep",
+     "day": -2,
+     "title": "Sprout the seed",
+     "how": "Soak the seed for a few hours, wrap it in a damp cloth and keep it warm and shaded until the tiny roots show.",
+     "task": "seed_treatment"
+    },
+    {
+     "phase": "planting",
+     "day": 0,
+     "title": "Plant the sprouted seed",
+     "how": "Plant one or two sprouted seeds a hill, root down, and cover lightly with fine soil. Water gently.",
+     "task": "planting"
+    },
+    {
+     "phase": "care",
+     "day": 5,
+     "title": "Guard the seedlings",
+     "how": "Check the young plants every day or two for leaf beetles and cutworms, which can wipe out a stand in the first weeks. Replant empty hills.",
+     "task": "spraying_watch"
+    },
+    {
+     "phase": "care",
+     "day": 7,
+     "title": "Water lightly and evenly",
+     "how": "Water the hills or run water in the furrows when the topsoil dries, a little at a time. Never let water stand around the stems.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "care",
+     "day": 14,
+     "title": "Thin to one plant",
+     "how": "Keep the strongest plant in each hill and pull the rest.",
+     "task": "thinning"
+    },
+    {
+     "phase": "care",
+     "day": 21,
+     "title": "Side dress as the vines run",
+     "how": "When the vines begin to run, side dress with urea a hand span from the stem and cover it. Weed the rows by hand before the vines cover the ground.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 30,
+     "title": "Help the fruits set",
+     "how": "If few bees come, touch an open male flower to the female flowers, the ones with a small ball behind the petals, early in the morning. Do not spray while the flowers are open.",
+     "task": "other"
+    },
+    {
+     "phase": "care",
+     "day": 35,
+     "title": "Keep the best fruits",
+     "how": "Keep a few well shaped fruits on each vine and remove the crooked or stung ones. Rest each fruit on straw or the plastic mulch so it does not touch wet soil.",
+     "task": "pruning"
+    },
+    {
+     "phase": "care",
+     "day": 40,
+     "title": "Potash for sweetness",
+     "how": "Once the fruits are the size of an egg, side dress with muriate of potash or complete fertilizer and water it in.",
+     "task": "fertilizer"
+    },
+    {
+     "phase": "care",
+     "day": 55,
+     "title": "Cut back the water",
+     "how": "As the fruits near ripeness, water less so they do not crack and their flesh turns sweeter.",
+     "task": "irrigation"
+    },
+    {
+     "phase": "harvest",
+     "day": 65,
+     "title": "Pick ripe fruits",
+     "how": "A ripe netted melon smells sweet, its skin turns from green to tan under the net, and it slips off the stalk with a light push. Honeydew does not slip: cut it when the skin turns creamy and slightly waxy.",
+     "task": "harvest"
+    },
+    {
+     "phase": "harvest",
+     "day": 66,
+     "title": "Handle gently",
+     "how": "Carry the fruits in lined baskets or crates, keep them in the shade, and sell them within a few days.",
+     "task": "postharvest"
+    }
+   ],
+   "note": "Early kinds can be picked from about 65 days after planting, as growers in Tarlac report. Larger kinds and honeydew take longer."
+  }
+ ],
+ "mistakes": [
+  "Timing the crop so it ripens in the rainy months, which splits the fruits and spoils the sweetness.",
+  "Picking before the fruit slips or smells sweet, so it never sweetens off the vine.",
+  "Planting where melon, pakwan or other gourds just grew, so soil diseases carry over.",
+  "Watering heavily near harvest, which cracks the fruits and dilutes the flavor.",
+  "Leaving too many fruits on one vine, which gives small, bland melons."
+ ],
+ "better": [
+  "Have the soil tested and feed by the result, with enough potash for sweet fruits.",
+  "Buy good hybrid seed suited to the lowlands and sprout it before planting so none is wasted.",
+  "Use plastic mulch on raised beds with drip irrigation for clean fruits and steady water.",
+  "Scout weekly and use integrated pest management for thrips, aphids, beetles and fruit fly.",
+  "Rotate with rice, corn or beans and keep two seasons between gourd crops on the same field."
+ ],
+ "video": {
+  "youtubeId": "SsMJe9dbyxw",
+  "title": "65 days lang, harvest na! Paraan ng Pagtatanim ng Melon at Honeydew | Paniqui, Tarlac",
+  "channel": "Christian Robillos",
+  "lang": "fil",
+  "minutes": 6,
+  "why": "A grower in Paniqui, Tarlac shows how melon and honeydew are planted in the field and harvested, in Tagalog."
+ },
+ "keywords": [
+  "paano magtanim ng melon",
+  "pagtatanim ng melon",
+  "paano magtanim ng honeydew",
+  "how to plant melon in the philippines",
+  "muskmelon farming philippines"
+ ],
+ "confidence": "low",
+ "slug": "melon",
+ "rev": "f601fb7093dd"
+}
