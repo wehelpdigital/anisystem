@@ -149,6 +149,67 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering patani, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Patani grows along fences and backyard frames, planted with the rains and watered by hand only in long dry spells. Old vines with deep roots bear for months on the rain alone. Hand watering with a can or a hose at the base of each hill, in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let patani go dry at these stages",
+   "text": "Coming up, the first two weeks: keep the hill moist. Flowering and pod filling: drought drops the flowers and leaves empty pods."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for patani, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 14",
+     "Water at planting if the soil is dry, then every day or two until the seedlings are up",
+     "Enough to keep the hill moist, never soggy"
+    ],
+    [
+     "Vine growth",
+     "Day 14 to 60",
+     "Usually the rains are enough. In a dry spell, water when the topsoil dries",
+     "A watering can of about 10 liters shared among a few hills"
+    ],
+    [
+     "Flowering and pods",
+     "Day 60 to 120",
+     "In dry weeks, water every few days",
+     "Soak the soil around each hill"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains or from October to November, near a fence or frame where the roots can go deep. Mulch the base of the vine.\n\n**In the dry season.** Bearing vines in the dry months need a watering every few days. Water when the leaves droop in the morning or the soil is dry a finger deep.\n\n**In the rainy season.** Plant on a mound or raised spot so rain drains away, since standing water rots the roots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and pale, flowers drop and pods fill poorly.",
+    "**Too much water:** Yellow leaves and rotting roots and stem base."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the base of the vine so the soil stays moist between waterings. Water steadily while the vine flowers and fills its pods."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for patani"
   },
   {
@@ -274,6 +335,10 @@
     {
      "q": "How long before patani can be harvested?",
      "a": "It is ready about 85 days after sowing. Green pods are picked when the seeds are full but still green, every few days for months."
+    },
+    {
+     "q": "How often do you water patani?",
+     "a": "Planting and coming up, sowing day to day 14: Water at planting if the soil is dry, then every day or two until the seedlings are up. Vine growth, day 14 to 60: Usually the rains are enough. In a dry spell, water when the topsoil dries. Flowering and pods, day 60 to 120: In dry weeks, water every few days. Bearing vines in the dry months need a watering every few days."
     },
     {
      "q": "What do you plant to grow patani?",

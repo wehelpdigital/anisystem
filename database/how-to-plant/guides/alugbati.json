@@ -115,6 +115,60 @@
   "Rotate with corn or other crops and plant marigold to cut root knot nematodes.",
   "Pick on a regular weekly schedule and keep the shoots cool and moist to market."
  ],
+ "watering": {
+  "traditional": "Alugbati needs plenty of water: in the dry season farmers run water down the furrows every five to seven days or sprinkle the plots daily, with grass clippings or rice straw as mulch. In the wet season they dig canals so rain drains fast, because soggy soil and too much watering bring leaf disease.",
+  "method": "Furrow watering every five to seven days or a daily sprinkler in the dry season. Backyard growers use a watering can or hose. Water in the morning or late afternoon.",
+  "rainfed": "Plant at the start of the rains so the cuttings root on the rain and the plants grow through the warm, wet months. Mulch the rows to hold moisture between rains, and keep a small patch near the house or well for the dry months.",
+  "dryseason": "Run water down the furrows every five to seven days, or sprinkle the plots daily, and keep a mulch of grass clippings or rice straw. Water when the leaves go limp by mid morning or the soil a finger deep is dry.",
+  "wet": "Dig canals so rain water drains fast after heavy rains, and do not water when the plots are wet. Over watering and soggy soil bring leaf spots and wash the plant food out of the soil.",
+  "schedule": [
+   {
+    "stage": "Soaking the cuttings",
+    "from": -1,
+    "to": 0,
+    "often": "Leave the stripped cuttings standing in water for one night, or rest them a day in a shaded, damp spot",
+    "amount": "Cuttings standing in clean water",
+    "why": "Cuttings full of water root faster after planting."
+   },
+   {
+    "stage": "Planting and rooting",
+    "from": 0,
+    "to": 14,
+    "often": "Water right after planting and keep the soil moist, every day by can or sprinkler in dry weather",
+    "amount": "Moisten the soil around the cuttings, no puddles",
+    "why": "Fresh cuttings root only in moist soil and wilt fast in the sun."
+   },
+   {
+    "stage": "Vine growth",
+    "from": 14,
+    "to": 40,
+    "often": "In the dry season, furrow water every five to seven days or sprinkle daily. Lay mulch along the rows",
+    "amount": "Wet the soil to the roots, then let it drain",
+    "why": "Steady water makes thick, tender shoots and a deep root system."
+   },
+   {
+    "stage": "Picking every week",
+    "from": 40,
+    "to": 120,
+    "often": "Keep the same schedule for as long as you pick, and water after each monthly feeding",
+    "amount": "Even waterings, no standing water",
+    "why": "The plants keep putting out new shoots only with steady water and feeding."
+   }
+  ],
+  "critical": [
+   "The first two weeks after planting, while the cuttings root.",
+   "The picking months in the dry season, when dry soil gives thin, tough shoots."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and turn small and dull, the shoots grow thin and tough, and the plants flower early.",
+   "wet": "Leaves show brown or purple spots and yellow, and the stems rot at the base in soggy plots."
+  },
+  "better": [
+   "Mulch with grass clippings or rice straw to keep the soil moist and cut the watering.",
+   "Water the soil, not the leaves, and avoid soaking the plots, to keep leaf spots down."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "OiqftXO7Ucs",
   "title": "HARVESTING AND PLANTING ALUGBATI | PAANO MAGTANIM NG ALUGBATI | D' Green Thumb",
@@ -135,5 +189,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "malabar-spinach",
- "rev": "b618e2aca519"
+ "rev": "2563bb02781b"
 }

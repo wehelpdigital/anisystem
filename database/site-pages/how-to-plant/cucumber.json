@@ -173,6 +173,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering pipino, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Pipino is watered right after sowing so the seeds come up evenly, then by furrow about once a week to every 10 days in the dry months, and only when the soil dries in the rainy months. Drainage canals at the ends of the rows keep water from standing, because the roots rot in it. Furrow irrigation along the trellised rows is the usual way. Small growers water each hill with a can or a hose. Water in the morning so the leaves dry before night."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let pipino go dry at these stages",
+   "text": "Right after sowing, for an even stand. Flowering, fruit set and picking: dry soil gives crooked, bitter fruits and cuts the harvest."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for pipino, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "Sowing day to day 5",
+     "Irrigate right after sowing. If the hills dry before the seedlings are up, sprinkle them by can",
+     "Wet the hills evenly, no puddles"
+    ],
+    [
+     "Young vines",
+     "Day 5 to 25",
+     "Run water down the furrows about every 7 to 10 days in the dry months",
+     "Soak the rows, then drain"
+    ],
+    [
+     "Flowering and fruit set",
+     "Day 25 to 40",
+     "Keep the furrow watering every 7 days or so. Water after the side dressing",
+     "A full soaking each time, never left standing"
+    ],
+    [
+     "Picking",
+     "Day 40 to 65",
+     "Go on watering about once a week while picking every other day",
+     "A full soaking each time, drained off"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** A rainy season crop needs little watering but must sit on raised beds with drainage canals. In the dry months pipino is grown only where water is near. Mulch the rows with rice straw and carry water to each hill about once a week if there is no canal.\n\n**In the dry season.** Furrow irrigate about every 7 to 10 days, more often on sandy soil, and keep it up through the picking. Water when the leaves droop by mid morning or the soil a few cm down is dry.\n\n**In the rainy season.** Plant on raised beds with drainage canals at the ends of the rows and water only when the soil dries. Standing water rots the roots, and wet leaves under a crowded trellis spread downy mildew, so keep the vines trained up and the rows open."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and dull in the heat, flowers drop, and fruits come out short, crooked, pale at the tip or bitter.",
+    "**Too much water:** Leaves yellow from the bottom up, the vines wilt and the roots rot, and yellow patches of mildew spread on the leaves."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A drip line along the row with straw or plastic mulch gives the steady water pipino needs for straight, sweet fruits. Water at the base, never over the leaves late in the day, to keep mildew down."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for pipino"
   },
   {
@@ -302,6 +369,10 @@
     {
      "q": "How long before pipino can be harvested?",
      "a": "It is ready about 40 days after sowing. Slicing fruits are ready about 38 to 45 days after planting and pickling kinds a few days earlier."
+    },
+    {
+     "q": "How often do you water pipino?",
+     "a": "Sowing to coming up, sowing day to day 5: Irrigate right after sowing. If the hills dry before the seedlings are up, sprinkle them by can. Young vines, day 5 to 25: Run water down the furrows about every 7 to 10 days in the dry months. Flowering and fruit set, day 25 to 40: Keep the furrow watering every 7 days or so. Water after the side dressing. Furrow irrigate about every 7 to 10 days, more often on sandy soil, and keep it up through the picking."
     },
     {
      "q": "What do you plant to grow pipino?",

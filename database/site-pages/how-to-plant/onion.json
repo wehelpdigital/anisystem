@@ -261,6 +261,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sibuyas, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Onion is a dry season crop on rice land, so nearly every grower waters it. Most let water from a canal or a shallow well pump into the small canals between the beds until it soaks up into the beds, then drain the rest, usually every 3 to 7 days and more than ten times in a season. Canal watering: water from a canal or a pump on a shallow well is let into the small canals between the raised beds until it seeps up into them, and the rest is drained off. Seedbeds are watered with a sprinkler can. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sibuyas go dry at these stages",
+   "text": "The first two weeks after transplanting: the seedlings die if the beds dry out. Bulb swelling, about day 40 to 75: never let the beds dry, or the bulbs stay small and split."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sibuyas, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "40 to 33 days before transplanting",
+     "Water gently every morning, through the straw cover, until most seedlings are up",
+     "Enough to wet the bed through, with a fine sprinkler can so the seed is not washed out"
+    ],
+    [
+     "Seedlings in the bed",
+     "33 days before transplanting to transplanting day",
+     "Water lightly every morning, and again late in the afternoon on hot days. Water the bed well the day before or the morning of pulling",
+     "Moist but never soggy"
+    ],
+    [
+     "Transplanting and settling in",
+     "Transplanting day to day 14",
+     "Water the day after transplanting, then again whenever the bed surface dries, often every few days, until the seedlings stand up and push new leaves",
+     "Let water into the canals until the beds are wet through, then drain the rest"
+    ],
+    [
+     "Leaf growth",
+     "Day 14 to 40",
+     "Every 3 to 7 days, more often on sandy soil and in hot, windy weeks. Water right after each side dressing",
+     "Fill the canals until the water soaks up to the top of the beds, then drain"
+    ],
+    [
+     "Bulb swelling",
+     "Day 40 to 75",
+     "Every 3 to 7 days on a steady schedule, never letting the beds dry out",
+     "The same canal watering, soaking the beds without leaving water standing on top"
+    ],
+    [
+     "Ripening",
+     "Day 75 to 90",
+     "Stop watering about two weeks before harvest, when the leaves start to soften",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Bulb onion is not grown on rain alone here, because it grows in the dry months. Growers without a canal sink a shallow well with a small pump, transplant soon after the rice harvest while the soil is still wet, and lay rice straw over the beds so each watering lasts longer.\n\n**In the dry season.** The whole crop grows in the dry season, so keep to a steady schedule of every 3 to 7 days. Water when the top of the bed is dry to a finger joint deep or the leaves look dull in the morning, and water more often in March and April when it is hottest.\n\n**In the rainy season.** Late plantings meet the first rains near harvest. Keep the beds raised and the canals open so rain drains away fast, and stop watering early. Standing water rots the roots and bulbs, brings more purple blotch, and bulbs pulled from wet soil rot in storage."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves turn a dull bluish gray, the tips dry and the leaves bend over early, and the bulbs stay small and hard.",
+    "**Too much water:** Leaves yellow from the tips, roots rot, bulbs turn soft or keep thick green necks, and leaf diseases spread fast."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water on a steady schedule rather than a heavy soaking after a long dry spell, which splits the bulbs. Rice straw mulch on the beds cuts the number of waterings and keeps weeds down, and a sprinkler or drip line on sandy soil saves water and pump fuel."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sibuyas"
   },
   {
@@ -389,6 +468,10 @@
     {
      "q": "How long before sibuyas can be harvested?",
      "a": "It is ready about 90 days after transplanting. Ready about 80 to 90 days after transplanting, when the tops fall over and the leaves yellow."
+    },
+    {
+     "q": "How often do you water sibuyas?",
+     "a": "Seedbed, 40 to 33 days before transplanting: Water gently every morning, through the straw cover, until most seedlings are up. Seedlings in the bed, 33 days before transplanting to transplanting day: Water lightly every morning, and again late in the afternoon on hot days. Water the bed well the day before or the morning of pulling. Transplanting and settling in, transplanting day to day 14: Water the day after transplanting, then again whenever the bed surface dries, often every few days, until the seedlings stand up and push new leaves. The whole crop grows in the dry season, so keep to a steady schedule of every 3 to 7 days."
     },
     {
      "q": "What do you plant to grow sibuyas?",

@@ -176,6 +176,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sayote, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Sayote in the mountains lives mostly on rain and the morning mist. Growers water the new plants at planting and during dry spells until they take hold, and after that the vines are rarely watered except by hose from a spring in a long dry season. Mostly rain and mist. Growers with a spring run hoses to the hills, and small growers water each hill with a can. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sayote go dry at these stages",
+   "text": "The first weeks after planting, until the roots take hold. Long dry spells while the vine flowers and bears, when the fruits get fewer and smaller."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sayote, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sprouting the seed fruits",
+     "30 days before planting to planting day",
+     "No watering. Keep the fruits in a cool, shaded, airy place until the shoots come",
+     "No water"
+    ],
+    [
+     "Planting and taking hold",
+     "Planting day to day 30",
+     "Water the hill right after planting, then whenever the soil dries until the shoots grow strongly",
+     "Moisten the hill around the fruit, never leave it soaked"
+    ],
+    [
+     "Vines climbing the trellis",
+     "Day 30 to 120",
+     "Rain and mist are usually enough. Water by hose or can in a long dry spell",
+     "A deep watering at the base of each hill"
+    ],
+    [
+     "Bearing vines",
+     "Day 120 to 450",
+     "Mostly rain. In the dry months, water the hills from a spring or tank where you can",
+     "A deep watering at each hill, then let it drain"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant from October to January in the mountains so the young vines root on the last rains and the cool mist. On slopes plant along the contour so each hill catches water, keep a clean, mulched circle around each hill, and feed before and after the rainy season.\n\n**In the dry season.** Water the young plants whenever the soil dries until they grow strongly. Bearing vines in a long dry season do better with a deep watering at the hill every so often from a spring, a hose or a tank. Water when the leaves hang limp in the morning.\n\n**In the rainy season.** Plant on high, sloping or mounded ground that drains, never in low spots. Soaked hills rot the planted fruit and the roots, and long wet spells bring fruit rot and leaf disease under a crowded trellis."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and stay limp in the morning, the vine tips stop running, flowers drop and the fruits stay small.",
+    "**Too much water:** The planted fruit or the base of the vine rots, the leaves yellow, and the fruits rot on the trellis."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the circle around each hill with grass or straw to hold moisture through the dry months. Where a spring or tank is near, a deep watering every so often in the dry months keeps the vines bearing."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sayote"
   },
   {
@@ -305,6 +372,10 @@
     {
      "q": "How long before sayote can be harvested?",
      "a": "It is ready about 120 days after planting. The first fruits come about 120 days after planting."
+    },
+    {
+     "q": "How often do you water sayote?",
+     "a": "Sprouting the seed fruits, 30 days before planting to planting day: No watering. Keep the fruits in a cool, shaded, airy place until the shoots come. Planting and taking hold, planting day to day 30: Water the hill right after planting, then whenever the soil dries until the shoots grow strongly. Vines climbing the trellis, day 30 to 120: Rain and mist are usually enough. Water by hose or can in a long dry spell. Water the young plants whenever the soil dries until they grow strongly."
     },
     {
      "q": "What do you plant to grow sayote?",

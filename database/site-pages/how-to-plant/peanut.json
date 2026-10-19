@@ -193,6 +193,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mani, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The wet season crop lives on the rains. The dry season crop after rice lives on the moisture left in the sandy fields, and farmers with a pump run water into the furrows during dry spells, most of all when the plants flower and fill their pods. Furrow watering from a pump or a canal, letting water run between the ridges and soak in. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mani go dry at these stages",
+   "text": "Flowering and pegging, about day 25 to 50: dry, hard topsoil stops the pegs from going in. Pod filling, about day 50 to 85: a dry spell gives empty pods and small kernels."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mani, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 10",
+     "Plant into moist soil. If the soil is dry, water the furrows lightly a day before planting",
+     "Enough to moisten the seed row, never soggy"
+    ],
+    [
+     "Early growth",
+     "Day 10 to 25",
+     "Usually no watering. Water only if the plants wilt in the morning",
+     "A light furrow watering"
+    ],
+    [
+     "Flowering and pegging",
+     "Day 25 to 50",
+     "In dry weeks, water soon after the hilling up and whenever the topsoil turns dry and hard",
+     "Fill the furrows and let the water soak into the ridge"
+    ],
+    [
+     "Pod filling",
+     "Day 50 to 85",
+     "Keep the soil moist. In the dry season water the furrows whenever the soil a few centimeters down is dry",
+     "A full furrow watering, without water standing around the plants"
+    ],
+    [
+     "Maturing",
+     "Day 85 to 100",
+     "Stop watering about two weeks before harvest. If the ground is too hard to pull, a light watering a day or two before pulling loosens it",
+     "None, or one light watering for pulling"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** For the wet season crop, plant at the start of the rains on well drained, sandy fields, so the pods fill before the heaviest rains. For the dry season crop, plant soon after the rice harvest while the field is still wet, so the pods fill before the soil dries out.\n\n**In the dry season.** The dry season crop after rice usually needs one to a few furrow waterings, mostly at flowering and pod filling. Water when the topsoil is dry and crusted or the leaves fold up and wilt before noon.\n\n**In the rainy season.** Peanut needs loose, well drained soil. In the wet season plant on ridges and keep the furrows draining, since standing water rots the roots and pods and spreads leaf diseases. Plants in very wet soil grow leaves at the cost of pods."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaflets fold up and turn dull gray green by mid morning, the topsoil cracks and hardens, and few pegs reach the soil.",
+    "**Too much water:** Leaves yellow, the plants grow tall with few pods, and pods rot or the kernels sprout in the ground."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Save your water for flowering, pegging and pod filling, the weeks that decide the number of full pods. Rice straw between the rows keeps the topsoil soft and moist for the pegs and cuts the number of waterings."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mani"
   },
   {
@@ -321,6 +394,10 @@
     {
      "q": "How long before mani can be harvested?",
      "a": "It is ready about 100 days after sowing. Ready at about 90 to 110 days, when the leaves yellow and the inside of most shells is dark."
+    },
+    {
+     "q": "How often do you water mani?",
+     "a": "Planting and coming up, sowing day to day 10: Plant into moist soil. If the soil is dry, water the furrows lightly a day before planting. Early growth, day 10 to 25: Usually no watering. Water only if the plants wilt in the morning. Flowering and pegging, day 25 to 50: In dry weeks, water soon after the hilling up and whenever the topsoil turns dry and hard. The dry season crop after rice usually needs one to a few furrow waterings, mostly at flowering and pod filling."
     },
     {
      "q": "What do you plant to grow mani?",

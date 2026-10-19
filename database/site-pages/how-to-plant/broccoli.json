@@ -143,7 +143,7 @@
     },
     {
      "title": "Day 1: Mulch the beds",
-     "text": "Lay rice straw, rice hull or plastic mulch to hold moisture and stop weeds. Many growers plant onion, garlic, kutsay or marigold along the rows to help keep insects away."
+     "text": "Lay plastic, rice hull or straw mulch to hold moisture and stop weeds. Many growers plant onion, garlic, kutsay or marigold along the rows to help keep insects away."
     }
    ]
   },
@@ -186,6 +186,79 @@
      "text": "Cut the head while the buds are tight, dark green and before any yellow flowers open, about 50 to 70 days after transplanting depending on the variety. Leave some stem and a few leaves on. Tip: Small side heads that grow after the main cut can be picked later."
     }
    ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Watering brokoli, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Broccoli is watered before and right after transplanting, then by furrow every 7 to 10 days or by sprinkler two to three times a week in dry weather. Growers mulch the beds with plastic, rice hull or straw so they water less. Furrows in the lowlands and sprinklers or hoses fed from springs in the highlands. Small growers use a watering can. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let brokoli go dry at these stages",
+   "text": "The first week after transplanting. Head forming: dry soil gives small, loose heads."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for brokoli, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "28 to 7 days before transplanting",
+     "Keep the bed moist under its cover of rice hull or cut grass, watering lightly in the morning",
+     "Damp, never soggy"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water less often while the seedlings get more sun. Water the bed before lifting them",
+     "Light waterings"
+    ],
+    [
+     "Transplanting and settling",
+     "1 day before transplanting to day 7",
+     "Irrigate the field before transplanting, wet each hole, and water each seedling right after setting it",
+     "Soak the hole and the soil around the roots"
+    ],
+    [
+     "Leaf growth",
+     "Day 7 to 40",
+     "In dry weather, furrow water every 7 to 10 days or sprinkle two to three times a week. Water after the side dressing",
+     "Wet the bed to the roots, then drain"
+    ],
+    [
+     "Head forming",
+     "Day 40 to 60",
+     "Keep the same steady schedule until the heads are cut",
+     "Even waterings, no dry spells and no standing water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** In the highlands rainy season plantings live largely on the rain, on beds that drain. In the lowlands broccoli is grown only in the coolest months and needs a furrow, sprinkler or watering can. Mulch the beds to stretch the water.\n\n**In the dry season.** Furrow water every 7 to 10 days, or sprinkle two to three times a week, more often on light soil. Water when the leaves stay limp into the late afternoon or the soil a few cm down is dry.\n\n**In the rainy season.** Use raised beds or ridges that drain, and skip watering in rainy weeks. Soaked soil rots the stems and heads, and wet heads rot fast after cutting."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and turn dull, the plants stay small and the heads come out small, loose or yellowing early.",
+    "**Too much water:** Lower leaves yellow, the stem base rots, and the heads turn soft and brown in spots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch with plastic, rice hull or straw: it keeps the soil moist and cuts how often you water. Keep the watering steady from transplanting to head cutting for tight, heavy heads."
   },
   {
    "type": "heading",
@@ -319,6 +392,10 @@
     {
      "q": "How long before brokoli can be harvested?",
      "a": "It is ready about 60 days after transplanting. Heads are cut while tight and green, usually 50 to 70 days after transplanting, with a piece of stem and some leaves."
+    },
+    {
+     "q": "How often do you water brokoli?",
+     "a": "Seedbed, 28 to 7 days before transplanting: Keep the bed moist under its cover of rice hull or cut grass, watering lightly in the morning. Hardening, 7 days before transplanting to transplanting day: Water less often while the seedlings get more sun. Water the bed before lifting them. Transplanting and settling, 1 day before transplanting to day 7: Irrigate the field before transplanting, wet each hole, and water each seedling right after setting it. Furrow water every 7 to 10 days, or sprinkle two to three times a week, more often on light soil."
     },
     {
      "q": "What do you plant to grow brokoli?",

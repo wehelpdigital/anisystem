@@ -252,6 +252,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering ubi, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Ubi is mostly rain fed: it goes in between March and May, at the end of the dry season or with the first rains, so the rainy months fall on the tuber filling stage at about three to five months. The rows are mulched right after planting, and where the dry season is long farmers water during tuber filling. Mostly rain. Where water is available, farmers water each hill with a hose or can or run it down the furrows between ridges. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let ubi go dry at these stages",
+   "text": "The first weeks after planting, while the sprouts root. Tuber filling at about three to five months: drought now gives small tubers."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for ubi, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sprouting the setts",
+     "30 days before planting to planting day",
+     "Water the sprouting bed two to three times a week, or at least once a week, until most setts have sprouted",
+     "Moisten the sand or compost cover, never soak it"
+    ],
+    [
+     "Planting and rooting",
+     "Planting day to day 30",
+     "Plant sprouted setts at the start of the rains if you cannot water. Otherwise water the hills when the soil dries. Mulch right after planting",
+     "Moisten each hill, no standing water"
+    ],
+    [
+     "Vines climbing the stakes",
+     "Day 30 to 90",
+     "Rain is usually enough. In a dry spell water the hills about once a week",
+     "A soaking at each hill, drained"
+    ],
+    [
+     "Tubers filling",
+     "Day 90 to 150",
+     "Keep the soil moist. Where the dry season falls on this stage, water about two to three times a week",
+     "Moisten the whole ridge or mound, never leave water standing"
+    ],
+    [
+     "Late growth",
+     "Day 150 to 270",
+     "Rain only. Water in a long drought if you can",
+     "Occasional deep watering"
+    ],
+    [
+     "Vines drying to harvest",
+     "Day 270 to 300",
+     "No watering once the leaves yellow and the vines dry",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the end of the dry season or with the first rains so the rainy months fall on tuber filling at three to five months. Mulch the rows with coconut fronds, corn stalks, rice straw or cut grass right after planting, and plant sprouted setts at the start of the rains when the field cannot be watered.\n\n**In the dry season.** Where the dry season lasts longer than three or four months and falls on tuber filling, water the hills about two to three times a week through that stage. Water when the leaves droop in the morning or the soil under the mulch is dry.\n\n**In the rainy season.** Plant on ridges or mounds in a field that drains well. Ubi stands drought better than flooding: waterlogged hills rot the setts and tubers, and wet weather spreads leaf scorch."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and yellow early, the vines stop climbing, and the tubers come out small.",
+    "**Too much water:** Setts rot in the ground, the leaves yellow and the tubers show soft, rotten patches."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the whole row right after planting to keep the soil moist and cool through the dry weeks. Time the planting, or the watering, so tuber filling at three to five months never goes short of water."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for ubi"
   },
   {
@@ -381,6 +460,10 @@
     {
      "q": "How long before ubi can be harvested?",
      "a": "It is ready about 300 days after planting. Most ubi is dug 10 to 11 months after planting, when the leaves yellow and the vines dry, mainly from late November to February."
+    },
+    {
+     "q": "How often do you water ubi?",
+     "a": "Sprouting the setts, 30 days before planting to planting day: Water the sprouting bed two to three times a week, or at least once a week, until most setts have sprouted. Planting and rooting, planting day to day 30: Plant sprouted setts at the start of the rains if you cannot water. Otherwise water the hills when the soil dries. Mulch right after planting. Vines climbing the stakes, day 30 to 90: Rain is usually enough. In a dry spell water the hills about once a week. Where the dry season lasts longer than three or four months and falls on tuber filling, water the hills about two to three times a week through that stage."
     },
     {
      "q": "What do you plant to grow ubi?",

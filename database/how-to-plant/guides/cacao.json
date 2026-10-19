@@ -272,6 +272,93 @@
   "Ferment beans properly in boxes and dry them on raised beds to sell for a better price.",
   "Use integrated pest management and scout weekly for pod borer, mirid bugs and black pod."
  ],
+ "watering": {
+  "traditional": "Cacao here is almost always rain fed: the nursery is watered by can or hose every day, seedlings go out as the rains begin, and young trees planted late get a pail of water in their first dry months. Grown trees under coconut are left to the rain, with mulch and shade to hold the soil moisture.",
+  "method": "A watering can with a rose or a soft hose in the nursery, and a pail or hose into the mulched ring for young trees in the field. A few farms run drip lines, some fed by gravity from a drum on a stand. Water early in the morning.",
+  "rainfed": "Plant as the rains begin, under the light shade of coconut, banana or kakawate, and keep a mulch of dry leaves or cut grass around each tree, off the stem. Cacao fits best where rain is spread through the year and the dry season lasts no more than about 3 months. A month with less than about 10 cm of rain sets the trees back. Where the dry months run longer, rain fed farms lose young trees and get few pods until the rains return.",
+  "dryseason": "Young trees: once or twice a week. Bearing trees: about once a week, with up to about 200 liters a week for a big tree where water allows. Water when the leaves hang limp in the afternoon, when no new leaves come, or when the small pods start to yellow and dry.",
+  "wet": "Long rains bring black pod rot, which spreads in splashing rain and in puddles under the trees. Dig drains so water does not stand, prune the cacao and the shade trees so the farm dries out between showers, and pick and bury sick pods every week. Waterlogged roots die and the tree yellows and dies back.",
+  "schedule": [
+   {
+    "stage": "Seedlings and grafts in the nursery",
+    "from": -150,
+    "to": -7,
+    "often": "In hot, sunny weeks every morning and again early in the afternoon. When the plants are older and the sky is cloudy, every other day",
+    "amount": "A sprinkle from a can with a rose or a soft hose, enough to wet the top few cm of the bag soil without flooding it",
+    "why": "Cacao seed and young roots die fast when dry and rot when soaked."
+   },
+   {
+    "stage": "Hardening and planting day",
+    "from": -7,
+    "to": 0,
+    "often": "Water well for the few days after turning the bags. Soak the bags just before planting",
+    "amount": "Enough to wet each bag right through",
+    "why": "Turning the bags tears roots that grew into the ground, and the plant needs water to recover."
+   },
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Water for the first few days after planting, then only in dry weeks",
+    "amount": "A good soak of the mulched ring around the stem",
+    "why": "The roots are still inside the bag ball."
+   },
+   {
+    "stage": "First dry season",
+    "from": 90,
+    "to": 360,
+    "often": "Once or twice a week whenever no rain falls",
+    "amount": "Enough to soak the ring under the leaves a hand deep",
+    "why": "Watering through the first dry months is the difference between losing half the young trees and losing almost none."
+   },
+   {
+    "stage": "Second year, before the first flowers",
+    "from": 360,
+    "to": 540,
+    "often": "About once a week in the dry months where water is near",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "Grafted trees start flowering at about 18 to 24 months, if they are not stressed."
+   },
+   {
+    "stage": "Flowering and young pods (cherelles)",
+    "from": 540,
+    "to": 630,
+    "often": "About once a week in dry spells, keeping the soil evenly moist",
+    "amount": "A deep soak under the crown, up to about 20 liters a tree a day on drip in the driest weeks",
+    "why": "In dry soil the small pods turn yellow, then black, and dry on the branch."
+   },
+   {
+    "stage": "Pod filling to the first ripe pods",
+    "from": 630,
+    "to": 720,
+    "often": "Water in long dry spells",
+    "amount": "A deep soak under the crown",
+    "why": "Pods ripen five to six months after flowering and stay small when the soil dries."
+   },
+   {
+    "stage": "Bearing trees, flowering and fruiting all year",
+    "from": 720,
+    "to": 1080,
+    "often": "Left to the rain in wet months. About once a week in the dry months",
+    "amount": "Up to about 200 liters a tree a week in the driest months, or about 20 liters a tree a day on drip",
+    "why": "Cacao barely flowers in a dry season unless it is watered."
+   }
+  ],
+  "critical": [
+   "Seedlings and new grafts in the nursery, which die quickly when the bags dry.",
+   "The first dry season in the field, when most young trees are lost.",
+   "Flowering and the first three months of pod growth, when dry soil makes small pods wither on the branch."
+  ],
+  "signs": {
+   "dry": "Leaves hang limp and lose their shine, older leaves yellow and fall, new leaf flushes stop, few flowers open, and many small pods turn yellow, then black, and dry up on the branch.",
+   "wet": "Yellowing and dieback on waterlogged ground, and many black, rotting pods after long rains."
+  },
+  "better": [
+   "A simple drip line, even fed by gravity from a raised drum, through the dry months keeps nearly all young trees alive and keeps bearing trees flowering and holding their pods.",
+   "Keep the shade and a thick mulch, and prune both the cacao and the shade trees so the farm dries out between rains, which cuts black pod."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "493cvJzMFEU",
   "title": "How to prepare land for cacao farming? How to plant a cacao tree?",
@@ -293,5 +380,5 @@
  "kind": "perennial",
  "icon": "🍫",
  "slug": "cacao",
- "rev": "fad7777fddea"
+ "rev": "1ae6d21b19b5"
 }

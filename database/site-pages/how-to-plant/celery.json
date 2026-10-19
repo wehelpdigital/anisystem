@@ -197,6 +197,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kintsay, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Celery is watered often: right after transplanting, every two days for the first two weeks, then about twice a week, by sprinkler, hose or furrow, with the water reaching the roots. Benguet growers mulch between the rows with dry grass or rice straw because the roots are shallow. Sprinklers or hoses fed from springs in the highlands, and watering cans or furrows on small lowland plots. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kintsay go dry at these stages",
+   "text": "The seedbed, which must stay moist for the slow seed. The first two weeks after transplanting. Stalk growth: a dry spell makes stringy, light stalks."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kintsay, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "45 to 24 days before transplanting",
+     "Water every day or two with a sprinkling can over the damp sacks so the bed never dries",
+     "Keep the bed close to fully moist without washing the seed"
+    ],
+    [
+     "Pricked seedlings",
+     "24 days before transplanting to transplanting day",
+     "Water the moved seedlings and keep them in a cool, shaded spot, then water every day or two",
+     "Light waterings, never soggy"
+    ],
+    [
+     "Transplanting and settling",
+     "Transplanting day to day 14",
+     "Water right after transplanting, then every two days for the first two weeks",
+     "Enough to reach the root zone each time"
+    ],
+    [
+     "Stalks growing",
+     "Day 14 to 55",
+     "About twice a week. Water in the weak fertilizer every 10 to 15 days",
+     "Water that reaches the roots, with mulch between the rows"
+    ],
+    [
+     "Before harvest",
+     "Day 55 to 60",
+     "Keep watering twice a week up to the harvest",
+     "The usual watering"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Highland growers plant from January through April for the best stalks, with sprinklers or hoses fed from springs. Celery is not grown on rain alone in the dry months. Mulch the beds and keep them near water.\n\n**In the dry season.** Water every two days for the first two weeks after transplanting, then about twice a week, more often on light soil or in wind. Water when the soil under the mulch is dry a finger deep or the leaves droop by mid morning.\n\n**In the rainy season.** Use beds up to about 30 cm high in the rains so water drains, and skip watering in rainy weeks. Soaked beds rot the roots and spread leaf blight."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt, the stalks turn stringy, hollow or bitter, and the plants stay light.",
+    "**Too much water:** Lower stalks yellow and rot at the base, and leaf spots and blight spread."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep a mulch of dry grass or rice straw between the rows to hold moisture near the shallow roots. Never let the beds go dry while the stalks grow. Even watering gives heavier, crisper celery."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kintsay"
   },
   {
@@ -326,6 +399,10 @@
     {
      "q": "How long before kintsay can be harvested?",
      "a": "It is ready about 60 days after transplanting. Usually pulled or cut about eight weeks after transplanting, longer for big stalk varieties."
+    },
+    {
+     "q": "How often do you water kintsay?",
+     "a": "Seedbed, 45 to 24 days before transplanting: Water every day or two with a sprinkling can over the damp sacks so the bed never dries. Pricked seedlings, 24 days before transplanting to transplanting day: Water the moved seedlings and keep them in a cool, shaded spot, then water every day or two. Transplanting and settling, transplanting day to day 14: Water right after transplanting, then every two days for the first two weeks. Water every two days for the first two weeks after transplanting, then about twice a week, more often on light soil or in wind."
     },
     {
      "q": "What do you plant to grow kintsay?",

@@ -145,6 +145,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering saluyot, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Saluyot is mostly a rain crop, sown when the rains come around May to June, often on moist ground near rivers and creeks. In dry spells growers water every day or two by can or hose, and with water it grows well even in the summer months. Mostly rain. Watering cans and hoses on small plots, furrows on bigger ones. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let saluyot go dry at these stages",
+   "text": "Sowing to the young plants: the plot must not dry out. Long dry spells at any stage, which stunt or kill saluyot."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for saluyot, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "Sowing day to day 7",
+     "Sow right after a good rain or water the plot after sowing, then every day or two until the seedlings are up",
+     "A gentle watering that keeps the top soil damp without washing the seed"
+    ],
+    [
+     "Young plants",
+     "Day 7 to 30",
+     "Water every day or two in dry spells. Water before thinning so the extra plants pull out easily",
+     "Enough to keep the soil moist to the roots"
+    ],
+    [
+     "First tops",
+     "Day 30 to 40",
+     "Keep the soil moist, every day or two in dry weather",
+     "Even waterings"
+    ],
+    [
+     "Picking every week or two",
+     "Day 40 to 100",
+     "Water after each picking and feeding, and every day or two in dry spells",
+     "Even waterings, no standing water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow when the rains come, around May to June, on loam or silty ground near a river or creek that stays moist. Thin the stand so the plants do not compete for water, and mulch with straw or cut grass if the rains break.\n\n**In the dry season.** In the summer months saluyot grows well only when watered every day or two. Water when the leaves droop by mid morning or the top soil is dry.\n\n**In the rainy season.** Saluyot likes wet weather but not standing water. Sow on ground that drains and open small canals in low spots so the young plants do not rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and yellow, the plants stay short and flower early, and the tops turn tough.",
+    "**Too much water:** Seedlings rot at the base in waterlogged spots and the lower leaves yellow."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water and feed right after each picking so the plants branch and give more tops. Mulch the plot to hold moisture through dry spells."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for saluyot"
   },
   {
@@ -273,6 +340,10 @@
     {
      "q": "How long before saluyot can be harvested?",
      "a": "It is ready about 40 days after sowing. The first tops are picked about five to six weeks after sowing, then every week or two for as long as the plants stay leafy."
+    },
+    {
+     "q": "How often do you water saluyot?",
+     "a": "Sowing to coming up, sowing day to day 7: Sow right after a good rain or water the plot after sowing, then every day or two until the seedlings are up. Young plants, day 7 to 30: Water every day or two in dry spells. Water before thinning so the extra plants pull out easily. First tops, day 30 to 40: Keep the soil moist, every day or two in dry weather. In the summer months saluyot grows well only when watered every day or two."
     },
     {
      "q": "What do you plant to grow saluyot?",

@@ -182,6 +182,68 @@
   "Test the soil and lime it if acid.",
   "Keep weeds out in the first month and scout for pod borers at flowering."
  ],
+ "watering": {
+  "traditional": "Soybean in the wet season lives on the rains. After rice in the dry season it lives on the moisture left in the field, and growers with water run it down the furrows if the soil dries while the pods fill.",
+  "method": "Furrow watering from a pump or canal where water is at hand, in the morning or late afternoon. Most fields get rain only.",
+  "rainfed": "Plant at the start of the rains on well drained soil, or right after the rice harvest while the paddy is still moist. Plant on ridges where the field may hold water.",
+  "dryseason": "The dry season crop after rice usually needs a watering or two at flowering and pod filling. Water when the topsoil is dry a finger deep and the leaves wilt by mid morning.",
+  "wet": "Soybean must not stand in water. Drain the field, plant on ridges in the rainy season, and keep the furrow ends open, since waterlogged plants turn yellow and their roots rot.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Plant into moist soil, never into a waterlogged field",
+    "amount": "No watering if the soil is moist. Otherwise a light furrow watering before planting",
+    "why": "Soybean seed swells and rots in standing water, and comes up patchy in dry soil."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 7,
+    "to": 35,
+    "often": "Usually no watering. Water only in a long dry spell",
+    "amount": "A light furrow watering",
+    "why": "The plant stands short dry spells now."
+   },
+   {
+    "stage": "Flowering",
+    "from": 35,
+    "to": 50,
+    "often": "Water if the soil is dry",
+    "amount": "A furrow watering that soaks in, with no water left standing",
+    "why": "Dry soil makes flowers and young pods drop."
+   },
+   {
+    "stage": "Pod filling",
+    "from": 50,
+    "to": 80,
+    "often": "In the dry season, water the furrows whenever the soil dries",
+    "amount": "A full furrow watering",
+    "why": "Moisture now fills the beans, while drought gives flat pods and small beans."
+   },
+   {
+    "stage": "Maturing",
+    "from": 80,
+    "to": 95,
+    "often": "Stop watering",
+    "amount": "None",
+    "why": "The pods need dry weather to ripen and dry."
+   }
+  ],
+  "critical": [
+   "Flowering, about day 35 to 50: a dry spell drops flowers and young pods.",
+   "Pod filling, about day 50 to 80: drought gives small beans and a light harvest."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and turn their pale backs up in the heat, flowers drop, and the pods stay flat.",
+   "wet": "Leaves yellow, plants stay short, few root nodules form, and seedlings rot in the low spots."
+  },
+  "better": [
+   "If you can water only once or twice, water at flowering and at pod filling.",
+   "Plant on ridges with open furrow ends, so you can water down the furrows and drain the rain the same way."
+  ],
+  "confidence": "medium"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng soybeans",
@@ -194,5 +256,5 @@
  "kind": "annual",
  "icon": "🫘",
  "slug": "soybean",
- "rev": "60ff03a31242"
+ "rev": "544744f40dea"
 }

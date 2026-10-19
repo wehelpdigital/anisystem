@@ -181,6 +181,52 @@
   "Force blocks one after another so fruit comes all year and prices are steadier.",
   "Pack fruit in lined boxes and keep it cool and shaded after picking."
  ],
+ "watering": {
+  "traditional": "Pineapple on small farms is rainfed. It stands dry spells well, so farmers water newly planted suckers only when the soil is very dry, and worry more about drainage, since standing water rots the roots and the heart.",
+  "method": "Rain only on most small farms. Where water is close, a hose or a watering can at the base of the plants, and sprinklers or drip lines on big farms. Water in the morning.",
+  "rainfed": "This is the usual way. Plant from about May to July so the suckers root before the dry months, lay pulled weeds between the rows as mulch, and grow on slopes or ridges that drain.",
+  "dryseason": "Grown plants seldom need water. Water a new planting if the soil is dry a hand deep, and water bearing plants in a long drought when the leaves turn reddish and stay folded.",
+  "wet": "Pineapple cannot stand wet feet. Plant on ridges or slopes, dig drains between the beds, and never plant in a spot where water stands after rain, since the roots and hearts rot.",
+  "schedule": [
+   {
+    "stage": "Planting and rooting",
+    "from": 0,
+    "to": 60,
+    "often": "Plant with the rains. Water a new planting only if the soil is very dry and no rain comes",
+    "amount": "A good soaking at the base of each sucker, with no water left standing in the heart",
+    "why": "The suckers need moisture to root, but water sitting in the heart rots them."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 60,
+    "to": 330,
+    "often": "No regular watering. In a long dry season, water if the leaves turn reddish and curl their edges, where water is at hand",
+    "amount": "A soaking along the rows",
+    "why": "The size the plant reaches now decides the size of the fruit."
+   },
+   {
+    "stage": "Forcing to harvest",
+    "from": 330,
+    "to": 480,
+    "often": "No regular watering. Force on a day with no rain expected, and in a long dry spell water during fruit growth if you can",
+    "amount": "A soaking along the rows when the soil is dry",
+    "why": "Rain right after forcing washes it off, and a well watered plant fills a heavier fruit."
+   }
+  ],
+  "critical": [
+   "The first two months: the suckers must root, so plant when the rains come.",
+   "Leaf growth, about months 2 to 11: a big, leafy plant is what makes a big fruit, and drought now stunts it."
+  ],
+  "signs": {
+   "dry": "Leaves turn reddish or yellow, roll their edges in and look thin, the plant stays small and the fruit comes out small.",
+   "wet": "Yellow, limp leaves, a heart that pulls out easily with a bad smell, and rotten roots."
+  },
+  "better": [
+   "Mulch between the rows with pulled weeds or plastic film to keep the soil moist and cool through the dry months.",
+   "Plant early in the rains so the plants grow big before the first dry season."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "q60pzpyJcvk",
   "title": "PARAAN NG PAGTATANIM NG PINYA | Biyaherong Batangueno",
@@ -202,5 +248,5 @@
  "kind": "annual",
  "icon": "🍍",
  "slug": "pineapple",
- "rev": "21a102b4505c"
+ "rev": "1fe058d2779a"
 }

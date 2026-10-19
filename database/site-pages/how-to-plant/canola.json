@@ -127,6 +127,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering canola, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Canola is rare here and only tried on highland plots, watered like highland vegetables: a light sprinkling after sowing and in dry spells. Growers ease off near the end, since too much water late on delays ripening. A watering can with a fine rose or a sprinkler on raised beds, as for highland vegetables, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let canola go dry at these stages",
+   "text": "Coming up: the shallow seed must not dry out. Flowering and pod filling, about day 40 to 85: a dry spell gives few seeds in each pod."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for canola, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing and coming up",
+     "Sowing day to day 10",
+     "Sprinkle the beds gently after sowing, then every day or two until the seedlings are up if no rain falls",
+     "Enough to keep the top of the bed moist, with a fine sprinkler can"
+    ],
+    [
+     "Leaf growth",
+     "Day 10 to 40",
+     "In dry spells, water about once or twice a week, and right after the side dressing",
+     "Wet the beds to a finger deep or more"
+    ],
+    [
+     "Flowering and pod filling",
+     "Day 40 to 85",
+     "Keep the soil moist, watering when the top of the bed dries",
+     "A good soaking of the beds"
+    ],
+    [
+     "Ripening",
+     "Day 85 to 100",
+     "Stop watering",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow at the end of the rains, from October to December, while the soil is still moist, so the crop grows on stored moisture through the cool months.\n\n**In the dry season.** The crop grows in the cool dry months, so water the beds once or twice a week in dry spells, more at flowering, and stop once most pods turn brown.\n\n**In the rainy season.** Use raised beds that drain, since canola roots rot in wet soil, and wet weather at ripening molds the pods."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and turn bluish gray, flowers drop, and the pods stay short with few seeds.",
+    "**Too much water:** Yellow lower leaves, rotting stems and roots, and moldy pods."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If water is short, give it at flowering and pod filling. A light mulch between the rows keeps the beds moist longer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for canola"
   },
   {
@@ -253,6 +320,10 @@
     {
      "q": "How long before canola can be harvested?",
      "a": "It is ready about 100 days after sowing. Ready when most pods are brown and the seeds black and hard."
+    },
+    {
+     "q": "How often do you water canola?",
+     "a": "Sowing and coming up, sowing day to day 10: Sprinkle the beds gently after sowing, then every day or two until the seedlings are up if no rain falls. Leaf growth, day 10 to 40: In dry spells, water about once or twice a week, and right after the side dressing. Flowering and pod filling, day 40 to 85: Keep the soil moist, watering when the top of the bed dries. The crop grows in the cool dry months, so water the beds once or twice a week in dry spells, more at flowering, and stop once most pods turn brown."
     },
     {
      "q": "What do you plant to grow canola?",

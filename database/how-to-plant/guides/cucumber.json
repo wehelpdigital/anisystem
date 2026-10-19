@@ -156,6 +156,60 @@
   "Rotate away from all gourds and melons for at least a season, longer where anthracnose struck.",
   "Keep bees around by not spraying while the flowers are open in the morning."
  ],
+ "watering": {
+  "traditional": "Pipino is watered right after sowing so the seeds come up evenly, then by furrow about once a week to every 10 days in the dry months, and only when the soil dries in the rainy months. Drainage canals at the ends of the rows keep water from standing, because the roots rot in it.",
+  "method": "Furrow irrigation along the trellised rows is the usual way. Small growers water each hill with a can or a hose. Water in the morning so the leaves dry before night.",
+  "rainfed": "A rainy season crop needs little watering but must sit on raised beds with drainage canals. In the dry months pipino is grown only where water is near. Mulch the rows with rice straw and carry water to each hill about once a week if there is no canal.",
+  "dryseason": "Furrow irrigate about every 7 to 10 days, more often on sandy soil, and keep it up through the picking. Water when the leaves droop by mid morning or the soil a few cm down is dry.",
+  "wet": "Plant on raised beds with drainage canals at the ends of the rows and water only when the soil dries. Standing water rots the roots, and wet leaves under a crowded trellis spread downy mildew, so keep the vines trained up and the rows open.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": 0,
+    "to": 5,
+    "often": "Irrigate right after sowing. If the hills dry before the seedlings are up, sprinkle them by can",
+    "amount": "Wet the hills evenly, no puddles",
+    "why": "Even moisture gives an even stand. A dry hill leaves gaps."
+   },
+   {
+    "stage": "Young vines",
+    "from": 5,
+    "to": 25,
+    "often": "Run water down the furrows about every 7 to 10 days in the dry months",
+    "amount": "Soak the rows, then drain",
+    "why": "Pipino needs plenty of water all through its growth, but its shallow roots rot in standing water."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 25,
+    "to": 40,
+    "often": "Keep the furrow watering every 7 days or so. Water after the side dressing",
+    "amount": "A full soaking each time, never left standing",
+    "why": "Dry soil now gives few fruits, and those come out crooked, short or bitter."
+   },
+   {
+    "stage": "Picking",
+    "from": 40,
+    "to": 65,
+    "often": "Go on watering about once a week while picking every other day",
+    "amount": "A full soaking each time, drained off",
+    "why": "Steady water keeps the vine bearing straight, crisp fruits."
+   }
+  ],
+  "critical": [
+   "Right after sowing, for an even stand.",
+   "Flowering, fruit set and picking: dry soil gives crooked, bitter fruits and cuts the harvest."
+  ],
+  "signs": {
+   "dry": "Leaves droop and dull in the heat, flowers drop, and fruits come out short, crooked, pale at the tip or bitter.",
+   "wet": "Leaves yellow from the bottom up, the vines wilt and the roots rot, and yellow patches of mildew spread on the leaves."
+  },
+  "better": [
+   "A drip line along the row with straw or plastic mulch gives the steady water pipino needs for straight, sweet fruits.",
+   "Water at the base, never over the leaves late in the day, to keep mildew down."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "36ZHnqfciyQ",
   "title": "Paano Magtanim ng Pipino",
@@ -177,5 +231,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "cucumber",
- "rev": "0a21b1211093"
+ "rev": "8fe26c5887bd"
 }

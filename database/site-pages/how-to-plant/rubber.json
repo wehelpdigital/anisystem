@@ -192,6 +192,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering goma, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Rubber is rainfed. Growers plant the budded seedlings on a rainy day when steady rain is coming, keep the soil damp with a cover crop and mulch, and almost never water the grown trees. Rain only. Young trees in a dry spell are watered by hand with a pail or a hose at the base."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let goma go dry at these stages",
+   "text": "Planting and the first dry season: a young tree that dries out before its roots are deep can die."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for goma, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting",
+     "Planting day to day 30",
+     "Plant on a rainy day. If a dry spell follows, water each young tree",
+     "A good soaking around the base, then mulch"
+    ],
+    [
+     "The first year",
+     "Day 30 to month 12",
+     "No regular watering. In a long dry spell, water the young trees and keep the ring around them weeded and mulched",
+     "A good soaking around the base"
+    ],
+    [
+     "Young trees, years 2 to 6",
+     "Month 12 to 72",
+     "No watering. Keep the cover crop and the mulch",
+     "None"
+    ],
+    [
+     "Tapping trees",
+     "Year 6 to 7",
+     "No watering. In the wettest months tap less often and only once the bark has dried",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant as the rains begin, plant a creeping legume cover between rows, mulch the tree circle, and on slopes keep the terraces that hold the rain.\n\n**In the dry season.** Grown trees need no water. Water young trees in their first dry season if they wilt, clear dry grass around them, and watch for fire in the summer.\n\n**In the rainy season.** Dig drains where water stands, since rubber roots rot in waterlogged soil. In very wet months tap less often, as rain on the panel washes out the latex."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Young trees drop their leaves, the top leaves wilt and the new flush stops.",
+    "**Too much water:** Yellow leaves, slow growth and rotting roots in low spots, and a wet tapping panel that gives little latex."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Plant only when steady rain is coming, and mulch the tree circle so young trees get through their first dry season. A legume cover crop between rows keeps the soil moist and the weeds down."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for goma"
   },
   {
@@ -322,6 +389,10 @@
     {
      "q": "How long before goma can be harvested?",
      "a": "It is ready about 6 years after planting. Tapping starts at about 6 to 7 years, when the trunk is about 46 cm around at about 1.1 m."
+    },
+    {
+     "q": "How often do you water goma?",
+     "a": "Planting, planting day to day 30: Plant on a rainy day. If a dry spell follows, water each young tree. The first year, day 30 to month 12: No regular watering. In a long dry spell, water the young trees and keep the ring around them weeded and mulched. Young trees, years 2 to 6, month 12 to 72: No watering. Keep the cover crop and the mulch. Grown trees need no water."
     },
     {
      "q": "What do you plant to grow goma?",

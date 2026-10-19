@@ -84,6 +84,52 @@
   "Keep the grass down in the first two months.",
   "Scout for pod borers at flowering and pick often."
  ],
+ "watering": {
+  "traditional": "Kadyos is planted with the rains along dikes, fences and slopes and is almost never watered. Its deep roots carry it through the dry months while it flowers and bears.",
+  "method": "No regular watering. Hand watering with a can for young or backyard plants in a dry spell.",
+  "rainfed": "This is the usual way. Plant at the start of the rains, from May to July, so the roots go deep before the dry months when the pods come.",
+  "dryseason": "Grown plants rarely need water. Water young or backyard plants only when they wilt in the morning.",
+  "wet": "Kadyos does not stand waterlogging. Plant on dikes, slopes or raised ground, never in low spots where water stays.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 14,
+    "often": "Plant after a good rain. Water only if the soil dries before the seedlings are up",
+    "amount": "Enough to moisten the hill",
+    "why": "The seedlings need moisture to start, then their roots go deep fast."
+   },
+   {
+    "stage": "Young plants",
+    "from": 14,
+    "to": 60,
+    "often": "Usually no watering. In a long dry spell, water the young plants once",
+    "amount": "A few liters around each hill",
+    "why": "Young plants still have short roots."
+   },
+   {
+    "stage": "Growth, flowering and pods",
+    "from": 60,
+    "to": 210,
+    "often": "No regular watering. Water a backyard plant only if it wilts during flowering",
+    "amount": "A good soaking around the base",
+    "why": "Grown plants find water deep in the soil."
+   }
+  ],
+  "critical": [
+   "The first two months: young plants need moisture until their roots are deep.",
+   "Flowering: a plant that wilts at flowering drops many flowers."
+  ],
+  "signs": {
+   "dry": "Leaves fold and droop at midday and do not recover by evening, and flowers drop.",
+   "wet": "Yellow leaves, wilting in wet soil, and plants that die in the low spots."
+  },
+  "better": [
+   "Plant early in the rains so the roots go deep before the dry months.",
+   "Mulch young plants with cut grass in their first dry spell."
+  ],
+  "confidence": "low"
+ },
  "video": {
   "youtubeId": "mFcPeuJotPg",
   "title": "PIGEON PEA (KADYOS) PLANTING | Biyaherong Batangueno",
@@ -102,5 +148,5 @@
  "kind": "annual",
  "icon": "🫘",
  "slug": "pigeon-pea",
- "rev": "1f4faed01d5a"
+ "rev": "9d383db9bb1d"
 }

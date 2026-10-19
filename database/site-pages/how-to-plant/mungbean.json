@@ -296,6 +296,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering monggo, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Monggo after rice is almost never watered: farmers sow it into the wet paddy right after the harvest and it lives on the moisture left in the soil. Upland crops are sown with the rains, and only a few growers with a pump give a furrow or sprinkler watering in a dry spell. Mostly no watering. Where water is at hand, a quick flush from a canal or pump that is drained off within hours, furrow watering, or an overhead sprinkler, best in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let monggo go dry at these stages",
+   "text": "Sowing: the soil must be moist, or the seed comes up patchy. Flowering and pod filling, about day 30 to 58: a long dry spell drops flowers and leaves light seed."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for monggo, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Before sowing",
+     "2 days before sowing to sowing day",
+     "After rice, if the paddy has already dried, let water in 1 to 2 days before sowing, then drain it. On upland fields, sow after a good rain",
+     "Enough to soak the topsoil, with all standing water drained before the seed goes in"
+    ],
+    [
+     "Coming up",
+     "Sowing day to day 10",
+     "No watering on moist soil. Never leave water standing on the field",
+     "None"
+    ],
+    [
+     "Leaf growth",
+     "Day 10 to 30",
+     "Usually none. Water only if the soil cracks and the plants wilt in the morning",
+     "A quick furrow watering or a flush that drains away within hours"
+    ],
+    [
+     "Flowering",
+     "Day 30 to 45",
+     "Water once if the soil is dry, mostly for plantings made from January to March",
+     "A furrow watering, a sprinkler, or a quick flush and drain"
+    ],
+    [
+     "Pod filling",
+     "Day 45 to 58",
+     "Water once more if the soil is dry",
+     "The same light watering, never standing water"
+    ],
+    [
+     "Picking",
+     "Day 58 to 66",
+     "Stop watering",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. After rice, sow within a few days of the harvest while the paddy is still wet, and spread rice straw back over the field to hold the moisture. Plantings made early in the dry months need no watering, while late ones from January to March often run short at flowering.\n\n**In the dry season.** Sow early after the rice, not late, so the crop finishes before the soil dries. In a late planting, water at flowering and again at pod filling if the soil has cracked or the leaves wilt by mid morning.\n\n**In the rainy season.** Monggo hates wet feet. In the rainy season plant on well drained soil or on ridges, cut a shallow drain around the field, and never plant heavy clay that holds water. Long rain at picking rots the pods on the plant."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and turn pale in the morning, flowers drop, and the pods stay few and short.",
+    "**Too much water:** Leaves turn yellow, seedlings die in the low spots, and the stems rot at the base."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If you can water once, water at flowering. A second watering at pod filling gives more again. Rice straw over the broadcast seed keeps the soil moist longer and holds back the weeds."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for monggo"
   },
   {
@@ -423,6 +502,10 @@
     {
      "q": "How long before monggo can be harvested?",
      "a": "Broadcast after rice, it is ready about 65 days after sowing. Planted in furrows, it is ready about 65 days after sowing. Pods are picked by hand as they turn black, starting at about 55 to 65 days, in two or three rounds."
+    },
+    {
+     "q": "How often do you water monggo?",
+     "a": "Before sowing, 2 days before sowing to sowing day: After rice, if the paddy has already dried, let water in 1 to 2 days before sowing, then drain it. On upland fields, sow after a good rain. Coming up, sowing day to day 10: No watering on moist soil. Never leave water standing on the field. Leaf growth, day 10 to 30: Usually none. Water only if the soil cracks and the plants wilt in the morning. Sow early after the rice, not late, so the crop finishes before the soil dries."
     },
     {
      "q": "What do you plant to grow monggo?",

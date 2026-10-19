@@ -159,6 +159,68 @@
   "Rotate with crops outside the cabbage family and scout twice a week.",
   "Tie the leaves on time and harvest firm heads in the cool morning."
  ],
+ "watering": {
+  "traditional": "Cauliflower is watered before and right after transplanting, then about every 7 to 10 days by furrow or two to three times a week by sprinkler in dry weather. Growers say steady moisture is the key, and mulch the beds to hold it.",
+  "method": "Furrows in the lowlands and sprinklers or hoses fed from springs in the highlands. Small growers use a watering can. Water in the morning, at the base once the leaves are tied.",
+  "rainfed": "Highland rainy season plantings live largely on the rain, on beds that drain. In the lowlands cauliflower is grown only in the coolest months near water, with mulch on the beds and water by furrow or can.",
+  "dryseason": "Furrow water every 7 to 10 days or sprinkle two to three times a week, more often on light soil. Water when the leaves stay limp into the late afternoon or the soil a few cm down is dry.",
+  "wet": "Use raised beds or ridges that drain and skip watering in rainy weeks. Soaked soil rots the stems, and wet weather under the tied leaves rots the curd.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -28,
+    "to": -7,
+    "often": "Water regularly under the rice hull mulch, lightly in the morning",
+    "amount": "Damp, never soggy",
+    "why": "Soggy, crowded seedbeds bring damping off."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water less often while the seedlings get more sun. Water the bed before lifting them",
+    "amount": "Light waterings",
+    "why": "Hardened seedlings take the move without shock."
+   },
+   {
+    "stage": "Transplanting and settling",
+    "from": -1,
+    "to": 7,
+    "often": "Irrigate before transplanting, wet each hole, and water each seedling right after setting it",
+    "amount": "Soak the hole and the soil around the roots",
+    "why": "A seedling that stalls after the move often forms a tiny early head."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 7,
+    "to": 40,
+    "often": "Furrow water every 7 to 10 days or sprinkle two to three times a week in dry weather. Water after the side dressing",
+    "amount": "Wet the bed to the roots, then drain",
+    "why": "Cauliflower that dries out now forms small, early heads."
+   },
+   {
+    "stage": "Curd forming and tying",
+    "from": 40,
+    "to": 55,
+    "often": "Keep the same steady schedule. Tie the leaves over the curd on a dry day",
+    "amount": "Even waterings at the base, keeping water off the tied heads",
+    "why": "Steady moisture fills a firm white head, and water trapped under the tied leaves rots it."
+   }
+  ],
+  "critical": [
+   "The first week after transplanting.",
+   "Leaf growth and curd forming: any dry spell gives small, early heads."
+  ],
+  "signs": {
+   "dry": "Leaves droop and stay small, and the plant forms a small, loose head early.",
+   "wet": "Lower leaves yellow, the stem base rots, and the curd turns brown and soft in spots."
+  },
+  "better": [
+   "Mulch the beds with plastic, rice hull or straw to keep moisture steady and water less often.",
+   "Never let the young plants dry out. That one habit prevents most small, early heads."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "zwlZglSINLA",
   "title": "Dapat Gawin sa Pagtanim ng Cauliflower para Mabilis Lumaki",
@@ -179,5 +241,5 @@
  "kind": "annual",
  "icon": "🥦",
  "slug": "cauliflower",
- "rev": "9acc4c91daaa"
+ "rev": "c7434663a994"
 }

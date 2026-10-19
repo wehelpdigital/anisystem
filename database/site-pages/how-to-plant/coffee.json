@@ -308,6 +308,109 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kape, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Nearly all coffee here is rain fed: seedlings are watered often in the nursery, planted on a cloudy day once the rains are steady, and after that left to the rain under shade and mulch. Grown trees are not watered at all, because they need the dry months to flower. A watering can with a rose for the seedbed and bags, and a pail into the mulched ring for young trees in the field. Grown trees get rain only. A few farms with a spring or tank run sprinklers to start flowering. Water in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kape go dry at these stages",
+   "text": "The seedbed and the bags in the nursery, which must never dry out. The first dry season after planting, when young trees die without mulch or water. The three weeks right after flowering, when a dry spell drops the young berries. Berry filling, since lack of water then gives black, shrunken beans."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kape, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "12 to 10 months before planting",
+     "Every day or every other day in dry weather",
+     "A light sprinkle from a rose can, enough to keep the sand damp all the way down"
+    ],
+    [
+     "Seedlings in bags under shade",
+     "10 to 2 months before planting",
+     "Every day in dry weather, every 2 to 3 days in cloudy weeks",
+     "Enough to wet each bag right through"
+    ],
+    [
+     "Hardening in more sun",
+     "2 months before planting to planting day",
+     "A little less often, every 2 to 3 days, as the bags move into the light",
+     "Enough to keep the bags from wilting. Soak them well the day before planting"
+    ],
+    [
+     "Planting to the end of the rains",
+     "Planting day to month 4",
+     "Rain is usually enough. Water only in a dry week",
+     "One good soak of the mulched ring around the tree"
+    ],
+    [
+     "First dry season",
+     "Month 4 to 12",
+     "Once or twice a week for trees planted late or on dry, open slopes",
+     "Enough to soak the mulched ring a hand deep"
+    ],
+    [
+     "Second year",
+     "Month 12 to 24",
+     "Left to the rain. Water only young trees that wilt in a long dry spell",
+     "A soak of the ring under the leaves"
+    ],
+    [
+     "Bearing trees: dry spell before flowering (each year)",
+     "Month 24 to 26",
+     "Do not water",
+     "None"
+    ],
+    [
+     "Flowering",
+     "Month 26 to 27",
+     "Where water is at hand and the rain comes late, one heavy watering or sprinkler run breaks the dry spell. The trees bloom about 7 to 12 days later",
+     "A soaking like a good heavy shower over all the ground under the trees"
+    ],
+    [
+     "Fruit set",
+     "Month 27 to 28",
+     "Keep the soil moist for about three weeks after blooming, watering about once a week if no rain falls",
+     "The same soaking under the trees"
+    ],
+    [
+     "Berry filling to ripening",
+     "Month 28 to 36",
+     "Rain usually covers it. Water only in a long dry spell",
+     "A soak of the mulched ring under the leaves"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant on a cloudy day once the rains are steady, under shade trees such as kakawate, banana or coconut, and keep 5 to 8 cm of straw, dry grass or coffee pulp around each tree. On slopes, dig short trenches along the contour between the rows to catch the rain. Shade and mulch keep the soil cool and damp enough for coffee to get through the dry months without watering.\n\n**In the dry season.** Young trees in their first dry season: once or twice a week where the soil dries, more on open slopes. Bearing trees: no water until flowering is due, then, where water is at hand, one heavy soaking to bring on the bloom and a few more for about three weeks after. Water a young tree when its leaves droop at midday and are still limp in the evening.\n\n**In the rainy season.** Coffee does not stand waterlogged soil: plant with the collar a little above the ground and drain flat, wet spots. Rain in the middle of the dry spell brings early, scattered flowering and an uneven harvest. Wet, crowded, heavily shaded trees get more leaf rust, so prune after harvest to let air through."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and curl at midday and stay limp in the evening, older leaves yellow and fall, few flowers open, young berries drop, and at harvest the beans come out black and shrunken.",
+    "**Too much water:** Yellow leaves, rotting roots and branches dying back on waterlogged ground, and flowering in small scattered rounds after off season rains."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Where a spring or tank is near, one heavy sprinkler run at the end of the dry spell and a follow up about three weeks later give one even flowering and a bigger, easier harvest. Keep the shade trees and the thick mulch. They hold more water in the soil than any watering a small farm can manage."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kape"
   },
   {
@@ -438,6 +541,10 @@
     {
      "q": "How long before kape can be harvested?",
      "a": "It is ready about 3 years after planting. Berries are ready when they turn fully red, about eight to ten months after flowering."
+    },
+    {
+     "q": "How often do you water kape?",
+     "a": "Seedbed, 12 to 10 months before planting: Every day or every other day in dry weather. Seedlings in bags under shade, 10 to 2 months before planting: Every day in dry weather, every 2 to 3 days in cloudy weeks. Hardening in more sun, 2 months before planting to planting day: A little less often, every 2 to 3 days, as the bags move into the light. Young trees in their first dry season: once or twice a week where the soil dries, more on open slopes."
     },
     {
      "q": "What do you plant to grow kape?",

@@ -201,6 +201,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sitaw, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "In the wet season sitaw lives on the rains. In the dry season farmers water it by hand with a can or a hose, or run water into the furrows, every few days, and more often once the vines flower and bear. Hand watering with a can or a hose at the base of each hill, or furrow watering between the rows. Water in the early morning or late afternoon, and water the soil, not the leaves."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sitaw go dry at these stages",
+   "text": "Coming up, the first week: keep the hills moist until the seedlings are out. Flowering and picking, about day 30 to 85: a dry spell drops flowers and gives short, tough pods."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sitaw, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 7",
+     "Water right after planting if the soil is dry, then every day or two until the seedlings are up",
+     "Enough to keep the hills moist, never soggy"
+    ],
+    [
+     "Young vines",
+     "Day 7 to 30",
+     "In dry weather, every few days, when the topsoil dries",
+     "A watering can spread over a few hills, or one furrow watering"
+    ],
+    [
+     "Flowering",
+     "Day 30 to 55",
+     "Every few days in dry weather, more often in hot, windy weeks",
+     "Soak the root zone of each hill, or fill the furrows"
+    ],
+    [
+     "Picking",
+     "Day 55 to 85",
+     "Keep watering every few days through the picking weeks",
+     "The same as at flowering"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains, from May to June, on raised rows that drain. Mulch around the hills with rice straw or dry grass so the soil stays moist between rains.\n\n**In the dry season.** The October to January planting needs watering every few days in the dry months. Water when the topsoil is dry to a finger joint deep or the leaves droop in the morning, and give the most during flowering and picking.\n\n**In the rainy season.** Raise the rows or beds so the rain drains away, since sitaw roots rot in standing water and wet weather brings more leaf and pod diseases. Do not water on top of the rain."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop in the morning and turn dull, flowers and small pods drop, and the pods come out short, curled and tough.",
+    "**Too much water:** Lower leaves yellow, the vines stop growing, and roots and stem bases rot."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the rows with rice straw or dry grass to keep the shallow roots moist and cut the waterings. Drip lines along the rows give steady water through flowering and picking with far less water and work."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sitaw"
   },
   {
@@ -328,6 +395,10 @@
     {
      "q": "How long before sitaw can be harvested?",
      "a": "It is ready about 55 days after sowing. Picking starts at about 50 to 60 days and goes on every two to three days for a month or more."
+    },
+    {
+     "q": "How often do you water sitaw?",
+     "a": "Planting and coming up, sowing day to day 7: Water right after planting if the soil is dry, then every day or two until the seedlings are up. Young vines, day 7 to 30: In dry weather, every few days, when the topsoil dries. Flowering, day 30 to 55: Every few days in dry weather, more often in hot, windy weeks. The October to January planting needs watering every few days in the dry months."
     },
     {
      "q": "What do you plant to grow sitaw?",

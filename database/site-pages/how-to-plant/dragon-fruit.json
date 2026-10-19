@@ -228,6 +228,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering dragon fruit, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Dragon fruit here is mostly rain fed: cuttings get a light watering until they root, and growers on sandy soil water about once a week by can or hose in long dry spells. Most of the work goes into keeping water away, with mounds around each post and canals between the rows. A watering can or hose on the mound around each post on small farms, and drip lines with an emitter at each post on bigger farms in the drier provinces. Water early in the morning, on the mound and not over the stems."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let dragon fruit go dry at these stages",
+   "text": "From the first flower buds to harvest, about a month after each flower opens, when a dry spell drops buds and gives small or split fruit. The first months after the cuttings root, when young shoots shrivel and stop climbing in long dry weather."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for dragon fruit, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Curing the cuttings",
+     "7 days before planting to planting day",
+     "No water. Keep them dry in an airy, shaded place",
+     "None"
+    ],
+    [
+     "Planting to rooting",
+     "Planting day to day 30",
+     "Water lightly once at planting, then once or twice a week if no rain falls, letting the mound dry a little in between",
+     "A light sprinkle on the mound, never a soaking"
+    ],
+    [
+     "Young shoots climbing the post",
+     "Day 30 to month 6",
+     "About once a week in dry weather. Skip it when it rains",
+     "One to two watering cans a post, enough to wet the mound without making it soggy"
+    ],
+    [
+     "Branching over the ring",
+     "Month 6 to 10",
+     "About once a week in dry spells, every two weeks in cooler weeks",
+     "One to two watering cans a post"
+    ],
+    [
+     "Short dry rest before flowering",
+     "Month 10 to 11",
+     "Many growers hold back water for a few weeks before the flowering season",
+     "None, unless the stems shrivel badly"
+    ],
+    [
+     "Flowering and fruit growth (each season)",
+     "Month 11 to 18",
+     "Twice a week in dry spells, once a week when some rain falls, keeping the mound evenly moist",
+     "About 2 to 4 watering cans (20 to 40 liters) a post a week, split into two waterings"
+    ],
+    [
+     "After the season, pruning and rest",
+     "Month 19 to 23",
+     "About every two weeks in dry months, not at all in the rains",
+     "One to two watering cans a post"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, on a raised mound around each post, and keep it covered with rice straw, rice hull or dry grass so the soil stays cool and damp. The plant stores water in its stems and lives through the dry months on rain alone, but it bears less. The flowers come with the rains, from about May to October, so rain fed plants still give a fair crop.\n\n**In the dry season.** Plants not in flower: about every two weeks, or once a week on sandy soil. Plants in flower or with fruit: twice a week in a dry spell. Feel the mound and water when it is dry a finger deep, or when the stems start to look thin and wrinkled.\n\n**In the rainy season.** Never let water stand around the posts: raise the mounds, dig canals between the rows and keep them open. Too much rain drops flowers and rots fruit, and soft rot of the stems spreads in wet weather, so cut out and bury rotten stems away from the field."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Stems turn thin, flat and wrinkled and lose their color, new shoots stop, and flower buds dry and fall.",
+    "**Too much water:** Stems turn soft and yellow, then brown or black from the base. Roots rot. Flowers drop. And fruits split or rot."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A drip line with an emitter at each post, run twice a week through flowering and fruit growth in dry spells, keeps the moisture even, gives bigger fruit and stops splitting. Hold water back for a few weeks before the flowering season, then water steadily once the buds show."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for dragon fruit"
   },
   {
@@ -358,6 +443,10 @@
     {
      "q": "How long before dragon fruit can be harvested?",
      "a": "It is ready about 18 months after planting. Fruits are cut when the skin is fully colored and the green flaps start turning, about a month after flowering, through the rainy months."
+    },
+    {
+     "q": "How often do you water dragon fruit?",
+     "a": "Curing the cuttings, 7 days before planting to planting day: No water. Keep them dry in an airy, shaded place. Planting to rooting, planting day to day 30: Water lightly once at planting, then once or twice a week if no rain falls, letting the mound dry a little in between. Young shoots climbing the post, day 30 to month 6: About once a week in dry weather. Skip it when it rains. Plants not in flower: about every two weeks, or once a week on sandy soil."
     },
     {
      "q": "What do you plant to grow dragon fruit?",

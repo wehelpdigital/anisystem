@@ -90,6 +90,60 @@
   "Test the soil and include boron.",
   "Sow on time at the start of the cool dry months and harvest on time."
  ],
+ "watering": {
+  "traditional": "Sugar beet is very rarely grown in the Philippines, only in trials. It is sown into moist soil at the start of the cool dry months, around November, and watered by furrow in long dry spells, with the rows kept draining because standing water rots the roots.",
+  "method": "Furrow irrigation between the rows, in the morning or late afternoon.",
+  "rainfed": "Sow at the start of the cool dry months, around November, so the crop starts on the moisture left after the rains. Late sowing gives smaller roots and less sugar.",
+  "dryseason": "Water by furrow in long dry spells through leaf growth and root filling, and stop about three to four weeks before digging. Water when the leaves stay limp into the late afternoon.",
+  "wet": "Plant on ridges with open furrows and avoid fields that flood. Standing water rots the roots.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": 0,
+    "to": 14,
+    "often": "Sow into moist soil after the rains. Water the furrows if the soil is dry",
+    "amount": "A light furrow watering that wets the rows without crusting them",
+    "why": "The seed needs even moisture to come up well."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 14,
+    "to": 60,
+    "often": "Furrow water in dry spells. Water before thinning and after top dressing",
+    "amount": "Soak the rows, then drain",
+    "why": "An early, full leaf canopy gives a bigger root and more sugar."
+   },
+   {
+    "stage": "Roots filling",
+    "from": 60,
+    "to": 130,
+    "often": "Keep watering by furrow in long dry spells. Water in the last top dressing",
+    "amount": "Soak the rows, never standing water",
+    "why": "The roots put on their weight now and rot if water stands."
+   },
+   {
+    "stage": "Before harvest",
+    "from": 130,
+    "to": 160,
+    "often": "Stop watering about three to four weeks before digging, but keep some moisture so the roots do not break",
+    "amount": "No water, or one light watering if the soil turns hard",
+    "why": "Drier soil near the end raises the sugar in the roots."
+   }
+  ],
+  "critical": [
+   "Sowing to a full stand.",
+   "Leaf growth and root filling, when the plant builds its size."
+  ],
+  "signs": {
+   "dry": "Leaves wilt through the afternoon, the canopy stays thin, and the roots stay small.",
+   "wet": "Leaves yellow and the roots rot from the tip or crown."
+  },
+  "better": [
+   "Water steadily through leaf growth and stop three to four weeks before digging for more sugar.",
+   "Watering every other furrow saves water with little loss of yield."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "sugar beet philippines",
@@ -102,5 +156,5 @@
  "kind": "annual",
  "icon": "🫚",
  "slug": "sugar-beet",
- "rev": "5c7d65b6d144"
+ "rev": "66ed78ef1467"
 }

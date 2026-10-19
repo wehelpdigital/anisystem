@@ -185,6 +185,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kawayan, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Cuttings in the nursery are watered often under shade, but in the field bamboo is rainfed: clumps are planted at the start of the rains and mulched. Young clumps get water only in long dry spells in their first year, and bamboo along creeks and rivers is never watered once it is set. A watering can or a hose in the nursery, in the early morning. In the field, rain, with a hand watering into the soil ring for young clumps in a dry spell."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kawayan go dry at these stages",
+   "text": "Rooting in the nursery: the cuttings must never dry out. The first dry season after field planting: water and mulch young clumps if no rain comes."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kawayan, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Cuttings rooting under shade",
+     "6 to 5 months before planting",
+     "Water every day in the dry season and every other day in the rainy season, letting the top of the soil dry a little in between",
+     "Keep the soil moist, never soaked"
+    ],
+    [
+     "Rooted cuttings in bags",
+     "5 months before planting to 30 days before planting",
+     "Water every day while they grow",
+     "Enough to wet each bag through, a little water for each bag"
+    ],
+    [
+     "Hardening",
+     "30 days before planting to planting day",
+     "Cut back to about two or three times a week",
+     "Less water than before"
+    ],
+    [
+     "Field planting",
+     "Planting day to day 30",
+     "Plant at the start of the rains. Soak the bag in water before planting, and water in each plant once it is set",
+     "At least 1 liter a plant at planting, poured into a small ring of soil around it"
+    ],
+    [
+     "The first year",
+     "Day 30 to month 12",
+     "No regular watering in the rains. In a long dry spell, water the young clumps",
+     "A good soaking inside the soil ring, then mulch"
+    ],
+    [
+     "Grown clumps",
+     "Month 12 to 48",
+     "No watering. Mound soil and mulch over the base each year",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant at the start of the rains, from May to July in most of Luzon and the Visayas, raise a ring of soil around each plant to catch the rain, and mulch it with rice straw, cogon or cut grass.\n\n**In the dry season.** Grown clumps need no water. Water young clumps in their first dry season when the leaves curl and stay rolled in the morning, and keep the mulch thick.\n\n**In the rainy season.** Bamboo stands floods and wet riverbanks well once it is set, but newly planted cuttings rot in waterlogged soil, so plant them on soil that drains."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll up tight and turn pale, young clumps drop their leaves, and few new shoots come up.",
+    "**Too much water:** In the nursery, cuttings turn black and rot at the base. In the field, young plants in waterlogged spots turn yellow."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Plant along creeks and rivers or on land that holds moisture, and mulch every clump. Keep a soil ring around each young plant so every rain and every watering soaks in at the roots."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kawayan"
   },
   {
@@ -315,6 +394,10 @@
     {
      "q": "How long before kawayan can be harvested?",
      "a": "It is ready about 3 years after planting. The first poles are cut at about three years after planting, and each year after."
+    },
+    {
+     "q": "How often do you water kawayan?",
+     "a": "Cuttings rooting under shade, 6 to 5 months before planting: Water every day in the dry season and every other day in the rainy season, letting the top of the soil dry a little in between. Rooted cuttings in bags, 5 months before planting to 30 days before planting: Water every day while they grow. Hardening, 30 days before planting to planting day: Cut back to about two or three times a week. Grown clumps need no water."
     },
     {
      "q": "What do you plant to grow kawayan?",

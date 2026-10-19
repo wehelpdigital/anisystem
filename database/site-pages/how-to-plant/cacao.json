@@ -288,6 +288,97 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kakaw, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Cacao here is almost always rain fed: the nursery is watered by can or hose every day, seedlings go out as the rains begin, and young trees planted late get a pail of water in their first dry months. Grown trees under coconut are left to the rain, with mulch and shade to hold the soil moisture. A watering can with a rose or a soft hose in the nursery, and a pail or hose into the mulched ring for young trees in the field. A few farms run drip lines, some fed by gravity from a drum on a stand. Water early in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kakaw go dry at these stages",
+   "text": "Seedlings and new grafts in the nursery, which die quickly when the bags dry. The first dry season in the field, when most young trees are lost. Flowering and the first three months of pod growth, when dry soil makes small pods wither on the branch."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kakaw, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedlings and grafts in the nursery",
+     "5 months before planting to 7 days before planting",
+     "In hot, sunny weeks every morning and again early in the afternoon. When the plants are older and the sky is cloudy, every other day",
+     "A sprinkle from a can with a rose or a soft hose, enough to wet the top few cm of the bag soil without flooding it"
+    ],
+    [
+     "Hardening and planting day",
+     "7 days before planting to planting day",
+     "Water well for the few days after turning the bags. Soak the bags just before planting",
+     "Enough to wet each bag right through"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Water for the first few days after planting, then only in dry weeks",
+     "A good soak of the mulched ring around the stem"
+    ],
+    [
+     "First dry season",
+     "Month 3 to 12",
+     "Once or twice a week whenever no rain falls",
+     "Enough to soak the ring under the leaves a hand deep"
+    ],
+    [
+     "Second year, before the first flowers",
+     "Month 12 to 18",
+     "About once a week in the dry months where water is near",
+     "A deep soak of the ring under the leaves"
+    ],
+    [
+     "Flowering and young pods (cherelles)",
+     "Month 18 to 21",
+     "About once a week in dry spells, keeping the soil evenly moist",
+     "A deep soak under the crown, up to about 20 liters a tree a day on drip in the driest weeks"
+    ],
+    [
+     "Pod filling to the first ripe pods",
+     "Month 21 to 24",
+     "Water in long dry spells",
+     "A deep soak under the crown"
+    ],
+    [
+     "Bearing trees, flowering and fruiting all year",
+     "Year 2 to 3",
+     "Left to the rain in wet months. About once a week in the dry months",
+     "Up to about 200 liters a tree a week in the driest months, or about 20 liters a tree a day on drip"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, under the light shade of coconut, banana or kakawate, and keep a mulch of dry leaves or cut grass around each tree, off the stem. Cacao fits best where rain is spread through the year and the dry season lasts no more than about 3 months. A month with less than about 10 cm of rain sets the trees back. Where the dry months run longer, rain fed farms lose young trees and get few pods until the rains return.\n\n**In the dry season.** Young trees: once or twice a week. Bearing trees: about once a week, with up to about 200 liters a week for a big tree where water allows. Water when the leaves hang limp in the afternoon, when no new leaves come, or when the small pods start to yellow and dry.\n\n**In the rainy season.** Long rains bring black pod rot, which spreads in splashing rain and in puddles under the trees. Dig drains so water does not stand, prune the cacao and the shade trees so the farm dries out between showers, and pick and bury sick pods every week. Waterlogged roots die and the tree yellows and dies back."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves hang limp and lose their shine, older leaves yellow and fall, new leaf flushes stop, few flowers open, and many small pods turn yellow, then black, and dry up on the branch.",
+    "**Too much water:** Yellowing and dieback on waterlogged ground, and many black, rotting pods after long rains."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A simple drip line, even fed by gravity from a raised drum, through the dry months keeps nearly all young trees alive and keeps bearing trees flowering and holding their pods. Keep the shade and a thick mulch, and prune both the cacao and the shade trees so the farm dries out between rains, which cuts black pod."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kakaw"
   },
   {
@@ -418,6 +509,10 @@
     {
      "q": "How long before kakaw can be harvested?",
      "a": "It is ready about 30 months after planting. Pods are ripe when they change color, from green to yellow or from red to orange, and sound hollow when tapped."
+    },
+    {
+     "q": "How often do you water kakaw?",
+     "a": "Seedlings and grafts in the nursery, 5 months before planting to 7 days before planting: In hot, sunny weeks every morning and again early in the afternoon. When the plants are older and the sky is cloudy, every other day. Hardening and planting day, 7 days before planting to planting day: Water well for the few days after turning the bags. Soak the bags just before planting. Planting to 3 months, planting day to month 3: Water for the first few days after planting, then only in dry weeks. Young trees: once or twice a week."
     },
     {
      "q": "What do you plant to grow kakaw?",

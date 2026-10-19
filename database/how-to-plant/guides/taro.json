@@ -133,7 +133,61 @@
      "how": "Brush off soil, separate the side corms from the mother corm, sort by size and keep them in a cool, airy, shaded place until sold.",
      "task": "postharvest"
     }
-   ]
+   ],
+   "watering": {
+    "traditional": "Upland gabi is a rain crop: it goes in as the rains begin, around May to June, and grows on rain spread through the months. Farmers lay dry grass or leaves around the plants to hold moisture in dry spells and water by hand only on small plots near a well.",
+    "method": "Mostly rain. Where water is near, farmers run it down the furrows or water each plant by can. Water in the morning or late afternoon.",
+    "rainfed": "Plant as the rains begin so the whole growth falls in the wet months, on loose loam that holds moisture. Lay dry grass, leaves or straw around the plants after weeding, and plant along creeks or in low, moist spots where the soil stays damp longer.",
+    "dryseason": "Upland gabi is not planted into the dry season on purpose. If a dry spell comes, water by furrow or can about once a week, keep the mulch thick, and water when the big leaves droop or curl in the morning.",
+    "wet": "Use furrows and ridges so heavy rain drains away and water does not pond around the base of the plants for long. Upland gabi likes wet soil but rots in long ponding, and wet weather spreads leaf blight.",
+    "schedule": [
+     {
+      "stage": "Planting and rooting",
+      "from": 0,
+      "to": 30,
+      "often": "Plant into moist soil with the first rains. Water the furrow or each plant if a dry week comes",
+      "amount": "Moisten the soil around each sett, no standing water",
+      "why": "Setts and shoots root only in moist soil and dry out fast in the first weeks."
+     },
+     {
+      "stage": "Leafy growth",
+      "from": 30,
+      "to": 90,
+      "often": "Rain is usually enough. In a dry spell water by furrow or can about once a week and keep the mulch on",
+      "amount": "A soaking that wets the root zone, then drain",
+      "why": "Gabi has shallow roots and big leaves, and it needs steady moisture to build the plant that fills the corm."
+     },
+     {
+      "stage": "Corms filling",
+      "from": 90,
+      "to": 180,
+      "often": "Keep the soil moist. Water in dry spells where you can",
+      "amount": "Even moisture, never soaked around the base",
+      "why": "Dry spells now give small, hard corms. Soaked soil at the base rots them."
+     },
+     {
+      "stage": "Leaves yellowing to harvest",
+      "from": 180,
+      "to": 210,
+      "often": "Stop watering as the leaves turn yellow and the stalks shorten",
+      "amount": "No water",
+      "why": "Drier soil makes digging easier and the corms keep better."
+     }
+    ],
+    "critical": [
+     "The first month, while the setts root.",
+     "Leaf growth and corm filling, roughly the third to sixth month: dry spells give small corms."
+    ],
+    "signs": {
+     "dry": "Big leaves droop, curl and scorch at the edges, new leaves come small, and the corms stay small and hard.",
+     "wet": "Ponded plants yellow and the corm and roots rot from the base."
+    },
+    "better": [
+     "Thick mulch of grass, leaves or straw around the plants holds moisture through dry spells and keeps weeds down.",
+     "Where you can, water about once a week through dry spells in the third to sixth month to keep the corms filling."
+    ],
+    "confidence": "medium"
+   }
   },
   {
    "key": "lowland",
@@ -217,7 +271,69 @@
      "how": "When the leaves yellow and shorten, drain the field, lift the plants and cut off the tops.",
      "task": "harvest"
     }
-   ]
+   ],
+   "watering": {
+    "traditional": "Lowland gabi grows in wet fields, paddies and along creeks where the soil stays soaked or under shallow water, so it keeps growing in the dry months. The grower holds a few cm of water in the field, lowers it while the plants are small or being fed, and drains the field before the harvest.",
+    "method": "The water level is held with the field's banks, inlet and outlet, or with a small pump. No hand watering is needed.",
+    "rainfed": "Lowland gabi is grown where the ground stays wet on its own, in low paddies, swampy spots and creek sides. Where these dry in summer, keep the field banks high to hold rain, plant in the wettest part, or switch to upland gabi with mulch.",
+    "dryseason": "Keep the field flooded with a few cm of water through the dry months. Let in water from the canal, creek or pump whenever the mud starts to show.",
+    "wet": "Keep an outlet open in the typhoon months so a big flood does not drown young plants or stand deep for long. Water deeper than a hand span for a long time cuts the corm yield, and warm, stale water brings corm rot.",
+    "schedule": [
+     {
+      "stage": "Puddling the field",
+      "from": -14,
+      "to": 0,
+      "often": "Flood the field and work the mud soft and level, as for rice",
+      "amount": "Enough water to make soft mud",
+      "why": "Soft, level mud lets the setts be planted at the same depth and the water stand evenly."
+     },
+     {
+      "stage": "Planting and rooting",
+      "from": 0,
+      "to": 30,
+      "often": "Keep the soil soaked, with only a little water over it while the plants are tiny",
+      "amount": "Saturated mud to about 2 to 3 cm of water",
+      "why": "Young plants drown in deep water."
+     },
+     {
+      "stage": "Weeding and feeding",
+      "from": 30,
+      "to": 31,
+      "often": "Lower the water, pull the weeds and put the fertilizer beside the plants, then bring the water back after a day or two",
+      "amount": "Low water while feeding",
+      "why": "Fertilizer stays in the field instead of floating away."
+     },
+     {
+      "stage": "Growth and corm filling",
+      "from": 31,
+      "to": 225,
+      "often": "Keep shallow standing water in the field all the time. Let fresh water flow through slowly if you can",
+      "amount": "About 4 to 8 cm of standing water",
+      "why": "A few cm of water keeps weeds down. Deeper water cuts the corm yield."
+     },
+     {
+      "stage": "Drain and harvest",
+      "from": 225,
+      "to": 240,
+      "often": "Drain the field when the leaves yellow and shorten",
+      "amount": "No water",
+      "why": "A drained field is easier to walk and dig, and the corms are less bruised."
+     }
+    ],
+    "critical": [
+     "The first month, when the water must stay shallow so the young plants do not drown.",
+     "The whole growth: the field must never dry and crack."
+    ],
+    "signs": {
+     "dry": "Mud shows and cracks, the leaves droop and scorch at the edges, and growth stops.",
+     "wet": "Young plants under deep water yellow and die. In warm stale water the corms go soft and rotten."
+    },
+    "better": [
+     "Hold only about 4 to 8 cm of water: enough to keep weeds down without cutting the yield.",
+     "Let cool, fresh water flow slowly through the field instead of leaving it stale and warm."
+    ],
+    "confidence": "medium"
+   }
   }
  ],
  "mistakes": [
@@ -255,5 +371,5 @@
  "kind": "annual",
  "icon": "🥔",
  "slug": "taro",
- "rev": "30e535c86e81"
+ "rev": "f16de104a321"
 }

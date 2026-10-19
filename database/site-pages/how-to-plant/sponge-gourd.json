@@ -181,6 +181,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering patola, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Dry season patola gets its first flooding of the furrows about two weeks after the seedlings come up, and then a furrow flooding about every 7 days for as long as it bears, unless it rains. Until that first flooding, many growers water the hills by can a few times a week. Wet season crops on ridges live mostly on the rain. Flooding the furrows between the rows is the usual way in the dry season. Backyard growers water each hill with a can or a hose. Water in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let patola go dry at these stages",
+   "text": "Flowering and fruit set, when dry soil drops flowers and young fruits. The picking weeks, when the vine must keep filling new fruits. Wet season sowing: seeds and seedlings rot in hills where water stands."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for patola, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sprouting the seed",
+     "1 day before sowing to sowing day",
+     "Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the coat splits",
+     "Damp, not dripping"
+    ],
+    [
+     "Sowing to young vines",
+     "Sowing day to day 19",
+     "Plant into moist soil. If no rain falls, water the hills by can about three times a week",
+     "Moisten each hill, never make mud"
+    ],
+    [
+     "Vines climbing the trellis",
+     "Day 19 to 35",
+     "First furrow flooding about two weeks after the seedlings come up, then about every 7 days when it does not rain",
+     "Let water fill the furrows and soak the rows, then drain what is left"
+    ],
+    [
+     "Flowering and fruit set",
+     "Day 35 to 45",
+     "Keep the 7 day furrow flooding without missing one",
+     "A full soaking each time, drained off"
+    ],
+    [
+     "Picking",
+     "Day 45 to 100",
+     "Go on flooding the furrows about every 7 days through the picking. Water after each feeding",
+     "A full soaking each time, drained off"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant from June to September with the rains, on ridges or raised beds so water does not stand around the seeds, and the rain does most of the watering. Lay rice straw or cut grass along the rows, and carry water to each hill if a dry spell hits while the vines flower.\n\n**In the dry season.** Plant from February to May only where there is water: flood the furrows about two weeks after the seedlings come up, then about every 7 days. Water when the leaves droop by mid morning or the soil a few cm down feels dry.\n\n**In the rainy season.** Plant on the ridges of the furrows or on raised beds, two to three seeds a hill, and keep the canals open. Low, poorly drained fields give poor patola: the seeds and roots rot and the leaves catch mildew in the damp."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and stay limp into the afternoon, the vine tips stop growing, flowers drop, and the fruits stay thin and tough.",
+    "**Too much water:** Seeds and seedlings rot, the leaves yellow and show mildew patches, and the vines wilt from rotten roots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A drip line or a weekly furrow flooding that is never skipped during flowering and picking gives more and longer fruits. Mulch the base of each plant with rice straw to keep the soil damp and cut the watering."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for patola"
   },
   {
@@ -310,6 +383,10 @@
     {
      "q": "How long before patola can be harvested?",
      "a": "It is ready about 45 days after sowing. Young fruits are cut with a sharp knife a few days after they set, at dawn or near sundown, and packed in plastic bags to stay fresh."
+    },
+    {
+     "q": "How often do you water patola?",
+     "a": "Sprouting the seed, 1 day before sowing to sowing day: Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the coat splits. Sowing to young vines, sowing day to day 19: Plant into moist soil. If no rain falls, water the hills by can about three times a week. Vines climbing the trellis, day 19 to 35: First furrow flooding about two weeks after the seedlings come up, then about every 7 days when it does not rain. Plant from February to May only where there is water: flood the furrows about two weeks after the seedlings come up, then about every 7 days."
     },
     {
      "q": "What do you plant to grow patola?",

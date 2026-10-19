@@ -139,6 +139,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering lansones, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Lanzones here is rain fed in most farms, grown under coconut, banana or kakawate shade with a thick mulch of dried leaves. Young trees are watered in dry spells, and the few growers with water on hand irrigate bearing trees in the dry months for a better and earlier crop. A pail or hose into a mulched ring for young trees. Basin or sprinkler watering for bearing trees where a spring or pump is near. Water early in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let lansones go dry at these stages",
+   "text": "The first two years, when young trees under stress grow slowly and recover poorly. Flowering and fruit set, when the flower clusters dry up in dry soil. Fruit growth, which needs even moisture for full, sweet bunches."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for lansones, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Water well at planting, then every 2 to 3 days when no rain falls, in light shade",
+     "A good soak of a ring basin around the stem"
+    ],
+    [
+     "First and second year",
+     "Month 3 to 24",
+     "About twice a week in the dry months, once a week on heavy soil",
+     "A soak of the mulched ring under the leaves"
+    ],
+    [
+     "Years 3 to 5, before bearing",
+     "Month 24 to 54",
+     "About once a week in the dry months where water is near",
+     "A deep soak of the ring, widened as the crown spreads"
+    ],
+    [
+     "Bearing trees: dry spell before flowering (each year)",
+     "Month 54 to 56",
+     "At the start of the dry season let the soil dry for some weeks, then water deeply until the soil is moist again",
+     "None for some weeks, then a deep soak of all the ground under the crown"
+    ],
+    [
+     "Flowering and fruit set",
+     "Month 56 to 57",
+     "About once a week in dry weather, keeping the soil evenly moist",
+     "A deep soak under the crown"
+    ],
+    [
+     "Fruit growth to ripening",
+     "Month 57 to 60",
+     "About once a week in dry spells until the bunches turn yellow",
+     "A deep soak under the crown"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains under shade that is already growing, and keep a thick mulch of dried leaves under the tree. Lanzones needs a humid place with rain spread through most of the year and does poorly where the dry season is long. On rain alone, the trees flower when the first heavy rains end the dry season, and the crop comes some months later.\n\n**In the dry season.** Young trees about twice a week. Bearing trees about once a week from flowering to harvest, after the short dry spell that brings the flowers. Water when the leaves droop and fold by midday.\n\n**In the rainy season.** Lanzones cannot stand flooding: plant on ground that drains, open drains from low spots, and keep water from standing around the trunk. Wet, shaded, crowded orchards get more bark disease and fruit rot, so thin the shade and prune water sprouts."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaflets droop and fold by midday, older leaves yellow and fall, flower clusters dry up, and fruits stay small and sour.",
+    "**Too much water:** Yellow leaves and dying twigs on waterlogged ground, and more rotting bark and fruits in long rains."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Where you have water, let the soil dry at the start of the dry season and then water deeply: the trees flower and fruit weeks ahead of the rain fed crop, when prices are higher. Keep the shade, mulch and steady water through the first two years, the stage where most young lanzones are lost."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for lansones"
   },
   {
@@ -269,6 +348,10 @@
     {
      "q": "How long before lansones can be harvested?",
      "a": "It is ready about 5 years after planting. Fruits are ready when the bunch has turned evenly yellow and the fruits taste sweet."
+    },
+    {
+     "q": "How often do you water lansones?",
+     "a": "Planting to 3 months, planting day to month 3: Water well at planting, then every 2 to 3 days when no rain falls, in light shade. First and second year, month 3 to 24: About twice a week in the dry months, once a week on heavy soil. Years 3 to 5, before bearing, month 24 to 54: About once a week in the dry months where water is near. Young trees about twice a week."
     },
     {
      "q": "What do you plant to grow lansones?",

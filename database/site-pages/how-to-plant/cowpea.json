@@ -167,6 +167,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering paayap, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Cowpea is rarely watered: farmers plant it after the rice harvest on the moisture left in the field, or with the rains on upland farms. It stands dry weather well, and growers worry more about water standing in the field. Mostly no watering. Where water is close, a furrow watering from a pump or canal, or hand watering on small plots, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let paayap go dry at these stages",
+   "text": "Planting: sow into moist soil after the rice or after rain. Flowering and pod set, about day 35 to 55: a long drought cuts the pods."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for paayap, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 7",
+     "Plant into moist soil. If the soil is dry, water the furrows lightly once",
+     "Enough to moisten the seed row, no standing water"
+    ],
+    [
+     "Leaf growth",
+     "Day 7 to 35",
+     "Usually none. Water only if the plants wilt in the morning",
+     "A light furrow watering"
+    ],
+    [
+     "Flowering and pod set",
+     "Day 35 to 55",
+     "Water once if the soil has dried and cracked",
+     "A furrow watering that soaks in"
+    ],
+    [
+     "Dry pod harvest",
+     "Day 55 to 72",
+     "Stop watering",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant right after the rice harvest while the field is still wet, or at the start of the rains on uplands, on soil that drains well.\n\n**In the dry season.** After rice it rarely needs water. In a hard dry year, give one furrow watering at flowering if the soil has cracked and the leaves wilt before noon.\n\n**In the rainy season.** Standing water hurts cowpea. Plant on ridges or well drained ground, open a drain where water collects, and pick the dry pods before long rains rot them."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and turn pale, flowers drop, and the plants stop growing.",
+    "**Too much water:** Leaves yellow, roots rot and plants die in the low spots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If you water only once, do it at flowering. Plant early after the rice so the crop flowers before the soil dries out."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for paayap"
   },
   {
@@ -293,6 +360,10 @@
     {
      "q": "How long before paayap can be harvested?",
      "a": "It is ready about 70 days after sowing. Young pods and tops are picked from about seven weeks for the kitchen."
+    },
+    {
+     "q": "How often do you water paayap?",
+     "a": "Planting and coming up, sowing day to day 7: Plant into moist soil. If the soil is dry, water the furrows lightly once. Leaf growth, day 7 to 35: Usually none. Water only if the plants wilt in the morning. Flowering and pod set, day 35 to 55: Water once if the soil has dried and cracked. After rice it rarely needs water."
     },
     {
      "q": "What do you plant to grow paayap?",

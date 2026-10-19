@@ -177,6 +177,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering upo, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Dry season upo is irrigated through the furrows about once a week, with a ring of rice straw at the foot of each plant so the soil stays damp longer. Wet season upo grows on ridges or raised beds with drainage canals and is watered only when the soil dries, because the vines dislike soggy soil. Furrow irrigation is the usual way in the dry season. Small growers water each hill with a can or a hose. Water in the early morning or late afternoon, at the base of the plant."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let upo go dry at these stages",
+   "text": "Flowering and fruit set, when dry soil drops the flowers. Fruit filling and picking, when the fruits grow fast and need steady water. Any time water stands: upo is sensitive to soggy soil, which brings disease."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for upo, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sprouting the seed",
+     "1 day before sowing to sowing day",
+     "Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the coat splits",
+     "Damp, not dripping"
+    ],
+    [
+     "Sowing to first leaves",
+     "Sowing day to day 7",
+     "Plant into moist soil and water the hills by can if they dry before the seedlings are up",
+     "Moisten each hill, no puddles"
+    ],
+    [
+     "Vines climbing the trellis",
+     "Day 7 to 40",
+     "Irrigate the furrows about once a week in the dry season. Lay the straw ring at the foot of each plant. Water after the side dressing",
+     "Soak the rows, then drain"
+    ],
+    [
+     "Flowering and fruit set",
+     "Day 40 to 65",
+     "Keep the weekly furrow watering steady",
+     "A full soaking each time, never left standing"
+    ],
+    [
+     "Picking",
+     "Day 65 to 100",
+     "Go on with the weekly furrow watering while cutting fruits every day or two",
+     "A full soaking each time, drained off"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** A wet season crop on ridges or raised beds lives mostly on the rain. Dig canals so the water drains away, keep the straw ring around each plant, and carry water to the hills if a dry spell comes during flowering.\n\n**In the dry season.** Irrigate the furrows about once a week, more often on sandy soil, and keep the rice straw ring at each plant so you water less. Water when the big leaves stay limp into the afternoon or the soil a few cm down is dry.\n\n**In the rainy season.** Plant on ridges or raised beds and dig canals so no water stands. Upo is sensitive to too much soil moisture: the roots rot, the vines wilt and fruits touching wet ground rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Large leaves wilt and stay limp into the afternoon, flowers drop, and the fruits stay small, thin and slow to fill.",
+    "**Too much water:** Leaves yellow, the vines wilt from rotten roots, and fruits rot at the blossom end or where they touch the wet ground."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A rice straw ring at each plant, or mulch along the whole row, keeps the soil damp and cuts the watering. Keep the watering steady through flowering and picking instead of soaking the field after a long dry spell."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for upo"
   },
   {
@@ -306,6 +379,10 @@
     {
      "q": "How long before upo can be harvested?",
      "a": "It is ready about 65 days after sowing. Fruits are cut about 15 days after they set, 60 to 80 days after sowing, with a sharp knife leaving about 5 cm of stalk."
+    },
+    {
+     "q": "How often do you water upo?",
+     "a": "Sprouting the seed, 1 day before sowing to sowing day: Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the coat splits. Sowing to first leaves, sowing day to day 7: Plant into moist soil and water the hills by can if they dry before the seedlings are up. Vines climbing the trellis, day 7 to 40: Irrigate the furrows about once a week in the dry season. Lay the straw ring at the foot of each plant. Water after the side dressing. Irrigate the furrows about once a week, more often on sandy soil, and keep the rice straw ring at each plant so you water less."
     },
     {
      "q": "What do you plant to grow upo?",

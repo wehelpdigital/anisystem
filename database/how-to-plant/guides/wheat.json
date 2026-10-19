@@ -96,6 +96,68 @@
   "Test the soil and lime it if it is acid.",
   "Keep the plot weed free for the first month."
  ],
+ "watering": {
+  "traditional": "The few wheat plots in our highlands are sown at the end of the rains and live on the last of the rain. Growers water small plots by hand or by hose during dry spells.",
+  "method": "Hand watering with a can or a hose on small plots, in the morning.",
+  "rainfed": "Sow at the end of the rains, from October to December, while the soil is still moist, so the crop grows on stored moisture through the cool months.",
+  "dryseason": "The crop grows through the dry months, so water small plots about once a week in dry spells, more at heading and flowering, and stop once the grain hardens.",
+  "wet": "Wet, warm weather brings rust and rotting heads. Plant on beds that drain, and do not sow so early that the heads come out in the rains.",
+  "schedule": [
+   {
+    "stage": "Sowing and coming up",
+    "from": 0,
+    "to": 10,
+    "often": "Water the plot right after sowing and every few days if no rain falls",
+    "amount": "Enough to moisten the seed rows, never soggy",
+    "why": "The seed needs even moisture to come up together."
+   },
+   {
+    "stage": "Tillering",
+    "from": 10,
+    "to": 45,
+    "often": "In dry spells, water about once a week",
+    "amount": "Soak the rows with a can or a hose",
+    "why": "Moisture now gives more shoots and more heads."
+   },
+   {
+    "stage": "Heading and flowering",
+    "from": 45,
+    "to": 75,
+    "often": "Keep the soil moist, watering when the topsoil dries",
+    "amount": "A good soaking of the rows",
+    "why": "Drought now gives short heads with empty spaces."
+   },
+   {
+    "stage": "Grain filling",
+    "from": 75,
+    "to": 100,
+    "often": "Water in dry spells until the grain is firm",
+    "amount": "A soaking of the rows",
+    "why": "Moisture fills the grain plump."
+   },
+   {
+    "stage": "Ripening",
+    "from": 100,
+    "to": 115,
+    "often": "Stop watering",
+    "amount": "None",
+    "why": "The straw and grain must dry for cutting."
+   }
+  ],
+  "critical": [
+   "Tillering, about day 10 to 45: dry soil means fewer heads.",
+   "Heading, flowering and grain filling, about day 45 to 100: a dry spell gives light, shriveled grain."
+  ],
+  "signs": {
+   "dry": "Leaves roll and turn gray green, the plants stay short with few shoots, and the heads are small.",
+   "wet": "Yellow leaves, rust spots and moldy heads."
+  },
+  "better": [
+   "Water at tillering and at heading if you can water only twice.",
+   "A light mulch between the rows keeps the topsoil moist longer."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng trigo",
@@ -108,5 +170,5 @@
  "kind": "annual",
  "icon": "🌾",
  "slug": "wheat",
- "rev": "509472b8f7f9"
+ "rev": "a4a9ce05d5b8"
 }

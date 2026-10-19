@@ -132,6 +132,60 @@
   "Scout at flowering for pod borers and act only when they are many.",
   "Dry the seed well and keep it in sealed containers."
  ],
+ "watering": {
+  "traditional": "Cowpea is rarely watered: farmers plant it after the rice harvest on the moisture left in the field, or with the rains on upland farms. It stands dry weather well, and growers worry more about water standing in the field.",
+  "method": "Mostly no watering. Where water is close, a furrow watering from a pump or canal, or hand watering on small plots, in the morning.",
+  "rainfed": "This is the usual way. Plant right after the rice harvest while the field is still wet, or at the start of the rains on uplands, on soil that drains well.",
+  "dryseason": "After rice it rarely needs water. In a hard dry year, give one furrow watering at flowering if the soil has cracked and the leaves wilt before noon.",
+  "wet": "Standing water hurts cowpea. Plant on ridges or well drained ground, open a drain where water collects, and pick the dry pods before long rains rot them.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Plant into moist soil. If the soil is dry, water the furrows lightly once",
+    "amount": "Enough to moisten the seed row, no standing water",
+    "why": "The seed needs moisture to come up evenly but rots in waterlogged soil."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 7,
+    "to": 35,
+    "often": "Usually none. Water only if the plants wilt in the morning",
+    "amount": "A light furrow watering",
+    "why": "Cowpea roots go deep and handle dry spells well."
+   },
+   {
+    "stage": "Flowering and pod set",
+    "from": 35,
+    "to": 55,
+    "often": "Water once if the soil has dried and cracked",
+    "amount": "A furrow watering that soaks in",
+    "why": "A hard drought now drops flowers and young pods."
+   },
+   {
+    "stage": "Dry pod harvest",
+    "from": 55,
+    "to": 72,
+    "often": "Stop watering",
+    "amount": "None",
+    "why": "Dry weather dries the pods for picking and keeps the seed from rotting."
+   }
+  ],
+  "critical": [
+   "Planting: sow into moist soil after the rice or after rain.",
+   "Flowering and pod set, about day 35 to 55: a long drought cuts the pods."
+  ],
+  "signs": {
+   "dry": "Leaves droop and turn pale, flowers drop, and the plants stop growing.",
+   "wet": "Leaves yellow, roots rot and plants die in the low spots."
+  },
+  "better": [
+   "If you water only once, do it at flowering.",
+   "Plant early after the rice so the crop flowers before the soil dries out."
+  ],
+  "confidence": "medium"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng paayap",
@@ -144,5 +198,5 @@
  "kind": "annual",
  "icon": "🫛",
  "slug": "cowpea",
- "rev": "6c90059f07bc"
+ "rev": "696eac9dad0a"
 }

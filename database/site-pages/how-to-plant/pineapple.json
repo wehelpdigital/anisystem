@@ -197,6 +197,67 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering pinya, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Pineapple on small farms is rainfed. It stands dry spells well, so farmers water newly planted suckers only when the soil is very dry, and worry more about drainage, since standing water rots the roots and the heart. Rain only on most small farms. Where water is close, a hose or a watering can at the base of the plants, and sprinklers or drip lines on big farms. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let pinya go dry at these stages",
+   "text": "The first two months: the suckers must root, so plant when the rains come. Leaf growth, about months 2 to 11: a big, leafy plant is what makes a big fruit, and drought now stunts it."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for pinya, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and rooting",
+     "Planting day to day 60",
+     "Plant with the rains. Water a new planting only if the soil is very dry and no rain comes",
+     "A good soaking at the base of each sucker, with no water left standing in the heart"
+    ],
+    [
+     "Leaf growth",
+     "Day 60 to 330",
+     "No regular watering. In a long dry season, water if the leaves turn reddish and curl their edges, where water is at hand",
+     "A soaking along the rows"
+    ],
+    [
+     "Forcing to harvest",
+     "Day 330 to 480",
+     "No regular watering. Force on a day with no rain expected, and in a long dry spell water during fruit growth if you can",
+     "A soaking along the rows when the soil is dry"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant from about May to July so the suckers root before the dry months, lay pulled weeds between the rows as mulch, and grow on slopes or ridges that drain.\n\n**In the dry season.** Grown plants seldom need water. Water a new planting if the soil is dry a hand deep, and water bearing plants in a long drought when the leaves turn reddish and stay folded.\n\n**In the rainy season.** Pineapple cannot stand wet feet. Plant on ridges or slopes, dig drains between the beds, and never plant in a spot where water stands after rain, since the roots and hearts rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves turn reddish or yellow, roll their edges in and look thin, the plant stays small and the fruit comes out small.",
+    "**Too much water:** Yellow, limp leaves, a heart that pulls out easily with a bad smell, and rotten roots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch between the rows with pulled weeds or plastic film to keep the soil moist and cool through the dry months. Plant early in the rains so the plants grow big before the first dry season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for pinya"
   },
   {
@@ -327,6 +388,10 @@
     {
      "q": "How long before pinya can be harvested?",
      "a": "It is ready about 480 days after planting. Ready about 4.5 to 5 months after forcing, when the base of the fruit turns yellow and the eyes flatten."
+    },
+    {
+     "q": "How often do you water pinya?",
+     "a": "Planting and rooting, planting day to day 60: Plant with the rains. Water a new planting only if the soil is very dry and no rain comes. Leaf growth, day 60 to 330: No regular watering. In a long dry season, water if the leaves turn reddish and curl their edges, where water is at hand. Forcing to harvest, day 330 to 480: No regular watering. Force on a day with no rain expected, and in a long dry spell water during fruit growth if you can. Grown plants seldom need water."
     },
     {
      "q": "What do you plant to grow pinya?",

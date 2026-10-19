@@ -236,6 +236,85 @@
   "Rotate with rice, corn or beans, never with eggplant, pepper or potato.",
   "Water evenly, a little and often, so the fruits do not crack."
  ],
+ "watering": {
+  "traditional": "Lowland tomato after rice is watered by quick furrow irrigation: water is let into the furrows, allowed to wet the roots and drained fast, because tomato cannot stand flooding. Where there is no canal, farmers pour water at each hill about once a week, and many dry season crops also live on the moisture left from the rice field.",
+  "method": "Quick furrow irrigation from a canal or a pump, with the water drained fast, is the usual way in the lowlands. Without a canal, water is poured at each hill with a can or a hose. Water in the morning so the leaves dry before evening.",
+  "rainfed": "Plant the main crop at the end of the rains, often in a rice field just harvested, so the plants grow on the moisture stored in the soil through the cool dry months. Mulch with rice straw to hold that moisture, and carry water to each hill about once a week, roughly a liter a hill, if the soil dries during flowering.",
+  "dryseason": "Give quick furrow irrigation about once a week from transplanting until 14 days before the last picking, more often on sandy soil and fewer times on heavy clay. Water when the leaves droop in the late morning or the soil a few cm down is dry, and make a catch canal so the extra water drains off after each irrigation.",
+  "wet": "For an off season crop pick slightly higher ground, plant on high, well drained rows and keep a drain canal around the field. Tomato is very sensitive to flooding: soaked roots rot, plants wilt fast and fruits that touch the wet soil rot, so stake every plant.",
+  "schedule": [
+   {
+    "stage": "Seedbed and trays",
+    "from": -30,
+    "to": -24,
+    "often": "Water the bed before sowing and sprinkle the trays right after. Then water each morning",
+    "amount": "Just enough to keep the soil damp, never soggy",
+    "why": "Too much water in the seedbed brings damping off and thin, weak seedlings."
+   },
+   {
+    "stage": "Growing seedlings",
+    "from": -24,
+    "to": -7,
+    "often": "Water in the morning, only enough to keep the soil moist. Water at once after pricking out and after the starter drench",
+    "amount": "Light sprinkles. Rinse the leaves with plain water after the fertilizer drink",
+    "why": "Steady, light watering makes sturdy seedlings, and fertilizer left on the leaves burns them."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water less and less often each day while the seedlings get more sun",
+    "amount": "Light waterings. Do not let them wilt hard",
+    "why": "Seedlings that are not soaked every day grow tougher stems and roots for the field."
+   },
+   {
+    "stage": "Transplanting and settling",
+    "from": 0,
+    "to": 14,
+    "often": "Water the hills right after transplanting, then about 4 to 5 light waterings in the first two weeks, depending on the soil",
+    "amount": "Moisten the root zone around each hill. No water left standing",
+    "why": "Young plants must root into the field soil before the hot days. Wilted ones are replaced at 3 to 5 days."
+   },
+   {
+    "stage": "Growth to first flowers",
+    "from": 14,
+    "to": 30,
+    "often": "Quick furrow irrigation about once a week in dry weather. Without a canal, about a liter a hill once a week",
+    "amount": "Let water run down the furrow until the root zone is wet, then drain it fast",
+    "why": "Even moisture builds a strong plant, while water left standing rots the roots and spreads wilt."
+   },
+   {
+    "stage": "Flowering and fruit setting",
+    "from": 30,
+    "to": 60,
+    "often": "Keep the weekly quick furrow watering without fail. Water lightly rather than heavily",
+    "amount": "Just enough to moisten the root zone each time, never a flood",
+    "why": "This is the stage tomato is most sensitive to: dry soil drops flowers, and dry spells followed by heavy watering give fruits with black rotten ends and cracks."
+   },
+   {
+    "stage": "Picking",
+    "from": 60,
+    "to": 100,
+    "often": "Go on watering about once a week while picking, then stop about 14 days before the last picking",
+    "amount": "Light quick waterings",
+    "why": "Steady water keeps the fruits filling. Stopping near the end firms the last fruits and saves water."
+   }
+  ],
+  "critical": [
+   "The first two weeks after transplanting, until the plants are rooted.",
+   "Flowering and fruit setting: no dry spells, because flowers drop and fruits get black rotten ends.",
+   "Every stage: never leave water standing in the furrows or let the field flood."
+  ],
+  "signs": {
+   "dry": "Leaves curl and droop in the heat, flowers drop before setting, and fruits stay small or show a dark, sunken patch at the blossom end.",
+   "wet": "Lower leaves yellow, plants wilt suddenly even in wet soil, roots turn brown and soft, and ripening fruits crack or rot."
+  },
+  "better": [
+   "Plastic or rice straw mulch keeps the soil evenly moist, cuts the watering and keeps fruits off the wet ground.",
+   "A drip line along each row gives the steady, light water tomato needs during fruit setting and wastes less than flooding the furrows."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "GEp2MzED_jE",
   "title": "PAANO MAGTANIM NG KAMATIS? (300 TOMATOES SEEDLINGS!)",
@@ -257,5 +336,5 @@
  "kind": "annual",
  "icon": "🍅",
  "slug": "tomato",
- "rev": "e0799971595b"
+ "rev": "89700a3b1ef8"
 }

@@ -166,6 +166,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering palma, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Oil palm in the field is grown on rain alone, where rain falls through most of the year and the dry season is short. The bagged seedlings in the nursery are the only stage that growers water by hand, and in the field they keep the soil damp with fronds, empty bunches and a cover crop. Rain only in the field. In the nursery, a hose or a watering can, or sprinklers on big nurseries, in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let palma go dry at these stages",
+   "text": "The nursery year: bagged seedlings must never dry out. The weeks after field planting: a new palm needs moist soil until its roots spread."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for palma, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Bagged seedlings in the nursery",
+     "12 months before planting to planting day",
+     "Water every day in dry weather and when the rain misses a day, less in steady rain",
+     "Enough to wet the soil in each bag through, with water draining out of the holes"
+    ],
+    [
+     "Field planting",
+     "Planting day to day 30",
+     "Plant on a rainy day. If a dry spell follows, water each new palm",
+     "A good soaking of the planting circle"
+    ],
+    [
+     "Young palms",
+     "Day 30 to year 3",
+     "No regular watering. Keep the weeded circle mulched and the cover crop between the rows",
+     "None"
+    ],
+    [
+     "Bearing palms",
+     "Year 3 to 4",
+     "No watering. Stack the pruned fronds between the rows and spread empty bunches around the palms",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant at the start of the rains, or in any month where rain falls well through the year, and plant only where the dry season is short. Mulch with fronds and empty bunches and keep a legume cover between the rows.\n\n**In the dry season.** Grown palms are not watered, but a long dry season shows up a year or two later as fewer and smaller bunches. Keep the frond stacks and mulch in place, and water the nursery every day.\n\n**In the rainy season.** Oil palm likes rain but not standing water. Dig drains where water stays after rain, keep them clean, and pile soil back over roots that the rain has washed bare."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Several young spear leaves stay unopened, the lower fronds dry and break early, and fewer bunches come a year or two later.",
+    "**Too much water:** Yellowing fronds, slow growth and rotting roots where water stands, with palms that lean or fall."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Stack pruned fronds between the rows and spread empty bunches around the palms to keep the soil moist and fed. Plant oil palm only where rain is spread through the year, and drain any low spots before planting."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for palma"
   },
   {
@@ -295,6 +362,10 @@
     {
      "q": "How long before palma can be harvested?",
      "a": "It is ready about 3 years after planting. First bunches at about 30 to 36 months."
+    },
+    {
+     "q": "How often do you water palma?",
+     "a": "Bagged seedlings in the nursery, 12 months before planting to planting day: Water every day in dry weather and when the rain misses a day, less in steady rain. Field planting, planting day to day 30: Plant on a rainy day. If a dry spell follows, water each new palm. Young palms, day 30 to year 3: No regular watering. Keep the weeded circle mulched and the cover crop between the rows. Grown palms are not watered, but a long dry season shows up a year or two later as fewer and smaller bunches."
     },
     {
      "q": "What do you plant to grow palma?",

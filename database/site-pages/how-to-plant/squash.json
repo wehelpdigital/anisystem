@@ -202,6 +202,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kalabasa, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Lowland kalabasa is planted after the rice harvest and watered by furrow about once a week in the dry season, while backyard growers pour about a liter at each hill every other day. Farmers water after each fertilizer dose and stop watering once the fruits reach the mature green stage. Furrow irrigation is the usual way on bigger fields. Backyard growers use a can, a hose or a simple sprinkler at each hill. Water in the early morning or late afternoon, at the base of the plant."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kalabasa go dry at these stages",
+   "text": "Flowering and fruit setting, when dry soil drops flowers and young fruits. Fruit filling, for heavy fruits with thick flesh. In the rainy months, standing water at the hills rots the seed, seedlings and roots."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kalabasa, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sprouting the seed",
+     "2 days before sowing to sowing day",
+     "Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the root shows",
+     "Damp, not dripping"
+    ],
+    [
+     "Sowing to first leaves",
+     "Sowing day to day 7",
+     "Water the hills right after planting if the soil is dry, then by can every day or two until the seedlings are up",
+     "Moisten each hill without making mud"
+    ],
+    [
+     "Vines running",
+     "Day 7 to 35",
+     "Furrow water about once a week in the dry season, or about a liter a hill every other day in a small garden. Water after each fertilizer dose",
+     "Soak the rows, then drain. About a liter a hill when hand watering"
+    ],
+    [
+     "Flowering and fruit setting",
+     "Day 35 to 50",
+     "Keep to the weekly furrow watering without missing one",
+     "A full soaking each time, no water left standing"
+    ],
+    [
+     "Fruits filling",
+     "Day 50 to 70",
+     "Keep watering about once a week and after the potash dose",
+     "A full soaking each time, drained off"
+    ],
+    [
+     "Mature green to harvest",
+     "Day 70 to 85",
+     "Stop watering once the fruits reach the mature green stage",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant from October to December in a rice field just harvested, so the vines start on the moisture left in the soil, and lay rice straw under the vines to hold it. Without a canal, carry water to each hill during flowering and fruit setting, when it matters most. A rainy season crop goes on raised hills with drainage canals.\n\n**In the dry season.** Run water down the furrows about once a week, or pour about a liter at each hill every other day in a small garden, and water after every fertilizer dose. Water when the big leaves stay limp after mid afternoon or the soil a few cm down is dry, and stop at the mature green stage.\n\n**In the rainy season.** Raise each hill and dig drainage canals around the field so rain runs off. Seeds and seedlings rot in flooded hills, and wet soil and leaves spread leaf diseases and fruit rot, so set the fruits on straw or dry leaves."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Big leaves wilt and stay limp into the late afternoon, flowers and small fruits drop, and the fruits stay small and light.",
+    "**Too much water:** Leaves yellow, the seedlings or the stem base rot, and fruits sitting on wet soil rot from below."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Rice straw mulch under the vines keeps the soil moist, cuts the watering and keeps the fruits off the wet ground. Never skip the watering from flowering to fruit filling. That is where most of the harvest is won or lost."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kalabasa"
   },
   {
@@ -332,6 +411,10 @@
     {
      "q": "How long before kalabasa can be harvested?",
      "a": "It is ready about 85 days after sowing. Young fruits for cooking are cut about 30 to 40 days after pollination."
+    },
+    {
+     "q": "How often do you water kalabasa?",
+     "a": "Sprouting the seed, 2 days before sowing to sowing day: Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the root shows. Sowing to first leaves, sowing day to day 7: Water the hills right after planting if the soil is dry, then by can every day or two until the seedlings are up. Vines running, day 7 to 35: Furrow water about once a week in the dry season, or about a liter a hill every other day in a small garden. Water after each fertilizer dose. Run water down the furrows about once a week, or pour about a liter at each hill every other day in a small garden, and water after every fertilizer dose."
     },
     {
      "q": "What do you plant to grow kalabasa?",

@@ -135,6 +135,68 @@
   "Mulch the rows with rice straw to keep the soil moist and cut weeding.",
   "Plan staggered sowings so you have pods to sell every week."
  ],
+ "watering": {
+  "traditional": "Okra is sown into slightly moist soil and then watered through the furrows once every one to two weeks, more often on sandy ground and in the hot dry months. Small growers without a canal water by hand two or three times a week, and in the rainy months the rows only need to drain well.",
+  "method": "Furrow irrigation is the usual way. Small growers water each hill with a can or a hose. Water in the early morning or late afternoon.",
+  "rainfed": "Okra stands dry spells better than most vegetables, so many farmers grow it on the rains with well drained rows. Sow at the start of the rains, mulch the rows with rice straw, and water by hand two or three times a week if a dry spell hits during picking.",
+  "dryseason": "Furrow irrigate every 7 to 14 days, closer on sandy ground and in the hottest months. Water when the leaves droop by mid morning or the soil a few cm down feels dry.",
+  "wet": "Make sure the rows drain well and the furrows lead to a canal. Okra does not stand waterlogging: the roots rot, the lower leaves yellow and the plants stop bearing.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": -1,
+    "to": 7,
+    "often": "Soak the seed overnight and sow into slightly moist soil. If the soil is dry, water the furrow before sowing rather than after",
+    "amount": "Moist soil, not mud",
+    "why": "Okra seed comes up evenly in moist, warm soil but rots in wet, cold soil."
+   },
+   {
+    "stage": "Young plants",
+    "from": 7,
+    "to": 35,
+    "often": "Furrow water about every 7 to 14 days, closer on sandy soil and in hot weather. By hand two or three times a week in a small garden",
+    "amount": "Soak the rows, then drain",
+    "why": "A deep rooted, sturdy plant bears longer and stands dry spells later."
+   },
+   {
+    "stage": "Flowering and first pods",
+    "from": 35,
+    "to": 50,
+    "often": "Keep the soil steadily moist. Water after the urea side dressing",
+    "amount": "A full furrow soaking each time",
+    "why": "Dry soil now drops flowers and gives crooked, stunted pods."
+   },
+   {
+    "stage": "Picking",
+    "from": 50,
+    "to": 100,
+    "often": "Go on watering every 7 to 14 days while picking every two or three days",
+    "amount": "A full furrow soaking each time, drained off",
+    "why": "Pods grow fast and stay tender only with steady water. Thirsty plants give tough, stringy pods."
+   },
+   {
+    "stage": "Cut back for a second crop",
+    "from": 100,
+    "to": 110,
+    "often": "Irrigate right after cutting the stems back, feeding and hilling up, then return to the usual schedule",
+    "amount": "A full furrow soaking",
+    "why": "Water after the cut makes the stumps send up new bearing shoots."
+   }
+  ],
+  "critical": [
+   "Sowing to coming up: moist, not wet, soil for an even stand.",
+   "Flowering and pod set, and the weeks of picking: dry soil gives fewer, tougher pods."
+  ],
+  "signs": {
+   "dry": "Leaves droop and roll in the heat, flowers drop, and the pods come out short, crooked and tough before they reach size.",
+   "wet": "Lower leaves yellow and fall, the plants stop growing and the stem base rots."
+  },
+  "better": [
+   "Keep the water regular through picking so pods stay tender and the plants keep bearing.",
+   "Straw mulch along the rows keeps the soil moist and lets you stretch the time between waterings."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "PyqViylMwHw",
   "title": "PAANO MAGTANIM NG OKRA AT PARAMIHIN ANG BUNGA",
@@ -156,5 +218,5 @@
  "kind": "annual",
  "icon": "🌿",
  "slug": "okra",
- "rev": "07e27528ee46"
+ "rev": "59d5c7039b18"
 }

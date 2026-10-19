@@ -117,6 +117,85 @@
   "Scout for twig borers, fruit borers and mealybugs every month and clean up fallen fruit.",
   "Pick in rounds with shears and sort the fruit for a better price."
  ],
+ "watering": {
+  "traditional": "Rambutan here is mostly rain fed: a new tree is shaded, mulched and watered in dry spells, and grown trees live on the rain. Growers with a creek or a pump water bearing trees in long dry months so they flower and fill their fruit well.",
+  "method": "A pail or hose into a mulched ring for young trees. Basin, small sprinklers or drip under bearing trees where water is near. Water in the cool early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin, shade the new tree, and keep a thick mulch of cut grass a little off the stem. Rambutan fits places with rain through most of the year. Where the dry season is long, rain fed trees bear lightly and young trees need water carried to them.",
+  "dryseason": "Young trees about twice a week. Bearing trees every 5 to 7 days from the first flowers until picking, after a short dry rest before flowering. Water when the young leaves droop and curl by midday.",
+  "wet": "Rambutan wants moist but well drained soil. Waterlogged trees yellow and their roots rot. Plant on sloping or raised ground, drain flat spots, and keep water away from the trunk. Long rain at flowering spoils pollination and brings fruit rot.",
+  "schedule": [
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Soak at planting, then every 2 to 3 days when no rain falls, under shade",
+    "amount": "A good soak of a ring basin around the stem",
+    "why": "The young graft has a small root ball and wilts fast in sun and dry soil."
+   },
+   {
+    "stage": "First and second year",
+    "from": 90,
+    "to": 720,
+    "often": "About twice a week in the dry months, once a week on heavy soil",
+    "amount": "A soak of the mulched ring under the leaves",
+    "why": "Rambutan is touchy about drought, and young trees stall or die in a dry month."
+   },
+   {
+    "stage": "Years 3 to 5, before bearing",
+    "from": 720,
+    "to": 1620,
+    "often": "About once a week in the dry months where water is near",
+    "amount": "A deep soak of the ring, widened as the crown spreads",
+    "why": "Steady leaf flushes build the crown that will carry fruit."
+   },
+   {
+    "stage": "Bearing trees: short dry rest before flowering (each year)",
+    "from": 1620,
+    "to": 1680,
+    "often": "Hold back water for a few weeks at the end of the rains or in the dry months, until the leaves stop flushing",
+    "amount": "None, or a light watering only if leaves wilt badly",
+    "why": "Drier soil stops new leaves and lets the tree flower."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 1680,
+    "to": 1720,
+    "often": "Once the flower panicles show, water every 5 to 7 days in dry weather",
+    "amount": "A deep soak of all the ground under the crown",
+    "why": "Dry soil now drops flowers and newly set fruits."
+   },
+   {
+    "stage": "Fruit growth to harvest",
+    "from": 1720,
+    "to": 1800,
+    "often": "Every 5 to 7 days in dry weather, keeping moisture even",
+    "amount": "A deep soak under the crown. A big bearing tree drinks far more now than at any other time",
+    "why": "Fruits that go thirsty stay small, with thin flesh, and may split."
+   },
+   {
+    "stage": "After harvest, new leaves",
+    "from": 1800,
+    "to": 1890,
+    "often": "Water with the after harvest feeding and pruning if the rains have not come",
+    "amount": "A deep soak under the crown",
+    "why": "Two good leaf flushes after harvest feed next year's flowers."
+   }
+  ],
+  "critical": [
+   "The first two years, since young rambutan does not stand drought.",
+   "Flowering and fruit set, when dry soil sheds flowers and small fruits.",
+   "Fruit growth, when a dry spell gives small fruits with thin flesh."
+  ],
+  "signs": {
+   "dry": "Young leaves droop and curl, leaf tips and edges brown, flowers and small fruits fall, and fruits stay small with thin flesh.",
+   "wet": "Yellow leaves, rotting roots and slow decline on waterlogged ground, and more rotting fruits in long rains."
+  },
+  "better": [
+   "Water steadily from flowering to harvest with drip or under tree sprinklers, after a short dry rest. This gives better fruit set and bigger fruits than rain alone.",
+   "Keep the mulch thick and shade young trees in their first months, the cheapest way to get them through the dry season."
+  ],
+  "confidence": "low"
+ },
  "video": {
   "youtubeId": "1QqbuItqlbQ",
   "title": "PAANO MAGTANIM NG RAMBUTAN 2024.",
@@ -137,5 +216,5 @@
  "kind": "perennial",
  "icon": "🍒",
  "slug": "rambutan",
- "rev": "08eb0d27eb2b"
+ "rev": "a4ca0d4e1eac"
 }

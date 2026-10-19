@@ -143,6 +143,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering rambutan, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Rambutan here is mostly rain fed: a new tree is shaded, mulched and watered in dry spells, and grown trees live on the rain. Growers with a creek or a pump water bearing trees in long dry months so they flower and fill their fruit well. A pail or hose into a mulched ring for young trees. Basin, small sprinklers or drip under bearing trees where water is near. Water in the cool early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let rambutan go dry at these stages",
+   "text": "The first two years, since young rambutan does not stand drought. Flowering and fruit set, when dry soil sheds flowers and small fruits. Fruit growth, when a dry spell gives small fruits with thin flesh."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for rambutan, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Soak at planting, then every 2 to 3 days when no rain falls, under shade",
+     "A good soak of a ring basin around the stem"
+    ],
+    [
+     "First and second year",
+     "Month 3 to 24",
+     "About twice a week in the dry months, once a week on heavy soil",
+     "A soak of the mulched ring under the leaves"
+    ],
+    [
+     "Years 3 to 5, before bearing",
+     "Month 24 to 54",
+     "About once a week in the dry months where water is near",
+     "A deep soak of the ring, widened as the crown spreads"
+    ],
+    [
+     "Bearing trees: short dry rest before flowering (each year)",
+     "Month 54 to 56",
+     "Hold back water for a few weeks at the end of the rains or in the dry months, until the leaves stop flushing",
+     "None, or a light watering only if leaves wilt badly"
+    ],
+    [
+     "Flowering and fruit set",
+     "Month 56 to 57",
+     "Once the flower panicles show, water every 5 to 7 days in dry weather",
+     "A deep soak of all the ground under the crown"
+    ],
+    [
+     "Fruit growth to harvest",
+     "Month 57 to 60",
+     "Every 5 to 7 days in dry weather, keeping moisture even",
+     "A deep soak under the crown. A big bearing tree drinks far more now than at any other time"
+    ],
+    [
+     "After harvest, new leaves",
+     "Month 60 to 63",
+     "Water with the after harvest feeding and pruning if the rains have not come",
+     "A deep soak under the crown"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, shade the new tree, and keep a thick mulch of cut grass a little off the stem. Rambutan fits places with rain through most of the year. Where the dry season is long, rain fed trees bear lightly and young trees need water carried to them.\n\n**In the dry season.** Young trees about twice a week. Bearing trees every 5 to 7 days from the first flowers until picking, after a short dry rest before flowering. Water when the young leaves droop and curl by midday.\n\n**In the rainy season.** Rambutan wants moist but well drained soil. Waterlogged trees yellow and their roots rot. Plant on sloping or raised ground, drain flat spots, and keep water away from the trunk. Long rain at flowering spoils pollination and brings fruit rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Young leaves droop and curl, leaf tips and edges brown, flowers and small fruits fall, and fruits stay small with thin flesh.",
+    "**Too much water:** Yellow leaves, rotting roots and slow decline on waterlogged ground, and more rotting fruits in long rains."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water steadily from flowering to harvest with drip or under tree sprinklers, after a short dry rest. This gives better fruit set and bigger fruits than rain alone. Keep the mulch thick and shade young trees in their first months, the cheapest way to get them through the dry season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for rambutan"
   },
   {
@@ -273,6 +358,10 @@
     {
      "q": "How long before rambutan can be harvested?",
      "a": "It is ready about 5 years after planting. Fruit is ready when the skin turns pinkish red to red, and the fruits in one bunch ripen at different times, so growers pick in rounds, often three times a week at the peak."
+    },
+    {
+     "q": "How often do you water rambutan?",
+     "a": "Planting to 3 months, planting day to month 3: Soak at planting, then every 2 to 3 days when no rain falls, under shade. First and second year, month 3 to 24: About twice a week in the dry months, once a week on heavy soil. Years 3 to 5, before bearing, month 24 to 54: About once a week in the dry months where water is near. Young trees about twice a week."
     },
     {
      "q": "What do you plant to grow rambutan?",

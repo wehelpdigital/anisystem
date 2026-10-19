@@ -163,6 +163,76 @@
   "Use raised, mulched beds and sun the prepared beds for a week to reduce rot.",
   "Scout weekly and keep the plants cool from harvest to market."
  ],
+ "watering": {
+  "traditional": "Lettuce seedlings are watered every day, and in the field growers water right after transplanting and then every day or regularly by sprinkler, hose or furrow, keeping the soil evenly moist. In the highlands many beds are mulched and watered from springs by hose or sprinkler. In the lowlands it is grown in the cool dry months near water.",
+  "method": "Sprinklers and hoses fed from springs in the highlands, and watering cans, hoses or furrows in the lowlands. Water early in the morning at the base so the leaves dry before night.",
+  "rainfed": "Lettuce is not grown on rain alone: it needs water almost every day. In the wettest highland months growers use rain shelters, and in the lowlands it goes in the cool dry months near a well or canal, with mulch on the beds.",
+  "dryseason": "Water every day in dry weather, more on sandy soil and in wind, early in the morning. Water when the top soil under the mulch is dry to the touch or the outer leaves go limp by mid morning.",
+  "wet": "Use raised, mulched beds and rain shelters in the wettest months, and skip watering when the beds are wet. Standing water and wet heads bring soft rot and leaf spots.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -36,
+    "to": -21,
+    "often": "Water the bed before sowing, then every day in the morning",
+    "amount": "A fine spray that keeps the top soil damp",
+    "why": "Lettuce seed is tiny and sits at the surface, and it dies if the top soil dries."
+   },
+   {
+    "stage": "Pricked seedlings",
+    "from": -21,
+    "to": -7,
+    "often": "Water every day after pricking out, under light shade in hot weather",
+    "amount": "Light waterings, never soggy",
+    "why": "Young seedlings rot at the base in soggy trays or beds."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water less often while the seedlings get full sun",
+    "amount": "Light waterings",
+    "why": "Hardened seedlings wilt less after transplanting."
+   },
+   {
+    "stage": "Transplanting",
+    "from": 0,
+    "to": 1,
+    "often": "Water the beds and the planting holes well before setting the seedlings, then water right after",
+    "amount": "Soak each hole",
+    "why": "Moist soil around the roots lets the seedlings settle overnight."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 1,
+    "to": 30,
+    "often": "Every day in dry weather, by sprinkler, hose or furrow, in the morning",
+    "amount": "Enough to keep the soil damp but never soggy",
+    "why": "Lettuce has short roots and grows fast and tender only with steady moisture."
+   },
+   {
+    "stage": "Heading or full leaf to harvest",
+    "from": 30,
+    "to": 50,
+    "often": "Keep watering daily or every other day. Water at the base and in the morning",
+    "amount": "Even waterings, no standing water",
+    "why": "Dry days turn the leaves bitter and make the plant bolt, while wet heads rot from the inside."
+   }
+  ],
+  "critical": [
+   "The seedbed, where the top soil must never dry.",
+   "The whole field growth: even a few dry days make bitter leaves and early bolting."
+  ],
+  "signs": {
+   "dry": "Outer leaves wilt and their edges brown, the leaves turn tough and bitter, and the plants bolt early.",
+   "wet": "Lower leaves yellow and rot, heads go soft and slimy at the base, and seedlings fall over at the soil line."
+  },
+  "better": [
+   "Mulch the beds with plastic or rice straw to keep the soil evenly moist and the leaves clean of splashed mud.",
+   "A drip line or a fine sprinkler on a timer gives the steady daily water lettuce needs with less work."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "K9Wjc3JoWIM",
   "title": "HOW TO PLANT LETTUCE (GREEN ICE) IN PLASTIC MULCH| Lubas, La Trinidad, Benguet",
@@ -183,5 +253,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "lettuce",
- "rev": "e7bb7bf53699"
+ "rev": "0d5b22504b57"
 }

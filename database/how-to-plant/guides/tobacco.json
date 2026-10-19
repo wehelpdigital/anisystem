@@ -241,6 +241,76 @@
   "Top at the button stage and keep the plants free of side shoots.",
   "Cure with a thermometer and humidity gauge, and keep every bale clean and dry."
  ],
+ "watering": {
+  "traditional": "Tobacco grows in the dry months, so watering is a big part of the work. Growers pour water on each plant with a can or a pail for the first two weeks, then run water down the furrows from shallow wells, pumps or canals every week or two, often in every other furrow, and stop near the end of picking.",
+  "method": "Hand watering hill to hill with a can, a pail or a hose for the first two weeks, then furrow watering from a shallow well pump or a canal, in every other furrow with small dikes across it. Water seedlings and new plants late in the afternoon.",
+  "rainfed": "Plant on rice land right after the wet season harvest while the soil is still moist, and plant in furrows in a dry year. Where no water can be run down the furrows, water each plant by hand with about 3 to 5 liters at about 3, 4 and 6 weeks after transplanting.",
+  "dryseason": "The whole crop grows in the dry months. After the first two weeks, water the furrows every week or two, more often on sandy soil, and water when the leaves stay limp after midday or the soil a hand deep in the ridge is dry.",
+  "wet": "In a rainy year plant on raised ridges instead of in furrows, and keep the furrow ends open so rain drains away. Standing water brings root rot and wilts and spreads black shank and bacterial wilt. Never pick leaves right after rain or watering.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -55,
+    "to": -35,
+    "often": "Water with a fine sprinkler in the morning and the afternoon until the seeds are up, then whenever the top dries",
+    "amount": "Enough to keep the bed damp but never wet",
+    "why": "The tiny seeds dry out fast, while a soggy bed brings damping off."
+   },
+   {
+    "stage": "Growing seedlings",
+    "from": -35,
+    "to": -7,
+    "often": "Water the bed whenever the top dries, in the morning, and open the shade little by little",
+    "amount": "Damp, not wet",
+    "why": "Even moisture gives thick, sturdy seedlings."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water less for the last week, then soak the bed well the evening before pulling",
+    "amount": "Just enough to keep the seedlings from wilting",
+    "why": "Less water toughens the seedlings so they survive in the field."
+   },
+   {
+    "stage": "Transplanting and settling in",
+    "from": 0,
+    "to": 14,
+    "often": "Water each plant at transplanting, again at about day 5, and again at about day 10 to 14",
+    "amount": "About 1 liter a plant at transplanting and at day 5, then about 2 to 3 liters a plant",
+    "why": "The seedlings need water at the roots until they grow new leaves."
+   },
+   {
+    "stage": "Fast leaf growth",
+    "from": 14,
+    "to": 50,
+    "often": "Run water down the furrows after the hilling up and after each side dressing, then about every week or two as the soil dries",
+    "amount": "Water in every other furrow, about half way up the ridge, with small dikes across the furrow",
+    "why": "The leaves grow big now, and drought gives small, thick leaves of poor quality."
+   },
+   {
+    "stage": "Topping and picking",
+    "from": 50,
+    "to": 105,
+    "often": "Water after a picking when the soil is dry, about every two weeks, and stop after the second to the fourth picking depending on the type and the soil",
+    "amount": "A lighter furrow watering than before",
+    "why": "The upper leaves still need water to fill, but too much late water slows ripening and curing."
+   }
+  ],
+  "critical": [
+   "The first two weeks after transplanting: each plant needs its waterings at the roots or it dies.",
+   "Fast leaf growth, about day 14 to 50: a dry spell now gives small leaves and a light crop."
+  ],
+  "signs": {
+   "dry": "Leaves droop at midday and stay limp into the afternoon, the plants stay short with small, thick, narrow leaves, and the lower leaves ripen and yellow too early.",
+   "wet": "Lower leaves yellow, plants wilt even in wet soil, the roots rot and the base of the stem turns dark."
+  },
+  "better": [
+   "Time the furrow waterings with the side dressings so the fertilizer goes in with the water, and use every other furrow with small dikes to save water and avoid waterlogging.",
+   "Keep to the stage schedule instead of watering by habit, and stop watering on time so the leaves ripen evenly and cure well."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "_y8-yqnydsw",
   "title": "GANITO PALA KAHIRAP ANG PROSESO SA PAGTANIM NG TABAKO",
@@ -262,5 +332,5 @@
  "kind": "annual",
  "icon": "🌿",
  "slug": "tobacco",
- "rev": "de8d5c4388cd"
+ "rev": "ca4638f4c8c3"
 }

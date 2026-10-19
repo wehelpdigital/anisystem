@@ -202,6 +202,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering bulak, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Cotton after rice is sown on the moisture left in the field, then watered down the furrows or with a hose along the rows at a few key weeks, or whenever the plants droop at midday. Where rice straw is free, farmers mulch with it to cut the watering. Furrow watering from a pump or canal, or a plastic hose carried along the rows where water is scarce. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let bulak go dry at these stages",
+   "text": "Squaring and flowering, about weeks 6 to 13: a dry spell drops squares, flowers and young bolls. Sowing: the seed must go into moist soil after the rice."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for bulak, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing and coming up",
+     "Sowing day to day 14",
+     "Sow on moist soil after the rice. Water after sowing only if the soil is dry",
+     "A light furrow or hose watering that moistens the seed row"
+    ],
+    [
+     "Seedlings",
+     "Day 14 to 42",
+     "Usually no watering while the soil holds the moisture left after the rice",
+     "None, unless the plants wilt in the morning"
+    ],
+    [
+     "First squares",
+     "Day 42 to 56",
+     "Water at about the sixth week, and right after the urea and hilling up at about day 45",
+     "Run water down the furrows, or a hose along the rows where water is short"
+    ],
+    [
+     "Flowering and boll setting",
+     "Day 56 to 95",
+     "Water at about the 8th, 11th and 13th weeks, or whenever the plants droop at midday",
+     "A full furrow watering, or a hose along every row"
+    ],
+    [
+     "Boll opening and picking",
+     "Day 110 to 165",
+     "Stop watering once the bolls start to open",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow early after the rice harvest, within the month your area sows, so the crop uses the moisture left in the soil. Mulch with rice straw and keep the field weed free. Late sowing works only where there is water to give.\n\n**In the dry season.** The crop grows through the dry months, so water at the key weeks. If you cannot keep to them, dig a hand deep, about 15 cm, and squeeze the soil: water when sandy soil will not form a ball, when medium soil crumbles, or when heavy soil only just holds together.\n\n**In the rainy season.** Cotton does not like wet feet or rain on open bolls. Keep the furrows draining, avoid low spots, and pick the open cotton on dry days so the lint does not rot or stain."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop at midday and stay limp into the afternoon, and squares and small bolls drop.",
+    "**Too much water:** Leaves yellow, the plants grow tall and leafy with few bolls, and the bolls rot."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep to the key weeks, the 6th, 8th, 11th and 13th, instead of watering by habit. Rice straw mulch over the field cuts how often and how much you water, and drip lines with fertilizer save even more where they are used."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for bulak"
   },
   {
@@ -331,6 +404,10 @@
     {
      "q": "How long before bulak can be harvested?",
      "a": "It is ready about 165 days after sowing. Picking starts at about 110 days and goes on for several weeks."
+    },
+    {
+     "q": "How often do you water bulak?",
+     "a": "Sowing and coming up, sowing day to day 14: Sow on moist soil after the rice. Water after sowing only if the soil is dry. Seedlings, day 14 to 42: Usually no watering while the soil holds the moisture left after the rice. First squares, day 42 to 56: Water at about the sixth week, and right after the urea and hilling up at about day 45. The crop grows through the dry months, so water at the key weeks."
     },
     {
      "q": "What do you plant to grow bulak?",

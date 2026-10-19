@@ -177,6 +177,60 @@
   "Scout twice a week for aphids and pod borers and remove damaged pods.",
   "Rotate with a crop that is not a bean to cut soil diseases."
  ],
+ "watering": {
+  "traditional": "In the wet season sitaw lives on the rains. In the dry season farmers water it by hand with a can or a hose, or run water into the furrows, every few days, and more often once the vines flower and bear.",
+  "method": "Hand watering with a can or a hose at the base of each hill, or furrow watering between the rows. Water in the early morning or late afternoon, and water the soil, not the leaves.",
+  "rainfed": "Plant at the start of the rains, from May to June, on raised rows that drain. Mulch around the hills with rice straw or dry grass so the soil stays moist between rains.",
+  "dryseason": "The October to January planting needs watering every few days in the dry months. Water when the topsoil is dry to a finger joint deep or the leaves droop in the morning, and give the most during flowering and picking.",
+  "wet": "Raise the rows or beds so the rain drains away, since sitaw roots rot in standing water and wet weather brings more leaf and pod diseases. Do not water on top of the rain.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Water right after planting if the soil is dry, then every day or two until the seedlings are up",
+    "amount": "Enough to keep the hills moist, never soggy",
+    "why": "The seed needs steady moisture to come up, but rots in wet, packed soil."
+   },
+   {
+    "stage": "Young vines",
+    "from": 7,
+    "to": 30,
+    "often": "In dry weather, every few days, when the topsoil dries",
+    "amount": "A watering can spread over a few hills, or one furrow watering",
+    "why": "The roots are shallow, so the topsoil must not dry out for long."
+   },
+   {
+    "stage": "Flowering",
+    "from": 30,
+    "to": 55,
+    "often": "Every few days in dry weather, more often in hot, windy weeks",
+    "amount": "Soak the root zone of each hill, or fill the furrows",
+    "why": "Dry soil at flowering makes the flowers and young pods drop."
+   },
+   {
+    "stage": "Picking",
+    "from": 55,
+    "to": 85,
+    "often": "Keep watering every few days through the picking weeks",
+    "amount": "The same as at flowering",
+    "why": "Steady water keeps new pods coming, long and tender."
+   }
+  ],
+  "critical": [
+   "Coming up, the first week: keep the hills moist until the seedlings are out.",
+   "Flowering and picking, about day 30 to 85: a dry spell drops flowers and gives short, tough pods."
+  ],
+  "signs": {
+   "dry": "Leaves droop in the morning and turn dull, flowers and small pods drop, and the pods come out short, curled and tough.",
+   "wet": "Lower leaves yellow, the vines stop growing, and roots and stem bases rot."
+  },
+  "better": [
+   "Mulch the rows with rice straw or dry grass to keep the shallow roots moist and cut the waterings.",
+   "Drip lines along the rows give steady water through flowering and picking with far less water and work."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "uD7NmcKbjEI",
   "title": "PAANO MAGTANIM AT MAG ALAGA NG SITAW",
@@ -196,5 +250,5 @@
  "kind": "annual",
  "icon": "🫛",
  "slug": "string-bean",
- "rev": "eae2a9d1a958"
+ "rev": "f77be44ad39f"
 }

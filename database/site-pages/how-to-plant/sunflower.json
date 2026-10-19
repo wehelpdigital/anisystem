@@ -11,6 +11,7 @@
  "keywords": [
   "paano magtanim ng sunflower",
   "paano magtanim ng mirasol",
+  "sunflower after rice",
   "how to plant sunflower"
  ],
  "excerpt": "Paano magtanim ng sunflower? Here is how traditional Filipino farmers usually plant mirasol (sunflower), step by step from getting the field ready to the harvest, with the day of each step and what to change for a higher yield.",
@@ -240,6 +241,157 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mirasol, stage by stage"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sown straight in the field: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Sunflower sown after rice in the dry season starts on the moisture left in the field. Growers then water down the furrows or by hose in dry spells, above all at budding and flowering, and stop once the heads begin to ripen. Furrow watering from a pump or canal, or a hose around the base of the plants on small fields. Water the soil, not the heads, in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mirasol go dry at these stages",
+   "text": "Budding and flowering, about day 35 to 70: drought now gives small heads with empty seeds. Seed filling, about day 70 to 85: a dry spell leaves light seed."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mirasol, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing and coming up",
+     "Sowing day to day 10",
+     "Sow into moist soil. Water lightly if the soil is dry",
+     "Enough to moisten the seed row, never soggy"
+    ],
+    [
+     "Young plants",
+     "Day 10 to 35",
+     "Usually no watering on soil left wet by the rice. Water after the side dressing if the soil is dry",
+     "A light furrow or hose watering"
+    ],
+    [
+     "Budding and flowering",
+     "Day 35 to 70",
+     "Water in dry spells, about once a week, more often on sandy soil",
+     "A full furrow watering, or a hose around the base of the plants"
+    ],
+    [
+     "Seed filling",
+     "Day 70 to 85",
+     "Water once more if the soil is dry",
+     "A furrow watering"
+    ],
+    [
+     "Ripening",
+     "Day 85 to 100",
+     "Stop watering once the backs of the heads start to turn yellow",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow after the rice harvest from about November to February while the field is still wet, so the crop grows on the stored moisture and ripens in dry, sunny weather.\n\n**In the dry season.** Water about once a week from budding through flowering, more on sandy soil and in hot, windy weeks. Water when the leaves droop by mid morning.\n\n**In the rainy season.** Heavy rain at flowering rots the heads, so do not sow for flowering in the rainiest months. Make ridges and keep the furrows draining, since sunflower roots rot in standing water."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop by mid morning and the lower leaves dry early, the stems stay thin and the heads small.",
+    "**Too much water:** Lower leaves yellow, stems rot at the base, and the backs of the heads turn gray or brown and soft after rain."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If water is short, give it at budding and flowering, the weeks that decide head size and seed fill. Rice straw mulch between the rows keeps the soil moist longer."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedlings from trays: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Flower farms raise sunflower seedlings in trays, transplant them in rows and water every few days in dry weather, by hose or down the furrows. They water the soil around the stems and keep the water off the blooms. A watering can or a fine hose for the trays, then a hose at the base of the plants or furrow watering in the field. Water in the morning, and the newly set plants late in the afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mirasol go dry at these stages",
+   "text": "The first days after transplanting: water each seedling until it stands up. Budding and blooming, about day 30 to 55: dry soil gives small, short lived blooms."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mirasol, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedlings in trays",
+     "18 days before transplanting to transplanting day",
+     "Water the trays every morning in light shade, and again in the afternoon on hot days",
+     "Wet the mix through, gently, so the seed is not washed out"
+    ],
+    [
+     "Transplanting and settling in",
+     "Transplanting day to day 10",
+     "Water each plant right after transplanting in the late afternoon, then every day or two until they stand up",
+     "Soak the soil around each seedling"
+    ],
+    [
+     "Leaf growth",
+     "Day 10 to 30",
+     "Every few days in dry weather, and after the side dressing",
+     "A hose around the base or a furrow watering"
+    ],
+    [
+     "Budding and blooming",
+     "Day 30 to 55",
+     "Every few days in dry weather, never letting the soil dry out",
+     "A good soaking at the base, keeping the water off the flowers"
+    ],
+    [
+     "Seed heads",
+     "Day 55 to 80",
+     "For seed, water in dry spells until the seeds fill, then stop once the backs of the heads turn yellow",
+     "A furrow or hose watering"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Flower farms grow this way where water is at hand. Without water, sow straight in the field after the rice instead, on the moisture left in the soil.\n\n**In the dry season.** Water every few days, every day on sandy soil in the hottest weeks. Water when the leaves droop by mid morning.\n\n**In the rainy season.** Heavy rain bends and rots the blooms and the heads. Use raised beds or ridges, stake tall plants in windy spots, and skip watering on rainy days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop by mid morning, blooms stay small and the petals dry early.",
+    "**Too much water:** Yellow lower leaves, rotting stem bases, and soft gray or brown spots on the heads after rain."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip lines along the rows give even water with no splashing on the blooms. Mulch the rows so the soil stays moist between waterings."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mirasol"
   },
   {
@@ -368,6 +520,10 @@
     {
      "q": "How long before mirasol can be harvested?",
      "a": "Sown straight in the field, it is ready about 100 days after sowing. Seedlings from trays, it is ready about 80 days after transplanting. Seed heads are ready at about 90 to 110 days, when the back of the head turns brown, the small leaves around it dry and the seeds are hard."
+    },
+    {
+     "q": "How often do you water mirasol?",
+     "a": "Sowing and coming up, sowing day to day 10: Sow into moist soil. Water lightly if the soil is dry. Young plants, day 10 to 35: Usually no watering on soil left wet by the rice. Water after the side dressing if the soil is dry. Budding and flowering, day 35 to 70: Water in dry spells, about once a week, more often on sandy soil. Water about once a week from budding through flowering, more on sandy soil and in hot, windy weeks."
     },
     {
      "q": "What do you plant to grow mirasol?",

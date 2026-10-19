@@ -202,6 +202,77 @@
   "Rotate away from other gourds and melons so soil diseases do not build up.",
   "Split the fertilizer into small doses, with enough potash once fruits start to form."
  ],
+ "watering": {
+  "traditional": "Lowland kalabasa is planted after the rice harvest and watered by furrow about once a week in the dry season, while backyard growers pour about a liter at each hill every other day. Farmers water after each fertilizer dose and stop watering once the fruits reach the mature green stage.",
+  "method": "Furrow irrigation is the usual way on bigger fields. Backyard growers use a can, a hose or a simple sprinkler at each hill. Water in the early morning or late afternoon, at the base of the plant.",
+  "rainfed": "Plant from October to December in a rice field just harvested, so the vines start on the moisture left in the soil, and lay rice straw under the vines to hold it. Without a canal, carry water to each hill during flowering and fruit setting, when it matters most. A rainy season crop goes on raised hills with drainage canals.",
+  "dryseason": "Run water down the furrows about once a week, or pour about a liter at each hill every other day in a small garden, and water after every fertilizer dose. Water when the big leaves stay limp after mid afternoon or the soil a few cm down is dry, and stop at the mature green stage.",
+  "wet": "Raise each hill and dig drainage canals around the field so rain runs off. Seeds and seedlings rot in flooded hills, and wet soil and leaves spread leaf diseases and fruit rot, so set the fruits on straw or dry leaves.",
+  "schedule": [
+   {
+    "stage": "Sprouting the seed",
+    "from": -2,
+    "to": 0,
+    "often": "Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the root shows",
+    "amount": "Damp, not dripping",
+    "why": "Moist seed sprouts in a day or two. Seed left sitting in water rots."
+   },
+   {
+    "stage": "Sowing to first leaves",
+    "from": 0,
+    "to": 7,
+    "often": "Water the hills right after planting if the soil is dry, then by can every day or two until the seedlings are up",
+    "amount": "Moisten each hill without making mud",
+    "why": "Sprouted seed dies in a dry hill and rots in a soaked one."
+   },
+   {
+    "stage": "Vines running",
+    "from": 7,
+    "to": 35,
+    "often": "Furrow water about once a week in the dry season, or about a liter a hill every other day in a small garden. Water after each fertilizer dose",
+    "amount": "Soak the rows, then drain. About a liter a hill when hand watering",
+    "why": "Big, healthy vines carry more female flowers and fruits."
+   },
+   {
+    "stage": "Flowering and fruit setting",
+    "from": 35,
+    "to": 50,
+    "often": "Keep to the weekly furrow watering without missing one",
+    "amount": "A full soaking each time, no water left standing",
+    "why": "Water matters most from flowering on: dry soil drops the flowers and young fruits."
+   },
+   {
+    "stage": "Fruits filling",
+    "from": 50,
+    "to": 70,
+    "often": "Keep watering about once a week and after the potash dose",
+    "amount": "A full soaking each time, drained off",
+    "why": "The fruits put on their weight and thick flesh now."
+   },
+   {
+    "stage": "Mature green to harvest",
+    "from": 70,
+    "to": 85,
+    "often": "Stop watering once the fruits reach the mature green stage",
+    "amount": "No water",
+    "why": "Water late in the season lowers fruit quality and how long the fruits keep."
+   }
+  ],
+  "critical": [
+   "Flowering and fruit setting, when dry soil drops flowers and young fruits.",
+   "Fruit filling, for heavy fruits with thick flesh.",
+   "In the rainy months, standing water at the hills rots the seed, seedlings and roots."
+  ],
+  "signs": {
+   "dry": "Big leaves wilt and stay limp into the late afternoon, flowers and small fruits drop, and the fruits stay small and light.",
+   "wet": "Leaves yellow, the seedlings or the stem base rot, and fruits sitting on wet soil rot from below."
+  },
+  "better": [
+   "Rice straw mulch under the vines keeps the soil moist, cuts the watering and keeps the fruits off the wet ground.",
+   "Never skip the watering from flowering to fruit filling. That is where most of the harvest is won or lost."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "4RkftAws7FI",
   "title": "PAANO MAGTANIM NG KALABASA, WALANG PAG ARARO, MABILIS AT TIPID SA PAGTANIM | D' GREEN THUMB",
@@ -223,5 +294,5 @@
  "kind": "annual",
  "icon": "🎃",
  "slug": "squash",
- "rev": "eab4011ae95a"
+ "rev": "36cfbaf6a9d5"
 }

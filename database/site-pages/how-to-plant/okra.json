@@ -155,6 +155,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering okra, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Okra is sown into slightly moist soil and then watered through the furrows once every one to two weeks, more often on sandy ground and in the hot dry months. Small growers without a canal water by hand two or three times a week, and in the rainy months the rows only need to drain well. Furrow irrigation is the usual way. Small growers water each hill with a can or a hose. Water in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let okra go dry at these stages",
+   "text": "Sowing to coming up: moist, not wet, soil for an even stand. Flowering and pod set, and the weeks of picking: dry soil gives fewer, tougher pods."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for okra, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "1 day before sowing to day 7",
+     "Soak the seed overnight and sow into slightly moist soil. If the soil is dry, water the furrow before sowing rather than after",
+     "Moist soil, not mud"
+    ],
+    [
+     "Young plants",
+     "Day 7 to 35",
+     "Furrow water about every 7 to 14 days, closer on sandy soil and in hot weather. By hand two or three times a week in a small garden",
+     "Soak the rows, then drain"
+    ],
+    [
+     "Flowering and first pods",
+     "Day 35 to 50",
+     "Keep the soil steadily moist. Water after the urea side dressing",
+     "A full furrow soaking each time"
+    ],
+    [
+     "Picking",
+     "Day 50 to 100",
+     "Go on watering every 7 to 14 days while picking every two or three days",
+     "A full furrow soaking each time, drained off"
+    ],
+    [
+     "Cut back for a second crop",
+     "Day 100 to 110",
+     "Irrigate right after cutting the stems back, feeding and hilling up, then return to the usual schedule",
+     "A full furrow soaking"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Okra stands dry spells better than most vegetables, so many farmers grow it on the rains with well drained rows. Sow at the start of the rains, mulch the rows with rice straw, and water by hand two or three times a week if a dry spell hits during picking.\n\n**In the dry season.** Furrow irrigate every 7 to 14 days, closer on sandy ground and in the hottest months. Water when the leaves droop by mid morning or the soil a few cm down feels dry.\n\n**In the rainy season.** Make sure the rows drain well and the furrows lead to a canal. Okra does not stand waterlogging: the roots rot, the lower leaves yellow and the plants stop bearing."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and roll in the heat, flowers drop, and the pods come out short, crooked and tough before they reach size.",
+    "**Too much water:** Lower leaves yellow and fall, the plants stop growing and the stem base rots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep the water regular through picking so pods stay tender and the plants keep bearing. Straw mulch along the rows keeps the soil moist and lets you stretch the time between waterings."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for okra"
   },
   {
@@ -284,6 +357,10 @@
     {
      "q": "How long before okra can be harvested?",
      "a": "It is ready about 50 days after sowing. Pods are picked young and tender, about 3 to 4 inches long, 4 to 6 days after flowering, every two or three days in the morning or late afternoon."
+    },
+    {
+     "q": "How often do you water okra?",
+     "a": "Sowing to coming up, 1 day before sowing to day 7: Soak the seed overnight and sow into slightly moist soil. If the soil is dry, water the furrow before sowing rather than after. Young plants, day 7 to 35: Furrow water about every 7 to 14 days, closer on sandy soil and in hot weather. By hand two or three times a week in a small garden. Flowering and first pods, day 35 to 50: Keep the soil steadily moist. Water after the urea side dressing. Furrow irrigate every 7 to 14 days, closer on sandy ground and in the hottest months."
     },
     {
      "q": "What do you plant to grow okra?",

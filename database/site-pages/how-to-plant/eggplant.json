@@ -277,6 +277,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering talong, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Talong is watered by furrow: water is let into the furrows between the rows, allowed to soak in and never left standing. In the dry season farmers water about a week after transplanting, again near 21 and 30 days, then about every 10 days for as long as they pick. In the wet season only when the soil dries. Furrow irrigation from a canal, a shallow well or a small pump is the usual way. Small growers water each hill with a can or a hose. Plastic mulch with water let into the furrows is common on commercial farms. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let talong go dry at these stages",
+   "text": "The first week after transplanting, while the seedlings root. Flowering and fruit growth: steady moisture keeps flowers from dropping and fruits from turning small and crooked. All season: water must never stand around the stems, because talong is easily hurt by flooding."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for talong, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "35 to 24 days before transplanting",
+     "Water the bed before sowing, sprinkle the trays after sowing, then water each morning",
+     "Just enough to keep the soil damp, never soggy"
+    ],
+    [
+     "Growing seedlings",
+     "24 to 7 days before transplanting",
+     "Water in the morning only, enough to keep the soil moist. Water and shade the pricked seedlings until they recover",
+     "Light sprinkles. Rinse the leaves with plain water right after the starter drink"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water less and less often while the shade comes off",
+     "Light waterings. Water at once if they wilt hard"
+    ],
+    [
+     "Field ready for planting",
+     "2 days before transplanting to transplanting day",
+     "With plastic mulch, flood the beds two days before transplanting. Without mulch, water the furrows before or at planting",
+     "Soak the beds or rows through"
+    ],
+    [
+     "Transplanting and settling",
+     "Transplanting day to day 7",
+     "Water each hill right after transplanting. In hot weather give wilting hills a little water by can until the first furrow irrigation",
+     "Soak the soil around each seedling"
+    ],
+    [
+     "Growth to first flowers",
+     "Day 7 to 30",
+     "In the dry season, furrow irrigate at about 7, 21 and 30 days after transplanting",
+     "Let water run down the furrows until the rows are wet, then let it soak in with none left standing"
+    ],
+    [
+     "Flowering and picking",
+     "Day 30 to 170",
+     "About every 10 days in the dry season, or whenever the soil dries. Water after each feeding",
+     "The plants use about 3.5 to 4 cm of water a week in dry weather, so each watering should soak the rows well"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Set out the main crop after the rice harvest so it starts on the moisture left in the field, and mulch with rice straw or rice hull to hold it. Without a canal, carry water by can or pail to each hill when the soil dries during flowering, and choose a field near a well or creek.\n\n**In the dry season.** Furrow irrigate about a week after transplanting, near 21 and 30 days, then about every 10 days until picking ends, more often on sandy soil. Water when the leaves droop by mid morning or the soil a few cm down feels dry.\n\n**In the rainy season.** Plant on raised rows with wider gaps between hills, about 75 cm, so water drains and air moves. Water only when the soil dries. Soaked soil brings root rot and bacterial wilt, which makes whole plants droop and die."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and roll in the heat, flowers fall before setting, and fruits stay small, crooked or turn dull and bitter.",
+    "**Too much water:** Lower leaves yellow and drop, plants wilt suddenly while the soil is wet, and the stems turn soft or brown inside at the base."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Lay a mulch of plastic, rice hull or straw over the beds: the soil stays damp longer, fewer weeds come up and you may water only half as often. A drip line under the mulch gives each plant the steady water talong needs through months of picking with far less water than flooding."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for talong"
   },
   {
@@ -407,6 +492,10 @@
     {
      "q": "How long before talong can be harvested?",
      "a": "It is ready about 50 days after transplanting. The first fruits are ready about 46 to 50 days after transplanting for hybrids and closer to 70 days for open pollinated kinds."
+    },
+    {
+     "q": "How often do you water talong?",
+     "a": "Seedbed, 35 to 24 days before transplanting: Water the bed before sowing, sprinkle the trays after sowing, then water each morning. Growing seedlings, 24 to 7 days before transplanting: Water in the morning only, enough to keep the soil moist. Water and shade the pricked seedlings until they recover. Hardening, 7 days before transplanting to transplanting day: Water less and less often while the shade comes off. Furrow irrigate about a week after transplanting, near 21 and 30 days, then about every 10 days until picking ends, more often on sandy soil."
     },
     {
      "q": "What do you plant to grow talong?",

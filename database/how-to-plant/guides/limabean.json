@@ -109,6 +109,52 @@
   "Feed with compost and a side dressing and pick often.",
   "Scout for pod borers at flowering."
  ],
+ "watering": {
+  "traditional": "Patani grows along fences and backyard frames, planted with the rains and watered by hand only in long dry spells. Old vines with deep roots bear for months on the rain alone.",
+  "method": "Hand watering with a can or a hose at the base of each hill, in the early morning or late afternoon.",
+  "rainfed": "Plant at the start of the rains or from October to November, near a fence or frame where the roots can go deep. Mulch the base of the vine.",
+  "dryseason": "Bearing vines in the dry months need a watering every few days. Water when the leaves droop in the morning or the soil is dry a finger deep.",
+  "wet": "Plant on a mound or raised spot so rain drains away, since standing water rots the roots.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 14,
+    "often": "Water at planting if the soil is dry, then every day or two until the seedlings are up",
+    "amount": "Enough to keep the hill moist, never soggy",
+    "why": "The big seed rots in soggy soil but needs moisture to sprout."
+   },
+   {
+    "stage": "Vine growth",
+    "from": 14,
+    "to": 60,
+    "often": "Usually the rains are enough. In a dry spell, water when the topsoil dries",
+    "amount": "A watering can of about 10 liters shared among a few hills",
+    "why": "A strong vine bears longer."
+   },
+   {
+    "stage": "Flowering and pods",
+    "from": 60,
+    "to": 120,
+    "often": "In dry weeks, water every few days",
+    "amount": "Soak the soil around each hill",
+    "why": "Dry soil drops the flowers and leaves the pods half full."
+   }
+  ],
+  "critical": [
+   "Coming up, the first two weeks: keep the hill moist.",
+   "Flowering and pod filling: drought drops the flowers and leaves empty pods."
+  ],
+  "signs": {
+   "dry": "Leaves droop and pale, flowers drop and pods fill poorly.",
+   "wet": "Yellow leaves and rotting roots and stem base."
+  },
+  "better": [
+   "Mulch the base of the vine so the soil stays moist between waterings.",
+   "Water steadily while the vine flowers and fills its pods."
+  ],
+  "confidence": "low"
+ },
  "video": {
   "youtubeId": "s7yM5MBwnNk",
   "title": "MAGTANIM TAYO NG PATANI! (Lima Bean Planting Tutorial) Napaka daling itanim! | Haydee's Garden",
@@ -127,5 +173,5 @@
  "kind": "annual",
  "icon": "🫘",
  "slug": "lima-bean",
- "rev": "2d1d0083cbb6"
+ "rev": "b372dae65cca"
 }

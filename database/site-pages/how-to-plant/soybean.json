@@ -211,6 +211,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering utaw, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Soybean in the wet season lives on the rains. After rice in the dry season it lives on the moisture left in the field, and growers with water run it down the furrows if the soil dries while the pods fill. Furrow watering from a pump or canal where water is at hand, in the morning or late afternoon. Most fields get rain only."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let utaw go dry at these stages",
+   "text": "Flowering, about day 35 to 50: a dry spell drops flowers and young pods. Pod filling, about day 50 to 80: drought gives small beans and a light harvest."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for utaw, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 7",
+     "Plant into moist soil, never into a waterlogged field",
+     "No watering if the soil is moist. Otherwise a light furrow watering before planting"
+    ],
+    [
+     "Leaf growth",
+     "Day 7 to 35",
+     "Usually no watering. Water only in a long dry spell",
+     "A light furrow watering"
+    ],
+    [
+     "Flowering",
+     "Day 35 to 50",
+     "Water if the soil is dry",
+     "A furrow watering that soaks in, with no water left standing"
+    ],
+    [
+     "Pod filling",
+     "Day 50 to 80",
+     "In the dry season, water the furrows whenever the soil dries",
+     "A full furrow watering"
+    ],
+    [
+     "Maturing",
+     "Day 80 to 95",
+     "Stop watering",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains on well drained soil, or right after the rice harvest while the paddy is still moist. Plant on ridges where the field may hold water.\n\n**In the dry season.** The dry season crop after rice usually needs a watering or two at flowering and pod filling. Water when the topsoil is dry a finger deep and the leaves wilt by mid morning.\n\n**In the rainy season.** Soybean must not stand in water. Drain the field, plant on ridges in the rainy season, and keep the furrow ends open, since waterlogged plants turn yellow and their roots rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and turn their pale backs up in the heat, flowers drop, and the pods stay flat.",
+    "**Too much water:** Leaves yellow, plants stay short, few root nodules form, and seedlings rot in the low spots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If you can water only once or twice, water at flowering and at pod filling. Plant on ridges with open furrow ends, so you can water down the furrows and drain the rain the same way."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for utaw"
   },
   {
@@ -337,6 +410,10 @@
     {
      "q": "How long before utaw can be harvested?",
      "a": "It is ready about 95 days after sowing. Dry beans are ready at about 85 to 100 days when the pods are brown and the leaves have dropped."
+    },
+    {
+     "q": "How often do you water utaw?",
+     "a": "Planting and coming up, sowing day to day 7: Plant into moist soil, never into a waterlogged field. Leaf growth, day 7 to 35: Usually no watering. Water only in a long dry spell. Flowering, day 35 to 50: Water if the soil is dry. The dry season crop after rice usually needs a watering or two at flowering and pod filling."
     },
     {
      "q": "What do you plant to grow utaw?",

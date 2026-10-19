@@ -246,6 +246,76 @@
   "Stop watering two weeks before harvest and cure the bulbs well before storing.",
   "Rotate onion with rice and do not plant onion on the same field every year."
  ],
+ "watering": {
+  "traditional": "Onion is a dry season crop on rice land, so nearly every grower waters it. Most let water from a canal or a shallow well pump into the small canals between the beds until it soaks up into the beds, then drain the rest, usually every 3 to 7 days and more than ten times in a season.",
+  "method": "Canal watering: water from a canal or a pump on a shallow well is let into the small canals between the raised beds until it seeps up into them, and the rest is drained off. Seedbeds are watered with a sprinkler can. Water in the morning.",
+  "rainfed": "Bulb onion is not grown on rain alone here, because it grows in the dry months. Growers without a canal sink a shallow well with a small pump, transplant soon after the rice harvest while the soil is still wet, and lay rice straw over the beds so each watering lasts longer.",
+  "dryseason": "The whole crop grows in the dry season, so keep to a steady schedule of every 3 to 7 days. Water when the top of the bed is dry to a finger joint deep or the leaves look dull in the morning, and water more often in March and April when it is hottest.",
+  "wet": "Late plantings meet the first rains near harvest. Keep the beds raised and the canals open so rain drains away fast, and stop watering early. Standing water rots the roots and bulbs, brings more purple blotch, and bulbs pulled from wet soil rot in storage.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -40,
+    "to": -33,
+    "often": "Water gently every morning, through the straw cover, until most seedlings are up",
+    "amount": "Enough to wet the bed through, with a fine sprinkler can so the seed is not washed out",
+    "why": "The tiny seed dries out fast and comes up unevenly in a dry bed."
+   },
+   {
+    "stage": "Seedlings in the bed",
+    "from": -33,
+    "to": 0,
+    "often": "Water lightly every morning, and again late in the afternoon on hot days. Water the bed well the day before or the morning of pulling",
+    "amount": "Moist but never soggy",
+    "why": "Even moisture grows pencil thick seedlings, while a soggy bed brings damping off."
+   },
+   {
+    "stage": "Transplanting and settling in",
+    "from": 0,
+    "to": 14,
+    "often": "Water the day after transplanting, then again whenever the bed surface dries, often every few days, until the seedlings stand up and push new leaves",
+    "amount": "Let water into the canals until the beds are wet through, then drain the rest",
+    "why": "New seedlings have few roots and die quickly in dry soil."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 14,
+    "to": 40,
+    "often": "Every 3 to 7 days, more often on sandy soil and in hot, windy weeks. Water right after each side dressing",
+    "amount": "Fill the canals until the water soaks up to the top of the beds, then drain",
+    "why": "Each leaf the plant grows now becomes a ring of the bulb later."
+   },
+   {
+    "stage": "Bulb swelling",
+    "from": 40,
+    "to": 75,
+    "often": "Every 3 to 7 days on a steady schedule, never letting the beds dry out",
+    "amount": "The same canal watering, soaking the beds without leaving water standing on top",
+    "why": "Steady water makes big, firm bulbs, while dry spells followed by heavy watering give split and double bulbs."
+   },
+   {
+    "stage": "Ripening",
+    "from": 75,
+    "to": 90,
+    "often": "Stop watering about two weeks before harvest, when the leaves start to soften",
+    "amount": "No water",
+    "why": "Dry soil firms the bulbs and lets the necks close, so they keep longer in storage."
+   }
+  ],
+  "critical": [
+   "The first two weeks after transplanting: the seedlings die if the beds dry out.",
+   "Bulb swelling, about day 40 to 75: never let the beds dry, or the bulbs stay small and split."
+  ],
+  "signs": {
+   "dry": "Leaves turn a dull bluish gray, the tips dry and the leaves bend over early, and the bulbs stay small and hard.",
+   "wet": "Leaves yellow from the tips, roots rot, bulbs turn soft or keep thick green necks, and leaf diseases spread fast."
+  },
+  "better": [
+   "Water on a steady schedule rather than a heavy soaking after a long dry spell, which splits the bulbs.",
+   "Rice straw mulch on the beds cuts the number of waterings and keeps weeds down, and a sprinkler or drip line on sandy soil saves water and pump fuel."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "-NnpGgxmhsk",
   "title": "Pagtatanim ng sibuyas",
@@ -266,5 +336,5 @@
  "kind": "annual",
  "icon": "🧅",
  "slug": "onion",
- "rev": "a61911e069bc"
+ "rev": "0f7dff927089"
 }

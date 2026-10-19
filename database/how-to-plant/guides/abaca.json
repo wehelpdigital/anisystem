@@ -228,6 +228,59 @@
   "Harvest every 3 to 4 months, cutting only stalks with the flag leaf out.",
   "Strip within a day, dry the fiber well and store it raised in a dry shed."
  ],
+ "watering": {
+  "traditional": "Abaca is grown on rain alone, on land with rain spread through the year and soil that drains. Farmers keep the soil damp with shade trees and mulch, and some water young plants once or twice a month in the summer.",
+  "method": "Rain only on most farms. Young plants in summer are watered by hand with a pail or a hose at the base, in the morning or late afternoon.",
+  "rainfed": "This is the usual way. Plant at the start of the rains, keep or plant shade trees, and lay cut weeds and leaves around each hill as mulch. Do not plant where the soil stays wet.",
+  "dryseason": "Water young plants once or twice a month in the summer, and watch older mats for drying leaves. Pseudostem rot and leaf spot also spread in dry weather on stressed plants.",
+  "wet": "Abaca does not like waterlogged soil. Plant on slopes or land that drains, dig drains where water collects, and never plant in a low, wet spot.",
+  "schedule": [
+   {
+    "stage": "Planting",
+    "from": 0,
+    "to": 30,
+    "often": "Plant as the rains begin. If a dry spell follows, water each new hill",
+    "amount": "A good soaking around the sucker or corm",
+    "why": "The planting material needs moisture to root and send up a shoot."
+   },
+   {
+    "stage": "Young plants, the first year",
+    "from": 30,
+    "to": 365,
+    "often": "Once or twice a month in the summer months. No watering in the rains",
+    "amount": "A good soaking around each hill, then mulch with the cut weeds",
+    "why": "Young abaca has short roots and stops growing in a dry spell."
+   },
+   {
+    "stage": "Grown mats",
+    "from": 365,
+    "to": 600,
+    "often": "No regular watering. Keep the mulch and the shade",
+    "amount": "None",
+    "why": "A grown mat finds its own water under shade and mulch."
+   },
+   {
+    "stage": "Harvest years",
+    "from": 600,
+    "to": 720,
+    "often": "No regular watering. Lay the cut leaves and sheaths around the mats",
+    "amount": "None",
+    "why": "Mulch from the harvest holds the soil moisture for the next stalks."
+   }
+  ],
+  "critical": [
+   "The first year: young plants need moisture in the summer months."
+  ],
+  "signs": {
+   "dry": "Leaves fold, dry at the edges and break, the new leaves come out slowly, and suckers stop coming.",
+   "wet": "Yellow leaves, rotting corms and stalks, and stunted mats in the low spots."
+  },
+  "better": [
+   "Keep shade trees and a thick mulch of cut leaves around the mats to hold the soil moisture.",
+   "Plant only on land with rain spread through the year and good drainage."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "Cjz84s1EQcI",
   "title": "TAMANG PARAAN SA PAGTANIM NG ABACA",
@@ -249,5 +302,5 @@
  "kind": "perennial",
  "icon": "🌿",
  "slug": "abaca",
- "rev": "7d73c811d302"
+ "rev": "b66a00d1b567"
 }

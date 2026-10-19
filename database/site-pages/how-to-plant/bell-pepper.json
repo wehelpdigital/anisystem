@@ -212,6 +212,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering atsal, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Atsal on mulched beds is watered or furrow irrigated about once a week, more often in hot, dry spells, with the beds kept draining so no water stands. In the highlands many growers water with sprinklers or hoses, and in the lowlands it is grown in the cooler months with a canal or pump nearby. Furrow irrigation between mulched beds in the lowlands, and sprinklers or hoses in the highlands. Small growers use a watering can at the base of each plant. Water in the morning so the leaves dry early."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let atsal go dry at these stages",
+   "text": "The first week after transplanting. Flowering and fruit set: dry soil drops flowers, and uneven water rots the fruit bottoms. All season: bell pepper wilts and dies fast in waterlogged beds."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for atsal, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Nursery bed",
+     "30 to 21 days before transplanting",
+     "Water the bed before sowing, water gently after, then each morning",
+     "Just enough to keep the soil damp"
+    ],
+    [
+     "Growing seedlings",
+     "21 to 7 days before transplanting",
+     "Water each morning or when the top soil dries",
+     "Light sprinkles"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water less often while the seedlings get more sun",
+     "Light waterings. Water at once if they wilt hard"
+    ],
+    [
+     "Transplanting and settling",
+     "Transplanting day to day 7",
+     "Water right after transplanting in the late afternoon, then every day or two if no rain falls until new leaves show",
+     "Soak the soil around each plant"
+    ],
+    [
+     "Leafy growth",
+     "Day 7 to 40",
+     "Water or furrow irrigate about once a week, more often in hot, dry spells. Water in the urea every two weeks",
+     "Wet the bed through, never leave water standing"
+    ],
+    [
+     "Flowering and fruit set",
+     "Day 40 to 85",
+     "Keep the weekly watering steady and never let the bed dry out",
+     "Even waterings, no soaking after a dry spell"
+    ],
+    [
+     "Picking",
+     "Day 85 to 130",
+     "Go on watering about once a week through the picking",
+     "Even waterings, drained off"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Lowland atsal is planted from about October to December so it grows through the cool months on the moisture left after the rains, with mulch to hold it. Without a pump, keep the beds close to a well or creek and water each plant by can about once a week.\n\n**In the dry season.** Water or furrow irrigate about once a week, more often in hot, dry spells and on sandy soil. Water when the leaves droop by mid morning or the soil a few cm down feels dry, and keep the mulch on.\n\n**In the rainy season.** Use raised, well drained beds with mulch, keep the canals open and do not water when the beds are wet. Soaked roots rot and the plants wilt suddenly, and wet weather spreads fruit rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and curl at midday, flowers and small fruits drop, and the fruits stay small with thin walls or rot at the bottom.",
+    "**Too much water:** Plants wilt while the soil is wet, the lower leaves yellow and fall, and the stem base turns dark and soft."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Plastic or rice straw mulch keeps the beds evenly moist, which is the best guard against rotten fruit bottoms. A drip line under the mulch gives steady water through months of picking with less work and less leaf disease."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for atsal"
   },
   {
@@ -341,6 +426,10 @@
     {
      "q": "How long before atsal can be harvested?",
      "a": "It is ready about 85 days after transplanting. Picking starts about 80 to 100 days after transplanting, or 3 to 6 weeks after flowering."
+    },
+    {
+     "q": "How often do you water atsal?",
+     "a": "Nursery bed, 30 to 21 days before transplanting: Water the bed before sowing, water gently after, then each morning. Growing seedlings, 21 to 7 days before transplanting: Water each morning or when the top soil dries. Hardening, 7 days before transplanting to transplanting day: Water less often while the seedlings get more sun. Water or furrow irrigate about once a week, more often in hot, dry spells and on sandy soil."
     },
     {
      "q": "What do you plant to grow atsal?",

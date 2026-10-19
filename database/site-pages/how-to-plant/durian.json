@@ -139,6 +139,97 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering duryan, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Durian here is mostly rain fed: young trees get water when the soil dries and a thick mulch in the dry season, and bearing trees are left to the rain. Growers in Davao and other durian areas who have a spring or a pump water in the dry months while the fruits grow. A pail or hose into a mulched ring basin for young trees, and basin, sprinkler or drip watering for bearing trees where water is at hand. Water in the cool early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let duryan go dry at these stages",
+   "text": "The first year after planting, when young durian dies easily in dry soil. Flowering and fruit set, when a dry spell makes the flowers and young fruits shed. Fruit growth, the months when the tree needs the most water."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for duryan, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Grafted seedlings in bags",
+     "5 months before planting to planting day",
+     "Every 2 to 3 days, or whenever the bag soil dries",
+     "Enough to wet each bag right through"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Water when the soil dries, about every 3 to 4 days in dry weather, and keep the half shade on",
+     "A good soak of a ring basin around the stem"
+    ],
+    [
+     "First and second year",
+     "Month 3 to 24",
+     "About once a week in the dry months, not needed while the rains are steady",
+     "A deep soak of the mulched ring under the leaves"
+    ],
+    [
+     "Years 3 to 5, before flowering",
+     "Month 24 to 54",
+     "Every 7 to 10 days in the dry months where water is near",
+     "A deep soak of the ring, widened as the crown spreads"
+    ],
+    [
+     "Bearing trees: dry rest before flowering (each year)",
+     "Month 54 to 56",
+     "Do not water for several weeks in the dry months. In one study durian began to flower about 50 days after the last rain",
+     "None"
+    ],
+    [
+     "Flowering and fruit set",
+     "Month 56 to 57",
+     "Once the flower buds show, start watering again, lightly at first and more each week",
+     "A light soak at first, building to a deep soak under the whole crown"
+    ],
+    [
+     "Fruit growth to harvest",
+     "Month 57 to 60",
+     "Every 5 to 7 days in dry weather, the most water of the whole year",
+     "A deep soak of all the ground under the crown"
+    ],
+    [
+     "After harvest, new leaves",
+     "Month 60 to 63",
+     "Water with the after harvest feeding if the rains have not come",
+     "A deep soak under the crown"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains, or in any wet month where rain falls most of the year. Shade the new tree for the first weeks, and in the dry season mulch it thickly with dried straw, leaves, cut grass, coconut husks or chopped banana trunks. Rain fed trees in places with a clear dry season flower after it ends. In a year with a long, hard drought many flowers and young fruits fall.\n\n**In the dry season.** Young trees about once a week. Bearing trees, no water in the weeks before flowering, then more each week from the first flower buds through fruit growth. Water a young tree when its leaves hang down and lose their shine by midday.\n\n**In the rainy season.** Durian roots rot in wet, heavy soil, and trunk canker spreads where water stands. Plant on deep, well drained ground or a mound, open drains, keep water away from the trunk, and scrape and treat canker spots on the bark. Steady rain through the flowering weeks washes off pollen and gives poor fruit set."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves hang down and lose their shine, older leaves yellow and drop, new shoots stop, and flowers and small fruits fall.",
+    "**Too much water:** Leaves yellow and wilt even in wet soil, roots rot, bark at the base turns dark and wet with oozing sap, and branches die back."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip lines run lightly once the flower buds show and more as the fruits grow give better flowering and fruit set than flooding or sprinklers. Give the bearing tree its dry rest before flowering, then water steadily. Keep a thick mulch all year."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for duryan"
   },
   {
@@ -269,6 +360,10 @@
     {
      "q": "How long before duryan can be harvested?",
      "a": "It is ready about 5 years after planting. A ripe fruit gives a sweet smell at its base and a loose, hollow sound when knocked."
+    },
+    {
+     "q": "How often do you water duryan?",
+     "a": "Grafted seedlings in bags, 5 months before planting to planting day: Every 2 to 3 days, or whenever the bag soil dries. Planting to 3 months, planting day to month 3: Water when the soil dries, about every 3 to 4 days in dry weather, and keep the half shade on. First and second year, month 3 to 24: About once a week in the dry months, not needed while the rains are steady. Young trees about once a week."
     },
     {
      "q": "What do you plant to grow duryan?",

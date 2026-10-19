@@ -139,6 +139,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering alfalfa, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Alfalfa is rare in the Philippines and grown mostly in small trial and dairy plots. Growers sow it at the end of the heavy rains on high, well drained ground and irrigate through the dry months, lightly while the seedlings are young and deeply but less often once the stand is rooted. Small plots are watered by hose, sprinkler or furrow. Water in the morning, and plan the watering around the cutting days."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let alfalfa go dry at these stages",
+   "text": "Sowing to rooting, when the top soil must stay damp. The days right after each cut, when the regrowth starts."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for alfalfa, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "Sowing day to day 7",
+     "Water gently right after sowing, then lightly every day or two if the soil dries",
+     "A fine spray that keeps the top soil damp without washing the tiny seed"
+    ],
+    [
+     "Seedlings rooting",
+     "Day 7 to 30",
+     "Light, frequent waterings until the seedlings are well rooted",
+     "Keep the top few cm moist, never puddled"
+    ],
+    [
+     "Stand growing to first cut",
+     "Day 30 to 70",
+     "Deep waterings, less often, in dry weather. Stop a few days before cutting so the field is dry",
+     "Soak the soil deeply each time, then let it drain"
+    ],
+    [
+     "After each cut",
+     "Day 70 to 100",
+     "Water soon after the cut forage is off the field and the regrowth starts, then deep and less often again. Stop a few days before the next cut",
+     "A deep soaking, drained off"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** On rain alone, sow at the end of the heavy rains so the young stand roots on the moisture left in the soil without being drowned. The deep taproot later carries the stand through short dry spells, but cutting slows in the dry months without water.\n\n**In the dry season.** Water deeply but not often once the stand is rooted, and always right after each cut once the forage is off the field. Water when the soil a hand span down is dry or the regrowth stalls.\n\n**In the rainy season.** Alfalfa cannot stand waterlogged soil: the roots rot and the stand dies out. Grow it only on high, well drained ground, keep drains open and skip watering in the rains."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** The stand turns dull and bluish, the leaves fold and the regrowth after cutting is short and slow.",
+    "**Too much water:** Plants yellow and thin out, roots rot in low spots, and weeds take over the gaps."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Time the watering to the cuts: stop a few days before cutting and water again soon after the forage is off. Pick high, well drained ground and level it so no water stands anywhere in the field."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for alfalfa"
   },
   {
@@ -267,6 +334,10 @@
     {
      "q": "How long before alfalfa can be harvested?",
      "a": "It is ready about 70 days after sowing. Cut when the stand begins to flower, leaving stubble to regrow, and cut again each time the regrowth flowers."
+    },
+    {
+     "q": "How often do you water alfalfa?",
+     "a": "Sowing to coming up, sowing day to day 7: Water gently right after sowing, then lightly every day or two if the soil dries. Seedlings rooting, day 7 to 30: Light, frequent waterings until the seedlings are well rooted. Stand growing to first cut, day 30 to 70: Deep waterings, less often, in dry weather. Stop a few days before cutting so the field is dry. Water deeply but not often once the stand is rooted, and always right after each cut once the forage is off the field."
     },
     {
      "q": "What do you plant to grow alfalfa?",

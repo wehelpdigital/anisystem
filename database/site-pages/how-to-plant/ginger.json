@@ -218,6 +218,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering luya, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Ginger is mostly a rain crop, planted as the rains begin around April to May so the young shoots grow on the rains, with rice straw or coconut leaves over the rows. Where the rains are uneven, farmers give light, frequent waterings every four to seven days during leaf growth, and they choose fields that never hold standing water. Mostly rain. Where water is near, farmers water by hose, sprinkler or furrow, lightly and often. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let luya go dry at these stages",
+   "text": "Planting to the first leaves, when the seed pieces need moist soil to sprout. Leaf growth through rhizome filling: no long dry spells and no standing water."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for luya, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sprouting the seed pieces",
+     "21 days before planting to planting day",
+     "Water the sprouting bed only as needed to keep the compost cover damp",
+     "Damp, never soggy"
+    ],
+    [
+     "Planting and shoots coming up",
+     "Planting day to day 30",
+     "Plant into moist soil with the rains and mulch at once. In a dry week water lightly every four to seven days",
+     "Light waterings that moisten the soil under the mulch"
+    ],
+    [
+     "Leaf growth",
+     "Day 30 to 120",
+     "Light, frequent waterings every four to seven days when rain is uneven, closer on sandy soil",
+     "Moist, not soaked. Water after each side dressing"
+    ],
+    [
+     "Rhizomes filling",
+     "Day 120 to 240",
+     "Rain is usually enough. Water every four to seven days in a dry spell",
+     "Light waterings, never standing water"
+    ],
+    [
+     "Leaves withering to harvest",
+     "Day 240 to 270",
+     "Stop watering as the leaves turn yellow and dry",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, around April to May, so the young shoots grow on the rains, and mulch the rows right after planting with rice straw or coconut leaves. Pick loose loam that drains easily, never clay that holds water.\n\n**In the dry season.** Where rain is uneven, give light waterings every four to seven days during leaf growth, closer on sandy soil. Water when the soil under the mulch is dry a finger deep or the leaves roll in the morning, and stop when the leaves start to yellow before harvest.\n\n**In the rainy season.** Open furrows and make sure rain water drains away. Ginger does not like stagnant water. Soggy ground brings rhizome rot and bacterial wilt, which yellow and collapse the shoots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll and yellow at the tips, new shoots stop coming, and the rhizomes stay thin and fibrous.",
+    "**Too much water:** Shoots yellow and collapse, the base of the stem goes soft and water soaked, and the rhizomes rot and smell."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep a thick mulch on the rows all season to hold moisture and cut the watering. Water lightly and often in dry spells instead of soaking the field, which brings rot."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for luya"
   },
   {
@@ -346,6 +419,10 @@
     {
      "q": "How long before luya can be harvested?",
      "a": "It is ready about 270 days after planting. Most ginger for the local market is dug at 8 to 10 months, when the leaves yellow and wither."
+    },
+    {
+     "q": "How often do you water luya?",
+     "a": "Sprouting the seed pieces, 21 days before planting to planting day: Water the sprouting bed only as needed to keep the compost cover damp. Planting and shoots coming up, planting day to day 30: Plant into moist soil with the rains and mulch at once. In a dry week water lightly every four to seven days. Leaf growth, day 30 to 120: Light, frequent waterings every four to seven days when rain is uneven, closer on sandy soil. Where rain is uneven, give light waterings every four to seven days during leaf growth, closer on sandy soil."
     },
     {
      "q": "What do you plant to grow luya?",

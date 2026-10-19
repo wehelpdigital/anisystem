@@ -117,7 +117,69 @@
      ]
     }
    ],
-   "note": "Days from sowing. Flowers open at about 55 to 70 days, which is when flower farms open for visitors. Seed heads are ready at about 90 to 110 days."
+   "note": "Days from sowing. Flowers open at about 55 to 70 days, which is when flower farms open for visitors. Seed heads are ready at about 90 to 110 days.",
+   "watering": {
+    "traditional": "Sunflower sown after rice in the dry season starts on the moisture left in the field. Growers then water down the furrows or by hose in dry spells, above all at budding and flowering, and stop once the heads begin to ripen.",
+    "method": "Furrow watering from a pump or canal, or a hose around the base of the plants on small fields. Water the soil, not the heads, in the morning or late afternoon.",
+    "rainfed": "Sow after the rice harvest from about November to February while the field is still wet, so the crop grows on the stored moisture and ripens in dry, sunny weather.",
+    "dryseason": "Water about once a week from budding through flowering, more on sandy soil and in hot, windy weeks. Water when the leaves droop by mid morning.",
+    "wet": "Heavy rain at flowering rots the heads, so do not sow for flowering in the rainiest months. Make ridges and keep the furrows draining, since sunflower roots rot in standing water.",
+    "schedule": [
+     {
+      "stage": "Sowing and coming up",
+      "from": 0,
+      "to": 10,
+      "often": "Sow into moist soil. Water lightly if the soil is dry",
+      "amount": "Enough to moisten the seed row, never soggy",
+      "why": "The seed needs moisture to come up, but rots in wet soil."
+     },
+     {
+      "stage": "Young plants",
+      "from": 10,
+      "to": 35,
+      "often": "Usually no watering on soil left wet by the rice. Water after the side dressing if the soil is dry",
+      "amount": "A light furrow or hose watering",
+      "why": "A little dryness now sends the roots deep."
+     },
+     {
+      "stage": "Budding and flowering",
+      "from": 35,
+      "to": 70,
+      "often": "Water in dry spells, about once a week, more often on sandy soil",
+      "amount": "A full furrow watering, or a hose around the base of the plants",
+      "why": "Dry soil now gives small heads and many empty seeds."
+     },
+     {
+      "stage": "Seed filling",
+      "from": 70,
+      "to": 85,
+      "often": "Water once more if the soil is dry",
+      "amount": "A furrow watering",
+      "why": "Moisture fills the seeds heavy."
+     },
+     {
+      "stage": "Ripening",
+      "from": 85,
+      "to": 100,
+      "often": "Stop watering once the backs of the heads start to turn yellow",
+      "amount": "None",
+      "why": "Dry weather ripens the heads and keeps them from rotting."
+     }
+    ],
+    "critical": [
+     "Budding and flowering, about day 35 to 70: drought now gives small heads with empty seeds.",
+     "Seed filling, about day 70 to 85: a dry spell leaves light seed."
+    ],
+    "signs": {
+     "dry": "Leaves droop by mid morning and the lower leaves dry early, the stems stay thin and the heads small.",
+     "wet": "Lower leaves yellow, stems rot at the base, and the backs of the heads turn gray or brown and soft after rain."
+    },
+    "better": [
+     "If water is short, give it at budding and flowering, the weeks that decide head size and seed fill.",
+     "Rice straw mulch between the rows keeps the soil moist longer."
+    ],
+    "confidence": "medium"
+   }
   },
   {
    "key": "transplanted",
@@ -167,7 +229,69 @@
      "task": "harvest"
     }
    ],
-   "note": "Days from transplanting. The seedlings spend about 2 to 3 weeks in trays first. Blooms open at about 40 to 50 days after transplanting and seed heads ripen at about 80 days. Used mostly on flower farms for even rows of blooms."
+   "note": "Days from transplanting. The seedlings spend about 2 to 3 weeks in trays first. Blooms open at about 40 to 50 days after transplanting and seed heads ripen at about 80 days. Used mostly on flower farms for even rows of blooms.",
+   "watering": {
+    "traditional": "Flower farms raise sunflower seedlings in trays, transplant them in rows and water every few days in dry weather, by hose or down the furrows. They water the soil around the stems and keep the water off the blooms.",
+    "method": "A watering can or a fine hose for the trays, then a hose at the base of the plants or furrow watering in the field. Water in the morning, and the newly set plants late in the afternoon.",
+    "rainfed": "Flower farms grow this way where water is at hand. Without water, sow straight in the field after the rice instead, on the moisture left in the soil.",
+    "dryseason": "Water every few days, every day on sandy soil in the hottest weeks. Water when the leaves droop by mid morning.",
+    "wet": "Heavy rain bends and rots the blooms and the heads. Use raised beds or ridges, stake tall plants in windy spots, and skip watering on rainy days.",
+    "schedule": [
+     {
+      "stage": "Seedlings in trays",
+      "from": -18,
+      "to": 0,
+      "often": "Water the trays every morning in light shade, and again in the afternoon on hot days",
+      "amount": "Wet the mix through, gently, so the seed is not washed out",
+      "why": "The small cells dry out fast."
+     },
+     {
+      "stage": "Transplanting and settling in",
+      "from": 0,
+      "to": 10,
+      "often": "Water each plant right after transplanting in the late afternoon, then every day or two until they stand up",
+      "amount": "Soak the soil around each seedling",
+      "why": "New seedlings have few roots and wilt fast."
+     },
+     {
+      "stage": "Leaf growth",
+      "from": 10,
+      "to": 30,
+      "often": "Every few days in dry weather, and after the side dressing",
+      "amount": "A hose around the base or a furrow watering",
+      "why": "Steady water gives strong stems that hold big blooms."
+     },
+     {
+      "stage": "Budding and blooming",
+      "from": 30,
+      "to": 55,
+      "often": "Every few days in dry weather, never letting the soil dry out",
+      "amount": "A good soaking at the base, keeping the water off the flowers",
+      "why": "Dry soil gives small blooms that fade early."
+     },
+     {
+      "stage": "Seed heads",
+      "from": 55,
+      "to": 80,
+      "often": "For seed, water in dry spells until the seeds fill, then stop once the backs of the heads turn yellow",
+      "amount": "A furrow or hose watering",
+      "why": "The heads must dry to ripen."
+     }
+    ],
+    "critical": [
+     "The first days after transplanting: water each seedling until it stands up.",
+     "Budding and blooming, about day 30 to 55: dry soil gives small, short lived blooms."
+    ],
+    "signs": {
+     "dry": "Leaves droop by mid morning, blooms stay small and the petals dry early.",
+     "wet": "Yellow lower leaves, rotting stem bases, and soft gray or brown spots on the heads after rain."
+    },
+    "better": [
+     "Drip lines along the rows give even water with no splashing on the blooms.",
+     "Mulch the rows so the soil stays moist between waterings."
+    ],
+    "confidence": "medium"
+   }
   }
  ],
  "mistakes": [
@@ -205,5 +329,5 @@
  "kind": "annual",
  "icon": "🌻",
  "slug": "sunflower",
- "rev": "a7750e62ad17"
+ "rev": "d52ae177f64e"
 }

@@ -192,6 +192,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering tubo, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Most cane here is rainfed: farmers plant while the soil still holds water from the rains and count on the wet season for the big growth. The few who water run it down the furrows from a pump or canal in the dry months, which is the usual way in Batangas, Tarlac and Pampanga, while some big farms in Negros use hoses, sprinklers or drip lines. Furrow watering from a pump or canal, letting water run down each furrow until it reaches the far end. A few farms flood the field or use hoses, sprinklers or drip lines. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let tubo go dry at these stages",
+   "text": "Sprouting, the first month: dry soil now gives poor sprouting and gaps in the rows. Tillering, about month 1 to 4: drought now means fewer shoots, so fewer stalks at harvest. Fast stalk growth, about month 4 to 9: a long dry spell gives short joints and light cane."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for tubo, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting",
+     "Planting day to day 1",
+     "Plant into moist soil. If the furrow is dry and water is at hand, run water down it once after covering the cane points",
+     "A light furrow watering that wets the soil around the cane points, without leaving them under water for long"
+    ],
+    [
+     "Sprouting",
+     "Day 1 to 30",
+     "Keep the soil moist. In the dry months, water the furrows again whenever the topsoil dries out",
+     "A furrow watering that soaks the row"
+    ],
+    [
+     "Tillering",
+     "Day 30 to 120",
+     "In dry months, water when the soil a hand deep in the row feels dry, and soon after the side dressing and the hilling up",
+     "Fill the furrows and let the water reach the end of the row"
+    ],
+    [
+     "Fast stalk growth",
+     "Day 120 to 270",
+     "Usually the rains do it. Water only in a long dry spell, when the leaves roll by mid morning",
+     "A full furrow watering"
+    ],
+    [
+     "Ripening",
+     "Day 270 to 330",
+     "Stop watering about a month before cutting",
+     "No water"
+    ],
+    [
+     "Ratoon start",
+     "Day 330 to 360",
+     "After cutting and putting fertilizer on the stubble, water once if the soil is dry",
+     "A furrow watering along the stubble rows"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant right after the old cane is cut, from about October to January, while the soil is still wet from the rains, or wait for the first rains in May or June on upland fields. Cover the cane points well, keep the trash from the harvest as mulch between rows, and keep the field weed free so the weeds do not drink the moisture.\n\n**In the dry season.** Young cane in its first months goes through the dry season, so this is when watering pays most. Water when the soil a hand deep in the row is dry, the leaves roll before noon, or the young shoots look gray. Older ratoon clumps also suffer if a long drought follows the harvest.\n\n**In the rainy season.** Cane stands short floods but not water that stays for days. On low or heavy soil keep the furrows open at the ends and dig field drains, since waterlogged cane turns yellow, grows slowly and its roots rot. Strong rain and wind on tall cane also make it fall over."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll up tight and turn yellow green, the leaf tips and edges dry, young shoots wilt, and the stalks grow short joints. Ratoon clumps die in patches.",
+    "**Too much water:** Leaves turn yellow and growth stops in the low spots, roots go dark and rot, and the stand thins where water stays."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Even a few waterings in the first months, during sprouting and tillering, raise the cane harvest a lot over rain alone. Leave the dry leaves from the harvest between the rows as mulch, and on big farms drip lines under the soil save water and labor."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for tubo"
   },
   {
@@ -322,6 +401,10 @@
     {
      "q": "How long before tubo can be harvested?",
      "a": "It is ready about 330 days after planting. Cane is ready at about 10 to 12 months, when growth slows, the lower leaves dry and the top of the stalk is as sweet as the base."
+    },
+    {
+     "q": "How often do you water tubo?",
+     "a": "Planting, planting day to day 1: Plant into moist soil. If the furrow is dry and water is at hand, run water down it once after covering the cane points. Sprouting, day 1 to 30: Keep the soil moist. In the dry months, water the furrows again whenever the topsoil dries out. Tillering, day 30 to 120: In dry months, water when the soil a hand deep in the row feels dry, and soon after the side dressing and the hilling up. Young cane in its first months goes through the dry season, so this is when watering pays most."
     },
     {
      "q": "What do you plant to grow tubo?",

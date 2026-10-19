@@ -127,6 +127,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering oats, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Oats are rare here and grown on small highland plots sown at the end of the rains. Growers water by hand in dry spells. Hand watering with a can or a hose on small plots, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let oats go dry at these stages",
+   "text": "Heading and grain filling, about day 45 to 85: a dry spell gives light grain."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for oats, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing and coming up",
+     "Sowing day to day 10",
+     "Water right after sowing and every few days if no rain falls",
+     "Enough to moisten the seed rows, never soggy"
+    ],
+    [
+     "Leaf growth and tillering",
+     "Day 10 to 45",
+     "In dry spells, water about once a week",
+     "Soak the rows with a can or a hose"
+    ],
+    [
+     "Heading and grain filling",
+     "Day 45 to 85",
+     "Water when the topsoil dries",
+     "A good soaking of the rows"
+    ],
+    [
+     "Ripening",
+     "Day 85 to 95",
+     "Stop watering",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow at the end of the rains, from October to December, while the soil is still moist.\n\n**In the dry season.** Water small plots about once a week in dry spells. For green feed, keep watering until cutting.\n\n**In the rainy season.** Plant on beds that drain, since wet, warm weather brings rust and lodging."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll and pale and the plants stay short.",
+    "**Too much water:** Yellow leaves, rust spots and plants that fall over."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water at tillering and at heading if you can water only twice."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for oats"
   },
   {
@@ -252,6 +319,10 @@
     {
      "q": "How long before oats can be harvested?",
      "a": "It is ready about 95 days after sowing. Grain is ready at about 90 to 110 days when the heads are pale and dry."
+    },
+    {
+     "q": "How often do you water oats?",
+     "a": "Sowing and coming up, sowing day to day 10: Water right after sowing and every few days if no rain falls. Leaf growth and tillering, day 10 to 45: In dry spells, water about once a week. Heading and grain filling, day 45 to 85: Water when the topsoil dries. Water small plots about once a week in dry spells."
     },
     {
      "q": "What do you plant to grow oats?",

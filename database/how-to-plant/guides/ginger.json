@@ -179,6 +179,68 @@
   "Rotate with crops outside the tomato family and pull and burn sick plants early.",
   "Dig at the right age for your buyer and handle rhizomes gently."
  ],
+ "watering": {
+  "traditional": "Ginger is mostly a rain crop, planted as the rains begin around April to May so the young shoots grow on the rains, with rice straw or coconut leaves over the rows. Where the rains are uneven, farmers give light, frequent waterings every four to seven days during leaf growth, and they choose fields that never hold standing water.",
+  "method": "Mostly rain. Where water is near, farmers water by hose, sprinkler or furrow, lightly and often. Water in the morning.",
+  "rainfed": "Plant as the rains begin, around April to May, so the young shoots grow on the rains, and mulch the rows right after planting with rice straw or coconut leaves. Pick loose loam that drains easily, never clay that holds water.",
+  "dryseason": "Where rain is uneven, give light waterings every four to seven days during leaf growth, closer on sandy soil. Water when the soil under the mulch is dry a finger deep or the leaves roll in the morning, and stop when the leaves start to yellow before harvest.",
+  "wet": "Open furrows and make sure rain water drains away. Ginger does not like stagnant water. Soggy ground brings rhizome rot and bacterial wilt, which yellow and collapse the shoots.",
+  "schedule": [
+   {
+    "stage": "Sprouting the seed pieces",
+    "from": -21,
+    "to": 0,
+    "often": "Water the sprouting bed only as needed to keep the compost cover damp",
+    "amount": "Damp, never soggy",
+    "why": "Seed pieces sprout in moist cover but rot in a wet bed."
+   },
+   {
+    "stage": "Planting and shoots coming up",
+    "from": 0,
+    "to": 30,
+    "often": "Plant into moist soil with the rains and mulch at once. In a dry week water lightly every four to seven days",
+    "amount": "Light waterings that moisten the soil under the mulch",
+    "why": "Shoots come up evenly only in moist soil, and the mulch holds that moisture."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 30,
+    "to": 120,
+    "often": "Light, frequent waterings every four to seven days when rain is uneven, closer on sandy soil",
+    "amount": "Moist, not soaked. Water after each side dressing",
+    "why": "The leaves built now feed the rhizomes later, and ginger rots in soggy ground."
+   },
+   {
+    "stage": "Rhizomes filling",
+    "from": 120,
+    "to": 240,
+    "often": "Rain is usually enough. Water every four to seven days in a dry spell",
+    "amount": "Light waterings, never standing water",
+    "why": "Steady moisture gives plump rhizomes. Stagnant water brings rhizome rot and wilt."
+   },
+   {
+    "stage": "Leaves withering to harvest",
+    "from": 240,
+    "to": 270,
+    "often": "Stop watering as the leaves turn yellow and dry",
+    "amount": "No water",
+    "why": "Drier soil makes digging cleaner and the rhizomes keep better."
+   }
+  ],
+  "critical": [
+   "Planting to the first leaves, when the seed pieces need moist soil to sprout.",
+   "Leaf growth through rhizome filling: no long dry spells and no standing water."
+  ],
+  "signs": {
+   "dry": "Leaves roll and yellow at the tips, new shoots stop coming, and the rhizomes stay thin and fibrous.",
+   "wet": "Shoots yellow and collapse, the base of the stem goes soft and water soaked, and the rhizomes rot and smell."
+  },
+  "better": [
+   "Keep a thick mulch on the rows all season to hold moisture and cut the watering.",
+   "Water lightly and often in dry spells instead of soaking the field, which brings rot."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "hfnCTm73DWo",
   "title": "PAANO MAGTANIM NG LUYA AT UMANI NG MARAMI",
@@ -199,5 +261,5 @@
  "kind": "annual",
  "icon": "🫚",
  "slug": "ginger",
- "rev": "0bdd608a111c"
+ "rev": "1bbe7373447b"
 }

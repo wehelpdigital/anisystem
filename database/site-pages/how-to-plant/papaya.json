@@ -153,6 +153,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering papaya, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Seedlings in bags are watered every day, and after planting out farmers water daily for a week or two, then about once a week in dry weather by hose or watering can. In the rains the work turns to drainage: the base is mounded or the rows ridged, because standing water kills papaya fast. A hose or watering can into a small basin on top of the mound in backyards, furrows between ridged rows on flat farms, and drip lines on commercial farms. Water in the early morning, at the base and not over the leaves."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let papaya go dry at these stages",
+   "text": "The first two weeks after planting out. Flowering, from about 3 to 4 months after planting out, when dry soil drops the flowers. Fruit set and fruit filling through all the bearing years, since drought drops young fruits and gives small, less sweet ones."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for papaya, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedlings in bags",
+     "2 months before planting to planting day",
+     "Every morning, with a fine sprinkle from a rose can",
+     "Enough to wet each bag through, with water running out the bottom"
+    ],
+    [
+     "Planting out to taking hold",
+     "Planting day to day 14",
+     "Every day for the first week or two",
+     "A good soak of each hill, without leaving a puddle at the stem"
+    ],
+    [
+     "Young plants",
+     "Day 14 to month 3",
+     "About once a week in dry weather, every 4 to 5 days in the hottest months or on sandy soil",
+     "One to two watering cans a plant each time"
+    ],
+    [
+     "Flowering",
+     "Month 3 to 5",
+     "Every 4 to 5 days in hot dry weather, about once a week in cooler weeks. Never let the soil dry out",
+     "About 10 liters a plant a day on drip. By hand, 3 to 4 watering cans a plant every 4 days"
+    ],
+    [
+     "Fruit set to first harvest",
+     "Month 5 to 8",
+     "Every 4 to 5 days in the dry months, every 7 to 10 days in cool or cloudy weeks",
+     "About 10 to 15 liters a plant a day in hot weather. By hand, 4 to 5 watering cans every 4 days"
+    ],
+    [
+     "Bearing plants, flowering and fruiting together",
+     "Month 8 to 36",
+     "Keep the same rhythm all year: every 4 to 5 days in the dry months, every 7 to 10 days in cooler weeks, none in steady rain",
+     "About 10 to 15 liters a plant a day in hot weather, more for big plants in very dry places"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow near the end of the dry season and plant out as the rains begin, so the plants flower in the wet months and fill fruit while the soil is still moist. Mound each plant, mulch with dried grass, and keep the weeds off. Without water in a long dry season papaya drops its flowers and fruits, so a rain fed grower plants where the dry months are short or keeps a drum or a well for the worst weeks.\n\n**In the dry season.** Every 4 to 5 days in the hottest months and every 7 to 10 days in cooler weeks. Water when the soil a finger deep is dry, when the leaves hang down at midday, or when the older leaves yellow and fall early.\n\n**In the rainy season.** Papaya cannot stand wet feet: even a short flood can kill it. Plant on mounds or ridged rows, dig drains so rain leaves the field within hours, and never let water pool at the stem, which brings rot at the base. Avoid planting out just before the typhoon months."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves hang down at midday, older leaves yellow and fall early, flowers and small fruits drop, and fruits stay small and less sweet.",
+    "**Too much water:** Leaves yellow and wilt even though the soil is wet, the stem base turns soft and dark with a bad smell, and the plant may fall over."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip with about 10 liters a plant a day in the dry months, with fertilizer fed through the same line, gives steady flowering and bigger, sweeter fruits. Ridge the rows or mound each plant before the rains, so watering in the dry months and drainage in the wet months both work."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for papaya"
   },
   {
@@ -283,6 +362,10 @@
     {
      "q": "How long before papaya can be harvested?",
      "a": "It is ready about 8 months after planting. Flowers come about 3 to 4 months after planting out and fruit is ready 4 to 5 months later."
+    },
+    {
+     "q": "How often do you water papaya?",
+     "a": "Seedlings in bags, 2 months before planting to planting day: Every morning, with a fine sprinkle from a rose can. Planting out to taking hold, planting day to day 14: Every day for the first week or two. Young plants, day 14 to month 3: About once a week in dry weather, every 4 to 5 days in the hottest months or on sandy soil. Every 4 to 5 days in the hottest months and every 7 to 10 days in cooler weeks."
     },
     {
      "q": "What do you plant to grow papaya?",

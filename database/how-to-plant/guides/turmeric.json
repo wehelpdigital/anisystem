@@ -150,6 +150,60 @@
   "Grow it in light shade only and rotate with crops outside the ginger family.",
   "Dry and grind in clean conditions if you sell powder, so the color and smell stay strong."
  ],
+ "watering": {
+  "traditional": "Luyang dilaw is rain fed on most farms, planted with the first rains around April to June on beds or ridges and mulched with green leaves. In long dry spells growers water by furrow or hose, and the leaves dry down in the cool dry months when the rhizomes are dug.",
+  "method": "Mostly rain. In dry spells growers water by furrow between the ridges or by hose. Water in the morning.",
+  "rainfed": "Plant with the first rains so the leaves grow through the wet months, on beds or ridges in land that never floods. Cover the beds with cut leaves or grass right after planting to hold moisture and stop weeds.",
+  "dryseason": "An irrigated crop gets about 15 to 23 waterings in the whole season on clay soil and about 40 on sandy loam, given in the dry spells while the leaves grow. Water when the soil under the mulch is dry or the leaves roll in the morning.",
+  "wet": "Use raised beds or ridges and pick land that never floods: turmeric cannot stand waterlogging. In soaked soil the stem base turns soft and the plant collapses as the rhizomes rot.",
+  "schedule": [
+   {
+    "stage": "Planting and shoots coming up",
+    "from": 0,
+    "to": 45,
+    "often": "Plant into moist soil with the first rains and mulch at once. Water in a dry week",
+    "amount": "Moisten the soil under the mulch, no standing water",
+    "why": "Seed pieces sprout only in moist soil and rot in soaked beds."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 45,
+    "to": 150,
+    "often": "Rain is usually enough. In dry spells water by furrow or hose, more often on sandy soil than on clay",
+    "amount": "A soaking that wets the bed, then drain",
+    "why": "Turmeric needs steady moisture while the leaves grow."
+   },
+   {
+    "stage": "Rhizomes filling",
+    "from": 150,
+    "to": 240,
+    "often": "Keep the soil moist in dry spells. Water less as the rains end",
+    "amount": "Moderate waterings, never waterlogged",
+    "why": "Moist soil fills the rhizomes. Waterlogging rots them."
+   },
+   {
+    "stage": "Leaves drying to harvest",
+    "from": 240,
+    "to": 270,
+    "often": "Stop watering as the leaves and stems dry",
+    "amount": "No water",
+    "why": "The rhizomes ripen and the clumps lift cleanly from dry soil."
+   }
+  ],
+  "critical": [
+   "The weeks after planting, until the shoots are up.",
+   "Leaf growth, when the plant needs steady moisture."
+  ],
+  "signs": {
+   "dry": "Leaves roll and brown at the edges, growth stalls and the rhizomes stay small.",
+   "wet": "Leaves yellow, the stem base goes soft and water soaked, and the plants collapse as the rhizomes rot."
+  },
+  "better": [
+   "A thick mulch of green leaves or straw holds moisture and cuts the number of waterings.",
+   "Where water is at hand, watering through dry spells in the leaf growth months gives bigger rhizomes."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "YqxCjuMdqyA",
   "title": "TURMERIC PLANTING + BAGONG ARIENDO",
@@ -170,5 +224,5 @@
  "kind": "annual",
  "icon": "🫚",
  "slug": "turmeric",
- "rev": "9dbf15fb4dac"
+ "rev": "e689afcc8cef"
 }

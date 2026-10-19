@@ -250,6 +250,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kamatis, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Lowland tomato after rice is watered by quick furrow irrigation: water is let into the furrows, allowed to wet the roots and drained fast, because tomato cannot stand flooding. Where there is no canal, farmers pour water at each hill about once a week, and many dry season crops also live on the moisture left from the rice field. Quick furrow irrigation from a canal or a pump, with the water drained fast, is the usual way in the lowlands. Without a canal, water is poured at each hill with a can or a hose. Water in the morning so the leaves dry before evening."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kamatis go dry at these stages",
+   "text": "The first two weeks after transplanting, until the plants are rooted. Flowering and fruit setting: no dry spells, because flowers drop and fruits get black rotten ends. Every stage: never leave water standing in the furrows or let the field flood."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kamatis, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed and trays",
+     "30 to 24 days before transplanting",
+     "Water the bed before sowing and sprinkle the trays right after. Then water each morning",
+     "Just enough to keep the soil damp, never soggy"
+    ],
+    [
+     "Growing seedlings",
+     "24 to 7 days before transplanting",
+     "Water in the morning, only enough to keep the soil moist. Water at once after pricking out and after the starter drench",
+     "Light sprinkles. Rinse the leaves with plain water after the fertilizer drink"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water less and less often each day while the seedlings get more sun",
+     "Light waterings. Do not let them wilt hard"
+    ],
+    [
+     "Transplanting and settling",
+     "Transplanting day to day 14",
+     "Water the hills right after transplanting, then about 4 to 5 light waterings in the first two weeks, depending on the soil",
+     "Moisten the root zone around each hill. No water left standing"
+    ],
+    [
+     "Growth to first flowers",
+     "Day 14 to 30",
+     "Quick furrow irrigation about once a week in dry weather. Without a canal, about a liter a hill once a week",
+     "Let water run down the furrow until the root zone is wet, then drain it fast"
+    ],
+    [
+     "Flowering and fruit setting",
+     "Day 30 to 60",
+     "Keep the weekly quick furrow watering without fail. Water lightly rather than heavily",
+     "Just enough to moisten the root zone each time, never a flood"
+    ],
+    [
+     "Picking",
+     "Day 60 to 100",
+     "Go on watering about once a week while picking, then stop about 14 days before the last picking",
+     "Light quick waterings"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant the main crop at the end of the rains, often in a rice field just harvested, so the plants grow on the moisture stored in the soil through the cool dry months. Mulch with rice straw to hold that moisture, and carry water to each hill about once a week, roughly a liter a hill, if the soil dries during flowering.\n\n**In the dry season.** Give quick furrow irrigation about once a week from transplanting until 14 days before the last picking, more often on sandy soil and fewer times on heavy clay. Water when the leaves droop in the late morning or the soil a few cm down is dry, and make a catch canal so the extra water drains off after each irrigation.\n\n**In the rainy season.** For an off season crop pick slightly higher ground, plant on high, well drained rows and keep a drain canal around the field. Tomato is very sensitive to flooding: soaked roots rot, plants wilt fast and fruits that touch the wet soil rot, so stake every plant."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves curl and droop in the heat, flowers drop before setting, and fruits stay small or show a dark, sunken patch at the blossom end.",
+    "**Too much water:** Lower leaves yellow, plants wilt suddenly even in wet soil, roots turn brown and soft, and ripening fruits crack or rot."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Plastic or rice straw mulch keeps the soil evenly moist, cuts the watering and keeps fruits off the wet ground. A drip line along each row gives the steady, light water tomato needs during fruit setting and wastes less than flooding the furrows."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kamatis"
   },
   {
@@ -379,6 +464,10 @@
     {
      "q": "How long before kamatis can be harvested?",
      "a": "It is ready about 60 days after transplanting. Picking starts about 55 to 65 days after transplanting and goes on weekly until about 100 days."
+    },
+    {
+     "q": "How often do you water kamatis?",
+     "a": "Seedbed and trays, 30 to 24 days before transplanting: Water the bed before sowing and sprinkle the trays right after. Then water each morning. Growing seedlings, 24 to 7 days before transplanting: Water in the morning, only enough to keep the soil moist. Water at once after pricking out and after the starter drench. Hardening, 7 days before transplanting to transplanting day: Water less and less often each day while the seedlings get more sun. Give quick furrow irrigation about once a week from transplanting until 14 days before the last picking, more often on sandy soil and fewer times on heavy clay."
     },
     {
      "q": "What do you plant to grow kamatis?",

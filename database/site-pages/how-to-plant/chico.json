@@ -172,9 +172,88 @@
    "items": [
     {
      "title": "Year 4: First fruits",
-     "text": "Pick when the skin turns from green to yellowish brown, the brown powder rubs off easily with the thumb and little sap flows when the fruit is pulled off. Soak the fruits in water so the sap bleeds out, scrub off the powder and let them ripen in 3 to 7 days."
+     "text": "Pick once the green skin has gone a dull yellowish brown, the brown powder wipes off with a thumb and the fruit leaves little sap when it comes off the branch. Soak the fruits in water so the sap bleeds out, scrub off the powder and let them ripen in 3 to 7 days."
     }
    ]
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Watering tsiko, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Chico is one of the hardiest fruit trees here and most trees live on rain alone: a new marcot is watered in dry spells until it takes hold, then left to the weather. In the drier provinces some growers water bearing trees through flowering and fruit growth, since flowers and young fruits drop in very dry soil. A pail or hose into a ring basin around young trees. Basin or furrow watering for bearing trees where a well or creek is near. Water in the cool early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let tsiko go dry at these stages",
+   "text": "The first months after planting a marcot, until it is clearly growing. Flowering and fruit set, since moisture stress sheds the flowers and fruitlets."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for tsiko, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Rooted marcot in the bag",
+     "2 months before planting to planting day",
+     "Every day or every other day in light shade, until new leaves come",
+     "Enough to wet the bag right through"
+    ],
+    [
+     "Planting to new growth",
+     "Planting day to month 2",
+     "Soak at planting, then about twice a week until the tree is clearly growing",
+     "A good soak of a ring basin around the stem"
+    ],
+    [
+     "Rest of the first two years",
+     "Month 2 to 24",
+     "Every 1 to 2 weeks in the dry months, by soil and weather. Not needed in the rains",
+     "A deep soak of the mulched ring"
+    ],
+    [
+     "Year 3 to the first flowers",
+     "Month 24 to 41",
+     "Every 2 weeks or so in long dry spells where water is near",
+     "A deep soak of the ring, widened as the tree grows"
+    ],
+    [
+     "Flowering and fruit set (main flowering about April to June)",
+     "Month 41 to 43",
+     "Every 1 to 2 weeks if no rain falls",
+     "A deep soak of the ground under the crown"
+    ],
+    [
+     "Fruit growth to harvest",
+     "Month 43 to 48",
+     "Every 2 weeks or so in long dry spells, until picking",
+     "A deep soak under the crown"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains, mulch the base and stake the young tree. Chico grows on as little as about 1,000 mm of rain a year and bears on rain alone in most places, but it does best where the dry season is short. In dry provinces, a pail of water to young trees every week or two in their first dry seasons keeps them from losing their leaves.\n\n**In the dry season.** Young trees every 1 to 2 weeks. Bearing trees every 2 weeks or so in long dry spells from flowering to harvest. Water when the soil a hand deep is dry or when a young tree starts to drop leaves.\n\n**In the rainy season.** Chico takes an occasional flood better than most fruit trees, but long wet spells and poorly drained soil slow growth and cut the crop. Plant on ground that drains or on a low mound, and open drains from spots where water stands after rain."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop, yellow and fall early on young trees, growth stops, and flowers and small fruits drop.",
+    "**Too much water:** Slow growth, yellowing leaves and a light crop on soil that stays soggy."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A deep soak every week or two from flowering to harvest in dry provinces holds more flowers and fruits and gives bigger chico. Water young trees through their first two dry seasons. They grow faster and bear sooner."
   },
   {
    "type": "heading",
@@ -309,6 +388,10 @@
     {
      "q": "How long before tsiko can be harvested?",
      "a": "It is ready about 4 years after planting. Fruits take about 6 to 8 months from flowering to maturity, and the main crop in the Philippines comes about December to February."
+    },
+    {
+     "q": "How often do you water tsiko?",
+     "a": "Rooted marcot in the bag, 2 months before planting to planting day: Every day or every other day in light shade, until new leaves come. Planting to new growth, planting day to month 2: Soak at planting, then about twice a week until the tree is clearly growing. Rest of the first two years, month 2 to 24: Every 1 to 2 weeks in the dry months, by soil and weather. Not needed in the rains. Young trees every 1 to 2 weeks."
     },
     {
      "q": "What do you plant to grow tsiko?",

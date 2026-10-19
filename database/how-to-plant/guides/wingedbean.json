@@ -115,6 +115,52 @@
   "Pick young pods often to keep the plant bearing.",
   "Plant at the start of the rains so the vines are big when the flowering season comes."
  ],
+ "watering": {
+  "traditional": "Sigarilyas is mostly a backyard and fence crop planted with the rains and watered by hand only in long dry spells. Once the vines are big, most families leave it to the rain.",
+  "method": "Hand watering with a can or a hose at the base of each hill, in the early morning or late afternoon.",
+  "rainfed": "Plant at the start of the rains, from May to July, so the vine grows in the wet months and bears in the cooler months that follow. Mulch around the hills to hold the moisture.",
+  "dryseason": "Vines bearing into the dry months need a watering every few days. Water when the leaves droop in the morning or the soil is dry a finger deep.",
+  "wet": "Plant on mounds or raised spots so rain drains away, since standing water rots the roots and the tubers. Wet weather also spreads leaf spots, so keep the vines thinned and airy.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 14,
+    "often": "Water at planting if the soil is dry, then every day or two until the seedlings are up",
+    "amount": "Enough to keep the hill moist, never soggy",
+    "why": "The soaked seed needs steady moisture to come up."
+   },
+   {
+    "stage": "Vine growth",
+    "from": 14,
+    "to": 60,
+    "often": "Usually the rains are enough. In a dry spell, water when the topsoil dries",
+    "amount": "A watering can of about 10 liters shared among a few hills",
+    "why": "Steady growth builds a big vine that bears longer."
+   },
+   {
+    "stage": "Flowering and pods",
+    "from": 60,
+    "to": 120,
+    "often": "In dry weeks, water every few days",
+    "amount": "Soak the soil around each hill",
+    "why": "Dry soil drops the flowers and gives tough, fibrous pods."
+   }
+  ],
+  "critical": [
+   "Coming up, the first two weeks: keep the hill moist.",
+   "Flowering and podding: dry soil drops flowers and makes the pods tough."
+  ],
+  "signs": {
+   "dry": "Leaves droop and curl, flowers drop and pods come out short and stringy.",
+   "wet": "Yellow leaves, rotting roots and a vine that stops growing."
+  },
+  "better": [
+   "Mulch the hills with dry grass or rice straw so each watering lasts longer.",
+   "Water steadily through flowering and podding instead of only when the vine wilts."
+  ],
+  "confidence": "low"
+ },
  "video": {
   "youtubeId": "m_3DICNfiyI",
   "title": "Matuto Paano magtanim ng Sigarilyas",
@@ -133,5 +179,5 @@
  "kind": "annual",
  "icon": "🫛",
  "slug": "winged-bean",
- "rev": "907dee79ffb9"
+ "rev": "09fc89b0588f"
 }

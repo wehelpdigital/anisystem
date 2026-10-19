@@ -144,6 +144,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering karot, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Carrots are watered by sprinkler, hose or furrow about every five to seven days, more in dry weather, with the most care in the first month while the seed comes up. Growers lay rice straw over the sown beds to keep them moist and move it between the rows once the seedlings are up. Sprinklers or hoses fed from springs in the highlands, and furrows or watering cans in the lowlands. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let karot go dry at these stages",
+   "text": "The first month: sowing to young seedlings needs steady moisture. Root growth: even watering, because swings from dry to wet crack and fork the roots."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for karot, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "Sowing day to day 14",
+     "Water the beds right after sowing and laying the straw, then lightly every day or two so the top soil never dries",
+     "A fine spray through the straw, enough to keep the top soil damp"
+    ],
+    [
+     "Young seedlings",
+     "Day 14 to 30",
+     "Water about every five to seven days, more often in dry spells, after moving the straw between the rows",
+     "Even waterings that wet the bed to the roots"
+    ],
+    [
+     "Roots growing",
+     "Day 30 to 80",
+     "Keep to the five to seven day schedule. Water after the side dressing",
+     "The same even amount each time, never a long dry spell followed by a soaking"
+    ],
+    [
+     "Before pulling",
+     "Day 80 to 90",
+     "Water less in the last days. Give a light watering the day before pulling if the soil is hard",
+     "Light"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Highland carrots sown in the rainy months live mostly on the rain on raised beds. In the dry months they need a sprinkler, hose or furrow. Without one, sow in the cool months near a water source and keep straw over the beds and between the rows.\n\n**In the dry season.** Water every five to seven days, or more often in dry, windy spells and on sandy soil, keeping the amount even each time. Water when the top soil under the straw is dry a finger deep.\n\n**In the rainy season.** Sow on raised beds that drain and skip watering in rainy weeks. Soaked beds rot the seed and the young roots, and roots sitting in wet soil split and rot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Seedlings come up patchy, leaves wilt in the heat, and the roots turn thin, woody, pale or cracked.",
+    "**Too much water:** Seedlings rot at the base, leaves yellow, and the roots split, fork or rot."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep the watering the same every few days instead of letting the beds dry out. It cuts cracked and forked roots. Lay rice straw over the sown beds and later between the rows to hold moisture and save water."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for karot"
   },
   {
@@ -273,6 +340,10 @@
     {
      "q": "How long before karot can be harvested?",
      "a": "It is ready about 90 days after sowing. Most carrots are pulled two to three months after sowing, when the lower leaves yellow and the roots reach market size."
+    },
+    {
+     "q": "How often do you water karot?",
+     "a": "Sowing to coming up, sowing day to day 14: Water the beds right after sowing and laying the straw, then lightly every day or two so the top soil never dries. Young seedlings, day 14 to 30: Water about every five to seven days, more often in dry spells, after moving the straw between the rows. Roots growing, day 30 to 80: Keep to the five to seven day schedule. Water after the side dressing. Water every five to seven days, or more often in dry, windy spells and on sandy soil, keeping the amount even each time."
     },
     {
      "q": "What do you plant to grow karot?",

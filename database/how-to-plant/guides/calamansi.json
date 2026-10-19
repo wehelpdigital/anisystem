@@ -157,6 +157,85 @@
   "Water during long dry spells and mulch, so flowering and fruit set stay even.",
   "Keep the orchard clean of weeds and fallen fruit to cut pests and disease."
  ],
+ "watering": {
+  "traditional": "Growers water a new seedling every morning until it shows new leaves, then only when the soil dries, and in the dry months many carry a full pail or more to each tree and keep dry leaves on the ground. Most calamansi then bears on the rains, with the big crop from about July to October, and only farms with water all year get an off season harvest.",
+  "method": "A pail or a hose into a ring basin around each tree, the usual way on small farms. Some commercial farms lay drip lines. Water in the early morning, on the ring under the leaves and not against the trunk.",
+  "rainfed": "Plant as the rains begin so the seedling settles with steady rain, and keep a thick layer of dry leaves around each tree, a little off the trunk. Without water in the dry months the trees rest and bear mostly in the rainy months, which is when prices are lowest. Even a drum of stored rainwater carried to young trees in their first dry season saves many of them.",
+  "dryseason": "Young trees when the soil a finger deep is dry, about half a pail to a pail a tree. Bearing trees every 7 to 10 days with a full pail or more. Water when leaves curl and lose their shine, or when young shoots droop by midday.",
+  "wet": "Calamansi dies in waterlogged soil, so plant on a slightly raised spot or a mound and dig drains out of low places. In long rains the trees turn yellow and give poor fruits, and wet soil around the trunk brings rot of the roots and collar with gum oozing from the bark. Keep mulch and grass off the trunk.",
+  "schedule": [
+   {
+    "stage": "Planting to new leaves",
+    "from": 0,
+    "to": 30,
+    "often": "Every morning until new leaves show",
+    "amount": "Enough to soak the soil ball and the hole around it, with no puddle left standing",
+    "why": "A marcot has a small, shallow root ball that dries out in a day of sun."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 30,
+    "to": 360,
+    "often": "When the soil a finger deep is dry. In the dry months that means every few days for a young tree",
+    "amount": "About half a pail to a full pail a tree, poured into a basin around the stem",
+    "why": "Steady water keeps the young tree putting out new flushes of leaves."
+   },
+   {
+    "stage": "Second year, before bearing",
+    "from": 360,
+    "to": 540,
+    "often": "Every 7 to 10 days in the dry months, after a deep soak. Not needed in the rains",
+    "amount": "A full pail or more a tree, wetting the basin out to the edge of the leaves",
+    "why": "Deep, spaced watering sends the roots down so the tree stands dry spells."
+   },
+   {
+    "stage": "Bearing trees: short dry spell before flowering (each year)",
+    "from": 540,
+    "to": 570,
+    "often": "Where water is at hand, hold back for a few weeks in the dry months, then give a deep soak with the fertilizer",
+    "amount": "None for a few weeks, then one deep soak of the whole basin",
+    "why": "Citrus flowers when water comes back after a dry spell. This is how farms with water time an off season crop."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 570,
+    "to": 630,
+    "often": "About once a week in dry weather, keeping the soil evenly moist",
+    "amount": "A full pail or more a tree each time",
+    "why": "Dry soil now drops the flowers and the tiny fruits."
+   },
+   {
+    "stage": "Fruit growth to harvest",
+    "from": 630,
+    "to": 720,
+    "often": "Every 7 to 10 days in dry weather until picking",
+    "amount": "A full pail or more a tree each time",
+    "why": "Even moisture gives full sized, juicy fruits."
+   },
+   {
+    "stage": "Main harvest in the rainy months",
+    "from": 720,
+    "to": 810,
+    "often": "Rain does the work. Water only in a long break in the rains",
+    "amount": "A full pail a tree if the soil dries",
+    "why": "The tree keeps flowering lightly and needs steady moisture for the next picks."
+   }
+  ],
+  "critical": [
+   "The first weeks after planting, when the seedling needs water every morning.",
+   "Flowering and fruit set, since dry soil then drops flowers and small fruits.",
+   "Fruit growth in a dry spell, which leaves the fruits small and less juicy."
+  ],
+  "signs": {
+   "dry": "Leaves curl, fold along the middle and lose their shine, young shoots droop by midday, and flowers and small fruits fall.",
+   "wet": "Leaves yellow all over, roots rot, gum oozes from the lower trunk, and the fruits come small and poor."
+  },
+  "better": [
+   "A drip line or a mulched basin watered every week through the dry months keeps trees bearing and lets a farm sell in the off season, when prices are higher.",
+   "Pair the deep soak after the dry spell with the fertilizer, so the trees flower together and the crop comes in at the time you choose."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "nScW5gq-bSU",
   "title": "Paano Magtanim atMag alaga ng Marcot Calamansi | Distancing, Abono, Insecticide at Sekreto ng Farmer",
@@ -177,5 +256,5 @@
  "kind": "perennial",
  "icon": "🍋",
  "slug": "calamansi",
- "rev": "6f4222363195"
+ "rev": "75fd76ec4981"
 }

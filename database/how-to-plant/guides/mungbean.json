@@ -243,6 +243,76 @@
   "Scout at flowering for pod borers and act only when they are many.",
   "Dry the seed well and store it in sealed containers."
  ],
+ "watering": {
+  "traditional": "Monggo after rice is almost never watered: farmers sow it into the wet paddy right after the harvest and it lives on the moisture left in the soil. Upland crops are sown with the rains, and only a few growers with a pump give a furrow or sprinkler watering in a dry spell.",
+  "method": "Mostly no watering. Where water is at hand, a quick flush from a canal or pump that is drained off within hours, furrow watering, or an overhead sprinkler, best in the morning.",
+  "rainfed": "This is the usual way. After rice, sow within a few days of the harvest while the paddy is still wet, and spread rice straw back over the field to hold the moisture. Plantings made early in the dry months need no watering, while late ones from January to March often run short at flowering.",
+  "dryseason": "Sow early after the rice, not late, so the crop finishes before the soil dries. In a late planting, water at flowering and again at pod filling if the soil has cracked or the leaves wilt by mid morning.",
+  "wet": "Monggo hates wet feet. In the rainy season plant on well drained soil or on ridges, cut a shallow drain around the field, and never plant heavy clay that holds water. Long rain at picking rots the pods on the plant.",
+  "schedule": [
+   {
+    "stage": "Before sowing",
+    "from": -2,
+    "to": 0,
+    "often": "After rice, if the paddy has already dried, let water in 1 to 2 days before sowing, then drain it. On upland fields, sow after a good rain",
+    "amount": "Enough to soak the topsoil, with all standing water drained before the seed goes in",
+    "why": "The seed needs moist soil to come up evenly, but drowns in standing water."
+   },
+   {
+    "stage": "Coming up",
+    "from": 0,
+    "to": 10,
+    "often": "No watering on moist soil. Never leave water standing on the field",
+    "amount": "None",
+    "why": "Monggo seed and young seedlings rot quickly in waterlogged soil."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 10,
+    "to": 30,
+    "often": "Usually none. Water only if the soil cracks and the plants wilt in the morning",
+    "amount": "A quick furrow watering or a flush that drains away within hours",
+    "why": "Monggo stands dry spells well at this stage."
+   },
+   {
+    "stage": "Flowering",
+    "from": 30,
+    "to": 45,
+    "often": "Water once if the soil is dry, mostly for plantings made from January to March",
+    "amount": "A furrow watering, a sprinkler, or a quick flush and drain",
+    "why": "Dry soil now makes the flowers drop and sets few pods."
+   },
+   {
+    "stage": "Pod filling",
+    "from": 45,
+    "to": 58,
+    "often": "Water once more if the soil is dry",
+    "amount": "The same light watering, never standing water",
+    "why": "Moisture now fills the seeds, while drought gives small, light seed."
+   },
+   {
+    "stage": "Picking",
+    "from": 58,
+    "to": 66,
+    "often": "Stop watering",
+    "amount": "None",
+    "why": "Dry weather lets the black pods dry for picking."
+   }
+  ],
+  "critical": [
+   "Sowing: the soil must be moist, or the seed comes up patchy.",
+   "Flowering and pod filling, about day 30 to 58: a long dry spell drops flowers and leaves light seed."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and turn pale in the morning, flowers drop, and the pods stay few and short.",
+   "wet": "Leaves turn yellow, seedlings die in the low spots, and the stems rot at the base."
+  },
+  "better": [
+   "If you can water once, water at flowering. A second watering at pod filling gives more again.",
+   "Rice straw over the broadcast seed keeps the soil moist longer and holds back the weeds."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "906fZ8uKk-M",
   "title": "Paano Magtanim Ng MONGGO Sa Palayan Para Mabilis Tumubo Ang Mga ITO?",
@@ -263,5 +333,5 @@
  "kind": "annual",
  "icon": "🫘",
  "slug": "mungbean",
- "rev": "38a50a5482f3"
+ "rev": "2044cd28a947"
 }

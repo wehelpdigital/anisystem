@@ -171,6 +171,69 @@
   "Rotate away from other gourds and melons so pests and soil diseases do not build up.",
   "Water by drip or regular furrow irrigation so the vines never dry out while they bear."
  ],
+ "watering": {
+  "traditional": "Dry season patola gets its first flooding of the furrows about two weeks after the seedlings come up, and then a furrow flooding about every 7 days for as long as it bears, unless it rains. Until that first flooding, many growers water the hills by can a few times a week. Wet season crops on ridges live mostly on the rain.",
+  "method": "Flooding the furrows between the rows is the usual way in the dry season. Backyard growers water each hill with a can or a hose. Water in the early morning or late afternoon.",
+  "rainfed": "Plant from June to September with the rains, on ridges or raised beds so water does not stand around the seeds, and the rain does most of the watering. Lay rice straw or cut grass along the rows, and carry water to each hill if a dry spell hits while the vines flower.",
+  "dryseason": "Plant from February to May only where there is water: flood the furrows about two weeks after the seedlings come up, then about every 7 days. Water when the leaves droop by mid morning or the soil a few cm down feels dry.",
+  "wet": "Plant on the ridges of the furrows or on raised beds, two to three seeds a hill, and keep the canals open. Low, poorly drained fields give poor patola: the seeds and roots rot and the leaves catch mildew in the damp.",
+  "schedule": [
+   {
+    "stage": "Sprouting the seed",
+    "from": -1,
+    "to": 0,
+    "often": "Keep the soaked seed wrapped in a damp cloth in a cool, dark place until the coat splits",
+    "amount": "Damp, not dripping",
+    "why": "Moist seed sprouts fast. Seed left in water rots."
+   },
+   {
+    "stage": "Sowing to young vines",
+    "from": 0,
+    "to": 19,
+    "often": "Plant into moist soil. If no rain falls, water the hills by can about three times a week",
+    "amount": "Moisten each hill, never make mud",
+    "why": "The seedlings need moist soil to root, but wet hills rot the seed."
+   },
+   {
+    "stage": "Vines climbing the trellis",
+    "from": 19,
+    "to": 35,
+    "often": "First furrow flooding about two weeks after the seedlings come up, then about every 7 days when it does not rain",
+    "amount": "Let water fill the furrows and soak the rows, then drain what is left",
+    "why": "Fast growing vines need steady water to reach the trellis roof."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 35,
+    "to": 45,
+    "often": "Keep the 7 day furrow flooding without missing one",
+    "amount": "A full soaking each time, drained off",
+    "why": "Dry soil drops the female flowers and young fruits."
+   },
+   {
+    "stage": "Picking",
+    "from": 45,
+    "to": 100,
+    "often": "Go on flooding the furrows about every 7 days through the picking. Water after each feeding",
+    "amount": "A full soaking each time, drained off",
+    "why": "Patola keeps setting fruits for weeks only with steady water and feeding."
+   }
+  ],
+  "critical": [
+   "Flowering and fruit set, when dry soil drops flowers and young fruits.",
+   "The picking weeks, when the vine must keep filling new fruits.",
+   "Wet season sowing: seeds and seedlings rot in hills where water stands."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and stay limp into the afternoon, the vine tips stop growing, flowers drop, and the fruits stay thin and tough.",
+   "wet": "Seeds and seedlings rot, the leaves yellow and show mildew patches, and the vines wilt from rotten roots."
+  },
+  "better": [
+   "A drip line or a weekly furrow flooding that is never skipped during flowering and picking gives more and longer fruits.",
+   "Mulch the base of each plant with rice straw to keep the soil damp and cut the watering."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "9yLBZQFOKfM",
   "title": "PATOLA MAGANDANG PAGKAKITAAN, KALAHATING TAON NA NAMUMUNGA PADIN | D' Green Thumb",
@@ -192,5 +255,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "sponge-gourd",
- "rev": "f165e087854a"
+ "rev": "1906259414e8"
 }

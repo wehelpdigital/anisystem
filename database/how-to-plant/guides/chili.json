@@ -219,6 +219,85 @@
   "Scout weekly for thrips, mites and aphids and use integrated pest management, spraying only when the count is high.",
   "Rotate with rice, corn or beans, never with other members of the tomato family."
  ],
+ "watering": {
+  "traditional": "Sili is watered right after transplanting and then given furrow irrigation at about 14, 30 and 50 days, with a last one a week before the first picking, more often on light soil in the dry months. Growers without a canal water by hand about three times a week until flowering, and wet season crops on ridges live mostly on the rain.",
+  "method": "Furrow irrigation between hilled rows is the usual way. Hilling up makes the furrows easier to water. Small growers water each hill with a can or a hose. Water in the morning or late afternoon.",
+  "rainfed": "A wet season crop planted from May to September on ridges or raised beds runs mostly on the rain. Mulch the rows with rice straw, which can cut the watering about in half, and carry water to each hill if a dry spell comes at flowering.",
+  "dryseason": "For the October to February crop, irrigate at transplanting, about 14, 30 and 50 days, and a week before picking, and more often on sandy or light soil. Water when the leaves droop by mid morning or the soil a few cm down feels dry.",
+  "wet": "Plant on ridges or raised beds and keep the furrows draining to a canal. Waterlogged sili wilts suddenly and the roots rot, and wet weather spreads fruit rot, so do not water when the soil is already wet.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -35,
+    "to": -26,
+    "often": "Water the bed before and after sowing, cover it with straw or keep the trays in shade, then water each morning",
+    "amount": "Just enough to keep the soil damp, never soggy",
+    "why": "Too much water brings damping off and weak seedlings."
+   },
+   {
+    "stage": "Growing seedlings",
+    "from": -26,
+    "to": -7,
+    "often": "Water each morning or as needed. Water the pricked seedlings and rinse the leaves after the starter drink",
+    "amount": "Light sprinkles",
+    "why": "Steady, light water grows sturdy seedlings. Fertilizer left on the leaves burns them."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water less often while the seedlings get more sun. Water the bed the day you lift them",
+    "amount": "Light waterings. Do not let them wilt hard",
+    "why": "Hardened seedlings stand the field, and a wet bed lets them come out with soil on the roots."
+   },
+   {
+    "stage": "Transplanting and settling",
+    "from": 0,
+    "to": 14,
+    "often": "Irrigate right after transplanting. By hand about three times a week if there is no canal",
+    "amount": "Soak the soil around each hill, no standing water",
+    "why": "The seedlings must root before the sun and wind dry them out."
+   },
+   {
+    "stage": "Growth and branching",
+    "from": 14,
+    "to": 30,
+    "often": "Furrow irrigate at about 14 days, sooner if the soil dries fast",
+    "amount": "Let water run until the rows are wet, then drain",
+    "why": "A big, branchy plant carries more flowers and fruits."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 30,
+    "to": 58,
+    "often": "Furrow irrigate at about 30 and 50 days, after the side dressings, and in between whenever the soil dries",
+    "amount": "A full soaking, drained off",
+    "why": "Dry soil drops flowers and young fruits, while soggy soil brings wilt."
+   },
+   {
+    "stage": "Before and during picking",
+    "from": 58,
+    "to": 130,
+    "often": "Give the last scheduled irrigation a week before picking starts, then water about once a week or when the soil dries while picking",
+    "amount": "A full soaking each time, drained off",
+    "why": "Steady water keeps the plants flowering and filling fruits for many weeks of picking."
+   }
+  ],
+  "critical": [
+   "The first two weeks after transplanting.",
+   "Flowering and fruit set: dry soil drops flowers, and a dry spell followed by a soaking brings rotten fruit tips.",
+   "Every stage: sili wilts and dies fast in waterlogged soil."
+  ],
+  "signs": {
+   "dry": "Leaves droop and curl at midday, flowers and young fruits fall, and the fruits stay small or show sunken, rotten tips.",
+   "wet": "Plants wilt suddenly while the soil is wet, the lower leaves yellow and drop, and the stem base turns dark and soft."
+  },
+  "better": [
+   "Rice straw or plastic mulch keeps the soil evenly moist and can cut the watering by about half.",
+   "A drip line under the mulch gives steady water through flowering and picking without wetting the leaves or flooding the roots."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "bcT9-3yC6f0",
   "title": "Paano magtanim ng Siling Panigang? Part 1 Step by Step | Osepang Bukid",
@@ -240,5 +319,5 @@
  "kind": "annual",
  "icon": "🌶️",
  "slug": "chili",
- "rev": "897c9c673876"
+ "rev": "e93cad145ff7"
 }

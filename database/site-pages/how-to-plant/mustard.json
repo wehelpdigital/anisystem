@@ -214,6 +214,145 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mustasa, stage by stage"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Sown in furrows: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Mustasa sown straight in the furrows is watered two to three times a week by hand, hose or furrow, more in dry spells. On rice land planted right after the wet season harvest, the soil still holds moisture for the first weeks and less watering is needed. Watering cans and hoses on small plots, furrows on bigger rice land fields. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mustasa go dry at these stages",
+   "text": "Sowing to coming up. Leaf growth: dry spells give tough, bitter leaves and early bolting."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mustasa, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "Sowing day to day 5",
+     "Water right after sowing, then every day or two until the seedlings are up",
+     "A gentle watering that keeps the furrow damp"
+    ],
+    [
+     "Young plants",
+     "Day 5 to 20",
+     "Two to three times a week, more often in dry spells. Water before thinning",
+     "Enough to keep the soil moist to the roots"
+    ],
+    [
+     "Leaf growth",
+     "Day 20 to 50",
+     "Two to three times a week, or more if the leaves droop in the afternoon",
+     "Even waterings, no standing water"
+    ],
+    [
+     "Picking",
+     "Day 50 to 60",
+     "Keep watering two to three times a week through the picking rounds",
+     "Even waterings"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow on rice land right after the wet season harvest so the plants start on the moisture left in the soil, and water by can two to three times a week once it dries. Mulch with rice straw to hold moisture.\n\n**In the dry season.** Water two to three times a week, more in hot, dry spells and on sandy soil. Water when the top soil is dry or the leaves droop by mid afternoon.\n\n**In the rainy season.** Heavy rain makes mustasa rot or bolt, so in the rainy months plant on raised beds with drainage and skip watering on wet days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and stay small, the stalks turn tough and the plants send up flower stalks early.",
+    "**Too much water:** Lower leaves yellow and rot at the base, and the plants go soft."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the furrows with rice straw to keep the soil moist between waterings. Keep the watering regular so the leaves stay mild and the plants do not bolt."
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Seedlings set out on beds: how to water"
+  },
+  {
+   "type": "text",
+   "text": "Seedlings are raised in trays or a seedbed under light shade and watered lightly, then set out in the cool hours, watered right away and watered two to three times a week until the leaves are picked. Watering cans and hoses on small beds, furrows on bigger fields. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mustasa go dry at these stages",
+   "text": "The first days after transplanting. Leaf growth: dry spells give tough, bitter leaves and early bolting."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mustasa, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedlings in trays",
+     "28 to 3 days before transplanting",
+     "Water lightly every day or as the mix dries, under light shade",
+     "Light sprinkles, never soggy"
+    ],
+    [
+     "Transplanting",
+     "Transplanting day to day 3",
+     "Water right after setting out in the morning or late afternoon, then daily until they stand up",
+     "Soak the soil around each plant"
+    ],
+    [
+     "Leaf growth",
+     "Day 3 to 20",
+     "Two to three times a week, more in dry spells. Water after weeding",
+     "Even waterings, no standing water"
+    ],
+    [
+     "Picking",
+     "Day 20 to 25",
+     "Keep watering two to three times a week while picking",
+     "Even waterings"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Set the seedlings out on rice land right after the wet season harvest so they start on the moisture left in the soil, and mulch with rice straw. Water by can two to three times a week once the soil dries.\n\n**In the dry season.** Water two to three times a week, more in hot, dry spells and on sandy soil. Water when the top soil is dry or the leaves droop by mid afternoon.\n\n**In the rainy season.** Use raised beds with drainage in the rainy months and skip watering on wet days. Heavy rain makes mustasa rot or bolt."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and stay small, the stalks turn tough and the plants bolt early.",
+    "**Too much water:** Lower leaves yellow and rot at the base, and the plants go soft."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the beds with rice straw to keep the soil moist between waterings. A drip line or a fine hose head gives every plant the same water and saves time."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mustasa"
   },
   {
@@ -342,6 +481,10 @@
     {
      "q": "How long before mustasa can be harvested?",
      "a": "Sown in furrows, it is ready about 60 days after sowing. Seedlings set out on beds, it is ready about 25 days after transplanting. Leaves are picked from about two to four weeks after transplanting, or about two months after direct sowing, while the stalks are crisp."
+    },
+    {
+     "q": "How often do you water mustasa?",
+     "a": "Sowing to coming up, sowing day to day 5: Water right after sowing, then every day or two until the seedlings are up. Young plants, day 5 to 20: Two to three times a week, more often in dry spells. Water before thinning. Leaf growth, day 20 to 50: Two to three times a week, or more if the leaves droop in the afternoon. Water two to three times a week, more in hot, dry spells and on sandy soil."
     },
     {
      "q": "What do you plant to grow mustasa?",

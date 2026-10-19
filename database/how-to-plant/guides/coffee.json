@@ -300,6 +300,110 @@
   "Scout for the berry borer and other pests, pick up fallen berries, and use integrated pest management.",
   "Match the type to the place: Arabica in the cool uplands, Robusta, Liberica or Excelsa lower down."
  ],
+ "watering": {
+  "traditional": "Nearly all coffee here is rain fed: seedlings are watered often in the nursery, planted on a cloudy day once the rains are steady, and after that left to the rain under shade and mulch. Grown trees are not watered at all, because they need the dry months to flower.",
+  "method": "A watering can with a rose for the seedbed and bags, and a pail into the mulched ring for young trees in the field. Grown trees get rain only. A few farms with a spring or tank run sprinklers to start flowering. Water in the early morning or late afternoon.",
+  "rainfed": "Plant on a cloudy day once the rains are steady, under shade trees such as kakawate, banana or coconut, and keep 5 to 8 cm of straw, dry grass or coffee pulp around each tree. On slopes, dig short trenches along the contour between the rows to catch the rain. Shade and mulch keep the soil cool and damp enough for coffee to get through the dry months without watering.",
+  "dryseason": "Young trees in their first dry season: once or twice a week where the soil dries, more on open slopes. Bearing trees: no water until flowering is due, then, where water is at hand, one heavy soaking to bring on the bloom and a few more for about three weeks after. Water a young tree when its leaves droop at midday and are still limp in the evening.",
+  "wet": "Coffee does not stand waterlogged soil: plant with the collar a little above the ground and drain flat, wet spots. Rain in the middle of the dry spell brings early, scattered flowering and an uneven harvest. Wet, crowded, heavily shaded trees get more leaf rust, so prune after harvest to let air through.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -365,
+    "to": -300,
+    "often": "Every day or every other day in dry weather",
+    "amount": "A light sprinkle from a rose can, enough to keep the sand damp all the way down",
+    "why": "Fresh coffee seed takes six to eight weeks to sprout and dies if the bed dries."
+   },
+   {
+    "stage": "Seedlings in bags under shade",
+    "from": -300,
+    "to": -60,
+    "often": "Every day in dry weather, every 2 to 3 days in cloudy weeks",
+    "amount": "Enough to wet each bag right through",
+    "why": "Bagged roots cannot reach any water outside the bag."
+   },
+   {
+    "stage": "Hardening in more sun",
+    "from": -60,
+    "to": 0,
+    "often": "A little less often, every 2 to 3 days, as the bags move into the light",
+    "amount": "Enough to keep the bags from wilting. Soak them well the day before planting",
+    "why": "Tougher leaves stand the field better."
+   },
+   {
+    "stage": "Planting to the end of the rains",
+    "from": 0,
+    "to": 120,
+    "often": "Rain is usually enough. Water only in a dry week",
+    "amount": "One good soak of the mulched ring around the tree",
+    "why": "Planting with the rains gives the roots months of water to spread."
+   },
+   {
+    "stage": "First dry season",
+    "from": 120,
+    "to": 360,
+    "often": "Once or twice a week for trees planted late or on dry, open slopes",
+    "amount": "Enough to soak the mulched ring a hand deep",
+    "why": "Young trees are lost in their first dry months more than at any other time."
+   },
+   {
+    "stage": "Second year",
+    "from": 360,
+    "to": 720,
+    "often": "Left to the rain. Water only young trees that wilt in a long dry spell",
+    "amount": "A soak of the ring under the leaves",
+    "why": "The roots are deep enough by now to ride out a normal dry season."
+   },
+   {
+    "stage": "Bearing trees: dry spell before flowering (each year)",
+    "from": 720,
+    "to": 790,
+    "often": "Do not water",
+    "amount": "None",
+    "why": "The flower buds need some weeks of dry weather to be ready to open."
+   },
+   {
+    "stage": "Flowering",
+    "from": 790,
+    "to": 810,
+    "often": "Where water is at hand and the rain comes late, one heavy watering or sprinkler run breaks the dry spell. The trees bloom about 7 to 12 days later",
+    "amount": "A soaking like a good heavy shower over all the ground under the trees",
+    "why": "A dry spell broken by rain or water makes the whole farm flower together."
+   },
+   {
+    "stage": "Fruit set",
+    "from": 810,
+    "to": 840,
+    "often": "Keep the soil moist for about three weeks after blooming, watering about once a week if no rain falls",
+    "amount": "The same soaking under the trees",
+    "why": "Without a follow up shower, many young berries drop."
+   },
+   {
+    "stage": "Berry filling to ripening",
+    "from": 840,
+    "to": 1080,
+    "often": "Rain usually covers it. Water only in a long dry spell",
+    "amount": "A soak of the mulched ring under the leaves",
+    "why": "Thirst while the berries fill gives black, shrunken beans."
+   }
+  ],
+  "critical": [
+   "The seedbed and the bags in the nursery, which must never dry out.",
+   "The first dry season after planting, when young trees die without mulch or water.",
+   "The three weeks right after flowering, when a dry spell drops the young berries.",
+   "Berry filling, since lack of water then gives black, shrunken beans."
+  ],
+  "signs": {
+   "dry": "Leaves droop and curl at midday and stay limp in the evening, older leaves yellow and fall, few flowers open, young berries drop, and at harvest the beans come out black and shrunken.",
+   "wet": "Yellow leaves, rotting roots and branches dying back on waterlogged ground, and flowering in small scattered rounds after off season rains."
+  },
+  "better": [
+   "Where a spring or tank is near, one heavy sprinkler run at the end of the dry spell and a follow up about three weeks later give one even flowering and a bigger, easier harvest.",
+   "Keep the shade trees and the thick mulch. They hold more water in the soil than any watering a small farm can manage."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "meP4sHPfr7s",
   "title": "VLOG Tamang Proseso sa pagtatanim ng Arabica na kape",
@@ -321,5 +425,5 @@
  "kind": "perennial",
  "icon": "☕",
  "slug": "coffee",
- "rev": "6b2d0f7d03e0"
+ "rev": "a4287aa97f02"
 }

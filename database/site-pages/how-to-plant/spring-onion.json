@@ -140,6 +140,67 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sibuyas na mura, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Spring onion is watered often because its roots are short. Growers water by hand with a can or a hose, or let water from a canal into the beds, every morning in the first week and every one to two days after that in dry weather. Hand watering with a can or a hose, or letting canal water into the furrows between beds. Water in the early morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sibuyas na mura go dry at these stages",
+   "text": "The first week: the bulbs must not dry out while they root. All through leaf growth: dry beds give tough, yellow tipped leaves."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sibuyas na mura, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and rooting",
+     "Planting day to day 7",
+     "Water every morning",
+     "Enough to wet the bed through, gently so the bulbs are not washed out"
+    ],
+    [
+     "Leaf growth",
+     "Day 7 to 45",
+     "Every one to two days in dry weather, and right after each feeding",
+     "Wet the bed to a finger deep or more, with no water left standing"
+    ],
+    [
+     "Before harvest",
+     "Day 45 to 50",
+     "Keep watering as before, and water the day before pulling",
+     "The same"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** In the rainy months the rain does most of the watering, but plant on raised beds and water in any dry spell. It is not grown on rain alone in the dry months.\n\n**In the dry season.** Water every one to two days, and every day in the hottest weeks or on sandy soil. Water when the top of the bed is dry or the leaf tips turn yellow.\n\n**In the rainy season.** Long heavy rain rots the plants, so keep the beds raised and the paths open for drainage, and skip watering on rainy days."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaf tips turn yellow and dry, leaves stay short and tough, and the plants bend over.",
+    "**Too much water:** Leaves yellow and go soft, and the bulbs and roots rot."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A thin rice straw mulch on the beds keeps the soil moist and the leaves clean. A sprinkler or drip line on bigger beds gives even water with less work."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sibuyas na mura"
   },
   {
@@ -265,6 +326,10 @@
     {
      "q": "How long before sibuyas na mura can be harvested?",
      "a": "It is ready about 50 days after planting. Whole plants are pulled at about 45 to 50 days, or leaves are cut for regrowth."
+    },
+    {
+     "q": "How often do you water sibuyas na mura?",
+     "a": "Planting and rooting, planting day to day 7: Water every morning. Leaf growth, day 7 to 45: Every one to two days in dry weather, and right after each feeding. Before harvest, day 45 to 50: Keep watering as before, and water the day before pulling. Water every one to two days, and every day in the hottest weeks or on sandy soil."
     },
     {
      "q": "What do you plant to grow sibuyas na mura?",

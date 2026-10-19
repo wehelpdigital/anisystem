@@ -121,6 +121,93 @@
   "Water during flowering and fruit growth in long dry spells to stop fruit drop.",
   "Match the variety to the place: mandarins in the cool uplands, dalandan and oranges lower down."
  ],
+ "watering": {
+  "traditional": "Dalandan and ponkan orchards here are mostly rain fed: a new tree is watered every few days in dry weather and mulched, then left to the rain once it roots. Growers with a creek or a pump water in the dry months during flowering and fruit growth, and some upland farms run small sprinklers.",
+  "method": "A pail or hose into a ring basin under the edge of the leaves on small farms. Small sprinklers on some upland orchards. Drip lines with two or more emitters a tree on a few commercial farms. Water early in the morning.",
+  "rainfed": "Plant as the rains begin, mulch well a little off the trunk, and mulch again before the dry months, since a long dry spell makes young fruit drop. On slopes, plant along the contour and shape a small basin on the downhill side of each tree so rain soaks in. Rain fed trees bear mostly on the rains, with fewer fruits in a year with a long dry season.",
+  "dryseason": "First year: every 3 to 4 days. Second year: every 3 to 7 days, by soil. Bearing trees: every 5 to 10 days through flowering and fruit growth. Water when the leaves curl and look dull by midday, or when young fruits start dropping.",
+  "wet": "Wet soil against the trunk brings root rot and gum oozing from the bark, so keep the bud union well above the ground, never pile soil or mulch on the trunk, and water the ring under the leaves, not the trunk. Plant on ground that drains well and open drains from low spots. Waterlogged trees yellow and decline.",
+  "schedule": [
+   {
+    "stage": "Planting to new leaves",
+    "from": 0,
+    "to": 30,
+    "often": "Soak on planting day, then every 2 to 3 days in dry weather until new leaves come out",
+    "amount": "Half to one watering can a tree each time, into a ring basin a little away from the stem",
+    "why": "The roots are still in the bag ball and dry out in a few hot days."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 30,
+    "to": 360,
+    "often": "Every 3 to 4 days in the dry months, not needed in steady rain",
+    "amount": "Half to one watering can a tree, or about 1 to 5 liters a tree a day on drip",
+    "why": "Most young citrus roots sit within about 40 cm of the surface, where the soil dries first."
+   },
+   {
+    "stage": "Second year",
+    "from": 360,
+    "to": 720,
+    "often": "Every 3 to 4 days in the dry months on light soil, about once a week on clay",
+    "amount": "About 3 to 5 watering cans a tree each time, or 10 to 15 liters a tree a day on drip",
+    "why": "Each new flush of leaves needs moist soil to come out full."
+   },
+   {
+    "stage": "Years 3 and 4, before bearing",
+    "from": 720,
+    "to": 1170,
+    "often": "Every 4 to 7 days in the dry months",
+    "amount": "A deep soak of the whole ring under the leaves, or about 15 to 40 liters a tree a day on drip as the tree grows",
+    "why": "A full, leafy frame now means a heavy first crop."
+   },
+   {
+    "stage": "Bearing trees: short dry spell before flowering (each year)",
+    "from": 1170,
+    "to": 1200,
+    "often": "Let the soil get drier for a few weeks at the end of the dry months, then give a deep soak with the fertilizer",
+    "amount": "Little or none for a few weeks, then one deep soak",
+    "why": "Citrus flowers when water comes back after a dry spell, so the trees bloom together."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 1200,
+    "to": 1260,
+    "often": "Every 5 to 7 days in dry weather, never letting the soil dry out",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "Most fruit drop comes when the soil dries during and just after flowering."
+   },
+   {
+    "stage": "Fruit growth",
+    "from": 1260,
+    "to": 1410,
+    "often": "Every 7 to 10 days in dry spells",
+    "amount": "A deep soak of the ring under the leaves",
+    "why": "Even moisture gives full sized, juicy fruits."
+   },
+   {
+    "stage": "Ripening and picking",
+    "from": 1410,
+    "to": 1470,
+    "often": "Water lightly and evenly in dry weather. Avoid one heavy flood after a long dry spell",
+    "amount": "A normal soak of the ring",
+    "why": "A sudden flood after dry weeks makes ripening fruits split."
+   }
+  ],
+  "critical": [
+   "The first year after planting, while the roots are small and shallow.",
+   "Flowering and fruit set, when dry soil makes the flowers and young fruits drop.",
+   "Fruit growth in a long dry spell, which gives small fruits that split when rain returns."
+  ],
+  "signs": {
+   "dry": "Leaves curl, fold along the middle and lose their shine by midday, older leaves yellow and fall, new flushes stop, and young fruits drop.",
+   "wet": "Leaves yellow all over, roots rot, gum oozes from the lower trunk, and the tree slowly declines."
+  },
+  "better": [
+   "Drip with two or more emitters a tree, starting at about 1 to 5 liters a tree a day in the first dry season and rising to 20 to 40 liters by the fourth year, keeps young trees growing through the dry months.",
+   "Keep the soil steadily moist from flowering through fruit set and wet a wide ring rather than the trunk. This alone cuts fruit drop and root rot."
+  ],
+  "confidence": "medium"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng dalandan",
@@ -134,5 +221,5 @@
  "kind": "perennial",
  "icon": "🍊",
  "slug": "citrus",
- "rev": "215130d9f5fe"
+ "rev": "c9d14783b4bb"
 }

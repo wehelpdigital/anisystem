@@ -135,6 +135,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering trigo, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "The few wheat plots in our highlands are sown at the end of the rains and live on the last of the rain. Growers water small plots by hand or by hose during dry spells. Hand watering with a can or a hose on small plots, in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let trigo go dry at these stages",
+   "text": "Tillering, about day 10 to 45: dry soil means fewer heads. Heading, flowering and grain filling, about day 45 to 100: a dry spell gives light, shriveled grain."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for trigo, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing and coming up",
+     "Sowing day to day 10",
+     "Water the plot right after sowing and every few days if no rain falls",
+     "Enough to moisten the seed rows, never soggy"
+    ],
+    [
+     "Tillering",
+     "Day 10 to 45",
+     "In dry spells, water about once a week",
+     "Soak the rows with a can or a hose"
+    ],
+    [
+     "Heading and flowering",
+     "Day 45 to 75",
+     "Keep the soil moist, watering when the topsoil dries",
+     "A good soaking of the rows"
+    ],
+    [
+     "Grain filling",
+     "Day 75 to 100",
+     "Water in dry spells until the grain is firm",
+     "A soaking of the rows"
+    ],
+    [
+     "Ripening",
+     "Day 100 to 115",
+     "Stop watering",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow at the end of the rains, from October to December, while the soil is still moist, so the crop grows on stored moisture through the cool months.\n\n**In the dry season.** The crop grows through the dry months, so water small plots about once a week in dry spells, more at heading and flowering, and stop once the grain hardens.\n\n**In the rainy season.** Wet, warm weather brings rust and rotting heads. Plant on beds that drain, and do not sow so early that the heads come out in the rains."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll and turn gray green, the plants stay short with few shoots, and the heads are small.",
+    "**Too much water:** Yellow leaves, rust spots and moldy heads."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water at tillering and at heading if you can water only twice. A light mulch between the rows keeps the topsoil moist longer."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for trigo"
   },
   {
@@ -260,6 +333,10 @@
     {
      "q": "How long before trigo can be harvested?",
      "a": "It is ready about 115 days after sowing. Ready in about 100 to 120 days, when the straw is golden and the grain is hard."
+    },
+    {
+     "q": "How often do you water trigo?",
+     "a": "Sowing and coming up, sowing day to day 10: Water the plot right after sowing and every few days if no rain falls. Tillering, day 10 to 45: In dry spells, water about once a week. Heading and flowering, day 45 to 75: Keep the soil moist, watering when the topsoil dries. The crop grows through the dry months, so water small plots about once a week in dry spells, more at heading and flowering, and stop once the grain hardens."
     },
     {
      "q": "What do you plant to grow trigo?",

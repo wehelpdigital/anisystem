@@ -169,6 +169,68 @@
   "Keep weeds out in the first month, then leave the soil around the plants alone.",
   "Dry pods quickly and throw out moldy ones to keep the crop safe to eat."
  ],
+ "watering": {
+  "traditional": "The wet season crop lives on the rains. The dry season crop after rice lives on the moisture left in the sandy fields, and farmers with a pump run water into the furrows during dry spells, most of all when the plants flower and fill their pods.",
+  "method": "Furrow watering from a pump or a canal, letting water run between the ridges and soak in. Water in the morning or late afternoon.",
+  "rainfed": "For the wet season crop, plant at the start of the rains on well drained, sandy fields, so the pods fill before the heaviest rains. For the dry season crop, plant soon after the rice harvest while the field is still wet, so the pods fill before the soil dries out.",
+  "dryseason": "The dry season crop after rice usually needs one to a few furrow waterings, mostly at flowering and pod filling. Water when the topsoil is dry and crusted or the leaves fold up and wilt before noon.",
+  "wet": "Peanut needs loose, well drained soil. In the wet season plant on ridges and keep the furrows draining, since standing water rots the roots and pods and spreads leaf diseases. Plants in very wet soil grow leaves at the cost of pods.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 10,
+    "often": "Plant into moist soil. If the soil is dry, water the furrows lightly a day before planting",
+    "amount": "Enough to moisten the seed row, never soggy",
+    "why": "Kernels rot in wet soil and come up poorly in dry soil."
+   },
+   {
+    "stage": "Early growth",
+    "from": 10,
+    "to": 25,
+    "often": "Usually no watering. Water only if the plants wilt in the morning",
+    "amount": "A light furrow watering",
+    "why": "A little dryness now pushes the roots deep."
+   },
+   {
+    "stage": "Flowering and pegging",
+    "from": 25,
+    "to": 50,
+    "often": "In dry weeks, water soon after the hilling up and whenever the topsoil turns dry and hard",
+    "amount": "Fill the furrows and let the water soak into the ridge",
+    "why": "The pegs push into the soil only when the topsoil is moist and soft."
+   },
+   {
+    "stage": "Pod filling",
+    "from": 50,
+    "to": 85,
+    "often": "Keep the soil moist. In the dry season water the furrows whenever the soil a few centimeters down is dry",
+    "amount": "A full furrow watering, without water standing around the plants",
+    "why": "Drought now gives empty pods and small kernels."
+   },
+   {
+    "stage": "Maturing",
+    "from": 85,
+    "to": 100,
+    "often": "Stop watering about two weeks before harvest. If the ground is too hard to pull, a light watering a day or two before pulling loosens it",
+    "amount": "None, or one light watering for pulling",
+    "why": "Wet soil late on makes the kernels sprout and rot in the pods."
+   }
+  ],
+  "critical": [
+   "Flowering and pegging, about day 25 to 50: dry, hard topsoil stops the pegs from going in.",
+   "Pod filling, about day 50 to 85: a dry spell gives empty pods and small kernels."
+  ],
+  "signs": {
+   "dry": "Leaflets fold up and turn dull gray green by mid morning, the topsoil cracks and hardens, and few pegs reach the soil.",
+   "wet": "Leaves yellow, the plants grow tall with few pods, and pods rot or the kernels sprout in the ground."
+  },
+  "better": [
+   "Save your water for flowering, pegging and pod filling, the weeks that decide the number of full pods.",
+   "Rice straw between the rows keeps the topsoil soft and moist for the pegs and cuts the number of waterings."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "6hVJ2C_7yfs",
   "title": "PAANO MAGTANIM NG MANI NA PANG TAG ARAW",
@@ -189,5 +251,5 @@
  "kind": "annual",
  "icon": "🥜",
  "slug": "peanut",
- "rev": "efc79b606141"
+ "rev": "00db8aebbb23"
 }

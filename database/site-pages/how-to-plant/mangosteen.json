@@ -150,6 +150,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering mangostan, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Mangosteen seedlings are watered three to four times a week through their two years in the nursery, then watered right after planting and whenever rain is short. Grown trees are mostly rain fed, and growers who have water give it in the dry months to keep the soil moist. A watering can or hose for nursery seedlings, and a pail or hose into a mulched ring for young trees. Bearing trees get basin, sprinkler or drip watering where water is near. Water in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let mangostan go dry at these stages",
+   "text": "The nursery years and the first months after planting, when the seedling dies from either drying out or standing water. Flowering and young fruits, when dry soil drops the fruits. Fruit growth up to picking, since a dry spell then a sudden soaking spoils the fruit inside."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for mangostan, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedlings in the nursery (two years)",
+     "2 years before planting to planting day",
+     "3 to 4 times a week under partial shade, daily in very hot spells",
+     "Enough to wet the bag or tube right through, with no water left standing"
+    ],
+    [
+     "Planting to 3 months",
+     "Planting day to month 3",
+     "Water right after planting, then every 2 to 3 days whenever rain is short",
+     "A gentle soak of a ring basin, never leaving water standing over the roots"
+    ],
+    [
+     "First years under shade",
+     "Month 3 to 48",
+     "About twice a week in the dry months, once a week on heavy soil. Not needed in steady rain",
+     "A soak of the mulched ring under the leaves"
+    ],
+    [
+     "Years 5 to 8, building the crown",
+     "Month 48 to 88",
+     "About once a week in the dry months",
+     "A deep soak of the ring, widened as the crown spreads"
+    ],
+    [
+     "Bearing trees: dry rest before flowering (each year)",
+     "Month 88 to 90",
+     "Hold back water for several weeks in the dry months. Mangosteen needs a longer dry spell than durian, about two months in one study",
+     "None"
+    ],
+    [
+     "Flowering and young fruits",
+     "Month 90 to 91",
+     "Once the flower buds show, water again and keep the soil evenly moist, about weekly in dry weather",
+     "A deep soak under the crown"
+    ],
+    [
+     "Fruit growth to harvest",
+     "Month 91 to 96",
+     "About once a week in dry spells, keeping moisture even until picking",
+     "A deep soak under the crown"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant once the rains have truly begun, under banana, dapdap, coconut or durian shade, and keep a mulch of leaves on the ring. Mangosteen does best where rain falls through most of the year. In places with a long dry season, rain fed trees grow very slowly and many young trees die, so carry water to them in their first dry seasons.\n\n**In the dry season.** Young trees about twice a week, grown trees about once a week, except for the dry rest of several weeks before flowering. Water when the topsoil under the mulch is dry a finger deep or when the young leaves droop.\n\n**In the rainy season.** Mangosteen wants moist but well drained soil. Never let water stand around a young tree. On flat land plant on a low mound and dig drains. Heavy rain after a dry spell while fruits ripen gives glassy, watery flesh, yellow sap stains inside and cracked skins."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Young leaves droop and curl, leaf edges brown, growth stops, and young fruits fall.",
+    "**Too much water:** Seedlings yellow and die back with rotting roots. Ripe fruits show glassy flesh, yellow sap and cracks after heavy rain."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip lines through the dry months give better flowering and fruit set than sprinklers and keep the slow young trees growing. Give the bearing tree its dry rest, then keep the soil evenly moist from flowering to harvest so the fruits stay clean inside."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for mangostan"
   },
   {
@@ -280,6 +365,10 @@
     {
      "q": "How long before mangostan can be harvested?",
      "a": "It is ready about 8 years after planting. The main season runs about August to October."
+    },
+    {
+     "q": "How often do you water mangostan?",
+     "a": "Seedlings in the nursery (two years), 2 years before planting to planting day: 3 to 4 times a week under partial shade, daily in very hot spells. Planting to 3 months, planting day to month 3: Water right after planting, then every 2 to 3 days whenever rain is short. First years under shade, month 3 to 48: About twice a week in the dry months, once a week on heavy soil. Not needed in steady rain. Young trees about twice a week, grown trees about once a week, except for the dry rest of several weeks before flowering."
     },
     {
      "q": "What do you plant to grow mangostan?",

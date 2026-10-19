@@ -107,6 +107,60 @@
   "Plant on raised, well drained ground with irrigation for the dry months.",
   "Compare it with forages that already do well here before relying on it for feed."
  ],
+ "watering": {
+  "traditional": "Alfalfa is rare in the Philippines and grown mostly in small trial and dairy plots. Growers sow it at the end of the heavy rains on high, well drained ground and irrigate through the dry months, lightly while the seedlings are young and deeply but less often once the stand is rooted.",
+  "method": "Small plots are watered by hose, sprinkler or furrow. Water in the morning, and plan the watering around the cutting days.",
+  "rainfed": "On rain alone, sow at the end of the heavy rains so the young stand roots on the moisture left in the soil without being drowned. The deep taproot later carries the stand through short dry spells, but cutting slows in the dry months without water.",
+  "dryseason": "Water deeply but not often once the stand is rooted, and always right after each cut once the forage is off the field. Water when the soil a hand span down is dry or the regrowth stalls.",
+  "wet": "Alfalfa cannot stand waterlogged soil: the roots rot and the stand dies out. Grow it only on high, well drained ground, keep drains open and skip watering in the rains.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Water gently right after sowing, then lightly every day or two if the soil dries",
+    "amount": "A fine spray that keeps the top soil damp without washing the tiny seed",
+    "why": "The seed sits very near the surface and dies if the top soil dries."
+   },
+   {
+    "stage": "Seedlings rooting",
+    "from": 7,
+    "to": 30,
+    "often": "Light, frequent waterings until the seedlings are well rooted",
+    "amount": "Keep the top few cm moist, never puddled",
+    "why": "Young plants have short roots, and standing water kills them."
+   },
+   {
+    "stage": "Stand growing to first cut",
+    "from": 30,
+    "to": 70,
+    "often": "Deep waterings, less often, in dry weather. Stop a few days before cutting so the field is dry",
+    "amount": "Soak the soil deeply each time, then let it drain",
+    "why": "Alfalfa grows a long taproot that feeds from deep moisture, and a dry field is easier to cut and dry."
+   },
+   {
+    "stage": "After each cut",
+    "from": 70,
+    "to": 100,
+    "often": "Water soon after the cut forage is off the field and the regrowth starts, then deep and less often again. Stop a few days before the next cut",
+    "amount": "A deep soaking, drained off",
+    "why": "Regrowth right after cutting is the stage most hurt by dry soil."
+   }
+  ],
+  "critical": [
+   "Sowing to rooting, when the top soil must stay damp.",
+   "The days right after each cut, when the regrowth starts."
+  ],
+  "signs": {
+   "dry": "The stand turns dull and bluish, the leaves fold and the regrowth after cutting is short and slow.",
+   "wet": "Plants yellow and thin out, roots rot in low spots, and weeds take over the gaps."
+  },
+  "better": [
+   "Time the watering to the cuts: stop a few days before cutting and water again soon after the forage is off.",
+   "Pick high, well drained ground and level it so no water stands anywhere in the field."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng alfalfa",
@@ -119,5 +173,5 @@
  "kind": "annual",
  "icon": "🌿",
  "slug": "alfalfa",
- "rev": "0470fd6c5d20"
+ "rev": "b9af11b58278"
 }

@@ -269,6 +269,85 @@
   "Fight fruit and shoot borer with weekly removal of damaged parts, sex pheromone traps and spraying only when the count is high.",
   "Rotate with rice, corn or a bean crop, not with tomato, pepper or potato."
  ],
+ "watering": {
+  "traditional": "Talong is watered by furrow: water is let into the furrows between the rows, allowed to soak in and never left standing. In the dry season farmers water about a week after transplanting, again near 21 and 30 days, then about every 10 days for as long as they pick. In the wet season only when the soil dries.",
+  "method": "Furrow irrigation from a canal, a shallow well or a small pump is the usual way. Small growers water each hill with a can or a hose. Plastic mulch with water let into the furrows is common on commercial farms. Water in the morning or late afternoon.",
+  "rainfed": "Set out the main crop after the rice harvest so it starts on the moisture left in the field, and mulch with rice straw or rice hull to hold it. Without a canal, carry water by can or pail to each hill when the soil dries during flowering, and choose a field near a well or creek.",
+  "dryseason": "Furrow irrigate about a week after transplanting, near 21 and 30 days, then about every 10 days until picking ends, more often on sandy soil. Water when the leaves droop by mid morning or the soil a few cm down feels dry.",
+  "wet": "Plant on raised rows with wider gaps between hills, about 75 cm, so water drains and air moves. Water only when the soil dries. Soaked soil brings root rot and bacterial wilt, which makes whole plants droop and die.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -35,
+    "to": -24,
+    "often": "Water the bed before sowing, sprinkle the trays after sowing, then water each morning",
+    "amount": "Just enough to keep the soil damp, never soggy",
+    "why": "Overwatered seedbeds bring damping off and thin, weak seedlings."
+   },
+   {
+    "stage": "Growing seedlings",
+    "from": -24,
+    "to": -7,
+    "often": "Water in the morning only, enough to keep the soil moist. Water and shade the pricked seedlings until they recover",
+    "amount": "Light sprinkles. Rinse the leaves with plain water right after the starter drink",
+    "why": "Steady, light water grows sturdy seedlings, and fertilizer left on the leaves burns them."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water less and less often while the shade comes off",
+    "amount": "Light waterings. Water at once if they wilt hard",
+    "why": "Seedlings used to less water and full sun take the move to the field better."
+   },
+   {
+    "stage": "Field ready for planting",
+    "from": -2,
+    "to": 0,
+    "often": "With plastic mulch, flood the beds two days before transplanting. Without mulch, water the furrows before or at planting",
+    "amount": "Soak the beds or rows through",
+    "why": "Water cools the soil under the mulch and dissolves the base fertilizer so it does not burn the young roots."
+   },
+   {
+    "stage": "Transplanting and settling",
+    "from": 0,
+    "to": 7,
+    "often": "Water each hill right after transplanting. In hot weather give wilting hills a little water by can until the first furrow irrigation",
+    "amount": "Soak the soil around each seedling",
+    "why": "Newly set seedlings root only in moist soil. Dead or wilted ones are replaced at 3 to 5 days."
+   },
+   {
+    "stage": "Growth to first flowers",
+    "from": 7,
+    "to": 30,
+    "often": "In the dry season, furrow irrigate at about 7, 21 and 30 days after transplanting",
+    "amount": "Let water run down the furrows until the rows are wet, then let it soak in with none left standing",
+    "why": "A big, well rooted plant carries more fruits for the months of picking."
+   },
+   {
+    "stage": "Flowering and picking",
+    "from": 30,
+    "to": 170,
+    "often": "About every 10 days in the dry season, or whenever the soil dries. Water after each feeding",
+    "amount": "The plants use about 3.5 to 4 cm of water a week in dry weather, so each watering should soak the rows well",
+    "why": "Dry soil drops flowers and gives small, crooked, bitter fruits, while soaked soil rots roots and spreads wilt."
+   }
+  ],
+  "critical": [
+   "The first week after transplanting, while the seedlings root.",
+   "Flowering and fruit growth: steady moisture keeps flowers from dropping and fruits from turning small and crooked.",
+   "All season: water must never stand around the stems, because talong is easily hurt by flooding."
+  ],
+  "signs": {
+   "dry": "Leaves droop and roll in the heat, flowers fall before setting, and fruits stay small, crooked or turn dull and bitter.",
+   "wet": "Lower leaves yellow and drop, plants wilt suddenly while the soil is wet, and the stems turn soft or brown inside at the base."
+  },
+  "better": [
+   "Lay a mulch of plastic, rice hull or straw over the beds: the soil stays damp longer, fewer weeds come up and you may water only half as often.",
+   "A drip line under the mulch gives each plant the steady water talong needs through months of picking with far less water than flooding."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "zvHnlG43jkU",
   "title": "Paano magtanim ng TALONG PART 1",
@@ -290,5 +369,5 @@
  "kind": "annual",
  "icon": "🍆",
  "slug": "eggplant",
- "rev": "89bf69a73ec7"
+ "rev": "04543ad02a06"
 }

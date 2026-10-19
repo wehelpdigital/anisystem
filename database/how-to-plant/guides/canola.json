@@ -84,6 +84,60 @@
   "Use ammonium sulfate or another sulfur source for nitrogen.",
   "Keep bees nearby and harvest on time, before the pods split."
  ],
+ "watering": {
+  "traditional": "Canola is rare here and only tried on highland plots, watered like highland vegetables: a light sprinkling after sowing and in dry spells. Growers ease off near the end, since too much water late on delays ripening.",
+  "method": "A watering can with a fine rose or a sprinkler on raised beds, as for highland vegetables, in the morning.",
+  "rainfed": "Sow at the end of the rains, from October to December, while the soil is still moist, so the crop grows on stored moisture through the cool months.",
+  "dryseason": "The crop grows in the cool dry months, so water the beds once or twice a week in dry spells, more at flowering, and stop once most pods turn brown.",
+  "wet": "Use raised beds that drain, since canola roots rot in wet soil, and wet weather at ripening molds the pods.",
+  "schedule": [
+   {
+    "stage": "Sowing and coming up",
+    "from": 0,
+    "to": 10,
+    "often": "Sprinkle the beds gently after sowing, then every day or two until the seedlings are up if no rain falls",
+    "amount": "Enough to keep the top of the bed moist, with a fine sprinkler can",
+    "why": "The tiny seed is sown shallow and dries out fast."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 10,
+    "to": 40,
+    "often": "In dry spells, water about once or twice a week, and right after the side dressing",
+    "amount": "Wet the beds to a finger deep or more",
+    "why": "Steady growth now builds a plant with many branches."
+   },
+   {
+    "stage": "Flowering and pod filling",
+    "from": 40,
+    "to": 85,
+    "often": "Keep the soil moist, watering when the top of the bed dries",
+    "amount": "A good soaking of the beds",
+    "why": "Dry soil now drops flowers and leaves the pods with few seeds."
+   },
+   {
+    "stage": "Ripening",
+    "from": 85,
+    "to": 100,
+    "often": "Stop watering",
+    "amount": "None",
+    "why": "Late water delays ripening and makes the pods ripen unevenly."
+   }
+  ],
+  "critical": [
+   "Coming up: the shallow seed must not dry out.",
+   "Flowering and pod filling, about day 40 to 85: a dry spell gives few seeds in each pod."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and turn bluish gray, flowers drop, and the pods stay short with few seeds.",
+   "wet": "Yellow lower leaves, rotting stems and roots, and moldy pods."
+  },
+  "better": [
+   "If water is short, give it at flowering and pod filling.",
+   "A light mulch between the rows keeps the beds moist longer."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng canola",
@@ -97,5 +151,5 @@
  "kind": "annual",
  "icon": "🌼",
  "slug": "canola",
- "rev": "898cede19891"
+ "rev": "cbeec66e1e28"
 }

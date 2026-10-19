@@ -151,6 +151,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering pakwan, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Pakwan is planted in the dry months, often in rice fields after the harvest and in sandy fields by the rivers, so it starts on the moisture left in the soil. Farmers then give only light waterings, about 5 to 6 in the whole season, by furrow or by hand at the hills, and cut back as the fruits ripen. A quick furrow watering from a canal or a shallow well, or water poured at each hill with a can or a hose, is the usual way. Water in the early morning or late afternoon, at the base of the plant rather than over the leaves."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let pakwan go dry at these stages",
+   "text": "Flowering and fruit set: a long drought now drops flowers and young fruits. Fruit swelling, when the fruits gain most of their size. Never overwater the young plants or let water stand: watermelon roots need more air than most crops."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for pakwan, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "Sowing day to day 7",
+     "Sow into moist soil and water the hills right after sowing. If the soil dries before the seedlings are up, sprinkle the hills by can",
+     "Moisten each hill lightly, no puddles"
+    ],
+    [
+     "Young plants",
+     "Day 7 to 20",
+     "Water sparingly, only when the soil is dry a few cm down",
+     "A light watering at the hill or a quick furrow"
+    ],
+    [
+     "Vines running",
+     "Day 20 to 40",
+     "A light furrow or hill watering when the soil dries, about every two weeks. Water in the side dressing if you give one",
+     "Wet the root zone around the hill, then let it drain"
+    ],
+    [
+     "Flowering and fruit set",
+     "Day 40 to 50",
+     "Do not let the field go dry. Water lightly whenever the soil dries",
+     "Light waterings at the hills"
+    ],
+    [
+     "Fruits swelling",
+     "Day 50 to 70",
+     "Water when the soil dries, more often on very sandy soil or in a long dry spell",
+     "A fuller watering than before, soaking the root zone, never standing water"
+    ],
+    [
+     "Ripening",
+     "Day 70 to 85",
+     "Ease off the water and stop in the last days before cutting",
+     "Little or no water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant from October to January in a field just cleared of rice or in sandy river fields, so the crop starts on the moisture in the soil and grows through the dry months. Plow deep so the roots go down to the moist layer, lay rice straw where the fruits will sit, and plant near a shallow well or creek so you can carry water during fruit set if the soil dries.\n\n**In the dry season.** Give about 5 to 6 light waterings in the whole season, roughly one every two weeks, more on very sandy soil or in a long dry spell. Water when the leaves stay limp into the late afternoon or the soil a few cm down is dry, and ease off once the fruits near ripeness.\n\n**In the rainy season.** Watermelon does poorly in heavy rain. For an off season crop, plant only on well drained, sandy ground with drainage canals and plastic mulch. Waterlogged soil rots the roots and the fruits, and heavy rain near ripeness makes fruits split and taste watery."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and stay limp into the afternoon, turn grayish and curl, flowers and small fruits drop, and the fruits stay small.",
+    "**Too much water:** Vines yellow and wilt, roots and the stem base rot, fruits rot where they touch the soil, and ripe fruits split or taste bland."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Plastic or rice straw mulch keeps the soil evenly moist, cuts the watering and keeps the fruits clean and dry. A drip line at each hill gives light, steady water during flowering and fruit swelling, the two stages that set the harvest."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for pakwan"
   },
   {
@@ -280,6 +359,10 @@
     {
      "q": "How long before pakwan can be harvested?",
      "a": "It is ready about 85 days after sowing. Fruits ripen about 35 to 40 days after pollination."
+    },
+    {
+     "q": "How often do you water pakwan?",
+     "a": "Sowing to coming up, sowing day to day 7: Sow into moist soil and water the hills right after sowing. If the soil dries before the seedlings are up, sprinkle the hills by can. Young plants, day 7 to 20: Water sparingly, only when the soil is dry a few cm down. Vines running, day 20 to 40: A light furrow or hill watering when the soil dries, about every two weeks. Water in the side dressing if you give one. Give about 5 to 6 light waterings in the whole season, roughly one every two weeks, more on very sandy soil or in a long dry spell."
     },
     {
      "q": "What do you plant to grow pakwan?",

@@ -111,6 +111,77 @@
   "Scrape loose bark and scout for bark borers and scab every few months.",
   "Prune water sprouts and crowded twigs after each harvest."
  ],
+ "watering": {
+  "traditional": "Lanzones here is rain fed in most farms, grown under coconut, banana or kakawate shade with a thick mulch of dried leaves. Young trees are watered in dry spells, and the few growers with water on hand irrigate bearing trees in the dry months for a better and earlier crop.",
+  "method": "A pail or hose into a mulched ring for young trees. Basin or sprinkler watering for bearing trees where a spring or pump is near. Water early in the morning.",
+  "rainfed": "Plant at the start of the rains under shade that is already growing, and keep a thick mulch of dried leaves under the tree. Lanzones needs a humid place with rain spread through most of the year and does poorly where the dry season is long. On rain alone, the trees flower when the first heavy rains end the dry season, and the crop comes some months later.",
+  "dryseason": "Young trees about twice a week. Bearing trees about once a week from flowering to harvest, after the short dry spell that brings the flowers. Water when the leaves droop and fold by midday.",
+  "wet": "Lanzones cannot stand flooding: plant on ground that drains, open drains from low spots, and keep water from standing around the trunk. Wet, shaded, crowded orchards get more bark disease and fruit rot, so thin the shade and prune water sprouts.",
+  "schedule": [
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Water well at planting, then every 2 to 3 days when no rain falls, in light shade",
+    "amount": "A good soak of a ring basin around the stem",
+    "why": "Young lanzones dries out fast and does not recover well once badly stressed."
+   },
+   {
+    "stage": "First and second year",
+    "from": 90,
+    "to": 720,
+    "often": "About twice a week in the dry months, once a week on heavy soil",
+    "amount": "A soak of the mulched ring under the leaves",
+    "why": "Water stress slows the growth of leaves, stem and roots of young trees."
+   },
+   {
+    "stage": "Years 3 to 5, before bearing",
+    "from": 720,
+    "to": 1620,
+    "often": "About once a week in the dry months where water is near",
+    "amount": "A deep soak of the ring, widened as the crown spreads",
+    "why": "A full crown under thinning shade is what brings the first flowers."
+   },
+   {
+    "stage": "Bearing trees: dry spell before flowering (each year)",
+    "from": 1620,
+    "to": 1680,
+    "often": "At the start of the dry season let the soil dry for some weeks, then water deeply until the soil is moist again",
+    "amount": "None for some weeks, then a deep soak of all the ground under the crown",
+    "why": "Flowers come after a dry spell is broken by rain or water. Doing it on purpose brought flowers about four weeks earlier in one trial."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 1680,
+    "to": 1710,
+    "often": "About once a week in dry weather, keeping the soil evenly moist",
+    "amount": "A deep soak under the crown",
+    "why": "Flower clusters on the trunk and branches dry up if the soil dries."
+   },
+   {
+    "stage": "Fruit growth to ripening",
+    "from": 1710,
+    "to": 1800,
+    "often": "About once a week in dry spells until the bunches turn yellow",
+    "amount": "A deep soak under the crown",
+    "why": "Fruits ripen about four months after the flowers show and stay small and sour when thirsty."
+   }
+  ],
+  "critical": [
+   "The first two years, when young trees under stress grow slowly and recover poorly.",
+   "Flowering and fruit set, when the flower clusters dry up in dry soil.",
+   "Fruit growth, which needs even moisture for full, sweet bunches."
+  ],
+  "signs": {
+   "dry": "Leaflets droop and fold by midday, older leaves yellow and fall, flower clusters dry up, and fruits stay small and sour.",
+   "wet": "Yellow leaves and dying twigs on waterlogged ground, and more rotting bark and fruits in long rains."
+  },
+  "better": [
+   "Where you have water, let the soil dry at the start of the dry season and then water deeply: the trees flower and fruit weeks ahead of the rain fed crop, when prices are higher.",
+   "Keep the shade, mulch and steady water through the first two years, the stage where most young lanzones are lost."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "o1mqZTpwJMU",
   "title": "Paano ba tamang paraan ng pagtatanim ng Lanzones? Ilang taon bago mamunga?",
@@ -131,5 +202,5 @@
  "kind": "perennial",
  "icon": "🫒",
  "slug": "lanzones",
- "rev": "487e0e61ce65"
+ "rev": "a622314496de"
 }

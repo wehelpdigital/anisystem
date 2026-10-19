@@ -178,6 +178,59 @@
   "Train tappers to cut thin and even, and tap less often, such as every third day, in the rainiest months.",
   "Keep cup lumps clean and sell them by grade for a better price."
  ],
+ "watering": {
+  "traditional": "Rubber is rainfed. Growers plant the budded seedlings on a rainy day when steady rain is coming, keep the soil damp with a cover crop and mulch, and almost never water the grown trees.",
+  "method": "Rain only. Young trees in a dry spell are watered by hand with a pail or a hose at the base.",
+  "rainfed": "This is the usual way. Plant as the rains begin, plant a creeping legume cover between rows, mulch the tree circle, and on slopes keep the terraces that hold the rain.",
+  "dryseason": "Grown trees need no water. Water young trees in their first dry season if they wilt, clear dry grass around them, and watch for fire in the summer.",
+  "wet": "Dig drains where water stands, since rubber roots rot in waterlogged soil. In very wet months tap less often, as rain on the panel washes out the latex.",
+  "schedule": [
+   {
+    "stage": "Planting",
+    "from": 0,
+    "to": 30,
+    "often": "Plant on a rainy day. If a dry spell follows, water each young tree",
+    "amount": "A good soaking around the base, then mulch",
+    "why": "The roots of a new tree must take hold before any dry spell."
+   },
+   {
+    "stage": "The first year",
+    "from": 30,
+    "to": 365,
+    "often": "No regular watering. In a long dry spell, water the young trees and keep the ring around them weeded and mulched",
+    "amount": "A good soaking around the base",
+    "why": "Young trees with short roots can die in their first dry season."
+   },
+   {
+    "stage": "Young trees, years 2 to 6",
+    "from": 365,
+    "to": 2160,
+    "often": "No watering. Keep the cover crop and the mulch",
+    "amount": "None",
+    "why": "The roots are deep enough by now."
+   },
+   {
+    "stage": "Tapping trees",
+    "from": 2160,
+    "to": 2520,
+    "often": "No watering. In the wettest months tap less often and only once the bark has dried",
+    "amount": "None",
+    "why": "Rain on the tapping cut washes out the latex and wet bark spreads panel disease."
+   }
+  ],
+  "critical": [
+   "Planting and the first dry season: a young tree that dries out before its roots are deep can die."
+  ],
+  "signs": {
+   "dry": "Young trees drop their leaves, the top leaves wilt and the new flush stops.",
+   "wet": "Yellow leaves, slow growth and rotting roots in low spots, and a wet tapping panel that gives little latex."
+  },
+  "better": [
+   "Plant only when steady rain is coming, and mulch the tree circle so young trees get through their first dry season.",
+   "A legume cover crop between rows keeps the soil moist and the weeds down."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "GOZvlnesqEM",
   "title": "Planting Budded Rubber tree.tara silipin natin kung paano ang tamang pagtanim.",
@@ -199,5 +252,5 @@
  "kind": "perennial",
  "icon": "🌳",
  "slug": "rubber",
- "rev": "237597012af8"
+ "rev": "3d62106b2913"
 }

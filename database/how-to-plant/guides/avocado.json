@@ -117,6 +117,77 @@
   "Scout for borers, fruit flies and leaf spots and clean up fallen fruit.",
   "Plant two or more varieties near each other for better fruit set."
  ],
+ "watering": {
+  "traditional": "Avocado here is mostly rain fed: young trees get a pail or a hose about every two weeks in the dry months of their first two or three years, and grown trees are left to the rain. Water matters most where the dry season runs longer than four to five months, because avocado flowers in the dry months.",
+  "method": "A pail or hose into a wide ring basin for young trees. Grown trees get rain, and a few commercial orchards use drip or small sprinklers. Avocado is easily hurt by salty water, so use clean water. Water early in the morning.",
+  "rainfed": "Plant as the rains begin, shade the young tree from hot sun, and keep a thick mulch of rice straw, dry leaves or wood chips over the root area, off the trunk. A grown avocado needs at least about 100 to 130 cm of rain a year, well spread. Where the dry season is short, mulch carries it, and where it is long, the trees flower and set poorly without water.",
+  "dryseason": "Young trees: every one to two weeks. Bearing trees: every 7 to 10 days from flowering through fruit growth when no rain falls. Keep the top 15 to 20 cm of soil moist. Water when the leaves droop in the afternoon or their tips start to brown.",
+  "wet": "Avocado roots rot fast in wet soil, and root rot is the main killer of avocado trees. Plant on a mound or a slope that drains, dig drains out of low spots, never flood the basin, and keep mulch off the trunk. Both too much and too little water bring on root rot, so water by the soil, not by the calendar.",
+  "schedule": [
+   {
+    "stage": "Seed in a bag",
+    "from": -120,
+    "to": 0,
+    "often": "Every day or every other day, in light shade",
+    "amount": "Enough to keep the bag soil moist, never soggy",
+    "why": "The seed sprouts in two to three weeks only in steady moisture."
+   },
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Water on planting day, then about twice a week when no rain falls. Shade the tree from hot sun",
+    "amount": "One to two watering cans a tree, into a ring basin away from the stem",
+    "why": "The small root ball dries fast, and avocado roots are weak at finding water."
+   },
+   {
+    "stage": "First to third year",
+    "from": 90,
+    "to": 1080,
+    "often": "Every one to two weeks in the dry months, more often on sandy soil or in a hot spell",
+    "amount": "Two to five watering cans (about 20 to 75 liters) a tree each time as it grows",
+    "why": "Young trees planted in dry places die or stall without this."
+   },
+   {
+    "stage": "Year 4, before bearing",
+    "from": 1080,
+    "to": 1230,
+    "often": "Every 7 to 10 days in long dry spells",
+    "amount": "A deep soak that wets the top 20 to 60 cm of soil under the crown, where most roots are",
+    "why": "A full, healthy crown carries the first crop."
+   },
+   {
+    "stage": "Flowering and fruit set (each year, mostly in the dry months)",
+    "from": 1230,
+    "to": 1290,
+    "often": "Every 7 to 10 days if no rain falls",
+    "amount": "A deep soak under the whole crown",
+    "why": "This is the most critical stage: dry soil drops flowers and small fruits."
+   },
+   {
+    "stage": "Fruit growth to harvest",
+    "from": 1290,
+    "to": 1440,
+    "often": "Every 7 to 10 days in dry spells, until the rains take over",
+    "amount": "A deep soak under the crown",
+    "why": "Steady moisture gives bigger fruits. The season here runs about April to September."
+   }
+  ],
+  "critical": [
+   "The first year after planting, when young trees die quickly in the dry months.",
+   "Flowering and fruit set, the stage when lack of water causes the heaviest fruit drop.",
+   "Fruit growth in the dry months, which decides fruit size."
+  ],
+  "signs": {
+   "dry": "Leaves droop in the afternoon, their tips and edges turn brown and burnt, older leaves fall, and flowers and small fruits drop.",
+   "wet": "Small, pale yellow leaves, wilting even though the soil is wet, branches dying back from the top, and brown, brittle roots with few fine feeder roots."
+  },
+  "better": [
+   "A thick, coarse mulch over the whole root area and drip or small sprinklers that wet that area from flowering to fruit growth give a much better fruit set.",
+   "Plant on mounds and water only when the top soil dries. It keeps root rot away better than any spray."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "V87PBVxNVz8",
   "title": "WASTONG PAGTANIM NG AVOCADO, Planting avocado",
@@ -137,5 +208,5 @@
  "kind": "perennial",
  "icon": "🥑",
  "slug": "avocado",
- "rev": "1bf61ed16588"
+ "rev": "5a349fde335e"
 }

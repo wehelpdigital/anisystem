@@ -184,6 +184,85 @@
   "Scout weekly and use integrated pest management for thrips, mites and aphids.",
   "Rotate with rice, corn or beans, not with tomato family crops."
  ],
+ "watering": {
+  "traditional": "Atsal on mulched beds is watered or furrow irrigated about once a week, more often in hot, dry spells, with the beds kept draining so no water stands. In the highlands many growers water with sprinklers or hoses, and in the lowlands it is grown in the cooler months with a canal or pump nearby.",
+  "method": "Furrow irrigation between mulched beds in the lowlands, and sprinklers or hoses in the highlands. Small growers use a watering can at the base of each plant. Water in the morning so the leaves dry early.",
+  "rainfed": "Lowland atsal is planted from about October to December so it grows through the cool months on the moisture left after the rains, with mulch to hold it. Without a pump, keep the beds close to a well or creek and water each plant by can about once a week.",
+  "dryseason": "Water or furrow irrigate about once a week, more often in hot, dry spells and on sandy soil. Water when the leaves droop by mid morning or the soil a few cm down feels dry, and keep the mulch on.",
+  "wet": "Use raised, well drained beds with mulch, keep the canals open and do not water when the beds are wet. Soaked roots rot and the plants wilt suddenly, and wet weather spreads fruit rot.",
+  "schedule": [
+   {
+    "stage": "Nursery bed",
+    "from": -30,
+    "to": -21,
+    "often": "Water the bed before sowing, water gently after, then each morning",
+    "amount": "Just enough to keep the soil damp",
+    "why": "Damp, not soggy, soil gives an even stand without damping off."
+   },
+   {
+    "stage": "Growing seedlings",
+    "from": -21,
+    "to": -7,
+    "often": "Water each morning or when the top soil dries",
+    "amount": "Light sprinkles",
+    "why": "Steady, light water grows sturdy seedlings."
+   },
+   {
+    "stage": "Hardening",
+    "from": -7,
+    "to": 0,
+    "often": "Water less often while the seedlings get more sun",
+    "amount": "Light waterings. Water at once if they wilt hard",
+    "why": "Hardened seedlings take the move to the field without shock."
+   },
+   {
+    "stage": "Transplanting and settling",
+    "from": 0,
+    "to": 7,
+    "often": "Water right after transplanting in the late afternoon, then every day or two if no rain falls until new leaves show",
+    "amount": "Soak the soil around each plant",
+    "why": "The seedlings must root into the bed before the sun dries them."
+   },
+   {
+    "stage": "Leafy growth",
+    "from": 7,
+    "to": 40,
+    "often": "Water or furrow irrigate about once a week, more often in hot, dry spells. Water in the urea every two weeks",
+    "amount": "Wet the bed through, never leave water standing",
+    "why": "A big, leafy plant holds more flowers and shades its fruits from sunburn."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 40,
+    "to": 85,
+    "often": "Keep the weekly watering steady and never let the bed dry out",
+    "amount": "Even waterings, no soaking after a dry spell",
+    "why": "Dry soil or heat drops the flowers, and uneven water gives fruits with black, rotten bottoms."
+   },
+   {
+    "stage": "Picking",
+    "from": 85,
+    "to": 130,
+    "often": "Go on watering about once a week through the picking",
+    "amount": "Even waterings, drained off",
+    "why": "The plant keeps filling heavy, thick walled fruits only with steady water."
+   }
+  ],
+  "critical": [
+   "The first week after transplanting.",
+   "Flowering and fruit set: dry soil drops flowers, and uneven water rots the fruit bottoms.",
+   "All season: bell pepper wilts and dies fast in waterlogged beds."
+  ],
+  "signs": {
+   "dry": "Leaves droop and curl at midday, flowers and small fruits drop, and the fruits stay small with thin walls or rot at the bottom.",
+   "wet": "Plants wilt while the soil is wet, the lower leaves yellow and fall, and the stem base turns dark and soft."
+  },
+  "better": [
+   "Plastic or rice straw mulch keeps the beds evenly moist, which is the best guard against rotten fruit bottoms.",
+   "A drip line under the mulch gives steady water through months of picking with less work and less leaf disease."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "-zubLlTsqbs",
   "title": "Paano Magtanim ng Atsal, From Seeds to Harvest ( Complete Guide )",
@@ -205,5 +284,5 @@
  "kind": "annual",
  "icon": "🫑",
  "slug": "bell-pepper",
- "rev": "e8165fb3349f"
+ "rev": "f0a17ee7f5fe"
 }

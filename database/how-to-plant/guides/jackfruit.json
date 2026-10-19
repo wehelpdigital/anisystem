@@ -161,6 +161,68 @@
   "Scout for borers, fruit flies and trunk rot every month and clean up fallen fruit.",
   "Make contour canals on slopes and water young trees in dry months."
  ],
+ "watering": {
+  "traditional": "Jackfruit is planted as the rains begin and watered by hand in dry spells for the first two years, after which most farmers leave it to the rain with a mulch at the base. Grown trees are seldom watered or fed and still bear, though they bear better with care.",
+  "method": "A pail or hose into a ring basin for young trees. Grown trees get rain only. Water in the early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin so the young tree needs little watering, keep the base mulched in the dry season a little off the trunk, and grow short crops or a legume cover between the trees to shade the soil. After the second year, mulch alone usually carries a jackfruit tree through the dry months.",
+  "dryseason": "Young trees in their first two years: about once a week. Older trees: mulch, and water only in a long drought, mainly while fruits are filling. Water when the leaves droop by midday and lose their shine.",
+  "wet": "Jackfruit cannot stand waterlogging: never plant in low spots where water stands, dig a drain from any wet corner, and keep the base dry and clean. A tree whose roots sit in water bears poorly, gets a dark, wet rot at the base and can die.",
+  "schedule": [
+   {
+    "stage": "Seedlings in bags (trees from seed)",
+    "from": -90,
+    "to": 0,
+    "often": "Every day or every other day, in light shade",
+    "amount": "Enough to wet each bag right through",
+    "why": "The long taproot grows fast and must not dry out or be disturbed."
+   },
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Water right after planting, then about once a week when no rain falls, more often in a hot spell",
+    "amount": "One to two watering cans a tree, into a ring basin a little away from the trunk",
+    "why": "With half its leaves cut back, the tree roots best in moist soil."
+   },
+   {
+    "stage": "First and second year",
+    "from": 90,
+    "to": 720,
+    "often": "About once a week in the dry months. Not needed in the rains",
+    "amount": "A deep soak of the ring basin, widened as the tree grows",
+    "why": "Watering through the first two dry seasons sets the tree up. After that it mostly fends for itself."
+   },
+   {
+    "stage": "Year 3 to the first fruits",
+    "from": 720,
+    "to": 1320,
+    "often": "Usually none. Mulch the base before the dry months and water only in a long drought",
+    "amount": "A deep soak of the ring when the soil under the mulch is dry a hand deep",
+    "why": "The roots now reach deep moisture."
+   },
+   {
+    "stage": "Bearing trees: fruit set to harvest (each year)",
+    "from": 1320,
+    "to": 1440,
+    "often": "Where water is near, soak in a long dry spell while the fruits fill. Trees from seed reach this at about 6 to 8 years",
+    "amount": "A deep soak of the ground under the crown",
+    "why": "Fruits take about four months to fill after they set, much of it in the dry months."
+   }
+  ],
+  "critical": [
+   "The first two dry seasons after planting.",
+   "Young and filling fruits in a long drought, which stay small or fall."
+  ],
+  "signs": {
+   "dry": "Leaves droop and lose their shine, older leaves yellow and drop, and young fruits shrivel and fall.",
+   "wet": "Leaves yellow and fall, dark wet rot shows at the trunk base, branches die back, and a whole tree can wilt suddenly after a flood."
+  },
+  "better": [
+   "Water young trees weekly through the first two dry seasons and keep a thick mulch. This gets them to first bearing sooner.",
+   "On bearing trees with water near, a deep soak in long dry spells while the fruits fill gives bigger fruits and fewer drops."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "S4UDTzfU2XM",
   "title": "PAANO MAGTANIM NG EVIARC SWEET JACKFRUIT (LANGKA)",
@@ -181,5 +243,5 @@
  "kind": "perennial",
  "icon": "🍈",
  "slug": "jackfruit",
- "rev": "ed6ed2466e93"
+ "rev": "8a9a4d338be7"
 }

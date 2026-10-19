@@ -127,6 +127,67 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kadyos, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Kadyos is planted with the rains along dikes, fences and slopes and is almost never watered. Its deep roots carry it through the dry months while it flowers and bears. No regular watering. Hand watering with a can for young or backyard plants in a dry spell."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kadyos go dry at these stages",
+   "text": "The first two months: young plants need moisture until their roots are deep. Flowering: a plant that wilts at flowering drops many flowers."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kadyos, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 14",
+     "Plant after a good rain. Water only if the soil dries before the seedlings are up",
+     "Enough to moisten the hill"
+    ],
+    [
+     "Young plants",
+     "Day 14 to 60",
+     "Usually no watering. In a long dry spell, water the young plants once",
+     "A few liters around each hill"
+    ],
+    [
+     "Growth, flowering and pods",
+     "Day 60 to 210",
+     "No regular watering. Water a backyard plant only if it wilts during flowering",
+     "A good soaking around the base"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant at the start of the rains, from May to July, so the roots go deep before the dry months when the pods come.\n\n**In the dry season.** Grown plants rarely need water. Water young or backyard plants only when they wilt in the morning.\n\n**In the rainy season.** Kadyos does not stand waterlogging. Plant on dikes, slopes or raised ground, never in low spots where water stays."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves fold and droop at midday and do not recover by evening, and flowers drop.",
+    "**Too much water:** Yellow leaves, wilting in wet soil, and plants that die in the low spots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Plant early in the rains so the roots go deep before the dry months. Mulch young plants with cut grass in their first dry spell."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kadyos"
   },
   {
@@ -252,6 +313,10 @@
     {
      "q": "How long before kadyos can be harvested?",
      "a": "It is ready about 150 days after sowing. Pods are picked green for cooking or dry for seed from about five months, every week or so, through the cool months."
+    },
+    {
+     "q": "How often do you water kadyos?",
+     "a": "Planting and coming up, sowing day to day 14: Plant after a good rain. Water only if the soil dries before the seedlings are up. Young plants, day 14 to 60: Usually no watering. In a long dry spell, water the young plants once. Growth, flowering and pods, day 60 to 210: No regular watering. Water a backyard plant only if it wilts during flowering. Grown plants rarely need water."
     },
     {
      "q": "What do you plant to grow kadyos?",

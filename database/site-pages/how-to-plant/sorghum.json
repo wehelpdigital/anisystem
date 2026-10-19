@@ -208,6 +208,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering batad, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Sorghum is grown on rain alone. Farmers plant it at the start of the rains or after the rice harvest on the moisture left in the field, because it rides out dry spells better than corn. Rain only on most farms. Where water is close, a furrow watering from a pump or canal, in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let batad go dry at these stages",
+   "text": "Booting and flowering, about day 60 to 80: the soil must not be bone dry, or the heads fill poorly. Right after cutting for a ratoon: the stubble needs moisture to shoot again."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for batad, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 10",
+     "Plant into moist soil. If you have water and the soil is dry, wet the furrows once before planting",
+     "Enough to moisten the seed row, with no water left standing"
+    ],
+    [
+     "Young plants",
+     "Day 10 to 30",
+     "Usually no watering",
+     "None"
+    ],
+    [
+     "Fast growth to booting",
+     "Day 30 to 60",
+     "Water only in a long dry spell, after the side dressing if the soil is dry",
+     "One furrow watering that soaks in"
+    ],
+    [
+     "Booting and flowering",
+     "Day 60 to 80",
+     "If water is at hand and the soil is dry, water once",
+     "A full furrow watering"
+    ],
+    [
+     "Grain filling",
+     "Day 80 to 100",
+     "Water once more in a hard drought",
+     "A furrow watering"
+    ],
+    [
+     "Ratoon",
+     "Day 105 to 112",
+     "Water right after cutting the stalks for a ratoon, if the soil is dry",
+     "A furrow watering along the stubble"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant at the start of the rains, or soon after the rice harvest while the field is still wet, so flowering comes before the soil dries out. Keep the field weed free so the weeds do not take the moisture.\n\n**In the dry season.** A crop sown after rice usually needs no watering. In a very dry year, one furrow watering at booting or flowering pays back the most grain.\n\n**In the rainy season.** Sorghum stands short floods better than corn but not water that stays for days. Keep the furrow ends open, and harvest the heads before long rains mold the grain."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves roll up tight and turn gray green, growth stops, and the heads come out late or stay partly inside the leaf.",
+    "**Too much water:** Yellow lower leaves, stunted plants in the low spots, and moldy heads after long rain."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: If you can water only once, water at booting or flowering. Water the stubble right after cutting if you want a good ratoon crop."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for batad"
   },
   {
@@ -336,6 +415,10 @@
     {
      "q": "How long before batad can be harvested?",
      "a": "It is ready about 105 days after sowing. Grain sorghum is ready at about 100 to 115 days, when the grain is hard and the leaves below the head start drying."
+    },
+    {
+     "q": "How often do you water batad?",
+     "a": "Planting and coming up, sowing day to day 10: Plant into moist soil. If you have water and the soil is dry, wet the furrows once before planting. Young plants, day 10 to 30: Usually no watering. Fast growth to booting, day 30 to 60: Water only in a long dry spell, after the side dressing if the soil is dry. A crop sown after rice usually needs no watering."
     },
     {
      "q": "What do you plant to grow batad?",

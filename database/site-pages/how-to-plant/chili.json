@@ -238,6 +238,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sili, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Sili is watered right after transplanting and then given furrow irrigation at about 14, 30 and 50 days, with a last one a week before the first picking, more often on light soil in the dry months. Growers without a canal water by hand about three times a week until flowering, and wet season crops on ridges live mostly on the rain. Furrow irrigation between hilled rows is the usual way. Hilling up makes the furrows easier to water. Small growers water each hill with a can or a hose. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sili go dry at these stages",
+   "text": "The first two weeks after transplanting. Flowering and fruit set: dry soil drops flowers, and a dry spell followed by a soaking brings rotten fruit tips. Every stage: sili wilts and dies fast in waterlogged soil."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sili, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "35 to 26 days before transplanting",
+     "Water the bed before and after sowing, cover it with straw or keep the trays in shade, then water each morning",
+     "Just enough to keep the soil damp, never soggy"
+    ],
+    [
+     "Growing seedlings",
+     "26 to 7 days before transplanting",
+     "Water each morning or as needed. Water the pricked seedlings and rinse the leaves after the starter drink",
+     "Light sprinkles"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water less often while the seedlings get more sun. Water the bed the day you lift them",
+     "Light waterings. Do not let them wilt hard"
+    ],
+    [
+     "Transplanting and settling",
+     "Transplanting day to day 14",
+     "Irrigate right after transplanting. By hand about three times a week if there is no canal",
+     "Soak the soil around each hill, no standing water"
+    ],
+    [
+     "Growth and branching",
+     "Day 14 to 30",
+     "Furrow irrigate at about 14 days, sooner if the soil dries fast",
+     "Let water run until the rows are wet, then drain"
+    ],
+    [
+     "Flowering and fruit set",
+     "Day 30 to 58",
+     "Furrow irrigate at about 30 and 50 days, after the side dressings, and in between whenever the soil dries",
+     "A full soaking, drained off"
+    ],
+    [
+     "Before and during picking",
+     "Day 58 to 130",
+     "Give the last scheduled irrigation a week before picking starts, then water about once a week or when the soil dries while picking",
+     "A full soaking each time, drained off"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** A wet season crop planted from May to September on ridges or raised beds runs mostly on the rain. Mulch the rows with rice straw, which can cut the watering about in half, and carry water to each hill if a dry spell comes at flowering.\n\n**In the dry season.** For the October to February crop, irrigate at transplanting, about 14, 30 and 50 days, and a week before picking, and more often on sandy or light soil. Water when the leaves droop by mid morning or the soil a few cm down feels dry.\n\n**In the rainy season.** Plant on ridges or raised beds and keep the furrows draining to a canal. Waterlogged sili wilts suddenly and the roots rot, and wet weather spreads fruit rot, so do not water when the soil is already wet."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and curl at midday, flowers and young fruits fall, and the fruits stay small or show sunken, rotten tips.",
+    "**Too much water:** Plants wilt suddenly while the soil is wet, the lower leaves yellow and drop, and the stem base turns dark and soft."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Rice straw or plastic mulch keeps the soil evenly moist and can cut the watering by about half. A drip line under the mulch gives steady water through flowering and picking without wetting the leaves or flooding the roots."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sili"
   },
   {
@@ -367,6 +452,10 @@
     {
      "q": "How long before sili can be harvested?",
      "a": "It is ready about 65 days after transplanting. Finger chili is picked mature green, full sized and glossy, from about 60 to 75 days after transplanting, about once a week."
+    },
+    {
+     "q": "How often do you water sili?",
+     "a": "Seedbed, 35 to 26 days before transplanting: Water the bed before and after sowing, cover it with straw or keep the trays in shade, then water each morning. Growing seedlings, 26 to 7 days before transplanting: Water each morning or as needed. Water the pricked seedlings and rinse the leaves after the starter drink. Hardening, 7 days before transplanting to transplanting day: Water less often while the seedlings get more sun. Water the bed the day you lift them. For the October to February crop, irrigate at transplanting, about 14, 30 and 50 days, and a week before picking, and more often on sandy or light soil."
     },
     {
      "q": "What do you plant to grow sili?",

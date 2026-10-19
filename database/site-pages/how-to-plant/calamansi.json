@@ -188,6 +188,91 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering kalamansi, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Growers water a new seedling every morning until it shows new leaves, then only when the soil dries, and in the dry months many carry a full pail or more to each tree and keep dry leaves on the ground. Most calamansi then bears on the rains, with the big crop from about July to October, and only farms with water all year get an off season harvest. A pail or a hose into a ring basin around each tree, the usual way on small farms. Some commercial farms lay drip lines. Water in the early morning, on the ring under the leaves and not against the trunk."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let kalamansi go dry at these stages",
+   "text": "The first weeks after planting, when the seedling needs water every morning. Flowering and fruit set, since dry soil then drops flowers and small fruits. Fruit growth in a dry spell, which leaves the fruits small and less juicy."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for kalamansi, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to new leaves",
+     "Planting day to day 30",
+     "Every morning until new leaves show",
+     "Enough to soak the soil ball and the hole around it, with no puddle left standing"
+    ],
+    [
+     "Rest of the first year",
+     "Day 30 to month 12",
+     "When the soil a finger deep is dry. In the dry months that means every few days for a young tree",
+     "About half a pail to a full pail a tree, poured into a basin around the stem"
+    ],
+    [
+     "Second year, before bearing",
+     "Month 12 to 18",
+     "Every 7 to 10 days in the dry months, after a deep soak. Not needed in the rains",
+     "A full pail or more a tree, wetting the basin out to the edge of the leaves"
+    ],
+    [
+     "Bearing trees: short dry spell before flowering (each year)",
+     "Month 18 to 19",
+     "Where water is at hand, hold back for a few weeks in the dry months, then give a deep soak with the fertilizer",
+     "None for a few weeks, then one deep soak of the whole basin"
+    ],
+    [
+     "Flowering and fruit set",
+     "Month 19 to 21",
+     "About once a week in dry weather, keeping the soil evenly moist",
+     "A full pail or more a tree each time"
+    ],
+    [
+     "Fruit growth to harvest",
+     "Month 21 to 24",
+     "Every 7 to 10 days in dry weather until picking",
+     "A full pail or more a tree each time"
+    ],
+    [
+     "Main harvest in the rainy months",
+     "Month 24 to 27",
+     "Rain does the work. Water only in a long break in the rains",
+     "A full pail a tree if the soil dries"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin so the seedling settles with steady rain, and keep a thick layer of dry leaves around each tree, a little off the trunk. Without water in the dry months the trees rest and bear mostly in the rainy months, which is when prices are lowest. Even a drum of stored rainwater carried to young trees in their first dry season saves many of them.\n\n**In the dry season.** Young trees when the soil a finger deep is dry, about half a pail to a pail a tree. Bearing trees every 7 to 10 days with a full pail or more. Water when leaves curl and lose their shine, or when young shoots droop by midday.\n\n**In the rainy season.** Calamansi dies in waterlogged soil, so plant on a slightly raised spot or a mound and dig drains out of low places. In long rains the trees turn yellow and give poor fruits, and wet soil around the trunk brings rot of the roots and collar with gum oozing from the bark. Keep mulch and grass off the trunk."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves curl, fold along the middle and lose their shine, young shoots droop by midday, and flowers and small fruits fall.",
+    "**Too much water:** Leaves yellow all over, roots rot, gum oozes from the lower trunk, and the fruits come small and poor."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A drip line or a mulched basin watered every week through the dry months keeps trees bearing and lets a farm sell in the off season, when prices are higher. Pair the deep soak after the dry spell with the fertilizer, so the trees flower together and the crop comes in at the time you choose."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for kalamansi"
   },
   {
@@ -318,6 +403,10 @@
     {
      "q": "How long before kalamansi can be harvested?",
      "a": "It is ready about 2 years after planting. Trees start bearing one to two years after planting, and bearing trees give a heavy crop in the rainy months, about July to October, with smaller picks the rest of the year."
+    },
+    {
+     "q": "How often do you water kalamansi?",
+     "a": "Planting to new leaves, planting day to day 30: Every morning until new leaves show. Rest of the first year, day 30 to month 12: When the soil a finger deep is dry. In the dry months that means every few days for a young tree. Second year, before bearing, month 12 to 18: Every 7 to 10 days in the dry months, after a deep soak. Not needed in the rains. Young trees when the soil a finger deep is dry, about half a pail to a pail a tree."
     },
     {
      "q": "What do you plant to grow kalamansi?",

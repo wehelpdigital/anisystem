@@ -163,6 +163,77 @@
   "Scout weekly for fruit flies, aphids, whiteflies and fruit spots.",
   "Water during long dry spells for steady fruiting through the year."
  ],
+ "watering": {
+  "traditional": "Guava stands dry weather better than most fruit trees, so most backyard and farm trees here live on rain alone. Guapple growers in places with a long dry season water every 5 to 7 days by hose or furrow so the trees keep flowering and fruiting through the year.",
+  "method": "A hose or pail into a ring basin around each tree on small farms, and furrow or drip watering on bigger guapple farms. Water in the cool early morning or late afternoon.",
+  "rainfed": "Plant as the rains begin and keep a mulch of cut grass or leaves around each tree. Guava rides out dry months on rain alone, but a rain fed tree rests in the dry season and bears mostly after the rains come back. In very dry places, a basin on the downhill side of each tree catches extra rain.",
+  "dryseason": "Grown trees every 10 to 15 days, or every 5 to 7 days in places with a long dry spell if you want fruit all year. Young trees every 7 to 10 days. Water when the soil a finger deep is dry, when the leaves droop by midday, or when flowers start falling.",
+  "wet": "Guava takes rain well but not standing water: plant on ground that drains, open drains in low spots, and do not let water stand around the trunk. Wet, crowded trees get more fruit rot and fruit flies, so prune for air and pick up fallen fruit.",
+  "schedule": [
+   {
+    "stage": "Hardening the marcots",
+    "from": -14,
+    "to": 0,
+    "often": "Every day, in light shade",
+    "amount": "Enough to wet each bag right through",
+    "why": "A fresh marcot has few roots and wilts in a day if the bag dries."
+   },
+   {
+    "stage": "Planting to new leaves",
+    "from": 0,
+    "to": 30,
+    "often": "Soak on planting day and again on the third day, then every 5 to 7 days when no rain falls",
+    "amount": "A good soak of a ring basin around the stem",
+    "why": "The marcot roots have to grow out of the bag soil before the tree can fend for itself."
+   },
+   {
+    "stage": "Young tree to the first flowers",
+    "from": 30,
+    "to": 240,
+    "often": "Every 7 to 10 days in the dry months, not needed in the rains",
+    "amount": "A soak of the ring basin, widened as the tree grows",
+    "why": "Guava flowers on new shoots, so steady growth now means more flowers."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 240,
+    "to": 300,
+    "often": "Every 5 to 7 days in dry weather",
+    "amount": "A deep soak of the ground under the leaves",
+    "why": "Dry soil at flowering drops flowers and newly set fruits."
+   },
+   {
+    "stage": "Fruit growth to the first harvest",
+    "from": 300,
+    "to": 390,
+    "often": "Every 5 to 7 days in dry spells, keeping the soil evenly moist",
+    "amount": "A deep soak under the leaves",
+    "why": "Fruits fill 90 to 150 days after flowering. Uneven water gives small, hard or cracked fruits."
+   },
+   {
+    "stage": "Bearing trees, flowering and fruiting through the year",
+    "from": 390,
+    "to": 720,
+    "often": "Every 10 to 15 days in the dry months for grown trees, every 5 to 7 days in a long dry season to keep the crop coming",
+    "amount": "A deep soak of the ground under the crown",
+    "why": "Watered trees keep flowering and give fruit in the dry months, when prices are better."
+   }
+  ],
+  "critical": [
+   "The first weeks after planting a marcot.",
+   "Flowering and fruit set, when dry soil drops the flowers and young fruits.",
+   "Fruit filling in a long dry season, which leaves fruits small and hard."
+  ],
+  "signs": {
+   "dry": "Leaves droop and curl by midday, older leaves turn reddish or yellow and fall, new shoots stop, flowers drop, and fruits stay small and hard.",
+   "wet": "Yellow leaves, slow growth and rotting roots on waterlogged ground, and more fruits rotting on the tree."
+  },
+  "better": [
+   "Drip lines save about half or more of the water of basin or furrow watering and let a farm keep guava fruiting through the dry months.",
+   "Keep the ground under the trees mulched and water every 5 to 7 days from flowering until picking in dry weather, for bigger, smoother fruits."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "IWltrNwD-tk",
   "title": "Tips sa pagtatanim ng Bayabas (Guapple)",
@@ -183,5 +254,5 @@
  "kind": "perennial",
  "icon": "🍐",
  "slug": "guava",
- "rev": "298f621be71e"
+ "rev": "598bbf0c0b2f"
 }

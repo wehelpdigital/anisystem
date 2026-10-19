@@ -173,6 +173,68 @@
   "Scout often in cool, wet weather and act at the first sign of late blight.",
   "Cut the vines a week before harvest and store tubers in a dark, cool shed."
  ],
+ "watering": {
+  "traditional": "Lowland and dry season potato is watered by furrow or hose: a light watering five to seven days after planting, then every 7 to 15 days depending on rain and soil. Highland crops in the rainy months live mostly on the rain, and the fields are drained well because soggy soil brings wilt and rot.",
+  "method": "Furrow irrigation or a hose in the lowlands. Sprinklers or hoses fed from springs in the highlands. Water in the morning so the leaves dry before the cool, damp night.",
+  "rainfed": "Highland farmers plant the rainy season crop so it grows on the rain, on beds or ridges that drain fast. Lowland potato is grown only in the coolest dry months and cannot live on rain alone. Mulch with rice straw and water by hose or furrow.",
+  "dryseason": "Water lightly at five to seven days, then every 7 to 15 days, more often on light soil and in windy, dry spells. Water when the soil in the ridge is dry a few cm down or the leaves droop by late morning, and stop about a week before cutting the vines.",
+  "wet": "Use raised beds or high ridges with open furrows so rain drains away fast. Soggy soil brings bacterial wilt, tuber rot and late blight, and potatoes left in waterlogged soil rot before harvest.",
+  "schedule": [
+   {
+    "stage": "Planting to sprouting",
+    "from": 0,
+    "to": 6,
+    "often": "Plant the sprouted seed tubers into moist soil and do not water heavily until the shoots start",
+    "amount": "No water if the soil is moist. A light sprinkle if it is dry",
+    "why": "Seed tubers rot in wet, cold soil before they sprout."
+   },
+   {
+    "stage": "First light watering",
+    "from": 6,
+    "to": 7,
+    "often": "Give the first light irrigation five to seven days after planting",
+    "amount": "A light furrow or hose watering that moistens the ridge without soaking it",
+    "why": "The new roots are shallow and need moist soil as the shoots come up."
+   },
+   {
+    "stage": "Leafy growth",
+    "from": 7,
+    "to": 30,
+    "often": "Water every 7 to 15 days by furrow or hose, closer on light soil and in dry weather",
+    "amount": "Moisten the ridge to the roots, then let it drain",
+    "why": "Potato roots are shallow, so the top soil must not dry out."
+   },
+   {
+    "stage": "Tubers starting and filling",
+    "from": 30,
+    "to": 75,
+    "often": "Keep to the 7 to 15 day schedule without letting the ridge dry. Water after the hilling up and side dressing",
+    "amount": "Even waterings that keep the ridge moist, no standing water in the furrows",
+    "why": "Dry soil when the tubers start gives few tubers and rough, scabby skins, and dry spells while they fill give small or knobby ones."
+   },
+   {
+    "stage": "Before cutting the vines",
+    "from": 75,
+    "to": 88,
+    "often": "Stop watering about a week before cutting the vines and leave the field dry until digging",
+    "amount": "No water",
+    "why": "Dry soil lets the skins harden so the tubers bruise and rot less in storage."
+   }
+  ],
+  "critical": [
+   "When the tubers start, around the time of the first hilling up: dry soil gives few tubers and scabby skins.",
+   "Tuber filling: steady moisture, never dry, never soggy."
+  ],
+  "signs": {
+   "dry": "Leaves droop and roll, plants stay short and yellow early, and the tubers come out small, few, knobby or scabby.",
+   "wet": "Plants wilt suddenly while the soil is wet, leaves show dark, water soaked patches in cool weather, and tubers rot in the ground."
+  },
+  "better": [
+   "Keep the ridge evenly moist from the first hilling up to tuber filling. This one change gives more and smoother tubers.",
+   "Rice straw mulch between the rows keeps the shallow roots moist and cool in the lowland dry season."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "ZWZhJQLGfZM",
   "title": "Paano Magtanim at Magpalaki ng Potato, Complete Farmer's Guide",
@@ -193,5 +255,5 @@
  "kind": "annual",
  "icon": "🥔",
  "slug": "potato",
- "rev": "08ca23b726f3"
+ "rev": "69e9d65e5a89"
 }

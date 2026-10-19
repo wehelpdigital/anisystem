@@ -162,6 +162,69 @@
   "Rotate with crops outside the carrot and celery family and scout weekly for leaf miner and blight.",
   "Harvest in the cool morning and keep the bundles moist and shaded."
  ],
+ "watering": {
+  "traditional": "Celery is watered often: right after transplanting, every two days for the first two weeks, then about twice a week, by sprinkler, hose or furrow, with the water reaching the roots. Benguet growers mulch between the rows with dry grass or rice straw because the roots are shallow.",
+  "method": "Sprinklers or hoses fed from springs in the highlands, and watering cans or furrows on small lowland plots. Water in the morning.",
+  "rainfed": "Highland growers plant from January through April for the best stalks, with sprinklers or hoses fed from springs. Celery is not grown on rain alone in the dry months. Mulch the beds and keep them near water.",
+  "dryseason": "Water every two days for the first two weeks after transplanting, then about twice a week, more often on light soil or in wind. Water when the soil under the mulch is dry a finger deep or the leaves droop by mid morning.",
+  "wet": "Use beds up to about 30 cm high in the rains so water drains, and skip watering in rainy weeks. Soaked beds rot the roots and spread leaf blight.",
+  "schedule": [
+   {
+    "stage": "Seedbed",
+    "from": -45,
+    "to": -24,
+    "often": "Water every day or two with a sprinkling can over the damp sacks so the bed never dries",
+    "amount": "Keep the bed close to fully moist without washing the seed",
+    "why": "Celery seed is slow to come up and dies if the top soil dries."
+   },
+   {
+    "stage": "Pricked seedlings",
+    "from": -24,
+    "to": 0,
+    "often": "Water the moved seedlings and keep them in a cool, shaded spot, then water every day or two",
+    "amount": "Light waterings, never soggy",
+    "why": "Seedlings with a strong root system take the field better."
+   },
+   {
+    "stage": "Transplanting and settling",
+    "from": 0,
+    "to": 14,
+    "often": "Water right after transplanting, then every two days for the first two weeks",
+    "amount": "Enough to reach the root zone each time",
+    "why": "The young plants have few roots and wilt fast."
+   },
+   {
+    "stage": "Stalks growing",
+    "from": 14,
+    "to": 55,
+    "often": "About twice a week. Water in the weak fertilizer every 10 to 15 days",
+    "amount": "Water that reaches the roots, with mulch between the rows",
+    "why": "Celery that runs dry gets stringy, hollow and light."
+   },
+   {
+    "stage": "Before harvest",
+    "from": 55,
+    "to": 60,
+    "often": "Keep watering twice a week up to the harvest",
+    "amount": "The usual watering",
+    "why": "Full, crisp stalks weigh more at the market."
+   }
+  ],
+  "critical": [
+   "The seedbed, which must stay moist for the slow seed.",
+   "The first two weeks after transplanting.",
+   "Stalk growth: a dry spell makes stringy, light stalks."
+  ],
+  "signs": {
+   "dry": "Leaves wilt, the stalks turn stringy, hollow or bitter, and the plants stay light.",
+   "wet": "Lower stalks yellow and rot at the base, and leaf spots and blight spread."
+  },
+  "better": [
+   "Keep a mulch of dry grass or rice straw between the rows to hold moisture near the shallow roots.",
+   "Never let the beds go dry while the stalks grow. Even watering gives heavier, crisper celery."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "IJ7SDMAqHwo",
   "title": "Paano kumita at magtanim ng Kinchay.",
@@ -182,5 +245,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "celery",
- "rev": "be592b43f5c5"
+ "rev": "2c2d292bcba5"
 }

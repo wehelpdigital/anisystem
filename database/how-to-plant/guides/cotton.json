@@ -191,6 +191,68 @@
   "Mulch with rice straw and water at the key weeks of flowering and boll filling.",
   "Sun dry the seed cotton and keep it clean of plastic for a better price."
  ],
+ "watering": {
+  "traditional": "Cotton after rice is sown on the moisture left in the field, then watered down the furrows or with a hose along the rows at a few key weeks, or whenever the plants droop at midday. Where rice straw is free, farmers mulch with it to cut the watering.",
+  "method": "Furrow watering from a pump or canal, or a plastic hose carried along the rows where water is scarce. Water in the morning or late afternoon.",
+  "rainfed": "Sow early after the rice harvest, within the month your area sows, so the crop uses the moisture left in the soil. Mulch with rice straw and keep the field weed free. Late sowing works only where there is water to give.",
+  "dryseason": "The crop grows through the dry months, so water at the key weeks. If you cannot keep to them, dig a hand deep, about 15 cm, and squeeze the soil: water when sandy soil will not form a ball, when medium soil crumbles, or when heavy soil only just holds together.",
+  "wet": "Cotton does not like wet feet or rain on open bolls. Keep the furrows draining, avoid low spots, and pick the open cotton on dry days so the lint does not rot or stain.",
+  "schedule": [
+   {
+    "stage": "Sowing and coming up",
+    "from": 0,
+    "to": 14,
+    "often": "Sow on moist soil after the rice. Water after sowing only if the soil is dry",
+    "amount": "A light furrow or hose watering that moistens the seed row",
+    "why": "The seed needs moisture to come up evenly in the first days."
+   },
+   {
+    "stage": "Seedlings",
+    "from": 14,
+    "to": 42,
+    "often": "Usually no watering while the soil holds the moisture left after the rice",
+    "amount": "None, unless the plants wilt in the morning",
+    "why": "A little dryness now pushes the roots deep."
+   },
+   {
+    "stage": "First squares",
+    "from": 42,
+    "to": 56,
+    "often": "Water at about the sixth week, and right after the urea and hilling up at about day 45",
+    "amount": "Run water down the furrows, or a hose along the rows where water is short",
+    "why": "The plant starts to form its flower buds and needs water for the fertilizer to work."
+   },
+   {
+    "stage": "Flowering and boll setting",
+    "from": 56,
+    "to": 95,
+    "often": "Water at about the 8th, 11th and 13th weeks, or whenever the plants droop at midday",
+    "amount": "A full furrow watering, or a hose along every row",
+    "why": "Drought now drops the squares and young bolls."
+   },
+   {
+    "stage": "Boll opening and picking",
+    "from": 110,
+    "to": 165,
+    "often": "Stop watering once the bolls start to open",
+    "amount": "None",
+    "why": "Dry weather opens the bolls cleanly and keeps the lint clean and dry."
+   }
+  ],
+  "critical": [
+   "Squaring and flowering, about weeks 6 to 13: a dry spell drops squares, flowers and young bolls.",
+   "Sowing: the seed must go into moist soil after the rice."
+  ],
+  "signs": {
+   "dry": "Leaves droop at midday and stay limp into the afternoon, and squares and small bolls drop.",
+   "wet": "Leaves yellow, the plants grow tall and leafy with few bolls, and the bolls rot."
+  },
+  "better": [
+   "Keep to the key weeks, the 6th, 8th, 11th and 13th, instead of watering by habit.",
+   "Rice straw mulch over the field cuts how often and how much you water, and drip lines with fertilizer save even more where they are used."
+  ],
+  "confidence": "high"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng bulak",
@@ -205,5 +267,5 @@
  "kind": "annual",
  "icon": "🌾",
  "slug": "cotton",
- "rev": "f9da903d0622"
+ "rev": "3cbd94f576ae"
 }

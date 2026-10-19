@@ -115,6 +115,60 @@
   "Rotate with corn or other crops outside the carrot family to keep root knot nematodes down.",
   "Harvest on time and keep roots cool and shaded after digging."
  ],
+ "watering": {
+  "traditional": "Carrots are watered by sprinkler, hose or furrow about every five to seven days, more in dry weather, with the most care in the first month while the seed comes up. Growers lay rice straw over the sown beds to keep them moist and move it between the rows once the seedlings are up.",
+  "method": "Sprinklers or hoses fed from springs in the highlands, and furrows or watering cans in the lowlands. Water in the morning.",
+  "rainfed": "Highland carrots sown in the rainy months live mostly on the rain on raised beds. In the dry months they need a sprinkler, hose or furrow. Without one, sow in the cool months near a water source and keep straw over the beds and between the rows.",
+  "dryseason": "Water every five to seven days, or more often in dry, windy spells and on sandy soil, keeping the amount even each time. Water when the top soil under the straw is dry a finger deep.",
+  "wet": "Sow on raised beds that drain and skip watering in rainy weeks. Soaked beds rot the seed and the young roots, and roots sitting in wet soil split and rot.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": 0,
+    "to": 14,
+    "often": "Water the beds right after sowing and laying the straw, then lightly every day or two so the top soil never dries",
+    "amount": "A fine spray through the straw, enough to keep the top soil damp",
+    "why": "Carrot seed is slow to come up and dies if the top soil dries or crusts."
+   },
+   {
+    "stage": "Young seedlings",
+    "from": 14,
+    "to": 30,
+    "often": "Water about every five to seven days, more often in dry spells, after moving the straw between the rows",
+    "amount": "Even waterings that wet the bed to the roots",
+    "why": "The first month is when carrots need moisture the most."
+   },
+   {
+    "stage": "Roots growing",
+    "from": 30,
+    "to": 80,
+    "often": "Keep to the five to seven day schedule. Water after the side dressing",
+    "amount": "The same even amount each time, never a long dry spell followed by a soaking",
+    "why": "Uneven watering makes the roots crack and fork."
+   },
+   {
+    "stage": "Before pulling",
+    "from": 80,
+    "to": 90,
+    "often": "Water less in the last days. Give a light watering the day before pulling if the soil is hard",
+    "amount": "Light",
+    "why": "Too much water on full grown roots splits them, while hard dry soil breaks them when pulled."
+   }
+  ],
+  "critical": [
+   "The first month: sowing to young seedlings needs steady moisture.",
+   "Root growth: even watering, because swings from dry to wet crack and fork the roots."
+  ],
+  "signs": {
+   "dry": "Seedlings come up patchy, leaves wilt in the heat, and the roots turn thin, woody, pale or cracked.",
+   "wet": "Seedlings rot at the base, leaves yellow, and the roots split, fork or rot."
+  },
+  "better": [
+   "Keep the watering the same every few days instead of letting the beds dry out. It cuts cracked and forked roots.",
+   "Lay rice straw over the sown beds and later between the rows to hold moisture and save water."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "fqRvhV2pthU",
   "title": "Carrots Farming Tips and Technique",
@@ -135,5 +189,5 @@
  "kind": "annual",
  "icon": "🥕",
  "slug": "carrot",
- "rev": "29988828b579"
+ "rev": "41ca5a1057aa"
 }

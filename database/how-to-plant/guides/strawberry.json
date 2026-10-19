@@ -159,6 +159,68 @@
   "Scout weekly for mites and aphids and use integrated pest management, with predatory mites where available.",
   "Rotate strawberry beds with other crops to cut soil diseases."
  ],
+ "watering": {
+  "traditional": "Strawberry growers in La Trinidad and other high places water often and lightly by hose, sprinkler or furrow so the shallow roots never dry, on raised beds that drain. Water is scarce in some strawberry areas in the dry months, so many growers lay plastic mulch or rice straw on the beds to hold moisture.",
+  "method": "Hoses, sprinklers and furrows between raised beds are the usual ways. Growers with mulch often use drip lines under it. Water early in the morning so the leaves and berries dry fast.",
+  "rainfed": "Open field strawberry is planted after the heavy rains and typhoons, around October to November, and fruits through the cool dry months, so it cannot live on rain alone. Without a water line, keep the beds close to a spring or tank, cover them with plastic mulch or rice straw, and water each plant by can.",
+  "dryseason": "Water every few days, more often in hot or windy spells and on light soil, so the shallow roots never dry. Water when the top soil under the mulch is dry to the touch or the leaves droop by midday. In drought years, mites also build up on thirsty plants.",
+  "wet": "Use raised beds that drain and do not water in rainy weeks. Rain and soaked soil rot the berries and the crowns and spread leaf spots, which is why open field picking ends when the rains start.",
+  "schedule": [
+   {
+    "stage": "Runners in the nursery",
+    "from": -30,
+    "to": 0,
+    "often": "Keep the soil around the rooting runners moist with light, frequent watering",
+    "amount": "Light sprinkles, never soggy",
+    "why": "Runners root only in moist soil, and soggy soil rots the young crowns."
+   },
+   {
+    "stage": "Beds ready",
+    "from": -2,
+    "to": 0,
+    "often": "Water the beds before laying the mulch and planting",
+    "amount": "Wet the bed through",
+    "why": "Mulch laid over moist soil keeps that moisture for weeks."
+   },
+   {
+    "stage": "Setting out and rooting",
+    "from": 0,
+    "to": 14,
+    "often": "Water the runners in well at planting, then every day or two in dry weather until new leaves show",
+    "amount": "Moisten the soil around each crown without burying it in mud",
+    "why": "New plants with few roots dry out in a day of sun and wind."
+   },
+   {
+    "stage": "Leafy growth",
+    "from": 14,
+    "to": 45,
+    "often": "Water every few days in dry weather. Water in the second compost dose",
+    "amount": "Light waterings that keep the top soil moist, drain off any standing water",
+    "why": "Strong crowns and leaves now carry more flowers in the cool months."
+   },
+   {
+    "stage": "Flowering and picking",
+    "from": 45,
+    "to": 180,
+    "often": "Keep watering every few days in the dry months, at the base or in the furrow, early in the day",
+    "amount": "Light, steady waterings. Keep water off the flowers and berries where you can",
+    "why": "Low water gives fewer and smaller berries and wilting plants, while wet berries rot."
+   }
+  ],
+  "critical": [
+   "The first two weeks after setting out the runners.",
+   "Flowering and fruiting through the dry months: low water gives fewer, smaller berries."
+  ],
+  "signs": {
+   "dry": "Leaves droop and their edges turn brown and crisp, flowers dry up, and the berries stay small and few.",
+   "wet": "Crowns and roots rot, the leaves yellow and spot, and the berries turn soft and moldy."
+  },
+  "better": [
+   "Plastic mulch or rice straw on the beds holds moisture and keeps the berries clean. It helped many growers through a drought year.",
+   "A drip line under the mulch waters the roots without wetting the berries, which cuts rot."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "wvH7wjMjuNo",
   "title": "Paano Magtanim at Magpabunga ng Malalaki sa Strawberry",
@@ -179,5 +241,5 @@
  "kind": "annual",
  "icon": "🍓",
  "slug": "strawberry",
- "rev": "0d5d7a513870"
+ "rev": "0595960631d3"
 }

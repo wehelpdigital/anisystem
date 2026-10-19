@@ -205,7 +205,70 @@
      ]
     }
    ],
-   "note": "The first fruits come about 45 to 75 days after sowing, depending on the variety. Picking then goes on two or three times a week for 2 to 3 months."
+   "note": "The first fruits come about 45 to 75 days after sowing, depending on the variety. Picking then goes on two or three times a week for 2 to 3 months.",
+   "watering": {
+    "traditional": "Ampalaya sown straight in the field is watered through the furrows beside the rows: water is let in when the soil dries, soaks the rows and is drained off, and one good soaking lasts about a week. In the hot months and once picking starts, many farmers water about twice a week.",
+    "method": "Furrow watering is the usual way: water is let into the furrow beside the rows, soaks in, and the rest is drained off. Small growers water each hill with a can or a hose, and some commercial farms use drip lines. Water in the early morning or late afternoon.",
+    "rainfed": "Most farmers plant ampalaya in the cooler, drier months from October to February where a canal, well or pump is near, because the vines need water through months of picking. A rain fed crop goes in at the start of the rains on raised rows with a drain canal, with rice straw or cut grass laid along the rows to hold the moisture between rains.",
+    "dryseason": "Let water into the furrows when the soil dries. One good soaking lasts about a week on loam, but on sandy soil and in the hot months water about twice a week, mostly from flowering on. Water when the leaves droop by mid morning, the vine tips stop growing, or the soil a few cm down feels dry, and water again after each side dressing.",
+    "wet": "Use raised rows set about 3 meters apart, with a canal at the low end to carry the rain away. Ampalaya cannot stand waterlogging: the roots rot and the vines wilt and yellow. Skip the furrow watering when the rains are steady.",
+    "schedule": [
+     {
+      "stage": "Sprouting the seed",
+      "from": -4,
+      "to": 0,
+      "often": "Keep the cloth with the soaked seed damp in the shade until the coat cracks",
+      "amount": "Damp, not dripping",
+      "why": "Moist seed sprouts in 3 to 4 days, but seed left in water rots."
+     },
+     {
+      "stage": "Sowing to first leaves",
+      "from": 0,
+      "to": 7,
+      "often": "Water the hills right after planting, then by can every day or two if no rain falls",
+      "amount": "Moisten each hill without washing the seed out",
+      "why": "The sprouted seed dies fast if the hill dries before it comes up."
+     },
+     {
+      "stage": "Vines climbing the trellis",
+      "from": 7,
+      "to": 35,
+      "often": "Furrow water when the soil dries, about once a week. Twice a week on sandy soil or in the hot months. Water after the side dressing",
+      "amount": "Let water run until the rows are soaked, then drain. Never leave it standing",
+      "why": "Strong vines that reach the trellis early carry more flowers and fruits."
+     },
+     {
+      "stage": "Flowering and fruit set",
+      "from": 35,
+      "to": 60,
+      "often": "Keep the soil steadily moist, about twice a week in dry, hot weather",
+      "amount": "A full furrow soaking each time, drained off",
+      "why": "Dry soil now drops flowers and gives short, crooked fruits."
+     },
+     {
+      "stage": "Picking",
+      "from": 60,
+      "to": 135,
+      "often": "Keep watering about once or twice a week, by the soil, through the two to three months of picking. Water after each feeding",
+      "amount": "A full furrow soaking each time, drained off",
+      "why": "The vines keep flowering and filling fruits only with steady water and feeding."
+     }
+    ],
+    "critical": [
+     "Sowing or transplanting to the first true leaves: the hills must stay moist.",
+     "Flowering and fruit set: dry soil now drops the flowers and makes short, crooked fruits.",
+     "The whole picking season: dry spells cut the number of fruits, and standing water rots the roots."
+    ],
+    "signs": {
+     "dry": "Leaves droop and turn dull, the vine tips stop running, flowers drop, and the fruits come out short, crooked and pale.",
+     "wet": "Leaves yellow from the base up, vines wilt even in wet soil, the root and stem base rot, and young fruits fall."
+    },
+    "better": [
+     "A drip line along the row under straw or plastic mulch gives the steady water ampalaya needs during months of picking, with far less water and fewer weeds.",
+     "Water right after each side dressing so the fertilizer dissolves and reaches the roots."
+    ],
+    "confidence": "high"
+   }
   },
   {
    "key": "transplanted",
@@ -372,7 +435,78 @@
      ]
     }
    ],
-   "note": "Seedlings go out about 15 days after sowing. Early hybrids give the first fruits about 45 to 60 days after transplanting and later kinds near 70 days."
+   "note": "Seedlings go out about 15 days after sowing. Early hybrids give the first fruits about 45 to 60 days after transplanting and later kinds near 70 days.",
+   "watering": {
+    "traditional": "Transplanted ampalaya is watered right after setting out and then through the furrows beside the rows about once a week, when the soil dries, with the water drained off after it soaks in. In the hot months and once picking starts, many farmers water about twice a week.",
+    "method": "Furrow watering is the usual way: water is let into the furrow beside the rows, soaks in, and the rest is drained off. Small growers water each hill with a can or a hose, and some commercial farms use drip lines. Water in the early morning or late afternoon.",
+    "rainfed": "Most farmers plant ampalaya in the cooler, drier months from October to February where a canal, well or pump is near, because the vines need water through months of picking. A rain fed crop goes in at the start of the rains on raised rows with a drain canal, with rice straw or cut grass laid along the rows to hold the moisture between rains.",
+    "dryseason": "Let water into the furrows when the soil dries. One good soaking lasts about a week on loam, but on sandy soil and in the hot months water about twice a week, mostly from flowering on. Water when the leaves droop by mid morning, the vine tips stop growing, or the soil a few cm down feels dry, and water again after each side dressing.",
+    "wet": "Use raised rows set about 3 meters apart, with a canal at the low end to carry the rain away. Ampalaya cannot stand waterlogging: the roots rot and the vines wilt and yellow. Skip the furrow watering when the rains are steady.",
+    "schedule": [
+     {
+      "stage": "Seedlings in trays",
+      "from": -15,
+      "to": -4,
+      "often": "Water the trays every morning in light shade",
+      "amount": "Enough to moisten the cells, never soggy",
+      "why": "Even moisture gives sturdy seedlings. Soggy trays bring damping off."
+     },
+     {
+      "stage": "Hardening",
+      "from": -4,
+      "to": 0,
+      "often": "Water less often while the trays get more sun",
+      "amount": "Light waterings. Water at once if they wilt hard",
+      "why": "Hardened seedlings stand the move to the field."
+     },
+     {
+      "stage": "Transplanting and settling",
+      "from": 0,
+      "to": 7,
+      "often": "Water each hill right after setting out the seedlings, then by can every day or two if no rain falls",
+      "amount": "Soak the soil around each root ball",
+      "why": "The seedlings must root into the field soil before the furrow watering starts."
+     },
+     {
+      "stage": "Vines climbing the trellis",
+      "from": 7,
+      "to": 30,
+      "often": "Furrow water when the soil dries, about once a week. Twice a week on sandy soil or in the hot months. Water after each side dressing",
+      "amount": "Let water run until the rows are soaked, then drain. Never leave it standing",
+      "why": "Strong vines that reach the trellis early carry more flowers and fruits."
+     },
+     {
+      "stage": "Flowering and fruit set",
+      "from": 30,
+      "to": 50,
+      "often": "Keep the soil steadily moist, about twice a week in dry, hot weather",
+      "amount": "A full furrow soaking each time, drained off",
+      "why": "Dry soil now drops flowers and gives short, crooked fruits."
+     },
+     {
+      "stage": "Picking",
+      "from": 50,
+      "to": 125,
+      "often": "Keep watering about once or twice a week, by the soil, through the two to three months of picking. Water after each feeding",
+      "amount": "A full furrow soaking each time, drained off",
+      "why": "The vines keep flowering and filling fruits only with steady water and feeding."
+     }
+    ],
+    "critical": [
+     "Sowing or transplanting to the first true leaves: the hills must stay moist.",
+     "Flowering and fruit set: dry soil now drops the flowers and makes short, crooked fruits.",
+     "The whole picking season: dry spells cut the number of fruits, and standing water rots the roots."
+    ],
+    "signs": {
+     "dry": "Leaves droop and turn dull, the vine tips stop running, flowers drop, and the fruits come out short, crooked and pale.",
+     "wet": "Leaves yellow from the base up, vines wilt even in wet soil, the root and stem base rot, and young fruits fall."
+    },
+    "better": [
+     "A drip line along the row under straw or plastic mulch gives the steady water ampalaya needs during months of picking, with far less water and fewer weeds.",
+     "Water right after each side dressing so the fertilizer dissolves and reaches the roots."
+    ],
+    "confidence": "high"
+   }
   }
  ],
  "mistakes": [
@@ -412,5 +546,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "bitter-gourd",
- "rev": "207c240487cc"
+ "rev": "0b87d9426582"
 }

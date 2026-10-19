@@ -188,6 +188,103 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering suha, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Pomelo here is mostly rain fed: a new marcot is watered every few days in dry weather and mulched, then left to the rain. Growers who can water during flowering and fruit growth in the dry months get a better fruit set and a second, off season crop. A pail or hose into a ring basin under the edge of the leaves on small farms. Drip lines or small sprinklers on the bigger orchards in Mindanao and Luzon. Water early in the morning."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let suha go dry at these stages",
+   "text": "The first year after planting, since a marcot has shallow roots. Flowering and fruit set, when dry soil drops flowers and young fruits. Fruit growth in the dry months, which decides fruit size and juice."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for suha, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Hardening the marcot",
+     "7 days before planting to planting day",
+     "Every day for the week before planting, in light shade",
+     "Enough to wet the soil ball right through"
+    ],
+    [
+     "Planting to new leaves",
+     "Planting day to day 30",
+     "Soak on planting day, then every 2 to 3 days in dry weather until new leaves show",
+     "Half to one watering can a tree each time, into a ring basin away from the stem"
+    ],
+    [
+     "Rest of the first year",
+     "Day 30 to month 12",
+     "Every 3 to 4 days in the dry months. Not needed in steady rain",
+     "One watering can a tree each time, or about 1 to 5 liters a tree a day on drip"
+    ],
+    [
+     "Second year",
+     "Month 12 to 24",
+     "Every 3 to 4 days on light soil and about once a week on clay, in the dry months",
+     "About 3 to 5 watering cans a tree each time, or 10 to 15 liters a tree a day on drip"
+    ],
+    [
+     "Years 3 and 4, before bearing",
+     "Month 24 to 40",
+     "Every 4 to 7 days in the dry months",
+     "A deep soak of the whole ring under the leaves, or about 15 to 40 liters a tree a day on drip as it grows"
+    ],
+    [
+     "Bearing trees: short dry spell before flowering (each year)",
+     "Month 40 to 41",
+     "Let the soil get drier for a few weeks late in the dry months, then soak deeply with the fertilizer",
+     "Little or none for a few weeks, then one deep soak"
+    ],
+    [
+     "Flowering and fruit set",
+     "Month 41 to 43",
+     "Every 5 to 7 days in dry weather, never letting the soil dry out",
+     "A deep soak of the ring under the leaves, out to the edge of the crown"
+    ],
+    [
+     "Fruit growth",
+     "Month 43 to 47",
+     "Every 7 to 10 days in dry spells",
+     "A deep soak under the crown"
+    ],
+    [
+     "Ripening and picking",
+     "Month 47 to 49",
+     "Water lightly and evenly. Avoid one heavy flood after a long dry spell",
+     "A normal soak of the ring"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant as the rains begin, stake the marcot against wind, and mulch a little away from the trunk. Mulch again before the dry months. On slopes, plant along the contour with a small basin on the downhill side of each tree. Rain fed trees give their main crop on the rains and little off season fruit.\n\n**In the dry season.** First year: every 3 to 4 days. Second year: every 3 to 7 days, by soil. Bearing trees: every 5 to 10 days through flowering and fruit growth. Water when leaves curl and lose their shine by midday, or when small fruits start to drop.\n\n**In the rainy season.** Wet soil against the trunk brings gum oozing from the bark and root rot, the trouble that ruins many pomelo farms here. Keep the base dry and clean, never pile soil or mulch on the trunk, water the ring under the leaves, and plant on ground that drains well with open drains from low spots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves curl and fold along the middle, lose their shine, and older ones yellow and fall. New flushes stop and small fruits drop.",
+    "**Too much water:** Leaves yellow all over, gum oozes from the trunk, roots rot, and branches die back."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Drip or a mulched ring basin watered through the dry months lets the tree carry an off season crop, when pomelo sells best. Keep the soil steadily moist from flowering through fruit set and keep water off the trunk to cut fruit drop and gum."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for suha"
   },
   {
@@ -318,6 +415,10 @@
     {
      "q": "How long before suha can be harvested?",
      "a": "It is ready about 4 years after planting. Pomelo needs no flower inducer and can give a main crop and a smaller off season crop each year."
+    },
+    {
+     "q": "How often do you water suha?",
+     "a": "Hardening the marcot, 7 days before planting to planting day: Every day for the week before planting, in light shade. Planting to new leaves, planting day to day 30: Soak on planting day, then every 2 to 3 days in dry weather until new leaves show. Rest of the first year, day 30 to month 12: Every 3 to 4 days in the dry months. Not needed in steady rain. First year: every 3 to 4 days."
     },
     {
      "q": "What do you plant to grow suha?",

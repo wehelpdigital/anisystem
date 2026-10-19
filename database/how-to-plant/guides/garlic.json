@@ -170,6 +170,68 @@
   "Keep the straw mulch even, 3 to 5 cm thick, and never let water stand.",
   "Cure the bulbs well in the shade before storing or selling."
  ],
+ "watering": {
+  "traditional": "In the Ilocos Region garlic is planted into unplowed rice land under a thick rice straw mulch. Farmers let water from a canal or a pump flow over the field until the soil is wet and drain it off quickly, about every week or two in the dry months, and stop two to three weeks before harvest.",
+  "method": "Flash flooding: water from a canal or a pump is let over the whole field, under the straw, until the soil is wet, then drained off quickly. Water in the morning or late afternoon.",
+  "rainfed": "Garlic is not grown on rain alone here, since it grows in the dry months. Without a canal, plant right after the rice harvest while the field is still wet, lay the rice straw thick, and use a shallow well with a small pump for the few waterings the crop needs.",
+  "dryseason": "The crop grows through the dry season, so water about every week or two, more often on sandy soil. Lift the straw and feel the soil: water when it is dry a finger deep, and do not wait for the leaves to wilt.",
+  "wet": "Rain near harvest or water left standing rots the cloves and the bulbs and spreads purple blotch and other leaf diseases. Keep the field drains open and never leave water on the field for long.",
+  "schedule": [
+   {
+    "stage": "Before planting",
+    "from": -3,
+    "to": 0,
+    "often": "Only if the soil is too dry to push the cloves in",
+    "amount": "Let water in briefly and drain it, so the soil is moist but firm",
+    "why": "Cloves pushed into soft, moist soil root quickly."
+   },
+   {
+    "stage": "Sprouting",
+    "from": 0,
+    "to": 14,
+    "often": "First watering about two days after planting, then again when the soil under the straw starts to dry",
+    "amount": "Flow water over the field until the soil is wet, then drain it off quickly",
+    "why": "The cloves need moisture to root, but standing water rots them."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 14,
+    "to": 60,
+    "often": "About every week or two in the dry months, more often on sandy soil. Water in the side dressing at about day 30",
+    "amount": "Wet the field and drain it within the day, with no water left standing",
+    "why": "Strong leaves now feed the bulb later."
+   },
+   {
+    "stage": "Bulbing",
+    "from": 60,
+    "to": 100,
+    "often": "About every week or two, without letting the soil under the straw dry out",
+    "amount": "The same quick flooding and draining",
+    "why": "Moisture while the cloves form gives bigger, heavier bulbs."
+   },
+   {
+    "stage": "Ripening",
+    "from": 100,
+    "to": 120,
+    "often": "Stop watering two to three weeks before harvest",
+    "amount": "No water",
+    "why": "Dry soil makes the bulbs mature firm and keep well when hung."
+   }
+  ],
+  "critical": [
+   "Sprouting, the first two weeks: the soil must stay moist under the straw, or the cloves come up patchy.",
+   "Bulbing, about day 60 to 100: a dry spell now gives small bulbs with small cloves."
+  ],
+  "signs": {
+   "dry": "Leaves turn pale and the tips dry early, the plants stay short, and the bulbs come out small.",
+   "wet": "Leaves yellow from the base, roots and cloves rot in the soil, and bulbs turn soft and do not keep."
+  },
+  "better": [
+   "Keep the rice straw mulch thick, about 3 to 5 cm, so the soil stays moist longer and fewer waterings are needed.",
+   "Drain each watering quickly and stop watering on time, which gives firmer bulbs that store longer."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "wXiFINyBSbA",
   "title": "HOW WE PLANT GARLIC IN ILOCOS NORTE, PHILIPPINES",
@@ -190,5 +252,5 @@
  "kind": "annual",
  "icon": "🧄",
  "slug": "garlic",
- "rev": "0f2f069fe4a1"
+ "rev": "8c8105e01639"
 }

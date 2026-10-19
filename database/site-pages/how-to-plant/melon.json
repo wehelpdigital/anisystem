@@ -155,6 +155,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering milon, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Melon is planted at the start of the dry season on loose, well drained soil and watered lightly and evenly, by hand at the hills or by a quick furrow, whenever the top soil dries. Growers give more water while the fruits swell and less as they ripen, and never let water stand around the stems. Water poured at each hill with a can or hose, or a quick furrow watering, is the usual way. Growers on plastic mulch often use drip lines. Water in the morning, at the base of the plant, keeping the leaves and fruits dry."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let milon go dry at these stages",
+   "text": "Flowering and fruit set, when dry soil drops flowers and young fruits. Fruit swelling, when the fruits gain most of their size. Ripening: no heavy watering or rain on the fruits, and no hard drought either."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for milon, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sprouting the seed",
+     "2 days before sowing to sowing day",
+     "Keep the soaked seed in a damp cloth until the root shows",
+     "Damp, not dripping"
+    ],
+    [
+     "Sowing to first leaves",
+     "Sowing day to day 7",
+     "Water gently right after planting, then lightly by can if the hills dry",
+     "Moisten each hill, no puddles"
+    ],
+    [
+     "Young vines",
+     "Day 7 to 30",
+     "Water the hills or run a quick furrow when the top soil dries, a little at a time. Water in the side dressing",
+     "Light waterings that wet the root zone, then drain"
+    ],
+    [
+     "Flowering and fruit set",
+     "Day 30 to 40",
+     "Keep the soil evenly moist. Water whenever the top soil dries",
+     "Light, even waterings at the base"
+    ],
+    [
+     "Fruits swelling",
+     "Day 40 to 55",
+     "Water more often than before, and water in the potash dose",
+     "Fuller waterings that soak the root zone, never standing water"
+    ],
+    [
+     "Ripening",
+     "Day 55 to 65",
+     "Water less, but do not let the vines wilt",
+     "Light waterings only"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Melon is a dry season crop: rain on ripening fruits splits them and makes them less sweet, so farmers plant at the start of the dry season and water by hand or furrow. Plow deep, lay plastic or rice straw mulch to hold moisture, and keep the field close to a well or pump.\n\n**In the dry season.** Water lightly whenever the top soil dries, more often while the fruits swell and on sandy soil, then less as they ripen. Water when the leaves stay limp into the late afternoon or the soil a few cm down feels dry.\n\n**In the rainy season.** Avoid planting so the fruits ripen in the rains. If rain comes, keep the drains open and the fruits on straw or mulch off the wet ground. Soaked soil rots the stems and roots, and rain at ripening splits the fruits and spreads leaf disease."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and stay limp into the afternoon, flowers and small fruits drop, and the fruits stay small and poorly netted.",
+    "**Too much water:** Vines yellow and wilt, the stem base rots, and fruits crack, rot on the ground or taste watery."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: A drip line under plastic mulch gives the light, even water melon needs and keeps the leaves and fruits dry. Keep the vines free of stress from flowering through harvest. Ease off the water near ripeness instead of cutting it off."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for milon"
   },
   {
@@ -283,6 +362,10 @@
     {
      "q": "How long before milon can be harvested?",
      "a": "It is ready about 65 days after sowing. Netted melons are ripe when they smell sweet, turn tan under the net and slip from the stalk with a light push."
+    },
+    {
+     "q": "How often do you water milon?",
+     "a": "Sprouting the seed, 2 days before sowing to sowing day: Keep the soaked seed in a damp cloth until the root shows. Sowing to first leaves, sowing day to day 7: Water gently right after planting, then lightly by can if the hills dry. Young vines, day 7 to 30: Water the hills or run a quick furrow when the top soil dries, a little at a time. Water in the side dressing. Water lightly whenever the top soil dries, more often while the fruits swell and on sandy soil, then less as they ripen."
     },
     {
      "q": "What do you plant to grow milon?",

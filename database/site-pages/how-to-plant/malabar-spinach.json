@@ -160,6 +160,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering alugbati, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Alugbati needs plenty of water: in the dry season farmers run water down the furrows every five to seven days or sprinkle the plots daily, with grass clippings or rice straw as mulch. In the wet season they dig canals so rain drains fast, because soggy soil and too much watering bring leaf disease. Furrow watering every five to seven days or a daily sprinkler in the dry season. Backyard growers use a watering can or hose. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let alugbati go dry at these stages",
+   "text": "The first two weeks after planting, while the cuttings root. The picking months in the dry season, when dry soil gives thin, tough shoots."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for alugbati, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Soaking the cuttings",
+     "1 day before planting to planting day",
+     "Leave the stripped cuttings standing in water for one night, or rest them a day in a shaded, damp spot",
+     "Cuttings standing in clean water"
+    ],
+    [
+     "Planting and rooting",
+     "Planting day to day 14",
+     "Water right after planting and keep the soil moist, every day by can or sprinkler in dry weather",
+     "Moisten the soil around the cuttings, no puddles"
+    ],
+    [
+     "Vine growth",
+     "Day 14 to 40",
+     "In the dry season, furrow water every five to seven days or sprinkle daily. Lay mulch along the rows",
+     "Wet the soil to the roots, then let it drain"
+    ],
+    [
+     "Picking every week",
+     "Day 40 to 120",
+     "Keep the same schedule for as long as you pick, and water after each monthly feeding",
+     "Even waterings, no standing water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains so the cuttings root on the rain and the plants grow through the warm, wet months. Mulch the rows to hold moisture between rains, and keep a small patch near the house or well for the dry months.\n\n**In the dry season.** Run water down the furrows every five to seven days, or sprinkle the plots daily, and keep a mulch of grass clippings or rice straw. Water when the leaves go limp by mid morning or the soil a finger deep is dry.\n\n**In the rainy season.** Dig canals so rain water drains fast after heavy rains, and do not water when the plots are wet. Over watering and soggy soil bring leaf spots and wash the plant food out of the soil."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt and turn small and dull, the shoots grow thin and tough, and the plants flower early.",
+    "**Too much water:** Leaves show brown or purple spots and yellow, and the stems rot at the base in soggy plots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch with grass clippings or rice straw to keep the soil moist and cut the watering. Water the soil, not the leaves, and avoid soaking the plots, to keep leaf spots down."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for alugbati"
   },
   {
@@ -288,6 +355,10 @@
     {
      "q": "How long before alugbati can be harvested?",
      "a": "It is ready about 40 days after planting. Ready about 30 to 45 days after planting."
+    },
+    {
+     "q": "How often do you water alugbati?",
+     "a": "Soaking the cuttings, 1 day before planting to planting day: Leave the stripped cuttings standing in water for one night, or rest them a day in a shaded, damp spot. Planting and rooting, planting day to day 14: Water right after planting and keep the soil moist, every day by can or sprinkler in dry weather. Vine growth, day 14 to 40: In the dry season, furrow water every five to seven days or sprinkle daily. Lay mulch along the rows. Run water down the furrows every five to seven days, or sprinkle the plots daily, and keep a mulch of grass clippings or rice straw."
     },
     {
      "q": "What do you plant to grow alugbati?",

@@ -89,6 +89,66 @@
   "Test the soil and lime it if acid, since barley dislikes acid soil.",
   "Keep the plot weed free for the first month."
  ],
+ "watering": {
+  "traditional": "The rare barley plots in our highlands are sown at the end of the rains and live on the last of the rain. Growers water by hand in dry spells.",
+  "method": "Hand watering with a can or a hose on small plots, in the morning.",
+  "rainfed": "Sow at the end of the rains, from October to December, while the soil is still moist.",
+  "dryseason": "Water small plots about once a week in dry spells, more at heading, and stop once the grain hardens.",
+  "wet": "Barley does poorly in wet, warm weather. Plant on beds that drain and keep water from standing.",
+  "schedule": [
+   {
+    "stage": "Sowing and coming up",
+    "from": 0,
+    "to": 10,
+    "often": "Water the plot right after sowing and every few days if no rain falls",
+    "amount": "Enough to moisten the seed rows, never soggy",
+    "why": "Even moisture brings an even stand."
+   },
+   {
+    "stage": "Tillering",
+    "from": 10,
+    "to": 40,
+    "often": "In dry spells, water about once a week",
+    "amount": "Soak the rows with a can or a hose",
+    "why": "Moisture now gives more shoots and heads."
+   },
+   {
+    "stage": "Heading and flowering",
+    "from": 40,
+    "to": 65,
+    "often": "Keep the soil moist, watering when the topsoil dries",
+    "amount": "A good soaking of the rows",
+    "why": "Drought now gives small heads."
+   },
+   {
+    "stage": "Grain filling",
+    "from": 65,
+    "to": 88,
+    "often": "Water in dry spells until the grain is firm",
+    "amount": "A soaking of the rows",
+    "why": "Moisture fills the grain."
+   },
+   {
+    "stage": "Ripening",
+    "from": 88,
+    "to": 100,
+    "often": "Stop watering",
+    "amount": "None",
+    "why": "Dry straw and grain are ready for cutting."
+   }
+  ],
+  "critical": [
+   "Heading, flowering and grain filling, about day 40 to 88: a dry spell gives light grain."
+  ],
+  "signs": {
+   "dry": "Leaves roll and pale, short plants with few heads.",
+   "wet": "Yellow leaves, leaf spots and moldy heads."
+  },
+  "better": [
+   "Water at tillering and at heading if you can water only twice."
+  ],
+  "confidence": "low"
+ },
  "video": null,
  "keywords": [
   "paano magtanim ng barley",
@@ -101,5 +161,5 @@
  "kind": "annual",
  "icon": "🌾",
  "slug": "barley",
- "rev": "11530fc91379"
+ "rev": "cfeb7c6ca8a1"
 }

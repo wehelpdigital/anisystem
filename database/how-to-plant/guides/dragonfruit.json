@@ -204,6 +204,84 @@
   "Scout weekly for ants, mealybugs, stem rot and fruit rot, and use integrated pest management.",
   "Some growers light the field at night in the cool months to get fruit out of season. Ask experienced growers before trying it."
  ],
+ "watering": {
+  "traditional": "Dragon fruit here is mostly rain fed: cuttings get a light watering until they root, and growers on sandy soil water about once a week by can or hose in long dry spells. Most of the work goes into keeping water away, with mounds around each post and canals between the rows.",
+  "method": "A watering can or hose on the mound around each post on small farms, and drip lines with an emitter at each post on bigger farms in the drier provinces. Water early in the morning, on the mound and not over the stems.",
+  "rainfed": "Plant as the rains begin, on a raised mound around each post, and keep it covered with rice straw, rice hull or dry grass so the soil stays cool and damp. The plant stores water in its stems and lives through the dry months on rain alone, but it bears less. The flowers come with the rains, from about May to October, so rain fed plants still give a fair crop.",
+  "dryseason": "Plants not in flower: about every two weeks, or once a week on sandy soil. Plants in flower or with fruit: twice a week in a dry spell. Feel the mound and water when it is dry a finger deep, or when the stems start to look thin and wrinkled.",
+  "wet": "Never let water stand around the posts: raise the mounds, dig canals between the rows and keep them open. Too much rain drops flowers and rots fruit, and soft rot of the stems spreads in wet weather, so cut out and bury rotten stems away from the field.",
+  "schedule": [
+   {
+    "stage": "Curing the cuttings",
+    "from": -7,
+    "to": 0,
+    "often": "No water. Keep them dry in an airy, shaded place",
+    "amount": "None",
+    "why": "The cut end has to dry and seal or it rots in the soil."
+   },
+   {
+    "stage": "Planting to rooting",
+    "from": 0,
+    "to": 30,
+    "often": "Water lightly once at planting, then once or twice a week if no rain falls, letting the mound dry a little in between",
+    "amount": "A light sprinkle on the mound, never a soaking",
+    "why": "Cuttings without roots turn soft and yellow in wet soil."
+   },
+   {
+    "stage": "Young shoots climbing the post",
+    "from": 30,
+    "to": 180,
+    "often": "About once a week in dry weather. Skip it when it rains",
+    "amount": "One to two watering cans a post, enough to wet the mound without making it soggy",
+    "why": "Steady growth now gives a thick stem that reaches the ring sooner."
+   },
+   {
+    "stage": "Branching over the ring",
+    "from": 180,
+    "to": 300,
+    "often": "About once a week in dry spells, every two weeks in cooler weeks",
+    "amount": "One to two watering cans a post",
+    "why": "The hanging branches grown now carry next season's flowers."
+   },
+   {
+    "stage": "Short dry rest before flowering",
+    "from": 300,
+    "to": 330,
+    "often": "Many growers hold back water for a few weeks before the flowering season",
+    "amount": "None, unless the stems shrivel badly",
+    "why": "A dry spell before the season brings out more flower buds."
+   },
+   {
+    "stage": "Flowering and fruit growth (each season)",
+    "from": 330,
+    "to": 540,
+    "often": "Twice a week in dry spells, once a week when some rain falls, keeping the mound evenly moist",
+    "amount": "About 2 to 4 watering cans (20 to 40 liters) a post a week, split into two waterings",
+    "why": "Even moisture gives big fruits. A dry spell then a heavy soaking splits them."
+   },
+   {
+    "stage": "After the season, pruning and rest",
+    "from": 570,
+    "to": 690,
+    "often": "About every two weeks in dry months, not at all in the rains",
+    "amount": "One to two watering cans a post",
+    "why": "The plant only needs enough to keep the new branches growing."
+   }
+  ],
+  "critical": [
+   "From the first flower buds to harvest, about a month after each flower opens, when a dry spell drops buds and gives small or split fruit.",
+   "The first months after the cuttings root, when young shoots shrivel and stop climbing in long dry weather."
+  ],
+  "signs": {
+   "dry": "Stems turn thin, flat and wrinkled and lose their color, new shoots stop, and flower buds dry and fall.",
+   "wet": "Stems turn soft and yellow, then brown or black from the base. Roots rot. Flowers drop. And fruits split or rot."
+  },
+  "better": [
+   "A drip line with an emitter at each post, run twice a week through flowering and fruit growth in dry spells, keeps the moisture even, gives bigger fruit and stops splitting.",
+   "Hold water back for a few weeks before the flowering season, then water steadily once the buds show."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "Aas9yQ33R64",
   "title": "Paano Magtanim ng Dragon Fruit?",
@@ -225,5 +303,5 @@
  "kind": "perennial",
  "icon": "🐉",
  "slug": "dragon-fruit",
- "rev": "6b896d0dc28c"
+ "rev": "5eed92d13f40"
 }

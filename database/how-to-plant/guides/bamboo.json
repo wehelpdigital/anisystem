@@ -163,6 +163,76 @@
   "Cure or treat the poles before sale so they last longer and sell better.",
   "Feed the clumps at the start of the rains, guided by a soil test."
  ],
+ "watering": {
+  "traditional": "Cuttings in the nursery are watered often under shade, but in the field bamboo is rainfed: clumps are planted at the start of the rains and mulched. Young clumps get water only in long dry spells in their first year, and bamboo along creeks and rivers is never watered once it is set.",
+  "method": "A watering can or a hose in the nursery, in the early morning. In the field, rain, with a hand watering into the soil ring for young clumps in a dry spell.",
+  "rainfed": "This is the usual way. Plant at the start of the rains, from May to July in most of Luzon and the Visayas, raise a ring of soil around each plant to catch the rain, and mulch it with rice straw, cogon or cut grass.",
+  "dryseason": "Grown clumps need no water. Water young clumps in their first dry season when the leaves curl and stay rolled in the morning, and keep the mulch thick.",
+  "wet": "Bamboo stands floods and wet riverbanks well once it is set, but newly planted cuttings rot in waterlogged soil, so plant them on soil that drains.",
+  "schedule": [
+   {
+    "stage": "Cuttings rooting under shade",
+    "from": -175,
+    "to": -145,
+    "often": "Water every day in the dry season and every other day in the rainy season, letting the top of the soil dry a little in between",
+    "amount": "Keep the soil moist, never soaked",
+    "why": "The nodes need moisture to root, but soaked soil and heavy shade bring rot."
+   },
+   {
+    "stage": "Rooted cuttings in bags",
+    "from": -145,
+    "to": -30,
+    "often": "Water every day while they grow",
+    "amount": "Enough to wet each bag through, a little water for each bag",
+    "why": "Bags dry out fast in the sun."
+   },
+   {
+    "stage": "Hardening",
+    "from": -30,
+    "to": 0,
+    "often": "Cut back to about two or three times a week",
+    "amount": "Less water than before",
+    "why": "Less water toughens the plants for the field."
+   },
+   {
+    "stage": "Field planting",
+    "from": 0,
+    "to": 30,
+    "often": "Plant at the start of the rains. Soak the bag in water before planting, and water in each plant once it is set",
+    "amount": "At least 1 liter a plant at planting, poured into a small ring of soil around it",
+    "why": "Water settles the soil around the roots, and the ring holds the rain."
+   },
+   {
+    "stage": "The first year",
+    "from": 30,
+    "to": 365,
+    "often": "No regular watering in the rains. In a long dry spell, water the young clumps",
+    "amount": "A good soaking inside the soil ring, then mulch",
+    "why": "Young clumps with short rhizomes can dry out in their first dry season."
+   },
+   {
+    "stage": "Grown clumps",
+    "from": 365,
+    "to": 1445,
+    "often": "No watering. Mound soil and mulch over the base each year",
+    "amount": "None",
+    "why": "A grown clump finds its own water, most of all near creeks."
+   }
+  ],
+  "critical": [
+   "Rooting in the nursery: the cuttings must never dry out.",
+   "The first dry season after field planting: water and mulch young clumps if no rain comes."
+  ],
+  "signs": {
+   "dry": "Leaves roll up tight and turn pale, young clumps drop their leaves, and few new shoots come up.",
+   "wet": "In the nursery, cuttings turn black and rot at the base. In the field, young plants in waterlogged spots turn yellow."
+  },
+  "better": [
+   "Plant along creeks and rivers or on land that holds moisture, and mulch every clump.",
+   "Keep a soil ring around each young plant so every rain and every watering soaks in at the roots."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "t69PU_CUxTc",
   "title": "PAGTATANIM NG KAWAYAN | ALIN ANG MAINAM NA ITANIM | D' GREEN THUMB",
@@ -184,5 +254,5 @@
  "kind": "perennial",
  "icon": "🎋",
  "slug": "bamboo",
- "rev": "6f1f14044258"
+ "rev": "6ad18c8686c9"
 }

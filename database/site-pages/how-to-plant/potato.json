@@ -204,6 +204,79 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering patatas, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Lowland and dry season potato is watered by furrow or hose: a light watering five to seven days after planting, then every 7 to 15 days depending on rain and soil. Highland crops in the rainy months live mostly on the rain, and the fields are drained well because soggy soil brings wilt and rot. Furrow irrigation or a hose in the lowlands. Sprinklers or hoses fed from springs in the highlands. Water in the morning so the leaves dry before the cool, damp night."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let patatas go dry at these stages",
+   "text": "When the tubers start, around the time of the first hilling up: dry soil gives few tubers and scabby skins. Tuber filling: steady moisture, never dry, never soggy."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for patatas, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting to sprouting",
+     "Planting day to day 6",
+     "Plant the sprouted seed tubers into moist soil and do not water heavily until the shoots start",
+     "No water if the soil is moist. A light sprinkle if it is dry"
+    ],
+    [
+     "First light watering",
+     "Day 6 to 7",
+     "Give the first light irrigation five to seven days after planting",
+     "A light furrow or hose watering that moistens the ridge without soaking it"
+    ],
+    [
+     "Leafy growth",
+     "Day 7 to 30",
+     "Water every 7 to 15 days by furrow or hose, closer on light soil and in dry weather",
+     "Moisten the ridge to the roots, then let it drain"
+    ],
+    [
+     "Tubers starting and filling",
+     "Day 30 to 75",
+     "Keep to the 7 to 15 day schedule without letting the ridge dry. Water after the hilling up and side dressing",
+     "Even waterings that keep the ridge moist, no standing water in the furrows"
+    ],
+    [
+     "Before cutting the vines",
+     "Day 75 to 88",
+     "Stop watering about a week before cutting the vines and leave the field dry until digging",
+     "No water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Highland farmers plant the rainy season crop so it grows on the rain, on beds or ridges that drain fast. Lowland potato is grown only in the coolest dry months and cannot live on rain alone. Mulch with rice straw and water by hose or furrow.\n\n**In the dry season.** Water lightly at five to seven days, then every 7 to 15 days, more often on light soil and in windy, dry spells. Water when the soil in the ridge is dry a few cm down or the leaves droop by late morning, and stop about a week before cutting the vines.\n\n**In the rainy season.** Use raised beds or high ridges with open furrows so rain drains away fast. Soggy soil brings bacterial wilt, tuber rot and late blight, and potatoes left in waterlogged soil rot before harvest."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and roll, plants stay short and yellow early, and the tubers come out small, few, knobby or scabby.",
+    "**Too much water:** Plants wilt suddenly while the soil is wet, leaves show dark, water soaked patches in cool weather, and tubers rot in the ground."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep the ridge evenly moist from the first hilling up to tuber filling. This one change gives more and smoother tubers. Rice straw mulch between the rows keeps the shallow roots moist and cool in the lowland dry season."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for patatas"
   },
   {
@@ -332,6 +405,10 @@
     {
      "q": "How long before patatas can be harvested?",
      "a": "It is ready about 90 days after planting. Most potatoes are ready 75 to 90 days after planting, when most of the leaves turn yellow."
+    },
+    {
+     "q": "How often do you water patatas?",
+     "a": "Planting to sprouting, planting day to day 6: Plant the sprouted seed tubers into moist soil and do not water heavily until the shoots start. First light watering, day 6 to 7: Give the first light irrigation five to seven days after planting. Leafy growth, day 7 to 30: Water every 7 to 15 days by furrow or hose, closer on light soil and in dry weather. Water lightly at five to seven days, then every 7 to 15 days, more often on light soil and in windy, dry spells."
     },
     {
      "q": "What do you plant to grow patatas?",

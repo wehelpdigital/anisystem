@@ -75,7 +75,61 @@
      "how": "From about two months after sowing, pick the outer leaves or pull whole plants while the stalks are still crisp and firm.",
      "task": "harvest"
     }
-   ]
+   ],
+   "watering": {
+    "traditional": "Mustasa sown straight in the furrows is watered two to three times a week by hand, hose or furrow, more in dry spells. On rice land planted right after the wet season harvest, the soil still holds moisture for the first weeks and less watering is needed.",
+    "method": "Watering cans and hoses on small plots, furrows on bigger rice land fields. Water in the morning or late afternoon.",
+    "rainfed": "Sow on rice land right after the wet season harvest so the plants start on the moisture left in the soil, and water by can two to three times a week once it dries. Mulch with rice straw to hold moisture.",
+    "dryseason": "Water two to three times a week, more in hot, dry spells and on sandy soil. Water when the top soil is dry or the leaves droop by mid afternoon.",
+    "wet": "Heavy rain makes mustasa rot or bolt, so in the rainy months plant on raised beds with drainage and skip watering on wet days.",
+    "schedule": [
+     {
+      "stage": "Sowing to coming up",
+      "from": 0,
+      "to": 5,
+      "often": "Water right after sowing, then every day or two until the seedlings are up",
+      "amount": "A gentle watering that keeps the furrow damp",
+      "why": "Shallow seed dies if the furrow dries before it comes up."
+     },
+     {
+      "stage": "Young plants",
+      "from": 5,
+      "to": 20,
+      "often": "Two to three times a week, more often in dry spells. Water before thinning",
+      "amount": "Enough to keep the soil moist to the roots",
+      "why": "Young mustasa grows tender leaves only in moist soil."
+     },
+     {
+      "stage": "Leaf growth",
+      "from": 20,
+      "to": 50,
+      "often": "Two to three times a week, or more if the leaves droop in the afternoon",
+      "amount": "Even waterings, no standing water",
+      "why": "Dry spells make the leaves small, tough and very hot, and push the plant to bolt."
+     },
+     {
+      "stage": "Picking",
+      "from": 50,
+      "to": 60,
+      "often": "Keep watering two to three times a week through the picking rounds",
+      "amount": "Even waterings",
+      "why": "Crisp stalks and full leaves sell and pickle best."
+     }
+    ],
+    "critical": [
+     "Sowing to coming up.",
+     "Leaf growth: dry spells give tough, bitter leaves and early bolting."
+    ],
+    "signs": {
+     "dry": "Leaves droop and stay small, the stalks turn tough and the plants send up flower stalks early.",
+     "wet": "Lower leaves yellow and rot at the base, and the plants go soft."
+    },
+    "better": [
+     "Mulch the furrows with rice straw to keep the soil moist between waterings.",
+     "Keep the watering regular so the leaves stay mild and the plants do not bolt."
+    ],
+    "confidence": "high"
+   }
   },
   {
    "key": "transplanted",
@@ -124,7 +178,61 @@
      "how": "Leaves are ready about two to four weeks after transplanting, while the stalks are crisp.",
      "task": "harvest"
     }
-   ]
+   ],
+   "watering": {
+    "traditional": "Seedlings are raised in trays or a seedbed under light shade and watered lightly, then set out in the cool hours, watered right away and watered two to three times a week until the leaves are picked.",
+    "method": "Watering cans and hoses on small beds, furrows on bigger fields. Water in the morning or late afternoon.",
+    "rainfed": "Set the seedlings out on rice land right after the wet season harvest so they start on the moisture left in the soil, and mulch with rice straw. Water by can two to three times a week once the soil dries.",
+    "dryseason": "Water two to three times a week, more in hot, dry spells and on sandy soil. Water when the top soil is dry or the leaves droop by mid afternoon.",
+    "wet": "Use raised beds with drainage in the rainy months and skip watering on wet days. Heavy rain makes mustasa rot or bolt.",
+    "schedule": [
+     {
+      "stage": "Seedlings in trays",
+      "from": -28,
+      "to": -3,
+      "often": "Water lightly every day or as the mix dries, under light shade",
+      "amount": "Light sprinkles, never soggy",
+      "why": "Seedlings rot at the base in soggy trays."
+     },
+     {
+      "stage": "Transplanting",
+      "from": 0,
+      "to": 3,
+      "often": "Water right after setting out in the morning or late afternoon, then daily until they stand up",
+      "amount": "Soak the soil around each plant",
+      "why": "The seedlings must root before the sun dries them."
+     },
+     {
+      "stage": "Leaf growth",
+      "from": 3,
+      "to": 20,
+      "often": "Two to three times a week, more in dry spells. Water after weeding",
+      "amount": "Even waterings, no standing water",
+      "why": "Steady moisture gives big, mild, tender leaves."
+     },
+     {
+      "stage": "Picking",
+      "from": 20,
+      "to": 25,
+      "often": "Keep watering two to three times a week while picking",
+      "amount": "Even waterings",
+      "why": "Well watered plants keep crisp after picking."
+     }
+    ],
+    "critical": [
+     "The first days after transplanting.",
+     "Leaf growth: dry spells give tough, bitter leaves and early bolting."
+    ],
+    "signs": {
+     "dry": "Leaves droop and stay small, the stalks turn tough and the plants bolt early.",
+     "wet": "Lower leaves yellow and rot at the base, and the plants go soft."
+    },
+    "better": [
+     "Mulch the beds with rice straw to keep the soil moist between waterings.",
+     "A drip line or a fine hose head gives every plant the same water and saves time."
+    ],
+    "confidence": "high"
+   }
   }
  ],
  "mistakes": [
@@ -161,5 +269,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "mustard",
- "rev": "6101b2d29400"
+ "rev": "dafee2a44cdb"
 }

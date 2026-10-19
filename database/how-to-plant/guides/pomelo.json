@@ -158,6 +158,101 @@
   "Water during flowering and fruit growth in long dry spells.",
   "Scout every new flush for aphids and psyllids that spread citrus diseases."
  ],
+ "watering": {
+  "traditional": "Pomelo here is mostly rain fed: a new marcot is watered every few days in dry weather and mulched, then left to the rain. Growers who can water during flowering and fruit growth in the dry months get a better fruit set and a second, off season crop.",
+  "method": "A pail or hose into a ring basin under the edge of the leaves on small farms. Drip lines or small sprinklers on the bigger orchards in Mindanao and Luzon. Water early in the morning.",
+  "rainfed": "Plant as the rains begin, stake the marcot against wind, and mulch a little away from the trunk. Mulch again before the dry months. On slopes, plant along the contour with a small basin on the downhill side of each tree. Rain fed trees give their main crop on the rains and little off season fruit.",
+  "dryseason": "First year: every 3 to 4 days. Second year: every 3 to 7 days, by soil. Bearing trees: every 5 to 10 days through flowering and fruit growth. Water when leaves curl and lose their shine by midday, or when small fruits start to drop.",
+  "wet": "Wet soil against the trunk brings gum oozing from the bark and root rot, the trouble that ruins many pomelo farms here. Keep the base dry and clean, never pile soil or mulch on the trunk, water the ring under the leaves, and plant on ground that drains well with open drains from low spots.",
+  "schedule": [
+   {
+    "stage": "Hardening the marcot",
+    "from": -7,
+    "to": 0,
+    "often": "Every day for the week before planting, in light shade",
+    "amount": "Enough to wet the soil ball right through",
+    "why": "A marcot has a small, shallow root ball that dries out in hours."
+   },
+   {
+    "stage": "Planting to new leaves",
+    "from": 0,
+    "to": 30,
+    "often": "Soak on planting day, then every 2 to 3 days in dry weather until new leaves show",
+    "amount": "Half to one watering can a tree each time, into a ring basin away from the stem",
+    "why": "The new roots have to grow out of the marcot ball into the field."
+   },
+   {
+    "stage": "Rest of the first year",
+    "from": 30,
+    "to": 360,
+    "often": "Every 3 to 4 days in the dry months. Not needed in steady rain",
+    "amount": "One watering can a tree each time, or about 1 to 5 liters a tree a day on drip",
+    "why": "Marcotted trees have no deep tap root and feel a dry spell sooner than seedlings."
+   },
+   {
+    "stage": "Second year",
+    "from": 360,
+    "to": 720,
+    "often": "Every 3 to 4 days on light soil and about once a week on clay, in the dry months",
+    "amount": "About 3 to 5 watering cans a tree each time, or 10 to 15 liters a tree a day on drip",
+    "why": "Each new flush builds the wide crown a pomelo needs."
+   },
+   {
+    "stage": "Years 3 and 4, before bearing",
+    "from": 720,
+    "to": 1200,
+    "often": "Every 4 to 7 days in the dry months",
+    "amount": "A deep soak of the whole ring under the leaves, or about 15 to 40 liters a tree a day on drip as it grows",
+    "why": "Big marcots may fruit early. Pick those fruits off and keep the tree growing."
+   },
+   {
+    "stage": "Bearing trees: short dry spell before flowering (each year)",
+    "from": 1200,
+    "to": 1230,
+    "often": "Let the soil get drier for a few weeks late in the dry months, then soak deeply with the fertilizer",
+    "amount": "Little or none for a few weeks, then one deep soak",
+    "why": "Like other citrus, pomelo flowers when water returns after a dry spell."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 1230,
+    "to": 1290,
+    "often": "Every 5 to 7 days in dry weather, never letting the soil dry out",
+    "amount": "A deep soak of the ring under the leaves, out to the edge of the crown",
+    "why": "Dry soil now drops the flowers and the young fruits."
+   },
+   {
+    "stage": "Fruit growth",
+    "from": 1290,
+    "to": 1410,
+    "often": "Every 7 to 10 days in dry spells",
+    "amount": "A deep soak under the crown",
+    "why": "Steady water gives big, juicy fruits with a thinner rind."
+   },
+   {
+    "stage": "Ripening and picking",
+    "from": 1410,
+    "to": 1470,
+    "often": "Water lightly and evenly. Avoid one heavy flood after a long dry spell",
+    "amount": "A normal soak of the ring",
+    "why": "A sudden flood after dry weeks can split ripening fruits."
+   }
+  ],
+  "critical": [
+   "The first year after planting, since a marcot has shallow roots.",
+   "Flowering and fruit set, when dry soil drops flowers and young fruits.",
+   "Fruit growth in the dry months, which decides fruit size and juice."
+  ],
+  "signs": {
+   "dry": "Leaves curl and fold along the middle, lose their shine, and older ones yellow and fall. New flushes stop and small fruits drop.",
+   "wet": "Leaves yellow all over, gum oozes from the trunk, roots rot, and branches die back."
+  },
+  "better": [
+   "Drip or a mulched ring basin watered through the dry months lets the tree carry an off season crop, when pomelo sells best.",
+   "Keep the soil steadily moist from flowering through fruit set and keep water off the trunk to cut fruit drop and gum."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "lwZGOnp46Mk",
   "title": "Life at Wefarm (Episode 9): How to Plant Pomelo",
@@ -178,5 +273,5 @@
  "kind": "perennial",
  "icon": "🍊",
  "slug": "pomelo",
- "rev": "e943b70ce90f"
+ "rev": "e0e8386195b1"
 }

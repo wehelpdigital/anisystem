@@ -138,6 +138,60 @@
   "Plan your plantings and buyers ahead, since prices crash when every farm harvests at once.",
   "Renew vines on a schedule so the fruits stay big and the yield stays high."
  ],
+ "watering": {
+  "traditional": "Sayote in the mountains lives mostly on rain and the morning mist. Growers water the new plants at planting and during dry spells until they take hold, and after that the vines are rarely watered except by hose from a spring in a long dry season.",
+  "method": "Mostly rain and mist. Growers with a spring run hoses to the hills, and small growers water each hill with a can. Water in the morning.",
+  "rainfed": "Plant from October to January in the mountains so the young vines root on the last rains and the cool mist. On slopes plant along the contour so each hill catches water, keep a clean, mulched circle around each hill, and feed before and after the rainy season.",
+  "dryseason": "Water the young plants whenever the soil dries until they grow strongly. Bearing vines in a long dry season do better with a deep watering at the hill every so often from a spring, a hose or a tank. Water when the leaves hang limp in the morning.",
+  "wet": "Plant on high, sloping or mounded ground that drains, never in low spots. Soaked hills rot the planted fruit and the roots, and long wet spells bring fruit rot and leaf disease under a crowded trellis.",
+  "schedule": [
+   {
+    "stage": "Sprouting the seed fruits",
+    "from": -30,
+    "to": 0,
+    "often": "No watering. Keep the fruits in a cool, shaded, airy place until the shoots come",
+    "amount": "No water",
+    "why": "The fruit sprouts on its own stored water, and wet fruits rot."
+   },
+   {
+    "stage": "Planting and taking hold",
+    "from": 0,
+    "to": 30,
+    "often": "Water the hill right after planting, then whenever the soil dries until the shoots grow strongly",
+    "amount": "Moisten the hill around the fruit, never leave it soaked",
+    "why": "The new roots must take hold before the fruit's own water runs out, but a soaked fruit rots in the ground."
+   },
+   {
+    "stage": "Vines climbing the trellis",
+    "from": 30,
+    "to": 120,
+    "often": "Rain and mist are usually enough. Water by hose or can in a long dry spell",
+    "amount": "A deep watering at the base of each hill",
+    "why": "A vine that covers the trellis before the cool months bears more fruits."
+   },
+   {
+    "stage": "Bearing vines",
+    "from": 120,
+    "to": 450,
+    "often": "Mostly rain. In the dry months, water the hills from a spring or tank where you can",
+    "amount": "A deep watering at each hill, then let it drain",
+    "why": "Dry months slow the flowering and the fruits come out small and fewer."
+   }
+  ],
+  "critical": [
+   "The first weeks after planting, until the roots take hold.",
+   "Long dry spells while the vine flowers and bears, when the fruits get fewer and smaller."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and stay limp in the morning, the vine tips stop running, flowers drop and the fruits stay small.",
+   "wet": "The planted fruit or the base of the vine rots, the leaves yellow, and the fruits rot on the trellis."
+  },
+  "better": [
+   "Mulch the circle around each hill with grass or straw to hold moisture through the dry months.",
+   "Where a spring or tank is near, a deep watering every so often in the dry months keeps the vines bearing."
+  ],
+  "confidence": "low"
+ },
  "video": {
   "youtubeId": "nQK7WynD21o",
   "title": "The best way na pagtatanim ng sayote,isang beses na pagtatanim walang tigil na pagkukunan",
@@ -159,5 +213,5 @@
  "kind": "annual",
  "icon": "🥒",
  "slug": "chayote",
- "rev": "5a3e3623d62d"
+ "rev": "45b0fd368906"
 }

@@ -153,6 +153,67 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sigarilyas, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Sigarilyas is mostly a backyard and fence crop planted with the rains and watered by hand only in long dry spells. Once the vines are big, most families leave it to the rain. Hand watering with a can or a hose at the base of each hill, in the early morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sigarilyas go dry at these stages",
+   "text": "Coming up, the first two weeks: keep the hill moist. Flowering and podding: dry soil drops flowers and makes the pods tough."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sigarilyas, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and coming up",
+     "Sowing day to day 14",
+     "Water at planting if the soil is dry, then every day or two until the seedlings are up",
+     "Enough to keep the hill moist, never soggy"
+    ],
+    [
+     "Vine growth",
+     "Day 14 to 60",
+     "Usually the rains are enough. In a dry spell, water when the topsoil dries",
+     "A watering can of about 10 liters shared among a few hills"
+    ],
+    [
+     "Flowering and pods",
+     "Day 60 to 120",
+     "In dry weeks, water every few days",
+     "Soak the soil around each hill"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant at the start of the rains, from May to July, so the vine grows in the wet months and bears in the cooler months that follow. Mulch around the hills to hold the moisture.\n\n**In the dry season.** Vines bearing into the dry months need a watering every few days. Water when the leaves droop in the morning or the soil is dry a finger deep.\n\n**In the rainy season.** Plant on mounds or raised spots so rain drains away, since standing water rots the roots and the tubers. Wet weather also spreads leaf spots, so keep the vines thinned and airy."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop and curl, flowers drop and pods come out short and stringy.",
+    "**Too much water:** Yellow leaves, rotting roots and a vine that stops growing."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the hills with dry grass or rice straw so each watering lasts longer. Water steadily through flowering and podding instead of only when the vine wilts."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sigarilyas"
   },
   {
@@ -278,6 +339,10 @@
     {
      "q": "How long before sigarilyas can be harvested?",
      "a": "It is ready about 70 days after sowing. Young pods are picked green and tender every few days once bearing starts."
+    },
+    {
+     "q": "How often do you water sigarilyas?",
+     "a": "Planting and coming up, sowing day to day 14: Water at planting if the soil is dry, then every day or two until the seedlings are up. Vine growth, day 14 to 60: Usually the rains are enough. In a dry spell, water when the topsoil dries. Flowering and pods, day 60 to 120: In dry weeks, water every few days. Vines bearing into the dry months need a watering every few days."
     },
     {
      "q": "What do you plant to grow sigarilyas?",

@@ -199,6 +199,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering litsugas, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Lettuce seedlings are watered every day, and in the field growers water right after transplanting and then every day or regularly by sprinkler, hose or furrow, keeping the soil evenly moist. In the highlands many beds are mulched and watered from springs by hose or sprinkler. In the lowlands it is grown in the cool dry months near water. Sprinklers and hoses fed from springs in the highlands, and watering cans, hoses or furrows in the lowlands. Water early in the morning at the base so the leaves dry before night."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let litsugas go dry at these stages",
+   "text": "The seedbed, where the top soil must never dry. The whole field growth: even a few dry days make bitter leaves and early bolting."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for litsugas, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "36 to 21 days before transplanting",
+     "Water the bed before sowing, then every day in the morning",
+     "A fine spray that keeps the top soil damp"
+    ],
+    [
+     "Pricked seedlings",
+     "21 to 7 days before transplanting",
+     "Water every day after pricking out, under light shade in hot weather",
+     "Light waterings, never soggy"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water less often while the seedlings get full sun",
+     "Light waterings"
+    ],
+    [
+     "Transplanting",
+     "Transplanting day to day 1",
+     "Water the beds and the planting holes well before setting the seedlings, then water right after",
+     "Soak each hole"
+    ],
+    [
+     "Leaf growth",
+     "Day 1 to 30",
+     "Every day in dry weather, by sprinkler, hose or furrow, in the morning",
+     "Enough to keep the soil damp but never soggy"
+    ],
+    [
+     "Heading or full leaf to harvest",
+     "Day 30 to 50",
+     "Keep watering daily or every other day. Water at the base and in the morning",
+     "Even waterings, no standing water"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Lettuce is not grown on rain alone: it needs water almost every day. In the wettest highland months growers use rain shelters, and in the lowlands it goes in the cool dry months near a well or canal, with mulch on the beds.\n\n**In the dry season.** Water every day in dry weather, more on sandy soil and in wind, early in the morning. Water when the top soil under the mulch is dry to the touch or the outer leaves go limp by mid morning.\n\n**In the rainy season.** Use raised, mulched beds and rain shelters in the wettest months, and skip watering when the beds are wet. Standing water and wet heads bring soft rot and leaf spots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Outer leaves wilt and their edges brown, the leaves turn tough and bitter, and the plants bolt early.",
+    "**Too much water:** Lower leaves yellow and rot, heads go soft and slimy at the base, and seedlings fall over at the soil line."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Mulch the beds with plastic or rice straw to keep the soil evenly moist and the leaves clean of splashed mud. A drip line or a fine sprinkler on a timer gives the steady daily water lettuce needs with less work."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for litsugas"
   },
   {
@@ -327,6 +406,10 @@
     {
      "q": "How long before litsugas can be harvested?",
      "a": "It is ready about 50 days after transplanting. Leaf lettuce is cut from about a month after transplanting, before it bolts."
+    },
+    {
+     "q": "How often do you water litsugas?",
+     "a": "Seedbed, 36 to 21 days before transplanting: Water the bed before sowing, then every day in the morning. Pricked seedlings, 21 to 7 days before transplanting: Water every day after pricking out, under light shade in hot weather. Hardening, 7 days before transplanting to transplanting day: Water less often while the seedlings get full sun. Water every day in dry weather, more on sandy soil and in wind, early in the morning."
     },
     {
      "q": "What do you plant to grow litsugas?",

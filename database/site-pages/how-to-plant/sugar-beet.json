@@ -133,6 +133,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sugar beet, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Sugar beet is very rarely grown in the Philippines, only in trials. It is sown into moist soil at the start of the cool dry months, around November, and watered by furrow in long dry spells, with the rows kept draining because standing water rots the roots. Furrow irrigation between the rows, in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sugar beet go dry at these stages",
+   "text": "Sowing to a full stand. Leaf growth and root filling, when the plant builds its size."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sugar beet, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Sowing to coming up",
+     "Sowing day to day 14",
+     "Sow into moist soil after the rains. Water the furrows if the soil is dry",
+     "A light furrow watering that wets the rows without crusting them"
+    ],
+    [
+     "Leaf growth",
+     "Day 14 to 60",
+     "Furrow water in dry spells. Water before thinning and after top dressing",
+     "Soak the rows, then drain"
+    ],
+    [
+     "Roots filling",
+     "Day 60 to 130",
+     "Keep watering by furrow in long dry spells. Water in the last top dressing",
+     "Soak the rows, never standing water"
+    ],
+    [
+     "Before harvest",
+     "Day 130 to 160",
+     "Stop watering about three to four weeks before digging, but keep some moisture so the roots do not break",
+     "No water, or one light watering if the soil turns hard"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Sow at the start of the cool dry months, around November, so the crop starts on the moisture left after the rains. Late sowing gives smaller roots and less sugar.\n\n**In the dry season.** Water by furrow in long dry spells through leaf growth and root filling, and stop about three to four weeks before digging. Water when the leaves stay limp into the late afternoon.\n\n**In the rainy season.** Plant on ridges with open furrows and avoid fields that flood. Standing water rots the roots."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves wilt through the afternoon, the canopy stays thin, and the roots stay small.",
+    "**Too much water:** Leaves yellow and the roots rot from the tip or crown."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Water steadily through leaf growth and stop three to four weeks before digging for more sugar. Watering every other furrow saves water with little loss of yield."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sugar beet"
   },
   {
@@ -259,6 +326,10 @@
     {
      "q": "How long before sugar beet can be harvested?",
      "a": "It is ready about 160 days after sowing. Dug about five to five and a half months after the seedlings come up, topped and sent to the buyer the same day or the next."
+    },
+    {
+     "q": "How often do you water sugar beet?",
+     "a": "Sowing to coming up, sowing day to day 14: Sow into moist soil after the rains. Water the furrows if the soil is dry. Leaf growth, day 14 to 60: Furrow water in dry spells. Water before thinning and after top dressing. Roots filling, day 60 to 130: Keep watering by furrow in long dry spells. Water in the last top dressing. Water by furrow in long dry spells through leaf growth and root filling, and stop about three to four weeks before digging."
     },
     {
      "q": "What do you plant to grow sugar beet?",

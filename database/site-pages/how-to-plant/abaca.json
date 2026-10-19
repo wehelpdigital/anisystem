@@ -236,6 +236,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering abaka, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Abaca is grown on rain alone, on land with rain spread through the year and soil that drains. Farmers keep the soil damp with shade trees and mulch, and some water young plants once or twice a month in the summer. Rain only on most farms. Young plants in summer are watered by hand with a pail or a hose at the base, in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let abaka go dry at these stages",
+   "text": "The first year: young plants need moisture in the summer months."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for abaka, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting",
+     "Planting day to day 30",
+     "Plant as the rains begin. If a dry spell follows, water each new hill",
+     "A good soaking around the sucker or corm"
+    ],
+    [
+     "Young plants, the first year",
+     "Day 30 to month 12",
+     "Once or twice a month in the summer months. No watering in the rains",
+     "A good soaking around each hill, then mulch with the cut weeds"
+    ],
+    [
+     "Grown mats",
+     "Month 12 to 20",
+     "No regular watering. Keep the mulch and the shade",
+     "None"
+    ],
+    [
+     "Harvest years",
+     "Month 20 to 24",
+     "No regular watering. Lay the cut leaves and sheaths around the mats",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** This is the usual way. Plant at the start of the rains, keep or plant shade trees, and lay cut weeds and leaves around each hill as mulch. Do not plant where the soil stays wet.\n\n**In the dry season.** Water young plants once or twice a month in the summer, and watch older mats for drying leaves. Pseudostem rot and leaf spot also spread in dry weather on stressed plants.\n\n**In the rainy season.** Abaca does not like waterlogged soil. Plant on slopes or land that drains, dig drains where water collects, and never plant in a low, wet spot."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves fold, dry at the edges and break, the new leaves come out slowly, and suckers stop coming.",
+    "**Too much water:** Yellow leaves, rotting corms and stalks, and stunted mats in the low spots."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep shade trees and a thick mulch of cut leaves around the mats to hold the soil moisture. Plant only on land with rain spread through the year and good drainage."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for abaka"
   },
   {
@@ -366,6 +433,10 @@
     {
      "q": "How long before abaka can be harvested?",
      "a": "It is ready about 20 months after planting. The first stalks are ready at about 16 to 24 months, when the flag leaf appears."
+    },
+    {
+     "q": "How often do you water abaka?",
+     "a": "Planting, planting day to day 30: Plant as the rains begin. If a dry spell follows, water each new hill. Young plants, the first year, day 30 to month 12: Once or twice a month in the summer months. No watering in the rains. Grown mats, month 12 to 20: No regular watering. Keep the mulch and the shade. Water young plants once or twice a month in the summer, and watch older mats for drying leaves."
     },
     {
      "q": "What do you plant to grow abaka?",

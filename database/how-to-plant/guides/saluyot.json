@@ -101,6 +101,60 @@
   "Keep moisture steady with mulch and water in dry spells.",
   "Pick tops on a regular schedule and keep the bundles cool to market."
  ],
+ "watering": {
+  "traditional": "Saluyot is mostly a rain crop, sown when the rains come around May to June, often on moist ground near rivers and creeks. In dry spells growers water every day or two by can or hose, and with water it grows well even in the summer months.",
+  "method": "Mostly rain. Watering cans and hoses on small plots, furrows on bigger ones. Water in the morning or late afternoon.",
+  "rainfed": "Sow when the rains come, around May to June, on loam or silty ground near a river or creek that stays moist. Thin the stand so the plants do not compete for water, and mulch with straw or cut grass if the rains break.",
+  "dryseason": "In the summer months saluyot grows well only when watered every day or two. Water when the leaves droop by mid morning or the top soil is dry.",
+  "wet": "Saluyot likes wet weather but not standing water. Sow on ground that drains and open small canals in low spots so the young plants do not rot.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Sow right after a good rain or water the plot after sowing, then every day or two until the seedlings are up",
+    "amount": "A gentle watering that keeps the top soil damp without washing the seed",
+    "why": "The small seed sits near the surface and dies if the top soil dries."
+   },
+   {
+    "stage": "Young plants",
+    "from": 7,
+    "to": 30,
+    "often": "Water every day or two in dry spells. Water before thinning so the extra plants pull out easily",
+    "amount": "Enough to keep the soil moist to the roots",
+    "why": "Young saluyot stunts or dies if it dries out."
+   },
+   {
+    "stage": "First tops",
+    "from": 30,
+    "to": 40,
+    "often": "Keep the soil moist, every day or two in dry weather",
+    "amount": "Even waterings",
+    "why": "Steady moisture gives tender, leafy tops."
+   },
+   {
+    "stage": "Picking every week or two",
+    "from": 40,
+    "to": 100,
+    "often": "Water after each picking and feeding, and every day or two in dry spells",
+    "amount": "Even waterings, no standing water",
+    "why": "The plants branch and give new tops only with water and feeding. Long droughts make them flower and turn woody."
+   }
+  ],
+  "critical": [
+   "Sowing to the young plants: the plot must not dry out.",
+   "Long dry spells at any stage, which stunt or kill saluyot."
+  ],
+  "signs": {
+   "dry": "Leaves droop and yellow, the plants stay short and flower early, and the tops turn tough.",
+   "wet": "Seedlings rot at the base in waterlogged spots and the lower leaves yellow."
+  },
+  "better": [
+   "Water and feed right after each picking so the plants branch and give more tops.",
+   "Mulch the plot to hold moisture through dry spells."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "qFVA-WIlR5c",
   "title": "Kumikita ng P5,000 every 2 weeks Sa Saluyot Farming, Kapital P250 Lang",
@@ -121,5 +175,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "jute-mallow",
- "rev": "1146250495fb"
+ "rev": "46929dd1a4b6"
 }

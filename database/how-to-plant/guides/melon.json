@@ -136,6 +136,77 @@
   "Scout weekly and use integrated pest management for thrips, aphids, beetles and fruit fly.",
   "Rotate with rice, corn or beans and keep two seasons between gourd crops on the same field."
  ],
+ "watering": {
+  "traditional": "Melon is planted at the start of the dry season on loose, well drained soil and watered lightly and evenly, by hand at the hills or by a quick furrow, whenever the top soil dries. Growers give more water while the fruits swell and less as they ripen, and never let water stand around the stems.",
+  "method": "Water poured at each hill with a can or hose, or a quick furrow watering, is the usual way. Growers on plastic mulch often use drip lines. Water in the morning, at the base of the plant, keeping the leaves and fruits dry.",
+  "rainfed": "Melon is a dry season crop: rain on ripening fruits splits them and makes them less sweet, so farmers plant at the start of the dry season and water by hand or furrow. Plow deep, lay plastic or rice straw mulch to hold moisture, and keep the field close to a well or pump.",
+  "dryseason": "Water lightly whenever the top soil dries, more often while the fruits swell and on sandy soil, then less as they ripen. Water when the leaves stay limp into the late afternoon or the soil a few cm down feels dry.",
+  "wet": "Avoid planting so the fruits ripen in the rains. If rain comes, keep the drains open and the fruits on straw or mulch off the wet ground. Soaked soil rots the stems and roots, and rain at ripening splits the fruits and spreads leaf disease.",
+  "schedule": [
+   {
+    "stage": "Sprouting the seed",
+    "from": -2,
+    "to": 0,
+    "often": "Keep the soaked seed in a damp cloth until the root shows",
+    "amount": "Damp, not dripping",
+    "why": "Moist seed sprouts fast. Seed left in water rots."
+   },
+   {
+    "stage": "Sowing to first leaves",
+    "from": 0,
+    "to": 7,
+    "often": "Water gently right after planting, then lightly by can if the hills dry",
+    "amount": "Moisten each hill, no puddles",
+    "why": "Melon seedlings rot fast in wet, airless soil."
+   },
+   {
+    "stage": "Young vines",
+    "from": 7,
+    "to": 30,
+    "often": "Water the hills or run a quick furrow when the top soil dries, a little at a time. Water in the side dressing",
+    "amount": "Light waterings that wet the root zone, then drain",
+    "why": "Too much water early keeps the roots shallow and brings stem rot."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 30,
+    "to": 40,
+    "often": "Keep the soil evenly moist. Water whenever the top soil dries",
+    "amount": "Light, even waterings at the base",
+    "why": "Dry soil now drops flowers and young fruits."
+   },
+   {
+    "stage": "Fruits swelling",
+    "from": 40,
+    "to": 55,
+    "often": "Water more often than before, and water in the potash dose",
+    "amount": "Fuller waterings that soak the root zone, never standing water",
+    "why": "The fruits gain most of their size now, and drought gives small, light fruits."
+   },
+   {
+    "stage": "Ripening",
+    "from": 55,
+    "to": 65,
+    "often": "Water less, but do not let the vines wilt",
+    "amount": "Light waterings only",
+    "why": "Heavy water near ripeness splits fruits and makes them bland, while a hard drought also cuts their weight and sweetness."
+   }
+  ],
+  "critical": [
+   "Flowering and fruit set, when dry soil drops flowers and young fruits.",
+   "Fruit swelling, when the fruits gain most of their size.",
+   "Ripening: no heavy watering or rain on the fruits, and no hard drought either."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and stay limp into the afternoon, flowers and small fruits drop, and the fruits stay small and poorly netted.",
+   "wet": "Vines yellow and wilt, the stem base rots, and fruits crack, rot on the ground or taste watery."
+  },
+  "better": [
+   "A drip line under plastic mulch gives the light, even water melon needs and keeps the leaves and fruits dry.",
+   "Keep the vines free of stress from flowering through harvest. Ease off the water near ripeness instead of cutting it off."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "SsMJe9dbyxw",
   "title": "65 days lang, harvest na! Paraan ng Pagtatanim ng Melon at Honeydew | Paniqui, Tarlac",
@@ -156,5 +227,5 @@
  "kind": "annual",
  "icon": "🍈",
  "slug": "melon",
- "rev": "10919d5edea4"
+ "rev": "a29cddd76f8e"
 }

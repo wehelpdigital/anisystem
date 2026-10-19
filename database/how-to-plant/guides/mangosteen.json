@@ -111,6 +111,85 @@
   "Scout for mites, mealybugs and scale every few months and act early.",
   "Grow cash crops between the rows to earn during the long wait."
  ],
+ "watering": {
+  "traditional": "Mangosteen seedlings are watered three to four times a week through their two years in the nursery, then watered right after planting and whenever rain is short. Grown trees are mostly rain fed, and growers who have water give it in the dry months to keep the soil moist.",
+  "method": "A watering can or hose for nursery seedlings, and a pail or hose into a mulched ring for young trees. Bearing trees get basin, sprinkler or drip watering where water is near. Water in the morning.",
+  "rainfed": "Plant once the rains have truly begun, under banana, dapdap, coconut or durian shade, and keep a mulch of leaves on the ring. Mangosteen does best where rain falls through most of the year. In places with a long dry season, rain fed trees grow very slowly and many young trees die, so carry water to them in their first dry seasons.",
+  "dryseason": "Young trees about twice a week, grown trees about once a week, except for the dry rest of several weeks before flowering. Water when the topsoil under the mulch is dry a finger deep or when the young leaves droop.",
+  "wet": "Mangosteen wants moist but well drained soil. Never let water stand around a young tree. On flat land plant on a low mound and dig drains. Heavy rain after a dry spell while fruits ripen gives glassy, watery flesh, yellow sap stains inside and cracked skins.",
+  "schedule": [
+   {
+    "stage": "Seedlings in the nursery (two years)",
+    "from": -720,
+    "to": 0,
+    "often": "3 to 4 times a week under partial shade, daily in very hot spells",
+    "amount": "Enough to wet the bag or tube right through, with no water left standing",
+    "why": "The seedling has a weak root with few root hairs and dries out or drowns easily."
+   },
+   {
+    "stage": "Planting to 3 months",
+    "from": 0,
+    "to": 90,
+    "often": "Water right after planting, then every 2 to 3 days whenever rain is short",
+    "amount": "A gentle soak of a ring basin, never leaving water standing over the roots",
+    "why": "Standing water over the roots of a young mangosteen can kill it outright."
+   },
+   {
+    "stage": "First years under shade",
+    "from": 90,
+    "to": 1440,
+    "often": "About twice a week in the dry months, once a week on heavy soil. Not needed in steady rain",
+    "amount": "A soak of the mulched ring under the leaves",
+    "why": "Mangosteen grows slowly and stops growing at once when the soil dries."
+   },
+   {
+    "stage": "Years 5 to 8, building the crown",
+    "from": 1440,
+    "to": 2640,
+    "often": "About once a week in the dry months",
+    "amount": "A deep soak of the ring, widened as the crown spreads",
+    "why": "A big, healthy crown is what finally brings the first flowers."
+   },
+   {
+    "stage": "Bearing trees: dry rest before flowering (each year)",
+    "from": 2640,
+    "to": 2700,
+    "often": "Hold back water for several weeks in the dry months. Mangosteen needs a longer dry spell than durian, about two months in one study",
+    "amount": "None",
+    "why": "The dry spell stops leaf growth and brings out the flower buds."
+   },
+   {
+    "stage": "Flowering and young fruits",
+    "from": 2700,
+    "to": 2730,
+    "often": "Once the flower buds show, water again and keep the soil evenly moist, about weekly in dry weather",
+    "amount": "A deep soak under the crown",
+    "why": "Fruits form without pollination, but dry soil now makes young fruits drop."
+   },
+   {
+    "stage": "Fruit growth to harvest",
+    "from": 2730,
+    "to": 2880,
+    "often": "About once a week in dry spells, keeping moisture even until picking",
+    "amount": "A deep soak under the crown",
+    "why": "Fruits ripen 5 to 6 months after flowering. Even water gives big, clean fruits."
+   }
+  ],
+  "critical": [
+   "The nursery years and the first months after planting, when the seedling dies from either drying out or standing water.",
+   "Flowering and young fruits, when dry soil drops the fruits.",
+   "Fruit growth up to picking, since a dry spell then a sudden soaking spoils the fruit inside."
+  ],
+  "signs": {
+   "dry": "Young leaves droop and curl, leaf edges brown, growth stops, and young fruits fall.",
+   "wet": "Seedlings yellow and die back with rotting roots. Ripe fruits show glassy flesh, yellow sap and cracks after heavy rain."
+  },
+  "better": [
+   "Drip lines through the dry months give better flowering and fruit set than sprinklers and keep the slow young trees growing.",
+   "Give the bearing tree its dry rest, then keep the soil evenly moist from flowering to harvest so the fruits stay clean inside."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "RVYFkZGcoRk",
   "title": "Paano itanim at alagaan ang mangosteen: Buhay Bukid 🌴ep.6",
@@ -131,5 +210,5 @@
  "kind": "perennial",
  "icon": "🫐",
  "slug": "mangosteen",
- "rev": "34c87324ce65"
+ "rev": "d7b33dd5d7e0"
 }

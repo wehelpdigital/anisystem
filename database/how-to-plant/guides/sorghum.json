@@ -188,6 +188,76 @@
   "Plant with neighbors at the same time so bird pressure is shared.",
   "Ratoon only a healthy first crop and feed the ratoon with urea."
  ],
+ "watering": {
+  "traditional": "Sorghum is grown on rain alone. Farmers plant it at the start of the rains or after the rice harvest on the moisture left in the field, because it rides out dry spells better than corn.",
+  "method": "Rain only on most farms. Where water is close, a furrow watering from a pump or canal, in the morning or late afternoon.",
+  "rainfed": "This is the usual way. Plant at the start of the rains, or soon after the rice harvest while the field is still wet, so flowering comes before the soil dries out. Keep the field weed free so the weeds do not take the moisture.",
+  "dryseason": "A crop sown after rice usually needs no watering. In a very dry year, one furrow watering at booting or flowering pays back the most grain.",
+  "wet": "Sorghum stands short floods better than corn but not water that stays for days. Keep the furrow ends open, and harvest the heads before long rains mold the grain.",
+  "schedule": [
+   {
+    "stage": "Planting and coming up",
+    "from": 0,
+    "to": 10,
+    "often": "Plant into moist soil. If you have water and the soil is dry, wet the furrows once before planting",
+    "amount": "Enough to moisten the seed row, with no water left standing",
+    "why": "The small seed sown shallow dries out fast in dry soil."
+   },
+   {
+    "stage": "Young plants",
+    "from": 10,
+    "to": 30,
+    "often": "Usually no watering",
+    "amount": "None",
+    "why": "Young sorghum stands dry spells and grows deep roots."
+   },
+   {
+    "stage": "Fast growth to booting",
+    "from": 30,
+    "to": 60,
+    "often": "Water only in a long dry spell, after the side dressing if the soil is dry",
+    "amount": "One furrow watering that soaks in",
+    "why": "The urea works only in moist soil."
+   },
+   {
+    "stage": "Booting and flowering",
+    "from": 60,
+    "to": 80,
+    "often": "If water is at hand and the soil is dry, water once",
+    "amount": "A full furrow watering",
+    "why": "Drought when the head comes out gives heads with few grains."
+   },
+   {
+    "stage": "Grain filling",
+    "from": 80,
+    "to": 100,
+    "often": "Water once more in a hard drought",
+    "amount": "A furrow watering",
+    "why": "Moist soil fills the grain heavy."
+   },
+   {
+    "stage": "Ratoon",
+    "from": 105,
+    "to": 112,
+    "often": "Water right after cutting the stalks for a ratoon, if the soil is dry",
+    "amount": "A furrow watering along the stubble",
+    "why": "Moisture helps the stubble send up even new shoots."
+   }
+  ],
+  "critical": [
+   "Booting and flowering, about day 60 to 80: the soil must not be bone dry, or the heads fill poorly.",
+   "Right after cutting for a ratoon: the stubble needs moisture to shoot again."
+  ],
+  "signs": {
+   "dry": "Leaves roll up tight and turn gray green, growth stops, and the heads come out late or stay partly inside the leaf.",
+   "wet": "Yellow lower leaves, stunted plants in the low spots, and moldy heads after long rain."
+  },
+  "better": [
+   "If you can water only once, water at booting or flowering.",
+   "Water the stubble right after cutting if you want a good ratoon crop."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "rFeayq1aDoI",
   "title": "Crop na feeds para sa Manok, Kambing, Baka, Kalabaw Atbp | Sorghum for livestock and poultry farming",
@@ -207,5 +277,5 @@
  "kind": "annual",
  "icon": "🌾",
  "slug": "sorghum",
- "rev": "3f1c30fc8520"
+ "rev": "262aab3f2ffe"
 }

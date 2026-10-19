@@ -252,6 +252,85 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering tabako, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Tobacco grows in the dry months, so watering is a big part of the work. Growers pour water on each plant with a can or a pail for the first two weeks, then run water down the furrows from shallow wells, pumps or canals every week or two, often in every other furrow, and stop near the end of picking. Hand watering hill to hill with a can, a pail or a hose for the first two weeks, then furrow watering from a shallow well pump or a canal, in every other furrow with small dikes across it. Water seedlings and new plants late in the afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let tabako go dry at these stages",
+   "text": "The first two weeks after transplanting: each plant needs its waterings at the roots or it dies. Fast leaf growth, about day 14 to 50: a dry spell now gives small leaves and a light crop."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for tabako, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Seedbed",
+     "55 to 35 days before transplanting",
+     "Water with a fine sprinkler in the morning and the afternoon until the seeds are up, then whenever the top dries",
+     "Enough to keep the bed damp but never wet"
+    ],
+    [
+     "Growing seedlings",
+     "35 to 7 days before transplanting",
+     "Water the bed whenever the top dries, in the morning, and open the shade little by little",
+     "Damp, not wet"
+    ],
+    [
+     "Hardening",
+     "7 days before transplanting to transplanting day",
+     "Water less for the last week, then soak the bed well the evening before pulling",
+     "Just enough to keep the seedlings from wilting"
+    ],
+    [
+     "Transplanting and settling in",
+     "Transplanting day to day 14",
+     "Water each plant at transplanting, again at about day 5, and again at about day 10 to 14",
+     "About 1 liter a plant at transplanting and at day 5, then about 2 to 3 liters a plant"
+    ],
+    [
+     "Fast leaf growth",
+     "Day 14 to 50",
+     "Run water down the furrows after the hilling up and after each side dressing, then about every week or two as the soil dries",
+     "Water in every other furrow, about half way up the ridge, with small dikes across the furrow"
+    ],
+    [
+     "Topping and picking",
+     "Day 50 to 105",
+     "Water after a picking when the soil is dry, about every two weeks, and stop after the second to the fourth picking depending on the type and the soil",
+     "A lighter furrow watering than before"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Plant on rice land right after the wet season harvest while the soil is still moist, and plant in furrows in a dry year. Where no water can be run down the furrows, water each plant by hand with about 3 to 5 liters at about 3, 4 and 6 weeks after transplanting.\n\n**In the dry season.** The whole crop grows in the dry months. After the first two weeks, water the furrows every week or two, more often on sandy soil, and water when the leaves stay limp after midday or the soil a hand deep in the ridge is dry.\n\n**In the rainy season.** In a rainy year plant on raised ridges instead of in furrows, and keep the furrow ends open so rain drains away. Standing water brings root rot and wilts and spreads black shank and bacterial wilt. Never pick leaves right after rain or watering."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaves droop at midday and stay limp into the afternoon, the plants stay short with small, thick, narrow leaves, and the lower leaves ripen and yellow too early.",
+    "**Too much water:** Lower leaves yellow, plants wilt even in wet soil, the roots rot and the base of the stem turns dark."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Time the furrow waterings with the side dressings so the fertilizer goes in with the water, and use every other furrow with small dikes to save water and avoid waterlogging. Keep to the stage schedule instead of watering by habit, and stop watering on time so the leaves ripen evenly and cure well."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for tabako"
   },
   {
@@ -382,6 +461,10 @@
     {
      "q": "How long before tabako can be harvested?",
      "a": "It is ready about 105 days after transplanting. Leaves are picked from the bottom up as they ripen, from about 55 to 65 days after transplanting, two to four leaves a plant each week, until the top."
+    },
+    {
+     "q": "How often do you water tabako?",
+     "a": "Seedbed, 55 to 35 days before transplanting: Water with a fine sprinkler in the morning and the afternoon until the seeds are up, then whenever the top dries. Growing seedlings, 35 to 7 days before transplanting: Water the bed whenever the top dries, in the morning, and open the shade little by little. Hardening, 7 days before transplanting to transplanting day: Water less for the last week, then soak the bed well the evening before pulling. The whole crop grows in the dry months."
     },
     {
      "q": "What do you plant to grow tabako?",

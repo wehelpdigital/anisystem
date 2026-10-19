@@ -228,6 +228,76 @@
   "Scout for leaf scorch in wet weather, remove sick vines and rotate fields.",
   "Handle tubers gently and store them in one layer in a dry, airy shed."
  ],
+ "watering": {
+  "traditional": "Ubi is mostly rain fed: it goes in between March and May, at the end of the dry season or with the first rains, so the rainy months fall on the tuber filling stage at about three to five months. The rows are mulched right after planting, and where the dry season is long farmers water during tuber filling.",
+  "method": "Mostly rain. Where water is available, farmers water each hill with a hose or can or run it down the furrows between ridges. Water in the morning or late afternoon.",
+  "rainfed": "Plant at the end of the dry season or with the first rains so the rainy months fall on tuber filling at three to five months. Mulch the rows with coconut fronds, corn stalks, rice straw or cut grass right after planting, and plant sprouted setts at the start of the rains when the field cannot be watered.",
+  "dryseason": "Where the dry season lasts longer than three or four months and falls on tuber filling, water the hills about two to three times a week through that stage. Water when the leaves droop in the morning or the soil under the mulch is dry.",
+  "wet": "Plant on ridges or mounds in a field that drains well. Ubi stands drought better than flooding: waterlogged hills rot the setts and tubers, and wet weather spreads leaf scorch.",
+  "schedule": [
+   {
+    "stage": "Sprouting the setts",
+    "from": -30,
+    "to": 0,
+    "often": "Water the sprouting bed two to three times a week, or at least once a week, until most setts have sprouted",
+    "amount": "Moisten the sand or compost cover, never soak it",
+    "why": "Setts sprout in moist cover but rot in a soggy bed."
+   },
+   {
+    "stage": "Planting and rooting",
+    "from": 0,
+    "to": 30,
+    "often": "Plant sprouted setts at the start of the rains if you cannot water. Otherwise water the hills when the soil dries. Mulch right after planting",
+    "amount": "Moisten each hill, no standing water",
+    "why": "Sprouts wilt in dry soil before the roots take hold."
+   },
+   {
+    "stage": "Vines climbing the stakes",
+    "from": 30,
+    "to": 90,
+    "often": "Rain is usually enough. In a dry spell water the hills about once a week",
+    "amount": "A soaking at each hill, drained",
+    "why": "A big leafy vine feeds the tuber later."
+   },
+   {
+    "stage": "Tubers filling",
+    "from": 90,
+    "to": 150,
+    "often": "Keep the soil moist. Where the dry season falls on this stage, water about two to three times a week",
+    "amount": "Moisten the whole ridge or mound, never leave water standing",
+    "why": "This is when ubi needs the most water, and drought now gives small tubers."
+   },
+   {
+    "stage": "Late growth",
+    "from": 150,
+    "to": 270,
+    "often": "Rain only. Water in a long drought if you can",
+    "amount": "Occasional deep watering",
+    "why": "The tubers keep growing slowly while the leaves stay green."
+   },
+   {
+    "stage": "Vines drying to harvest",
+    "from": 270,
+    "to": 300,
+    "often": "No watering once the leaves yellow and the vines dry",
+    "amount": "No water",
+    "why": "Dry soil makes digging easier and the tubers keep longer in storage."
+   }
+  ],
+  "critical": [
+   "The first weeks after planting, while the sprouts root.",
+   "Tuber filling at about three to five months: drought now gives small tubers."
+  ],
+  "signs": {
+   "dry": "Leaves droop and yellow early, the vines stop climbing, and the tubers come out small.",
+   "wet": "Setts rot in the ground, the leaves yellow and the tubers show soft, rotten patches."
+  },
+  "better": [
+   "Mulch the whole row right after planting to keep the soil moist and cool through the dry weeks.",
+   "Time the planting, or the watering, so tuber filling at three to five months never goes short of water."
+  ],
+  "confidence": "high"
+ },
  "video": {
   "youtubeId": "_XTXwDh2Uhs",
   "title": "PAGTATANIM NG UBE, SEKRETO SA PAGLAKI NITO | TRES PLANTERS",
@@ -248,5 +318,5 @@
  "kind": "annual",
  "icon": "🍠",
  "slug": "purple-yam",
- "rev": "007413333b27"
+ "rev": "d8056a998141"
 }

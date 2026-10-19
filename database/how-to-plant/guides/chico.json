@@ -116,7 +116,7 @@
      "phase": "harvest",
      "day": 1440,
      "title": "First fruits",
-     "how": "Pick when the skin turns from green to yellowish brown, the brown powder rubs off easily with the thumb and little sap flows when the fruit is pulled off. Soak the fruits in water so the sap bleeds out, scrub off the powder and let them ripen in 3 to 7 days.",
+     "how": "Pick once the green skin has gone a dull yellowish brown, the brown powder wipes off with a thumb and the fruit leaves little sap when it comes off the branch. Soak the fruits in water so the sap bleeds out, scrub off the powder and let them ripen in 3 to 7 days.",
      "task": "harvest"
     }
    ],
@@ -139,6 +139,76 @@
   "Scout for mealybugs, scale and fruit borers and clean up fallen fruit.",
   "Sort and bleed the fruits right after picking for a better price."
  ],
+ "watering": {
+  "traditional": "Chico is one of the hardiest fruit trees here and most trees live on rain alone: a new marcot is watered in dry spells until it takes hold, then left to the weather. In the drier provinces some growers water bearing trees through flowering and fruit growth, since flowers and young fruits drop in very dry soil.",
+  "method": "A pail or hose into a ring basin around young trees. Basin or furrow watering for bearing trees where a well or creek is near. Water in the cool early morning or late afternoon.",
+  "rainfed": "Plant at the start of the rains, mulch the base and stake the young tree. Chico grows on as little as about 1,000 mm of rain a year and bears on rain alone in most places, but it does best where the dry season is short. In dry provinces, a pail of water to young trees every week or two in their first dry seasons keeps them from losing their leaves.",
+  "dryseason": "Young trees every 1 to 2 weeks. Bearing trees every 2 weeks or so in long dry spells from flowering to harvest. Water when the soil a hand deep is dry or when a young tree starts to drop leaves.",
+  "wet": "Chico takes an occasional flood better than most fruit trees, but long wet spells and poorly drained soil slow growth and cut the crop. Plant on ground that drains or on a low mound, and open drains from spots where water stands after rain.",
+  "schedule": [
+   {
+    "stage": "Rooted marcot in the bag",
+    "from": -60,
+    "to": 0,
+    "often": "Every day or every other day in light shade, until new leaves come",
+    "amount": "Enough to wet the bag right through",
+    "why": "The new roots are few and the leafy branch loses water fast."
+   },
+   {
+    "stage": "Planting to new growth",
+    "from": 0,
+    "to": 60,
+    "often": "Soak at planting, then about twice a week until the tree is clearly growing",
+    "amount": "A good soak of a ring basin around the stem",
+    "why": "The roots have to grow out of the bag soil before the tree can stand dry weeks."
+   },
+   {
+    "stage": "Rest of the first two years",
+    "from": 60,
+    "to": 720,
+    "often": "Every 1 to 2 weeks in the dry months, by soil and weather. Not needed in the rains",
+    "amount": "A deep soak of the mulched ring",
+    "why": "Young chico trees drop leaves and decline in long dry spells, and watered trees bear sooner."
+   },
+   {
+    "stage": "Year 3 to the first flowers",
+    "from": 720,
+    "to": 1230,
+    "often": "Every 2 weeks or so in long dry spells where water is near",
+    "amount": "A deep soak of the ring, widened as the tree grows",
+    "why": "The tree is building the shoot tips where flowers will come."
+   },
+   {
+    "stage": "Flowering and fruit set (main flowering about April to June)",
+    "from": 1230,
+    "to": 1290,
+    "often": "Every 1 to 2 weeks if no rain falls",
+    "amount": "A deep soak of the ground under the crown",
+    "why": "Under moisture stress the tree sheds its flowers and tiny fruits."
+   },
+   {
+    "stage": "Fruit growth to harvest",
+    "from": 1290,
+    "to": 1440,
+    "often": "Every 2 weeks or so in long dry spells, until picking",
+    "amount": "A deep soak under the crown",
+    "why": "Fruits take 6 to 8 months to mature and fill better with some water in the dry months."
+   }
+  ],
+  "critical": [
+   "The first months after planting a marcot, until it is clearly growing.",
+   "Flowering and fruit set, since moisture stress sheds the flowers and fruitlets."
+  ],
+  "signs": {
+   "dry": "Leaves droop, yellow and fall early on young trees, growth stops, and flowers and small fruits drop.",
+   "wet": "Slow growth, yellowing leaves and a light crop on soil that stays soggy."
+  },
+  "better": [
+   "A deep soak every week or two from flowering to harvest in dry provinces holds more flowers and fruits and gives bigger chico.",
+   "Water young trees through their first two dry seasons. They grow faster and bear sooner."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "3mzpLMd6sI4",
   "title": "5 easy steps how to Marcot Chico tree or sapodilla tree. English Subtitle",
@@ -159,5 +229,5 @@
  "kind": "perennial",
  "icon": "🥔",
  "slug": "chico",
- "rev": "31a6ae7fff4a"
+ "rev": "1941c7b914aa"
 }

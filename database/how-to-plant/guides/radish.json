@@ -109,6 +109,60 @@
   "Rotate labanos with crops outside the cabbage family and keep the field clean of old roots.",
   "Harvest on time and keep the roots shaded and cool after washing."
  ],
+ "watering": {
+  "traditional": "Labanos is watered every day at first, by hand, sprinkler or furrow, until the seedlings are up, and then kept evenly moist until it is pulled. In the rainy season farmers plant on raised beds so water does not stand around the roots.",
+  "method": "Watering cans and hoses on small beds, sprinklers in the highlands, and furrows on bigger lowland fields. Water in the morning or late afternoon.",
+  "rainfed": "In the rainy season labanos grows on raised beds with little watering. In the dry months it needs daily water at first, so without a pump keep the beds near a well and mulch with rice straw or rice hull.",
+  "dryseason": "Water every day until the seedlings are up, then about every day or two to keep the soil evenly moist, more on sandy soil. Water when the top soil is dry to the touch or the leaves droop by late morning.",
+  "wet": "Plant on raised beds so water does not stand around the roots, and skip watering in rainy weeks. Soaked soil rots the roots and splits them, and hard rain beats down the young leaves.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": 0,
+    "to": 5,
+    "often": "Water right after sowing, then every day until the seedlings are up",
+    "amount": "A fine spray that keeps the top soil damp without washing the seed",
+    "why": "The seed sits shallow and dies if the top soil dries."
+   },
+   {
+    "stage": "Leaves and root starting",
+    "from": 5,
+    "to": 20,
+    "often": "Keep the soil evenly moist, about every day or two in dry weather. Water after thinning and after the early urea",
+    "amount": "Even waterings that wet the bed to the roots",
+    "why": "The root starts swelling early, and a dry week now makes it tough and hot tasting."
+   },
+   {
+    "stage": "Roots swelling",
+    "from": 20,
+    "to": 40,
+    "often": "Keep the same even schedule, more often on sandy soil and in hot weather",
+    "amount": "The same amount each time, never a dry spell followed by a heavy soaking",
+    "why": "Dry spells followed by heavy watering make the roots crack, and dry soil makes them pithy and woody."
+   },
+   {
+    "stage": "Pulling",
+    "from": 40,
+    "to": 45,
+    "often": "Keep watering lightly while pulling in rounds",
+    "amount": "Light",
+    "why": "Moist soil lets the roots come out whole and keeps the remaining ones crisp."
+   }
+  ],
+  "critical": [
+   "Sowing to coming up: the top soil must stay damp.",
+   "Root swelling: even moisture, with no dry spells followed by soaking."
+  ],
+  "signs": {
+   "dry": "Leaves wilt in the heat, roots stay small, turn woody, pithy or very hot tasting, and plants flower early.",
+   "wet": "Roots split, turn soft or rot at the shoulder, and the leaves yellow."
+  },
+  "better": [
+   "Keep the watering even every day or two. It is the best guard against cracked and pithy roots.",
+   "Mulch the beds with rice straw or rice hull to hold moisture between waterings."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "Cja61MmYi1k",
   "title": "PAANO BA MAGTANIM NG LABANOS? SIMULA SA PAGLILINIS HANGANG PAGTATANIM",
@@ -129,5 +183,5 @@
  "kind": "annual",
  "icon": "🥬",
  "slug": "radish",
- "rev": "2e31628a8cc7"
+ "rev": "f21027eb1b92"
 }

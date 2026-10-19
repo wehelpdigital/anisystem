@@ -137,6 +137,60 @@
   "Keep about 32 to 40 fronds a palm and use the cut fronds as mulch.",
   "Join a grower group tied to a mill for steady prices and hauling."
  ],
+ "watering": {
+  "traditional": "Oil palm in the field is grown on rain alone, where rain falls through most of the year and the dry season is short. The bagged seedlings in the nursery are the only stage that growers water by hand, and in the field they keep the soil damp with fronds, empty bunches and a cover crop.",
+  "method": "Rain only in the field. In the nursery, a hose or a watering can, or sprinklers on big nurseries, in the morning or late afternoon.",
+  "rainfed": "This is the usual way. Plant at the start of the rains, or in any month where rain falls well through the year, and plant only where the dry season is short. Mulch with fronds and empty bunches and keep a legume cover between the rows.",
+  "dryseason": "Grown palms are not watered, but a long dry season shows up a year or two later as fewer and smaller bunches. Keep the frond stacks and mulch in place, and water the nursery every day.",
+  "wet": "Oil palm likes rain but not standing water. Dig drains where water stays after rain, keep them clean, and pile soil back over roots that the rain has washed bare.",
+  "schedule": [
+   {
+    "stage": "Bagged seedlings in the nursery",
+    "from": -365,
+    "to": 0,
+    "often": "Water every day in dry weather and when the rain misses a day, less in steady rain",
+    "amount": "Enough to wet the soil in each bag through, with water draining out of the holes",
+    "why": "Seedlings in bags dry out fast, and a stunted seedling never catches up."
+   },
+   {
+    "stage": "Field planting",
+    "from": 0,
+    "to": 30,
+    "often": "Plant on a rainy day. If a dry spell follows, water each new palm",
+    "amount": "A good soaking of the planting circle",
+    "why": "The roots must grow out of the old bag soil into the field soil."
+   },
+   {
+    "stage": "Young palms",
+    "from": 30,
+    "to": 1080,
+    "often": "No regular watering. Keep the weeded circle mulched and the cover crop between the rows",
+    "amount": "None",
+    "why": "Mulch and a cover crop hold the rain in the soil around the young palm."
+   },
+   {
+    "stage": "Bearing palms",
+    "from": 1080,
+    "to": 1440,
+    "often": "No watering. Stack the pruned fronds between the rows and spread empty bunches around the palms",
+    "amount": "None",
+    "why": "Moist soil through the year keeps the bunches coming."
+   }
+  ],
+  "critical": [
+   "The nursery year: bagged seedlings must never dry out.",
+   "The weeks after field planting: a new palm needs moist soil until its roots spread."
+  ],
+  "signs": {
+   "dry": "Several young spear leaves stay unopened, the lower fronds dry and break early, and fewer bunches come a year or two later.",
+   "wet": "Yellowing fronds, slow growth and rotting roots where water stands, with palms that lean or fall."
+  },
+  "better": [
+   "Stack pruned fronds between the rows and spread empty bunches around the palms to keep the soil moist and fed.",
+   "Plant oil palm only where rain is spread through the year, and drain any low spots before planting."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "Z70Z4itqhaE",
   "title": "PALM OIL PLANTING | Tanim ng Palm Oil | Tanum ug Palm Oil, Cebuano Vlog",
@@ -157,5 +211,5 @@
  "kind": "perennial",
  "icon": "🌴",
  "slug": "oil-palm",
- "rev": "71b3171c23a7"
+ "rev": "65796941ed8e"
 }

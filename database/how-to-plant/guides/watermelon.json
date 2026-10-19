@@ -129,6 +129,77 @@
   "Scout weekly and use integrated pest management for thrips, aphids and fruit fly. Keep bees safe by not spraying open flowers in the morning.",
   "Rotate with rice, corn or beans, and keep away from fields that just grew melon, squash or other gourds."
  ],
+ "watering": {
+  "traditional": "Pakwan is planted in the dry months, often in rice fields after the harvest and in sandy fields by the rivers, so it starts on the moisture left in the soil. Farmers then give only light waterings, about 5 to 6 in the whole season, by furrow or by hand at the hills, and cut back as the fruits ripen.",
+  "method": "A quick furrow watering from a canal or a shallow well, or water poured at each hill with a can or a hose, is the usual way. Water in the early morning or late afternoon, at the base of the plant rather than over the leaves.",
+  "rainfed": "Plant from October to January in a field just cleared of rice or in sandy river fields, so the crop starts on the moisture in the soil and grows through the dry months. Plow deep so the roots go down to the moist layer, lay rice straw where the fruits will sit, and plant near a shallow well or creek so you can carry water during fruit set if the soil dries.",
+  "dryseason": "Give about 5 to 6 light waterings in the whole season, roughly one every two weeks, more on very sandy soil or in a long dry spell. Water when the leaves stay limp into the late afternoon or the soil a few cm down is dry, and ease off once the fruits near ripeness.",
+  "wet": "Watermelon does poorly in heavy rain. For an off season crop, plant only on well drained, sandy ground with drainage canals and plastic mulch. Waterlogged soil rots the roots and the fruits, and heavy rain near ripeness makes fruits split and taste watery.",
+  "schedule": [
+   {
+    "stage": "Sowing to coming up",
+    "from": 0,
+    "to": 7,
+    "often": "Sow into moist soil and water the hills right after sowing. If the soil dries before the seedlings are up, sprinkle the hills by can",
+    "amount": "Moisten each hill lightly, no puddles",
+    "why": "Seed in a wet, airless hill rots, and seed in dry soil does not come up."
+   },
+   {
+    "stage": "Young plants",
+    "from": 7,
+    "to": 20,
+    "often": "Water sparingly, only when the soil is dry a few cm down",
+    "amount": "A light watering at the hill or a quick furrow",
+    "why": "Too much water early keeps the roots shallow, and deep roots carry the plant through dry spells later."
+   },
+   {
+    "stage": "Vines running",
+    "from": 20,
+    "to": 40,
+    "often": "A light furrow or hill watering when the soil dries, about every two weeks. Water in the side dressing if you give one",
+    "amount": "Wet the root zone around the hill, then let it drain",
+    "why": "The vines spread fast now and need steady, moderate water and air in the soil."
+   },
+   {
+    "stage": "Flowering and fruit set",
+    "from": 40,
+    "to": 50,
+    "often": "Do not let the field go dry. Water lightly whenever the soil dries",
+    "amount": "Light waterings at the hills",
+    "why": "A long dry spell now drops flowers and young fruits, and the fruits that set are fewer."
+   },
+   {
+    "stage": "Fruits swelling",
+    "from": 50,
+    "to": 70,
+    "often": "Water when the soil dries, more often on very sandy soil or in a long dry spell",
+    "amount": "A fuller watering than before, soaking the root zone, never standing water",
+    "why": "The fruits put on most of their size now, and drought gives small fruits."
+   },
+   {
+    "stage": "Ripening",
+    "from": 70,
+    "to": 85,
+    "often": "Ease off the water and stop in the last days before cutting",
+    "amount": "Little or no water",
+    "why": "Less water keeps the fruits from splitting and helps them turn sweet."
+   }
+  ],
+  "critical": [
+   "Flowering and fruit set: a long drought now drops flowers and young fruits.",
+   "Fruit swelling, when the fruits gain most of their size.",
+   "Never overwater the young plants or let water stand: watermelon roots need more air than most crops."
+  ],
+  "signs": {
+   "dry": "Leaves wilt and stay limp into the afternoon, turn grayish and curl, flowers and small fruits drop, and the fruits stay small.",
+   "wet": "Vines yellow and wilt, roots and the stem base rot, fruits rot where they touch the soil, and ripe fruits split or taste bland."
+  },
+  "better": [
+   "Plastic or rice straw mulch keeps the soil evenly moist, cuts the watering and keeps the fruits clean and dry.",
+   "A drip line at each hill gives light, steady water during flowering and fruit swelling, the two stages that set the harvest."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "aRvw87szEfU",
   "title": "v91: Paano magtanim ng Pakwan/Watermelon part 1. (Land Prep+Planting+Irrigation+Fertilization Guide)",
@@ -150,5 +221,5 @@
  "kind": "annual",
  "icon": "🍉",
  "slug": "watermelon",
- "rev": "f905d3474785"
+ "rev": "fff7c0cdccc8"
 }

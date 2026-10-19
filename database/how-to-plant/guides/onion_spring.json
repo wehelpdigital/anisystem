@@ -105,6 +105,52 @@
   "Feed little and often, and water in the mornings.",
   "Plant in batches every couple of weeks for a steady supply."
  ],
+ "watering": {
+  "traditional": "Spring onion is watered often because its roots are short. Growers water by hand with a can or a hose, or let water from a canal into the beds, every morning in the first week and every one to two days after that in dry weather.",
+  "method": "Hand watering with a can or a hose, or letting canal water into the furrows between beds. Water in the early morning.",
+  "rainfed": "In the rainy months the rain does most of the watering, but plant on raised beds and water in any dry spell. It is not grown on rain alone in the dry months.",
+  "dryseason": "Water every one to two days, and every day in the hottest weeks or on sandy soil. Water when the top of the bed is dry or the leaf tips turn yellow.",
+  "wet": "Long heavy rain rots the plants, so keep the beds raised and the paths open for drainage, and skip watering on rainy days.",
+  "schedule": [
+   {
+    "stage": "Planting and rooting",
+    "from": 0,
+    "to": 7,
+    "often": "Water every morning",
+    "amount": "Enough to wet the bed through, gently so the bulbs are not washed out",
+    "why": "The cut bulbs need moisture to root and sprout fast."
+   },
+   {
+    "stage": "Leaf growth",
+    "from": 7,
+    "to": 45,
+    "often": "Every one to two days in dry weather, and right after each feeding",
+    "amount": "Wet the bed to a finger deep or more, with no water left standing",
+    "why": "Steady moisture gives long, tender, green leaves."
+   },
+   {
+    "stage": "Before harvest",
+    "from": 45,
+    "to": 50,
+    "often": "Keep watering as before, and water the day before pulling",
+    "amount": "The same",
+    "why": "Moist soil makes pulling easy and keeps the leaves fresh."
+   }
+  ],
+  "critical": [
+   "The first week: the bulbs must not dry out while they root.",
+   "All through leaf growth: dry beds give tough, yellow tipped leaves."
+  ],
+  "signs": {
+   "dry": "Leaf tips turn yellow and dry, leaves stay short and tough, and the plants bend over.",
+   "wet": "Leaves yellow and go soft, and the bulbs and roots rot."
+  },
+  "better": [
+   "A thin rice straw mulch on the beds keeps the soil moist and the leaves clean.",
+   "A sprinkler or drip line on bigger beds gives even water with less work."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "xcmH1Yx87ks",
   "title": "Simpleng paraan ng pagtatanim ng dahon ng sibuyas (spring onion)",
@@ -124,5 +170,5 @@
  "kind": "annual",
  "icon": "🧅",
  "slug": "spring-onion",
- "rev": "c1cf6686f58c"
+ "rev": "61b296a5efc1"
 }

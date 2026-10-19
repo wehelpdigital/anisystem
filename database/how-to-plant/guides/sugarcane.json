@@ -180,6 +180,77 @@
   "Cut green cane close to the ground and leave the trash as mulch instead of burning it.",
   "Scout every few weeks for borers, grubs, rats and smut, and plow out fields after the ratoons drop off."
  ],
+ "watering": {
+  "traditional": "Most cane here is rainfed: farmers plant while the soil still holds water from the rains and count on the wet season for the big growth. The few who water run it down the furrows from a pump or canal in the dry months, which is the usual way in Batangas, Tarlac and Pampanga, while some big farms in Negros use hoses, sprinklers or drip lines.",
+  "method": "Furrow watering from a pump or canal, letting water run down each furrow until it reaches the far end. A few farms flood the field or use hoses, sprinklers or drip lines. Water in the morning or late afternoon.",
+  "rainfed": "Plant right after the old cane is cut, from about October to January, while the soil is still wet from the rains, or wait for the first rains in May or June on upland fields. Cover the cane points well, keep the trash from the harvest as mulch between rows, and keep the field weed free so the weeds do not drink the moisture.",
+  "dryseason": "Young cane in its first months goes through the dry season, so this is when watering pays most. Water when the soil a hand deep in the row is dry, the leaves roll before noon, or the young shoots look gray. Older ratoon clumps also suffer if a long drought follows the harvest.",
+  "wet": "Cane stands short floods but not water that stays for days. On low or heavy soil keep the furrows open at the ends and dig field drains, since waterlogged cane turns yellow, grows slowly and its roots rot. Strong rain and wind on tall cane also make it fall over.",
+  "schedule": [
+   {
+    "stage": "Planting",
+    "from": 0,
+    "to": 1,
+    "often": "Plant into moist soil. If the furrow is dry and water is at hand, run water down it once after covering the cane points",
+    "amount": "A light furrow watering that wets the soil around the cane points, without leaving them under water for long",
+    "why": "The eyes sprout only in moist soil, and a dry start gives many gaps."
+   },
+   {
+    "stage": "Sprouting",
+    "from": 1,
+    "to": 30,
+    "often": "Keep the soil moist. In the dry months, water the furrows again whenever the topsoil dries out",
+    "amount": "A furrow watering that soaks the row",
+    "why": "Without moisture now the cane points dry out and the stand comes up thin."
+   },
+   {
+    "stage": "Tillering",
+    "from": 30,
+    "to": 120,
+    "often": "In dry months, water when the soil a hand deep in the row feels dry, and soon after the side dressing and the hilling up",
+    "amount": "Fill the furrows and let the water reach the end of the row",
+    "why": "Moist soil now gives more shoots per clump, and more shoots mean more stalks to cut."
+   },
+   {
+    "stage": "Fast stalk growth",
+    "from": 120,
+    "to": 270,
+    "often": "Usually the rains do it. Water only in a long dry spell, when the leaves roll by mid morning",
+    "amount": "A full furrow watering",
+    "why": "The cane uses the most water now, and drought gives short joints and thin stalks."
+   },
+   {
+    "stage": "Ripening",
+    "from": 270,
+    "to": 330,
+    "often": "Stop watering about a month before cutting",
+    "amount": "No water",
+    "why": "A drier field makes the cane store sugar instead of growing more leaves."
+   },
+   {
+    "stage": "Ratoon start",
+    "from": 330,
+    "to": 360,
+    "often": "After cutting and putting fertilizer on the stubble, water once if the soil is dry",
+    "amount": "A furrow watering along the stubble rows",
+    "why": "Moisture helps the old clumps send up new shoots, and dry stubble often dies."
+   }
+  ],
+  "critical": [
+   "Sprouting, the first month: dry soil now gives poor sprouting and gaps in the rows.",
+   "Tillering, about month 1 to 4: drought now means fewer shoots, so fewer stalks at harvest.",
+   "Fast stalk growth, about month 4 to 9: a long dry spell gives short joints and light cane."
+  ],
+  "signs": {
+   "dry": "Leaves roll up tight and turn yellow green, the leaf tips and edges dry, young shoots wilt, and the stalks grow short joints. Ratoon clumps die in patches.",
+   "wet": "Leaves turn yellow and growth stops in the low spots, roots go dark and rot, and the stand thins where water stays."
+  },
+  "better": [
+   "Even a few waterings in the first months, during sprouting and tillering, raise the cane harvest a lot over rain alone.",
+   "Leave the dry leaves from the harvest between the rows as mulch, and on big farms drip lines under the soil save water and labor."
+  ],
+  "confidence": "medium"
+ },
  "video": {
   "youtubeId": "zXMu4H2onU4",
   "title": "EP36: SUGARCANE PLANTING METHODS | 10000 PCS KITA KA NG 800 PESOS",
@@ -201,5 +272,5 @@
  "kind": "annual",
  "icon": "🎋",
  "slug": "sugarcane",
- "rev": "c2e0d17bdbc1"
+ "rev": "ebb7295a31e0"
 }

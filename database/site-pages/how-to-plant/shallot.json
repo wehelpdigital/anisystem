@@ -175,6 +175,73 @@
   {
    "type": "heading",
    "level": 2,
+   "text": "Watering sibuyas Tagalog, stage by stage"
+  },
+  {
+   "type": "text",
+   "text": "Lasona is planted on rice land after the harvest, under a thin rice straw mulch. Farmers let water from a canal or a pump into the field or the canals until the soil is wet and drain it, about every week in the dry months, and stop two weeks before harvest. Flooding and draining: water from a canal or a pump is let into the field or the canals between beds until the soil is wet, then drained off. Water in the morning or late afternoon."
+  },
+  {
+   "type": "callout",
+   "tone": "warn",
+   "title": "Never let sibuyas Tagalog go dry at these stages",
+   "text": "Rooting, the first two weeks: the soil must stay moist under the straw. Clump swelling, about day 45 to 70: a dry spell gives small bulbs."
+  },
+  {
+   "type": "table",
+   "caption": "Watering schedule for sibuyas Tagalog, stage by stage",
+   "rows": [
+    [
+     "Stage",
+     "When",
+     "How often",
+     "How much"
+    ],
+    [
+     "Planting and rooting",
+     "Sowing day to day 14",
+     "Plant into moist soil. Give the first watering about two days after planting, then again when the soil under the straw starts to dry",
+     "Let water in until the soil is wet, then drain it off"
+    ],
+    [
+     "Leaf growth",
+     "Day 14 to 45",
+     "About every week in the dry months, and right after the side dressing",
+     "Wet the field or fill the canals, then drain"
+    ],
+    [
+     "Clump swelling",
+     "Day 45 to 70",
+     "About every week, without letting the soil dry out",
+     "The same watering and draining"
+    ],
+    [
+     "Ripening",
+     "Day 70 to 85",
+     "Stop watering about two weeks before harvest",
+     "None"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "text": "**Without irrigation.** Shallot grows in the dry months, so it is not grown on rain alone. Without a canal, plant right after the rice harvest while the field is still wet, mulch with rice straw, and use a shallow well with a small pump.\n\n**In the dry season.** Water about every week, more often on sandy soil. Lift the straw and water when the soil is dry a finger deep.\n\n**In the rainy season.** Standing water and rain near harvest rot the bulbs and spread purple blotch. Drain each watering quickly and keep the field drains open."
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Too little water:** Leaf tips dry and turn yellow, leaves stay short, and the clumps form few small bulbs.",
+    "**Too much water:** Leaves yellow from the base, and bulbs turn soft and rot."
+   ]
+  },
+  {
+   "type": "text",
+   "text": "To water better for a higher yield: Keep the rice straw mulch over the field so the soil stays moist longer between waterings. Drain each watering quickly and stop on time for firm bulbs that store well."
+  },
+  {
+   "type": "heading",
+   "level": 2,
    "text": "Spacing, water and fertilizer for sibuyas Tagalog"
   },
   {
@@ -301,6 +368,10 @@
     {
      "q": "How long before sibuyas Tagalog can be harvested?",
      "a": "It is ready about 85 days after sowing. Ready at about 70 to 90 days, when most leaves yellow and fall over."
+    },
+    {
+     "q": "How often do you water sibuyas Tagalog?",
+     "a": "Planting and rooting, sowing day to day 14: Plant into moist soil. Give the first watering about two days after planting, then again when the soil under the straw starts to dry. Leaf growth, day 14 to 45: About every week in the dry months, and right after the side dressing. Clump swelling, day 45 to 70: About every week, without letting the soil dry out. Water about every week, more often on sandy soil."
     },
     {
      "q": "What do you plant to grow sibuyas Tagalog?",
