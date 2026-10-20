@@ -34,6 +34,28 @@ class FieldProfileController extends Controller
         return $this->json(true, 'ok', ['crop' => $crop, 'rows' => $rows, 'crops' => $crops]);
     }
 
+    /**
+     * The weeds and grasses catalogue the weeds question opens (2026-10-21, the owner):
+     * every weed with its photo, names, group and how to keep it out. Only for looking;
+     * nothing is picked from it. Kept six hours (FieldBook::weeds() reads the site pages).
+     */
+    public function weeds()
+    {
+        $out = \Illuminate\Support\Facades\Cache::remember('fq-weeds:v1', 21600, function () {
+            $book = \App\Support\FieldBook::weeds();
+            $crops = collect(\App\Support\FieldCatalogue::crops())->map(fn ($c) => $c[1])->all();
+            $keep = ['k', 'name', 'sci', 'local', 'kind', 'life', 'hint', 'stop', 'thumb', 'photo', 'alt', 'credit'];
+
+            return [
+                'rows' => array_map(fn ($e) => array_intersect_key($e, array_flip($keep))
+                    + ['crops' => array_values(array_filter(array_map(fn ($c) => $crops[$c] ?? null, (array) $e['crops'])))], $book['entries']),
+                'groups' => collect(\App\Support\WeedControl::GROUPS)->map(fn ($g) => [$g['label'], $g['hint']])->all(),
+            ];
+        });
+
+        return $this->json(true, 'ok', $out);
+    }
+
     /** The farm's saved profiles, the newest first. */
     public function list()
     {

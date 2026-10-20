@@ -141,6 +141,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && ! str_contains((string) @file_get_contents(resource_path('views/partials/farm-lots.blade.php')), 'id="flCrop"'),
             // Every crop's troubles in the field questions, with a crop filter (2026-10-16).
             'troublesAll' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqCropSheet'),
+            'lotWeeds' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqWeedSheet'),
             'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),
@@ -949,6 +950,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Field profiles (2026-10-15): a lot's soil, water and history answered once and reused by every analysis (App\Support\FieldProfile).
     Route::get('/app/field-profiles', [App\Http\Controllers\FieldProfileController::class, 'list'])->name('fieldprofile.list');
     Route::get('/app/field-profiles/troubles', [App\Http\Controllers\FieldProfileController::class, 'troubles'])->middleware('throttle:120,1')->name('fieldprofile.troubles');
+    Route::get('/app/field-profiles/weeds', [App\Http\Controllers\FieldProfileController::class, 'weeds'])->middleware('throttle:60,1')->name('fieldprofile.weeds');
     Route::post('/app/field-profiles', [App\Http\Controllers\FieldProfileController::class, 'save'])->middleware('throttle:60,1')->name('fieldprofile.save');
     Route::post('/app/field-profiles/{id}', [App\Http\Controllers\FieldProfileController::class, 'update'])->whereNumber('id')->middleware('throttle:60,1')->name('fieldprofile.update');
     // Global Lots (2026-10-16): the farm's lots, with their place, size and field answers, picked by every analysis (App\Support\FarmLots).

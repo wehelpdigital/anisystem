@@ -100,12 +100,13 @@ final class FieldProfile
                 'green' => ['Greenish', 'Algae in it'], 'salty' => ['Tastes salty', 'Or leaves a white crust'], 'smelly' => ['Smells bad', 'An oily film or foam'],
                 'unsure' => ['Not sure', 'Or no irrigation water'],
             ]],
-        'drainage' => ['in' => 'soil', 'page' => 'water', 'short' => 'Drainage', 'q' => 'After heavy rain, how fast does the water go?',
+        'drainage' => ['in' => 'soil', 'page' => 'water', 'short' => 'Drainage', 'q' => 'After irrigation or heavy rain, how fast does the water drain or disappear?',
             'why' => 'A field that stays wet drowns sown seed and bogs down the machines.', 'o' => [
                 'fast' => ['Soaks in fast', 'Gone within hours'], 'day' => ['Within a day', 'Or I can drain it in a day'],
                 'slow' => ['Slowly', 'Some spots stay wet for days'], 'stands' => ['It stands for days', 'Hard to drain'],
             ]],
-        'flooding' => ['in' => 'history', 'page' => 'water', 'short' => 'Floods', 'q' => 'Does the field go under water?',
+        // Knee deep (2026-10-21, the owner): the usual water of a paddy is not a flood.
+        'flooding' => ['in' => 'history', 'page' => 'water', 'short' => 'Floods', 'q' => 'Does the field get flooded knee deep or more?',
             'why' => 'A field that floods needs a backup seedbed or high beds, and a variety that can take it.', 'o' => [
                 'never' => ['Never', ''], 'sometimes' => ['Sometimes', 'In a strong typhoon'], 'often' => ['Most wet seasons', ''],
             ]],
@@ -173,7 +174,9 @@ final class FieldProfile
             ]],
         'yieldLast' => ['in' => 'history', 'page' => 'last', 'short' => 'Last harvest', 'q' => 'How did the last harvest compare with the farms around it?',
             'why' => 'A lot that yields less than its neighbors, with the same crop and care, usually lacks plant food or has a problem worth finding.', 'o' => [
-                'better' => ['Better than most', ''], 'same' => ['About the same', ''], 'worse' => ['Worse than most', ''],
+                // 2026-10-21, the owner: a better harvest can come from the care, not the soil.
+                'better' => ['Better than most', ''], 'better_care' => ['Better than most, because of the protocol or variety used', 'Not because the soil is richer'],
+                'same' => ['About the same', ''], 'worse' => ['Worse than most', ''],
             ]],
         'fertUse' => ['in' => 'history', 'page' => 'last', 'short' => 'Past fertilizer', 'q' => 'How much fertilizer did it get in recent seasons?',
             'why' => 'Years without fertilizer wear the soil down. Heavy use leaves phosphorus behind, so less may be needed.', 'o' => [
@@ -201,8 +204,13 @@ final class FieldProfile
                 'level' => ['No, the water spread evenly', ''], 'some' => ['A few high and low spots', ''], 'uneven' => ['Very uneven', ''],
             ]],
         'wild' => ['in' => 'history', 'page' => 'weeds', 'short' => 'Grows wild', 'q' => 'Which of these grow wild on it?', 'multi' => true, 'none' => 'none',
-            'why' => 'Wild plants read the soil for free: ferns like sour soil, makahiya likes poor packed soil, and lush leafy weeds like rich soil.', 'o' => [
-                'ferns' => ['Ferns', 'Pako'], 'makahiya' => ['Makahiya', 'Leaves that fold when touched'], 'lush' => ['Soft leafy weeds, lush and green', 'Like kulitis or olasiman'],
+            'why' => 'Wild plants read the soil for free: ferns and cogon like sour soil, makahiya and paragis like poor packed soil, and lush leafy weeds like rich soil.', 'o' => [
+                'ferns' => ['Ferns', 'Pako'], 'cogon' => ['Cogon', 'Tall grass with sharp edged leaves and white fluffy heads'],
+                'makahiya' => ['Makahiya', 'Leaves that fold when touched'], 'paragis' => ['Paragis', 'Tough flat tufts, like on paths and trampled ground'],
+                'moss' => ['Moss or green scum on the soil', 'On the ground itself, not on rocks or walls'],
+                'rushes' => ['Rushes or cattails', 'Like tikog or balangot, even when the field is not flooded'],
+                'saltplants' => ['Salt plants', 'Like dampalit, or the mangrove fern lagolo'],
+                'lush' => ['Soft leafy weeds, lush and green', 'Like kulitis or olasiman'],
                 'bare' => ['Little grows at all', 'Bare patches stay bare'], 'none' => ['None of these', ''],
             ]],
         'outbreaks' => ['in' => 'history', 'page' => 'problems', 'short' => 'Troubles', 'q' => 'What troubled the last crop grown on this lot?', 'multi' => true, 'sheet' => true,
@@ -598,6 +606,10 @@ final class FieldProfile
             if (isset($c['phTo']) && (! isset($c['ph']) || $c['phTo'] === $c['ph'])) {
                 unset($c['phTo']);
             }
+            // A range typed high to low reads low to high.
+            if (isset($c['phTo']) && $c['phTo'] < $c['ph']) {
+                [$c['ph'], $c['phTo']] = [$c['phTo'], $c['ph']];
+            }
             // A test with no result in it is not a test.
             if (! $c) {
                 continue;
@@ -749,7 +761,12 @@ final class FieldProfile
         $out = [];
         $map = [
             ['wild', 'ferns', 'ferns grow wild on it, a sign of acidic soil'],
+            ['wild', 'cogon', 'cogon grows wild on it, a sign of acidic, worn out soil'],
             ['wild', 'makahiya', 'makahiya grows wild on it, a sign of poor or packed soil'],
+            ['wild', 'paragis', 'paragis (goosegrass) grows in tough tufts on it, a sign of packed, trampled soil'],
+            ['wild', 'moss', 'moss or green scum covers the bare soil, a sign the surface stays wet and drains poorly, often with acidic soil'],
+            ['wild', 'rushes', 'rushes or cattails grow on it even when it is not flooded, a sign the soil stays waterlogged'],
+            ['wild', 'saltplants', 'salt plants like dampalit or the mangrove fern grow on it, a sign of salty soil'],
             ['wild', 'lush', 'lush leafy weeds grow on it, a sign of fertile soil'],
             ['wild', 'bare', 'parts of it stay bare, a sign of salt, strong acidity, a hard layer or very poor soil there'],
             ['cropLook', 'pale', 'the last crop was pale or yellow from the older leaves, so nitrogen likely ran short'],
@@ -765,6 +782,7 @@ final class FieldProfile
             ['fertUse', 'heavy', 'it had more fertilizer than usual in past seasons, so phosphorus may have built up'],
             ['yieldLast', 'worse', 'it yields less than the farms around it'],
             ['yieldLast', 'better', 'it yields better than the farms around it'],
+            ['yieldLast', 'better_care', 'it yields better than the farms around it because of the protocol or variety used, not because the soil is richer, so do not read the soil as rich from it'],
             ['cropsYear', 'two', 'it grows two crops a year, so zinc and sulfur run short sooner'],
             ['cropsYear', 'three', 'it grows three crops a year, so zinc and sulfur run short sooner'],
             ['zincGiven', 'recent', 'it had zinc in the last two seasons, which keeps working for two or three crops'],
@@ -899,7 +917,7 @@ final class FieldProfile
             $phWord === 'acidic' ? 'acidic' : null, $phWord === 'alkaline' ? 'alkaline' : null, $sodic ? 'sodic' : null, $sulfate ? 'acid_sulfate' : null,
             $isPest ? 'pests' : null, $isDisease ? 'disease' : null, $weedy ? 'weeds' : null, $poorDrain ? 'drainage' : null,
             ($a['organic'] ?? '') === 'low' || $had('nutrient') || array_intersect((array) ($a['cropLook'] ?? []), ['pale', 'purple', 'edges'])
-                || array_intersect((array) ($a['wild'] ?? []), ['makahiya', 'bare']) || ($levels['N'] ?? '') === 'low' ? 'low_fertility' : null, in_array($a['slope'] ?? '', ['gentle', 'steep'], true) ? 'slope' : null,
+                || array_intersect((array) ($a['wild'] ?? []), ['makahiya', 'cogon', 'bare']) || ($levels['N'] ?? '') === 'low' ? 'low_fertility' : null, in_array($a['slope'] ?? '', ['gentle', 'steep'], true) ? 'slope' : null,
             in_array('wind', $hazards, true) ? 'wind' : null,
         ]));
         $autoProblems = array_values(array_filter([

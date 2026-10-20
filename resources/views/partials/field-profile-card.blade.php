@@ -222,7 +222,7 @@
                 hazards.includes('river') && 'river', hazards.includes('wind') && 'wind', shaded && 'shade']),
             problemsVariety: keep([drought && 'drought', floods && 'floods', limitedWater && 'water_source', saline && 'salinity', phWord === 'acidic' && 'acidic', phWord === 'alkaline' && 'alkaline',
                 sodic && 'sodic', sulfate && 'acid_sulfate', isPest && 'pests', isDisease && 'disease', weedy && 'weeds', poorDrain && 'drainage',
-                (a.organic === 'low' || had('nutrient') || has([].concat(a.cropLook || []), ['pale', 'purple', 'edges']) || has([].concat(a.wild || []), ['makahiya', 'bare']) || levels.N === 'low') && 'low_fertility', ['gentle', 'steep'].includes(a.slope) && 'slope', hazards.includes('wind') && 'wind']),
+                (a.organic === 'low' || had('nutrient') || has([].concat(a.cropLook || []), ['pale', 'purple', 'edges']) || has([].concat(a.wild || []), ['makahiya', 'cogon', 'bare']) || levels.N === 'low') && 'low_fertility', ['gentle', 'steep'].includes(a.slope) && 'slope', hazards.includes('wind') && 'wind']),
             problemsAuto: keep([weedy && 'weeds', floods && 'flood', drought && 'drought', kinds.some((k) => !BUGLESS.includes(k)) && 'insects', kinds.some((k) => SICK.includes(k)) && 'diseases',
                 kinds.includes('Rodent') && 'rats', kinds.includes('Bird') && 'birds', kinds.includes('Snail') && 'snails', had('lodging') && 'lodging', saline && 'salt', a.drainage === 'stands' && 'waterlog']),
             soilSignsAuto: keep([texture === 'heavy_clay' && 'cracks', texture === 'clay' && 'sticky', texture === 'sandy' && 'gritty', texture === 'loam' && 'crumbly',

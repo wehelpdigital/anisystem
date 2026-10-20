@@ -162,6 +162,10 @@
     .fqt-l small { font-weight: 600; color: #9ca3af; }
     .fqt-f .form-input { width: 100%; }
     .fqt-n { max-width: 9rem; text-align: center; font-weight: 700; }
+    .fqt-ph { display: flex; align-items: center; gap: .55rem; }
+    .fqt-ph .fqt-n { flex: 0 1 7rem; min-width: 0; }
+    .fqt-ph > span { flex: none; font-size: .86rem; font-weight: 700; color: #6b7280; }
+    html.dark .fqt-ph > span { color: #a9b69c; }
     .fqt-kind { display: grid; gap: .45rem; }
     @container (min-width: 30rem) { .fqt-kind { grid-template-columns: 1fr 1fr; } }
     .fqt-sec { margin-top: 1rem; padding: .85rem; border-radius: 1rem; background: #f8faf6; border: 1px solid #e8eee1; animation: fqPop .3s var(--fq-e) both; }
@@ -212,6 +216,46 @@
     .fq-add svg { width: 1rem; height: 1rem; }
     .fq-none { min-height: 2.9rem; padding: .5rem 1rem; border-radius: 999px; font-size: .86rem; font-weight: 800; color: #374151; background: #fff; border: 1.5px solid #e5e9e0; transition: border-color .28s var(--fq-e), background-color .28s var(--fq-e), color .28s var(--fq-e); }
     .fq-none.is-on { color: #fff; background: #4b5563; border-color: #4b5563; }
+
+    /* The weeds and grasses catalogue (2026-10-21, the owner): a link in the weeds question's line
+       opens it, for telling the weeds apart. Nothing is picked from it. */
+    .fq-wlink { display: inline; padding: 0; font: inherit; font-weight: 800; color: var(--fq-g, #4a7c2a); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1.5px;
+        transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .fq-wlink:hover { color: var(--fq-gd, #2d5016); }
+    .fqw-groups { flex: none; display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 1rem .5rem; }
+    .fqw-groups button { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.6rem; padding: .3rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #2d5016;
+        background: #f3f8ec; border: 1px solid #d7e7c4; transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .fqw-groups button:hover { border-color: #a8cc7e; }
+    .fqw-groups button.is-on { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    .fqw-groups small { font-size: .7rem; font-weight: 700; opacity: .75; }
+    .fqw-ghint { flex: none; margin: -.1rem 1.15rem .5rem; font-size: .78rem; line-height: 1.45; color: #5b6472; animation: fqPop .28s cubic-bezier(.22,1,.36,1) both; }
+    .fqw-ghint[hidden], .fqw-one[hidden], .fq-list[hidden], .fqw-tools[hidden], .fqw-back[hidden] { display: none; }
+    .fqw-tools { flex: none; display: flex; flex-direction: column; }
+    .fqw-row .fq-ri { width: 3.4rem; height: 3.4rem; border-radius: .85rem; }
+    .fqw-row .fq-rt small { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .fqw-row > svg { flex: none; width: 1rem; height: 1rem; color: #9aa69a; }
+    .fqw-in { animation: fqPop .3s cubic-bezier(.22,1,.36,1) both; }
+    .fqw-fig { margin: .2rem 0 0; }
+    .fqw-fig img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 1rem; background: #f3f6ef; }
+    .fqw-fig figcaption { margin-top: .3rem; font-size: .68rem; line-height: 1.4; color: #8a9480; overflow-wrap: anywhere; }
+    .fqw-name { margin-top: .8rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; line-height: 1.25; color: #14210c; }
+    .fqw-sci { margin-top: .1rem; font-size: .84rem; font-style: italic; color: #6b7280; }
+    .fqw-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
+    .fqw-chips span { padding: .2rem .65rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: #3d6823; background: #eef5e6; }
+    .fqw-sec { margin-top: .95rem; }
+    .fqw-sec b { display: block; font-size: .72rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #3d6823; }
+    .fqw-sec p { margin-top: .25rem; font-size: .9rem; line-height: 1.55; color: #1f2937; }
+    html.dark .fq-wlink { color: #a5c97e; }
+    html.dark .fqw-groups button { color: #cfe6b8; background: #1a2414; border-color: #2f4321; }
+    html.dark .fqw-groups button.is-on { color: #fff; background: #4a7c2a; border-color: #6b9f3d; }
+    html.dark .fqw-ghint, html.dark .fqw-sci { color: #a9b69c; }
+    html.dark .fqw-name { color: #e8efe1; }
+    html.dark .fqw-chips span { color: #cfe6b8; background: #22301a; }
+    html.dark .fqw-sec b { color: #a5c97e; }
+    html.dark .fqw-sec p { color: #d5e3c5; }
+    html.dark .fqw-fig img { background: #1c2616; }
+    @media (prefers-reduced-motion: reduce) { .fqw-in, .fqw-ghint { animation: none !important; } .fq-wlink, .fqw-groups button { transition: none !important; } }
+    html.sm-still .fqw-in, html.sm-still .fqw-ghint { animation: none !important; }
 
     /* The sheets. */
     .fq-sheet { padding: 0; border: 0; background: transparent; max-width: none; max-height: none; width: 100%; height: 100%; margin: 0; inset: 0; overflow: hidden; }
@@ -368,6 +412,21 @@
     </div>
 </dialog>
 
+{{-- The weeds and grasses catalogue, opened from the weeds question: look, not pick. --}}
+<dialog class="fq-sheet is-full" id="fqWeedSheet" aria-labelledby="fqWeedTitle">
+    <div class="fq-box" tabindex="-1">
+        <div class="fq-grip" aria-hidden="true"></div>
+        <div class="fq-head"><button type="button" class="fq-x fqw-back" id="fqWeedBack" aria-label="Back to the weeds" hidden><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg></button><h2 id="fqWeedTitle">Weeds and grasses<small id="fqWeedSub">Tap one to see it up close</small></h2><button type="button" class="fq-x" data-fq-close aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="fqw-tools" id="fqWeedTools">
+            <label class="fq-find"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path stroke-linecap="round" d="M20 20l-4.2-4.2"/></svg><span class="sr-only">Search</span><input type="search" id="fqWeedQ" placeholder="Search any name, like kulape or ubod ubod" autocomplete="off" maxlength="40"></label>
+            <div class="fqw-groups" id="fqWeedGroups" role="group" aria-label="Weed group"></div>
+            <p class="fqw-ghint" id="fqWeedHint" hidden></p>
+        </div>
+        <div class="fq-list" id="fqWeedList"></div>
+        <div class="fq-body fqw-one" id="fqWeedOne" hidden></div>
+    </div>
+</dialog>
+
 {{-- The crop filter of the troubles sheet: every crop with troubles of its own. --}}
 <dialog class="fq-sheet" id="fqCropSheet" aria-labelledby="fqCropTitle">
     <div class="fq-box" tabindex="-1">
@@ -431,7 +490,7 @@
 @push('scripts')
 @php
     $fqData = ['bank' => \App\Support\FieldProfile::forPayload(null), 'other' => \App\Support\FieldProfile::OTHER,
-        'urls' => ['troubles' => route('fieldprofile.troubles'), 'list' => route('fieldprofile.list'), 'save' => route('fieldprofile.save')]];
+        'urls' => ['troubles' => route('fieldprofile.troubles'), 'weeds' => route('fieldprofile.weeds'), 'list' => route('fieldprofile.list'), 'save' => route('fieldprofile.save')]];
 @endphp
 <script>
 (() => {
@@ -456,11 +515,15 @@
 
     /* Tagalog help flags (data-tl, see partials/tagalog-flags): the technical
        questions by key, and the technical answers by question.answer, with a
-       1 when the term sits in the answer's small line. */
-    const TLQ = { texture: 'soil-texture', organic: 'organic-matter', water: 'water-source', drainage: 'drainage', flooding: 'flood-prone',
-        salt: 'saline', acidity: 'acidic', lastLimed: 'lime', hardpan: 'hardpan' };
-    const TLO = { 'texture.sandy': ['sandy', 1], 'texture.loam': ['loam', 1], 'texture.clay': ['clay', 1], 'water.irrigation': ['irrigation'], 'water.rainfed': ['rainfed'],
-        'salt.sodic': ['sodic', 1], 'acidity.sulfate': ['acid-sulfate'], 'acidity.alkaline': ['alkaline'], 'stubble.ratoon': ['ratoon'], 'weeds.sedges': ['weed-sedge'] };
+       1 when the term sits in the answer's small line. The lot-* keys are the
+       lot questions' own words (2026-10-21, the owner): what the question or
+       the answer means, never why it is asked. */
+    const TLQ = { texture: 'lot-texture', organic: 'organic-matter', water: 'water-source', drainage: 'drainage', flooding: 'lot-flood',
+        salt: 'saline', lastLimed: 'lot-lime', hardpan: 'hardpan' };
+    const TLO = { 'texture.sandy': ['sandy', 1], 'texture.loam': ['loam', 1], 'texture.clay': ['clay', 1], 'texture.heavy_clay': ['heavy-clay'],
+        'signs.rust': ['lot-sign-rust'], 'signs.sheen': ['lot-sign-sheen'], 'signs.smell': ['lot-sign-smell'], 'water.irrigation': ['irrigation'], 'water.rainfed': ['rainfed'],
+        'salt.crust': ['lot-salt-crust'], 'salt.sea': ['lot-salt-sea'], 'salt.tips': ['lot-salt-tips'], 'salt.sodic': ['lot-salt-sodic'],
+        'acidity.sulfate': ['acid-sulfate'], 'acidity.alkaline': ['alkaline'], 'stubble.ratoon': ['ratoon'] };
     const tlAt = (key) => (key ? ' data-tl="' + esc(key) + '"' : '');
     const tlFlag = (key) => (window.aneeTl ? window.aneeTl.flag(key) : '');
 
@@ -587,8 +650,10 @@
             body.innerHTML = '<div class="fqt-f"><label class="fqt-l" for="fqtDate">When was the soil sampled? <small>(leave it empty if you do not remember)</small></label><input type="date" class="form-input" id="fqtDate" max="' + today + '" value="' + esc(w.date || '') + '"></div>'
                 + '<div class="fqt-f"><span class="fqt-l">How was it tested?</span><div class="fq-opts fqt-kind" role="radiogroup">'
                 + kindBtn('kit', 'A soil test kit', 'Colors on a chart, read as low, medium or high. Often from the MAO or the DA.') + kindBtn('lab', 'A soils laboratory', 'A printed result with numbers') + '</div></div>'
-                + '<div class="fqt-f"><label class="fqt-l" for="fqtPh">pH <small>(optional)</small></label><input type="text" inputmode="decimal" maxlength="4" class="form-input fqt-n" id="fqtPh" placeholder="Like 5.8" value="' + esc(w.ph != null ? tNum(w.ph) : '') + '">'
-                + (w.phTo != null ? '<p class="fqt-was">It was saved as a range, ' + esc(tNum(w.ph)) + ' to ' + esc(tNum(w.phTo)) + '. Change the number to save just one.</p>' : '') + '</div>'
+                // One pH, or a range when the result gives one (2026-10-21, the owner).
+                + '<div class="fqt-f"><label class="fqt-l" for="fqtPh">pH <small>(optional)</small></label><div class="fqt-ph"><input type="text" inputmode="decimal" maxlength="4" class="form-input fqt-n" id="fqtPh" placeholder="Like 5.8" value="' + esc(w.ph != null ? tNum(w.ph) : '') + '">'
+                + '<span>to</span><input type="text" inputmode="decimal" maxlength="4" class="form-input fqt-n" id="fqtPhTo" placeholder="Like 6.2" aria-label="pH, the high end of a range" value="' + esc(w.phTo != null ? tNum(w.phTo) : '') + '"></div>'
+                + '<p class="fqt-was">One number, or a range like 5.5 to 6.0 when the result gives one. Leave the second box empty for one number.</p></div>'
                 + '<div class="fqt-sec" data-for="kit"' + (w.kind === 'kit' ? '' : ' hidden') + '><p>Tap the level the kit showed. Skip what it did not test.</p>'
                 + T_KIT.map(([k, l]) => '<div class="fqt-lv"><span>' + esc(l) + '</span>' + pills(k, T_LV, w[k]) + '</div>').join('') + '</div>'
                 + '<div class="fqt-sec" data-for="lab"' + (w.kind === 'lab' ? '' : ' hidden') + '><p>Type the numbers as printed. Leave a box empty if the result does not have it.</p><div class="fqt-grid">'
@@ -620,9 +685,15 @@
                 const r = { id: (t && t.id) || ('t' + Math.random().toString(36).slice(2, 9)), date: $('fqtDate').value || null, kind: w.kind || '' };
                 if (r.date && r.date > today) { err('The day it was sampled cannot be after today.'); return; }
                 const num = (raw, k) => { raw = String(raw || '').trim().replace(',', '.'); if (raw === '') return null; const n = Number(raw); const [lo, hi] = T_NUMS[k]; return isFinite(n) && n >= lo && n <= hi ? n : NaN; };
-                const ph = num($('fqtPh').value, 'ph');
-                if (Number.isNaN(ph)) { err('A pH is a number from 3 to 10, like 5.8.'); return; }
-                if (ph != null) { r.ph = Math.round(ph * 10) / 10; if (t && t.phTo != null && t.ph === r.ph) r.phTo = t.phTo; }
+                let ph = num($('fqtPh').value, 'ph'), phTo = num($('fqtPhTo').value, 'ph');
+                if (Number.isNaN(ph) || Number.isNaN(phTo)) { err('A pH is a number from 3 to 10, like 5.8.'); (Number.isNaN(ph) ? $('fqtPh') : $('fqtPhTo')).focus(); return; }
+                // Only the second box filled is one pH; a range typed high to low reads low to high.
+                if (ph == null && phTo != null) { ph = phTo; phTo = null; }
+                if (ph != null) {
+                    r.ph = Math.round(Math.min(ph, phTo ?? ph) * 10) / 10;
+                    const hi = Math.round(Math.max(ph, phTo ?? ph) * 10) / 10;
+                    if (hi !== r.ph) r.phTo = hi;
+                }
                 if (r.kind === 'kit') T_KIT.forEach(([k]) => { if (w[k]) r[k] = w[k]; });
                 if (r.kind === 'lab') {
                     for (const inp of body.querySelectorAll('[data-tn]')) {
@@ -770,6 +841,91 @@
         });
     });
 
+    /* ---- the weeds and grasses catalogue (2026-10-21, the owner) ----
+       Opened from the weeds question's line, to tell the weeds apart: a list with
+       a search and the three groups, each weed up close in the same sheet. */
+    let WEEDS = null;
+    const WS = { group: '', one: null, scroll: 0 };
+    const CHEV = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>';
+    function weedsData() {
+        if (!WEEDS) WEEDS = window.api(D.urls.weeds).then((r) => (r && r.data) || { rows: [], groups: {} }).catch(() => { WEEDS = null; return null; });
+        return WEEDS;
+    }
+    function paintWeedGroups(data) {
+        const rows = (data && data.rows) || [];
+        const n = (g) => rows.filter((w) => !g || w.kind === g).length;
+        const groups = (data && data.groups) || {};
+        $('fqWeedGroups').innerHTML = [['', 'All']].concat(Object.entries(groups).map(([k, g]) => [k, g[0]])).map(([k, label]) => '<button type="button" data-wg="' + esc(k) + '" aria-pressed="' + (WS.group === k) + '"' + (WS.group === k ? ' class="is-on"' : '') + '>' + esc(label) + ' <small>' + n(k) + '</small></button>').join('');
+        const hint = WS.group && groups[WS.group] ? groups[WS.group][1] : '';
+        $('fqWeedHint').textContent = hint;
+        $('fqWeedHint').hidden = !hint;
+    }
+    function paintWeeds(data) {
+        if (!data) { $('fqWeedList').innerHTML = '<p class="fq-nothing">The weeds could not load. Check the connection, then close this and open it again.</p>'; return; }
+        const q = $('fqWeedQ').value.trim().toLowerCase();
+        const hit = (w) => (!WS.group || w.kind === WS.group) && (!q || [w.name, w.local, w.sci].join(' ').toLowerCase().includes(q));
+        const row = (w) => '<button type="button" class="fq-row fqw-row" data-wk="' + esc(w.k) + '"><span class="fq-ri">' + (w.thumb ? '<img src="' + esc(w.thumb) + '" alt="" loading="lazy">' : '🌿') + '</span><span class="fq-rt"><b>' + esc(w.name) + '</b>'
+            + (w.local ? '<small>' + esc(w.local) + '</small>' : '') + '</span>' + CHEV + '</button>';
+        const parts = Object.entries(data.groups || {}).map(([k, g]) => {
+            const rows = data.rows.filter((w) => w.kind === k && hit(w));
+            return rows.length ? (WS.group ? '' : '<b class="fq-gh">' + esc(g[0]) + '<small>' + rows.length + '</small></b>') + rows.map(row).join('') : '';
+        }).join('');
+        const gname = WS.group && data.groups[WS.group] ? data.groups[WS.group][0] : '';
+        $('fqWeedList').innerHTML = parts || '<p class="fq-nothing">' + (q ? 'No weed by that name' + (gname ? ' in ' + esc(gname) + '. Tap All to look in every group.' : '.') : 'No weeds in this group.') + '</p>';
+    }
+    function showWeed(data, k) {
+        const w = data && data.rows.find((x) => x.k === k);
+        const one = $('fqWeedOne'), list = $('fqWeedList');
+        // The list keeps its place while one weed is open (a hidden list forgets its scroll).
+        if (w && !WS.one) WS.scroll = list.scrollTop;
+        WS.one = w ? k : null;
+        $('fqWeedTools').hidden = !!w; list.hidden = !!w; one.hidden = !w; $('fqWeedBack').hidden = !w;
+        $('fqWeedTitle').firstChild.textContent = w ? w.name : 'Weeds and grasses';
+        $('fqWeedSub').textContent = w ? ((data.groups[w.kind] || [w.kind])[0]) : 'Tap one to see it up close';
+        if (!w) { list.scrollTop = WS.scroll || 0; return; }
+        const g = data.groups[w.kind] || [];
+        const sec = (title, text) => (text ? '<div class="fqw-sec"><b>' + esc(title) + '</b><p>' + esc(text) + '</p></div>' : '');
+        one.innerHTML = '<div class="fqw-in">'
+            + (w.photo ? '<figure class="fqw-fig"><img src="' + esc(w.photo) + '" alt="' + esc(w.alt || w.name) + '">' + (w.credit ? '<figcaption>Photo: ' + esc(w.credit) + '</figcaption>' : '') + '</figure>' : '')
+            + '<h3 class="fqw-name">' + esc(w.name) + '</h3>' + (w.sci ? '<p class="fqw-sci">' + esc(w.sci) + '</p>' : '')
+            + '<div class="fqw-chips">' + [g[0], w.life].filter(Boolean).map((x) => '<span>' + esc(x) + '</span>').join('') + '</div>'
+            + sec('Local names', w.local) + sec('How to know it', [g[1], w.hint].filter(Boolean).join(' ')) + sec('Found in', (w.crops || []).join(', ')) + sec('How to keep it out', w.stop)
+            + '</div>';
+        one.scrollTop = 0;
+        $('fqWeedBack').focus({ preventScroll: true });
+    }
+    async function openWeeds() {
+        const dlg = $('fqWeedSheet');
+        WS.group = ''; WS.one = null; WS.scroll = 0;
+        $('fqWeedQ').value = '';
+        showWeed(null, null);
+        $('fqWeedList').innerHTML = '<p class="fq-nothing">Loading the weeds…</p>';
+        $('fqWeedGroups').innerHTML = '';
+        $('fqWeedHint').hidden = true;
+        sheetOpen(dlg, $('fqWeedQ'));
+        const data = await weedsData();
+        if (data) paintWeedGroups(data);
+        paintWeeds(data);
+        $('fqWeedList').scrollTop = 0;
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        $('fqWeedQ').addEventListener('input', async () => paintWeeds(await weedsData()));
+        $('fqWeedGroups').addEventListener('click', async (e) => {
+            const b = e.target.closest('[data-wg]');
+            if (!b) return;
+            WS.group = b.dataset.wg;
+            const data = await weedsData();
+            paintWeedGroups(data);
+            paintWeeds(data);
+            $('fqWeedList').scrollTop = 0;
+        });
+        $('fqWeedList').addEventListener('click', async (e) => {
+            const b = e.target.closest('[data-wk]');
+            if (b) showWeed(await weedsData(), b.dataset.wk);
+        });
+        $('fqWeedBack').addEventListener('click', async () => { const k = WS.one; showWeed(await weedsData(), null); if (k) $('fqWeedList').querySelector('[data-wk="' + CSS.escape(k) + '"]')?.focus({ preventScroll: true }); });
+    });
+
     /* ---- one form: a page of one lot at a time ---- */
     function mount(el, o) {
         o = o || {};
@@ -808,7 +964,8 @@
         function qHtml(k, q, v) {
             const done = k === 'outbreaks' ? (v.outbreaks || []).length > 0 : (q.multi ? (v[k] || []).length > 0 : v[k] !== undefined);
             let h = '<section class="fq-q' + (done ? ' is-done' : '') + '" data-k="' + esc(k) + '"><h3><span' + tlAt(TLQ[k]) + '>' + esc(q.q) + '</span><i class="fq-tick" aria-hidden="true">' + CHECK + '</i></h3>'
-                + '<p class="fq-why">' + BULB + '<span>' + esc(q.why) + '</span></p>'
+                + '<p class="fq-why">' + BULB + '<span>' + esc(q.why)
+                + (k === 'weeds' ? ' <button type="button" class="fq-wlink" data-wcat aria-haspopup="dialog">See the weeds and grasses</button>' : '') + '</span></p>'
                 + (q.multi && k !== 'outbreaks' ? '<p class="fq-many">Pick all that fit</p>' : '');
             h += k === 'outbreaks' ? troubleHtml(v) : optHtml(k, q, v);
             if (q.ph) h += testsHtml(v);
@@ -928,6 +1085,7 @@
                 if (lotOf(i).copiedFrom !== null || lotOf(i).from) refreshBanner();
                 return;
             }
+            if (e.target.closest('[data-wcat]')) { openWeeds(); return; }
             const o2 = e.target.closest('.fq-o');
             if (o2) { pick(o2.closest('.fq-q').dataset.k, o2.dataset.v); return; }
             if (e.target.closest('[data-topen]')) {

@@ -226,7 +226,8 @@ final class SeedPenalty
         $test = FieldProfile::testLatest((array) ($a['tests'] ?? []));
         $salt = array_values(array_diff(array_map('strval', (array) ($a['salt'] ?? [])), ['none']));
         $waterLook = array_map('strval', (array) ($a['waterLook'] ?? []));
-        $ph = isset($test['ph']) && is_numeric($test['ph']) ? (float) $test['ph'] : ($L['phValue'] !== null ? (float) $L['phValue'] : null);
+        // A tested range counts by its middle, as legacy()'s phValue does.
+        $ph = isset($test['ph']) && is_numeric($test['ph']) ? round(((float) $test['ph'] + (float) ($test['phTo'] ?? $test['ph'])) / 2, 1) : ($L['phValue'] !== null ? (float) $L['phValue'] : null);
         $pick = fn ($k) => isset($a[$k]) && is_string($a[$k]) && $a[$k] !== '' ? $a[$k] : null;
 
         return [
