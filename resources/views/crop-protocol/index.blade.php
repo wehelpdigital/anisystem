@@ -1088,15 +1088,21 @@
     html.dark .cq-rev button:hover { background: #1c2616; }
 
     /* ---- THE FARM REPORT (format 4) ---- */
-    .cr-tabs { position: sticky; top: calc(3.2rem + env(safe-area-inset-top)); z-index: 3; display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; margin: -.2rem -1rem .9rem; padding: .45rem 1rem;
-        background: rgb(250 250 248 / .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--color-gray-200); }
+    /* The tab bar sticks under the view's own bar as a band from edge to edge of the screen (2026-10-21, the owner: it
+       looked cut off at the sides). The band is the wrapper's shadow, clipped to its own height; the tabs scroll inside. */
+    .cr-tabwrap { position: sticky; top: calc(3.2rem + env(safe-area-inset-top)); z-index: 3; margin: -.2rem 0 .9rem; background: rgb(250 250 248);
+        box-shadow: 0 0 0 100vmax rgb(250 250 248), 0 1px 0 100vmax var(--color-gray-200); clip-path: inset(0 -100vmax -1px); }
+    .cr-tabs { position: relative; display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; padding: .5rem 0; scroll-padding-inline: 1rem;
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%); }
+    .cr-tabs > :first-child { margin-left: .5rem; }
+    .cr-tabs > :last-child { margin-right: .5rem; }
+    html.dark .cr-tabwrap { background: #0d110a; box-shadow: 0 0 0 100vmax #0d110a, 0 1px 0 100vmax #2b3a1c; }
     .cr-tabs::-webkit-scrollbar { display: none; }
     .cr-tab { flex: none; display: inline-flex; align-items: center; gap: .4rem; min-height: 2.4rem; padding: .3rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--color-gray-600); background: var(--color-white); border: 1.5px solid var(--color-gray-200);
         transition: background-color .28s var(--cq-e), border-color .28s var(--cq-e), color .28s var(--cq-e); }
     .cr-tab i { width: .6rem; height: .6rem; border-radius: 999px; background: var(--lc, #4a7c2a); }
     .cr-tab.is-on { color: #fff; background: var(--lc, #4a7c2a); border-color: var(--lc, #4a7c2a); }
     .cr-tab.is-on i { background: #fff; }
-    html.dark .cr-tabs { background: rgb(13 17 10 / .94); border-color: #2b3a1c; }
     html.dark .cr-tab { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .cr-tab.is-on { color: #fff; background: var(--lc, #4a7c2a); border-color: var(--lc, #4a7c2a); }
     .cr-pane { display: grid; gap: .9rem; min-width: 0; animation: cqIn .26s ease both; }
@@ -1291,6 +1297,7 @@
 @include('partials.farm-lots')
 @include('partials.variety-pick')
 @include('partials.month-pick')
+@include('partials.liebig-barrel')
 
 <div class="cq" id="cqPage">
     <div class="wtp-tabs" role="tablist">
@@ -2941,11 +2948,11 @@
     function drawV4(hostEl, item, mode) {
         const r = item.report || {};
         const lots = r.lots || [];
-        const tabs = '<div class="cr-tabs" role="tablist" aria-label="The farm and its lots">'
+        const tabs = '<div class="cr-tabwrap"><div class="cr-tabs" role="tablist" aria-label="The farm and its lots">'
             + (lots.length > 1 ? '<button type="button" class="cr-tab is-on" role="tab" aria-selected="true" data-crtab="farm" style="--lc:#2d5016"><i></i>Whole farm</button>' : '')
             + lots.map((L, i) => '<button type="button" class="cr-tab' + (lots.length === 1 ? ' is-on' : '') + '" role="tab" aria-selected="' + (lots.length === 1) + '" data-crtab="lot' + i + '" style="--lc:' + lc(i) + '"><i></i>' + esc(lots.length > 1 ? L.name : 'This lot') + '</button>').join('')
             + (lots.length === 1 ? '<button type="button" class="cr-tab" role="tab" aria-selected="false" data-crtab="farm" style="--lc:#2d5016"><i></i>Calendar and more</button>' : '')
-            + '</div>';
+            + '</div></div>';
         hostEl.innerHTML = tabs
             + '<div class="cr-pane" data-pane="farm"' + (lots.length === 1 ? ' hidden' : '') + '>' + farmPane(r, item) + '</div>'
             + lots.map((L, i) => '<div class="cr-pane" data-pane="lot' + i + '"' + (lots.length === 1 ? '' : ' hidden') + '></div>').join('')
@@ -2957,6 +2964,7 @@
             const pane = hostEl.querySelector('[data-pane="lot' + i + '"]');
             pane.innerHTML = lotPane(lots[i], r, i);
             paintProgram(pane.querySelector('[data-proghost]'), lots[i], hostEl);
+            paintBarrel(pane.querySelector('[data-barrel]'), lots[i]);
         };
         if (lots.length === 1) paintLot(0);
         const go = (key) => {
@@ -2969,7 +2977,7 @@
                 if (!hostEl.classList.contains('is-drawn')) requestAnimationFrame(() => requestAnimationFrame(() => hostEl.classList.add('is-drawn')));
             }
             hostEl.querySelectorAll('[data-pane]').forEach((p) => { p.hidden = p.dataset.pane !== key; });
-            const view = $('cpView'), tabsEl = hostEl.querySelector('.cr-tabs');
+            const view = $('cpView'), tabsEl = hostEl.querySelector('.cr-tabwrap');
             if (view && tabsEl && view.scrollTop > tabsEl.offsetTop) view.scrollTo({ top: Math.max(0, tabsEl.offsetTop - 8), behavior: reduce() ? 'auto' : 'smooth' });
         };
         hostEl.querySelector('.cr-tabs').addEventListener('click', (e) => { const t = e.target.closest('[data-crtab]'); if (t) go(t.dataset.crtab); });
@@ -3102,6 +3110,8 @@
         return '<h3 style="margin:1rem 0 .5rem;font-size:.92rem;font-weight:800">Protection, watch first' + (window.aneeTl ? window.aneeTl.flag('ipm') : '') + '</h3>'
             + '<div class="cr-warn" role="note"><span>🧑‍🌾</span><span><b>Spraying is your call, always</b>' + esc(r.disclaimer || pr.disclaimer || '') + '</span></div>'
             + (pr.intro ? '<p class="cr-say" style="margin-top:.6rem">' + esc(sweepT(pr.intro)) + '</p>' : '')
+            // The seed's own traits (2026-10-21): a Bt corn, a herbicide tolerant one.
+            + (c.traits && (c.traits.notes || []).length ? '<div class="cr-lines">' + c.traits.notes.map((w) => '<p>🧬 ' + esc(w) + '</p>').join('') + '</div>' : '')
             + (lotWatch && lotWatch.length ? '<div class="cr-lines">' + lotWatch.map((w) => '<p>' + esc(sweepT(w)) + '</p>').join('') + '</div>' : '')
             + (th.length ? '<div class="cr-threats">' + th.map(card).join('') + '</div>' : '<p class="cp-note">No threats came back for this crop.</p>') + weeds;
     }
@@ -3135,6 +3145,7 @@
                     : '<div class="cr-fixrow' + (m.pick === 'spray' ? ' is-spray' : '') + '"><span>' + esc(m.el) + '</span><div>' + (m.pick === 'spray' && m.spray ? '<b>' + esc(m.spray.name) + '</b> at ' + esc(String(m.spray.stage || '').toLowerCase()) + (m.soil ? '. Or ' + esc(m.soil.say) + ' at the last harrowing.' : '.') : '<b>' + esc(m.soil.say) + '</b> with the basal.' + (m.spray ? ' Or a ' + esc(m.spray.name.toLowerCase()) + ' at ' + esc(String(m.spray.stage || '').toLowerCase()) + '.' : ''))
                     + '<small>' + esc(m.name + ': the need is ' + elAmt(m.need) + ' a hectare, the program gives ' + elAmt(m.plan) + '. ' + (m.why && m.why.length ? m.why.join(', ') + '. ' : '') + (m.note || '')) + '</small></div></div>').join('')
                 + '</div><p class="cp-note">Soil doses go on with the basal, blended or spread. A spray is named by its nutrient: ask the store for that foliar, and follow its label for the dose.</p></div>' : '')
+            + (n.known ? '<div class="cr-card"><h3>What holds this lot\'s harvest' + (window.aneeTl ? window.aneeTl.flag('liebig') : '') + '<small>Liebig\'s barrel: the plan this protocol hands you, against the need. The shortest plank sets how high the water stands.</small></h3><div data-barrel></div></div>' : '')
             + ((g.soilLogic || g.timingLogic) ? '<div class="cr-card cp3-gran"><h3>Why these fertilizers<small>which bag and when, chosen for this lot\'s soil</small></h3>' + (g.soilLogic ? '<div class="cp3-gran-row"><span class="e">🧪</span><div><b>The soil decides the bag</b><p>' + esc(sweepT(g.soilLogic)) + '</p></div></div>' : '')
                 + (g.timingLogic ? '<div class="cp3-gran-row"><span class="e">⏱️</span><div><b>The stage decides the amount</b><p>' + esc(sweepT(g.timingLogic)) + '</p></div></div>' : '')
                 + ((g.rejected || []).filter((x) => x && x.what).length ? '<div class="cp3-gran-row"><span class="e">🚫</span><div><b>Considered but not used</b><div class="cp3-no">' + (g.rejected || []).filter((x) => x && x.what).map((x) => '<div class="cp3-no-row"><b>' + esc(sweepT(x.what)) + '</b>' + (x.why ? '<p>' + esc(sweepT(x.why)) + '</p>' : '') + '</div>').join('') + '</div></div></div>' : '')
@@ -3153,6 +3164,70 @@
                     + (t.hired ? ' <em class="is-hired">Hired</em>' : '') + '</div></div>';
             }).join('') + '</div></div>' : '')
             + ((L.field || []).length ? '<details class="cr-card cr-fold" style="margin-top:0"><summary>The lot\'s answers Anee read</summary><div class="cr-lines">' + L.field.map((p) => '<p>' + esc(p[0] + ': ' + p[1]) + '</p>').join('') + '</div></details>' : '');
+    }
+
+    /* Liebig's barrel for a lot (2026-10-21, the owner): the plan the protocol hands over (the recommended program, what still
+       falls short added, the micronutrient top ups) against the lot's need, and the season's water from twenty years of
+       weather and the ENSO outlook. The water stands at the shortest plank, as on NPK Plus. */
+    function paintBarrel(host, L) {
+        if (!host || !window.aneeBarrel) return;
+        const n = L.need || {}, pg = ((L.rec || {}).programs || [])[0] || {};
+        const card = host.closest('.cr-card');
+        if (!n.known || !(pg.check || []).length) { if (card) card.hidden = true; return; }
+        const pct = (r) => (r === null ? '?' : Math.round(Math.min(r, 1) * 100) + '%');
+        const amt = (kg) => { const x = Number(kg) || 0; return x >= 1 ? (Math.round(x * 10) / 10) + ' kg' : Math.round(x * 1000) + ' g'; };
+        const stateOf = (r, hi) => (r === null ? 'noflag' : (r < 0.9 ? 'short' : (r > hi ? 'over' : 'right')));
+        const fixGap = {}, topUp = {};
+        (L.fixes || []).forEach((f) => { fixGap[f.el] = (fixGap[f.el] || 0) + (Number(f.gap) || 0); });
+        (L.micro || []).forEach((m) => { if (m.pick !== 'covered') topUp[m.el] = (topUp[m.el] || 0) + (Number(m.gap) || 0); });
+        const KEY = { n: ['N', 'N', 'Nitrogen'], p: ['P2O5', 'P₂O₅', 'Phosphorus'], k: ['K2O', 'K₂O', 'Potassium'] };
+        const staves = [], rows = [];
+        (pg.check || []).forEach((c) => {
+            const [el, t, name] = KEY[c.key] || [c.key, c.label, c.label];
+            const need = Number(c.need) || 0, have = (Number(c.have) || 0) + (fixGap[el] || 0), r = need > 0 ? have / need : null;
+            staves.push({ k: el, t, name });
+            rows.push({ state: stateOf(r, 1.3), ratio: r, pct: pct(r), note: need > 0 ? 'The plan gives ' + Math.round(have) + ' kg of the ' + Math.round(need) + ' kg a hectare this lot needs' : 'No need counted' });
+        });
+        // The secondary and micro elements NPK Plus always shows, and any other with a verdict.
+        const base = ['Ca', 'Mg', 'S', 'Zn', 'B'];
+        (pg.elements || []).filter((e) => !e.beneficial && (base.includes(e.key) || ['short', 'over', 'right', 'spray'].includes(e.state))).forEach((e) => {
+            const need = e.need === null || e.need === undefined ? null : Number(e.need), plan = (Number(e.plan) || 0) + (topUp[e.key] || 0);
+            const r = need ? plan / need : null;
+            staves.push({ k: e.key, t: e.key, name: e.name });
+            rows.push({ state: e.state === 'over' ? 'over' : stateOf(r, 99), ratio: r, pct: pct(r), note: need ? 'The plan gives ' + amt(plan) + ' of the ' + amt(need) + ' a hectare' : 'No shortage flagged on this lot' });
+        });
+        // The season's water: rain (and the pump or the canal) against what the crop drinks.
+        const sn = n.season;
+        if (sn && sn.waterShare !== null && sn.waterShare !== undefined) {
+            const r = Math.max(0, Math.min(1, Number(sn.waterShare)));
+            staves.push({ k: 'water', t: 'Water', name: 'Water this season' });
+            const from = { pump: 'the rain and the pump', irrigated: 'the rain and the irrigation', partial: 'the rain and the water you can bring' }[sn.water] || 'the rain';
+            rows.push({ state: r < 0.97 ? 'short' : 'right', ratio: r, pct: pct(r), note: from.charAt(0).toUpperCase() + from.slice(1) + ' bring about ' + Math.round(r * 100) + '% of the water the crop drinks this season' });
+        }
+        const tIn = Number(((OPT && OPT.yieldT) || {})[L.yieldUnit]) || 1, unit = L.yieldWord || 'tons';
+        const goal = n.goal ? Number(n.goal.eff) / tIn : null;
+        const b = window.aneeBarrel.mount(host, { label: "Liebig's barrel for " + (L.name || 'this lot') });
+        const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null);
+        const low = measured.length ? measured.reduce((a, c) => (c[0].ratio < a[0].ratio ? c : a)) : null;
+        const reach = low ? Math.round(Math.min(1, low[0].ratio) * 100) : null;
+        const LOCK = { high_p: 'the heavy phosphorus can tie up zinc and iron', high_k: 'the heavy potassium can crowd out magnesium and calcium', liming: 'the lime can tie up zinc, boron, manganese, copper and iron', excess_zn: 'the heavy zinc can crowd out copper' };
+        const locks = (pg.lockouts || []).map((k) => LOCK[k]).filter(Boolean);
+        let say = !low ? '' : reach >= 97 ? 'Every plank reaches the rim: the plan, with what still fell short added, meets this lot\'s need for the goal.'
+            : 'The shortest plank is <b>' + esc(staves[low[1]].name) + '</b>: ' + esc(((t) => t.charAt(0).toLowerCase() + t.slice(1))((rows[low[1]].note || '').replace(/\.$/, ''))) + '. It holds the water at ' + reach + '% of the need' + (goal ? ', near ' + esc(fmt2(goal * reach / 100) + ' ' + unit) + ' a hectare' : '') + '. Raise it first: more of the others adds nothing until it rises.';
+        if (staves[low ? low[1] : -1] && staves[low[1]].k === 'water' && reach < 97) say += ' Water is the season, not the fertilizer: plan the irrigation, or a variety and a planting day that fit the rain.' + (sn && sn.words ? ' ' + esc(sn.words) : '');
+        const over = rows.map((r, i) => [r, i]).filter(([r]) => r.state === 'over').map(([, i]) => staves[i].name.toLowerCase());
+        if (over.length) say += ' Too much ' + esc(andList(over)) + ': the taller plank holds no more water, and it costs money.';
+        if (locks.length) say += ' <b>Lockouts from the plan:</b> ' + esc(andList(locks)) + '. They are counted in the needs.';
+        b.draw({ staves, rows, tag: goal ? 'The rim is this lot\'s goal, ' + fmt2(goal) + ' ' + unit + ' a hectare.' : 'The rim is everything the crop needs.',
+            arrow: 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : ''),
+            reach: reach !== null ? '<b>' + reach + '%</b><span>of what this lot needs for its goal is met, at the shortest plank.</span>' : '',
+            say: say ? '<p class="cr-say" style="margin-top:.6rem">' + say + '</p>' : '' });
+        // It fills and turns when it comes into view, and rests when it leaves.
+        const root = $('cpView');
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? b.enter() : b.leave())), { root: root && root.contains(host) ? root : null, threshold: 0.25 });
+            io.observe(host);
+        } else b.enter();
     }
 
     /* A lot's fertilizer by stage, per program: the tabs, the chart, the rows, the detail, the totals, the nutrient check (drawV2's, for one lot). */

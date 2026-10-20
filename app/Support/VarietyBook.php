@@ -198,6 +198,11 @@ class VarietyBook
                 $r['yieldTop'] ??= ! empty($t['yieldTop']) ? (float) $t['yieldTop'] : null;
                 $filled[] = 'yield';
             }
+            // The best trial site is the variety's potential (2026-10-21, the owner: a 15 t corn target was held to the
+            // 9.1 t average of DK 8282S): a curated average keeps the registration trials' best site beside it.
+            if (($r['yieldTop'] ?? null) === null && ! empty($t['yieldTop']) && ($r['yieldUnit'] ?? 't/ha') === 't/ha' && (float) $t['yieldTop'] > (float) ($r['yield'] ?? 0)) {
+                $r['yieldTop'] = (float) $t['yieldTop'];
+            }
             if (! $r['ratings'] && ! empty($t['facts']['ratings'])) {
                 $r['ratings'] = self::shortRatings((array) $t['facts']['ratings']);
                 $filled[] = 'ratings';

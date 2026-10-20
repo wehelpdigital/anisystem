@@ -144,6 +144,74 @@ final class ProtocolCare
             'prevent' => array_values(array_map('strval', (array) ($plan['prevent'] ?? [])))];
     }
 
+    /** Caterpillars a Bt corn trait guards against (Cry and Vip proteins): fall armyworm, Asian corn borer, corn earworm. */
+    public const BT_PESTS = ['fall-armyworm', 'asian-corn-borer', 'corn-earworm'];
+
+    /**
+     * What the seed itself brings (2026-10-21, the owner): a Bt trait against caterpillars, and tolerance to
+     * glyphosate or glufosinate, read from the variety's names, its kind and its seller's words (VT Double PRO,
+     * Viptera or VIP, YieldGard, Agrisure, BtGt, Roundup Ready, GT ...).
+     *
+     * @return array{bt:bool, glyphosate:bool, glufosinate:bool, names:list<string>}
+     */
+    public static function traits(?array $rec, string $variety = ''): array
+    {
+        $text = implode(' ', array_filter([$variety, (string) ($rec['name'] ?? ''), implode(' ', (array) ($rec['aliases'] ?? [])), (string) ($rec['kind'] ?? ''),
+            (string) ($rec['seller'] ?? ''), implode(' ', (array) ($rec['trials']['names'] ?? [])), (string) ($rec['trials']['notes'] ?? '')], 'strlen'));
+        $has = fn (string $words) => (bool) preg_match('/(?<![a-z])(' . $words . ')(?![a-z])/i', $text);
+        $bt = $has('bt|btgt|vt ?double ?pro|vtdoublepro|vt2p|vt ?triple ?pro|yieldgard|yg|viptera|vip|agrisure|herculex|powercore|smartstax|rib complete|bt proteins?');
+        $gly = $has('rr|rr2|rrc2|roundup ready|gt|btgt|glyphosate[ -]tolerant|tolerant to glyphosate|vt ?double ?pro|vtdoublepro|vt2p|viptera|vip|ga21');
+        $glu = $has('liberty ?link|glufosinate[ -]tolerant|tolerant to glufosinate|herculex');
+        $names = array_values(array_filter([$bt ? 'a Bt trait against caterpillars' : null, $gly ? 'tolerance to glyphosate' : null, $glu ? 'tolerance to glufosinate' : null]));
+
+        return ['bt' => $bt, 'glyphosate' => $gly, 'glufosinate' => $glu, 'names' => $names];
+    }
+
+    /**
+     * The protection lists for a variety's traits: a Bt corn drops the caterpillars its trait guards against
+     * (they stay a watch, not a spray program), a herbicide tolerant one puts glyphosate over the top first,
+     * and a variety without the trait never sees an "(herbicide tolerant corn only)" ingredient.
+     *
+     * @return array{0:array, 1:?array, 2:list<string>} threats, weeds, notes for the prompt and the report
+     */
+    public static function forTraits(string $crop, array $threats, ?array $weeds, array $traits, string $variety = ''): array
+    {
+        $notes = [];
+        $corn = str_starts_with($crop, 'corn');
+        if ($corn && $traits['bt']) {
+            $gone = array_values(array_filter($threats['pests'] ?? [], fn ($t) => in_array($t['slug'], self::BT_PESTS, true)));
+            $threats['pests'] = array_values(array_filter($threats['pests'] ?? [], fn ($t) => ! in_array($t['slug'], self::BT_PESTS, true)));
+            if ($gone) {
+                $notes[] = ($variety !== '' ? $variety . ' carries' : 'The seed carries') . ' a Bt trait that guards against ' . self::andList(array_map(fn ($t) => preg_replace('/\basian\b/', 'Asian', mb_strtolower($t['name'])), $gone))
+                    . ', so no spray program is planned for them. Scout every week anyway and spray only past the threshold: caterpillars can learn to beat the trait.';
+            }
+        }
+        if ($weeds) {
+            $ht = '/herbicide tolerant/i';
+            foreach ($weeds['windows'] as &$w) {
+                if ($corn && $traits['glyphosate']) {
+                    // Glyphosate over the top first on a tolerant variety.
+                    usort($w['ingredients'], fn ($a, $b) => (int) (! preg_match($ht, $a['name']) && ! (stripos($a['name'], 'glyphosate') === 0 && $w['key'] === 'early_post'))
+                        <=> (int) (! preg_match($ht, $b['name']) && ! (stripos($b['name'], 'glyphosate') === 0 && $w['key'] === 'early_post')));
+                } else {
+                    // Never on a variety without the trait: it would kill the crop.
+                    $w['ingredients'] = array_values(array_filter($w['ingredients'], fn ($i) => ! preg_match($ht, $i['name'])));
+                }
+            }
+            unset($w);
+            if ($corn && $traits['glyphosate']) {
+                $notes[] = ($variety !== '' ? $variety . ' tolerates' : 'The seed tolerates') . ' glyphosate, so glyphosate can go over the top of the young crop for the weeds after they come up. Read the label for the latest stage it allows, and rotate with another group so the weeds do not learn to survive it.';
+            }
+        }
+
+        return [$threats, $weeds, $notes];
+    }
+
+    private static function andList(array $a): string
+    {
+        return count($a) < 2 ? (string) ($a[0] ?? '') : implode(', ', array_slice($a, 0, -1)) . ' and ' . end($a);
+    }
+
     /** The candidates as the prompt reads them: one line a pest or disease, then the weed windows. */
     public static function promptLines(array $threats, ?array $weeds, int $maxAi = 4): string
     {

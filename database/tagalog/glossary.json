@@ -380,5 +380,6 @@
 {"key": "eq-pagulong", "en": "Pagulong", "tl": "Tinatawag ding cultipacker. Isang mabigat na rolyo o tambol na may mga talim o tadyang sa paligid, hinihila ng kalabaw o kuliglig sa basang palayan habang gumugulong."},
 {"key": "eq-leveling-board", "en": "Leveling board", "tl": "Isang mahaba at malapad na tabla o kahoy na hinihila nang pahiga sa ibabaw ng basang putik, ng kalabaw o ng kuliglig."},
 {"key": "eq-drum-seeder", "en": "Drum or palatak seeder", "tl": "Dalawang uri ng hinihilang pantanim ng sumibol na binhi. Ang drum seeder ay mga plastik na tambol na may maliliit na butas, nakakabit sa isang ehe na may gulong. Ang palatak seeder ay gawang lokal na may balangkas na bakal at anim na hanay, at hinihila rin ng tao sa putik."},
-{"key": "eq-transplanter", "en": "Rice transplanter", "tl": "Makinang pantanim ng punla. May uring nilalakad at may uring sinasakyan. Kumukuha ito ng punla mula sa tray o dapog at itinutusok ito sa putik nang pahanay."}
+{"key": "eq-transplanter", "en": "Rice transplanter", "tl": "Makinang pantanim ng punla. May uring nilalakad at may uring sinasakyan. Kumukuha ito ng punla mula sa tray o dapog at itinutusok ito sa putik nang pahanay."},
+{"key": "liebig", "en": "Liebig's barrel", "tl": "Ang batas ni Liebig: parang bariles na ang bawat tabla ay isang sustansya o ang tubig. Ang taas ng tabla ay kung gaano karami ng kailangan ang natutugunan ng plano. Ang tubig sa loob ay hanggang sa pinakamababang tabla lang, kaya ang pinakakulang ang humahawak sa ani."}
 ]

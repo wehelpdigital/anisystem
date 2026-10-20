@@ -1113,6 +1113,10 @@ class CropProtocolController extends Controller
             try {
                 $ctx['threats'][$c['key']] = ProtocolCare::threats($c['crop'], $had);
                 $ctx['weeds'][$c['key']] = ProtocolCare::weeds($c['crop'], $c['method'], $ctx['frames'][$c['lots'][0]]['harvest']);
+                // The seed's own traits (2026-10-21, the owner): a Bt corn needs no caterpillar program, a tolerant one takes glyphosate.
+                $tr = ProtocolCare::traits($ctx['records'][$c['lots'][0]] ?? null, (string) ($c['variety'] ?? ''));
+                [$ctx['threats'][$c['key']], $ctx['weeds'][$c['key']], $tnotes] = ProtocolCare::forTraits($c['crop'], $ctx['threats'][$c['key']], $ctx['weeds'][$c['key']], $tr, (string) ($c['variety'] ?? ''));
+                $ctx['traits'][$c['key']] = $tr + ['notes' => $tnotes];
             } catch (\Throwable $e) {
                 report($e);
                 $ctx['threats'][$c['key']] = ['pests' => [], 'diseases' => []];
@@ -1652,6 +1656,7 @@ PROMPT;
                 . '- Its stages, in order (use these names exactly): ' . self::stageList($frame) . "\n"
                 . '- Lots growing it: ' . $names . "\n"
                 . ProtocolCare::promptLines($ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null)
+                . (! empty($ctx['traits'][$c['key']]['notes']) ? '- THE SEED\'S OWN TRAITS (plan around them): ' . implode(' ', $ctx['traits'][$c['key']]['notes']) . "\n" : '')
                 . '- Research notes for this crop:' . "\n" . (trim($notes[$c['key']] ?? '') !== '' ? trim($notes[$c['key']]) : 'none found; rely on established agronomy and say so in dataGaps') . "\n\n";
         }
         // A background part already written for these places and months is left out (OutlookShelf, 2026-10-19).
@@ -1875,6 +1880,7 @@ PROMPT;
                 'stages' => $stages,
                 'protection' => ProtocolCare::attach((array) ($words['protection'] ?? []), $ctx['threats'][$c['key']] ?? [], $ctx['weeds'][$c['key']] ?? null, $c['crop'], $frame),
                 'weeds' => ProtocolCare::weedsForReport($ctx['weeds'][$c['key']] ?? null, $c['crop']),
+                'traits' => $ctx['traits'][$c['key']] ?? null,
                 'lots' => $c['lots'],
             ];
         }

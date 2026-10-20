@@ -144,6 +144,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'lotWeeds' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqWeedSheet'),
             'lpNewWorker' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'lpNewWSheet'),
             'protoCrew' => str_contains((string) @file_get_contents(resource_path('views/crop-protocol/index.blade.php')), 'cqNewWSheet'),
+            'protoBarrel' => is_file(resource_path('views/partials/liebig-barrel.blade.php')),
             'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),
