@@ -1040,6 +1040,7 @@
     html.dark .cq-pill.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     html.dark .cq-choice .ce { background: #1c2416; border-color: #2b3a1c; }
     html.dark .cq-tag { background: #1c2616; border-color: #2b3a1c; color: #e8efe1; }
+    html.dark .cq-tag:hover:not(:disabled) { background: #22301a; border-color: #4a6b2c; }
     html.dark .cq-tag .ti { background: #151b12; border-color: #2b3a1c; }
     html.dark .cq-tag .tc, html.dark .cq-fledit, html.dark .cq-samed button, html.dark .cq-stepper button { background: #2b3a1c; color: #d5e3c5; }
     html.dark .cq-lot-top b, html.dark .cq-label, html.dark .cq-field > label, html.dark .cq-size label { color: #d5e3c5; }
@@ -1297,7 +1298,7 @@
                 </button>
                 <p class="cq-ferr" id="cqCropErr" hidden>Choose the crop first.</p>
                 <div id="cqMethodBox" hidden>
-                    <span class="cq-label" data-tl="planting-method">How will you plant it?</span>
+                    <span class="cq-label">How will you plant it?</span>
                     <div class="cq-choices" id="cqMethods"></div>
                     <p class="cq-ferr" id="cqMethodErr" hidden>Pick how it goes in.</p>
                 </div>
@@ -1484,7 +1485,7 @@
 </dialog>
 
 {{-- The farm's lots: tick several, or add a new one. --}}
-<dialog class="cq-sheet is-tall" id="cqFarmSheet" aria-labelledby="cqFarmTitle">
+<dialog class="cq-sheet" id="cqFarmSheet" aria-labelledby="cqFarmTitle">
     <div class="cq-sbox" tabindex="-1">
         <div class="cq-grip" aria-hidden="true"></div>
         <div class="cq-shead"><h2 id="cqFarmTitle">Your lots<small>Tick the lots you will plant. Their place, size and answers come along.</small></h2><button type="button" class="cq-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
@@ -1497,7 +1498,7 @@
 </dialog>
 
 {{-- My workers (Global Workers): tick who works. --}}
-<dialog class="cq-sheet is-tall" id="cqRosterSheet" aria-labelledby="cqRosterTitle">
+<dialog class="cq-sheet" id="cqRosterSheet" aria-labelledby="cqRosterTitle">
     <div class="cq-sbox" tabindex="-1">
         <div class="cq-grip" aria-hidden="true"></div>
         <div class="cq-shead"><h2 id="cqRosterTitle">My workers<small>Tick who will work. They bring their days off.</small></h2><button type="button" class="cq-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
@@ -2345,7 +2346,7 @@
             : '<p class="cq-snone">Nobody by that name.</p>';
         $('cqRosterCount').textContent = RPICK.size ? RPICK.size + ' ticked' : 'None ticked';
     }
-    $('cqRosterOpen').addEventListener('click', async () => { await loadPeople(); RPICK = new Set(S.workers.filter((w) => w.globalId).map((w) => w.globalId)); $('cqRosterQ').value = ''; paintRoster(); sheetOpen($('cqRosterSheet'), $('cqRosterQ')); });
+    $('cqRosterOpen').addEventListener('click', async () => { await loadPeople(); $('cqRosterSheet').classList.toggle('is-tall', ((PEOPLE && PEOPLE.roster) || []).length > 6); RPICK = new Set(S.workers.filter((w) => w.globalId).map((w) => w.globalId)); $('cqRosterQ').value = ''; paintRoster(); sheetOpen($('cqRosterSheet'), $('cqRosterQ')); });
     $('cqRosterQ').addEventListener('input', paintRoster);
     $('cqRosterList').addEventListener('click', (e) => {
         const b = e.target.closest('[data-gw]');

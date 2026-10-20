@@ -259,18 +259,11 @@
     .lp-rec p { margin-top: .2rem; font-size: .78rem; line-height: 1.5; color: #3d5226; }
     .lp-rec .btn { margin-top: .55rem; min-height: 2.5rem; padding: .3rem .95rem; font-size: .84rem; }
     .lp-rec.is-wait b { color: #6b7280; font-weight: 700; }
-    .lp-stepper { display: flex; align-items: center; gap: .6rem; }
-    .lp-stepper button { width: 3rem; height: 3rem; border-radius: 1rem; font-size: 1.4rem; font-weight: 800; color: var(--lp-gd); background: var(--lp-gl); transition: transform .28s var(--lp-e), background-color .28s var(--lp-e); }
-    .lp-stepper button:active { transform: scale(.94); }
-    .lp-stepper output { min-width: 3.2rem; text-align: center; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-gray-900); }
-    .lp-stepper span { font-size: .86rem; font-weight: 700; color: var(--color-gray-500); }
     .lp-wks { display: grid; gap: .55rem; margin-top: .8rem; }
     .lp-wk { padding: .65rem .7rem; border-radius: 1rem; background: #fbfcfa; border: 1px solid var(--color-gray-200); animation: lpPop .28s var(--lp-e) both; min-width: 0; transition: opacity .2s var(--lp-e), transform .2s var(--lp-e); }
     .lp-wk.is-gone { opacity: 0; transform: scale(.97); }
     .lp-wk-top { display: flex; align-items: center; gap: .55rem; min-width: 0; }
     .lp-wk-top > i { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center; font-style: normal; font-size: .78rem; font-weight: 900; color: #fff; background: #6b9f3d; }
-    .lp-wk-top input { flex: 1; min-width: 0; min-height: 2.5rem; padding: .35rem .65rem; border-radius: .7rem; border: 1.5px solid #e1e7da; background: #fff; font-size: .95rem; font-weight: 700; color: #14210c; transition: border-color .28s var(--lp-e); }
-    .lp-wk-top input:focus { outline: none; border-color: #86b556; }
     .lp-wk-top small { flex: none; font-size: .74rem; font-weight: 800; color: var(--color-gray-500); }
     .lp-d7 { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .3rem; margin-top: .5rem; }
     .lp-d7 button { min-height: 2.35rem; border-radius: .7rem; font-size: .76rem; font-weight: 800; color: var(--color-gray-500); background: #fff; border: 1.5px solid #e3e8dc; transition: background-color .28s var(--lp-e), color .28s var(--lp-e), border-color .28s var(--lp-e), transform .2s var(--lp-e); }
@@ -290,7 +283,27 @@
     html.dark .lp-lcvars { border-color: #2b3a1c; }
 
     /* Pay, the roster and who is hired (2026-10-16, the owner). */
-    .lp-roster { margin-bottom: .8rem; }
+    .lp-roster { margin-bottom: .55rem; }
+    .lp-addw { display: flex; align-items: center; justify-content: center; gap: .45rem; width: 100%; min-height: 3.1rem; padding: .6rem 1rem; border-radius: 1.1rem; font-size: .9rem; font-weight: 800;
+        color: #3d6823; background: transparent; border: 1.5px dashed #b9d59a; transition: background-color .28s var(--lp-e), border-color .28s var(--lp-e); }
+    .lp-addw:hover { background: #f3f8ec; border-color: #86b556; }
+    .lp-addw svg { width: 1.05rem; height: 1.05rem; }
+    .lp-wcount { margin-top: .9rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-600); animation: lpPop .28s var(--lp-e) both; }
+    .lp-wk-name { flex: 1; min-width: 0; font-size: .95rem; font-weight: 800; color: #14210c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lp-wk-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; color: var(--color-gray-500); transition: background-color .28s var(--lp-e), color .28s var(--lp-e); }
+    .lp-wk-x:hover { background: #fee2e2; color: #b91c1c; }
+    .lp-wk-x svg { width: .85rem; height: .85rem; }
+    .lp-wk-from.is-plan { color: #6b7280; background: #f1f3ee; }
+    .lp-wadd-acts { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+    .lp-nw .form-input { width: 100%; }
+    .lp-nw .lp-label small { font-weight: 600; color: var(--color-gray-400); }
+    html.dark .lp-addw { color: #a5c97e; border-color: #3d5a26; }
+    html.dark .lp-addw:hover { background: #1c2914; }
+    html.dark .lp-wk-name { color: #e8efe1; }
+    html.dark .lp-wk-x:hover { background: #3b1414; color: #fca5a5; }
+    html.dark .lp-wk-from.is-plan { color: #a9b69c; background: #1c2616; }
+    html.dark .lp-wcount { color: #b7c2ad; }
+    @media (prefers-reduced-motion: reduce) { .lp-addw, .lp-wk-x { transition: none !important; } .lp-wcount { animation: none !important; } }
     .lp-wk.is-roster { border-color: #cfe3b8; background: #f7fbf2; }
     .lp-wk-from { display: inline-flex; align-items: center; gap: .25rem; margin: .4rem 0 0 2.55rem; padding: .1rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 800; color: var(--lp-gd); background: var(--lp-gl); }
     .lp-pay { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; margin-top: .5rem; min-width: 0; }
@@ -302,10 +315,6 @@
     .lp-unit2 { flex: none; display: inline-flex; gap: .15rem; padding: .2rem; border-radius: .8rem; background: #f1f5ec; max-width: 100%; flex-wrap: wrap; }
     .lp-unit2 button { min-height: 2.1rem; padding: 0 .65rem; border-radius: .6rem; font-size: .76rem; font-weight: 800; color: var(--color-gray-500); transition: background-color .28s var(--lp-e), color .28s var(--lp-e), box-shadow .28s var(--lp-e); }
     .lp-unit2 button.is-on { color: var(--lp-gd); background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .1); }
-    .lp-savenew { display: flex; align-items: flex-start; gap: .6rem; margin-top: .7rem; padding: .65rem .75rem; border-radius: .9rem; background: var(--lp-gx); border: 1px solid #e1edd3; cursor: pointer; animation: lpPop .28s var(--lp-e) both; }
-    .lp-savenew input { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .15rem; accent-color: #4a7c2a; }
-    .lp-savenew b { display: block; font-size: .84rem; font-weight: 800; color: var(--color-gray-900); }
-    .lp-savenew small { display: block; font-size: .74rem; line-height: 1.4; color: var(--color-gray-500); }
     .lp-hire { width: 100%; display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .32s var(--lp-e), opacity .28s var(--lp-e); }
     .lp-hire.is-closed { grid-template-rows: 0fr; opacity: 0; }
     .lp-hire > div { min-height: 0; overflow: hidden; }
@@ -371,8 +380,6 @@
     html.dark .lp-money input { color: #e8efe1; }
     html.dark .lp-unit2 { background: #1c2416; }
     html.dark .lp-unit2 button.is-on { color: #e8efe1; background: #2b3a1c; }
-    html.dark .lp-savenew { background: #18210f; border-color: #2b3a1c; }
-    html.dark .lp-savenew b { color: #e8efe1; }
     html.dark .lp-hire-in { background: #2a2010; border-color: #5c4413; }
     html.dark .lp-hire-h, html.dark .lp-hire-h small, html.dark .lp-hire-note { color: #fcd34d; }
     html.dark .lp-hpick, html.dark .lp-hchip { color: #fcd34d; background: #1a1408; border-color: #5c4413; }
@@ -392,7 +399,7 @@
     html.dark .lp-cast-row .is-ok { color: #cfe6b8; background: #22301a; }
     html.dark .lp-cast-row .is-late { color: #fca5a5; background: #3a1414; }
     html.dark .lp-cast-row .is-moved { color: #d8ccfb; background: #2a1f45; }
-    @media (prefers-reduced-motion: reduce) { .lp-hire, .lp-hchip, .lp-savenew, .lp-dlot, .lp-dauto, .lp-cast, .lp-cast-c, .lp-cast-row { transition: none !important; animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .lp-hire, .lp-hchip, .lp-dlot, .lp-dauto, .lp-cast, .lp-cast-c, .lp-cast-row { transition: none !important; animation: none !important; } }
 
     /* The lot pages host the shared field profile. */
     .lp-fqhost { min-height: 10rem; }
@@ -904,7 +911,7 @@
 
     /* Night. */
     html.dark .lp-tabs, html.dark .lp-wiz, html.dark .lp-c, html.dark .lp-card, html.dark .lp-s, html.dark .lp-find, html.dark .lp-empty, html.dark .lp-eq { background: #151b12; border-color: #2b3a1c; }
-    html.dark .lp-q, html.dark .lp-choice .ct b, html.dark .lp-c > h3, html.dark .lp-card-t b, html.dark .lp-sb > b, html.dark .lp-rev .rt b, html.dark .lp-lothead b, html.dark .lp-empty b, html.dark .lp-eq .et b, html.dark .lp-job .jt b, html.dark .lp-tlh b, html.dark .lp-stepper output, html.dark .lp-ct output { color: #e8efe1; }
+    html.dark .lp-q, html.dark .lp-choice .ct b, html.dark .lp-c > h3, html.dark .lp-card-t b, html.dark .lp-sb > b, html.dark .lp-rev .rt b, html.dark .lp-lothead b, html.dark .lp-empty b, html.dark .lp-eq .et b, html.dark .lp-job .jt b, html.dark .lp-tlh b, html.dark .lp-ct output { color: #e8efe1; }
     html.dark .lp-choice, html.dark .lp-chipb, html.dark .lp-rev button, html.dark .lp-lotpick button { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .lp-choice.is-on { background: #22301a; border-color: #6b9f3d; }
     html.dark .lp-choice .ce, html.dark .lp-hour, html.dark .lp-an div, html.dark .lp-dbox, html.dark .lp-cc, html.dark .lp-fd, html.dark .lp-note, html.dark .lp-card-meta span, html.dark .lp-ans span, html.dark .lp-swhen div, html.dark .lp-crew-chip { background: #1c2416; border-color: #2b3a1c; color: #d5e3c5; }
@@ -913,6 +920,7 @@
     html.dark .lp-lot-top b, html.dark .lp-field > label, html.dark .lp-field > span.lp-fl, html.dark .lp-label { color: #d5e3c5; }
     html.dark .lp-chipb.is-on, html.dark .lp-d7 button.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     html.dark .lp-tag { background: #1c2616; border-color: #2b3a1c; color: #e8efe1; }
+    html.dark .lp-tag:hover:not(:disabled) { background: #22301a; border-color: #4a6b2c; }
     html.dark .lp-tag .ti, html.dark .lp-an div > span:first-child, html.dark .lp-hour > span, html.dark .lp-job > span:first-child { background: #151b12; border-color: #2b3a1c; }
     html.dark .lp-tag .tc, html.dark .lp-unit, html.dark .lp-same button, html.dark .lp-loc { background: #2b3a1c; border-color: #3d5228; color: #d5e3c5; }
     html.dark .lp-quote { background: linear-gradient(115deg, #1c2913, #22301a); border-color: #2b3a1c; color: #cfe6b8; }
@@ -936,7 +944,6 @@
     html.dark .lp-rec { background: linear-gradient(120deg, #1a2414, #1f2c17); border-color: #2b3a1c; }
     html.dark .lp-rec b { color: #e8efe1; }
     html.dark .lp-rec p { color: #b7c2ad; }
-    html.dark .lp-wk-top input { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
     html.dark .lp-d7 button { background: #151b12; border-color: #2b3a1c; color: #93a684; }
     html.dark .lp-view { background: #0d110a; }
     html.dark .lp-vbar { background: rgb(13 17 10 / .92); border-color: #2b3a1c; }
@@ -986,7 +993,6 @@
     html.dark .lp-tg.is-irri { background: #0c2231; color: #bae6fd; }
     html.dark .lp-tg.is-squeezed { background: #3a1f0a; color: #fdba74; }
     html.dark .lp-tg.is-extension, html.dark .lp-tg.is-reason, html.dark .lp-badge.is-none, html.dark .lp-lotchip { background: #1c2416; color: #b7c2ad; }
-    html.dark .lp-stepper button { background: #22301a; color: #cfe6b8; }
     html.dark .lp-rev button:hover, html.dark .lp-job:hover { background: #1c2616; }
     html.dark .lp-lothead > i { background: color-mix(in srgb, var(--lc) 22%, #151b12); }
     html.dark .lp-quote.is-off { background: #2a1a0a; border-color: #4d2f0d; color: #fdba74; }
@@ -1037,7 +1043,7 @@
                 <div id="lpPlantCrop">
                     @include('public.site.partials.crop-pick', ['id' => 'lpCropSheet', 'crops' => $lpCrops, 'current' => 'rice', 'title' => 'Which crop?', 'noun' => null])
                 </div>
-                <span class="lp-label" id="lpMethodQ" data-tl="planting-method">How will you plant it?</span>
+                <span class="lp-label" id="lpMethodQ">How will you plant it?</span>
                 <p class="lp-sub lp-sub-s" id="lpMethodSub">Each way has its own schedule.</p>
                 <div class="lp-choices" id="lpMethods"></div>
                 <p class="lp-ferr" id="lpMethodErr" hidden>Pick how it goes in.</p>
@@ -1051,8 +1057,8 @@
                 <div id="lpSeedType" hidden>
                     <span class="lp-label">Is the seed inbred or hybrid?</span>
                     <div class="lp-chips" id="lpSeedTypes">
-                        <button type="button" class="lp-chipb" data-type="inbred">Inbred{{ \App\Support\Tagalog::flag('inbred') }}</button>
-                        <button type="button" class="lp-chipb" data-type="hybrid">Hybrid{{ \App\Support\Tagalog::flag('hybrid') }}</button>
+                        <button type="button" class="lp-chipb" data-type="inbred">Inbred</button>
+                        <button type="button" class="lp-chipb" data-type="hybrid">Hybrid</button>
                         <button type="button" class="lp-chipb" data-type="">Not sure</button>
                     </div>
                 </div>
@@ -1062,7 +1068,7 @@
             {{-- Where the seed is from (rice) --}}
             <section class="lp-step" data-screen="seed">
                 <p class="lp-q" id="lpSeedQ">Where is your seed from?</p>
-                <p class="lp-sub" id="lpSeedWhy" data-tl="germination-test"></p>
+                <p class="lp-sub" id="lpSeedWhy"></p>
                 <div class="lp-choices" id="lpSeedSrc"></div>
             </section>
 
@@ -1112,20 +1118,16 @@
             {{-- The workers --}}
             <section class="lp-step" data-screen="workers">
                 <p class="lp-q">Who will do the work?{{ \App\Support\Tagalog::flag('crew') }}</p>
-                <p class="lp-sub">Each worker keeps their own days and pay. Anee gives each day only the hands that work it, and adds up what the work costs.</p>
+                <p class="lp-sub">Pick them from My workers, or add new ones. Each keeps their own days and pay. Anee gives each day only the hands that work it, and adds up what the work costs.</p>
                 <div id="lpRec"></div>
-                {{-- The farm's own workers (Global Workers): picked, they bring their days off and pay (2026-10-16, the owner). --}}
+                {{-- No crew is set for you (2026-10-21, the owner): the farm's own workers (Global Workers) are
+                     picked, and a new one is added to My workers too; each brings their days off and pay. --}}
                 <button type="button" class="lp-tag lp-roster" id="lpRosterOpen" hidden><span class="ti" aria-hidden="true">👥</span><span class="tt"><b>Pick from My workers</b><small id="lpRosterLine">Your workers from every season</small></span><span class="tc">Pick{!! $chev !!}</span></button>
-                <div class="lp-stepper">
-                    <button type="button" data-wstep="-1" aria-label="One worker less">−</button>
-                    <output id="lpWCount">2</output>
-                    <button type="button" data-wstep="1" aria-label="One worker more">+</button>
-                    <span id="lpWWord">workers</span>
-                </div>
+                <button type="button" class="lp-addw" id="lpWNew"><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>Add a new worker</button>
+                <p class="lp-wcount" id="lpWCount" hidden></p>
                 <div class="lp-wks" id="lpWorkers"></div>
-                <div class="lp-same" id="lpSameDays"><button type="button" data-same="days">Same days for all</button><button type="button" data-same="pay">Same pay for all</button></div>
-                <label class="lp-savenew" id="lpSaveNew" hidden><input type="checkbox" id="lpSaveNewOn" checked><span><b>Add the new names to My workers</b><small>Next season you pick them instead of typing them again.</small></span></label>
-                <p class="lp-ferr" id="lpWErr" hidden>Give at least one worker a work day.</p>
+                <div class="lp-same" id="lpSameDays" hidden><button type="button" data-same="days">Same days for all</button><button type="button" data-same="pay">Same pay for all</button></div>
+                <p class="lp-ferr" id="lpWErr" hidden>Pick or add at least one worker, with a work day.</p>
                 {{-- Will every lot be ready on its day with this crew? The days themselves are set on the
                      planting day step (2026-10-16, the owner), so this only warns. --}}
                 <div class="lp-cast" id="lpCast" aria-live="polite"></div>
@@ -1222,8 +1224,8 @@
             <div id="lpVarNewType">
                 <span class="lp-label">Is it hybrid or inbred?</span>
                 <div class="lp-chips" id="lpVarNewTypes">
-                    <button type="button" class="lp-chipb" data-ntype="hybrid">Hybrid{{ \App\Support\Tagalog::flag('hybrid') }}</button>
-                    <button type="button" class="lp-chipb" data-ntype="inbred">Inbred{{ \App\Support\Tagalog::flag('inbred') }}</button>
+                    <button type="button" class="lp-chipb" data-ntype="hybrid">Hybrid</button>
+                    <button type="button" class="lp-chipb" data-ntype="inbred">Inbred</button>
                     <button type="button" class="lp-chipb is-on" data-ntype="">Not sure</button>
                 </div>
             </div>
@@ -1299,7 +1301,7 @@
 </dialog>
 
 {{-- My workers (Global Workers): tick who works on this plan. --}}
-<dialog class="lp-sheet is-tall" id="lpRosterSheet" aria-labelledby="lpRosterTitle">
+<dialog class="lp-sheet" id="lpRosterSheet" aria-labelledby="lpRosterTitle">
     <div class="lp-sbox" tabindex="-1">
         <div class="lp-grip" aria-hidden="true"></div>
         <div class="lp-shead"><h2 id="lpRosterTitle">My workers<small>Tick who will work. They bring their days off and their pay.</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
@@ -1358,8 +1360,29 @@
 </dialog>
 
 
+{{-- A new worker: their name, days and pay; kept in My workers too when the plan allows (2026-10-21, the owner). --}}
+<dialog class="lp-sheet" id="lpNewWSheet" aria-labelledby="lpNewWTitle">
+    <div class="lp-sbox" tabindex="-1">
+        <div class="lp-grip" aria-hidden="true"></div>
+        <div class="lp-shead"><h2 id="lpNewWTitle">A new worker<small id="lpNewWSub">Kept in My workers too, for your next plans and seasons.</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <div class="lp-sbody lp-nw">
+            <label class="lp-label" for="lpNwName">Name</label>
+            <input type="text" id="lpNwName" class="form-input" maxlength="40" autocomplete="off">
+            <label class="lp-label" for="lpNwPhone">Phone <small>(optional)</small></label>
+            <input type="text" id="lpNwPhone" class="form-input" inputmode="tel" maxlength="32" autocomplete="off">
+            <span class="lp-label">Work days</span>
+            <div class="lp-d7" id="lpNwDays" role="group" aria-label="Work days"></div>
+            <span class="lp-label">Pay <small>(optional)</small></span>
+            <div class="lp-pay"><label class="lp-money"><em id="lpNwCur"></em><input type="text" inputmode="decimal" id="lpNwPay" placeholder="0" aria-label="Pay"></label>
+                <div class="lp-unit2" id="lpNwUnit" role="group" aria-label="The pay is for"><button type="button" data-nwu="day" class="is-on" aria-pressed="true">a day</button><button type="button" data-nwu="half" aria-pressed="false">half a day</button></div></div>
+            <p class="lp-ferr" id="lpNwErr" hidden></p>
+        </div>
+        <div class="lp-sfoot"><span class="lp-pickline"></span><button type="button" class="btn btn-white" data-close>Cancel</button><button type="button" class="btn btn-primary" id="lpNwSave">Add the worker</button></div>
+    </div>
+</dialog>
+
 {{-- The farm's lots (Global Lots): tick the lots to prepare, or add a new one. --}}
-<dialog class="lp-sheet is-tall" id="lpFarmSheet" aria-labelledby="lpFarmTitle">
+<dialog class="lp-sheet" id="lpFarmSheet" aria-labelledby="lpFarmTitle">
     <div class="lp-sbox" tabindex="-1">
         <div class="lp-grip" aria-hidden="true"></div>
         <div class="lp-shead"><h2 id="lpFarmTitle">Your lots<small>Tick the lots to prepare. Their place, size and answers come along.</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
@@ -1456,7 +1479,7 @@
         job: (id) => @json(url('/app/land-prep/job')) + '/' + id, one: (id) => @json(url('/app/land-prep/one')) + '/' + id, del: (id) => @json(url('/app/land-prep')) + '/' + id,
         ph: @json(asset('data/ph-locations.json')),
         lots: @json(route('farmlots.index')), lotIcon: @json(asset('images/treasure-map.png')),
-        people: @json(route('landprep.people')),
+        people: @json(route('landprep.people')), workerSave: @json(route('workers.global.store')),
     };
     const TODAY = @json($today);
     const CROPS = @json($lpCropJs);
@@ -1467,13 +1490,13 @@
     const XSM = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>';
     const PLUS = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
     /* Tagalog help flags (partials/tagalog-flags): tlf is a flag for a spot inside a line,
-       tlAt the data-tl attribute for a whole label. Methods and machines by key. */
+       tlAt the data-tl attribute for a whole label. Machines by key; the planting methods
+       carry none (2026-10-21, the owner: they explain themselves). */
     const tlf = (key) => (key && window.aneeTl ? window.aneeTl.flag(key) : '');
     const tlAt = (key) => (key ? ' data-tl="' + esc(key) + '"' : '');
-    const METH_TL = { tpr_manual: 'transplanting', transplant: 'transplanting', tpr_mechanical: 'mechanical-transplanting', dsr_wet_broadcast: 'wet-seeding', dsr_wet_drum: 'drum-seeder',
-        dsr_dry: 'dry-seeding', direct: 'direct-seeding', setts: 'cane-setts', suckers: 'suckers', tissue: 'tissue-culture', grafted: 'grafted-seedlings' };
-    const EQ_TL = { hand_tractor: 'hand-tractor', tractor_rotavator: 'rotavating', tractor_disc: 'disc-plow', carabao_plow: 'plowing', carabao_harrow: 'harrowing',
-        pagulong: 'puddling', leveling_board: 'leveling', drum_seeder: 'drum-seeder', transplanter: 'mechanical-transplanting' };
+    // The machines' own words (2026-10-21, the owner): what each machine or animal is, never what it is for.
+    const EQ_TL = { hand_tractor: 'eq-hand-tractor', tractor_rotavator: 'eq-tractor-rotavator', tractor_disc: 'eq-tractor-disc', carabao_plow: 'eq-carabao-plow',
+        carabao_harrow: 'eq-carabao-harrow', pagulong: 'eq-pagulong', leveling_board: 'eq-leveling-board', drum_seeder: 'eq-drum-seeder', transplanter: 'eq-transplanter' };
 
     /* ---- dates, as Y-m-d strings and whole days ---- */
     const dn = (s) => { const [y, m, d] = String(s).split('-').map(Number); return Date.UTC(y, m - 1, d) / 864e5; };
@@ -1557,10 +1580,12 @@
         try { PEOPLE = (await window.api(U.people)).data; } catch (_) { PEOPLE = { roster: [], contacts: [], canSave: false }; }
         return PEOPLE;
     };
+    // New names join My workers when the plan allows (LandPrepController::rememberWorkers, the fallback
+    // for a worker the new worker sheet could not save at once).
     S.saveNew = true;
     const clone = (o) => JSON.parse(JSON.stringify(o || {}));
-    // The plan starts with no lot: they come from the farm's lots, or from a season.
-    S.workers.push(newWorker(), newWorker());
+    // The plan starts with no lot and no worker: lots come from the farm's lots or a season, workers
+    // from My workers or the new worker sheet (2026-10-21, the owner: no default crew).
 
     /* ---- the farm's lots in the plan ---- */
     const isRiceCrop = () => String(S.crop || '').startsWith('rice');
@@ -1839,8 +1864,8 @@
         $('lpMethodSub').textContent = keys.length === 1 ? (CROPS[S.crop] ? CROPS[S.crop].en : 'This crop') + ' goes in one way. The plan follows it.' : 'Each way has its own schedule.';
         $('lpMethods').innerHTML = keys.map((k, i) => {
             const m = ms[k], f = rice() ? (OPT.riceFacts[k] || {}) : {};
-            return '<button type="button" class="lp-choice' + (S.method === k ? ' is-on' : '') + '" data-method="' + esc(k) + '"><span class="ce">' + esc(m[2]) + '</span><span class="ct"><b' + tlAt(METH_TL[k]) + '>' + esc(m[0]) + '</b><small>' + esc(m[1]) + '</small>'
-                + (f.rate ? '<em' + (i === 0 ? tlAt('seeding-rate') : '') + '>' + esc(f.rate.split('.')[0]) + '</em>' : '') + '</span><span class="ck">' + CHECK + '</span></button>';
+            return '<button type="button" class="lp-choice' + (S.method === k ? ' is-on' : '') + '" data-method="' + esc(k) + '"><span class="ce">' + esc(m[2]) + '</span><span class="ct"><b>' + esc(m[0]) + '</b><small>' + esc(m[1]) + '</small>'
+                + (f.rate ? '<em>' + esc(f.rate.split('.')[0]) + '</em>' : '') + '</span><span class="ck">' + CHECK + '</span></button>';
         }).join('');
     }
     $('lpMethods').addEventListener('click', (e) => {
@@ -2270,14 +2295,13 @@
             total(); paintLotPlace(); paintCount();
             return;
         }
-        const haAt = S.lots.findIndex((x) => x.unit === 'ha');     // the hectare flag, on the first lot in hectares
         $('lpLots').innerHTML = S.lots.map((l, i) => '<div class="lp-lot" data-uid="' + l.uid + '" style="--lc:' + lc(i) + ';animation-delay:' + (i * 40) + 'ms">'
             + '<div class="lp-lot-top"><i></i><b>Lot ' + (i + 1) + '</b>' + (l.from ? '<em>from ' + esc(l.from) + '</em>' : (l.farmLotId ? '<em>from your lots</em>' : '')) + '</div>'
             + '<button type="button" class="lp-lot-x" data-lot-x="' + l.uid + '" aria-label="Remove lot ' + (i + 1) + '">' + XSM + '</button>'
             + (l.farmLotId ? farmHead(l)
                 : '<div class="lp-field" data-f="name"><label for="lpLn' + l.uid + '">Name of the lot <small>(optional)</small></label><input type="text" id="lpLn' + l.uid + '" class="form-input" data-in="name" maxlength="60" value="' + esc(l.name) + '" autocomplete="off"></div>')
             + '<div class="lp-field" data-f="area"><label for="lpLa' + l.uid + '">Size</label><div class="lp-size"><input type="text" id="lpLa' + l.uid + '" class="form-input" data-in="area" inputmode="decimal" maxlength="10" value="' + esc(l.area) + '" autocomplete="off">'
-            + '<button type="button" class="lp-unit" data-unit="' + l.uid + '" aria-haspopup="dialog" aria-label="Unit: ' + esc(UNITS[l.unit][0]) + '">' + esc(UNITS[l.unit][1]) + (i === haAt ? tlf('hectare') : '') + CHEV + '</button></div>'
+            + '<button type="button" class="lp-unit" data-unit="' + l.uid + '" aria-haspopup="dialog" aria-label="Unit: ' + esc(UNITS[l.unit][0]) + '">' + esc(UNITS[l.unit][1]) + CHEV + '</button></div>'
             + '<p class="lp-size-eq" data-eq>' + eqWords(l) + '</p><p class="lp-ferr" data-err hidden></p></div>'
             + '</div>').join('');
         total();
@@ -2627,33 +2651,35 @@
     const DAYN = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     const daysWord = (d) => (d.length === 7 ? 'every day' : d.length === 0 ? 'no days' : d.length + (d.length === 1 ? ' day' : ' days'));
     function paintWorkers() {
-        $('lpWCount').textContent = S.workers.length;
-        $('lpWWord').textContent = S.workers.length === 1 ? 'worker' : 'workers';
-        $('lpWorkers').innerHTML = S.workers.map((w, i) => '<div class="lp-wk' + (w.globalId ? ' is-roster' : '') + '" data-w="' + w.uid + '" style="animation-delay:' + Math.min(i, 8) * 30 + 'ms"><div class="lp-wk-top"><i>' + (i + 1) + '</i><input type="text" data-wname maxlength="40" value="' + esc(w.name) + '" placeholder="Name (optional)" aria-label="Name of worker ' + (i + 1) + '"><small data-wdays>' + daysWord(w.days) + '</small></div>'
-            + (w.globalId ? '<span class="lp-wk-from">👥 From My workers</span>' : '')
-            + '<div class="lp-d7" role="group" aria-label="Work days of worker ' + (i + 1) + '">' + DAYN.map((n, d) => '<button type="button" data-wd="' + d + '" class="' + (w.days.includes(d) ? 'is-on' : '') + '" aria-pressed="' + w.days.includes(d) + '">' + n + '</button>').join('') + '</div>'
+        const n = S.workers.length;
+        $('lpWCount').hidden = !n;
+        $('lpWCount').textContent = n + (n === 1 ? ' worker' : ' workers') + ' in this plan';
+        $('lpWorkers').innerHTML = S.workers.map((w, i) => '<div class="lp-wk' + (w.globalId ? ' is-roster' : '') + '" data-w="' + w.uid + '" style="animation-delay:' + Math.min(i, 8) * 30 + 'ms"><div class="lp-wk-top"><i>' + (i + 1) + '</i><b class="lp-wk-name">' + esc(w.name || 'Worker ' + (i + 1)) + '</b><small data-wdays>' + daysWord(w.days) + '</small>'
+            + '<button type="button" class="lp-wk-x" data-wx="' + w.uid + '" aria-label="Take ' + esc(w.name || 'worker ' + (i + 1)) + ' off this plan">' + XSM + '</button></div>'
+            + (w.globalId ? '<span class="lp-wk-from">👥 From My workers</span>' : (w.name ? '<span class="lp-wk-from is-plan">In this plan only</span>' : ''))
+            + '<div class="lp-d7" role="group" aria-label="Work days of worker ' + (i + 1) + '">' + DAYN.map((nm, d) => '<button type="button" data-wd="' + d + '" class="' + (w.days.includes(d) ? 'is-on' : '') + '" aria-pressed="' + w.days.includes(d) + '">' + nm + '</button>').join('') + '</div>'
             + '<div class="lp-pay"><span>Pay</span><label class="lp-money"><em>' + esc(CUR) + '</em><input type="text" inputmode="decimal" data-wpay value="' + esc(w.pay || '') + '" placeholder="0" aria-label="Pay of worker ' + (i + 1) + '"></label>'
             + '<div class="lp-unit2" role="group" aria-label="The pay is for">' + [['day', 'a day'], ['half', 'half a day']].map(([u, t]) => '<button type="button" data-wunit="' + u + '" class="' + (w.payUnit === u ? 'is-on' : '') + '" aria-pressed="' + (w.payUnit === u) + '">' + t + '</button>').join('') + '</div></div></div>').join('');
-        $('lpSameDays').hidden = S.workers.length < 2;
-        paintSaveNew();
+        $('lpSameDays').hidden = n < 2;
         castSoon();
     }
-    // New names may join the roster (the Workers module's plan gate decides, LandPrepController::people).
-    const paintSaveNew = () => {
-        const box = $('lpSaveNew');
-        const any = !!(PEOPLE && PEOPLE.canSave) && S.workers.some((w) => !w.globalId && w.name.trim());
-        if (box.hidden === !any) return;
-        box.hidden = !any;
-    };
     function paintRosterBtn() {
-        const r = (PEOPLE && PEOPLE.roster) || [];
+        const P = PEOPLE || {}, r = P.roster || [];
         const b = $('lpRosterOpen');
-        b.hidden = !r.length;
+        // Only the farm owner has My workers; a worker signed in to the farm adds new names to the plan.
+        b.hidden = !P.owner;
+        b.disabled = !r.length;
         const inPlan = S.workers.filter((w) => w.globalId).length;
-        $('lpRosterLine').textContent = r.length + (r.length === 1 ? ' worker' : ' workers') + ' on your list' + (inPlan ? ', ' + inPlan + ' in this plan' : '') + '. They bring their days off and pay.';
-        paintSaveNew();
+        $('lpRosterLine').textContent = r.length ? r.length + (r.length === 1 ? ' worker' : ' workers') + ' on your list' + (inPlan ? ', ' + inPlan + ' in this plan' : '') + '. They bring their days off and pay.'
+            : 'Nobody on your list yet. Add a new worker below.';
     }
-    $('lpSaveNewOn').addEventListener('change', (e) => { S.saveNew = e.target.checked; });
+    // The two ways to grow the crew, for the crew advice and the forecast.
+    const wAddBtns = () => {
+        const P = PEOPLE || {}, inPlan = new Set(S.workers.map((w) => w.globalId).filter(Boolean));
+        const more = (P.roster || []).some((g) => !inPlan.has(g.id));
+        return '<div class="lp-wadd-acts">' + (P.owner && more ? '<button type="button" class="btn btn-primary" data-wpick>Pick from My workers</button>' : '')
+            + '<button type="button" class="btn btn-white" data-wnew>Add a new worker</button></div>';
+    };
 
     /* My workers: tick who works; picked, a worker brings their days off and pay. */
     let RPICK = new Set();
@@ -2666,13 +2692,16 @@
             : '<p class="lp-snone">Nobody by that name.</p>';
         $('lpRosterCount').textContent = RPICK.size ? RPICK.size + ' ticked' : 'None ticked';
     }
-    $('lpRosterOpen').addEventListener('click', async () => {
+    async function openRoster() {
         await loadPeople();
         RPICK = new Set(S.workers.filter((w) => w.globalId).map((w) => w.globalId));
         $('lpRosterQ').value = '';
+        // A short list fits its sheet; a long one gets the tall sheet, so the search does not resize it.
+        $('lpRosterSheet').classList.toggle('is-tall', ((PEOPLE && PEOPLE.roster) || []).length > 6);
         paintRoster();
         sheetOpen($('lpRosterSheet'), $('lpRosterQ'));
-    });
+    }
+    $('lpRosterOpen').addEventListener('click', openRoster);
     $('lpRosterQ').addEventListener('input', paintRoster);
     $('lpRosterList').addEventListener('click', (e) => {
         const b = e.target.closest('[data-gw]');
@@ -2683,33 +2712,107 @@
         b.setAttribute('aria-selected', String(RPICK.has(id)));
         $('lpRosterCount').textContent = RPICK.size ? RPICK.size + ' ticked' : 'None ticked';
     });
+    // A roster person as a worker of this plan: their days off and their pay.
+    const fromRoster = (g) => ({ name: g.name, days: (g.off || []).length ? [0, 1, 2, 3, 4, 5, 6].filter((d) => !(g.off || []).includes(d)) : [1, 2, 3, 4, 5, 6], globalId: g.id, pay: g.halfDay > 0 ? String(g.halfDay) : '', payUnit: 'half' });
     $('lpRosterUse').addEventListener('click', () => {
         const roster = (PEOPLE && PEOPLE.roster) || [];
-        // Unticked ones leave, ticked ones fill the empty cards first, then come as new cards.
+        // Unticked ones leave, ticked ones come as new cards.
         S.workers = S.workers.filter((w) => !w.globalId || RPICK.has(w.globalId));
         const have = new Set(S.workers.map((w) => w.globalId).filter(Boolean));
         let added = 0;
         roster.filter((g) => RPICK.has(g.id) && !have.has(g.id)).forEach((g) => {
-            const days = [0, 1, 2, 3, 4, 5, 6].filter((d) => !(g.off || []).includes(d));
-            const facts = { name: g.name, days: (g.off || []).length ? days : [1, 2, 3, 4, 5, 6], globalId: g.id, pay: g.halfDay > 0 ? String(g.halfDay) : '', payUnit: 'half' };
-            const empty = S.workers.find((w) => !w.globalId && !w.name.trim() && !num(w.pay));
-            if (empty) Object.assign(empty, facts); else if (S.workers.length < 100) S.workers.push(newWorker(facts));
-            added++;
+            if (S.workers.length < 100) { S.workers.push(newWorker(fromRoster(g))); added++; }
         });
-        if (!S.workers.length) S.workers.push(newWorker());
         sheetClose($('lpRosterSheet'));
         paintWorkers();
         paintRosterBtn();
         if (S.workers.some((x) => x.days.length)) $('lpWErr').hidden = true;
         if (added) window.toast?.(added + (added === 1 ? ' worker' : ' workers') + ' from My workers. Check their days and pay below.');
     });
-    const setWorkers = (n) => {
-        n = Math.max(1, Math.min(100, Math.round(n) || 1));
-        while (S.workers.length < n) S.workers.push(newWorker({ days: (S.workers[S.workers.length - 1] || {}).days ? S.workers[S.workers.length - 1].days.slice() : [1, 2, 3, 4, 5, 6] }));
-        if (S.workers.length > n) S.workers = S.workers.slice(0, n);
+
+    /* A new worker (2026-10-21, the owner): saved to My workers at once when the plan has them,
+       else kept in this plan; a name already on the roster brings that person instead. */
+    const NW = { days: [1, 2, 3, 4, 5, 6], unit: 'day' };
+    function paintNw() {
+        $('lpNwDays').innerHTML = DAYN.map((nm, d) => '<button type="button" data-nwd="' + d + '" class="' + (NW.days.includes(d) ? 'is-on' : '') + '" aria-pressed="' + NW.days.includes(d) + '">' + nm + '</button>').join('');
+        $('lpNwUnit').querySelectorAll('[data-nwu]').forEach((b) => { const on = b.dataset.nwu === NW.unit; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
+    }
+    async function openNewWorker() {
+        NW.days = [1, 2, 3, 4, 5, 6]; NW.unit = 'day';
+        $('lpNwName').value = ''; $('lpNwPhone').value = ''; $('lpNwPay').value = '';
+        $('lpNwCur').textContent = CUR;
+        $('lpNwErr').hidden = true;
+        $('lpNwSave').disabled = false;
+        paintNw();
+        const P = await loadPeople();
+        $('lpNewWSub').textContent = P.canSave ? 'Kept in My workers too, for your next plans and seasons.'
+            : (P.owner && P.savePlan ? 'Kept in this plan. My workers come with ' + P.savePlan + '.' : 'Kept in this plan.');
+        sheetOpen($('lpNewWSheet'), $('lpNwName'));
+    }
+    $('lpWNew').addEventListener('click', openNewWorker);
+    $('lpNwDays').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-nwd]');
+        if (!b) return;
+        const d = Number(b.dataset.nwd);
+        NW.days = NW.days.includes(d) ? NW.days.filter((x) => x !== d) : NW.days.concat(d).sort();
+        b.classList.toggle('is-on', NW.days.includes(d));
+        b.setAttribute('aria-pressed', String(NW.days.includes(d)));
+    });
+    $('lpNwUnit').addEventListener('click', (e) => { const b = e.target.closest('[data-nwu]'); if (b) { NW.unit = b.dataset.nwu; paintNw(); } });
+    $('lpNwPay').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/[^\d.,]/g, ''); });
+    $('lpNwSave').addEventListener('click', async () => {
+        const err = (m, el) => { $('lpNwErr').textContent = m; $('lpNwErr').hidden = false; if (el) el.focus(); };
+        const name = $('lpNwName').value.trim().replace(/\s+/g, ' ');
+        if (!name) { err('Type the worker\'s name.', $('lpNwName')); return; }
+        if (!NW.days.length) { err('Pick at least one work day.'); return; }
+        if (S.workers.some((w) => w.name.trim().toLowerCase() === name.toLowerCase())) { err(name + ' is already in this plan.', $('lpNwName')); return; }
+        if (S.workers.length >= 100) { err('Up to 100 workers in one plan.'); return; }
+        const pay = num($('lpNwPay').value), phone = $('lpNwPhone').value.trim();
+        let facts = { name, days: NW.days.slice(), pay: pay > 0 ? String(pay) : '', payUnit: NW.unit, globalId: null };
+        const P = await loadPeople();
+        let said = name + ' is in this plan.';
+        if (P.canSave) {
+            const btn = $('lpNwSave');
+            btn.disabled = true;
+            try {
+                const half = pay > 0 ? Math.round((NW.unit === 'half' ? pay : pay / 2) * 100) / 100 : 0;
+                const g = (await window.api(U.workerSave, { method: 'POST', body: { workerName: name, phone: phone || null, costPerHalfDay: half,
+                    offWeekdays: [0, 1, 2, 3, 4, 5, 6].filter((d) => !NW.days.includes(d)), notes: 'Added from the Land Prep Planner.' } })).data;
+                facts.globalId = g.id;
+                (P.roster = P.roster || []).push({ id: g.id, name: g.workerName, phone: g.phone || '', halfDay: Number(g.costPerHalfDay) || 0, off: g.offWeekdays || [] });
+                P.roster.sort((a, b) => a.name.localeCompare(b.name));
+                said = name + ' is in this plan and in My workers.';
+            } catch (e) {
+                // The same name is already on the roster: that person comes, with their own days and pay.
+                const twin = (P.roster || []).find((g) => g.name.trim().toLowerCase() === name.toLowerCase());
+                if (!twin) { btn.disabled = false; err((e && e.message) || 'The worker could not be saved. Please try again.'); return; }
+                if (S.workers.some((w) => w.globalId === twin.id)) { btn.disabled = false; err(twin.name + ' is already in this plan.', $('lpNwName')); return; }
+                facts = fromRoster(twin);
+                said = twin.name + ' was already in My workers, with their own days and pay.';
+            }
+        }
+        S.workers.push(newWorker(facts));
+        sheetClose($('lpNewWSheet'));
         paintWorkers();
-    };
-    document.querySelectorAll('[data-wstep]').forEach((b) => b.addEventListener('click', () => setWorkers(S.workers.length + Number(b.dataset.wstep))));
+        paintRosterBtn();
+        $('lpWErr').hidden = true;
+        window.toast?.(said);
+    });
+    // Take one off the plan (a roster person stays in My workers).
+    $('lpWorkers').addEventListener('click', (e) => {
+        const x = e.target.closest('[data-wx]');
+        if (!x) return;
+        const card = x.closest('.lp-wk');
+        const gone = () => { S.workers = S.workers.filter((w) => String(w.uid) !== x.dataset.wx); paintWorkers(); paintRosterBtn(); };
+        if (reduce()) { gone(); return; }
+        card.classList.add('is-gone');
+        setTimeout(gone, 200);
+    });
+    // The crew advice and the forecast offer the same two ways in.
+    document.querySelector('.lp-step[data-screen="workers"]').addEventListener('click', (e) => {
+        if (e.target.closest('[data-wpick]')) openRoster();
+        else if (e.target.closest('[data-wnew]')) openNewWorker();
+    });
     $('lpWorkers').addEventListener('click', (e) => {
         const b = e.target.closest('[data-wd]');
         if (!b) return;
@@ -2725,7 +2828,6 @@
         const card = e.target.closest('.lp-wk');
         const w = card && S.workers.find((x) => String(x.uid) === card.dataset.w);
         if (!w) return;
-        if (e.target.closest('[data-wname]')) { w.name = e.target.value; paintSaveNew(); }
         if (e.target.closest('[data-wpay]')) w.pay = e.target.value.replace(/[^\d.,]/g, '');
     });
     $('lpWorkers').addEventListener('click', (e) => {
@@ -2766,9 +2868,8 @@
             return;
         }
         box.innerHTML = '<div class="lp-rec">' + face + '<div><b>' + (r.workers ? 'Recommended: about ' + r.workers + (r.workers === 1 ? ' worker' : ' workers') : 'This needs more than a crew') + '</b><p>' + esc(r.reason) + (timed ? ' That gets every lot ready on the first lot\'s day. With fewer, Anee spaces the lots further apart.' : '') + '</p>'
-            + (r.workers && r.workers !== S.workers.length ? '<button type="button" class="btn btn-primary" data-userec="' + r.workers + '">Use ' + r.workers + (r.workers === 1 ? ' worker' : ' workers') + '</button>' : '') + '</div></div>';
+            + (r.workers && r.workers > S.workers.length ? '<p>' + esc(S.workers.length ? 'You have ' + S.workers.length + ' so far: pick or add ' + (r.workers - S.workers.length) + ' more.' : 'Pick them from My workers, or add them.') + '</p>' + wAddBtns() : '') + '</div></div>';
     }
-    $('lpRec').addEventListener('click', (e) => { const b = e.target.closest('[data-userec]'); if (!b) return; setWorkers(Number(b.dataset.userec)); b.remove(); window.toast?.('Set to ' + S.workers.length + ' workers. Give each their own days below.'); });
 
     /* ---------------- will every lot be ready on its day? (2026-10-16, the owner) ----------------
        The crew calendar without Anee (LandPrepPlanner::forecast), counted
@@ -2780,6 +2881,7 @@
     async function paintCast() {
         const box = $('lpCast');
         if (!S.planting || !S.lots.length || screenOf(FLOW[pos]) !== 'workers') return;
+        if (!S.workers.length) { castSig = ''; fadeSwap(box, ''); return; }
         const body = Object.assign(checkBody(false), { forecast: 1 });
         const key = castKey(body);
         if (key === castSig) return;
@@ -2812,7 +2914,7 @@
         }).join('');
         const tips = [];
         const total = fc.more ? fc.workers + fc.more : 0;
-        const use = (n) => (onReview ? '<button type="button" class="btn btn-white" data-jump="workers">Change the workers</button>' : '<button type="button" class="btn btn-primary" data-castuse="' + n + '">Use ' + n + ' workers</button>');
+        const use = () => (onReview ? '<button type="button" class="btn btn-white" data-jump="workers">Change the workers</button>' : wAddBtns());
         if (late.length) {
             if (fc.more) tips.push(['With ' + total + ' workers working Monday to Saturday, ' + fc.more + ' more than now, ' + (many ? (first ? 'every lot is ready on the day Anee gives it.' : 'every lot is ready on its day.') : 'it is ready on your day.'), use(total)]);
             // A day falls on a Sunday nobody works (a Monday planting puts the leveling there).
@@ -2835,8 +2937,6 @@
             + (tips.length ? '<div class="lp-cast-do">' + tips.map(([t2, b]) => '<p>' + esc(t2) + '</p>' + b).join('') + '</div>' : '') + '</div>';
     }
     $('lpCast').addEventListener('click', (e) => {
-        const u = e.target.closest('[data-castuse]');
-        if (u) { setWorkers(Number(u.dataset.castuse)); window.toast?.('Set to ' + S.workers.length + ' workers. Check their days above.'); return; }
         const j = e.target.closest('[data-jump]');
         if (j) goTo(j.dataset.jump, true);
     });
@@ -3015,11 +3115,11 @@
     /* A plan made leaves a clean form (2026-10-17, the owner): closing it,
        "Plan another field" or deleting it brings the wizard back at the
        lots with every answer as the page first opens it: rice, no lots, no
-       day, no machines, two blank workers, no place and no notes. The
+       day, no machines, no workers, no place and no notes. The
        options, the varieties, the farm's lots and people stay loaded. */
     function resetWizard() {
         Object.assign(S, { crop: 'rice', method: null, variety: '', varRec: null, custom: false, seedType: '', seedSource: '', planting: null,
-            lots: [], fleet: {}, handOnly: false, workers: [newWorker(), newWorker()], dateMode: 'first',
+            lots: [], fleet: {}, handOnly: false, workers: [], dateMode: 'first',
             loc: { province: '', town: '', place: '', lat: null, lng: null }, notes: '', saveNew: true });
         ACK.date = null;
         ACK.review = null;
@@ -3034,7 +3134,6 @@
         if (tag && window.cropPickSet) window.cropPickSet(tag, 'rice');
         $('lpNotes').value = '';
         $('lpPlaceText').value = '';
-        $('lpSaveNewOn').checked = true;
         $('lpSeed').hidden = true;
         ['lpRec', 'lpCast', 'lpCastRev', 'lpTimeCard', 'lpReview'].forEach((id) => { const el = $(id); el._html = ''; el.innerHTML = ''; el.classList.remove('is-busy'); });
         ['lpDateErr', 'lpWErr', 'lpPlaceErr', 'lpErr'].forEach((id) => { $(id).hidden = true; });

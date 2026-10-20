@@ -48,7 +48,7 @@ final class LandPrepPlanner
         'tpr_manual' => ['By hand', 'Transplanted by hand', 'Seedlings of 18 to 21 days from a wet seedbed', '🤲'],
         'tpr_mechanical' => ['By machine', 'Transplanted by machine', 'Trays or dapog, seedlings of 14 to 18 days', '🚜'],
         'dsr_wet_broadcast' => ['Broadcast', 'Wet seeded, broadcast (sabog tanim)', 'Sprouted seed scattered on puddled soil', '🌾'],
-        'dsr_wet_drum' => ['Drum seeder', 'Wet seeded, drum seeder', 'Sprouted seed sown in rows with a drum seeder', '🛞'],
+        'dsr_wet_drum' => ['Drum or palatak seeder', 'Wet seeded, drum or palatak seeder', 'Sprouted seed sown in rows, pulled by hand', '🛞'],
         'dsr_dry' => ['Dry seeded', 'Dry seeded', 'Dry seed drilled or dibbled into moist soil', '☀️'],
     ];
 
@@ -170,7 +170,7 @@ final class LandPrepPlanner
     private const PLANTING = [
         'transplant:tpr_manual' => [20, 'planters'], 'pull:tpr_manual' => [8, 'people pulling seedlings'],
         'transplant:tpr_mechanical' => [3, 'people with the transplanter'], 'sow:dsr_wet_broadcast' => [1, 'people sowing'],
-        'sow:dsr_wet_drum' => [1.5, 'people with the drum seeder'], 'sow:dsr_dry' => [2, 'people sowing'],
+        'sow:dsr_wet_drum' => [1.5, 'people with the seeder'], 'sow:dsr_dry' => [2, 'people sowing'],
         'plant:corn' => [4, 'people planting'], 'plant:legume' => [4, 'people planting'], 'plant:vegetable' => [12, 'people planting'],
         'plant:cucurbit' => [4, 'people planting'], 'plant:root' => [8, 'people planting'], 'plant:bulb' => [30, 'people planting'],
         'plant:sugarcane' => [10, 'people planting'], 'plant:banana' => [4, 'people planting'], 'plant:tree' => [3, 'people planting'],
@@ -1192,7 +1192,7 @@ final class LandPrepPlanner
             $note('warn', 'None of your machines can plow, so the plan has the plowing done by hand. Hiring a plow for those days saves weeks of work.', 'crew');
         }
         if ($method === 'dsr_wet_drum' && ! in_array('drum_seeder', $types, true)) {
-            $note('warn', 'You sow with a drum seeder but have none on your list. Borrow one from your agriculture office or hire one, and book it a week ahead.', 'crew');
+            $note('warn', 'You sow with a drum or palatak seeder but have none on your list. Borrow one from your agriculture office or hire one, and book it a week ahead.', 'crew');
         }
         if ($method === 'tpr_mechanical' && ! in_array('transplanter', $types, true)) {
             $note('warn', 'You plant by machine but have no transplanter on your list. Book the transplanter service a week ahead, together with the trays.', 'crew');

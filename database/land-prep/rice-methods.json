@@ -708,7 +708,7 @@
    ]
   },
   "dsr_wet_drum": {
-   "label": "Wet direct seeded rice, drum seeder (row seeding)",
+   "label": "Wet direct seeded rice, drum or palatak seeder (row seeding)",
    "plantingDay": "Sowing day",
    "seedlingAge": "No seedbed: pre germinated seed goes straight onto the field.",
    "seedRate": "40 to 60 kg of pre germinated seed per hectare, plus 1 kg sown along one side of the field for replanting.",
@@ -848,7 +848,7 @@
      "from": -1,
      "to": 0,
      "what": "Keep the sprouts short",
-     "how": "Sow when the sprouts are just showing, about 1 to 2 mm. Longer sprouts tangle, break and block the drum holes, so cut the incubation short if they grow fast.",
+     "how": "Sow when the sprouts are just showing, about 1 to 2 mm. Longer sprouts tangle, break and clog the seeder, so cut the incubation short if they grow fast.",
      "basis": "suggestion",
      "follows": {
       "step": "seed_incubate",
@@ -861,15 +861,15 @@
      "from": 0,
      "to": 0,
      "what": "Drain and sow",
-     "how": "Drain the field down to saturated mud and pull the drum seeder along the field in straight rows. Sow an extra 1 kg along one side of the field for filling gaps later.",
+     "how": "Drain the field down to saturated mud and pull the drum or palatak seeder along the field in straight rows. Sow an extra 1 kg along one side of the field for filling gaps later.",
      "basis": "standard"
     },
     {
      "key": "drum_setup",
      "from": 0,
      "to": 0,
-     "what": "Set up the drum seeder",
-     "how": "Sow a day after leveling, when the mud is firm enough to carry the wheels but soft enough to take the seed. Fill each drum no more than two thirds, walk at a steady pace, and keep the rows straight and even.",
+     "what": "Set up the seeder",
+     "how": "Sow a day after leveling, when the mud is firm enough to carry the wheels but soft enough to take the seed. Fill each drum or seed box no more than two thirds, walk at a steady pace, and keep the rows straight and even.",
      "basis": "suggestion",
      "follows": {
       "step": "level",

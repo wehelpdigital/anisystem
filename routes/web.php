@@ -142,6 +142,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // Every crop's troubles in the field questions, with a crop filter (2026-10-16).
             'troublesAll' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqCropSheet'),
             'lotWeeds' => str_contains((string) @file_get_contents(resource_path('views/partials/field-profile.blade.php')), 'fqWeedSheet'),
+            'lpNewWorker' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'lpNewWSheet'),
             'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),

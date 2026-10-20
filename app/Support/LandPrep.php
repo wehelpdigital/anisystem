@@ -107,7 +107,7 @@ class LandPrep
             ],
         ],
         'rice_dsr_drum' => [
-            'label' => 'Wet seeded rice, drum seeder',
+            'label' => 'Wet seeded rice, drum or palatak seeder',
             'guide' => 'direct-seeded-rice-land-preparation',
             'steps' => [
                 [-45, -35, 'Check the planting schedule in your area', 'Ask your irrigators association or the municipal agriculture office when your area plants, and set your sowing day no more than 14 days before or after it.', 'calendar'],
@@ -121,8 +121,8 @@ class LandPrep
                 [-2, -2, 'Soak the seed', 'Two days before sowing, soak 40 to 60 kg of seed per hectare in clean water for 24 hours. Where zinc is short, add 1 kg of zinc sulfate for every 40 kg of seed to the last change of soaking water.', 'seed_soak'],
                 [-2, -1, 'Final harrowing and leveling', 'Make the last pass so it is done by the day before sowing, and level very carefully under shallow water.', 'level'],
                 [-1, -1, 'Cut the small canals', 'Right after leveling, cut small canals about 25 cm wide and 5 cm deep along the inside of the dikes and through the middle of the field.', 'canals'],
-                [-1, -1, 'Let the seed sprout', 'Keep the seed covered in a shaded, airy spot and sow when the sprouts are just showing, 1 to 2 mm. Longer sprouts tangle and block the drum holes.', 'seed_incubate'],
-                [0, 0, 'Drain and sow in rows', 'Drain the field to saturated mud and pull the drum seeder along the field in straight rows. Sow an extra 1 kg along one side of the field for filling gaps later.', 'sow'],
+                [-1, -1, 'Let the seed sprout', 'Keep the seed covered in a shaded, airy spot and sow when the sprouts are just showing, 1 to 2 mm. Longer sprouts tangle and clog the seeder.', 'seed_incubate'],
+                [0, 0, 'Drain and sow in rows', 'Drain the field to saturated mud and pull the drum or palatak seeder along the field in straight rows. Sow an extra 1 kg along one side of the field for filling gaps later.', 'sow'],
                 [0, 3, 'Pre emergence herbicide', 'If weeds are a problem, spray a pre emergence herbicide within 3 days of sowing, following its label.', 'weeds_pre'],
                 [0, 7, 'Guard the seed', 'Chase birds off, fill rat burrows with mud and water, and keep the dikes clean.', 'guard'],
                 [0, 14, 'Keep the soil wet, not flooded', 'Hold back irrigation for the first 10 to 14 days so the soil stays saturated with no standing water.', 'keep_wet'],

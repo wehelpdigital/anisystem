@@ -50,7 +50,7 @@
         },
         "tractor_disc": {
             "name": "Four wheel tractor with a disc plow",
-            "local": "",
+            "local": "Stubble tractor",
             "line": "Turns heavy or dry ground, then a disc harrow",
             "rates": {
                 "plow": 0.35,
@@ -113,7 +113,7 @@
         },
         "pagulong": {
             "name": "Pagulong",
-            "local": "Roller puddler",
+            "local": "Cultipacker",
             "line": "A bladed roller that puddles the wet paddy",
             "rates": {
                 "harrow": 2,
@@ -152,9 +152,9 @@
             }
         },
         "drum_seeder": {
-            "name": "Drum seeder",
+            "name": "Drum or palatak seeder",
             "local": "",
-            "line": "Sows sprouted seed in straight rows",
+            "line": "Sows sprouted seed in rows, pulled by hand",
             "rates": {},
             "for": [
                 "dsr_wet_drum"

@@ -279,7 +279,11 @@ class LandPrepController extends Controller
             ->map(fn ($c) => ['id' => (int) $c->id, 'name' => (string) $c->name, 'phone' => (string) ($c->phone ?? ''),
                 'company' => mb_substr((string) ($c->company ?? ''), 0, 80), 'town' => (string) ($c->town ?? ''), 'tags' => array_values((array) $c->tags)])->all();
 
-        return $this->json(true, 'ok', ['roster' => $roster, 'canSave' => $owner && Tier::can('workers'), 'contacts' => $contacts, 'currency' => Region::symbol()]);
+        // owner: only the farm owner has My workers; savePlan: the plan that brings them, when this one does not.
+        $canSave = $owner && Tier::can('workers');
+
+        return $this->json(true, 'ok', ['roster' => $roster, 'canSave' => $canSave, 'owner' => $owner, 'savePlan' => $owner && ! $canSave ? Tier::planName(Tier::unlocksAt('workers')) : null,
+            'contacts' => $contacts, 'currency' => Region::symbol()]);
     }
 
     /**
@@ -508,7 +512,8 @@ class LandPrepController extends Controller
         }
         $c = (array) $request->input('crew', []);
         $c['fleet'] = array_values(array_filter((array) ($c['fleet'] ?? []), fn ($f) => is_array($f) && isset($usable[$f['type'] ?? ''])));
-        if (! isset($c['workers'])) {
+        // No crew yet (the wizard starts with none since 2026-10-21): the time check counts one worker.
+        if (! isset($c['workers']) || ($lenient && ! $c['workers'])) {
             $c['workers'] = [['name' => 'Worker 1', 'days' => [1, 2, 3, 4, 5, 6]]];
         }
         // The way the days were set decides whether they may move (a page from before sends crew.stagger).
