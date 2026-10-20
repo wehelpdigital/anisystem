@@ -250,6 +250,7 @@
     .np-soil > div { min-height: 0; overflow: hidden; }
     .np-switch { display: flex; align-items: center; gap: .6rem; cursor: pointer; font-size: .84rem; font-weight: 700; color: var(--color-gray-700); }
     .np-switch input { width: 1.1rem; height: 1.1rem; accent-color: var(--color-brand-600); }
+    .np-ybasis { display: block; margin-top: .3rem; }
     .np-microsw { margin: .2rem 0 .8rem; padding: .55rem .7rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
     html.dark .np-microsw { background: #121a0d; border-color: #2b3a1c; }
     .np-otab.is-off { opacity: .55; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
@@ -637,15 +638,17 @@
                             @include('partials.variety-pick')
                             <div class="np-row" style="align-items:center;margin-top:.85rem"><span class="np-label" style="margin:0;flex:1 1 auto">Yields in</span>
                                 <button type="button" class="np-utag is-inline" id="npYUnit" aria-label="Yield unit"><span>t/ha</span>{!! $chev !!}</button></div>
+                            {{-- Dry or fresh (2026-10-21, the owner): every yield on this step is said in the same weight. --}}
+                            <span class="np-hint np-ybasis" id="npYBasis" hidden></span>
                             <div class="np-two">
                                 <div>
-                                    <label class="np-label" for="npPotential">Potential of the variety <span>(optional)</span></label>
+                                    <label class="np-label" for="npPotential">Potential of the variety <span id="npPotU">(optional)</span></label>
                                     <input type="number" id="npPotential" class="form-input w-full" min="0" step="any" inputmode="decimal" placeholder="Like 8">
                                     <span class="np-hint" id="npPotHint">On the seed bag or the variety's description.</span>
                                     <div class="np-potfrom" id="npPotFrom" hidden></div>
                                 </div>
                                 <div>
-                                    <label class="np-label" for="npTarget">Your yield goal <span>(optional)</span></label>
+                                    <label class="np-label" for="npTarget">Your yield goal <span id="npTargetU">(optional)</span></label>
                                     <input type="number" id="npTarget" class="form-input w-full" min="0" step="any" inputmode="decimal" placeholder="Like 6">
                                     <span class="np-hint">Empty: 80% of the potential, the most a well run field usually reaches.</span>
                                 </div>
@@ -1327,6 +1330,12 @@
     const hints = () => {
         if (!M) return;
         const c = cropOf(st.crop), g = goalOf(c), unit = Y_U[st.yUnit][1], f = Y_U[st.yUnit][3];
+        // Dry or fresh on the yield unit, the potential and the goal (2026-10-21, the owner), NpkModel::YIELD_BASIS.
+        const YB = basisOf(c), yw = !c ? '' : (YB ? YB.dry : 'fresh, as picked');
+        $('npPotU').textContent = '(' + (yw ? yw + ', ' : '') + 'optional)';
+        $('npTargetU').textContent = '(' + (yw ? yw + ', ' : '') + 'optional)';
+        $('npYBasis').textContent = !c ? '' : (YB ? 'Every yield here is ' + YB.dry + '. At harvest the same crop weighs more, as ' + YB.wet + '.' : 'Every yield here is the fresh harvest, weighed as it is picked.');
+        $('npYBasis').hidden = !c;
         $('npGoal').innerHTML = !c ? 'Pick the crop first; the goal is sized to it.'
             : g.Y ? 'NPK Plus counts for <b>' + fmt(g.Y / f) + ' ' + esc(unit) + '</b>' + (st.yUnit !== 't' ? ' (' + fmt(g.Y) + ' t/ha)' : '') + esc(basisSay(c, g.Y)) + ': ' + esc(g.why) + '.'
                 + (g.sd.sf < 1 ? ' Your stand is thin, so it counts for ' + fmt(g.Yeff / f) + ' ' + esc(unit) + '.' : '')
