@@ -2118,7 +2118,9 @@
         const zoneOf = (eq) => Math.min(P.zoneCap, Math.abs(eq) / B * P.zone) * (flood ? P.flooded : 1);
         const zone = zoneOf(acidEq), nonLime = acidEq + (limeEq ?? 0);
         return { tex, buffer: B, calc: calcR, flooded: flood, bulk: -acidEq / B, zone: acidEq > 0 ? -zone : zone,
-            u: acidEq > 0 ? clamp(zone / P.fullAt, 0, 1) : 0, bu: nonLime < 0 ? clamp(zoneOf(nonLime) / P.fullAt, 0, 1) : 0 };
+            u: acidEq > 0 ? clamp(zone / P.fullAt, 0, 1) : 0, bu: nonLime < 0 ? clamp(zoneOf(nonLime) / P.fullAt, 0, 1) : 0,
+            // The plan's lime, mixed through the plow layer: the field's own pH rise (2026-10-21).
+            lu: (limeEq ?? 0) > 0 ? clamp(limeEq / B * (flood ? P.flooded : 1) / P.fullAt, 0, 1) : 0 };
     };
     // How hard a plan lockout bites on this soil (NpkModel::LOCK_SOIL, NpkNeed::lockMult).
     const lockMult = (k, f) => {
@@ -2178,8 +2180,22 @@
                 if (alk && v > 1) { v = 1 + (v - 1) * (1 - au * (M.acidUnlock ?? 0.5)); out.whys.push('the acid fertilizers in your plan free some of the locked phosphorus'); }
                 else if (sour) { v = v + 0.1 * au; out.whys.push('the acid fertilizers in your plan make the acid soil sourer'); }
             }
+            // The plan's lime on an acid soil frees some of the lock; its nitrates on a high pH soil add to it (2026-10-21).
+            if (n === 'P2O5' && key.endsWith(':pfix') && v > 1) {
+                if (sour && ps.lu > 0) { v = 1 + (v - 1) * (1 - ps.lu * (M.acidUnlock ?? 0.5)); out.whys.push('the lime in your plan frees some of the phosphorus this acid soil locks up'); }
+                else if (alk && Math.max(ps.bu, ps.lu) > 0) {
+                    // Nitrate or lime pushing a high pH higher: more calcium phosphate.
+                    v += M.phNeed.basicP * Math.max(ps.bu, ps.lu);
+                    out.whys.push(ps.lu >= ps.bu ? 'the lime in your plan pushes this high pH higher and locks a little more phosphorus' : 'the nitrate in your plan raises the pH around the roots and locks a little more phosphorus');
+                }
+            }
             m[n] *= v;
         });
+        // The acid washes potassium down with the nitrate on an acid or sandy soil (2026-10-21).
+        if (au > 0 && (sour || f.has('sandy'))) {
+            m.K2O *= 1 + M.phNeed.kWash * au;
+            out.whys.push('the acid fertilizers in your plan wash some potassium down in this ' + (sour ? 'acid' : 'sandy') + ' soil');
+        }
         // Your field: the nitrogen the organic matter or slow drainage adds or saves.
         if (fl && fl.on) m.N *= fl.nMult;
         NPK.forEach((n) => { out.adj[n] = clamp(m[n], 0.5, 1.8); out.share[n] = clamp(sh[n], 0.3, 0.97); });

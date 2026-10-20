@@ -165,6 +165,16 @@ final class NpkModel
 
     public const ACID_UNLOCK = 0.5;
 
+    /**
+     * The plan's pH change on the N, P and K need (2026-10-21, the owner): the
+     * lime in the plan, mixed into an acid soil, frees up to ACID_UNLOCK of the
+     * phosphorus lock as aluminum and iron let go of it (full at `fullAt` of
+     * the field's pH rise); the nitrates' push on a high pH soil adds up to
+     * `basicP` to the lock; and the acid on an acid or sandy soil washes
+     * potassium down with the nitrate, up to `kWash` more potassium needed.
+     */
+    public const PH_NEED = ['basicP' => 0.1, 'kWash' => 0.05];
+
     /** The share of a phosphorus or potassium guide rate that does not follow the yield goal. */
     public const PK_BASE = 0.5;
 
@@ -553,7 +563,7 @@ final class NpkModel
 
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
-            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'phShift' => self::PH_SHIFT, 'acidEffect' => self::ACID_EFFECT, 'planLock' => self::PLAN_LOCK, 'lockSoil' => self::LOCK_SOIL, 'gypsumSodic' => self::GYPSUM_SODIC,
+            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'phNeed' => self::PH_NEED, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'phShift' => self::PH_SHIFT, 'acidEffect' => self::ACID_EFFECT, 'planLock' => self::PLAN_LOCK, 'lockSoil' => self::LOCK_SOIL, 'gypsumSodic' => self::GYPSUM_SODIC,
             'levels' => self::MICRO_LEVELS, 'soilMicro' => ['step' => self::SOIL_STEP, 'floor' => self::SOIL_FLOOR, 'none' => self::SOIL_NONE, 'factor' => self::SOIL_FACTOR, 'byEl' => self::SOIL_FACTOR_EL], 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
             'field' => self::FIELD, 'yieldBasis' => self::YIELD_BASIS,
             // The pump's year and its months, in the lot questions' own words (2026-10-21).

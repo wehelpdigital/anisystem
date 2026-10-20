@@ -625,6 +625,8 @@ final class NpkNeed
 
         return ['tex' => $tex, 'buffer' => $B, 'calc' => $calc, 'flooded' => $flood, 'bulk' => -$bulk, 'zone' => $acidEq > 0 ? -$zone : $zone,
             'u' => $acidEq > 0 ? max(0.0, min(1.0, $zone / $P['fullAt'])) : 0.0,
+            // The plan's lime, mixed through the plow layer: the field's own pH rise (2026-10-21).
+            'lu' => ($limeEq ?? 0) > 0 ? max(0.0, min(1.0, (float) $limeEq / $B * ($flood ? $P['flooded'] : 1) / $P['fullAt'])) : 0.0,
             'bu' => $nonLime < 0 ? max(0.0, min(1.0, $zoneOf($nonLime) / $P['fullAt'])) : 0.0];
     }
 
@@ -868,7 +870,24 @@ final class NpkNeed
                     $out['whys'][] = 'the acid fertilizers in your plan make the acid soil sourer';
                 }
             }
+            // The plan's lime on an acid soil frees some of the lock; its nitrates on a high pH soil add to it (2026-10-21).
+            if ($n === 'P2O5' && str_ends_with($key, ':pfix') && $v > 1) {
+                if ($sour && $ps['lu'] > 0) {
+                    $v = 1 + ($v - 1) * (1 - $ps['lu'] * NpkModel::ACID_UNLOCK);
+                    $out['whys'][] = 'the lime in your plan frees some of the phosphorus this acid soil locks up';
+                } elseif ($alk && max($ps['bu'], $ps['lu']) > 0) {
+                    // Nitrate or lime pushing a high pH higher: more calcium phosphate.
+                    $v += NpkModel::PH_NEED['basicP'] * max($ps['bu'], $ps['lu']);
+                    $out['whys'][] = $ps['lu'] >= $ps['bu'] ? 'the lime in your plan pushes this high pH higher and locks a little more phosphorus'
+                        : 'the nitrate in your plan raises the pH around the roots and locks a little more phosphorus';
+                }
+            }
             $m[$n] *= $v;
+        }
+        // The acid washes potassium down with the nitrate on an acid or sandy soil (2026-10-21).
+        if ($au > 0 && ($sour || $has('sandy'))) {
+            $m['K2O'] *= 1 + NpkModel::PH_NEED['kWash'] * $au;
+            $out['whys'][] = 'the acid fertilizers in your plan wash some potassium down in this ' . ($sour ? 'acid' : 'sandy') . ' soil';
         }
         // Your field: the nitrogen the organic matter or slow drainage adds or saves.
         if ($fl['on']) {
