@@ -576,6 +576,22 @@ class NpkPlusController extends Controller
             . 'The app keeps the field\'s weather history and the ENSO state' . ($atlas ? ' and the area\'s soil survey' : '') . ': do not look those up. At most 900 words.';
     }
 
+    /** The pump's year from the plan's setup (2026-10-21): "; the pump runs low every dry season, in March to May". */
+    private static function pumpWords(object $calc): string
+    {
+        $res = json_decode((string) ($calc->result ?? ''), true) ?: [];
+        $pump = (array) ($res['setup']['pump'] ?? []);
+        $year = ['always' => 'gives water all year, even in a very dry year', 'badYears' => 'runs low or stops in a very dry year', 'everyYear' => 'runs low or stops every dry season'][$pump['year'] ?? ''] ?? null;
+        if (! $year) {
+            return '';
+        }
+        $stops = array_values(array_filter(array_map('intval', (array) ($pump['stops'] ?? []))));
+        sort($stops);
+        $m = \App\Support\NpkNeed::monthWords($stops);
+
+        return '; the pump or well ' . $year . ($m !== '' && $pump['year'] !== 'always' ? ', in ' . $m : '') . ' (counted in the season\'s water)';
+    }
+
     private function prompt(array $p, object $calc): string
     {
         return "You are Anee, a smart farm technician for Filipino farmers. Judge this fertilizer plan honestly and practically. Return ONE JSON object, nothing else.\n\n"
@@ -584,7 +600,7 @@ class NpkPlusController extends Controller
             . 'Soil as the farmer knows it: ' . (SoilConditions::words($p['soilConditions'], $p['phValue']) ?: 'not stated') . "\n"
             . (SoilConditions::guidance($p['soilConditions']) ? SoilConditions::guidance($p['soilConditions']) . "\n" : '')
             . self::areaSoil($p, $calc)
-            . 'Water: ' . (self::WATER[$p['water']] ?? $p['water']) . "\n"
+            . 'Water: ' . (self::WATER[$p['water']] ?? $p['water']) . self::pumpWords($calc) . "\n"
             . FieldProfile::promptLine((array) ($p['fieldProfile'] ?? []), $calc->crop ?: null, '')
             . 'Planting date: ' . ($p['plantingDate'] ?: 'not given') . '; how the farmer means to apply it: ' . (self::TIMING[$p['timing']] ?? $p['timing']) . "\n"
             . ($p['variety'] ? 'Variety: ' . $p['variety'] . (($vf = \App\Support\VarietyBook::factsLine((string) $calc->crop, (string) $p['variety'])) !== '' ? ' (known: ' . $vf . ')' : '') . "\n" : '') . ($p['notes'] ? 'Notes: ' . $p['notes'] . "\n" : '')

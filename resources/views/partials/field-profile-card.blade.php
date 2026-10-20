@@ -181,6 +181,7 @@
     function legacyOf(a, kind) {
         a = a || {};
         const water = [].concat(a.water || []), weeds = [].concat(a.weeds || []);
+        const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
         const troubles = [].concat(a.outbreaks || []).filter((k) => k !== 'none').map((k) => ({ key: k, kind: kind(k), slug: k.replace(/^[a-z]+:/, '') })).filter((t) => t.kind);
         const kinds = troubles.map((t) => t.kind), slugs = troubles.map((t) => t.slug);
         const isPest = troubles.some((t) => t.key.startsWith('pest:')), isDisease = troubles.some((t) => t.key.startsWith('disease:'));
@@ -199,7 +200,9 @@
         const texture = a.texture || '';
         const soil = ['clay', 'heavy_clay'].includes(texture) ? 'clay' : texture === 'loam' ? 'loam' : texture === 'silt' ? 'silty' : texture === 'sandy' ? 'sandy' : a.rocks === 'many' ? 'rocky' : 'unsure';
         const lay = (a.drainage === 'stands' || a.flooding === 'often') ? 'low' : a.slope === 'steep' ? 'steep' : a.slope === 'gentle' ? 'gentle' : ['flat', 'terraced'].includes(a.slope) ? 'flat' : null;
-        const reliable = has(water, ['irrigation', 'pump']), partly = has(water, ['river', 'reservoir']), drought = had('drought');
+        // A pump that runs low every dry season (2026-10-21) is only partly reliable (FieldProfile::legacy).
+        const pumpWeak = water.includes('pump') && a.pumpYear === 'everyYear';
+        const reliable = water.includes('irrigation') || (water.includes('pump') && !pumpWeak), partly = has(water, ['river', 'reservoir']) || pumpWeak, drought = had('drought');
         const rainOnly = water.length === 1 && water[0] === 'rainfed';
         const w = reliable && !drought ? 'irrigated' : (reliable || partly) ? 'limited' : rainOnly ? 'rainfed' : null;
         const auto = water.includes('irrigation') ? (drought ? 'canal_late' : 'canal_ok') : water.includes('pump') ? 'pump_own' : water.includes('river') ? 'river'
@@ -217,6 +220,8 @@
             soil, phLevel: phWord || 'unsure', soilExtra: keep([sodic && 'sodic', saline && 'saline', sulfate && 'acid_sulfate']), lay,
             // NPK Plus's water (2026-10-20): a pump or a well is its own source; a canal with no drought trouble stays irrigated.
             water: w, waterNpk: water.includes('pump') && !(water.includes('irrigation') && !drought) ? 'pump' : (w === 'limited' ? 'partial' : w), waterAuto: auto,
+            // The pump's year (2026-10-21): NPK Plus's pumpCover() reads it.
+            pump: water.includes('pump') ? { year: a.pumpYear || null, stops: MONTHS.filter((m) => [].concat(a.pumpStops || []).includes(m)).map((m) => MONTHS.indexOf(m) + 1) } : null,
             problemsWhen: keep([floods && 'floods', texture === 'heavy_clay' && 'cracking', texture === 'sandy' && 'sandy', limitedWater && 'water_source', rainOnly && 'rainfed',
                 salt.includes('sea') && 'sea', isPest && 'pests', weedy && 'weeds', poorDrain && 'drainage',
                 hazards.includes('river') && 'river', hazards.includes('wind') && 'wind', shaded && 'shade']),
@@ -248,7 +253,8 @@
                 out.push([q.short, list.includes('none') ? 'None' : list.map((x) => (names[x] && names[x].n) || (x.startsWith('other:') ? (D.others[x.slice(6)] || x.slice(6)) : x.replace(/^[a-z]+:/, '').replace(/-/g, ' '))).join(', ')]);
                 return;
             }
-            const words = [].concat(a).map((x) => (q.o[x] || [])[0]).filter(Boolean);
+            // In the question's own order (2026-10-21, FieldProfile::pairs): the pump's months read January to December.
+            const picked = [].concat(a), words = (q.multi ? Object.keys(q.o).filter((x) => picked.includes(x)) : picked).map((x) => (q.o[x] || [])[0]).filter(Boolean);
             if (words.length) out.push([q.short, words.join(', ')]);
         });
         const T = FP().tests;
@@ -297,7 +303,8 @@
         function paintTiles() {
             const Q = FP().questions, v = st.value, c = crop();
             $q('[data-fpc-tiles]').innerHTML = FP().pagesFor(c).map((p) => {
-                const qs = Object.entries(Q).filter(([, q]) => q.page === p && !(c && q.only === 'rice' && !isRice(c)));
+                // A follow up counts only while it is asked (2026-10-21: the pump's year and months, for a pump).
+                const qs = Object.entries(Q).filter(([, q]) => q.page === p && !(c && q.only === 'rice' && !isRice(c)) && (!q.if || !FP().shown || FP().shown(q, v)));
                 const done = qs.filter(([k]) => { const a = v[k]; return a !== undefined && a !== null && a !== '' && !(Array.isArray(a) && !a.length); }).length
                     + (p === 'acid' && v.phFrom != null && !v.acidity ? 1 : 0);
                 const t = TILES[p] || ['•', p];

@@ -722,6 +722,15 @@
                                 <span class="np-label">Water</span>
                                 <button type="button" class="np-utag is-wide" id="npWaterBtn"><span>Irrigated</span>{!! $chev !!}</button>
                             </div></div>
+                            {{-- How sure the pump is (2026-10-21, the owner): only for a pump or well; a lot's answers fill them. --}}
+                            <div class="np-lq is-off" data-lq="pump" inert><div>
+                                <span class="np-label">Does the pump or well give water all year?</span>
+                                <button type="button" class="np-utag is-wide is-none" id="npPumpYear"><span>Not sure</span>{!! $chev !!}</button>
+                            </div></div>
+                            <div class="np-lq is-off" data-lq="pumpStops" inert><div>
+                                <span class="np-label">Months it runs low or stops</span>
+                                <button type="button" class="np-utag is-wide is-none" id="npPumpStops"><span>The usual dry months, March to May</span>{!! $chev !!}</button>
+                            </div></div>
                             <div class="np-season" id="npSeason">Pick the place and the planting date to read the season.</div>
                         </section>
                         <section class="np-wstep" data-s="4" hidden>
@@ -1124,7 +1133,7 @@
     const GERM_USUAL = 85;
 
     let OPT = null, M = null, calcId = null, RES = null;
-    const st = { microsOn: true, crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
+    const st = { pump: { year: null, stops: [] }, microsOn: true, crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
         texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null, varPick: null, areaSoil: null, area: null, areaNo: false };
     // The field in detail (partials/field-profile-card) and what the farmer set by hand (theirs wins over what it fills).
     let FPC = null;
@@ -1453,7 +1462,19 @@
         }, false, true);
     });
     const tagWide = (id, text, none) => { const b = $(id); if (!b) return; b.querySelector('span').textContent = text; b.classList.toggle('is-none', !!none); };
-    $('npWaterBtn').addEventListener('click', () => pick('Where the water comes from', '', WATER_U, st.water, (k) => { st.water = k; TOUCH.water = true; tagWide('npWaterBtn', WATER_U[k][0], false); calc(); }));
+    $('npWaterBtn').addEventListener('click', () => pick('Where the water comes from', '', WATER_U, st.water, (k) => { st.water = k; TOUCH.water = true; tagWide('npWaterBtn', WATER_U[k][0], false); paintPump(); calc(); }));
+    // The pump's year and its months (2026-10-21): shown only for a pump or well, unless the lot answered them.
+    const paintPump = () => {
+        const p = st.pump, Y = M.pumpYear || {};
+        tagWide('npPumpYear', p.year && Y[p.year] ? Y[p.year][0] : 'Not sure', !p.year);
+        tagWide('npPumpStops', p.stops.length ? monthWords(p.stops.slice().sort((a, b) => a - b)) : 'The usual dry months, March to May', !p.stops.length);
+        const H = lotHides();
+        document.querySelectorAll('[data-lq="pump"], [data-lq="pumpStops"]').forEach((el) => fold(el, !!H[el.dataset.lq]));
+    };
+    $('npPumpYear').addEventListener('click', () => pick('Does the pump or well give water all year?', 'A well that runs low in the dry months cannot make up for the missing rain.', M.pumpYear, st.pump.year || '',
+        (k) => { st.pump.year = k; TOUCH.pump = true; paintPump(); calc(); }));
+    $('npPumpStops').addEventListener('click', () => pick('Months it runs low or stops', 'Pick every month it happens. None picked: March to May.', M.pumpMonths, st.pump.stops.map((m) => MONTH_K[m - 1]),
+        (sel) => { st.pump.stops = MONTH_K.map((k, i) => (sel.includes(k) ? i + 1 : 0)).filter(Boolean); TOUCH.pump = true; paintPump(); calc(); }, true));
     ['npTownIn', 'npProvIn'].forEach((id) => $(id)?.addEventListener('input', () => seasonSoon(900)));
     $('npPlanted').addEventListener('change', () => seasonSoon());
     const placeWords = () => $('npTownIn') ? [$('npTownIn').value.trim(), $('npProvIn').value.trim()] : [townName(st.town), st.prov || ''];
@@ -1473,6 +1494,35 @@
             areaGot(r.data && r.data.area);
         } catch (err) { if (ask !== seasonAsk) return; st.season = null; $('npSeason').textContent = err.message || 'The season could not be read.'; calc(); return; }
         paintSeason(); calc();
+    };
+    /* What a pump or well makes up of the rain's shortfall (2026-10-21, the owner: "if it does get water all year
+       round or on very bad dry season water usually stops and what month usually"). NpkNeed::pumpCover is its
+       twin: all year, a little more than the usual pump; in the months it runs low or stops (every dry season, or
+       only in a very dry year: an El Nino of moderate strength or more, or the driest of the twenty years) only
+       pumpLow of it, by the share of the season's days in those months. */
+    const MONTH_K = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+    const MONTH_N = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthWords = (ms) => {
+        if (!ms.length) return '';
+        const run = ms.length > 2 && ms.every((m, i) => !i || m === ms[i - 1] % 12 + 1), w = ms.map((m) => MONTH_N[m - 1]);
+        return run ? w[0] + ' to ' + w[w.length - 1] : list(w);
+    };
+    const pumpCover = (pump, win, enso, driest = false) => {
+        const F = M.field, year = ['always', 'badYears', 'everyYear', 'unsure'].includes((pump || {}).year) ? pump.year : null;
+        const base = year === 'always' ? F.pumpAlways : F.pumpCover, out = { cover: base, low: [], lowDays: 0, year, given: false };
+        const dryYear = !!enso && enso.phase === 'el_nino' && ['moderate', 'strong', 'very strong'].includes(enso.strength);
+        if (!['badYears', 'everyYear'].includes(year) || (year === 'badYears' && !dryYear && !driest) || !win || !win.from) return out;
+        let stops = [].concat(pump.stops || []).map(Number).filter((m) => m >= 1 && m <= 12);
+        out.given = stops.length > 0;
+        if (!stops.length) stops = F.pumpDryMonths;
+        const days = Math.max(1, Number(win.days) || 1), [y0, m0, d0] = String(win.from).split('-').map(Number), low = [];
+        let n = 0;
+        for (let d = 0; d < days; d++) {
+            const m = new Date(y0, m0 - 1, d0 + d).getMonth() + 1;
+            if (stops.includes(m)) { n++; if (!low.includes(m)) low.push(m); }
+        }
+        const share = n / days;
+        return { cover: base * (1 - share) + F.pumpLow * share, low, lowDays: n, year, given: out.given };
     };
     // How ENSO tilts this season (NpkModel::ENSO_TILT): full in October to May, half in the southwest monsoon, half again when the season is far off.
     const ensoTilt = (S) => {
@@ -1498,7 +1548,9 @@
     // against the goal: the same season at a lower goal is a taller plank,
     // never a smaller harvest (the owner's report, 2026-10-08).
     const potentialOf = (c, g) => {
-        if (g.P) return { t: g.P, given: true };
+        // A goal above the variety's record (2026-10-21, the owner: a record is not a ceiling) is the yield the
+        // season is measured by, so a dry season's full sun reads near full, not cut by the record.
+        if (g.P) return { t: Math.max(g.P, g.Yeff || 0), given: true, above: (g.Yeff || 0) > g.P, rec: g.P };
         const Yg = M.guideYield[c.key] || (c.typicalYield ? c.typicalYield.hi * 1.25 : null);
         const t = Math.max(Yg ? Yg * (M.potentialX || 1.6) : 0, g.Yeff ? g.Yeff / 0.8 : 0);
         return t ? { t, given: false } : null;
@@ -1510,12 +1562,13 @@
         const rain = a.rain * t.rain, rad = a.rad * t.sun, tmean = a.tmean + t.temp, et0 = a.et0 * (t.rain < 1 ? 1 + (1 - t.rain) * 0.15 : 1);
         // Water: what the crop drinks against what it gets (FAO's yield response, ky).
         const need = et0 * K.kc + (K.extraMm || 0), eff = rain * 0.75;
-        // A pump makes up most of what the rain leaves short (FIELD pumpCover), a part time canal half (NpkNeed::seasonWater).
-        const cover = st.water === 'pump' ? M.field.pumpCover : st.water === 'partial' ? M.field.partialCover : 0;
+        // A pump makes up most of what the rain leaves short (pumpCover: less in the months it runs low), a part time canal half (NpkNeed::seasonWater).
+        const pc = st.water === 'pump' ? pumpCover(st.pump, S.window, S.enso) : null, pcDry = st.water === 'pump' ? pumpCover(st.pump, S.window, S.enso, true) : null;
+        const cover = pc ? pc.cover : st.water === 'partial' ? M.field.partialCover : 0;
         const supply = st.water === 'irrigated' ? need : eff + cover * Math.max(0, need - eff);
         const wr = Math.min(1, supply / Math.max(1, need)), water = clamp(1 - K.ky * (1 - wr), 0.1, 1);
         const driest = S.years.reduce((m, y) => Math.min(m, y.rain), Infinity) * t.rain * 0.75;
-        const wrDry = Math.min(1, (st.water === 'irrigated' ? need : driest + cover * Math.max(0, need - driest)) / Math.max(1, need));
+        const wrDry = Math.min(1, (st.water === 'irrigated' ? need : driest + (pcDry ? pcDry.cover : cover) * Math.max(0, need - driest)) / Math.max(1, need));
         // Sun: a full potential wants about K.rad MJ a day; less sun lowers the yield the season can carry.
         const fs = clamp(rad / K.rad, 0.2, 1.1), fw = water;
         // Temperature: the mean against the crop's best range, and the days too hot for flowers and fruit.
@@ -1526,7 +1579,7 @@
         const pot = potentialOf(c, g), cap = pot ? { sun: pot.t * fs, water: pot.t * fw, temp: pot.t * ft } : null;
         const of = (k, f0) => (cap && g.Yeff ? cap[k] / g.Yeff : f0);
         return { sun: of('sun', Math.min(1, fs)), water: of('water', fw), temp: of('temp', ft), cap, pot, f: { sun: fs, water: fw, temp: ft },
-            rain, rad, tmean, need, supply, wr, wrDry: clamp(1 - K.ky * (1 - wrDry), 0.1, 1), hotN, K, t };
+            rain, rad, tmean, need, supply, wr, wrDry: clamp(1 - K.ky * (1 - wrDry), 0.1, 1), hotN, K, t, pump: pc, pumpDry: pcDry };
     };
 
     /* ---- step 5: the soil ---- */
@@ -2244,7 +2297,7 @@
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
                 target: num('npTarget') ? { value: num('npTarget'), unit: yu[1], tPerHa: Math.round(num('npTarget') * yu[3] * 100) / 100 } : null,
                 seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null } : null,
-                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), intensive: !!st.intensive, zincRecent: !!st.zincRecent, microsOn: !!st.microsOn, prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null,
+                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), intensive: !!st.intensive, zincRecent: !!st.zincRecent, microsOn: !!st.microsOn, prov: st.prov, town: st.town, water: st.water, pump: st.water === 'pump' && (st.pump.year || st.pump.stops.length) ? { year: st.pump.year, stops: st.pump.stops.slice() } : null, planted: $('npPlanted').value || null,
                 // The variety's source (2026-10-15) and what the field in detail changed, in words.
                 varietyPick: st.varPick ? Object.assign({}, st.varPick, recT(st.varPick) ? { potential: recT(st.varPick), potentialIs: st.varPick.top ? 'top' : 'avg', potentialFrom: potOwn() ? 'own' : 'record' } : {}) : null,
                 fieldAdjust: FL.map((l) => l.lead + ' ' + l.text + (l.e ? ' [' + l.e + ']' : '')),
@@ -2522,7 +2575,8 @@
                 if (!SP) { rows.push({ state: 'dull', ratio: null, px: H, pct: '', note: 'Pick the place and the planting date' }); return; }
                 const r = SP[s.k], state = r < 0.97 ? 'short' : 'right', yu0 = Y_U[st.yUnit];
                 const note = (s.k === 'sun' ? fmt(SP.rad, 1) + ' MJ of sun a day against the ' + SP.K.rad + ' a full harvest wants'
-                    : s.k === 'water' ? (st.water === 'irrigated' ? 'Irrigated: the crop gets the ' + Math.round(SP.need) + ' mm it drinks' : (st.water === 'pump' ? 'The rain and your pump give about ' : 'About ') + Math.round(SP.supply) + ' of the ' + Math.round(SP.need) + ' mm the crop drinks')
+                    : s.k === 'water' ? (st.water === 'irrigated' ? 'Irrigated: the crop gets the ' + Math.round(SP.need) + ' mm it drinks' : (st.water === 'pump' ? 'The rain and your pump give about ' : 'About ') + Math.round(SP.supply) + ' of the ' + Math.round(SP.need) + ' mm the crop drinks'
+                        + (SP.pump && SP.pump.low.length ? ', with the pump low in ' + monthWords(SP.pump.low) : ''))
                     : fmt(SP.tmean, 1) + '°C on average, ' + Math.round(SP.hotN) + ' days too hot for flowers')
                     + (SP.cap ? ', enough for about ' + fmt(SP.cap[s.k] / yu0[3]) + ' ' + yu0[1] : '');
                 rows.push({ state, ratio: r, yr: r, px: Math.max(22, Math.round(H * Math.min(1.22, r))), pct: Math.round(Math.min(1, r) * 100) + '%', note, season: true });
@@ -2574,9 +2628,14 @@
             const carry = (k) => SP.cap ? ' Enough for about <b>' + esc(fmt(SP.cap[k] / yu0[3])) + ' ' + esc(yu0[1]) + '</b>.' : '';
             const pctOf = (k) => Math.round(Math.min(1, SP[k]) * 100) + '%';
             $('lbSky').innerHTML = '<h4>Your season\'s sun, water and heat</h4>'
-                + (SP.pot ? '<p class="lb-rainkey" style="margin:0 0 .5rem">Each is what it lets ' + (SP.pot.given ? 'your variety\'s ' + esc(fmt(SP.pot.t / yu0[3])) + ' ' + esc(yu0[1]) + ' potential' : 'a good variety (about ' + esc(fmt(SP.pot.t / yu0[3])) + ' ' + esc(yu0[1]) + '; give the potential in step 2 to use yours)') + ' carry this season, set against your goal.</p>' : '')
+                + (SP.pot ? '<p class="lb-rainkey" style="margin:0 0 .5rem">Each is what it lets ' + (SP.pot.above ? 'your goal of ' + esc(fmt(SP.pot.t / yu0[3])) + ' ' + esc(yu0[1]) + ' (above the variety\'s ' + esc(fmt(SP.pot.rec / yu0[3])) + ' on record, so your goal is the yield measured)'
+                    : SP.pot.given ? 'your variety\'s ' + esc(fmt(SP.pot.t / yu0[3])) + ' ' + esc(yu0[1]) + ' potential' : 'a good variety (about ' + esc(fmt(SP.pot.t / yu0[3])) + ' ' + esc(yu0[1]) + '; give the potential in step 2 to use yours)') + ' carry this season, set against your goal.</p>' : '')
                 + '<div class="lb-skyrow"><i>☀️</i><span><b>Sun</b><small>' + fmt(SP.rad, 1) + ' MJ a day expected, against about ' + SP.K.rad + ' for a full harvest of ' + esc(cropShort(c).toLowerCase()) + (SP.t.sun !== 1 ? ', with ENSO' : '') + '.' + carry('sun') + '</small></span><em>' + pctOf('sun') + '</em></div>'
-                + '<div class="lb-skyrow is-water"><i>💧</i><span><b>Water</b><small>' + Math.round(SP.rain) + ' mm of rain expected' + (SP.t.rain !== 1 ? ' (ENSO tilted)' : '') + '; the crop drinks about ' + Math.round(SP.need) + ' mm. ' + esc(WATER_U[st.water][0]) + '.' + (st.water !== 'irrigated' ? ' In the driest of the ' + yrs.length + ' years: ' + Math.round(SP.wrDry * 100) + '%.' : (SP.t.e && SP.t.e.phase === 'el_nino' && SP.t.rain < 0.8 ? ' In a strong El Niño, check that the canal will run all season.' : '')) + carry('water') + '</small></span><em>' + pctOf('water') + '</em></div>'
+                + '<div class="lb-skyrow is-water"><i>💧</i><span><b>Water</b><small>' + Math.round(SP.rain) + ' mm of rain expected' + (SP.t.rain !== 1 ? ' (ENSO tilted)' : '') + '; the crop drinks about ' + Math.round(SP.need) + ' mm. ' + esc(WATER_U[st.water][0]) + '.' + (st.water !== 'irrigated' ? ' In the driest of the ' + yrs.length + ' years: ' + Math.round(SP.wrDry * 100) + '%.' : (SP.t.e && SP.t.e.phase === 'el_nino' && SP.t.rain < 0.8 ? ' In a strong El Niño, check that the canal will run all season.' : ''))
+                + (SP.pump && SP.pump.low.length ? ' Your pump runs low ' + (SP.pump.year === 'badYears' ? 'in a very dry year like this one, ' : '') + 'in ' + esc(monthWords(SP.pump.low)) + ' (' + SP.pump.lowDays + ' of these ' + st.season.window.days + ' days' + (SP.pump.given ? '' : ', the usual dry months since none were picked') + '), so the crop lives mostly on the rain then.'
+                    : SP.pump && SP.pump.year === 'badYears' ? ' Your pump runs low only in a very dry year; this outlook is not one, so it counts in full, and the driest year above counts it low.'
+                    : SP.pump && SP.pump.year === 'always' ? ' Your pump gives water all year, so it makes up nearly all the rain leaves short.' : '')
+                + carry('water') + '</small></span><em>' + pctOf('water') + '</em></div>'
                 + '<div class="lb-skyrow is-temp"><i>🌡️</i><span><b>Temperature</b><small>' + fmt(SP.tmean, 1) + '°C on average against ' + SP.K.opt[0] + ' to ' + SP.K.opt[1] + '°C best for it; about ' + Math.round(SP.hotN) + ' days at ' + SP.K.hot + '°C or more.' + carry('temp') + '</small></span><em>' + pctOf('temp') + '</em></div>'
                 + '<div class="lb-rainyears" aria-label="Rain in the same weeks of each year">' + yrs.map((y) => '<span style="height:' + Math.max(4, y.rain / maxR * 100) + '%" title="' + y.year + ': ' + y.rain + ' mm">' + (yrs.length <= 12 || y.year % 2 === 0 ? '<b>' + String(y.year).slice(2) + '</b>' : '') + '</span>').join('')
                 + '<span class="is-now" style="height:' + Math.max(4, SP.rain / maxR * 100) + '%" title="Expected this season: ' + Math.round(SP.rain) + ' mm"><b>Now</b></span></div>'
@@ -2683,6 +2742,13 @@
             if (w !== st.water) { st.water = w; tagWide('npWaterBtn', WATER_U[w][0], false); moved = true; }
             if (WATER_U[L.waterNpk]) got.push('the water');
         }
+        // The pump's year and months (2026-10-21), from the lot's answers unless set here.
+        if (!TOUCH.pump) {
+            const p = L.pump || null;
+            st.pump = { year: p && p.year ? p.year : null, stops: p ? [].concat(p.stops || []) : [] };
+            if (p && p.year) got.push('how sure the pump is');
+        }
+        paintPump();
         // How the field is farmed (2026-10-19): the lot's crops a year and its last zinc set the two switches, the
         // answers NpkNeed::run reads for the Crop Protocol, so a lot counts the same in both.
         if (!TOUCH.habits) {
@@ -2713,6 +2779,8 @@
         area: !!(LOT && Number(LOT.areaHa) > 0),
         place: !!(LOT && LOT.province && LOT.town),
         water: lotHas('water'),
+        pump: st.water !== 'pump' || lotHas('pumpYear'),
+        pumpStops: st.water !== 'pump' || !['badYears', 'everyYear'].includes(st.pump.year) || lotHas('pumpStops'),
         fpc: !!LOT,
         texture: lotHas('texture'),
         ph: lotHas('phFrom'),
@@ -2742,7 +2810,8 @@
         if (!LOT) { ['area', 'season', 'soil', 'anee'].forEach((k) => lotSay(k, [])); return; }
         const [tw, pv] = placeWords();
         lotSay('area', H.area ? [areaWords()] : []);
-        lotSay('season', [H.place ? [tw, pv].filter(Boolean).join(', ') : '', H.water ? WATER_U[st.water][0] : ''].filter(Boolean));
+        lotSay('season', [H.place ? [tw, pv].filter(Boolean).join(', ') : '', H.water ? WATER_U[st.water][0] : '',
+            st.water === 'pump' && lotHas('pumpYear') && st.pump.year && st.pump.year !== 'unsure' ? (M.pumpYear[st.pump.year] || [''])[0] + (lotHas('pumpStops') && st.pump.stops.length ? ', ' + monthWords(st.pump.stops.slice().sort((a, b) => a - b)) : '') : ''].filter(Boolean));
         const n = FPC ? FPC.count() : 0;
         lotSay('soil', [H.texture && M ? M.textures[st.texture][0] : '', H.ph && phVal() != null ? 'pH ' + fmt(phVal()) : '',
             H.conds ? (st.conds.length ? st.conds.map((k) => (M.conditions[k] || [k])[0]).join(', ') : 'nothing else of note') : '',
@@ -2757,6 +2826,7 @@
         const H = lotHides();
         if (H.texture) TOUCH.texture = false;
         if (H.water) TOUCH.water = false;
+        if (lotHas('pumpYear')) TOUCH.pump = false;
         if (H.ph) TOUCH.ph = false;
         if (H.conds) TOUCH.conds = false;
         if (H.habits) TOUCH.habits = false;
@@ -2919,6 +2989,8 @@
             st.prov = set.prov || null; st.town = set.town || null; st.water = WATER_U[set.water] ? set.water : 'irrigated';
             if ($('npProvBtn')) { tagWide('npProvBtn', st.prov || 'Choose the province', !st.prov); tagWide('npTownBtn', st.town ? townName(st.town) : (st.prov ? 'Choose the town' : 'Pick the province first'), !st.town); $('npTownBtn').disabled = !st.prov; }
             tagWide('npWaterBtn', WATER_U[st.water][0], false);
+            st.pump = set.pump && typeof set.pump === 'object' ? { year: set.pump.year || null, stops: [].concat(set.pump.stops || []).map(Number).filter((m) => m >= 1 && m <= 12) } : { year: null, stops: [] };
+            paintPump();
             $('npPlanted').value = set.planted || '';
             st.season = null; paintSeason();
             if (st.prov) seasonSoon(400);
@@ -2942,7 +3014,7 @@
             st.lines = (d.lines || []).filter((l) => OPT.products.some((p) => p.id === l.id)).map((l) => ({ id: l.id, amount: l.amount, unit: l.unit }));
             tab(false); lines(); setCrop(d.crop || null); go(5);
             // A saved plan's answers are the farmer's: the field in detail fills none of them.
-            Object.assign(TOUCH, { water: true, texture: st.texture !== 'unsure', conds: st.conds.length > 0, ph: phVal() != null, habits: true });
+            Object.assign(TOUCH, { water: true, pump: true, texture: st.texture !== 'unsure', conds: st.conds.length > 0, ph: phVal() != null, habits: true });
             varPaintTag(); potPaint();
             if (d.analysis) showReport(d.analysis.report, d.analysis.params); else $('npRep').hidden = true;
             mountCard();

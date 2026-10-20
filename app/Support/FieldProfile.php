@@ -93,6 +93,17 @@ final class FieldProfile
                 'river' => ['River, creek or spring', 'Led in by a small canal'], 'reservoir' => ['Small farm pond', 'A reservoir filled in the rains'],
                 'rainfed' => ['Rain only', 'No other water'],
             ]],
+        // How sure a pump or well is (2026-10-21, the owner): asked only when the lot pumps ('if': the answer it follows).
+        'pumpYear' => ['in' => 'soil', 'page' => 'water', 'short' => 'Pump all year', 'q' => 'Does the pump or well give water all year?', 'if' => ['water', 'pump'],
+            'why' => 'A well that runs low in the dry months cannot make up for the missing rain, so the crop gets less water than the pump promises.', 'o' => [
+                'always' => ['All year', 'Even in a very dry year'], 'badYears' => ['Runs low in a very dry year', 'It slows or stops in an El Niño year'],
+                'everyYear' => ['Runs low every dry season', 'It slows or stops most years'], 'unsure' => ['Not sure', ''],
+            ]],
+        'pumpStops' => ['in' => 'soil', 'page' => 'water', 'short' => 'Pump runs low', 'q' => 'In which months does it usually run low or stop?', 'multi' => true, 'if' => ['pumpYear', ['badYears', 'everyYear']],
+            'why' => 'In those weeks the crop lives mostly on the rain, so it gets less water. Pick every month it happens.', 'o' => [
+                'jan' => ['January', ''], 'feb' => ['February', ''], 'mar' => ['March', ''], 'apr' => ['April', ''], 'may' => ['May', ''], 'jun' => ['June', ''],
+                'jul' => ['July', ''], 'aug' => ['August', ''], 'sep' => ['September', ''], 'oct' => ['October', ''], 'nov' => ['November', ''], 'dec' => ['December', ''],
+            ]],
         'waterLook' => ['in' => 'soil', 'page' => 'water', 'short' => 'Water look', 'q' => 'How does the irrigation water look?', 'multi' => true, 'none' => 'unsure',
             'why' => 'Muddy water leaves silt, and salty or dirty water hurts young plants. It changes which crops do well here.', 'o' => [
                 'clear' => ['Clear and clean', ''], 'muddy' => ['Muddy or brown', 'It carries silt'], 'gray' => ['Grayish', 'Fine silt, fine sand or volcanic ash in it'],
@@ -251,6 +262,15 @@ final class FieldProfile
     }
 
     /** The questions a crop is asked (all of them for no crop): rice only questions and options dropped elsewhere. */
+    /** The pump's months as numbers: jan 1 to dec 12. */
+    public const MONTH_KEYS = ['jan' => 1, 'feb' => 2, 'mar' => 3, 'apr' => 4, 'may' => 5, 'jun' => 6, 'jul' => 7, 'aug' => 8, 'sep' => 9, 'oct' => 10, 'nov' => 11, 'dec' => 12];
+
+    /** A question that follows another ('if' => [the question, the answers it waits for]) and is asked only when one was picked. */
+    public static function shown(array $q, array $answers): bool
+    {
+        return empty($q['if']) || (bool) array_intersect((array) ($answers[$q['if'][0]] ?? []), (array) $q['if'][1]);
+    }
+
     public static function questions(?string $crop = null): array
     {
         $rice = self::isRice($crop);
@@ -467,6 +487,12 @@ final class FieldProfile
                 $out[$k] = $v;
             }
         }
+        // A follow up question (2026-10-21) stands only while the answer it follows does: no pump, no pump months.
+        foreach (array_keys($out) as $k) {
+            if (! self::shown(self::QUESTIONS[$k] ?? [], $out)) {
+                unset($out[$k]);
+            }
+        }
         // The old Land Prep answers that are troubles now.
         $old = [];
         if (($answers['snails'] ?? '') === 'many') {
@@ -555,7 +581,8 @@ final class FieldProfile
                 }
                 continue;
             }
-            $labels = array_values(array_filter(array_map(fn ($x) => $q['o'][$x][0] ?? null, (array) $v)));
+            // In the question's own order (2026-10-21): the pump's months read January to December, as picked or not.
+            $labels = array_values(array_filter(array_map(fn ($o) => $o[0] ?? null, array_intersect_key($q['o'], array_flip(array_filter((array) $v, 'is_string'))))));
             if ($labels) {
                 $out[] = [$q['short'], implode(', ', $labels)];
             }
@@ -786,6 +813,8 @@ final class FieldProfile
             ['cropsYear', 'two', 'it grows two crops a year, so zinc and sulfur run short sooner'],
             ['cropsYear', 'three', 'it grows three crops a year, so zinc and sulfur run short sooner'],
             ['zincGiven', 'recent', 'it had zinc in the last two seasons, which keeps working for two or three crops'],
+            ['pumpYear', 'badYears', 'its pump or well runs low or stops in a very dry year, so an El Niño season can run short of water'],
+            ['pumpYear', 'everyYear', 'its pump or well runs low or stops every dry season, so a dry season crop can run short of water'],
         ];
         foreach ($map as [$k, $v, $line]) {
             if ($has($k, $v)) {
@@ -881,9 +910,11 @@ final class FieldProfile
             default => null,
         };
 
-        // Water: a canal or a pump is reliable, a river or a pond partly, rain alone not.
-        $reliable = (bool) array_intersect($water, ['irrigation', 'pump']);
-        $partly = (bool) array_intersect($water, ['river', 'reservoir']);
+        // Water: a canal or a pump is reliable, a river or a pond partly, rain alone not. A pump that runs low every
+        // dry season (2026-10-21) is only partly reliable.
+        $pumpWeak = in_array('pump', $water, true) && ($a['pumpYear'] ?? '') === 'everyYear';
+        $reliable = in_array('irrigation', $water, true) || (in_array('pump', $water, true) && ! $pumpWeak);
+        $partly = (bool) array_intersect($water, ['river', 'reservoir']) || $pumpWeak;
         $drought = $had('drought');
         $w = match (true) {
             $reliable && ! $drought => 'irrigated',
@@ -941,6 +972,9 @@ final class FieldProfile
             // NPK Plus's water (2026-10-20): a pump or a well is its own source, topping up what the rain leaves
             // short; a canal with no drought trouble is irrigated, the rest as before.
             'water' => $w, 'waterNpk' => in_array('pump', $water, true) && ! (in_array('irrigation', $water, true) && ! $drought) ? 'pump' : ($w === 'limited' ? 'partial' : $w), 'waterAuto' => $auto,
+            // The pump's year (2026-10-21): NpkNeed::pumpCover reads it for NPK Plus and the Crop Protocol.
+            'pump' => in_array('pump', $water, true) ? ['year' => $a['pumpYear'] ?? null,
+                'stops' => array_values(array_intersect(self::MONTH_KEYS, array_map(fn ($m) => self::MONTH_KEYS[$m] ?? 0, (array) ($a['pumpStops'] ?? []))))] : null,
             'problemsWhen' => $when, 'problemsVariety' => $variety, 'problemsAuto' => $autoProblems, 'soilSignsAuto' => $signs,
             'waterLook' => array_values(array_diff((array) ($a['waterLook'] ?? []), ['unsure'])), 'elevation' => $a['elevation'] ?? null, 'sun' => $a['sun'] ?? null,
             // The newest soil test, and its N, P and K as Crop Protocol's levels.

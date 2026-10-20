@@ -147,6 +147,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'protoBarrel' => is_file(resource_path('views/partials/liebig-barrel.blade.php')),
             // The soil's own micronutrients start the planks and the Micros bars (2026-10-21).
             'soilMicro' => defined(\App\Support\NpkModel::class . '::SOIL_STEP') && method_exists(\App\Support\NpkNeed::class, 'soilSay'),
+            // How sure a lot's pump is, in the water count (2026-10-21).
+            'pumpYear' => isset(\App\Support\FieldProfile::QUESTIONS['pumpYear']) && method_exists(\App\Support\NpkNeed::class, 'pumpCover'),
             'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),

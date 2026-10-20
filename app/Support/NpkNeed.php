@@ -338,7 +338,7 @@ final class NpkNeed
      * dry season). $hist = ClimateStore::season(), $window = seasonWindow(),
      * $enso = ClimateStore::enso(). Change it with the page's seasonPlanks().
      */
-    public static function seasonWater(?array $c, ?array $hist, array $window, ?array $enso, string $water): ?array
+    public static function seasonWater(?array $c, ?array $hist, array $window, ?array $enso, string $water, ?array $pump = null): ?array
     {
         if (! $c || empty($hist['avg'])) {
             return null;
@@ -350,12 +350,71 @@ final class NpkNeed
         $et0 = (float) $a['et0'] * ($t['rain'] < 1 ? 1 + (1 - $t['rain']) * 0.15 : 1);
         $need = $et0 * (float) $K['kc'] + (float) ($K['extraMm'] ?? 0);
         $eff = $rain * 0.75;
-        $cover = $water === 'pump' ? NpkModel::FIELD['pumpCover'] : ($water === 'partial' ? NpkModel::FIELD['partialCover'] : 0.0);
+        $pc = $water === 'pump' ? self::pumpCover($pump, $window, $enso) : null;
+        $cover = $pc ? $pc['cover'] : ($water === 'partial' ? NpkModel::FIELD['partialCover'] : 0.0);
         $supply = $water === 'irrigated' ? $need : $eff + $cover * max(0, $need - $eff);
 
         return ['rainMm' => $rain, 'waterShare' => min(1, $supply / max(1, $need)), 'needMm' => $need, 'water' => $water, 'avgRain' => (float) $a['rain'],
+            'pumpLow' => $pc && $pc['low'] ? ['months' => $pc['low'], 'days' => $pc['lowDays'], 'given' => $pc['given']] : null, 'pumpYear' => $pc['year'] ?? null,
             'years' => count((array) ($hist['years'] ?? [])), 'tilt' => round($t['rain'], 3),
             'enso' => ($enso['phase'] ?? 'neutral') !== 'neutral' ? ($enso['label'] ?? null) : null, 'from' => $window['from'], 'days' => $window['days']];
+    }
+
+    /**
+     * What a pump or well makes up of the rain's shortfall over a season
+     * (2026-10-21, the owner; the page's pumpCover() is its twin): all year,
+     * a little more than the usual pump; in the months it runs low or stops
+     * (every dry season, or only in a very dry year: an El Nino of moderate
+     * strength or more, or the driest of the twenty years) only pumpLow of
+     * it, by the share of the season's days in those months.
+     * $pump = FieldProfile::legacy()['pump'] (year, stops: month numbers).
+     *
+     * @return array{cover: float, low: list<int>, lowDays: int, year: ?string, given: bool}
+     */
+    public static function pumpCover(?array $pump, array $window, ?array $enso, bool $driest = false): array
+    {
+        $F = NpkModel::FIELD;
+        $year = in_array($pump['year'] ?? null, ['always', 'badYears', 'everyYear', 'unsure'], true) ? $pump['year'] : null;
+        $base = (float) ($year === 'always' ? $F['pumpAlways'] : $F['pumpCover']);
+        $out = ['cover' => $base, 'low' => [], 'lowDays' => 0, 'year' => $year, 'given' => false];
+        $dryYear = ($enso['phase'] ?? '') === 'el_nino' && in_array($enso['strength'] ?? '', ['moderate', 'strong', 'very strong'], true);
+        if (! in_array($year, ['badYears', 'everyYear'], true) || ($year === 'badYears' && ! $dryYear && ! $driest) || empty($window['from'])) {
+            return $out;
+        }
+        $stops = array_values(array_filter(array_map('intval', (array) ($pump['stops'] ?? [])), fn ($m) => $m >= 1 && $m <= 12));
+        $out['given'] = (bool) $stops;
+        $stops = $stops ?: $F['pumpDryMonths'];
+        $days = max(1, (int) ($window['days'] ?? 1));
+        $from = \Illuminate\Support\Carbon::parse($window['from']);
+        $low = [];
+        $n = 0;
+        for ($d = 0; $d < $days; $d++) {
+            $m = (int) $from->copy()->addDays($d)->format('n');
+            if (in_array($m, $stops, true)) {
+                $n++;
+                $low[$m] = true;
+            }
+        }
+        $share = $n / $days;
+
+        return ['cover' => $base * (1 - $share) + (float) $F['pumpLow'] * $share, 'low' => array_keys($low), 'lowDays' => $n, 'year' => $year, 'given' => $out['given']];
+    }
+
+    /** Month numbers in words: "March to May", "January and March". */
+    public static function monthWords(array $months): string
+    {
+        $names = [1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $m = array_values($months);
+        if (! $m) {
+            return '';
+        }
+        $run = count($m) > 2;
+        for ($i = 1; $i < count($m); $i++) {
+            $run = $run && ($m[$i] === $m[$i - 1] % 12 + 1);
+        }
+        $w = array_map(fn ($x) => $names[$x] ?? '', $m);
+
+        return $run ? $w[0] . ' to ' . end($w) : (count($w) < 2 ? $w[0] : implode(', ', array_slice($w, 0, -1)) . ' and ' . end($w));
     }
 
     /** The season a need read, in words for the farmer and for the prompt. */
@@ -372,6 +431,9 @@ final class NpkNeed
             . (abs($tilt - 1) >= 0.01 && ! empty($s['enso']) ? '. With ' . lcfirst((string) $s['enso']) . ' ahead, expect about ' . $mm($s['rainMm']) . ' mm this time' : '')
             . ', against the ' . $mm($s['needMm']) . ' mm the crop drinks'
             . ($water !== 'irrigated' ? ', so ' . ($water === 'pump' ? 'the rain and the pump meet' : ($water === 'partial' ? 'the rain and the water source meet' : 'the rain meets')) . ' about ' . round(min(1, (float) $s['waterShare']) * 100) . '% of it' : '') . '.'
+            // The pump's low months (2026-10-21).
+            . (! empty($s['pumpLow']['months']) ? ' The pump runs low ' . (($s['pumpYear'] ?? '') === 'badYears' ? 'in a very dry year like this one, ' : '') . 'in ' . self::monthWords((array) $s['pumpLow']['months'])
+                . ' (' . (int) $s['pumpLow']['days'] . ' of these ' . (int) $s['days'] . ' days' . (empty($s['pumpLow']['given']) ? ', the usual dry months since none were given' : '') . '), so the crop lives mostly on the rain then.' : '')
             . ($heavy ? ' That much rain washes calcium, magnesium and boron out, so the need holds more of them.' : '')
             . ($dry ? ' A season that dry makes boron and calcium harder for the roots to take up, so the need holds more of them.' : '');
     }

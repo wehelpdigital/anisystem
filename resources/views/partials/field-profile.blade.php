@@ -99,6 +99,11 @@
     .fq-q:first-of-type { border-top: 0; padding-top: .2rem; }
     .fq-q h3 { display: flex; align-items: flex-start; gap: .45rem; font-size: 1rem; font-weight: 800; line-height: 1.35; color: #14210c; }
     .fq-q h3 span { flex: 1; min-width: 0; }
+    /* A question that follows another (2026-10-21: the pump's year, its low months) opens in place when its answer is picked. */
+    .fq-q.fq-if { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .28s var(--fq-e), opacity .28s var(--fq-e), padding .28s var(--fq-e), border-color .28s var(--fq-e); }
+    .fq-q.fq-if > .fq-if-in { min-height: 0; min-width: 0; overflow: hidden; }
+    .fq-q.fq-if.is-off { grid-template-rows: 0fr; opacity: 0; padding-top: 0; padding-bottom: 0; border-top-color: transparent; }
+    @media (prefers-reduced-motion: reduce) { .fq-q.fq-if { transition: none; } }
     .fq-tick { flex: none; margin-top: .12rem; width: 1.2rem; height: 1.2rem; border-radius: 999px; display: grid; place-items: center; color: #fff; background: var(--fq-g); transform: scale(0); transition: transform .28s var(--fq-e); }
     .fq-tick svg { width: .7rem; height: .7rem; }
     .fq-q.is-done .fq-tick { transform: none; }
@@ -531,6 +536,10 @@
     const qsFor = (crop, page) => Object.entries(Q).filter(([, q]) => q.page === page && !(crop && q.only === 'rice' && !isRice(crop)))
         .map(([k, q]) => [k, Object.assign({}, q, { o: Object.fromEntries(Object.entries(q.o || {}).filter(([, o]) => !(crop && o[2] === 'rice' && !isRice(crop)))) })]);
     const pagesFor = (crop) => Object.keys(G).filter((p) => qsFor(crop, p).length);
+    // A question that follows another ('if': [the question, the answers it waits for]), FieldProfile::shown's twin.
+    const shownQ = (q, v) => !q.if || [].concat(v[q.if[0]] ?? []).some((x) => [].concat(q.if[1]).includes(x));
+    // A follow up whose answer is gone goes too (no pump, no pump months), in the bank's order so a chain clears.
+    const pruneIf = (v) => { const gone = []; Object.entries(Q).forEach(([k, q]) => { if (q.if && v[k] !== undefined && !shownQ(q, v)) { delete v[k]; gone.push(k); } }); return gone; };
     const count = (v) => Object.keys(v || {}).filter((k) => Q[k] && v[k] !== undefined && !(Array.isArray(v[k]) && !v[k].length)).length + (v && v.phFrom != null && !v.acidity ? 1 : 0);
     /* Every answer in the shape the bank asks for NOW. A lot saved before a
        question took several picks kept one word ("salt": "crust" before
@@ -564,7 +573,9 @@
             const a = v[k];
             if (a === undefined || (Array.isArray(a) && !a.length)) return;
             if (k === 'outbreaks') { bits.push(a.includes('none') ? 'no troubles' : a.map(tname).join(', ')); return; }
-            bits.push([].concat(a).map((x) => (q.o[x] || [x])[0]).join(', '));
+            // In the question's own order (2026-10-21): the pump's months read January to December.
+            const picked = [].concat(a);
+            bits.push((q.multi ? Object.keys(q.o).filter((x) => picked.includes(x)) : picked).map((x) => (q.o[x] || [x])[0]).join(', '));
         });
         return bits.join(' · ');
     }
@@ -963,13 +974,15 @@
         }
         function qHtml(k, q, v) {
             const done = k === 'outbreaks' ? (v.outbreaks || []).length > 0 : (q.multi ? (v[k] || []).length > 0 : v[k] !== undefined);
-            let h = '<section class="fq-q' + (done ? ' is-done' : '') + '" data-k="' + esc(k) + '"><h3><span' + tlAt(TLQ[k]) + '>' + esc(q.q) + '</span><i class="fq-tick" aria-hidden="true">' + CHECK + '</i></h3>'
+            const off = q.if && !shownQ(q, v);
+            let h = '<section class="fq-q' + (done ? ' is-done' : '') + (q.if ? ' fq-if' + (off ? ' is-off' : '') : '') + '" data-k="' + esc(k) + '"' + (off ? ' inert' : '') + '>' + (q.if ? '<div class="fq-if-in">' : '')
+                + '<h3><span' + tlAt(TLQ[k]) + '>' + esc(q.q) + '</span><i class="fq-tick" aria-hidden="true">' + CHECK + '</i></h3>'
                 + '<p class="fq-why">' + BULB + '<span>' + esc(q.why)
                 + (k === 'weeds' ? ' <button type="button" class="fq-wlink" data-wcat aria-haspopup="dialog">See the weeds and grasses</button>' : '') + '</span></p>'
                 + (q.multi && k !== 'outbreaks' ? '<p class="fq-many">Pick all that fit</p>' : '');
             h += k === 'outbreaks' ? troubleHtml(v) : optHtml(k, q, v);
             if (q.ph) h += testsHtml(v);
-            return h + '</section>';
+            return h + (q.if ? '</div>' : '') + '</section>';
         }
         async function show(lot, page, back) {
             st.lot = Math.max(0, Math.min(st.lots.length - 1, lot || 0));
@@ -1044,6 +1057,9 @@
                 if (a.length) v[k] = a; else delete v[k];
             } else if (v[k] === x) delete v[k]; else v[k] = x;
             repaintQ(k);
+            // The follow ups of this answer open or close, and lose their answers when they close.
+            pruneIf(v).forEach(repaintQ);
+            el.querySelectorAll('.fq-q.fq-if').forEach((sec) => { const on = shownQ(Q[sec.dataset.k] || {}, v); sec.classList.toggle('is-off', !on); sec.toggleAttribute('inert', !on); });
             changed(st.lot);
             if (lotOf(st.lot).copiedFrom !== null || lotOf(st.lot).from) refreshBanner();
         }
@@ -1191,7 +1207,7 @@
             dlg.toggleAttribute('data-keep', all);
             // Each page's title says how many of its questions are answered, as they are.
             const counts = () => body.querySelectorAll('.fq-sec').forEach((sec) => {
-                const n = sec.querySelectorAll('.fq-q').length, d = sec.querySelectorAll('.fq-q.is-done').length, em = sec.querySelector('.fq-sec-h em');
+                const n = sec.querySelectorAll('.fq-q:not(.is-off)').length, d = sec.querySelectorAll('.fq-q.is-done:not(.is-off)').length, em = sec.querySelector('.fq-sec-h em');
                 if (em) { em.textContent = d + ' of ' + n; em.classList.toggle('is-done', d === n); }
             });
             // A fresh host each time: a mount listens on its element, so reusing one would stack listeners.
@@ -1215,7 +1231,7 @@
         try { const r = await window.api(D.urls.save, { method: 'POST', body: p }); SAVED = null; return (r.data && r.data.row) || null; } catch (_) { return null; }
     }
 
-    window.aneeFieldProfile = { mount, open, ask, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS, shape };
+    window.aneeFieldProfile = { mount, open, ask, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS, shape, shown: shownQ };
 })();
 </script>
 @endpush

@@ -426,6 +426,12 @@ final class NpkModel
         // what the rain leaves short, El Nino or not; a little is lost when the water table drops late in a dry
         // season or the fuel runs out. A canal that runs only some of the time ('partial') makes up half.
         'pumpCover' => 0.9, 'partialCover' => 0.5,
+        // How sure the pump is (2026-10-21, the owner: "if it does get water all year round or on very bad dry season
+        // water usually stops and what month usually"): one that gives water all year makes up a little more; in the
+        // months one runs low or stops (every dry season, or only in a very dry year: an El Nino of moderate strength or
+        // more, and the driest of the twenty years) it makes up only pumpLow of the shortfall. Months not given: the
+        // hot dry months, March to May.
+        'pumpAlways' => 0.95, 'pumpLow' => 0.25, 'pumpDryMonths' => [3, 4, 5],
         'splits' => ['sandy' => 3, 'loam' => 2, 'clay' => 2, 'unsure' => 2],
         'acidPh' => 5.5, 'alkPh' => 7.5,
     ];
@@ -483,6 +489,8 @@ final class NpkModel
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
             'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'levels' => self::MICRO_LEVELS, 'soilMicro' => ['step' => self::SOIL_STEP, 'floor' => self::SOIL_FLOOR, 'none' => self::SOIL_NONE, 'factor' => self::SOIL_FACTOR, 'byEl' => self::SOIL_FACTOR_EL], 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
             'field' => self::FIELD, 'yieldBasis' => self::YIELD_BASIS,
+            // The pump's year and its months, in the lot questions' own words (2026-10-21).
+            'pumpYear' => FieldProfile::QUESTIONS['pumpYear']['o'], 'pumpMonths' => FieldProfile::QUESTIONS['pumpStops']['o'],
         ];
     }
 }

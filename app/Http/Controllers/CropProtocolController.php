@@ -579,7 +579,7 @@ class CropProtocolController extends Controller
             'prev' => $prev,
             // The weeks it stands in the field, as NPK Plus reads them (2026-10-19, the owner): twenty years of the
             // place's weather and the ENSO outlook; heavy rain or a dry season moves calcium, magnesium and boron.
-            'season' => $place !== '' ? \App\Support\ProtocolFacts::season($place, NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null), self::plantedOn($p), $water) : null,
+            'season' => $place !== '' ? \App\Support\ProtocolFacts::season($place, NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null), self::plantedOn($p), $water, $L['pump'] ?? null) : null,
         ], $place);
     }
 

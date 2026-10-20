@@ -171,7 +171,7 @@ final class ProtocolFacts
      * heavy rain or a dry season. $from is the planting day (null: two weeks
      * from now, NPK Plus's own default). Null when it cannot be read.
      */
-    public static function season(string $place, ?string $cropKey, ?string $from, string $water): ?array
+    public static function season(string $place, ?string $cropKey, ?string $from, string $water, ?array $pump = null): ?array
     {
         $c = NpkNeed::crop($cropKey);
         if (! $c || trim($place) === '' || ! class_exists(ClimateStore::class) || ! method_exists(NpkNeed::class, 'seasonWater')) {
@@ -187,7 +187,7 @@ final class ProtocolFacts
             }
             self::$memo['enso'] ??= ['v' => ClimateStore::enso()];
 
-            return NpkNeed::seasonWater($c, self::$memo[$memo], NpkNeed::seasonWindow($start, $days), self::$memo['enso']['v'], $water);
+            return NpkNeed::seasonWater($c, self::$memo[$memo], NpkNeed::seasonWindow($start, $days), self::$memo['enso']['v'], $water, $pump);
         } catch (\Throwable $e) {
             report($e);
 
