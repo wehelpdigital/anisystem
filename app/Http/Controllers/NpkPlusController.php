@@ -193,7 +193,7 @@ class NpkPlusController extends Controller
             'level' => $pl['level'], 'samples' => $a['samples'], 'year' => $a['year'],
             'tests' => (object) $a['tests'], 'texture' => $a['texture']['typical'] ?? null, 'ph' => $a['phMid'],
             'phBand' => $a['ph']['band'] ?? null, 'phRange' => $a['ph']['range'] ?? null,
-            'salt' => $a['salinity']['risk'] ?? null, 'conditions' => $a['conditions'],
+            'salt' => $a['salinity']['risk'] ?? null, 'conditions' => $a['conditions'], 'zinc' => $a['zincArea'] ?? null,
             'lines' => array_values(array_filter(explode("\n", \App\Support\SoilAtlas::words($a, 'card')))),
         ];
     }
@@ -528,7 +528,7 @@ class NpkPlusController extends Controller
             . ($soil ? 'Soil test: ' . json_encode($soil) . "\n" : 'No soil test given.' . "\n")
             // Levels the farmer took from the area's typical soil (Use these, 2026-10-18): typical for the area, never a test of this field.
             . (! empty($set['area']['tests']) || ! empty($set['area']['filled'])
-                ? 'Of these, typical for the area (soil samples taken there, not a test of this field; say so): ' . json_encode(array_filter(['levels' => $set['area']['tests'] ?? null, 'filled' => $set['area']['filled'] ?? null])) . "\n" : '')
+                ? 'Of these, typical for the area (soil samples taken there, not a test of this field; say so): ' . json_encode(array_filter(['levels' => $set['area']['tests'] ?? null, 'zinc' => $set['area']['zinc'] ?? null, 'filled' => $set['area']['filled'] ?? null])) . "\n" : '')
             . (! empty($set['texture']) && $set['texture'] !== 'unsure' ? 'Soil type: ' . $set['texture'] . "\n" : '')
             . (! empty($set['conditions']) ? 'Soil conditions the farmer picked: ' . implode(', ', array_map('strval', (array) $set['conditions'])) . "\n" : '')
             . (! empty($set['fieldAdjust']) ? 'What the calculator counted for the field in detail: ' . mb_substr(implode(' ', array_map('strval', (array) $set['fieldAdjust'])), 0, 900) . "\n" : '')
@@ -536,7 +536,7 @@ class NpkPlusController extends Controller
             . (! empty($res['needs']) ? 'The calculator\'s need model, kg per ha for that goal on this soil (the official guide rate sized to the goal and adjusted for the soil; plan is what the plan gives): ' . json_encode($res['needs']) . "\n" : '')
             // The farmer left the micronutrients out (2026-10-21): the reading stays with N, P and K.
             . (($set['microsOn'] ?? true) === false ? 'THE FARMER LEFT THE MICRONUTRIENTS OUT of this plan: read and advise on nitrogen, phosphorus and potassium only, and add no secondary or micro element product.' . "\n" : '')
-            . (! empty($res['micros']) ? 'The calculator\'s secondary, micro and beneficial element needs, kg of element per ha (level none, watch, likely, or test from a soil test): ' . json_encode($res['micros']) . "\n" : '')
+            . (! empty($res['micros']) ? 'The calculator\'s secondary, micro and beneficial element needs, kg of element per ha (level none, watch, likely, or test from a soil test; soil = the share of the crop\'s need the soil gives on its own, from the soil type, the pH, the area\'s soils and what locks it up): ' . json_encode($res['micros']) . "\n" : '')
             . (isset($res['reach']) && $res['reach'] !== null ? 'Liebig reading: at the shortest plank (a nutrient, or the season\'s sun, water or heat) the plan meets about ' . (int) $res['reach'] . "% of the crop's need for the goal"
                 . (isset($res['harvest']) && $res['harvest'] !== null ? '; with what the soil gives on its own, the harvest could still come near ' . (int) $res['harvest'] . '% of the goal this season' : '') . ".\n" : '')
             . (! empty($res['season']['carriesTPerHa']) ? 'What the season lets the variety carry, t/ha (from the years of weather at the field and the ENSO state; potential ' . json_encode($res['season']['potential'] ?? null) . '): ' . json_encode($res['season']['carriesTPerHa']) . "\n" : '')

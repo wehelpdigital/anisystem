@@ -145,6 +145,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'lpNewWorker' => str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), 'lpNewWSheet'),
             'protoCrew' => str_contains((string) @file_get_contents(resource_path('views/crop-protocol/index.blade.php')), 'cqNewWSheet'),
             'protoBarrel' => is_file(resource_path('views/partials/liebig-barrel.blade.php')),
+            // The soil's own micronutrients start the planks and the Micros bars (2026-10-21).
+            'soilMicro' => defined(\App\Support\NpkModel::class . '::SOIL_STEP') && method_exists(\App\Support\NpkNeed::class, 'soilSay'),
             'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),

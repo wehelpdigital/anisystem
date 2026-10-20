@@ -251,6 +251,50 @@ final class NpkModel
     ];
 
     /**
+     * What the soil gives of a secondary or micro element on its own
+     * (2026-10-21, the owner: "analyze the soil type and location if it
+     * already by default has micronutrients ... and if it is locked or not";
+     * nothing should start from zero). The share of the crop's need the soil
+     * meets before any bag: each point of the element's score (its weights:
+     * the soil type, the pH, the soil's conditions, the area's soils, the
+     * plan's own lockouts, the crop's hunger for it) takes SOIL_STEP off a
+     * full share, never under SOIL_FLOOR, so the levels keep their shares
+     * (a score of 1, "may run short", leaves 92%; 2.5, "likely short", 80%).
+     * Nothing flagged leaves at least SOIL_NONE; a soil test that reads low
+     * leaves the test level's share at most, one that reads enough all of
+     * it. The Micros tab and the barrel's planks start from it, never from 0.
+     */
+    public const SOIL_STEP = 0.08;
+
+    public const SOIL_FLOOR = 0.5;
+
+    public const SOIL_NONE = 0.97;
+
+    /**
+     * Why the soil gives less, as a farmer reads it: the soil holds little
+     * of it (low), holds some but locks it up (lock), or the season takes it
+     * away (loss, said as a whole clause). SOIL_FACTOR_EL: an element that
+     * reads a factor its own way (acid soil holds molybdenum but locks it
+     * up; peat binds copper and manganese).
+     */
+    public const SOIL_FACTOR = [
+        'sandy' => ['low', 'sandy soil'], 'peat' => ['low', 'peat soil'], 'low_om' => ['low', 'low organic matter'],
+        'acid' => ['low', 'acid soil'], 'strongAcid' => ['low', 'very acid soil'], 'acid_sulfate' => ['low', 'acid sulfate soil'],
+        'area_zn_low' => ['low', 'the soil around here'], 'area_zn_mlow' => ['low', 'the soil around here'],
+        'alkaline' => ['lock', 'alkaline soil'], 'strongAlk' => ['lock', 'strongly alkaline soil'], 'calcareous' => ['lock', 'limy soil'],
+        'sodic' => ['lock', 'the sodium in the soil'], 'flooded' => ['lock', 'the flooding'], 'waterlogged' => ['lock', 'wet soil'],
+        'drought' => ['lock', 'a dry season'], 'upland' => ['lock', 'soil that is never flooded'],
+        'high_p' => ['lock', 'the heavy phosphorus in the plan'], 'high_k' => ['lock', 'the heavy potassium in the plan'],
+        'liming' => ['lock', 'the lime in the plan'], 'excess_zn' => ['lock', 'the heavy zinc in the plan'],
+        'high_rainfall' => ['loss', 'heavy rain washes it out'], 'intensive_cropping' => ['loss', 'two or three crops a year draw it down'],
+    ];
+
+    public const SOIL_FACTOR_EL = [
+        'Mo' => ['acid' => 'lock', 'strongAcid' => 'lock', 'acid_sulfate' => 'lock'],
+        'Cu' => ['peat' => 'lock'], 'Mn' => ['peat' => 'lock'],
+    ];
+
+    /**
      * Secondary, micro and beneficial elements. base = the corrective dose,
      * kg of the element per hectare; weights = what raises the risk of a
      * shortfall; sensitive = crops that need more or show it first.
@@ -268,7 +312,7 @@ final class NpkModel
             'sources' => [['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf'], ['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf']]],
         'S' => ['base' => 17.5, 'rate' => [10, 40], 'weights' => ['low_om' => 1, 'sandy' => 1, 'calcareous' => 0.25, 'acid_sulfate' => -1, 'saline' => -0.25, 'intensive_cropping' => 1], 'sensitive' => ['cabbage', 'broccoli', 'pechay', 'onion', 'garlic', 'mungbean', 'peanut', 'soybean', 'stringbean', 'rice', 'rice_dsr_wet', 'rice_dsr_dry', 'coconut'], 'critical' => 10, 'over' => 6, 'fert' => 'ammonium sulfate, calcium sulfate (gypsum) or single superphosphate', 'down' => ['acid_sulfate' => 'acid sulfate soil holds too much sulfur, not too little', 'saline' => 'salty soil often carries sulfate'],
             'sources' => [['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf']]],
-        'Zn' => ['base' => 5, 'rate' => [5, 10], 'weights' => ['alkaline' => 1, 'strongAlk' => 1.5, 'calcareous' => 1, 'sodic' => 1, 'waterlogged' => 1, 'flooded' => 1, 'high_p' => 0.5, 'low_om' => 0.5, 'sandy' => 0.5, 'peat' => 0.5, 'liming' => 0.5, 'acid' => -0.5, 'strongAcid' => -0.5, 'intensive_cropping' => 0.5, 'organic_inputs' => -0.25, 'zinc_recent' => -2], 'sensitive' => ['rice', 'rice_dsr_wet', 'rice_dsr_dry', 'corn_yellow', 'corn_sweet', 'sorghum', 'stringbean', 'mungbean', 'onion', 'cassava', 'ginger', 'watermelon', 'pineapple', 'banana', 'mango', 'calamansi', 'coffee', 'cacao', 'coconut'], 'critical' => 0.8, 'over' => 5, 'fert' => 'zinc sulfate', 'down' => ['acid' => 'acid soil frees zinc', 'strongAcid' => 'acid soil frees zinc', 'organic_inputs' => 'manure or compost in the plan brings zinc', 'zinc_recent' => 'the zinc put on in the last two seasons still works'],
+        'Zn' => ['base' => 5, 'rate' => [5, 10], 'weights' => ['alkaline' => 1, 'strongAlk' => 1.5, 'calcareous' => 1, 'sodic' => 1, 'waterlogged' => 1, 'flooded' => 1, 'high_p' => 0.5, 'low_om' => 0.5, 'sandy' => 0.5, 'peat' => 0.5, 'liming' => 0.5, 'acid' => -0.5, 'strongAcid' => -0.5, 'intensive_cropping' => 0.5, 'organic_inputs' => -0.25, 'zinc_recent' => -2, 'area_zn_low' => 1.5, 'area_zn_mlow' => 1, 'area_zn_ok' => -1], 'sensitive' => ['rice', 'rice_dsr_wet', 'rice_dsr_dry', 'corn_yellow', 'corn_sweet', 'sorghum', 'stringbean', 'mungbean', 'onion', 'cassava', 'ginger', 'watermelon', 'pineapple', 'banana', 'mango', 'calamansi', 'coffee', 'cacao', 'coconut'], 'critical' => 0.8, 'over' => 5, 'fert' => 'zinc sulfate', 'down' => ['acid' => 'acid soil frees zinc', 'strongAcid' => 'acid soil frees zinc', 'organic_inputs' => 'manure or compost in the plan brings zinc', 'zinc_recent' => 'the zinc put on in the last two seasons still works', 'area_zn_ok' => 'soils around here usually test fine in zinc'],
             'sources' => [['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf']]],
         'B' => ['base' => 0.875, 'rate' => [0.5, 2], 'weights' => ['sandy' => 1, 'alkaline' => 0.5, 'strongAlk' => 1, 'liming' => 0.5, 'calcareous' => 0.5, 'peat' => 0.5, 'low_om' => 0.5, 'saline' => -1, 'sodic' => -1, 'clay' => -0.5, 'high_rainfall' => 1, 'drought' => 0.5], 'sensitive' => ['broccoli', 'cabbage', 'pechay', 'carrot', 'tomato', 'papaya', 'pineapple', 'sweetpotato', 'coconut', 'coffee', 'cacao', 'mango', 'banana', 'watermelon', 'calamansi'], 'sensitiveWeight' => 1.5, 'critical' => 0.5, 'over' => 2, 'fert' => 'borax or boric acid', 'toxic' => 'Boron burns crops just above the dose they need, and beans, cucumber and soybean are very sensitive: keep to the need.', 'down' => ['sodic' => 'sodic and salty soils usually hold plenty of boron, often too much', 'saline' => 'sodic and salty soils usually hold plenty of boron, often too much', 'clay' => 'clay holds more boron than sandy soil'],
             'sources' => [['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf'], ['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf']]],
@@ -437,7 +481,7 @@ final class NpkModel
 
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
-            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'levels' => self::MICRO_LEVELS, 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
+            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'levels' => self::MICRO_LEVELS, 'soilMicro' => ['step' => self::SOIL_STEP, 'floor' => self::SOIL_FLOOR, 'none' => self::SOIL_NONE, 'factor' => self::SOIL_FACTOR, 'byEl' => self::SOIL_FACTOR_EL], 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
             'field' => self::FIELD, 'yieldBasis' => self::YIELD_BASIS,
         ];
     }

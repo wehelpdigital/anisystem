@@ -54,6 +54,9 @@ final class SoilAtlas
 
     public const TEXTURE = ['L' => 'sandy', 'M' => 'loam', 'H' => 'clay'];
 
+    /** The area's zinc class as NpkNeed's factor (2026-10-21): area_zn_low, area_zn_mlow, area_zn_ok. */
+    public const ZINC_AREA = ['L' => 'low', 'ML' => 'mlow', 'MH' => 'ok', 'H' => 'ok'];
+
     public const TEXTURE_WORDS = ['L' => 'light (sandy)', 'M' => 'medium (loamy)', 'H' => 'heavy (clayey)'];
 
     public const SAL_CLASS = ['ns' => 'not saline', 'ss' => 'slightly saline', 'ms' => 'moderately saline', 'sev' => 'severely saline', 'vsev' => 'very severely saline'];
@@ -98,7 +101,7 @@ final class SoilAtlas
             return self::$memo[$mk] = null;
         }
         try {
-            $key = 'soil-atlas:' . self::conn() . ':v1:' . md5($mk);
+            $key = 'soil-atlas:' . self::conn() . ':v2:' . md5($mk); // v2 (2026-10-21): zincArea
             $out = Cache::remember($key, 6 * 3600, fn () => self::build($place, $crop) ?? false);
         } catch (\Throwable $e) {
             report($e);
@@ -248,6 +251,7 @@ final class SoilAtlas
             }
         }
         $out['tests'] = array_filter($tests);
+        $out['zincArea'] = self::ZINC_AREA[$out['zinc']['class'] ?? ''] ?? null;
         $out['phMid'] = $out['ph']['mid'] ?? null;
         $conds = [];
         if ($out['phMid'] !== null && $out['phMid'] < 5.5) {
@@ -453,6 +457,11 @@ final class SoilAtlas
         if (($in['ph'] ?? null) === null && isset($a['phMid']) && is_numeric($a['phMid'])) {
             $in['ph'] = (float) $a['phMid'];
             $filled[] = 'ph';
+        }
+        // The area's zinc (2026-10-21), where the lot has no zinc test: NpkNeed::moreFactors reads it.
+        if (! empty($a['zincArea']) && ! isset($in['tests']['Zn'])) {
+            $in['areaZinc'] = $a['zincArea'];
+            $filled[] = 'zinc';
         }
         // The area's salt and low organic matter, only when no soil condition was given (2026-10-19): an empty
         // list means "not sure", never "none of them". Acid or alkaline come through the pH, not from here.

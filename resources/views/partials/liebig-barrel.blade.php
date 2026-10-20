@@ -36,6 +36,12 @@
        raw wood, a plank NPK Plus cannot measure is weathered grey. */
     .lb-st.is-unknown .lb-out, .lb-st.is-unknown .lb-in, .lb-st.is-noflag .lb-out, .lb-st.is-noflag .lb-in,
     .lb-st.is-notneeded .lb-out, .lb-st.is-notneeded .lb-in, .lb-st.is-extra .lb-out, .lb-st.is-extra .lb-in { filter: saturate(.25) brightness(1.22); }
+    /* The soil's own part of a plank (2026-10-21): a darker, earthy foot up to what the soil gives. */
+    .lb-out::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--soil, 0) * 100%); pointer-events: none;
+        background: linear-gradient(180deg, rgb(255 233 184 / .45) 0 2px, rgb(70 40 12 / .42) 2px); transition: height .9s cubic-bezier(.22,1,.36,1); }
+    .lb-k.is-soil em { color: #8a5a2b; } html.dark .lb-k.is-soil em { color: #d6a878; }
+    .lb-kbar i { position: absolute; left: 0; top: 0; bottom: 0; z-index: 1; border-radius: 999px 0 0 999px; background: rgb(110 64 22 / .55); transition: width .6s cubic-bezier(.22,1,.36,1); }
+    @media (prefers-reduced-motion: reduce) { .lb-out::before, .lb-kbar i { transition: none; } }
     .lb-st.is-dull .lb-out, .lb-st.is-dull .lb-in { filter: grayscale(1) brightness(.8); }
     .lb-st.is-limit .lb-out b { padding: 2px 0; background: rgb(180 83 9 / .85); }
     .lb-spill { position: absolute; right: 3px; top: -3px; bottom: 0; width: 8px; transform: translateZ(2px); backface-visibility: hidden; -webkit-backface-visibility: hidden;
@@ -219,6 +225,8 @@
             rowsNow.forEach((r, i) => {
                 if (!sts[i]) return;
                 sts[i].style.height = r.px + 'px';
+                // The soil's own part of the plank (2026-10-21): its brown foot.
+                sts[i].style.setProperty('--soil', r.soil != null && r.ratio ? Math.min(1, r.soil / Math.min(1.22, r.ratio)) : 0);
                 sts[i].className = 'lb-st is-' + r.state + (i === limNow ? ' is-limit' : '') + (i === limNow && levelNow < H - 1 && levelNow > 0 ? ' is-spill' : '');
                 sts[i].querySelector('small').textContent = r.pct;
             });
@@ -229,7 +237,7 @@
             lim = limNow;
             if (moved) arrowSoon(false);
         };
-        const WORD = { short: 'Short', right: 'Enough', over: 'Too much', noflag: 'Not flagged', dull: 'Not measured' };
+        const WORD = { short: 'Short', right: 'Enough', over: 'Too much', noflag: 'Not flagged', soil: 'From the soil', dull: 'Not measured' };
         return {
             draw(d) {
                 build(d.staves);
@@ -246,7 +254,8 @@
                 q('.lb-key').innerHTML = d.staves.map((s, i) => {
                     const r = rowsNow[i];
                     return '<button type="button" class="lb-k is-' + esc(r.state) + '" data-i="' + i + '" title="' + esc(r.note || '') + '"><i></i><b>' + esc(s.name || s.t) + (s.name && s.name !== s.t ? ' <small>' + esc(s.t) + '</small>' : '') + '</b>'
-                        + '<span class="lb-kbar"><span style="width:' + (r.ratio === null || r.ratio === undefined ? (r.state === 'dull' ? 100 : 0) : Math.min(100, r.ratio * 100)) + '%"></span></span><em>' + esc(r.word || WORD[r.state] || '') + '</em></button>';
+                        + '<span class="lb-kbar"><span style="width:' + (r.ratio === null || r.ratio === undefined ? (r.state === 'dull' ? 100 : 0) : Math.min(100, r.ratio * 100)) + '%"></span>'
+                        + (r.soil != null && r.ratio != null ? '<i style="width:' + Math.min(100, r.soil * 100) + '%"></i>' : '') + '</span><em>' + esc(r.word || WORD[r.state] || '') + '</em></button>';
                 }).join('');
                 q('.lb-say').innerHTML = d.say || '';
                 return { limit: limNow, level: levelNow / H };

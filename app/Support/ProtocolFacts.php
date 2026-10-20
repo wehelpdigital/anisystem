@@ -100,6 +100,7 @@ final class ProtocolFacts
                     'texture' => in_array($a['texture']['typical'] ?? null, ['clay', 'loam', 'sandy'], true) ? $a['texture']['typical'] : null,
                     'phMid' => isset($a['phMid']) && is_numeric($a['phMid']) ? (float) $a['phMid'] : null,
                     'conditions' => array_values(array_map('strval', (array) ($a['conditions'] ?? []))),
+                    'zinc' => $a['zincArea'] ?? null,
                 ];
             }
         } catch (\Throwable $e) {
@@ -137,6 +138,11 @@ final class ProtocolFacts
         if (($in['ph'] ?? null) === null && $s['phMid'] !== null && ! array_intersect((array) ($in['conditions'] ?? []), ['acidic', 'alkaline', 'acid_sulfate'])) {
             $in['ph'] = $s['phMid'];
             $filled[] = 'ph';
+        }
+        // The area's zinc (2026-10-21, SoilAtlas::fill's rule), where the lot has no zinc test.
+        if (! empty($s['zinc']) && ! isset($in['tests']['Zn'])) {
+            $in['areaZinc'] = $s['zinc'];
+            $filled[] = 'zinc';
         }
         // The area's salt and low organic matter, only when no soil condition was given (2026-10-19): an empty
         // list means "not sure", never "none of them". Acid or alkaline come through the pH, not from here.

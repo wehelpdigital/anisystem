@@ -75,7 +75,9 @@ final class NpkNeed
         'liming' => 'the lime in the plan locks it up', 'excess_zn' => 'heavy zinc in the plan crowds it out',
         // 2026-10-19: the researched factors the first build left out.
         'high_rainfall' => 'heavy rain over the season washes it out', 'drought' => 'a dry season',
-        'intensive_cropping' => 'two or three crops a year', 'upland' => 'dry seeded rice on soil that is not flooded'];
+        'intensive_cropping' => 'two or three crops a year', 'upland' => 'dry seeded rice on soil that is not flooded',
+        // 2026-10-21: the area's zinc, from the soil atlas (SoilAtlas::ZINC_AREA).
+        'area_zn_low' => 'soils around here often test low in zinc', 'area_zn_mlow' => 'soils around here often test moderately low in zinc'];
 
     public const NAMES = ['N' => 'Nitrogen', 'P2O5' => 'Phosphorus', 'K2O' => 'Potassium', 'Ca' => 'Calcium', 'Mg' => 'Magnesium', 'S' => 'Sulfur', 'Zn' => 'Zinc',
         'B' => 'Boron', 'Fe' => 'Iron', 'Mn' => 'Manganese', 'Cu' => 'Copper', 'Mo' => 'Molybdenum', 'Si' => 'Silicon', 'Co' => 'Cobalt'];
@@ -267,6 +269,10 @@ final class NpkNeed
         }
         if (! empty($in['zincRecent'])) {
             $f[] = 'zinc_recent';
+        }
+        // The area's zinc (SoilAtlas::fill, 2026-10-21): only where the lot has no zinc test of its own.
+        if (in_array($in['areaZinc'] ?? null, ['low', 'mlow', 'ok'], true) && ! isset(((array) ($in['tests'] ?? []))['Zn'])) {
+            $f[] = 'area_zn_' . $in['areaZinc'];
         }
         if ((float) ($in['organicKg'] ?? 0) >= 1000) {
             $f[] = 'organic_inputs';
@@ -792,10 +798,18 @@ final class NpkNeed
                 }
             }
             $sens = in_array($c['key'], $e['sensitive'] ?? [], true);
+            // The crop's short name, as the page says it (cropName, cropShort): "Rice, transplanted (Palay)" is "rice".
+            $cropWord = strtolower(explode(',', explode(' (', str_replace(' — ', ', ', (string) $c['label']))[0])[0]);
             if ($sens) {
                 $score += $e['sensitiveWeight'] ?? 1;
-                // The crop's short name, as the page says it (cropName, cropShort): "Rice, transplanted (Palay)" is "rice".
-                $why[] = strtolower(explode(',', explode(' (', str_replace(' — ', ', ', (string) $c['label']))[0])[0]) . ' needs more of it';
+                $why[] = $cropWord . ' needs more of it';
+            }
+            // Why the soil gives less of it (NpkModel::SOIL_FACTOR): holds little, locks it up, or loses it.
+            $sw = ['low' => [], 'lock' => [], 'loss' => [], 'past' => false, 'crop' => $sens ? $cropWord : null];
+            foreach ($e['weights'] ?? [] as $k => $w) {
+                if ($w > 0 && in_array($k, $ff, true) && isset(NpkModel::SOIL_FACTOR[$k])) {
+                    $sw[NpkModel::SOIL_FACTOR_EL[$el][$k] ?? NpkModel::SOIL_FACTOR[$k][0]][] = $k;
+                }
             }
             // Acid around the roots on a high pH soil: zinc, iron, manganese and copper come
             // free again, and on sodic soil the soil's own lime turns to calcium.
@@ -808,6 +822,7 @@ final class NpkNeed
                 $level = 'likely';
                 array_unshift($why, 'zinc ran short last season');
             }
+            $sw['past'] = $fl['zinc'] && $el === 'Zn';
             if (! empty($e['beneficial']) && ! $sens) {
                 $level = 'notneeded';
             }
@@ -819,7 +834,14 @@ final class NpkNeed
                 $level = 'testok';
             }
             $lv = $L[$level] ?? ['dose' => 0, 'share' => 1];
-            $out['micro'][$el] = ['level' => $level, 'why' => $why, 'down' => $down, 'need' => (float) $e['base'] * (float) $lv['dose'] * $ys, 'share' => (float) $lv['share']];
+            // What the soil gives on its own (NpkModel::SOIL_STEP, 2026-10-21): from the same score, held to the level's share.
+            $soil = max(NpkModel::SOIL_FLOOR, min(1.0, 1 - NpkModel::SOIL_STEP * max(0.0, $score)));
+            $soil = match ($level) {
+                'testok', 'notneeded' => 1.0,
+                'none' => max(NpkModel::SOIL_NONE, $soil),
+                default => min($soil, (float) ($lv['share'] ?? 1)),
+            };
+            $out['micro'][$el] = ['level' => $level, 'why' => $why, 'down' => $down, 'need' => (float) $e['base'] * (float) $lv['dose'] * $ys, 'share' => round($soil, 4), 'soilWhy' => $sw];
         }
 
         return $out;
@@ -859,10 +881,57 @@ final class NpkNeed
                 $state = $plan > 0 ? 'extra' : (in_array($mm['level'], ['notneeded', 'testok'], true) ? $mm['level'] : 'noflag');
             }
             $rows[] = ['key' => $el, 'name' => self::NAMES[$el] ?? $el, 'need' => $need > 0 ? round($need, 3) : null, 'plan' => round($plan, 3), 'state' => $state,
-                'level' => $mm['level'], 'why' => array_slice((array) ($mm['why'] ?? []), 0, 3), 'fert' => (string) ($e['fert'] ?? ''), 'beneficial' => ! empty($e['beneficial'])];
+                'level' => $mm['level'], 'why' => array_slice((array) ($mm['why'] ?? []), 0, 3), 'fert' => (string) ($e['fert'] ?? ''), 'beneficial' => ! empty($e['beneficial']),
+                'soilShare' => round((float) ($mm['share'] ?? 1), 3), 'soilSay' => self::soilSay($mm)];
         }
 
         return $rows;
+    }
+
+    /**
+     * What the soil gives of an element on its own, in a sentence (the page's
+     * soilSay(), 2026-10-21): "The soil gives about 84% of it on its own:
+     * alkaline soil locks part of it; corn needs more of it than most crops."
+     * '' for an element the crop does not need.
+     */
+    public static function soilSay(array $mm): string
+    {
+        $level = (string) ($mm['level'] ?? 'none');
+        if ($level === 'notneeded') {
+            return '';
+        }
+        if ($level === 'testok') {
+            return 'Your soil test reads enough: the soil gives all of it.';
+        }
+        $pct = (int) round((float) ($mm['share'] ?? 1) * 100);
+        if ($level === 'none') {
+            return 'Your soil likely gives about all of it (' . $pct . '%) on its own, by its type, pH and place. Only a soil test can say for sure.';
+        }
+        $sw = (array) ($mm['soilWhy'] ?? []);
+        $word = fn ($k) => NpkModel::SOIL_FACTOR[$k][1] ?? $k;
+        $and = fn (array $a) => count($a) < 2 ? (string) ($a[0] ?? '') : implode(', ', array_slice($a, 0, -1)) . ' and ' . end($a);
+        $bits = [];
+        $low = array_values(array_unique(array_map($word, (array) ($sw['low'] ?? []))));
+        if ($low) {
+            $bits[] = $and($low) . (count($low) > 1 ? ' hold' : ' holds') . ' less of it';
+        }
+        $lock = array_values(array_unique(array_map($word, (array) ($sw['lock'] ?? []))));
+        if ($lock) {
+            $bits[] = $and($lock) . (count($lock) > 1 ? ' lock' : ' locks') . ' part of it';
+        }
+        $loss = array_values(array_unique(array_map($word, (array) ($sw['loss'] ?? []))));
+        if ($loss) {
+            $bits[] = $and($loss);
+        }
+        if (! empty($sw['past'])) {
+            $bits[] = 'it ran short last season';
+        }
+        if (! empty($sw['crop'])) {
+            $bits[] = $sw['crop'] . ' needs more of it than most crops';
+        }
+
+        return ($level === 'test' ? 'Your soil test reads low, so the soil gives about ' : 'The soil gives about ') . $pct . '% of it on its own'
+            . ($bits ? ': ' . implode('; ', $bits) : '') . '.';
     }
 
     /** The secondary and micro elements a field needs from a bag, in words: "Zinc 5 kg Zn (likely short: ...)". */
@@ -876,7 +945,8 @@ final class NpkNeed
             $kg = (float) $mm['need'];
             $bits[] = (self::NAMES[$el] ?? $el) . ' ' . ($kg >= 1 ? rtrim(rtrim(number_format($kg, 1, '.', ''), '0'), '.') . ' kg' : round($kg * 1000) . ' g') . ' ' . $el
                 . ' (' . (['watch' => 'may run short', 'likely' => 'likely short', 'test' => 'short by the soil test'][$mm['level']] ?? $mm['level'])
-                . ($mm['why'] ? ': ' . implode(', ', array_slice($mm['why'], 0, 3)) : '') . ')';
+                . ($mm['why'] ? ': ' . implode(', ', array_slice($mm['why'], 0, 3)) : '')
+                . '; the soil gives about ' . (int) round((float) ($mm['share'] ?? 1) * 100) . '% of the crop\'s need on its own)';
         }
 
         return implode('; ', $bits);

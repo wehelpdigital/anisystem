@@ -437,7 +437,9 @@ class CropProtocolController extends Controller
             }
             if ((float) ($m['need'] ?? 0) > 0) {
                 $micros[$el] = ['name' => NpkNeed::NAMES[$el] ?? $el, 'need' => round((float) $m['need'], 3), 'level' => $m['level'], 'why' => array_slice($m['why'], 0, 3),
-                    'fert' => (string) (\App\Support\NpkModel::ELEMENTS[$el]['fert'] ?? ''), 'beneficial' => ! empty(\App\Support\NpkModel::ELEMENTS[$el]['beneficial'])];
+                    'fert' => (string) (\App\Support\NpkModel::ELEMENTS[$el]['fert'] ?? ''), 'beneficial' => ! empty(\App\Support\NpkModel::ELEMENTS[$el]['beneficial']),
+                    // What the soil gives of it on its own (2026-10-21, NpkModel::SOIL_STEP).
+                    'soil' => round((float) ($m['share'] ?? 1), 2), 'soilSay' => NpkNeed::soilSay($m)];
             }
         }
 
@@ -631,7 +633,8 @@ class CropProtocolController extends Controller
         $ben = collect($n['micros'] ?? [])->filter(fn ($m) => ! empty($m['beneficial']));
         $amount = fn (float $kg) => $kg >= 1 ? rtrim(rtrim(number_format($kg, 1, '.', ''), '0'), '.') . ' kg' : round($kg * 1000) . ' g';
         $level = ['watch' => 'may run short', 'likely' => 'likely short', 'test' => 'short by the soil test'];
-        $micro = $req->map(fn ($m, $el) => $m['name'] . ' ' . $amount((float) $m['need']) . ' ' . $el . ' (' . ($level[$m['level']] ?? $m['level']) . ($m['why'] ? ': ' . implode(', ', $m['why']) : '') . ')')->implode('; ');
+        $micro = $req->map(fn ($m, $el) => $m['name'] . ' ' . $amount((float) $m['need']) . ' ' . $el . ' (' . ($level[$m['level']] ?? $m['level']) . ($m['why'] ? ': ' . implode(', ', $m['why']) : '')
+            . (isset($m['soil']) ? '; the soil gives about ' . (int) round((float) $m['soil'] * 100) . '% of the crop\'s need on its own' : '') . ')')->implode('; ');
         $okByTest = collect($n['tested'] ?? [])->filter(fn ($v) => $v === 'ok')->keys()->map(fn ($el) => NpkNeed::NAMES[$el] ?? $el)->implode(', ');
         $need = '- THE NUTRIENT NEED, already worked out by the app with NPK Plus\'s need model (the official guide rate for this crop scaled to the yield goal above, then sized by the soil, the soil test, the stand and the field\'s history): '
             . NpkNeed::words($n['need']) . '.'
@@ -643,7 +646,7 @@ class CropProtocolController extends Controller
             . (! empty($n['habits']['intensive']) ? ' The lot grows two or three crops a year, already counted.' : '')
             . (! empty($n['habits']['zincRecent']) ? ' The lot had zinc in the last two seasons, already counted.' : '')
             . "\n" . ($micro !== ''
-                ? '- THE SECONDARY AND MICRO ELEMENT NEED, worked out the same way (NPK Plus\'s corrective dose sized to the yield goal, counted only where this crop, this soil or the soil test make a shortfall likely), kg of the ELEMENT per hectare: ' . $micro . '. Every other element: no shortage flagged here.'
+                ? '- THE SECONDARY AND MICRO ELEMENT NEED, worked out the same way (NPK Plus\'s corrective dose sized to the yield goal, counted only where this crop, this soil or the soil test make a shortfall likely), kg of the ELEMENT per hectare: ' . $micro . '. Every other element: no shortage flagged here, the soil likely gives about all of it.'
                     . ($okByTest !== '' ? ' Enough by the soil test: ' . $okByTest . '.' : '')
                     . ($ben->isNotEmpty() ? ' Beneficial, not required: ' . $ben->map(fn ($m, $el) => $m['name'] . ' ' . $amount((float) $m['need']) . ' ' . $el)->implode(', ') . '.' : '') . "\n"
                 : '- Secondary and micro elements: no shortage flagged on this ground by the same count.' . ($okByTest !== '' ? ' Enough by the soil test: ' . $okByTest . '.' : '') . "\n");
@@ -2563,7 +2566,7 @@ PROMPT;
         return $this->json(true, 'Protocol ready.', [
             'status' => 'ready',
             'savedId' => (int) $r->id,
-            'report' => \App\Support\GovSource::scrubAll(json_decode($r->report, true)),
+            'report' => self::soilOnRead(\App\Support\GovSource::scrubAll(json_decode($r->report, true))),
             'params' => json_decode($r->params, true),
             'charged' => (float) $r->credits,
             'balance' => round($this->credits->balance($this->payer()->id), 2),
@@ -2600,9 +2603,38 @@ PROMPT;
             'id' => $r->id,
             'title' => $r->title,
             'params' => json_decode($r->params, true),
-            'report' => \App\Support\GovSource::scrubAll(json_decode($r->report, true)),
+            'report' => self::soilOnRead(\App\Support\GovSource::scrubAll(json_decode($r->report, true))),
             'credits' => (float) $r->credits,
         ]);
+    }
+
+    /**
+     * A report made before the soil's own share was counted (2026-10-21):
+     * each element row gets it from its level (NpkModel::MICRO_LEVELS, all
+     * of it where nothing was flagged), so its barrel starts from the soil
+     * too, never from zero. A newer row keeps its own.
+     */
+    private static function soilOnRead($node)
+    {
+        if (! is_array($node)) {
+            return $node;
+        }
+        foreach ($node as $k => $v) {
+            if ($k === 'elements' && is_array($v) && array_is_list($v)) {
+                foreach ($v as $i => $e) {
+                    if (is_array($e) && isset($e['key'], $e['level']) && ! array_key_exists('soilShare', $e)) {
+                        $share = in_array($e['level'], ['testok', 'notneeded', 'none'], true) ? 1.0 : (float) (\App\Support\NpkModel::MICRO_LEVELS[$e['level']]['share'] ?? 1);
+                        $v[$i]['soilShare'] = $share;
+                        $v[$i]['soilSay'] = NpkNeed::soilSay(['level' => (string) $e['level'], 'share' => $share]);
+                    }
+                }
+                $node[$k] = $v;
+            } elseif (is_array($v)) {
+                $node[$k] = self::soilOnRead($v);
+            }
+        }
+
+        return $node;
     }
 
     /** What Anee reads when a protocol is attached to a chat. */

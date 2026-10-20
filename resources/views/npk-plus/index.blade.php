@@ -341,7 +341,14 @@
     html.dark .np-ben { color: #cbd5e1; background: #334155; }
     .np-mbar { position: relative; display: block; height: .45rem; margin-top: .35rem; border-radius: 999px; background: var(--color-gray-100); }
     html.dark .np-mbar { background: #1c2616; }
-    .np-mbar .have { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: #0f766e; transition: width .6s var(--np-ease); }
+    .np-mbar .have { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 999px 999px 0; background: #0f766e; transition: width .6s var(--np-ease), left .6s var(--np-ease); }
+    .np-mbar .soil { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px 0 0 999px; background: #9a6a3a; transition: width .6s var(--np-ease); }
+    html.dark .np-mbar .soil { background: #b98652; }
+    .np-mtxt small.np-soil { display: block; margin-top: .15rem; color: #8a5a2b; }
+    html.dark .np-mtxt small.np-soil { color: #d6a878; }
+    .np-mrow.is-noflag .np-mval em, .np-mrow.is-soil .np-mval em { color: #8a5a2b; }
+    html.dark .np-mrow.is-noflag .np-mval em, html.dark .np-mrow.is-soil .np-mval em { color: #d6a878; }
+    @media (prefers-reduced-motion: reduce) { .np-mbar .have, .np-mbar .soil { transition: none; } }
     .np-mbar .need { position: absolute; top: -.2rem; bottom: -.2rem; width: 2px; margin-left: -1px; background: var(--color-gray-700); }
     html.dark .np-mbar .need { background: #e8efe1; }
     .np-mrow.is-short .np-mbar .have { background: #f59e0b; } .np-mrow.is-over .np-mbar .have { background: #dc2626; }
@@ -382,6 +389,12 @@
     .lb-st.is-notneeded .lb-out, .lb-st.is-notneeded .lb-in, .lb-st.is-extra .lb-out, .lb-st.is-extra .lb-in { filter: saturate(.25) brightness(1.22); }
     .lb-st.is-dull .lb-out, .lb-st.is-dull .lb-in { filter: grayscale(1) brightness(.8); }
     .lb-st.is-limit .lb-out b { padding: 2px 0; background: rgb(180 83 9 / .85); }
+    /* The soil's own part of a plank (2026-10-21): a darker, earthy foot up to what the soil gives. */
+    .lb-out::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--soil, 0) * 100%); pointer-events: none;
+        background: linear-gradient(180deg, rgb(255 233 184 / .45) 0 2px, rgb(70 40 12 / .42) 2px); transition: height .9s var(--np-ease); }
+    .lb-k.is-soil em { color: #8a5a2b; } html.dark .lb-k.is-soil em { color: #d6a878; }
+    .lb-kbar i { position: absolute; left: 0; top: 0; bottom: 0; z-index: 1; border-radius: 999px 0 0 999px; background: rgb(110 64 22 / .55); transition: width .6s var(--np-ease); }
+    @media (prefers-reduced-motion: reduce) { .lb-out::before, .lb-kbar i { transition: none; } }
     .lb-spill { position: absolute; right: 3px; top: -3px; bottom: 0; width: 8px; transform: translateZ(2px); backface-visibility: hidden; -webkit-backface-visibility: hidden;
         border-radius: 5px 5px 2px 2px; opacity: 0; transition: opacity .5s var(--np-ease) .9s;
         background: repeating-linear-gradient(180deg, rgb(147 205 255 / .95) 0 9px, rgb(56 140 225 / .85) 9px 18px); background-size: 100% 18px; animation: lbFlow .55s linear infinite; }
@@ -1104,7 +1117,9 @@
         calcareous: 'limy (calcareous) soil', high_p: 'heavy phosphorus in the plan locks it up', high_k: 'heavy potassium in the plan crowds it out',
         liming: 'the lime in the plan locks it up', excess_zn: 'heavy zinc in the plan crowds it out',
         high_rainfall: 'heavy rain over the season washes it out', drought: 'a dry season', intensive_cropping: 'two or three crops a year',
-        upland: 'dry seeded rice on soil that is not flooded' };
+        upland: 'dry seeded rice on soil that is not flooded',
+        // 2026-10-21: the area's zinc, from the soil atlas (NpkNeed::FACTOR).
+        area_zn_low: 'soils around here often test low in zinc', area_zn_mlow: 'soils around here often test moderately low in zinc' };
     // The usual germination the seeding rates in the guides assume.
     const GERM_USUAL = 85;
 
@@ -1548,7 +1563,7 @@
     const TEX_W = { clay: 'clay', loam: 'loam', sandy: 'sandy' };
     const areaGot = (A) => {
         st.areaSoil = A || null;
-        if (st.area && A) st.area.tests = Object.assign({}, A.tests || {});
+        if (st.area && A) { st.area.tests = Object.assign({}, A.tests || {}); st.area.zinc = A.zinc || null; }
         if (st.area && !A) areaStop(true);
         paintArea();
     };
@@ -1563,6 +1578,7 @@
             const used = [];
             const t = st.area.tests || {};
             if (Object.keys(t).length) used.push('the N, P and K levels');
+            if (st.area.zinc) used.push('the zinc');
             if (st.area.filled && st.area.filled.texture) used.push('the soil type');
             if (st.area.filled && st.area.filled.ph) used.push('the pH');
             if (st.area.filled && st.area.filled.conds) used.push(st.area.filled.conds.map((k) => ({ saline: 'the salt', low_om: 'the low organic matter' })[k]).join(' and '));
@@ -1583,7 +1599,7 @@
             const add = (A.conditions || []).filter((k) => (k === 'saline' || k === 'low_om') && M.conditions[k]);
             if (add.length) { st.conds = add.slice(); filled.conds = add.slice(); }
         }
-        st.area = { where: A.where, tests: Object.assign({}, A.tests || {}), filled };
+        st.area = { where: A.where, tests: Object.assign({}, A.tests || {}), zinc: A.zinc || null, filled };
         soilTag(); paintArea(); calc();
     };
     const areaStop = (quiet) => {
@@ -1647,6 +1663,8 @@
         if (st.intensive) f.add('intensive_cropping');
         if (st.zincRecent) f.add('zinc_recent');
         if ((X.organicKg || 0) >= 1000) f.add('organic_inputs');
+        // The area's zinc (2026-10-21, NpkNeed::moreFactors): only from the area's soil the farmer chose to use, and never over a zinc test.
+        if (st.area && ['low', 'mlow', 'ok'].includes(st.area.zinc) && !soilClass(soil(false)).Zn) f.add('area_zn_' + st.area.zinc);
         return f;
     };
 
@@ -2096,8 +2114,11 @@
                 score += w;
                 if (w > 0) why.push(FACTOR[k] || k); else if (e.down && e.down[k] && !down.includes(e.down[k])) down.push(e.down[k]);
             });
-            const sens = (e.sensitive || []).includes(c.key);
-            if (sens) { score += e.sensitiveWeight || 1; why.push(cropShort(c).split(',')[0].toLowerCase() + ' needs more of it'); }
+            const sens = (e.sensitive || []).includes(c.key), cropWord = cropShort(c).split(',')[0].toLowerCase();
+            if (sens) { score += e.sensitiveWeight || 1; why.push(cropWord + ' needs more of it'); }
+            // Why the soil gives less of it (NpkModel::SOIL_FACTOR): holds little, locks it up, or loses it.
+            const SM = M.soilMicro, sw = { low: [], lock: [], loss: [], past: false, crop: sens ? cropWord : null };
+            Object.entries(e.weights || {}).forEach(([k, w]) => { if (w > 0 && ff.has(k) && SM.factor[k]) sw[(SM.byEl[el] || {})[k] || SM.factor[k][0]].push(k); });
             // Acid around the roots on a high pH soil: zinc, iron, manganese and copper come
             // free again, and on sodic soil the soil's own lime turns to calcium.
             if (au > 0 && alk && (['Zn', 'Fe', 'Mn', 'Cu'].includes(el) || (el === 'Ca' && f.has('sodic')))) {
@@ -2108,11 +2129,15 @@
             let level = score >= L.likely.at ? 'likely' : score >= L.watch.at ? 'watch' : 'none';
             // Your field: a zinc shortage last season makes it likely this one too.
             if (fl && fl.zinc && el === 'Zn' && level !== 'likely') { level = 'likely'; why.unshift('zinc ran short last season'); }
+            sw.past = !!(fl && fl.zinc) && el === 'Zn';
             if (e.beneficial && !sens) level = 'notneeded';
             if (cls[el] === 'low') { level = 'test'; why.unshift('your soil test reads low'); }
             else if (cls[el] === 'ok') level = 'testok';
             const lv = L[level] || { dose: 0, share: 1 };
-            out.micro[el] = { level, why, down, need: e.base * lv.dose * ys, share: lv.share };
+            // What the soil gives on its own (NpkModel::SOIL_STEP, 2026-10-21): from the same score, held to the level's share.
+            let soil = clamp(1 - SM.step * Math.max(0, score), SM.floor, 1);
+            soil = level === 'testok' || level === 'notneeded' ? 1 : level === 'none' ? Math.max(SM.none, soil) : Math.min(soil, lv.share ?? 1);
+            out.micro[el] = { level, why, down, need: e.base * lv.dose * ys, share: Math.round(soil * 1e4) / 1e4, soilWhy: sw };
         });
         return out;
     };
@@ -2226,7 +2251,7 @@
                 // The farm's lot it was made for (2026-10-16): a saved calculation opens on it again.
                 lotId: LOT ? LOT.id : null, lotName: LOT ? LOT.name : null,
                 // The area's typical soil the farmer chose to use (2026-10-18).
-                area: st.area ? { where: st.area.where, tests: st.area.tests, filled: st.area.filled } : null },
+                area: st.area ? { where: st.area.where, tests: st.area.tests, zinc: st.area.zinc || null, filled: st.area.filled } : null },
             season: (() => { const SP = seasonPlanks(c, g); return SP ? { place: st.season.place, window: st.season.window, enso: SP.t.e ? SP.t.e.label : null, rainMm: Math.round(SP.rain), sunMJ: SP.rad, tmean: SP.tmean,
                 needMm: Math.round(SP.need), water: st.water, planks: { sun: Math.round(Math.min(1, SP.sun) * 100), water: Math.round(Math.min(1, SP.water) * 100), temp: Math.round(Math.min(1, SP.temp) * 100) },
                 potential: SP.pot ? { tPerHa: Math.round(SP.pot.t * 10) / 10, given: SP.pot.given } : null,
@@ -2265,7 +2290,7 @@
 
     /* ---- the micros tab: each element's need per area, from the model ---- */
     // One word per verdict, shared with the barrel's planks and key (2026-10-19).
-    const MICRO_WORD = { short: 'Short', right: 'Enough', over: 'Too much', extra: 'Extra', noflag: 'Not flagged', testok: 'Enough', notneeded: 'Not needed' };
+    const MICRO_WORD = { short: 'Short', right: 'Enough', over: 'Too much', extra: 'Extra', noflag: 'From the soil', soil: 'From the soil', testok: 'Enough', notneeded: 'Not needed' };
     // Left out (2026-10-21, the owner): the tab says so, and nothing is counted for the elements past N, P and K.
     const microsOff = () => {
         $('npMicro').innerHTML = '<div class="np-say">The micronutrients are left out: this plan counts nitrogen, phosphorus and potassium only, and the barrel has only their planks. Switch <b>Count the micronutrients</b> back on to see calcium, magnesium, sulfur, zinc, boron and the rest.</div>';
@@ -2278,6 +2303,23 @@
         t.classList.toggle('is-off', !st.microsOn);
     };
     $('npMicrosOn').addEventListener('change', (e) => { st.microsOn = e.target.checked; paintMicroTab(); calc(); });
+    /* What the soil gives of an element on its own, in a sentence (2026-10-21, the owner: "analyze the soil
+       type and location if it already by default has micronutrients ... and if it is locked or not").
+       NpkNeed::soilSay is its twin. */
+    const soilSay = (mm) => {
+        if (!mm || mm.level === 'notneeded') return '';
+        if (mm.level === 'testok') return 'Your soil test reads enough: the soil gives all of it.';
+        const pct = Math.round((mm.share ?? 1) * 100);
+        if (mm.level === 'none') return 'Your soil likely gives about all of it (' + pct + '%) on its own, by its type, pH and place. Only a soil test can say for sure.';
+        const sw = mm.soilWhy || {}, SF = M.soilMicro.factor, uniq = (a) => [...new Set((a || []).map((k) => (SF[k] || [0, k])[1]))];
+        const bits = [], low = uniq(sw.low), lock = uniq(sw.lock), loss = uniq(sw.loss);
+        if (low.length) bits.push(list(low) + (low.length > 1 ? ' hold' : ' holds') + ' less of it');
+        if (lock.length) bits.push(list(lock) + (lock.length > 1 ? ' lock' : ' locks') + ' part of it');
+        if (loss.length) bits.push(list(loss));
+        if (sw.past) bits.push('it ran short last season');
+        if (sw.crop) bits.push(sw.crop + ' needs more of it than most crops');
+        return (mm.level === 'test' ? 'Your soil test reads low, so the soil gives about ' : 'The soil gives about ') + pct + '% of it on its own' + (bits.length ? ': ' + bits.join('; ') : '') + '.';
+    };
     const micros = (c, md, tot, perHa, area, has) => {
         const out = {};
         let k = 0;
@@ -2288,21 +2330,28 @@
             let state;
             if (need > 0) { const r = plan / need; state = r < 0.9 ? 'short' : r > (e.over || 5) ? 'over' : 'right'; }
             else state = plan > 0 ? 'extra' : mm.level === 'notneeded' ? 'notneeded' : mm.level === 'testok' ? 'testok' : 'noflag';
-            out[el] = { need: Math.round(need * 1000) / 1000, plan: Math.round(plan * 1000) / 1000, level: mm.level, state, beneficial: !!e.beneficial };
+            out[el] = { need: Math.round(need * 1000) / 1000, plan: Math.round(plan * 1000) / 1000, level: mm.level, state, beneficial: !!e.beneficial, soil: Math.round((mm.share ?? 1) * 100) / 100 };
             // "Not flagged" is not "the soil gives enough": it means nothing you
             // told NPK Plus points to a shortage. Only a soil test says enough.
-            const say = { none: 'No shortage flagged: nothing you told NPK Plus points to one', notneeded: 'Not needed for this crop', watch: 'May run short', likely: 'Likely short',
+            const say = { none: 'No shortage flagged', notneeded: 'Not needed for this crop', watch: 'May run short', likely: 'Likely short',
                 test: 'Short by your soil test', testok: 'Enough, by your soil test' }[mm.level]
                 + (mm.why.length && (mm.level === 'watch' || mm.level === 'likely') ? ': ' + list(mm.why) : '') + '.';
             const down = mm.down && mm.down.length ? '<small class="np-down">' + esc(list(mm.down).charAt(0).toUpperCase() + list(mm.down).slice(1)) + '.</small>' : '';
             const fix = state === 'short' && e.fert ? ' Usual source: ' + e.fert + '.' : '';
             const warn = state === 'over' && e.toxic ? ' ' + e.toxic : '';
-            const scale = Math.max(need * 1.6, plan * 1.05, 1e-9);
-            const bar = need > 0 || plan > 0 ? '<span class="np-mbar"><span class="have" style="width:' + Math.min(100, plan / scale * 100) + '%"></span>' + (need > 0 ? '<span class="need" style="left:' + (need / scale * 100) + '%"></span>' : '') + '</span>' : '';
+            /* The bar is the crop's whole need for the goal (2026-10-21, the owner): the soil's own share first,
+               then what the plan adds of the rest, past the line when it gives more. The barrel's plank is the
+               same number. An element with no need reads the plan at the "may run short" dose's scale. */
+            const soil = mm.share ?? 1, LV = M.levels.watch, SC = 1.3;
+            const add = plan * (need > 0 ? (1 - soil) / need : (1 - LV.share) / Math.max(1e-9, e.base * LV.dose));
+            const bar = mm.level === 'notneeded' && !(plan > 0) ? '' : '<span class="np-mbar"><span class="soil" style="width:' + (soil / SC * 100) + '%"></span>'
+                + '<span class="have" style="left:' + (soil / SC * 100) + '%;width:' + (Math.max(0, Math.min(SC - soil, add)) / SC * 100) + '%"></span><span class="need" style="left:' + (100 / SC) + '%"></span></span>';
+            const soilLine = mm.level === 'testok' ? '' : soilSay(mm);
             // A beneficial element is never "short": it would help (the barrel leaves it out the same way).
             const word = e.beneficial && state === 'short' ? 'Would help' : MICRO_WORD[state];
             return '<div class="np-mrow is-' + (e.beneficial && state === 'short' ? 'helps' : state) + (['Ca', 'Mg', 'S'].includes(el) ? ' is-sec' : '') + (e.beneficial ? ' is-ben' : '') + '" style="--k:' + (k++) + '"><i>' + el + '</i>'
-                + '<span class="np-mtxt"><b>' + NAMES[el] + (e.beneficial ? '<span class="np-ben">Beneficial, not required</span>' : '') + '</b><small>' + esc(say + fix + warn) + '</small>' + down + bar + '</span>'
+                + '<span class="np-mtxt"><b>' + NAMES[el] + (e.beneficial ? '<span class="np-ben">Beneficial, not required</span>' : '') + '</b><small>' + esc(say + fix + warn) + '</small>' + down
+                + (soilLine ? '<small class="np-soil">' + esc(soilLine) + '</small>' : '') + bar + '</span>'
                 + '<span class="np-mval"><em>' + word + '</em><small>' + (need > 0 ? 'Need ' + amt(need) + ' per ha' + (area > 0 && Math.abs(area - 1) > 0.001 ? ', ' + amt(need * area) + ' in all' : '') : 'Need none') + '</small><small>Plan ' + (plan > 0 ? amt(plan) + ' per ha' : 'none') + '</small></span></div>';
         };
         if (!c) {
@@ -2317,7 +2366,7 @@
             + '<p class="np-mh">Beneficial elements</p><div class="np-mlist">' + ben.map(row).join('') + '</div>'
             + (tot.Cl > 0 ? '<p class="np-fine">Your plan also carries ' + amt(perHa.Cl) + ' of chloride per ha, from muriate of potash. Most crops take it well; on salty soil, sulfate of potash is the gentler source.</p>' : '')
             + (md.lockouts && md.lockouts.length ? '<div class="np-say"><b>Lockouts from the plan:</b> ' + esc(list(md.lockouts.map((k) => ({ high_p: 'the heavy phosphorus can tie up zinc and iron', high_k: 'the heavy potassium can crowd out magnesium and calcium', liming: 'the lime can tie up zinc, boron, manganese, copper and iron', excess_zn: 'the heavy zinc can crowd out copper' })[k]))) + '. They are counted in the needs above.</div>' : '')
-            + '<div class="np-say">Each need is a corrective dose sized to your goal, counted only where your crop, your soil or your plan make a shortfall likely. "Not flagged" means nothing you told NPK Plus points to a shortage, not that the soil has enough: only a soil test can say that.</div>';
+            + '<div class="np-say">Each bar is all your crop needs of the element for your goal, up to the line: the brown part is what the soil gives on its own, read from your soil type, pH, area and what locks it up, and the part after it is what your plan adds. Each need in kg is a corrective dose for the part the soil does not give, counted only where your crop, your soil or your plan make a shortfall likely. Only a soil test can say for sure what your soil holds.</div>';
         return out;
     };
 
@@ -2426,6 +2475,8 @@
             set(rows, levelPx, limIdx) {
                 rows.forEach((r, i) => {
                     sts[i].style.height = r.px + 'px';
+                    // The soil's own part of the plank (2026-10-21): its brown foot.
+                    sts[i].style.setProperty('--soil', r.soil != null && r.ratio ? Math.min(1, r.soil / Math.min(1.22, r.ratio)) : 0);
                     sts[i].className = 'lb-st is-' + r.state + (i === limIdx ? ' is-limit' : '') + (i === limIdx && levelPx < H - 1 && levelPx > 0 ? ' is-spill' : '');
                     sts[i].querySelector('small').textContent = r.pct;
                 });
@@ -2458,7 +2509,10 @@
        The water is the need met at the shortest plank. The harvest is said
        apart (yr): the soil gives part of a missing nutrient on its own, so a
        short plan costs less harvest than its plank shows, while it drains
-       the soil for the next season. */
+       the soil for the next season. A secondary or micro plank (2026-10-21,
+       the owner) starts at what the soil gives of it on its own (the brown
+       foot of the plank, md.micro[el].share), never at zero: the plan adds
+       the rest, as the Micros tab's bar shows it. */
     const barrel = (c, md, states, perHa, has, g, micro) => {
         STAVES = stavesFor(micro);
         BR.build(STAVES);
@@ -2475,7 +2529,7 @@
                 return;
             }
             const n = s.k;
-            let state = 'unknown', ratio = null, yr = null, note = c ? 'No numbers for this crop' : 'Pick the crop';
+            let state = 'unknown', ratio = null, yr = null, soil = null, note = c ? 'No numbers for this crop' : 'Pick the crop';
             // A plank from its tab's verdict and cover: short at its cover, enough at the rim, too much above it.
             const plank = (st0, cover, over) => st0 === 'over' ? over : st0 === 'right' || st0 === 'testok' ? 1 : Math.min(1, cover);
             if (c && NPK.includes(n)) {
@@ -2490,23 +2544,26 @@
                         + (state === 'short' ? ' (the soil gives some on its own: the harvest keeps about ' + Math.round(yr * 100) + '%)' : '');
                 }
             } else if (c && md.micro[n]) {
-                // The Micros tab's own verdict (micros() above), so the two never disagree.
-                const mm = md.micro[n], plan = perHa[n] || 0, v = (micro && micro[n]) || {};
+                // The Micros tab's own verdict and bar (micros() above), so the two never disagree.
+                const mm = md.micro[n], plan = perHa[n] || 0, v = (micro && micro[n]) || {}, s0 = mm.share ?? 1;
                 state = v.state || 'noflag';
+                soil = s0;
                 if (mm.need > 0) {
                     const cover = plan / mm.need;
-                    ratio = plank(state, cover, 1.1);
-                    yr = state === 'short' ? mm.share + (1 - mm.share) * Math.min(1, cover) : 1;
-                    note = { watch: 'May run short', likely: 'Likely short', test: 'Short by your soil test' }[mm.level] + (plan > 0 ? ', plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the need for your goal' : ', none in plan');
+                    ratio = state === 'over' ? 1.1 : state === 'right' ? 1 : s0 + (1 - s0) * Math.min(1, cover);
+                    yr = Math.min(1, ratio);
+                    note = { watch: 'May run short', likely: 'Likely short', test: 'Short by your soil test' }[mm.level] + ': the soil gives about ' + Math.round(s0 * 100) + '% of it on its own'
+                        + (plan > 0 ? ', and your plan covers ' + Math.round(Math.min(cover, 9.99) * 100) + '% of the rest' : ', and your plan adds none');
                 } else if (state === 'testok') { ratio = 1; yr = 1; note = 'Enough, by your soil test'; }
+                else if (state === 'noflag') { state = 'soil'; ratio = s0; yr = s0; note = 'From the soil: your soil likely gives about all of it (' + Math.round(s0 * 100) + '%) on its own'; }
                 else {
-                    // Not flagged, not needed or extra: no need to measure the plank against, drawn full and pale.
-                    ratio = null;
-                    note = { notneeded: 'Not needed for this crop', extra: 'Extra: the crop has no need for it here' }[state] || 'No shortage flagged: nothing you told NPK Plus points to one';
+                    // Not needed or extra: no need to measure the plank against, drawn full and pale.
+                    ratio = null; soil = null;
+                    note = { notneeded: 'Not needed for this crop', extra: 'Extra: the crop has no need for it here' }[state] || 'No shortage flagged';
                 }
             }
             const px = ratio === null ? H : Math.max(22, Math.round(H * Math.min(1.22, ratio)));
-            rows.push({ state, ratio, yr, px, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
+            rows.push({ state, ratio, yr, px, soil, pct: ratio === null ? '?' : Math.round(Math.min(ratio, 1) * 100) + '%', note });
         });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null && r.state !== 'dull');
         // The season's sky and water, from twenty years of weather.
@@ -2534,7 +2591,7 @@
         $('lbKey').innerHTML = STAVES.map((s, i) => {
             const r = rows[i];
             return '<button type="button" class="lb-k is-' + r.state + '" data-i="' + i + '" title="' + esc(r.note) + '"><i></i><b>' + esc(s.name || NAMES[s.k]) + (s.dull ? '' : ' <small>' + s.t + '</small>') + '</b>'
-                + '<span class="lb-kbar"><span style="width:' + (r.ratio === null ? (r.state === 'dull' ? 100 : 0) : Math.min(100, r.ratio * 100)) + '%"></span></span><em>' + (WORD[r.state] || '') + '</em></button>';
+                + '<span class="lb-kbar"><span style="width:' + (r.ratio === null ? (r.state === 'dull' ? 100 : 0) : Math.min(100, r.ratio * 100)) + '%"></span>' + (r.soil != null && r.ratio !== null ? '<i style="width:' + Math.min(100, r.soil * 100) + '%"></i>' : '') + '</span><em>' + (WORD[r.state] || '') + '</em></button>';
         }).join('');
         // The water, said: the share of the need met at the shortest plank. And the harvest apart: the
         // soil gives part of a missing nutrient on its own, so it falls less than the water.
@@ -2568,6 +2625,9 @@
             if (over.length) say += ' Too much ' + esc(list(over)) + ': the taller plank holds no more water. It costs money' + (over.includes('nitrogen') ? ', and too much nitrogen can make the crop lodge and draw pests' : '') + '.';
             const unk = STAVES.filter((s, i) => rows[i].state === 'noflag').map((s) => s.t);
             if (unk.length) say += ' Not flagged: ' + esc(unk.join(', ')) + '. Nothing you told NPK Plus points to a shortage of them, as the Micros tab says; only a soil test can say they are enough.';
+            const fromSoil = STAVES.filter((s, i) => rows[i].state === 'soil').map((s) => s.t);
+            if (fromSoil.length) say += ' From the soil: ' + esc(fromSoil.join(', ')) + '. By your soil type, pH and place, the soil likely gives about all of them on its own; only a soil test can say for sure.';
+            if (rows.some((r) => r.soil != null && r.state !== 'soil' && r.soil < 1)) say += ' The brown foot of a plank is what the soil gives of it on its own, read from your soil type, pH, area and what locks it up; your plan adds the rest.';
             const nn = STAVES.filter((s, i) => rows[i].state === 'notneeded').map((s) => s.t);
             if (nn.length) say += ' Not needed for this crop: ' + esc(nn.join(', ')) + '.';
         }
@@ -2867,7 +2927,7 @@
             st.intensive = !!set.intensive; $('npIntensive').checked = st.intensive;
             st.zincRecent = !!set.zincRecent; $('npZincRecent').checked = st.zincRecent;
             st.microsOn = set.microsOn !== false; $('npMicrosOn').checked = st.microsOn; paintMicroTab();
-            st.area = set.area && typeof set.area === 'object' ? { where: set.area.where || '', tests: set.area.tests || {}, filled: set.area.filled || {} } : null;
+            st.area = set.area && typeof set.area === 'object' ? { where: set.area.where || '', tests: set.area.tests || {}, zinc: set.area.zinc || null, filled: set.area.filled || {} } : null;
             st.areaNo = false;
             const s = d.soil || {};
             $('npPh').value = set.ph != null ? set.ph : (s.ph != null ? s.ph : '');

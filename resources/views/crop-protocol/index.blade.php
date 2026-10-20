@@ -515,6 +515,8 @@
     .cp2-nut-row .v small { display: block; font-size: .64rem; color: var(--color-gray-400); text-align: right; }
     .cp2-nut-row .vd { grid-area: vd; font-size: .7rem; font-weight: 700; color: var(--color-gray-500); padding-left: 3.1rem; }
     .cp2-nut-row.is-ok .vd { color: #166534; }
+    .cp2-nut-row .vd small.cp2-soil { display: block; margin-top: .1rem; font-weight: 600; color: #8a5a2b; }
+    html.dark .cp2-nut-row .vd small.cp2-soil { color: #d6a878; }
     .cp2-nut-row.is-short .vd { color: #b45309; }
     .cp2-nut-row.is-short .have { background: #f0b04a; }
     .cp2-nut-row.is-over .vd { color: var(--color-gray-500); }
@@ -2438,7 +2440,7 @@
         const mics = Object.entries(n.micros || {}).filter(([, m]) => !m.beneficial);
         box.innerHTML = '<div class="cq-need-h">This lot\'s need a hectare, counted like NPK Plus' + (window.aneeTl ? window.aneeTl.flag('npk-plus') : '') + '</div>'
             + '<div class="cq-need-n"><span><b>' + kgFmt(n.need.N) + '</b><small>kg N</small></span><span><b>' + kgFmt(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kgFmt(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
-            + (mics.length ? '<div class="cq-need-m">' + mics.map(([, m]) => '<span>' + esc(m.name) + ' ' + esc(amt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + '</small></span>').join('') + '</div>' : '')
+            + (mics.length ? '<div class="cq-need-m">' + mics.map(([, m]) => '<span title="' + esc(m.soilSay || '') + '">' + esc(m.name) + ' ' + esc(amt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + (m.soil != null ? ', the soil gives ' + Math.round(m.soil * 100) + '%' : '') + '</small></span>').join('') + '</div>' : '')
             + (n.goal ? '<p>For <b>' + esc(t(n.goal.eff)) + '</b>' + (Math.abs(n.goal.eff - n.goal.t) > 0.01 ? ' (' + esc(t(n.goal.t)) + ', ' + esc(n.goal.why) + ', less for this lot)' : ', ' + esc(n.goal.why)) + '. Every program is held to this, and what still falls short is added for you.</p>' : '')
             + (lines.length ? '<p>' + lines.map(esc).join(' ') + '</p>' : '');
         box.hidden = false;
@@ -3189,9 +3191,15 @@
         const base = ['Ca', 'Mg', 'S', 'Zn', 'B'];
         (pg.elements || []).filter((e) => !e.beneficial && (base.includes(e.key) || ['short', 'over', 'right', 'spray'].includes(e.state))).forEach((e) => {
             const need = e.need === null || e.need === undefined ? null : Number(e.need), plan = (Number(e.plan) || 0) + (topUp[e.key] || 0);
-            const r = need ? plan / need : null;
+            const r = need ? plan / need : null, s0 = e.soilShare === null || e.soilShare === undefined ? null : Number(e.soilShare);
+            let state = e.state === 'over' ? 'over' : stateOf(r, 99), ratio = r;
+            // The plank starts at what the soil gives of it on its own (2026-10-21, NpkNeed::check's soilShare), never at zero.
+            if (s0 !== null && need) ratio = state === 'over' ? 1.1 : state === 'right' ? 1 : s0 + (1 - s0) * Math.min(1, r);
+            else if (s0 !== null && e.state === 'testok') { state = 'right'; ratio = 1; }
+            else if (s0 !== null && e.state === 'noflag') { state = 'soil'; ratio = s0; }
             staves.push({ k: e.key, t: e.key, name: e.name });
-            rows.push({ state: e.state === 'over' ? 'over' : stateOf(r, 99), ratio: r, pct: pct(r), note: need ? 'The plan gives ' + amt(plan) + ' of the ' + amt(need) + ' a hectare' : 'No shortage flagged on this lot' });
+            rows.push({ state, ratio, soil: s0, pct: pct(ratio), note: need ? (s0 !== null ? 'The soil gives about ' + Math.round(s0 * 100) + '% of what the crop needs of it on its own; the plan gives ' + amt(plan) + ' of the ' + amt(need) + ' a hectare it needs for the rest' : 'The plan gives ' + amt(plan) + ' of the ' + amt(need) + ' a hectare')
+                : state === 'soil' ? 'From the soil: by this lot\'s soil type, pH and place, the soil likely gives about all of it (' + Math.round(s0 * 100) + '%)' : state === 'right' ? 'Enough by the soil test' : 'No shortage flagged on this lot' });
         });
         // The season's water: rain (and the pump or the canal) against what the crop drinks.
         const sn = n.season;
@@ -3215,6 +3223,7 @@
         const over = rows.map((r, i) => [r, i]).filter(([r]) => r.state === 'over').map(([, i]) => staves[i].name.toLowerCase());
         if (over.length) say += ' Too much ' + esc(andList(over)) + ': the taller plank holds no more water, and it costs money.';
         if (locks.length) say += ' <b>Lockouts from the plan:</b> ' + esc(andList(locks)) + '. They are counted in the needs.';
+        if (rows.some((r) => r.soil != null && r.state !== 'soil' && r.soil < 1)) say += ' The brown foot of a plank is what the soil gives of it on its own, read from the lot\'s soil type, pH, area and what locks it up; the plan adds the rest.';
         b.draw({ staves, rows, tag: goal ? 'The rim is this lot\'s goal, ' + fmt2(goal) + ' ' + unit + ' a hectare.' : 'The rim is everything the crop needs.',
             arrow: 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : ''),
             reach: reach !== null ? '<b>' + reach + '%</b><span>of what this lot needs for its goal is met, at the shortest plank.</span>' : '',
@@ -3275,7 +3284,7 @@
                             + '<span class="v"><b>' + esc(trimN(c.have)) + '</b>' + (c.need != null ? ' / ' + esc(trimN(c.need)) : '') + (area !== 1 ? '<small>(' + esc(trimN(c.haveField)) + (c.needField != null ? ' / ' + esc(trimN(c.needField)) : '') + ')</small>' : '') + '</span>'
                             + '<span class="vd">' + (c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? '⚠️ short by ' + esc(trimN(Math.abs(c.gap))) : (c.verdict === 'over' ? '↑ over by ' + esc(trimN(c.gap)) : 'not checked'))) + '</span></div>'; }).join('')
                         + (els.length ? '<p class="cp2-nut-sub">Secondary and micro elements</p>' + shown.map((e) => { const top = Math.max(1e-6, Number(e.plan) || 0, Number(e.need) || 0); return '<div class="cp2-nut-row is-el is-' + esc(e.state) + (e.beneficial ? ' is-ben' : '') + '"><span class="l" title="' + esc(e.name) + '">' + esc(e.key) + '</span><div class="tr"><span class="have" style="width:' + Math.max(2, Math.round(((Number(e.plan) || 0) / top) * 100)) + '%"></span>' + (e.need !== null ? '<i class="need" style="left:' + Math.min(100, Math.round(((Number(e.need) || 0) / top) * 100)) + '%"></i>' : '') + '</div>'
-                            + '<span class="v"><b>' + esc(elAmt(e.plan)) + '</b>' + (e.need !== null ? ' / ' + esc(elAmt(e.need)) : '') + '</span><span class="vd">' + esc(e.name) + ': ' + (e.beneficial ? 'it helps, but is not required, so nothing is added' : e.state === 'short' ? '⚠️ short by ' + esc(elAmt(Math.max(0, Number(e.need) - Number(e.plan)))) + (PROG === 0 ? ', added below' : '') : (e.state === 'spray' ? '💧 given by the spray' + (e.sprayAt ? ' at ' + esc(e.sprayAt) : '') : esc(word[e.state] || ''))) + (e.beneficial ? ' (beneficial, not required)' : '') + '</span></div>'; }).join('') : '')
+                            + '<span class="v"><b>' + esc(elAmt(e.plan)) + '</b>' + (e.need !== null ? ' / ' + esc(elAmt(e.need)) : '') + '</span><span class="vd">' + esc(e.name) + ': ' + (e.beneficial ? 'it helps, but is not required, so nothing is added' : e.state === 'short' ? '⚠️ short by ' + esc(elAmt(Math.max(0, Number(e.need) - Number(e.plan)))) + (PROG === 0 ? ', added below' : '') : (e.state === 'spray' ? '💧 given by the spray' + (e.sprayAt ? ' at ' + esc(e.sprayAt) : '') : esc(word[e.state] || ''))) + (e.beneficial ? ' (beneficial, not required)' : '') + (e.soilSay && e.state !== 'testok' ? '<small class="cp2-soil">' + esc(e.soilSay) + '</small>' : '') + '</span></div>'; }).join('') : '')
                         + ((g.unknownProducts || []).length ? '<p class="cp-note">Not counted (nutrient content unknown): ' + esc(g.unknownProducts.join(', ')) + '.</p>' : '') + '</div>' + (npk.note ? '<p class="cp-note">' + esc(sweepT(npk.note)) + '</p>' : '') : '') + '</div>' : '');
             wire();
             if (viewHost && viewHost.classList.contains('is-drawn')) requestAnimationFrame(() => hostBox.querySelectorAll('.cp-bar, .cp2-tot-row .tr span, .cp2-nut-row .have').forEach((el) => { el.style.transition = 'none'; el.style.transform = 'none'; }));
@@ -3732,9 +3741,9 @@
                         <span class="l" title="${esc(e.name)}">${esc(e.key)}</span>
                         <div class="tr"><span class="have" style="width:${Math.max(2, Math.round(((Number(e.plan) || 0) / top) * 100))}%"></span>${e.need !== null ? `<i class="need" style="left:${Math.min(100, Math.round(((Number(e.need) || 0) / top) * 100))}%"></i>` : ''}</div>
                         <span class="v"><b>${esc(elAmt(e.plan))}</b>${e.need !== null ? ` / ${esc(elAmt(e.need))}` : ''}${Number(p.area) && Number(p.area) !== 1 && e.need !== null ? `<small>(${esc(elAmt(e.planField))} / ${esc(elAmt(e.needField))})</small>` : ''}</span>
-                        <span class="vd">${esc(e.name)}: ${e.state === 'short' ? `⚠️ short by ${esc(elAmt(Math.max(0, Number(e.need) - Number(e.plan))))}${e.fert ? '. Usual source: ' + esc(e.fert) : ''}` : (e.state === 'spray' ? `💧 given by the spray${e.sprayAt ? ' at ' + esc(e.sprayAt) : ''}` : esc(word[e.state] || ''))}${e.beneficial ? ' (beneficial, not required)' : ''}</span>
+                        <span class="vd">${esc(e.name)}: ${e.state === 'short' ? `⚠️ short by ${esc(elAmt(Math.max(0, Number(e.need) - Number(e.plan))))}${e.fert ? '. Usual source: ' + esc(e.fert) : ''}` : (e.state === 'spray' ? `💧 given by the spray${e.sprayAt ? ' at ' + esc(e.sprayAt) : ''}` : esc(word[e.state] || ''))}${e.beneficial ? ' (beneficial, not required)' : ''}${e.soilSay && e.state !== 'testok' ? `<small class="cp2-soil">${esc(e.soilSay)}</small>` : ''}</span>
                     </div>`; }).join('')
-                            + (quiet.length || ok.length ? `<p class="cp2-nut-quiet">${quiet.length ? 'No shortage flagged: ' + esc(quiet.join(', ')) + '. ' : ''}${ok.length ? 'Enough by your soil test: ' + esc(ok.join(', ')) + '. ' : ''}Counted the way NPK Plus counts them.</p>` : '');
+                            + (quiet.length || ok.length ? `<p class="cp2-nut-quiet">${quiet.length ? 'From the soil: ' + esc(quiet.join(', ')) + '. By this lot\'s soil type, pH and place, the soil likely gives about all of them on its own; only a soil test can say for sure. ' : ''}${ok.length ? 'Enough by your soil test: ' + esc(ok.join(', ')) + '. ' : ''}Counted the way NPK Plus counts them.</p>` : '');
                     })()}
                     ${(g.unknownProducts || []).length ? `<p class="cp-note">Not counted (nutrient content unknown): ${esc((g.unknownProducts || []).join(', '))}.</p>` : ''}
                 </div>${npk.basis ? `<p class="cp-note">${esc(npk.basis)}</p>` : ''}${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
