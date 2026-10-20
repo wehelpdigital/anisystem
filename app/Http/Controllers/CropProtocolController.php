@@ -349,6 +349,9 @@ class CropProtocolController extends Controller
             'prevCrops' => self::PREV_CROPS,
             'residues' => self::RESIDUES,
             'granulars' => self::GRANULARS,
+            // The real products on Philippine shelves (2026-10-21, the owner: Atlas, Yara's UNIK and KUMPLE+O and the rest).
+            'products' => route('proto.products'),
+            'productKinds' => array_intersect_key(NpkPlusController::CATEGORIES, array_flip(\App\Support\PhFertilizers::SOIL_CATEGORIES)),
             // The engine's quote (App\Support\AiPricing): one size, today's flat price unless the cost says more.
             'quote' => $canUse ? (float) AiPricing::credits('protocol', ['lots' => 1, 'cases' => 0]) : null,
             'aneeFace' => $settings->faceUrl(),
@@ -889,6 +892,8 @@ class CropProtocolController extends Controller
             'mode' => 'nullable|in:auto,keep',
             'granulars' => 'nullable|array|max:20',
             'granulars.*' => 'string|max:24',
+            'products' => 'nullable|array|max:30',
+            'products.*' => 'integer',
             'notes' => 'nullable|string|max:500',
             'location' => 'nullable|string|max:160',
         ], [], ['lots.*.areaHa' => 'lot size', 'lots.*.crop' => 'crop', 'lots.*.month' => 'planting month', 'lots.*.name' => 'lot name']);
@@ -899,6 +904,7 @@ class CropProtocolController extends Controller
             return 'Pick or add at least one worker, with a work day.';
         }
         $granulars = WhatToPlantController::picks(self::GRANULARS, $in['granulars'] ?? []);
+        $products = self::brandProducts((array) ($in['products'] ?? []));
         // Plan the secondary and micro elements too (2026-10-21, the owner asks it after the fertilizers); yes unless said.
         $micros = ! array_key_exists('micros', $in) || $in['micros'] === null || filter_var($in['micros'], FILTER_VALIDATE_BOOLEAN);
         $notes = trim((string) preg_replace('/\s+/', ' ', (string) ($in['notes'] ?? '')));
@@ -981,7 +987,7 @@ class CropProtocolController extends Controller
             if ($l['place'] === '') {
                 $lots[$i]['place'] = $location;
             }
-            $lots[$i]['p'] = self::lotParams($lots[$i], $granulars, $notes) + ['micros' => $micros];
+            $lots[$i]['p'] = self::lotParams($lots[$i], $granulars, $notes) + ['micros' => $micros, 'products' => $products];
         }
         $crew = ProtocolCrew::crewOf((array) ($in['crew'] ?? []));
         $crew['saveNew'] = ! empty($in['crew']['saveNew']);
@@ -991,10 +997,67 @@ class CropProtocolController extends Controller
             'crew' => $crew,
             'mode' => ($in['mode'] ?? 'auto') === 'keep' ? 'keep' : 'auto',
             'granulars' => $granulars,
+            'products' => $products,
             'notes' => $notes,
             'location' => $location,
             'micros' => $micros,
         ];
+    }
+
+    /**
+     * The farmer's own products (2026-10-21, the owner): the registered
+     * Philippine products they can buy, by id, with their exact analysis,
+     * so Anee plans with them and the check counts what each carries.
+     *
+     * @return list<array{id: int, name: string, brand: string, grade: string, pct: array<string, float>}>
+     */
+    private static function brandProducts(array $ids): array
+    {
+        $ids = array_values(array_unique(array_filter(array_map('intval', $ids))));
+        if (! $ids) {
+            return [];
+        }
+        try {
+            $rows = DB::table('as_ph_fertilizers')->whereIn('id', array_slice($ids, 0, 30))->where('active', 1)->get();
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [];
+        }
+
+        return $rows->map(fn ($r) => \App\Support\PhFertilizers::row($r))
+            ->map(fn ($r) => ['id' => $r['id'], 'name' => (string) $r['name'], 'brand' => (string) $r['brand'], 'grade' => (string) $r['grade'],
+                'pct' => array_map('floatval', array_filter((array) $r['pct'], fn ($v) => (float) $v > 0))])->values()->all();
+    }
+
+    /** "YaraMila UNIK 16 (16-16-16) [N 16, P2O5 16, K2O 16, S 1.5]": a product and every nutrient it carries. */
+    private static function brandWords(array $b): string
+    {
+        $bits = [];
+        foreach ((array) $b['pct'] as $n => $v) {
+            $bits[] = $n . ' ' . rtrim(rtrim(number_format((float) $v, 2, '.', ''), '0'), '.');
+        }
+
+        return $b['name'] . ($bits ? ' [' . implode(', ', $bits) . ']' : '');
+    }
+
+    /** The case's own products, for the check (tidy): set while a report is tidied. */
+    private static array $brands = [];
+
+    /** The page's product list: the granular and crystal products on Philippine shelves, the hand checked first. */
+    public function products(Request $request)
+    {
+        $q = \Illuminate\Support\Str::limit(trim((string) $request->query('q', '')), 80, '');
+        $cat = (string) $request->query('cat', '');
+        $cat = in_array($cat, \App\Support\PhFertilizers::SOIL_CATEGORIES, true) ? $cat : '';
+        try {
+            $rows = \App\Support\PhFertilizers::search($q, $cat, $q === '' ? 200 : 80, true);
+        } catch (\Throwable $e) {
+            report($e);
+            $rows = [];
+        }
+
+        return $this->json(true, 'ok', ['rows' => array_map(fn ($r) => array_intersect_key($r, array_flip(['id', 'brand', 'name', 'company', 'category', 'form', 'grade', 'pct', 'curated'])), $rows)]);
     }
 
     /** The seed calculator's spacing for a crop and its way in (SeedSpacing::CROPS), in cm; null where it has no entry. */
@@ -1256,7 +1319,7 @@ class CropProtocolController extends Controller
 
         return [
             'format' => 4, 'crop' => $first['crop'], 'month' => $first['month'], 'location' => $case['location'], 'mode' => $case['mode'],
-            'crew' => array_diff_key($case['crew'], ['saveNew' => 1]), 'granulars' => $case['granulars'], 'notes' => $case['notes'], 'size' => $size, 'price' => $price,
+            'crew' => array_diff_key($case['crew'], ['saveNew' => 1]), 'granulars' => $case['granulars'], 'products' => $case['products'] ?? [], 'notes' => $case['notes'], 'size' => $size, 'price' => $price,
             'lots' => array_map(fn ($l) => array_diff_key($l, ['p' => 1]) + ['p' => array_diff_key($l['p'], ['fieldProfileSaid' => 1])], $case['lots']),
             // The first lot's answers where a protocol of one lot kept them.
             'area' => (float) $first['areaHa'], 'method' => $first['method'], 'variety' => $first['variety'], 'priority' => $first['priority'],
@@ -1836,6 +1899,7 @@ GROUND RULES
 - CRITICALITY BY STAGE: size every application to what the crop can take up then. The basal is a starter; the bulk of nitrogen goes where the crop builds yield (tillering and panicle initiation in rice; V6 to V8 and before tasselling in corn; branching and fruit set in vegetables); potassium where straw strength and grain fill are decided. Keep any single nitrogen dressing within the safe range (rice about 1 to 2 bags of urea a hectare a split, corn about 2 to 3) and say the ceiling in timingLogic. Credit what a legume or ploughed in residue left.
 {$microRule}- SECONDARY AND MICRO ELEMENTS ARE PART OF THE PROGRAM: the recommended program carries what the main fertilizers bring (ammonium sulfate 24 percent S, solophos 12 percent S and 20 percent Ca, gypsum 23 percent Ca and 18 percent S, dolomite 21 percent Ca and 12 percent Mg) and adds a soil product for an element in THE SECONDARY AND MICRO ELEMENT NEED only where this soil truly calls for it (zinc sulfate on flooded or alkaline rice, borax for fruiting crops on sandy ground), as kgPerHa and never past the need (boron burns crops just above it). The app adds what is still short after the recommended program, by the kilo or as a spray, and shows it: do not pile products on to be safe.
 - THREE PROGRAMS, honest about what each is for: the first is your recommendation; the second a lean low cost program; the third a genuinely different strategy that makes sense HERE (soil first, one simple product, LCC guided, a fuller push). {$programRule}. Each: name at most 4 words; for at most 22 words; applications 3 to 9 = {stage exactly as listed, day on the count inside that stage, product with its grade in the name ("Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60", "Zinc sulfate"), bagsPerHa (decimals allowed) or kgPerHa for a product used by the kilo, purpose at most 14 words}.
+- THE FARMER'S OWN PRODUCTS: where the fertilizers sold near the farmer name products, build the programs from them, written exactly as named, at what each carries (a 16-16-16 is not a 14-14-14), and say in cautions where none of them fits this soil. Never name a brand the farmer did not list.
 - NO ORGANIC FERTILIZER (no compost, manure, vermicast or biofertilizer) and NO PRICES anywhere.
 - npk.note at most 30 words: the one check in the field that could change the need (the leaf color chart for rice, a soil test, a thin stand), never a different number.
 - DEFICIENCIES BY SOIL: 2 to 4, most likely first, starting from the elements flagged in THE SECONDARY AND MICRO ELEMENT NEED: nutrient; why at most 26 words (this soil, this crop); signs at most 22 words; when = the stage; action at most 26 words in plain words, no amounts and no product names.
@@ -2199,6 +2263,15 @@ PROMPT;
      */
     private static function analysisOf(string $name): ?array
     {
+        // One of the farmer's own products (2026-10-21): its registered analysis, by its name with or without the grade.
+        $key = fn (string $s) => preg_replace('/[^a-z0-9]+/', '', mb_strtolower((string) preg_replace('/\([^)]*\)/', '', $s)));
+        $k = $key($name);
+        foreach (self::$brands as $b) {
+            $bk = $key((string) ($b['name'] ?? ''));
+            if (strlen($k) >= 5 && strlen($bk) >= 5 && (str_contains($k, $bk) || str_contains($bk, $k)) && ! empty($b['pct'])) {
+                return ['slug' => 'ph-' . (int) $b['id'], 'pct' => array_map('floatval', (array) $b['pct'])];
+            }
+        }
         try {
             $hit = NpkPlan::match($name);
         } catch (\Throwable) {
@@ -2219,6 +2292,7 @@ PROMPT;
      */
     private function tidy(array $report, array $p): array
     {
+        self::$brands = (array) ($p['products'] ?? []);
         $area = max(0.01, (float) $p['area']);
         $totals = [];
         $stages = [];
@@ -2887,7 +2961,11 @@ PROMPT;
             'testK' => (($p['testK'] ?? 'unsure') !== 'unsure') ? (self::TEST_LEVELS[$p['testK']] ?? $p['testK']) : 'not known',
             'prevCrop' => (($p['prevCrop'] ?? 'unsure') !== 'unsure') ? (self::PREV_CROPS[$p['prevCrop']] ?? $p['prevCrop']) : 'not stated',
             'residue' => (($p['residue'] ?? 'unsure') !== 'unsure') ? (self::RESIDUES[$p['residue']] ?? $p['residue']) : 'not stated',
-            'granulars' => ! empty($p['granulars']) ? collect($p['granulars'])->map(fn ($k) => self::GRANULAR_WORDS[$k] ?? self::GRANULARS[$k] ?? $k)->implode(', ') : 'not stated — assume the common products sold in the region',
+            'granulars' => ! empty($p['granulars']) || ! empty($p['products'])
+                ? collect($p['granulars'] ?? [])->map(fn ($k) => self::GRANULAR_WORDS[$k] ?? self::GRANULARS[$k] ?? $k)->implode(', ')
+                    . (! empty($p['products']) ? (! empty($p['granulars']) ? '; and ' : '') . 'THESE PRODUCTS BY NAME, each with what it carries in percent: '
+                        . collect($p['products'])->map(fn ($b) => self::brandWords($b))->implode('; ') : '')
+                : 'not stated — assume the common products sold in the region',
             'fertHistory' => (($p['fertHistory'] ?? '') !== '') ? $p['fertHistory'] : 'not stated',
             'variety' => $p['variety'] !== '' ? $p['variety'] : 'not named — assume a widely grown, well-documented variety for this crop, season and region, and SAY which you assumed',
             'area' => rtrim(rtrim(number_format((float) $p['area'], 2), '0'), '.'),

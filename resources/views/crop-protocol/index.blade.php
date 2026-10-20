@@ -773,6 +773,25 @@
     .cq-hint.is-warn { color: #92400e; background: #fffbeb; border-color: #fde68a; }
     .cq-hint b { color: inherit; }
     .cq-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+    /* Products by brand (2026-10-21): the picked bags as chips, the kinds as pills in the sheet. */
+    .cq-bchips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .55rem; }
+    .cq-bchips:empty { display: none; }
+    .cq-bchip { display: inline-flex; align-items: center; gap: .4rem; max-width: 100%; padding: .35rem .35rem .35rem .7rem; border-radius: 999px; font-size: .8rem; font-weight: 700; color: #14210c; background: #eef5e6; border: 1px solid #d7e7c4; animation: cqPop .28s var(--cq-e) both; }
+    .cq-bchip span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cq-bchip small { font-weight: 800; color: #3d6823; }
+    .cq-bchip button { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center; color: #4b5563; background: #fff; transition: background-color .28s var(--cq-e); }
+    .cq-bchip button:hover { background: #fee2e2; color: #b91c1c; }
+    .cq-bchip button svg { width: .7rem; height: .7rem; }
+    .cq-bkinds { flex: none; display: flex; gap: .35rem; overflow-x: auto; padding: 0 1rem .55rem; scrollbar-width: none; }
+    .cq-bkinds button { flex: none; padding: .35rem .75rem; border-radius: 999px; font-size: .78rem; font-weight: 800; color: #3d6823; background: #f4f8ef; border: 1px solid #d7e7c4; transition: background-color .28s var(--cq-e), color .28s var(--cq-e); }
+    .cq-bkinds button[aria-pressed="true"] { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    .cq-row .rg { flex: none; font-size: .78rem; font-weight: 800; color: #3d6823; font-variant-numeric: tabular-nums; }
+    html.dark .cq-bchip { color: #e8efe1; background: #1c2616; border-color: #2f4220; }
+    html.dark .cq-bchip small, html.dark .cq-row .rg { color: #a5c97e; }
+    html.dark .cq-bchip button { background: #121a0d; color: #d5e3c5; }
+    html.dark .cq-bkinds button { color: #a5c97e; background: #18210f; border-color: #2f4220; }
+    html.dark .cq-bkinds button[aria-pressed="true"] { color: #fff; background: #4a7c2a; border-color: #4a7c2a; }
+    @media (prefers-reduced-motion: reduce) { .cq-bchip { animation: none; } }
     .cq-habits { margin-top: .9rem; }
     .cq-habits .cq-sub { margin: .35rem 0 0; }
     .cq-habits .cq-label + .cq-pills { margin-top: .1rem; }
@@ -1425,6 +1444,12 @@
                 <p class="cq-q">What fertilizer is sold near you?</p>
                 <p class="cq-sub">Pick all that apply. Anee builds every plan from these, and says so when a better one is not on your list.</p>
                 <div class="wtp-choices is-pills" id="cqGranulars" role="group" aria-label="Fertilizer sold near you"></div>
+                {{-- The real bags on the shelf (2026-10-21, the owner: "products by Atlas and Yara like the UNIK or KUMPLE+O"):
+                     every registered Philippine product a farmer spreads on the soil, searched by brand, name or grade. --}}
+                <span class="cq-label">Products by brand <small>(optional)</small></span>
+                <p class="cq-sub cq-sub-s">The bags you can buy, like Atlas, Yara or Philphos. Anee plans with each one's own analysis.</p>
+                <button type="button" class="cq-tag" id="cqBrandOpen"><span class="ti" aria-hidden="true">🛍️</span><span class="tt"><b>Add products by brand</b><small>Search by brand, name or grade, like UNIK or 17-0-17</small></span><span class="tc">Pick{!! $chev !!}</span></button>
+                <div class="cq-bchips" id="cqBrands"></div>
                 {{-- The micronutrients, the farmer's choice (2026-10-21, the owner). --}}
                 <span class="cq-label">Plan the micronutrients too?</span>
                 <p class="cq-sub cq-sub-s">Zinc, boron, sulfur, magnesium and the like, only where this crop and this soil need them.</p>
@@ -1571,6 +1596,21 @@
     </div>
 </dialog>
 
+{{-- Products by brand (2026-10-21): tick the bags you can buy. --}}
+<dialog class="cq-sheet is-tall" id="cqBrandSheet" aria-labelledby="cqBrandTitle">
+    <div class="cq-sbox" tabindex="-1">
+        <div class="cq-grip" aria-hidden="true"></div>
+        <div class="cq-shead"><h2 id="cqBrandTitle">Products by brand<small>Registered fertilizers on Philippine shelves. Brands are shown so you can find yours, not to favor one.</small></h2><button type="button" class="cq-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <label class="cq-sfind">{!! $find !!}<span class="sr-only">Search the products</span><input type="search" id="cqBrandQ" placeholder="Brand, name or grade, like Yara or 16-16-16" autocomplete="off" maxlength="60"></label>
+        <div class="cq-bkinds" id="cqBrandKinds" role="group" aria-label="Kind of fertilizer"></div>
+        <div class="cq-slist" id="cqBrandList" role="listbox" aria-multiselectable="true" aria-label="Products"></div>
+        <div class="cq-sfoot">
+            <div class="cq-pickline"><b id="cqBrandCount">None ticked</b><span>Search to see every registered product</span></div>
+            <button type="button" class="btn btn-primary" id="cqBrandUse">Use them</button>
+        </div>
+    </div>
+</dialog>
+
 {{-- My workers (Global Workers): tick who works. --}}
 <dialog class="cq-sheet" id="cqRosterSheet" aria-labelledby="cqRosterTitle">
     <div class="cq-sbox" tabindex="-1">
@@ -1630,7 +1670,7 @@
         copiedFrom: null, edited: false, savedFrom: null, stale: false, updated: '', pick: null, goal: null, jobs: null }, o || {});
     const newWorker = (o) => Object.assign({ uid: ++uid, name: '', days: [1, 2, 3, 4, 5, 6], globalId: null }, o || {});
     // No worker to start with (2026-10-21, the owner): they come from My workers or the new worker sheet.
-    const S = { lots: [], workers: [], sprayers: 1, mode: 'auto', saveNew: true, micros: true, granulars: [], notes: '', place: '' };
+    const S = { lots: [], workers: [], sprayers: 1, mode: 'auto', saveNew: true, micros: true, granulars: [], products: [], notes: '', place: '' };
     let QUOTE = null;
 
     /* ---- what each lot grows and aims for: its own pick and goal, the lot before it as the default ---- */
@@ -2451,7 +2491,69 @@
         $('cqGranulars').innerHTML = Object.entries(OPT.granulars || {}).map(([k, label]) => '<button type="button" class="wtp-choice' + (S.granulars.includes(k) ? ' is-on' : '') + '" data-granular="' + esc(k) + '" aria-pressed="' + S.granulars.includes(k) + '"><span class="c-e"></span><span>' + esc(label) + '</span></button>').join('');
         $('cqNotes').value = S.notes;
         paintMicros();
+        paintBrands();
     }
+    /* Products by brand (2026-10-21, the owner): picked in a sheet that searches every registered product a
+       farmer spreads on the soil; the hand checked ones show first, grouped by brand. */
+    const XS = '<svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>';
+    const paintBrands = () => {
+        $('cqBrands').innerHTML = S.products.map((p) => '<span class="cq-bchip"><span>' + esc(p.name) + '</span>' + (p.grade && !String(p.name).includes(p.grade) ? '<small>' + esc(p.grade) + '</small>' : '')
+            + '<button type="button" data-bx="' + p.id + '" aria-label="Remove ' + esc(p.name) + '">' + XS + '</button></span>').join('');
+        $('cqBrandOpen').querySelector('.tt small').textContent = S.products.length ? S.products.length + (S.products.length === 1 ? ' product picked' : ' products picked') : 'Search by brand, name or grade, like UNIK or 17-0-17';
+    };
+    $('cqBrands').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-bx]');
+        if (!b) return;
+        S.products = S.products.filter((p) => p.id !== Number(b.dataset.bx));
+        paintBrands();
+    });
+    const BP = { pick: new Map(), kind: '', rows: [], ask: 0, t: 0 };
+    const loadBrands = async () => {
+        const ask = ++BP.ask, q = $('cqBrandQ').value.trim();
+        try {
+            const r = await window.api(OPT.products + '?' + new URLSearchParams({ q, cat: BP.kind }).toString(), { method: 'GET' });
+            if (ask !== BP.ask) return;
+            BP.rows = (r.data && r.data.rows) || [];
+        } catch (_) { if (ask !== BP.ask) return; BP.rows = []; }
+        paintBrandList();
+    };
+    const paintBrandList = () => {
+        let last = '';
+        $('cqBrandList').innerHTML = BP.rows.length ? BP.rows.map((p) => {
+            const on = BP.pick.has(p.id), head = p.brand !== last ? '<span class="cq-sgh">' + esc(last = p.brand) + '</span>' : '';
+            return head + '<button type="button" class="cq-row" role="option" data-bp="' + p.id + '" aria-checked="' + on + '" aria-selected="' + on + '"><span class="rt"><b>' + esc(p.name) + '</b><small>'
+                + esc([p.company, p.form === 'crystal' ? 'crystals' : 'granules'].filter(Boolean).join(' · ')) + '</small></span>' + (p.grade ? '<span class="rg">' + esc(p.grade) + '</span>' : '') + '<span class="cq-check">' + CHECK + '</span></button>';
+        }).join('') : '<p class="cq-snone">' + ($('cqBrandQ').value.trim() ? 'No registered product by that name. Try the brand, or the grade like 16-16-16.' : 'The list could not be read. Try a search.') + '</p>';
+        $('cqBrandCount').textContent = BP.pick.size ? BP.pick.size + ' ticked' : 'None ticked';
+    };
+    const paintKinds = () => {
+        $('cqBrandKinds').innerHTML = [['', 'All']].concat(Object.entries(OPT.productKinds || {})).map(([k, v]) => '<button type="button" data-bk="' + esc(k) + '" aria-pressed="' + (BP.kind === k) + '">' + esc(v) + '</button>').join('');
+    };
+    $('cqBrandOpen').addEventListener('click', () => {
+        BP.pick = new Map(S.products.map((p) => [p.id, p]));
+        BP.kind = ''; $('cqBrandQ').value = '';
+        paintKinds();
+        $('cqBrandList').innerHTML = '<p class="cq-snone">Reading the list…</p>';
+        $('cqBrandCount').textContent = BP.pick.size ? BP.pick.size + ' ticked' : 'None ticked';
+        sheetOpen($('cqBrandSheet'), $('cqBrandQ'));
+        loadBrands();
+    });
+    $('cqBrandQ').addEventListener('input', () => { clearTimeout(BP.t); BP.t = setTimeout(loadBrands, 250); });
+    $('cqBrandKinds').addEventListener('click', (e) => { const b = e.target.closest('[data-bk]'); if (!b) return; BP.kind = b.dataset.bk; paintKinds(); loadBrands(); });
+    $('cqBrandList').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-bp]');
+        if (!b) return;
+        const id = Number(b.dataset.bp), row = BP.rows.find((p) => p.id === id);
+        if (BP.pick.has(id)) BP.pick.delete(id); else if (row && BP.pick.size < 30) BP.pick.set(id, { id, name: row.name, brand: row.brand, grade: row.grade });
+        b.setAttribute('aria-checked', String(BP.pick.has(id)));
+        b.setAttribute('aria-selected', String(BP.pick.has(id)));
+        $('cqBrandCount').textContent = BP.pick.size ? BP.pick.size + ' ticked' : 'None ticked';
+    });
+    $('cqBrandUse').addEventListener('click', () => {
+        S.products = [...BP.pick.values()];
+        sheetClose($('cqBrandSheet'));
+        paintBrands();
+    });
     const paintMicros = () => document.querySelectorAll('#cqMicros [data-micros]').forEach((b) => { const on = (b.dataset.micros === '1') === S.micros; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
     $('cqMicros').addEventListener('click', (e) => { const b = e.target.closest('[data-micros]'); if (!b) return; S.micros = b.dataset.micros === '1'; paintMicros(); });
     $('cqGranulars').addEventListener('click', (e) => {
@@ -2695,7 +2797,7 @@
             spacing: g.sp && num(g.sp.row) > 0 && num(g.sp.plant) > 0 && spacingOf(i) ? { row: num(g.sp.row), plant: num(g.sp.plant), perHill: Math.round(num(g.sp.hill)) || 1 } : null,
             plantBy: jobNow(i, 'plant'), plantOwn: !!jobsOf(i).plantOwn, harvestBy: jobNow(i, 'harvest'), harvestOwn: !!jobsOf(i).harvestOwn };
     }
-    const body = () => ({ lots: S.lots.map((_, i) => lotBody(i)), crew: crewBody(), mode: S.mode, granulars: S.granulars, notes: S.notes, location: S.place, micros: S.micros });
+    const body = () => ({ lots: S.lots.map((_, i) => lotBody(i)), crew: crewBody(), mode: S.mode, granulars: S.granulars, products: S.products.map((p) => p.id), notes: S.notes, location: S.place, micros: S.micros });
     let castT = null, castAsk = 0, castSig = '';
     const castSoon = (now) => { clearTimeout(castT); castT = setTimeout(() => paintCast('cqCast'), now ? 0 : 450); };
     const fadeSwap = (el, html) => { if (reduce() || !el.innerHTML) { el.innerHTML = html; return; } el.style.opacity = '0'; setTimeout(() => { el.innerHTML = html; el.style.opacity = ''; }, 180); };
@@ -2775,7 +2877,7 @@
             const n = window.aneeFieldProfile ? window.aneeFieldProfile.count(l.profile) : 0;
             rows.push('<button type="button" data-go="lots"><span class="re">🟤</span><span class="rt"><small>Its field</small><b>' + esc(n ? n + ' answers from the lot' : 'No answers yet') + '</b><em>' + esc(l.place || S.place || 'No place') + '. Its soil test and answers decide the fertilizer.</em></span><span class="rc">Change</span></button>');
         });
-        rows.push('<button type="button" data-go="buy"><span class="re">🛒</span><span class="rt"><small>Fertilizer you can buy</small><b>' + esc(S.granulars.length ? S.granulars.map((k) => (OPT.granulars || {})[k] || k).join(', ') : 'Not said: the common ones sold here') + '</b><em>' + esc((S.micros ? 'Micronutrients planned too.' : 'Nitrogen, phosphorus and potassium only.') + (S.notes ? ' ' + S.notes : '')) + '</em></span><span class="rc">Change</span></button>');
+        rows.push('<button type="button" data-go="buy"><span class="re">🛒</span><span class="rt"><small>Fertilizer you can buy</small><b>' + esc(S.granulars.length || S.products.length ? S.granulars.map((k) => (OPT.granulars || {})[k] || k).concat(S.products.map((p) => p.name)).join(', ') : 'Not said: the common ones sold here') + '</b><em>' + esc((S.micros ? 'Micronutrients planned too.' : 'Nitrogen, phosphorus and potassium only.') + (S.notes ? ' ' + S.notes : '')) + '</em></span><span class="rc">Change</span></button>');
         const days = (() => { const all = new Set(S.workers.map((w) => w.days.join(','))); return all.size === 1 ? daysWord(S.workers[0].days) : 'their own days'; })();
         rows.push('<button type="button" data-go="workers"><span class="re">👷</span><span class="rt"><small>The crew</small><b>' + esc(S.workers.length + (S.workers.length === 1 ? ' worker, ' : ' workers, ') + days + ' · ' + S.sprayers + (S.sprayers === 1 ? ' sprayer' : ' sprayers')) + '</b><em>'
             + esc(jobsWords() + ' ' + (S.mode === 'auto' ? 'Anee moves jobs inside their safe days when they collide.' : 'Your dates stay, and Anee names the short days.')) + '</em></span><span class="rc">Change</span></button>');
@@ -2857,7 +2959,7 @@
     function resetWizard() {
         S.lots = [];
         S.workers = [];
-        Object.assign(S, { sprayers: 1, mode: 'auto', saveNew: true, micros: true, granulars: [], notes: '', place: '' });
+        Object.assign(S, { sprayers: 1, mode: 'auto', saveNew: true, micros: true, granulars: [], products: [], notes: '', place: '' });
         $('cqRec').innerHTML = ''; $('cqRec')._html = '';
         QUOTE = null;
         castSig = '';

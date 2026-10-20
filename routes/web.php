@@ -149,6 +149,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'soilMicro' => defined(\App\Support\NpkModel::class . '::SOIL_STEP') && method_exists(\App\Support\NpkNeed::class, 'soilSay'),
             // How sure a lot's pump is, in the water count (2026-10-21).
             'pumpYear' => isset(\App\Support\FieldProfile::QUESTIONS['pumpYear']) && method_exists(\App\Support\NpkNeed::class, 'pumpCover'),
+            // The Crop Protocol's products by brand, and iron locked on sodic soil (2026-10-21).
+            'protoBrands' => method_exists(\App\Http\Controllers\CropProtocolController::class, 'products') && isset(\App\Support\NpkModel::ELEMENTS['Fe']['weights']['sodic']),
             'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),
@@ -1018,6 +1020,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/satellite/{id}', [App\Http\Controllers\SatelliteController::class, 'destroy'])->whereNumber('id')->name('sat.delete');
     Route::get('/app/crop-protocol', [App\Http\Controllers\CropProtocolController::class, 'page'])->name('proto.page');
     Route::get('/app/crop-protocol/options', [App\Http\Controllers\CropProtocolController::class, 'options'])->name('proto.options');
+    Route::get('/app/crop-protocol/products', [App\Http\Controllers\CropProtocolController::class, 'products'])->middleware('throttle:120,1')->name('proto.products');
     Route::post('/app/crop-protocol/generate', [App\Http\Controllers\CropProtocolController::class, 'generate'])->name('proto.generate');
     Route::post('/app/crop-protocol/need', [App\Http\Controllers\CropProtocolController::class, 'need'])->name('proto.need');
     Route::get('/app/crop-protocol/list', [App\Http\Controllers\CropProtocolController::class, 'list'])->name('proto.list');

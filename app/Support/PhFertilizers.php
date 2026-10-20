@@ -352,16 +352,28 @@ final class PhFertilizers
             'pct' => $pct, 'grade' => $grade, 'packs' => json_decode((string) $r->packs, true) ?: [], 'reg' => $r->fpaReg, 'expiry' => $r->fpaExpiry, 'curated' => (bool) $r->curated];
     }
 
-    /** The tab's list: the hand checked ones first, then every registered match. */
-    public static function search(string $q = '', string $category = '', int $limit = 60): array
+    /** The kinds a farmer spreads on the soil from a bag (the Crop Protocol's list, 2026-10-21). */
+    public const SOIL_CATEGORIES = ['nitrogen', 'phosphate', 'potash', 'complete', 'secondary'];
+
+    /**
+     * The tab's list: the hand checked ones first, then every registered
+     * match. $soil keeps the granular and crystal products a farmer spreads
+     * on the soil (the Crop Protocol's fertilizer list). A name written with
+     * a plus for a letter is found by the word ("kumpleto" finds KUMPLE+O).
+     */
+    public static function search(string $q = '', string $category = '', int $limit = 60, bool $soil = false): array
     {
         $qb = DB::table('as_ph_fertilizers')->where('active', 1);
         if ($category !== '') {
             $qb->where('category', $category);
         }
+        if ($soil) {
+            $qb->whereIn('category', self::SOIL_CATEGORIES)->whereIn('form', ['granular', 'crystal']);
+        }
         foreach (array_filter(explode(' ', mb_strtolower(trim(preg_replace('/\s*\+\s*/', '-', $q))))) as $w) {
             $qb->where(fn ($x) => $x->where('name', 'like', '%' . $w . '%')->orWhere('brand', 'like', '%' . $w . '%')->orWhere('company', 'like', '%' . $w . '%')
-                ->orWhere('analysis', 'like', '%' . $w . '%')->orWhere('fpaReg', 'like', '%' . $w . '%'));
+                ->orWhere('analysis', 'like', '%' . $w . '%')->orWhere('fpaReg', 'like', '%' . $w . '%')
+                ->orWhereRaw("REPLACE(LOWER(name), '+', 't') LIKE ?", ['%' . $w . '%']));
         }
         if (trim($q) === '') {
             $qb->where('curated', 1);
