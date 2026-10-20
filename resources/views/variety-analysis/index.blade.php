@@ -528,7 +528,7 @@
                  answered are hidden on the steps after it. The field is in the
                  farmer's own country (the lots carry no other). --}}
             <section class="wtp-step is-on" data-step="0">
-                <p class="wtp-q">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="wtp-q">Which lot is it for?</p>
                 <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
                 <div id="vaLots"></div>
             </section>

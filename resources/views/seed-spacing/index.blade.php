@@ -347,7 +347,7 @@
                 </div>
                 {{-- The lot (2026-10-19, the owner): its size, soil and water count in. Optional. --}}
                 <div class="sc-row">
-                    <div class="sc-f"><span>Which lot is it for?<small class="sc-opt-w">Optional</small>{{ \App\Support\Tagalog::flag('lot') }}</span>
+                    <div class="sc-f"><span>Which lot is it for?<small class="sc-opt-w">Optional</small></span>
                         <div id="scLots"></div>
                         <button type="button" class="sc-nolot" id="scNoLot" hidden>Use no lot</button>
                         <small>Its size fills in, and its soil and water count in the stand and the harvest.</small></div>

@@ -657,7 +657,7 @@
                                  size, soil and water (partials/farm-lots), so the steps after
                                  do not ask them again. Optional here: the calculator is free
                                  and works without one, exactly as before. --}}
-                            <p class="np-wq">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                            <p class="np-wq">Which lot is it for?</p>
                             <p class="np-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again. No lot? Go on, and the next steps ask them.</p>
                             <div id="npLots"></div>
                             <button type="button" class="np-nolot" id="npNoLot" hidden>Use no lot, and answer the steps by hand</button>

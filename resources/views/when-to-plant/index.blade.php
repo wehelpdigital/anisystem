@@ -533,7 +533,7 @@
                  one at home. It sets the crop book and whose climate record
                  and agencies the analysis reads. --}}
             <section class="wtp-step is-on" data-step="0">
-                <p class="wtp-q">Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="wtp-q">Which lot is it for?</p>
                 <p class="wtp-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
                 <div class="wtp-loc-country" @if (\App\Support\Region::ph()) hidden @endif>
                     <label class="form-label">Country</label>

@@ -1089,7 +1089,7 @@
 
             {{-- The lots: the plan starts here (2026-10-17, the owner) --}}
             <section class="lp-step is-on" data-screen="lots">
-                <p class="lp-q">Which lots are you preparing?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="lp-q">Which lots are you preparing?</p>
                 <p class="lp-sub">One card a lot. Next, you pick what each lot will grow. Anee plans every lot and shares the crew between them. Your lots bring their place, size and answers, so only what they lack is asked.</p>
                 <div class="lp-lots" id="lpLots"></div>
                 {{-- The farm's lots are the source (2026-10-16, the owner): pick them

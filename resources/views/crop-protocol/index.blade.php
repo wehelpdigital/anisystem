@@ -1274,7 +1274,7 @@
 
             {{-- 1. The lots: the protocol starts from the farm's lots (Global Lots), several at once. --}}
             <section class="cq-step is-on" data-screen="lots">
-                <p class="cq-q">Which lots will you plant?{{ \App\Support\Tagalog::flag('lot') }}</p>
+                <p class="cq-q">Which lots will you plant?</p>
                 <p class="cq-sub">One card a lot. Next, you pick what each lot will grow and your goal for it. Each lot brings its place, size, soil and water, and its soil test, so only what it lacks is asked.</p>
                 <div class="cq-lots" id="cqLots"></div>
                 <div class="cq-lot-acts">

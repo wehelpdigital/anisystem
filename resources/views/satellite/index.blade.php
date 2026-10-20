@@ -434,7 +434,7 @@
                  partials/farm-lots), and the questions it answered are hidden
                  on the steps after it. --}}
             <section class="sat-step is-on" data-step="0">
-                <h3>Which lot is it for?{{ \App\Support\Tagalog::flag('lot') }}</h3>
+                <h3>Which lot is it for?</h3>
                 <p class="sat-sub">Pick the lot, or add it. Its place, size, soil and water come with it, so they are not asked again.</p>
                 <div id="satLots"></div>
                 <div class="sat-onmap" id="satOnMap" hidden>
