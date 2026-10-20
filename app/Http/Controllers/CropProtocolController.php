@@ -316,6 +316,9 @@ class CropProtocolController extends Controller
                 // NPK Plus's row for it (its seeding rate, its need), and how it is usually planted.
                 'npk' => NpkNeed::cropKey($key),
                 'seedUnit' => NpkNeed::seedUnitFor(NpkNeed::cropKey($key)),
+                // Only the units it is planted by (2026-10-21, the owner), and its spacing by way in (SeedSpacing).
+                'seedUnits' => NpkNeed::seedUnitsFor(NpkNeed::cropKey($key)),
+                'spacing' => (object) array_filter(array_combine(self::methodsFor($key), array_map(fn ($m) => self::spacingOf($key, $m), self::methodsFor($key)))),
                 // The field questions' crop (partials/field-profile), and the catalogue's.
                 'fq' => \App\Support\FieldCatalogue::cropKey($key),
             ])->values(),
@@ -329,6 +332,9 @@ class CropProtocolController extends Controller
             'seedUnits' => NpkNeed::SEED_UNITS,
             'seeding' => collect(NpkModel::SEEDING)->map(fn ($s) => ['w' => $s['w'], 'n' => $s['n'], 'countWord' => $s['countWord'], 'note' => $s['note']])->all(),
             'germUsual' => NpkNeed::GERM_USUAL,
+            // Whether a yield is dry or fresh (NpkModel::YIELD_BASIS, by NPK Plus's crop key), and the machines that plant or harvest.
+            'yieldBasis' => NpkModel::YIELD_BASIS,
+            'crewMachines' => ProtocolCrew::MACHINES,
             'yieldT' => self::yieldTons(),
             'months' => $months,
             'methods' => self::METHODS,
@@ -441,6 +447,8 @@ class CropProtocolController extends Controller
             'need' => $r['need'],
             'how' => $r['how'],
             'goal' => $g['Y'] !== null ? ['t' => round($g['Y'], 2), 'eff' => round((float) $g['Yeff'], 2), 'why' => $g['why'], 'warn' => $g['warn'],
+                // The farmer's target and the potential it was held to (2026-10-21), so the page can say so.
+                'T' => $g['T'] !== null ? round((float) $g['T'], 2) : null, 'P' => $g['P'] !== null ? round((float) $g['P'], 2) : null,
                 'capped' => $g['capped'], 'cap' => round($g['cap']['k'], 2), 'capWhy' => array_column($g['cap']['why'], 0)] : null,
             'seed' => $sd['perHa'] !== null ? ['perHa' => round((float) $sd['raw'], $sd['raw'] >= 100 ? 0 : 1), 'unit' => $sd['unitWord'], 'usual' => $sd['usual'],
                 'germ' => $sd['germ'], 'sf' => round($sd['sf'], 2), 'thin' => $sd['sf'] < 1, 'words' => $sd['words']] : null,
@@ -500,7 +508,10 @@ class CropProtocolController extends Controller
                 : \App\Support\NutrientBook::varietyPotential(NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null) ?? ($p['crop'] ?? null), $p['variety'] ?? null),
             'target' => ($p['targetYield'] ?? null) !== null ? (float) $p['targetYield'] * $tons : null,
             'areaHa' => (float) ($p['area'] ?? 0),
-            'seed' => ($p['seedAmount'] ?? null) ? ['amount' => (float) $p['seedAmount'], 'unit' => $p['seedUnit'] ?? 'kg', 'germination' => $p['germination'] ?? null] : null,
+            'seed' => ($p['seedAmount'] ?? null) ? ['amount' => (float) $p['seedAmount'], 'unit' => $p['seedUnit'] ?? 'kg', 'germination' => $p['germination'] ?? null]
+                // The spacing's stand (2026-10-21) where the guides count the crop by plants.
+                : (! empty($p['spacing']['perHa']) && (float) ($p['area'] ?? 0) > 0 && ! empty(NpkModel::SEEDING[NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null) ?? '']['n'])
+                    ? ['amount' => (float) $p['spacing']['perHa'] * (float) $p['area'], 'unit' => 'plants', 'germination' => null] : null),
             'texture' => in_array($soil, ['sandy', 'clay', 'loam'], true) ? $soil : ($soil === 'silty' ? 'loam' : 'unsure'),
             'conditions' => array_values(array_unique($conds)),
             'ph' => ($p['ph'] ?? null) !== null ? (float) $p['ph'] : ($L['phValue'] ?? null),
@@ -543,10 +554,12 @@ class CropProtocolController extends Controller
     }
 
     /** The need, its goal and its stand, as the prompt's facts. */
-    private static function needLines(array $n, string $unitWord, float $tons): array
+    private static function needLines(array $n, string $unitWord, float $tons, array $p = []): array
     {
+        $sp = self::spacingWords($p['spacing'] ?? null);
+        $spLine = $sp !== '' ? '- The farmer\'s spacing: ' . $sp . ".\n" : '';
         if (empty($n['known'])) {
-            return ['seed' => '', 'goal' => '', 'need' => ''];
+            return ['seed' => $spLine, 'goal' => '', 'need' => ''];
         }
         $t = fn ($x) => rtrim(rtrim(number_format((float) $x / $tons, 2, '.', ''), '0'), '.') . ' ' . $unitWord;
         $g = $n['goal'] ?? null;
@@ -579,7 +592,13 @@ class CropProtocolController extends Controller
                     . ($ben->isNotEmpty() ? ' Beneficial, not required: ' . $ben->map(fn ($m, $el) => $m['name'] . ' ' . $amount((float) $m['need']) . ' ' . $el)->implode(', ') . '.' : '') . "\n"
                 : '- Secondary and micro elements: no shortage flagged on this ground by the same count.' . ($okByTest !== '' ? ' Enough by the soil test: ' . $okByTest . '.' : '') . "\n");
 
-        return ['seed' => $seed, 'goal' => $goal, 'need' => $need];
+        // N, P and K only (2026-10-21, the owner's choice on the fertilizer step).
+        if (array_key_exists('micros', $p) && ! $p['micros']) {
+            $need = preg_replace('/- THE SECONDARY AND MICRO ELEMENT NEED.*$|- Secondary and micro elements:.*$/s', '', $need)
+                . "- Secondary and micro elements: THE FARMER ASKED FOR A NITROGEN, PHOSPHORUS AND POTASSIUM PROGRAM ONLY. Add no product and no spray for a secondary or micro element; what the main fertilizers carry may be said.\n";
+        }
+
+        return ['seed' => $seed . $spLine, 'goal' => $goal, 'need' => $need];
     }
 
     /**
@@ -699,7 +718,7 @@ class CropProtocolController extends Controller
             $rec = self::recordOf($l);
             $frame = ProtocolCrew::frame(['crop' => $l['crop'], 'method' => $l['method'], 'days' => $l['days'] ?: ($rec['days'] ?? null), 'areaHa' => $l['areaHa']]);
             $sched[] = ['i' => $l['i'], 'name' => $l['name'], 'month' => $l['month'], 'asked' => $l['day'],
-                'tasks' => ProtocolCrew::tasks($frame, ProtocolCrew::skeleton($frame), [], ['weedy' => self::weedy($l['profile'])])];
+                'tasks' => ProtocolCrew::tasks($frame, ProtocolCrew::skeleton($frame), [], self::fieldOf($l))];
             $n = $request->boolean('needs', true) ? self::needFor($l['p']) : null;
             $lots[] = ['i' => $l['i'], 'name' => $l['name'], 'harvestDays' => $frame['harvest'], 'seedAge' => $frame['seedAge'],
                 'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed', 'areaSoil', 'season', 'habits'])) : null];
@@ -733,7 +752,7 @@ class CropProtocolController extends Controller
             'short' => $short, 'shortCount' => count($s['short']),
             'late' => array_slice(array_map(fn ($t) => ['lot' => $t['lot'], 'name' => $name($t['lot']), 'title' => $t['title'], 'left' => $t['left'], 'hi' => $t['hi'], 'to' => $t['to']], $s['late']), 0, 8),
             'lateCount' => count($s['late']),
-            'busy' => $busy, 'more' => $s['more'], 'moreSprayers' => $s['moreSprayers'], 'workDays' => $days->count(),
+            'busy' => $busy, 'more' => $s['more'], 'moreSprayers' => $s['moreSprayers'], 'workDays' => $days->count(), 'recommend' => $s['recommend'] ?? null,
         ];
     }
 
@@ -783,9 +802,19 @@ class CropProtocolController extends Controller
             'lots.*.seedAmount' => 'nullable|numeric|min:0|max:100000000',
             'lots.*.seedUnit' => 'nullable|in:' . implode(',', array_keys(NpkNeed::SEED_UNITS)),
             'lots.*.germination' => 'nullable|numeric|min:1|max:100',
+            'lots.*.spacing' => 'nullable|array',
+            'lots.*.spacing.row' => 'nullable|numeric|min:1|max:5000',
+            'lots.*.spacing.plant' => 'nullable|numeric|min:1|max:5000',
+            'lots.*.spacing.perHill' => 'nullable|integer|min:1|max:20',
+            'lots.*.plantBy' => 'nullable|string|max:16',
+            'lots.*.plantOwn' => 'nullable|boolean',
+            'lots.*.harvestBy' => 'nullable|string|max:16',
+            'lots.*.harvestOwn' => 'nullable|boolean',
+            'micros' => 'nullable|boolean',
             'crew' => 'nullable|array',
             'crew.workers' => 'nullable|array|max:100',
-            'crew.workers.*.name' => 'nullable|string|max:40',
+            // Every worker has a name (2026-10-21, the owner): picked from My workers or added to it.
+            'crew.workers.*.name' => ($lenient ? 'nullable' : 'required') . '|string|max:40',
             'crew.workers.*.days' => 'nullable|array|max:7',
             'crew.workers.*.days.*' => 'integer|min:0|max:6',
             'crew.workers.*.globalId' => 'nullable|integer',
@@ -801,7 +830,12 @@ class CropProtocolController extends Controller
         if ($v->fails()) {
             return $v->errors()->first();
         }
+        if (! $lenient && ! array_filter((array) ($in['crew']['workers'] ?? []), fn ($w) => is_array($w) && ! empty($w['days']))) {
+            return 'Pick or add at least one worker, with a work day.';
+        }
         $granulars = WhatToPlantController::picks(self::GRANULARS, $in['granulars'] ?? []);
+        // Plan the secondary and micro elements too (2026-10-21, the owner asks it after the fertilizers); yes unless said.
+        $micros = ! array_key_exists('micros', $in) || $in['micros'] === null || filter_var($in['micros'], FILTER_VALIDATE_BOOLEAN);
         $notes = trim((string) preg_replace('/\s+/', ' ', (string) ($in['notes'] ?? '')));
         $units = self::yieldUnits();
         $tomorrow = now('Asia/Manila')->startOfDay()->addDay();
@@ -853,7 +887,14 @@ class CropProtocolController extends Controller
                 'seedAmount' => $num($l['seedAmount'] ?? null), 'seedUnit' => isset(NpkNeed::SEED_UNITS[$l['seedUnit'] ?? '']) ? (string) $l['seedUnit'] : NpkNeed::seedUnitFor(NpkNeed::cropKey($crop)),
                 'germination' => $num($l['germination'] ?? null) !== null ? max(1.0, min(100.0, (float) $l['germination'])) : null,
                 'profile' => FieldProfile::fromInput($l['profile'] ?? null, $crop),
+                'spacing' => self::spacingIn($l['spacing'] ?? null),
             ];
+            // Who plants and who harvests this lot (2026-10-21): own, hired, or a machine that serves its crop.
+            foreach (['plant', 'harvest'] as $job) {
+                $by = (string) ($l[$job . 'By'] ?? 'own');
+                $lot[$job . 'By'] = $by === 'hired' || (isset(ProtocolCrew::MACHINES[$by]) && ProtocolCrew::MACHINES[$by]['kind'] === $job && ProtocolCrew::fits($by, $crop, $method)) ? $by : 'own';
+                $lot[$job . 'Own'] = ! empty($l[$job . 'Own']);
+            }
             $lots[] = $lot;
         }
         if (! $lots) {
@@ -875,7 +916,7 @@ class CropProtocolController extends Controller
             if ($l['place'] === '') {
                 $lots[$i]['place'] = $location;
             }
-            $lots[$i]['p'] = self::lotParams($lots[$i], $granulars, $notes);
+            $lots[$i]['p'] = self::lotParams($lots[$i], $granulars, $notes) + ['micros' => $micros];
         }
         $crew = ProtocolCrew::crewOf((array) ($in['crew'] ?? []));
         $crew['saveNew'] = ! empty($in['crew']['saveNew']);
@@ -887,7 +928,54 @@ class CropProtocolController extends Controller
             'granulars' => $granulars,
             'notes' => $notes,
             'location' => $location,
+            'micros' => $micros,
         ];
+    }
+
+    /** The seed calculator's spacing for a crop and its way in (SeedSpacing::CROPS), in cm; null where it has no entry. */
+    public static function spacingOf(string $crop, string $method): ?array
+    {
+        $key = match (true) {
+            str_starts_with($crop, 'rice') => $method === 'transplanted' ? 'rice' : 'rice_dsr',
+            $crop === 'corn_glutinous' => 'corn_white',
+            default => $crop,
+        };
+        $c = \App\Support\SeedSpacing::CROPS[$key] ?? null;
+        if (! $c || empty($c['row']) || empty($c['plant'])) {
+            return null;
+        }
+
+        return ['row' => $c['row'], 'plant' => $c['plant'], 'perHill' => $c['perHill'] ?? [1, 1, 1], 'standBy' => $c['standBy'] ?? 'plants', 'stand' => $c['stand'] ?? null,
+            // Trees and other wide crops are said in meters; rice sown in place only when it goes in rows.
+            'meters' => (float) $c['row'][1] >= 200, 'note' => $key === 'rice_dsr' ? 'Only when it is sown in rows, with a seeder or a drill.' : ''];
+    }
+
+    /** A lot's spacing as given: rows and plants in cm, plants a hill, and the stand a hectare; null when not given. */
+    private static function spacingIn($s): ?array
+    {
+        if (! is_array($s)) {
+            return null;
+        }
+        $row = is_numeric($s['row'] ?? null) ? (float) $s['row'] : 0.0;
+        $plant = is_numeric($s['plant'] ?? null) ? (float) $s['plant'] : 0.0;
+        if ($row < 1 || $plant < 1) {
+            return null;
+        }
+        $hill = max(1, min(20, (int) ($s['perHill'] ?? 1)));
+
+        return ['row' => round($row, 1), 'plant' => round($plant, 1), 'perHill' => $hill, 'perHa' => (int) round(10000 / (($row / 100) * ($plant / 100)) * $hill)];
+    }
+
+    /** Spacing in words: "rows 70 cm apart, 20 cm between hills, 1 plant a hill, about 71,429 plants a hectare". */
+    public static function spacingWords(?array $s): string
+    {
+        if (! $s) {
+            return '';
+        }
+        $len = fn (float $cm) => $cm >= 200 ? rtrim(rtrim(number_format($cm / 100, 2, '.', ''), '0'), '.') . ' m' : rtrim(rtrim(number_format($cm, 1, '.', ''), '0'), '.') . ' cm';
+
+        return 'rows ' . $len($s['row']) . ' apart, ' . $len($s['plant']) . ' between hills, ' . $s['perHill'] . ($s['perHill'] === 1 ? ' plant' : ' plants') . ' a hill, about '
+            . number_format($s['perHa']) . ' plants a hectare';
     }
 
     /** A crop in a sentence: "rice", "yellow corn". */
@@ -930,8 +1018,16 @@ class CropProtocolController extends Controller
             'prevCrop' => $prev[0], 'residue' => $prev[1],
             'granulars' => $granulars, 'fertHistory' => '',
             'potential' => $lot['potential'], 'seedAmount' => $lot['seedAmount'], 'seedUnit' => (string) $lot['seedUnit'], 'germination' => $lot['germination'],
+            'spacing' => $lot['spacing'] ?? null,
             'ph' => $L['phValue'] ?? null,
         ] + FieldProfile::forParams($profile, (string) $lot['crop']);
+    }
+
+    /** What the work calendar reads of a lot: was it weedy, and who plants and who harvests it. */
+    private static function fieldOf(array $l): array
+    {
+        return ['weedy' => self::weedy((array) ($l['profile'] ?? [])), 'plantBy' => $l['plantBy'] ?? 'own', 'plantOwn' => ! empty($l['plantOwn']),
+            'harvestBy' => $l['harvestBy'] ?? 'own', 'harvestOwn' => ! empty($l['harvestOwn'])];
     }
 
     /** Whether a lot was weedy last season: true, false (few or none), null (not said). */
@@ -1029,7 +1125,7 @@ class CropProtocolController extends Controller
             foreach ($case['lots'] as $l) {
                 $f = $ctx['frames'][$l['i']];
                 $pre[] = ['i' => $l['i'], 'name' => $l['name'], 'month' => $l['month'], 'asked' => $l['day'],
-                    'tasks' => ProtocolCrew::tasks($f, ProtocolCrew::skeleton($f), [], ['weedy' => self::weedy($l['profile'])])];
+                    'tasks' => ProtocolCrew::tasks($f, ProtocolCrew::skeleton($f), [], self::fieldOf($l))];
             }
             $s = ProtocolCrew::schedule($pre, $case['crew'], $case['mode'], null, false);
             $ctx['planWords'] = implode(' ', ProtocolCrew::words($s, array_map(fn ($l) => $l['name'], $case['lots'])))
@@ -1633,6 +1729,10 @@ PROMPT;
             : '';
         $shape = '{"intro":"","granulars":{"soilLogic":"","timingLogic":"","rejected":[{"what":"","why":""}],"cautions":[""]},"programs":[{"name":"","for":"","applications":[{"stage":"","day":0,"product":"","bagsPerHa":0,"kgPerHa":0,"purpose":""}]}],"npk":{"note":""},"deficiencies":[{"nutrient":"","why":"","signs":"","when":"","action":""}],"foliars":[{"stage":"","product":"","why":""}],"water":{"plan":"","ifDry":"","ifWet":""},"yield":{"target":"","realistic":"","note":""},"watch":[""]}';
         $notesText = trim($notes) !== '' ? trim($notes) : 'none found; rely on established agronomy and say so';
+        // The farmer's choice on the fertilizer step (2026-10-21): N, P and K only overrules the micro rule below.
+        $microsOn = ! array_key_exists('micros', $p) || $p['micros'];
+        $microRule = $microsOn ? '' : "- N, P AND K ONLY, THE FARMER'S CHOICE: no product and no spray for a secondary or micro element in any program, whatever the next line says; deficiencies may still name a likely shortfall to watch for.\n";
+        $foliarCount = $microsOn ? '0 to 3' : 'none (the farmer asked for N, P and K only); return an empty list';
 
         return <<<PROMPT
 You are an agronomic decision-support analyst for farming in {$country}. Write the FERTILIZER AND NUTRITION PLAN of ONE LOT for this season, by growth stage, for a farmer who reads it on a phone. The farm's background, stage guide and protection are written separately: only fertilizer, nutrition, water and yield here.
@@ -1664,12 +1764,12 @@ GROUND RULES
 - Every quantity is per hectare (bagsPerHa, a 50 kg bag) and the app scales it to the lot; {$aimRule}. Each application carries its PURPOSE in a few words.
 - GRANULARS, THOUGHT THROUGH: choose each product for the soil condition and the water. A sodic or saline soil does not want a chloride load (muriate of potash only where potassium is truly short, late and light; sulfate of potash where it can be bought); ammonium sulfate is the nitrogen that also acidifies an alkaline or sodic soil and feeds sulfur; an acid soil wants its phosphorus placed at planting; flooded rice loses broadcast urea to the air and the water, so small splits into shallow water; a sandy soil leaks nitrogen and potassium, so smaller and more frequent doses; a heavy clay holds them, so fewer and fuller. Where the soil test or history says phosphorus or potassium is already high, do not buy it again. Use what the farmer can buy; where a better product is not on the list, say so in cautions. soilLogic and timingLogic reason in the open, mechanism by mechanism; rejected names the 2 to 3 things a farmer here would reasonably have done instead and why each fails on THIS ground.
 - CRITICALITY BY STAGE: size every application to what the crop can take up then. The basal is a starter; the bulk of nitrogen goes where the crop builds yield (tillering and panicle initiation in rice; V6 to V8 and before tasselling in corn; branching and fruit set in vegetables); potassium where straw strength and grain fill are decided. Keep any single nitrogen dressing within the safe range (rice about 1 to 2 bags of urea a hectare a split, corn about 2 to 3) and say the ceiling in timingLogic. Credit what a legume or ploughed in residue left.
-- SECONDARY AND MICRO ELEMENTS ARE PART OF THE PROGRAM: the recommended program carries what the main fertilizers bring (ammonium sulfate 24 percent S, solophos 12 percent S and 20 percent Ca, gypsum 23 percent Ca and 18 percent S, dolomite 21 percent Ca and 12 percent Mg) and adds a soil product for an element in THE SECONDARY AND MICRO ELEMENT NEED only where this soil truly calls for it (zinc sulfate on flooded or alkaline rice, borax for fruiting crops on sandy ground), as kgPerHa and never past the need (boron burns crops just above it). The app adds what is still short after the recommended program, by the kilo or as a spray, and shows it: do not pile products on to be safe.
+{$microRule}- SECONDARY AND MICRO ELEMENTS ARE PART OF THE PROGRAM: the recommended program carries what the main fertilizers bring (ammonium sulfate 24 percent S, solophos 12 percent S and 20 percent Ca, gypsum 23 percent Ca and 18 percent S, dolomite 21 percent Ca and 12 percent Mg) and adds a soil product for an element in THE SECONDARY AND MICRO ELEMENT NEED only where this soil truly calls for it (zinc sulfate on flooded or alkaline rice, borax for fruiting crops on sandy ground), as kgPerHa and never past the need (boron burns crops just above it). The app adds what is still short after the recommended program, by the kilo or as a spray, and shows it: do not pile products on to be safe.
 - THREE PROGRAMS, honest about what each is for: the first is your recommendation; the second a lean low cost program; the third a genuinely different strategy that makes sense HERE (soil first, one simple product, LCC guided, a fuller push). {$programRule}. Each: name at most 4 words; for at most 22 words; applications 3 to 9 = {stage exactly as listed, day on the count inside that stage, product with its grade in the name ("Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60", "Zinc sulfate"), bagsPerHa (decimals allowed) or kgPerHa for a product used by the kilo, purpose at most 14 words}.
 - NO ORGANIC FERTILIZER (no compost, manure, vermicast or biofertilizer) and NO PRICES anywhere.
 - npk.note at most 30 words: the one check in the field that could change the need (the leaf color chart for rice, a soil test, a thin stand), never a different number.
 - DEFICIENCIES BY SOIL: 2 to 4, most likely first, starting from the elements flagged in THE SECONDARY AND MICRO ELEMENT NEED: nutrient; why at most 26 words (this soil, this crop); signs at most 22 words; when = the stage; action at most 26 words in plain words, no amounts and no product names.
-- FOLIARS: 0 to 3, only where they pay here, each the stage, the product named by its nutrient only ("Zinc spray", "Boron spray", never a salt, a chemical or a strength) and why at most 16 words.
+- FOLIARS: {$foliarCount}, only where they pay here, each the stage, the product named by its nutrient only ("Zinc spray", "Boron spray", never a salt, a chemical or a strength) and why at most 16 words.
 - WATER: plan at most 55 words for this lot's water source; ifDry and ifWet at most 22 words each.
 - YIELD: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, the same unit, resting first on the REAL HARVESTS in the notes; note at most 36 words naming the harvest it rests on.
 - watch: 0 to 3 lines of at most 22 words on what this lot's own answers warn of (its troubles last season, floods, salt, a thin stand) and what to do.
@@ -1790,13 +1890,13 @@ PROMPT;
             $fake = ['recommendation' => [
                 'stages' => array_map(fn ($s) => ['stage' => $s['name'], 'days' => self::daysLabel($frame, $s)], $frame['stages']),
                 'programs' => array_slice($out['programs'], 0, 3),
-                'foliars' => array_values(array_filter((array) ($out['foliars'] ?? []), 'is_array')),
+                'foliars' => ($p['micros'] ?? true) ? array_values(array_filter((array) ($out['foliars'] ?? []), 'is_array')) : [],
                 'npk' => ['need' => [], 'note' => (string) ($out['npk']['note'] ?? '')],
             ]];
             $rec = $this->tidy($fake, $p)['recommendation'];
             $main = $rec['programs'][0] ?? null;
             $conds = self::soilConditions($p['soilConditions'] ?? []);
-            $micro = $main ? ProtocolCare::micro((array) ($main['elements'] ?? []), $frame, $conds, $area) : [];
+            $micro = $main && ($p['micros'] ?? true) ? ProtocolCare::micro((array) ($main['elements'] ?? []), $frame, $conds, $area) : [];
             $fixes = $main ? ProtocolCare::fixes((array) ($main['check'] ?? []), (array) ($main['byStage'] ?? []), $frame, $conds, $area, (array) $p['granulars']) : [];
 
             // The jobs: the recommended program by its days, the soil top ups with the first application, the sprays.
@@ -1866,7 +1966,7 @@ PROMPT;
                 return ['stage' => $s['stage'], 'title' => ucfirst(mb_strtolower($head)) . ' spray', 'what' => implode(' ', array_unique($s['what']))];
             }, array_values($byStage));
             $schedLots[] = ['i' => $l['i'], 'name' => $l['name'], 'month' => $l['month'], 'asked' => $l['day'],
-                'tasks' => ProtocolCrew::tasks($frame, $apps, array_slice($sprays, 0, 4), ['weedy' => self::weedy($l['profile'])])];
+                'tasks' => ProtocolCrew::tasks($frame, $apps, array_slice($sprays, 0, 4), self::fieldOf($l))];
 
             $lots[$l['i']] = [
                 'i' => $l['i'], 'name' => $l['name'], 'place' => $l['place'], 'areaHa' => $area, 'farmLotId' => $l['farmLotId'],
@@ -2250,8 +2350,9 @@ PROMPT;
                 ];
             }
             // The secondary and micro elements, each as the Micros tab reads it; a short one a foliar names is given by spray.
+            // None when the farmer asked for N, P and K only (2026-10-21).
             $elements = [];
-            if ($run) {
+            if ($run && ($p['micros'] ?? true)) {
                 foreach (NpkNeed::check($run, $perHa) as $row) {
                     if (in_array($row['key'], NpkNeed::NPK, true)) {
                         continue;
@@ -2712,7 +2813,7 @@ PROMPT;
 
                 return $r ? '- The variety on record (its registered figures, and the figures of its seller where marked; never say where they come from): ' . ltrim(\App\Support\VarietyBook::promptLines([$r]), '- ') . "\n" : '';
             })(),
-        ] + self::needLines((array) ($p['npkNeed'] ?? []), self::yieldUnits()[$p['yieldUnit']] ?? 'tons per hectare', (float) (self::yieldTons()[$p['yieldUnit']] ?? 1));
+        ] + self::needLines((array) ($p['npkNeed'] ?? []), self::yieldUnits()[$p['yieldUnit']] ?? 'tons per hectare', (float) (self::yieldTons()[$p['yieldUnit']] ?? 1), $p);
     }
 
     /**

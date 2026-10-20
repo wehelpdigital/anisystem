@@ -878,8 +878,6 @@
     .cq-wk.is-roster { border-color: #cfe3b8; background: #f7fbf2; }
     .cq-wk-top { display: flex; align-items: center; gap: .55rem; min-width: 0; }
     .cq-wk-top > i { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center; font-style: normal; font-size: .78rem; font-weight: 900; color: #fff; background: #6b9f3d; }
-    .cq-wk-top input { flex: 1; min-width: 0; min-height: 2.5rem; padding: .35rem .65rem; border-radius: .7rem; border: 1.5px solid #e1e7da; background: #fff; font-size: .95rem; font-weight: 700; color: #14210c; transition: border-color .28s var(--cq-e); }
-    .cq-wk-top input:focus { outline: none; border-color: #86b556; }
     .cq-wk-top small { flex: none; font-size: .72rem; font-weight: 800; color: var(--color-gray-500); }
     .cq-wk-from { display: inline-flex; align-items: center; gap: .25rem; margin: .4rem 0 0 2.55rem; padding: .1rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 800; color: var(--cq-gd); background: var(--cq-gl); }
     .cq-d7 { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .3rem; margin-top: .5rem; }
@@ -888,19 +886,53 @@
     .cq-d7 button.is-on { color: #fff; background: var(--cq-g); border-color: var(--cq-g); }
     .cq-samed { display: flex; justify-content: flex-end; margin-top: .55rem; }
     .cq-samed button { min-height: 2.4rem; padding: .3rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--cq-gd); background: var(--cq-gl); }
-    .cq-savenew { display: flex; align-items: flex-start; gap: .6rem; margin-top: .7rem; padding: .65rem .75rem; border-radius: .9rem; background: var(--cq-gx); border: 1px solid #e1edd3; cursor: pointer; animation: cqPop .28s var(--cq-e) both; }
-    .cq-savenew input { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .15rem; accent-color: #4a7c2a; }
-    .cq-savenew b { display: block; font-size: .84rem; font-weight: 800; color: var(--color-gray-900); }
-    .cq-savenew small { display: block; font-size: .74rem; line-height: 1.4; color: var(--color-gray-500); }
-    .cq-savenew[hidden] { display: none; }
+    .cq-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+    .cq-three .cq-field > label { min-height: 2.1rem; display: flex; flex-direction: column; justify-content: flex-end; line-height: 1.2; }
+    .cq-basis { margin-top: .55rem; }
+    .cq-addw { display: flex; align-items: center; justify-content: center; gap: .45rem; width: 100%; min-height: 3.1rem; padding: .6rem 1rem; border-radius: 1.1rem; font-size: .9rem; font-weight: 800;
+        color: #3d6823; background: transparent; border: 1.5px dashed #b9d59a; transition: background-color .28s var(--cq-e), border-color .28s var(--cq-e); }
+    .cq-addw:hover { background: #f3f8ec; border-color: #86b556; }
+    .cq-addw svg { width: 1.05rem; height: 1.05rem; }
+    .cq-wcount { margin-top: .9rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-600); animation: cqPop .28s var(--cq-e) both; }
+    .cq-wk-name { flex: 1; min-width: 0; font-size: .95rem; font-weight: 800; color: #14210c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cq-wk-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; color: var(--color-gray-500); transition: background-color .28s var(--cq-e), color .28s var(--cq-e); }
+    .cq-wk-x:hover { background: #fee2e2; color: #b91c1c; }
+    .cq-wk-x svg { width: .85rem; height: .85rem; }
+    .cq-wk.is-gone { opacity: 0; transform: scale(.97); transition: opacity .2s var(--cq-e), transform .2s var(--cq-e); }
+    .cq-wk-from.is-plan { color: #6b7280; background: #f1f3ee; }
+    .cq-wadd-acts { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+    .cq-rec { display: flex; align-items: flex-start; gap: .7rem; margin-bottom: .8rem; padding: .8rem; border-radius: 1rem; background: #f4f9ee; border: 1px solid #d7e7c4; animation: cqPop .28s var(--cq-e) both; }
+    .cq-rec > img, .cq-rec > span { flex: none; width: 2.6rem; height: 2.6rem; border-radius: 999px; object-fit: cover; display: grid; place-items: center; font-size: 1.3rem; background: #fff; }
+    .cq-rec > div { flex: 1; min-width: 0; }
+    .cq-rec b { display: block; font-size: .92rem; font-weight: 800; color: #14210c; }
+    .cq-rec p { margin-top: .2rem; font-size: .8rem; line-height: 1.45; color: #4b5563; }
+    .cq-rec .btn { margin-top: .5rem; }
+    .cq-jobs { display: grid; gap: .55rem; }
+    .cq-jobl { padding: .7rem .75rem; border-radius: 1rem; background: #fbfcfa; border: 1px solid var(--color-gray-200); animation: cqPop .28s var(--cq-e) both; min-width: 0; }
+    .cq-jobl > b { display: flex; align-items: center; gap: .45rem; font-size: .88rem; font-weight: 800; color: #14210c; }
+    .cq-jobl > b i { flex: none; width: .7rem; height: .7rem; border-radius: 999px; background: var(--lc, #4a7c2a); }
+    .cq-job { margin-top: .6rem; }
+    .cq-job-t { display: block; margin-bottom: .3rem; font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-500); }
+    .cq-job-own { margin-top: .4rem; animation: cqPop .26s var(--cq-e) both; }
+    .cq-job-own .cq-pill { font-size: .76rem; min-height: 2.2rem; }
+    .cq-job-line { display: block; margin-top: .3rem; font-size: .74rem; color: var(--color-gray-500); }
+    .cq-nw .form-input { width: 100%; }
+    .cq-nw .cq-label small { font-weight: 600; color: var(--color-gray-400); }
+    html.dark .cq-addw { color: #a5c97e; border-color: #3d5a26; }
+    html.dark .cq-addw:hover { background: #1c2914; }
+    html.dark .cq-wk-name, html.dark .cq-rec b, html.dark .cq-jobl > b { color: #e8efe1; }
+    html.dark .cq-wk-x:hover { background: #3b1414; color: #fca5a5; }
+    html.dark .cq-wk-from.is-plan { color: #a9b69c; background: #1c2616; }
+    html.dark .cq-wcount, html.dark .cq-rec p { color: #b7c2ad; }
+    html.dark .cq-rec { background: #18210f; border-color: #2f4220; }
+    html.dark .cq-rec > img, html.dark .cq-rec > span { background: #151b12; }
+    html.dark .cq-jobl { background: #12170f; border-color: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) { .cq-addw, .cq-wk-x, .cq-wk.is-gone { transition: none !important; } .cq-wcount, .cq-rec, .cq-jobl, .cq-job-own { animation: none !important; } }
     html.dark .cq-wk, html.dark .cq-lot { background: #12170f; border-color: #2b3a1c; }
     html.dark .cq-lot { border-left-color: var(--lc); }
     html.dark .cq-wk.is-roster { background: #18210f; border-color: #2f4220; }
-    html.dark .cq-wk-top input { background: #151b12; border-color: #2b3a1c; color: #e8efe1; }
     html.dark .cq-d7 button { background: #151b12; border-color: #2b3a1c; color: #93a684; }
     html.dark .cq-d7 button.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
-    html.dark .cq-savenew { background: #18210f; border-color: #2b3a1c; }
-    html.dark .cq-savenew b { color: #e8efe1; }
 
     /* Will the crew keep up? Before the run, from the server's calendar. */
     .cq-cast { margin-top: 1rem; transition: opacity .2s ease; }
@@ -1335,14 +1367,16 @@
                 <div class="cq-pills" id="cqUnits" role="radiogroup" aria-label="Yields in"></div>
                 <div class="cq-two" style="margin-top:.8rem">
                     <div class="cq-field">
-                        <label for="cqPotential" data-tl="yield">Yield potential of the variety <small>(per hectare)</small></label>
+                        <label for="cqPotential" data-tl="yield">Yield potential of the variety <small id="cqPotU">(per hectare)</small></label>
                         <input type="number" id="cqPotential" class="form-input" min="0" step="any" inputmode="decimal" placeholder="On the seed bag">
                     </div>
                     <div class="cq-field">
-                        <label for="cqTarget">Your target <small>(per hectare, optional)</small></label>
+                        <label for="cqTarget">Your target <small id="cqTargetU">(per hectare, optional)</small></label>
                         <input type="number" id="cqTarget" class="form-input" min="0" step="any" inputmode="decimal" placeholder="Your own goal">
                     </div>
                 </div>
+                {{-- Dry or fresh (2026-10-21, the owner): the potential and the target are said in the same weight. --}}
+                <p class="cq-sub cq-sub-s cq-basis" id="cqBasis" hidden></p>
                 <div class="cq-from" id="cqPotFrom" hidden></div>
                 <span class="cq-label">How much will you plant? <small>(optional, for this lot)</small></span>
                 <div class="cq-pills" id="cqSeedUnits" role="radiogroup" aria-label="What you plant"></div>
@@ -1357,6 +1391,16 @@
                     </div>
                 </div>
                 <p class="cq-sub cq-sub-s" id="cqSeedHint" style="margin-top:.45rem"></p>
+                {{-- The spacing (2026-10-21, the owner): only for a crop the seed calculator lays out in rows. --}}
+                <div id="cqSpaceBox" hidden>
+                    <span class="cq-label">Spacing <small>(optional)</small></span>
+                    <div class="cq-three">
+                        <div class="cq-field"><label for="cqRow">Between rows <small id="cqRowU">(cm)</small></label><input type="number" id="cqRow" class="form-input" min="0" step="any" inputmode="decimal"></div>
+                        <div class="cq-field"><label for="cqPlantSp"><span id="cqPlantSpW">Between hills</span> <small id="cqPlantU">(cm)</small></label><input type="number" id="cqPlantSp" class="form-input" min="0" step="any" inputmode="decimal"></div>
+                        <div class="cq-field"><label for="cqPerHill" id="cqPerHillW">Plants a hill</label><input type="number" id="cqPerHill" class="form-input" min="1" max="20" step="1" inputmode="numeric"></div>
+                    </div>
+                    <p class="cq-sub cq-sub-s" id="cqSpaceHint" style="margin-top:.45rem"></p>
+                </div>
                 {{-- How the lot is farmed (2026-10-19): asked here only when its last season page is answered already. --}}
                 <div class="cq-habits" id="cqHabits" hidden></div>
                 <div class="cq-need" id="cqNeed" hidden aria-live="polite"></div>
@@ -1372,6 +1416,13 @@
                 <p class="cq-q">What fertilizer is sold near you?</p>
                 <p class="cq-sub">Pick all that apply. Anee builds every plan from these, and says so when a better one is not on your list.</p>
                 <div class="wtp-choices is-pills" id="cqGranulars" role="group" aria-label="Fertilizer sold near you"></div>
+                {{-- The micronutrients, the farmer's choice (2026-10-21, the owner). --}}
+                <span class="cq-label">Plan the micronutrients too?</span>
+                <p class="cq-sub cq-sub-s">Zinc, boron, sulfur, magnesium and the like, only where this crop and this soil need them.</p>
+                <div class="cq-choices is-2" id="cqMicros">
+                    <button type="button" class="cq-choice is-on" data-micros="1" aria-pressed="true"><span class="ce">🧪</span><span class="ct"><b>Yes, plan them too</b><small>Soil products and sprays where they run short</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                    <button type="button" class="cq-choice" data-micros="0" aria-pressed="false"><span class="ce">🌾</span><span class="ct"><b>No, only N, P and K</b><small>Nitrogen, phosphorus and potassium only</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
+                </div>
                 <label class="cq-label" for="cqNotes">Anything else Anee should know? <small>(optional)</small></label>
                 <textarea id="cqNotes" class="form-textarea" rows="2" maxlength="500" placeholder="e.g. we have a pump but diesel is costly"></textarea>
             </section>
@@ -1379,18 +1430,15 @@
             {{-- 6. The crew: who works, on which days, and what happens when jobs collide. --}}
             <section class="cq-step" data-screen="workers">
                 <p class="cq-q">Who will do the work?{{ \App\Support\Tagalog::flag('workers') }}</p>
-                <p class="cq-sub">Pick your workers or set how many. Each keeps their own work days. Anee lays every lot's jobs over them, so no day asks more hands than you have.</p>
-                <button type="button" class="cq-tag" id="cqRosterOpen" hidden style="margin-bottom:.8rem"><span class="ti" aria-hidden="true">👥</span><span class="tt"><b>Pick from My workers</b><small id="cqRosterLine">Your workers from every season</small></span><span class="tc">Pick{!! $chev !!}</span></button>
-                <div class="cq-stepper">
-                    <button type="button" data-wstep="-1" aria-label="One worker less">−</button>
-                    <output id="cqWCount">2</output>
-                    <button type="button" data-wstep="1" aria-label="One worker more">+</button>
-                    <span id="cqWWord">workers</span>
-                </div>
+                <p class="cq-sub">Pick them from My workers, or add new ones. Each keeps their own work days. Anee lays every lot's jobs over them, so no day asks more hands than you have.</p>
+                <div id="cqRec"></div>
+                {{-- No crew is set for you (2026-10-21, the owner): picked from My workers, or added and kept there too. --}}
+                <button type="button" class="cq-tag" id="cqRosterOpen" hidden style="margin-bottom:.55rem"><span class="ti" aria-hidden="true">👥</span><span class="tt"><b>Pick from My workers</b><small id="cqRosterLine">Your workers from every season</small></span><span class="tc">Pick{!! $chev !!}</span></button>
+                <button type="button" class="cq-addw" id="cqWNew"><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>Add a new worker</button>
+                <p class="cq-wcount" id="cqWCount" hidden></p>
                 <div class="cq-wks" id="cqWorkers"></div>
-                <div class="cq-samed" id="cqSameDays"><button type="button" data-same="days">Same days for all</button></div>
-                <label class="cq-savenew" id="cqSaveNew" hidden><input type="checkbox" id="cqSaveNewOn" checked><span><b>Add the new names to My workers</b><small>Next season you pick them instead of typing them again.</small></span></label>
-                <p class="cq-ferr" id="cqWErr" hidden>Give at least one worker a work day.</p>
+                <div class="cq-samed" id="cqSameDays" hidden><button type="button" data-same="days">Same days for all</button></div>
+                <p class="cq-ferr" id="cqWErr" hidden>Pick or add at least one worker, with a work day.</p>
                 <span class="cq-label">Knapsack sprayers you have</span>
                 <div class="cq-stepper">
                     <button type="button" data-sstep="-1" aria-label="One sprayer less">−</button>
@@ -1398,11 +1446,10 @@
                     <button type="button" data-sstep="1" aria-label="One sprayer more">+</button>
                     <span id="cqSWord">sprayer</span>
                 </div>
-                <span class="cq-label">Who plants and harvests?</span>
-                <div class="cq-choices is-2" id="cqPlantBy">
-                    <button type="button" class="cq-choice is-on" data-plantby="own"><span class="ce">🧑‍🌾</span><span class="ct"><b>My workers</b><small>They plant and harvest too, so those days count</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                    <button type="button" class="cq-choice" data-plantby="hired"><span class="ce">🤝</span><span class="ct"><b data-tl="hired">A hired crew</b><small>Planters and harvesters come for those days</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                </div>
+                {{-- Who plants and who harvests, lot by lot (2026-10-21, the owner): a hired crew, or a machine. --}}
+                <span class="cq-label">Who plants and who harvests, lot by lot</span>
+                <p class="cq-sub cq-sub-s">A hired crew, or a hired machine with its operator, takes those days off your workers. Your own machine is run by your workers.</p>
+                <div class="cq-jobs" id="cqJobs"></div>
                 <span class="cq-label">When jobs on different lots fall on the same days</span>
                 <div class="cq-choices" id="cqMode">
                     <button type="button" class="cq-choice is-on" data-mode="auto"><span class="ce">🔀</span><span class="ct"><b>Anee moves them</b><small>Each job moves only inside the days the crop still takes it well, and a lot with no day picked gets the first day that fits your crew.</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
@@ -1497,6 +1544,24 @@
     </div>
 </dialog>
 
+{{-- A new worker: their name and work days; kept in My workers too when the plan allows (2026-10-21, the owner). --}}
+<dialog class="cq-sheet" id="cqNewWSheet" aria-labelledby="cqNewWTitle">
+    <div class="cq-sbox" tabindex="-1">
+        <div class="cq-grip" aria-hidden="true"></div>
+        <div class="cq-shead"><h2 id="cqNewWTitle">A new worker<small id="cqNewWSub">Kept in My workers too, for your next plans and seasons.</small></h2><button type="button" class="cq-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
+        <div class="cq-sbody cq-nw">
+            <label class="cq-label" for="cqNwName">Name</label>
+            <input type="text" id="cqNwName" class="form-input" maxlength="40" autocomplete="off">
+            <label class="cq-label" for="cqNwPhone">Phone <small>(optional)</small></label>
+            <input type="text" id="cqNwPhone" class="form-input" inputmode="tel" maxlength="32" autocomplete="off">
+            <span class="cq-label">Work days</span>
+            <div class="cq-d7" id="cqNwDays" role="group" aria-label="Work days"></div>
+            <p class="cq-ferr" id="cqNwErr" hidden></p>
+        </div>
+        <div class="cq-sfoot"><span class="cq-pickline"></span><button type="button" class="btn btn-white" data-close>Cancel</button><button type="button" class="btn btn-primary" id="cqNwSave">Add the worker</button></div>
+    </div>
+</dialog>
+
 {{-- My workers (Global Workers): tick who works. --}}
 <dialog class="cq-sheet" id="cqRosterSheet" aria-labelledby="cqRosterTitle">
     <div class="cq-sbox" tabindex="-1">
@@ -1525,7 +1590,7 @@
         one: (id) => @json(url('/app/crop-protocol/one')) + '/' + id,
         job: (id) => @json(url('/app/crop-protocol/job')) + '/' + id,
         del: (id) => @json(url('/app/crop-protocol')) + '/' + id,
-        anee: @json(route('ai.index')),
+        anee: @json(route('ai.index')), workerSave: @json(route('workers.global.store')),
         lots: @json(route('farmlots.index')), lotIcon: @json(asset('images/treasure-map.png')),
     };
     const META_URL = @json(route('proto.meta'));
@@ -1534,7 +1599,6 @@
     const CHECK = '<svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     const XSM = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>';
     const PLUS = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
-    const tlAt = (key) => (key ? ' data-tl="' + esc(key) + '"' : '');
     const clone = (o) => JSON.parse(JSON.stringify(o ?? null));
     const num = (v) => { const n = parseFloat(String(v ?? '').replace(/,/g, '').trim()); return Number.isFinite(n) ? n : 0; };
     const fmt2 = (v) => String(Math.round(Number(v) * 100) / 100);
@@ -1552,11 +1616,12 @@
     let FQ = null;
     let uid = 0;
     const newPick = () => ({ crop: '', method: null, variety: '', varRec: null, month: null, day: null });
-    const newGoal = () => ({ priority: 'balanced', yieldUnit: null, potential: '', potTouched: false, target: '', seedUnit: null, seedTouched: false, seedAmount: '', germination: '' });
+    const newGoal = () => ({ priority: 'balanced', yieldUnit: null, potential: '', potTouched: false, target: '', seedUnit: null, seedTouched: false, seedAmount: '', germination: '', sp: null });
     const newLot = (o) => Object.assign({ uid: ++uid, farmLotId: null, lot: null, name: '', place: '', where: '', province: '', town: '', areaHa: '', areaFrom: '', profile: {}, base: {},
-        copiedFrom: null, edited: false, savedFrom: null, stale: false, updated: '', pick: null, goal: null }, o || {});
+        copiedFrom: null, edited: false, savedFrom: null, stale: false, updated: '', pick: null, goal: null, jobs: null }, o || {});
     const newWorker = (o) => Object.assign({ uid: ++uid, name: '', days: [1, 2, 3, 4, 5, 6], globalId: null }, o || {});
-    const S = { lots: [], workers: [newWorker(), newWorker()], sprayers: 1, plantBy: 'own', mode: 'auto', saveNew: true, granulars: [], notes: '', place: '' };
+    // No worker to start with (2026-10-21, the owner): they come from My workers or the new worker sheet.
+    const S = { lots: [], workers: [], sprayers: 1, mode: 'auto', saveNew: true, micros: true, granulars: [], notes: '', place: '' };
     let QUOTE = null;
 
     /* ---- what each lot grows and aims for: its own pick and goal, the lot before it as the default ---- */
@@ -1570,7 +1635,7 @@
         if (l.goal) return l.goal;
         if (!i) return newGoal();
         const g = Object.assign(clone(goalOf(i - 1)), { potential: '', potTouched: false, seedAmount: '', seedTouched: false });
-        if (pickOf(i).crop !== pickOf(i - 1).crop) g.target = '';
+        if (pickOf(i).crop !== pickOf(i - 1).crop) { g.target = ''; g.sp = null; }
         return g;
     };
     const samePick = (a, b) => !!a && !!b && a.crop === b.crop && (a.method || null) === (b.method || null) && (a.variety || '') === (b.variety || '') && (a.month || '') === (b.month || '');
@@ -1616,8 +1681,10 @@
     function flow() {
         const f = ['lots'];
         S.lots.forEach((l, i) => {
-            f.push('plant:' + i, 'goal:' + i);
+            // The lot's field questions come before its goal (2026-10-21, the owner): the need card then counts its soil and water at once.
+            f.push('plant:' + i);
             askedPages(i).forEach((p) => f.push('lot:' + i + ':' + p));
+            f.push('goal:' + i);
         });
         f.push('buy', 'workers');
         if (S.lots.length && !S.lots.some((l) => l.place)) f.push('place');
@@ -2101,17 +2168,72 @@
         who.innerHTML = whoHtml(i);
         $('cqGoalQ').textContent = 'Your goal on ' + (l && l.name ? l.name : 'this lot') + (c ? ', ' + cropShort(c.key).split(',')[0].toLowerCase() : '');
         $('cqGoals').innerHTML = Object.entries(OPT.priorities).map(([k, pr]) => '<button type="button" class="cq-choice' + (g.priority === k ? ' is-on' : '') + '" data-goal="' + esc(k) + '"><span class="ce">' + esc(pr.icon) + '</span><span class="ct"><b>' + esc(pr.label) + '</b><small>' + esc(pr.sub) + '</small></span><span class="ck">' + CHECK + '</span></button>').join('');
-        $('cqUnits').innerHTML = units().map((k) => '<button type="button" class="cq-pill' + (k === g.yieldUnit ? ' is-on' : '') + '" data-unit="' + esc(k) + '" role="radio" aria-checked="' + (k === g.yieldUnit) + '"' + tlAt(k === 'cavans' ? 'cavans' : (k === 'tons' ? 't-ha' : '')) + '>' + esc(unitWord(k)) + '</button>').join('');
+        $('cqUnits').innerHTML = units().map((k) => '<button type="button" class="cq-pill' + (k === g.yieldUnit ? ' is-on' : '') + '" data-unit="' + esc(k) + '" role="radio" aria-checked="' + (k === g.yieldUnit) + '">' + esc(unitWord(k)) + '</button>').join('');
         $('cqPotential').value = g.potential;
         $('cqTarget').value = g.target;
         $('cqSeed').value = g.seedAmount;
         $('cqGerm').value = g.germination;
         potSay();
+        paintBasis();
         paintSeedUnits();
+        paintSpacing();
         paintSameGoal();
         paintHabits();
         needSoon(true);
     }
+    /* Dry or fresh (2026-10-21, the owner): NPK Plus's own basis (NpkModel::YIELD_BASIS) on both numbers. */
+    const basisOf = () => {
+        const k = npkKey(), b = k && OPT.yieldBasis ? OPT.yieldBasis[k] : null;
+        if (!b) return null;
+        const lo = b.mc ? (100 - b.mc[0]) / (100 - b.mc[1]) : b.x[0], hi = b.mc ? lo : b.x[1];
+        return { dry: b.dry + (b.mc ? ' at ' + b.mc[0] + '% moisture' : ''), wet: b.wet + (b.mc ? ', about ' + b.mc[1] + '% moisture' : ''), lo, hi };
+    };
+    function paintBasis() {
+        const B = basisOf(), g = PAGE.goal, w = B ? B.dry : 'fresh, as picked';
+        $('cqPotU').textContent = '(' + w + ', per hectare)';
+        $('cqTargetU').textContent = '(' + w + ', per hectare, optional)';
+        const v = num($('cqTarget').value) || num($('cqPotential').value), u = unitWord(g.yieldUnit), box = $('cqBasis');
+        box.textContent = !B ? 'Both are the fresh harvest, weighed as it is picked.'
+            : 'Both are ' + B.dry + '.' + (v > 0 ? ' At harvest, ' + fmt2(v) + ' ' + u + ' of it weighs about ' + (B.hi - B.lo < 0.005 ? fmt2(v * B.lo) : fmt2(v * B.lo) + ' to ' + fmt2(v * B.hi)) + ' ' + u + ' as ' + B.wet + '.'
+                : ' At harvest it weighs more, as ' + B.wet + '.');
+        box.hidden = false;
+    }
+    /* The spacing (2026-10-21, the owner): rows, hills and plants a hill, for a crop the seed calculator lays out. */
+    const spacingOf = (i) => { const p = pickOf(i), c = cropOf(p.crop); return c && c.spacing ? (c.spacing[p.method] || null) : null; };
+    const spShow = (cm, sp) => (cm === '' || cm == null || !(num(cm) > 0) ? '' : (sp && sp.meters ? fmt2(num(cm) / 100) : fmt2(num(cm))));
+    const spLen = (cm, sp) => (sp.meters ? fmt2(cm / 100) + ' m' : fmt2(cm) + ' cm');
+    function paintSpacing() {
+        const sp = spacingOf(PAGE.i), g = PAGE.goal;
+        $('cqSpaceBox').hidden = !sp;
+        if (!sp) return;
+        const u = '(' + (sp.meters ? 'm' : 'cm') + ')', s = g.sp || {};
+        $('cqRowU').textContent = u; $('cqPlantU').textContent = u;
+        $('cqPlantSpW').textContent = sp.standBy === 'hills' ? 'Between hills' : 'Between plants';
+        $('cqPerHillW').textContent = str(pickOf(PAGE.i).crop).startsWith('rice') ? 'Seedlings a hill' : 'Plants a hill';
+        $('cqRow').value = spShow(s.row, sp); $('cqPlantSp').value = spShow(s.plant, sp); $('cqPerHill').value = s.hill || '';
+        $('cqRow').placeholder = 'e.g. ' + spShow(sp.row[1], sp); $('cqPlantSp').placeholder = 'e.g. ' + spShow(sp.plant[1], sp); $('cqPerHill').placeholder = 'e.g. ' + sp.perHill[1];
+        spaceHint();
+    }
+    const str = (v) => String(v || '');
+    function readSpacing() {
+        const sp = spacingOf(PAGE.i);
+        if (!sp || !PAGE.goal) return;
+        const f = sp.meters ? 100 : 1, r = num($('cqRow').value) * f, pl = num($('cqPlantSp').value) * f, h = Math.round(num($('cqPerHill').value));
+        PAGE.goal.sp = r > 0 || pl > 0 || h > 0 ? { row: r > 0 ? r : '', plant: pl > 0 ? pl : '', hill: h > 0 ? h : '' } : null;
+    }
+    function spaceHint() {
+        const sp = spacingOf(PAGE.i), s = PAGE.goal.sp || {};
+        if (!sp) return;
+        const rg = (a) => (a[0] === a[2] ? spLen(a[0], sp) : spLen(a[0], sp) + ' to ' + spLen(a[2], sp));
+        const hills = sp.standBy === 'hills';
+        let say = 'Usual: rows ' + rg(sp.row) + ' apart, ' + rg(sp.plant) + ' between ' + (hills ? 'hills' : 'plants') + (sp.perHill[2] > 1 ? ', ' + (sp.perHill[0] === sp.perHill[2] ? sp.perHill[0] : sp.perHill[0] + ' to ' + sp.perHill[2]) + ' a hill' : '') + '.';
+        if (num(s.row) > 0 && num(s.plant) > 0) {
+            const per = Math.round(10000 / ((num(s.row) / 100) * (num(s.plant) / 100)) * (hills ? 1 : (num(s.hill) || 1)));
+            say = 'That is about ' + per.toLocaleString('en-US') + (hills ? ' hills' : ' plants') + ' a hectare' + (sp.stand ? ' (usual ' + sp.stand[0].toLocaleString('en-US') + ' to ' + sp.stand[1].toLocaleString('en-US') + ')' : '') + '. ' + say;
+        }
+        $('cqSpaceHint').textContent = (sp.note ? sp.note + ' ' : '') + say;
+    }
+    ['cqRow', 'cqPlantSp', 'cqPerHill'].forEach((id) => $(id).addEventListener('input', () => { readSpacing(); spaceHint(); needSoon(); }));
     function readGoal() {
         if (!PAGE.goal || screenOf(FLOW[pos]) !== 'goal') return;
         const g = PAGE.goal;
@@ -2119,6 +2241,7 @@
         g.target = $('cqTarget').value.trim();
         g.seedAmount = $('cqSeed').value.trim();
         g.germination = $('cqGerm').value.trim();
+        readSpacing();
     }
     function potSay() {
         const p = pickOf(PAGE.i), g = PAGE.goal, t = recT(p.varRec), box = $('cqPotFrom');
@@ -2137,8 +2260,8 @@
         box.hidden = false;
     }
     $('cqPotFrom').addEventListener('click', (e) => { if (!e.target.closest('[data-pot-rec]')) return; const t = recT(pickOf(PAGE.i).varRec); if (!t) return; PAGE.goal.potential = fmt2(t / tonsIn(PAGE.goal.yieldUnit)); PAGE.goal.potTouched = false; $('cqPotential').value = PAGE.goal.potential; potSay(); needSoon(); });
-    $('cqPotential').addEventListener('input', () => { PAGE.goal.potTouched = true; PAGE.goal.potential = $('cqPotential').value.trim(); potSay(); needSoon(); });
-    $('cqTarget').addEventListener('input', () => { PAGE.goal.target = $('cqTarget').value.trim(); needSoon(); });
+    $('cqPotential').addEventListener('input', () => { PAGE.goal.potTouched = true; PAGE.goal.potential = $('cqPotential').value.trim(); potSay(); paintBasis(); needSoon(); });
+    $('cqTarget').addEventListener('input', () => { PAGE.goal.target = $('cqTarget').value.trim(); paintBasis(); needSoon(); });
     $('cqGoals').addEventListener('click', (e) => {
         const b = e.target.closest('[data-goal]');
         if (!b) return;
@@ -2181,7 +2304,7 @@
         g.potential = conv($('cqPotential').value); g.target = conv($('cqTarget').value);
         $('cqPotential').value = g.potential; $('cqTarget').value = g.target;
         $('cqUnits').querySelectorAll('.cq-pill').forEach((u) => { u.classList.toggle('is-on', u === b); u.setAttribute('aria-checked', String(u === b)); });
-        potSay(); paintSameGoal(); needSoon();
+        potSay(); paintBasis(); paintSameGoal(); needSoon();
     });
     const npkKey = () => {
         const p = pickOf(PAGE.i), c = cropOf(p.crop);
@@ -2189,8 +2312,11 @@
         return c.npk === 'rice' && /^direct_(wet|dry)$/.test(p.method || '') && OPT.seeding['rice_dsr_' + p.method.slice(7)] ? 'rice_dsr_' + p.method.slice(7) : c.npk;
     };
     function paintSeedUnits() {
-        const g = PAGE.goal;
-        $('cqSeedUnits').innerHTML = Object.entries(OPT.seedUnits || {}).map(([k, u]) => '<button type="button" class="cq-pill' + (k === g.seedUnit ? ' is-on' : '') + '" data-seedunit="' + esc(k) + '" role="radio" aria-checked="' + (k === g.seedUnit) + '" title="' + esc(u[2]) + '">' + esc(u[0]) + '</button>').join('');
+        const g = PAGE.goal, c = cropOf(pickOf(PAGE.i).crop);
+        // Only the units this crop is planted by (2026-10-21, the owner: corn is never counted in trees).
+        const allowed = c && c.seedUnits && c.seedUnits.length ? c.seedUnits : Object.keys(OPT.seedUnits || {});
+        if (!allowed.includes(g.seedUnit)) { g.seedUnit = allowed[0]; g.seedTouched = false; }
+        $('cqSeedUnits').innerHTML = Object.entries(OPT.seedUnits || {}).filter(([k]) => allowed.includes(k)).map(([k, u]) => '<button type="button" class="cq-pill' + (k === g.seedUnit ? ' is-on' : '') + '" data-seedunit="' + esc(k) + '" role="radio" aria-checked="' + (k === g.seedUnit) + '" title="' + esc(u[2]) + '">' + esc(u[0]) + '</button>').join('');
         $('cqSeedU').textContent = '(' + ((OPT.seedUnits[g.seedUnit] || [])[1] || g.seedUnit) + ')';
         $('cqGermBox').hidden = !['kg', 'g', 'seeds', 'hills'].includes(g.seedUnit);
         seedHint();
@@ -2269,8 +2395,22 @@
         }
         const g = PAGE.goal, t = (x) => fmt2(x / tonsIn(g.yieldUnit)) + ' ' + unitWord(g.yieldUnit) + ' a hectare';
         const lines = [];
-        if (n.seed && n.seed.thin) lines.push('Your stand is thin, so the need is sized to the plants you will have.');
-        if (n.goal && n.goal.capped) lines.push('The lot\'s water, salt or sodium hold the harvest lower, so the need is too.');
+        // What cuts the need, with its numbers and a way out (2026-10-21, the owner: a 15 ton target counted as 3.4).
+        const acts = [];
+        if (n.goal && n.goal.T && n.goal.P && n.goal.T > n.goal.P + 0.01) {
+            const p = pickOf(i);
+            lines.push('Your target of ' + t(n.goal.T) + ' is held to ' + t(n.goal.P) + ', the potential ' + (p.variety ? 'of ' + p.variety + ' on record' : 'given') + '. If the seed bag or the seller promises more, type that as the potential.');
+            acts.push('<button type="button" class="btn btn-white" data-fullgoal>Count my full target</button>');
+        }
+        if (n.seed && n.seed.thin) {
+            const f = (x) => Number(x).toLocaleString('en-US', { maximumFractionDigits: 0 });
+            lines.push('You plant about ' + f(n.seed.perHa) + ' ' + n.seed.unit + ' a hectare, and the usual is ' + f(n.seed.usual[0]) + ' to ' + f(n.seed.usual[1]) + ', a thin stand: the need is counted for ' + Math.round(n.seed.sf * 100) + ' percent of the goal. Check the amount above, or give the spacing.');
+        }
+        // The field's own limits, as NPK Plus counts them (2026-10-21, the owner): said even when a target was typed.
+        const CAPW = { rainfed: 'rain only', partial: 'short water', saline: 'salt', sodic: 'sodium' };
+        const capSay = n.goal ? andList((n.goal.capWhy || []).map((k) => CAPW[k] || k)) : '';
+        if (n.goal && n.goal.capped) lines.push(capSay.charAt(0).toUpperCase() + capSay.slice(1) + ' hold a harvest here to about ' + Math.round(n.goal.cap * 100) + ' percent of the goal, so the need is sized to it.');
+        else if (n.goal && n.goal.cap < 1 && capSay) lines.push('Your target stays yours, but ' + capSay + ' usually hold a harvest here to about ' + t(n.goal.t * n.goal.cap) + '.');
         if (n.credit && n.credit.N) lines.push(n.credit.N + ' kg less nitrogen for the legume before.');
         if (n.credit && n.credit.K2O) lines.push(n.credit.K2O + ' kg less potassium for the rice straw plowed back.');
         (n.whys || []).slice(0, 3).forEach((w) => lines.push(w + '.'));
@@ -2288,15 +2428,28 @@
             + '<div class="cq-need-n"><span><b>' + kgFmt(n.need.N) + '</b><small>kg N</small></span><span><b>' + kgFmt(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kgFmt(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
             + (mics.length ? '<div class="cq-need-m">' + mics.map(([, m]) => '<span>' + esc(m.name) + ' ' + esc(amt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + '</small></span>').join('') + '</div>' : '')
             + (n.goal ? '<p>For <b>' + esc(t(n.goal.eff)) + '</b>' + (Math.abs(n.goal.eff - n.goal.t) > 0.01 ? ' (' + esc(t(n.goal.t)) + ', ' + esc(n.goal.why) + ', less for this lot)' : ', ' + esc(n.goal.why)) + '. Every program is held to this, and what still falls short is added for you.</p>' : '')
-            + (lines.length ? '<p>' + lines.map(esc).join(' ') + '</p>' : '');
+            + (lines.length ? '<p>' + lines.map(esc).join(' ') + '</p>' : '')
+            + (acts.length ? '<div class="cq-wadd-acts">' + acts.join('') + '</div>' : '');
         box.hidden = false;
     }
+    // The target counted in full: it becomes the potential the goal is held to.
+    $('cqNeed').addEventListener('click', (e) => {
+        if (!e.target.closest('[data-fullgoal]') || !PAGE.goal) return;
+        const g = PAGE.goal;
+        g.potential = $('cqTarget').value.trim() || g.target;
+        g.potTouched = true;
+        $('cqPotential').value = g.potential;
+        potSay(); paintBasis(); needSoon(true);
+    });
 
     /* ---------------- fertilizer sold near the farm, and a note ---------------- */
     function paintBuy() {
         $('cqGranulars').innerHTML = Object.entries(OPT.granulars || {}).map(([k, label]) => '<button type="button" class="wtp-choice' + (S.granulars.includes(k) ? ' is-on' : '') + '" data-granular="' + esc(k) + '" aria-pressed="' + S.granulars.includes(k) + '"><span class="c-e"></span><span>' + esc(label) + '</span></button>').join('');
         $('cqNotes').value = S.notes;
+        paintMicros();
     }
+    const paintMicros = () => document.querySelectorAll('#cqMicros [data-micros]').forEach((b) => { const on = (b.dataset.micros === '1') === S.micros; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
+    $('cqMicros').addEventListener('click', (e) => { const b = e.target.closest('[data-micros]'); if (!b) return; S.micros = b.dataset.micros === '1'; paintMicros(); });
     $('cqGranulars').addEventListener('click', (e) => {
         const b = e.target.closest('[data-granular]');
         if (!b) return;
@@ -2315,28 +2468,37 @@
         return PEOPLE;
     };
     function paintWorkers() {
-        $('cqWCount').textContent = S.workers.length;
-        $('cqWWord').textContent = S.workers.length === 1 ? 'worker' : 'workers';
-        $('cqWorkers').innerHTML = S.workers.map((w, i) => '<div class="cq-wk' + (w.globalId ? ' is-roster' : '') + '" data-w="' + w.uid + '" style="animation-delay:' + Math.min(i, 8) * 30 + 'ms"><div class="cq-wk-top"><i>' + (i + 1) + '</i><input type="text" data-wname maxlength="40" value="' + esc(w.name) + '" placeholder="Name (optional)" aria-label="Name of worker ' + (i + 1) + '"><small data-wdays>' + daysWord(w.days) + '</small></div>'
-            + (w.globalId ? '<span class="cq-wk-from">👥 From My workers</span>' : '')
-            + '<div class="cq-d7" role="group" aria-label="Work days of worker ' + (i + 1) + '">' + DN2.map((n, d) => '<button type="button" data-wd="' + d + '" class="' + (w.days.includes(d) ? 'is-on' : '') + '" aria-pressed="' + w.days.includes(d) + '">' + n + '</button>').join('') + '</div></div>').join('');
-        $('cqSameDays').hidden = S.workers.length < 2;
+        const n = S.workers.length;
+        $('cqWCount').hidden = !n;
+        $('cqWCount').textContent = n + (n === 1 ? ' worker' : ' workers') + ' in this protocol';
+        $('cqWorkers').innerHTML = S.workers.map((w, i) => '<div class="cq-wk' + (w.globalId ? ' is-roster' : '') + '" data-w="' + w.uid + '" style="animation-delay:' + Math.min(i, 8) * 30 + 'ms"><div class="cq-wk-top"><i>' + (i + 1) + '</i><b class="cq-wk-name">' + esc(w.name) + '</b><small data-wdays>' + daysWord(w.days) + '</small>'
+            + '<button type="button" class="cq-wk-x" data-wx="' + w.uid + '" aria-label="Take ' + esc(w.name) + ' off this protocol">' + XSM + '</button></div>'
+            + (w.globalId ? '<span class="cq-wk-from">👥 From My workers</span>' : '<span class="cq-wk-from is-plan">In this protocol only</span>')
+            + '<div class="cq-d7" role="group" aria-label="Work days of ' + esc(w.name) + '">' + DN2.map((nm, d) => '<button type="button" data-wd="' + d + '" class="' + (w.days.includes(d) ? 'is-on' : '') + '" aria-pressed="' + w.days.includes(d) + '">' + nm + '</button>').join('') + '</div></div>').join('');
+        $('cqSameDays').hidden = n < 2;
         $('cqSCount').textContent = S.sprayers;
         $('cqSWord').textContent = S.sprayers === 1 ? 'sprayer' : 'sprayers';
-        document.querySelectorAll('#cqPlantBy [data-plantby]').forEach((b) => b.classList.toggle('is-on', b.dataset.plantby === S.plantBy));
         document.querySelectorAll('#cqMode [data-mode]').forEach((b) => b.classList.toggle('is-on', b.dataset.mode === S.mode));
-        paintSaveNew();
+        paintJobs();
         castSoon();
     }
-    const paintSaveNew = () => { const any = !!(PEOPLE && PEOPLE.canSave) && S.workers.some((w) => !w.globalId && w.name.trim()); $('cqSaveNew').hidden = !any; };
     function paintRosterBtn() {
-        const r = (PEOPLE && PEOPLE.roster) || [];
-        $('cqRosterOpen').hidden = !r.length;
+        const P = PEOPLE || {}, r = P.roster || [];
+        const b = $('cqRosterOpen');
+        // Only the farm owner has My workers; a worker signed in to the farm adds new names to the protocol.
+        b.hidden = !P.owner;
+        b.disabled = !r.length;
         const inPlan = S.workers.filter((w) => w.globalId).length;
-        $('cqRosterLine').textContent = r.length + (r.length === 1 ? ' worker' : ' workers') + ' on your list' + (inPlan ? ', ' + inPlan + ' in this protocol' : '') + '. They bring their days off.';
-        paintSaveNew();
+        $('cqRosterLine').textContent = r.length ? r.length + (r.length === 1 ? ' worker' : ' workers') + ' on your list' + (inPlan ? ', ' + inPlan + ' in this protocol' : '') + '. They bring their days off.'
+            : 'Nobody on your list yet. Add a new worker below.';
     }
-    $('cqSaveNewOn').addEventListener('change', (e) => { S.saveNew = e.target.checked; });
+    // The two ways to grow the crew, for the crew advice and the calendar's tips.
+    const wAddBtns = () => {
+        const P = PEOPLE || {}, inPlan = new Set(S.workers.map((w) => w.globalId).filter(Boolean));
+        const more = (P.roster || []).some((g) => !inPlan.has(g.id));
+        return '<div class="cq-wadd-acts">' + (P.owner && more ? '<button type="button" class="btn btn-primary" data-wpick>Pick from My workers</button>' : '')
+            + '<button type="button" class="btn btn-white" data-wnew>Add a new worker</button></div>';
+    };
     let RPICK = new Set();
     function paintRoster() {
         const q = $('cqRosterQ').value.trim().toLowerCase();
@@ -2346,7 +2508,16 @@
             : '<p class="cq-snone">Nobody by that name.</p>';
         $('cqRosterCount').textContent = RPICK.size ? RPICK.size + ' ticked' : 'None ticked';
     }
-    $('cqRosterOpen').addEventListener('click', async () => { await loadPeople(); $('cqRosterSheet').classList.toggle('is-tall', ((PEOPLE && PEOPLE.roster) || []).length > 6); RPICK = new Set(S.workers.filter((w) => w.globalId).map((w) => w.globalId)); $('cqRosterQ').value = ''; paintRoster(); sheetOpen($('cqRosterSheet'), $('cqRosterQ')); });
+    async function openRoster() {
+        await loadPeople();
+        // A short list fits its sheet; a long one gets the tall sheet, so the search does not resize it.
+        $('cqRosterSheet').classList.toggle('is-tall', ((PEOPLE && PEOPLE.roster) || []).length > 6);
+        RPICK = new Set(S.workers.filter((w) => w.globalId).map((w) => w.globalId));
+        $('cqRosterQ').value = '';
+        paintRoster();
+        sheetOpen($('cqRosterSheet'), $('cqRosterQ'));
+    }
+    $('cqRosterOpen').addEventListener('click', openRoster);
     $('cqRosterQ').addEventListener('input', paintRoster);
     $('cqRosterList').addEventListener('click', (e) => {
         const b = e.target.closest('[data-gw]');
@@ -2357,66 +2528,170 @@
         b.setAttribute('aria-selected', String(RPICK.has(id)));
         $('cqRosterCount').textContent = RPICK.size ? RPICK.size + ' ticked' : 'None ticked';
     });
+    const fromRoster = (g) => ({ name: g.name, days: (g.off || []).length ? [0, 1, 2, 3, 4, 5, 6].filter((d) => !(g.off || []).includes(d)) : [1, 2, 3, 4, 5, 6], globalId: g.id });
     $('cqRosterUse').addEventListener('click', () => {
         const roster = (PEOPLE && PEOPLE.roster) || [];
         S.workers = S.workers.filter((w) => !w.globalId || RPICK.has(w.globalId));
         const have = new Set(S.workers.map((w) => w.globalId).filter(Boolean));
         let added = 0;
-        roster.filter((g) => RPICK.has(g.id) && !have.has(g.id)).forEach((g) => {
-            const days = [0, 1, 2, 3, 4, 5, 6].filter((d) => !(g.off || []).includes(d));
-            const facts = { name: g.name, days: (g.off || []).length ? days : [1, 2, 3, 4, 5, 6], globalId: g.id };
-            const empty = S.workers.find((w) => !w.globalId && !w.name.trim());
-            if (empty) Object.assign(empty, facts); else if (S.workers.length < 100) S.workers.push(newWorker(facts));
-            added++;
-        });
-        if (!S.workers.length) S.workers.push(newWorker());
+        roster.filter((g) => RPICK.has(g.id) && !have.has(g.id)).forEach((g) => { if (S.workers.length < 100) { S.workers.push(newWorker(fromRoster(g))); added++; } });
         sheetClose($('cqRosterSheet'));
         paintWorkers();
         paintRosterBtn();
         if (S.workers.some((x) => x.days.length)) $('cqWErr').hidden = true;
         if (added) window.toast?.(added + (added === 1 ? ' worker' : ' workers') + ' from My workers. Check their days below.');
     });
-    const setWorkers = (n) => {
-        n = Math.max(1, Math.min(100, Math.round(n) || 1));
-        while (S.workers.length < n) S.workers.push(newWorker({ days: (S.workers[S.workers.length - 1] || {}).days ? S.workers[S.workers.length - 1].days.slice() : [1, 2, 3, 4, 5, 6] }));
-        if (S.workers.length > n) S.workers = S.workers.slice(0, n);
+    /* A new worker (2026-10-21, the owner): a name is a must; saved to My workers at once when the plan has
+       them, else kept in this protocol; a name already on the roster brings that person instead. */
+    let NWD = [1, 2, 3, 4, 5, 6];
+    const paintNw = () => { $('cqNwDays').innerHTML = DN2.map((nm, d) => '<button type="button" data-nwd="' + d + '" class="' + (NWD.includes(d) ? 'is-on' : '') + '" aria-pressed="' + NWD.includes(d) + '">' + nm + '</button>').join(''); };
+    async function openNewWorker() {
+        NWD = [1, 2, 3, 4, 5, 6];
+        $('cqNwName').value = ''; $('cqNwPhone').value = '';
+        $('cqNwErr').hidden = true;
+        $('cqNwSave').disabled = false;
+        paintNw();
+        const P = await loadPeople();
+        $('cqNewWSub').textContent = P.canSave ? 'Kept in My workers too, for your next plans and seasons.'
+            : (P.owner && P.savePlan ? 'Kept in this protocol. My workers come with ' + P.savePlan + '.' : 'Kept in this protocol.');
+        sheetOpen($('cqNewWSheet'), $('cqNwName'));
+    }
+    $('cqWNew').addEventListener('click', openNewWorker);
+    $('cqNwDays').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-nwd]');
+        if (!b) return;
+        const d = Number(b.dataset.nwd);
+        NWD = NWD.includes(d) ? NWD.filter((x) => x !== d) : NWD.concat(d).sort();
+        b.classList.toggle('is-on', NWD.includes(d));
+        b.setAttribute('aria-pressed', String(NWD.includes(d)));
+    });
+    $('cqNwSave').addEventListener('click', async () => {
+        const err = (m, el) => { $('cqNwErr').textContent = m; $('cqNwErr').hidden = false; if (el) el.focus(); };
+        const name = $('cqNwName').value.trim().replace(/\s+/g, ' ');
+        if (!name) { err('Type the worker\'s name.', $('cqNwName')); return; }
+        if (!NWD.length) { err('Pick at least one work day.'); return; }
+        if (S.workers.some((w) => w.name.trim().toLowerCase() === name.toLowerCase())) { err(name + ' is already in this protocol.', $('cqNwName')); return; }
+        if (S.workers.length >= 100) { err('Up to 100 workers in one protocol.'); return; }
+        const phone = $('cqNwPhone').value.trim();
+        let facts = { name, days: NWD.slice(), globalId: null }, said = name + ' is in this protocol.';
+        const P = await loadPeople();
+        if (P.canSave) {
+            const btn = $('cqNwSave');
+            btn.disabled = true;
+            try {
+                const g = (await window.api(U.workerSave, { method: 'POST', body: { workerName: name, phone: phone || null, offWeekdays: [0, 1, 2, 3, 4, 5, 6].filter((d) => !NWD.includes(d)), notes: 'Added from the Crop Protocol.' } })).data;
+                facts.globalId = g.id;
+                (P.roster = P.roster || []).push({ id: g.id, name: g.workerName, phone: g.phone || '', halfDay: Number(g.costPerHalfDay) || 0, off: g.offWeekdays || [] });
+                P.roster.sort((a, b) => a.name.localeCompare(b.name));
+                said = name + ' is in this protocol and in My workers.';
+            } catch (e) {
+                const twin = (P.roster || []).find((g) => g.name.trim().toLowerCase() === name.toLowerCase());
+                if (!twin) { btn.disabled = false; err((e && e.message) || 'The worker could not be saved. Please try again.'); return; }
+                if (S.workers.some((w) => w.globalId === twin.id)) { btn.disabled = false; err(twin.name + ' is already in this protocol.', $('cqNwName')); return; }
+                facts = fromRoster(twin);
+                said = twin.name + ' was already in My workers, with their own days.';
+            }
+        }
+        S.workers.push(newWorker(facts));
+        sheetClose($('cqNewWSheet'));
         paintWorkers();
-    };
-    document.querySelectorAll('[data-wstep]').forEach((b) => b.addEventListener('click', () => setWorkers(S.workers.length + Number(b.dataset.wstep))));
+        paintRosterBtn();
+        $('cqWErr').hidden = true;
+        window.toast?.(said);
+    });
     document.querySelectorAll('[data-sstep]').forEach((b) => b.addEventListener('click', () => { S.sprayers = Math.max(1, Math.min(50, S.sprayers + Number(b.dataset.sstep))); paintWorkers(); }));
     $('cqWorkers').addEventListener('click', (e) => {
+        const x = e.target.closest('[data-wx]');
+        if (x) {
+            // Off this protocol only: a roster person stays in My workers.
+            const card = x.closest('.cq-wk');
+            const gone = () => { S.workers = S.workers.filter((w) => String(w.uid) !== x.dataset.wx); paintWorkers(); paintRosterBtn(); };
+            if (reduce()) gone(); else { card.classList.add('is-gone'); setTimeout(gone, 200); }
+            return;
+        }
         const b = e.target.closest('[data-wd]');
         if (!b) return;
-        const w = S.workers.find((x) => String(x.uid) === b.closest('.cq-wk').dataset.w);
+        const w = S.workers.find((y) => String(y.uid) === b.closest('.cq-wk').dataset.w);
         const d = Number(b.dataset.wd);
-        w.days = w.days.includes(d) ? w.days.filter((x) => x !== d) : w.days.concat(d).sort();
+        w.days = w.days.includes(d) ? w.days.filter((y) => y !== d) : w.days.concat(d).sort();
         b.classList.toggle('is-on', w.days.includes(d));
         b.setAttribute('aria-pressed', String(w.days.includes(d)));
         b.closest('.cq-wk').querySelector('[data-wdays]').textContent = daysWord(w.days);
-        if (S.workers.some((x) => x.days.length)) $('cqWErr').hidden = true;
-    });
-    $('cqWorkers').addEventListener('input', (e) => {
-        const card = e.target.closest('.cq-wk');
-        const w = card && S.workers.find((x) => String(x.uid) === card.dataset.w);
-        if (w && e.target.closest('[data-wname]')) { w.name = e.target.value; paintSaveNew(); }
+        if (S.workers.some((y) => y.days.length)) $('cqWErr').hidden = true;
     });
     $('cqSameDays').addEventListener('click', () => { const d = S.workers[0].days.slice(); S.workers.forEach((w) => { w.days = d.slice(); }); paintWorkers(); window.toast?.('Every worker now works ' + (d.length === 7 ? 'every day' : d.map((x) => DN2[x]).join(', ')) + '.'); });
-    $('cqPlantBy').addEventListener('click', (e) => { const b = e.target.closest('[data-plantby]'); if (!b) return; S.plantBy = b.dataset.plantby; paintWorkers(); });
     $('cqMode').addEventListener('click', (e) => { const b = e.target.closest('[data-mode]'); if (!b) return; S.mode = b.dataset.mode; paintWorkers(); });
-    // Any change on the crew page asks the calendar again, after a pause.
-    document.querySelector('.cq-step[data-screen="workers"]').addEventListener('click', (e) => { if (!e.target.closest('#cqCast')) castSoon(); });
+
+    /* Who plants and who harvests, lot by lot (2026-10-21, the owner): the farm's workers, a hired crew, or a
+       machine that serves the lot's crop and way in (ProtocolCrew::MACHINES), the farm's own or hired. */
+    const JOB0 = { plantBy: 'own', plantOwn: false, harvestBy: 'own', harvestOwn: false };
+    const jobsOf = (i) => Object.assign({}, JOB0, (S.lots[i] || {}).jobs || {});
+    const fitsM = (m, crop, method) => !!crop && m.crops.some((c) => crop === c || crop.startsWith(c + '_') || (c === 'rice' && crop.startsWith('rice'))) && (!m.methods || m.methods.includes(method));
+    const machinesFor = (i, kind) => { const p = pickOf(i); return Object.entries(OPT.crewMachines || {}).filter(([, m]) => m.kind === kind && fitsM(m, p.crop, p.method)); };
+    const jobNow = (i, kind) => { const j = jobsOf(i), by = j[kind + 'By']; return by === 'hired' || machinesFor(i, kind).some(([k]) => k === by) ? by : 'own'; };
+    function paintJobs() {
+        $('cqJobs').innerHTML = S.lots.map((l, i) => {
+            const c = cropOf(pickOf(i).crop), j = jobsOf(i);
+            const row = (kind, title) => {
+                const cur = jobNow(i, kind), m = (OPT.crewMachines || {})[cur];
+                const opts = [['own', 'My workers'], ['hired', 'A hired crew']].concat(machinesFor(i, kind).map(([k, x]) => [k, x.name]));
+                return '<div class="cq-job"><span class="cq-job-t">' + esc(title) + '</span><div class="cq-pills" role="radiogroup" aria-label="' + esc(title + ' on ' + lotWord(i)) + '">'
+                    + opts.map(([k, t]) => '<button type="button" class="cq-pill' + (cur === k ? ' is-on' : '') + '" data-job="' + i + ':' + kind + ':' + k + '" role="radio" aria-checked="' + (cur === k) + '">' + esc(t) + '</button>').join('') + '</div>'
+                    + (m ? '<div class="cq-pills cq-job-own" role="radiogroup" aria-label="Whose machine">' + [['1', 'Ours, our workers run it'], ['0', 'Hired, with its operator']].map(([v, t]) => { const on = !!j[kind + 'Own'] === (v === '1'); return '<button type="button" class="cq-pill' + (on ? ' is-on' : '') + '" data-jobown="' + i + ':' + kind + ':' + v + '" role="radio" aria-checked="' + on + '">' + t + '</button>'; }).join('') + '</div>'
+                        + '<small class="cq-job-line">' + esc(m.line) + '</small>' : '')
+                    + '</div>';
+            };
+            return '<div class="cq-jobl" style="--lc:' + lc(i) + ';animation-delay:' + Math.min(i, 8) * 30 + 'ms"><b><i></i>' + esc(lotWord(i) + (c ? ' · ' + cropShort(c.key).split(',')[0] : '')) + '</b>' + row('plant', 'Planting') + row('harvest', 'Harvest') + '</div>';
+        }).join('');
+    }
+    $('cqJobs').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-job]'), o = e.target.closest('[data-jobown]');
+        if (!b && !o) return;
+        const [i, kind, v] = (b ? b.dataset.job : o.dataset.jobown).split(':');
+        const l = S.lots[Number(i)];
+        if (!l) return;
+        l.jobs = jobsOf(Number(i));
+        if (b) l.jobs[kind + 'By'] = v; else l.jobs[kind + 'Own'] = v === '1';
+        paintJobs();
+    });
+    // The crew Anee recommends, from the calendar check: the workers it takes with the sprayers the team has.
+    function paintRec(r) {
+        const box = $('cqRec');
+        if (!r || !S.lots.length) { box.innerHTML = ''; return; }
+        const face = OPT && OPT.aneeFace ? '<img src="' + esc(OPT.aneeFace) + '" alt="">' : '<span>👷</span>';
+        const sp = (n) => n + (n === 1 ? ' sprayer' : ' sprayers');
+        const head = r.workers ? 'Recommended: about ' + r.workers + (r.workers === 1 ? ' worker' : ' workers') : 'This needs more than a crew';
+        const txt = r.workers ? 'Working Monday to Saturday with your ' + sp(r.sprayers) + ', they keep every job of every lot inside its days.' + (r.alt ? ' With ' + sp(r.alt.sprayers) + ', about ' + r.alt.workers + ' would do.' : '')
+            : 'Even 60 workers do not keep every job inside its days. A hired crew or a machine for the planting or the harvest takes the most off them.';
+        const html = '<div class="cq-rec">' + face + '<div><b>' + esc(head) + '</b><p>' + esc(txt) + '</p>'
+            + (r.workers && r.workers > S.workers.length ? '<p>' + esc(S.workers.length ? 'You have ' + S.workers.length + ' so far: pick or add ' + (r.workers - S.workers.length) + ' more.' : 'Pick them from My workers, or add them.') + '</p>' + wAddBtns() : '')
+            + (r.alt && r.alt.sprayers > S.sprayers ? '<button type="button" class="btn btn-white" data-recspray="' + (r.alt.sprayers - S.sprayers) + '">Use ' + sp(r.alt.sprayers) + '</button>' : '') + '</div></div>';
+        if (box._html === html) return;
+        box._html = html;
+        fadeSwap(box, html);
+    }
+    // Any change on the crew page asks the calendar again, after a pause; the two ways in and the sprayers the advice offers.
+    document.querySelector('.cq-step[data-screen="workers"]').addEventListener('click', (e) => {
+        if (e.target.closest('[data-wpick]')) { openRoster(); return; }
+        if (e.target.closest('[data-wnew]')) { openNewWorker(); return; }
+        const rs = e.target.closest('[data-recspray]');
+        if (rs) { S.sprayers = Math.min(50, S.sprayers + Number(rs.dataset.recspray)); paintWorkers(); return; }
+        if (!e.target.closest('#cqCast')) castSoon();
+    });
 
     /* ---------------- the work calendar before the run (ProtocolCrew, no AI) ---------------- */
-    const crewBody = () => ({ workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days, globalId: w.globalId })), sprayers: S.sprayers, plantBy: S.plantBy, saveNew: S.saveNew });
+    const crewBody = () => ({ workers: S.workers.map((w) => ({ name: w.name.trim(), days: w.days, globalId: w.globalId })), sprayers: S.sprayers, saveNew: S.saveNew });
     function lotBody(i, fromPage) {
         const l = S.lots[i], p = fromPage && screenOf(FLOW[pos]) === 'plant' && PAGE.i === i ? PAGE.pick : pickOf(i);
         const g = fromPage && screenOf(FLOW[pos]) === 'goal' && PAGE.i === i ? PAGE.goal : goalOf(i);
         return { name: l.name, farmLotId: l.farmLotId, areaHa: num(l.areaHa) || null, place: l.place || S.place, province: l.province, town: l.town, profile: l.profile,
             crop: p.crop, method: p.method, variety: p.variety, days: p.varRec && p.varRec.days ? p.varRec.days : null, month: p.month, day: p.day,
             priority: g.priority, targetYield: num(g.target) > 0 ? num(g.target) : null, yieldUnit: g.yieldUnit || units()[0], potential: num(g.potential) > 0 ? num(g.potential) : null,
-            seedAmount: num(g.seedAmount) > 0 ? num(g.seedAmount) : null, seedUnit: g.seedUnit, germination: num(g.germination) > 0 ? num(g.germination) : null };
+            seedAmount: num(g.seedAmount) > 0 ? num(g.seedAmount) : null, seedUnit: g.seedUnit, germination: num(g.germination) > 0 ? num(g.germination) : null,
+            spacing: g.sp && num(g.sp.row) > 0 && num(g.sp.plant) > 0 && spacingOf(i) ? { row: num(g.sp.row), plant: num(g.sp.plant), perHill: Math.round(num(g.sp.hill)) || 1 } : null,
+            plantBy: jobNow(i, 'plant'), plantOwn: !!jobsOf(i).plantOwn, harvestBy: jobNow(i, 'harvest'), harvestOwn: !!jobsOf(i).harvestOwn };
     }
-    const body = () => ({ lots: S.lots.map((_, i) => lotBody(i)), crew: crewBody(), mode: S.mode, granulars: S.granulars, notes: S.notes, location: S.place });
+    const body = () => ({ lots: S.lots.map((_, i) => lotBody(i)), crew: crewBody(), mode: S.mode, granulars: S.granulars, notes: S.notes, location: S.place, micros: S.micros });
     let castT = null, castAsk = 0, castSig = '';
     const castSoon = (now) => { clearTimeout(castT); castT = setTimeout(() => paintCast('cqCast'), now ? 0 : 450); };
     const fadeSwap = (el, html) => { if (reduce() || !el.innerHTML) { el.innerHTML = html; return; } el.style.opacity = '0'; setTimeout(() => { el.innerHTML = html; el.style.opacity = ''; }, 180); };
@@ -2424,8 +2699,8 @@
         const box = $(hostId);
         if (!S.lots.length) { box.innerHTML = ''; return null; }
         const b = Object.assign(body(), { needs: needs ? 1 : 0 });
-        const key = hostId + JSON.stringify([b.lots.map((l) => [l.areaHa, l.crop, l.method, l.month, l.day, l.variety]), b.crew, b.mode, needs]);
-        if (key === castSig && box.innerHTML) return null;
+        const key = hostId + JSON.stringify([b.lots.map((l) => [l.areaHa, l.crop, l.method, l.month, l.day, l.variety, l.plantBy, l.plantOwn, l.harvestBy, l.harvestOwn]), b.crew, b.mode, needs]);
+        if (key === castSig && (box.innerHTML || !S.workers.length)) return null;
         castSig = key;
         const ask = ++castAsk;
         box.classList.add('is-busy');
@@ -2435,7 +2710,9 @@
         box.classList.remove('is-busy');
         if (!d) { castSig = ''; return null; }
         QUOTE = Number(d.quote) || null;
-        fadeSwap(box, castHtml(d.schedule, hostId === 'cqCastRev'));
+        if (hostId === 'cqCast') paintRec(d.schedule.recommend);
+        // No calendar without a crew: only the advice of how many it takes.
+        fadeSwap(box, S.workers.length || hostId === 'cqCastRev' ? castHtml(d.schedule, hostId === 'cqCastRev') : '');
         return d;
     }
     function castHtml(s, onReview) {
@@ -2455,31 +2732,35 @@
         short.slice(0, 5).forEach((d) => lines.push(dayFmt(d.date) + ': ' + d.need + ' workers needed, you have ' + d.cap + (d.sprayOver ? ' (and ' + d.sprayOver + ' more sprayer' + (d.sprayOver === 1 ? '' : 's') + ')' : '') + '. ' + andList(d.items.filter((x) => !x.hired).map((x) => (many ? 'Lot ' + (x.lot + 1) + ' ' : '') + x.title.toLowerCase()))));
         late.slice(0, 5).forEach((t) => lines.push((many ? 'Lot ' + (t.lot + 1) + ', ' : '') + t.title + ': it needs more hands to be done by ' + dayFmt(t.hi) + '.'));
         const tips = [];
-        const use = (n) => (onReview ? '<button type="button" class="btn btn-white" data-jump="workers">Change the workers</button>' : '<button type="button" class="btn btn-primary" data-castuse="' + n + '">Use ' + (S.workers.length + n) + ' workers</button>');
+        const use = () => (onReview ? '<button type="button" class="btn btn-white" data-jump="workers">Change the workers</button>' : wAddBtns());
         if (warn) {
             if (s.more) tips.push(['With ' + (S.workers.length + s.more) + ' workers working Monday to Saturday, ' + s.more + ' more than now, everything fits.', use(s.more)]);
             if (s.moreSprayers) tips.push([(s.more ? 'Or ' : '') + s.moreSprayers + ' more sprayer' + (s.moreSprayers === 1 ? '' : 's') + ' would do it.', onReview ? '' : '<button type="button" class="btn btn-white" data-castspray="' + s.moreSprayers + '">Use ' + (S.sprayers + s.moreSprayers) + ' sprayers</button>']);
-            if (S.plantBy === 'own' && late.concat(short.flatMap((d) => d.items)).some((x) => /transplant|sow|plant|harvest/i.test(x.title || ''))) tips.push(['Most of it is the planting and the harvest. A hired crew for those days takes them off your workers.', onReview ? '' : '<button type="button" class="btn btn-white" data-casthired>A hired crew plants and harvests</button>']);
+            if (S.lots.some((l, i) => jobNow(i, 'plant') === 'own' || jobNow(i, 'harvest') === 'own') && late.concat(short.flatMap((d) => d.items)).some((x) => /transplant|sow|plant|harvest/i.test(x.title || ''))) tips.push(['Most of it is the planting and the harvest. A hired crew or a machine for those days takes them off your workers.', onReview ? '' : '<button type="button" class="btn btn-white" data-casthired>A hired crew plants and harvests</button>']);
             if (S.mode === 'keep') tips.push(['Or let Anee move the jobs inside their safe days.', onReview ? '' : '<button type="button" class="btn btn-white" data-castauto>Let Anee move them</button>']);
         }
         return '<div class="cq-cast-c' + (warn ? ' is-warn' : '') + '"><div class="cq-cast-h"><span aria-hidden="true">' + (warn ? '⚠️' : '✅') + '</span><b>' + esc(head) + '</b></div>'
-            + '<p>' + esc('Counted from the usual fertilizer days, with your ' + s.crew.workers + (s.crew.workers === 1 ? ' worker' : ' workers') + ' and ' + s.crew.sprayers + (s.crew.sprayers === 1 ? ' sprayer' : ' sprayers') + (s.crew.plantBy === 'hired' ? ', a hired crew planting and harvesting' : '') + '. The protocol lays out Anee\'s own program the same way.') + '</p>'
+            + '<p>' + esc('Counted from the usual fertilizer days, with your ' + s.crew.workers + (s.crew.workers === 1 ? ' worker' : ' workers') + ' and ' + s.crew.sprayers + (s.crew.sprayers === 1 ? ' sprayer' : ' sprayers') + '. The protocol lays out Anee\'s own program the same way.') + '</p>'
             + '<div class="cq-cast-rows">' + rows + '</div>'
             + (lines.length ? '<div class="cq-cast-do">' + lines.map((t) => '<p>' + esc(t) + '</p>').join('') + '</div>' : '')
             + (tips.length ? '<div class="cq-cast-do">' + tips.map(([t, b]) => '<p>' + esc(t) + '</p>' + b).join('') + '</div>' : '')
             + (s.peak ? '<p style="margin-top:.5rem">' + esc('The busiest day is ' + dayFmt(s.peak.date) + ', with ' + s.peak.workers + ' of your ' + s.peak.cap + ' workers busy. ' + s.workDays + ' days of field work in all.') + '</p>' : '') + '</div>';
     }
     $('cqCast').addEventListener('click', (e) => {
-        const u = e.target.closest('[data-castuse]');
-        if (u) { setWorkers(S.workers.length + Number(u.dataset.castuse)); window.toast?.('Set to ' + S.workers.length + ' workers. Check their days above.'); return; }
         const sp = e.target.closest('[data-castspray]');
         if (sp) { S.sprayers += Number(sp.dataset.castspray); paintWorkers(); return; }
-        if (e.target.closest('[data-casthired]')) { S.plantBy = 'hired'; paintWorkers(); return; }
+        if (e.target.closest('[data-casthired]')) { S.lots.forEach((l, i) => { l.jobs = Object.assign(jobsOf(i), { plantBy: 'hired', harvestBy: 'hired' }); }); paintWorkers(); return; }
         if (e.target.closest('[data-castauto]')) { S.mode = 'auto'; paintWorkers(); }
     });
     $('cqCastRev').addEventListener('click', (e) => { const j = e.target.closest('[data-jump]'); if (j) goTo(j.dataset.jump, true); });
 
     /* ---------------- the review ---------------- */
+    // Who plants and harvests every lot, in a line: "Your workers plant and harvest." or lot by lot.
+    function jobsWords() {
+        const w = (i, kind) => { const by = jobNow(i, kind), m = (OPT.crewMachines || {})[by]; return by === 'own' ? 'your workers' : (by === 'hired' ? 'a hired crew' : (m ? m.name.toLowerCase() + (jobsOf(i)[kind + 'Own'] ? ', yours' : ', hired') : 'your workers')); };
+        if (S.lots.every((l, i) => jobNow(i, 'plant') === 'own' && jobNow(i, 'harvest') === 'own')) return 'Your workers plant and harvest.';
+        return S.lots.map((l, i) => (S.lots.length > 1 ? 'Lot ' + (i + 1) + ': ' : '') + 'planting by ' + w(i, 'plant') + ', harvest by ' + w(i, 'harvest')).join('. ') + '.';
+    }
     async function review() {
         const rows = [];
         S.lots.forEach((l, i) => {
@@ -2490,10 +2771,10 @@
             const n = window.aneeFieldProfile ? window.aneeFieldProfile.count(l.profile) : 0;
             rows.push('<button type="button" data-go="lots"><span class="re">🟤</span><span class="rt"><small>Its field</small><b>' + esc(n ? n + ' answers from the lot' : 'No answers yet') + '</b><em>' + esc(l.place || S.place || 'No place') + '. Its soil test and answers decide the fertilizer.</em></span><span class="rc">Change</span></button>');
         });
-        rows.push('<button type="button" data-go="buy"><span class="re">🛒</span><span class="rt"><small>Fertilizer you can buy</small><b>' + esc(S.granulars.length ? S.granulars.map((k) => (OPT.granulars || {})[k] || k).join(', ') : 'Not said: the common ones sold here') + '</b>' + (S.notes ? '<em>' + esc(S.notes) + '</em>' : '') + '</span><span class="rc">Change</span></button>');
+        rows.push('<button type="button" data-go="buy"><span class="re">🛒</span><span class="rt"><small>Fertilizer you can buy</small><b>' + esc(S.granulars.length ? S.granulars.map((k) => (OPT.granulars || {})[k] || k).join(', ') : 'Not said: the common ones sold here') + '</b><em>' + esc((S.micros ? 'Micronutrients planned too.' : 'Nitrogen, phosphorus and potassium only.') + (S.notes ? ' ' + S.notes : '')) + '</em></span><span class="rc">Change</span></button>');
         const days = (() => { const all = new Set(S.workers.map((w) => w.days.join(','))); return all.size === 1 ? daysWord(S.workers[0].days) : 'their own days'; })();
         rows.push('<button type="button" data-go="workers"><span class="re">👷</span><span class="rt"><small>The crew</small><b>' + esc(S.workers.length + (S.workers.length === 1 ? ' worker, ' : ' workers, ') + days + ' · ' + S.sprayers + (S.sprayers === 1 ? ' sprayer' : ' sprayers')) + '</b><em>'
-            + esc((S.plantBy === 'hired' ? 'A hired crew plants and harvests. ' : 'Your workers plant and harvest. ') + (S.mode === 'auto' ? 'Anee moves jobs inside their safe days when they collide.' : 'Your dates stay, and Anee names the short days.')) + '</em></span><span class="rc">Change</span></button>');
+            + esc(jobsWords() + ' ' + (S.mode === 'auto' ? 'Anee moves jobs inside their safe days when they collide.' : 'Your dates stay, and Anee names the short days.')) + '</em></span><span class="rc">Change</span></button>');
         if (FLOW.includes('place')) rows.push('<button type="button" data-go="place"><span class="re">📍</span><span class="rt"><small>Place</small><b>' + esc(S.place || 'Not said') + '</b></span><span class="rc">Change</span></button>');
         $('cqReview').innerHTML = rows.join('');
         $('cqErr').hidden = true;
@@ -2571,8 +2852,9 @@
     /* A finished run leaves a clean form (2026-10-17, the owner): back at the lots, nothing picked. */
     function resetWizard() {
         S.lots = [];
-        S.workers = [newWorker(), newWorker()];
-        Object.assign(S, { sprayers: 1, plantBy: 'own', mode: 'auto', saveNew: true, granulars: [], notes: '', place: '' });
+        S.workers = [];
+        Object.assign(S, { sprayers: 1, mode: 'auto', saveNew: true, micros: true, granulars: [], notes: '', place: '' });
+        $('cqRec').innerHTML = ''; $('cqRec')._html = '';
         QUOTE = null;
         castSig = '';
         $('cqCast').innerHTML = ''; $('cqCastRev').innerHTML = ''; $('cqNeed').hidden = true;

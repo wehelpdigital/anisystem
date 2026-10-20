@@ -116,6 +116,42 @@ final class NpkNeed
     }
 
     /**
+     * The units a crop is planted by, its usual one first (2026-10-21, the owner: corn is never counted
+     * in trees): weight where the guides give the seed by weight, and the crop's own count where they
+     * give a stand (seeds and hills for a crop sown in place, seedlings, cuttings, or plants and trees).
+     *
+     * @return list<string> keys of SEED_UNITS
+     */
+    public static function seedUnitsFor(?string $key): array
+    {
+        $def = self::seedUnitFor($key);
+        $sd = $key !== null ? (NpkModel::SEEDING[$key] ?? null) : null;
+        $out = [$def];
+        if (! $sd) {
+            return array_values(array_unique(array_merge($out, in_array($def, ['kg', 'g'], true) ? ['kg', 'g', 'seeds'] : [])));
+        }
+        if (! empty($sd['w'])) {
+            $out[] = 'kg';
+            if ((float) $sd['w'][1] <= 10) {
+                $out[] = 'g';
+            }
+        }
+        if (! empty($sd['n'])) {
+            $cw = (string) ($sd['countWord'] ?? 'plants');
+            $count = match (true) {
+                in_array($cw, ['cuttings', 'setts'], true) => [$def === 'plants' ? 'plants' : 'cuttings'],
+                in_array($cw, ['trees', 'palms', 'suckers'], true) => ['plants'],
+                $cw === 'seedlings' => ['seedlings'],
+                $cw === 'hills' => ['seeds', 'hills'],
+                default => $def === 'seedlings' ? ['seedlings'] : ($def === 'plants' ? ['plants'] : ['seeds', 'hills']),
+            };
+            $out = array_merge($out, $count);
+        }
+
+        return array_values(array_unique($out));
+    }
+
+    /**
      * The whole count: the goal, the stand, the factors, the need. Every
      * number the protocol and its prompt use, with the reasons in words.
      */

@@ -409,7 +409,8 @@ class LandPrepController extends Controller
             'lots.*.seedSource' => 'nullable|in:certified,own,old',
             'crew' => 'nullable|array',
             'crew.workers' => 'nullable|array|max:100',
-            'crew.workers.*.name' => 'nullable|string|max:40',
+            // Every worker has a name (2026-10-21, the owner): picked from My workers or added there.
+            'crew.workers.*.name' => ($lenient ? 'nullable' : 'required') . '|string|max:40',
             'crew.workers.*.days' => 'nullable|array|max:7',
             'crew.workers.*.pay' => 'nullable|numeric|min:0|max:1000000',
             'crew.workers.*.payUnit' => 'nullable|in:day,half',

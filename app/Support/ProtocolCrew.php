@@ -79,6 +79,53 @@ final class ProtocolCrew
     /** One person sprays about a hectare a day with a knapsack (16 liters, 12 to 16 loads). */
     public const SPRAY_PD = 1.0;
 
+    /**
+     * Machines that plant or harvest (2026-10-21, the owner: who plants and who harvests, lot by lot, with
+     * machines as the Land Prep Planner offers them). crops: crop keys or their starts ("corn" for every
+     * corn), methods: the ways in it serves (null for any), pd: person days a hectare the farm's own
+     * workers put in running the farm's own machine; a hired one comes with its operator.
+     */
+    public const MACHINES = [
+        'transplanter' => ['kind' => 'plant', 'name' => 'Rice transplanter', 'line' => 'Plants tray seedlings in rows', 'crops' => ['rice'], 'methods' => ['transplanted'], 'pd' => 3.0],
+        'seeder' => ['kind' => 'plant', 'name' => 'Drum or palatak seeder', 'line' => 'Sows sprouted seed in rows, pulled by hand', 'crops' => ['rice'], 'methods' => ['direct_wet'], 'pd' => 1.5],
+        'planter' => ['kind' => 'plant', 'name' => 'Corn planter or seed drill', 'line' => 'Drops the seed in rows as it is pulled', 'crops' => ['corn', 'sorghum', 'mungbean', 'peanut', 'soybean', 'rice'],
+            'methods' => ['direct', 'direct_dry'], 'pd' => 1.0],
+        'combine' => ['kind' => 'harvest', 'name' => 'Combine harvester', 'line' => 'Cuts and threshes in one pass', 'crops' => ['rice', 'corn_yellow', 'corn_white', 'corn_glutinous', 'sorghum'], 'methods' => null, 'pd' => 0.7],
+        'reaper' => ['kind' => 'harvest', 'name' => 'Reaper and thresher', 'line' => 'Cuts the rows; the crew gathers and threshes', 'crops' => ['rice'], 'methods' => null, 'pd' => 6.0],
+    ];
+
+    /** Whether a machine serves this crop and way in. */
+    public static function fits(string $machine, string $crop, string $method): bool
+    {
+        $m = self::MACHINES[$machine] ?? null;
+        if (! $m) {
+            return false;
+        }
+        $crops = array_filter($m['crops'], fn ($c) => $crop === $c || str_starts_with($crop, $c . '_') || ($c === 'rice' && str_starts_with($crop, 'rice')));
+
+        return $crops !== [] && ($m['methods'] === null || in_array($method, $m['methods'], true));
+    }
+
+    /**
+     * Who does a lot's planting or harvest: the farm's own workers by hand, a hired crew, or a machine,
+     * the farm's own (its workers run it) or hired (it comes with its operator, so none of the farm's).
+     *
+     * @return array{by:string, machine:?string, hired:bool, pd:?float, name:?string}
+     */
+    public static function doneBy(string $kind, array $field, string $crop, string $method): array
+    {
+        $by = (string) ($field[$kind . 'By'] ?? 'own');
+        if ($by === 'hired') {
+            return ['by' => 'hired', 'machine' => null, 'hired' => true, 'pd' => null, 'name' => null];
+        }
+        $m = self::MACHINES[$by] ?? null;
+        if ($m && $m['kind'] === $kind && self::fits($by, $crop, $method)) {
+            return ['by' => 'machine', 'machine' => $by, 'hired' => empty($field[$kind . 'Own']), 'pd' => (float) $m['pd'], 'name' => $m['name']];
+        }
+
+        return ['by' => 'own', 'machine' => null, 'hired' => false, 'pd' => null, 'name' => null];
+    }
+
     /* ============================================================ a lot's frame */
 
     /**
@@ -305,12 +352,20 @@ final class ProtocolCrew
         }
         // The planting itself: its work may spread over the first days (seedlings wait a day or two).
         [$plantPd, $who] = self::plantRate($crop, $frame['method']);
+        // Who plants (2026-10-21): the farm's workers by hand, a hired crew, or a machine.
+        $pb = self::doneBy('plant', $field, $crop, (string) $frame['method']);
+        if ($pb['by'] === 'machine') {
+            $plantPd = $pb['pd'];
+            $who = $pb['hired'] ? 'the hired ' . mb_strtolower((string) $pb['name']) . ' and its operator' : 'people running the ' . mb_strtolower((string) $pb['name']);
+        } elseif ($pb['by'] === 'hired') {
+            $who = 'a hired planting crew';
+        }
         $plantWord = match (true) {
             $frame['method'] === 'transplanted' || $frame['method'] === 'nursery' => 'Transplant',
             str_starts_with($frame['method'], 'direct') => 'Sow',
             default => 'Plant',
         };
-        $add('plant', 'plant', $plantWord, 0, 0, $frame['seedAge'] ? 3 : 2, (float) $plantPd, ['who' => $who, 'what' => ucfirst($who) . '.']);
+        $add('plant', 'plant', $plantWord, 0, 0, $frame['seedAge'] ? 3 : 2, (float) $plantPd, ['who' => $who, 'what' => ucfirst($who) . '.', 'hired' => $pb['hired'], 'machine' => $pb['machine']]);
         // The fertilizer, one job a day (products on one day go on in one pass).
         $byDay = [];
         foreach ($apps as $ap) {
@@ -361,8 +416,17 @@ final class ProtocolCrew
         // The harvest.
         if ($frame['harvest']) {
             [$hpd, $early, $late] = self::HARVEST_CROP[$crop] ?? (self::HARVEST_GROUP[$group] ?? self::HARVEST_GROUP['Other']);
+            // Who harvests (2026-10-21): the farm's workers, a hired crew, or a combine or a reaper.
+            $hb = self::doneBy('harvest', $field, $crop, (string) $frame['method']);
+            $hwhat = $late > 20 ? 'Picking by picking, over several weeks.' : 'Cut and gather; threshing by machine is not counted.';
+            if ($hb['by'] === 'machine') {
+                $hpd = $hb['pd'];
+                $hwhat = $hb['hired'] ? 'The hired ' . mb_strtolower((string) $hb['name']) . ' comes with its operator.' : 'Your workers run the ' . mb_strtolower((string) $hb['name']) . '.';
+            } elseif ($hb['by'] === 'hired') {
+                $hwhat = 'A hired harvest crew. ' . $hwhat;
+            }
             $add('harvest', 'harvest', 'Harvest', (int) $frame['harvest'], (int) $frame['harvest'] - $early, (int) $frame['harvest'] + $late, (float) $hpd,
-                ['what' => $late > 20 ? 'Picking by picking, over several weeks.' : 'Cut and gather; threshing by machine is not counted.']);
+                ['what' => $hwhat, 'hired' => $hb['hired'], 'machine' => $hb['machine']]);
         }
         usort($out, fn ($a, $b) => $a['day'] <=> $b['day']);
 
@@ -471,9 +535,10 @@ final class ProtocolCrew
             foreach ($l['tasks'] as $t) {
                 $need = (float) $t['pd'];
                 $days = [];
-                $hired = in_array($t['kind'], $hiredKinds, true);
+                // A hired crew or a hired machine: the whole farm's (old pages) or this lot's job (2026-10-21).
+                $hired = in_array($t['kind'], $hiredKinds, true) || ! empty($t['hired']);
                 if ($hired || $need <= 0) {
-                    $placed[] = $t + ['hired' => $hired, 'days' => [[$base + $t['day'], $need]], 'left' => 0.0];
+                    $placed[] = array_merge($t, ['hired' => $hired, 'days' => [[$base + $t['day'], $need]], 'left' => 0.0]);
                     continue;
                 }
                 if ($mode === 'keep') {
@@ -536,7 +601,7 @@ final class ProtocolCrew
             $l = $lots[$k];
             [$from, $to] = $window($l);
             $best = null;
-            $plantOwn = ! in_array('plant', $hiredKinds, true);
+            $plantOwn = ! in_array('plant', $hiredKinds, true) && ! array_filter($l['tasks'], fn ($t) => $t['kind'] === 'plant' && ! empty($t['hired']));
             for ($d = $from; $d <= $to; $d++) {
                 // The planting day is a day the crew works when the crew plants; a hired crew is not asked for a Sunday.
                 if ($d < $to && ($plantOwn ? $cap[self::wd($d)] <= 0 : self::wd($d) === 0)) {
@@ -637,6 +702,38 @@ final class ProtocolCrew
         $out['crew'] = ['workers' => count($crew['workers']), 'week' => $cap, 'sprayers' => $spr, 'plantBy' => $crew['plantBy']];
         $trouble = $out['late'] || $out['short'];
         $out['ok'] = ! $trouble;
+        // The crew it takes (2026-10-21, the owner: how many workers, with the knapsack sprayers the team has):
+        // the fewest working Monday to Saturday that keep every job inside its days, and with one or two more sprayers.
+        $out['recommend'] = null;
+        if ($advise) {
+            $fit = function (int $sp) use ($lots, $crew, $mode, $today): ?int {
+                $ok = fn (int $n) => self::schedule($lots, ['workers' => array_fill(0, $n, ['name' => 'R', 'days' => [1, 2, 3, 4, 5, 6]]), 'sprayers' => $sp, 'plantBy' => $crew['plantBy']], $mode, $today, false)['ok'];
+                if (! $ok(60)) {
+                    return null;
+                }
+                [$lo, $hi] = [1, 60];
+                while ($lo < $hi) {
+                    $mid = intdiv($lo + $hi, 2);
+                    if ($ok($mid)) {
+                        $hi = $mid;
+                    } else {
+                        $lo = $mid + 1;
+                    }
+                }
+
+                return $lo;
+            };
+            $w = $fit($spr);
+            $rec = ['workers' => $w, 'sprayers' => $spr, 'alt' => null];
+            foreach ([1, 2] as $k) {
+                $w2 = $fit($spr + $k);
+                if ($w2 !== null && ($w === null || $w2 < $w)) {
+                    $rec['alt'] = ['sprayers' => $spr + $k, 'workers' => $w2];
+                    break;
+                }
+            }
+            $out['recommend'] = $rec;
+        }
         // What would fit: more workers working Monday to Saturday (and one more sprayer when the sprays hold it up).
         $out['more'] = null;
         $out['moreSprayers'] = null;

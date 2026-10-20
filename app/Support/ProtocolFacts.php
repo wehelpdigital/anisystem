@@ -133,7 +133,8 @@ final class ProtocolFacts
             $in['texture'] = $s['texture'];
             $filled[] = 'texture';
         }
-        if (($in['ph'] ?? null) === null && $s['phMid'] !== null) {
+        // The farmer's own acid or alkaline answer stands (2026-10-21): the area's pH would read an alkaline lot as neutral.
+        if (($in['ph'] ?? null) === null && $s['phMid'] !== null && ! array_intersect((array) ($in['conditions'] ?? []), ['acidic', 'alkaline', 'acid_sulfate'])) {
             $in['ph'] = $s['phMid'];
             $filled[] = 'ph';
         }
