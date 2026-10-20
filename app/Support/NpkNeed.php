@@ -9,7 +9,7 @@ namespace App\Support;
  * The calculator works the need out in the page, as the farmer types
  * (needModel() and its helpers in resources/views/npk-plus/index.blade.php).
  * This is its twin for the analyses that run on the server: the same goal
- * (a target held to the variety's potential, else 80 percent of the
+ * (a target as set, with a warning above the variety's potential, else 80 percent of the
  * potential, else the national average; a thin stand and a field that
  * cannot carry the goal lower it), the same soil factors, soil test bands
  * and field layer, the same N, P2O5 and K2O arithmetic and the same
@@ -561,9 +561,12 @@ final class NpkNeed
         $why = '';
         $warn = '';
         if ($T > 0) {
-            $Y = $P > 0 ? min($T, $P) : $T;
-            $why = $P > 0 && $T > $P ? 'your goal, held to the variety\'s potential' : 'your goal';
-            if ($P > 0 && $T > 0.8 * $P && $T <= $P) {
+            // The target as set (2026-10-21, the owner: a record is not a ceiling; DK 8282S gives 12 to 13 t on good farms).
+            $Y = $T;
+            $why = 'your goal';
+            if ($P > 0 && $T > $P) {
+                $warn = 'Above the variety\'s best on record (' . rtrim(rtrim(number_format($P, 2, '.', ''), '0'), '.') . ' t a hectare): it is counted as you set it, but it takes a full stand, heavy grain and everything going right.';
+            } elseif ($P > 0 && $T > 0.8 * $P) {
                 $warn = 'Above 80 percent of the potential, each extra ton takes more fertilizer and more luck with the weather.';
             }
         } elseif ($P > 0) {

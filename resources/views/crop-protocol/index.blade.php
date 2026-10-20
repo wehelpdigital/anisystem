@@ -2255,7 +2255,7 @@
         if (!t) {
             box.className = 'cq-from is-own';
             box.innerHTML = p.variety ? '<span>' + esc(p.variety) + ' is not on record. Type its potential if the seed bag or the seller gives one. Without it, the goal is the usual yield here.</span>'
-                : '<span>No variety named, so the goal is the usual yield for this crop here. Your target, if you type one, is held to the variety\'s potential.</span>';
+                : '<span>No variety named, so the goal is the usual yield for this crop here, or your target if you type one.</span>';
             box.hidden = false;
             return;
         }
@@ -2263,7 +2263,7 @@
         const own = g.potTouched && g.potential && Math.abs(num(g.potential) * tonsIn(g.yieldUnit) - t) > 0.05;
         box.className = 'cq-from' + (own ? ' is-own' : '');
         box.innerHTML = own ? '<span>Your own figure is used. The record says ' + esc(rec) + ', ' + word + '. <button type="button" data-pot-rec>Use the record\'s</button></span>'
-            : '<span>From the record: <b>' + esc(rec) + '</b>, ' + word + ' for ' + esc(p.variety) + '. The fertilizer is sized to your target held to it, or 80 percent of it.</span>';
+            : '<span>From the record: <b>' + esc(rec) + '</b>, ' + word + ' for ' + esc(p.variety) + '. The fertilizer is sized to your target as you set it (a notice if it is above this), or to 80 percent of it with no target.</span>';
         box.hidden = false;
     }
     $('cqPotFrom').addEventListener('click', (e) => { if (!e.target.closest('[data-pot-rec]')) return; const t = recT(pickOf(PAGE.i).varRec); if (!t) return; PAGE.goal.potential = fmt2(t / tonsIn(PAGE.goal.yieldUnit)); PAGE.goal.potTouched = false; $('cqPotential').value = PAGE.goal.potential; potSay(); needSoon(); });
@@ -2403,11 +2403,16 @@
         const g = PAGE.goal, t = (x) => fmt2(x / tonsIn(g.yieldUnit)) + ' ' + unitWord(g.yieldUnit) + ' a hectare';
         const lines = [];
         // What cuts the need, with its numbers and a way out (2026-10-21, the owner: a 15 ton target counted as 3.4).
-        const acts = [];
+        // A target above the record is counted as set, with a notice (2026-10-21, the owner: never a cap).
         if (n.goal && n.goal.T && n.goal.P && n.goal.T > n.goal.P + 0.01) {
             const p = pickOf(i);
-            lines.push('Your target of ' + t(n.goal.T) + ' is held to ' + t(n.goal.P) + ', the potential ' + (p.variety ? 'of ' + p.variety + ' on record' : 'given') + '. If the seed bag or the seller promises more, type that as the potential.');
-            acts.push('<button type="button" class="btn btn-white" data-fullgoal>Count my full target</button>');
+            lines.push('Your target of ' + t(n.goal.T) + ' is above the ' + t(n.goal.P) + ' ' + (p.variety ? p.variety + ' has given' : 'the variety has given') + ' at its best on record. It is counted as you set it; reaching it takes a full stand, heavy grain and everything going right.');
+        }
+        // What the stand carries, from the seed calculator and the variety's own yield parts: the realistic check.
+        if (n.stand) {
+            const f0 = (x) => Number(x).toLocaleString('en-US', { maximumFractionDigits: 0 }), T = n.goal && n.goal.T ? n.goal.T : null;
+            lines.push('Your stand of about ' + f0(n.stand.plants) + ' plants a hectare carries about ' + fmt2(n.stand.lo / tonsIn(g.yieldUnit)) + ' to ' + t(n.stand.hi) + ' of ' + n.stand.what + ', by the weight each plant makes.'
+                + (T && T > n.stand.hi + 0.01 ? ' Your target asks for more plants, or heavier ears and grain than this variety usually makes.' : (T ? ' Your target fits it.' : '')));
         }
         if (n.seed && n.seed.thin) {
             const f = (x) => Number(x).toLocaleString('en-US', { maximumFractionDigits: 0 });
@@ -2435,19 +2440,9 @@
             + '<div class="cq-need-n"><span><b>' + kgFmt(n.need.N) + '</b><small>kg N</small></span><span><b>' + kgFmt(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kgFmt(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
             + (mics.length ? '<div class="cq-need-m">' + mics.map(([, m]) => '<span>' + esc(m.name) + ' ' + esc(amt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + '</small></span>').join('') + '</div>' : '')
             + (n.goal ? '<p>For <b>' + esc(t(n.goal.eff)) + '</b>' + (Math.abs(n.goal.eff - n.goal.t) > 0.01 ? ' (' + esc(t(n.goal.t)) + ', ' + esc(n.goal.why) + ', less for this lot)' : ', ' + esc(n.goal.why)) + '. Every program is held to this, and what still falls short is added for you.</p>' : '')
-            + (lines.length ? '<p>' + lines.map(esc).join(' ') + '</p>' : '')
-            + (acts.length ? '<div class="cq-wadd-acts">' + acts.join('') + '</div>' : '');
+            + (lines.length ? '<p>' + lines.map(esc).join(' ') + '</p>' : '');
         box.hidden = false;
     }
-    // The target counted in full: it becomes the potential the goal is held to.
-    $('cqNeed').addEventListener('click', (e) => {
-        if (!e.target.closest('[data-fullgoal]') || !PAGE.goal) return;
-        const g = PAGE.goal;
-        g.potential = $('cqTarget').value.trim() || g.target;
-        g.potTouched = true;
-        $('cqPotential').value = g.potential;
-        potSay(); paintBasis(); needSoon(true);
-    });
 
     /* ---------------- fertilizer sold near the farm, and a note ---------------- */
     function paintBuy() {
@@ -3137,7 +3132,9 @@
             + (n.known ? '<div class="cq-need"><div class="cq-need-h">This lot\'s need a hectare, counted like NPK Plus</div><div class="cq-need-n"><span><b>' + kgFmt(n.need.N) + '</b><small>kg N</small></span><span><b>' + kgFmt(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kgFmt(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
                 + (mics.length ? '<div class="cq-need-m">' + mics.map(([, m]) => '<span>' + esc(m.name) + ' ' + esc(elAmt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + '</small></span>').join('') + '</div>' : '')
                 + (n.goal ? '<p>For <b>' + esc(fmt2(n.goal.eff / tIn) + ' ' + unit) + '</b> a hectare (' + esc(n.goal.why) + (Math.abs(n.goal.eff - n.goal.t) > 0.01 ? ', less for this lot\'s field' : '') + '), on this lot\'s soil, its soil test, its history' + (n.season ? ' and the weather of these weeks' : '') + '. Every program below is checked against it.</p>' : '')
-                + (n.season && n.season.words ? '<p>' + esc(n.season.words) + '</p>' : '') + '</div>' : '')
+                + (n.season && n.season.words ? '<p>' + esc(n.season.words) + '</p>' : '')
+                + (n.stand ? '<p>' + esc('Your stand of about ' + Number(n.stand.plants).toLocaleString('en-US') + ' plants a hectare carries about ' + fmt2(n.stand.lo / tIn) + ' to ' + fmt2(n.stand.hi / tIn) + ' ' + unit + ' of ' + n.stand.what + ', by the weight each plant makes.' + (n.goal && n.goal.T && n.goal.T > n.stand.hi + 0.01 ? ' Your target asks for more plants or heavier grain than that.' : '')) + '</p>' : '')
+                + (n.goal && n.goal.warn ? '<p>' + esc(n.goal.warn) + '</p>' : '') + '</div>' : '')
             + '<div data-proghost></div>'
             + ((fix.length || mic.length) ? '<div class="cr-card"><h3>To reach your target' + (window.aneeTl ? window.aneeTl.flag('nutrient-deficiency') : '') + '<small>What the recommended program still leaves short of this lot\'s need, worked out like NPK Plus</small></h3><div class="cr-fix">'
                 + fix.map((f) => '<div class="cr-fixrow"><span>' + esc(f.el === 'P2O5' ? 'P' : (f.el === 'K2O' ? 'K' : f.el)) + '</span><div><b>' + esc(bagAmt(f.bags) + ' ' + f.product) + '</b> for the lot (' + esc(f.bagsPerHa >= 1 ? trimN(f.bagsPerHa) + ' bags' : Math.round(f.kgPerHa) + ' kg') + ' a hectare) at ' + esc(f.stage.toLowerCase()) + '. <small>' + esc(f.label + ' short by ' + f.gap + ' kg a hectare. ' + (f.note || '')) + '</small></div></div>').join('')

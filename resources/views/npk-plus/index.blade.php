@@ -1305,9 +1305,11 @@
         const P = num('npPotential') * f, T = num('npTarget') * f, ty = c && c.typicalYield;
         let Y = null, why = '', warn = '';
         if (T) {
-            Y = P ? Math.min(T, P) : T;
-            why = P && T > P ? 'your goal, held to the variety\'s potential' : 'your goal';
-            if (P && T > 0.8 * P && T <= P) warn = 'Above 80% of the potential, each extra ton takes more fertilizer and more luck with the weather.';
+            // The target as set (2026-10-21, the owner: a record is not a ceiling); NpkNeed::goal is the twin.
+            Y = T;
+            why = 'your goal';
+            if (P && T > P) warn = 'Above the variety\'s best on record (' + fmt(P) + ' t a hectare): it is counted as you set it, but it takes a full stand, heavy grain and everything going right.';
+            else if (P && T > 0.8 * P) warn = 'Above 80% of the potential, each extra ton takes more fertilizer and more luck with the weather.';
         } else if (P) { Y = 0.8 * P; why = '80% of the variety\'s potential, the most a well run field usually reaches'; }
         else if (ty) { Y = ty.hi; why = 'the Philippine average, since no goal or potential was given'; }
         const sd = seedCheck(c);

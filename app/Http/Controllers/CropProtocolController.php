@@ -466,7 +466,63 @@ class CropProtocolController extends Controller
                 'words' => NpkNeed::seasonWords($in['season'], in_array('high_rainfall', $r['factors'], true), in_array('drought', $r['factors'], true)),
             ]) : null,
             'habits' => ['intensive' => in_array('intensive_cropping', $r['factors'], true), 'zincRecent' => in_array('zinc_recent', $r['factors'], true)],
+            // What the stand carries (2026-10-21, the owner): beside the need, never a cap on it.
+            'stand' => self::standYield($p),
         ];
+    }
+
+    /**
+     * What the lot's stand carries (2026-10-21, the owner: "the main goal to become realistic is still the final stand,
+     * and the weight or fruit of the crop"): the seed calculator (SeedSpacing::compute) for the lot's spacing, or for the
+     * seed or plants it puts in, with the variety's yield parts (ears and grain an ear, grains and grain weight, fruit
+     * weight); t a hectare of what the crop is sold as. Null when neither the spacing nor an amount is given.
+     */
+    public static function standYield(array $p): ?array
+    {
+        $crop = (string) ($p['crop'] ?? '');
+        $method = (string) ($p['method'] ?? '');
+        $key = match (true) {
+            str_starts_with($crop, 'rice') => $method === 'transplanted' ? 'rice' : 'rice_dsr',
+            $crop === 'corn_glutinous' => 'corn_white',
+            default => $crop,
+        };
+        if (! isset(\App\Support\SeedSpacing::CROPS[$key])) {
+            return null;
+        }
+        $way = in_array($method, ['transplanted', 'nursery', 'tree_seedlings'], true) ? 'transplant' : (in_array($method, ['cuttings', 'tubers', 'sets', 'suckers', 'sprouted'], true) ? 'piece' : 'direct');
+        $in = ['crop' => $key, 'method' => $way, 'variety' => (string) ($p['variety'] ?? ''), 'area' => 1, 'areaUnit' => 'ha'];
+        $sp = $p['spacing'] ?? null;
+        $area = max(0.0001, (float) ($p['area'] ?? 1));
+        $amt = (float) ($p['seedAmount'] ?? 0);
+        $unit = (string) ($p['seedUnit'] ?? 'kg');
+        if (! empty($sp['row']) && ! empty($sp['plant'])) {
+            $in += ['mode' => 'seeds', 'row' => $sp['row'], 'plant' => $sp['plant'], 'perHill' => $sp['perHill'] ?? 1];
+        } elseif ($amt > 0 && $unit === 'seeds') {
+            $in += ['mode' => 'spacing', 'amount' => $amt / $area, 'amountUnit' => 'count', 'amountPer' => 'ha'];
+        } elseif ($amt > 0 && in_array($unit, ['kg', 'g'], true)) {
+            $in += ['mode' => 'spacing', 'amount' => $amt / $area, 'amountUnit' => $unit, 'amountPer' => 'ha'];
+        } elseif ($amt > 0) {
+            $in += ['mode' => 'stand', 'target' => $amt / $area, 'targetPer' => 'ha'];
+        } else {
+            return null;
+        }
+        try {
+            $c = \App\Support\SeedSpacing::read($in);
+            if (\App\Support\SeedSpacing::missing($c) !== '') {
+                return null;
+            }
+            $r = \App\Support\SeedSpacing::compute($c);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+        if (empty($r['kgHaHi']) || empty($r['standHa'])) {
+            return null;
+        }
+
+        return ['plants' => (int) round((float) $r['standHa']), 'lo' => round((float) $r['kgHaLo'] / 1000, 2), 'hi' => round((float) $r['kgHaHi'] / 1000, 2),
+            'what' => (string) (\App\Support\SeedSpacing::CROPS[$key]['yield']['what'] ?? 'harvest'), 'basis' => $r['basis'] ?? null];
     }
 
     /** A protocol's answers as NPK Plus's inputs: the simple answers first, the field in detail where they are silent. */
@@ -598,6 +654,12 @@ class CropProtocolController extends Controller
                 . "- Secondary and micro elements: THE FARMER ASKED FOR A NITROGEN, PHOSPHORUS AND POTASSIUM PROGRAM ONLY. Add no product and no spray for a secondary or micro element; what the main fertilizers carry may be said.\n";
         }
 
+        $st = $n['stand'] ?? null;
+        if ($st) {
+            $goal .= '- What the stand carries (the seed calculator, from the variety\'s own yield parts): about ' . $t($st['lo']) . ' to ' . $t($st['hi']) . ' of ' . $st['what']
+                . ' from about ' . number_format($st['plants']) . ' plants a hectare. The target is NOT held to it: where the target is above it, say plainly what closes the gap (more plants, heavier ears or grains), and size the nutrition to the target.' . "\n";
+        }
+
         return ['seed' => $seed . $spLine, 'goal' => $goal, 'need' => $need];
     }
 
@@ -721,7 +783,7 @@ class CropProtocolController extends Controller
                 'tasks' => ProtocolCrew::tasks($frame, ProtocolCrew::skeleton($frame), [], self::fieldOf($l))];
             $n = $request->boolean('needs', true) ? self::needFor($l['p']) : null;
             $lots[] = ['i' => $l['i'], 'name' => $l['name'], 'harvestDays' => $frame['harvest'], 'seedAge' => $frame['seedAge'],
-                'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed', 'areaSoil', 'season', 'habits'])) : null];
+                'need' => $n ? array_intersect_key($n, array_flip(['known', 'need', 'goal', 'micros', 'whys', 'credit', 'pLock', 'seed', 'areaSoil', 'season', 'habits', 'stand'])) : null];
         }
         $s = ProtocolCrew::schedule($sched, $case['crew'], $case['mode']);
         $size = self::sizeOf($case);
