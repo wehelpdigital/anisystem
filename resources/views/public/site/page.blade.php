@@ -30,6 +30,17 @@
     if (($page->kind ?? null) !== 'roundup' && ! ($page->section === 'features' && $page->slug === 'the-stash')) {
         $blocks = \App\Support\GovSource::pageBlocks((array) $blocks);
     }
+    // A variety's sources, every one named and linked (2026-10-21, the owner: "to avoid issues like libel, show
+    // the source for each variety"), the one place a government body is named as the source. They take the
+    // place of the page's own sources list and sit outside the members' gate, so every reader sees them.
+    $varSrc = [];
+    if (in_array($page->section, ['rice-varieties', 'crop-varieties'], true)) {
+        $vr = collect($page->section === 'rice-varieties' ? \App\Support\RiceVarieties::all() : \App\Support\CropVarieties::all())->firstWhere('slug', $page->slug);
+        $varSrc = $vr ? ($page->section === 'rice-varieties' ? \App\Support\VarietySources::rice($vr) : \App\Support\VarietySources::crop($vr)) : [];
+        if ($varSrc) {
+            $blocks = array_values(array_filter((array) $blocks, fn ($b) => ($b['type'] ?? '') !== 'sources'));
+        }
+    }
     // The members' gate (2026-10-14): a guest reads the opening of a field
     // guide; the rest is in the page for search engines, blurred for them.
     $gateSplit = (! ($preview ?? false) && \App\Support\ContentGate::applies($page->section)) ? \App\Support\ContentGate::split($blocks) : null;
@@ -241,6 +252,17 @@
                         @include('public.site.blocks', ['blocks' => $memberSplit['gated']])
                     @else
                         @include('public.site.blocks', ['blocks' => $blocks])
+                    @endif
+                    @if ($varSrc)
+                        <div class="sp-sources sp-vsrc">
+                            <b>Sources for this variety</b>
+                            <ol>
+                                @foreach ($varSrc as $s)
+                                    <li>@if ($s['url'])<a href="{{ $s['url'] }}" target="_blank" rel="noopener nofollow">{{ $s['label'] ?? $s['name'] }}</a>@else{{ $s['label'] ?? $s['name'] }}@endif</li>
+                                @endforeach
+                            </ol>
+                            <p>The days, yields and ratings on this page are as these sources give them. What a seller says about its own seed is said as the seller's.</p>
+                        </div>
                     @endif
                 </div>
                 <aside class="sp-side {{ $isQuestion ? 'is-question' : '' }}">

@@ -99,6 +99,8 @@
                                 @endforeach
                             </span>
                         @endif
+                        {{-- Where its facts come from (2026-10-21, the owner); linked on its page. --}}
+                        <span class="rv-src">Source: {{ \App\Support\VarietySources::line(\App\Support\VarietySources::rice($v)) }}</span>
                     </a>
                 @endforeach
             </div>

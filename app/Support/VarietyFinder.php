@@ -21,7 +21,9 @@ use Illuminate\Support\Str;
  * holds up against (rice), grain [label, value, class, percent], traits
  * [label, value], env farms (rice), where, dom (luzon visayas mindanao),
  * sea seasons, est how it is planted, el elevation, rem remarks, uses,
- * notes {popular, facts, claims}, chip its type, q its search words.
+ * notes {popular, facts, claims}, chip its type, q its search words, src its
+ * sources [{name, url}] (App\Support\VarietySources, 2026-10-21: every
+ * variety shows where its facts come from; the trials' own `tr.src`).
  */
 final class VarietyFinder
 {
@@ -123,7 +125,7 @@ final class VarietyFinder
      * The finder's varieties with their registration trials joined on
      * (`tr`, App\Support\VarietyRegistry) and a figure the record lacks
      * filled from them; then the registered varieties only the trials
-     * hold, in the same shape. Never a source in what it shows.
+     * hold, in the same shape. The trials name their papers (tr.src).
      */
     private static function withTrials(array $items, string $crop): array
     {
@@ -239,6 +241,7 @@ final class VarietyFinder
             'areas' => isset($f['areas']) ? self::plain((string) $f['areas']) : null,
             'diff' => $diff,
             'notes' => $t['notes'] ?? null,
+            'src' => VarietySources::papers($t['ref'] ?? null),
         ], fn ($x) => $x !== null && $x !== [] && $x !== '');
     }
 
@@ -283,6 +286,7 @@ final class VarietyFinder
             'est' => [], 'el' => [], 'rem' => null, 'uses' => null, 'notes' => null,
             'chip' => $chip,
             'tr' => self::trialView($t),
+            'src' => [VarietySources::papers($t['ref'] ?? null)],
             'q' => strtolower(implode(' ', array_filter([$name, str_replace([' ', '-'], '', $name), implode(' ', $alias), str_replace([' ', '-'], '', implode(' ', $alias)),
                 $t['localName'] ?? '', $t['company'] ?? '', $t['regNo'] ?? '', $kind]))),
         ];
@@ -392,6 +396,7 @@ final class VarietyFinder
             'est' => array_values(array_filter(array_map(fn ($e) => self::ESTABLISH[strtolower($e)] ?? ucfirst($e), (array) ($v['establishment'] ?? [])))),
             'el' => [], 'rem' => isset($v['remarks']) ? self::plain((string) $v['remarks']) : null, 'uses' => null, 'notes' => null,
             'chip' => ($v['type'] ?? '') === 'hybrid' ? 'hybrid' : 'inbred',
+            'src' => VarietySources::rice($v),
             'q' => strtolower($v['name'] . ' ' . str_replace(' ', '', $v['name']) . ' ' . ($v['localName'] ?? '') . ' ' . (self::breeder($v['breeder'] ?? null) ?? '') . ' ' . implode(' ', $trade)
                 . ' ' . str_replace([' ', '-'], '', implode(' ', $trade)) . ' ' . $brand),
         ];
@@ -465,6 +470,7 @@ final class VarietyFinder
             'est' => [], 'el' => array_values(array_map('ucfirst', (array) ($v['elevation'] ?? []))),
             'rem' => null, 'uses' => $v['uses'] ?? null, 'notes' => $notes,
             'chip' => $chip,
+            'src' => VarietySources::crop($v),
             'q' => strtolower(implode(' ', array_filter([$v['name'], str_replace([' ', '-'], '', $v['name']), implode(' ', $alias), str_replace([' ', '-'], '', implode(' ', $alias)),
                 $v['localName'] ?? '', self::breeder($v['owner'] ?? null) ?? '', $v['reg'] ?? '', $kind]))),
         ];

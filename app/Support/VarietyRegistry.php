@@ -33,8 +33,10 @@ use Illuminate\Support\Facades\Cache;
  *    (bookName); where the two disagree both are kept (conflicts) and the
  *    analyses keep the curated figure, the one the variety pages and the
  *    finders show, and are told the trial figure beside it.
- *  - sourceRef is the item's id in the papers, for a re-run only. It never
- *    reaches a screen or a prompt (trials() leaves it out).
+ *  - sourceRef is the item's id in the papers. It reaches no prompt
+ *    (trials() leaves it out); since 2026-10-21 (the owner: "show the source
+ *    for each variety") the Variety Finder links the variety's page in the
+ *    papers' library with it (decode() keeps it as `ref`).
  *
  * App\Support\VarietyBook is the only door the modules use: its rows carry
  * `trials` (this class's trials()), promptLines() says them compactly and
@@ -141,7 +143,7 @@ final class VarietyRegistry
             // Keyed by the seed file AND the table's last write (read at most every five minutes), so a
             // sync that lands after the new file (a deploy's migration) is seen within minutes, never hours.
             $by = self::ready()
-                ? Cache::remember('variety-registry:' . $id . ':all:' . self::stamp() . ':' . self::version(), 21600, fn () => $group(
+                ? Cache::remember('variety-registry:' . $id . ':all2:' . self::stamp() . ':' . self::version(), 21600, fn () => $group(
                     self::db()->table(self::TABLE)->where('status', 1)->orderBy('sortOrder')->get()->map(fn ($r) => self::decode($r))->all()))
                 : $group(self::fileRows());
         } catch (\Throwable $e) {
@@ -445,6 +447,7 @@ final class VarietyRegistry
             'yieldAvg' => $r->yieldAvg !== null ? (float) $r->yieldAvg : null, 'yieldTop' => $r->yieldTop !== null ? (float) $r->yieldTop : null,
             'stress' => (array) $j($r->stress), 'facts' => (array) $j($r->facts), 'notes' => $r->notes ?: null,
             'bookName' => $r->bookName ?: null, 'conflicts' => (array) $j($r->conflicts), 'quality' => (int) $r->quality,
+            'ref' => isset($r->sourceRef) && $r->sourceRef !== '' ? (string) $r->sourceRef : null,
         ];
     }
 }
