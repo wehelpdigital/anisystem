@@ -60,7 +60,12 @@
     @media (min-width: 520px) { .sc-row.is-2 { grid-template-columns: 1fr 1fr; } .sc-row.is-3 { grid-template-columns: 1fr 1fr 1fr; } }
     .sc-f { display: grid; gap: .3rem; min-width: 0; align-content: start; }
     .sc-f > span { font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
-    .sc-f > small { font-size: .72rem; line-height: 1.4; color: var(--color-gray-500); }
+    .sc-f > small, .sc-fold > div > small { font-size: .72rem; line-height: 1.4; color: var(--color-gray-500); }
+    .sc-fold { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .sc-fold > div { display: grid; gap: .3rem; min-height: 0; min-width: 0; overflow: hidden; align-content: start; }
+    .sc-fold > div > span { font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
+    .sc-fold.is-off { grid-template-rows: 0fr; opacity: 0; }
+    @media (prefers-reduced-motion: reduce) { .sc-fold { transition: none; } }
     .sc-in { position: relative; display: flex; align-items: center; }
     .sc-in input { width: 100%; min-width: 0; padding-right: 3.9rem; font-variant-numeric: tabular-nums; transition: background-color .28s var(--sc-e), border-color .28s var(--sc-e); }
     .sc-in input[readonly] { background: #f3f8ec; border-color: #c9dfb1; color: #2d5016; font-weight: 800; }
@@ -350,17 +355,18 @@
                     <div class="sc-f"><span>Which lot is it for?<small class="sc-opt-w">Optional</small></span>
                         <div id="scLots"></div>
                         <button type="button" class="sc-nolot" id="scNoLot" hidden>Use no lot</button>
-                        <small>Its size fills in, and its soil and water count in the stand and the harvest.</small></div>
+                        <small>Its size, soil and water count in the stand and the harvest.</small></div>
                 </div>
                 <div class="sc-row is-2">
                     <div class="sc-f" id="scMethodF"><span>How it is planted</span>
                         <button type="button" class="sc-tag is-wide" id="scMethod" aria-haspopup="dialog"><span>Sown where it grows</span>{!! $chev !!}</button></div>
-                    <div class="sc-f"><span>Lot size</span>
+                    {{-- Asked only without a lot that has its size (2026-10-21, the owner): a lot's size is in its answers. --}}
+                    <div class="sc-f sc-fold" id="scAreaF"><div><span>Lot size</span>
                         <div class="sc-pair">
                             <span class="sc-in"><input type="number" class="form-input" id="scArea" min="0" step="any" inputmode="decimal" placeholder="Like 0.5"></span>
                             <button type="button" class="sc-tag" id="scAreaUnit" aria-haspopup="dialog"><span>Hectares</span>{!! $chev !!}</button>
                         </div>
-                        <small>Leave it empty to count one hectare.</small></div>
+                        <small>Leave it empty to count one hectare.</small></div></div>
                 </div>
                 {{-- When it is planted: with a lot, twenty years of its weather, the ENSO outlook and the forecast. --}}
                 <div class="sc-row is-2">
@@ -1570,6 +1576,12 @@
         } catch (e) { if (ask !== ctxAsk) return; st.ctx = null; }
         st.ctxBusy = false; calc();
     }
+    // The size field folds away while the lot in use has its own size.
+    const paintAreaF = () => {
+        const off = !!(st.lot && Number(st.lot.areaHa) > 0), f = $('scAreaF');
+        f.classList.toggle('is-off', off);
+        f.toggleAttribute('inert', off);
+    };
     const useLotArea = (lot) => {
         const a = Number(lot && lot.areaHa);
         if (!(a > 0)) return;
@@ -1582,12 +1594,13 @@
         LOTP = window.aneeLots.picker($('scLots'), { crop: () => crop().book || st.crop, value: st.lotId || null, onPick: (lot) => {
             const was = st.lotId;
             st.lotId = lot ? lot.id : null; st.lot = lot || null;
-            if (lot && lot.id !== was) useLotArea(lot);
+            if (lot && (lot.id !== was || Number(lot.areaHa) > 0)) useLotArea(lot);
+            paintAreaF();
             ctxSoon(0);
         } });
     };
     if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
-    $('scNoLot').addEventListener('click', () => { st.lotId = null; st.lot = null; if (LOTP) LOTP.set(null); ctxSoon(0); });
+    $('scNoLot').addEventListener('click', () => { st.lotId = null; st.lot = null; if (LOTP) LOTP.set(null); paintAreaF(); ctxSoon(0); });
     $('scMonth').addEventListener('click', async () => {
         if (!window.aneeMonthPick) return;
         const k = await window.aneeMonthPick.open({ months: MONTHS, value: st.month, title: 'Which month will you plant?' });

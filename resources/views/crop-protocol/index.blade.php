@@ -1713,7 +1713,7 @@
         profile: clone(r.answers) || {}, savedFrom: r.count ? r.name : null }));
     function refreshFarm(l, r, keep) {
         Object.assign(l, farmBits(r), keep ? {} : { profile: clone(r.answers) || {}, savedFrom: r.count ? r.name : null, copiedFrom: null, edited: false });
-        if (Number(r.areaHa) > 0 && !num(l.areaHa)) l.areaHa = String(Math.round(Number(r.areaHa) * 10000) / 10000);
+        if (Number(r.areaHa) > 0) Object.assign(l, { areaHa: String(Math.round(Number(r.areaHa) * 10000) / 10000), areaFrom: window.aneeLots ? window.aneeLots.fmtSize(r) : '' });
     }
     async function editFarm(l) {
         const L = window.aneeLots;
@@ -1891,7 +1891,7 @@
         const FP = window.aneeFieldProfile, n = FP ? FP.count(l.profile) : 0;
         const i = S.lots.indexOf(l), ask = pickOf(i).crop ? askedPages(i).length : 0;
         return '<div class="cq-flot"><span aria-hidden="true"><img src="' + esc(U.lotIcon) + '" alt=""></span><div><b>' + esc(l.name) + '</b>'
-            + (l.place ? '<small>' + esc(l.place) + '</small>' : '<small class="is-none">No place yet</small>')
+            + (l.place ? '<small>' + esc(l.place + (l.areaFrom ? ' · ' + l.areaFrom : '')) + '</small>' : '<small class="is-none">No place yet' + (l.areaFrom ? ' · ' + esc(l.areaFrom) : '') + '</small>')
             + '<span class="cq-flchips">' + (n ? '<span>' + n + (n === 1 ? ' answer' : ' answers') + '</span>' : '<span class="is-ask">No answers yet</span>')
             + (ask ? '<span class="is-ask">' + ask + (ask === 1 ? ' page' : ' pages') + ' of questions later</span>' : '')
             + (l.stale ? '<span class="is-old">Check it</span>' : '') + '</span></div>'
@@ -1909,8 +1909,8 @@
             + '<div class="cq-lot-top"><i></i><b>Lot ' + (i + 1) + '</b>' + (pickOf(i).crop && l.pick ? '<em>' + esc(pickLine(pickOf(i))) + '</em>' : '<em>from your lots</em>') + '</div>'
             + '<button type="button" class="cq-lot-x" data-lot-x="' + l.uid + '" aria-label="Remove lot ' + (i + 1) + '">' + XSM + '</button>'
             + farmHead(l)
-            + '<div class="cq-size"><label for="cqLa' + l.uid + '">Size</label><input type="text" id="cqLa' + l.uid + '" class="form-input" data-area inputmode="decimal" maxlength="10" value="' + esc(l.areaHa) + '" autocomplete="off"><span>hectares' + (window.aneeTl ? window.aneeTl.flag('hectare') : '') + '</span></div>'
-            + (l.areaFrom && !/ ha$/.test(l.areaFrom) ? '<p class="cq-sub cq-sub-s" style="margin-top:.3rem">The lot says ' + esc(l.areaFrom) + '.</p>' : '')
+            // Its size comes with the lot (2026-10-21, the owner): asked here only when the lot has none yet.
+            + (l.areaFrom ? '' : '<div class="cq-size"><label for="cqLa' + l.uid + '">Size</label><input type="text" id="cqLa' + l.uid + '" class="form-input" data-area inputmode="decimal" maxlength="10" value="' + esc(l.areaHa) + '" autocomplete="off"><span>hectares' + (window.aneeTl ? window.aneeTl.flag('hectare') : '') + '</span></div>')
             + '</div>').join('');
         total();
         paintCount();

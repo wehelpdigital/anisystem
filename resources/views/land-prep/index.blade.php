@@ -1620,7 +1620,7 @@
     function refreshFarm(l, r, keep) {
         Object.assign(l, farmBits(r), keep ? {} : { profile: clone(r.answers), savedFrom: r.count ? r.name : null, copiedFrom: null, edited: false });
         // The size follows the lot, unless one was typed here.
-        if (Number(r.areaHa) > 0 && (l.areaFromLot || !String(l.area).trim())) Object.assign(l, lotSize(r.areaHa, r.areaUnit), { areaFromLot: true });
+        if (Number(r.areaHa) > 0) Object.assign(l, lotSize(r.areaHa, r.areaUnit), { areaFromLot: true });
     }
     // The lot's sheet (partials/farm-lots). The answers given on this plan's pages ride along, so the lot keeps them too.
     async function editFarm(l) {
@@ -2268,8 +2268,9 @@
     function farmHead(l) {
         const FP = window.aneeFieldProfile, n = FP ? FP.count(l.profile) : 0, ask = askedPages(l).length;
         const C = window.aneeLots && window.aneeLots.crops ? window.aneeLots.crops[l.crop] : null;
+        const size = l.areaFromLot && window.aneeLots ? window.aneeLots.fmtSize(l.lot || {}) : '';
         return '<div class="lp-flot"><span aria-hidden="true">' + (C && C[2] ? esc(C[2]) : '<img src="' + esc(U.lotIcon) + '" alt="">') + '</span><div><b>' + esc(l.name) + '</b>'
-            + (l.place ? '<small>' + esc(l.place) + '</small>' : '<small class="is-none">No place yet</small>')
+            + (l.place ? '<small>' + esc(l.place + (size ? ' · ' + size : '')) + '</small>' : '<small class="is-none">No place yet' + (size ? ' · ' + esc(size) : '') + '</small>')
             + '<span class="lp-flchips">' + (n ? '<span>' + n + (n === 1 ? ' answer' : ' answers') + '</span>' : '')
             + (ask ? '<span class="is-ask">' + (n ? ask + (ask === 1 ? ' page' : ' pages') + ' of questions next' : 'Its questions come next') + '</span>' : '')
             + (l.stale ? '<span class="is-old">Check it</span>' : '') + '</span></div>'
@@ -2300,9 +2301,10 @@
             + '<button type="button" class="lp-lot-x" data-lot-x="' + l.uid + '" aria-label="Remove lot ' + (i + 1) + '">' + XSM + '</button>'
             + (l.farmLotId ? farmHead(l)
                 : '<div class="lp-field" data-f="name"><label for="lpLn' + l.uid + '">Name of the lot <small>(optional)</small></label><input type="text" id="lpLn' + l.uid + '" class="form-input" data-in="name" maxlength="60" value="' + esc(l.name) + '" autocomplete="off"></div>')
-            + '<div class="lp-field" data-f="area"><label for="lpLa' + l.uid + '">Size</label><div class="lp-size"><input type="text" id="lpLa' + l.uid + '" class="form-input" data-in="area" inputmode="decimal" maxlength="10" value="' + esc(l.area) + '" autocomplete="off">'
+            // A lot from your lots brings its size (2026-10-21, the owner): the field is only for a lot that has none.
+            + (l.farmLotId && l.areaFromLot ? '' : '<div class="lp-field" data-f="area"><label for="lpLa' + l.uid + '">Size</label><div class="lp-size"><input type="text" id="lpLa' + l.uid + '" class="form-input" data-in="area" inputmode="decimal" maxlength="10" value="' + esc(l.area) + '" autocomplete="off">'
             + '<button type="button" class="lp-unit" data-unit="' + l.uid + '" aria-haspopup="dialog" aria-label="Unit: ' + esc(UNITS[l.unit][0]) + '">' + esc(UNITS[l.unit][1]) + CHEV + '</button></div>'
-            + '<p class="lp-size-eq" data-eq>' + eqWords(l) + '</p><p class="lp-ferr" data-err hidden></p></div>'
+            + '<p class="lp-size-eq" data-eq>' + eqWords(l) + '</p><p class="lp-ferr" data-err hidden></p></div>')
             + '</div>').join('');
         total();
         paintLotPlace();
