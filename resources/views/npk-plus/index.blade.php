@@ -1128,7 +1128,10 @@
         high_rainfall: 'heavy rain over the season washes it out', drought: 'a dry season', intensive_cropping: 'two or three crops a year',
         upland: 'dry seeded rice on soil that is not flooded',
         // 2026-10-21: the area's zinc, from the soil atlas (NpkNeed::FACTOR).
-        area_zn_low: 'soils around here often test low in zinc', area_zn_mlow: 'soils around here often test moderately low in zinc' };
+        area_zn_low: 'soils around here often test low in zinc', area_zn_mlow: 'soils around here often test moderately low in zinc',
+        // 2026-10-21: the plan's own lockouts by amount (NpkModel::PLAN_LOCK).
+        high_ca: 'heavy calcium in the plan crowds it out', high_mg: 'heavy magnesium in the plan crowds it out',
+        high_s: 'heavy sulfate in the plan holds it back', high_nh4: 'heavy ammonium in the plan competes with it at the roots' };
     // The usual germination the seeding rates in the guides assume.
     const GERM_USUAL = 85;
 
@@ -2064,12 +2067,77 @@
     /* ---- the need model (App\Support\NpkModel says where each number comes from) ----
        App\Support\NpkNeed is its twin on the server (the Crop Protocol sizes its
        programs with it): change the arithmetic in both. */
-    const needModel = (c, g, f, cls, perHa = {}, acidEq = 0, fl = null, limeEq = null) => {
+    /* What one product does to the soil's acidity (2026-10-21, NpkNeed::acidityOf's twin): lime and dolomite by
+       the kilo; nitrogen by its kind, from the shelf's name for it or, for a brand or your own product, from its
+       name and analysis; elemental sulfur by its sulfur. The sulfate in gypsum, sulfate of potash or kieserite
+       does not acidify. nh4: the share of its nitrogen that is ammonium. */
+    const acidityOf = (slug, name, pct) => {
+        const AC = M.acidity, nm = String(name || '').toLowerCase(), n = pct.N || 0, s = pct.S || 0, p = pct.P2O5 || 0, k = pct.K2O || 0, cl = pct.Cl || 0;
+        if (AC.perKg[slug] != null) return { kind: slug === 'dolomite' ? 'dolomite' : 'lime', perKg: AC.perKg[slug], perN: 0, perS: 0, nh4: 0 };
+        if (/\bdolomit/.test(nm)) return { kind: 'dolomite', perKg: -1.0, perN: 0, perS: 0, nh4: 0 };
+        if (/\b(lime|limestone|calcitic|apog)\b/.test(nm) && !/sulfate|sulphate|gypsum/.test(nm)) return { kind: 'lime', perKg: -0.9, perN: 0, perS: 0, nh4: 0 };
+        const perS = AC.perS[slug] != null ? AC.perS[slug] : (!(n > 0) && (s >= 80 || (s >= 60 && /\b(elemental|sulfur|sulphur)\b/.test(nm))) ? 3.1 : 0);
+        let kind, perN, nh4;
+        if (!(n > 0)) [kind, perN, nh4] = [perS > 0 ? 'sulfur' : 'none', 0, 0];
+        else if (AC.perN[slug] != null) [kind, perN, nh4] = [slug, AC.perN[slug], ['urea', 'calcium-nitrate', 'potassium-nitrate'].includes(slug) ? 0 : (slug.startsWith('complete') || slug.startsWith('npk') ? 0.6 : 1)];
+        else if (/nitrate|calcinit|tropicote|nitrabor/.test(nm)) [kind, perN, nh4] = ['nitrate', k >= 30 ? -2.0 : -1.35, 0];
+        else if (n >= 40 && /urea/.test(nm)) [kind, perN, nh4] = ['urea', 1.8, 0];
+        else if (s >= 20 && n >= 18) [kind, perN, nh4] = ['ammonium sulfate', 5.35, 1];
+        else if (cl >= 40 && n >= 20) [kind, perN, nh4] = ['ammonium chloride', 5.35, 1];
+        else if (p >= 40 && !(k > 0)) [kind, perN, nh4] = ['ammonium phosphate', n <= 12 ? 5.0 : 3.9, 1];
+        else if (p >= 15 && !(k > 0)) [kind, perN, nh4] = ['ammonium phosphate', 4.4, 1];
+        else if (p > 0 || k > 0) [kind, perN, nh4] = ['compound', s >= 5 ? 4.0 : 3.0, 0.6];
+        else [kind, perN, nh4] = ['nitrogen', AC.defaultPerN, 0];
+        return { kind, perKg: null, perN, perS, nh4 };
+    };
+    // The plan's effect on the soil, a hectare (NpkNeed::planFacts): lines [slug, kg a hectare, pct, name].
+    const planFacts = (lines) => {
+        const out = { acidEq: 0, limeEq: 0, gypsumKg: 0, nh4N: 0, caNonLime: 0, sources: [], salts: [], s0: false, nAcid: false }, by = {}, salts = [];
+        lines.forEach(([slug, kg, pct, name]) => {
+            const a = acidityOf(slug || '', name || slug || '', pct || {}), nKg = kg * (pct.N || 0) / 100;
+            const eq = a.perKg != null ? kg * a.perKg : nKg * a.perN + kg * (pct.S || 0) / 100 * a.perS;
+            out.acidEq += eq;
+            if (a.perKg != null && a.perKg < 0) out.limeEq += kg * -a.perKg; else out.caNonLime += kg * (pct.Ca || 0) / 100;
+            out.nh4N += nKg * a.nh4;
+            // What acidifies: elemental sulfur, and nitrogen that turns to nitrate (ammonium, urea).
+            out.s0 = out.s0 || (a.perS > 0 && kg > 0);
+            out.nAcid = out.nAcid || (a.perN > 0 && nKg > 0);
+            if (['gypsum', 'gypsum-anhydrous'].includes(slug) || /gypsum|calcium sulfate|calcium sulphate/i.test(name || '')) out.gypsumKg += kg;
+            if (eq > 0) by[name] = (by[name] || 0) + eq;
+            // A sulfate salt worth saying (5 kg of sulfur a hectare or more): gypsum, sulfate of potash, kieserite.
+            if ((pct.S || 0) >= 10 && kg * (pct.S || 0) / 100 >= 5 && a.perS <= 0 && !((pct.N || 0) > 0) && !salts.includes(name)) salts.push(name);
+        });
+        out.sources = Object.entries(by).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([k]) => k);
+        out.salts = salts;
+        return out;
+    };
+    // How far the plan moves the pH (NpkModel::PH_SHIFT, NpkNeed::phShift): the field and the root zone, below 0 sourer.
+    const phShift = (f, acidEq, limeEq) => {
+        const P = M.phShift, tex = f.has('peat') ? 'peat' : f.has('sandy') ? 'sandy' : f.has('clay') ? 'clay' : 'loam', calcR = f.has('calcareous'), flood = f.has('flooded');
+        const B = P.buffer[tex] * (f.has('low_om') ? P.lowOm : 1) * (calcR ? P.calcareous : 1);
+        const zoneOf = (eq) => Math.min(P.zoneCap, Math.abs(eq) / B * P.zone) * (flood ? P.flooded : 1);
+        const zone = zoneOf(acidEq), nonLime = acidEq + (limeEq ?? 0);
+        return { tex, buffer: B, calc: calcR, flooded: flood, bulk: -acidEq / B, zone: acidEq > 0 ? -zone : zone,
+            u: acidEq > 0 ? clamp(zone / P.fullAt, 0, 1) : 0, bu: nonLime < 0 ? clamp(zoneOf(nonLime) / P.fullAt, 0, 1) : 0 };
+    };
+    // How hard a plan lockout bites on this soil (NpkModel::LOCK_SOIL, NpkNeed::lockMult).
+    const lockMult = (k, f) => {
+        const kinds = { alk: ['alkaline', 'strongAlk', 'calcareous', 'sodic'].some((x) => f.has(x)), sour: ['strongAcid', 'acid', 'acid_sulfate'].some((x) => f.has(x)),
+            neutral: f.has('neutral'), sandy: f.has('sandy'), sodic: f.has('sodic') };
+        let m = null;
+        Object.entries(M.lockSoil[k] || {}).forEach(([kind, x]) => { if (kinds[kind]) m = m === null ? x : Math.max(m, x); });
+        return m ?? 1;
+    };
+    const needModel = (c, g, f, cls, perHa = {}, acidEq = 0, fl = null, limeEq = null, pe = {}) => {
         const out = { need: {}, raw: {}, how: {}, share: {}, adj: {}, scale: {}, whys: [], Yg: null, micro: {}, base: null, acid: null, credit: {} };
-        // The plan's own acidity (kg of lime per hectare): how far it goes toward its full effect.
+        // The plan's own acidity (kg of lime per hectare), against this soil's buffer around the roots (2026-10-21).
         const alk = ['alkaline', 'strongAlk', 'calcareous', 'sodic'].some((k) => f.has(k)), sour = ['strongAcid', 'acid', 'acid_sulfate'].some((k) => f.has(k));
-        const au = acidEq > 0 ? clamp(acidEq / (M.acidAt || 400), 0, 1) : 0;
-        if (Math.abs(acidEq) >= 50) out.acid = { eq: acidEq, u: au, alk, sour };
+        const ps = phShift(f, acidEq, limeEq), au = ps.u, zs = alk ? 'alk' : sour ? 'sour' : f.has('neutral') ? 'neutral' : null;
+        // Gypsum on sodic soil pushes the sodium out (NpkModel::GYPSUM_SODIC).
+        const gyp = f.has('sodic') ? clamp((pe.gypsumKg || 0) / M.gypsumSodic.full, 0, 1) * M.gypsumSodic.season : 0;
+        if (Math.abs(acidEq) >= 50 || gyp > 0) out.acid = { eq: acidEq, u: au, bu: ps.bu, alk, sour, soil: zs, bulk: Math.round(ps.bulk * 100) / 100, zone: Math.round(ps.zone * 100) / 100,
+            tex: ps.tex, calc: ps.calc, flooded: ps.flooded, gypsum: Math.round(gyp * 100) / 100, gypsumKg: Math.round(pe.gypsumKg || 0), sources: (pe.sources || []).slice(), salts: (pe.salts || []).slice(), s0: !!pe.s0, nAcid: !!pe.nAcid,
+            texKnown: ['sandy', 'clay', 'peat', 'loam'].some((k) => f.has(k)) };
         // How the soil sizes N, P2O5 and K2O, and the soil's own share.
         const base = Object.assign({}, M.soilShare, (c && M.soilShareCrop[c.key]) || {});
         const m = { N: 1, P2O5: 1, K2O: 1 }, sh = Object.assign({}, base), same = {};
@@ -2154,7 +2222,14 @@
         // Lime in the plan: its liming materials, 300 kg of lime equivalent a hectare or more (no limeEq
         // given: the plan's net effect on the pH). Gypsum and calcium nitrate carry calcium, not lime.
         if ((limeEq != null ? limeEq : Math.max(0, -acidEq)) >= 300) pf.add('liming');
-        if ((perHa.Zn || 0) > 10) pf.add('excess_zn');
+        const PL = M.planLock;
+        if ((perHa.Zn || 0) > PL.excessZn) pf.add('excess_zn');
+        // 2026-10-21: calcium that is not lime crowding magnesium; magnesium past calcium crowding calcium; sulfate
+        // holding molybdenum back; ammonium competing with calcium and magnesium (NpkNeed::model).
+        if ((pe.caNonLime ?? (perHa.Ca || 0)) > PL.highCa) pf.add('high_ca');
+        if ((perHa.Mg || 0) > PL.highMg && (perHa.Mg || 0) >= (perHa.Ca || 0)) pf.add('high_mg');
+        if ((perHa.S || 0) > PL.highS) pf.add('high_s');
+        if ((pe.nh4N || 0) > PL.highNh4) pf.add('high_nh4');
         out.lockouts = [...pf];
         const ff = new Set([...f, ...pf]);
         // Secondary, micro and beneficial elements: from a bag only where a shortfall is likely.
@@ -2164,19 +2239,37 @@
             let score = 0;
             Object.entries(e.weights || {}).forEach(([k, w]) => {
                 if (!ff.has(k)) return;
+                // A plan lockout bites harder or softer by the soil (NpkModel::LOCK_SOIL).
+                if (w > 0 && M.lockSoil[k]) w *= lockMult(k, f);
                 score += w;
                 if (w > 0) why.push(FACTOR[k] || k); else if (e.down && e.down[k] && !down.includes(e.down[k])) down.push(e.down[k]);
             });
             const sens = (e.sensitive || []).includes(c.key), cropWord = cropShort(c).split(',')[0].toLowerCase();
             if (sens) { score += e.sensitiveWeight || 1; why.push(cropWord + ' needs more of it'); }
             // Why the soil gives less of it (NpkModel::SOIL_FACTOR): holds little, locks it up, or loses it.
-            const SM = M.soilMicro, sw = { low: [], lock: [], loss: [], past: false, crop: sens ? cropWord : null };
+            const SM = M.soilMicro, sw = { low: [], lock: [], loss: [], past: false, crop: sens ? cropWord : null, freed: false, gypsum: false };
             Object.entries(e.weights || {}).forEach(([k, w]) => { if (w > 0 && ff.has(k) && SM.factor[k]) sw[(SM.byEl[el] || {})[k] || SM.factor[k][0]].push(k); });
-            // Acid around the roots on a high pH soil: zinc, iron, manganese and copper come
-            // free again, and on sodic soil the soil's own lime turns to calcium.
-            if (au > 0 && alk && (['Zn', 'Fe', 'Mn', 'Cu'].includes(el) || (el === 'Ca' && f.has('sodic')))) {
-                score -= au;
-                down.push(el === 'Ca' ? 'the acid fertilizers in your plan turn the soil\'s own lime into calcium' : 'the acid fertilizers in your plan free some of it around the roots');
+            // The acid around the roots, by the soil (NpkModel::ACID_EFFECT): on a high pH soil it frees zinc, iron,
+            // manganese, copper and boron (on sodic soil the soil's own lime turns to calcium), near neutral a little,
+            // on an acid soil it locks molybdenum harder and washes calcium and magnesium out.
+            const AE = M.acidEffect;
+            const ae = zs && au > 0 ? (AE[zs][el] ?? (el === 'Ca' && zs === 'alk' && f.has('sodic') ? AE.alk['Ca:sodic'] : null)) : null;
+            if (ae != null) {
+                score += ae * au;
+                if (ae < 0) { down.push(el === 'Ca' ? 'the acid fertilizers in your plan turn the soil\'s own lime into calcium' : 'the acid fertilizers in your plan free some of it around the roots'); sw.freed = true; }
+                else why.push(el === 'Mo' ? 'the acid fertilizers in your plan lock it harder on this acid soil' : 'the acid fertilizers in your plan wash it out of this acid soil');
+            }
+            // A plan that pushes the pH up with nitrates does the opposite.
+            const be = ps.bu > 0 && ['alk', 'sour'].includes(zs) ? AE.basic[zs][el] ?? null : null;
+            if (be != null) {
+                score += be * ps.bu;
+                if (be > 0) why.push('the nitrate in your plan raises the pH around the roots'); else down.push('the nitrate in your plan frees some of it');
+            }
+            // Gypsum on sodic soil frees part of what the sodium locks.
+            if (gyp > 0 && ['Zn', 'Fe', 'Mn'].includes(el) && (e.weights.sodic || 0) > 0) {
+                score -= e.weights.sodic * gyp;
+                down.push('the gypsum in your plan pushes sodium out, freeing some of it');
+                sw.gypsum = true;
             }
             const L = M.levels;
             let level = score >= L.likely.at ? 'likely' : score >= L.watch.at ? 'watch' : 'none';
@@ -2211,31 +2304,16 @@
             return { id: p.id, name: p.name, grade: grade(p), amount: l.amount, unit: l.unit, kg: Math.round(kg * 100) / 100, pct: p.pct, estimate: p.estimate };
         }).filter(Boolean);
         const perHa = Object.fromEntries(Object.keys(tot).map((n) => [n, area > 0 ? tot[n] / area : 0]));
-        // What the plan does to the soil's acidity, in kg of lime per hectare (NpkModel::ACIDITY).
-        const AC = M.acidity || { perN: {}, perS: {}, perKg: {}, defaultPerN: 1.8 };
-        const acidEq = area > 0 ? st.lines.reduce((sum, l) => {
-            const p = prodOf(l.id);
-            if (!p || l.unit === 'dose') return sum;
-            const kg = kgOf(p, l.amount, l.unit), slug = p.slug || '';
-            if (AC.perKg[slug] != null) return sum + kg * AC.perKg[slug];
-            const nKg = kg * (p.pct.N || 0) / 100, sKg = kg * (p.pct.S || 0) / 100;
-            const perN = AC.perN[slug] != null ? AC.perN[slug] : (p.pct.S >= 20 && p.pct.N >= 18 ? 5.35 : AC.defaultPerN);
-            return sum + nKg * perN + (AC.perS[slug] != null || (p.pct.S >= 80 && !(p.pct.N > 0)) ? sKg * (AC.perS[slug] ?? 3.1) : 0);
-        }, 0) / area : 0;
-        // The plan's liming materials, in kg of lime equivalent per hectare (NpkNeed::limeEq); a farmer's own
-        // lime or dolomite counts by its name.
-        const limeEq = area > 0 ? st.lines.reduce((sum, l) => {
-            const p = prodOf(l.id);
-            if (!p || l.unit === 'dose') return sum;
-            const k = AC.perKg[p.slug || ''] ?? (/\b(lime|limestone|dolomit\w*|apog)\b/i.test(p.name || '') ? -0.9 : 0);
-            return k < 0 ? sum + kgOf(p, l.amount, l.unit) * -k : sum;
-        }, 0) / area : 0;
+        // What the plan does to the soil, a hectare (2026-10-21, NpkNeed::planFacts): its acidity and its liming in kg
+        // of lime equivalent, the gypsum, the ammonium nitrogen, the calcium that is not lime, the main acid sources.
+        const PF = planFacts(area > 0 ? st.lines.map((l) => { const p = prodOf(l.id); return p && l.unit !== 'dose' ? [p.slug || '', kgOf(p, l.amount, l.unit) / area, p.pct || {}, p.name || ''] : null; }).filter(Boolean) : []);
+        const acidEq = PF.acidEq, limeEq = PF.limeEq;
         // Manure or compost in the plan, kg per hectare (organic_inputs at a tonne or more).
         const organicKg = area > 0 ? st.lines.reduce((sum, l) => { const p = prodOf(l.id); return p && l.unit !== 'dose' && p.category === 'organic' ? sum + kgOf(p, l.amount, l.unit) : sum; }, 0) / area : 0;
         $('npN').textContent = fmt(perHa.N, 0); $('npP').textContent = fmt(perHa.P2O5, 0); $('npK').textContent = fmt(perHa.K2O, 0);
         const npk = fmt(perHa.N, 0) + '-' + fmt(perHa.P2O5, 0) + '-' + fmt(perHa.K2O, 0);
 
-        const c = cropOf(st.crop), g = goalOf(c), f = factors(c, { SP: seasonPlanks(c, g), organicKg }), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl, limeEq);
+        const c = cropOf(st.crop), g = goalOf(c), f = factors(c, { SP: seasonPlanks(c, g), organicKg }), cls = soilClass(soil()), fl = fieldLayer(c, f), md = needModel(c, g, f, cls, perHa, acidEq, fl, limeEq, PF);
         // A level the area filled is the area's, not a test the farmer made (the Crop Protocol says it the same way).
         if (st.area) {
             const own = soilClass(soil(false)), names = { N: 'nitrogen', P2O5: 'phosphorus', K2O: 'potassium' };
@@ -2272,12 +2350,29 @@
             $('npNeed').innerHTML = '<div class="np-say">' + (st.cropPicked ? 'No crop picked, so these are the totals only.' : 'Pick the crop in step 1 to see what it needs for your goal.') + '</div>';
         }
         const short = NPK.filter((n) => states[n] && states[n].state === 'short'), over = NPK.filter((n) => states[n] && states[n].state === 'over');
-        // The plan's acidity, said once.
-        const acidSay = md.acid ? (md.acid.eq > 0
-            ? '<div class="np-say"><b>Your plan acidifies the soil</b> by about ' + fmt(md.acid.eq, 0) + ' kg of lime per hectare (ammonium and sulfur fertilizers). '
-                + (md.acid.alk ? 'On this high pH soil that is welcome: around the roots it frees some of the phosphorus, zinc, iron and manganese the soil locks up' + (f.has('sodic') ? ', and turns the soil\'s own lime into the calcium that pushes sodium out' : '') + '. NPK Plus counts it above.'
-                    : md.acid.sour ? 'On this acid soil it makes things worse: lime the field, and lean on less acidifying sources.' : 'Over many seasons it lowers the pH; a soil test every few years tells when to lime.') + '</div>'
-            : '<div class="np-say"><b>Your plan raises the pH</b> by about ' + fmt(-md.acid.eq, 0) + ' kg of lime per hectare.' + (md.acid.alk ? ' On this high pH soil that locks up more phosphorus and zinc: choose ammonium or sulfate sources instead.' : '') + '</div>') : '';
+        // What the plan does to the soil, said once (2026-10-21): the acid, where it comes from, how far it moves the pH
+        // on this soil, what that frees or locks, and the gypsum on a sodic soil.
+        const acidSay = (() => {
+            const A = md.acid;
+            if (!A) return '';
+            const TEXW = { sandy: 'sandy soil gives way easily', loam: 'loam holds its pH fairly well', clay: 'clay holds its pH firmly', peat: 'peat holds its pH very firmly' };
+            const ph = (v) => (Math.abs(v) < 0.1 ? fmt(Math.abs(v), 2) : fmt(Math.abs(v), 1)), parts = [];
+            const how = [A.nAcid ? 'nitrogen from ammonium and urea turns to acid as it changes to nitrate' : '', A.s0 ? 'elemental sulfur turns to sulfuric acid' : ''].filter(Boolean);
+            if (A.eq >= 50) {
+                parts.push('<b>Your plan acidifies the soil</b> by about ' + fmt(A.eq, 0) + ' kg of lime per hectare' + (A.sources.length ? ', mostly from ' + esc(list(A.sources)) : '') + (how.length ? ': ' + list(how) : '') + '.'
+                    + (Math.abs(A.zone) >= 0.05 ? ' Around the roots and the fertilizer band it lowers the pH by about ' + ph(A.zone) + ' this season; the field as a whole moves about ' + ph(A.bulk) + (A.calc ? ', since the soil\'s free lime takes most of the acid' : ', since ' + (A.texKnown ? TEXW[A.tex] : 'soil holds its pH against acid')) + (A.flooded ? ', and a flooded paddy pulls its pH back toward neutral' : '') + '.' : ' This soil takes it with hardly a change in pH' + (A.calc ? ': its free lime neutralizes the acid' : '') + '.'));
+                parts.push(A.soil === 'alk' ? (A.u >= 0.3 ? 'On this high pH soil that is welcome: it frees some of the phosphorus, zinc, iron, manganese, copper and boron the soil locks up' + (f.has('sodic') ? ', and turns the soil\'s own lime into the calcium that pushes sodium out' : '') + '. NPK Plus counts it above.'
+                        : 'On this high pH soil only a little is freed.' + (A.calc ? ' Band the ammonium fertilizers with the seed, so more of their acid works where the roots are.' : ''))
+                    : A.soil === 'sour' ? 'On this acid soil it makes things worse: molybdenum locks harder, calcium and magnesium wash out with the nitrate, and manganese and aluminum can rise to harmful levels. Lime the field, and lean on less acidifying sources.'
+                    : A.soil === 'neutral' ? 'Near neutral it frees a little zinc, iron and manganese. Over many seasons it lowers the pH; a soil test every few years tells when to lime.'
+                    : 'Over many seasons it lowers the pH; a soil test every few years tells when to lime.');
+            } else if (A.eq <= -50) {
+                parts.push('<b>Your plan raises the pH</b> by about ' + fmt(-A.eq, 0) + ' kg of lime per hectare.' + (A.alk ? ' On this high pH soil that locks up more phosphorus, zinc, iron and manganese: choose ammonium or sulfate of ammonia sources instead of nitrates or lime.' : A.sour ? ' On this acid soil that is welcome: it frees molybdenum and keeps calcium and magnesium in.' : ''));
+            }
+            if (A.salts.length) parts.push('The sulfate in ' + esc(list(A.salts)) + ' does not acidify: only ammonium and elemental sulfur do.');
+            if (A.gypsum > 0) parts.push('<b>The gypsum</b> (about ' + fmt(A.gypsumKg, 0) + ' kg a hectare) pushes sodium off the clay, which frees some zinc, iron and manganese and lets calcium in. It needs water to wash the sodium down below the roots.');
+            return parts.length ? '<div class="np-say">' + parts.join(' ') + '</div>' : '';
+        })();
         // Where the soil locks phosphorus up, a band beats more of it.
         const pLock = c && md.need.P2O5 && md.pLock;
         $('npSay').innerHTML = c && out.length && Object.keys(states).length
@@ -2292,6 +2387,8 @@
         const seedV = num('npSeed');
         RES = { perHa: Object.fromEntries(Object.entries(perHa).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])), total: Object.fromEntries(Object.entries(tot).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])),
             npkPerHa: npk, needs: states, micros: micro, reach, harvest, lines: out, areaHa: area, soilClass: cls,
+            acid: md.acid ? { limeEqPerHa: Math.round(md.acid.eq), rootZonePh: md.acid.zone, fieldPh: md.acid.bulk, soil: md.acid.soil, texture: md.acid.tex, limy: md.acid.calc, sources: md.acid.sources, gypsumKgPerHa: md.acid.gypsumKg } : null,
+            lockouts: md.lockouts || [],
             goal: g.Y ? { tPerHa: Math.round(g.Y * 100) / 100, counted: Math.round(g.Yeff * 100) / 100, why: g.why, fieldCap: g.capped ? Math.round(g.cap.k * 100) / 100 : null } : null,
             setup: { variety: $('npVariety').value.trim(), areaUnit: st.areaUnit, areaValue: num('npArea'), yUnit: st.yUnit,
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
@@ -2371,6 +2468,8 @@
         if (loss.length) bits.push(list(loss));
         if (sw.past) bits.push('it ran short last season');
         if (sw.crop) bits.push(sw.crop + ' needs more of it than most crops');
+        if (sw.freed) bits.push('the acid fertilizers in your plan free a little of it around the roots');
+        if (sw.gypsum) bits.push('the gypsum in your plan frees some of it from the sodium');
         return (mm.level === 'test' ? 'Your soil test reads low, so the soil gives about ' : 'The soil gives about ') + pct + '% of it on its own' + (bits.length ? ': ' + bits.join('; ') : '') + '.';
     };
     const micros = (c, md, tot, perHa, area, has) => {
@@ -2418,7 +2517,8 @@
             + '<p class="np-mh">Micronutrients</p><div class="np-mlist">' + mic.map(row).join('') + '</div>'
             + '<p class="np-mh">Beneficial elements</p><div class="np-mlist">' + ben.map(row).join('') + '</div>'
             + (tot.Cl > 0 ? '<p class="np-fine">Your plan also carries ' + amt(perHa.Cl) + ' of chloride per ha, from muriate of potash. Most crops take it well; on salty soil, sulfate of potash is the gentler source.</p>' : '')
-            + (md.lockouts && md.lockouts.length ? '<div class="np-say"><b>Lockouts from the plan:</b> ' + esc(list(md.lockouts.map((k) => ({ high_p: 'the heavy phosphorus can tie up zinc and iron', high_k: 'the heavy potassium can crowd out magnesium and calcium', liming: 'the lime can tie up zinc, boron, manganese, copper and iron', excess_zn: 'the heavy zinc can crowd out copper' })[k]))) + '. They are counted in the needs above.</div>' : '')
+            + (md.lockouts && md.lockouts.length ? '<div class="np-say"><b>Lockouts from the plan:</b> ' + esc(list(md.lockouts.map((k) => ({ high_p: 'the heavy phosphorus can tie up zinc and iron', high_k: 'the heavy potassium can crowd out magnesium and calcium', liming: 'the lime can tie up zinc, boron, manganese, copper and iron', excess_zn: 'the heavy zinc can crowd out copper and a little iron',
+                high_ca: 'the heavy calcium can crowd out magnesium', high_mg: 'the heavy magnesium can crowd out calcium', high_s: 'the heavy sulfate can hold molybdenum back', high_nh4: 'the heavy ammonium can hold magnesium and calcium back at the roots' })[k]).filter(Boolean))) + '. They are counted in the needs above.</div>' : '')
             + '<div class="np-say">Each bar is all your crop needs of the element for your goal, up to the line: the brown part is what the soil gives on its own, read from your soil type, pH, area and what locks it up, and the part after it is what your plan adds. Each need in kg is a corrective dose for the part the soil does not give, counted only where your crop, your soil or your plan make a shortfall likely. Only a soil test can say for sure what your soil holds.</div>';
         return out;
     };

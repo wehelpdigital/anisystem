@@ -3317,7 +3317,8 @@
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null);
         const low = measured.length ? measured.reduce((a, c) => (c[0].ratio < a[0].ratio ? c : a)) : null;
         const reach = low ? Math.round(Math.min(1, low[0].ratio) * 100) : null;
-        const LOCK = { high_p: 'the heavy phosphorus can tie up zinc and iron', high_k: 'the heavy potassium can crowd out magnesium and calcium', liming: 'the lime can tie up zinc, boron, manganese, copper and iron', excess_zn: 'the heavy zinc can crowd out copper' };
+        const LOCK = { high_p: 'the heavy phosphorus can tie up zinc and iron', high_k: 'the heavy potassium can crowd out magnesium and calcium', liming: 'the lime can tie up zinc, boron, manganese, copper and iron', excess_zn: 'the heavy zinc can crowd out copper and a little iron',
+            high_ca: 'the heavy calcium can crowd out magnesium', high_mg: 'the heavy magnesium can crowd out calcium', high_s: 'the heavy sulfate can hold molybdenum back', high_nh4: 'the heavy ammonium can hold magnesium and calcium back at the roots' };
         const locks = (pg.lockouts || []).map((k) => LOCK[k]).filter(Boolean);
         let say = !low ? '' : reach >= 97 ? 'Every plank reaches the rim: the plan, with what still fell short added, meets this lot\'s need for the goal.'
             : 'The shortest plank is <b>' + esc(staves[low[1]].name) + '</b>: ' + esc(((t) => t.charAt(0).toLowerCase() + t.slice(1))((rows[low[1]].note || '').replace(/\.$/, ''))) + '. It holds the water at ' + reach + '% of the need' + (goal ? ', near ' + esc(fmt2(goal * reach / 100) + ' ' + unit) + ' a hectare' : '') + '. Raise it first: more of the others adds nothing until it rises.';
@@ -3325,6 +3326,11 @@
         const over = rows.map((r, i) => [r, i]).filter(([r]) => r.state === 'over').map(([, i]) => staves[i].name.toLowerCase());
         if (over.length) say += ' Too much ' + esc(andList(over)) + ': the taller plank holds no more water, and it costs money.';
         if (locks.length) say += ' <b>Lockouts from the plan:</b> ' + esc(andList(locks)) + '. They are counted in the needs.';
+        // What the program does to the soil's pH (2026-10-21, NpkNeed::phShift), and gypsum on a sodic soil.
+        const PA = pg.acid;
+        if (PA && PA.eq >= 50 && Math.abs(PA.zone) >= 0.05) say += ' <b>The program acidifies the root zone</b> by about ' + (Math.round(Math.abs(PA.zone) * 10) / 10) + ' pH this season (the field about ' + (Math.round(Math.abs(PA.bulk) * 10) / 10) + ')'
+            + (PA.soil === 'alk' ? ', which frees some of the zinc, iron, manganese and phosphorus this soil locks up.' : PA.soil === 'sour' ? ', which on this acid soil locks molybdenum harder and washes calcium and magnesium out: lime the field.' : '.');
+        if (PA && PA.gypsum > 0) say += ' The gypsum pushes sodium out, freeing some zinc, iron and manganese.';
         if (rows.some((r) => r.soil != null && r.state !== 'soil' && r.soil < 1)) say += ' The brown foot of a plank is what the soil gives of it on its own, read from the lot\'s soil type, pH, area and what locks it up; the plan adds the rest.';
         b.draw({ staves, rows, tag: goal ? 'The rim is this lot\'s goal, ' + fmt2(goal) + ' ' + unit + ' a hectare.' : 'The rim is everything the crop needs.',
             arrow: 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : ''),

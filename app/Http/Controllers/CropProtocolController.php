@@ -2473,10 +2473,11 @@ PROMPT;
                     foreach ($an['pct'] as $n => $v) {
                         $perHa[$n] = ($perHa[$n] ?? 0) + $kg * (float) $v / 100;
                     }
-                    $lines[] = [$an['slug'], $kg, $an['pct']];
+                    $lines[] = [$an['slug'], $kg, $an['pct'], (string) ($ap['product'] ?? '')];
                 }
             }
-            $run = $known ? NpkNeed::run($needIn + ['plan' => ['perHa' => $perHa, 'acidEq' => NpkNeed::acidEq($lines), 'limeEq' => NpkNeed::limeEq($lines)]]) : null;
+            // What the program does to the soil too (2026-10-21): its acid against this soil's buffer, its lockouts, gypsum on sodic soil.
+            $run = $known ? NpkNeed::run($needIn + ['plan' => ['perHa' => $perHa] + NpkNeed::planFacts($lines)]) : null;
             $want = $run ? ['n' => (float) ($run['need']['N'] ?? 0), 'p' => (float) ($run['need']['P2O5'] ?? 0), 'k' => (float) ($run['need']['K2O'] ?? 0)] : $need;
             $has = ['n' => (float) ($perHa['N'] ?? 0), 'p' => (float) ($perHa['P2O5'] ?? 0), 'k' => (float) ($perHa['K2O'] ?? 0)];
             $rows = [];
@@ -2513,7 +2514,7 @@ PROMPT;
             }
 
             return ['delivered' => ['n' => round($has['n']), 'p' => round($has['p']), 'k' => round($has['k'])], 'check' => $rows, 'elements' => $elements,
-                'lockouts' => $run['lockouts'] ?? [], 'whys' => $run['whys'] ?? [],
+                'lockouts' => $run['lockouts'] ?? [], 'whys' => $run['whys'] ?? [], 'acid' => $run['acid'] ?? null,
                 'unknownProducts' => array_values(array_unique(array_filter($unknown)))];
         };
         $programs = [];

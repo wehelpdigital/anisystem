@@ -101,6 +101,68 @@ final class NpkModel
 
     public const ACID_AT = 400;
 
+    /**
+     * How far the plan's acid moves the pH (2026-10-21, the owner: "sulfates
+     * create acidic environment so depending on the amount ... it should
+     * acidify the soil that at least makes some elements absorbable"). The
+     * acid it makes (ACIDITY, kg of lime equivalent a hectare) against the
+     * soil's buffer: about `buffer` kg of lime moves the top 15 cm of a field
+     * one pH unit (the lime requirement curves: a sandy soil the least, peat
+     * the most); low organic matter buffers less, and a limy soil's free lime
+     * takes most of the acid (`calcareous` times the buffer). Around the roots
+     * and the fertilizer band the change is `zone` times the field's, never
+     * past `zoneCap`; a flooded paddy pulls its pH back toward neutral, so
+     * there `flooded` of it counts. The effect on the elements is full at a
+     * root zone change of `fullAt` pH units. It replaces ACID_AT's flat scale.
+     *
+     * Only ammonium (as it turns to nitrate) and elemental sulfur acidify; the
+     * sulfate in gypsum, sulfate of potash or kieserite does not, and the
+     * nitrates push the pH up (ACIDITY, NpkNeed::acidityOf).
+     */
+    public const PH_SHIFT = ['buffer' => ['sandy' => 2000, 'loam' => 4000, 'clay' => 6500, 'peat' => 10000], 'lowOm' => 0.8, 'calcareous' => 6,
+        'zone' => 4, 'zoneCap' => 1.0, 'fullAt' => 0.5, 'flooded' => 0.5];
+
+    /**
+     * What a root zone made sourer does to the secondary and micro elements,
+     * by the soil (points on the element's score at the full effect): on a
+     * high pH soil it frees what the pH locks (zinc, iron and manganese the
+     * most, copper and boron less; on sodic soil the soil's own lime turns to
+     * calcium); near neutral a little; on an acid soil it makes it worse
+     * (molybdenum locks harder, calcium and magnesium wash out with the
+     * nitrate). A plan that pushes the pH up with nitrates does the opposite,
+     * by `basic`.
+     */
+    public const ACID_EFFECT = [
+        'alk' => ['Zn' => -1, 'Fe' => -1, 'Mn' => -1, 'Cu' => -0.5, 'B' => -0.5, 'Ca:sodic' => -1],
+        'neutral' => ['Zn' => -0.5, 'Fe' => -0.5, 'Mn' => -0.5],
+        'sour' => ['Mo' => 1, 'Ca' => 0.5, 'Mg' => 0.5],
+        'basic' => ['alk' => ['Zn' => 0.5, 'Fe' => 0.5, 'Mn' => 0.5, 'B' => 0.25], 'sour' => ['Mo' => -0.5]],
+    ];
+
+    /**
+     * The plan's own lockouts (2026-10-21): when, in kg a hectare (high_p and
+     * high_k past 1.5 times the need stay as they were), and how much harder
+     * or softer each bites on a soil (the larger multiplier of the soil's
+     * kinds: alk, sour, neutral, sandy, sodic). Heavy phosphorus ties zinc up
+     * hardest at a high pH; heavy potassium crowds magnesium and calcium
+     * hardest on sandy or acid soil; lime on an acid soil mostly helps, lime on
+     * a soil that does not need it locks the most; gypsum is the cure on
+     * sodic soil, not a lockout; sulfate holds molybdenum back hardest on acid
+     * soil.
+     */
+    public const PLAN_LOCK = ['highCa' => 250, 'highMg' => 80, 'highS' => 80, 'highNh4' => 120, 'excessZn' => 10, 'liming' => 300];
+
+    public const LOCK_SOIL = [
+        'high_p' => ['alk' => 1.5],
+        'high_k' => ['sandy' => 1.5, 'sour' => 1.5],
+        'liming' => ['sour' => 0.5, 'neutral' => 1.5, 'alk' => 2],
+        'high_ca' => ['sodic' => 0.5, 'sandy' => 1.5],
+        'high_s' => ['sour' => 1.5],
+    ];
+
+    /** Gypsum on sodic soil: `full` kg a hectare pushes the most sodium out a season can, `season` of the sodium's lock on zinc, iron and manganese. */
+    public const GYPSUM_SODIC = ['full' => 2000, 'season' => 0.5];
+
     public const ACID_UNLOCK = 0.5;
 
     /** The share of a phosphorus or potassium guide rate that does not follow the yield goal. */
@@ -286,6 +348,8 @@ final class NpkModel
         'drought' => ['lock', 'a dry season'], 'upland' => ['lock', 'soil that is never flooded'],
         'high_p' => ['lock', 'the heavy phosphorus in the plan'], 'high_k' => ['lock', 'the heavy potassium in the plan'],
         'liming' => ['lock', 'the lime in the plan'], 'excess_zn' => ['lock', 'the heavy zinc in the plan'],
+        'high_ca' => ['lock', 'the heavy calcium in the plan'], 'high_mg' => ['lock', 'the heavy magnesium in the plan'],
+        'high_s' => ['lock', 'the heavy sulfate in the plan'], 'high_nh4' => ['lock', 'the heavy ammonium in the plan'],
         'high_rainfall' => ['loss', 'heavy rain washes it out'], 'intensive_cropping' => ['loss', 'two or three crops a year draw it down'],
     ];
 
@@ -306,9 +370,9 @@ final class NpkModel
      * 2026-10-17 sweep removed out.
      */
     public const ELEMENTS = [
-        'Ca' => ['base' => 100, 'rate' => [50, 250], 'weights' => ['acid' => 1, 'strongAcid' => 1.5, 'sandy' => 0.5, 'sodic' => 1, 'peat' => 0.5, 'high_k' => 0.5, 'calcareous' => -1, 'liming' => -1, 'high_rainfall' => 0.5, 'drought' => 0.5, 'neutral' => -0.5], 'sensitive' => ['peanut', 'tomato', 'bellpepper', 'chili', 'watermelon', 'cabbage', 'carrot', 'banana', 'mango'], 'over' => 8, 'fert' => 'calcium sulfate (gypsum, dihydrate or anhydrous), or agricultural lime on acid soil', 'toxic' => 'Too much lime pushes the pH up and locks away zinc, iron, manganese, copper and boron.', 'down' => ['calcareous' => 'limy (calcareous) soil holds plenty of calcium', 'liming' => 'the lime in the plan adds calcium', 'neutral' => 'a near neutral pH keeps calcium within reach'],
+        'Ca' => ['base' => 100, 'rate' => [50, 250], 'weights' => ['acid' => 1, 'strongAcid' => 1.5, 'sandy' => 0.5, 'sodic' => 1, 'peat' => 0.5, 'high_k' => 0.5, 'calcareous' => -1, 'liming' => -1, 'high_rainfall' => 0.5, 'drought' => 0.5, 'neutral' => -0.5, 'high_mg' => 0.5, 'high_nh4' => 0.25], 'sensitive' => ['peanut', 'tomato', 'bellpepper', 'chili', 'watermelon', 'cabbage', 'carrot', 'banana', 'mango'], 'over' => 8, 'fert' => 'calcium sulfate (gypsum, dihydrate or anhydrous), or agricultural lime on acid soil', 'toxic' => 'Too much lime pushes the pH up and locks away zinc, iron, manganese, copper and boron.', 'down' => ['calcareous' => 'limy (calcareous) soil holds plenty of calcium', 'liming' => 'the lime in the plan adds calcium', 'neutral' => 'a near neutral pH keeps calcium within reach'],
             'sources' => [['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf'], ['label' => 'Rajendrudu and Williams 1987, Effect of gypsum and drought on pod initiation and crop yield in early maturing groundnut (ICRISAT, Experimental Agriculture 23)', 'url' => 'https://oar.icrisat.org/3423/1/JA_384.pdf']]],
-        'Mg' => ['base' => 20, 'rate' => [10, 50], 'weights' => ['acid' => 1, 'strongAcid' => 1.5, 'sandy' => 1, 'high_k' => 1, 'peat' => 0.5, 'waterlogged' => 0.25, 'flooded' => 0.25, 'calcareous' => -0.5, 'high_rainfall' => 0.5, 'neutral' => -0.5], 'sensitive' => ['banana', 'sugarcane', 'pineapple', 'cassava', 'corn_yellow', 'corn_sweet', 'potato', 'coffee', 'cacao', 'coconut', 'calamansi', 'tomato', 'bellpepper', 'chili', 'cabbage', 'broccoli', 'cucumber', 'watermelon', 'onion', 'stringbean', 'carrot'], 'over' => 6, 'fert' => 'dolomite on acid soil, or magnesium sulfate', 'toxic' => 'Too much magnesium crowds out potassium and calcium.', 'down' => ['calcareous' => 'limy soil carries magnesium', 'neutral' => 'a near neutral pH keeps magnesium within reach'],
+        'Mg' => ['base' => 20, 'rate' => [10, 50], 'weights' => ['acid' => 1, 'strongAcid' => 1.5, 'sandy' => 1, 'high_k' => 1, 'peat' => 0.5, 'waterlogged' => 0.25, 'flooded' => 0.25, 'calcareous' => -0.5, 'high_rainfall' => 0.5, 'neutral' => -0.5, 'high_ca' => 0.5, 'high_nh4' => 0.5], 'sensitive' => ['banana', 'sugarcane', 'pineapple', 'cassava', 'corn_yellow', 'corn_sweet', 'potato', 'coffee', 'cacao', 'coconut', 'calamansi', 'tomato', 'bellpepper', 'chili', 'cabbage', 'broccoli', 'cucumber', 'watermelon', 'onion', 'stringbean', 'carrot'], 'over' => 6, 'fert' => 'dolomite on acid soil, or magnesium sulfate', 'toxic' => 'Too much magnesium crowds out potassium and calcium.', 'down' => ['calcareous' => 'limy soil carries magnesium', 'neutral' => 'a near neutral pH keeps magnesium within reach'],
             'sources' => [['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf'], ['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf']]],
         'S' => ['base' => 17.5, 'rate' => [10, 40], 'weights' => ['low_om' => 1, 'sandy' => 1, 'calcareous' => 0.25, 'acid_sulfate' => -1, 'saline' => -0.25, 'intensive_cropping' => 1], 'sensitive' => ['cabbage', 'broccoli', 'pechay', 'onion', 'garlic', 'mungbean', 'peanut', 'soybean', 'stringbean', 'rice', 'rice_dsr_wet', 'rice_dsr_dry', 'coconut'], 'critical' => 10, 'over' => 6, 'fert' => 'ammonium sulfate, calcium sulfate (gypsum) or single superphosphate', 'down' => ['acid_sulfate' => 'acid sulfate soil holds too much sulfur, not too little', 'saline' => 'salty soil often carries sulfate'],
             'sources' => [['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf']]],
@@ -318,13 +382,13 @@ final class NpkModel
             'sources' => [['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf'], ['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf']]],
         // Sodic soil locks iron as it locks zinc (2026-10-21, the owner: "iron should be low and locked as well on sodic
         // alkaline"): with the alkaline pH it stays flagged even when the plan's acid fertilizers free a little.
-        'Fe' => ['base' => 1.125, 'rate' => [0.5, 3], 'weights' => ['alkaline' => 1, 'strongAlk' => 1.5, 'calcareous' => 1, 'sodic' => 1, 'sandy' => 0.5, 'low_om' => 0.5, 'high_p' => 0.5, 'liming' => 0.5, 'waterlogged' => -1, 'flooded' => -1, 'acid' => -1, 'strongAcid' => -1, 'acid_sulfate' => -1, 'upland' => 1, 'drought' => 0.25, 'organic_inputs' => -0.5], 'critical' => 4.5, 'sensitive' => ['sorghum', 'soybean', 'stringbean', 'mungbean', 'rice', 'rice_dsr_wet', 'rice_dsr_dry', 'tomato', 'broccoli', 'cucumber', 'watermelon', 'pineapple', 'calamansi', 'coffee', 'banana'], 'over' => 5, 'fert' => 'ferrous sulfate as a foliar spray, or an iron chelate', 'down' => ['flooded' => 'a flooded paddy frees plenty of iron', 'waterlogged' => 'wet soil frees plenty of iron', 'acid' => 'acid soil frees iron', 'strongAcid' => 'acid soil frees iron', 'acid_sulfate' => 'acid sulfate soil frees too much iron', 'organic_inputs' => 'manure or compost frees iron'],
+        'Fe' => ['base' => 1.125, 'rate' => [0.5, 3], 'weights' => ['alkaline' => 1, 'strongAlk' => 1.5, 'calcareous' => 1, 'sodic' => 1, 'sandy' => 0.5, 'low_om' => 0.5, 'high_p' => 0.5, 'liming' => 0.5, 'excess_zn' => 0.25, 'waterlogged' => -1, 'flooded' => -1, 'acid' => -1, 'strongAcid' => -1, 'acid_sulfate' => -1, 'upland' => 1, 'drought' => 0.25, 'organic_inputs' => -0.5], 'critical' => 4.5, 'sensitive' => ['sorghum', 'soybean', 'stringbean', 'mungbean', 'rice', 'rice_dsr_wet', 'rice_dsr_dry', 'tomato', 'broccoli', 'cucumber', 'watermelon', 'pineapple', 'calamansi', 'coffee', 'banana'], 'over' => 5, 'fert' => 'ferrous sulfate as a foliar spray, or an iron chelate', 'down' => ['flooded' => 'a flooded paddy frees plenty of iron', 'waterlogged' => 'wet soil frees plenty of iron', 'acid' => 'acid soil frees iron', 'strongAcid' => 'acid soil frees iron', 'acid_sulfate' => 'acid sulfate soil frees too much iron', 'organic_inputs' => 'manure or compost frees iron'],
             'sources' => [['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf'], ['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf']]],
         'Mn' => ['base' => 2.75, 'rate' => [1, 8], 'weights' => ['alkaline' => 1, 'strongAlk' => 1.5, 'liming' => 1, 'peat' => 1, 'sodic' => 0.5, 'calcareous' => 0.5, 'sandy' => 0.5, 'acid' => -1, 'strongAcid' => -1, 'waterlogged' => -1, 'flooded' => -1, 'drought' => 0.25], 'critical' => 1, 'sensitive' => ['soybean', 'stringbean', 'sorghum', 'cucumber', 'lettuce', 'onion', 'potato', 'calamansi', 'coffee'], 'over' => 5, 'fert' => 'manganese sulfate', 'toxic' => 'On acid soil extra manganese turns toxic.', 'down' => ['flooded' => 'a flooded paddy frees plenty of manganese', 'waterlogged' => 'wet soil frees plenty of manganese', 'acid' => 'acid soil frees manganese', 'strongAcid' => 'acid soil frees manganese'],
             'sources' => [['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf'], ['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf']]],
         'Cu' => ['base' => 2.625, 'rate' => [1.5, 6], 'weights' => ['peat' => 1, 'sandy' => 0.5, 'calcareous' => 0.5, 'liming' => 0.5, 'excess_zn' => 0.5, 'intensive_cropping' => 0.25, 'loam' => -0.5], 'critical' => 0.2, 'down' => ['loam' => 'most loam soils hold enough copper'], 'sensitive' => ['onion', 'lettuce', 'tomato', 'carrot', 'cucumber', 'watermelon', 'pineapple', 'calamansi', 'coconut'], 'over' => 3, 'fert' => 'copper sulfate', 'toxic' => 'Copper does not wash out of the soil, so extra builds up and harms roots.',
             'sources' => [['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf'], ['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf']]],
-        'Mo' => ['base' => 0.0563, 'rate' => [0.025, 0.15], 'weights' => ['acid' => 1, 'strongAcid' => 1.5, 'sandy' => 0.5, 'peat' => 1, 'acid_sulfate' => 0.25, 'alkaline' => -1, 'strongAlk' => -1, 'liming' => -1, 'neutral' => -1], 'sensitive' => ['soybean', 'mungbean', 'peanut', 'stringbean', 'broccoli', 'cabbage', 'pechay', 'lettuce', 'onion', 'tomato'], 'sensitiveWeight' => 1.5, 'over' => 3, 'fert' => 'sodium or ammonium molybdate, as a seed treatment', 'toxic' => 'Crops take extra molybdenum, but forage high in it harms cattle.', 'down' => ['alkaline' => 'alkaline soil frees molybdenum', 'strongAlk' => 'alkaline soil frees molybdenum', 'liming' => 'lime frees molybdenum', 'neutral' => 'a near neutral pH frees molybdenum'],
+        'Mo' => ['base' => 0.0563, 'rate' => [0.025, 0.15], 'weights' => ['acid' => 1, 'strongAcid' => 1.5, 'sandy' => 0.5, 'peat' => 1, 'acid_sulfate' => 0.25, 'alkaline' => -1, 'strongAlk' => -1, 'liming' => -1, 'neutral' => -1, 'high_s' => 0.5], 'sensitive' => ['soybean', 'mungbean', 'peanut', 'stringbean', 'broccoli', 'cabbage', 'pechay', 'lettuce', 'onion', 'tomato'], 'sensitiveWeight' => 1.5, 'over' => 3, 'fert' => 'sodium or ammonium molybdate, as a seed treatment', 'toxic' => 'Crops take extra molybdenum, but forage high in it harms cattle.', 'down' => ['alkaline' => 'alkaline soil frees molybdenum', 'strongAlk' => 'alkaline soil frees molybdenum', 'liming' => 'lime frees molybdenum', 'neutral' => 'a near neutral pH frees molybdenum'],
             'sources' => [['label' => 'IFA World Fertilizer Use Manual (1992)', 'url' => 'https://www.fertilizer.org/wp-content/uploads/1992/06/IFA_World_Fertilizer_Use_Manual.pdf'], ['label' => 'Embrapa Soja Documentos 322, Soja: Molibdenio e Cobalto (Sfredo and Oliveira 2010)', 'url' => 'https://www.infoteca.cnptia.embrapa.br/bitstream/doc/859439/1/Doc322online1.pdf']]],
         'Si' => ['base' => 150, 'rate' => [150, 600], 'weights' => ['peat' => 1, 'intensive_cropping' => 1, 'neutral' => -0.5], 'down' => ['neutral' => 'lowland soils near neutral usually hold plenty of silicon'], 'sensitive' => ['rice', 'rice_dsr_wet', 'rice_dsr_dry', 'sugarcane'], 'sensitiveWeight' => 1, 'beneficial' => true, 'over' => 6, 'fert' => 'rice straw or rice hull ash put back, or calcium silicate',
             'sources' => [['label' => 'ICAR Central Rice Research Institute, Identification and Management of Nutrient Disorders and Diseases in Rice (Nayak et al. 2013)', 'url' => 'https://icar-crri.in/wp-content/uploads/2023/05/e_book_nuritent.pdf'], ['label' => 'Kono, Effectiveness of silicate fertilizer to japonica varieties (JIRCAS Tropical Agriculture Research Series 3)', 'url' => 'https://www.jircas.go.jp/sites/default/files/publication/tars/tars3-_241-247.pdf']]],
@@ -489,7 +553,8 @@ final class NpkModel
 
         return [
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
-            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'levels' => self::MICRO_LEVELS, 'soilMicro' => ['step' => self::SOIL_STEP, 'floor' => self::SOIL_FLOOR, 'none' => self::SOIL_NONE, 'factor' => self::SOIL_FACTOR, 'byEl' => self::SOIL_FACTOR_EL], 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
+            'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'phShift' => self::PH_SHIFT, 'acidEffect' => self::ACID_EFFECT, 'planLock' => self::PLAN_LOCK, 'lockSoil' => self::LOCK_SOIL, 'gypsumSodic' => self::GYPSUM_SODIC,
+            'levels' => self::MICRO_LEVELS, 'soilMicro' => ['step' => self::SOIL_STEP, 'floor' => self::SOIL_FLOOR, 'none' => self::SOIL_NONE, 'factor' => self::SOIL_FACTOR, 'byEl' => self::SOIL_FACTOR_EL], 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
             'field' => self::FIELD, 'yieldBasis' => self::YIELD_BASIS,
             // The pump's year and its months, in the lot questions' own words (2026-10-21).
             'pumpYear' => FieldProfile::QUESTIONS['pumpYear']['o'], 'pumpMonths' => FieldProfile::QUESTIONS['pumpStops']['o'],

@@ -77,7 +77,10 @@ final class NpkNeed
         'high_rainfall' => 'heavy rain over the season washes it out', 'drought' => 'a dry season',
         'intensive_cropping' => 'two or three crops a year', 'upland' => 'dry seeded rice on soil that is not flooded',
         // 2026-10-21: the area's zinc, from the soil atlas (SoilAtlas::ZINC_AREA).
-        'area_zn_low' => 'soils around here often test low in zinc', 'area_zn_mlow' => 'soils around here often test moderately low in zinc'];
+        'area_zn_low' => 'soils around here often test low in zinc', 'area_zn_mlow' => 'soils around here often test moderately low in zinc',
+        // 2026-10-21: the plan's own lockouts by amount (NpkModel::PLAN_LOCK).
+        'high_ca' => 'heavy calcium in the plan crowds it out', 'high_mg' => 'heavy magnesium in the plan crowds it out',
+        'high_s' => 'heavy sulfate in the plan holds it back', 'high_nh4' => 'heavy ammonium in the plan competes with it at the roots'];
 
     public const NAMES = ['N' => 'Nitrogen', 'P2O5' => 'Phosphorus', 'K2O' => 'Potassium', 'Ca' => 'Calcium', 'Mg' => 'Magnesium', 'S' => 'Sulfur', 'Zn' => 'Zinc',
         'B' => 'Boron', 'Fe' => 'Iron', 'Mn' => 'Manganese', 'Cu' => 'Copper', 'Mo' => 'Molybdenum', 'Si' => 'Silicon', 'Co' => 'Cobalt'];
@@ -179,7 +182,8 @@ final class NpkNeed
         $g = self::goal($c, $in, $fieldOn, $water, (array) ($in['conditions'] ?? []));
         $fl = self::fieldLayer($c, $f, $fieldOn ? FieldProfile::normalize($profile) : [], (array) ($in['prev'] ?? []));
         $plan = (array) ($in['plan'] ?? []);
-        $md = self::model($c, $g, $f, $cls, $fl, (array) ($plan['perHa'] ?? []), (float) ($plan['acidEq'] ?? 0), isset($plan['limeEq']) ? (float) $plan['limeEq'] : null);
+        $md = self::model($c, $g, $f, $cls, $fl, (array) ($plan['perHa'] ?? []), (float) ($plan['acidEq'] ?? 0), isset($plan['limeEq']) ? (float) $plan['limeEq'] : null,
+            array_intersect_key($plan, array_flip(['gypsumKg', 'nh4N', 'caNonLime', 'sources', 'salts', 's0', 'nAcid'])));
 
         return [
             'crop' => $key,
@@ -506,24 +510,122 @@ final class NpkNeed
      */
     public static function acidEq(array $lines): float
     {
+        return self::planFacts($lines)['acidEq'];
+    }
+
+    /**
+     * What one product does to the soil's acidity (2026-10-21; the page's
+     * acidityOf() is its twin): lime and dolomite by the kilo; nitrogen by its
+     * kind, from the shelf's own name for it or, for a brand or the farmer's
+     * own product, from its name and analysis (a nitrate pushes the pH up,
+     * urea a little down, ammonium sulfate, ammonium chloride and the
+     * ammonium phosphates the most, a compound NPK between); elemental sulfur
+     * by its sulfur. The sulfate in gypsum, sulfate of potash or kieserite
+     * does not acidify. nh4 is the share of its nitrogen that is ammonium.
+     *
+     * @return array{kind: string, perKg: ?float, perN: float, perS: float, nh4: float}
+     */
+    public static function acidityOf(string $slug, string $name, array $pct): array
+    {
         $AC = NpkModel::ACIDITY;
-        $sum = 0.0;
-        foreach ($lines as [$slug, $kg, $pct]) {
-            $slug = (string) $slug;
-            $kg = (float) $kg;
-            $pct = (array) $pct;
-            if (isset($AC['perKg'][$slug])) {
-                $sum += $kg * $AC['perKg'][$slug];
-
-                continue;
-            }
-            $n = (float) ($pct['N'] ?? 0);
-            $sp = (float) ($pct['S'] ?? 0);
-            $perN = $AC['perN'][$slug] ?? (($sp >= 20 && $n >= 18) ? 5.35 : $AC['defaultPerN']);
-            $sum += $kg * $n / 100 * $perN + ((isset($AC['perS'][$slug]) || ($sp >= 80 && ! ($n > 0))) ? $kg * $sp / 100 * ($AC['perS'][$slug] ?? 3.1) : 0);
+        $nm = mb_strtolower($name);
+        $n = (float) ($pct['N'] ?? 0);
+        $s = (float) ($pct['S'] ?? 0);
+        $p = (float) ($pct['P2O5'] ?? 0);
+        $k = (float) ($pct['K2O'] ?? 0);
+        $cl = (float) ($pct['Cl'] ?? 0);
+        if (isset($AC['perKg'][$slug])) {
+            return ['kind' => $slug === 'dolomite' ? 'dolomite' : 'lime', 'perKg' => (float) $AC['perKg'][$slug], 'perN' => 0.0, 'perS' => 0.0, 'nh4' => 0.0];
         }
+        if (preg_match('/\bdolomit/', $nm)) {
+            return ['kind' => 'dolomite', 'perKg' => -1.0, 'perN' => 0.0, 'perS' => 0.0, 'nh4' => 0.0];
+        }
+        if (preg_match('/\b(lime|limestone|calcitic|apog)\b/', $nm) && ! preg_match('/sulfate|sulphate|gypsum/', $nm)) {
+            return ['kind' => 'lime', 'perKg' => -0.9, 'perN' => 0.0, 'perS' => 0.0, 'nh4' => 0.0];
+        }
+        $perS = isset($AC['perS'][$slug]) ? (float) $AC['perS'][$slug]
+            : (! ($n > 0) && ($s >= 80 || ($s >= 60 && preg_match('/\b(elemental|sulfur|sulphur)\b/', $nm))) ? 3.1 : 0.0);
+        [$kind, $perN, $nh4] = match (true) {
+            ! ($n > 0) => [$perS > 0 ? 'sulfur' : 'none', 0.0, 0.0],
+            isset($AC['perN'][$slug]) => [$slug, (float) $AC['perN'][$slug], in_array($slug, ['urea', 'calcium-nitrate', 'potassium-nitrate'], true) ? 0.0 : (str_starts_with($slug, 'complete') || str_starts_with($slug, 'npk') ? 0.6 : 1.0)],
+            (bool) preg_match('/nitrate|calcinit|tropicote|nitrabor/', $nm) => ['nitrate', $k >= 30 ? -2.0 : -1.35, 0.0],
+            $n >= 40 && (bool) preg_match('/urea/', $nm) => ['urea', 1.8, 0.0],
+            $s >= 20 && $n >= 18 => ['ammonium sulfate', 5.35, 1.0],
+            $cl >= 40 && $n >= 20 => ['ammonium chloride', 5.35, 1.0],
+            $p >= 40 && ! ($k > 0) => ['ammonium phosphate', $n <= 12 ? 5.0 : 3.9, 1.0],
+            $p >= 15 && ! ($k > 0) => ['ammonium phosphate', 4.4, 1.0],
+            $p > 0 || $k > 0 => ['compound', $s >= 5 ? 4.0 : 3.0, 0.6],
+            default => ['nitrogen', (float) $AC['defaultPerN'], 0.0],
+        };
 
-        return $sum;
+        return ['kind' => $kind, 'perKg' => null, 'perN' => $perN, 'perS' => $perS, 'nh4' => $nh4];
+    }
+
+    /**
+     * The plan's effect on the soil, a hectare (2026-10-21): its acidity and
+     * its liming in kg of lime equivalent, the gypsum, the ammonium nitrogen,
+     * the calcium that is not lime, the products that acidify the most, and
+     * the sulfate products that do not. $lines: [slug, kg a hectare, pct, name].
+     */
+    public static function planFacts(array $lines): array
+    {
+        $out = ['acidEq' => 0.0, 'limeEq' => 0.0, 'gypsumKg' => 0.0, 'nh4N' => 0.0, 'caNonLime' => 0.0, 'sources' => [], 'salts' => [], 's0' => false, 'nAcid' => false];
+        $by = [];
+        foreach ($lines as $l) {
+            [$slug, $kg, $pct] = [(string) ($l[0] ?? ''), (float) ($l[1] ?? 0), (array) ($l[2] ?? [])];
+            $name = (string) ($l[3] ?? $slug);
+            $a = self::acidityOf($slug, $name, $pct);
+            $nKg = $kg * (float) ($pct['N'] ?? 0) / 100;
+            $eq = $a['perKg'] !== null ? $kg * $a['perKg'] : $nKg * $a['perN'] + $kg * (float) ($pct['S'] ?? 0) / 100 * $a['perS'];
+            $out['acidEq'] += $eq;
+            if ($a['perKg'] !== null && $a['perKg'] < 0) {
+                $out['limeEq'] += $kg * -$a['perKg'];
+            } else {
+                $out['caNonLime'] += $kg * (float) ($pct['Ca'] ?? 0) / 100;
+            }
+            $out['nh4N'] += $nKg * $a['nh4'];
+            // What acidifies: elemental sulfur, and nitrogen that turns to nitrate (ammonium, urea).
+            $out['s0'] = $out['s0'] || ($a['perS'] > 0 && $kg > 0);
+            $out['nAcid'] = $out['nAcid'] || ($a['perN'] > 0 && $nKg > 0);
+            if (in_array($slug, ['gypsum', 'gypsum-anhydrous'], true) || preg_match('/gypsum|calcium sulfate|calcium sulphate/i', $name)) {
+                $out['gypsumKg'] += $kg;
+            }
+            if ($eq > 0) {
+                $by[$name] = ($by[$name] ?? 0) + $eq;
+            }
+            // A sulfate salt worth saying (5 kg of sulfur a hectare or more): gypsum, sulfate of potash, kieserite.
+            if ((float) ($pct['S'] ?? 0) >= 10 && $kg * (float) ($pct['S'] ?? 0) / 100 >= 5 && $a['perS'] <= 0 && ! ((float) ($pct['N'] ?? 0) > 0)) {
+                $out['salts'][$name] = true;
+            }
+        }
+        arsort($by);
+        $out['sources'] = array_slice(array_keys($by), 0, 3);
+        $out['salts'] = array_keys($out['salts']);
+
+        return $out;
+    }
+
+    /**
+     * How far the plan moves the pH (NpkModel::PH_SHIFT): the field and the
+     * root zone, in pH units (below 0 sourer), the share of the acid's full
+     * effect it reaches (u), and the push of its nitrates the other way (bu).
+     */
+    public static function phShift(array $f, float $acidEq, ?float $limeEq): array
+    {
+        $P = NpkModel::PH_SHIFT;
+        $tex = in_array('peat', $f, true) ? 'peat' : (in_array('sandy', $f, true) ? 'sandy' : (in_array('clay', $f, true) ? 'clay' : 'loam'));
+        $calc = in_array('calcareous', $f, true);
+        $flood = in_array('flooded', $f, true);
+        $B = $P['buffer'][$tex] * (in_array('low_om', $f, true) ? $P['lowOm'] : 1) * ($calc ? $P['calcareous'] : 1);
+        $zoneOf = fn (float $eq) => min($P['zoneCap'], abs($eq) / $B * $P['zone']) * ($flood ? $P['flooded'] : 1);
+        $bulk = $acidEq / $B;
+        $zone = $zoneOf($acidEq);
+        // The nitrates' own push, apart from the plan's lime (the liming lockout counts that).
+        $nonLime = $acidEq + ($limeEq ?? 0.0);
+
+        return ['tex' => $tex, 'buffer' => $B, 'calc' => $calc, 'flooded' => $flood, 'bulk' => -$bulk, 'zone' => $acidEq > 0 ? -$zone : $zone,
+            'u' => $acidEq > 0 ? max(0.0, min(1.0, $zone / $P['fullAt'])) : 0.0,
+            'bu' => $nonLime < 0 ? max(0.0, min(1.0, $zoneOf($nonLime) / $P['fullAt'])) : 0.0];
     }
 
     /**
@@ -532,15 +634,7 @@ final class NpkNeed
      */
     public static function limeEq(array $lines): float
     {
-        $sum = 0.0;
-        foreach ($lines as [$slug, $kg]) {
-            $k = NpkModel::ACIDITY['perKg'][(string) $slug] ?? 0;
-            if ($k < 0) {
-                $sum += (float) $kg * -$k;
-            }
-        }
-
-        return $sum;
+        return self::planFacts($lines)['limeEq'];
     }
 
     /** How much is planted per hectare against the usual, and what that does to the goal. */
@@ -684,16 +778,24 @@ final class NpkNeed
      * secondary and micro elements with their need. perHa and acidEq are the
      * plan's (none: the need before any plan).
      */
-    public static function model(?array $c, array $g, array $f, array $cls, array $fl, array $perHa = [], float $acidEq = 0.0, ?float $limeEq = null): array
+    public static function model(?array $c, array $g, array $f, array $cls, array $fl, array $perHa = [], float $acidEq = 0.0, ?float $limeEq = null, array $pe = []): array
     {
         $out = ['need' => [], 'raw' => [], 'how' => [], 'adj' => [], 'share' => [], 'whys' => [], 'credit' => [], 'micro' => [], 'pLock' => false, 'lockouts' => [], 'acid' => null];
         $has = fn (string $k) => in_array($k, $f, true);
         // The plan's own acidity (kg of lime per hectare): how far it goes toward its full effect.
         $alk = (bool) array_intersect(['alkaline', 'strongAlk', 'calcareous', 'sodic'], $f);
         $sour = (bool) array_intersect(['strongAcid', 'acid', 'acid_sulfate'], $f);
-        $au = $acidEq > 0 ? max(0, min(1, $acidEq / (NpkModel::ACID_AT ?: 400))) : 0;
-        if (abs($acidEq) >= 50) {
-            $out['acid'] = ['eq' => $acidEq, 'u' => $au, 'alk' => $alk, 'sour' => $sour];
+        // How far it moves the pH around the roots, against this soil's buffer (NpkModel::PH_SHIFT, 2026-10-21).
+        $ps = self::phShift($f, $acidEq, $limeEq);
+        $au = $ps['u'];
+        $zs = $alk ? 'alk' : ($sour ? 'sour' : ($has('neutral') ? 'neutral' : null));
+        // Gypsum on sodic soil pushes the sodium out (NpkModel::GYPSUM_SODIC).
+        $gyp = $has('sodic') ? max(0.0, min(1.0, (float) ($pe['gypsumKg'] ?? 0) / NpkModel::GYPSUM_SODIC['full'])) * NpkModel::GYPSUM_SODIC['season'] : 0.0;
+        if (abs($acidEq) >= 50 || $gyp > 0) {
+            $out['acid'] = ['eq' => $acidEq, 'u' => $au, 'bu' => $ps['bu'], 'alk' => $alk, 'sour' => $sour, 'soil' => $zs, 'bulk' => round($ps['bulk'], 2), 'zone' => round($ps['zone'], 2),
+                'tex' => $ps['tex'], 'calc' => $ps['calc'], 'flooded' => $ps['flooded'], 'gypsum' => round($gyp, 2), 'gypsumKg' => round((float) ($pe['gypsumKg'] ?? 0)),
+                'sources' => array_values((array) ($pe['sources'] ?? [])), 'salts' => array_values((array) ($pe['salts'] ?? [])), 's0' => ! empty($pe['s0']), 'nAcid' => ! empty($pe['nAcid']),
+                'texKnown' => (bool) array_intersect(['sandy', 'clay', 'peat', 'loam'], $f)];
         }
         $base = NpkModel::SOIL_SHARE + [];
         if ($c && isset(NpkModel::SOIL_SHARE_CROP[$c['key']])) {
@@ -836,8 +938,23 @@ final class NpkNeed
         if (($limeEq ?? max(0.0, -$acidEq)) >= 300) {
             $pf[] = 'liming';
         }
-        if ((float) ($perHa['Zn'] ?? 0) > 10) {
+        $PL = NpkModel::PLAN_LOCK;
+        if ((float) ($perHa['Zn'] ?? 0) > $PL['excessZn']) {
             $pf[] = 'excess_zn';
+        }
+        // 2026-10-21: calcium that is not lime (gypsum, superphosphate, calcium nitrate) crowding magnesium; magnesium
+        // past calcium crowding calcium; sulfate holding molybdenum back; ammonium competing with calcium and magnesium.
+        if ((float) ($pe['caNonLime'] ?? ($perHa['Ca'] ?? 0)) > $PL['highCa']) {
+            $pf[] = 'high_ca';
+        }
+        if ((float) ($perHa['Mg'] ?? 0) > $PL['highMg'] && (float) ($perHa['Mg'] ?? 0) >= (float) ($perHa['Ca'] ?? 0)) {
+            $pf[] = 'high_mg';
+        }
+        if ((float) ($perHa['S'] ?? 0) > $PL['highS']) {
+            $pf[] = 'high_s';
+        }
+        if ((float) ($pe['nh4N'] ?? 0) > $PL['highNh4']) {
+            $pf[] = 'high_nh4';
         }
         $out['lockouts'] = $pf;
         $ff = array_values(array_unique(array_merge($f, $pf)));
@@ -851,6 +968,10 @@ final class NpkNeed
             foreach ($e['weights'] ?? [] as $k => $w) {
                 if (! in_array($k, $ff, true)) {
                     continue;
+                }
+                // A plan lockout bites harder or softer by the soil (NpkModel::LOCK_SOIL).
+                if ($w > 0 && isset(NpkModel::LOCK_SOIL[$k])) {
+                    $w *= self::lockMult($k, $f);
                 }
                 $score += $w;
                 if ($w > 0) {
@@ -867,17 +988,41 @@ final class NpkNeed
                 $why[] = $cropWord . ' needs more of it';
             }
             // Why the soil gives less of it (NpkModel::SOIL_FACTOR): holds little, locks it up, or loses it.
-            $sw = ['low' => [], 'lock' => [], 'loss' => [], 'past' => false, 'crop' => $sens ? $cropWord : null];
+            $sw = ['low' => [], 'lock' => [], 'loss' => [], 'past' => false, 'crop' => $sens ? $cropWord : null, 'freed' => false, 'gypsum' => false];
             foreach ($e['weights'] ?? [] as $k => $w) {
                 if ($w > 0 && in_array($k, $ff, true) && isset(NpkModel::SOIL_FACTOR[$k])) {
                     $sw[NpkModel::SOIL_FACTOR_EL[$el][$k] ?? NpkModel::SOIL_FACTOR[$k][0]][] = $k;
                 }
             }
-            // Acid around the roots on a high pH soil: zinc, iron, manganese and copper come
-            // free again, and on sodic soil the soil's own lime turns to calcium.
-            if ($au > 0 && $alk && (in_array($el, ['Zn', 'Fe', 'Mn', 'Cu'], true) || ($el === 'Ca' && $has('sodic')))) {
-                $score -= $au;
-                $down[] = $el === 'Ca' ? 'the acid fertilizers in your plan turn the soil\'s own lime into calcium' : 'the acid fertilizers in your plan free some of it around the roots';
+            // The acid around the roots, by the soil (NpkModel::ACID_EFFECT): on a high pH soil it frees zinc, iron,
+            // manganese, copper and boron (and on sodic soil the soil's own lime turns to calcium), near neutral a
+            // little, on an acid soil it locks molybdenum harder and washes calcium and magnesium out.
+            $AE = NpkModel::ACID_EFFECT;
+            $ae = $zs && $au > 0 ? ($AE[$zs][$el] ?? ($el === 'Ca' && $zs === 'alk' && $has('sodic') ? $AE['alk']['Ca:sodic'] : null)) : null;
+            if ($ae !== null) {
+                $score += $ae * $au;
+                if ($ae < 0) {
+                    $down[] = $el === 'Ca' ? 'the acid fertilizers in your plan turn the soil\'s own lime into calcium' : 'the acid fertilizers in your plan free some of it around the roots';
+                    $sw['freed'] = true;
+                } else {
+                    $why[] = $el === 'Mo' ? 'the acid fertilizers in your plan lock it harder on this acid soil' : 'the acid fertilizers in your plan wash it out of this acid soil';
+                }
+            }
+            // A plan that pushes the pH up with nitrates does the opposite.
+            $be = $ps['bu'] > 0 && in_array($zs, ['alk', 'sour'], true) ? ($AE['basic'][$zs][$el] ?? null) : null;
+            if ($be !== null) {
+                $score += $be * $ps['bu'];
+                if ($be > 0) {
+                    $why[] = 'the nitrate in your plan raises the pH around the roots';
+                } else {
+                    $down[] = 'the nitrate in your plan frees some of it';
+                }
+            }
+            // Gypsum on sodic soil frees part of what the sodium locks.
+            if ($gyp > 0 && in_array($el, ['Zn', 'Fe', 'Mn'], true) && ($e['weights']['sodic'] ?? 0) > 0) {
+                $score -= $e['weights']['sodic'] * $gyp;
+                $down[] = 'the gypsum in your plan pushes sodium out, freeing some of it';
+                $sw['gypsum'] = true;
             }
             $level = $score >= $L['likely']['at'] ? 'likely' : ($score >= $L['watch']['at'] ? 'watch' : 'none');
             if ($fl['zinc'] && $el === 'Zn' && $level !== 'likely') {
@@ -991,9 +1136,33 @@ final class NpkNeed
         if (! empty($sw['crop'])) {
             $bits[] = $sw['crop'] . ' needs more of it than most crops';
         }
+        if (! empty($sw['freed'])) {
+            $bits[] = 'the acid fertilizers in your plan free a little of it around the roots';
+        }
+        if (! empty($sw['gypsum'])) {
+            $bits[] = 'the gypsum in your plan frees some of it from the sodium';
+        }
 
         return ($level === 'test' ? 'Your soil test reads low, so the soil gives about ' : 'The soil gives about ') . $pct . '% of it on its own'
             . ($bits ? ': ' . implode('; ', $bits) : '') . '.';
+    }
+
+    /** How hard a plan lockout bites on this soil: the larger multiplier of the soil's kinds (NpkModel::LOCK_SOIL). */
+    public static function lockMult(string $k, array $f): float
+    {
+        $kinds = array_filter([
+            'alk' => (bool) array_intersect(['alkaline', 'strongAlk', 'calcareous', 'sodic'], $f),
+            'sour' => (bool) array_intersect(['strongAcid', 'acid', 'acid_sulfate'], $f),
+            'neutral' => in_array('neutral', $f, true), 'sandy' => in_array('sandy', $f, true), 'sodic' => in_array('sodic', $f, true),
+        ]);
+        $m = null;
+        foreach (NpkModel::LOCK_SOIL[$k] ?? [] as $kind => $x) {
+            if (isset($kinds[$kind])) {
+                $m = $m === null ? $x : max($m, $x);
+            }
+        }
+
+        return $m ?? 1.0;
     }
 
     /** The secondary and micro elements a field needs from a bag, in words: "Zinc 5 kg Zn (likely short: ...)". */
