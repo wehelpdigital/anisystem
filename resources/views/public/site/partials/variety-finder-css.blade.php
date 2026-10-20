@@ -48,7 +48,6 @@
         .rv-bar { height: .35rem; border-radius: 999px; background: #eef3e8; overflow: hidden; }
         .rv-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #86b556, #4a7c2a); }
         .rv-res { display: flex; flex-wrap: wrap; gap: .28rem; }
-        .rv-src { display: block; margin-top: auto; padding-top: .35rem; font-size: .68rem; line-height: 1.35; color: #6b7280; overflow-wrap: anywhere; }
         .rv-res i { font-style: normal; display: inline-flex; align-items: center; gap: .25rem; padding: .12rem .42rem; border-radius: .5rem; font-size: .66rem; font-weight: 800; }
         .rv-res i.r { color: #1f5c1a; background: #e1f2d6; }
         .rv-res i.m { color: #6b5600; background: #fbf1c7; }

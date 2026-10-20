@@ -133,12 +133,6 @@
     .fhv-dl dd .fhd-chips li { font-size: .8rem; padding: .25rem .6rem; }
     .fhv-notes { display: grid; gap: .5rem; font-size: .9rem; line-height: 1.55; color: #1f2937; }
     .fhv-notes ul { display: grid; gap: .3rem; }
-    /* Where a variety's facts come from (2026-10-21): a line on its card, the list in its sheet. */
-    .fhv-src { display: block; margin-top: auto; font-size: .68rem; line-height: 1.35; color: #6b7280; overflow-wrap: anywhere; }
-    .fhv-srcs { display: grid; gap: .3rem; padding-left: 1.2rem; list-style: decimal; font-size: .85rem; line-height: 1.45; }
-    .fhv-srcs a { color: #2d5016; text-decoration: underline; text-underline-offset: 2px; overflow-wrap: anywhere; }
-    html.dark .fhv-src { color: #9aa69a; }
-    html.dark .fhv-srcs a { color: #a5c97e; }
     .fhv-notes li { position: relative; padding-left: 1rem; }
     .fhv-notes li::before { content: ''; position: absolute; left: .15rem; top: .6rem; width: .35rem; height: .35rem; border-radius: 999px; background: #6b9f3d; }
     .fhv-notes .fhd-facts { grid-template-columns: minmax(0, 1fr); }
@@ -383,13 +377,6 @@
     // Tagalog help flags: a rating code's key, and the filters whose sheet title carries one.
     const RES_TL = { HR: 'res-hr', R: 'res-r', MR: 'res-mr', HT: 'res-ht', T: 'res-t', MT: 'res-mt', I: 'res-i', MS: 'res-ms', S: 'res-s', HS: 'res-hs' };
     const FILTER_TL = { days: 'maturity-days', res: 'resistance-rating' };
-    // Where a variety's facts come from (2026-10-21, the owner; App\Support\VarietySources::line's twin): the names for a card.
-    const srcLine = (src) => {
-        const n = [...new Set((src || []).map((s) => s.name))];
-        if (!n.length) return '';
-        return n.length > 2 ? n.slice(0, 2).join(', ') + ' and ' + (n.length - 2) + ' more' : n.join(' and ');
-    };
-    const srcList = (src) => '<ol class="fhv-srcs">' + (src || []).map((s) => '<li>' + (s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.label || s.name) + '</a>' : esc(s.label || s.name)) + '</li>').join('') + '</ol>';
     const kindTl = (k) => (/hybrid/i.test(k || '') ? 'hybrid' : (/^inbred$/i.test(String(k || '').trim()) ? 'inbred' : ''));
     // `lead`: the first card of the list, the one whose labels and rating chips carry the flags (once each).
     const card = (v, lead) => {
@@ -413,7 +400,6 @@
             + (!rice && !v.reg ? '<span class="fhv-tag is-g">Not on the registry</span>' : '') + '</span>'
             + nums
             + (res.length ? '<span class="fhv-cres">' + res.map((r) => '<i class="' + r[3] + '" title="' + esc(r[0] + ': ' + r[2]) + '"' + flag(RES_TL[r[1]], rated) + '>' + esc(RES_SHORT[r[0]] || r[0].slice(0, 16)) + ' ' + esc(r[1]) + '</i>').join('') + '</span>' : '')
-            + (srcLine(v.src) ? '<span class="fhv-src">Source: ' + esc(srcLine(v.src)) + '</span>' : '')
             + '</button>';
     };
     let ok = [], booted = false;
@@ -539,7 +525,7 @@
             if ((tr.lim || []).length) parts.push('<p class="fhv-say"><b>Watch:</b> ' + esc(tr.lim.join('; ')) + '</p>');
             if (tr.areas) parts.push('<p class="fh-fine">Recommended for ' + esc(tr.areas) + '</p>');
             if (tr.diff) parts.push('<p class="fh-fine">' + esc(tr.diff) + '</p>');
-            out.push(sec('In its trials', '<div class="fhv-notes">' + parts.join('') + (v.tr.src ? '<p class="fh-fine">From its <a href="' + esc(v.tr.src.url) + '" target="_blank" rel="noopener nofollow">' + esc(v.tr.src.name) + '</a>.</p>' : '') + '</div>', true));
+            out.push(sec('In its trials', '<div class="fhv-notes">' + parts.join('') + '</div>', true));
         }
         // Grain (rice) and the registry's traits (every other crop).
         if ((v.grain || []).length) {
@@ -577,8 +563,8 @@
         return '<header class="fhv-hero"><span class="fhv-ic" aria-hidden="true">' + esc(c.icon) + '</span><div><small>' + esc(c.name) + ' variety</small><h2>' + esc(v.n) + '</h2>'
             + ((v.ln || (v.al || []).length) ? '<p>' + esc([v.ln, (v.al || []).length ? (v.ln ? 'Sold as ' : 'Also called ') + v.al.slice(0, 3).join(', ') : ''].filter(Boolean).join('. ')) + '</p>' : '') + '</div>'
             + (chips ? '<div class="fhv-chips">' + chips + '</div>' : '') + '</header>'
-            + '<div class="fhv-secs">' + out.join('') + ((v.src || []).length ? sec('Sources', srcList(v.src) + '<p class="fh-fine">The days, yields and ratings here are as these sources give them. What a seller says about its own seed is said as the seller\'s.</p>', true) : '') + '</div>'
-            + (who ? '<p class="fhd-src" style="margin-top:1rem">' + esc(who) + '.</p>' : '');
+            + '<div class="fhv-secs">' + out.join('') + '</div>'
+            + '<p class="fhd-src" style="margin-top:1rem">' + esc(who ? who + '. ' : '') + 'Facts from ' + esc(from) + '.</p>';
     };
     // The big number counts up as the sheet opens.
     const countUp = (root) => {

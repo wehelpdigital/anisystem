@@ -153,8 +153,6 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'protoBrands' => method_exists(\App\Http\Controllers\CropProtocolController::class, 'products') && isset(\App\Support\NpkModel::ELEMENTS['Fe']['weights']['sodic']),
             // What the plan does to the soil: its acid against the buffer, its lockouts by amount and soil (2026-10-21).
             'soilEffect' => method_exists(\App\Support\NpkNeed::class, 'phShift') && defined(\App\Support\NpkModel::class . '::LOCK_SOIL'),
-            // Every variety shows its sources, the official records named (2026-10-21).
-            'varietySources' => class_exists(\App\Support\VarietySources::class),
             'lotMap' => is_file(resource_path('views/partials/lot-map.blade.php')),
             'monthPick' => is_file(resource_path('views/partials/month-pick.blade.php')),
             'vaMonth' => method_exists(\App\Http\Controllers\VarietyAnalysisController::class, 'seasonOfMonth'),
