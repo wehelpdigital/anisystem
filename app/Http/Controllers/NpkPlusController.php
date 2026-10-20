@@ -534,6 +534,8 @@ class NpkPlusController extends Controller
             . (! empty($set['fieldAdjust']) ? 'What the calculator counted for the field in detail: ' . mb_substr(implode(' ', array_map('strval', (array) $set['fieldAdjust'])), 0, 900) . "\n" : '')
             . (! empty($res['goal']) ? 'Yield goal the calculator counted for: ' . json_encode($res['goal']) . "\n" : '')
             . (! empty($res['needs']) ? 'The calculator\'s need model, kg per ha for that goal on this soil (the official guide rate sized to the goal and adjusted for the soil; plan is what the plan gives): ' . json_encode($res['needs']) . "\n" : '')
+            // The farmer left the micronutrients out (2026-10-21): the reading stays with N, P and K.
+            . (($set['microsOn'] ?? true) === false ? 'THE FARMER LEFT THE MICRONUTRIENTS OUT of this plan: read and advise on nitrogen, phosphorus and potassium only, and add no secondary or micro element product.' . "\n" : '')
             . (! empty($res['micros']) ? 'The calculator\'s secondary, micro and beneficial element needs, kg of element per ha (level none, watch, likely, or test from a soil test): ' . json_encode($res['micros']) . "\n" : '')
             . (isset($res['reach']) && $res['reach'] !== null ? 'Liebig reading: at the shortest plank (a nutrient, or the season\'s sun, water or heat) the plan meets about ' . (int) $res['reach'] . "% of the crop's need for the goal"
                 . (isset($res['harvest']) && $res['harvest'] !== null ? '; with what the soil gives on its own, the harvest could still come near ' . (int) $res['harvest'] . '% of the goal this season' : '') . ".\n" : '')

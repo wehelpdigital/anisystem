@@ -250,6 +250,10 @@
     .np-soil > div { min-height: 0; overflow: hidden; }
     .np-switch { display: flex; align-items: center; gap: .6rem; cursor: pointer; font-size: .84rem; font-weight: 700; color: var(--color-gray-700); }
     .np-switch input { width: 1.1rem; height: 1.1rem; accent-color: var(--color-brand-600); }
+    .np-microsw { margin: .2rem 0 .8rem; padding: .55rem .7rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+    html.dark .np-microsw { background: #121a0d; border-color: #2b3a1c; }
+    .np-otab.is-off { opacity: .55; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    @media (prefers-reduced-motion: reduce) { .np-otab.is-off { transition: none; } }
     .np-soilu { display: flex; flex-wrap: wrap; gap: .5rem .9rem; margin-top: .7rem; }
     .np-soilu label { display: flex; align-items: center; gap: .45rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
     .np-soilu .np-utag { min-height: 2.1rem; min-width: 0; }
@@ -785,6 +789,8 @@
                 <div class="np-card" id="npOut">
                     <h3><i>✓</i>What your plan gives</h3>
                     <p class="np-sub" id="npOutSub">Add a fertilizer to see the totals.</p>
+                    {{-- Leave the micronutrients out (2026-10-21, the owner): the Micros tab and the barrel then count N, P and K only. --}}
+                    <label class="np-switch np-microsw"><input type="checkbox" id="npMicrosOn" checked> <span><b>Count the micronutrients</b><br><span class="text-xs text-gray-500 font-normal">Calcium, magnesium, sulfur, zinc, boron and the rest, in the Micros tab and the barrel. Off: nitrogen, phosphorus and potassium only.</span></span></label>
                     <div class="np-otabs" role="tablist" id="npOTabs" style="--i:0">
                         <span class="np-otab-ind" aria-hidden="true"></span>
                         <button type="button" class="np-otab is-on" role="tab" aria-selected="true" data-p="npk">NPK</button>
@@ -1100,7 +1106,7 @@
     const GERM_USUAL = 85;
 
     let OPT = null, M = null, calcId = null, RES = null;
-    const st = { crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
+    const st = { microsOn: true, crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
         texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null, varPick: null, areaSoil: null, area: null, areaNo: false };
     // The field in detail (partials/field-profile-card) and what the farmer set by hand (theirs wins over what it fills).
     let FPC = null;
@@ -2193,7 +2199,7 @@
                 + acidSay + (pLock ? '<div class="np-say"><b>On this soil, band the phosphorus.</b> Put it in a band beside and a little below the seed, or in the planting hole, instead of spreading it over the field: less of it touches the soil that locks it up. The need above counts the lock up as if it were spread, so a banded plan can do with less.</div>' : '')
             : '';
 
-        const micro = micros(c, md, tot, perHa, area, out.length);
+        const micro = st.microsOn ? micros(c, md, tot, perHa, area, out.length) : microsOff();
         const { reach, harvest } = barrel(c, md, states, perHa, out.length, g, micro);
 
         const seedV = num('npSeed');
@@ -2204,7 +2210,7 @@
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
                 target: num('npTarget') ? { value: num('npTarget'), unit: yu[1], tPerHa: Math.round(num('npTarget') * yu[3] * 100) / 100 } : null,
                 seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null } : null,
-                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), intensive: !!st.intensive, zincRecent: !!st.zincRecent, prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null,
+                texture: st.texture, conditions: st.conds.slice(), ph: phVal(), intensive: !!st.intensive, zincRecent: !!st.zincRecent, microsOn: !!st.microsOn, prov: st.prov, town: st.town, water: st.water, planted: $('npPlanted').value || null,
                 // The variety's source (2026-10-15) and what the field in detail changed, in words.
                 varietyPick: st.varPick ? Object.assign({}, st.varPick, recT(st.varPick) ? { potential: recT(st.varPick), potentialIs: st.varPick.top ? 'top' : 'avg', potentialFrom: potOwn() ? 'own' : 'record' } : {}) : null,
                 fieldAdjust: FL.map((l) => l.lead + ' ' + l.text + (l.e ? ' [' + l.e + ']' : '')),
@@ -2251,6 +2257,18 @@
     /* ---- the micros tab: each element's need per area, from the model ---- */
     // One word per verdict, shared with the barrel's planks and key (2026-10-19).
     const MICRO_WORD = { short: 'Short', right: 'Enough', over: 'Too much', extra: 'Extra', noflag: 'Not flagged', testok: 'Enough', notneeded: 'Not needed' };
+    // Left out (2026-10-21, the owner): the tab says so, and nothing is counted for the elements past N, P and K.
+    const microsOff = () => {
+        $('npMicro').innerHTML = '<div class="np-say">The micronutrients are left out: this plan counts nitrogen, phosphorus and potassium only, and the barrel has only their planks. Switch <b>Count the micronutrients</b> back on to see calcium, magnesium, sulfur, zinc, boron and the rest.</div>';
+        return {};
+    };
+    const paintMicroTab = () => {
+        const t = document.querySelector('#npOTabs [data-p="micro"]');
+        if (!t) return;
+        t.textContent = st.microsOn ? 'Micros' : 'Micros (off)';
+        t.classList.toggle('is-off', !st.microsOn);
+    };
+    $('npMicrosOn').addEventListener('change', (e) => { st.microsOn = e.target.checked; paintMicroTab(); calc(); });
     const micros = (c, md, tot, perHa, area, has) => {
         const out = {};
         let k = 0;
@@ -2307,6 +2325,7 @@
     const STAVES_SKY = [{ k: 'sun', t: 'Sun', name: 'Sunlight', dull: true }, { k: 'water', t: 'Water', name: 'Water', dull: true }, { k: 'temp', t: 'Temp', name: 'Temperature', dull: true }];
     let STAVES = STAVES_BASE.concat(STAVES_SKY);
     const stavesFor = (micro) => {
+        if (!st.microsOn) return STAVES_BASE.slice(0, 3).concat(STAVES_SKY);
         const has = STAVES_BASE.map((x) => x.k);
         const more = Object.keys(M.elements || {}).filter((el) => !has.includes(el) && !(M.elements[el] || {}).beneficial
             && micro && micro[el] && ['short', 'over', 'right', 'testok'].includes(micro[el].state));
@@ -2838,6 +2857,7 @@
             st.conds = Array.isArray(set.conditions) ? set.conditions.filter((k) => M.conditions[k]) : [];
             st.intensive = !!set.intensive; $('npIntensive').checked = st.intensive;
             st.zincRecent = !!set.zincRecent; $('npZincRecent').checked = st.zincRecent;
+            st.microsOn = set.microsOn !== false; $('npMicrosOn').checked = st.microsOn; paintMicroTab();
             st.area = set.area && typeof set.area === 'object' ? { where: set.area.where || '', tests: set.area.tests || {}, filled: set.area.filled || {} } : null;
             st.areaNo = false;
             const s = d.soil || {};
