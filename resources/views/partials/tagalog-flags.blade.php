@@ -192,7 +192,6 @@
             + (sheet ? '<div class="tlx-grip" aria-hidden="true"></div>' : '')
             + '<div class="tlx-head"><span class="tlx-term"></span><span class="tlx-lang">Taglish</span></div>'
             + '<p class="tlx-tl" aria-live="polite"></p>'
-            + '<p class="tlx-ex" hidden><b>Halimbawa:</b> <span></span></p>'
             + '<p class="tlx-links" hidden></p>'
             + (sheet ? '<button type="button" class="tlx-close">Isara</button>' : '')
             + '</div>';
@@ -248,26 +247,24 @@
     function fill(el, key, anchor, late) {
         const row = book && book[key];
         const card = el.querySelector('.tlx-card');
-        const term = el.querySelector('.tlx-term'), p = el.querySelector('.tlx-tl'), ex = el.querySelector('.tlx-ex'), links = el.querySelector('.tlx-links');
+        // What the label says, nothing more (2026-10-21, the owner): no example line.
+        const term = el.querySelector('.tlx-term'), p = el.querySelector('.tlx-tl'), links = el.querySelector('.tlx-links');
         const h0 = late && el.classList.contains('tlx-sheet') ? card.offsetHeight : 0;
         term.textContent = row ? row[0] : (anchor.getAttribute('aria-label') || '').replace(SAY, '');
         p.classList.toggle('is-wait', !row);
         if (row) {
             p.textContent = row[1];
-            ex.hidden = !row[2];
-            ex.querySelector('span').textContent = row[2] || '';
             const go = Array.isArray(row[3]) ? row[3] : [];
             links.innerHTML = go.map((l) => '<a class="tlx-link" href="' + esc(l[1]) + '">' + esc(l[0]) + '</a>').join('');
             links.hidden = !go.length;
         } else {
             p.textContent = failed ? 'Walang koneksyon. Pindutin ulit ang Taglish mamaya.' : 'Sandali lang';
-            ex.hidden = true;
             links.hidden = true;
         }
         // Words that arrive after the card opened fade in, and the sheet
         // grows to them instead of jumping.
         if (late && row && !still()) {
-            [p, ex, links].forEach((n) => { n.classList.remove('is-fresh'); void n.offsetWidth; n.classList.add('is-fresh'); });
+            [p, links].forEach((n) => { n.classList.remove('is-fresh'); void n.offsetWidth; n.classList.add('is-fresh'); });
             if (h0 && card.animate) {
                 const h1 = card.offsetHeight;
                 if (Math.abs(h1 - h0) > 2) card.animate([{ height: h0 + 'px', overflow: 'hidden' }, { height: h1 + 'px', overflow: 'hidden' }], { duration: HOUSE, easing: 'cubic-bezier(.22,1,.36,1)' });

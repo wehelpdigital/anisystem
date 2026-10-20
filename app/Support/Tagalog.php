@@ -75,8 +75,8 @@ final class Tagalog
             if ($key === '' || $en === '' || $tl === '') {
                 continue;
             }
-            $ex = trim((string) ($row['ex'] ?? ''));
-            $book[$key] = ['en' => $en, 'tl' => $tl, 'ex' => $ex !== '' ? $ex : null, 'links' => self::links($row['links'] ?? [])];
+            // No example (Halimbawa) and no why, only what the label means (2026-10-21, the owner): an `ex` is never served.
+            $book[$key] = ['en' => $en, 'tl' => $tl, 'ex' => null, 'links' => self::links($row['links'] ?? [])];
         }
 
         return self::$book = $book;
