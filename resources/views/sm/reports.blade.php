@@ -75,6 +75,11 @@
             // to the module that already has its own tile in the hub — the
             // same screen offered twice.
         ];
+        // Every report but View as Protocol is money: a worker kept from the farm's money
+        // (MoneyView, 2026-10-22) is offered only that one; the others' addresses refuse anyway.
+        if (\App\Support\MoneyView::hidden()) {
+            $reports = array_values(array_filter($reports, fn ($r) => $r['tl'] === 'protocol-report'));
+        }
     @endphp
     @foreach ($reports as $r)
         @php $rLocked = ! $shelfOpen && empty($r['free']); $rRung = $rLocked ? \App\Support\Tier::scheduleUnlocksAt($schedule, 'reportsAll') : ''; @endphp

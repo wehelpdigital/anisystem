@@ -68,6 +68,11 @@ class ActivityController extends BaseScheduleController
             'progressMarkers',
             'defaultGroupings.lots',
         ]);
+        // Money the worker is kept from is never sent (MoneyView): blanked in memory before anything reads it.
+        $moneyHidden = \App\Support\MoneyView::hidden();
+        if ($moneyHidden) {
+            \App\Support\MoneyView::blankSchedule($schedule);
+        }
 
         $draftsCount = AsScheduleActivity::active()
             ->where('croppingScheduleId', $schedule->id)
@@ -105,7 +110,7 @@ class ActivityController extends BaseScheduleController
             ->orderBy('id')
             ->get()
             ->groupBy(fn ($m) => $m->happenedOn?->format('Y-m-d'))
-            ->map(fn ($grp) => $grp->map(function ($m) use ($ivNoteItems) {
+            ->map(fn ($grp) => $grp->map(function ($m) use ($ivNoteItems, $moneyHidden) {
                 $item = $ivNoteItems->get($m->itemId);
 
                 return [
@@ -116,7 +121,7 @@ class ActivityController extends BaseScheduleController
                     // A purchase declared on an activity is costed by that
                     // activity's own line; the day's cash must not count it twice.
                     'activityId' => $m->activityId,
-                    'amount' => $m->cost($item),
+                    'amount' => $moneyHidden ? 0 : $m->cost($item),
                     'qty' => abs((float) $m->delta),
                     'enteredQty' => $m->enteredQty !== null ? (float) $m->enteredQty : null,
                     'enteredUnit' => $m->enteredUnit,
@@ -189,7 +194,7 @@ class ActivityController extends BaseScheduleController
             'activeVersion'     => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,
             'waterTasks'      => AsScheduleActivity::WATER_TASKS,
-            'itemCatalog'     => $this->itemCatalog($schedule),
+            'itemCatalog'     => $moneyHidden ? array_merge($this->itemCatalog($schedule), ['prices' => []]) : $this->itemCatalog($schedule),
             'readiness'       => (new ScheduleReadinessService())->check($schedule),
         ]);
     }
@@ -241,7 +246,7 @@ class ActivityController extends BaseScheduleController
         $payload['items'] = $this->serializeItems($activity);
         $payload = array_merge($payload, $this->serializeWorkerPay($activity));
 
-        return $this->jsonOk('Activity loaded.', ['data' => $payload]);
+        return $this->jsonOk('Activity loaded.', ['data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($payload) : $payload]);
     }
 
     /**
@@ -1073,7 +1078,7 @@ class ActivityController extends BaseScheduleController
         // 'saved' already means to the board.
         $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
 
-        return $this->jsonOk('Restored from drafts.', ['data' => $data]);
+        return $this->jsonOk('Restored from drafts.', ['data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data]);
     }
 
     /**
@@ -1167,7 +1172,7 @@ class ActivityController extends BaseScheduleController
         // person who pressed undo.
         $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
 
-        return $this->jsonOk('Activity restored.', ['data' => $data]);
+        return $this->jsonOk('Activity restored.', ['data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data]);
     }
 
     /**
@@ -1387,7 +1392,7 @@ class ActivityController extends BaseScheduleController
         $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
         $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
-        return $this->jsonOk('Activity copied.', ['data' => $data]);
+        return $this->jsonOk('Activity copied.', ['data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data]);
     }
 
     /**
@@ -1606,6 +1611,52 @@ class ActivityController extends BaseScheduleController
             ->reject(fn ($t) => in_array($t, ['irrigation', 'service', 'worker_payroll', 'reminder_checklist'], true))
             ->unique()->values()->all();
 
+        /* A WORKER WHO CANNOT WRITE MONEY NEVER TOUCHES IT (2026-10-22). Their form came blank of prices,
+         * pay and errand amounts (MoneyView), so whatever it sends for them is set aside: the service price,
+         * each line's price, each worker's agreed pay and each errand's money stay as the task had them. */
+        $keepMoney = ! \App\Support\MoneyView::writable();
+        $before = ($keepMoney && $id !== null)
+            ? AsScheduleActivity::active()->where('croppingScheduleId', $schedule->id)->where('id', $id)->with(['items', 'workers'])->first()
+            : null;
+        $priceOf = [];
+        foreach ($before?->items ?? [] as $it) {
+            $priceOf[mb_strtolower(trim((string) $it->itemName))] ??= $it->unitPrice;
+        }
+        $remMoney = [];
+        foreach ((array) ($before?->reminders ?? []) as $r) {
+            if (is_array($r) && isset($r['text'])) {
+                $remMoney[mb_strtolower(trim((string) $r['text']))] ??= ['kind' => $r['kind'] ?? 'none', 'amount' => $r['amount'] ?? 0];
+            }
+        }
+        if ($keepMoney) {
+            $request->merge([
+                'servicePrice' => $before?->servicePrice,
+                'items' => array_map(function ($item) use ($priceOf) {
+                    if (is_array($item)) {
+                        $item['unitPrice'] = $priceOf[mb_strtolower(trim((string) ($item['itemName'] ?? '')))] ?? null;
+                    }
+
+                    return $item;
+                }, (array) $request->input('items', [])),
+                // Every worker on the task keeps the pay agreed for them; how much of the day they work is still theirs to say.
+                'workerPay' => collect((array) $request->input('workerIds', []))->mapWithKeys(function ($wid) use ($request, $before) {
+                    $one = (array) ($request->input('workerPay.' . (int) $wid) ?? []);
+                    $one['amount'] = $before?->workers->firstWhere('id', (int) $wid)?->pivot?->salaryAmount;
+
+                    return [(string) (int) $wid => $one];
+                })->all(),
+                'reminders' => array_map(function ($r) use ($remMoney) {
+                    if (is_array($r)) {
+                        $was = $remMoney[mb_strtolower(trim((string) ($r['text'] ?? '')))] ?? ['kind' => 'none', 'amount' => 0];
+                        $r['kind'] = $was['kind'];
+                        $r['amount'] = $was['amount'];
+                    }
+
+                    return $r;
+                }, (array) $request->input('reminders', [])),
+            ]);
+        }
+
         $payload = [
             'croppingScheduleId' => $schedule->id,
             'activityTitle'      => $request->activityTitle,
@@ -1817,7 +1868,7 @@ class ActivityController extends BaseScheduleController
         $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
 
         return $this->jsonOk($id ? 'Activity updated.' : 'Activity added.', [
-            'data' => $data,
+            'data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data,
         ]);
     }
 
@@ -2304,6 +2355,10 @@ class ActivityController extends BaseScheduleController
 
         $roster = array_values($roster);
         usort($roster, fn ($a, $b) => strcasecmp($a['name'], $b['name']));
+        // Who worked, not what they earn, for a worker kept from the money.
+        if (\App\Support\MoneyView::hidden()) {
+            $roster = array_map(fn ($w) => array_merge($w, ['pay' => 0.0, 'jobs' => array_map(fn ($j) => array_merge($j, ['pay' => 0.0]), $w['jobs'])]), $roster);
+        }
 
         return $this->jsonOk('Roster loaded.', ['data' => [
             'date' => $date,

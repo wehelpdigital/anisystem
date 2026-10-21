@@ -184,6 +184,23 @@ class WorkerModuleAccess
         ['sm.labor.report',      'reports'],
         // The labor report's own data (every worker's days and pay): the page was gated, its numbers were not.
         ['sm.activities.labor',  'reports'],
+
+        /* MONEY (2026-10-22, the owner: "All money on the board"). The day book's two strips are money
+         * outright; the board itself is handed its money blanked (MoneyView) when this says None. Every
+         * report but View as Protocol is money too, so those need a look at Money as well as Reports:
+         * a worker kept from the wages must not read them off the labor report. */
+        ['sm.activities.day-expense.*',        'money'],
+        ['sm.activities.day-income.*',         'money'],
+        ['sm.activities.day-money.block-move', 'money:edit'],
+        ['sm.labor.report',      'money:view'],
+        ['sm.activities.labor',  'money:view'],
+        ['sm.expenses.report',   'money:view'],
+        ['sm.expenses.report.*', 'money:view'],
+        ['sm.profit.report',     'money:view'],
+        ['sm.profit.report.*',   'money:view'],
+        ['sm.anee.*',            'money:view'],
+        ['sm.compare.*',         'money:view'],
+        ['sm.report.*',          'money:view'],
         ['sm.report.*',          'reports'],
         ['sm.expenses.report',   'reports'],
         ['sm.expenses.report.*', 'reports'],
@@ -231,6 +248,7 @@ class WorkerModuleAccess
         'notes' => 'Notes',
         'inventory' => 'the Inventory',
         'observations' => 'Observations',
+        'money' => 'the farm\'s money',
         'maps' => 'the Maps module',
         'draw' => 'the Drawing module',
         'ai' => 'Anee',

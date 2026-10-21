@@ -1488,7 +1488,8 @@
             Add to inventory
         </button>
         @endif
-        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
+        {{-- Money is its own pen (MoneyView, 2026-10-22): the board's pen says whether the day can change at all. --}}
+        @if ((! \App\Support\WorkerContext::activeGrant() || $mayEdit) && \App\Support\MoneyView::writable())
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="day-expense-btn" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M14.4 9.4a2.3 2.3 0 00-2.4-1.3c-1.3.1-2.3.8-2.3 1.9s1 1.7 2.5 1.9 2.6.8 2.6 2-1.1 1.9-2.5 1.9a2.4 2.4 0 01-2.4-1.3"/></svg>
             Add extra expense
@@ -1500,7 +1501,7 @@
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>
             View saved weather
         </button>
-        @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
+        @if ((! \App\Support\WorkerContext::activeGrant() || $mayEdit) && \App\Support\MoneyView::writable())
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="add-income" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <rect x="2.5" y="7.5" width="19" height="11" rx="2"/>

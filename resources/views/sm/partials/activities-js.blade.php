@@ -131,6 +131,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // them); for a worker it is not rendered: an offer you may never accept is
     // not an offer, it is clutter with a padlock.
     const IS_WORKER = @json((bool) \App\Support\WorkerContext::activeGrant());
+    /* MONEY (2026-10-22): a worker kept from the farm's money was sent none of it (MoneyView), so the
+       board's own sums come to nothing; the stylesheet takes away the empty money chrome, and the day
+       book is never asked for. One who may look but not write sees it all with the money fields shut. */
+    const MONEY_HIDDEN = @json(\App\Support\MoneyView::hidden());
+    const MONEY_RO = @json(! \App\Support\MoneyView::writable());
+    document.documentElement.classList.toggle('money-off', MONEY_HIDDEN);
+    document.documentElement.classList.toggle('money-ro', MONEY_RO && !MONEY_HIDDEN);
     // The third answer the board needs: a worker can be trusted with the day's
     // notes without being trusted with the plan. Anyone who may edit may write
     // notes, so the two are folded into one question for the note controls.
@@ -1443,7 +1450,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /** Re-read one day's expenses, so the header pill and the expense strip
      *  catch up with a tick that just added or removed money. */
     async function refreshDayMoney(dateKey) {
-        if (!dateKey) return;
+        if (!dateKey || MONEY_HIDDEN) return;
         try {
             const res = await api(U.dayExpenseList(dateKey));
             DAY_EXPENSES[dateKey] = (res && res.data) || [];
@@ -7407,7 +7414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function renderDayIncome(date) {
         const host = $qs(`#activitiesList .day-income-block[data-date="${date}"]`);
-        if (!host) return;
+        if (!host || MONEY_HIDDEN) return;
         try {
             const res = await api(`${U.dayIncomeList()}&incomeDate=${encodeURIComponent(date)}`);
             const rows = res.data || [];

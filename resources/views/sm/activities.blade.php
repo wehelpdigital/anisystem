@@ -680,6 +680,16 @@
          * costs nothing: that line is already there for the others. */
         .day-warn-btn { order: 91; }
         .date-header-weather, .wx-mini-btn { order: 91; }
+        /* MONEY (2026-10-22, MoneyView). money-off: a worker kept from the farm's money; the figures were
+           never sent, and the chrome that would only say nothing goes too. money-ro: the figures show, the
+           fields that write them do not take a hand (the server keeps the task's money as it was anyway). */
+        html.money-off .act-cost-tag, html.money-off .date-header-cash, html.money-off .day-expense-block,
+        html.money-off .day-income-block, html.money-off #activityCostSay, html.money-off #activityServicePriceWrap,
+        html.money-off #workerPayTotal, html.money-off .wp-amount, html.money-off .wp-rate, html.money-off .rem-money,
+        html.money-off .act-rem-amt, html.money-off .act-rem-total, html.money-off #itemPriceCell,
+        html.money-off .item-tag-price, html.money-off .act-check-pay, html.money-off [data-att-total] { display: none !important; }
+        html.money-ro #activityServicePrice, html.money-ro .wp-amount, html.money-ro .rem-money, html.money-ro #itemPriceInput {
+            pointer-events: none; opacity: .6; }
         .date-header-cash { order: 92; display: inline-flex; align-items: center; gap: .28rem;
             font-size: .69rem; font-weight: 800; color: var(--color-amber-800, #92400e);
             background: var(--color-amber-50, #fffbeb); border: 1px solid var(--color-amber-200, #fde68a);
