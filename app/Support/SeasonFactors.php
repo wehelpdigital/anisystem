@@ -21,7 +21,7 @@ namespace App\Support;
 final class SeasonFactors
 {
     /** The factors, or null without a history. */
-    public static function of(string $climateKey, ?array $hist, array $window, ?array $enso, string $water): ?array
+    public static function of(string $climateKey, ?array $hist, array $window, ?array $enso, string $water, ?array $pump = null): ?array
     {
         if (empty($hist['avg'])) {
             return null;
@@ -37,8 +37,10 @@ final class SeasonFactors
         $et0 = (float) $a['et0'] * ($t['rain'] < 1 ? 1 + (1 - $t['rain']) * 0.15 : 1);
         $need = $et0 * (float) $K['kc'] + (float) ($K['extraMm'] ?? 0);
         $eff = $rain * 0.75;
-        // A pump or a well makes up most of what the rain leaves short, a part time source half (NpkModel::FIELD, NpkNeed::seasonWater).
-        $cover = $water === 'pump' ? (float) NpkModel::FIELD['pumpCover'] : ($water === 'partial' ? (float) NpkModel::FIELD['partialCover'] : 0.0);
+        // A pump or a well makes up most of what the rain leaves short, less in the months it runs low (NpkNeed::pumpCover,
+        // 2026-10-21); a part time source half (NpkModel::FIELD, NpkNeed::seasonWater).
+        $pc = $water === 'pump' ? NpkNeed::pumpCover($pump, $window, $enso) : null;
+        $cover = $pc ? (float) $pc['cover'] : ($water === 'partial' ? (float) NpkModel::FIELD['partialCover'] : 0.0);
         $supply = $water === 'irrigated' ? $need : $eff + $cover * max(0, $need - $eff);
         $wr = min(1, $supply / max(1, $need));
         $fw = $clamp(1 - (float) $K['ky'] * (1 - $wr), 0.1, 1);
@@ -49,7 +51,7 @@ final class SeasonFactors
         $hotN = $hotRaw * ($phase === 'el_nino' ? 1.3 : ($phase === 'la_nina' ? 0.85 : 1));
         $ft = $clamp((1 - 0.07 * $dev) * (1 - 0.8 * min(1, $hotN / $days)), 0.25, 1);
 
-        return ['sun' => $fs, 'water' => $fw, 'temp' => $ft, 'rain' => $rain, 'rad' => $rad, 'tmean' => $tmean, 'need' => $need, 'supply' => $supply,
+        return ['pump' => $pc, 'sun' => $fs, 'water' => $fw, 'temp' => $ft, 'rain' => $rain, 'rad' => $rad, 'tmean' => $tmean, 'need' => $need, 'supply' => $supply,
             'wr' => $wr, 'hotN' => $hotN, 'dev' => $dev, 'tilt' => $t, 'K' => $K];
     }
 }

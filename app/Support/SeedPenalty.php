@@ -238,6 +238,8 @@ final class SeedPenalty
             'ph' => $ph, 'ec' => isset($test['ec']) && is_numeric($test['ec']) && (float) $test['ec'] > 0 ? (float) $test['ec'] : null,
             // NPK Plus's water: a pump or a well is its own source (2026-10-20).
             'water' => in_array($L['waterNpk'] ?? null, ['irrigated', 'pump', 'partial', 'rainfed'], true) ? $L['waterNpk'] : null,
+            // How sure the pump is (2026-10-21): its year and the months it runs low (FieldProfile::legacy).
+            'pump' => $L['pump'] ?? null,
             'saline' => in_array('saline', (array) $L['soilConditions'], true), 'sodic' => in_array('sodic', (array) $L['soilConditions'], true),
             'sulfate' => ($a['acidity'] ?? null) === 'sulfate',
         ];
@@ -514,7 +516,7 @@ final class SeedPenalty
         foreach ($cap['why'] as $w) {
             $add($G, 'cap-' . $w[0], (float) $w[1], 'lot');
         }
-        $SF = $season ? SeasonFactors::of(self::CLIMATE_KEY[$key] ?? $key, $season['hist'], $season['window'], $season['enso'] ?? null, $wk) : null;
+        $SF = $season ? SeasonFactors::of(self::CLIMATE_KEY[$key] ?? $key, $season['hist'], $season['window'], $season['enso'] ?? null, $wk, $f['pump'] ?? null) : null;
         if ($SF) {
             $min = min(1.0, $SF['sun'], $SF['water'], $SF['temp']);
             $which = $min === $SF['water'] ? 'water' : ($min === $SF['temp'] ? 'temp' : 'sun');

@@ -896,22 +896,49 @@
         const w = (0.5 + 0.5 * dry) * (Number((win && win.monthsAhead) || 0) > 9 ? 0.5 : 1);
         return { rain: 1 + T.rain[lvl] * w, sun: 1 + T.sun[lvl] * w, temp: T.temp[lvl] * w };
     };
+    /* What a pump or well makes up of the rain's shortfall (2026-10-21, NpkNeed::pumpCover and NPK Plus's twin): all
+       year a little more, in the months it runs low (every dry season, or only in a very dry year) a quarter, by the
+       share of the season's days in them. */
+    const MONTH_N = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthWords = (ms) => {
+        if (!ms.length) return '';
+        const run = ms.length > 2 && ms.every((m, i) => !i || m === ms[i - 1] % 12 + 1), w = ms.map((m) => MONTH_N[m - 1]);
+        return run ? w[0] + ' to ' + w[w.length - 1] : (w.length < 2 ? w[0] : w.slice(0, -1).join(', ') + ' and ' + w[w.length - 1]);
+    };
+    const pumpCover = (pump, win, enso, driest = false) => {
+        const F = B.pen.field, year = ['always', 'badYears', 'everyYear', 'unsure'].includes((pump || {}).year) ? pump.year : null;
+        const base = year === 'always' ? F.pumpAlways : F.pumpCover, out = { cover: base, low: [], lowDays: 0, year, given: false };
+        const dryYear = !!enso && enso.phase === 'el_nino' && ['moderate', 'strong', 'very strong'].includes(enso.strength);
+        if (!['badYears', 'everyYear'].includes(year) || (year === 'badYears' && !dryYear && !driest) || !win || !win.from) return out;
+        let stops = [].concat(pump.stops || []).map(Number).filter((m) => m >= 1 && m <= 12);
+        out.given = stops.length > 0;
+        if (!stops.length) stops = F.pumpDryMonths;
+        const days = Math.max(1, Number(win.days) || 1), [y0, m0, d0] = String(win.from).split('-').map(Number), low = [];
+        let n = 0;
+        for (let d = 0; d < days; d++) {
+            const m = new Date(y0, m0 - 1, d0 + d).getMonth() + 1;
+            if (stops.includes(m)) { n++; if (!low.includes(m)) low.push(m); }
+        }
+        const share = n / days;
+        return { cover: base * (1 - share) + F.pumpLow * share, low, lowDays: n, year, given: out.given };
+    };
     // SeasonFactors::of, NPK Plus's seasonPlanks() factors: sun, water, temperature.
-    const seasonFactorsOf = (ckey, hist, win, enso, water) => {
+    const seasonFactorsOf = (ckey, hist, win, enso, water, pump = null) => {
         if (!hist || !hist.avg) return null;
         const K = Object.assign({}, B.pen.climate.default, B.pen.climate[ckey] || {}), t = ensoTiltOf(enso, win), a = hist.avg, days = Math.max(1, Math.trunc(Number(win.days || 1)));
         const cl = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
         const rain = a.rain * t.rain, rad = a.rad * t.sun, tmean = a.tmean + t.temp, et0 = a.et0 * (t.rain < 1 ? 1 + (1 - t.rain) * 0.15 : 1);
         const need = et0 * K.kc + (K.extraMm || 0), eff = rain * 0.75;
-        // A pump or a well makes up most of what the rain leaves short, a part time source half (NpkModel::FIELD).
-        const cover = water === 'pump' ? B.pen.field.pumpCover : water === 'partial' ? B.pen.field.partialCover : 0;
+        // A pump or a well makes up most of what the rain leaves short, less in the months it runs low; a part time source half (NpkModel::FIELD).
+        const pc = water === 'pump' ? pumpCover(pump, win, enso) : null;
+        const cover = pc ? pc.cover : water === 'partial' ? B.pen.field.partialCover : 0;
         const supply = water === 'irrigated' ? need : eff + cover * Math.max(0, need - eff);
         const wr = Math.min(1, supply / Math.max(1, need)), fw = cl(1 - K.ky * (1 - wr), 0.1, 1), fs = cl(rad / K.rad, 0.2, 1.1);
         const dev = Math.max(0, K.opt[0] - tmean, tmean - K.opt[1]), phase = (enso && enso.phase) || null;
         const hotRaw = K.hot >= 35 ? (a.hot35 || 0) : K.hot >= 32 ? (a.hot32 || 0) : (a.hot30 || 0);
         const hotN = hotRaw * (phase === 'el_nino' ? 1.3 : phase === 'la_nina' ? 0.85 : 1);
         const ft = cl((1 - 0.07 * dev) * (1 - 0.8 * Math.min(1, hotN / days)), 0.25, 1);
-        return { sun: fs, water: fw, temp: ft, rain, rad, tmean, need, supply, wr, hotN, dev, tilt: t, K };
+        return { pump: pc, sun: fs, water: fw, temp: ft, rain, rad, tmean, need, supply, wr, hotN, dev, tilt: t, K };
     };
     // SeedPenalty::weather: the chance of a heavy or a dry start, the mean and the warm part of the day.
     const weatherOf = (season) => {
@@ -995,7 +1022,7 @@
         const capWater = season && season.hist && season.hist.avg ? 'irrigated' : wk;
         const conds = f ? [(f.saline || f.waterSalty) ? 'saline' : null, f.sodic ? 'sodic' : null].filter(Boolean) : [];
         fieldCapOf(key, !!f, capWater, conds).forEach((w) => add(G, 'cap-' + w[0], w[1], 'lot'));
-        const SF = season ? seasonFactorsOf(B.pen.climateKey[key] || key, season.hist, season.window, season.enso || null, wk) : null;
+        const SF = season ? seasonFactorsOf(B.pen.climateKey[key] || key, season.hist, season.window, season.enso || null, wk, f ? f.pump || null : null) : null;
         if (SF) {
             const min = Math.min(1, SF.sun, SF.water, SF.temp), which = min === SF.water ? 'water' : min === SF.temp ? 'temp' : 'sun';
             add(G, 'season-' + which, min, 'season', which === 'water' ? SF.wr : which === 'temp' ? SF.tmean : SF.rad);
@@ -1647,7 +1674,8 @@
             case 'cap-partial': return ['Water only part of the time', eff + '.' + seasonNext];
             case 'cap-saline': return ['Salty soil', eff + ', as NPK Plus counts it.'];
             case 'cap-sodic': return ['Sodic soil', eff + ', as NPK Plus counts it.'];
-            case 'season-water': return ["The season's water", eff + ': the rain' + (f && f.water === 'pump' ? ' and your pump meet' : f && f.water === 'partial' ? ' and the water source meet' : ' meets') + ' about ' + pct(v) + ' of what the crop drinks.'];
+            case 'season-water': return ["The season's water", eff + ': the rain' + (f && f.water === 'pump' ? ' and your pump meet' : f && f.water === 'partial' ? ' and the water source meet' : ' meets') + ' about ' + pct(v) + ' of what the crop drinks'
+                + (SF && SF.pump && SF.pump.low.length ? ', with the pump low in ' + monthWords(SF.pump.low) + (SF.pump.given ? '' : ', the usual dry months') : '') + '.'];
             case 'season-sun': return ["The season's sun", eff + ': about ' + num(v, 1) + ' MJ a day, under the ' + (SF ? SF.K.rad : 17) + ' a full crop wants.'];
             case 'season-temp': return ["The season's heat", eff + ': about ' + num(v, 1) + '°C on average' + (SF && SF.hotN >= 1 ? ', with about ' + num(SF.hotN) + ' days too hot for its flowers' : '') + '.'];
             case 'hardpan': return ['A hard layer under the plow depth', eff + ': roots and tubers fork and stay small.'];
