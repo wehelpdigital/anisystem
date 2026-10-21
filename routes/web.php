@@ -240,6 +240,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'observationsGrant' => isset(\App\Models\WorkerGrant::MODULES['observations']),
             // Set as harvested on the Harvest sheet, and the Season Report per lot (2026-10-22).
             'lotHarvest' => \Illuminate\Support\Facades\Route::has('sm.lots.harvest'),
+            // The Crop Protocol's recommended program carries its own top ups and meets the need (2026-10-22).
+            'protoMeetsNeed' => method_exists(\App\Http\Controllers\CropProtocolController::class, 'withTopUps'),
             // The germination only where seed goes in, by each crop's way in (2026-10-21).
             'germByWay' => method_exists(\App\Support\PlantAmount::class, 'germApplies'),
             // 2026-10-19: How to Plant in Quick Tools (true once the guides are loaded into their table).

@@ -1862,7 +1862,7 @@ PROMPT;
             ? 'bend the products and the splits to the aim, the soil and the troubles, while the recommended program meets THE NUTRIENT NEED above (the aim is already in it through the yield goal)'
             : 'bend them to the aim (highest yield = the fuller recommended rate; lower cost = the lean end; in the middle = the standard recommendation) and to the soil and troubles';
         $programRule = $known
-            ? 'The recommended program must deliver THE NUTRIENT NEED above, within about a tenth either way; the other two say in their "for" line how they differ (a lean one that falls short says so). The app checks every program against that need and shows the farmer each gap'
+            ? 'The recommended program must deliver THE NUTRIENT NEED above for N, P2O5 and K2O, never less and no more than about a tenth over, whatever the aim: add each product\'s kilos up (a 50 kg bag of 14-14-14 is 7 kg of each) before you answer. The other two say in their "for" line how they differ (a lean one that falls short says so). The app checks every program against that need and tops the recommended one up where it falls short'
             : 'Every program must add up to the need for its own aim; the app checks each one';
         $history = $ctx['history'][$l['place']] ?? '';
         $weather = (($ctx['ensoBrief'] ?? '') !== '' ? $ctx['ensoBrief'] . ' ' : ($ctx['enso'] !== '' ? 'ENSO: ' . $ctx['enso'] . ' ' : '')) . ($history !== '' ? 'The area\'s record for these months: ' . mb_substr(preg_replace('/\s+/', ' ', $history), 0, 1600) : '');
@@ -2051,10 +2051,28 @@ PROMPT;
                 'npk' => ['need' => [], 'note' => (string) ($out['npk']['note'] ?? '')],
             ]];
             $rec = $this->tidy($fake, $p)['recommendation'];
-            $main = $rec['programs'][0] ?? null;
             $conds = self::soilConditions($p['soilConditions'] ?? []);
+            /* THE RECOMMENDED PROGRAM MEETS THE NEED (2026-10-22, the owner: "if the goal is highest yield
+             * ... why is anee suggesting a short total of NPK? ... it should be hit right?"). Anee writes the
+             * bags and her sums can land under the need; the app worked out what closes the gap but showed
+             * it apart, under a program that still read "short". Now the top ups go INTO the recommended
+             * program (onto its application of the same fertilizer at that stage, else as one of their own)
+             * and it is checked again; a second pass catches the need moving with the plan. The lean program
+             * keeps its honest gap: showing what spending less leaves out is what it is for. */
+            $fixes = [];
+            for ($pass = 0; $pass < 2; $pass++) {
+                $main = $rec['programs'][0] ?? null;
+                $more = $main ? ProtocolCare::fixes((array) ($main['check'] ?? []), (array) ($main['byStage'] ?? []), $frame, $conds, $area, (array) $p['granulars']) : [];
+                if (! $more || empty($out['programs'][0])) {
+                    break;
+                }
+                [$out['programs'][0]['applications'], $more] = self::withTopUps((array) ($out['programs'][0]['applications'] ?? []), $more);
+                $fixes = self::sumFixes($fixes, $more);
+                $fake['recommendation']['programs'] = array_slice($out['programs'], 0, 3);
+                $rec = $this->tidy($fake, $p)['recommendation'];
+            }
+            $main = $rec['programs'][0] ?? null;
             $micro = $main && ($p['micros'] ?? true) ? ProtocolCare::micro((array) ($main['elements'] ?? []), $frame, $conds, $area) : [];
-            $fixes = $main ? ProtocolCare::fixes((array) ($main['check'] ?? []), (array) ($main['byStage'] ?? []), $frame, $conds, $area, (array) $p['granulars']) : [];
 
             // The jobs: the recommended program by its days, the soil top ups with the first application, the sprays.
             $apps = [];
@@ -2070,7 +2088,8 @@ PROMPT;
             if (! $apps) {
                 $apps = ProtocolCrew::skeleton($frame);
             }
-            // What closes a gap goes on with the application already at that stage (one trip), else on its own.
+            // What closes an NPK gap is in the program's own applications now (withTopUps); the soil
+            // micronutrients go on with the application already at that stage (one trip), else on their own.
             $join = function (string $stage, ?int $day, string $words) use (&$apps, $frame) {
                 $si = ProtocolCrew::stageIndex($frame, $stage);
                 foreach ($apps as &$ap) {
@@ -2084,9 +2103,6 @@ PROMPT;
                 unset($ap);
                 $apps[] = ['stage' => $stage, 'day' => $day, 'products' => [$words]];
             };
-            foreach ($fixes as $fx) {
-                $join($fx['stage'], null, self::bagWords((float) $fx['bags']) . ' ' . $fx['product'] . ' (to meet the need)');
-            }
             foreach ($micro as $m) {
                 if ($m['pick'] === 'soil' && $m['soil']) {
                     $join($frame['stages'][0]['name'], -1, ProtocolCare::amount((float) $m['soil']['totalKg']) . ' ' . $m['soil']['product']);
@@ -2152,7 +2168,7 @@ PROMPT;
         }
         unset($L);
 
-        // What to buy for the whole farm: the recommended programs, what meets the need, and the top ups.
+        // What to buy for the whole farm: the recommended programs (what meets the need is in them) and the micro top ups.
         $buy = [];
         $addBuy = function (string $name, float $kg, int $lot) use (&$buy) {
             if ($kg <= 0) {
@@ -2166,9 +2182,6 @@ PROMPT;
         foreach ($lots as $i => $L) {
             foreach ((array) ($L['rec']['totals'] ?? []) as $t) {
                 $addBuy((string) $t['product'], (float) $t['bags'] * 50, $i);
-            }
-            foreach ($L['fixes'] as $fx) {
-                $addBuy($fx['product'], (float) $fx['bags'] * 50, $i);
             }
             foreach ($L['micro'] as $m) {
                 if ($m['pick'] === 'soil' && $m['soil']) {
@@ -2269,6 +2282,105 @@ PROMPT;
     }
 
     /** An application's 50 kg bags per hectare, from its bags or, for a product used by the kilo, its kgPerHa. */
+    /**
+     * A program's applications with the top ups that close its N, P and K gaps put in: onto its
+     * application of the same fertilizer (the same grade) at that stage, else as an application of
+     * their own at that stage. Each carries a word that the app added it.
+     *
+     * Nitrogen is never piled onto one dressing: the extra urea is spread over the stages that
+     * already carry nitrogen, in the shares the program gives them, so the split Anee chose keeps
+     * its shape and no single dressing outgrows the safe ceiling the prompt holds her to.
+     *
+     * @param  array<int, array<string, mixed>>  $apps   the model's applications, per hectare
+     * @param  array<int, array<string, mixed>>  $fixes  ProtocolCare::fixes rows
+     * @return array{0: array<int, array<string, mixed>>, 1: array<int, array<string, mixed>>}  the applications, and the fixes as placed
+     */
+    private static function withTopUps(array $apps, array $fixes): array
+    {
+        $norm = fn ($t) => trim((string) preg_replace('/[^a-z0-9]+/', ' ', mb_strtolower((string) $t)));
+        $put = function (string $stage, string $product, float $bags) use (&$apps, $norm) {
+            $grade = self::grade($product);
+            foreach ($apps as $i => $a) {
+                if (is_array($a) && $norm($a['stage'] ?? '') === $norm($stage) && self::grade((string) ($a['product'] ?? '')) === $grade) {
+                    $was = rtrim(trim((string) ($a['purpose'] ?? '')), '.');
+                    $apps[$i]['bagsPerHa'] = round(self::bagsOf($a) + $bags, 3);
+                    $apps[$i]['kgPerHa'] = 0;
+                    $apps[$i]['purpose'] = ($was !== '' ? $was . '. ' : '') . 'Raised to meet the need';
+
+                    return;
+                }
+            }
+            $apps[] = ['stage' => $stage, 'day' => null, 'product' => $product, 'bagsPerHa' => round($bags, 3), 'kgPerHa' => 0, 'purpose' => 'Added to meet the need'];
+        };
+        $placed = [];
+        foreach ($fixes as $fx) {
+            $add = (float) $fx['kgPerHa'] / 50;
+            $shares = [];
+            if ($fx['el'] === 'N') {
+                foreach ($apps as $a) {
+                    $g = is_array($a) ? self::grade((string) ($a['product'] ?? '')) : null;
+                    $n = $g ? $g[0] * self::bagsOf($a) : 0;
+                    if ($n > 0) {
+                        $k = $norm($a['stage'] ?? '');
+                        $shares[$k] = ['stage' => (string) $a['stage'], 'n' => ($shares[$k]['n'] ?? 0) + $n];
+                    }
+                }
+            }
+            // A sliver under 5 kg a hectare is not a dressing: it goes to the biggest one.
+            $sum = array_sum(array_column($shares, 'n'));
+            if ($sum > 0) {
+                uasort($shares, fn ($x, $y) => $y['n'] <=> $x['n']);
+                $top = array_key_first($shares);
+                foreach ($shares as $k => $s) {
+                    if ($k !== $top && $add * $s['n'] / $sum < 0.1) {
+                        $shares[$top]['n'] += $s['n'];
+                        unset($shares[$k]);
+                    }
+                }
+            }
+            if (count($shares) > 1 && $sum > 0) {
+                foreach ($shares as $s) {
+                    $put($s['stage'], (string) $fx['product'], $add * $s['n'] / $sum);
+                }
+                $fx['stage'] = 'Every nitrogen dressing';
+                $fx['note'] = 'Spread over the dressings that already carry nitrogen, in the same shares, so none grows too big.';
+            } else {
+                // One dressing left: the biggest nitrogen one, where the extra joins the same urea.
+                if (count($shares) === 1) {
+                    $fx['stage'] = (string) reset($shares)['stage'];
+                }
+                $put((string) $fx['stage'], (string) $fx['product'], $add);
+            }
+            $placed[] = $fx;
+        }
+
+        return [$apps, $placed];
+    }
+
+    /** Top ups of two passes as one list, a fertilizer once: the amounts and the gap it closed added up. */
+    private static function sumFixes(array $have, array $more): array
+    {
+        foreach ($more as $fx) {
+            $fx['folded'] = true;
+            $at = null;
+            foreach ($have as $i => $h) {
+                if ($h['product'] === $fx['product'] && $h['stage'] === $fx['stage']) {
+                    $at = $i;
+                    break;
+                }
+            }
+            if ($at === null) {
+                $have[] = $fx;
+                continue;
+            }
+            foreach (['kgPerHa', 'bagsPerHa', 'bags', 'gap'] as $k) {
+                $have[$at][$k] = round((float) $have[$at][$k] + (float) $fx[$k], $k === 'gap' ? 0 : 2);
+            }
+        }
+
+        return $have;
+    }
+
     private static function bagsOf(array $ap): float
     {
         $bags = max(0, (float) ($ap['bagsPerHa'] ?? 0));
