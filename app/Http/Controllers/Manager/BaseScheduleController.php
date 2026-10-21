@@ -161,6 +161,30 @@ abstract class BaseScheduleController extends Controller
     }
 
     /**
+     * Same again, for the season's observations. Its own grant level, like
+     * the shed: recording what came off a lot is not changing the plan, so a
+     * worker can hold this pen without the board's. A completed season still
+     * refuses, as everywhere.
+     */
+    protected function scheduleForObservations(Request $request, string $key = 'scheduleId'): AsCroppingSchedule
+    {
+        $schedule = $this->schedule($request->query($key));
+
+        if (! $request->isMethodSafe()) {
+            if (! \App\Support\WorkerContext::canWriteModule('observations')) {
+                abort(response()->json([
+                    'success' => false,
+                    'message' => 'You can only view the Observations on this farm.',
+                ], 403));
+            }
+
+            $this->assertUnlocked($schedule);
+        }
+
+        return $schedule;
+    }
+
+    /**
      * Pull a query-string integer or abort with 400.
      */
     protected function queryId(Request $request, string $key = 'id'): int

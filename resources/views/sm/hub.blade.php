@@ -42,11 +42,11 @@
         // read the stock and who may write the ledger.
         'inventory' => $may('inventory'),
         'notes' => $mayNotes,
-        // What the season is documented as, and what came off it at the end,
-        // are the owner's record of their own farm — not a shelf a worker
-        // reads or writes. No tier of grant opens these.
+        // What the season is documented as is the owner's record of their
+        // own farm, not a shelf a worker reads or writes. No grant opens it.
         'documentation' => ! $isWorker,
-        'post-harvest' => ! $isWorker,
+        // What came off the season is a grant level now, like the shed.
+        'post-harvest' => $may('observations'),
         'maps' => $may('maps'),
         'draw' => $may('draw'),
         'ai' => $may('ai'),

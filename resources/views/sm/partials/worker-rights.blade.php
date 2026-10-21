@@ -33,6 +33,7 @@
         ['NotesAccess', '📝', 'Notes', 'Day notes and their photos and videos.'],
         ['ReportsAccess', '📊', 'Reports', 'Labor and money reports for this farm.'],
         ['InventoryAccess', '📦', 'Inventory', 'Items on hand, stock moves and what they cost.'],
+        ['ObservationsAccess', '🔍', 'Observations', 'Harvest yields, prices, problems and lessons for next season.'],
         ['MapsAccess', '🗺️', 'Maps', 'Field and lot maps. View only, or draw and save too.'],
         ['DrawAccess', '✏️', 'Draw', 'Drawings and saved pictures. View only, or draw new ones.'],
     ];
@@ -59,11 +60,12 @@
             </span>
             {{-- The hidden input is the answer; the segment is how it is
                  given. Both directions go through it, so a sheet that sets
-                 .value still repaints these buttons. The shed, the maps and
-                 the drawing pad start shut; the older levels start readable —
-                 the same defaults workerRights.paint uses. --}}
+                 .value still repaints these buttons. The shed, the season's
+                 observations, the maps and the drawing pad start shut; the
+                 older levels start readable — the same defaults
+                 workerRights.paint uses. --}}
             <input type="hidden" id="{{ $p }}{{ $key }}" class="wr-level"
-                   value="{{ in_array($key, ['InventoryAccess', 'MapsAccess', 'DrawAccess'], true) ? 'none' : 'view' }}">
+                   value="{{ in_array($key, ['InventoryAccess', 'ObservationsAccess', 'MapsAccess', 'DrawAccess'], true) ? 'none' : 'view' }}">
             <span class="wr-seg" role="group" aria-label="{{ $label }} access" data-wr-seg="{{ $p }}{{ $key }}">
                 {{-- Activities has no "None": a worker with no eyes on the
                      plan is not a worker on this farm — the least they get
@@ -209,7 +211,7 @@
  * by another is how a permission ends up not applying, so the keys are the
  * grant's own column names either way. */
 window.workerRights = (() => {
-    const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess'];
+    const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess', 'observationsAccess', 'mapsAccess', 'drawAccess'];
     const SWITCHES = ['aiAccess', 'cameraAccess', 'videoAccess', 'voiceAccess'];
     const id = (p, key) => p + key.charAt(0).toUpperCase() + key.slice(1);
     return {
@@ -226,11 +228,11 @@ window.workerRights = (() => {
             LEVELS.forEach((k) => {
                 const el = document.getElementById(id(p, k));
                 if (!el) return;
-                // The shed, the maps and the drawing pad start shut for a new
-                // login; the older levels start readable, which is where the
-                // app has always put them.
+                // The shed, the observations, the maps and the drawing pad
+                // start shut for a new login; the older levels start readable,
+                // which is where the app has always put them.
                 el.value = (grant && grant[k])
-                    || (['inventoryAccess', 'mapsAccess', 'drawAccess'].includes(k) ? 'none' : 'view');
+                    || (['inventoryAccess', 'observationsAccess', 'mapsAccess', 'drawAccess'].includes(k) ? 'none' : 'view');
                 // The level is a hidden input under a segmented control; the
                 // buttons learn what it says from this.
                 el.dispatchEvent(new Event('change', { bubbles: true }));

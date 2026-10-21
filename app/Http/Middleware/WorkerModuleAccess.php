@@ -101,6 +101,13 @@ class WorkerModuleAccess
         ['sm.inventory',   'inventory'],
         ['sm.inventory.*', 'inventory'],
 
+        /* What came off the season. It was the owner's alone (2026-08-23)
+         * until the owner asked for a switch: now it is a level like the
+         * shed. The upload below also wants the camera or the recorder, so
+         * a photo on an observation needs both pens. */
+        ['sm.post-harvest',   'observations'],
+        ['sm.post-harvest.*', 'observations'],
+
         // Tags ride the activity forms, so whoever may work the board may
         // read and coin them; the writes still pass canEdit inside.
         ['sm.tags',    'activities'],
@@ -120,9 +127,9 @@ class WorkerModuleAccess
         ['sm.ai.*',    'ai'],
 
         // ---- the owner's own record of the farm --------------------------
-        // The documentation a season carries and what came off it at the end
-        // are the owner's, at every tier: no grant opens them, so the doors
-        // are not drawn and the addresses answer the same way.
+        // The documentation a season carries is the owner's, at every tier:
+        // no grant opens it, so the doors are not drawn and the addresses
+        // answer the same way.
         ['sm.documentation',   'owner'],
         ['sm.doc-entries.*',   'owner'],
         ['sm.doc-tags.*',      'owner'],
@@ -131,8 +138,6 @@ class WorkerModuleAccess
         // and the wildcard was refusing a report the grant may well allow.
         ['sm.protocol.save',     'owner'],
         ['sm.protocol.download', 'owner'],
-        ['sm.post-harvest',    'owner'],
-        ['sm.post-harvest.*',  'owner'],
 
         // Reports wear many route names — one per engine — and a name left
         // off this list is a door with no lock, which is how the expenses
@@ -159,7 +164,9 @@ class WorkerModuleAccess
         ['sm.notes.image-upload',       'camera'],
         ['notes.hub.image-upload',      'camera'],
         ['sm.activities.image-upload',  'camera'],
-        ['sm.post-harvest.image-upload', 'camera'],
+        // One endpoint takes the observation's photos AND its clips, so
+        // either tool opens it and the controller asks for the one used.
+        ['sm.post-harvest.image-upload', 'camera:edit|video:edit'],
         ['sm.photo',                    'camera'],
         ['sm.photo.*',                  'camera'],
 
@@ -183,6 +190,7 @@ class WorkerModuleAccess
     private const LABELS = [
         'notes' => 'Notes',
         'inventory' => 'the Inventory',
+        'observations' => 'Observations',
         'maps' => 'the Maps module',
         'draw' => 'the Drawing module',
         'ai' => 'Chat Anee',

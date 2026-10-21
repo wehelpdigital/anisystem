@@ -12,7 +12,9 @@
                                                        //   which half the pages
                                                        //   already have of their own
            'scheduleId' => $schedule->id,              // whose gallery to offer
-           'imageUrl'   => $photoUploadEndpoint,       // POST, field `image`
+           'imageUrl'   => $photoUploadEndpoint,       // POST, field `image`; no url,
+                                                       //   no Photo (a worker
+                                                       //   without the camera)
            'videoUrl'   => $videoUploadEndpoint,       // optional; no url, no Record
            'kinds'      => 'image,video',              // what the gallery offers
            'imageField' => 'image', 'videoField' => 'video',   // if yours differ
@@ -53,10 +55,13 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
             <span>Gallery</span>
         </button>
+        {{-- A door per endpoint: with neither, only the gallery is left. --}}
+        @if (filled($imageUrl ?? null) || filled($videoUrl ?? null))
         <button type="button" class="ab-btn" data-ab="upload" title="Pick a file from this device">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12l-4 4m4-4l4 4"/></svg>
             <span>Upload</span>
         </button>
+        @endif
         @if (filled($videoUrl ?? null))
             @php
                 /* Locked on the tier, the Record button stays and sells —
@@ -74,10 +79,12 @@
                 <span>Record {{ $abVidLocked ? '🔒' : '' }}</span>
             </button>
         @endif
+        @if (filled($imageUrl ?? null))
         <button type="button" class="ab-btn" data-ab="camera" title="Take a photo now">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             <span>Photo</span>
         </button>
+        @endif
     </div>
     @isset($hint)
         <p class="form-hint">{{ $hint }}</p>
@@ -85,7 +92,7 @@
     {{-- The recorder writes the clip into this input and fires a change on it
          by hand, because assigning .files in script does not fire one. --}}
     <input type="file" class="js-video-file" accept="video/*" hidden>
-    <input type="file" data-ab-file accept="{{ filled($videoUrl ?? null) ? 'image/*,video/*' : 'image/*' }}" hidden @if ($multiple ?? true) multiple @endif>
+    <input type="file" data-ab-file accept="{{ implode(',', array_filter([filled($imageUrl ?? null) ? 'image/*' : null, filled($videoUrl ?? null) ? 'video/*' : null])) ?: 'image/*' }}" hidden @if ($multiple ?? true) multiple @endif>
     {{-- capture= asks the phone for its camera rather than its files. Desktop
          browsers ignore it and show a picker, which is the right fallback. --}}
     <input type="file" data-ab-camera accept="image/*" capture="environment" hidden>

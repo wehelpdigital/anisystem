@@ -19,7 +19,7 @@ class PostHarvestController extends BaseScheduleController
 {
     public function page(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request, 'id');
+        $schedule = $this->scheduleForObservations($request, 'id');
         $schedule->load('lots');
 
         $all = AsSchedulePostHarvest::active()
@@ -55,7 +55,7 @@ class PostHarvestController extends BaseScheduleController
 
     public function store(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForObservations($request);
 
         $data = $this->validated($request, $schedule);
         if (! is_array($data)) {
@@ -76,7 +76,7 @@ class PostHarvestController extends BaseScheduleController
 
     public function update(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForObservations($request);
         $observation = $this->find($schedule->id, $this->queryId($request));
         if (! $observation) {
             return $this->jsonFail('Observation not found.', 404);
@@ -98,7 +98,7 @@ class PostHarvestController extends BaseScheduleController
 
     public function destroy(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForObservations($request);
         $observation = $this->find($schedule->id, $this->queryId($request));
         if (! $observation) {
             return $this->jsonFail('Observation not found.', 404);
@@ -112,7 +112,7 @@ class PostHarvestController extends BaseScheduleController
     /** Undo support — the row is only ever soft-deleted. */
     public function restore(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForObservations($request);
         $observation = AsSchedulePostHarvest::where('croppingScheduleId', $schedule->id)
             ->where('id', $this->queryId($request))
             ->first();
@@ -138,9 +138,19 @@ class PostHarvestController extends BaseScheduleController
      */
     public function uploadImage(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForObservations($request);
 
-        return $request->hasFile('video')
+        // The route lets in either tool; this is the one that was used. A
+        // worker lent the recorder and not the camera may add a clip and
+        // not a photo, and the other way round.
+        $pen = $request->hasFile('video') ? 'video' : 'camera';
+        if (! \App\Support\WorkerContext::canWriteModule($pen)) {
+            return $this->jsonFail($pen === 'video'
+                ? 'The farm owner has not given you video recording.'
+                : 'The farm owner has not given you the camera.', 403);
+        }
+
+        return $pen === 'video'
             ? $this->storeVideo($request, $schedule)
             : $this->storePhoto($request, $schedule);
     }

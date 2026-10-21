@@ -236,6 +236,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
             // By spacing or by amount in the Crop Protocol and NPK Plus (2026-10-21).
             'plantAmount' => class_exists(\App\Support\PlantAmount::class) && \Illuminate\Support\Facades\Route::has('seedcalc.count'),
+            // Observations is a worker grant level, not owner only (2026-10-22).
+            'observationsGrant' => isset(\App\Models\WorkerGrant::MODULES['observations']),
             // The germination only where seed goes in, by each crop's way in (2026-10-21).
             'germByWay' => method_exists(\App\Support\PlantAmount::class, 'germApplies'),
             // 2026-10-19: How to Plant in Quick Tools (true once the guides are loaded into their table).

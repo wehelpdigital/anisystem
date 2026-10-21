@@ -22,6 +22,8 @@ class WorkerGrant extends BaseModel
         'notes'     => ['column' => 'notesAccess',     'shape' => 'level'],
         'reports'   => ['column' => 'reportsAccess',   'shape' => 'level'],
         'inventory' => ['column' => 'inventoryAccess', 'shape' => 'level'],
+        // What came off the season: yields, prices, problems, lessons.
+        'observations' => ['column' => 'observationsAccess', 'shape' => 'level'],
         'maps'      => ['column' => 'mapsAccess',      'shape' => 'level'],
         'draw'      => ['column' => 'drawAccess',      'shape' => 'level'],
         'ai'        => ['column' => 'aiAccess',        'shape' => 'open'],
@@ -35,7 +37,7 @@ class WorkerGrant extends BaseModel
     protected $fillable = [
         'bossUserId', 'workerUserId', 'scheduleWorkerId', 'globalWorkerId', 'invitedEmail',
         'inviteToken', 'scheduleAccess', 'canAddNotes', 'communityAccess', 'status',
-        'notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess', 'aiAccess',
+        'notesAccess', 'reportsAccess', 'inventoryAccess', 'observationsAccess', 'mapsAccess', 'drawAccess', 'aiAccess',
         'cameraAccess', 'videoAccess', 'voiceAccess',
         'acceptedAt', 'deleteStatus',
     ];

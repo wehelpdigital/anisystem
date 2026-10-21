@@ -22,7 +22,14 @@
     // shell, so a chip left standing here is the door the hub tile and the
     // modules sheet already dropped — and both of these now answer 404.
     if (\App\Support\WorkerContext::activeGrant()) {
-        unset($modules['workers'], $modules['ai'], $modules['documentation'], $modules['post-harvest'], $modules['inventory']);
+        unset($modules['workers'], $modules['ai'], $modules['documentation']);
+        // These two follow the grant: a worker the owner let in keeps the
+        // name of the module they are standing in.
+        foreach (['post-harvest' => 'observations', 'inventory' => 'inventory'] as $chip => $grantKey) {
+            if (! \App\Support\WorkerContext::canUseModule($grantKey)) {
+                unset($modules[$chip]);
+            }
+        }
     }
 @endphp
 

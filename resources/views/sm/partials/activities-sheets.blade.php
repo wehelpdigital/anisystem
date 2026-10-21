@@ -932,7 +932,7 @@
             $navDoor = [
                 'workers' => ! $isWorker,
                 'documentation' => ! $isWorker,
-                'post-harvest' => ! $isWorker,
+                'post-harvest' => $may('observations'),
                 'inventory' => $may('inventory'),
                 'tags' => $may('activities'),
                 'notes' => $may('notes'),

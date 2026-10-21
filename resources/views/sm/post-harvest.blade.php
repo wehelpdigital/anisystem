@@ -14,6 +14,11 @@
     // off the name, exactly as PostHarvestController::kindOf() does it.
     $phKind = fn ($p) => \App\Http\Controllers\Manager\PostHarvestController::kindOf($p);
     $phUrl = fn ($p) => \App\Support\MediaStore::url($p);
+    // A worker the owner let read the observations without the pen sees the
+    // season's record and no way to change it. The sheet's photo and clip
+    // doors follow the camera and the recorder, as everywhere else.
+    $phMayWrite = \App\Support\WorkerContext::canWriteModule('observations');
+    $phUploadUrl = route('sm.post-harvest.image-upload') . '?scheduleId=' . $schedule->id;
 @endphp
 
 @push('head')
@@ -99,10 +104,12 @@
 {{-- The list's own add button. It stands down while the season is empty:
      the empty panel below already offers exactly this, and two of the same
      button on one screen reads as a mistake. --}}
+@if ($phMayWrite)
 <button type="button" id="phAddTop" class="btn btn-primary w-full mb-4 inline-flex {{ $observations->isEmpty() ? 'hidden' : '' }}" data-ph-add>
     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     Record an observation
 </button>
+@endif
 
 <div class="space-y-3" id="phList" data-animate-list>
     @foreach ($observations as $o)
@@ -116,8 +123,12 @@
 <div class="card p-8 text-center {{ $observations->isEmpty() ? '' : 'hidden' }}" id="phEmpty">
     <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
     <p class="font-semibold text-gray-700 mt-3">Nothing recorded yet</p>
-    <p class="text-sm text-gray-500 mt-1">After harvest, note your yield, moisture, price and any problems. Then you can plan next season from real numbers.</p>
-    <button type="button" class="btn btn-primary mt-4" data-ph-add>Record an observation</button>
+    @if ($phMayWrite)
+        <p class="text-sm text-gray-500 mt-1">After harvest, note your yield, moisture, price and any problems. Then you can plan next season from real numbers.</p>
+        <button type="button" class="btn btn-primary mt-4" data-ph-add>Record an observation</button>
+    @else
+        <p class="text-sm text-gray-500 mt-1">The yield, prices and problems of this season show here once the farm records them.</p>
+    @endif
 </div>
 
 {{-- The attach bar in the sheet would pull this in on its own, but a sheet
@@ -200,8 +211,8 @@
                 // One endpoint for both: the route is named image-upload and
                 // routes/web.php is the integrator's, so the controller sorts
                 // the photo from the clip by what arrives.
-                'imageUrl' => route('sm.post-harvest.image-upload') . '?scheduleId=' . $schedule->id,
-                'videoUrl' => route('sm.post-harvest.image-upload') . '?scheduleId=' . $schedule->id,
+                'imageUrl' => \App\Support\WorkerContext::canWriteModule('camera') ? $phUploadUrl : null,
+                'videoUrl' => \App\Support\WorkerContext::canWriteModule('video') ? $phUploadUrl : null,
                 'kinds' => 'image,video',
                 'label' => 'Attach to this observation',
                 'hint' => 'Take a photo of the harvest, the sacks or a problem. Or pick one this season already has.',
@@ -308,6 +319,8 @@ const __init = () => {
         destroy: (id) => @json(route('sm.post-harvest.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
         upload: @json(route('sm.post-harvest.image-upload')) + '?scheduleId=' + SCHEDULE_ID,
     };
+    // Mirrors the Blade card: no pen, no edit or delete on a card.
+    const MAY_WRITE = @json($phMayWrite);
 
     @php
         $seed = $observations->mapWithKeys(fn ($o) => [$o->id => [
@@ -377,14 +390,14 @@ const __init = () => {
                     </div>
                     <h3 class="font-bold text-gray-900 leading-snug mt-1.5">${escapeHtml(o.title)}</h3>
                 </div>
-                <div class="flex gap-1 shrink-0">
+                ${MAY_WRITE ? `<div class="flex gap-1 shrink-0">
                     <button type="button" class="btn btn-sm btn-ghost js-edit" aria-label="Edit observation">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
                     <button type="button" class="btn btn-sm btn-ghost text-red-600 js-delete" aria-label="Delete observation">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                     </button>
-                </div>
+                </div>` : ''}
             </div>
             ${figures.length ? `<dl class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">${figures.map(([l, v, tone]) =>
                 `<div class="ph-figure"><dt class="text-gray-400">${escapeHtml(l)}</dt><dd class="${tone}">${escapeHtml(v)}</dd></div>`).join('')}</dl>` : ''}

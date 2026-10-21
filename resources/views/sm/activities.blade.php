@@ -4904,6 +4904,8 @@
         @endif
         @if (! $isWorker)
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
+        @endif
+        @if ($may('observations'))
         'post-harvest': { label: 'Observations', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
         @endif
         {{-- Tags ride the board's own forms, so the door follows the board. --}}
