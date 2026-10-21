@@ -1318,7 +1318,9 @@
         $('npCropIcon').textContent = c ? c.icon : '🧮';
         $('npCropNow').textContent = c ? cropName(c) : 'No crop, just the totals';
         $('npCropNow').classList.remove('is-none');
-        if (c && !st.seedUnitSet) { st.seedUnit = Object.keys(SEED_DEF).find((u) => SEED_DEF[u].includes(c.key)) || 'kg'; tagSay('npSeedUnit', SEED_U, st.seedUnit); }
+        if (c && !st.seedUnitSet) { st.seedUnit = (c.units && c.units[0]) || Object.keys(SEED_DEF).find((u) => SEED_DEF[u].includes(c.key)) || 'kg'; tagSay('npSeedUnit', SEED_U, st.seedUnit); }
+        // Only the units this crop is planted by (PlantAmount::units): a mango is never counted in kilos of seed.
+        if (c && c.units && c.units.length && !c.units.includes(st.seedUnit)) { st.seedUnit = c.units[0]; tagSay('npSeedUnit', SEED_U, st.seedUnit); }
         // Another crop's spacing is not this one's: the boxes start empty, on its own usual.
         if (st.spCrop !== k) { ['npRow', 'npPlantSp', 'npPerHill'].forEach((id) => { $(id).value = ''; }); st.spCrop = k; }
         st.by = null; st.cnt = null;
@@ -1349,7 +1351,7 @@
         // Seed is counted at its germination against the usual 85% the guides
         // assume: 40 kg at 60% sprouts like 28 kg of normal seed. Seedlings,
         // cuttings and plants are already growing.
-        out.germ = bySp ? (sd0.germination || null) : (['kg', 'g', 'seeds', 'hills'].includes(unit) && num('npGerm') ? clamp(num('npGerm'), 1, 100) : null);
+        out.germ = bySp ? (sd0.germination || null) : (!$('npGermBox').hidden && num('npGerm') ? clamp(num('npGerm'), 1, 100) : null);
         out.raw = out.perHa;
         if (out.germ) out.perHa = out.perHa * out.germ / GERM_USUAL;
         const sd = c && M.seeding[c.key];
@@ -1496,7 +1498,10 @@
         if (!res.name) { varSet(null, ''); return; }
         varSet(res.record ? Object.assign({ source: 'record', crop: st.crop }, res.record) : { source: 'custom', name: res.name }, res.name);
     });
-    $('npSeedUnit').addEventListener('click', () => pick('What you plant', 'For the whole area.', SEED_U, st.seedUnit, (k) => { st.seedUnit = k; st.seedUnitSet = true; tagSay('npSeedUnit', SEED_U, k); paintGerm(); hints(); calc(); }));
+    $('npSeedUnit').addEventListener('click', () => {
+        const c = cropOf(st.crop), only = c && c.units && c.units.length ? Object.fromEntries(c.units.filter((u) => SEED_U[u]).map((u) => [u, SEED_U[u]])) : SEED_U;
+        pick('What you plant', 'For the whole area.', only, st.seedUnit, (k) => { st.seedUnit = k; st.seedUnitSet = true; tagSay('npSeedUnit', SEED_U, k); paintGerm(); hints(); calc(); });
+    });
 
     /* ---- by spacing or by amount (2026-10-21, the owner, as the Crop Protocol asks it) ----
        By spacing, the seed calculator counts the seeds (seedcalc.count, App\Support\PlantAmount), and that
@@ -1524,9 +1529,12 @@
         }
         paintGerm();
     }
+    /* The germination only where seed goes in (2026-10-21, the owner; PlantAmount::germApplies is the twin): seed sown
+       in place or in the farmer's own rice seedbed, by either way; vegetable seedlings are bought, so only when their
+       amount is given as seed; never for cuttings, sets, tubers, suckers or trees. */
     function paintGerm() {
-        const sp = cropSp();
-        $('npGermBox').hidden = st.by === 'spacing' ? !(sp && sp.fromSeed) : !['kg', 'g', 'seeds', 'hills'].includes(st.seedUnit);
+        const c = cropOf(st.crop), k = (c && c.germ) || 'seed', seedU = ['kg', 'g', 'seeds', 'hills'].includes(st.seedUnit);
+        $('npGermBox').hidden = !(k === 'seed' ? (st.by === 'spacing' || seedU) : (k === 'seedlings' ? st.by !== 'spacing' && seedU && st.seedUnit !== 'hills' : false));
     }
     let countT = null, countAsk = 0;
     function countSoon() {

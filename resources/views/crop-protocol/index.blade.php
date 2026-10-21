@@ -1853,7 +1853,7 @@
         if (sc === 'goal') {
             readGoal();
             const g = PAGE.goal;
-            if (g.germination !== '' && !(num(g.germination) >= 1 && num(g.germination) <= 100)) { window.toast?.('Germination is a percent from 1 to 100.', 'error'); shake($('cqGerm')); return false; }
+            if (germOn(PAGE.i, g) && g.germination !== '' && !(num(g.germination) >= 1 && num(g.germination) <= 100)) { window.toast?.('Germination is a percent from 1 to 100.', 'error'); shake($('cqGerm')); return false; }
             return true;
         }
         if (sc === 'workers') { const ok = S.workers.some((w) => w.days.length); $('cqWErr').hidden = ok; if (!ok) shake($('cqWorkers')); return ok; }
@@ -2234,7 +2234,9 @@
         const g = PAGE.goal;
         if (!g.yieldUnit || !units().includes(g.yieldUnit)) g.yieldUnit = units()[0];
         const c = cropOf(p.crop);
-        if (!g.seedUnit || !g.seedTouched) g.seedUnit = (c && c.seedUnit) || 'kg';
+        // The usual unit of the way it goes in (PlantAmount::units): seedlings for vegetable seedlings, plants for trees.
+        const wayUnits = c && c.units && c.units[pickOf(i).method];
+        if (!g.seedUnit || !g.seedTouched) g.seedUnit = (wayUnits && wayUnits[0]) || (c && c.seedUnit) || 'kg';
         // The variety's potential from its record, while the farmer has not typed their own.
         const t = recT(p.varRec);
         if (t && (!g.potTouched || !g.potential)) { g.potential = fmt2(t / tonsIn(g.yieldUnit)); g.potTouched = false; }
@@ -2290,10 +2292,16 @@
         $('cqAmountBox').hidden = g.by !== 'amount';
         paintGerm();
     }
-    /* The germination counts for seed: sown in place or in the farmer's own seedbed, by either way. */
+    /* The germination only where seed goes in (2026-10-21, the owner; PlantAmount::GERM by way in, the twin of
+       PlantAmount::germApplies): seed sown in place or in the farmer's own rice seedbed, by either way; vegetable
+       seedlings are bought, so only when their amount is given as seed; never for cuttings, sets, tubers or trees. */
+    const germOf = (i) => { const p = pickOf(i), c = cropOf(p.crop); return (c && c.germ && c.germ[p.method]) || 'none'; };
+    const germOn = (i, g) => {
+        const k = germOf(i), seedU = ['kg', 'g', 'seeds', 'hills'].includes(g.seedUnit);
+        return k === 'seed' ? (g.by === 'spacing' || seedU) : (k === 'seedlings' ? g.by !== 'spacing' && seedU && g.seedUnit !== 'hills' : false);
+    };
     function paintGerm() {
-        const g = PAGE.goal, sp = spacingOf(PAGE.i);
-        $('cqGermBox').hidden = g.by === 'spacing' ? !(sp && sp.fromSeed) : !['kg', 'g', 'seeds', 'hills'].includes(g.seedUnit);
+        $('cqGermBox').hidden = !germOn(PAGE.i, PAGE.goal);
     }
     $('cqBy').addEventListener('click', (e) => {
         const b = e.target.closest('[data-by]');
@@ -2440,7 +2448,8 @@
     function paintSeedUnits() {
         const g = PAGE.goal, c = cropOf(pickOf(PAGE.i).crop);
         // Only the units this crop is planted by (2026-10-21, the owner: corn is never counted in trees).
-        const allowed = c && c.seedUnits && c.seedUnits.length ? c.seedUnits : Object.keys(OPT.seedUnits || {});
+        const wayUnits = c && c.units ? c.units[pickOf(PAGE.i).method] : null;
+        const allowed = wayUnits && wayUnits.length ? wayUnits : (c && c.seedUnits && c.seedUnits.length ? c.seedUnits : Object.keys(OPT.seedUnits || {}));
         if (!allowed.includes(g.seedUnit)) { g.seedUnit = allowed[0]; g.seedTouched = false; }
         $('cqSeedUnits').innerHTML = Object.entries(OPT.seedUnits || {}).filter(([k]) => allowed.includes(k)).map(([k, u]) => '<button type="button" class="cq-pill' + (k === g.seedUnit ? ' is-on' : '') + '" data-seedunit="' + esc(k) + '" role="radio" aria-checked="' + (k === g.seedUnit) + '" title="' + esc(u[2]) + '">' + esc(u[0]) + '</button>').join('');
         $('cqSeedU').textContent = '(' + ((OPT.seedUnits[g.seedUnit] || [])[1] || g.seedUnit) + ')';
@@ -2875,7 +2884,7 @@
             priority: g.priority, targetYield: num(g.target) > 0 ? num(g.target) : null, yieldUnit: g.yieldUnit || units()[0], potential: num(g.potential) > 0 ? num(g.potential) : null,
             // One way of saying how much is planted (2026-10-21): the other way's numbers stay on the page, not in the plan.
             amountBy: g.by || null,
-            seedAmount: g.by !== 'spacing' && num(g.seedAmount) > 0 ? num(g.seedAmount) : null, seedUnit: g.seedUnit, germination: num(g.germination) > 0 ? num(g.germination) : null,
+            seedAmount: g.by !== 'spacing' && num(g.seedAmount) > 0 ? num(g.seedAmount) : null, seedUnit: g.seedUnit, germination: germOn(i, g) && num(g.germination) > 0 ? num(g.germination) : null,
             spacing: g.by !== 'amount' && g.sp && num(g.sp.row) > 0 && num(g.sp.plant) > 0 && spacingOf(i) ? { row: num(g.sp.row), plant: num(g.sp.plant), perHill: Math.round(num(g.sp.hill)) || null } : null,
             plantBy: jobNow(i, 'plant'), plantOwn: !!jobsOf(i).plantOwn, harvestBy: jobNow(i, 'harvest'), harvestOwn: !!jobsOf(i).harvestOwn };
     }

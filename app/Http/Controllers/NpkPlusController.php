@@ -91,7 +91,11 @@ class NpkPlusController extends Controller
                 // (GovSource, 2026-10-19); the long 'about' notes are for us and are not sent.
                 'sources' => \App\Support\GovSource::keep($c['sources'] ?? []),
                 // Its usual spacing, for "By spacing" (2026-10-21, the owner); null where the seed calculator has none.
-                'spacing' => \App\Support\PlantAmount::spacing($k)] + array_diff_key($c, ['about' => 1]))->values(),
+                'spacing' => \App\Support\PlantAmount::spacing($k),
+                // Whether the seed tag's germination counts, by the crop's usual way in (PlantAmount::GERM): seed, seedlings or none.
+                'germ' => \App\Support\PlantAmount::germ($k),
+                // The amount's units by its usual way in, the usual first (PlantAmount::units).
+                'units' => \App\Support\PlantAmount::units($k)] + array_diff_key($c, ['about' => 1]))->values(),
             'soilConditions' => SoilConditions::OPTIONS,
             'model' => \App\Support\NpkModel::forClient(),
             'water' => self::WATER,

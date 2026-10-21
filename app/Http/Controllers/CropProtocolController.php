@@ -319,6 +319,10 @@ class CropProtocolController extends Controller
                 // Only the units it is planted by (2026-10-21, the owner), and its spacing by way in (SeedSpacing).
                 'seedUnits' => NpkNeed::seedUnitsFor(NpkNeed::cropKey($key)),
                 'spacing' => (object) array_filter(array_combine(self::methodsFor($key), array_map(fn ($m) => self::spacingOf($key, $m), self::methodsFor($key)))),
+                // Whether the seed tag's germination counts, by way in (2026-10-21, PlantAmount::GERM): seed, seedlings or none.
+                'germ' => (object) array_combine(self::methodsFor($key), array_map(fn ($m) => \App\Support\PlantAmount::germ($key, $m), self::methodsFor($key))),
+                // The amount's units by way in, the usual first (PlantAmount::units): seed, seedlings, pieces or plants.
+                'units' => (object) array_combine(self::methodsFor($key), array_map(fn ($m) => \App\Support\PlantAmount::units($key, $m), self::methodsFor($key))),
                 // The field questions' crop (partials/field-profile), and the catalogue's.
                 'fq' => \App\Support\FieldCatalogue::cropKey($key),
             ])->values(),
@@ -488,17 +492,22 @@ class CropProtocolController extends Controller
         if (! $k) {
             return null;
         }
-        [$key, $way] = $k;
-        $in = ['crop' => $key, 'method' => $way, 'variety' => (string) ($p['variety'] ?? ''), 'area' => 1, 'areaUnit' => 'ha'];
-        // The seed tag's germination, where the farmer gave it (2026-10-21): the seeds that come up, in either way.
-        if ((float) ($p['germination'] ?? 0) > 0) {
-            $in['germTag'] = (float) $p['germination'];
-        }
+        [$key, $way, $bought] = $k;
         $sp = $p['spacing'] ?? null;
         $area = max(0.0001, (float) ($p['area'] ?? 1));
         $amt = (float) ($p['seedAmount'] ?? 0);
         $unit = (string) ($p['seedUnit'] ?? 'kg');
-        if (! empty($sp['row']) && ! empty($sp['plant'])) {
+        $bySp = ! empty($sp['row']) && ! empty($sp['plant']);
+        // Seedlings given as seed (kilos, grams, seeds): a tray of the farmer's own, so not bought.
+        if (! $bySp && in_array($unit, ['kg', 'g', 'seeds'], true)) {
+            $bought = false;
+        }
+        $in = ['crop' => $key, 'method' => $way, 'variety' => (string) ($p['variety'] ?? ''), 'area' => 1, 'areaUnit' => 'ha', 'bought' => $bought];
+        // The seed tag's germination (2026-10-21, the owner): only where seed goes in (PlantAmount::germApplies).
+        if ((float) ($p['germination'] ?? 0) > 0 && \App\Support\PlantAmount::germApplies($p['crop'] ?? null, $p['method'] ?? null, $bySp ? 'spacing' : 'amount', $unit)) {
+            $in['germTag'] = (float) $p['germination'];
+        }
+        if ($bySp) {
             // The farmer's spacing, as typed: rows and plants, and the plants a hill they set.
             $in += ['mode' => 'seeds', 'layout' => 'rows', 'row' => $sp['row'], 'plant' => $sp['plant']]
                 + (! empty($sp['perHill']) ? ['hillMode' => 'set', 'perHill' => $sp['perHill']] : []);
@@ -963,7 +972,8 @@ class CropProtocolController extends Controller
                 'priority' => isset(self::PRIORITIES[$l['priority'] ?? '']) ? (string) $l['priority'] : 'balanced',
                 'targetYield' => $num($l['targetYield'] ?? null), 'yieldUnit' => isset($units[$l['yieldUnit'] ?? '']) ? (string) $l['yieldUnit'] : array_key_first($units),
                 'potential' => $num($l['potential'] ?? null),
-                'seedAmount' => $num($l['seedAmount'] ?? null), 'seedUnit' => isset(NpkNeed::SEED_UNITS[$l['seedUnit'] ?? '']) ? (string) $l['seedUnit'] : NpkNeed::seedUnitFor(NpkNeed::cropKey($crop)),
+                'seedAmount' => $num($l['seedAmount'] ?? null),
+                'seedUnit' => in_array($l['seedUnit'] ?? '', $units = \App\Support\PlantAmount::units($crop, $method), true) ? (string) $l['seedUnit'] : ($units[0] ?? 'kg'),
                 'germination' => $num($l['germination'] ?? null) !== null ? max(1.0, min(100.0, (float) $l['germination'])) : null,
                 'profile' => FieldProfile::fromInput($l['profile'] ?? null, $crop),
                 'spacing' => self::spacingIn($l['spacing'] ?? null),
@@ -974,6 +984,10 @@ class CropProtocolController extends Controller
                 $lot['seedAmount'] = null;
             } elseif ($lot['amountBy'] === 'amount') {
                 $lot['spacing'] = null;
+            }
+            // The germination only where seed goes in: not for bought seedlings, cuttings, sets, tubers or trees.
+            if ($lot['germination'] !== null && ! \App\Support\PlantAmount::germApplies($crop, $method, $lot['amountBy'] ?? ($lot['spacing'] ? 'spacing' : 'amount'), $lot['seedUnit'])) {
+                $lot['germination'] = null;
             }
             // Who plants and who harvests this lot (2026-10-21): own, hired, or a machine that serves its crop.
             foreach (['plant', 'harvest'] as $job) {

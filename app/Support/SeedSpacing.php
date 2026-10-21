@@ -764,6 +764,9 @@ final class SeedSpacing
             // The seed tag's germination, where another module asks it (2026-10-21, PlantAmount): it wins in withSeed.
             // This page never sends it.
             'germTag' => $n('germTag', 1, 100),
+            // Seedlings bought ready to set out (PlantAmount: vegetables from seedlings): counted as seedlings, no seed
+            // to weigh and no seedbed. This page never sends it.
+            'bought' => ! empty($in['bought']),
             'weight' => $n('weight', 0.01, 10000000),
             // The pack the farmer picked (2026-10-19): null counts the variety's or the crop's usual.
             'pack' => preg_match('/^(kg|g|seeds)-\d+(\.\d+)?-[a-z]{1,12}$/', (string) ($in['pack'] ?? '')) ? (string) $in['pack'] : null,
@@ -1007,7 +1010,8 @@ final class SeedSpacing
         $fit = $c['fit'] / 100;
         $res = $c['reserve'] / 100;
         // Seedlings from the farmer's own seedbed are counted back to seeds; bought plants are not.
-        $nursery = $method === 'transplant' && ! empty($C['tgw']);
+        $bought = $method === 'transplant' && ! empty($c['bought']);
+        $nursery = $method === 'transplant' && ! empty($C['tgw']) && ! $bought;
         $hasGerm = $method !== 'transplant' || $nursery;
         // The chance one seed, piece or seedling put in a hill comes up (or lives); the losses after thinning.
         // The field and the season at emergence lower the chance (SeedPenalty); the seedbed's temperature, its germination.
@@ -1032,7 +1036,7 @@ final class SeedSpacing
         $perHillStand = $byHills ? $filled : $kept;
         // The weight of one seed or piece, g: the farmer's own, the variety's, or the crop's spread.
         $wts = null;
-        if (self::weighs($C, $method)) {
+        if (self::weighs($C, $method) && ! $bought) {
             $own = $c['weight'] ? ($method === 'piece' ? $c['weight'] : $c['weight'] / 1000) : null;
             $vw = $method === 'piece' ? null : self::span($vy['tgw'] ?? null);
             $span = $method === 'piece' ? $C['pieceWt'] : array_map(fn ($v) => $v / 1000, $vw ?? $C['tgw']);
@@ -1097,7 +1101,7 @@ final class SeedSpacing
         $kgLo = $wts ? $needLo * $wts['lo'] / 1000 : null;
         $kgHi = $wts ? $needHi * $wts['hi'] / 1000 : null;
         // The packs to buy: a pack sold by count from the seeds (the seed size does not matter), a weighed one from the kilos.
-        $pk = self::packPick(self::packs($c, $vy), $c);
+        $pk = $bought ? null : self::packPick(self::packs($c, $vy), $c);
         $packLo = null;
         $packHi = null;
         $packEach = null;
