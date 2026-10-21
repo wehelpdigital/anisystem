@@ -1215,7 +1215,8 @@ document.addEventListener('DOMContentLoaded', () => {
      data-tags="${esc(JSON.stringify(Array.isArray(a.tags) ? a.tags : []))}"
      data-labour="${Number(a.labourTotal || 0)}"
      data-labour-parts="${esc(hasChecklist(a) ? '' : labourParts(a.workerPay))}"
-     data-materials="${Number(a.materialsTotal || 0)}"
+     data-materials="${cardGoods(a)}"
+     data-errands="${cardErrands(a)}"
      data-target-date="${esc(targetDateStr)}"
      data-target-end-date="${esc(targetEndDateStr)}"
      data-lot-signature="${esc(lotSig)}"
@@ -1437,6 +1438,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
             });
             paintReminderTotals(wrap, res.data);
+            // The errands still to buy move with the tick: a ticked one becomes the day's expense.
+            const remCard = box.closest('.activity-card');
+            if (remCard && res.data && res.data.errandSpend !== undefined) remCard.setAttribute('data-errands', String(Number(res.data.errandSpend) || 0));
             // A ticked line may have added money to the day; ask the server
             // what the day costs now rather than adding it up twice.
             await refreshDayMoney((box.closest('.date-group')?.getAttribute('data-date') || '').trim());
@@ -1493,6 +1497,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 return `${p.name || 'Worker'}${len ? ' ' + len : ''} ${money(p.total)}`;
             })
             .join(' · ');
+    }
+    /* What a card hands the day's cash pill besides its wages (2026-10-22): its priced lines and a
+       service task's own price, and an errand list's expense errands not ticked yet. The server says
+       both (goodsTotal, errandSpend); a card drawn from older data works them out the same way. */
+    function cardGoods(a) {
+        if (a.goodsTotal !== undefined && a.goodsTotal !== null) return Number(a.goodsTotal) || 0;
+        return (Number(a.materialsTotal) || 0) + (a.activityType === 'service' ? (Number(a.servicePrice) || 0) : 0);
+    }
+    function cardErrands(a) {
+        if (a.errandSpend !== undefined && a.errandSpend !== null) return Number(a.errandSpend) || 0;
+        if (a.activityType !== 'reminder_checklist' || !Array.isArray(a.reminders)) return 0;
+        return a.reminders.reduce((t, r) => t + (r && r.kind === 'expense' && !r.done ? (Number(r.amount) || 0) : 0), 0);
     }
     function costTag(total, pay) {
         if (!total || Number(total) <= 0) return '';
@@ -1788,7 +1804,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .reduce((t, c) => t + (Number(c.getAttribute('data-materials')) || 0), 0);
         const stock = _stockBuysFor(dateKey).reduce((t, r) => t + (Number(r.amount) || 0), 0);
         const extra = _expenseRowsFor(dateKey).reduce((t, r) => t + (Number(r.amount) || 0), 0);
-        return labour + materials + stock + extra;
+        // Errands still to buy that day (a ticked one is an extra expense already).
+        const errands = $qsa('.activity-card[data-errands]', group)
+            .reduce((t, c) => t + (Number(c.getAttribute('data-errands')) || 0), 0);
+        return labour + materials + stock + extra + errands;
     }
     /** What a day's cash pill says now: its total, 0 when it has none. */
     function dayCashNow(dateKey) {
@@ -1859,7 +1878,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     : `${SVG.wallet}<span>0</span>`;
             }
             const tip = total > 0
-                ? 'Cash to prepare for this day: wages, materials, stock bought and extra expenses'
+                ? 'Cash to prepare for this day: wages, materials, services, stock bought, errands and extra expenses'
                 : 'Nothing costed on this day';
             if (pill.title !== tip) pill.title = tip;
         } else {
@@ -1926,6 +1945,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+        // Errand lists: the expense errands not ticked yet.
+        $qsa('.activity-card[data-errands]', group).forEach((card) => {
+            const amount = Number(card.getAttribute('data-errands')) || 0;
+            if (amount <= 0) return;
+            extras.push({
+                name: (card.querySelector('.activity-card-title')?.textContent || 'Errands').trim(),
+                detail: 'errands still to buy on this list',
+                amount,
+            });
+        });
+
         const wageSum = wages.reduce((t, r) => t + r.amount, 0);
         const goodsSum = goods.reduce((t, r) => t + r.amount, 0);
         const extraSum = extras.reduce((t, r) => t + r.amount, 0);
@@ -1967,8 +1997,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${wageSum > 0 && extraSum > 0 ? `<span class="dc-split" title="Wages ${share}% · expenses ${100 - share}%"><span class="dc-split-wages" style="width:${share}%"></span></span>` : ''}
             </div>
             ${section('Wages', 'wages', ICON_WAGES, wages, wageSum)}
-            ${section('Materials & stock', 'goods', ICON_GOODS, goods, goodsSum)}
-            ${section('Extra expenses', 'extra', ICON_EXTRA, extras, extraSum)}
+            ${section('Materials, services and stock', 'goods', ICON_GOODS, goods, goodsSum)}
+            ${section('Errands and extra expenses', 'extra', ICON_EXTRA, extras, extraSum)}
             <p class="dc-foot">${wages.length
                 ? 'Wages come from each activity. A worker with no half or whole day set is paid for as long as the task takes.'
                 : 'No wages yet. Nobody is assigned to this day.'}</p>`;
@@ -4462,6 +4492,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Re-price anyone still following the task's own length when that changes.
     $id('activityTimeRequired')?.addEventListener('change', () => renderWorkerPay());
+    $id('activityServicePrice')?.addEventListener('input', () => paintSheetCost());
 
     /* ---- WHAT THIS TASK COSTS, SAID WHILE IT IS WRITTEN ----------------
      *
@@ -4481,7 +4512,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const box = $id('activityCostSay');
         if (!box) return;
         const workers = getActivityWorkerIds();
-        const materials = sheetMaterials();
+        // A service task's own price is the task's cost as much as a priced line is (2026-10-22).
+        const materials = sheetMaterials() + (activityMode === 'service' ? (Number($id('activityServicePrice')?.value) || 0) : 0);
+        const goodsWord = activityMode === 'service' ? 'service' : 'materials';
         const show = activityMode !== 'payroll' && activityMode !== 'reminders'
             && (workers.length > 0 || materials > 0);
         box.classList.toggle('is-off', !show);
@@ -4491,18 +4524,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const wages = workers.reduce((t, id) => t + payFor(id), 0);
         const part = inheritedPart();
         const who = workers.length === 1 ? '1 worker' : workers.length + ' workers';
-        const bits = [];
-        if (workers.length) {
-            bits.push(part
-                ? 'wages, ' + (part === 'whole' ? 'whole day' : 'half day') + ' × ' + who
-                : 'no wages: no set time');
-        }
-        if (materials > 0) bits.push((workers.length ? '+ ' : '') + money(materials) + ' materials');
+        /* The bold figure is the TASK'S total (2026-10-22, the owner asked why the costing looked
+           out of step). It read "₱3,524.50 wages ... + ₱3,074.50 materials", the total wearing the
+           wages' name; each part now carries its own amount when there are two. */
+        const pay = part ? 'wages (' + (part === 'whole' ? 'whole day' : 'half day') + ' × ' + who + ')' : 'no wages: no set time';
+        const both = workers.length > 0 && part && materials > 0;
+        const what = both
+            ? 'for this task: ' + money(wages) + ' ' + pay + ' + ' + money(materials) + ' ' + goodsWord
+            : (workers.length ? pay + (materials > 0 ? ' + ' + money(materials) + ' ' + goodsWord : '') : goodsWord);
         const figure = money(wages + materials);
         const moved = !!box.dataset.fig && box.dataset.fig !== figure && box.classList.contains('is-on');
         box.dataset.fig = figure;
         $id('activityCostTask').textContent = figure;
-        $id('activityCostWhat').textContent = bits.join(' ');
+        $id('activityCostWhat').textContent = what;
         // A new figure (half a day to a whole one) pulses, so the change is
         // seen where the eye already is.
         if (moved) {
@@ -4531,7 +4565,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (_) { dayLine.textContent = ''; return; }
         const editing = ($id('activityId')?.value || '').trim();
         const was = editing && group ? group.querySelector(`.activity-card[data-id="${editing}"]`) : null;
-        if (was) base -= (Number(was.getAttribute('data-labour')) || 0) + (Number(was.getAttribute('data-materials')) || 0);
+        if (was) base -= (Number(was.getAttribute('data-labour')) || 0) + (Number(was.getAttribute('data-materials')) || 0)
+            + (Number(was.getAttribute('data-errands')) || 0);
         const d = parseLocalDate(date);
         const when = d ? MONTH_SHORT[d.getMonth()] + ' ' + d.getDate() : 'that day';
         dayLine.textContent = 'Cash to prepare on ' + when + ': ' + money(Math.max(0, base) + wages + materials);
@@ -4971,7 +5006,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityTypeWrap')?.classList.toggle('hidden', !task);
         // How much of a day it takes is not a question a list of errands has.
         $qs('#activitySheet .js-time-required')?.classList.toggle('hidden', reminders);
-        if (reminders) $id('activityTimeRequired').value = 'n/a';
+        if (reminders) { $id('activityTimeRequired').value = 'n/a'; paintPick('activityTimeRequired', 'activityTimeText'); }
         $id('activityWaterTaskWrap')?.classList.toggle('hidden', !irr);
         $id('activityServicePriceWrap')?.classList.toggle('hidden', !svc);
         $id('activityImagesSection')?.classList.toggle('hidden', !task);
@@ -6190,6 +6225,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if ($id('activityServicePrice')) $id('activityServicePrice').value = '';
         setActivityMode('task');
         $id('activityTimeRequired').value = 'half';
+        paintPick('activityPriority', 'activityPriorityText');
+        paintPick('activityTimeRequired', 'activityTimeText');
         if ($id('actWorkerChecklist')) $id('actWorkerChecklist').checked = false;
         if ($id('actWorkerSelfCheck')) $id('actWorkerSelfCheck').checked = false;
         $id('activityIsDayZero').checked = false;
@@ -6295,6 +6332,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             setSprayDirs(Array.isArray(a.sprayDirections) ? a.sprayDirections : []);
             $id('activityTimeRequired').value = a.timeRequired || 'half';
+            // A value set by script fires no change: the tags are repainted by hand, or a whole day
+            // task opened under a "Half day" tag left over from the last sheet (2026-10-22).
+            paintPick('activityPriority', 'activityPriorityText');
+            paintPick('activityTimeRequired', 'activityTimeText');
             if ($id('actWorkerChecklist')) $id('actWorkerChecklist').checked = !!boolFlag(a.workerChecklist);
             if ($id('actWorkerSelfCheck')) $id('actWorkerSelfCheck').checked = !!boolFlag(a.workerSelfCheck);
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);

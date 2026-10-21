@@ -100,7 +100,7 @@ class MoneyView
         if (array_key_exists('servicePrice', $d)) {
             $d['servicePrice'] = null;
         }
-        foreach (['labourTotal', 'materialsTotal'] as $k) {
+        foreach (['labourTotal', 'materialsTotal', 'goodsTotal', 'errandSpend'] as $k) {
             if (array_key_exists($k, $d)) {
                 $d[$k] = 0;
             }

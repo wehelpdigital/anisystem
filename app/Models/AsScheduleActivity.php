@@ -261,6 +261,36 @@ class AsScheduleActivity extends BaseModel
         return round((float) $this->items->sum(fn ($it) => (float) ($it->unitPrice ?? 0) * (float) ($it->quantity ?? 0)), 2);
     }
 
+    /**
+     * What the task costs besides its wages: its priced lines, and a service
+     * task's own price (a tractor, a sprayer for hire). The day's cash pill
+     * reads this (2026-10-22, the owner: the day's "cash to prepare" must be
+     * its whole cost); it counted the lines only, so a hired service never
+     * reached the day's figure although every report counts it.
+     */
+    public function goodsTotal(): float
+    {
+        $service = $this->activityType === 'service' ? (float) ($this->servicePrice ?? 0) : 0.0;
+
+        return round($this->materialsTotal() + $service, 2);
+    }
+
+    /**
+     * An errand list's money still to spend: the expense errands not ticked
+     * yet. A ticked one is already an extra expense on its day, so it is not
+     * counted twice; income errands are money coming in, not cash to prepare.
+     */
+    public function errandSpend(): float
+    {
+        if ($this->activityType !== 'reminder_checklist' || ! is_array($this->reminders)) {
+            return 0.0;
+        }
+
+        return round((float) collect($this->reminders)
+            ->filter(fn ($r) => is_array($r) && ($r['kind'] ?? '') === 'expense' && empty($r['done']))
+            ->sum(fn ($r) => (float) ($r['amount'] ?? 0)), 2);
+    }
+
     public function version()
     {
         return $this->belongsTo(AsScheduleActivityVersion::class, 'versionId');

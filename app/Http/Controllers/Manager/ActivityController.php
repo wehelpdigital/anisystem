@@ -2803,11 +2803,18 @@ class ActivityController extends BaseScheduleController
         $fresh = $activity->fresh();
         $this->broadcastBoard($schedule, 'reload', ['id' => $activity->id], $activity->versionId);
 
+        // A worker kept from the money ticks the errand, not its amounts (MoneyView).
+        $hide = \App\Support\MoneyView::hidden();
+
         return $this->jsonOk($done ? 'Ticked.' : 'Unticked.', ['data' => [
             'id' => $fresh->id,
-            'reminders' => $fresh->reminderList(),
-            'expenseTotal' => $fresh->reminderTotal('expense'),
-            'incomeTotal' => $fresh->reminderTotal('income'),
+            'reminders' => $hide
+                ? array_map(fn ($r) => array_merge($r, ['kind' => 'none', 'amount' => 0.0]), $fresh->reminderList())
+                : $fresh->reminderList(),
+            'expenseTotal' => $hide ? 0.0 : $fresh->reminderTotal('expense'),
+            'incomeTotal' => $hide ? 0.0 : $fresh->reminderTotal('income'),
+            // What the card hands the day's cash pill now: the errands still to buy.
+            'errandSpend' => $hide ? 0.0 : $fresh->errandSpend(),
         ]]);
     }
 
@@ -2880,6 +2887,9 @@ class ActivityController extends BaseScheduleController
             ]])->all(),
             'labourTotal' => $activity->labourTotal(),
             'materialsTotal' => $activity->materialsTotal(),
+            // What the day's cash pill reads besides the wages (2026-10-22): lines and a service's price; unticked errand spending.
+            'goodsTotal' => $activity->goodsTotal(),
+            'errandSpend' => $activity->errandSpend(),
         ];
     }
 
