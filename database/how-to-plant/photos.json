@@ -1,0 +1,578 @@
+{
+ "abaca": {
+  "src": "/images/site/how-to-plant/abaca.webp",
+  "alt": "Abaca plants growing in Lagonoy, Camarines Sur",
+  "credit": "MarvinBikolano, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Abaca_Tree.jpg"
+ },
+ "alfalfa": {
+  "src": "/images/site/how-to-plant/alfalfa.webp",
+  "alt": "A field of alfalfa in flower",
+  "credit": "Chris Morgan, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Walking_through_a_field_of_alfalfa_-_geograph.org.uk_-_4073273.jpg"
+ },
+ "almond": {
+  "src": "/images/site/how-to-plant/almond.webp",
+  "alt": "Almond trees in flower in an orchard",
+  "credit": "Ximonic (Simo Räsänen), CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Almond_cultivation_in_the_mountains_of_Relleu,_Alicante,_Spain,_2022_January.jpg"
+ },
+ "apple": {
+  "src": "/images/site/how-to-plant/apple.webp",
+  "alt": "Red apples ripening on a tree in an orchard",
+  "credit": "Lehlohonolo Chefa, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Maoa-Mafubelu_Fruits_Farm_produce.jpg"
+ },
+ "avocado": {
+  "src": "/images/site/how-to-plant/avocado.webp",
+  "alt": "Avocado fruits hanging on the tree",
+  "credit": "Denis kasozi, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Ugandan_avocado_fruit_on_the_tree.jpg"
+ },
+ "bamboo": {
+  "src": "/images/site/how-to-plant/bamboo.webp",
+  "alt": "A clump of bamboo beside vegetable plots in Santa Maria, Bulacan",
+  "credit": "FBenjr123, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Vegetable_plantations_in_Santa_Maria,_Bulacan_04.jpg"
+ },
+ "banana": {
+  "src": "/images/site/how-to-plant/banana.webp",
+  "alt": "A banana plantation in Davao del Sur",
+  "credit": "Michael Padada, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Banana_Plantation,_Padada.JPG"
+ },
+ "barley": {
+  "src": "/images/site/how-to-plant/barley.webp",
+  "alt": "A barley field with ripening heads",
+  "credit": "Gerda Arendt, CC0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Barley_field,_Ehrenbach,_from_trail.jpg"
+ },
+ "bell-pepper": {
+  "src": "/images/site/how-to-plant/bell-pepper.webp",
+  "alt": "Green bell peppers on the plant, one turning red",
+  "credit": "USDAgov, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Veteran_New_Farmer_Green_Bexar_Farm_(20201017-NRCS-LSC-0130).jpg"
+ },
+ "bitter-gourd": {
+  "src": "/images/site/how-to-plant/bitter-gourd.webp",
+  "alt": "Bitter gourd fruits hanging from the vine",
+  "credit": "Zeynel Cebeci, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Momordica_charantia_-_Bitter_melon,_Adana_2017-11-19_01-1.jpg"
+ },
+ "blueberry": {
+  "src": "/images/site/how-to-plant/blueberry.webp",
+  "alt": "A blueberry bush with ripening berries",
+  "credit": "OHWiki, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:The_Blueberry_Patch.JPG"
+ },
+ "bottle-gourd": {
+  "src": "/images/site/how-to-plant/bottle-gourd.webp",
+  "alt": "Bottle gourds hanging from a trellis",
+  "credit": "Kutlunur, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Su_kabaklar%C4%B1.jpg"
+ },
+ "broccoli": {
+  "src": "/images/site/how-to-plant/broccoli.webp",
+  "alt": "Broccoli plants with heads forming in the field",
+  "credit": "Richard Sutcliffe, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Broccoli_-_geograph.org.uk_-_7890282.jpg"
+ },
+ "cabbage": {
+  "src": "/images/site/how-to-plant/cabbage.webp",
+  "alt": "Rows of cabbage heads in a farm",
+  "credit": "Salihu Aliyu, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Cabbage_farm_5.jpg"
+ },
+ "cacao": {
+  "src": "/images/site/how-to-plant/cacao.webp",
+  "alt": "Ripe cacao pods growing on the trunk",
+  "credit": "Isabell Schulz, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Cacao_farm,_Can_Tho_(45199902095).jpg"
+ },
+ "calamansi": {
+  "src": "/images/site/how-to-plant/calamansi.webp",
+  "alt": "Calamansi fruits on the branch",
+  "credit": "Сарапулов, CC BY 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B0%D0%BB%D0%B0%D0%BC%D0%BE%D0%BD%D0%B4%D0%B8%D0%BD_DSC_0342.jpg"
+ },
+ "canola": {
+  "src": "/images/site/how-to-plant/canola.webp",
+  "alt": "A canola field in full yellow flower",
+  "credit": "Ethan Sahagun, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Canola_field_in_Manitoba,_Canada.jpg"
+ },
+ "carrot": {
+  "src": "/images/site/how-to-plant/carrot.webp",
+  "alt": "Rows of carrot plants in a field",
+  "credit": "Ben Harris, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Carrot_field_near_Wormegay_-_geograph.org.uk_-_529368.jpg"
+ },
+ "cashew": {
+  "src": "/images/site/how-to-plant/cashew.webp",
+  "alt": "Cashew apples with their nuts hanging on the tree",
+  "credit": "Vinayaraj, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Cashewnuts_hanging_on_a_Cashew_Tree.jpg"
+ },
+ "cassava": {
+  "src": "/images/site/how-to-plant/cassava.webp",
+  "alt": "Cassava plants growing in a field in Candaba, Pampanga",
+  "credit": "Judgefloro, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:02776jfSan_Luis_Roads_School_Halls_Mangga_Cassava_Tenejero_Barit_Candaba_Pampangafvf_20.JPG"
+ },
+ "cauliflower": {
+  "src": "/images/site/how-to-plant/cauliflower.webp",
+  "alt": "A cauliflower head forming inside its leaves",
+  "credit": "DelwarHossain, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Brassica_oleracea_var_in_pabna.jpg"
+ },
+ "celery": {
+  "src": "/images/site/how-to-plant/celery.webp",
+  "alt": "Rows of celery growing in a field",
+  "credit": "Richard Humphrey, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:G%27s_Celery_-_geograph.org.uk_-_4683218.jpg"
+ },
+ "chayote": {
+  "src": "/images/site/how-to-plant/chayote.webp",
+  "alt": "Chayote fruits hanging from a trellis",
+  "credit": "Wendy Cutler, CC BY 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sechium_edule_Main_Chayote_Cutler_P1050272.jpg"
+ },
+ "cherry": {
+  "src": "/images/site/how-to-plant/cherry.webp",
+  "alt": "Sweet cherries ripening on the tree",
+  "credit": "Geoprofi Lars, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:2009-06-21_Berlin_S%C3%BC%C3%9Fkirsche.jpg"
+ },
+ "chico": {
+  "src": "/images/site/how-to-plant/chico.webp",
+  "alt": "Chico fruits ripening on the branch",
+  "credit": "HK Arun, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Manilkara_Zapota_in_HK.JPG"
+ },
+ "chili": {
+  "src": "/images/site/how-to-plant/chili.webp",
+  "alt": "Chili plants with red pods in the field",
+  "credit": "Bhaskaranaidu, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Mirci_ready_in_the_field.JPG"
+ },
+ "citrus": {
+  "src": "/images/site/how-to-plant/citrus.webp",
+  "alt": "A citrus tree heavy with ripe fruit in an orchard",
+  "credit": "Donarreiskoffer, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Citrus_orchards_near_Sagunto_04.jpg"
+ },
+ "coconut": {
+  "src": "/images/site/how-to-plant/coconut.webp",
+  "alt": "A coconut plantation in Sipocot, Camarines Sur",
+  "credit": "Biag arnel, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Coconut_Plantation_in_Sipocot,_Camarines_Sur,_Philippines.jpg"
+ },
+ "coffee": {
+  "src": "/images/site/how-to-plant/coffee.webp",
+  "alt": "Ripe robusta coffee cherries on the branch",
+  "credit": "Jeevan Jose, Kerala, India, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Coffea_canephora_2_at_Aanakkulam.jpg"
+ },
+ "cotton": {
+  "src": "/images/site/how-to-plant/cotton.webp",
+  "alt": "Cotton plants with open bolls in the field",
+  "credit": "Nabina Chakraborty, WELL Labs, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Closeup_image_of_a_cotton_field_in_Raichur_Karnataka.jpg"
+ },
+ "cowpea": {
+  "src": "/images/site/how-to-plant/cowpea.webp",
+  "alt": "Cowpea plants with long pods in the field",
+  "credit": "Ganesh Mohan T, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Cowpea_cultivation_01.jpg"
+ },
+ "cucumber": {
+  "src": "/images/site/how-to-plant/cucumber.webp",
+  "alt": "Cucumbers hanging from vines trained up strings",
+  "credit": "Frank Vincentz, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Kluse_-_Cucumis_sativus_Salatgurken_01_ies.jpg"
+ },
+ "dragon-fruit": {
+  "src": "/images/site/how-to-plant/dragon-fruit.webp",
+  "alt": "Rows of dragon fruit cactus trained on concrete posts",
+  "credit": "PJeganathan, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Dragonfruit_farm_in_Andhra_Pradesh_IMG_20251123_132250348.jpg"
+ },
+ "durian": {
+  "src": "/images/site/how-to-plant/durian.webp",
+  "alt": "Young durian fruits hanging from the branches",
+  "credit": "DXLINH, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Tender_fruit%27s_Durian_tree.JPG"
+ },
+ "eggplant": {
+  "src": "/images/site/how-to-plant/eggplant.webp",
+  "alt": "An eggplant fruit hanging from the plant in Baliuag, Bulacan",
+  "credit": "Judgefloro, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:09705jfVillages_Makinabang_Highway_Baliuag_Bulacan_Paddy_fields_Roadsfvf_11.jpg"
+ },
+ "garlic": {
+  "src": "/images/site/how-to-plant/garlic.webp",
+  "alt": "Rows of young garlic plants in a field",
+  "credit": "Dwight Sipler from Stow, MA, USA, CC BY 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Garlic_in_the_Spring_(6908829406).jpg"
+ },
+ "ginger": {
+  "src": "/images/site/how-to-plant/ginger.webp",
+  "alt": "Ginger plants growing on raised beds",
+  "credit": "Anee jose at Malayalam Wikipedia, CC BY 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Ginger_farm.jpg"
+ },
+ "glutinous-corn": {
+  "src": "/images/site/how-to-plant/glutinous-corn.webp",
+  "alt": "Freshly picked ears of white glutinous corn from Bulacan",
+  "credit": "Judgefloro, CC0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:9698Cuisine_foods_in_Bulacan_51.jpg"
+ },
+ "grape": {
+  "src": "/images/site/how-to-plant/grape.webp",
+  "alt": "Bunches of dark grapes ripening on the vine",
+  "credit": "Florian Pépellin, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Grappes_de_raisin_noir_%C3%A0_St-Pierre-d%27Albigny_(octobre_2021)_1.JPG"
+ },
+ "guava": {
+  "src": "/images/site/how-to-plant/guava.webp",
+  "alt": "Guava fruits growing among the leaves",
+  "credit": "Lallji at Malayalam Wikipedia, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Guava_Fruits_with_Leaves.JPG"
+ },
+ "jackfruit": {
+  "src": "/images/site/how-to-plant/jackfruit.webp",
+  "alt": "Jackfruits hanging from the branches of the tree",
+  "credit": "Zahara5555, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Jackfruit_tree,_the_largest_tree_fruit_03.jpg"
+ },
+ "jute-mallow": {
+  "src": "/images/site/how-to-plant/jute-mallow.webp",
+  "alt": "Saluyot leaves and a yellow flower on the plant",
+  "credit": "Dinesh Valke, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Corchorus_olitorius_254449477.jpg"
+ },
+ "lanzones": {
+  "src": "/images/site/how-to-plant/lanzones.webp",
+  "alt": "A cluster of lanzones fruits growing on the trunk",
+  "credit": "Len Worthington, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Lansium_domesticum_(7126753821).jpg"
+ },
+ "lettuce": {
+  "src": "/images/site/how-to-plant/lettuce.webp",
+  "alt": "Rows of leaf lettuce growing in a farm",
+  "credit": "Amuzujoe, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Lettuce_farm.jpg"
+ },
+ "lima-bean": {
+  "src": "/images/site/how-to-plant/lima-bean.webp",
+  "alt": "Freshly picked green patani pods",
+  "credit": "Wibowo Djatmiko (Wie146), CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Phaseol_lunat_130815-0005_tdp.JPG"
+ },
+ "malabar-spinach": {
+  "src": "/images/site/how-to-plant/malabar-spinach.webp",
+  "alt": "Alugbati vines climbing with their thick green leaves",
+  "credit": "Yercaud elango, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Basella_alba-yercaud-salem-India.JPG"
+ },
+ "mango": {
+  "src": "/images/site/how-to-plant/mango.webp",
+  "alt": "Young mangoes hanging among the leaves of the tree",
+  "credit": "iMahesh, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Mangoes_during_the_end_of_Autumn_season_in_Hyderabad_(2).jpg"
+ },
+ "mangosteen": {
+  "src": "/images/site/how-to-plant/mangosteen.webp",
+  "alt": "A ripe mangosteen fruit on the tree",
+  "credit": "VpuipV, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Mangosteen_fruit_on_the_tree.jpg"
+ },
+ "melon": {
+  "src": "/images/site/how-to-plant/melon.webp",
+  "alt": "A melon fruit lying among the vines",
+  "credit": "Melón de Torres de Berrellén, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Melon_tendral.jpg"
+ },
+ "moringa": {
+  "src": "/images/site/how-to-plant/moringa.webp",
+  "alt": "Malunggay leaves on a young tree",
+  "credit": "Mokkie, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Drumstick_Tree_(Moringa_oleifera)_4.jpg"
+ },
+ "mungbean": {
+  "src": "/images/site/how-to-plant/mungbean.webp",
+  "alt": "Mungbean pods and yellow flowers on the plant",
+  "credit": "Dinesh Valke, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Vigna_radiata_256733481.jpg"
+ },
+ "mustard": {
+  "src": "/images/site/how-to-plant/mustard.webp",
+  "alt": "Leafy mustard greens ready to pick",
+  "credit": "Comedora, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Brassica_juncea.jpg"
+ },
+ "oats": {
+  "src": "/images/site/how-to-plant/oats.webp",
+  "alt": "A field of oats with ripening heads",
+  "credit": "Philip Halling, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:A_field_of_oats_-_geograph.org.uk_-_6945100.jpg"
+ },
+ "oil-palm": {
+  "src": "/images/site/how-to-plant/oil-palm.webp",
+  "alt": "An oil palm plantation on rolling hills",
+  "credit": "CEphoto, Uwe Aranas, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Kunak-District_Sabah_Oil-palm-plantation-01.jpg"
+ },
+ "okra": {
+  "src": "/images/site/how-to-plant/okra.webp",
+  "alt": "An okra pod growing upright on the plant",
+  "credit": "Earth100, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Okra_Aug_25_2012.JPG"
+ },
+ "onion": {
+  "src": "/images/site/how-to-plant/onion.webp",
+  "alt": "Onion fields in the Philippines",
+  "credit": "Zarate123, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Onion_fields_in_the_Philippines_River_32.jpg"
+ },
+ "papaya": {
+  "src": "/images/site/how-to-plant/papaya.webp",
+  "alt": "Young papaya fruits clustered on the trunk",
+  "credit": "Valugi, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Young_papaya.jpg"
+ },
+ "peach": {
+  "src": "/images/site/how-to-plant/peach.webp",
+  "alt": "Ripe peaches hanging on the tree",
+  "credit": "Jackson's Orchard, CC BY 2.0, via Flickr",
+  "file": "https://www.flickr.com/photos/48353198@N05/5558955306"
+ },
+ "peanut": {
+  "src": "/images/site/how-to-plant/peanut.webp",
+  "alt": "A field of peanut plants",
+  "credit": "Alabama Extension, CC0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Field_of_Peanut_Plants.jpg"
+ },
+ "pear": {
+  "src": "/images/site/how-to-plant/pear.webp",
+  "alt": "Ripe pears hanging on the branch",
+  "credit": "Unuplusunu, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Pears_-_fruits_x1.jpg"
+ },
+ "pechay": {
+  "src": "/images/site/how-to-plant/pechay.webp",
+  "alt": "Pechay plants growing close together in a bed",
+  "credit": "Rameshng, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Brassica_rapa_subsp._chinensis_-_Pak_choi_from_lalbagh_2289.JPG"
+ },
+ "pigeon-pea": {
+  "src": "/images/site/how-to-plant/pigeon-pea.webp",
+  "alt": "Kadyos pods and flowers on the plant",
+  "credit": "Filo gèn', CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Cajanus_Cajan_(Fabaceae)_01.jpg"
+ },
+ "pineapple": {
+  "src": "/images/site/how-to-plant/pineapple.webp",
+  "alt": "Pineapples growing among their spiky leaves in Bukidnon",
+  "credit": "Obsidian Soul, CC0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Del_Monte_Pineapple_field_at_Camp_Philips,_Bukidnon,_Philippines_01.jpg"
+ },
+ "pomelo": {
+  "src": "/images/site/how-to-plant/pomelo.webp",
+  "alt": "Pomelo fruits hanging from the tree",
+  "credit": "Forest and Kim Starr, CC BY 3.0 US, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Starr-030201-0005-Citrus_maxima-habit-Haiku-Maui_(24324252660).jpg"
+ },
+ "potato": {
+  "src": "/images/site/how-to-plant/potato.webp",
+  "alt": "Potato plants growing in rows of red soil",
+  "credit": "Willem van Aken, CSIRO, CC BY 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:CSIRO_ScienceImage_4062_Potato_plants_on_farm_near_Atherton_QLD.jpg"
+ },
+ "purple-yam": {
+  "src": "/images/site/how-to-plant/purple-yam.webp",
+  "alt": "An ube tuber cut open to show its purple flesh",
+  "credit": "Deepugn at Malayalam Wikipedia, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Kaachil_cut.jpg"
+ },
+ "radish": {
+  "src": "/images/site/how-to-plant/radish.webp",
+  "alt": "White labanos roots pushing up from the soil among their leaves",
+  "credit": "Unknown author, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Daikon.jpg"
+ },
+ "rambutan": {
+  "src": "/images/site/how-to-plant/rambutan.webp",
+  "alt": "Ripe red rambutan fruits hanging on the tree",
+  "credit": "Michael Hermann www.CropsfortheFuture.org, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Rambutan_fruits_Nephelium_lappaceum_02.JPG"
+ },
+ "rubber": {
+  "src": "/images/site/how-to-plant/rubber.webp",
+  "alt": "Rows of tapped rubber trees with latex cups",
+  "credit": "Manukrishnan80, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Rubber_Plantation_(32826).jpg"
+ },
+ "santol": {
+  "src": "/images/site/how-to-plant/santol.webp",
+  "alt": "Santol fruits growing among the leaves of the tree",
+  "credit": "Татьяна Максимова, CC BY 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sandoricum_koetjape_251714778.jpg"
+ },
+ "shallot": {
+  "src": "/images/site/how-to-plant/shallot.webp",
+  "alt": "A farmer watering rows of shallots",
+  "credit": "Arief1802, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Menyiram_Tanaman_Bawang.jpg"
+ },
+ "sorghum": {
+  "src": "/images/site/how-to-plant/sorghum.webp",
+  "alt": "A sorghum field with ripe red heads in the Philippines",
+  "credit": "Zarate123, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sorghum_fields_in_the_Philippines_19.jpg"
+ },
+ "soursop": {
+  "src": "/images/site/how-to-plant/soursop.webp",
+  "alt": "Guyabano fruits growing on the tree",
+  "credit": "Yercaud elango, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Annona_muricata-4-panaimarathupatti-salem-India.jpg"
+ },
+ "soybean": {
+  "src": "/images/site/how-to-plant/soybean.webp",
+  "alt": "Young soybean plants growing in rows",
+  "credit": "United Soybean Board, CC BY 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Soybean_Field_(9624053828).jpg"
+ },
+ "sponge-gourd": {
+  "src": "/images/site/how-to-plant/sponge-gourd.webp",
+  "alt": "A ridged patola fruit lying among the vines",
+  "credit": "Forest and Kim Starr, CC BY 3.0 US, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Starr-170614-0951-Luffa_acutangula-fruit_leaves_tendrils-Community_Garden_Sand_Island-Midway_Atoll_(36218841511).jpg"
+ },
+ "spring-onion": {
+  "src": "/images/site/how-to-plant/spring-onion.webp",
+  "alt": "Long beds of green onions growing on plastic mulch",
+  "credit": "Solomon203, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sansing_Green_Onion_fields_20141206.jpg"
+ },
+ "squash": {
+  "src": "/images/site/how-to-plant/squash.webp",
+  "alt": "A kalabasa fruit ripening among its broad leaves",
+  "credit": "Forest and Kim Starr, CC BY 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Starr-131002-2370-plant-Cucurbita_moschata-fruit_and_leaves-Hawea_Pl_Olinda.jpg"
+ },
+ "star-apple": {
+  "src": "/images/site/how-to-plant/star-apple.webp",
+  "alt": "A star apple cut in half to show its purple star",
+  "credit": "TopTropicals.com, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Chrysophylum_caimito_-_Star_Apple_(52334746354).jpg"
+ },
+ "strawberry": {
+  "src": "/images/site/how-to-plant/strawberry.webp",
+  "alt": "A strawberry plant with ripe fruit on plastic mulch",
+  "credit": "Alabama Extension, CC0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Strawberry_Plant_with_Fruit.jpg"
+ },
+ "string-bean": {
+  "src": "/images/site/how-to-plant/string-bean.webp",
+  "alt": "Sitaw vines climbing their poles over plastic mulch",
+  "credit": "Aris riyanto, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:%22%2Barya%2B%22_kacang_panjang_(Vigna_unguiculata_sesquipedalis)_%EA%A6%8F%EA%A6%95%EA%A6%81_%EA%A6%AD%EA%A6%9A%EA%A7%80%EA%A6%97%EA%A6%AB%EA%A6%A4%EA%A7%80_2020_4.jpg"
+ },
+ "sugar-apple": {
+  "src": "/images/site/how-to-plant/sugar-apple.webp",
+  "alt": "An atis fruit growing on the branch",
+  "credit": "Priyadharshini Mohanraj, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Custard_apple_in_garden.jpg"
+ },
+ "sugar-beet": {
+  "src": "/images/site/how-to-plant/sugar-beet.webp",
+  "alt": "A field of sugar beet plants",
+  "credit": "Gilles San Martin from Namur, Belgium, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sugar_beet_field_(4799481326).jpg"
+ },
+ "sugarcane": {
+  "src": "/images/site/how-to-plant/sugarcane.webp",
+  "alt": "Young sugarcane rows in La Carlota, Negros Occidental",
+  "credit": "divina_gracia, CC BY 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sugar_Cane_Field,_Barangay_Haguimit,_La_Carlota_City_-_panoramio_(1).jpg"
+ },
+ "sunflower": {
+  "src": "/images/site/how-to-plant/sunflower.webp",
+  "alt": "A sunflower field in full bloom",
+  "credit": "Audrey from Central Pennsylvania, USA, CC BY 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sunflower_Field_(7848091146).jpg"
+ },
+ "sweet-corn": {
+  "src": "/images/site/how-to-plant/sweet-corn.webp",
+  "alt": "Freshly picked ears of yellow sweet corn",
+  "credit": "Forest and Kim Starr, CC BY 3.0 US, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Starr-150814-2148-Zea_mays-Illini_Xtra_Sweet_ears_harvested-Hawea_Pl_Olinda-Maui_(25000436000).jpg"
+ },
+ "sweet-potato": {
+  "src": "/images/site/how-to-plant/sweet-potato.webp",
+  "alt": "Long rows of kamote vines covering a field",
+  "credit": "Σ64, CC BY 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Sweet_potato_field_in_Namegata,_Ibaraki_02.jpg"
+ },
+ "tamarind": {
+  "src": "/images/site/how-to-plant/tamarind.webp",
+  "alt": "Sampalok pods hanging from the branches",
+  "credit": "Thamizhpparithi Maari, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:A_aesthetic_Tamarind_tree.JPG"
+ },
+ "taro": {
+  "src": "/images/site/how-to-plant/taro.webp",
+  "alt": "A flooded field of gabi plants",
+  "credit": "Zyrahila, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Taro_Field.jpg"
+ },
+ "tobacco": {
+  "src": "/images/site/how-to-plant/tobacco.webp",
+  "alt": "Tobacco fields in Laoac, Pangasinan",
+  "credit": "Judgefloro, CC0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:0281Tobacco_fields_in_Laoac,_Pangasinan_69.jpg"
+ },
+ "tomato": {
+  "src": "/images/site/how-to-plant/tomato.webp",
+  "alt": "Tomatoes ripening on the vine",
+  "credit": "Naposia, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Ripening_tomatoes.jpg"
+ },
+ "turmeric": {
+  "src": "/images/site/how-to-plant/turmeric.webp",
+  "alt": "The long leaves of turmeric plants",
+  "credit": "Manojk, CC BY SA 3.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Curcuma_longa_DSCN0555.jpg"
+ },
+ "water-spinach": {
+  "src": "/images/site/how-to-plant/water-spinach.webp",
+  "alt": "Kangkong growing thick in a farm bed",
+  "credit": "Wee Hong, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Ipomoea_aquatica_at_Organic_Unit,_FP,_UPM.jpg"
+ },
+ "watermelon": {
+  "src": "/images/site/how-to-plant/watermelon.webp",
+  "alt": "Watermelons ripening between rows of vines",
+  "credit": "Asturio Cantabrio, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Watermelon_fields_in_Amino-cho_Tawarano_ac_(2).jpg"
+ },
+ "wheat": {
+  "src": "/images/site/how-to-plant/wheat.webp",
+  "alt": "A green wheat field",
+  "credit": "Hugh Venables, CC BY SA 2.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Wheat_field_-_geograph.org.uk_-_4068947.jpg"
+ },
+ "winged-bean": {
+  "src": "/images/site/how-to-plant/winged-bean.webp",
+  "alt": "A sigarilyas pod hanging from the vine",
+  "credit": "Wee Hong, CC BY SA 4.0, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:Psophocarpus_tetragonolobus_(240529-0857).jpg"
+ },
+ "yellow-corn": {
+  "src": "/images/site/how-to-plant/yellow-corn.webp",
+  "alt": "Young corn plants in a field in Pura, Tarlac",
+  "credit": "Judgefloro, Public domain, via Wikimedia Commons",
+  "file": "https://commons.wikimedia.org/wiki/File:09299jfPura_Victoria_Tarlac_Corn_Fields_Barangay_National_Roadfvf_11.JPG"
+ }
+}

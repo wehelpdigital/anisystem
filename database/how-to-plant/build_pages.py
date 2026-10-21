@@ -461,7 +461,9 @@ def page_of(g, order, heroes, hubs, used):
             items.append(r)
     blocks.append({"type": "links", "title": "Read next", "items": items[:6]})
 
-    hero = heroes.get(crop)
+    # Each crop's own photo (photos.json, picked by hand from free licensed photos), else its group's picture.
+    photo = (load_json(os.path.join(HERE, "photos.json"), {}) or {}).get(g["slug"])
+    hero = (photo["src"], photo["alt"], photo["credit"]) if photo else heroes.get(crop)
     page = {
         "section": "how-to-plant", "slug": g["slug"], "lang": "en", "category": SHELF.get(shelf, "Fruits and Plantation Crops"),
         "sortOrder": order, "title": title, "metaTitle": meta_title, "metaDescription": meta, "focusKeyword": focus,
