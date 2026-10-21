@@ -408,16 +408,23 @@ class FarmReportController extends BaseScheduleController
         $blockers = [];
         $warnings = [];
         if ($yieldRows->isEmpty()) {
-            $blockers[] = 'No harvest is recorded in Observations yet, and a profit report needs it. First add a Yield observation with the amount and its selling price.';
+            $blockers[] = 'No harvest is recorded yet, and a profit report needs it. Mark a lot harvested from the Harvest button on the board (or add a Yield observation), with what it sold for.';
         }
         if ($undone->count() > 0) {
             $warnings[] = $undone->count() . ' ' . ($undone->count() === 1 ? 'activity is' : 'activities are')
                 . ' not ticked done. Their planned costs are still counted, so the numbers show the full plan, not only what was done.';
         }
-        $unpriced = $yieldRows->filter(fn ($h) => $h->pricePerUnit === null || (float) $h->pricePerUnit <= 0);
-        if ($unpriced->count() > 0) {
-            $warnings[] = $unpriced->count() . ' yield ' . ($unpriced->count() === 1 ? 'row has' : 'rows have')
-                . ' no selling price. That harvest counts as ' . \App\Support\Region::symbol() . '0 income until you add a price.';
+        // Unpriced is a lot whose harvest has no price anywhere: a harvest
+        // row beside a priced sale (the board's harvest record writes both)
+        // is not missing anything.
+        $priced = fn ($h) => $h->pricePerUnit !== null && (float) $h->pricePerUnit > 0;
+        $unpricedLots = $yieldRows->groupBy(fn ($h) => (int) ($h->lotId ?: 0))
+            ->filter(fn ($rows) => ! $rows->contains($priced))
+            ->keys()
+            ->map(fn ($lid) => $lid === 0 ? 'The whole season' : ($schedule->lots->firstWhere('id', $lid)?->lotName ?? 'A lot'));
+        if ($unpricedLots->isNotEmpty()) {
+            $warnings[] = $unpricedLots->implode(', ') . ': a harvest with no selling price. It counts as ' . \App\Support\Region::symbol()
+                . '0 income until you add what it sold for (a Selling and price observation).';
         }
 
         /* ---- crop-day sanity, per lot: how long the crop actually ran
@@ -491,13 +498,18 @@ class FarmReportController extends BaseScheduleController
         }
         $totalCost = round(array_sum($costCats), 2);
 
-        /* ---- revenue, per lot ---- */
+        /* ---- revenue, per lot ----
+         * The money is every priced row, amount × price. The harvest's size
+         * is counted once: a sale is not a second harvest (harvestRows). */
         $lotRevenue = [];   // lotId (0 = general) => amount
         $lotYield = [];     // lotId => [unit => qty]
         foreach ($yieldRows as $h) {
             $lid = (int) ($h->lotId ?: 0);
             $rev = round((float) $h->yieldAmount * (float) ($h->pricePerUnit ?? 0), 2);
             $lotRevenue[$lid] = ($lotRevenue[$lid] ?? 0) + $rev;
+        }
+        foreach (\App\Models\AsSchedulePostHarvest::harvestRows($yieldRows) as $h) {
+            $lid = (int) ($h->lotId ?: 0);
             $unit = $h->yieldUnit ?: 'units';
             $lotYield[$lid][$unit] = ($lotYield[$lid][$unit] ?? 0) + (float) $h->yieldAmount;
         }
@@ -595,7 +607,8 @@ class FarmReportController extends BaseScheduleController
         $settings = AiSetting::current();
         $credits = app(AiCreditService::class);
 
-        [$blockers, $warnings] = $this->aneeChecks($schedule, $kind);
+        $lot = (int) $request->query('lotId', 0) > 0 ? $schedule->lots()->where('id', (int) $request->query('lotId'))->first() : null;
+        [$blockers, $warnings] = $this->aneeChecks($schedule, $kind, $lot);
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
             $blockers[] = $payer->canUseAi()
                 ? 'Anee is not switched on yet. Please check back soon.'
@@ -620,22 +633,44 @@ class FarmReportController extends BaseScheduleController
      * What honestly stops a run, and what only rides as a footnote.
      * The season read needs a FINISHED season; so-far only needs a season
      * with something in it.
+     *
+     * The season read of ONE lot (2026-10-22) needs that lot finished: marked
+     * harvested (or the season closed), its own work ticked, its harvest on
+     * record. The rest of the farm may still be growing.
      */
-    private function aneeChecks(\App\Models\AsCroppingSchedule $schedule, string $kind): array
+    private function aneeChecks(\App\Models\AsCroppingSchedule $schedule, string $kind, $lot = null): array
     {
-        $schedule->loadMissing('activities');
+        $schedule->loadMissing('activities.lots');
         $blockers = [];
         $warnings = [];
-        $undone = $schedule->activities->filter(fn ($a) => ! $a->isDone)->count();
+        $acts = $schedule->activities;
+        if ($lot && $kind === 'season') {
+            $acts = $acts->filter(fn ($a) => $a->lots->contains('id', $lot->id));
+        }
+        $undone = $acts->filter(fn ($a) => ! $a->isDone)->count();
         $harvestCount = \App\Models\AsSchedulePostHarvest::where('croppingScheduleId', $schedule->id)
-            ->where('deleteStatus', 1)->count();
+            ->where('deleteStatus', 1)
+            ->when($lot && $kind === 'season', fn ($q) => $q->where('lotId', $lot->id))
+            ->count();
 
         if ($schedule->activities->isEmpty()) {
             $blockers[] = 'The season has no activities yet, so there is nothing to look at.';
+        } elseif ($lot && $kind === 'season' && $acts->isEmpty()) {
+            $blockers[] = 'No activities are on ' . $lot->lotName . ', so there is nothing to look at for it.';
         }
-        if ($kind === 'season') {
+        if ($kind === 'season' && $lot) {
+            if (! $lot->isHarvested() && ! $schedule->isLocked()) {
+                $blockers[] = $lot->lotName . ' is not marked harvested yet. Mark it from the Harvest button on the board, because this report looks back at a finished crop.';
+            }
+            if ($undone > 0) {
+                $blockers[] = $undone . ' ' . ($undone === 1 ? 'activity' : 'activities') . ' on ' . $lot->lotName . ' ' . ($undone === 1 ? 'is' : 'are') . ' not ticked done. Tick what was done (or delete what was not) so the report is true.';
+            }
+            if ($harvestCount === 0) {
+                $blockers[] = 'No observations on ' . $lot->lotName . ' yet. Its harvest record (the yield at least) is half the story.';
+            }
+        } elseif ($kind === 'season') {
             if (! $schedule->isLocked()) {
-                $blockers[] = 'The season is not closed yet. Close it in the Hub first, because this report looks back at a finished season.';
+                $blockers[] = 'The season is not closed yet. Close it in the Hub first, because this report looks back at a finished season. A lot marked harvested can be read on its own now.';
             }
             if ($undone > 0) {
                 $blockers[] = $undone . ' ' . ($undone === 1 ? 'activity is' : 'activities are') . ' not ticked done. Tick what was done (or delete what was not) so the report is true.';
@@ -658,6 +693,10 @@ class FarmReportController extends BaseScheduleController
         $this->guardReports($schedule);
         $kind = $request->input('kind') === 'sofar' ? 'sofar' : 'season';
         $lotId = (int) $request->input('lotId', 0);
+        $lot = $lotId ? $schedule->lots()->where('id', $lotId)->first() : null;
+        if ($lotId && ! $lot) {
+            return $this->jsonFail('That lot is not in this season.', 404);
+        }
         $payer = $this->aneePayer();
         $settings = AiSetting::current();
         $credits = app(AiCreditService::class);
@@ -667,7 +706,7 @@ class FarmReportController extends BaseScheduleController
                 ? 'Anee is not switched on yet. Please check back soon.'
                 : Tier::aneeNeeds($payer, 'This report'), 403);
         }
-        [$blockers] = $this->aneeChecks($schedule, $kind);
+        [$blockers] = $this->aneeChecks($schedule, $kind, $lot);
         if ($blockers !== []) {
             return $this->jsonFail('Not ready: ' . implode(' ', $blockers), 422);
         }
@@ -696,7 +735,6 @@ class FarmReportController extends BaseScheduleController
             return $this->jsonOk('Already working on it.', ['data' => ['pending' => true, 'id' => $standing->id]]);
         }
 
-        $lot = $lotId ? $schedule->lots()->where('id', $lotId)->first() : null;
         // Short: the shelf already sits inside the season, so the title says
         // the kind, the lot when one was asked for, and the day.
         $title = ($kind === 'sofar' ? 'So far' : 'Season report')
@@ -715,7 +753,7 @@ class FarmReportController extends BaseScheduleController
         // once here: Anee reads them in words and the report keeps them.
         $facts = null;
         try {
-            $facts = $kind === 'season' ? $this->seasonFacts($schedule) : $this->sofarFacts($schedule, $lot);
+            $facts = $kind === 'season' ? $this->seasonFacts($schedule, $lot) : $this->sofarFacts($schedule, $lot);
         } catch (\Throwable $e) {
             report($e);
         }
@@ -888,7 +926,9 @@ class FarmReportController extends BaseScheduleController
         // records and kept with it from then on.
         if ($r->kind === 'season' && (int) (($r->report['facts'] ?? [])['v'] ?? 0) < 2) {
             try {
-                $r->report = array_merge((array) $r->report, ['facts' => $this->seasonFacts($schedule)]);
+                $lotId = (int) (($r->params ?? [])['lotId'] ?? 0);
+                $lot = $lotId ? $schedule->lots()->where('id', $lotId)->first() : null;
+                $r->report = array_merge((array) $r->report, ['facts' => $this->seasonFacts($schedule, $lot)]);
                 $r->save();
             } catch (\Throwable $e) {
                 report($e);
@@ -1177,8 +1217,9 @@ class FarmReportController extends BaseScheduleController
                 ->implode(' | ');
         }
 
-        // Past seasons of the same crop, for the comparison.
-        if ($kind === 'season') {
+        // Past seasons of the same crop, for the comparison (whole seasons,
+        // so not set against one lot).
+        if ($kind === 'season' && ! $lot) {
             foreach ($this->pastSeasons($schedule) as $ps) {
                 $ppf = $this->profitFacts($ps);
                 $ctx[] = 'A PAST SEASON OF THE SAME CROP — ' . $ps->title . ': revenue ' . \App\Support\Region::symbol() . number_format($ppf['revenue'], 2)
@@ -1205,7 +1246,7 @@ class FarmReportController extends BaseScheduleController
             : '{"headline": string (at most 10 words on where the season stands — a title, not a sentence), "standing": "on-track" | "watch" | "rescue" (unbiased — say rescue when it is true), "score": int 0-100 (how well the season stands today, all things weighed), "verdict": string (2-4 sentences on the season as it stands today), "scores": {"protocol": int 0-100 (how faithfully the plan has been followed so far), "timing": int 0-100 (how well the work sits on the crop\'s calendar), "weather": int 0-100 (how kindly the sky has treated the crop and what is ahead), "money": int 0-100 (how the spend runs against a sensible budget for this crop), "records": int 0-100 (how complete the records are)}, "good": [2-5 of {"point": string (short), "why": string (one sentence)}], "bad": [1-5 of {"point": string (short), "why": string (one sentence), "fix": string (what to do about it)}], "protocol": {"summary": string (2-3 sentences on the plan so far — done against planned, to today), "followed": [0-5 short strings — what was done as planned], "missed": [0-5 short strings — what was skipped, late or never planned that the crop needed], "drift": string (one sentence: how far the work has drifted from the plan and what it costs)}, "timing": {"summary": string (2-3 sentences on where the crop is on its own clock against the work done), "stage": string (the growth stage it is in now), "daysBehind": int or null (days the work runs behind the crop, 0 when on time, negative when ahead)}, "weather": {"summary": string (2-3 sentences on what the sky has done to the crop so far), "outlook": string (what the next few weeks and ENSO mean here), "risks": [0-4 short strings]}, "money": {"summary": string (2-3 sentences on the spend so far against the crop and the season), "verdict": "lean"|"fair"|"heavy"}, "risks": [2-5 of {"risk": string, "severity": "low"|"moderate"|"high", "why": string}], "whatsNext": [3-7 of {"action": string, "when": string (a date or a ' . $schedule->dayType . ' day-count), "why": string, "urgency": "now"|"soon"|"routine"}], "lacking": [0-4 strings — what the records are missing that would sharpen this read], "scoreWhy": {"protocol": string, "timing": string, "weather": string, "money": string, "records": string} (one short plain sentence each: why that score), "cropNow": [1-4 of {"lot": string (the lot\'s name, or "The whole farm"), "needs": string (what the crop needs in the stage it is in now, one or two short sentences), "watch": string (the pest, disease or weather to watch for at this stage)}], "harvestOutlook": {"when": string (when harvest is likely, a short date range), "expect": string (a fair harvest to expect per hectare if things go on as they are, in the farmer\'s own unit where you can, or "unknown"), "note": string (one or two sentences: what could raise it or lower it from here)}, "encouragement": string (2-3 warm sentences — honest about the hard parts, sure the farmer can land this)}';
 
         return 'You are an agricultural analyst for a smallholder farm in ' . \App\Support\Region::name() . ', writing '
-            . ($kind === 'season' ? 'a full season debrief now that the season is closed.' : 'a mid-season read of where things stand and what to do next. Judge the PROTOCOL SO FAR from the activity list: what was planned up to today and what was actually ticked done, what was skipped or late, and what the crop needed that was never planned; judge the TIMING of that work against the crop\'s own stage today; judge the WEATHER\'s part so far and ahead; judge the MONEY so far against what this crop and stage usually cost. Say plainly what is good and what is bad.')
+            . ($kind === 'season' ? ($lot ? 'a debrief of one lot, ' . $lot->lotName . ', now that its harvest is in (other lots may still be growing; judge this lot, its own work, money and harvest).' : 'a full season debrief now that the season is closed.') : 'a mid-season read of where things stand and what to do next. Judge the PROTOCOL SO FAR from the activity list: what was planned up to today and what was actually ticked done, what was skipped or late, and what the crop needed that was never planned; judge the TIMING of that work against the crop\'s own stage today; judge the WEATHER\'s part so far and ahead; judge the MONEY so far against what this crop and stage usually cost. Say plainly what is good and what is bad.')
             . ' Everything below is the farm\'s own records, compiled by the app — treat the numbers as facts and the notes as the farmer\'s own words.'
             . ' Be unbiased: name what went wrong plainly. Be warm and a little jolly in tone — this is a debrief between friends, not an audit.'
             . ' Account for delays honestly: ENSO conditions, typhoons, drought spells, herbicide setbacks and labor gaps stretch a crop\'s calendar — use the weather records given before blaming the farmer.'
@@ -1378,12 +1419,23 @@ class FarmReportController extends BaseScheduleController
      * typical maturity, the sky month by month, and the farmer's past
      * seasons of the same crop. The money adds up to profitFacts' totals:
      * the same lines, the same labor formula, only sorted by month.
+     *
+     * One lot (2026-10-22, the owner): the work on that lot, each activity's
+     * money shared across its lots the profit engine's way, its harvest and
+     * its days. The farm's own costs (extra expenses, stock bought by hand)
+     * are no lot's, so they are said apart as general; past seasons are whole
+     * seasons, so a lot's report draws no comparison bars.
      */
-    private function seasonFacts(\App\Models\AsCroppingSchedule $schedule): array
+    private function seasonFacts(\App\Models\AsCroppingSchedule $schedule, $lot = null): array
     {
         $pf = $this->profitFacts($schedule);
         $cats = array_keys($pf['costCats']);
         $blank = array_fill_keys($cats, 0.0);
+        $acts = $lot
+            ? $schedule->activities->filter(fn ($a) => $a->lots->contains('id', $lot->id))->values()
+            : $schedule->activities;
+        $share = fn ($a) => $lot ? 1 / max(1, $a->lots->count()) : 1.0;
+        $lotCats = $blank;
 
         /* ---- the money by month, and the work by kind and by worker ---- */
         $months = [];
@@ -1399,20 +1451,22 @@ class FarmReportController extends BaseScheduleController
         $workers = [];
         $workerDays = 0.0;
         $done = 0;
-        foreach ($schedule->activities as $a) {
+        foreach ($acts as $a) {
             if ($a->isDone) $done++;
             $iso = $a->targetDate?->format('Y-m-d');
             $lines = $this->activityLines($a);
+            $part = $share($a);
             foreach (['materials', 'services', 'labor'] as $k) {
-                $addMonth($iso, $k, $lines[$k]);
+                $addMonth($iso, $k, $lines[$k] * $part);
+                $lotCats[$k] += $lines[$k] * $part;
             }
             foreach ($lines['workers'] as $w) {
-                $workerDays += $w['days'];
+                $workerDays += $w['days'] * $part;
                 $workers[$w['id']] = $workers[$w['id']] ?? ['name' => $w['name'], 'days' => 0.0, 'pay' => 0.0];
-                $workers[$w['id']]['days'] += $w['days'];
-                $workers[$w['id']]['pay'] += $w['pay'];
+                $workers[$w['id']]['days'] += $w['days'] * $part;
+                $workers[$w['id']]['pay'] += $w['pay'] * $part;
             }
-            $cost = $lines['materials'] + $lines['services'] + $lines['labor'];
+            $cost = ($lines['materials'] + $lines['services'] + $lines['labor']) * $part;
             $slug = $a->activityType ?: 'other';
             $types[$slug] = $types[$slug] ?? [
                 'label' => \App\Models\AsScheduleActivity::ACTIVITY_TYPES[$slug] ?? ucfirst(str_replace('_', ' ', $slug)),
@@ -1421,16 +1475,19 @@ class FarmReportController extends BaseScheduleController
             $types[$slug]['count']++;
             $types[$slug]['cost'] += $cost;
         }
-        foreach ($schedule->dayExpenses as $e) {
-            $addMonth($e->expenseDate?->format('Y-m-d'), 'expense', (float) $e->amount);
-        }
-        // Stock bought by hand, the purchase line of profitFacts, by the day it came in.
-        $buys = AsInventoryMove::where('croppingScheduleId', $schedule->id)
-            ->where('deleteStatus', 1)->whereIn('reason', [AsInventoryMove::IN, AsInventoryMove::OPEN])
-            ->whereNull('activityId')->get();
-        $buyItems = AsInventoryItem::whereIn('id', $buys->pluck('itemId')->unique()->all() ?: [0])->get()->keyBy('id');
-        foreach ($buys as $m) {
-            $addMonth($m->happenedOn?->format('Y-m-d') ?: $m->created_at?->format('Y-m-d'), 'purchase', $m->cost($buyItems->get((int) $m->itemId)));
+        // The farm's own costs: the whole season's, no one lot's.
+        if (! $lot) {
+            foreach ($schedule->dayExpenses as $e) {
+                $addMonth($e->expenseDate?->format('Y-m-d'), 'expense', (float) $e->amount);
+            }
+            // Stock bought by hand, the purchase line of profitFacts, by the day it came in.
+            $buys = AsInventoryMove::where('croppingScheduleId', $schedule->id)
+                ->where('deleteStatus', 1)->whereIn('reason', [AsInventoryMove::IN, AsInventoryMove::OPEN])
+                ->whereNull('activityId')->get();
+            $buyItems = AsInventoryItem::whereIn('id', $buys->pluck('itemId')->unique()->all() ?: [0])->get()->keyBy('id');
+            foreach ($buys as $m) {
+                $addMonth($m->happenedOn?->format('Y-m-d') ?: $m->created_at?->format('Y-m-d'), 'purchase', $m->cost($buyItems->get((int) $m->itemId)));
+            }
         }
         ksort($months);
         $multiYear = count(array_unique(array_map(fn ($ym) => substr($ym, 0, 4), array_keys($months)))) > 1;
@@ -1443,9 +1500,11 @@ class FarmReportController extends BaseScheduleController
         uasort($types, fn ($x, $y) => [$y['count'], $y['cost']] <=> [$x['count'], $x['cost']]);
         uasort($workers, fn ($x, $y) => $y['days'] <=> $x['days']);
 
-        /* ---- the harvest, per lot and in all ---- */
-        $yieldRows = \App\Models\AsSchedulePostHarvest::where('croppingScheduleId', $schedule->id)
-            ->where('deleteStatus', 1)->where('yieldAmount', '>', 0)->get();
+        /* ---- the harvest, per lot and in all: counted once, a sale is not
+         *      a second harvest (harvestRows) ---- */
+        $yieldRows = \App\Models\AsSchedulePostHarvest::harvestRows(\App\Models\AsSchedulePostHarvest::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->where('yieldAmount', '>', 0)
+            ->when($lot, fn ($q) => $q->where('lotId', $lot->id))->get());
         $qty = fn (float $q) => rtrim(rtrim(number_format($q, 2), '0'), '.');
         $harvest = [];
         foreach ($yieldRows->groupBy(fn ($h) => $h->yieldUnit ?: 'units') as $unit => $rows) {
@@ -1458,7 +1517,7 @@ class FarmReportController extends BaseScheduleController
             ->max(fn ($a) => $a->targetDate->format('Y-m-d'));
         $pfLots = collect($pf['lots'])->keyBy('id');
         $lotRows = [];
-        foreach ($schedule->lots as $L) {
+        foreach (($lot ? collect([$lot]) : $schedule->lots) as $L) {
             $pl = $pfLots->get($L->id) ?? [];
             $ha = $this->hectares($L);
             $lotYield = $yieldRows->where('lotId', $L->id);
@@ -1472,7 +1531,9 @@ class FarmReportController extends BaseScheduleController
                 && array_intersect(['harvest', 'harvesting'], $a->typeSlugs())
                 && ($a->lots->isEmpty() || $a->lots->contains('id', $L->id)))
                 ->max(fn ($a) => $a->targetDate->format('Y-m-d'));
-            $endIso = $harvestDone ?: ($lotYield->max(fn ($h) => $h->observationDate?->format('Y-m-d')) ?: $lastDone);
+            // The day it was marked harvested says it best, when it was.
+            $endIso = $L->harvestedAt?->format('Y-m-d')
+                ?: ($harvestDone ?: ($lotYield->max(fn ($h) => $h->observationDate?->format('Y-m-d')) ?: $lastDone));
             $zero = $dz[$L->id] ?? null;
             $daysRan = ($zero && $endIso) ? (int) $zero->copy()->startOfDay()->diffInDays(\Carbon\Carbon::parse($endIso)->startOfDay(), false) : null;
             $atHarvest = null;
@@ -1505,18 +1566,34 @@ class FarmReportController extends BaseScheduleController
         }
         $general = $pfLots->get(0);
 
+        /* ---- the money: the season's, or the one lot's ---- */
+        $money = [
+            'revenue' => $pf['revenue'], 'cost' => $pf['cost'], 'profit' => $pf['profit'], 'margin' => $pf['margin'],
+            'dayIncome' => $pf['dayIncome'], 'cats' => $pf['costCats'],
+            'general' => $general ? (float) $general['cost'] : 0.0,
+        ];
+        if ($lot) {
+            $pl = $pfLots->get($lot->id) ?? [];
+            $money = [
+                'revenue' => (float) ($pl['revenue'] ?? 0), 'cost' => (float) ($pl['cost'] ?? 0),
+                'profit' => (float) ($pl['profit'] ?? 0), 'margin' => $pl['margin'] ?? null,
+                'dayIncome' => 0.0, 'cats' => array_map(fn ($v) => round($v, 2), $lotCats),
+                'general' => $general ? (float) $general['cost'] : 0.0,
+            ];
+        }
+
         /* ---- the farmer's own past seasons of the same crop ---- */
         $past = [[
-            'title' => $schedule->title, 'this' => true,
-            'revenue' => $pf['revenue'], 'cost' => $pf['cost'], 'profit' => $pf['profit'], 'margin' => $pf['margin'],
+            'title' => $lot ? $lot->lotName : $schedule->title, 'this' => true,
+            'revenue' => $money['revenue'], 'cost' => $money['cost'], 'profit' => $money['profit'], 'margin' => $money['margin'],
         ]];
-        foreach ($this->pastSeasons($schedule) as $ps) {
+        foreach ($lot ? [] : $this->pastSeasons($schedule) as $ps) {
             $ppf = $this->profitFacts($ps);
             $past[] = ['title' => $ps->title, 'this' => false,
                 'revenue' => $ppf['revenue'], 'cost' => $ppf['cost'], 'profit' => $ppf['profit'], 'margin' => $ppf['margin']];
         }
 
-        $dates = $schedule->activities->pluck('targetDate')->filter();
+        $dates = $acts->pluck('targetDate')->filter();
         $from = $dates->min();
         $to = $dates->max();
 
@@ -1527,17 +1604,14 @@ class FarmReportController extends BaseScheduleController
                 'from' => $from->format('M j, Y'), 'to' => $to->format('M j, Y'),
                 'days' => (int) $from->diffInDays($to) + 1,
             ] : null,
-            'money' => [
-                'revenue' => $pf['revenue'], 'cost' => $pf['cost'], 'profit' => $pf['profit'], 'margin' => $pf['margin'],
-                'dayIncome' => $pf['dayIncome'], 'cats' => $pf['costCats'],
-                'general' => $general ? (float) $general['cost'] : 0.0,
-            ],
+            'lot' => $lot ? ['id' => (int) $lot->id, 'name' => (string) $lot->lotName] : null,
+            'money' => $money,
             'months' => $monthRows,
             'undated' => round($undated, 2),
             'harvest' => $harvest,
             'lots' => $lotRows,
             'work' => [
-                'total' => $schedule->activities->count(),
+                'total' => $acts->count(),
                 'done' => $done,
                 'workerDays' => round($workerDays, 1),
                 'types' => array_values(array_map(fn ($t) => ['label' => $t['label'], 'count' => $t['count'], 'cost' => round($t['cost'], 2)], $types)),

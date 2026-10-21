@@ -37,6 +37,8 @@ class RecordsScheduleActivity
         'sm.lots.store' => 'Added a lot',
         'sm.lots.update' => 'Edited a lot',
         'sm.lots.destroy' => 'Deleted a lot',
+        'sm.lots.harvest' => 'Marked a lot harvested',
+        'sm.lots.harvest.undo' => "Took back a lot's harvest",
         'sm.workers.store' => 'Added a worker',
         'workers.global.season' => 'Added a worker from the roster',
         'sm.workers.update' => 'Edited a worker',
@@ -176,7 +178,7 @@ class RecordsScheduleActivity
     private const NAMEISH = ['activityTitle', 'lotName', 'workerName', 'name', 'title', 'workerEmail'];
 
     /** Request keys the diary never repeats. */
-    private const HUSH = ['password', 'token', '_token', 'body', 'content', 'notes', 'report', 'strokes', 'media', 'image', 'images', 'imagePaths', 'params', 'objects', 'keepPaths', 'clip', 'files', 'audio', 'video', 'description', 'details'];
+    private const HUSH = ['password', 'token', '_token', 'body', 'content', 'notes', 'report', 'strokes', 'media', 'image', 'images', 'imagePaths', 'params', 'objects', 'keepPaths', 'clip', 'files', 'audio', 'video', 'description', 'details', 'answers'];
 
     /** The row about to change, photographed for the from column. */
     private function snapBefore(Request $request): ?array
@@ -268,6 +270,7 @@ class RecordsScheduleActivity
         'quick-capture.gallery' => ['added photos to an album', 'sm.gallery'],
         'sm.gallery.image.store' => ['added a picture to the gallery', 'sm.gallery'],
         'sm.post-harvest.store' => ['recorded an observation', 'sm.post-harvest'],
+        'sm.lots.harvest' => ['marked a lot harvested', 'sm.post-harvest'],
         'sm.post-harvest.image-upload' => ['added a photo to an observation', 'sm.post-harvest'],
         'sm.inventory.move' => ['moved stock', 'sm.inventory'],
         'sm.doc-entries.store' => ['added a document', 'sm.hub'],

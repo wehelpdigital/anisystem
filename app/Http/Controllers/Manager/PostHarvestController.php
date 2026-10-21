@@ -35,6 +35,8 @@ class PostHarvestController extends BaseScheduleController
             // gross_value is an accessor over yieldAmount × pricePerUnit — the
             // select must carry its ingredients or every row sums as null.
             'yieldAmount', 'yieldUnit', 'moisturePercent', 'pricePerUnit',
+            // Which rows are the harvest and which the sale (harvestRows).
+            'category', 'lotId',
         ]));
 
         // The scroller asks for cards alone.
@@ -375,16 +377,17 @@ class PostHarvestController extends BaseScheduleController
      */
     private function summarise($observations): array
     {
-        // Yields only add up within a unit, so they are grouped by it.
+        // Yields only add up within a unit, so they are grouped by it, and
+        // a sale is not a second harvest (AsSchedulePostHarvest::harvestRows).
         $byUnit = [];
         $revenue = 0.0;
         $moistures = [];
 
+        foreach (AsSchedulePostHarvest::harvestRows($observations) as $o) {
+            $unit = trim((string) $o->yieldUnit) ?: 'unit';
+            $byUnit[$unit] = ($byUnit[$unit] ?? 0) + (float) $o->yieldAmount;
+        }
         foreach ($observations as $o) {
-            if ($o->yieldAmount !== null) {
-                $unit = trim((string) $o->yieldUnit) ?: 'unit';
-                $byUnit[$unit] = ($byUnit[$unit] ?? 0) + (float) $o->yieldAmount;
-            }
             if ($o->gross_value !== null) {
                 $revenue += $o->gross_value;
             }

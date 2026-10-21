@@ -657,6 +657,8 @@
         'pinLabel' => $l->pinLabel,
         'mapsHref' => $l->mapsHref(),
         'mapSaveId' => $l->mapSaveId,
+        // Marked harvested from the board's Harvest sheet.
+        'harvestedSays' => $l->harvestedAt?->format('M j, Y'),
     ])->values();
 @endphp
 <script>
@@ -962,7 +964,7 @@ const __init = () => {
                 </div>
 
                 <div class="min-w-0 grow space-y-1.5">
-                    <div class="flex flex-wrap gap-1.5">${cropBadge}${variety}${dayTypeBadge}</div>
+                    <div class="flex flex-wrap gap-1.5">${lot.harvestedSays ? `<span class="badge badge-green">✓ Harvested ${escapeHtml(lot.harvestedSays)}</span>` : ''}${cropBadge}${variety}${dayTypeBadge}</div>
                     ${lot.fullAddress ? `<p class="text-xs text-gray-500 flex items-start gap-1.5"><svg class="w-3.5 h-3.5 mt-px shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>${escapeHtml(lot.fullAddress)}</span></p>` : ''}
                     ${lot.notes ? `<p class="text-xs text-gray-500 line-clamp-2">${escapeHtml(lot.notes)}</p>` : ''}
                 </div>

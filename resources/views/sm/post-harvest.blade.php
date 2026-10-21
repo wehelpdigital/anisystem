@@ -443,9 +443,13 @@ const __init = () => {
         SEASON.count = Math.max(0, SEASON.count + sign);
         if (o.yieldAmount !== null && o.yieldAmount !== undefined) {
             const unit = (o.yieldUnit || '').trim() || 'unit';
-            const next = (SEASON.yields[unit] || 0) + sign * o.yieldAmount;
-            if (next > 0.0001) SEASON.yields[unit] = next;
-            else delete SEASON.yields[unit];
+            // A sale is not a second harvest (harvestRows on the server):
+            // its money counts, its amount does not add to the harvest.
+            if (o.category !== 'market') {
+                const next = (SEASON.yields[unit] || 0) + sign * o.yieldAmount;
+                if (next > 0.0001) SEASON.yields[unit] = next;
+                else delete SEASON.yields[unit];
+            }
             if (o.pricePerUnit !== null && o.pricePerUnit !== undefined) {
                 SEASON.revenue = Math.max(0, SEASON.revenue + sign * o.yieldAmount * o.pricePerUnit);
             }

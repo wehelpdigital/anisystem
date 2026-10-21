@@ -86,6 +86,51 @@ class PostHarvestFields
     /** Which of the above keys are real columns rather than JSON details. */
     public const COLUMNS = ['yieldAmount', 'yieldUnit', 'moisturePercent', 'pricePerUnit', 'buyer'];
 
+    /**
+     * The kinds a harvest record asks, in the order the board's Harvest sheet
+     * asks them (2026-10-22): what came off the field, how good it was, the
+     * drying and keeping, and the sale. Each part answered is filed as its
+     * own observation of that kind, so the Observations module shows and
+     * edits them like any other.
+     */
+    public const HARVEST = ['yield', 'quality', 'storage', 'market'];
+
+    /**
+     * One kind's answers, split the way a row stores them: [columns, details].
+     * Only the keys this kind asks are kept, blanks dropped, numbers read as
+     * numbers. An empty pair means the part was left unanswered.
+     *
+     * @return array{0: array<string, mixed>, 1: array<string, string>}
+     */
+    public static function split(string $category, array $answers): array
+    {
+        $columns = [];
+        $details = [];
+        foreach (self::for($category) as $f) {
+            $v = $answers[$f['key']] ?? null;
+            $v = is_string($v) ? trim($v) : $v;
+            if ($v === null || $v === '') {
+                continue;
+            }
+            if (in_array($f['type'], ['number', 'percent', 'money'], true)) {
+                if (! is_numeric($v)) {
+                    continue;
+                }
+                $v = $f['isColumn'] ? (float) $v : (string) (0 + $v);
+            }
+            if ($f['options'] && ! array_key_exists((string) $v, $f['options'])) {
+                continue;
+            }
+            if ($f['isColumn']) {
+                $columns[$f['key']] = is_string($v) ? mb_substr($v, 0, $f['key'] === 'yieldUnit' ? 24 : 191) : $v;
+            } else {
+                $details[$f['key']] = mb_substr((string) $v, 0, 500);
+            }
+        }
+
+        return [$columns, $details];
+    }
+
     /** The fields for one category, each as a keyed row the views can loop. */
     public static function for(string $category): array
     {

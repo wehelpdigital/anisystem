@@ -36,6 +36,10 @@ class AsScheduleLot extends BaseModel
         'growthRealign',
         // The farmer's own delay counter: days the crop is behind the calendar.
         'delayDays',
+        // Marked harvested from the board's Harvest sheet: the day, and the
+        // observations that harvest record wrote.
+        'harvestedAt',
+        'harvestObservationIds',
         'notes',
         'deleteStatus',
     ];
@@ -52,8 +56,16 @@ class AsScheduleLot extends BaseModel
         'growthRealign' => 'array',
         'treePlantedAt' => 'date:Y-m-d',
         'daysToMaturity' => 'integer',
+        'harvestedAt' => 'date:Y-m-d',
+        'harvestObservationIds' => 'array',
         'deleteStatus' => 'integer',
     ];
+
+    /** Has this lot been marked harvested? */
+    public function isHarvested(): bool
+    {
+        return $this->harvestedAt !== null;
+    }
 
     /**
      * How long this lot's crop takes, in days.

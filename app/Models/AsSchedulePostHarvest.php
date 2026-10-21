@@ -62,6 +62,32 @@ class AsSchedulePostHarvest extends BaseModel
         return $this->belongsTo(AsScheduleLot::class, 'lotId');
     }
 
+    /**
+     * The rows a harvest's size is counted from, out of a set of observations.
+     *
+     * A harvest is often said twice: what came off the field (Yield) and how
+     * much of it was sold (Selling and price carries an amount too). Added
+     * together they doubled the harvest, and the board's harvest record writes
+     * both. So, lot by lot, the rows that are not a sale are the harvest; a
+     * lot with only sales on record counts its sales, as it always did. The
+     * money is not decided here: every priced row is still amount × price.
+     *
+     * @param  \Illuminate\Support\Collection<int, self>  $rows
+     * @return \Illuminate\Support\Collection<int, self>
+     */
+    public static function harvestRows($rows)
+    {
+        return collect($rows)
+            ->filter(fn ($h) => $h->yieldAmount !== null && (float) $h->yieldAmount > 0)
+            ->groupBy(fn ($h) => (int) ($h->lotId ?: 0))
+            ->flatMap(function ($lotRows) {
+                $field = $lotRows->filter(fn ($h) => $h->category !== 'market');
+
+                return $field->isNotEmpty() ? $field : $lotRows;
+            })
+            ->values();
+    }
+
     /** Gross value of this observation's harvest, when both figures are known. */
     public function getGrossValueAttribute(): ?float
     {

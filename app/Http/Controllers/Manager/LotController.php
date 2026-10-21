@@ -71,6 +71,7 @@ class LotController extends BaseScheduleController
             // Where it is, and the one link that acts on that.
             'pinned' => $lot->isPinned(),
             'mapsHref' => $lot->mapsHref(),
+            'harvestedSays' => $lot->harvestedAt?->format('M j, Y'),
         ];
     }
 
@@ -235,6 +236,149 @@ class LotController extends BaseScheduleController
 
         return $this->jsonOk($days > 0 ? 'Delay set: ' . $days . ' day' . ($days === 1 ? '' : 's') . ' behind.' : 'Delay removed.',
             ['data' => $this->lotPayload($lot->fresh())]);
+    }
+
+    /**
+     * Mark a lot harvested, with its harvest record (2026-10-22, the owner).
+     *
+     * The board's Harvest sheet sends the day and every harvest question the
+     * Observations module asks (PostHarvestFields::HARVEST): what came off
+     * the field, how good it was, the drying, the sale. Each part answered is
+     * filed as its own observation on this lot, dated the harvest day, and
+     * the lot keeps their ids so taking the mark back takes them too.
+     *
+     * Two pens: the lot is the plan's (assertCanEdit, through the resolver)
+     * and the record is the Observations module's. A closed season refuses.
+     */
+    public function harvest(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        if (! \App\Support\WorkerContext::canWriteModule('observations')) {
+            return $this->jsonFail('The farm owner has not given you Observations, where the harvest is written.', 403);
+        }
+
+        $rules = [
+            'lotId' => 'required|integer',
+            'harvestedAt' => 'required|date|before_or_equal:' . now('Asia/Manila')->addDay()->toDateString(),
+            'notes' => 'nullable|string|max:5000',
+            'answers' => 'nullable|array',
+            'answers.yield.yieldAmount' => 'required|numeric|gt:0|max:99999999',
+            'answers.yield.yieldUnit' => 'required|string|max:24',
+        ];
+        foreach (\App\Support\PostHarvestFields::HARVEST as $cat) {
+            foreach (\App\Support\PostHarvestFields::for($cat) as $f) {
+                $key = 'answers.' . $cat . '.' . $f['key'];
+                $rules[$key] ??= match ($f['type']) {
+                    'number', 'money' => 'nullable|numeric|min:0|max:99999999',
+                    'percent' => 'nullable|numeric|min:0|max:100',
+                    'select' => ['nullable', \Illuminate\Validation\Rule::in(array_keys($f['options'] ?? []))],
+                    'unit' => 'nullable|string|max:24',
+                    'textarea' => 'nullable|string|max:2000',
+                    default => 'nullable|string|max:191',
+                };
+            }
+        }
+        $data = Validator::make($request->all(), $rules, [
+            'answers.yield.yieldAmount.required' => 'Say how much was harvested.',
+            'answers.yield.yieldAmount.gt' => 'Say how much was harvested.',
+            'answers.yield.yieldUnit.required' => 'Say what the harvest was measured in (kg, sacks, cavans).',
+            'harvestedAt.required' => 'Pick the day it was harvested.',
+            'harvestedAt.before_or_equal' => 'The harvest day cannot be in the future.',
+        ])->validate();
+
+        $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)
+            ->find($data['lotId']);
+        if (! $lot) {
+            return $this->jsonFail('That lot is not in this season.', 404);
+        }
+        if ($lot->isHarvested()) {
+            return $this->jsonFail($lot->lotName . ' is already marked harvested.', 409);
+        }
+
+        $titles = [
+            'yield' => 'harvest',
+            'quality' => 'quality',
+            'storage' => 'drying and storage',
+            'market' => 'sale',
+        ];
+        $notes = trim((string) ($data['notes'] ?? ''));
+        $ids = \Illuminate\Support\Facades\DB::transaction(function () use ($data, $schedule, $lot, $titles, $notes) {
+            $ids = [];
+            foreach (\App\Support\PostHarvestFields::HARVEST as $cat) {
+                [$columns, $details] = \App\Support\PostHarvestFields::split($cat, (array) ($data['answers'][$cat] ?? []));
+                if (! $columns && ! $details && ! ($cat === 'yield' && $notes !== '')) {
+                    continue;
+                }
+                // A sale said without its unit is in the harvest's unit.
+                if ($cat === 'market' && isset($columns['yieldAmount']) && empty($columns['yieldUnit'])) {
+                    $columns['yieldUnit'] = (string) ($data['answers']['yield']['yieldUnit'] ?? '');
+                }
+                $row = \App\Models\AsSchedulePostHarvest::create($columns + [
+                    'croppingScheduleId' => $schedule->id,
+                    'lotId' => $lot->id,
+                    'observationDate' => $data['harvestedAt'],
+                    'title' => mb_substr($lot->lotName . ' ' . $titles[$cat], 0, 191),
+                    'category' => $cat,
+                    'details' => $details ?: null,
+                    // Words typed plainly, kept as the rich text the module's
+                    // editor reads, on the harvest row where they were asked.
+                    'notes' => $cat === 'yield' && $notes !== ''
+                        ? \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($notes), false) . '</p>')
+                        : null,
+                    'deleteStatus' => 1,
+                ]);
+                $ids[] = (int) $row->id;
+            }
+            $lot->update(['harvestedAt' => $data['harvestedAt'], 'harvestObservationIds' => $ids]);
+
+            return $ids;
+        });
+
+        return $this->jsonOk($lot->lotName . ' is harvested. ' . count($ids) . ' ' . (count($ids) === 1 ? 'observation' : 'observations') . ' saved.',
+            ['data' => $this->harvestPayload($lot->fresh())]);
+    }
+
+    /**
+     * Take the harvested mark back: the lot goes back to growing, and the
+     * observations its harvest record wrote leave Observations with it, so a
+     * lot marked by mistake and marked again is never counted twice. Rows
+     * written by hand in the module are not touched.
+     */
+    public function unharvest(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        if (! \App\Support\WorkerContext::canWriteModule('observations')) {
+            return $this->jsonFail('The farm owner has not given you Observations, where the harvest is written.', 403);
+        }
+        $data = Validator::make($request->all(), ['lotId' => 'required|integer'])->validate();
+
+        $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)
+            ->find($data['lotId']);
+        if (! $lot) {
+            return $this->jsonFail('That lot is not in this season.', 404);
+        }
+
+        $ids = array_map('intval', (array) ($lot->harvestObservationIds ?? []));
+        $removed = $ids ? \App\Models\AsSchedulePostHarvest::where('croppingScheduleId', $schedule->id)
+            ->where('lotId', $lot->id)->whereIn('id', $ids)->where('deleteStatus', 1)
+            ->update(['deleteStatus' => 0]) : 0;
+        $lot->update(['harvestedAt' => null, 'harvestObservationIds' => null]);
+
+        return $this->jsonOk($lot->lotName . ' is back to growing.' . ($removed ? ' ' . $removed . ' harvest ' . ($removed === 1 ? 'observation' : 'observations') . ' removed.' : ''),
+            ['data' => $this->harvestPayload($lot->fresh())]);
+    }
+
+    /** What the Harvest sheet repaints a lot's row from. */
+    private function harvestPayload(AsScheduleLot $lot): array
+    {
+        return [
+            'lotId' => (int) $lot->id,
+            'harvestedAt' => $lot->harvestedAt?->format('Y-m-d'),
+            'harvestedSays' => $lot->harvestedAt?->format('M j, Y'),
+            'observations' => count((array) ($lot->harvestObservationIds ?? [])),
+        ];
     }
 
     public function pin(Request $request)

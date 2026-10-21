@@ -322,7 +322,7 @@
                     <p>{{ $aneeName }} reads your season as it is today: the work, the money and the recent weather. She tells you how each lot is doing, the risks ahead and what to do next. Every report is kept on the Saved tab.</p>
                 @else
                     <b>About this report</b>
-                    <p>{{ $aneeName }} reads your whole finished season: the work, the money, the harvest, your notes and the weather. She tells you what went right, what went wrong and what to change next time, with a score. Every report is kept on the Saved tab.</p>
+                    <p>{{ $aneeName }} reads your whole finished season, or one lot once it is harvested: the work, the money, the harvest, your notes and the weather. She tells you what went right, what went wrong and what to change next time, with a score. Every report is kept on the Saved tab.</p>
                 @endif
             </div>
         </div>
@@ -336,7 +336,7 @@
             </button>
             <div class="arq-body" id="arQuoteBody">
                 <div class="arq-card">
-                    One report costs <b>{{ $price }} credits{{ \App\Support\Tagalog::flag('credits') }}</b>. You have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits: your log and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="arBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif. Nothing is charged until you press Run.
+                    One report costs <b><span id="arPriceSays">{{ $price }}</span> credits{{ \App\Support\Tagalog::flag('credits') }}</b>. You have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits: your log and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="arBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif. Nothing is charged until you press Run.
                 </div>
                 <div class="arq-card">
                     {{ $isSofar
@@ -350,9 +350,9 @@
         <div class="card p-4 mb-4" id="arReadyCard">
             <p class="text-sm font-bold text-gray-900 mb-2" id="arReadyTitle">Checking the season…</p>
             <div id="arChecks"></div>
-            @if ($isSofar && $schedule->lots->count())
+            @if ($schedule->lots->count())
                 <div class="mt-3">
-                    <span class="form-label text-xs! mb-1!">Analyze which lot?</span>
+                    <span class="form-label text-xs! mb-1!">{{ $isSofar ? 'Analyze which lot?' : 'Report on which lot?' }}</span>
                     <button type="button" class="crop-tag" id="arLotBtn">
                         <span class="crop-tag-e">🌾</span>
                         <span class="crop-tag-t is-none" id="arLotNow">The whole season</span>
@@ -387,11 +387,11 @@
 @endsection
 
 @push('sheets')
-@if ($isSofar && $schedule->lots->count())
+@if ($schedule->lots->count())
 <div class="sheet hidden" id="arLotSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Analyze which lot?</h3>
+        <h3 class="sheet-title">{{ $isSofar ? 'Analyze which lot?' : 'Report on which lot?' }}</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="arLotList">
@@ -403,7 +403,7 @@
         @foreach ($schedule->lots as $lot)
             <button type="button" class="dt-row" data-ar-lot="{{ $lot->id }}">
                 <span class="dt-row-e">🌾</span>
-                <span class="dt-row-body"><b>{{ $lot->lotName }}</b><i>{{ \App\Support\CropStages::label($lot->crop) ?: 'No crop set' }}{{ $lot->variety ? ' · ' . $lot->variety : '' }}</i></span>
+                <span class="dt-row-body"><b>{{ $lot->lotName }}</b><i>{{ \App\Support\CropStages::label($lot->crop) ?: 'No crop set' }}{{ $lot->variety ? ' · ' . $lot->variety : '' }}@if (! $isSofar){{ $lot->harvestedAt ? ' · harvested ' . $lot->harvestedAt->format('M j') : ' · not harvested yet' }}@endif</i></span>
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
         @endforeach
@@ -458,21 +458,24 @@ const __init = () => {
     /* ---------------- readiness ---------------- */
     async function loadStatus() {
         try {
-            const res = await api(U.status);
+            const res = await api(U.status + (LOT_ID ? '&lotId=' + LOT_ID : ''));
             STATUS = res.data;
+            // The price follows the size asked about: one lot costs less.
+            $id('arRunSays').textContent = `Run the analysis (${STATUS.price} credits)`;
+            if ($id('arPriceSays')) $id('arPriceSays').textContent = STATUS.price;
             $id('arBalance').textContent = STATUS.unlimited ? '∞' : Number(STATUS.balance).toLocaleString();
             const checks = [];
             (STATUS.blockers || []).forEach((t) => checks.push(`<div class="ar-check is-block">⛔ ${esc(t)}</div>`));
             (STATUS.warnings || []).forEach((t) => checks.push(`<div class="ar-check is-warn">⚠️ ${esc(t)}</div>`));
             $id('arChecks').innerHTML = checks.join('');
             $id('arReadyTitle').textContent = STATUS.ready
-                ? (checks.length ? 'Ready, with a few notes' : 'The season is ready')
+                ? (checks.length ? 'Ready, with a few notes' : (LOT_ID ? 'The lot is ready' : 'The season is ready'))
                 : 'Not ready yet';
             $id('arRunBtn').disabled = !STATUS.ready;
         } catch (err) { toast(err.message, 'error'); }
     }
 
-    /* ---------------- lot picker (sofar) ---------------- */
+    /* ---------------- lot picker (both reports) ---------------- */
     $id('arLotBtn')?.addEventListener('click', () => openSheet('arLotSheet'));
     $id('arLotList')?.addEventListener('click', (e) => {
         const row = e.target.closest('[data-ar-lot]');
@@ -483,6 +486,10 @@ const __init = () => {
         t.textContent = LOT_ID ? row.querySelector('b').textContent : 'The whole season';
         t.classList.toggle('is-none', !LOT_ID);
         closeSheet('arLotSheet');
+        // A lot has its own readiness (harvested, its work ticked) and price.
+        $id('arRunBtn').disabled = true;
+        $id('arReadyTitle').textContent = LOT_ID ? 'Checking the lot…' : 'Checking the season…';
+        loadStatus();
     });
 
     /* ---------------- the veil's rotating lines ---------------- */
@@ -493,13 +500,14 @@ const __init = () => {
     $id('arRunBtn').addEventListener('click', async () => {
         if (!STATUS || !STATUS.ready) return;
         window.aneeWait.show({
-            title: KIND === 'sofar' ? 'Anee is reading the season so far…' : 'Anee is reading the whole season…',
+            title: KIND === 'sofar' ? 'Anee is reading the season so far…' : (LOT_ID ? 'Anee is reading the lot…' : 'Anee is reading the whole season…'),
             lines: LINES,
             sub: 'This takes a few minutes. That is normal.',
         });
         let landed = false;
         try {
-            const res = await api(U.generate, { method: 'POST', body: { scheduleId: SCHEDULE_ID, kind: KIND, lotId: LOT_ID || null } });
+            // The price said is the price charged: a stale one is refused, not changed.
+            const res = await api(U.generate, { method: 'POST', body: { scheduleId: SCHEDULE_ID, kind: KIND, lotId: LOT_ID || null, quote: STATUS.price } });
             let data = res.data;
             if (data.pending) {
                 for (let i = 0; i < 160 && (!data || data.status !== 'ready'); i++) {
@@ -594,6 +602,8 @@ const __init = () => {
         const M = F && F.money ? F.money : null;
         const lots = F ? (F.lots || []) : [];
         const loss = M ? Number(M.profit) < 0 : false;
+        // One lot's report (facts.lot): its own money, the farm's costs apart.
+        const ONE = F && F.lot ? F.lot : null;
 
         // At a glance: the six numbers a farmer asks first (not for a
         // season with no money and no work on it -- a row of zeros says nothing).
@@ -604,7 +614,7 @@ const __init = () => {
                 [loss ? 'is-bad' : 'is-good', loss ? 'Loss' : 'Net profit', peso(Math.abs(Number(M.profit))),
                     M.margin !== null && M.margin !== undefined ? (loss ? 'more went out than came in' : `${nf(M.margin)}% of the money in was kept`) : '', loss ? 'loss' : 'net-profit'],
                 ['', 'Money in', peso(M.revenue), Number(M.dayIncome) > 0 ? 'the harvest and other income' : 'from the harvest', 'money-in'],
-                ['', 'Money out', peso(M.cost), 'everything the season spent', 'money-out'],
+                ['', 'Money out', peso(M.cost), ONE ? 'its share of the work' : 'everything the season spent', 'money-out'],
             ];
             const oneUnit = perHa.length && perHa.every((l) => l.unit === perHa[0].unit);
             const lo = oneUnit ? Math.min(...perHa.map((l) => Number(l.perHa))) : 0;
@@ -642,6 +652,7 @@ const __init = () => {
                 ${cats.length ? `<p class="ar-sub">Where the money went</p>
                     <div class="ar-stack">${cats.map(([k, label]) => `<i class="k-${k}" style="width:${(Number(C[k]) / total * 100).toFixed(1)}%" title="${esc(label)}: ${esc(peso(C[k]))}"></i>`).join('')}</div>
                     <div class="ar-legend">${cats.map(([k, label]) => `<span><i class="k-${k}"></i><span${tlAttr(CAT_TL[k])}>${label}</span> <b>${peso(C[k])}</b> <em>${Math.round(Number(C[k]) / total * 100)}%</em></span>`).join('')}</div>` : ''}
+                ${ONE && Number(M.general) > 0 ? capOf(`${peso(M.general)} more went to the whole farm (extra expenses, stock bought) and is not counted on ${ONE.name}.`) : ''}
                 ${proseOf(r.moneyStory)}`));
         }
 
@@ -663,7 +674,7 @@ const __init = () => {
         const shown = lots.filter((l) => Number(l.revenue) > 0 || Number(l.cost) > 0 || (l.yield || []).length);
         if (shown.length) {
             const max = Math.max(0, ...shown.flatMap((l) => [Number(l.revenue) || 0, Number(l.cost) || 0])) || 1;
-            parts.push(cardOf('🌾 Lot by lot', shown.map((l, i) => `<div class="ar-lot">
+            parts.push(cardOf(ONE ? '🌾 The lot' : '🌾 Lot by lot', shown.map((l, i) => `<div class="ar-lot">
                 <div class="ar-lot-h"><b>${esc(l.name)}</b><span>${esc(l.icon || '')} ${esc(l.crop || '')}${l.variety ? ' · ' + esc(l.variety) : ''}${l.size ? ' · ' + esc(l.size) : ''}</span></div>
                 <div class="ar-prog">${barRow('Money in', '', peso(l.revenue), pct(l.revenue, max), 'k-in')}${barRow('Money out', '', peso(l.cost), pct(l.cost, max), 'k-out')}</div>
                 <div class="ar-kv">
@@ -673,8 +684,8 @@ const __init = () => {
                     <span class="${Number(l.profit) < 0 ? 'is-bad' : ''}">${Number(l.profit) < 0 ? 'Loss' : 'Kept'} <b>${peso(Math.abs(Number(l.profit)))}</b></span>
                 </div>
             </div>`).join('')
-                + capOf('The bars share one scale, so lots can be set side by side.'
-                    + (M && Number(M.general) > 0 ? ` ${peso(M.general)} of costs belong to the whole farm rather than one lot, so they are not in any lot's bar.` : ''))));
+                + (ONE ? '' : capOf('The bars share one scale, so lots can be set side by side.'
+                    + (M && Number(M.general) > 0 ? ` ${peso(M.general)} of costs belong to the whole farm rather than one lot, so they are not in any lot's bar.` : '')))));
         }
 
         // The harvest against a typical farm: the farm's own per hectare,

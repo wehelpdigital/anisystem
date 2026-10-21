@@ -238,6 +238,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'plantAmount' => class_exists(\App\Support\PlantAmount::class) && \Illuminate\Support\Facades\Route::has('seedcalc.count'),
             // Observations is a worker grant level, not owner only (2026-10-22).
             'observationsGrant' => isset(\App\Models\WorkerGrant::MODULES['observations']),
+            // Set as harvested on the Harvest sheet, and the Season Report per lot (2026-10-22).
+            'lotHarvest' => \Illuminate\Support\Facades\Route::has('sm.lots.harvest'),
             // The germination only where seed goes in, by each crop's way in (2026-10-21).
             'germByWay' => method_exists(\App\Support\PlantAmount::class, 'germApplies'),
             // 2026-10-19: How to Plant in Quick Tools (true once the guides are loaded into their table).
@@ -1132,6 +1134,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-lots-pin', [App\Http\Controllers\Manager\LotController::class, 'pin'])->name('sm.lots.pin');
     // The farmer's delay counter on a lot: days the crop is behind the calendar (null clears it).
     Route::post('/app/sm-lots-delay', [App\Http\Controllers\Manager\LotController::class, 'delay'])->name('sm.lots.delay');
+    // Mark a lot harvested from the board's Harvest sheet, with its harvest record filed in Observations; and take it back.
+    Route::post('/app/sm-lots-harvest', [App\Http\Controllers\Manager\LotController::class, 'harvest'])->name('sm.lots.harvest');
+    Route::post('/app/sm-lots-harvest-undo', [App\Http\Controllers\Manager\LotController::class, 'unharvest'])->name('sm.lots.harvest.undo');
     Route::post('/app/sm-lots-map-link', [App\Http\Controllers\Manager\LotController::class, 'linkMap'])->name('sm.lots.map.link');
     Route::post('/app/sm-lots-map-detach', [App\Http\Controllers\Manager\LotController::class, 'detachMap'])->name('sm.lots.map.detach');
     // Attach a map: the maps a lot may wear (the season's, and your own).
