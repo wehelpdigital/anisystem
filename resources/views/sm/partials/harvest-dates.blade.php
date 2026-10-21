@@ -11,7 +11,12 @@
      each part answered as its own observation on the lot, marks the lot
      harvested (LotController::harvest) and lands back here, the row now
      saying so. "Not harvested yet" takes the mark back, with the
-     observations it wrote. --}}
+     observations it wrote.
+
+     Too early (2026-10-22, the owner): a lot whose harvest window (the
+     original date and Anee's realigned one, the earlier of the two first)
+     has not opened yet gets a warning sheet (#hvEarlySheet) before the
+     record opens; "Harvest anyway" goes on to it. --}}
 @php
     [$hvZero] = \App\Support\LotCalendar::effectiveAnchors($schedule);
     $hvToday = now('Asia/Manila')->startOfDay();
@@ -123,6 +128,14 @@
         transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .hvr-chips button.is-on { background: #e8f5e9; border-color: #86b556; color: #1f6b32; }
     .hvr-need { color: #dc2626; }
+    /* The too early warning. */
+    .hve-head { display: flex; align-items: flex-start; gap: .7rem; }
+    .hve-ico { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; display: grid; place-items: center; font-size: 1.35rem;
+        background: #fff4d6; border: 1px solid #f5d98a; }
+    .hve-why { margin-top: .75rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-500); }
+    #hvEarlyDates .hv-d.is-today { background: #fff4d6; border-color: #f5d98a; }
+    #hvEarlyDates .hv-d.is-today span { color: #8a5a00; }
+    html.dark .hve-ico, html.dark #hvEarlyDates .hv-d.is-today { background: #2a2210; border-color: #5c4a24; }
     html.dark .hv-row, html.dark .hvr-sec { background: #1a1d23; border-color: #2a2f38; }
     html.dark .hv-d, html.dark .hv-top i { background: #20242c; border-color: #2a2f38; }
     html.dark .hv-d.is-anee { background: #2a2210; border-color: #5c4a24; }
@@ -155,7 +168,12 @@
     <div class="sheet-body">
         <div class="hv-list">
             @forelse ($hvRows as $i => $r)
-                <div class="hv-row {{ $r['harvested'] ? 'is-harvested' : '' }}" style="--i: {{ $i }}" data-hv-lot="{{ $r['id'] }}" data-hv-name="{{ $r['name'] }}">
+                @php
+                    // The harvest window: the original date and Anee's realigned one, the earlier first.
+                    $hvWin = $r['orig'] ? collect([$r['orig'], $r['real']])->filter()->sortBy(fn ($d) => $d->timestamp)->values() : collect();
+                @endphp
+                <div class="hv-row {{ $r['harvested'] ? 'is-harvested' : '' }}" style="--i: {{ $i }}" data-hv-lot="{{ $r['id'] }}" data-hv-name="{{ $r['name'] }}"
+                     @if ($hvWin->isNotEmpty()) data-hv-from="{{ $hvWin->first()->format('Y-m-d') }}" data-hv-orig="{{ $r['orig']->format('Y-m-d') }}" @if ($r['real']) data-hv-real="{{ $r['real']->format('Y-m-d') }}" @endif @endif>
                     <div class="hv-top">
                         <i aria-hidden="true">{{ $r['icon'] }}</i><span><b>{{ $r['name'] }}</b><small>{{ $r['crop'] }}</small></span>
                         <span class="hv-tag">✓ Harvested</span>
@@ -211,6 +229,25 @@
 </div>
 
 @if ($hvMay)
+<div class="sheet hidden" id="hvEarlySheet" style="--sheet-width:26rem" aria-labelledby="hvEarlyTitle">
+    <div class="sheet-handle"></div>
+    <div class="sheet-body pt-5">
+        <div class="hve-head">
+            <span class="hve-ico" aria-hidden="true">⏳</span>
+            <div>
+                <h3 class="text-lg font-bold text-gray-900" id="hvEarlyTitle">Not harvest time yet</h3>
+                <p class="text-sm text-gray-600" id="hvEarlySay"></p>
+            </div>
+        </div>
+        <div class="hv-dates" id="hvEarlyDates"></div>
+        <p class="hve-why">Harvesting before the grain or fruit is ready lowers both the yield and the quality. Check the crop in the field first. If it is ready, or you have to harvest now, you can still go on.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Not yet</button>
+        <button type="button" class="btn btn-primary" id="hvEarlyGo">Harvest anyway</button>
+    </div>
+</div>
+
 <div class="sheet hidden" id="hvRecordSheet" style="--sheet-width:34rem" aria-labelledby="hvRecordTitle">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -316,6 +353,24 @@
         allIn();
     }
 
+    /* The too early warning: the lot's window against today. */
+    let earlyRow = null;
+    const dayOf = (ymd) => Date.UTC(+ymd.slice(0, 4), +ymd.slice(5, 7) - 1, +ymd.slice(8, 10));
+    const said = (ymd) => new Date(dayOf(ymd)).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' });
+    const inDays = (ymd) => { const n = Math.round((dayOf(ymd) - dayOf(today())) / 864e5); return n === 1 ? 'tomorrow' : 'in ' + n + ' days'; };
+    function openEarly(row) {
+        earlyRow = row;
+        const d = row.dataset, name = d.hvName || 'This lot';
+        const two = d.hvReal && d.hvReal !== d.hvOrig;
+        $('hvEarlySay').textContent = two
+            ? name + ' is due between ' + said(d.hvFrom) + ' and ' + said(d.hvFrom === d.hvOrig ? d.hvReal : d.hvOrig) + ', and that starts ' + inDays(d.hvFrom) + '.'
+            : name + ' is due on ' + said(d.hvFrom) + ', ' + inDays(d.hvFrom) + '.';
+        const tile = (cls, label, ymd, sub) => '<div class="hv-d' + cls + '"><span>' + label + '</span><b>' + said(ymd) + '</b><small>' + sub + '</small></div>';
+        $('hvEarlyDates').innerHTML = tile('', 'Original', d.hvOrig, inDays(d.hvOrig))
+            + (d.hvReal ? tile(' is-anee', 'Realigned by Anee', d.hvReal, inDays(d.hvReal)) : tile(' is-today', 'Today', today(), 'too early to harvest'));
+        window.openSheet('hvEarlySheet');
+    }
+
     function openRecord(row) {
         lotRow = row;
         lotId = Number(row.dataset.hvLot);
@@ -370,7 +425,19 @@
         }
 
         const mark = e.target.closest('[data-hv-mark]');
-        if (mark) { openRecord(mark.closest('[data-hv-lot]')); return; }
+        if (mark) {
+            const row = mark.closest('[data-hv-lot]');
+            // Before the harvest window opens: say so first, and let them go on.
+            if (row.dataset.hvFrom && today() < row.dataset.hvFrom) openEarly(row);
+            else openRecord(row);
+            return;
+        }
+
+        if (e.target.closest('#hvEarlyGo')) {
+            window.closeSheet('hvEarlySheet');
+            if (earlyRow) openRecord(earlyRow);
+            return;
+        }
 
         const obs = e.target.closest('[data-hv-obs]');
         if (obs && typeof window.smShowModule === 'function') {
