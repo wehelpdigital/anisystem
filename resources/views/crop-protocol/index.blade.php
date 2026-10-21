@@ -800,8 +800,9 @@
         transition: border-color .28s var(--cq-e), background-color .28s var(--cq-e), color .28s var(--cq-e); }
     .cq-pill:hover { border-color: #a8cc7e; }
     .cq-pill.is-on { color: #fff; background: var(--cq-g); border-color: var(--cq-g); }
-    .cq-two { display: grid; grid-template-columns: minmax(0, 1fr); gap: .7rem; }
-    @media (min-width: 520px) { .cq-two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+    /* The variety's potential and the target, a row each at every width (2026-10-22, the owner):
+       side by side, their long labels wrapped unevenly and the two boxes sat at different heights. */
+    .cq-rows { display: grid; grid-template-columns: minmax(0, 1fr); gap: .7rem; }
     .cq-field .form-input { width: 100%; min-height: 2.9rem; font-size: 1rem; }
     .cq-field > label { display: block; margin-bottom: .3rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-700); }
     .cq-field > label small { font-weight: 600; color: var(--color-gray-400); }
@@ -1412,7 +1413,7 @@
                 <div class="cq-choices" id="cqGoals"></div>
                 <span class="cq-label">Yields in</span>
                 <div class="cq-pills" id="cqUnits" role="radiogroup" aria-label="Yields in"></div>
-                <div class="cq-two" style="margin-top:.8rem">
+                <div class="cq-rows" style="margin-top:.8rem">
                     <div class="cq-field">
                         <label for="cqPotential" data-tl="yield">Yield potential of the variety <small id="cqPotU">(per hectare)</small></label>
                         <input type="number" id="cqPotential" class="form-input" min="0" step="any" inputmode="decimal" placeholder="On the seed bag">
