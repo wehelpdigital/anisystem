@@ -12,10 +12,10 @@
     @include('sm.partials.tag-picker')
 
     <div>
-        {{-- No "Give access" card up here any more: a login is given from
-             the worker's own card (its login panel, or the Add Worker
-             sheet's account tab), so the roster is the one place it is
-             asked. What stays is the word for a plan that cannot. --}}
+        {{-- Logins and what they open are given in Global Workers, the
+             farm's worker module (2026-10-22, the owner); each card here says
+             where its login stands in this season and opens the person
+             there. What stays here is the word for a plan without logins. --}}
         @unless (auth()->user()->canWorkerAccounts())
             <div class="card p-4 mb-4 border-amber-200">
                 <p class="text-sm text-gray-700"><strong>🔒 Worker logins</strong> come with <strong>{{ \App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('workerLogins')) }}</strong>. <a href="{{ route('account.subscription') }}" class="text-brand-600 font-semibold">Upgrade</a> to give workers their own login and email notifications.</p>
@@ -67,55 +67,33 @@
     <div class="sheet-body space-y-4">
         <input type="hidden" id="workerId" value="">
 
-        {{-- Two ways in. A worker who already has an anee.io login is picked
-             out by their email and arrives with the name their account
-             carries; anyone else is written down here by hand. The strip
-             only shows for a new worker — an existing card is one card. --}}
+        {{-- Two ways in (2026-10-22, the owner: "if you want to add a new
+             worker you have to select from the global workers, or if you want
+             to add a new worker it will auto add to the global worker"). Pick
+             someone from Global Workers, or write someone new, who joins
+             Global Workers and this season together. The strip only shows for
+             a new worker; an existing card is one card. --}}
         @php
-            // The farm's own roster is the owner's: how many on it are not in this season yet.
-            $gwWaiting = ((int) $schedule->anisystemUserId === (int) auth()->id() && ! \App\Support\WorkerContext::inWorkerContext())
-                ? \App\Models\AsGlobalWorker::where('userId', $schedule->anisystemUserId)->where('deleteStatus', 1)
-                    ->whereNotIn('id', \App\Models\AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->whereNotNull('globalWorkerId')->pluck('globalWorkerId'))->count()
-                : null;
+            // Who in Global Workers is not in this season yet.
+            $gwWaiting = \App\Models\AsGlobalWorker::where('userId', $schedule->anisystemUserId)->where('deleteStatus', 1)
+                ->whereNotIn('id', \App\Models\AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->whereNotNull('globalWorkerId')->pluck('globalWorkerId'))->count();
         @endphp
-        <div class="wa-tabs" id="workerTabs" role="tablist" aria-label="How to add this worker" @if ($gwWaiting !== null) style="grid-template-columns: 1fr 1fr 1fr" @endif>
-            @if ($gwWaiting !== null)
-            <button type="button" class="wa-tab" data-wtab="mine" role="tab" aria-selected="false">My workers</button>
-            @endif
+        <div class="wa-tabs" id="workerTabs" role="tablist" aria-label="How to add this worker">
+            <button type="button" class="wa-tab" data-wtab="mine" role="tab" aria-selected="false">From Global Workers</button>
             <button type="button" class="wa-tab is-on" data-wtab="new" role="tab" aria-selected="true">New worker</button>
-            <button type="button" class="wa-tab" data-wtab="account" role="tab" aria-selected="false">Has an account</button>
         </div>
 
         {{-- The farm's own roster (Global Workers, 2026-10-12): someone who
              worked another season joins this one in a tap, with their pay,
              skills and weekdays off. --}}
         <div id="workerMinePane" class="wa-pane space-y-3" hidden data-waiting="{{ (int) $gwWaiting }}">
-            <p class="text-sm text-gray-500">Your workers from every season. Tap one to add them here; they bring their pay, skills and weekdays off. <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">Manage your workers</a></p>
+            <p class="text-sm text-gray-500">Everyone in <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">Global Workers</a> who is not in this season yet. Tap one to add them here; they bring their pay, skills and weekdays off.</p>
             <div id="gwList" class="gw-pick"></div>
         </div>
 
-        <div id="workerAccountPane" class="wa-pane space-y-4" hidden>
-            <p class="text-sm text-gray-500">Already on anee.io? They join as your worker with the name and email on their account.</p>
-            <div>
-                <label for="waEmail" class="form-label">Their account email <span class="text-red-500">*</span></label>
-                {{-- No Find button: the answer arrives as the address is
-                     typed, once it is a whole one. The spinner in the corner
-                     says the question is out. --}}
-                <div class="wa-field">
-                    <input type="email" id="waEmail" maxlength="191" class="form-input" placeholder="e.g. juan@email.com" autocomplete="off" inputmode="email">
-                    <span class="wa-spin" id="waSpin" hidden aria-hidden="true"></span>
-                </div>
-                <p class="form-hint">The email they sign in with. We look it up as you type.</p>
-            </div>
-            {{-- What the search found: a face and a name, or a plain no. --}}
-            <div id="waResult" hidden></div>
-        </div>
-
         <div id="workerNewPane" class="wa-pane space-y-4">
-        @if ($gwWaiting !== null)
-            {{-- Every card is a person of the farm's roster (AsGlobalWorker::forCard), said where it is made (2026-10-16, the owner). --}}
-            <p class="text-sm text-gray-500" id="workerNewRoster">Someone new joins <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">My workers</a> too, so next season you add them in a tap instead of typing them again.</p>
-        @endif
+            {{-- Every card is a person of Global Workers (AsGlobalWorker::forCard), said where it is made. --}}
+            <p class="text-sm text-gray-500" id="workerNewRoster">Someone new is added to <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">Global Workers</a> too, so next season you pick them in a tap instead of typing them again.</p>
         <div>
             <label for="workerName" class="form-label">Worker Name <span class="text-red-500">*</span></label>
             <input type="text" id="workerName" maxlength="255" class="form-input" placeholder="e.g. Juan Dela Cruz">
@@ -182,84 +160,17 @@
         </div>
 
         @if ($canWorkerLogins)
-        {{-- Login access: give an already-added worker their own login by
-             sending a registration link OR setting a password for them. Shows
-             only when editing an existing worker. --}}
+        {{-- LOGIN AND ACCESS, IN THIS SEASON (2026-10-22). Given in Global
+             Workers, where the owner chooses all cropping schedules or season
+             by season; this says where the login stands here and opens the
+             person there, with this season offered first. --}}
         <div id="workerLoginSection" class="hidden mt-1 pt-4 border-t border-gray-100">
-            <div class="rounded-2xl border border-gray-200 bg-gray-50/60 p-4 space-y-4">
-                <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 text-lg">🔑</span>
-                    <div class="min-w-0 grow">
-                        <p class="font-bold text-gray-900 text-sm">Login access</p>
-                        <p class="text-xs text-gray-500" id="wlStatus">No login yet.</p>
-                    </div>
-                    {{-- Revoke lives in the card's corner as one quiet icon —
-                         the confirm sheet still stands between the tap and
-                         the act. --}}
-                    <button type="button" id="wlRevoke"
-                            class="hidden shrink-0 w-9 h-9 rounded-full text-red-500 hover:bg-red-50"
-                            title="Remove login" aria-label="Remove this worker's login">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H9m4 8H7a2 2 0 01-2-2V6a2 2 0 012-2h6"/></svg>
-                    </button>
-                </div>
-
-                {{-- Writing down what happened is not the same act as changing
-                     what is supposed to happen, and the same is true of every
-                     module below: a worker who may only look at the plan can
-                     still be the right person to record the day, or to keep
-                     the maps, and not the right person to spend the farm's AI
-                     credits. Each answer stands on its own. --}}
-                {{-- What they can open only makes sense once there is a they
-                     to open it. Before a login exists these switches are
-                     answers to a question nobody has asked — and worse, they
-                     look like settings that are already in force. The panel
-                     arrives with the login. --}}
-                <div id="wlRightsWrap" class="hidden">
-                    @include('sm.partials.worker-rights', ['p' => 'wl'])
-                </div>
-                <p id="wlNoLoginSay" class="text-xs text-gray-500 leading-relaxed">
-                    Send a registration link or set a password below. Once they
-                    can log in, you choose what they can open.
-                </p>
-
-{{-- Community access is a row in the rights panel above. --}}
-
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    {{-- One of these two, never both: a worker who has not
-                         registered needs the way in, and one who has needs the
-                         way to a new password. paintLogin picks. --}}
-                    <button type="button" id="wlSendLink" class="btn btn-white btn-sm w-full sm:w-auto justify-center">✉️ Send registration link</button>
-                    <button type="button" id="wlSendPwLink" class="btn btn-white btn-sm w-full sm:w-auto justify-center hidden">✉️ Send password change link</button>
-                    <button type="button" id="wlSetPwToggle" class="btn btn-white btn-sm w-full sm:w-auto justify-center">🔒 Set a password</button>
-                </div>
-
-                {{-- The password, in its own card. It unfolds on the house
-                     easing rather than popping in, and folds away the same
-                     road backwards. --}}
-                <div id="wlPwFold" class="wl-fold" aria-hidden="true">
-                    <div class="wl-fold-in">
-                        <div class="rounded-2xl border border-brand-100 bg-white p-4 space-y-3">
-                            <p class="font-bold text-gray-900 text-sm flex items-center gap-2">🔒 Password for this worker</p>
-                            <div>
-                                <label class="form-label" for="wlPassword">New password</label>
-                                <input type="password" id="wlPassword" class="form-input" placeholder="At least 8 characters" autocomplete="new-password">
-                                {{-- The strength bar: how much of a password this is. --}}
-                                <div class="wl-strength mt-2" aria-hidden="true"><i id="wlPwBar"></i></div>
-                                <p class="text-xs mt-1 font-semibold text-gray-400" id="wlPwSay">At least 8 characters.</p>
-                            </div>
-                            <div>
-                                <label class="form-label" for="wlPassword2">Repeat password</label>
-                                <input type="password" id="wlPassword2" class="form-input" placeholder="Type it again" autocomplete="new-password">
-                                <p class="form-error hidden" id="wlPwMatchSay">Passwords do not match yet.</p>
-                            </div>
-                            <button type="button" id="wlCreateLogin" class="btn btn-primary w-full">Create login</button>
-                            <p class="form-hint">Give them the email above and this password to sign in.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="form-hint mt-0!">Uses the worker's <strong>email</strong> above. Add one if it is blank.</p>
+            <div class="wl-acc">
+                <span class="wl-acc-ico" aria-hidden="true">🔑</span>
+                <span class="wl-acc-t"><b id="wlAccTitle">Login</b><small id="wlAccSay"></small></span>
             </div>
+            <p class="wl-acc-sum" id="wlAccSum" hidden></p>
+            <a class="btn btn-white btn-sm w-full justify-center mt-3" id="wlAccGo" href="{{ route('workers.global') }}">Manage in Global Workers</a>
         </div>
         @endif
         </div>
@@ -269,7 +180,6 @@
              door: the second stays shut until the search has found somebody
              who is not on the roster yet. --}}
         <button type="button" id="saveWorkerBtn" class="btn btn-primary w-full">Save Worker</button>
-        <button type="button" id="addAccountBtn" class="btn btn-primary w-full" hidden disabled>Add as worker</button>
     </div>
 </div>
 
@@ -312,27 +222,18 @@
 
 @push('head')
 <style>
-    /* The revoke icon in the login card's corner. Its own display rule so
-       the `hidden` utility always wins the argument. */
-    #wlRevoke { display: flex; align-items: center; justify-content: center; }
-    #wlRevoke.hidden { display: none; }
-
-    /* The password card's fold: a grid row growing from nothing, so the
-       card is exactly as tall as itself and the animation has a real end. */
-    .wl-fold { display: grid; grid-template-rows: 0fr;
-        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-    .wl-fold.is-open { grid-template-rows: 1fr; }
-    .wl-fold-in { overflow: hidden; min-height: 0; }
-    .wl-fold .wl-fold-in > div { margin-top: .25rem; }
-
-    /* The strength bar: how much of a password this is, in one glance. */
-    .wl-strength { height: .45rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
-    .wl-strength i { display: block; height: 100%; width: 0; border-radius: inherit; background: #ef4444;
-        transition: width .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
-
-    @media (prefers-reduced-motion: reduce) {
-        .wl-fold, .wl-strength i { transition: none; }
-    }
+    /* Login and access in this season (2026-10-22): a line and a door. */
+    .wl-acc { display: flex; align-items: center; gap: .65rem; }
+    .wl-acc-ico { flex: none; width: 2.25rem; height: 2.25rem; border-radius: .75rem; display: grid; place-items: center; font-size: 1.05rem; background: var(--color-brand-50); }
+    .wl-acc-t { flex: 1; min-width: 0; }
+    .wl-acc-t b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .wl-acc-t small { display: block; font-size: .76rem; line-height: 1.45; color: var(--color-gray-500); }
+    .wl-acc-sum { margin-top: .6rem; padding: .55rem .7rem; border-radius: .8rem; font-size: .74rem; line-height: 1.5; color: var(--color-gray-600);
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-100); animation: wa-arrive .3s var(--ease-house, cubic-bezier(.22,1,.36,1)) both; }
+    .wl-acc-sum[hidden] { display: none; }
+    html.dark .wl-acc-t b { color: #e8efe1; }
+    html.dark .wl-acc-sum { background: #151b12; border-color: #2b3a1c; color: #a5b89a; }
+    @media (prefers-reduced-motion: reduce) { .wl-acc-sum { animation: none; } }
 
     /* "ADD TO MY CONTACT LIST TOO" — the row that unrolls.
        It is an offer, not a field, so it arrives the way an offer should:
@@ -473,6 +374,8 @@
         'offDays' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->values(),
         'offDates' => $w->offDates->map(fn ($d) => $d->offDate->format('Y-m-d'))->values(),
         'login' => ($grantByWorker ?? [])[$w->id] ?? null,
+        // The person in Global Workers, where their login and access are given.
+        'globalWorkerId' => $w->globalWorkerId ? (int) $w->globalWorkerId : null,
     ])->values();
 @endphp
 <script>
@@ -492,13 +395,19 @@ const __init = () => {
     const tellBoard = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
     const CAN_LOGINS = @json($canWorkerLogins);
     const LOGINS_PLAN = @json(\App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('workerLogins')));
-    let editingWorker = null;   // the worker whose sheet is open (for login controls)
+    let editingWorker = null;   // the worker whose sheet is open
+    // Global Workers: where a login and what it opens are given (2026-10-22).
+    const GW_URL = @json(route('workers.global'));
+    const gwLink = (w) => GW_URL + (w && w.globalWorkerId ? '?login=' + w.globalWorkerId + '&season=' + SCHEDULE_ID : '');
+    // The access that answers for this season: its own, else all cropping schedules, else none.
+    const accessHere = (login) => login ? ((login.access || []).find((a) => Number(a.scheduleId) === SCHEDULE_ID) || (login.access || []).find((a) => a.all) || null) : null;
 
     const list = document.getElementById('workersList');
     const empty = document.getElementById('workersEmpty');
 
     function loginPillHtml(login) {
         if (!login) return '';
+        if (login.status === 'active' && !accessHere(login)) return '<span class="inline-flex items-center gap-1 text-xs font-semibold text-gray-600 bg-gray-50 border border-gray-200 rounded-full px-2 py-0.5" title="They can log in, but have no access to this season">🔑 Not in this season</span>';
         if (login.status === 'active') return '<span class="inline-flex items-center gap-1 text-xs font-semibold text-green-700 bg-green-50 border border-green-100 rounded-full px-2 py-0.5">🔑 Login</span>';
         if (login.status === 'pending') return '<span class="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-100 rounded-full px-2 py-0.5">🔑 Invite sent</span>';
         return '';
@@ -609,31 +518,19 @@ const __init = () => {
             if (w && w.id) window.smTags.load(tagsMount, 'worker', w.id);
             else window.smTags.clear(tagsMount);
         }
-        // Login controls only make sense for a saved worker (needs an id to link).
+        // Where the login stands here: a saved worker only.
         editingWorker = w;
-        paintLogin(w);
+        paintAccess(w);
         toContactReset();
         wlEmailReset();
         // Two doors for a new worker; an existing card is one card.
         document.getElementById('workerTabs').hidden = !!w;
-        waReset();
-        // Someone on the farm's roster not in this season yet: that list first.
-        showWorkerTab(!w && document.querySelector('[data-wtab="mine"]') && Number(document.getElementById('workerMinePane').dataset.waiting) > 0 ? 'mine' : 'new', false);
+        // Someone in Global Workers not in this season yet: that list first.
+        showWorkerTab(!w && Number(document.getElementById('workerMinePane').dataset.waiting) > 0 ? 'mine' : 'new', false);
         openSheet('workerSheet');
     }
 
-    /* ---------------- The second door: an anee.io account ----------------
-     *
-     * The owner types the email the person signs in with, the server says
-     * whether an account is behind it, and the card shows who. Adding them
-     * writes a worker card from the account's own name and email, and —
-     * where the plan allows logins — links the account to this farm at once
-     * with the same starting rights a new login always gets (read the plan,
-     * the owner's tools shut), changeable from their card afterwards. */
     const ACCOUNT_URL = @json(route('sm.workers.account'));
-    const GRANT_URL = @json(route('sm.workers.access.grant'));
-    let waFound = null;        // what the last search answered, or null
-    let waSeq = 0;             // a slow answer about an older email is ignored
 
     function showWorkerTab(which, animate = true) {
         document.querySelectorAll('#workerTabs .wa-tab').forEach((t) => {
@@ -641,7 +538,7 @@ const __init = () => {
             t.classList.toggle('is-on', on);
             t.setAttribute('aria-selected', on ? 'true' : 'false');
         });
-        const panes = { new: document.getElementById('workerNewPane'), account: document.getElementById('workerAccountPane'), mine: document.getElementById('workerMinePane') };
+        const panes = { new: document.getElementById('workerNewPane'), mine: document.getElementById('workerMinePane') };
         Object.entries(panes).forEach(([key, pane]) => {
             const on = key === which;
             pane.classList.remove('is-arriving');
@@ -654,16 +551,11 @@ const __init = () => {
                 pane.hidden = !on;
             }
         });
-        const onAccount = which === 'account';
         if (which === 'mine') gwLoad();
-        document.getElementById('saveWorkerBtn').hidden = onAccount || which === 'mine';
-        // The roster is a tap per person: no button row under it.
+        document.getElementById('saveWorkerBtn').hidden = which === 'mine';
+        // Global Workers is a tap per person: no button row under it.
         const foot = document.getElementById('saveWorkerBtn').closest('.sheet-footer');
         if (foot) foot.style.display = which === 'mine' ? 'none' : '';
-        const addBtn = document.getElementById('addAccountBtn');
-        addBtn.hidden = !onAccount;
-        addBtn.disabled = !(waFound && waFound.found && !waFound.onRoster);
-        if (onAccount) window.smFocus?.('waEmail');
     }
 
     document.getElementById('workerTabs').addEventListener('click', (e) => {
@@ -671,86 +563,7 @@ const __init = () => {
         if (t) showWorkerTab(t.dataset.wtab);
     });
 
-    function waReset() {
-        waSeq++;
-        waFound = null;
-        document.getElementById('waEmail').value = '';
-        const out = document.getElementById('waResult');
-        out.hidden = true;
-        out.innerHTML = '';
-        document.getElementById('addAccountBtn').disabled = true;
-    }
-
-    function waPaint(d) {
-        const out = document.getElementById('waResult');
-        if (d.self) {
-            out.innerHTML = `<p class="wa-say is-stop">That is your own account. You are the owner here, not a worker.</p>`;
-            out.hidden = false;
-            return;
-        }
-        if (!d.found) {
-            out.innerHTML = `<div class="wa-none">No anee.io account uses that email.
-                <button type="button" class="btn btn-white btn-sm" id="waAsNew">Add as a new worker instead</button></div>`;
-            out.hidden = false;
-            document.getElementById('waAsNew').addEventListener('click', () => {
-                // Their email carries over, so it is not typed twice.
-                document.getElementById('workerEmail').value = document.getElementById('waEmail').value.trim();
-                document.getElementById('workerEmail').dispatchEvent(new Event('input', { bubbles: true }));
-                showWorkerTab('new');
-                window.smFocus?.('workerName');
-            });
-            return;
-        }
-        const a = d.account;
-        const face = a.avatar ? `<img src="${escapeHtml(a.avatar)}" alt="">` : escapeHtml(a.initials || '·');
-        let say, stop = false;
-        if (d.onRoster) { say = `${escapeHtml(a.name)} is already a worker in this season.`; stop = true; }
-        else if (d.login === 'active') say = 'They already have access to your farm. They join as a worker with the rights you gave them.';
-        else if (CAN_LOGINS) say = 'They join as a worker and can view this farm. You can change what they open from their card later.';
-        else say = `They join as a worker with this name and email. Worker logins come with ${escapeHtml(LOGINS_PLAN)}.`;
-        out.innerHTML = `<div class="wa-card">
-                <span class="wa-face">${face}</span>
-                <span class="wa-who"><b>${escapeHtml(a.name)}</b><span>${escapeHtml(a.email)}</span>${a.since ? `<span>On anee.io since ${escapeHtml(a.since)}</span>` : ''}</span>
-            </div>
-            <p class="wa-say${stop ? ' is-stop' : ''}">${say}</p>`;
-        out.hidden = false;
-    }
-
     const EMAIL_RX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-    let waDebounce;
-    async function waFind() {
-        const email = document.getElementById('waEmail').value.trim();
-        if (!EMAIL_RX.test(email)) return;
-        const spin = document.getElementById('waSpin');
-        const mine = ++waSeq;
-        spin.hidden = false;
-        try {
-            const res = await api(`${ACCOUNT_URL}?scheduleId=${SCHEDULE_ID}&email=${encodeURIComponent(email)}`);
-            if (mine !== waSeq) return;
-            waFound = res.data;
-            waPaint(res.data);
-            document.getElementById('addAccountBtn').disabled = !(waFound.found && !waFound.self && !waFound.onRoster);
-        } catch (err) {
-            if (mine !== waSeq) return;
-            waFound = null;
-            document.getElementById('addAccountBtn').disabled = true;
-            toast(err.message, 'error');
-        } finally { if (mine === waSeq) spin.hidden = true; }
-    }
-    document.getElementById('waEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(waDebounce); waFind(); } });
-    /* Asked as the address is typed, once it is a whole one, after the
-       typing pauses. A changed email is a new question, so the old answer
-       goes at once -- it must not add the wrong person. */
-    document.getElementById('waEmail').addEventListener('input', () => {
-        waSeq++;
-        waFound = null;
-        document.getElementById('addAccountBtn').disabled = true;
-        const out = document.getElementById('waResult');
-        out.hidden = true; out.innerHTML = '';
-        document.getElementById('waSpin').hidden = true;
-        clearTimeout(waDebounce);
-        if (EMAIL_RX.test(document.getElementById('waEmail').value.trim())) waDebounce = setTimeout(waFind, 450);
-    });
 
     /* ---------------- The address, known: the new-worker form ------------
      *
@@ -759,10 +572,10 @@ const __init = () => {
      * different people. So as the email is typed here the same question
      * the account tab asks is asked, and the answer sits under the field:
      * a card on THIS season already carrying it is a duplicate (said in
-     * red, and the save is refused until it changes); the same person on
-     * another of your seasons is one tap from being reused as they are;
-     * an anee.io account is one tap from the other door, which links
-     * their login. Editing a card excludes the card itself. */
+     * red, and the save is refused until it changes); someone already in
+     * Global Workers is added from there in one tap rather than typed
+     * again; an anee.io account lends its name. Editing a card excludes
+     * the card itself. */
     let wlEmailSeq = 0;
     let wlEmailDebounce;
     let wlEmailBlocked = false;
@@ -791,9 +604,12 @@ const __init = () => {
         } else if (d.self) {
             tone = 'is-note';
             html = `<span>That is your own email. You do not need it on your own card.</span>`;
+        } else if (d.roster && !editing) {
+            html = `<span><b>${escapeHtml(d.roster.name)}</b> is already in Global Workers with this email.</span>
+                <button type="button" class="btn btn-primary btn-sm" data-wl-roster="${d.roster.id}">Add ${escapeHtml(d.roster.name)} here</button>`;
         } else if (d.found && !editing) {
-            html = `<span><b>${escapeHtml(d.account.name)}</b> uses this email on anee.io. Add them from the account tab to link their login.</span>
-                <button type="button" class="btn btn-primary btn-sm" data-wl-account>Use their account</button>`;
+            html = `<span><b>${escapeHtml(d.account.name)}</b> uses this email on anee.io. After you add them, give them a login in Global Workers.</span>
+                <button type="button" class="btn btn-white btn-sm" data-wl-account>Use their name</button>`;
         } else if (d.found && editing) {
             tone = 'is-note';
             html = `<span>That email signs in to <b>${escapeHtml(d.account.name)}</b>'s anee.io account${d.login === 'active' ? ', which already has access to your farm' : ''}.</span>`;
@@ -812,12 +628,12 @@ const __init = () => {
             if (twin) setTimeout(() => openWorkerSheet(twin), 350);
         });
         box.querySelector('[data-wl-account]')?.addEventListener('click', () => {
-            // The address carries over, and the other door asks its question at once.
-            const wa = document.getElementById('waEmail');
-            wa.value = document.getElementById('workerEmail').value.trim();
-            showWorkerTab('account');
-            wa.dispatchEvent(new Event('input', { bubbles: true }));
+            // The account's own name and phone, so the card and the login agree about who this is.
+            document.getElementById('workerName').value = d.account.name || document.getElementById('workerName').value;
+            if (d.account.phone && !document.getElementById('workerPhone').value.trim()) document.getElementById('workerPhone').value = d.account.phone;
+            box.hidden = true;
         });
+        box.querySelector('[data-wl-roster]')?.addEventListener('click', (e) => addFromRoster(Number(e.currentTarget.dataset.wlRoster), e.currentTarget));
         box.querySelector('[data-wl-reuse]')?.addEventListener('click', () => {
             const e = d.elsewhere;
             document.getElementById('workerName').value = e.name || document.getElementById('workerName').value;
@@ -855,57 +671,11 @@ const __init = () => {
         wlEmailDebounce = setTimeout(wlEmailAsk, 450);
     });
 
-    document.getElementById('addAccountBtn').addEventListener('click', async (e) => {
-        const btn = e.currentTarget;
-        if (!waFound || !waFound.found || waFound.onRoster) return;
-        const a = waFound.account;
-        btn.disabled = true;
-        try {
-            const res = await api(`{{ route('sm.workers.store') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { accountUserId: a.id } });
-            /* The login. An account the farm already granted keeps the
-               rights the owner chose — the card simply shows them. A new one
-               is linked now, with a new login's starting rights, and the
-               grant's own reply is what the toast says. Best-effort past the
-               card: a login that could not be linked is a line, not a
-               failure of the worker, who is on the roster either way. */
-            let login = waFound.grant || null;
-            let said = res.message;
-            if (CAN_LOGINS && !login) {
-                try {
-                    const g = await api(GRANT_URL, { method: 'POST', body: { scheduleWorkerId: res.data.id, email: a.email, scheduleAccess: 'view' } });
-                    login = g.data && g.data.grant;
-                    said = g.message || said;
-                } catch (err) {
-                    toast('Added as a worker, but their login could not be linked: ' + err.message, 'error');
-                }
-            }
-            WORKERS.push({
-                id: res.data.id,
-                workerName: res.data.workerName,
-                email: res.data.email,
-                phone: res.data.phone,
-                costPerHalfDay: res.data.costPerHalfDay,
-                priority: Number(res.data.priority) || 1,
-                skills: res.data.skills || [],
-                notes: res.data.notes,
-                offDays: [], offDates: [],
-                login,
-            });
-            renderList();
-            tellBoard('sm:worker-saved', res.data);
-            closeSheet('workerSheet');
-            toast(said);
-            window.smSpot?.('[data-worker-card="' + res.data.id + '"]');
-        } catch (err) {
-            toast(err.message, 'error');
-            btn.disabled = false;
-        }
-    });
-
-    /* ------------- My workers: the farm's own roster -------------
+    /* ------------- From Global Workers -------------
      *
-     * Global Workers (2026-10-12). The ones not on this season yet, a tap
-     * each: the card is made from their roster facts on the server. */
+     * The farm's worker module (2026-10-12; the way in since 2026-10-22).
+     * The ones not in this season yet, a tap each: the card is made from
+     * their Global Workers facts on the server. */
     const GW_LIST = @json(route('workers.global.list'));
     const gwEsc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     let GW_ROWS = [];
@@ -920,21 +690,25 @@ const __init = () => {
                     <span class="gw-av">${gwEsc((g.workerName || '?').trim().charAt(0).toUpperCase())}</span>
                     <span class="gw-t"><b>${gwEsc(g.workerName)}</b><small>${gwEsc([g.phone, g.email].filter(Boolean).join(' · ') || 'No contact yet')}${Number(g.costPerHalfDay) ? ' · ' + gwEsc(@json(\App\Support\Region::symbol()) + Number(g.costPerHalfDay).toLocaleString()) + ' a half day' : ''}</small></span>
                     <span class="gw-add">Add</span></button>`).join('')
-                : '<p class="text-sm text-gray-500">Everyone on your roster is in this season already. Add someone new in the New worker tab.</p>';
+                : '<p class="text-sm text-gray-500">Everyone in Global Workers is in this season already. Add someone new in the New worker tab.</p>';
         } catch (err) { box.innerHTML = '<p class="text-sm text-gray-500">' + gwEsc(err.message) + '</p>'; }
     }
-    document.getElementById('gwList').addEventListener('click', async (e) => {
+    document.getElementById('gwList').addEventListener('click', (e) => {
         const b = e.target.closest('[data-gw]');
-        if (!b || b.disabled) return;
-        b.disabled = true;
+        if (b && !b.disabled) addFromRoster(Number(b.dataset.gw), b);
+    });
+    // One person from Global Workers onto this season (the list above, or the email line in the New worker tab).
+    async function addFromRoster(personId, b) {
+        if (b) b.disabled = true;
         try {
-            const res = await api(`{{ route('sm.workers.store') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { globalWorkerId: Number(b.dataset.gw) } });
+            const res = await api(`{{ route('sm.workers.store') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { globalWorkerId: personId } });
             // Their weekdays off came with them (the server copied them to the card),
-            // and so does a login given on the roster: it is the same person's grant.
-            const gwRow = GW_ROWS.find((g) => String(g.id) === b.dataset.gw) || {};
+            // and so does their login: it is the same person's.
+            const gwRow = GW_ROWS.find((g) => Number(g.id) === personId) || {};
             const offDays = (gwRow.offWeekdays || []).map(Number);
             WORKERS.push({ id: res.data.id, workerName: res.data.workerName, email: res.data.email, phone: res.data.phone, costPerHalfDay: res.data.costPerHalfDay,
-                priority: Number(res.data.priority) || 1, skills: res.data.skills || [], notes: res.data.notes, offDays, offDates: [], login: (CAN_LOGINS && gwRow.login) || null });
+                priority: Number(res.data.priority) || 1, skills: res.data.skills || [], notes: res.data.notes, offDays, offDates: [],
+                login: (CAN_LOGINS && gwRow.login) || null, globalWorkerId: personId });
             renderList();
             tellBoard('sm:worker-saved', res.data);
             if (offDays.length) tellBoard('sm:worker-rules', { id: Number(res.data.id), offDays, offDates: [] });
@@ -943,8 +717,8 @@ const __init = () => {
             closeSheet('workerSheet');
             toast(res.message);
             window.smSpot?.('[data-worker-card="' + res.data.id + '"]');
-        } catch (err) { toast(err.message, 'error'); b.disabled = false; }
-    });
+        } catch (err) { toast(err.message, 'error'); if (b) b.disabled = false; }
+    }
 
     /* ------------- "Add to my Contact List too" -------------
      *
@@ -1007,233 +781,43 @@ const __init = () => {
         toContactDebounce = setTimeout(toContactAsk, 450);
     });
 
-    /* ---------------- Worker login controls ---------------- */
-
-    function paintLogin(w) {
+    /* ---------------- Login and access, in this season ----------------
+     *
+     * Given in Global Workers (2026-10-22): this says where the login stands
+     * here and opens the person there, this season offered first. */
+    function paintAccess(w) {
         const sec = document.getElementById('workerLoginSection');
-        if (!sec) return;   // not the boss / no login controls rendered
+        if (!sec) return;   // a plan without logins
         const show = !!(w && w.id);
         sec.classList.toggle('hidden', !show);
         if (!show) return;
-        const login = w.login || null;
-        const statusEl = document.getElementById('wlStatus');
-        if (login && login.status === 'active') statusEl.textContent = 'Active. This worker can log in.';
-        else if (login && login.status === 'pending') statusEl.textContent = 'Invite sent. Waiting for them to set a password.';
-        else statusEl.textContent = 'No login yet.';
-        const wlAccess = document.getElementById('wlAccess');
-        // Activities has no "None" any more: a legacy grant that still says
-        // it is read as view, and the next save writes the honest word.
-        const schedAccess = (login && login.scheduleAccess) || 'view';
-        wlAccess.value = schedAccess === 'none' ? 'view' : schedAccess;
-        wlAccess.dispatchEvent(new Event('change', { bubbles: true }));
-        // No community switch any more: a worker reaches the community through
-        // their own account, never through the farm they are working in.
-        window.workerRights.paint('wl', login);
-        // The rights panel belongs to a login, not to a worker: no login, no
-        // question to answer, and a line saying how to get one instead.
-        document.getElementById('wlRightsWrap')?.classList.toggle('hidden', !login);
-        document.getElementById('wlNoLoginSay')?.classList.toggle('hidden', !!login);
-        document.getElementById('wlRevoke').classList.toggle('hidden', !login);
-        /* A registration link is only a link for somebody who has not
-           registered. Once the grant names a real account, the button becomes
-           the one an owner actually reaches for — a link to change the
-           password, usually because the worker has forgotten it. */
-        const hasLogin = !!(login && login.workerUserId);
-        document.getElementById('wlSendLink')?.classList.toggle('hidden', hasLogin);
-        document.getElementById('wlSendPwLink')?.classList.toggle('hidden', !hasLogin);
-        // An account's password is never overwritten (setPassword keeps it), so
-        // once there is one the way to a new password is the link above.
-        document.getElementById('wlSetPwToggle')?.classList.toggle('hidden', hasLogin);
-        document.getElementById('wlPwFold').classList.remove('is-open');
-        document.getElementById('wlPassword').value = '';
-        document.getElementById('wlPassword2').value = '';
-        paintPwStrength('');
-        document.getElementById('wlPwMatchSay').classList.add('hidden');
-    }
-
-    /* ---- how much of a password this is ---- */
-    function pwScore(pw) {
-        if (pw.length < 8) return 0;
-        let s = 1;
-        if (pw.length >= 12) s++;
-        if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) s++;
-        if (/\d/.test(pw)) s++;
-        if (/[^A-Za-z0-9]/.test(pw)) s++;
-        return Math.min(4, s);
-    }
-    function paintPwStrength(pw) {
-        const bar = document.getElementById('wlPwBar');
-        const say = document.getElementById('wlPwSay');
-        if (!bar || !say) return;
-        if (!pw) {
-            bar.style.width = '0';
-            say.textContent = 'At least 8 characters.';
-            say.style.color = '';
-            return;
+        const l = w.login || null;
+        const here = accessHere(l);
+        const name = w.workerName || 'They';
+        let title, say, go, sum = '';
+        if (!l) {
+            title = 'No login yet';
+            say = 'Give ' + name + ' a login in Global Workers, then choose the seasons they can open.';
+            go = 'Give a login in Global Workers';
+        } else if (!here) {
+            title = l.status === 'pending' ? 'Invite sent, no access here' : 'Can log in, but not in this season';
+            say = name + ' has no access to this season yet.';
+            go = 'Give access to this season';
+        } else {
+            title = l.status === 'pending' ? 'Invite sent' : 'Can log in here';
+            say = here.all ? 'This season follows their access to all cropping schedules.' : 'This season has its own access for them.';
+            sum = here.summary || '';
+            go = 'Manage in Global Workers';
         }
-        const s = pwScore(pw);
-        const looks = [
-            ['12%', '#ef4444', 'Too short. Use at least 8 characters.'],
-            ['30%', '#ef4444', 'Weak. Longer is stronger.'],
-            ['55%', '#f59e0b', 'Okay. Mix in capitals or numbers.'],
-            ['80%', '#84cc16', 'Strong.'],
-            ['100%', '#16a34a', 'Very strong.'],
-        ][s];
-        bar.style.width = looks[0];
-        bar.style.background = looks[1];
-        say.textContent = looks[2];
-        say.style.color = looks[1];
+        document.getElementById('wlAccTitle').textContent = title;
+        document.getElementById('wlAccSay').textContent = say;
+        const sumEl = document.getElementById('wlAccSum');
+        sumEl.textContent = sum;
+        sumEl.hidden = !sum;
+        const goEl = document.getElementById('wlAccGo');
+        goEl.textContent = go;
+        goEl.href = gwLink(w);
     }
-    document.getElementById('wlPassword')?.addEventListener('input', (e) => {
-        paintPwStrength(e.target.value);
-        checkPwMatch();
-    });
-    document.getElementById('wlPassword2')?.addEventListener('input', checkPwMatch);
-    function checkPwMatch() {
-        const a = document.getElementById('wlPassword').value;
-        const b = document.getElementById('wlPassword2').value;
-        // Only complain once they have started the second field.
-        document.getElementById('wlPwMatchSay').classList.toggle('hidden', !b || a === b);
-    }
-
-    /* ---- rights save themselves the moment they change ----
-       The old shape only sent the switches with "Send link" / "Create
-       login", so flipping a right on an existing login changed nothing.
-       Now any real tap on the panel saves after a short breath. */
-    let rightsTimer = null;
-    function queueRightsSave() {
-        if (!editingWorker || !editingWorker.login || !editingWorker.login.id) return;
-        clearTimeout(rightsTimer);
-        rightsTimer = setTimeout(saveRightsNow, 450);
-    }
-    async function saveRightsNow() {
-        const login = editingWorker && editingWorker.login;
-        if (!login || !login.id) return;
-        try {
-            const res = await api(@json(route('sm.workers.access.rights')), { method: 'POST', body: {
-                id: login.id,
-                scheduleAccess: document.getElementById('wlAccess').value,
-                communityAccess: 1,   // vestigial: the grant column is no longer asked
-                ...window.workerRights.read('wl'),
-            } });
-            editingWorker.login = (res.data && res.data.grant) || editingWorker.login;
-            renderList();
-            toast(res.message || 'Access updated.');
-        } catch (err) {
-            toast(err.message, 'error');
-            paintLogin(editingWorker);   // repaint the truth the server kept
-        }
-    }
-    // 'input' on a level fires only from a real segment tap (paint uses
-    // 'change'); checkboxes are guarded by isTrusted so programmatic
-    // repaints never save.
-    document.getElementById('wlRightsWrap')?.addEventListener('input', (e) => {
-        if (e.target.classList?.contains('wr-level')) queueRightsSave();
-    });
-    document.getElementById('wlRightsWrap')?.addEventListener('change', (e) => {
-        if (e.isTrusted && e.target.classList?.contains('wr-check')) queueRightsSave();
-    });
-
-    function applyGrant(grant) {
-        if (!editingWorker) return;
-        editingWorker.login = grant || null;   // editingWorker is a live ref in WORKERS
-        paintLogin(editingWorker);
-        renderList();
-    }
-    const loginEmail = () => (document.getElementById('workerEmail').value || '').trim();
-
-    document.getElementById('wlSendLink')?.addEventListener('click', async (e) => {
-        const email = loginEmail();
-        if (!email) { toast('Add the worker\'s email above first.', 'error'); document.getElementById('workerEmail').focus(); return; }
-        const btn = e.currentTarget; btn.disabled = true;
-        try {
-            const res = await api(@json(route('sm.workers.access.grant')), { method: 'POST', body: {
-                scheduleWorkerId: editingWorker && editingWorker.id,
-                email,
-                scheduleAccess: document.getElementById('wlAccess').value,
-                communityAccess: 1,   // vestigial: the grant column is no longer asked
-                ...window.workerRights.read('wl'),
-            } });
-            toast(res.message);
-            applyGrant(res.data && res.data.grant);
-        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
-    });
-
-    /* The link for a worker who already has a login. Asked first, because it
-       lands in somebody's inbox: an owner tapping the row to read it should
-       not send mail by brushing past. */
-    document.getElementById('wlSendPwLink')?.addEventListener('click', async (e) => {
-        // Taken BEFORE the confirm: currentTarget is only set while the event
-        // is being dispatched, and after the await it is null. Reading it
-        // there threw, and the link was never asked for -- "nothing happens".
-        const btn = e.currentTarget;
-        const grantId = editingWorker && editingWorker.login && editingWorker.login.id;
-        if (!grantId) { toast('This worker has no login yet.', 'error'); return; }
-        const name = (editingWorker && editingWorker.workerName) || 'this worker';
-        const ok = window.confirmAction ? await window.confirmAction({
-            title: 'Send a password change link?',
-            message: name + ' gets an email to pick a new password. The old one works until they change it.',
-            confirmText: 'Send the link',
-            confirmClass: 'btn-primary',
-        }) : true;
-        if (!ok) return;
-        btn.disabled = true;
-        try {
-            const res = await api(@json(route('sm.workers.access.password-link')), {
-                method: 'POST', body: { id: grantId },
-            });
-            toast(res.message);
-        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
-    });
-
-    document.getElementById('wlSetPwToggle')?.addEventListener('click', () => {
-        const fold = document.getElementById('wlPwFold');
-        const opening = !fold.classList.contains('is-open');
-        fold.classList.toggle('is-open', opening);
-        fold.setAttribute('aria-hidden', opening ? 'false' : 'true');
-        if (opening) setTimeout(() => document.getElementById('wlPassword').focus(), 300);
-    });
-
-    document.getElementById('wlCreateLogin')?.addEventListener('click', async (e) => {
-        const email = loginEmail();
-        if (!email) { toast('Add the worker\'s email above first.', 'error'); document.getElementById('workerEmail').focus(); return; }
-        const pw = document.getElementById('wlPassword').value;
-        if (pw.length < 8) { toast('Password must be at least 8 characters.', 'error'); return; }
-        if (pw !== document.getElementById('wlPassword2').value) {
-            toast('Passwords do not match. Type the same one again below.', 'error');
-            document.getElementById('wlPassword2').focus();
-            return;
-        }
-        const btn = e.currentTarget; btn.disabled = true;
-        try {
-            const res = await api(@json(route('sm.workers.access.password')), { method: 'POST', body: {
-                scheduleWorkerId: editingWorker && editingWorker.id,
-                name: editingWorker && editingWorker.workerName,
-                email, password: pw,
-                scheduleAccess: document.getElementById('wlAccess').value,
-                communityAccess: 1,   // vestigial: the grant column is no longer asked
-                ...window.workerRights.read('wl'),
-            } });
-            toast(res.message);
-            applyGrant(res.data && res.data.grant);
-        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
-    });
-
-    document.getElementById('wlRevoke')?.addEventListener('click', async (e) => {
-        // Captured before the question is asked: `currentTarget` is null on
-        // the far side of an await, and this used to throw instead of
-        // revoking anything.
-        const btn = e.currentTarget;
-        if (!editingWorker || !editingWorker.login || !editingWorker.login.id) return;
-        const ok = await confirmAction({ title: 'Remove login?', message: 'This worker will no longer be able to log in.', confirmText: 'Remove' });
-        if (!ok) return;
-        btn.disabled = true;
-        try {
-            const res = await api(@json(route('sm.workers.access.revoke')), { method: 'DELETE', body: { id: editingWorker.login.id } });
-            toast(res.message);
-            applyGrant(null);
-        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
-    });
 
     document.getElementById('saveWorkerBtn').addEventListener('click', async (e) => {
         const btn = e.currentTarget;
@@ -1281,6 +865,7 @@ const __init = () => {
                 offDays: prev ? prev.offDays : [],
                 offDates: prev ? prev.offDates : [],
                 login: prev ? prev.login : null,
+                globalWorkerId: res.data.globalWorkerId ? Number(res.data.globalWorkerId) : (prev ? prev.globalWorkerId : null),
             };
             if (prev) {
                 WORKERS[WORKERS.indexOf(prev)] = saved;

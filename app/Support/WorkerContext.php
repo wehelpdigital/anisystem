@@ -22,6 +22,49 @@ class WorkerContext
      * way in, and the rows cannot change between two of those asks. */
     private static array $grantCache = [];
 
+    /**
+     * The season this request is about (2026-10-22: access is set per
+     * cropping schedule, or for all of them). An id once known; null for the
+     * farm as a whole; 'pending' on a season page whose season is not read
+     * yet. Set by the gate from the request, and by the controllers when they
+     * resolve the season (enterSeason), which is the last word.
+     */
+    private static $season = null;
+
+    public static function useSeason($season): void
+    {
+        self::$season = is_numeric($season) && (int) $season > 0 ? (int) $season : ($season === 'pending' ? 'pending' : null);
+    }
+
+    /** @return int|string|null */
+    public static function season()
+    {
+        return self::$season;
+    }
+
+    /**
+     * A controller has found the season the request is about: from here on
+     * every question is asked of that season's own setting, and the gate asks
+     * its table again, because what it allowed for the farm as a whole may
+     * not hold in this season. A refusal ends the request there.
+     */
+    public static function enterSeason(int $id): void
+    {
+        if (self::$season === $id || ! self::inWorkerContext()) {
+            self::$season = $id;
+
+            return;
+        }
+        self::$season = $id;
+        $request = request();
+        if ($request && $request->route()) {
+            $no = \App\Http\Middleware\WorkerModuleAccess::verdict($request);
+            if ($no) {
+                throw new \Illuminate\Http\Exceptions\HttpResponseException($no);
+            }
+        }
+    }
+
     public static function grants()
     {
         $uid = (int) Auth::id();
@@ -118,82 +161,46 @@ class WorkerContext
      * Which of a farm's seasons this request is allowed to see, or null for
      * "all of them".
      *
-     * A grant is an invitation to a JOB, not to a farm: the boss adds a
-     * worker to one season's roster and invites that row. Standing in the
-     * farm was letting them read every other season in it — the neighbouring
-     * crop, its costs, its workers — which nobody ever agreed to.
+     * The login's access settings say (2026-10-22): an "all cropping
+     * schedules" setting opens every season of the farm, now and to come;
+     * otherwise the seasons with a setting of their own, and no others. Being
+     * on a season's roster no longer opens it by itself: the roster is who
+     * works there, the settings are what their login may open.
      *
-     * Three ways a season counts as theirs:
-     *   • the roster row their invitation names;
-     *   • any other roster row of the same farm carrying their address,
-     *     because that is the same person written down again;
-     *   • all of them, when a grant names no roster row at all — those
-     *     invitations were made farm-wide and are honoured as they were made.
-     *
-     * Returns null for an owner, for a farm that is not the one on screen,
-     * and for a farm-wide grant. An empty array means "they are on none of
-     * them", which is a real answer and not the same as null.
+     * Returns null for an owner and for a farm that is not the one on screen.
+     * An empty array means "none of them", which is a real answer.
      */
     public static function visibleScheduleIdsFor(int $ownerId): ?array
     {
-        static $cache = [];
-
         $grant = self::activeGrant();
         if (! $grant || (int) $grant->bossUserId !== $ownerId) {
             return null;   // an owner, or a farm this session is not standing in
         }
 
-        $key = $ownerId . ':' . (int) Auth::id();
-        if (array_key_exists($key, $cache)) {
-            return $cache[$key];
+        return $grant->seasonIds();
+    }
+
+    /**
+     * The visible seasons where a module is open to whoever is asking, for
+     * the pages that gather from every season (Global Notes, the maps, the
+     * report comparisons). Null when nothing is withheld.
+     *
+     * @return array<int, int>|null
+     */
+    public static function seasonIdsWith(string $module, string $level = 'view'): ?array
+    {
+        $grant = self::activeGrant();
+        if (! $grant) {
+            return null;
         }
+        $owner = (int) $grant->bossUserId;
+        $ids = $grant->seasonIds() ?? \App\Models\AsCroppingSchedule::active()->where('anisystemUserId', $owner)->pluck('id')->map(fn ($id) => (int) $id)->all();
 
-        $mine = self::grants()->where('bossUserId', $ownerId);
+        return array_values(array_filter($ids, function ($id) use ($grant, $module, $level) {
+            $has = $grant->moduleAccess($module, (int) $id);
 
-        // An invitation with no roster row behind it, and no person on the
-        // farm's roster either, was never about one season, so it keeps the
-        // whole farm. A login given from Global Workers names the person and
-        // is about the seasons they are on, even before they are on any.
-        if ($mine->contains(fn ($g) => $g->isFarmWide())) {
-            return $cache[$key] = null;
-        }
-
-        $rosterIds = $mine->pluck('scheduleWorkerId')->filter()->all();
-        $ids = \App\Models\AsScheduleWorker::query()
-            ->whereIn('id', $rosterIds ?: [-1])
-            ->pluck('croppingScheduleId');
-
-        // The person on the farm's roster the login was given to: every
-        // season card that is them (Global Workers links each card to its
-        // person), so adding them to a season opens that season to them.
-        $people = $mine->pluck('globalWorkerId')->filter()->map(fn ($id) => (int) $id)->all();
-        if ($people) {
-            $ids = $ids->concat(
-                \App\Models\AsScheduleWorker::active()
-                    ->whereIn('globalWorkerId', $people)
-                    ->whereIn('croppingScheduleId', \App\Models\AsCroppingSchedule::active()
-                        ->where('anisystemUserId', $ownerId)
-                        ->select('id'))
-                    ->pluck('croppingScheduleId')
-            );
-        }
-
-        // The same person, written onto another season's roster by the same
-        // boss. Matched on the address the invitation was sent to, which is
-        // the only thing the two rows are guaranteed to share.
-        $email = trim((string) (Auth::user()->email ?? ''));
-        if ($email !== '') {
-            $ids = $ids->concat(
-                \App\Models\AsScheduleWorker::query()
-                    ->whereRaw('LOWER(email) = ?', [mb_strtolower($email)])
-                    ->whereIn('croppingScheduleId', \App\Models\AsCroppingSchedule::active()
-                        ->where('anisystemUserId', $ownerId)
-                        ->select('id'))
-                    ->pluck('croppingScheduleId')
-            );
-        }
-
-        return $cache[$key] = $ids->map(fn ($id) => (int) $id)->unique()->values()->all();
+            return $level === 'edit' ? $has === 'edit' : $has !== 'none';
+        }));
     }
 
     /** Whether the current worker context may write to schedules. */
@@ -202,7 +209,7 @@ class WorkerContext
         $grant = self::activeGrant();
 
         // Owners (no grant) always edit their own; workers need 'edit'.
-        return $grant ? $grant->canEditSchedules() : true;
+        return $grant ? $grant->canEditSchedules(self::$season) : true;
     }
 
     /**
@@ -216,7 +223,7 @@ class WorkerContext
     {
         $grant = self::activeGrant();
 
-        return $grant ? $grant->canAddNotes() : true;
+        return $grant ? $grant->canAddNotes(self::$season) : true;
     }
 
     /** Whether the current worker context may at least view schedules. */
@@ -224,7 +231,7 @@ class WorkerContext
     {
         $grant = self::activeGrant();
 
-        return $grant ? $grant->canViewSchedules() : true;
+        return $grant ? $grant->canViewSchedules(self::$season) : true;
     }
 
     /**
@@ -238,7 +245,7 @@ class WorkerContext
     {
         $grant = self::activeGrant();
 
-        return $grant ? $grant->moduleAccess($key) : 'edit';
+        return $grant ? $grant->moduleAccess($key, self::$season) : 'edit';
     }
 
     /** May they open this module at all? */
@@ -251,6 +258,17 @@ class WorkerContext
     public static function canWriteModule(string $key): bool
     {
         return self::moduleAccess($key) === 'edit';
+    }
+
+    /**
+     * May whoever is asking see and open one of the home screen's tools
+     * (WorkerTools keys)? Always, outside somebody else's farm.
+     */
+    public static function canUseTool(string $key): bool
+    {
+        $grant = self::activeGrant();
+
+        return $grant ? $grant->mayUseTool($key) : true;
     }
 
     /**

@@ -123,6 +123,47 @@
         .gw-login, .gl-revoke, .gl-fold, .gl-strength i { transition: none; }
         .gl-btns .btn { animation: none; }
     }
+
+    /* WHERE THEY CAN WORK (2026-10-22): the login's access settings, one row
+       each, opened to choose what they can open there. */
+    .ga-box { padding: .85rem; border-radius: 1.1rem; border: 1px solid var(--color-gray-200); background: var(--color-gray-50); }
+    .ga-top { display: flex; align-items: center; gap: .6rem; }
+    .ga-top-t { flex: 1; min-width: 0; }
+    .ga-top-t b { display: block; font-weight: 800; color: var(--color-gray-900); }
+    .ga-top-t small { display: block; font-size: .74rem; color: var(--color-gray-500); }
+    .ga-intro { margin-top: .45rem; font-size: .76rem; line-height: 1.5; color: var(--color-gray-500); }
+    .ga-intro b { color: var(--color-gray-700); }
+    .ga-list { display: grid; gap: .45rem; margin-top: .65rem; }
+    .ga-row { display: flex; align-items: center; gap: .65rem; width: 100%; padding: .6rem .7rem; border-radius: .9rem; text-align: left; cursor: pointer;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); animation: gaIn .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 40ms);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .ga-row:hover { border-color: var(--color-brand-300, #a8cc7e); transform: translateY(-1px); }
+    .ga-row:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+    @keyframes gaIn { from { opacity: 0; transform: translateY(5px); } }
+    .ga-ico { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .7rem; display: grid; place-items: center; color: #3f6d1f; background: #e8f3da; }
+    .ga-row.is-all .ga-ico { color: #8a5a00; background: #fff0c2; }
+    .ga-row.is-gone .ga-ico { color: var(--color-gray-400); background: var(--color-gray-100); }
+    .ga-ico svg { width: 1.05rem; height: 1.05rem; }
+    .ga-t { flex: 1; min-width: 0; }
+    .ga-t b { display: block; font-size: .84rem; font-weight: 800; color: var(--color-gray-900); }
+    .ga-t small { display: block; font-size: .72rem; line-height: 1.4; color: var(--color-gray-500); }
+    .ga-go { flex: none; width: 1rem; height: 1rem; color: var(--color-gray-400); }
+    .ga-none { padding: .7rem .8rem; border-radius: .9rem; border: 1px dashed var(--color-gray-300); font-size: .78rem; line-height: 1.5; color: var(--color-gray-600); background: var(--color-white); }
+    .ga-want { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-top: .65rem; padding: .6rem .75rem; border-radius: .9rem; font-size: .78rem; line-height: 1.45;
+        color: #7a4b00; background: #fff8e1; border: 1px solid #f3dc9b; animation: gaIn .3s cubic-bezier(.22,1,.36,1) both; }
+    .ga-want[hidden] { display: none; }
+    .ga-want .btn { margin-left: auto; }
+    .ga-say { font-size: .8rem; line-height: 1.5; color: var(--color-gray-600); }
+    .ga-say b { color: var(--color-gray-900); }
+    .btn.ga-remove { color: #dc2626; }
+    .gs-say { display: block; font-size: .72rem; font-weight: 600; color: var(--color-gray-500); }
+    html.dark .ga-box { background: #151b12; border-color: #2b3a1c; }
+    html.dark .ga-row, html.dark .ga-none { background: #1a1d23; border-color: #2a2f38; }
+    html.dark .ga-top-t b, html.dark .ga-t b, html.dark .ga-say b, html.dark .ga-intro b { color: #e8efe1; }
+    html.dark .ga-ico { background: #26391a; color: #c5e09f; }
+    html.dark .ga-row.is-all .ga-ico { background: #3a2e10; color: #f3d9a4; }
+    html.dark .ga-want { background: #241d0c; border-color: #4a3a12; color: #f3d9a4; }
+    @media (prefers-reduced-motion: reduce) { .ga-row, .ga-want { animation: none; transition: none; } }
 </style>
 @endpush
 
@@ -130,7 +171,7 @@
 <div class="max-w-5xl mx-auto">
     <div class="gw-hero">
         <img src="{{ asset('images/friends.png') }}" alt="">
-        <div><h2>Global Workers</h2><p>Your crew in one list. Add someone once, with their pay, skills and the weekdays they do not work, then put them on any season in a tap. Each season keeps its own record of their work and pay.@if ($canLogins) Give anyone their own login here too.@endif</p></div>
+        <div><h2>Global Workers</h2><p>Your crew in one list. Add someone once, with their pay, skills and the weekdays they do not work, then put them on any season in a tap. Each season keeps its own record of their work and pay.@if ($canLogins) Give anyone their own login here, and choose where they can work: all cropping schedules, or season by season.@endif</p></div>
     </div>
     {{-- The same words the season Workers page says for a plan without logins. --}}
     @unless ($canLogins)
@@ -185,11 +226,13 @@
 </div>
 
 @if ($canLogins)
-{{-- Login access, for the person (2026-10-18, the owner): the season card's
-     login controls, given from the roster. The same endpoints
-     (WorkerAccessController, sm.workers.access.*), the same rights panel and
-     the same words; the grant names the roster person, so every season card
-     that is them shows it too. --}}
+{{-- Login access, for the person (2026-10-18, the owner), and since
+     2026-10-22 the one place it is given: Global Workers is the farm's worker
+     module, and a season's Workers page only picks people from it. The sheet
+     is the login (an address and a way in), then WHERE THEY CAN WORK: access
+     settings for all cropping schedules or for one season, each opened to
+     choose what they can open there (WorkerAccess), then the login's own home
+     screen tools. --}}
 <div class="sheet hidden" id="gwLoginSheet" style="--sheet-width:34rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -199,12 +242,11 @@
     <div class="sheet-body space-y-4">
         <div class="gl-head">
             <span class="gl-head-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M11 12l9-9m-3 3l3 3m-6 0l2 2"/></svg></span>
-            <span class="gl-head-t"><b>Login access</b><small id="glStatus">No login yet.</small></span>
+            <span class="gl-head-t"><b>Login</b><small id="glStatus">No login yet.</small></span>
             <button type="button" id="glRevoke" class="gl-revoke" hidden title="Remove login" aria-label="Remove this worker's login">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H9m4 8H7a2 2 0 01-2-2V6a2 2 0 012-2h6"/></svg>
             </button>
         </div>
-        <p class="gl-reach" id="glReach"></p>
 
         <div id="glEmailWrap">
             <label class="form-label" for="glEmail">Their email</label>
@@ -212,12 +254,7 @@
             <p class="form-hint">They sign in with this email. If their card has none, it is saved on their card too.</p>
         </div>
         <p class="gl-email-fixed" id="glEmailFixed" hidden>Signs in with <b id="glEmailShown"></b></p>
-
-        {{-- What they can open arrives with the login, as on the season card. --}}
-        <div id="glRightsWrap" class="gl-fold" aria-hidden="true" inert>
-            <div class="gl-fold-in">@include('sm.partials.worker-rights', ['p' => 'gl'])</div>
-        </div>
-        <p id="glNoLoginSay" class="gl-say">Send a registration link or set a password below. Once they can log in, you choose what they can open.</p>
+        <p id="glNoLoginSay" class="gl-say">Send a registration link or set a password below. Then choose where they can work.</p>
 
         <div class="gl-btns">
             {{-- One of these two, never both: a worker who has not registered
@@ -248,6 +285,51 @@
                 </div>
             </div>
         </div>
+
+        {{-- WHERE THEY CAN WORK (2026-10-22): arrives with the login. --}}
+        <div id="glAccessWrap" class="gl-fold" aria-hidden="true" inert>
+            <div class="gl-fold-in">
+                <div class="ga-box">
+                    <div class="ga-top">
+                        <span class="ga-top-t"><b>Where they can work</b><small id="glReachSay"></small></span>
+                        <button type="button" class="btn btn-sm gl-cta" id="glAddAccess">+ Add access</button>
+                    </div>
+                    <p class="ga-intro">Give them <b>all cropping schedules</b>, one season, or both. A season with its own access follows it; the rest follow all cropping schedules, or stay closed without it.</p>
+                    <div id="glWant" class="ga-want" hidden></div>
+                    <div id="glAccessList" class="ga-list"></div>
+                </div>
+                <div class="mt-4">@include('sm.partials.worker-rights', ['p' => 'gl', 'only' => 'tools'])</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Add access: all cropping schedules, or one season. --}}
+<div class="sheet hidden" id="gwScopeSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add access</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <p class="gl-say">Where can <b id="gsWho"></b> work? Then choose what they can open there.</p>
+        <div class="gw-seasons" id="gsList"></div>
+    </div>
+</div>
+
+{{-- One access setting, opened: what they can open there. Saves as it is tapped. --}}
+<div class="sheet hidden" id="gwAccessSheet" style="--sheet-width:34rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="gaTitle">Access</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <p class="ga-say" id="gaSay"></p>
+        <div id="gaRightsWrap">@include('sm.partials.worker-rights', ['p' => 'ga', 'tools' => false])</div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-white w-full ga-remove" id="gaRemove">Remove this access</button>
     </div>
 </div>
 @endif
@@ -273,7 +355,9 @@
     const LOGINS_RUNG = @json(\App\Support\Tier::unlocksAt('workerLogins'));
     const LOGINS_PLAN = @json(\App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('workerLogins')));
     const A = { grant: @json(route('sm.workers.access.grant')), password: @json(route('sm.workers.access.password')), rights: @json(route('sm.workers.access.rights')),
-        link: @json(route('sm.workers.access.password-link')), revoke: @json(route('sm.workers.access.revoke')) };
+        link: @json(route('sm.workers.access.password-link')), revoke: @json(route('sm.workers.access.revoke')),
+        // Access by cropping schedule, or for all (2026-10-22).
+        scopeStore: @json(route('sm.workers.access.scope.store')), scopeUpdate: @json(route('sm.workers.access.scope.update')), scopeDestroy: @json(route('sm.workers.access.scope.destroy')) };
     const KEY_SVG = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M11 12l9-9m-3 3l3 3m-6 0l2 2"/></svg>';
     const LOCK_SVG = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V7a4 4 0 018 0v4"/></svg>';
     // The login strip on a card: a tag that opens the login sheet.
@@ -284,7 +368,8 @@
         }
         const l = g.login;
         const [cls, title, say, go] = !l ? ['', 'No login yet', 'Give them their own login to your farm', 'Give a login']
-            : l.status === 'active' ? ['is-active', 'Can log in', 'Activities: ' + (l.scheduleAccess === 'edit' ? 'can edit' : 'view only'), 'Manage']
+            : l.status === 'active' ? ['is-active', 'Can log in', ((l.access || []).length ? 'Opens ' + (l.reach || '') : 'Choose where they can work')
+                + ((l.toolsOff || []).length ? ' · ' + l.toolsOff.length + ' dashboard ' + (l.toolsOff.length === 1 ? 'tool' : 'tools') + ' off' : ''), 'Manage']
             : ['is-pending', 'Invite sent', 'Waiting for them to set a password', 'Manage'];
         return `<button type="button" class="gw-login ${cls}" data-login="${g.id}" aria-label="Login access for ${esc(g.workerName)}: ${esc(title)}">
             <span class="gw-login-ico">${KEY_SVG}</span><span class="gw-login-t"><b>${esc(title)}</b><small>${esc(say)}</small></span><span class="gw-login-go">${esc(go)}</span></button>`;
@@ -305,7 +390,7 @@
         const rows = ROWS.filter((g) => !q || (g.workerName + ' ' + (g.phone || '') + ' ' + (g.email || '')).toLowerCase().includes(q));
         $('gwGrid').innerHTML = rows.length ? rows.map(card).join('') : `<div class="gw-empty">${ROWS.length ? 'No worker by that name.' : 'No workers yet. Add your crew once and put them on any season.'}</div>`;
     };
-    const load = async () => { try { ROWS = (await window.api(U.list)).data || []; } catch (e) { ROWS = []; } paint(); };
+    const load = async () => { try { ROWS = (await window.api(U.list)).data || []; } catch (e) { ROWS = []; } paint(); openDeep?.(); };
     $('gwQ').addEventListener('input', paint);
 
     const pills = (box, attr, on) => box.querySelectorAll('[' + attr + ']').forEach((b) => b.setAttribute('aria-pressed', String(on.includes(isNaN(b.getAttribute(attr)) ? b.getAttribute(attr) : Number(b.getAttribute(attr))))));
@@ -367,12 +452,15 @@
     });
     /* ---------------- Login access ----------------
      *
-     * The season card's login controls, for the person (2026-10-18, the
-     * owner). The grant is the farm's one grant for them (it names this
-     * roster person, WorkerGrant::findFor), so what is set here is what
-     * every season card that is them shows, and the other way round. */
+     * The farm's one login for the person (it names this roster person,
+     * WorkerGrant::findFor), and since 2026-10-22 the one place it is given:
+     * the login, then where they can work (access settings for all cropping
+     * schedules or one season, WorkerAccess), then the login's own home
+     * screen tools. A season's Workers page links here. */
     let loginFor = null;          // the roster row whose login sheet is open (a live ref in ROWS)
-    let rightsTimer = null;
+    let accessFor = null;         // the access setting open in #gwAccessSheet
+    let wantSeason = null;        // a season the page was opened for (?season=), offered first
+    let rightsTimer = null, accessTimer = null;
     const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const fold = (el, open) => {
         if (!el) return;
@@ -384,13 +472,34 @@
         const el = document.querySelector('[data-login="' + g.id + '"]');
         if (el) el.outerHTML = loginStrip(g);
     };
-    const reachSay = (g) => {
-        const l = g.login;
-        if (l && l.farmWide) return 'This login opens <b>every season</b> on your farm.';
-        const seasons = g.seasons || [];
-        if (!seasons.length) return 'They are not on a season yet. The login opens a season once you add them to it.';
-        return 'The login opens the seasons they are on: ' + seasons.map((s) => '<b>' + esc(s.title) + '</b>').join(', ') + '. Add them to another season and it opens that one too.';
-    };
+    const seasonTitle = (id) => (SEASONS.find((s) => Number(s.id) === Number(id)) || {}).title || 'this season';
+    const ALL_ICO = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
+    const ONE_ICO = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M16 3v4M8 3v4M3 10h18"/></svg>';
+
+    function paintAccessList() {
+        const g = loginFor, l = g && g.login;
+        const box = $('glAccessList');
+        if (!l || !box) return;
+        const rows = l.access || [];
+        $('glReachSay').textContent = rows.length ? 'Opens ' + (l.reach || '') + '.' : 'No access yet.';
+        box.innerHTML = rows.length ? rows.map((a, i) => `<button type="button" class="ga-row${a.all ? ' is-all' : ''}${a.gone ? ' is-gone' : ''}" data-access="${a.id}" style="--i:${i}">
+                <span class="ga-ico">${a.all ? ALL_ICO : ONE_ICO}</span>
+                <span class="ga-t"><b>${esc(a.title)}</b><small>${esc(a.gone ? 'This season was deleted. Remove this access.' : a.summary)}</small></span>
+                <svg class="ga-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>`).join('')
+            : '<p class="ga-none">They can log in but cannot open any season yet. Tap <b>+ Add access</b> to choose where they work.</p>';
+        // Opened from a season's Workers page: that season first, when it has nothing yet.
+        const want = $('glWant');
+        const covered = wantSeason && rows.some((a) => Number(a.scheduleId) === Number(wantSeason));
+        if (wantSeason && !covered && SEASONS.some((s) => Number(s.id) === Number(wantSeason))) {
+            const viaAll = rows.some((a) => a.all);
+            want.innerHTML = `<span>${viaAll ? 'In <b>' + esc(seasonTitle(wantSeason)) + '</b> they follow all cropping schedules.' : 'No access to <b>' + esc(seasonTitle(wantSeason)) + '</b> yet.'}</span>
+                <button type="button" class="btn btn-sm btn-white" data-want="${wantSeason}">${viaAll ? 'Set this season apart' : 'Give access to it'}</button>`;
+            want.hidden = false;
+        } else {
+            want.hidden = true;
+            want.innerHTML = '';
+        }
+    }
     function paintLogin() {
         const g = loginFor;
         if (!g) return;
@@ -398,18 +507,15 @@
         $('glTitle').textContent = 'Login for ' + g.workerName;
         $('glStatus').textContent = l && l.status === 'active' ? 'Active. This worker can log in.'
             : l && l.status === 'pending' ? 'Invite sent. Waiting for them to set a password.' : 'No login yet.';
-        $('glReach').innerHTML = reachSay(g);
         // The address is the login's once there is one: changing it would be a second login.
         $('glEmailWrap').hidden = !!l;
         $('glEmailFixed').hidden = !l;
         $('glEmailShown').textContent = l ? (l.email || g.email || '') : '';
         if (!l) $('glEmail').value = g.email || '';
-        // Activities has no "None": a legacy grant that still says it is read as view.
-        const sched = (l && l.scheduleAccess) || 'view';
-        $('glAccess').value = sched === 'none' ? 'view' : sched;
-        $('glAccess').dispatchEvent(new Event('change', { bubbles: true }));
+        // The login's own home screen tools; the rights live in its access settings.
         window.workerRights.paint('gl', l);
-        fold($('glRightsWrap'), !!l);
+        fold($('glAccessWrap'), !!l);
+        paintAccessList();
         $('glNoLoginSay').hidden = !!l;
         $('glRevoke').hidden = !l;
         const hasAccount = !!(l && l.workerUserId);
@@ -423,9 +529,10 @@
         paintPwStrength('');
         $('glPwMatchSay').classList.add('hidden');
     }
-    function openLogin(g) {
+    function openLogin(g, season = null) {
         clearTimeout(rightsTimer);
         loginFor = g;
+        wantSeason = season;
         paintLogin();
         window.openSheet('gwLoginSheet');
     }
@@ -435,7 +542,8 @@
         paintLogin();
         repaintStrip(loginFor);
     }
-    const body = () => ({ scheduleAccess: $('glAccess').value, communityAccess: 1, ...window.workerRights.read('gl') });
+    // The login itself carries no rights now; the home screen tools ride along so a new login keeps what the panel shows.
+    const body = () => ({ communityAccess: 1, ...window.workerRights.read('gl') });
     const loginEmail = () => (loginFor && loginFor.login ? loginFor.login.email : $('glEmail').value.trim());
     const askEmail = () => {
         const email = loginEmail();
@@ -482,13 +590,64 @@
     }
     const checkPwMatch = () => { const b = $('glPassword2').value; $('glPwMatchSay').classList.toggle('hidden', !b || $('glPassword').value === b); };
 
+    /* ---------------- One access setting ---------------- */
+    function paintAccessSheet() {
+        const a = accessFor, g = loginFor;
+        if (!a || !g) return;
+        $('gaTitle').textContent = a.all ? 'All cropping schedules' : a.title;
+        $('gaSay').innerHTML = a.all
+            ? 'What <b>' + esc(g.workerName) + '</b> can open in every cropping schedule of your farm, now and to come. A season with its own access follows that one instead.'
+            : 'What <b>' + esc(g.workerName) + '</b> can open in <b>' + esc(a.title) + '</b>. This comes first there; '
+                + ((g.login.access || []).some((x) => x.all) ? 'the other seasons follow all cropping schedules.' : 'a season without its own access stays closed to them.');
+        // Activities has no "None": a setting is a place to work.
+        const sched = a.scheduleAccess === 'edit' ? 'edit' : 'view';
+        $('gaAccess').value = sched;
+        $('gaAccess').dispatchEvent(new Event('change', { bubbles: true }));
+        window.workerRights.paint('ga', a);
+    }
+    function openAccess(id) {
+        const a = ((loginFor && loginFor.login && loginFor.login.access) || []).find((x) => String(x.id) === String(id));
+        if (!a) return;
+        clearTimeout(accessTimer);
+        accessFor = a;
+        paintAccessSheet();
+        window.openSheet('gwAccessSheet');
+    }
+    async function addAccess(scope, btn) {
+        const g = loginFor, l = g && g.login;
+        if (!l) return;
+        if (btn) btn.disabled = true;
+        try {
+            const res = await window.api(A.scopeStore, { method: 'POST', body: { grantId: l.id, scope } });
+            applyGrant(res.data && res.data.grant);
+            window.closeSheet?.('gwScopeSheet');
+            window.toast?.(res.message);
+            setTimeout(() => openAccess(res.data.accessId), 260);
+        } catch (err) {
+            window.toast?.(err.message, 'error');
+            if (err.data && err.data.accessId) { window.closeSheet?.('gwScopeSheet'); setTimeout(() => openAccess(err.data.accessId), 260); }
+        } finally { if (btn) btn.disabled = false; }
+    }
+    function openScopes() {
+        const g = loginFor, l = g && g.login;
+        if (!l) return;
+        $('gsWho').textContent = g.workerName;
+        const has = (l.access || []).map((a) => (a.all ? 'all' : String(a.scheduleId)));
+        const rows = [{ id: 'all', title: 'All cropping schedules', say: 'Every season of your farm, now and to come' }]
+            .concat(SEASONS.map((s) => ({ id: String(s.id), title: s.title, say: s.closed ? 'Closed season' : 'This season only' })));
+        $('gsList').innerHTML = rows.map((r) => `<button type="button" class="gw-srow" data-scope="${esc(r.id)}" ${has.includes(r.id) ? 'disabled' : ''}>
+                <b>${esc(r.title)}<small class="gs-say">${esc(r.say)}</small></b><em>${has.includes(r.id) ? 'Added' : 'Add'}</em></button>`).join('')
+            + (SEASONS.length ? '' : '<p class="text-sm text-gray-500">No seasons yet. All cropping schedules covers the ones you make later.</p>');
+        window.openSheet('gwScopeSheet');
+    }
+
     if (CAN_LOGINS) {
         $('glPassword').addEventListener('input', (e) => { paintPwStrength(e.target.value); checkPwMatch(); });
         $('glPassword2').addEventListener('input', checkPwMatch);
 
-        /* Rights save themselves a breath after a real tap, as on the season
-           card: 'input' on a level comes only from a segment tap (paint uses
-           'change'), and a checkbox counts only when a hand moved it. */
+        /* The home screen tools save themselves a breath after a real tap: a
+           switch counts only when a hand moved it, and All on / All off say so
+           through the hidden level beside them. */
         const queueRights = () => {
             if (!loginFor || !loginFor.login || !loginFor.login.id) return;
             clearTimeout(rightsTimer);
@@ -498,17 +657,68 @@
             const g = loginFor, l = g && g.login;
             if (!l || !l.id) return;
             try {
-                const res = await window.api(A.rights, { method: 'POST', body: { id: l.id, ...body() } });
+                const res = await window.api(A.rights, { method: 'POST', body: { id: l.id, ...window.workerRights.read('gl') } });
                 g.login = Object.assign({}, l, (res.data && res.data.grant) || {});
                 repaintStrip(g);
-                window.toast?.(res.message || 'Access updated.');
+                window.toast?.(res.message || 'Saved.');
             } catch (err) {
                 window.toast?.(err.message, 'error');
                 if (loginFor === g) paintLogin();   // repaint the truth the server kept
             }
         }
-        $('glRightsWrap').addEventListener('input', (e) => { if (e.target.classList?.contains('wr-level')) queueRights(); });
-        $('glRightsWrap').addEventListener('change', (e) => { if (e.isTrusted && e.target.classList?.contains('wr-check')) queueRights(); });
+        $('glAccessWrap').addEventListener('input', (e) => { if (e.target.classList?.contains('wr-level')) queueRights(); });
+        $('glAccessWrap').addEventListener('change', (e) => { if (e.isTrusted && e.target.classList?.contains('wr-check')) queueRights(); });
+
+        // The access list: open one, add one, or the season this page was opened for.
+        $('glAccessList').addEventListener('click', (e) => { const r = e.target.closest('[data-access]'); if (r) openAccess(r.dataset.access); });
+        $('glAddAccess').addEventListener('click', openScopes);
+        $('glWant').addEventListener('click', (e) => { const b = e.target.closest('[data-want]'); if (b) addAccess(b.dataset.want, b); });
+        $('gsList').addEventListener('click', (e) => { const b = e.target.closest('[data-scope]'); if (b && !b.disabled) addAccess(b.dataset.scope, b); });
+
+        /* One setting's rights save as they are tapped, as the panel always did. */
+        const queueAccess = () => {
+            if (!accessFor) return;
+            clearTimeout(accessTimer);
+            accessTimer = setTimeout(saveAccess, 450);
+        };
+        async function saveAccess() {
+            const a = accessFor, g = loginFor;
+            if (!a || !g) return;
+            try {
+                const res = await window.api(A.scopeUpdate, { method: 'POST', body: { id: a.id, scheduleAccess: $('gaAccess').value, ...window.workerRights.read('ga') } });
+                g.login = (res.data && res.data.grant) || g.login;
+                accessFor = (g.login.access || []).find((x) => x.id === a.id) || a;
+                paintAccessList();
+                repaintStrip(g);
+                window.toast?.(res.message || 'Access updated.');
+            } catch (err) {
+                window.toast?.(err.message, 'error');
+                paintAccessSheet();   // repaint the truth the server kept
+            }
+        }
+        $('gaRightsWrap').addEventListener('input', (e) => { if (e.target.classList?.contains('wr-level')) queueAccess(); });
+        $('gaRightsWrap').addEventListener('change', (e) => { if (e.isTrusted && e.target.classList?.contains('wr-check')) queueAccess(); });
+
+        $('gaRemove').addEventListener('click', async (e) => {
+            const btn = e.currentTarget, a = accessFor, g = loginFor;
+            if (!a || !g) return;
+            const ok = window.confirmAction ? await window.confirmAction({
+                title: 'Remove this access?',
+                message: a.all
+                    ? g.workerName + ' can no longer open every season. Seasons with their own access keep it.'
+                    : ((g.login.access || []).some((x) => x.all) ? 'In ' + a.title + ', ' + g.workerName + ' goes back to what all cropping schedules gives.' : g.workerName + ' can no longer open ' + a.title + '.'),
+                confirmText: 'Remove',
+            }) : confirm('Remove this access?');
+            if (!ok) return;
+            btn.disabled = true;
+            try {
+                const res = await window.api(A.scopeDestroy, { method: 'DELETE', body: { id: a.id } });
+                accessFor = null;
+                applyGrant(res.data && res.data.grant);
+                window.closeSheet?.('gwAccessSheet');
+                window.toast?.(res.message);
+            } catch (err) { window.toast?.(err.message, 'error'); } finally { btn.disabled = false; }
+        });
 
         $('glSendLink').addEventListener('click', async (e) => {
             const btn = e.currentTarget, g = loginFor;
@@ -566,7 +776,7 @@
             const btn = e.currentTarget, g = loginFor;
             const id = g && g.login && g.login.id;
             if (!id) return;
-            const ok = window.confirmAction ? await window.confirmAction({ title: 'Remove login?', message: g.workerName + ' will no longer be able to log in to your farm.', confirmText: 'Remove' })
+            const ok = window.confirmAction ? await window.confirmAction({ title: 'Remove login?', message: g.workerName + ' will no longer be able to log in to your farm. Their access settings go too.', confirmText: 'Remove' })
                 : confirm('Remove ' + g.workerName + "'s login?");
             if (!ok) return;
             btn.disabled = true;
@@ -577,6 +787,16 @@
             } catch (err) { window.toast?.(err.message, 'error'); } finally { btn.disabled = false; }
         });
     }
+
+    /* Opened from a season's Workers page (?login=person&season=id): that
+       person's login sheet, with that season offered first. */
+    const DEEP = new URLSearchParams(location.search);
+    const openDeep = () => {
+        const who = DEEP.get('login');
+        if (!who || !CAN_LOGINS) return;
+        const g = ROWS.find((x) => String(x.id) === String(who));
+        if (g) openLogin(g, DEEP.get('season') ? Number(DEEP.get('season')) : null);
+    };
 
     // The page's own script runs before app.js (a module, run after parsing) has made window.api:
     // asked too early, the list call threw and the roster showed empty (2026-10-18, the owner).

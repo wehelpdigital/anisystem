@@ -196,6 +196,23 @@
              screen. The choice is remembered per farm, because whether these
              are useful depends on how somebody works, not on which visit it
              is. --}}
+        @php
+            /* The worker's home screen tools (2026-10-22): the owner switches tiles off per login
+               (App\Support\WorkerTools); always on outside somebody else's farm. A group whose
+               tiles are all off is not drawn, so no empty heading is left behind. */
+            $qOn = fn (string $k) => \App\Support\WorkerContext::canUseTool($k);
+            $qAnyOn = fn (array $keys) => collect($keys)->contains(fn ($k) => $qOn($k));
+            $qMayCompare = \App\Support\WorkerContext::canView() && \App\Support\WorkerContext::canUseModule('reports') && $qOn('compare');
+            $qFhKeys = array_values(array_diff(array_keys(\App\Http\Controllers\FieldHelperController::TOOLS), ['landprep']));
+            $qQuickAny = $allSchedules->isNotEmpty() && collect(['camera', 'video', 'voice'])->contains(fn ($m) => \App\Support\WorkerContext::canUseModule($m));
+            $qShowAnee = $qAnyOn(['wtp', 'whatp', 'vary', 'proto', 'sat', 'landprep']);
+            $qShowInside = $qMayCompare || $qAnyOn(array_merge(['sky', 'pb', 'npk', 'lcc', 'bilad', 'seedcalc', 'htp'], $qFhKeys));
+            $qShowRecords = ! \App\Support\WorkerContext::inWorkerContext() || $qQuickAny
+                || $qAnyOn(['notes', 'gallery', 'farmlots', 'maps', 'draw', 'contacts', 'tags']);
+            // Nothing to show (every tool switched off for this login): no panel at all.
+            $qShowPanel = $qShowAnee || $qShowInside || $qShowRecords;
+        @endphp
+        @if ($qShowPanel)
         <section class="qa-panel" id="globalTools">
             <button type="button" class="qa-panel-head" id="globalToolsHead" aria-expanded="true" aria-controls="globalToolsBody">
                 <span class="qa-panel-ico"><img src="{{ asset('images/icons/tool-box.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
@@ -225,6 +242,7 @@
             @endphp
             @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); $qWtpRung = \App\Support\Tier::farmUnlocksAt('aiAnalyses'); $qWtpWith = \App\Support\Tier::withPlan($qWtpRung); @endphp
             {{-- Grouped by Anee (2026-10-12): what she does for you, what has her inside, and the rest. --}}
+            @if ($qShowAnee)
             <div class="qa-sub" data-sub="anee">
             <button type="button" class="qa-group is-first" aria-expanded="true">
                 <span class="qa-group-dot" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.5l1.7 4.4 4.4 1.7-4.4 1.7L11 15.7l-1.7-4.4-4.4-1.7 4.4-1.7zM18 14.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span>
@@ -234,6 +252,7 @@
                 <i>She reads your farm and writes it for you. Uses credits.</i>
             </button>
             <div class="qa-sub-fold"><div class="qa-sub-in">
+            @if ($qOn('wtp'))
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }}. Anee reads your town's climate and the El Niño or La Niña outlook to find your safest time to plant." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -247,6 +266,8 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
+            @if ($qOn('whatp'))
             <a href="{{ route('whatp.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The What to Plant analysis comes with {{ $qWtpWith }}. Anee looks at your location, the season's forecast and your soil to suggest the best crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -260,8 +281,10 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
             {{-- The third: which variety, searched on the web and ranked by
                  the farmer's own priorities. --}}
+            @if ($qOn('vary'))
             <a href="{{ route('vary.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Variety Ranking comes with {{ $qWtpWith }}. Anee studies the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -275,8 +298,10 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
             {{-- The fourth: the whole season written out by growth stage --
                  bags, sprays, water, watch-list -- for one field. --}}
+            @if ($qOn('proto'))
             <a href="{{ route('proto.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Crop Protocol Analysis comes with {{ $qWtpWith }}. Anee writes your season stage by stage: which fertilizer and when, the sprays to have ready, the water, and the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -290,9 +315,11 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
 
             {{-- Satellite Analysis (2026-10-07): a drawn field read from
                  Sentinel-2 and Sentinel-1, then by Anee. --}}
+            @if ($qOn('sat'))
             <a href="{{ route('sat.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Satellite Analysis comes with {{ $qWtpWith }}. Draw your field and Anee reads the newest satellite pictures and radar for crop health, weak spots and threats." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/satellite.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
@@ -306,11 +333,13 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
 
             {{-- Land Prep (2026-10-14, the owner): Anee plans the land preparation
                  of every lot from PhilRice practice, the soil, the weather and the
                  crew, so it is hers to do. --}}
             @php $qLpRoute = \Illuminate\Support\Facades\Route::has('landprep.page') ? route('landprep.page') : route('fh.page', 'landprep'); @endphp
+            @if ($qOn('landprep'))
             <a href="{{ $qLpRoute }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Land Prep Planner comes with {{ $qWtpWith }}. Anee plans every step of getting your lots ready, dated back from planting, around the weather and your crew." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/land-prep.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
@@ -324,10 +353,13 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
 
             </div></div></div>
+            @endif
+            @if ($qShowInside)
             <div class="qa-sub" data-sub="inside">
-            <button type="button" class="qa-group" aria-expanded="true">
+            <button type="button" class="qa-group{{ ($qShowAnee) ? '' : ' is-first' }}" aria-expanded="true">
                 <span class="qa-group-dot" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.2a4.2 4.2 0 00-5.3 5.3L4 15.7 7.3 19l5.2-5.2a4.2 4.2 0 005.3-5.3l-2.6 2.6-2.4-.7-.7-2.4z"/></svg></span>
                 <b>Your tools</b>
                 {!! $qAnee(true) !!}
@@ -340,6 +372,7 @@
                  (App\Support\SkyPass), Anee's reading priced on its own. --}}
             {{-- From Libre + Anee up (2026-10-17, the owner). --}}
             @php $qSkyLocked = ! \App\Support\Tier::farmCan('skyWeather'); $qSkyRung = \App\Support\Tier::farmUnlocksAt('skyWeather'); @endphp
+            @if ($qOn('sky'))
             <a href="{{ route('sky.page') }}" class="qa-tile qa-wtp"
                @if ($qSkyLocked) data-tier-lock="{{ $qSkyRung }}" data-lock-say="Satellite Weather comes with {{ \App\Support\Tier::withPlan($qSkyRung) }}. Watch the clouds, rain and typhoon paths over your farm and ask Anee what they mean for your lot." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/storm.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
@@ -353,12 +386,13 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
             {{-- Compare Reports: two saved reports side by side, any season
                  against any other. Gated as CompareController::gate() gates
                  it -- the farm's plan first (reportsAll), then a worker's
                  Reports grant. A worker the farm keeps out of Reports does
                  not see a door that only refuses. --}}
-            @if (\App\Support\WorkerContext::canView() && \App\Support\WorkerContext::canUseModule('reports'))
+            @if ($qMayCompare)
                 @php $qCmpLocked = ! \App\Support\Tier::farmCan('reportsAll'); $qCmpRung = \App\Support\Tier::farmUnlocksAt('reportsAll'); @endphp
                 <a href="{{ route('compare.page') }}" class="qa-tile qa-cmp"
                    @if ($qCmpLocked) data-tier-lock="{{ $qCmpRung }}" data-lock-say="{{ \App\Support\Tier::say($qCmpRung, 'Compare Reports comes with {plan}. See any two saved reports side by side, like this season against the last.') }}" @endif>
@@ -375,6 +409,7 @@
                 </a>
             @endif
 
+        @if ($qOn('pb'))
         <a href="{{ route('pb.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/bricks.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
             <span class="qa-txt">
@@ -383,10 +418,12 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        @endif
         {{-- NPK Plus (2026-10-07): the free fertilizer calculator; Anee's
              reading of a plan is the paid step inside it. --}}
         {{-- From Libre + Anee up (2026-10-17, the owner). --}}
         @php $qNpkLocked = ! \App\Support\Tier::farmCan('npkPlus'); $qNpkRung = \App\Support\Tier::farmUnlocksAt('npkPlus'); @endphp
+        @if ($qOn('npk'))
         <a href="{{ route('npk.page') }}" class="qa-tile qa-build"
            @if ($qNpkLocked) data-tier-lock="{{ $qNpkRung }}" data-lock-say="The NPK Plus calculator comes with {{ \App\Support\Tier::withPlan($qNpkRung) }}. Add up every nutrient in your fertilizer plan and see if it is enough for your crop and the yield you want." @endif>
             <span class="qa-ico"><img src="{{ asset('images/icons/npk.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
@@ -400,8 +437,10 @@
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             @endif
         </a>
+        @endif
         {{-- The LCC Checker (2026-10-14): the leaf color chart read free from
              the farmer's own chart, or by Anee from leaf photos for credits. --}}
+        @if ($qOn('lcc'))
         <a href="{{ route('lcc.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/leaf-color.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
             <span class="qa-txt">
@@ -410,7 +449,9 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        @endif
         {{-- Benta o Bilad (2026-10-19, the owner): sell the harvest wet, or dry it first? --}}
+        @if ($qOn('bilad'))
         <a href="{{ route('bilad.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/benta-bilad.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
             <span class="qa-txt">
@@ -419,7 +460,9 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        @endif
         {{-- Seed Count and Distance (2026-10-19, the owner): the seeds for a spacing, or the spacing for the seeds. --}}
+        @if ($qOn('seedcalc'))
         <a href="{{ route('seedcalc.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/seed-count.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
             <span class="qa-txt">
@@ -428,8 +471,9 @@
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
+        @endif
         {{-- How to Plant (2026-10-19, the owner): how traditional farmers plant each crop, step by step, and into the Protocol Builder. --}}
-        @if (\Illuminate\Support\Facades\Route::has('htp.page'))
+        @if (\Illuminate\Support\Facades\Route::has('htp.page') && $qOn('htp'))
         <a href="{{ route('htp.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/how-to-plant.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
             <span class="qa-txt">
@@ -445,7 +489,7 @@
              and pest and disease finders, as small modules of their own. --}}
         @php $qFhLocked = \App\Support\FieldPack::lockedHere(); @endphp
         @foreach (\App\Http\Controllers\FieldHelperController::TOOLS as $fhKey => [$fhName, $fhLead, $fhIcon])
-            @continue($fhKey === 'landprep')
+            @continue($fhKey === 'landprep' || ! $qOn($fhKey))
             <a href="{{ route('fh.page', $fhKey) }}" class="qa-tile qa-build"
                @if ($qFhLocked) data-field-pack @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/' . $fhIcon . '.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
@@ -461,18 +505,21 @@
             </a>
         @endforeach
             </div></div></div>
+            @endif
             {{-- The farm's own records (2026-10-16, the owner): what is kept, not
                  what is worked out. Notes, pictures, maps and drawings, the lots,
                  the crew, the phonebook and the tags, gathered from every season,
                  and the three quick doors that add to them. --}}
+            @if ($qShowRecords)
             <div class="qa-sub" data-sub="records">
-            <button type="button" class="qa-group" aria-expanded="true">
+            <button type="button" class="qa-group{{ ($qShowAnee || $qShowInside) ? '' : ' is-first' }}" aria-expanded="true">
                 <span class="qa-group-dot" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7.5A1.5 1.5 0 015.5 6h4l2 2h7A1.5 1.5 0 0120 9.5v8a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5z"/></svg></span>
                 <b>Your farm records</b>
                 <svg class="qa-group-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 <i>Notes, pictures, maps, lots, workers and contacts from every season, kept in one place.</i>
             </button>
             <div class="qa-sub-fold"><div class="qa-sub-in">
+            @if ($qOn('notes'))
             <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">
                 <span class="qa-ico"><img src="{{ asset('images/sticky-note.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -481,6 +528,8 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            @endif
+            @if ($qOn('gallery'))
             <a href="{{ route('gallery.hub') }}" class="qa-tile qa-gallery">
                 <span class="qa-ico"><img src="{{ asset('images/gallery.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -489,6 +538,7 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            @endif
             {{-- Maps and Draw left the seasons (2026-09-30): a farm's fields do
                  not change with the season, so the maps and drawings of them
                  are the grower's own, and any season can use them. --}}
@@ -513,6 +563,7 @@
                  size, soil, water and last season) for every analysis. A clock and a
                  count when a lot's answers are six months old. --}}
             @php $qLotsOld = \App\Support\FarmLots::staleCount(\App\Support\WorkerContext::effectiveOwnerId()); @endphp
+            @if ($qOn('farmlots'))
             <a href="{{ route('farmlots.index') }}" class="qa-tile qa-lots">
                 <span class="qa-ico"><img src="{{ asset('images/treasure-map.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -521,9 +572,11 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            @endif
             {{-- Maps leave Libre (2026-10-12): the tile stays, wearing a lock. An
                  Anee tool since 2026-10-14 (the owner), among the + Anee tools. --}}
             @php $qMapLocked = ! \App\Support\Tier::farmCan('maps'); $qMapRung = \App\Support\Tier::farmUnlocksAt('maps'); @endphp
+            @if ($qOn('maps'))
             <a href="{{ route('maps.page') }}" class="qa-tile qa-maps"
                @if ($qMapLocked) data-tier-lock="{{ $qMapRung }}" data-lock-say="Maps come with {{ \App\Support\Tier::withPlan($qMapRung) }}. Draw your lots on the satellite map, measure them and pin what matters." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/location-marker.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -537,7 +590,9 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+            @endif
 
+            @if ($qOn('draw'))
             <a href="{{ route('draw.page') }}" class="qa-tile qa-draw">
                 <span class="qa-ico"><img src="{{ asset('images/writting.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -546,8 +601,10 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            @endif
             {{-- The farm's phonebook — every tier, no locks. Workers, tractor
                  rentals, harvesters, buyers: tagged, searchable, one tap away. --}}
+            @if ($qOn('contacts'))
             <a href="{{ route('contacts.page') }}" class="qa-tile qa-contacts">
                 <span class="qa-ico"><img src="{{ asset('images/list.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -556,10 +613,12 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            @endif
             {{-- Every tag in every season and every tool, and what wears it.
                  Open to every plan and every login, as the page is: a worker
                  standing in somebody else's farm is shown their own tags
                  there, and the page says so. --}}
+            @if ($qOn('tags'))
             <a href="{{ route('tags.global') }}" class="qa-tile qa-tags">
                 <span class="qa-ico"><img src="{{ asset('images/label.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -568,6 +627,7 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            @endif
             @php
                 /* The camera and the recorder are modules the owner grants,
                    and the Hub has always drawn these two tiles only for
@@ -623,10 +683,12 @@
                 </button>
             @endif
             </div></div></div>
+            @endif
         </div>
               </div>
             </div>
         </section>
+        @endif
 
     {{-- The season tag picker (which season is chosen in the sheet) and the
          member's own picker (voice notes are global) come along for the

@@ -121,7 +121,7 @@ class MapAccess
             return true;
         }
 
-        return WorkerContext::canView() && WorkerContext::canWriteModule('maps') && self::sharesASeason($save);
+        return WorkerContext::canView() && WorkerContext::canWriteModule('maps') && self::sharesASeason($save, 'edit');
     }
 
     /** A save by id that the caller may open, or null. */
@@ -257,19 +257,25 @@ class MapAccess
             return [];
         }
 
-        return AsCroppingSchedule::active()->forClient(WorkerContext::effectiveOwnerId())->pluck('id')
+        // Each season by its own Maps answer (access is set per cropping schedule, 2026-10-22).
+        $mapsIn = WorkerContext::seasonIdsWith('maps');
+
+        return AsCroppingSchedule::active()->forClient(WorkerContext::effectiveOwnerId())
+            ->when($mapsIn !== null, fn ($q) => $q->whereIn('id', $mapsIn ?: [-1]))->pluck('id')
             ->map(fn ($id) => (int) $id)->all();
     }
 
     /** Whether the map is linked to a season the caller can open. */
-    private static function sharesASeason(ScheduleMapSave $save): bool
+    private static function sharesASeason(ScheduleMapSave $save, string $level = 'view'): bool
     {
         $linked = self::seasonIds($save);
         if (! $linked) {
             return false;
         }
+        // A worker by the Maps answer of the linked season itself (access is set per cropping schedule, 2026-10-22).
+        $mapsIn = WorkerContext::seasonIdsWith('maps', $level);
 
         return AsCroppingSchedule::active()->forClient(WorkerContext::effectiveOwnerId())
-            ->whereIn('id', $linked)->exists();
+            ->whereIn('id', $mapsIn === null ? $linked : (array_values(array_intersect(array_map('intval', $linked), $mapsIn)) ?: [-1]))->exists();
     }
 }

@@ -40,7 +40,7 @@ class WorkerGrant extends BaseModel
         'bossUserId', 'workerUserId', 'scheduleWorkerId', 'globalWorkerId', 'invitedEmail',
         'inviteToken', 'scheduleAccess', 'canAddNotes', 'communityAccess', 'status',
         'notesAccess', 'reportsAccess', 'inventoryAccess', 'observationsAccess', 'moneyAccess', 'mapsAccess', 'drawAccess', 'aiAccess',
-        'cameraAccess', 'videoAccess', 'voiceAccess',
+        'cameraAccess', 'videoAccess', 'voiceAccess', 'toolsOff',
         'acceptedAt', 'deleteStatus',
     ];
 
@@ -51,6 +51,8 @@ class WorkerGrant extends BaseModel
         'cameraAccess' => 'boolean',
         'videoAccess' => 'boolean',
         'voiceAccess' => 'boolean',
+        // The home screen's tools this login has switched off (WorkerTools keys); empty is all on.
+        'toolsOff' => 'array',
         'acceptedAt' => 'datetime',
         'deleteStatus' => 'integer',
     ];
@@ -109,56 +111,137 @@ class WorkerGrant extends BaseModel
         return blank($this->scheduleWorkerId) && blank($this->globalWorkerId);
     }
 
-    public function canEditSchedules(): bool
+    /*
+     * WHERE THEY MAY WORK, AND WITH WHAT (2026-10-22, the owner: "the farm
+     * owner can manage what can a user access, but can specify by cropping
+     * schedule, or all").
+     *
+     * The rights left this row for WorkerAccess: one setting for "all
+     * cropping schedules" and any number for one season each, a season's own
+     * coming first there. Every question below takes the season it is about:
+     *   an id      that season's own setting, else the "all" one, else none;
+     *   null       the farm as a whole (the home screen, Global Notes, a tool
+     *              run): the "all" setting when there is one, else the most
+     *              the season settings give somewhere;
+     *   'pending'  a season page whose season is not read yet: the most any
+     *              setting gives, so the gate does not refuse what the season
+     *              may allow (WorkerContext::enterSeason asks again once known).
+     * The old rights columns on this row stay for the migration's sake only.
+     */
+
+    /** @var \Illuminate\Support\Collection<int, WorkerAccess>|null */
+    private $accessCache = null;
+
+    /** This login's access settings (cached on the row for the request). */
+    public function accessRows()
     {
-        return $this->status === self::STATUS_ACTIVE && $this->scheduleAccess === 'edit';
+        return $this->accessCache ??= WorkerAccess::active()->where('grantId', (int) $this->id)->get();
+    }
+
+    /** Forget the cached settings, after one was written. */
+    public function forgetAccess(): void
+    {
+        $this->accessCache = null;
+    }
+
+    /** The "all cropping schedules" setting, if they have one. */
+    public function accessAll(): ?WorkerAccess
+    {
+        return $this->accessRows()->first(fn ($r) => $r->isAll());
+    }
+
+    /** The setting that answers for a season (see the note above), or null for no access. */
+    public function rightsFor($season = null): ?WorkerAccess
+    {
+        if ($this->status !== self::STATUS_ACTIVE) {
+            return null;
+        }
+        $rows = $this->accessRows();
+        if ($rows->isEmpty()) {
+            return null;
+        }
+        if (is_int($season)) {
+            return $rows->first(fn ($r) => $r->croppingScheduleId === $season) ?? $this->accessAll();
+        }
+        if ($season === 'pending') {
+            return WorkerAccess::merge($rows);
+        }
+
+        return $this->accessAll() ?? WorkerAccess::merge($rows);
     }
 
     /**
-     * What this grant says about one module: 'none', 'view' or 'edit'.
+     * The seasons this login opens: null for every one of the farm (an "all"
+     * setting), else the ones with a setting of their own.
      *
-     * An open/shut module answers in the same words so a caller never has to
-     * know which shape it is: shut is 'none', open is 'edit'. Everything is
-     * bounded by seeing the farm at all — a community-only worker has no
-     * modules, whatever the module columns happen to hold.
+     * @return array<int, int>|null
      */
-    public function moduleAccess(string $key): string
+    public function seasonIds(): ?array
     {
-        // The board itself is not a module column: 'activities' answers with
-        // the schedule access, so the gate, the hub doors and the tag picker
-        // can ask about the board in the same words they ask about a module.
-        if ($key === 'activities') {
-            if ($this->status !== self::STATUS_ACTIVE || ! $this->canViewSchedules()) {
-                return 'none';
-            }
-
-            return in_array($this->scheduleAccess, ['view', 'edit'], true) ? $this->scheduleAccess : 'none';
+        if ($this->status !== self::STATUS_ACTIVE) {
+            return [];
+        }
+        if ($this->accessAll()) {
+            return null;
         }
 
-        $spec = self::MODULES[$key] ?? null;
-        if (! $spec || $this->status !== self::STATUS_ACTIVE || ! $this->canViewSchedules()) {
-            return 'none';
+        return $this->accessRows()->pluck('croppingScheduleId')->filter()->map(fn ($id) => (int) $id)->unique()->values()->all();
+    }
+
+    /** Where they may work, in words: "every season, can edit the plan" / "2 seasons" / "no season yet". */
+    public function reachSay(): string
+    {
+        $all = $this->accessAll();
+        if ($all) {
+            return 'every season, ' . ($all->rights()['scheduleAccess'] === 'edit' ? 'can edit the plan' : 'view only');
         }
+        // Counted from the settings, not seasonIds(): an invite not yet accepted already has its places.
+        $n = $this->accessRows()->pluck('croppingScheduleId')->filter()->unique()->count();
 
-        if ($spec['shape'] === 'open') {
-            return $this->{$spec['column']} ? 'edit' : 'none';
-        }
+        return $n === 0 ? 'no season yet' : ($n === 1 ? '1 season' : $n . ' seasons');
+    }
 
-        $level = (string) ($this->{$spec['column']} ?? 'none');
+    public function canEditSchedules($season = null): bool
+    {
+        return $this->moduleAccess('activities', $season) === 'edit';
+    }
 
-        return in_array($level, ['none', 'view', 'edit'], true) ? $level : 'none';
+    /**
+     * What this login says about one module, in a season: 'none', 'view' or
+     * 'edit'. An open/shut module answers in the same words so a caller never
+     * has to know which shape it is: shut is 'none', open is 'edit'. No
+     * setting for the season is no access to anything in it.
+     */
+    public function moduleAccess(string $key, $season = null): string
+    {
+        $rights = $this->rightsFor($season);
+
+        return $rights ? $rights->moduleAccess($key) : 'none';
     }
 
     /** May they open this module at all? */
-    public function mayUseModule(string $key): bool
+    public function mayUseModule(string $key, $season = null): bool
     {
-        return $this->moduleAccess($key) !== 'none';
+        return $this->moduleAccess($key, $season) !== 'none';
     }
 
     /** May they add to it, not only look at it? */
-    public function mayWriteModule(string $key): bool
+    public function mayWriteModule(string $key, $season = null): bool
     {
-        return $this->moduleAccess($key) === 'edit';
+        return $this->moduleAccess($key, $season) === 'edit';
+    }
+
+    /**
+     * May they see and open one of the home screen's tools on this farm?
+     *
+     * The owner switches tools off, not on (2026-10-22): a login keeps every
+     * tool until one is turned off, so a tool added to the home screen later
+     * reaches the crew without anybody revisiting their switches. A login
+     * question, not a season's: the home screen is the farm's.
+     */
+    public function mayUseTool(string $key): bool
+    {
+        return ! in_array($key, (array) ($this->toolsOff ?? []), true);
     }
 
     /**
@@ -166,17 +249,16 @@ class WorkerGrant extends BaseModel
      *
      * Separate from editing the plan on purpose: recording what happened in
      * a field is not the same act as changing what is supposed to happen,
-     * and most farms want the first without the second. The answer now lives
-     * in notesAccess, where it sits beside the other modules; the old
-     * canAddNotes column is kept in step for anything still reading it.
+     * and most farms want the first without the second.
      */
-    public function canAddNotes(): bool
+    public function canAddNotes($season = null): bool
     {
-        return $this->mayWriteModule('notes');
+        return $this->mayWriteModule('notes', $season);
     }
 
-    public function canViewSchedules(): bool
+    /** May they see this season (or, with null, any season of the farm)? */
+    public function canViewSchedules($season = null): bool
     {
-        return $this->status === self::STATUS_ACTIVE && in_array($this->scheduleAccess, ['view', 'edit'], true);
+        return $this->rightsFor($season) !== null;
     }
 }

@@ -92,6 +92,7 @@ class WeatherController extends Controller
             ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
             ->where('id', (int) $request->query('id'))
             ->firstOrFail();
+        \App\Support\WorkerContext::enterSeason((int) $schedule->id);
 
         return view('sm.weather', ['schedule' => $schedule]);
     }

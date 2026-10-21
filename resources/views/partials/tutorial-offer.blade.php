@@ -24,7 +24,7 @@
      Order-proof: this may run before or after the engine in the layout. --}}
 @auth
 @php
-    if (! empty($byRoute)) {
+    if (! empty($byRoute) && empty($noTutorial)) {
         $__key = \App\Http\Controllers\TutorialController::forRoute(optional(request()->route())->getName(), (array) (optional(request()->route())->parameters() ?? []));
         $__keys = $__key ? [$__key] : [];
         $__auto = $__key;

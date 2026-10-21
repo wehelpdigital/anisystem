@@ -437,7 +437,7 @@ class CroppingScheduleController extends Controller
                         continue;
                     }
                     $skills = array_values(array_intersect($skillKeys, (array) ($row['skills'] ?? [])));
-                    AsScheduleWorker::create([
+                    $card = AsScheduleWorker::create([
                         'croppingScheduleId' => $schedule->id,
                         'workerName' => mb_substr($name, 0, 255),
                         'costPerHalfDay' => is_numeric($row['costPerHalfDay'] ?? null) ? max(0, (float) $row['costPerHalfDay']) : 0,
@@ -446,6 +446,12 @@ class CroppingScheduleController extends Controller
                         'notes' => ! empty($row['notes']) ? mb_substr(trim($row['notes']), 0, 2000) : null,
                         'deleteStatus' => 1,
                     ]);
+                    // Every season's worker is a person of Global Workers, found or added (2026-10-22, the owner).
+                    try {
+                        \App\Models\AsGlobalWorker::forCard($card, (int) $schedule->anisystemUserId);
+                    } catch (\Throwable $e) {
+                        report($e);
+                    }
                     $priorityFallback++;
                 }
 
@@ -1029,6 +1035,8 @@ class CroppingScheduleController extends Controller
             }
             abort(404, 'Season not found.');
         }
+        // From here every question is this season's own (access is set per cropping schedule, 2026-10-22).
+        \App\Support\WorkerContext::enterSeason((int) $schedule->id);
 
         // This controller has its own door, so it needs its own version of
         // the check the shared one makes: a grant that permits no schedule

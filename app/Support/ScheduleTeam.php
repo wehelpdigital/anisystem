@@ -9,10 +9,9 @@ use Illuminate\Support\Collection;
 
 /**
  * The "team" of a cropping schedule for the group chat: the owner plus every
- * worker who holds an active login grant to that owner. Worker grants are
- * boss-wide (a granted worker can already see all of the boss's schedules via
- * WorkerContext), so the roster is the same across the owner's schedules while
- * the messages themselves stay scoped per schedule.
+ * worker whose login can open THIS season (2026-10-22: access is given for
+ * all cropping schedules or season by season, WorkerAccess), so the team of
+ * one season is not the crew of another. The messages stay scoped per schedule.
  */
 class ScheduleTeam
 {
@@ -21,10 +20,13 @@ class ScheduleTeam
     {
         $ownerId = (int) $schedule->anisystemUserId;
 
+        $season = (int) $schedule->id;
         $workerIds = WorkerGrant::active()
             ->where('bossUserId', $ownerId)
             ->where('status', WorkerGrant::STATUS_ACTIVE)
             ->whereNotNull('workerUserId')
+            ->get()
+            ->filter(fn ($g) => $g->rightsFor($season) !== null)
             ->pluck('workerUserId')
             ->map(fn ($id) => (int) $id)
             ->all();

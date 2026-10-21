@@ -697,8 +697,14 @@ class CompareController extends BaseScheduleController
             return $this->seasonsMemo = collect();
         }
 
+        // Each season by its own Reports and Money answers (access is set per cropping schedule, 2026-10-22).
+        $reportsIn = WorkerContext::seasonIdsWith('reports');
+        $moneyIn = WorkerContext::seasonIdsWith('money');
+
         return $this->seasonsMemo = AsCroppingSchedule::active()
             ->forClient(WorkerContext::effectiveOwnerId())
+            ->when($reportsIn !== null, fn ($q) => $q->whereIn('id', $reportsIn ?: [-1]))
+            ->when($moneyIn !== null, fn ($q) => $q->whereIn('id', $moneyIn ?: [-1]))
             ->orderByDesc('id')
             ->get(['id', 'title', 'status', 'cropType', 'created_at']);
     }

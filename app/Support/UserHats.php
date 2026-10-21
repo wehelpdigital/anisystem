@@ -80,15 +80,17 @@ class UserHats
             $name = $boss ? trim(($boss->firstName ?? '') . ' ' . ($boss->lastName ?? '')) : '';
             // The farm's own count, not this account's: choosing this hat
             // shows that farm's schedules, so that is the number to promise.
+            // The seasons this login opens there (its access settings, 2026-10-22), not the whole farm.
+            $only = $g->seasonIds();
             $theirs = AsCroppingSchedule::active()
-                ->forClient((int) $g->bossUserId)
+                ->where('anisystemUserId', (int) $g->bossUserId)
+                ->when($only !== null, fn ($q) => $q->whereIn('id', $only ?: [-1]))
                 ->count();
             $hats[] = [
                 'key' => 'worker:' . $g->bossUserId,
                 'kind' => 'worker',
                 'title' => 'Worker at ' . ($name !== '' ? $name : 'a farm'),
-                'detail' => $theirs . ' ' . str('schedule')->plural($theirs) . ' on this farm · '
-                    . ($g->scheduleAccess === 'edit' ? 'you can add and change work' : 'you can view only'),
+                'detail' => $theirs . ' ' . str('schedule')->plural($theirs) . ' open to you · ' . $g->reachSay(),
                 'count' => $theirs,
                 'bossId' => (int) $g->bossUserId,
                 'url' => null,

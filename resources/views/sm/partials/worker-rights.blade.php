@@ -17,9 +17,12 @@
      A partial with prefixed ids: it was once drawn twice on the page (a
      "Give access" card at the top, since removed — a login is given from
      the worker's own card now) and the prefix costs nothing to keep.
-     Expects: $p, the prefix ('wl' on a season's Workers page, 'gl' on
-     Global Workers). Its CSS and window.workerRights (read/paint by
-     prefix) live here too, so any page that includes it gets the whole panel.
+     Expects: $p, the prefix. Since access is set per cropping schedule
+     (2026-10-22) it is drawn in two halves on Global Workers: the rights of
+     one access setting ('ga', with 'tools' => false) and the login's own
+     home screen tools ('gl', with 'only' => 'tools'). Its CSS and
+     window.workerRights (read/paint by prefix) live here too, so any page
+     that includes it gets the whole panel.
 
      Every level keeps a hidden input under the segment carrying the same id
      the sheet's JS has always read, so nothing outside this file had to learn
@@ -51,7 +54,12 @@
         ['VoiceAccess', '🎙️', 'Voice notes', 'Speak a note instead of typing it.'],
     ];
 @endphp
-<div class="wr-block" data-wr-block>
+@php
+    $wrOnlyTools = ($only ?? null) === 'tools';
+    $wrWithTools = $wrOnlyTools || ($tools ?? true);
+@endphp
+<div class="wr-block{{ $wrOnlyTools ? ' is-tools-only' : '' }}" data-wr-block>
+    @unless ($wrOnlyTools)
     <p class="wr-head">What they can open</p>
 
     @foreach ($wrLevels as [$key, $mark, $label, $hint])
@@ -99,7 +107,57 @@
             <span class="wr-toggle" aria-hidden="true"></span>
         </label>
     @endforeach
+    @endunless
 
+    @if ($wrWithTools)
+    {{-- THE HOME SCREEN'S TOOLS (2026-10-22, the owner: "in the workers add
+         also management switches for the tools in the home or dashboard").
+         A switch per tile of Global and Quick Tools, folded behind one row so
+         the panel above stays a page long. A tool switched off leaves their
+         dashboard on this farm and its address answers no (WorkerTools, the
+         one list). Every tool starts on, as every login always had them.
+         The hidden level is how All on and All off save: the pages save on a
+         real tap of a switch or on input from a .wr-level, and a bulk change
+         is neither tap. --}}
+    {{-- Its own heading on the login (2026-10-22, the owner: "provide option as well for the access
+         of the tools in the dashboard. have that option in the global level"): a login question, the
+         same in every season, apart from the access settings that are season by season. --}}
+    @if ($wrOnlyTools)
+        <p class="wr-head">Dashboard tools · for the whole farm</p>
+    @endif
+    <div class="wr-tools" data-wr-tools="{{ $p }}">
+        <button type="button" class="wr-row wr-tools-head" aria-expanded="false" aria-controls="{{ $p }}ToolsFold">
+            <span class="wr-mark"><img src="{{ asset('images/icons/tool-box.png') }}" alt=""></span>
+            <span class="wr-what">
+                <b>Global and Quick Tools <span class="wr-tools-count" data-wr-tools-count></span></b>
+                <i>Which tools on your dashboard they can open, in every season. Tap to choose. On their own farm they have all of theirs.</i>
+            </span>
+            <svg class="wr-tools-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <input type="hidden" class="wr-level" id="{{ $p }}ToolsMark" value="">
+        <div class="wr-tools-fold" id="{{ $p }}ToolsFold"><div class="wr-tools-in">
+            <div class="wr-tools-bar">
+                <button type="button" data-wr-tools-all="1">All on</button>
+                <button type="button" data-wr-tools-all="0">All off</button>
+            </div>
+            @foreach (\App\Support\WorkerTools::GROUPS as $wtGroup => $wtGroupName)
+                <p class="wr-tools-group">{{ $wtGroupName }}</p>
+                @foreach (\App\Support\WorkerTools::all() as $wtKey => [$wtName, $wtIn, $wtIcon])
+                    @continue($wtIn !== $wtGroup)
+                    <label class="wr-row wr-switch wr-tool" for="{{ $p }}Tool-{{ $wtKey }}">
+                        <span class="wr-mark"><img src="{{ asset($wtIcon) }}" alt=""></span>
+                        <span class="wr-what"><b>{{ $wtName }}</b></span>
+                        <input type="checkbox" id="{{ $p }}Tool-{{ $wtKey }}" class="wr-check" data-wr-tool="{{ $wtKey }}" checked>
+                        <span class="wr-toggle" aria-hidden="true"></span>
+                    </label>
+                @endforeach
+            @endforeach
+            <p class="wr-tools-note">Quick Capture, Quick Record and Quick Voice follow the Camera, Record video and Voice notes switches of their access. Compare Reports also needs Reports. Maps and Draw here are the dashboard pages; a season's maps and drawings follow its Maps and Draw.</p>
+        </div></div>
+    </div>
+    @endif
+
+    @unless ($wrOnlyTools)
     {{-- WHOSE CREDITS. The one thing about this panel that costs money, said
          where the switches are rather than discovered on a statement. --}}
     <p class="wr-credits">
@@ -113,6 +171,7 @@
     </p>
 
     <p class="wr-foot">Every worker can at least <strong>view Activities</strong>. You choose the rest. Changes save by themselves.</p>
+    @endunless
 </div>
 
 @once
@@ -193,6 +252,42 @@
     .wr-credits-ico { flex:none; font-size:.95rem; line-height:1.35; }
     html.dark .wr-credits { background:rgb(180 83 9 / .14); border-color:rgb(180 83 9 / .35); color:#eec155; }
     html.dark .wr-credits b { color:#fcd34d; }
+    /* The home screen's tools: one row that folds the list open, smoothly. */
+    .wr-tools { border-top:1px solid var(--color-gray-100); }
+    .wr-block.is-tools-only .wr-tools { border-top:0; }
+    .wr-tools-head { width:100%; text-align:left; background:none; border:0; border-bottom:0; cursor:pointer;
+        transition:background-color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    @media (hover:hover) { .wr-tools-head:hover { background:var(--color-gray-50); } html.dark .wr-tools-head:hover { background:rgb(255 255 255 / .03); } }
+    .wr-tools-head:focus-visible { outline:2px solid var(--color-brand-500); outline-offset:-2px; }
+    .wr-tools-count { display:inline-block; margin-left:.3rem; padding:.05rem .45rem; border-radius:999px; font-size:.66rem;
+        font-weight:800; vertical-align:.08em; color:var(--color-brand-700); background:var(--color-brand-50); }
+    .wr-tools-count.is-some { color:#92400e; background:#fef3c7; }
+    html.dark .wr-tools-count { color:#cfe3bd; background:#2b3a1c; }
+    html.dark .wr-tools-count.is-some { color:#fcd34d; background:#3a2a0c; }
+    .wr-tools-chev { flex:none; width:1.05rem; height:1.05rem; color:var(--color-gray-400);
+        transform:rotate(-90deg); transition:transform .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .wr-tools.is-open .wr-tools-chev { transform:none; }
+    .wr-tools-fold { display:grid; grid-template-rows:0fr; opacity:0;
+        transition:grid-template-rows .28s var(--ease-house, cubic-bezier(.22,1,.36,1)), opacity .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .wr-tools.is-open .wr-tools-fold { grid-template-rows:1fr; opacity:1; }
+    .wr-tools-in { min-height:0; overflow:hidden; visibility:hidden; transition:visibility 0s linear .28s; }
+    .wr-tools.is-open .wr-tools-in { visibility:visible; transition:none; }
+    .wr-tools-bar { display:flex; gap:.4rem; padding:.15rem .85rem .5rem; }
+    .wr-tools-bar button { padding:.28rem .7rem; border-radius:999px; font-size:.7rem; font-weight:700; cursor:pointer;
+        color:var(--color-gray-600); background:var(--color-gray-100); border:1px solid var(--color-gray-200);
+        transition:background-color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)), color .28s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .wr-tools-bar button:hover { color:var(--color-brand-700); background:var(--color-brand-50); }
+    html.dark .wr-tools-bar button { color:#b7c9a3; background:#151b12; border-color:#2b3a1c; }
+    .wr-tools-group { padding:.55rem .85rem .2rem; font-size:.64rem; font-weight:800; letter-spacing:.05em;
+        text-transform:uppercase; color:var(--color-gray-400); }
+    .wr-tool { padding-top:.4rem; padding-bottom:.4rem; }
+    .wr-tool .wr-mark { width:1.75rem; height:1.75rem; }
+    .wr-tool .wr-mark img { width:1.1rem; height:1.1rem; }
+    .wr-tool .wr-what b { font-weight:600; }
+    .wr-tools-note { padding:.55rem .85rem .7rem; font-size:.7rem; line-height:1.4; color:var(--color-gray-500); }
+    @media (prefers-reduced-motion: reduce) {
+        .wr-tools-fold, .wr-tools-chev, .wr-tools-in, .wr-tools-head, .wr-tools-bar button { transition:none; }
+    }
     @media (max-width:480px) {
         /* The three-way answers drop their select onto its own line; a yes/no
            does not -- letting those wrap put the box on a line of its own,
@@ -202,6 +297,8 @@
         .wr-row { flex-wrap:nowrap; }
         .wr-seg button { min-width:2.6rem; padding-left:.3rem; padding-right:.3rem; }
         .wr-what i { display:none; }
+        /* The dashboard tools row keeps its line: it is the one row that says what tapping it opens. */
+        .wr-tools-head .wr-what i { display:block; }
     }
 </style>
 @endpush
@@ -218,13 +315,26 @@ window.workerRights = (() => {
     const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess', 'observationsAccess', 'moneyAccess', 'mapsAccess', 'drawAccess'];
     const SWITCHES = ['aiAccess', 'cameraAccess', 'videoAccess', 'voiceAccess'];
     const id = (p, key) => p + key.charAt(0).toUpperCase() + key.slice(1);
+    // The home screen's tools: switched off is what the grant keeps (toolsOff).
+    const toolBoxes = (p) => Array.from(document.querySelectorAll('[data-wr-tools="' + p + '"] [data-wr-tool]'));
+    const countTools = (p) => {
+        const boxes = toolBoxes(p);
+        const on = boxes.filter((b) => b.checked).length;
+        const tag = document.querySelector('[data-wr-tools="' + p + '"] [data-wr-tools-count]');
+        if (!tag) return;
+        tag.textContent = on === boxes.length ? 'All on' : (on + ' of ' + boxes.length + ' on');
+        tag.classList.toggle('is-some', on !== boxes.length);
+    };
     return {
         read(p) {
             const out = {};
             LEVELS.forEach((k) => { const el = document.getElementById(id(p, k)); if (el) out[k] = el.value; });
             SWITCHES.forEach((k) => { const el = document.getElementById(id(p, k)); if (el) out[k] = el.checked ? 1 : 0; });
+            const boxes = toolBoxes(p);
+            if (boxes.length) out.toolsOff = boxes.filter((b) => !b.checked).map((b) => b.getAttribute('data-wr-tool'));
             return out;
         },
+        countTools,
         /* No grant yet means a new worker, and a new worker starts where the
          * app has always put them: able to read the farm, with the owner's
          * tools closed until the owner opens them. */
@@ -245,8 +355,40 @@ window.workerRights = (() => {
                 const el = document.getElementById(id(p, k));
                 if (el) el.checked = !!(grant && grant[k]);
             });
+            // Every tool on unless this login has it switched off.
+            const off = (grant && Array.isArray(grant.toolsOff)) ? grant.toolsOff : [];
+            toolBoxes(p).forEach((b) => { b.checked = !off.includes(b.getAttribute('data-wr-tool')); });
+            countTools(p);
         },
     };
+})();
+
+/* The tools list: its fold, its count, and All on / All off. A bulk change
+ * saves through the hidden level beside it (an 'input' from a .wr-level is
+ * what both pages save on), since it is not a tap on any one switch. */
+(function workerToolSwitches() {
+    document.querySelectorAll('[data-wr-tools]').forEach((box) => window.workerRights.countTools(box.getAttribute('data-wr-tools')));
+    document.addEventListener('click', (e) => {
+        const head = e.target.closest('.wr-tools-head');
+        if (head) {
+            const box = head.closest('[data-wr-tools]');
+            const open = !box.classList.contains('is-open');
+            box.classList.toggle('is-open', open);
+            head.setAttribute('aria-expanded', open ? 'true' : 'false');
+            return;
+        }
+        const all = e.target.closest('[data-wr-tools-all]');
+        if (!all) return;
+        const box = all.closest('[data-wr-tools]');
+        const on = all.getAttribute('data-wr-tools-all') === '1';
+        box.querySelectorAll('[data-wr-tool]').forEach((b) => { b.checked = on; });
+        window.workerRights.countTools(box.getAttribute('data-wr-tools'));
+        box.querySelector('input.wr-level')?.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    document.addEventListener('change', (e) => {
+        const box = e.target.closest?.('[data-wr-tools]');
+        if (box && e.target.hasAttribute('data-wr-tool')) window.workerRights.countTools(box.getAttribute('data-wr-tools'));
+    });
 })();
 </script>
 @endpush

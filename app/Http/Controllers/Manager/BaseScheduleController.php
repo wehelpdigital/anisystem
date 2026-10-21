@@ -28,6 +28,8 @@ abstract class BaseScheduleController extends Controller
         if (!$schedule) {
             abort(response()->json(['success' => false, 'message' => 'Season not found.'], 404));
         }
+        // From here every question is this season's own (access is set per cropping schedule, 2026-10-22).
+        \App\Support\WorkerContext::enterSeason((int) $schedule->id);
 
         // A grant can say 'none' — community access without the farm. Until
         // now nothing asked: effectiveOwnerId() is derived from the grant

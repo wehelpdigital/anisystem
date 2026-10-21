@@ -57,19 +57,9 @@ class WorkerAccessController extends Controller
             'scheduleWorkerId' => 'nullable|integer',
             'globalWorkerId'   => 'nullable|integer',
             'email'            => 'required|email|max:191',
-            'scheduleAccess'   => 'required|in:view,edit',
             'communityAccess'  => 'nullable|boolean',
-            'notesAccess'      => 'nullable|in:none,view,edit',
-            'reportsAccess'    => 'nullable|in:none,view,edit',
-            'inventoryAccess'  => 'nullable|in:none,view,edit',
-            'observationsAccess' => 'nullable|in:none,view,edit',
-            'moneyAccess'      => 'nullable|in:none,view,edit',
-            'mapsAccess'       => 'nullable|in:none,view,edit',
-            'drawAccess'       => 'nullable|in:none,view,edit',
-            'aiAccess'         => 'nullable|boolean',
-            'cameraAccess'     => 'nullable|boolean',
-            'videoAccess'      => 'nullable|boolean',
-            'voiceAccess'      => 'nullable|boolean',
+            'toolsOff'         => 'nullable|array',
+            'toolsOff.*'       => 'string|max:32',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
@@ -100,26 +90,14 @@ class WorkerAccessController extends Controller
             'invitedEmail'     => $email,
             'scheduleWorkerId' => $link[0],
             'globalWorkerId'   => $link[1],
-            'scheduleAccess'   => $request->input('scheduleAccess'),
-            'communityAccess'  => $request->boolean('communityAccess'),
-            /* The module rights, as the owner set them. canAddNotes is
-             * written from notesAccess rather than read from the form: it is
-             * the same permission under an older name, and two columns that
-             * can disagree is how a setting starts lying. */
-            'notesAccess'      => $request->input('notesAccess', 'view'),
-            'reportsAccess'    => $request->input('reportsAccess', 'view'),
-            'inventoryAccess'  => $request->input('inventoryAccess', 'none'),
-            'observationsAccess' => $request->input('observationsAccess', 'none'),
-            'moneyAccess'      => $request->input('moneyAccess', 'none'),
-            'mapsAccess'       => $request->input('mapsAccess', 'none'),
-            'drawAccess'       => $request->input('drawAccess', 'none'),
-            'aiAccess'         => $request->boolean('aiAccess'),
-            'cameraAccess'     => $request->boolean('cameraAccess'),
-            'videoAccess'      => $request->boolean('videoAccess'),
-            'voiceAccess'      => $request->boolean('voiceAccess'),
-            'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
+            // What they may open is set apart, per cropping schedule or for all (WorkerAccess, 2026-10-22).
+            'communityAccess'  => true,
             'deleteStatus'     => 1,
         ]);
+        // The home screen's tools, when the panel sent them; a login made without it keeps every tool.
+        if ($request->has('toolsOff')) {
+            $grant->toolsOff = \App\Support\WorkerTools::clean($request->input('toolsOff'));
+        }
 
         if ($existing) {
             // Account already exists → grant is active immediately.
@@ -186,19 +164,9 @@ class WorkerAccessController extends Controller
             'name'             => 'nullable|string|max:191',
             'email'            => 'required|email|max:191',
             'password'         => 'required|string|min:8|max:191',
-            'scheduleAccess'   => 'required|in:view,edit',
             'communityAccess'  => 'nullable|boolean',
-            'notesAccess'      => 'nullable|in:none,view,edit',
-            'reportsAccess'    => 'nullable|in:none,view,edit',
-            'inventoryAccess'  => 'nullable|in:none,view,edit',
-            'observationsAccess' => 'nullable|in:none,view,edit',
-            'moneyAccess'      => 'nullable|in:none,view,edit',
-            'mapsAccess'       => 'nullable|in:none,view,edit',
-            'drawAccess'       => 'nullable|in:none,view,edit',
-            'aiAccess'         => 'nullable|boolean',
-            'cameraAccess'     => 'nullable|boolean',
-            'videoAccess'      => 'nullable|boolean',
-            'voiceAccess'      => 'nullable|boolean',
+            'toolsOff'         => 'nullable|array',
+            'toolsOff.*'       => 'string|max:32',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
@@ -224,26 +192,14 @@ class WorkerAccessController extends Controller
             'invitedEmail'     => $email,
             'scheduleWorkerId' => $link[0],
             'globalWorkerId'   => $link[1],
-            'scheduleAccess'   => $request->input('scheduleAccess'),
-            'communityAccess'  => $request->boolean('communityAccess'),
-            /* The module rights, as the owner set them. canAddNotes is
-             * written from notesAccess rather than read from the form: it is
-             * the same permission under an older name, and two columns that
-             * can disagree is how a setting starts lying. */
-            'notesAccess'      => $request->input('notesAccess', 'view'),
-            'reportsAccess'    => $request->input('reportsAccess', 'view'),
-            'inventoryAccess'  => $request->input('inventoryAccess', 'none'),
-            'observationsAccess' => $request->input('observationsAccess', 'none'),
-            'moneyAccess'      => $request->input('moneyAccess', 'none'),
-            'mapsAccess'       => $request->input('mapsAccess', 'none'),
-            'drawAccess'       => $request->input('drawAccess', 'none'),
-            'aiAccess'         => $request->boolean('aiAccess'),
-            'cameraAccess'     => $request->boolean('cameraAccess'),
-            'videoAccess'      => $request->boolean('videoAccess'),
-            'voiceAccess'      => $request->boolean('voiceAccess'),
-            'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
+            // What they may open is set apart, per cropping schedule or for all (WorkerAccess, 2026-10-22).
+            'communityAccess'  => true,
             'deleteStatus'     => 1,
         ]);
+        // The home screen's tools, when the panel sent them; a login made without it keeps every tool.
+        if ($request->has('toolsOff')) {
+            $grant->toolsOff = \App\Support\WorkerTools::clean($request->input('toolsOff'));
+        }
 
         $existing = User::where('deleteStatus', 1)->whereRaw('LOWER(email) = ?', [$email])->first();
 
@@ -425,8 +381,124 @@ class WorkerAccessController extends Controller
 
         $validator = Validator::make($request->all(), [
             'id'               => 'required|integer',
-            'scheduleAccess'   => 'required|in:view,edit',
             'communityAccess'  => 'nullable|boolean',
+            'toolsOff'         => 'nullable|array',
+            'toolsOff.*'       => 'string|max:32',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
+        }
+
+        $grant = WorkerGrant::active()
+            ->where('bossUserId', $boss->id)
+            ->where('id', (int) $request->input('id'))
+            ->first();
+        if (! $grant) {
+            return response()->json(['success' => false, 'message' => 'That access was not found.'], 404);
+        }
+
+        if ($request->has('toolsOff')) {
+            $grant->toolsOff = \App\Support\WorkerTools::clean($request->input('toolsOff'));
+        }
+        $grant->save();
+        $this->audit($request, $grant);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Home screen tools saved.',
+            'data' => ['grant' => $this->grantData($grant)],
+        ]);
+    }
+
+    /*
+     * ACCESS SETTINGS (2026-10-22, the owner: "the farm owner can manage what
+     * can a user access, but can specify by cropping schedule, or all. so they
+     * need to setup first what to create access settings, for all and
+     * specific cropping schedule, then open it to manage what they can
+     * access"). A login carries any number: one for all cropping schedules,
+     * and one per season, the season's own coming first there.
+     */
+
+    /** The owner's login by id, or a refusal. */
+    private function ownGrant(Request $request, $id): WorkerGrant|\Illuminate\Http\JsonResponse
+    {
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json(['success' => false, 'message' => 'Only the farm owner can manage worker logins.'], 403);
+        }
+        $grant = WorkerGrant::active()->where('bossUserId', (int) $request->user()->id)->where('id', (int) $id)->first();
+
+        return $grant ?: response()->json(['success' => false, 'message' => 'That login was not found.'], 404);
+    }
+
+    /** One of the owner's access settings by id, whose login still stands, or a refusal. */
+    private function ownAccess(Request $request, $id): \App\Models\WorkerAccess|\Illuminate\Http\JsonResponse
+    {
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json(['success' => false, 'message' => 'Only the farm owner can manage worker logins.'], 403);
+        }
+        $row = \App\Models\WorkerAccess::active()->where('bossUserId', (int) $request->user()->id)->where('id', (int) $id)->first();
+        if (! $row || ! WorkerGrant::active()->where('id', $row->grantId)->exists()) {
+            return response()->json(['success' => false, 'message' => 'That access setting was not found.'], 404);
+        }
+
+        return $row;
+    }
+
+    /** The season a setting is about, for the Logs diary. */
+    private function auditAccess(Request $request, \App\Models\WorkerAccess $row): void
+    {
+        if ($row->croppingScheduleId) {
+            $request->attributes->set('auditScheduleId', (int) $row->croppingScheduleId);
+        }
+    }
+
+    /**
+     * A new access setting: `scope` is "all" or one of the owner's seasons.
+     * A season's own starts as a copy of the "all" setting when there is one
+     * (it is usually a small change to it), else the starting rights.
+     */
+    public function accessStore(Request $request)
+    {
+        $grant = $this->ownGrant($request, $request->input('grantId'));
+        if ($grant instanceof \Illuminate\Http\JsonResponse) {
+            return $grant;
+        }
+        $scope = (string) $request->input('scope');
+        $season = null;
+        if ($scope !== 'all') {
+            $season = \App\Models\AsCroppingSchedule::active()->where('anisystemUserId', (int) $request->user()->id)->where('id', (int) $scope)->first();
+            if (! $season) {
+                return response()->json(['success' => false, 'message' => 'Choose all cropping schedules or one of yours.'], 422);
+            }
+        }
+        $seasonId = $season ? (int) $season->id : null;
+        $twin = $grant->accessRows()->first(fn ($r) => $r->croppingScheduleId === $seasonId);
+        if ($twin) {
+            return response()->json(['success' => false, 'message' => 'They already have this one. Open it to change it.', 'data' => ['accessId' => (int) $twin->id]], 422);
+        }
+        $from = $seasonId ? $grant->accessAll() : null;
+        $row = \App\Models\WorkerAccess::create(($from ? $from->rights() : \App\Models\WorkerAccess::DEFAULTS) + [
+            'grantId' => (int) $grant->id, 'bossUserId' => (int) $grant->bossUserId, 'croppingScheduleId' => $seasonId, 'deleteStatus' => 1,
+        ]);
+        $grant->forgetAccess();
+        $this->auditAccess($request, $row);
+
+        return response()->json([
+            'success' => true,
+            'message' => $season ? 'Access to ' . $season->title . ' added. Choose what they can open there.' : 'Access to all cropping schedules added. Choose what they can open.',
+            'data' => ['grant' => $this->grantData($grant), 'accessId' => (int) $row->id],
+        ]);
+    }
+
+    /** What one setting gives, saved as the panel is tapped. */
+    public function accessUpdate(Request $request)
+    {
+        $row = $this->ownAccess($request, $request->input('id'));
+        if ($row instanceof \Illuminate\Http\JsonResponse) {
+            return $row;
+        }
+        $validator = Validator::make($request->all(), [
+            'scheduleAccess'   => 'required|in:view,edit',
             'notesAccess'      => 'nullable|in:none,view,edit',
             'reportsAccess'    => 'nullable|in:none,view,edit',
             'inventoryAccess'  => 'nullable|in:none,view,edit',
@@ -442,38 +514,29 @@ class WorkerAccessController extends Controller
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
         }
-
-        $grant = WorkerGrant::active()
-            ->where('bossUserId', $boss->id)
-            ->where('id', (int) $request->input('id'))
-            ->first();
-        if (! $grant) {
-            return response()->json(['success' => false, 'message' => 'That access was not found.'], 404);
+        $fill = [];
+        foreach (\App\Models\WorkerAccess::DEFAULTS as $col => $default) {
+            if ($request->has($col)) {
+                $fill[$col] = is_bool($default) ? $request->boolean($col) : (string) $request->input($col);
+            }
         }
+        $row->fill($fill)->save();
+        $this->auditAccess($request, $row);
 
-        $grant->fill([
-            'scheduleAccess'   => $request->input('scheduleAccess'),
-            'communityAccess'  => $request->boolean('communityAccess'),
-            'notesAccess'      => $request->input('notesAccess', 'view'),
-            'reportsAccess'    => $request->input('reportsAccess', 'view'),
-            'inventoryAccess'  => $request->input('inventoryAccess', 'none'),
-            'observationsAccess' => $request->input('observationsAccess', 'none'),
-            'moneyAccess'      => $request->input('moneyAccess', 'none'),
-            'mapsAccess'       => $request->input('mapsAccess', 'none'),
-            'drawAccess'       => $request->input('drawAccess', 'none'),
-            'aiAccess'         => $request->boolean('aiAccess'),
-            'cameraAccess'     => $request->boolean('cameraAccess'),
-            'videoAccess'      => $request->boolean('videoAccess'),
-            'voiceAccess'      => $request->boolean('voiceAccess'),
-            'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
-        ])->save();
-        $this->audit($request, $grant);
+        return response()->json(['success' => true, 'message' => 'Access updated.', 'data' => ['grant' => $this->grantData(WorkerGrant::find($row->grantId))]]);
+    }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Access updated.',
-            'data' => ['grant' => $this->grantData($grant)],
-        ]);
+    /** A setting taken away: that season goes back to the "all" setting, or closes to them. */
+    public function accessDestroy(Request $request)
+    {
+        $row = $this->ownAccess($request, $request->input('id'));
+        if ($row instanceof \Illuminate\Http\JsonResponse) {
+            return $row;
+        }
+        $row->update(['deleteStatus' => 0]);
+        $this->auditAccess($request, $row);
+
+        return response()->json(['success' => true, 'message' => 'Access removed.', 'data' => ['grant' => $this->grantData(WorkerGrant::find($row->grantId))]]);
     }
 
     /** Revoke a worker's access. */
@@ -503,6 +566,8 @@ class WorkerAccessController extends Controller
         }
 
         $grant->update(['status' => WorkerGrant::STATUS_REVOKED, 'deleteStatus' => 0]);
+        // Its access settings go with it; a login given again starts from none.
+        \App\Models\WorkerAccess::where('grantId', (int) $grant->id)->update(['deleteStatus' => 0]);
         $this->audit($request, $grant);
 
         return response()->json(['success' => true, 'message' => 'Access removed.']);

@@ -601,7 +601,7 @@
                                             </span>
                                             <span class="dt-row-body">
                                                 <b>{{ optional($__g->boss)->full_name ?: 'Farm' }}</b>
-                                                <i>You are a <strong>worker</strong> here. {{ $__g->scheduleAccess === 'edit' ? 'You can edit the plan' : 'View only' }}.</i>
+                                                <i>You are a <strong>worker</strong> here: {{ $__g->reachSay() }}.</i>
                                             </span>
                                             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                         </button>

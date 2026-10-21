@@ -9,6 +9,9 @@
 @extends('layouts.app')
 
 @section('title', 'No access')
+{{-- The refusal wears the refused page's route name, so the layout's tutorial
+     offered a video of a tool the worker cannot open (2026-10-22). --}}
+@php $noTutorial = true; @endphp
 @section('page-title', 'No access')
 
 @section('content')

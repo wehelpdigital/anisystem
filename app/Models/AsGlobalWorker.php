@@ -61,11 +61,29 @@ class AsGlobalWorker extends BaseModel
         } else {
             // The card was just written by hand: who they are follows it.
             $g->update(['workerName' => $card->workerName, 'email' => $card->email, 'phone' => $card->phone, 'skills' => $card->skills, 'personKey' => $key]);
+            // And so do their cards on the other open seasons (2026-10-22, the owner: "all workers in
+            // the cropping schedule are synced to the main worker module"). Pay stays each season's own.
+            $g->spread((int) $card->id);
         }
         if ((int) $card->globalWorkerId !== (int) $g->id) {
             $card->forceFill(['globalWorkerId' => $g->id])->save();
         }
 
         return $g;
+    }
+
+    /**
+     * Who they are, onto every card of theirs on an open season (a closed
+     * season is a record and keeps what it said): the name, contact and
+     * skills. Pay and days off stay each season's own business, written there.
+     */
+    public function spread(int $exceptCardId = 0): void
+    {
+        $open = AsCroppingSchedule::active()->where('anisystemUserId', (int) $this->userId)
+            ->whereNotIn('status', [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED])->pluck('id');
+        AsScheduleWorker::active()->where('globalWorkerId', (int) $this->id)->whereIn('croppingScheduleId', $open)
+            ->when($exceptCardId > 0, fn ($q) => $q->where('id', '!=', $exceptCardId))
+            ->update(['workerName' => $this->workerName, 'email' => $this->email, 'phone' => $this->phone,
+                'skills' => $this->skills ? json_encode(array_values((array) $this->skills)) : null, 'updated_at' => now()]);
     }
 }

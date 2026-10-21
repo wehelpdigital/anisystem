@@ -54,8 +54,10 @@ class NotesHubController extends Controller
         $ownerId = \App\Support\WorkerContext::effectiveOwnerId();
         $mayFarmNotes = \App\Support\WorkerContext::canUseModule('notes');
 
+        // Each season by its own Notes answer (access is set per cropping schedule, 2026-10-22).
+        $notesIn = \App\Support\WorkerContext::seasonIdsWith('notes');
         $seasons = $mayFarmNotes
-            ? AsCroppingSchedule::active()->forClient($ownerId)->pluck('title', 'id')
+            ? AsCroppingSchedule::active()->forClient($ownerId)->when($notesIn !== null, fn ($q) => $q->whereIn('id', $notesIn ?: [-1]))->pluck('title', 'id')
             : collect();
         $scheduleIds = $seasons->keys()->all();
         $titles = $seasons;

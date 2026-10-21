@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Support\WorkerContext;
+use App\Support\WorkerTools;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -259,6 +260,39 @@ class WorkerModuleAccess
         'owner' => 'this page, which only the farm owner can open',
     ];
 
+    /**
+     * The season pages whose `?id=` IS the season (2026-10-22, access by
+     * cropping schedule). Elsewhere an `id` is a task, a note, a map; those
+     * calls name their season as scheduleId, or the controller says it
+     * (WorkerContext::enterSeason) and this table is asked again.
+     */
+    private const SEASON_BY_ID = [
+        'sm.hub', 'sm.settings', 'sm.settings.logs', 'sm.reports', 'sm.ai', 'sm.weather.page', 'sm.lots', 'sm.workers',
+        'sm.inventory', 'sm.inventory.list', 'sm.documentation', 'sm.activities', 'sm.notes', 'sm.lots.map', 'sm.gallery',
+        'sm.growth', 'sm.growth.card', 'sm.media', 'sm.collab', 'sm.activities.readiness', 'sm.post-harvest',
+        'sm.labor.report', 'sm.expenses.report', 'sm.expenses.report.data', 'sm.profit.report', 'sm.profit.report.data',
+        'sm.anee.season', 'sm.anee.sofar', 'sm.anee.status', 'sm.anee.list', 'sm.protocol.report',
+        'sm.tags', 'sm.tags.list', 'sm.tags.items', 'sm.tags.of', 'sm.activities.day-income.list', 'sm.activities.day-expense.list',
+        'sm.update', 'sm.destroy', 'sm.duplicate', 'sm.digest.test', 'sm.day-type', 'sm.status',
+    ];
+
+    /** The season a request names, as far as it can be read before the controller runs. */
+    public static function seasonOf(Request $request, string $name)
+    {
+        foreach (['scheduleId', 'croppingScheduleId'] as $key) {
+            $v = $request->input($key);
+            if (is_numeric($v) && (int) $v > 0) {
+                return (int) $v;
+            }
+        }
+        if (in_array($name, self::SEASON_BY_ID, true) && is_numeric($request->input('id')) && (int) $request->input('id') > 0) {
+            return (int) $request->input('id');
+        }
+
+        // A season's own screen whose season is still to be read; anything else is the farm as a whole.
+        return str_starts_with($name, 'sm.') ? 'pending' : null;
+    }
+
     public function handle(Request $request, Closure $next): Response
     {
         $route = $request->route();
@@ -271,6 +305,31 @@ class WorkerModuleAccess
             return $next($request);
         }
 
+        WorkerContext::useSeason(self::seasonOf($request, $name));
+
+        return self::verdict($request) ?? $next($request);
+    }
+
+    /**
+     * The table's answer for this request, in the season WorkerContext holds:
+     * a refusal, or null to go on. Asked by handle() on the way in and again
+     * by WorkerContext::enterSeason() once a controller knows the season.
+     */
+    public static function verdict(Request $request): ?Response
+    {
+        $name = (string) optional($request->route())->getName();
+        if ($name === '' || ! WorkerContext::inWorkerContext()) {
+            return null;
+        }
+
+        /* The home screen's tools (2026-10-22): a tool the owner switched off
+         * for this login is refused at its address too, not only left off the
+         * dashboard. A route two tools share opens while either is on. */
+        $tools = WorkerTools::forRequest($name, $request);
+        if ($tools && ! array_filter($tools, fn ($key) => WorkerContext::canUseTool($key))) {
+            return self::refuse($request, WorkerTools::all()[$tools[0]][0]);
+        }
+
         /* Maps and drawings of your OWN (2026-09-30): the canvas and save
          * endpoints serve the global Maps and Draw pages when no season is
          * named, and those are the worker's own tools, not the farm's -- the
@@ -279,7 +338,7 @@ class WorkerModuleAccess
          * changing one, and a season's drawing is only reached by naming
          * its season, which brings this gate back. */
         if (Str::is(['sm.map', 'sm.map.*', 'sm.draw.*'], $name) && (int) $request->query('scheduleId') <= 0) {
-            return $next($request);
+            return null;
         }
 
         // A GET is looking; anything else is changing something.
@@ -335,7 +394,7 @@ class WorkerModuleAccess
             $level = $firstLevel;
 
             if ($module === 'owner') {
-                return $this->refuse($request, 'owner');
+                return self::refuse($request, 'owner');
             }
 
             if ($module === 'community') {
@@ -345,15 +404,15 @@ class WorkerModuleAccess
                     return response()->view('sm.community-switch', ['next' => $request->getRequestUri()], 403);
                 }
 
-                return $this->refuse($request, 'community');
+                return self::refuse($request, 'community');
             }
 
             $has = WorkerContext::moduleAccess($module);
 
-            return $this->refuse($request, $module, $has !== 'none' && $level === 'edit');
+            return self::refuse($request, $module, $has !== 'none' && $level === 'edit');
         }
 
-        return $next($request);
+        return null;
     }
 
     /**
@@ -363,12 +422,14 @@ class WorkerModuleAccess
      * so in the toast the screen already knows how to show rather than
      * painting an HTML apology into a JSON parser.
      */
-    private function refuse(Request $request, string $module, bool $readOnly = false): Response
+    private static function refuse(Request $request, string $module, bool $readOnly = false): Response
     {
         $what = self::LABELS[$module] ?? $module;
+        // Access is set per cropping schedule (2026-10-22): a refusal in a season is about that season.
+        $where = is_int(WorkerContext::season()) ? ' in this season' : ' on this farm';
         $message = $readOnly
-            ? 'You have view-only access to ' . $what . ' on this farm.'
-            : 'The farm owner has not given you access to ' . $what . '.';
+            ? 'You have view-only access to ' . $what . $where . '.'
+            : 'The farm owner has not given you access to ' . $what . (is_int(WorkerContext::season()) && ! in_array($module, ['owner', 'community'], true) && isset(self::LABELS[$module]) ? $where : '') . '.';
 
         if ($request->expectsJson() || ! $request->isMethodSafe()) {
             return response()->json(['success' => false, 'message' => $message], 403);

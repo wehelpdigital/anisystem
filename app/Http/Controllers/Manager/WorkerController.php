@@ -140,6 +140,14 @@ class WorkerController extends BaseScheduleController
             ->select('as_schedule_workers.*', 's.title as scheduleTitle')
             ->first();
 
+        // Somebody already in Global Workers with the address, not in this season yet:
+        // added from there in a tap rather than typed again (2026-10-22, the owner).
+        $person = \App\Models\AsGlobalWorker::where('userId', $ownerId)->where('deleteStatus', 1)
+            ->whereRaw('LOWER(email) = ?', [$email])->first();
+        if ($person && $person->inSeason((int) $schedule->id)) {
+            $person = null;
+        }
+
         $user = $self ? null : \App\Models\User::active()->whereRaw('LOWER(email) = ?', [$email])->first();
         $grant = $user ? \App\Models\WorkerGrant::active()
             ->where('bossUserId', $ownerId)
@@ -159,6 +167,7 @@ class WorkerController extends BaseScheduleController
                 'since' => $user->created_at?->format('M Y'),
             ] : null,
             'onRoster' => $onRoster ? (int) $onRoster->id : null,
+            'roster' => $person ? ['id' => (int) $person->id, 'name' => (string) $person->workerName] : null,
             'onRosterName' => $onRoster?->workerName,
             'elsewhere' => $elsewhere ? [
                 'workerId' => (int) $elsewhere->id,

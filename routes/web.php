@@ -242,6 +242,12 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'lotHarvest' => \Illuminate\Support\Facades\Route::has('sm.lots.harvest'),
             // The Crop Protocol's recommended program carries its own top ups and meets the need (2026-10-22).
             'protoMeetsNeed' => method_exists(\App\Http\Controllers\CropProtocolController::class, 'withTopUps'),
+            // A worker login's switches for the home screen tools (2026-10-22; true once its column is in).
+            // A login's access set per cropping schedule or for all of them (2026-10-22; true once the table is in).
+            'accessBySeason' => class_exists(\App\Models\WorkerAccess::class)
+                && rescue(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_worker_access'), false, false),
+            'homeToolSwitches' => class_exists(\App\Support\WorkerTools::class)
+                && rescue(fn () => \Illuminate\Support\Facades\Schema::hasColumn('as_worker_grants', 'toolsOff'), false, false),
             // The germination only where seed goes in, by each crop's way in (2026-10-21).
             'germByWay' => method_exists(\App\Support\PlantAmount::class, 'germApplies'),
             // 2026-10-19: How to Plant in Quick Tools (true once the guides are loaded into their table).
@@ -1172,6 +1178,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // For a worker who already has a login: the reset link, sent by the boss.
     Route::post('/app/sm-workers-access-password-link', [App\Http\Controllers\Manager\WorkerAccessController::class, 'sendPasswordLink'])->name('sm.workers.access.password-link');
     Route::delete('/app/sm-workers-access-revoke', [App\Http\Controllers\Manager\WorkerAccessController::class, 'revoke'])->name('sm.workers.access.revoke');
+    // Access by cropping schedule, or for all of them (2026-10-22): a login's access settings.
+    Route::post('/app/sm-workers-access-scope', [App\Http\Controllers\Manager\WorkerAccessController::class, 'accessStore'])->name('sm.workers.access.scope.store');
+    Route::post('/app/sm-workers-access-scope-save', [App\Http\Controllers\Manager\WorkerAccessController::class, 'accessUpdate'])->name('sm.workers.access.scope.update');
+    Route::delete('/app/sm-workers-access-scope', [App\Http\Controllers\Manager\WorkerAccessController::class, 'accessDestroy'])->name('sm.workers.access.scope.destroy');
 
     // --- Schedule team group chat ---
     Route::get('/app/sm-chat', [App\Http\Controllers\Manager\ScheduleChatController::class, 'messages'])->name('sm.chat');

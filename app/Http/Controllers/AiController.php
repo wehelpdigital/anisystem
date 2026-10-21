@@ -894,6 +894,7 @@ class AiController extends Controller
         if (! $schedule) {
             return $this->json(false, 'That season is not yours to write to.', [], 404);
         }
+        \App\Support\WorkerContext::enterSeason((int) $schedule->id);
         // Writing the notebook is the note right — the same line every other
         // door into the schedule's records draws for a worker.
         if (\App\Support\WorkerContext::activeGrant() && ! \App\Support\WorkerContext::canAddNotes()) {
@@ -1228,6 +1229,7 @@ class AiController extends Controller
         if (! $schedule) {
             abort(404);
         }
+        \App\Support\WorkerContext::enterSeason((int) $schedule->id);
         // Whether a worker may be here is their owner's answer, given per
         // person in the Workers module and asked by WorkerModuleAccess for
         // every ai.* route -- including this one.
