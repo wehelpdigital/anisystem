@@ -234,6 +234,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
+            // By spacing or by amount in the Crop Protocol and NPK Plus (2026-10-21).
+            'plantAmount' => class_exists(\App\Support\PlantAmount::class) && \Illuminate\Support\Facades\Route::has('seedcalc.count'),
             // 2026-10-19: How to Plant in Quick Tools (true once the guides are loaded into their table).
             'howToPlant' => class_exists(\App\Support\HowToPlant::class) && \Illuminate\Support\Facades\Route::has('htp.page')
                 && rescue(fn () => \App\Support\HowToPlant::ready(), false, false),
@@ -903,6 +905,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/seed-count-distance/list', [App\Http\Controllers\SeedSpacingController::class, 'list'])->name('seedcalc.list');
     Route::get('/app/seed-count-distance/variety', [App\Http\Controllers\SeedSpacingController::class, 'variety'])->middleware('throttle:60,1')->name('seedcalc.variety');
     Route::get('/app/seed-count-distance/context', [App\Http\Controllers\SeedSpacingController::class, 'context'])->middleware('throttle:60,1')->name('seedcalc.context');
+    // The seeds a spacing takes, for the Crop Protocol and NPK Plus (2026-10-21, App\Support\PlantAmount).
+    Route::get('/app/seed-count-distance/count', [App\Http\Controllers\SeedSpacingController::class, 'count'])->middleware('throttle:120,1')->name('seedcalc.count');
     Route::get('/app/seed-count-distance/one/{id}', [App\Http\Controllers\SeedSpacingController::class, 'one'])->whereNumber('id')->name('seedcalc.one');
     Route::delete('/app/seed-count-distance/{id}', [App\Http\Controllers\SeedSpacingController::class, 'destroy'])->whereNumber('id')->name('seedcalc.delete');
     // How to Plant (2026-10-19, the owner): how traditional farmers plant each crop, and into the Protocol Builder.

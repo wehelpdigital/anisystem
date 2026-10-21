@@ -682,7 +682,8 @@ final class SeedSpacing
         $mid = fn ($v) => ($s = self::span($v)) ? ($s[0] + $s[1]) / 2 : null;
         $vg = $mid($vy['germ'] ?? null);
         $tg = $type !== null && isset($types[$type]) ? (float) $types[$type][0] : null;
-        $germ = $vg ?? $tg ?? (float) (($C['germ'] ?? [100])[0]);
+        $tag = isset($c['germTag']) && $c['germTag'] > 0 ? (float) $c['germTag'] : null;
+        $germ = $tag ?? $vg ?? $tg ?? (float) (($C['germ'] ?? [100])[0]);
         $vm = $mid($vy['germMin'] ?? null);
         // The least good seed shows: the variety's, else the crop's usual kind's, else the crop's.
         $dk = $kinds['default'] ?? null;
@@ -698,7 +699,7 @@ final class SeedSpacing
         ];
 
         return $c + $out + ['seed' => $out + ['type' => $type,
-            'from' => ['germ' => $vg !== null ? 'variety' : ($tg !== null ? 'type' : 'crop'), 'germMin' => $vm !== null ? 'variety' : 'crop',
+            'from' => ['germ' => $tag !== null ? 'tag' : ($vg !== null ? 'variety' : ($tg !== null ? 'type' : 'crop')), 'germMin' => $vm !== null ? 'variety' : 'crop',
                 'fit' => $vf !== null ? 'variety' : 'crop', 'loss' => $vl !== null ? 'variety' : 'crop']]];
     }
 
@@ -760,6 +761,9 @@ final class SeedSpacing
             'keep' => ($k = $n('keep', 1, 20, $C['keep'] === null ? null : (float) $C['keep'])) === null ? null : (int) round($k),
             // Germination and losses are no longer typed (withSeed resolves them): the seed's kind is.
             'seedType' => isset(self::SEED_KINDS[$key]['types'][$in['seedType'] ?? '']) ? (string) $in['seedType'] : null,
+            // The seed tag's germination, where another module asks it (2026-10-21, PlantAmount): it wins in withSeed.
+            // This page never sends it.
+            'germTag' => $n('germTag', 1, 100),
             'weight' => $n('weight', 0.01, 10000000),
             // The pack the farmer picked (2026-10-19): null counts the variety's or the crop's usual.
             'pack' => preg_match('/^(kg|g|seeds)-\d+(\.\d+)?-[a-z]{1,12}$/', (string) ($in['pack'] ?? '')) ? (string) $in['pack'] : null,

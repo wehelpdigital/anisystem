@@ -61,6 +61,28 @@
     .np-fpc-sub { margin: -.2rem 0 .6rem; }
     .np-hint { display: block; margin-top: .3rem; font-size: .72rem; line-height: 1.45; color: var(--color-gray-500); }
     .np-hint.is-warn { color: #b45309; font-weight: 700; }
+    /* By spacing or by amount (2026-10-21): two choices, the chosen one's fields, the germination under both. */
+    .np-by { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .5rem; margin-bottom: .55rem; }
+    .np-by[hidden], .np-bypane[hidden], .np-germ[hidden] { display: none; }
+    .np-by-b { min-width: 0; padding: .6rem .75rem; border-radius: .95rem; text-align: left; background: var(--color-white); border: 1.5px solid var(--color-gray-200);
+        transition: border-color .28s var(--np-ease), background-color .28s var(--np-ease), box-shadow .28s var(--np-ease); }
+    .np-by-b:hover { border-color: #a8cc7e; }
+    .np-by-b b { display: block; font-size: .84rem; font-weight: 800; line-height: 1.3; color: var(--color-gray-900); }
+    .np-by-b small { display: block; margin-top: .1rem; font-size: .7rem; line-height: 1.35; color: var(--color-gray-500); }
+    .np-by-b.is-on { border-color: #4a7c2a; background: #f4f9ee; box-shadow: 0 0 0 3px rgb(107 159 61 / .16); }
+    .np-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+    .np-three .np-label { min-height: 2.1rem; display: flex; flex-direction: column; justify-content: flex-end; line-height: 1.2; margin-top: .2rem; }
+    .np-bypane { animation: npByIn .28s var(--np-ease) both; }
+    .np-germ { margin-top: .5rem; padding-top: .1rem; border-top: 1px dashed var(--color-gray-200); animation: npByIn .28s var(--np-ease) both; }
+    @keyframes npByIn { from { opacity: 0; transform: translateY(8px); } }
+    .np-seedsay { transition: opacity .28s var(--np-ease); }
+    .np-seedsay.is-busy { opacity: .55; }
+    @media (prefers-reduced-motion: reduce) { .np-by-b, .np-seedsay { transition: none; } .np-bypane, .np-germ { animation: none; } }
+    html.dark .np-by-b { background: #151b12; border-color: #2b3a1c; }
+    html.dark .np-by-b b { color: #e8efe1; }
+    html.dark .np-by-b small { color: #9fb08f; }
+    html.dark .np-by-b.is-on { background: #22301a; border-color: #6b9f3d; }
+    html.dark .np-germ { border-top-color: #2b3a1c; }
     .np-row { display: flex; gap: .5rem; } .np-row > * { min-width: 0; }
     .np-two { display: grid; gap: 0 .8rem; grid-template-columns: minmax(0, 1fr); }
     @media (min-width: 560px) { .np-two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -684,14 +706,33 @@
                             <p class="np-wq np-wq2">What you plant</p>
                             <p class="np-sub">Too thin a stand cannot reach the goal. NPK Plus counts for what it can.</p>
                             @endif
-                            <label class="np-label" for="npSeed">Seeds or planting material <span>(optional)</span></label>
-                            <div class="np-row"><input type="number" id="npSeed" class="form-input flex-1" min="0" step="any" inputmode="decimal" placeholder="Like 40">
-                                <button type="button" class="np-utag is-inline" id="npSeedUnit" aria-label="What you plant"><span>kg</span>{!! $chev !!}</button></div>
-                            <span class="np-hint" id="npSeedHint">How much you plant on the whole area.</span>
-                            <label class="np-label" for="npGerm">Germination <span>(optional, on the seed tag)</span></label>
-                            <div class="np-row" style="align-items:center"><input type="number" id="npGerm" class="form-input flex-1" min="1" max="100" step="1" inputmode="numeric" placeholder="Like 85">
-                                <span class="np-hint" style="margin:0;flex:none;font-weight:800">%</span></div>
-                            <span class="np-hint" id="npGermHint">Seed that does not sprout grows nothing: NPK Plus counts only the seed that will.</span>
+                            {{-- How much is planted, one of two ways (2026-10-21, the owner, as the Crop Protocol asks it): by
+                                 spacing, the seed calculator counts the seeds (seedcalc.count); by amount, the kilos, seeds or
+                                 plants. The germination is its own field under both. Spacing only for a crop the calculator lays out. --}}
+                            <span class="np-label">How much you plant <span>(optional)</span></span>
+                            <div class="np-by" id="npBy" role="radiogroup" aria-label="Say it by" hidden>
+                                <button type="button" class="np-by-b" data-by="spacing" role="radio" aria-checked="false"><b>By spacing</b><small>The seeds are counted for you</small></button>
+                                <button type="button" class="np-by-b" data-by="amount" role="radio" aria-checked="false"><b>By amount</b><small>The kilos, seeds or plants</small></button>
+                            </div>
+                            <div class="np-bypane" id="npSpaceBox" hidden>
+                                <div class="np-three">
+                                    <div><label class="np-label" for="npRow">Between rows <span id="npRowU">(cm)</span></label><input type="number" id="npRow" class="form-input w-full" min="0" step="any" inputmode="decimal"></div>
+                                    <div><label class="np-label" for="npPlantSp"><b id="npPlantSpW" style="font-weight:inherit">Between hills</b> <span id="npPlantU">(cm)</span></label><input type="number" id="npPlantSp" class="form-input w-full" min="0" step="any" inputmode="decimal"></div>
+                                    <div><label class="np-label" for="npPerHill" id="npPerHillW">Plants a hill</label><input type="number" id="npPerHill" class="form-input w-full" min="1" max="20" step="1" inputmode="numeric"></div>
+                                </div>
+                                <span class="np-hint" id="npSpaceUsual"></span>
+                            </div>
+                            <div class="np-bypane" id="npAmountBox">
+                                <div class="np-row"><input type="number" id="npSeed" class="form-input flex-1" min="0" step="any" inputmode="decimal" placeholder="Like 40" aria-label="Seeds or planting material">
+                                    <button type="button" class="np-utag is-inline" id="npSeedUnit" aria-label="What you plant"><span>kg</span>{!! $chev !!}</button></div>
+                            </div>
+                            <div class="np-germ" id="npGermBox">
+                                <label class="np-label" for="npGerm" data-tl="germination-test">Germination <span>(optional, on the seed tag)</span></label>
+                                <div class="np-row" style="align-items:center"><input type="number" id="npGerm" class="form-input flex-1" min="1" max="100" step="1" inputmode="numeric" placeholder="Like 85">
+                                    <span class="np-hint" style="margin:0;flex:none;font-weight:800">%</span></div>
+                                <span class="np-hint" id="npGermHint">Seed that does not sprout grows nothing: NPK Plus counts only the seed that will.</span>
+                            </div>
+                            <span class="np-hint np-seedsay" id="npSeedHint" aria-live="polite">How much you plant on the whole area.</span>
                             <div class="np-lq" data-lq="area"><div>
                                 <label class="np-label" for="npArea">Area</label>
                                 <div class="np-row"><input type="number" id="npArea" class="form-input flex-1" min="0" step="any" value="1" inputmode="decimal">
@@ -1093,6 +1134,7 @@
         save: @json(route('npk.save')), season: @json(route('npk.season')), ph: @json(asset('data/ph-locations.json')), list: @json(route('npk.list')), one: (id) => @json(url('/app/npk-plus/one')) + '/' + id,
         analyze: @json(route('npk.analyze')), job: (id) => @json(url('/app/npk-plus/job')) + '/' + id,
         phProducts: @json(route('npk.ph')), phUse: @json(route('npk.ph.use')),
+        count: @json(route('seedcalc.count')),
     };
     const NUTRIENTS = ['N', 'P2O5', 'K2O', 'Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Cl', 'Co'];
     const NPK = ['N', 'P2O5', 'K2O'];
@@ -1137,7 +1179,9 @@
 
     let OPT = null, M = null, calcId = null, RES = null;
     const st = { pump: { year: null, stops: [] }, microsOn: true, crop: null, cropPicked: false, lines: [], areaUnit: 'ha', yUnit: 't', seedUnit: 'kg', seedUnitSet: false, pMethod: 'olsen', kUnit: 'ppm', form: 'granular',
-        texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null, varPick: null, areaSoil: null, area: null, areaNo: false };
+        texture: 'unsure', conds: [], step: 0, prov: null, town: null, water: 'irrigated', season: null, varPick: null, areaSoil: null, area: null, areaNo: false,
+        // How much is planted (2026-10-21): by 'spacing' or 'amount', and the seeds the spacing takes (seedcalc.count).
+        by: null, cnt: null };
     // The field in detail (partials/field-profile-card) and what the farmer set by hand (theirs wins over what it fills).
     let FPC = null;
     const TOUCH = {};
@@ -1275,6 +1319,10 @@
         $('npCropNow').textContent = c ? cropName(c) : 'No crop, just the totals';
         $('npCropNow').classList.remove('is-none');
         if (c && !st.seedUnitSet) { st.seedUnit = Object.keys(SEED_DEF).find((u) => SEED_DEF[u].includes(c.key)) || 'kg'; tagSay('npSeedUnit', SEED_U, st.seedUnit); }
+        // Another crop's spacing is not this one's: the boxes start empty, on its own usual.
+        if (st.spCrop !== k) { ['npRow', 'npPlantSp', 'npPerHill'].forEach((id) => { $(id).value = ''; }); st.spCrop = k; }
+        st.by = null; st.cnt = null;
+        paintBy(); countSoon();
         const f = [];
         if (c) {
             const ty = c.typicalYield, R = c.recommendedPerHa || {};
@@ -1292,14 +1340,16 @@
     /* ---- steps 2 and 3: the goal, the stand, the area ---- */
     const seedKind = (u) => (u === 'kg' || u === 'g') ? 'w' : 'n';
     const seedCheck = (c) => {
-        const v = num('npSeed'), a = areaHa();
-        const out = { perHa: null, kind: seedKind(st.seedUnit), usual: null, sf: 1, pop: 1, words: '', warn: false };
+        // By spacing (2026-10-21): the seeds the seed calculator counted for it, as NpkNeed reads them (PlantAmount::asSeed).
+        const bySp = st.by === 'spacing', sd0 = bySp && st.cnt ? st.cnt.seed : null;
+        const v = bySp ? (sd0 ? sd0.amount : 0) : num('npSeed'), a = areaHa(), unit = bySp ? (sd0 ? sd0.unit : 'kg') : st.seedUnit;
+        const out = { perHa: null, kind: seedKind(unit), usual: null, sf: 1, pop: 1, words: '', warn: false };
         if (!v || !a) return out;
-        out.perHa = (st.seedUnit === 'g' ? v / 1000 : v) / a;
+        out.perHa = (unit === 'g' ? v / 1000 : v) / a;
         // Seed is counted at its germination against the usual 85% the guides
         // assume: 40 kg at 60% sprouts like 28 kg of normal seed. Seedlings,
         // cuttings and plants are already growing.
-        out.germ = ['kg', 'g', 'seeds', 'hills'].includes(st.seedUnit) && num('npGerm') ? clamp(num('npGerm'), 1, 100) : null;
+        out.germ = bySp ? (sd0.germination || null) : (['kg', 'g', 'seeds', 'hills'].includes(unit) && num('npGerm') ? clamp(num('npGerm'), 1, 100) : null);
         out.raw = out.perHa;
         if (out.germ) out.perHa = out.perHa * out.germ / GERM_USUAL;
         const sd = c && M.seeding[c.key];
@@ -1370,6 +1420,14 @@
                 + (g.warn ? '<br><span class="text-xs">' + esc(g.warn) + '</span>' : '')
             : 'No yield numbers for this crop: give your goal, or the guide rate is used as it is.';
         const s = num('npSeed'), a = areaHa(), sd = c && M.seeding[c.key];
+        if (st.by === 'spacing') {
+            const n = st.cnt && st.cnt.count, si = spIn();
+            if (n) $('npSeedHint').textContent = n.say + (g.sd.warn ? ' ' + g.sd.words : '');
+            else if (!(si.row > 0 && si.plant > 0)) $('npSeedHint').textContent = 'Type the rows and the distance between ' + (cropSp() && cropSp().standBy === 'hills' ? 'hills' : 'plants') + ', and the ' + ((cropSp() && cropSp().word) || 'seeds') + ' it takes are counted here.';
+            $('npSeedHint').classList.toggle('is-warn', !!g.sd.warn || !!(n && ['sparse', 'danger'].includes(n.status)));
+            return;
+        }
+        $('npSeedHint').classList.remove('is-busy');
         $('npSeedHint').textContent = s && a ? 'For the whole area: ' + fmt(g.sd.raw * (st.seedUnit === 'g' ? 1000 : 1), g.sd.raw >= 100 ? 0 : 1) + ' ' + SEED_U[st.seedUnit][1] + ' per hectare. ' + g.sd.words
             : 'How much you plant on the whole area.' + (sd && sd.note ? ' ' + sd.note : '');
         $('npSeedHint').classList.toggle('is-warn', !!g.sd.warn);
@@ -1438,7 +1496,67 @@
         if (!res.name) { varSet(null, ''); return; }
         varSet(res.record ? Object.assign({ source: 'record', crop: st.crop }, res.record) : { source: 'custom', name: res.name }, res.name);
     });
-    $('npSeedUnit').addEventListener('click', () => pick('What you plant', 'For the whole area.', SEED_U, st.seedUnit, (k) => { st.seedUnit = k; st.seedUnitSet = true; tagSay('npSeedUnit', SEED_U, k); hints(); calc(); }));
+    $('npSeedUnit').addEventListener('click', () => pick('What you plant', 'For the whole area.', SEED_U, st.seedUnit, (k) => { st.seedUnit = k; st.seedUnitSet = true; tagSay('npSeedUnit', SEED_U, k); paintGerm(); hints(); calc(); }));
+
+    /* ---- by spacing or by amount (2026-10-21, the owner, as the Crop Protocol asks it) ----
+       By spacing, the seed calculator counts the seeds (seedcalc.count, App\Support\PlantAmount), and that
+       count is the stand NPK Plus reads; by amount, the kilos, seeds or plants. The germination counts in both. */
+    const cropSp = () => { const c = cropOf(st.crop); return c && c.spacing ? c.spacing : null; };
+    const spIn = () => { const sp = cropSp(), f = sp && sp.meters ? 100 : 1; return { row: num('npRow') * f, plant: num('npPlantSp') * f, hill: Math.round(num('npPerHill')) }; };
+    const spShow = (cm, sp) => (cm > 0 ? fmt(sp && sp.meters ? cm / 100 : cm, 2) : '');
+    function paintBy() {
+        const sp = cropSp();
+        if (!sp) st.by = 'amount';
+        else if (st.by !== 'spacing' && st.by !== 'amount') st.by = num('npSeed') > 0 && !num('npRow') ? 'amount' : 'spacing';
+        $('npBy').hidden = !sp;
+        $('npBy').querySelectorAll('[data-by]').forEach((b) => { const on = b.dataset.by === st.by; b.classList.toggle('is-on', on); b.setAttribute('aria-checked', String(on)); });
+        $('npSpaceBox').hidden = st.by !== 'spacing';
+        $('npAmountBox').hidden = st.by !== 'amount';
+        if (sp) {
+            const u = '(' + (sp.meters ? 'm' : 'cm') + ')', rg = (a) => (a[0] === a[2] ? spShow(a[0], sp) : spShow(a[0], sp) + ' to ' + spShow(a[2], sp)) + (sp.meters ? ' m' : ' cm');
+            $('npRowU').textContent = u; $('npPlantU').textContent = u;
+            $('npPlantSpW').textContent = sp.standBy === 'hills' ? 'Between hills' : 'Between plants';
+            $('npPerHillW').textContent = sp.way === 'direct' ? 'Seeds a hill' : sp.way === 'piece' ? sp.word.charAt(0).toUpperCase() + sp.word.slice(1) + ' a hill' : (st.crop === 'rice' ? 'Seedlings a hill' : 'Plants a hill');
+            $('npRow').placeholder = 'Like ' + spShow(sp.row[1], sp); $('npPlantSp').placeholder = 'Like ' + spShow(sp.plant[1], sp); $('npPerHill').placeholder = 'Like ' + sp.perHill[1];
+            $('npSpaceUsual').textContent = (sp.note ? sp.note + ' ' : '') + 'Usual: rows ' + rg(sp.row) + ' apart, ' + rg(sp.plant) + ' between ' + (sp.standBy === 'hills' ? 'hills' : 'plants')
+                + (sp.perHill[2] > 1 ? ', ' + (sp.perHill[0] === sp.perHill[2] ? sp.perHill[0] : sp.perHill[0] + ' to ' + sp.perHill[2]) + ' a hill' : '') + '.'
+                + (sp.perHill[2] > 1 && sp.fromSeed ? ' Left empty, the ' + $('npPerHillW').textContent.toLowerCase() + ' are set for your germination.' : '');
+        }
+        paintGerm();
+    }
+    function paintGerm() {
+        const sp = cropSp();
+        $('npGermBox').hidden = st.by === 'spacing' ? !(sp && sp.fromSeed) : !['kg', 'g', 'seeds', 'hills'].includes(st.seedUnit);
+    }
+    let countT = null, countAsk = 0;
+    function countSoon() {
+        clearTimeout(countT);
+        if (st.by !== 'spacing') return;
+        const s = spIn(), h = $('npSeedHint');
+        if (!(s.row > 0 && s.plant > 0)) { countAsk++; st.cnt = null; h.classList.remove('is-busy'); hints(); calc(); return; }
+        h.classList.add('is-busy');
+        countT = setTimeout(async () => {
+            const ask = ++countAsk, q = new URLSearchParams({ crop: st.crop || '', npk: st.crop || '', row: s.row, plant: s.plant, area: areaHa() || 0, variety: $('npVariety').value.trim() });
+            if (s.hill > 0) q.set('perHill', s.hill);
+            if (num('npGerm') && !$('npGermBox').hidden) q.set('germ', clamp(num('npGerm'), 1, 100));
+            let d = null;
+            try { d = (await window.api(U.count + '?' + q.toString())).data; } catch (_) { d = null; }
+            if (ask !== countAsk) return;
+            h.classList.remove('is-busy');
+            st.cnt = d && d.count ? d : null;
+            if (!st.cnt) h.textContent = 'The seeds could not be counted just now. Try again, or give the amount.';
+            hints(); calc();
+        }, 350);
+    }
+    $('npBy').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-by]');
+        if (!b || st.by === b.dataset.by) return;
+        st.by = b.dataset.by;
+        paintBy();
+        if (st.by === 'spacing') countSoon(); else { hints(); calc(); }
+    });
+    ['npRow', 'npPlantSp', 'npPerHill'].forEach((id) => $(id).addEventListener('input', countSoon));
+    ['npGerm', 'npArea', 'npVariety'].forEach((id) => $(id).addEventListener('input', () => { if (st.by === 'spacing') countSoon(); }));
     $('npAreaUnit').addEventListener('click', () => pick('The area in', '', AREA_U, st.areaUnit, (k) => { st.areaUnit = k; tagSay('npAreaUnit', AREA_U, k); hints(); calc(); }));
     ['npArea', 'npPotential', 'npTarget', 'npSeed', 'npGerm', 'npVariety', 'npPh'].forEach((id) => $(id).addEventListener('input', () => { hints(); calc(); }));
 
@@ -2409,7 +2527,10 @@
             setup: { variety: $('npVariety').value.trim(), areaUnit: st.areaUnit, areaValue: num('npArea'), yUnit: st.yUnit,
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
                 target: num('npTarget') ? { value: num('npTarget'), unit: yu[1], tPerHa: Math.round(num('npTarget') * yu[3] * 100) / 100 } : null,
-                seed: seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null } : null,
+                seed: st.by === 'spacing' && st.cnt && st.cnt.seed ? { amount: st.cnt.seed.amount, unit: SEED_U[st.cnt.seed.unit] ? SEED_U[st.cnt.seed.unit][1] : st.cnt.seed.unit, key: st.cnt.seed.unit,
+                        perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: num('npGerm') && !$('npGermBox').hidden ? clamp(num('npGerm'), 1, 100) : null,
+                        by: 'spacing', spacing: { row: spIn().row, plant: spIn().plant, perHill: spIn().hill || null }, say: st.cnt.count.say }
+                    : st.by !== 'spacing' && seedV ? { amount: seedV, unit: SEED_U[st.seedUnit][1], key: st.seedUnit, perHa: g.sd.raw ? Math.round(g.sd.raw * 10) / 10 : null, germination: g.sd.germ || null, by: 'amount' } : null,
                 texture: st.texture, conditions: st.conds.slice(), ph: phVal(), intensive: !!st.intensive, zincRecent: !!st.zincRecent, microsOn: !!st.microsOn, prov: st.prov, town: st.town, water: st.water, pump: st.water === 'pump' && (st.pump.year || st.pump.stops.length) ? { year: st.pump.year, stops: st.pump.stops.slice() } : null, planted: $('npPlanted').value || null,
                 // The variety's source (2026-10-15) and what the field in detail changed, in words.
                 varietyPick: st.varPick ? Object.assign({}, st.varPick, recT(st.varPick) ? { potential: recT(st.varPick), potentialIs: st.varPick.top ? 'top' : 'avg', potentialFrom: potOwn() ? 'own' : 'record' } : {}) : null,
@@ -3098,10 +3219,17 @@
             $('npPotential').value = set.potential ? set.potential.value : '';
             $('npTarget').value = set.target ? set.target.value : (!set.potential && d.targetYield ? d.targetYield : '');
             const seed = set.seed;
-            st.seedUnitSet = !!seed;
-            if (seed && SEED_U[seed.key]) { st.seedUnit = seed.key; tagSay('npSeedUnit', SEED_U, st.seedUnit); }
-            $('npSeed').value = seed ? seed.amount : '';
+            const bySp = !!(seed && seed.by === 'spacing' && seed.spacing);
+            st.seedUnitSet = !!seed && !bySp;
+            if (seed && !bySp && SEED_U[seed.key]) { st.seedUnit = seed.key; tagSay('npSeedUnit', SEED_U, st.seedUnit); }
+            $('npSeed').value = seed && !bySp ? seed.amount : '';
             $('npGerm').value = seed && seed.germination ? seed.germination : '';
+            // A calculation made by spacing opens on its spacing, counted again when setCrop below paints the way.
+            const spC = cropOf(d.crop), spF = spC && spC.spacing && spC.spacing.meters ? 100 : 1;
+            $('npRow').value = bySp && seed.spacing.row ? seed.spacing.row / spF : '';
+            $('npPlantSp').value = bySp && seed.spacing.plant ? seed.spacing.plant / spF : '';
+            $('npPerHill').value = bySp && seed.spacing.perHill ? seed.spacing.perHill : '';
+            st.cnt = null; st.spCrop = d.crop || null;
             st.prov = set.prov || null; st.town = set.town || null; st.water = WATER_U[set.water] ? set.water : 'irrigated';
             if ($('npProvBtn')) { tagWide('npProvBtn', st.prov || 'Choose the province', !st.prov); tagWide('npTownBtn', st.town ? townName(st.town) : (st.prov ? 'Choose the town' : 'Pick the province first'), !st.town); $('npTownBtn').disabled = !st.prov; }
             tagWide('npWaterBtn', WATER_U[st.water][0], false);

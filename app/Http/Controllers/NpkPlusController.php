@@ -89,7 +89,9 @@ class NpkPlusController extends Controller
                 'group' => CropCatalog::CROPS[$k]['group'] ?? 'Other crops', 'maturity' => CropCatalog::CROPS[$k]['maturity'] ?? null, 'perennial' => CropCatalog::isPerennial($k),
                 // The crop's sources as shown under "How NPK Plus counted the need": never a government body, institute or university
                 // (GovSource, 2026-10-19); the long 'about' notes are for us and are not sent.
-                'sources' => \App\Support\GovSource::keep($c['sources'] ?? [])] + array_diff_key($c, ['about' => 1]))->values(),
+                'sources' => \App\Support\GovSource::keep($c['sources'] ?? []),
+                // Its usual spacing, for "By spacing" (2026-10-21, the owner); null where the seed calculator has none.
+                'spacing' => \App\Support\PlantAmount::spacing($k)] + array_diff_key($c, ['about' => 1]))->values(),
             'soilConditions' => SoilConditions::OPTIONS,
             'model' => \App\Support\NpkModel::forClient(),
             'water' => self::WATER,
@@ -518,8 +520,13 @@ class NpkPlusController extends Controller
                     . (! empty($pot['tPerHa']) && ($pot['unit'] ?? '') !== 't/ha' ? ' (' . round((float) $pot['tPerHa'], 2) . ' t/ha)' : '')
                 : ($calc->targetYield ? '; target yield ' . (float) $calc->targetYield . ' t/ha' : ''))
             . (! empty($seed['amount'])
-                ? '; planted with ' . (float) $seed['amount'] . ' ' . mb_substr((string) ($seed['unit'] ?? ''), 0, 30) . ' for the whole area'
-                    . (! empty($seed['perHa']) ? ' (' . round((float) $seed['perHa'], 1) . ' per hectare)' : '')
+                ? (($seed['by'] ?? '') === 'spacing' && ! empty($seed['spacing']['row'])
+                    // Planted by spacing (2026-10-21): the spacing and what the seed calculator counted for it.
+                    ? '; planted by spacing: rows ' . (float) $seed['spacing']['row'] . ' cm apart, ' . (float) ($seed['spacing']['plant'] ?? 0) . ' cm between hills'
+                        . (! empty($seed['spacing']['perHill']) ? ', ' . (int) $seed['spacing']['perHill'] . ' a hill' : '') . ' (' . mb_substr((string) ($seed['say'] ?? ''), 0, 600) . ')'
+                    : '; planted with ' . (float) $seed['amount'] . ' ' . mb_substr((string) ($seed['unit'] ?? ''), 0, 30) . ' for the whole area'
+                        . (! empty($seed['perHa']) ? ' (' . round((float) $seed['perHa'], 1) . ' per hectare)' : ''))
+                    . (! empty($seed['germination']) ? ', at ' . round((float) $seed['germination']) . '% germination' : '')
                 : '') . "\n"
             . \App\Support\NpkModel::yieldBasisWords($calc->crop) . "\n"
             . "Fertilizers planned (for the whole area):\n" . $lines . "\n"

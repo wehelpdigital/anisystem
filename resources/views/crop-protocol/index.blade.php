@@ -907,6 +907,20 @@
     .cq-d7 button.is-on { color: #fff; background: var(--cq-g); border-color: var(--cq-g); }
     .cq-samed { display: flex; justify-content: flex-end; margin-top: .55rem; }
     .cq-samed button { min-height: 2.4rem; padding: .3rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--cq-gd); background: var(--cq-gl); }
+    /* By spacing or by amount (2026-10-21): two choices, the chosen one's fields, the germination under both. */
+    .cq-by { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .5rem; margin-bottom: .7rem; }
+    .cq-by[hidden], .cq-bypane[hidden], .cq-germ[hidden] { display: none; }
+    .cq-by-b { min-width: 0; padding: .6rem .75rem; border-radius: .95rem; text-align: left; background: var(--color-white); border: 1.5px solid var(--color-gray-200);
+        transition: border-color .28s var(--cq-e), background-color .28s var(--cq-e), box-shadow .28s var(--cq-e); }
+    .cq-by-b:hover { border-color: #a8cc7e; }
+    .cq-by-b b { display: block; font-size: .86rem; font-weight: 800; line-height: 1.3; color: var(--color-gray-900); }
+    .cq-by-b small { display: block; margin-top: .1rem; font-size: .72rem; line-height: 1.35; color: var(--color-gray-500); }
+    .cq-by-b.is-on { border-color: var(--cq-g); background: var(--cq-gx); box-shadow: 0 0 0 3px rgb(107 159 61 / .16); }
+    .cq-bypane { animation: cqPop .28s var(--cq-e) both; }
+    .cq-germ { margin-top: .75rem; padding-top: .7rem; border-top: 1px dashed var(--color-gray-200); animation: cqIn .28s var(--cq-e) both; }
+    .cq-seedsay { transition: opacity .28s var(--cq-e); }
+    .cq-seedsay.is-busy { opacity: .55; }
+    @media (prefers-reduced-motion: reduce) { .cq-by-b, .cq-seedsay { transition: none; } .cq-bypane, .cq-germ { animation: none; } }
     .cq-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
     .cq-three .cq-field > label { min-height: 2.1rem; display: flex; flex-direction: column; justify-content: flex-end; line-height: 1.2; }
     .cq-basis { margin-top: .55rem; }
@@ -1090,6 +1104,11 @@
     html.dark .cq-q, html.dark .cq-choice .ct b, html.dark .cq-rev .rt b, html.dark .cq-flot b, html.dark .cq-lotsnone b, html.dark .cq-stepper output, html.dark .cq-spick b { color: #e8efe1; }
     html.dark .cq-choice, html.dark .cq-pill, html.dark .cq-rev button, html.dark .cq-spick { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .cq-choice.is-on, html.dark .cq-spick.is-on { background: #22301a; border-color: #6b9f3d; }
+    html.dark .cq-by-b { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cq-by-b b { color: #e8efe1; }
+    html.dark .cq-by-b small { color: #9fb08f; }
+    html.dark .cq-by-b.is-on { background: #22301a; border-color: #6b9f3d; }
+    html.dark .cq-germ { border-top-color: #2b3a1c; }
     html.dark .cq-pill.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     html.dark .cq-choice .ce { background: #1c2416; border-color: #2b3a1c; }
     html.dark .cq-tag { background: #1c2616; border-color: #2b3a1c; color: #e8efe1; }
@@ -1406,22 +1425,16 @@
                 {{-- Dry or fresh (2026-10-21, the owner): the potential and the target are said in the same weight. --}}
                 <p class="cq-sub cq-sub-s cq-basis" id="cqBasis" hidden></p>
                 <div class="cq-from" id="cqPotFrom" hidden></div>
+                {{-- How much is planted, one of two ways (2026-10-21, the owner: "either spacing (you can calculate
+                     the # of seeds as well) or the amount. then the germination is a separate field between the two"):
+                     by spacing, the seed calculator counts the seeds (seedcalc.count); by amount, the kilos, seeds or
+                     plants. The germination is its own field under both. Spacing only for a crop the calculator lays out. --}}
                 <span class="cq-label">How much will you plant? <small>(optional, for this lot)</small></span>
-                <div class="cq-pills" id="cqSeedUnits" role="radiogroup" aria-label="What you plant"></div>
-                <div class="cq-two" style="margin-top:.6rem">
-                    <div class="cq-field">
-                        <label for="cqSeed">Amount <small id="cqSeedU">(kg)</small></label>
-                        <input type="number" id="cqSeed" class="form-input" min="0" step="any" inputmode="decimal" placeholder="e.g. 40">
-                    </div>
-                    <div class="cq-field" id="cqGermBox">
-                        <label for="cqGerm" data-tl="germination-test">Germination <small>(percent, on the seed tag)</small></label>
-                        <input type="number" id="cqGerm" class="form-input" min="1" max="100" step="any" inputmode="decimal" placeholder="e.g. 85">
-                    </div>
+                <div class="cq-by" id="cqBy" role="radiogroup" aria-label="Say it by" hidden>
+                    <button type="button" class="cq-by-b" data-by="spacing" role="radio" aria-checked="false"><b>By spacing</b><small>The seeds are counted for you</small></button>
+                    <button type="button" class="cq-by-b" data-by="amount" role="radio" aria-checked="false"><b>By amount</b><small>The kilos, seeds or plants</small></button>
                 </div>
-                <p class="cq-sub cq-sub-s" id="cqSeedHint" style="margin-top:.45rem"></p>
-                {{-- The spacing (2026-10-21, the owner): only for a crop the seed calculator lays out in rows. --}}
-                <div id="cqSpaceBox" hidden>
-                    <span class="cq-label">Spacing <small>(optional)</small></span>
+                <div class="cq-bypane" id="cqSpaceBox" hidden>
                     <div class="cq-three">
                         <div class="cq-field"><label for="cqRow">Between rows <small id="cqRowU">(cm)</small></label><input type="number" id="cqRow" class="form-input" min="0" step="any" inputmode="decimal"></div>
                         <div class="cq-field"><label for="cqPlantSp"><span id="cqPlantSpW">Between hills</span> <small id="cqPlantU">(cm)</small></label><input type="number" id="cqPlantSp" class="form-input" min="0" step="any" inputmode="decimal"></div>
@@ -1429,6 +1442,18 @@
                     </div>
                     <p class="cq-sub cq-sub-s" id="cqSpaceHint" style="margin-top:.45rem"></p>
                 </div>
+                <div class="cq-bypane" id="cqAmountBox">
+                    <div class="cq-pills" id="cqSeedUnits" role="radiogroup" aria-label="What you plant"></div>
+                    <div class="cq-field" style="margin-top:.6rem">
+                        <label for="cqSeed">Amount <small id="cqSeedU">(kg)</small></label>
+                        <input type="number" id="cqSeed" class="form-input" min="0" step="any" inputmode="decimal" placeholder="e.g. 40">
+                    </div>
+                </div>
+                <div class="cq-field cq-germ" id="cqGermBox">
+                    <label for="cqGerm" data-tl="germination-test">Germination <small>(percent, on the seed tag, optional)</small></label>
+                    <input type="number" id="cqGerm" class="form-input" min="1" max="100" step="any" inputmode="decimal" placeholder="e.g. 85">
+                </div>
+                <p class="cq-sub cq-sub-s cq-seedsay" id="cqSeedHint" style="margin-top:.5rem" aria-live="polite"></p>
                 {{-- How the lot is farmed (2026-10-19): asked here only when its last season page is answered already. --}}
                 <div class="cq-habits" id="cqHabits" hidden></div>
                 <div class="cq-need" id="cqNeed" hidden aria-live="polite"></div>
@@ -1641,6 +1666,7 @@
         del: (id) => @json(url('/app/crop-protocol')) + '/' + id,
         anee: @json(route('ai.index')), workerSave: @json(route('workers.global.store')),
         lots: @json(route('farmlots.index')), lotIcon: @json(asset('images/treasure-map.png')),
+        count: @json(route('seedcalc.count')),
     };
     const META_URL = @json(route('proto.meta'));
     const LOT_COLORS = ['#4a7c2a', '#d97706', '#0284c7', '#7c3aed', '#db2777', '#0f766e', '#b45309', '#4f46e5'];
@@ -1665,7 +1691,7 @@
     let FQ = null;
     let uid = 0;
     const newPick = () => ({ crop: '', method: null, variety: '', varRec: null, month: null, day: null });
-    const newGoal = () => ({ priority: 'balanced', yieldUnit: null, potential: '', potTouched: false, target: '', seedUnit: null, seedTouched: false, seedAmount: '', germination: '', sp: null });
+    const newGoal = () => ({ priority: 'balanced', yieldUnit: null, potential: '', potTouched: false, target: '', seedUnit: null, seedTouched: false, seedAmount: '', germination: '', sp: null, by: null });
     const newLot = (o) => Object.assign({ uid: ++uid, farmLotId: null, lot: null, name: '', place: '', where: '', province: '', town: '', areaHa: '', areaFrom: '', profile: {}, base: {},
         copiedFrom: null, edited: false, savedFrom: null, stale: false, updated: '', pick: null, goal: null, jobs: null }, o || {});
     const newWorker = (o) => Object.assign({ uid: ++uid, name: '', days: [1, 2, 3, 4, 5, 6], globalId: null }, o || {});
@@ -1684,7 +1710,7 @@
         if (l.goal) return l.goal;
         if (!i) return newGoal();
         const g = Object.assign(clone(goalOf(i - 1)), { potential: '', potTouched: false, seedAmount: '', seedTouched: false });
-        if (pickOf(i).crop !== pickOf(i - 1).crop) { g.target = ''; g.sp = null; }
+        if (pickOf(i).crop !== pickOf(i - 1).crop) { g.target = ''; g.sp = null; g.by = null; }
         return g;
     };
     const samePick = (a, b) => !!a && !!b && a.crop === b.crop && (a.method || null) === (b.method || null) && (a.variety || '') === (b.variety || '') && (a.month || '') === (b.month || '');
@@ -2224,6 +2250,7 @@
         $('cqGerm').value = g.germination;
         potSay();
         paintBasis();
+        paintBy();
         paintSeedUnits();
         paintSpacing();
         paintSameGoal();
@@ -2251,14 +2278,40 @@
     const spacingOf = (i) => { const p = pickOf(i), c = cropOf(p.crop); return c && c.spacing ? (c.spacing[p.method] || null) : null; };
     const spShow = (cm, sp) => (cm === '' || cm == null || !(num(cm) > 0) ? '' : (sp && sp.meters ? fmt2(num(cm) / 100) : fmt2(num(cm))));
     const spLen = (cm, sp) => (sp.meters ? fmt2(cm / 100) + ' m' : fmt2(cm) + ' cm');
+    /* By spacing or by amount (2026-10-21, the owner): one of the two, the germination under both. A crop the seed
+       calculator has no spacing for is said by amount only. Spacing first for a new lot; a lot that has an amount keeps it. */
+    function paintBy() {
+        const sp = spacingOf(PAGE.i), g = PAGE.goal;
+        if (!sp) g.by = 'amount';
+        else if (g.by !== 'spacing' && g.by !== 'amount') g.by = num(g.seedAmount) > 0 && !(g.sp && num(g.sp.row) > 0) ? 'amount' : 'spacing';
+        $('cqBy').hidden = !sp;
+        $('cqBy').querySelectorAll('[data-by]').forEach((b) => { const on = b.dataset.by === g.by; b.classList.toggle('is-on', on); b.setAttribute('aria-checked', String(on)); });
+        $('cqSpaceBox').hidden = g.by !== 'spacing';
+        $('cqAmountBox').hidden = g.by !== 'amount';
+        paintGerm();
+    }
+    /* The germination counts for seed: sown in place or in the farmer's own seedbed, by either way. */
+    function paintGerm() {
+        const g = PAGE.goal, sp = spacingOf(PAGE.i);
+        $('cqGermBox').hidden = g.by === 'spacing' ? !(sp && sp.fromSeed) : !['kg', 'g', 'seeds', 'hills'].includes(g.seedUnit);
+    }
+    $('cqBy').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-by]');
+        if (!b || !PAGE.goal || PAGE.goal.by === b.dataset.by) return;
+        readGoal();
+        PAGE.goal.by = b.dataset.by;
+        paintBy();
+        seedHint();
+        needSoon();
+    });
     function paintSpacing() {
         const sp = spacingOf(PAGE.i), g = PAGE.goal;
-        $('cqSpaceBox').hidden = !sp;
         if (!sp) return;
         const u = '(' + (sp.meters ? 'm' : 'cm') + ')', s = g.sp || {};
         $('cqRowU').textContent = u; $('cqPlantU').textContent = u;
         $('cqPlantSpW').textContent = sp.standBy === 'hills' ? 'Between hills' : 'Between plants';
-        $('cqPerHillW').textContent = str(pickOf(PAGE.i).crop).startsWith('rice') ? 'Seedlings a hill' : 'Plants a hill';
+        // What goes in a hill: seeds sown in place, seedlings (rice) or plants set out, or the crop's pieces.
+        $('cqPerHillW').textContent = sp.way === 'direct' ? 'Seeds a hill' : sp.way === 'piece' ? sp.word.charAt(0).toUpperCase() + sp.word.slice(1) + ' a hill' : (str(pickOf(PAGE.i).crop).startsWith('rice') ? 'Seedlings a hill' : 'Plants a hill');
         $('cqRow').value = spShow(s.row, sp); $('cqPlantSp').value = spShow(s.plant, sp); $('cqPerHill').value = s.hill || '';
         $('cqRow').placeholder = 'e.g. ' + spShow(sp.row[1], sp); $('cqPlantSp').placeholder = 'e.g. ' + spShow(sp.plant[1], sp); $('cqPerHill').placeholder = 'e.g. ' + sp.perHill[1];
         spaceHint();
@@ -2271,18 +2324,42 @@
         PAGE.goal.sp = r > 0 || pl > 0 || h > 0 ? { row: r > 0 ? r : '', plant: pl > 0 ? pl : '', hill: h > 0 ? h : '' } : null;
     }
     function spaceHint() {
-        const sp = spacingOf(PAGE.i), s = PAGE.goal.sp || {};
+        const sp = spacingOf(PAGE.i);
         if (!sp) return;
         const rg = (a) => (a[0] === a[2] ? spLen(a[0], sp) : spLen(a[0], sp) + ' to ' + spLen(a[2], sp));
-        const hills = sp.standBy === 'hills';
-        let say = 'Usual: rows ' + rg(sp.row) + ' apart, ' + rg(sp.plant) + ' between ' + (hills ? 'hills' : 'plants') + (sp.perHill[2] > 1 ? ', ' + (sp.perHill[0] === sp.perHill[2] ? sp.perHill[0] : sp.perHill[0] + ' to ' + sp.perHill[2]) + ' a hill' : '') + '.';
-        if (num(s.row) > 0 && num(s.plant) > 0) {
-            const per = Math.round(10000 / ((num(s.row) / 100) * (num(s.plant) / 100)) * (hills ? 1 : (num(s.hill) || 1)));
-            say = 'That is about ' + per.toLocaleString('en-US') + (hills ? ' hills' : ' plants') + ' a hectare' + (sp.stand ? ' (usual ' + sp.stand[0].toLocaleString('en-US') + ' to ' + sp.stand[1].toLocaleString('en-US') + ')' : '') + '. ' + say;
-        }
+        const hills = sp.standBy === 'hills', many = sp.perHill[2] > 1;
+        // The usual only: what the spacing takes and stands is said once, under the germination (countSoon).
+        const say = 'Usual: rows ' + rg(sp.row) + ' apart, ' + rg(sp.plant) + ' between ' + (hills ? 'hills' : 'plants') + (many ? ', ' + (sp.perHill[0] === sp.perHill[2] ? sp.perHill[0] : sp.perHill[0] + ' to ' + sp.perHill[2]) + ' a hill' : '') + '.'
+            + (many && sp.fromSeed ? ' Left empty, the ' + $('cqPerHillW').textContent.toLowerCase() + ' are set for your germination.' : '');
         $('cqSpaceHint').textContent = (sp.note ? sp.note + ' ' : '') + say;
     }
-    ['cqRow', 'cqPlantSp', 'cqPerHill'].forEach((id) => $(id).addEventListener('input', () => { readSpacing(); spaceHint(); needSoon(); }));
+    ['cqRow', 'cqPlantSp', 'cqPerHill'].forEach((id) => $(id).addEventListener('input', () => { readSpacing(); spaceHint(); seedHint(); needSoon(); }));
+    /* The seeds a spacing takes, from the seed calculator (seedcalc.count, App\Support\PlantAmount): one engine for every module. */
+    let countT = null, countAsk = 0;
+    function countSoon() {
+        clearTimeout(countT);
+        const g = PAGE.goal, s = g.sp || {}, i = PAGE.i, p = pickOf(i), h = $('cqSeedHint');
+        if (!(num(s.row) > 0 && num(s.plant) > 0)) {
+            countAsk++;
+            h.classList.remove('is-busy');
+            h.textContent = 'Type the rows and the distance between ' + (spacingOf(i) && spacingOf(i).standBy === 'hills' ? 'hills' : 'plants') + ', and the ' + ((spacingOf(i) && spacingOf(i).word) || 'seeds') + ' it takes are counted here.';
+            h.style.color = '';
+            return;
+        }
+        h.classList.add('is-busy');
+        countT = setTimeout(async () => {
+            const ask = ++countAsk, q = new URLSearchParams({ crop: p.crop || '', method: p.method || '', row: num(s.row), plant: num(s.plant), area: num((S.lots[i] || {}).areaHa) || 0, variety: p.variety || '' });
+            if (num(s.hill) > 0) q.set('perHill', Math.round(num(s.hill)));
+            if (num($('cqGerm').value) > 0 && !$('cqGermBox').hidden) q.set('germ', num($('cqGerm').value));
+            let d = null;
+            try { d = (await window.api(U.count + '?' + q.toString())).data; } catch (_) { d = null; }
+            if (ask !== countAsk) return;
+            h.classList.remove('is-busy');
+            const n = d && d.count;
+            h.textContent = n ? n.say : 'The seeds could not be counted just now. The plan still reads your spacing.';
+            h.style.color = n && ['sparse', 'danger'].includes(n.status) ? '#92400e' : '';
+        }, 350);
+    }
     function readGoal() {
         if (!PAGE.goal || screenOf(FLOW[pos]) !== 'goal') return;
         const g = PAGE.goal;
@@ -2367,12 +2444,15 @@
         if (!allowed.includes(g.seedUnit)) { g.seedUnit = allowed[0]; g.seedTouched = false; }
         $('cqSeedUnits').innerHTML = Object.entries(OPT.seedUnits || {}).filter(([k]) => allowed.includes(k)).map(([k, u]) => '<button type="button" class="cq-pill' + (k === g.seedUnit ? ' is-on' : '') + '" data-seedunit="' + esc(k) + '" role="radio" aria-checked="' + (k === g.seedUnit) + '" title="' + esc(u[2]) + '">' + esc(u[0]) + '</button>').join('');
         $('cqSeedU').textContent = '(' + ((OPT.seedUnits[g.seedUnit] || [])[1] || g.seedUnit) + ')';
-        $('cqGermBox').hidden = !['kg', 'g', 'seeds', 'hills'].includes(g.seedUnit);
+        paintGerm();
         seedHint();
     }
     $('cqSeedUnits').addEventListener('click', (e) => { const b = e.target.closest('[data-seedunit]'); if (!b) return; PAGE.goal.seedUnit = b.dataset.seedunit; PAGE.goal.seedTouched = true; paintSeedUnits(); needSoon(); });
     const span = (u) => { const f = (x) => Number(x).toLocaleString(undefined, { maximumFractionDigits: 2 }); return u[0] === u[1] ? f(u[0]) : f(u[0]) + ' to ' + f(u[1]); };
     function seedHint() {
+        if (PAGE.goal && PAGE.goal.by === 'spacing') { countSoon(); return; }
+        countAsk++;
+        $('cqSeedHint').classList.remove('is-busy');
         const sd = OPT && OPT.seeding ? OPT.seeding[npkKey()] : null, g = PAGE.goal;
         const v = num($('cqSeed').value), a = num((S.lots[PAGE.i] || {}).areaHa), unit = g.seedUnit;
         const kind = unit === 'kg' || unit === 'g' ? 'w' : 'n', u = sd && sd[kind];
@@ -2793,8 +2873,10 @@
         return { name: l.name, farmLotId: l.farmLotId, areaHa: num(l.areaHa) || null, place: l.place || S.place, province: l.province, town: l.town, profile: l.profile,
             crop: p.crop, method: p.method, variety: p.variety, days: p.varRec && p.varRec.days ? p.varRec.days : null, month: p.month, day: p.day,
             priority: g.priority, targetYield: num(g.target) > 0 ? num(g.target) : null, yieldUnit: g.yieldUnit || units()[0], potential: num(g.potential) > 0 ? num(g.potential) : null,
-            seedAmount: num(g.seedAmount) > 0 ? num(g.seedAmount) : null, seedUnit: g.seedUnit, germination: num(g.germination) > 0 ? num(g.germination) : null,
-            spacing: g.sp && num(g.sp.row) > 0 && num(g.sp.plant) > 0 && spacingOf(i) ? { row: num(g.sp.row), plant: num(g.sp.plant), perHill: Math.round(num(g.sp.hill)) || 1 } : null,
+            // One way of saying how much is planted (2026-10-21): the other way's numbers stay on the page, not in the plan.
+            amountBy: g.by || null,
+            seedAmount: g.by !== 'spacing' && num(g.seedAmount) > 0 ? num(g.seedAmount) : null, seedUnit: g.seedUnit, germination: num(g.germination) > 0 ? num(g.germination) : null,
+            spacing: g.by !== 'amount' && g.sp && num(g.sp.row) > 0 && num(g.sp.plant) > 0 && spacingOf(i) ? { row: num(g.sp.row), plant: num(g.sp.plant), perHill: Math.round(num(g.sp.hill)) || null } : null,
             plantBy: jobNow(i, 'plant'), plantOwn: !!jobsOf(i).plantOwn, harvestBy: jobNow(i, 'harvest'), harvestOwn: !!jobsOf(i).harvestOwn };
     }
     const body = () => ({ lots: S.lots.map((_, i) => lotBody(i)), crew: crewBody(), mode: S.mode, granulars: S.granulars, products: S.products.map((p) => p.id), notes: S.notes, location: S.place, micros: S.micros });

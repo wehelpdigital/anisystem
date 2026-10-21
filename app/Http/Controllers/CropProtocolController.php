@@ -484,24 +484,24 @@ class CropProtocolController extends Controller
      */
     public static function standYield(array $p): ?array
     {
-        $crop = (string) ($p['crop'] ?? '');
-        $method = (string) ($p['method'] ?? '');
-        $key = match (true) {
-            str_starts_with($crop, 'rice') => $method === 'transplanted' ? 'rice' : 'rice_dsr',
-            $crop === 'corn_glutinous' => 'corn_white',
-            default => $crop,
-        };
-        if (! isset(\App\Support\SeedSpacing::CROPS[$key])) {
+        $k = \App\Support\PlantAmount::key((string) ($p['crop'] ?? ''), (string) ($p['method'] ?? ''));
+        if (! $k) {
             return null;
         }
-        $way = in_array($method, ['transplanted', 'nursery', 'tree_seedlings'], true) ? 'transplant' : (in_array($method, ['cuttings', 'tubers', 'sets', 'suckers', 'sprouted'], true) ? 'piece' : 'direct');
+        [$key, $way] = $k;
         $in = ['crop' => $key, 'method' => $way, 'variety' => (string) ($p['variety'] ?? ''), 'area' => 1, 'areaUnit' => 'ha'];
+        // The seed tag's germination, where the farmer gave it (2026-10-21): the seeds that come up, in either way.
+        if ((float) ($p['germination'] ?? 0) > 0) {
+            $in['germTag'] = (float) $p['germination'];
+        }
         $sp = $p['spacing'] ?? null;
         $area = max(0.0001, (float) ($p['area'] ?? 1));
         $amt = (float) ($p['seedAmount'] ?? 0);
         $unit = (string) ($p['seedUnit'] ?? 'kg');
         if (! empty($sp['row']) && ! empty($sp['plant'])) {
-            $in += ['mode' => 'seeds', 'row' => $sp['row'], 'plant' => $sp['plant'], 'perHill' => $sp['perHill'] ?? 1];
+            // The farmer's spacing, as typed: rows and plants, and the plants a hill they set.
+            $in += ['mode' => 'seeds', 'layout' => 'rows', 'row' => $sp['row'], 'plant' => $sp['plant']]
+                + (! empty($sp['perHill']) ? ['hillMode' => 'set', 'perHill' => $sp['perHill']] : []);
         } elseif ($amt > 0 && $unit === 'seeds') {
             $in += ['mode' => 'spacing', 'amount' => $amt / $area, 'amountUnit' => 'count', 'amountPer' => 'ha'];
         } elseif ($amt > 0 && in_array($unit, ['kg', 'g'], true)) {
@@ -570,9 +570,12 @@ class CropProtocolController extends Controller
             'target' => ($p['targetYield'] ?? null) !== null ? (float) $p['targetYield'] * $tons : null,
             'areaHa' => (float) ($p['area'] ?? 0),
             'seed' => ($p['seedAmount'] ?? null) ? ['amount' => (float) $p['seedAmount'], 'unit' => $p['seedUnit'] ?? 'kg', 'germination' => $p['germination'] ?? null]
-                // The spacing's stand (2026-10-21) where the guides count the crop by plants.
-                : (! empty($p['spacing']['perHa']) && (float) ($p['area'] ?? 0) > 0 && ! empty(NpkModel::SEEDING[NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null) ?? '']['n'])
-                    ? ['amount' => (float) $p['spacing']['perHa'] * (float) $p['area'], 'unit' => 'plants', 'germination' => null] : null),
+                // Planted by spacing (2026-10-21, the owner): the seeds the seed calculator counts for it, as the
+                // stand where the guides count plants or hills, else the kilos where they give a weight.
+                : (! empty($p['spacing']['row']) && (float) ($p['area'] ?? 0) > 0
+                    ? \App\Support\PlantAmount::asSeed(\App\Support\PlantAmount::count($p['crop'] ?? null, $p['method'] ?? null, (array) $p['spacing'],
+                        isset($p['germination']) ? (float) $p['germination'] : null, (float) $p['area'], (string) ($p['variety'] ?? '')),
+                        NpkNeed::cropKey($p['crop'] ?? null, $p['method'] ?? null), (float) $p['area']) : null),
             'texture' => in_array($soil, ['sandy', 'clay', 'loam'], true) ? $soil : ($soil === 'silty' ? 'loam' : 'unsure'),
             'conditions' => array_values(array_unique($conds)),
             'ph' => ($p['ph'] ?? null) !== null ? (float) $p['ph'] : ($L['phValue'] ?? null),
@@ -618,7 +621,10 @@ class CropProtocolController extends Controller
     private static function needLines(array $n, string $unitWord, float $tons, array $p = []): array
     {
         $sp = self::spacingWords($p['spacing'] ?? null);
-        $spLine = $sp !== '' ? '- The farmer\'s spacing: ' . $sp . ".\n" : '';
+        // What that spacing takes, from the seed calculator (2026-10-21, PlantAmount): the farmer planted by spacing.
+        $cnt = $sp !== '' ? \App\Support\PlantAmount::count($p['crop'] ?? null, $p['method'] ?? null, (array) $p['spacing'],
+            isset($p['germination']) ? (float) $p['germination'] : null, (float) ($p['area'] ?? 0), (string) ($p['variety'] ?? '')) : null;
+        $spLine = $sp !== '' ? '- The farmer\'s spacing: ' . $sp . '.' . ($cnt ? ' The seed calculator counts it: ' . $cnt['say'] : '') . "\n" : '';
         if (empty($n['known'])) {
             return ['seed' => $spLine, 'goal' => '', 'need' => ''];
         }
@@ -874,6 +880,8 @@ class CropProtocolController extends Controller
             'lots.*.spacing.row' => 'nullable|numeric|min:1|max:5000',
             'lots.*.spacing.plant' => 'nullable|numeric|min:1|max:5000',
             'lots.*.spacing.perHill' => 'nullable|integer|min:1|max:20',
+            // How much is planted, said by spacing or by amount (2026-10-21, PlantAmount::BY).
+            'lots.*.amountBy' => 'nullable|in:' . implode(',', array_keys(\App\Support\PlantAmount::BY)),
             'lots.*.plantBy' => 'nullable|string|max:16',
             'lots.*.plantOwn' => 'nullable|boolean',
             'lots.*.harvestBy' => 'nullable|string|max:16',
@@ -959,7 +967,14 @@ class CropProtocolController extends Controller
                 'germination' => $num($l['germination'] ?? null) !== null ? max(1.0, min(100.0, (float) $l['germination'])) : null,
                 'profile' => FieldProfile::fromInput($l['profile'] ?? null, $crop),
                 'spacing' => self::spacingIn($l['spacing'] ?? null),
+                'amountBy' => isset(\App\Support\PlantAmount::BY[$l['amountBy'] ?? '']) ? (string) $l['amountBy'] : null,
             ];
+            // One way of saying how much is planted (2026-10-21, the owner): the other way's numbers are not read.
+            if ($lot['amountBy'] === 'spacing') {
+                $lot['seedAmount'] = null;
+            } elseif ($lot['amountBy'] === 'amount') {
+                $lot['spacing'] = null;
+            }
             // Who plants and who harvests this lot (2026-10-21): own, hired, or a machine that serves its crop.
             foreach (['plant', 'harvest'] as $job) {
                 $by = (string) ($l[$job . 'By'] ?? 'own');
@@ -1063,19 +1078,7 @@ class CropProtocolController extends Controller
     /** The seed calculator's spacing for a crop and its way in (SeedSpacing::CROPS), in cm; null where it has no entry. */
     public static function spacingOf(string $crop, string $method): ?array
     {
-        $key = match (true) {
-            str_starts_with($crop, 'rice') => $method === 'transplanted' ? 'rice' : 'rice_dsr',
-            $crop === 'corn_glutinous' => 'corn_white',
-            default => $crop,
-        };
-        $c = \App\Support\SeedSpacing::CROPS[$key] ?? null;
-        if (! $c || empty($c['row']) || empty($c['plant'])) {
-            return null;
-        }
-
-        return ['row' => $c['row'], 'plant' => $c['plant'], 'perHill' => $c['perHill'] ?? [1, 1, 1], 'standBy' => $c['standBy'] ?? 'plants', 'stand' => $c['stand'] ?? null,
-            // Trees and other wide crops are said in meters; rice sown in place only when it goes in rows.
-            'meters' => (float) $c['row'][1] >= 200, 'note' => $key === 'rice_dsr' ? 'Only when it is sown in rows, with a seeder or a drill.' : ''];
+        return \App\Support\PlantAmount::spacing($crop, $method);
     }
 
     /** A lot's spacing as given: rows and plants in cm, plants a hill, and the stand a hectare; null when not given. */
@@ -1089,9 +1092,10 @@ class CropProtocolController extends Controller
         if ($row < 1 || $plant < 1) {
             return null;
         }
-        $hill = max(1, min(20, (int) ($s['perHill'] ?? 1)));
+        // Plants a hill left empty: the seed calculator sets enough for the germination (PlantAmount::count).
+        $hill = is_numeric($s['perHill'] ?? null) && (int) $s['perHill'] > 0 ? max(1, min(20, (int) $s['perHill'])) : null;
 
-        return ['row' => round($row, 1), 'plant' => round($plant, 1), 'perHill' => $hill, 'perHa' => (int) round(10000 / (($row / 100) * ($plant / 100)) * $hill)];
+        return ['row' => round($row, 1), 'plant' => round($plant, 1), 'perHill' => $hill, 'perHa' => (int) round(10000 / (($row / 100) * ($plant / 100)) * ($hill ?? 1))];
     }
 
     /** Spacing in words: "rows 70 cm apart, 20 cm between hills, 1 plant a hill, about 71,429 plants a hectare". */
@@ -1101,6 +1105,10 @@ class CropProtocolController extends Controller
             return '';
         }
         $len = fn (float $cm) => $cm >= 200 ? rtrim(rtrim(number_format($cm / 100, 2, '.', ''), '0'), '.') . ' m' : rtrim(rtrim(number_format($cm, 1, '.', ''), '0'), '.') . ' cm';
+
+        if (empty($s['perHill'])) {
+            return 'rows ' . $len($s['row']) . ' apart, ' . $len($s['plant']) . ' between hills, about ' . number_format($s['perHa']) . ' hills a hectare, the seeds a hill left to the germination';
+        }
 
         return 'rows ' . $len($s['row']) . ' apart, ' . $len($s['plant']) . ' between hills, ' . $s['perHill'] . ($s['perHill'] === 1 ? ' plant' : ' plants') . ' a hill, about '
             . number_format($s['perHa']) . ' plants a hectare';

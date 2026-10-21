@@ -60,6 +60,28 @@ class SeedSpacingController extends Controller
         return $this->json(true, 'ok', SeedPenalty::context(WorkerContext::effectiveOwnerId(), $c['lotId'], $crop, $c['month'], $c['day']));
     }
 
+    /**
+     * The seeds a spacing takes, for the modules that ask how much is planted
+     * (2026-10-21, the owner: the Crop Protocol and NPK Plus, "By spacing"):
+     * App\Support\PlantAmount::count in words, and that count as NPK Plus's
+     * seed answer for the lot when `npk` names its crop. No Anee, no credits.
+     */
+    public function count(Request $request)
+    {
+        $q = fn ($k) => is_numeric($request->query($k)) ? (float) $request->query($k) : null;
+        $sp = ['row' => $q('row'), 'plant' => $q('plant'), 'perHill' => $q('perHill') ? max(1, min(20, (int) $q('perHill'))) : null];
+        $germ = $q('germ') !== null ? max(1.0, min(100.0, $q('germ'))) : null;
+        $area = max(0.0, min(100000.0, (float) $q('area')));
+        $n = \App\Support\PlantAmount::count((string) $request->query('crop', ''), (string) $request->query('method', ''), $sp, $germ, $area,
+            mb_substr(trim((string) $request->query('variety', '')), 0, 120));
+        if (! $n) {
+            return $this->json(false, 'Fill in the rows and the distance between plants.', [], 422);
+        }
+        $npk = (string) $request->query('npk', '');
+
+        return $this->json(true, 'ok', ['count' => $n, 'seed' => $npk !== '' ? \App\Support\PlantAmount::asSeed($n, $npk, $area) : null]);
+    }
+
     /** Save one: counted again here, so what is kept is what the rule says. */
     public function save(Request $request)
     {
