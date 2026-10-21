@@ -2301,7 +2301,7 @@ PROMPT;
         $put = function (string $stage, string $product, float $bags) use (&$apps, $norm) {
             $grade = self::grade($product);
             foreach ($apps as $i => $a) {
-                if (is_array($a) && $norm($a['stage'] ?? '') === $norm($stage) && self::grade((string) ($a['product'] ?? '')) === $grade) {
+                if (is_array($a) && $norm($a['stage'] ?? '') === $norm($stage) && $grade !== null && self::grade((string) ($a['product'] ?? '')) == $grade) {
                     $was = rtrim(trim((string) ($a['purpose'] ?? '')), '.');
                     $apps[$i]['bagsPerHa'] = round(self::bagsOf($a) + $bags, 3);
                     $apps[$i]['kgPerHa'] = 0;
@@ -2343,7 +2343,9 @@ PROMPT;
                     $put($s['stage'], (string) $fx['product'], $add * $s['n'] / $sum);
                 }
                 $fx['stage'] = 'Every nitrogen dressing';
-                $fx['note'] = 'Spread over the dressings that already carry nitrogen, in the same shares, so none grows too big.';
+                // The soil's reason for the fertilizer stays (ammonium sulfate on an alkaline soil); "split it" is said here.
+                $why = str_starts_with((string) ($fx['note'] ?? ''), 'Split') ? '' : trim((string) ($fx['note'] ?? '')) . ' ';
+                $fx['note'] = $why . 'Spread over the dressings that already carry nitrogen, in the same shares, so none grows too big.';
             } else {
                 // One dressing left: the biggest nitrogen one, where the extra joins the same urea.
                 if (count($shares) === 1) {

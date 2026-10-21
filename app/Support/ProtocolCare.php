@@ -593,17 +593,31 @@ final class ProtocolCare
             if (in_array('dap', $granulars, true) || ($bothShort && ! in_array('ammophos', $granulars, true))) {
                 $kg = $gap['P2O5'] / 0.46;
                 $gap['N'] = max(0, $gap['N'] - $kg * 0.18);
-                $row('P2O5', 'DAP 18-46-0', $kg, $bothShort ? 'It brings nitrogen too, so the urea below is that much less.' : '');
+                $row('P2O5', 'DAP 18-46-0', $kg, $bothShort ? 'It brings nitrogen too, so the nitrogen below is that much less.' : '');
             } elseif ($bothShort || in_array('ammophos', $granulars, true)) {
                 $kg = $gap['P2O5'] / 0.20;
                 $gap['N'] = max(0, $gap['N'] - $kg * 0.16);
-                $row('P2O5', 'Ammonium phosphate 16-20-0', $kg, $bothShort ? 'It brings nitrogen too, so the urea below is that much less.' : '');
+                $row('P2O5', 'Ammonium phosphate 16-20-0', $kg, $bothShort ? 'It brings nitrogen too, so the nitrogen below is that much less.' : '');
             } else {
                 $row('P2O5', 'Solophos 0-18-0', $gap['P2O5'] / 0.18, 'It also brings calcium and sulfur.');
             }
         }
         if ($gap['N'] > 0) {
-            $row('N', 'Urea 46-0-0', $gap['N'] * 100 / self::pct('urea', 'N', 46), 'Split it over the stages that take nitrogen, never all at once.');
+            /* The soil picks the nitrogen too (2026-10-22, the owner: the top ups must weigh the soil, water and
+             * weather as NPK Plus does). On an alkaline or sodic soil urea loses its nitrogen to the air, and
+             * ammonium sulfate does not; its acid and sulfur help there, the same soil logic Anee is held to. Only
+             * where the farmer buys it or the program already carries it, and never on an acid soil. */
+            $alkaline = (in_array('alkaline', $conds, true) || in_array('sodic', $conds, true))
+                && ! in_array('acidic', $conds, true) && ! in_array('acid_sulfate', $conds, true);
+            $carriesAs = in_array('ammosul', $granulars, true);
+            foreach ($byStage as $apps) {
+                foreach ($apps as $a) {
+                    $carriesAs = $carriesAs || \App\Http\Controllers\CropProtocolController::grade((string) ($a['product'] ?? '')) == [21, 0, 0];
+                }
+            }
+            $alkaline && $carriesAs
+                ? $row('N', 'Ammonium sulfate 21-0-0', $gap['N'] * 100 / self::pct('ammonium-sulfate', 'N', 21), 'Ammonium sulfate, not urea: on this alkaline soil urea loses nitrogen to the air, and the sulfate helps bring the pH down.')
+                : $row('N', 'Urea 46-0-0', $gap['N'] * 100 / self::pct('urea', 'N', 46), 'Split it over the stages that take nitrogen, never all at once.');
         }
         if ($gap['K2O'] > 0) {
             $salty
