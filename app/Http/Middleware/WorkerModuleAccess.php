@@ -129,6 +129,26 @@ class WorkerModuleAccess
         ['ai.credits.*', 'owner'],
         ['sm.ai',      'ai'],
         ['sm.ai.*',    'ai'],
+        /* EVERY ANEE RUN THE FARM PAYS FOR (2026-10-22, the owner: "make sure that the setup to what workers
+         * can access are complete"). In a farm, each of these charges the owner's credits
+         * (effectiveOwnerId pays), and only the chat asked the Anee switch: a worker with Anee off could
+         * still realign a lot, read the fertilizer or run Crop Protocol, When to Plant and the rest on the
+         * owner's balance. The runs only; their pages and finished results stay open. The season reports
+         * (sm.anee.*, sm.compare.*) answer to Reports above. A new paid run belongs on this list. */
+        ['sm.growth.realign', 'ai:edit'],
+        ['sm.npk.generate',   'ai:edit'],
+        ['proto.generate',    'ai:edit'],
+        ['pb.analyze',        'ai:edit'],
+        ['pb.npk.generate',   'ai:edit'],
+        ['npk.analyze',       'ai:edit'],
+        ['landprep.generate', 'ai:edit'],
+        ['wtp.generate',      'ai:edit'],
+        ['whatp.generate',    'ai:edit'],
+        ['vary.generate',     'ai:edit'],
+        ['lcc.generate',      'ai:edit'],
+        ['compat.anee',       'ai:edit'],
+        ['sat.generate',      'ai:edit'],
+        ['sky.generate',      'ai:edit'],
 
         // ---- the owner's own record of the farm --------------------------
         // The documentation a season carries is the owner's, at every tier:
@@ -142,12 +162,28 @@ class WorkerModuleAccess
         // and the wildcard was refusing a report the grant may well allow.
         ['sm.protocol.save',     'owner'],
         ['sm.protocol.download', 'owner'],
+        /* The season's own settings and its lots are the owner's (2026-10-22): the Settings page told a
+         * worker "only the owner can change them" and the Lots page drew no add, edit or delete, while
+         * these answered any worker who could edit the board. Making a copy of a season is making a
+         * season, which sm.store already refuses a worker. The diary carries pay and logins, as the
+         * Workers page does, so it is the owner's to read. */
+        ['sm.update',                 'owner'],
+        ['sm.day-type',               'owner'],
+        ['sm.digest.test',            'owner'],
+        ['sm.duplicate',              'owner'],
+        ['sm.default-groupings.save', 'owner'],
+        ['sm.settings.logs',          'owner'],
+        ['sm.lots.store',             'owner'],
+        ['sm.lots.update',            'owner'],
+        ['sm.lots.destroy',           'owner'],
 
         // Reports wear many route names — one per engine — and a name left
         // off this list is a door with no lock, which is how the expenses
         // and profit pages stood open while sm.reports itself was gated.
         ['sm.reports',           'reports'],
         ['sm.labor.report',      'reports'],
+        // The labor report's own data (every worker's days and pay): the page was gated, its numbers were not.
+        ['sm.activities.labor',  'reports'],
         ['sm.report.*',          'reports'],
         ['sm.expenses.report',   'reports'],
         ['sm.expenses.report.*', 'reports'],
@@ -197,7 +233,7 @@ class WorkerModuleAccess
         'observations' => 'Observations',
         'maps' => 'the Maps module',
         'draw' => 'the Drawing module',
-        'ai' => 'Chat Anee',
+        'ai' => 'Anee',
         'camera' => 'the camera',
         'video' => 'video recording',
         'reports' => 'Reports',

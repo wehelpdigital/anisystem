@@ -215,7 +215,10 @@
                             {{ $lot->lotName }}
                         </button>
                     @endforeach
+                    {{-- Lots are the owner's to add (sm.lots.store is owner only, 2026-10-22). --}}
+                    @unless (\App\Support\WorkerContext::inWorkerContext())
                     <button type="button" class="chip chip-dashed" id="quickAddLotBtn" data-chip-manual>+ New lot</button>
+                    @endunless
                 </div>
                 {{-- Said only when it matters: an activity already saved
                      against several lots is about to become one. --}}
@@ -785,7 +788,10 @@
                             {{ $w->workerName }}
                         </button>
                     @endforeach
+                    {{-- The roster is the owner's: WorkerController refuses a worker, so the chip is not drawn. --}}
+                    @unless (\App\Support\WorkerContext::inWorkerContext())
                     <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ New worker</button>
+                    @endunless
                     {{-- The farm's own roster (Global Workers, 2026-10-12), for the owner. --}}
                     @if ((int) $schedule->anisystemUserId === (int) auth()->id() && ! \App\Support\WorkerContext::inWorkerContext())
                         <button type="button" class="chip chip-dashed" id="quickRosterBtn" data-chip-manual>+ From my workers</button>

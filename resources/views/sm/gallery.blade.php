@@ -12,6 +12,14 @@
 
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'gallery'])
+{{-- What a worker may do here (2026-10-22): everyone with eyes on the season looks; the board's pen
+     makes, renames and empties albums and moves or deletes pictures (the endpoints ask it), and the
+     camera adds them. A control that would only be refused is not drawn: the page root wears
+     ga-ro / ga-nocam (set by init below, so a pane injected into the shell gets it too). --}}
+<style>
+    html.ga-ro #gaNewAlbum, html.ga-ro .ga-act[data-edit], html.ga-ro .ga-act[data-del], html.ga-ro [data-pick],
+    html.ga-ro .ga-del, html.ga-ro .ga-lb-rename, html.ga-ro #gaBar, html.ga-nocam .ga-act[data-add] { display: none !important; }
+</style>
 
 
 {{-- One button, not a strip that scrolls.
@@ -200,6 +208,8 @@
 <script>
 (() => {
     const init = () => {
+        document.documentElement.classList.toggle('ga-ro', ! @json(\App\Support\WorkerContext::canEdit()));
+        document.documentElement.classList.toggle('ga-nocam', ! @json(\App\Support\WorkerContext::canWriteModule('camera')));
         const SCHEDULE_ID = @json($schedule->id);
         const EVERYTHING = @json($everything);
         const U = {

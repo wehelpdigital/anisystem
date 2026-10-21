@@ -643,6 +643,8 @@ const __init = () => {
              stays — locked — and the tap opens the upgrade sheet instead
              of the pane (the capture-phase handler wins the click). --}}
         @php $setLogsLocked = ! \App\Support\Tier::scheduleCan($schedule, 'auditLogs'); @endphp
+        {{-- The diary carries pay and logins, as the Workers page does: the owner's to read (2026-10-22). --}}
+        @unless (\App\Support\WorkerContext::inWorkerContext())
         <button type="button" class="dt-row" data-set-tab-row="logs"
                 @if ($setLogsLocked) data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs'), 'Logs come with {plan}. See every change and who made it.') }}" @endif>
             <span class="dt-row-e {{ $setLogsLocked ? 'tl-dim' : '' }}">🕒</span>
@@ -653,6 +655,7 @@ const __init = () => {
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             @endif
         </button>
+        @endunless
     </div>
 </div>
 

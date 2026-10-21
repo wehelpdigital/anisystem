@@ -40,7 +40,9 @@
     $wrSwitches = [
         // Anee's row wears her face, not a robot: a mark with a '/' in it
         // is an image path, and the loop below knows the difference.
-        ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Ask Anee questions. Answers use YOUR credits, not theirs.'],
+        // Every Anee run on this farm, not only the chat (2026-10-22): Realign, the fertilizer reading,
+        // Crop Protocol and the other analyses all charge the owner and all ask this switch.
+        ['AiAccess', 'images/anee/avatar-160.jpg', 'Anee', 'Chat with Anee and run her readings and analyses here. They use YOUR credits, not theirs.'],
         ['CameraAccess', '📷', 'Camera', 'Take photos and save them to this farm.'],
         ['VideoAccess', '🎥', 'Record video', 'Record clips and attach them.'],
         // Its own switch: speaking a note is what a farmer does with their
@@ -102,10 +104,11 @@
     <p class="wr-credits">
         <span class="wr-credits-ico" aria-hidden="true">💳</span>
         <span><b>Anee uses your credits, not theirs.</b>
-        When workers use Anee on your farm (chat, season reads, planting
-        analyses), <strong>your</strong> account pays. Turn off
-        <strong>Chat Anee</strong>, or set <strong>Reports</strong> to
-        None or View, to stop this. On their own farm, they pay.</span>
+        When workers use Anee on your farm (chat, Realign, fertilizer
+        readings, Crop Protocol and the other analyses), <strong>your</strong>
+        account pays. Turn off <strong>Anee</strong> to stop this, and set
+        <strong>Reports</strong> to None or View to stop the season reports.
+        On their own farm, they pay.</span>
     </p>
 
     <p class="wr-foot">Every worker can at least <strong>view Activities</strong>. You choose the rest. Changes save by themselves.</p>

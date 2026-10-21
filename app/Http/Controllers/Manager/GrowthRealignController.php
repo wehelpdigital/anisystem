@@ -71,8 +71,11 @@ class GrowthRealignController extends BaseScheduleController
             'locked' => ! Tier::scheduleCan($schedule, 'ai'),
             'aiUsable' => $payer->canUseAi() && AiSetting::current()->isUsable(),
             'lot' => ['id' => (int) $lot->id, 'name' => $lot->lotName, 'crop' => CropStages::label($lot->crop)],
-            // Only what is known without a read: a lot with no crop cannot be asked about.
-            'blocked' => CropStages::normalize($lot->crop) ? null : $this->whyNot($lot),
+            // Only what is known without a read: a lot with no crop cannot be asked about, and a worker
+            // the owner has not lent Anee (her runs charge the owner) is told so before the button.
+            'blocked' => \App\Support\WorkerContext::inWorkerContext() && ! \App\Support\WorkerContext::canWriteModule('ai')
+                ? 'The farm owner has not given you Anee on this farm, and Realign is hers.'
+                : (CropStages::normalize($lot->crop) ? null : $this->whyNot($lot)),
             'realign' => $this->applied($lot),
         ]]);
     }

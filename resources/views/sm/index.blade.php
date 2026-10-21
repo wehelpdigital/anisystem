@@ -839,7 +839,8 @@
                              Duplicate that folds the card away instead is
                              the kind of thing you only forgive once. --}}
                         <span class="se-tools">
-                            @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
+                            {{-- A copy is a new season, and making seasons is the owner's (sm.duplicate, 2026-10-22). --}}
+                            @if (! \App\Support\WorkerContext::activeGrant())
                                 <button type="button" class="se-tool"
                                     data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
                                     title="Make a copy of this season" aria-label="Duplicate {{ $s->title }}">

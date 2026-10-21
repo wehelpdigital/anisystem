@@ -141,11 +141,14 @@
             <div class="min-w-0 grow">
                 <div class="flex items-start gap-2">
                     <h2 class="sched-title" id="schedTitleText">{{ $schedule->title }}</h2>
+                    {{-- The season's name is the owner's setting (sm.update is owner only, 2026-10-22). --}}
+                    @unless ($isWorker)
                     <button type="button" id="schedRenameBtn" class="sched-pen" title="Edit name and description" aria-label="Edit name and description">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
+                    @endunless
                 </div>
-                <p class="sched-desc" id="schedDescText">{{ $schedule->description ?: 'No description yet. Tap the pencil to add one.' }}</p>
+                <p class="sched-desc" id="schedDescText">{{ $schedule->description ?: ($isWorker ? 'No description yet.' : 'No description yet. Tap the pencil to add one.') }}</p>
             </div>
             <span class="sched-state sched-state-{{ $schedule->status }}">{{ ['setup' => 'Open', 'completed' => 'Closed', 'archived' => 'Archived'][$schedule->status] ?? ucfirst($schedule->status) }}</span>
         </div>
