@@ -204,7 +204,18 @@
             $qAnyOn = fn (array $keys) => collect($keys)->contains(fn ($k) => $qOn($k));
             $qMayCompare = \App\Support\WorkerContext::canView() && \App\Support\WorkerContext::canUseModule('reports') && $qOn('compare');
             $qFhKeys = array_values(array_diff(array_keys(\App\Http\Controllers\FieldHelperController::TOOLS), ['landprep']));
-            $qQuickAny = $allSchedules->isNotEmpty() && collect(['camera', 'video', 'voice'])->contains(fn ($m) => \App\Support\WorkerContext::canUseModule($m));
+            /* The quick doors file into a season, so they follow each season's own switch (access is set
+               per cropping schedule, 2026-10-22): the tile shows when any season allows it, and its picker
+               offers only those seasons. Everything, for an owner. */
+            $qSeasonsWith = function (string $m) use ($allSchedules) {
+                $ids = \App\Support\WorkerContext::seasonIdsWith($m, 'edit');
+
+                return $ids === null ? $allSchedules : $allSchedules->filter(fn ($s) => in_array((int) $s->id, $ids, true))->values();
+            };
+            $qCamSeasons = $qSeasonsWith('camera');
+            $qVidSeasons = $qSeasonsWith('video');
+            $qVoiceSeasons = $qSeasonsWith('voice');
+            $qQuickAny = $qCamSeasons->isNotEmpty() || $qVidSeasons->isNotEmpty() || $qVoiceSeasons->isNotEmpty();
             $qShowAnee = $qAnyOn(['wtp', 'whatp', 'vary', 'proto', 'sat', 'landprep']);
             $qShowInside = $qMayCompare || $qAnyOn(array_merge(['sky', 'pb', 'npk', 'lcc', 'bilad', 'seedcalc', 'htp'], $qFhKeys));
             $qShowRecords = ! \App\Support\WorkerContext::inWorkerContext() || $qQuickAny
@@ -634,10 +645,10 @@
                    somebody who holds them. This list did not, so a worker
                    with no recorder still had a Quick Record button here — a
                    door with nothing behind it. */
-                $qMayCamera = \App\Support\WorkerContext::canUseModule('camera');
-                $qMayVideo = \App\Support\WorkerContext::canUseModule('video');
+                $qMayCamera = $qCamSeasons->isNotEmpty();
+                $qMayVideo = $qVidSeasons->isNotEmpty();
             @endphp
-            @if ($allSchedules->isNotEmpty() && $qMayCamera)
+            @if ($qMayCamera)
                 <button type="button" id="quickCaptureBtn" class="qa-tile qa-cap">
                     <span class="qa-ico"><img src="{{ asset('images/camera.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt">
@@ -654,7 +665,7 @@
                 $qVidLocked = ! \App\Support\Tier::farmCan('videoRecording');
                 $qVidRung = \App\Support\Tier::farmUnlocksAt('videoRecording');
             @endphp
-            @if ($allSchedules->isNotEmpty() && $qMayVideo)
+            @if ($qMayVideo)
                 <button type="button" id="quickRecordBtn" class="qa-tile qa-rec"
                         @if ($qVidLocked) data-tier-lock="{{ $qVidRung }}" data-lock-say="{{ \App\Support\Tier::say($qVidRung, 'Video recording comes with {plan}. Photos and voice notes work on every plan.') }}" @endif>
                     <span class="qa-ico"><img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -672,7 +683,7 @@
             {{-- The microphone has its own switch. This tile used to live
                  inside the video block above, so it came and went with a
                  permission that was never about speaking. --}}
-            @if ($allSchedules->isNotEmpty() && \App\Support\WorkerContext::canUseModule('voice'))
+            @if ($qVoiceSeasons->isNotEmpty())
                 <button type="button" id="quickVoiceBtn" class="qa-tile qa-rec">
                     <span class="qa-ico"><img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt">
@@ -695,14 +706,14 @@
          three quick doors. --}}
     @include('sm.partials.tag-picker', ['schedule' => null])
     @include('partials.user-tags')
-    @if (\App\Support\WorkerContext::canUseModule('camera'))
-        @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
+    @if ($qCamSeasons->isNotEmpty())
+        @include('sm.partials.quick-capture', ['allSchedules' => $qCamSeasons])
     @endif
-    @if (\App\Support\WorkerContext::canUseModule('video'))
-        @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
+    @if ($qVidSeasons->isNotEmpty())
+        @include('sm.partials.quick-record', ['allSchedules' => $qVidSeasons])
     @endif
-    @if (\App\Support\WorkerContext::canUseModule('voice'))
-        @include('sm.partials.quick-voice', ['allSchedules' => $allSchedules])
+    @if ($qVoiceSeasons->isNotEmpty())
+        @include('sm.partials.quick-voice', ['allSchedules' => $qVoiceSeasons])
     @endif
     {{-- The field helpers pack's offer, for the locked helper tiles (2026-10-14). --}}
     @if (\App\Support\FieldPack::lockedHere())

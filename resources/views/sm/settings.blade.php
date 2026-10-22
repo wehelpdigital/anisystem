@@ -567,7 +567,8 @@ const __init = () => {
     document.getElementById('settingsDayType')?.addEventListener('change', sayDayType);
     sayDayType();
 
-    document.getElementById('saveBasicBtn').addEventListener('click', async (e) => {
+    // Not drawn for a worker (the season's settings are the owner's): bound only when there.
+    document.getElementById('saveBasicBtn')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         btn.disabled = true;
         try {

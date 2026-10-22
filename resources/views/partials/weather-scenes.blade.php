@@ -6,8 +6,7 @@
      families for the panel behind them. Include once per page; everything
      here is inert until something asks for it.
 
-     Two ways to use it:
-       Blade   @include('partials.weather-sky', ['key' => 'rain', 'size' => 44])
+     From JS (there is no Blade partial for one scene):
        JS      window.wxSky('rain')            -> markup for one scene
                window.wxHue('rain')            -> the panel class for its colour
                window.WX_SKIES['rain']         -> {label, tagalog, scene, hue, advice}
