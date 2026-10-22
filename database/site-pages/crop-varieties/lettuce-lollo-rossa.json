@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Lettuce",
   "profile": true,
-  "title": "Lollo Rossa lettuce (Lollo Rosso): Characteristics",
-  "metaTitle": "Lollo Rossa lettuce: Characteristics",
+  "title": "Lollo Rossa Lettuce (Lollo Rosso): Characteristics",
+  "metaTitle": "Lollo Rossa Lettuce: Characteristics",
   "metaDescription": "Lollo Rossa lettuce is an open pollinated (loose leaf) lettuce variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Lollo Rossa lettuce",
   "keywords": [
@@ -74,7 +74,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 40 to 45 days after transplanting (Ramgo). No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -153,9 +153,9 @@
       "ordered": false,
       "items": [
         "[Altima](/crop-varieties/lettuce-altima)",
-        "[Green Diamond](/crop-varieties/lettuce-green-diamond)",
-        "[Green Wave](/crop-varieties/lettuce-green-wave)",
-        "[Black Seeded Simpson](/crop-varieties/lettuce-black-seeded-simpson): 33 to 40 days, 1970"
+        "[Corelle](/crop-varieties/lettuce-corelle)",
+        "[Dazzling](/crop-varieties/lettuce-dazzling)",
+        "[Fame](/crop-varieties/lettuce-fame)"
       ]
     },
     {

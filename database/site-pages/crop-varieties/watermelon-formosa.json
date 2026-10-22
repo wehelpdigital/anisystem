@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Watermelon",
   "profile": true,
-  "title": "Formosa watermelon (Formosa F1): Characteristics",
-  "metaTitle": "Formosa watermelon: Characteristics",
+  "title": "Formosa Watermelon (Formosa F1): Characteristics",
+  "metaTitle": "Formosa Watermelon: Characteristics",
   "metaDescription": "Formosa watermelon is an F1 hybrid watermelon variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Formosa watermelon",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 60 to 75 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -85,7 +85,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit watermelon fields most often: [anthracnose](/diseases/anthracnose), [Cercospora leaf spot](/diseases/cercospora-leaf-spot), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [Fusarium wilt](/diseases/fusarium-wilt). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit watermelon fields most often: [anthracnose](/diseases/anthracnose), [Cercospora leaf spot](/diseases/cercospora-leaf-spot), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -153,7 +153,7 @@
         "[Ariana](/crop-varieties/watermelon-ariana)",
         "[Black Panther](/crop-varieties/watermelon-black-panther)",
         "[Diana](/crop-varieties/watermelon-diana)",
-        "[Jaguar Improved](/crop-varieties/watermelon-jaguar-improved)"
+        "[Dragon](/crop-varieties/watermelon-dragon)"
       ]
     },
     {

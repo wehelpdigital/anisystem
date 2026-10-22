@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Lettuce",
   "profile": true,
-  "title": "Altima lettuce: Characteristics",
-  "metaTitle": "Altima lettuce: Characteristics",
+  "title": "Altima Lettuce: Characteristics",
+  "metaTitle": "Altima Lettuce: Characteristics",
   "metaDescription": "Altima lettuce is a lettuce variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Altima lettuce",
   "keywords": [
@@ -60,7 +60,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 45 to 50 days after transplanting. Yield, by the seller's count: about 25 t/ha potential (Ramgo). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -139,10 +139,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Green Diamond](/crop-varieties/lettuce-green-diamond)",
-        "[Green Wave](/crop-varieties/lettuce-green-wave)",
-        "[Lollo Rossa](/crop-varieties/lettuce-lollo-rossa)",
-        "[Black Seeded Simpson](/crop-varieties/lettuce-black-seeded-simpson): 33 to 40 days, 1970"
+        "[Corelle](/crop-varieties/lettuce-corelle)",
+        "[Dazzling](/crop-varieties/lettuce-dazzling)",
+        "[Fame](/crop-varieties/lettuce-fame)",
+        "[General](/crop-varieties/lettuce-general)"
       ]
     },
     {

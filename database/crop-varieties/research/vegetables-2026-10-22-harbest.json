@@ -1,0 +1,634 @@
+[
+ {
+  "crop": "ampalaya",
+  "name": "Dyosa",
+  "aliases": [
+   "Dyosa ampalaya",
+   "Diyosa ampalaya"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "open pollinated",
+  "popular": "one of the best sellers in Harbest's Seeds of Hope catalogue",
+  "facts": {
+   "maturityDays": "first harvest 55 to 60 days after sowing",
+   "fruit": "long and cylindrical",
+   "traits": [
+    "vigorous and bears heavily"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://www.harbest.com.ph/seeds"
+  ]
+ },
+ {
+  "crop": "ampalaya",
+  "name": "Moon Beauty",
+  "aliases": [
+   "Moon Beauty F1",
+   "Moon Beauty ampalaya"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 68 days after sowing",
+   "fruit": "oblong, glossy light green to whitish green, and less bitter than most",
+   "traits": [
+    "early, with strong vines that bear heavily in warm climates"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "ampalaya",
+  "name": "Rococo",
+  "aliases": [
+   "Rococo F1",
+   "Rococo white ampalaya"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 68 days after sowing",
+   "fruit": "pear shaped and pearly white with thick, bumpy ridges and a mild taste",
+   "traits": [
+    "early and high yielding",
+    "vigorous"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "ampalaya",
+  "name": "Jadeite",
+  "aliases": [
+   "Jadeite F1"
+  ],
+  "facts": {
+   "maturityDays": "first harvest about 65 days after sowing (Harbest)",
+   "traits": [
+    "early and vigorous with good fruit set, its fruit bright green with small warts"
+   ]
+  },
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Purple Beauty",
+  "aliases": [
+   "Purple Beauty talong",
+   "Purple Beauty eggplant"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "popular": "one of the best sellers in Harbest's Seeds of Hope catalogue",
+  "facts": {
+   "maturityDays": "first harvest 70 to 72 days after transplanting",
+   "fruit": "large, slightly tapering, shiny and greenish purple",
+   "traits": [
+    "tolerates waterlogging"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://www.harbest.com.ph/seeds"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Charming",
+  "aliases": [
+   "Charming F1",
+   "Charming talong"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 75 days after sowing",
+   "fruit": "short and plump with a glossy skin and tender white flesh, a good size for torta",
+   "traits": [
+    "well branched and fairly early, bearing 2 to 3 fruits at a node"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Fullness",
+  "aliases": [
+   "Fullness F1",
+   "Fullness round eggplant"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 70 days after sowing",
+   "fruit": "round, smooth and nearly black, with pale green flesh and a violet calyx",
+   "uses": "for markets that want round eggplant"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Fond May",
+  "aliases": [
+   "Fond May F1",
+   "Fond May talong"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 77 days after sowing",
+   "fruit": "30 to 35 cm long and 4 cm wide, deep glossy purple fruit and calyx, with white, tender flesh"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Tisoy",
+  "aliases": [
+   "Tisoy F1",
+   "white talong Tisoy"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 70 days after transplanting",
+   "fruit": "long and cylindrical, white, shiny and firm with a green calyx",
+   "traits": [
+    "vigorous and high yielding, suited to picking over a long period"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Fortuner",
+  "aliases": [
+   "Fortuner F1"
+  ],
+  "facts": {
+   "maturityDays": "first harvest 55 to 60 days after transplanting (Harbest)",
+   "traits": [
+    "compact and vigorous",
+    "fruits of 26 to 30 cm with a green calyx that keep well"
+   ]
+  },
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Ascent",
+  "aliases": [
+   "Ascent F1",
+   "Ascent hot pepper"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 100 days after sowing",
+   "fruit": "thin, firm, even and extremely hot, held above the leaves for easy picking",
+   "traits": [
+    "early, upright and well branched with very good fruit set"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Cleopatra",
+  "aliases": [
+   "Cleopatra F1",
+   "Cleopatra hot pepper"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "75 to 85 days after sowing",
+   "fruit": "even and smooth, bluish green when young and red when ripe, very hot, about 200 fruits a plant",
+   "traits": [
+    "resists viruses, its seller says",
+    "spreading and well branched with short internodes"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "KY Sinigang",
+  "aliases": [
+   "KY Sinigang F1",
+   "Sinigang pepper KY"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 80 days after transplanting",
+   "fruit": "slim and long panigang (siling haba) type, aromatic with a light heat",
+   "traits": [
+    "medium tall, slightly spreading plant"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Taiwan Express",
+  "aliases": [
+   "Taiwan Express chili",
+   "Taiwan Express hot pepper"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "106 to 113 days after sowing",
+   "fruit": "pointed red fruits 4 to 6 cm long and 6 to 8 g, very hot",
+   "traits": [
+    "tolerates heat and humidity",
+    "semi spreading with many branches"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Dyesebel",
+  "aliases": [
+   "Dyesebel tomato",
+   "Dyesebel kamatis"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "popular": "one of the best sellers in Harbest's Seeds of Hope catalogue",
+  "facts": {
+   "maturityDays": "first harvest 55 to 60 days after transplanting",
+   "fruit": "very round and smooth",
+   "traits": [
+    "determinate plant",
+    "tolerates fruit cracking"
+   ],
+   "season": "dry season"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://www.harbest.com.ph/seeds"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Kingkong #2",
+  "aliases": [
+   "Kingkong #2 F1",
+   "Kingkong 2 tomato",
+   "King Kong 2"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 100 days after sowing",
+   "fruit": "round and firm with green shoulders, turning red when ripe",
+   "traits": [
+    "resists bacterial wilt and viruses, its seller says",
+    "resists cracking",
+    "indeterminate plant"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Season Red",
+  "aliases": [
+   "Season Red F1",
+   "Season Red cherry tomato"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 65 days after sowing",
+   "fruit": "cherry type, small fruits set in large numbers",
+   "traits": [
+    "tolerates heat and humidity",
+    "a vigorous, dwarf determinate plant that needs little care"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Aruru",
+  "aliases": [
+   "Aruru F1",
+   "Aruru cherry tomato"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 121 days after sowing",
+   "fruit": "cherry type, round, red and very sweet, for eating fresh and in salads",
+   "traits": [
+    "suited to protected growing in the lowland and the highland"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Marilag",
+  "aliases": [
+   "Marilag bell pepper"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "first harvest 70 to 75 days after transplanting",
+   "fruit": "blocky, mostly 4 lobed, about 11 cm long and 10 cm wide, dark green turning red, sweet with crisp, thick walls"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Vega",
+  "aliases": [
+   "Vega F1",
+   "Vega bell pepper"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 80 days after sowing",
+   "fruit": "square, smooth, firm and even with a very thick wall",
+   "traits": [
+    "a slightly dwarf plant"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Yellow Star",
+  "aliases": [
+   "Yellow Star F1",
+   "Yellow Star bell pepper"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "80 to 120 days after sowing",
+   "fruit": "rectangular, green turning yellow when ripe"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Improved Smooth Cayene",
+  "aliases": [
+   "Smooth Cayene",
+   "Improved Smooth Cayenne sweet pepper"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "open pollinated",
+  "facts": {
+   "maturityDays": "90 to 95 days after sowing",
+   "fruit": "conical sweet pepper with thick flesh, green turning red, that ships well",
+   "traits": [
+    "high yielding",
+    "can be planted in the wet and the dry season"
+   ],
+   "season": "all year"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Sultan",
+  "aliases": [
+   "Sultan F1",
+   "Sultan sweet pepper",
+   "East West Sultan"
+  ],
+  "company": "East-West Seed (also sold by Harbest Agribusiness)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 55 to 60 days after transplanting",
+   "fruit": "conical sweet pepper, firm, smooth and thick, light green turning red",
+   "traits": [
+    "high yielding",
+    "keeps long after picking"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://goedenph.com/product/bell-pepper_sultan-f1_east-west_sachet/"
+  ],
+  "popular": "sold in Philippine farm shops under the East-West name"
+ },
+ {
+  "crop": "okra",
+  "name": "Peter Pan",
+  "aliases": [
+   "Peter Pan F1",
+   "Peter Pan okra"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 48 to 52 days after sowing",
+   "fruit": "deep green and spineless, crisp with a slightly sweet taste",
+   "uses": "also eaten as a snack, blanched and chilled"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "okra",
+  "name": "Carmine Splendor",
+  "aliases": [
+   "Carmine Splendor F1",
+   "Splendor F1",
+   "Splendor red okra"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 51 days after sowing",
+   "fruit": "red, ridged pods about 9 to 10 cm long, 1.8 to 1.9 cm across and 14 g",
+   "traits": [
+    "adapts to a wide range of temperatures",
+    "sets fruit well"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://goedenph.com/product/okra-seeds-carmine-splendor/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Matikas",
+  "aliases": [
+   "Matikas squash",
+   "Matikas kalabasa"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "popular": "one of the best sellers in Harbest's Seeds of Hope catalogue",
+  "facts": {
+   "maturityDays": "harvest 90 to 100 days after sowing",
+   "fruit": "dark green with deep yellow, maligat (sticky) flesh and good taste",
+   "traits": [
+    "tolerates viruses, its seller says",
+    "high yielding"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://www.harbest.com.ph/seeds"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Fairy",
+  "aliases": [
+   "Fairy F1",
+   "Fairy squash"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 100 days after sowing",
+   "fruit": "oval with a smooth orange yellow skin and thick golden flesh, 1 to 1.5 kg",
+   "traits": [
+    "bears heavily",
+    "stores well",
+    "tolerates heat"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Phoenix",
+  "aliases": [
+   "Phoenix F1",
+   "Phoenix squash"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 110 days after sowing",
+   "fruit": "papaya shaped winter squash with thick, sweet golden flesh",
+   "traits": [
+    "few side shoots, so it suits close planting and is easy to harvest"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "patola",
+  "name": "Sagana",
+  "aliases": [
+   "Sagana patola",
+   "Sagana sponge gourd"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "first harvest 45 to 58 days after sowing",
+   "fruit": "pointed, ridged and green, about 250 g",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Bright Jean F1",
+  "aliases": [
+   "Bright Jean",
+   "Bright Jean sweet corn"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "supersweet corn hybrid",
+  "popular": "one of the best sellers in Harbest's Seeds of Hope catalogue",
+  "facts": {
+   "maturityDays": "70 to 80 days after sowing",
+   "traits": [
+    "supersweet type",
+    "vigorous and high yielding",
+    "tolerates heat, wet ground and damping off",
+    "suited to summer planting"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://www.harbest.com.ph/seeds"
+  ]
+ }
+]

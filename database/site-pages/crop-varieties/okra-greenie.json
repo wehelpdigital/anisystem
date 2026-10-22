@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Okra",
   "profile": true,
-  "title": "Greenie okra (Greenie F1): Characteristics",
-  "metaTitle": "Greenie okra: Characteristics",
+  "title": "Greenie Okra (Greenie F1): Characteristics",
+  "metaTitle": "Greenie Okra: Characteristics",
   "metaDescription": "Greenie okra is an F1 hybrid okra variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Greenie okra",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: about 50 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -150,10 +150,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Carmine Splendor](/crop-varieties/okra-carmine-splendor)",
+        "[Peter Pan](/crop-varieties/okra-peter-pan)",
         "[Camiling Smooth](/crop-varieties/okra-camiling-smooth)",
-        "[Hagibis Verde](/crop-varieties/okra-hagibis-verde)",
-        "[Smooth Green](/crop-varieties/okra-smooth-green)",
-        "[Clemson Spineless](/crop-varieties/okra-clemson-spineless): 50 to 70 days, 1970"
+        "[Hagibis Verde](/crop-varieties/okra-hagibis-verde)"
       ]
     },
     {

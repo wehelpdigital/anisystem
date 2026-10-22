@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Sitao",
   "profile": true,
-  "title": "PSB Bs3 (EG Bs 22) sitao: Yield, Maturity and Characteristics",
-  "metaTitle": "PSB Bs3 (EG Bs 22) sitao: Yield and Maturity",
+  "title": "PSB Bs3 (EG Bs 22) Sitao: Yield, Maturity and Characteristics",
+  "metaTitle": "PSB Bs3 (EG Bs 22) Sitao: Yield and Maturity",
   "metaDescription": "PSB Bs3 (EG Bs 22) sitao is a bush sitao variety. 47 to 49 days to harvest, 9 t/ha in trials. See its ratings and traits.",
   "focusKeyword": "PSB Bs3 (EG Bs 22) sitao",
   "keywords": [
@@ -168,7 +168,11 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit sitao fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "Read up on [leafminer](/pests/leafminer)."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit sitao fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cacao",
   "profile": true,
-  "title": "S5 cacao (NSIC Cc 09): Yield and Characteristics",
-  "metaTitle": "S5 cacao: Yield and Characteristics",
+  "title": "S5 Cacao (NSIC Cc 09): Yield and Characteristics",
+  "metaTitle": "S5 Cacao: Yield and Characteristics",
   "metaDescription": "S5 cacao is a cacao variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
   "focusKeyword": "S5 cacao",
   "keywords": [
@@ -243,10 +243,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[UF 18](/crop-varieties/cacao-uf-18): 3.11 t dry beans/ha, 2008",
         "[K9](/crop-varieties/cacao-k9): 2.44 t dry beans/ha, 2008",
+        "[UF 18](/crop-varieties/cacao-uf-18): 3.11 t dry beans/ha, 2008",
         "[PBC123](/crop-varieties/cacao-pbc123): 2.23 t dry beans/ha, 2014",
-        "[ICS 40](/crop-varieties/cacao-ics-40): 2.2 t dry beans/ha, 1999"
+        "[BR 25](/crop-varieties/cacao-br-25): 1.63 t dry beans/ha, 1999"
       ]
     },
     {

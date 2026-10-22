@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Ampalaya",
   "profile": true,
-  "title": "Jadeite ampalaya (Jadeite F1): Characteristics",
-  "metaTitle": "Jadeite ampalaya: Characteristics",
+  "title": "Jadeite Ampalaya (Jadeite F1): Characteristics",
+  "metaTitle": "Jadeite Ampalaya: Characteristics",
   "metaDescription": "Jadeite ampalaya is an F1 hybrid ampalaya variety from Known You Seed. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Jadeite ampalaya",
   "keywords": [
@@ -60,6 +60,10 @@
         [
           "Type",
           "F1 hybrid"
+        ],
+        [
+          "Days to harvest, per the seller",
+          "first harvest about 65 days after sowing (Harbest)"
         ]
       ]
     },
@@ -70,7 +74,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest about 65 days after sowing (Harbest). No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -94,10 +98,12 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "**Days to harvest:** First harvest about 65 days after sowing (Harbest).",
         "**Fruit:** Big, very dark green, glossy and spiny, about 28 to 30 cm long, 6.5 cm across and 400 to 500 g.",
         "**Season:** Wet and dry.",
         "Prolific and vigorous through sudden weather changes.",
-        "Milder bitterness and crisp texture, sold for salads and frying."
+        "Milder bitterness and crisp texture, sold for salads and frying.",
+        "Early and vigorous with good fruit set, its fruit bright green with small warts."
       ]
     },
     {
@@ -148,10 +154,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bonito](/crop-varieties/ampalaya-bonito)",
         "[Galaxy](/crop-varieties/ampalaya-galaxy)",
-        "[Jade Star](/crop-varieties/ampalaya-jade-star)",
-        "[Mestisa](/crop-varieties/ampalaya-mestisa)",
-        "[Trident Improved](/crop-varieties/ampalaya-trident-improved)"
+        "[Green Alpha](/crop-varieties/ampalaya-green-alpha)",
+        "[Jade Star](/crop-varieties/ampalaya-jade-star)"
       ]
     },
     {
@@ -211,6 +217,10 @@
         {
           "label": "Notes on Jadeite from agriculture.com.ph",
           "url": "https://agriculture.com.ph/2019/04/25/jadeite-bittergourd/"
+        },
+        {
+          "label": "Notes on Jadeite from harbest.com.ph",
+          "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
         }
       ]
     }

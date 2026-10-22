@@ -1,0 +1,930 @@
+[
+ {
+  "crop": "cucumber",
+  "name": "General Lee",
+  "aliases": [
+   "General Lee F1",
+   "General Lee cucumber"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 45 to 50 days after sowing",
+   "fruit": "American slicer type, glossy dark green and cylindrical, 290 to 300 g",
+   "traits": [
+    "rated intermediate against cucumber mosaic virus and powdery mildew",
+    "tolerates heat",
+    "early"
+   ],
+   "season": "dry season",
+   "elevation": "midland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/general-lee-f1-hybrid-slicer-cucumber/"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Great Wall",
+  "aliases": [
+   "Great Wall F1",
+   "Great Wall cucumber"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "American slicer type, large, even, dark green and cylindrical",
+   "traits": [
+    "rated intermediate against powdery mildew, downy mildew and angular leaf spot",
+    "bears heavily"
+   ],
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/great-wall-f1-hybrid-cucumber/"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "MacArthur",
+  "aliases": [
+   "MacArthur F1",
+   "Mac Arthur F1",
+   "MacArthur cucumber"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 38 days after sowing",
+   "fruit": "American slicer type, large, even and dark green",
+   "traits": [
+    "rated intermediate against powdery mildew and downy mildew",
+    "vigorous and bears heavily"
+   ],
+   "season": "dry season",
+   "elevation": "lowland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/mac-arthur-f1-hybrid-cucumber/"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Stonewall",
+  "aliases": [
+   "Stonewall F1",
+   "Stone Wall F1",
+   "Stonewall cucumber"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 50 to 55 days after sowing",
+   "fruit": "American slicer type, glossy dark green and evenly cylindrical, 270 to 290 g",
+   "traits": [
+    "rated intermediate against cucumber mosaic virus, powdery mildew, scab, anthracnose and angular leaf spot",
+    "bears heavily"
+   ],
+   "season": "dry season",
+   "elevation": "lowland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/stonewall-f1-hybrid-cucumber/"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Super C",
+  "aliases": [
+   "Super C F1",
+   "Super C cucumber"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 30 to 35 days after sowing",
+   "fruit": "Asian tropical type, oriental green, even and cylindrical with a smooth skin",
+   "traits": [
+    "early and bears heavily"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/super-c-f1-hybrid-cucumber/"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Bangkok",
+  "aliases": [
+   "Bangkok F1",
+   "Bangkok cucumber"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "crisp, tender and evenly cylindrical, for salads and sandwiches",
+   "traits": [
+    "stands heat and yields well in the lowland"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/bangkok-f1-hybrid-cucumber/"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Green Beauty",
+  "aliases": [
+   "Green Beauty F1",
+   "Green Beauty cucumber"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "large, even and cylindrical",
+   "traits": [
+    "tolerates downy mildew and powdery mildew",
+    "early and adapts widely"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/green-beauty-f1-hybrid-cucumber/"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Hunter",
+  "aliases": [
+   "Hunter F1",
+   "Hunter watermelon"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 70 to 75 days after transplanting",
+   "fruit": "Sugar Baby type with a dark green rind and red flesh, 7 to 9 kg, about 11 percent sugar",
+   "traits": [
+    "tolerates fruit cracking",
+    "vigorous and sets fruit well"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/hunter-f1-hybrid-watermelon-2/"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Panther",
+  "aliases": [
+   "Panther F1",
+   "Panther watermelon"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after transplanting",
+   "fruit": "slightly high round with a dark green rind and sweet red flesh, 6 to 8 kg, about 11 percent sugar",
+   "traits": [
+    "a plant can carry two fruits"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/panther-f1-hybrid-watermelon-2/"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Mellow Yellow",
+  "aliases": [
+   "Mellow Yellow F1",
+   "Mellow Yellow watermelon"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after transplanting",
+   "fruit": "oval torpedo type with a dark and light green striped rind and yellow flesh, very sweet with fewer seeds",
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/mellow-yellow-f1-hybrid-watermelon/"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Triple Sweet",
+  "aliases": [
+   "Triple Sweet F1",
+   "Triple Sweet watermelon"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after sowing",
+   "fruit": "round with a light and dark green striped rind and sweet red flesh, 5 to 7 kg, 11 to 12 Brix",
+   "yield": "40 t/ha (company figure)",
+   "traits": [
+    "early, sets fruit well and ships well"
+   ],
+   "elevation": "lowland, midland and highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/triple-sweet-f1/"
+  ]
+ },
+ {
+  "crop": "cabbage",
+  "name": "Gladiator",
+  "aliases": [
+   "Gladiator F1",
+   "Gladiator cabbage",
+   "Gladiator repolyo"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after transplanting",
+   "fruit": "head: round, heavy and compact heads with purple veins on a tall stalk, 1.25 to 1.5 kg",
+   "traits": [
+    "adapts widely"
+   ],
+   "areas": "suited to Laguna, Quezon, Nueva Vizcaya and Benguet",
+   "season": "wet season",
+   "elevation": "lowland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/gladiator-f1-hybrid-cabbage/"
+  ]
+ },
+ {
+  "crop": "cabbage",
+  "name": "Red Jewel",
+  "aliases": [
+   "Red Jewel F1",
+   "Red Jewel cabbage"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "an improved red cabbage that its seller calls the Philippine standard for red cabbage",
+  "facts": {
+   "fruit": "head: red, round heads"
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/red-jewel-f1-hybrid-cabbage/"
+  ]
+ },
+ {
+  "crop": "chinesecabbage",
+  "name": "CR Alabama",
+  "aliases": [
+   "CR Alabama F1",
+   "Alabama Chinese cabbage"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after transplanting",
+   "fruit": "head: barrel shaped heads",
+   "traits": [
+    "rated intermediate against black rot, soft rot, white rust and clubroot",
+    "tolerates bolting",
+    "high yielding"
+   ],
+   "areas": "suited to the Cordillera, Dalaguete in Cebu and Lantapan in Bukidnon",
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/cr-alabama-f1-hybrid-chinese-cabbage/"
+  ]
+ },
+ {
+  "crop": "chinesecabbage",
+  "name": "Green Cool",
+  "aliases": [
+   "Green Cool F1",
+   "Green Cool wombok"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after transplanting",
+   "fruit": "head: firm, heavy and compact heads of 1.5 to 2.2 kg that keep and ship well",
+   "traits": [
+    "rated intermediate against bacterial soft rot"
+   ],
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/green-cool-f1-hybrid-chinese-cabbage/"
+  ]
+ },
+ {
+  "crop": "chinesecabbage",
+  "name": "CR Halsema",
+  "aliases": [
+   "CR Halsema F1",
+   "Halsema F1"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 50 to 55 days after transplanting",
+   "fruit": "head: even, compact, medium long barrel shaped heads with dark green leaves, 1 to 1.3 kg",
+   "traits": [
+    "rated intermediate against soft rot and black rot",
+    "ships well"
+   ],
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/halsema-f1/"
+  ]
+ },
+ {
+  "crop": "chinesecabbage",
+  "name": "Tropical Delight",
+  "aliases": [
+   "Tropical Delight F1",
+   "Tropical Delight wombok"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 70 to 75 days after sowing",
+   "fruit": "head: heads with no hairs, a yellow inside and sweet, crunchy leaves, 0.8 to 1.04 kg a plant",
+   "yield": "24 to 33 t/ha (company figure)",
+   "traits": [
+    "bred for the lowland and warm areas",
+    "rated intermediate against diseases and pests, its seller says"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/tropical-delight-f1-hybrid-chinese-cabbage/"
+  ]
+ },
+ {
+  "crop": "chinesecabbage",
+  "name": "Improved Emerald Rocket",
+  "aliases": [
+   "Improved Emerald Rocket F1",
+   "Emerald Rocket"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a tall michihili type that its seller says is popular in Southern Mindanao",
+  "facts": {
+   "fruit": "head: michihili (tall) type with even heads and a good taste",
+   "traits": [
+    "suits close planting"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/improved-emerald-rocket-f1-hybrid-chinese-cabbage/"
+  ]
+ },
+ {
+  "crop": "cauliflower",
+  "name": "White Flash",
+  "aliases": [
+   "White Flash F1",
+   "White Flash cauliflower"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 50 to 60 days after transplanting",
+   "fruit": "curd: big, heavy, dome shaped pure white curds of 1 to 1.5 kg",
+   "traits": [
+    "rated intermediate against black rot"
+   ],
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/white-flash-f1-hybrid-cauliflower-highland/"
+  ]
+ },
+ {
+  "crop": "cauliflower",
+  "name": "Sunshine",
+  "aliases": [
+   "Sunshine F1",
+   "Sunshine cauliflower"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 50 to 60 days after transplanting",
+   "fruit": "curd: heavy, compact, high dome curds of creamy white, about 500 g a plant",
+   "traits": [
+    "tolerates heat"
+   ],
+   "areas": "grown in low to mid elevation areas such as Ilocos Norte and Kayapa, Nueva Vizcaya",
+   "season": "dry season",
+   "elevation": "lowland to midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/white-island-f1-hybrid-cauliflower-midland/"
+  ]
+ },
+ {
+  "crop": "radish",
+  "name": "Daikon No. 14",
+  "aliases": [
+   "Daikon No. 14 F1",
+   "Daikon 14 radish"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after sowing",
+   "fruit": "root: roots of 500 to 700 g, with more starch than minowase and Chinese types",
+   "traits": [
+    "very slow to bolt"
+   ],
+   "season": "dry season",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/daikon-no-14-f1-hybrid-radish/"
+  ]
+ },
+ {
+  "crop": "radish",
+  "name": "Nagcarlan",
+  "aliases": [
+   "Nagcarlan radish",
+   "Nagcarlan labanos"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "maturityDays": "harvest 45 to 50 days after sowing",
+   "fruit": "root: long, smooth, heavy and cylindrical pearl white roots of 100 to 125 g",
+   "traits": [
+    "easy to grow and vigorous"
+   ],
+   "season": "all year",
+   "elevation": "lowland to midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/nagcarlan-radish/"
+  ]
+ },
+ {
+  "crop": "radish",
+  "name": "Lily",
+  "aliases": [
+   "Lily F1",
+   "Lily radish"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a new radish hybrid in Allied Botanical's line",
+  "facts": {
+   "maturityDays": "harvest about 45 days after sowing",
+   "fruit": "root: white, smooth and cylindrical roots with no root hairs",
+   "yield": "10 to 15 t/ha (company figure)",
+   "traits": [
+    "late bolting",
+    "smooth leaves"
+   ],
+   "season": "all year",
+   "elevation": "midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/lily-f1/"
+  ]
+ },
+ {
+  "crop": "radish",
+  "name": "Summer Beauty",
+  "aliases": [
+   "Summer Beauty F1",
+   "Summer Beauty radish"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 52 days after sowing",
+   "fruit": "root: long, smooth and heavy white roots with a blunt end, 150 to 200 g, about 21 cm long and 6 cm across",
+   "yield": "35.22 t/ha (company figure)",
+   "traits": [
+    "early, with strong tops and serrated leaves"
+   ],
+   "season": "all year",
+   "elevation": "lowland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/summer-beauty-f1/"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Benny",
+  "aliases": [
+   "Benny F1",
+   "Benny carrot"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 100 days after sowing",
+   "fruit": "root: thick, long, smooth deep orange roots with blunt ends, 180 to 190 g",
+   "traits": [
+    "tolerates cracking and forking",
+    "a high share of marketable roots that hold well in the field"
+   ],
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/benny-f1-hybrid-carrot/"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Kuroda GT",
+  "aliases": [
+   "Kuroda GT carrot"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "open pollinated",
+  "facts": {
+   "maturityDays": "harvest about 100 days after sowing",
+   "fruit": "root: large deep orange roots of about 150 g under vigorous tops",
+   "traits": [
+    "rated intermediate against powdery mildew and blight",
+    "does well in hot weather"
+   ],
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/kuroda-gt-carrot/"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Kuroda Max",
+  "aliases": [
+   "Kuroda Max carrot"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "fruit": "root: even, deep red orange roots with little forking or cracking",
+   "traits": [
+    "its seller says growers pick it for disease resistance and its bright color"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/kuroda-max-carrot/"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Nikko Kuroda",
+  "aliases": [
+   "Nikko Kuroda carrot"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "fruit": "root: large deep red orange roots with a small core",
+   "traits": [
+    "tolerant of powdery mildew and blight"
+   ],
+   "elevation": "mid to high elevation"
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/nikko-kuroda-carrot/"
+  ]
+ },
+ {
+  "crop": "onion",
+  "name": "Red Colorado",
+  "aliases": [
+   "Red Colorado onion",
+   "Condor Red Colorado"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "popular": "sold under the Condor name and in online farm shops as Red Colorado onion seed",
+  "facts": {
+   "maturityDays": "harvest 80 to 85 days after transplanting",
+   "fruit": "bulb: globe shaped, deep red bulbs of 60 to 80 g with a double skin and a thin neck",
+   "traits": [
+    "rated intermediate against leaf miner, twisting, damping off, neck rot, purple blotch and bulb rot",
+    "stores well and holds in the field"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/red-colorado-red-onion/",
+   "https://agrify.ph/products/red-colorado-onion-seeds"
+  ]
+ },
+ {
+  "crop": "onion",
+  "name": "Rio Grande",
+  "aliases": [
+   "Rio Grande F1",
+   "Rio Grande onion"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 80 to 85 days after transplanting",
+   "fruit": "bulb: firm, even, bright yellow bulbs of 130 to 150 g",
+   "traits": [
+    "rated intermediate against leaf miner, twisting, damping off, purple blotch and bulb rot"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/super-creole-onion/"
+  ]
+ },
+ {
+  "crop": "onion",
+  "name": "Red Nirvana",
+  "aliases": [
+   "Red Nirvana onion"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "hybrid",
+  "facts": {
+   "maturityDays": "harvest 68 to 70 days after transplanting",
+   "fruit": "bulb: firm, high globe to globe bulbs with a glossy dark red skin, 48 to 56 g, about 80 percent single centered",
+   "yield": "16 to 20 t/ha (company figure)",
+   "traits": [
+    "rated intermediate against anthracnose and purple blotch",
+    "stores very well"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/red-nirvana/"
+  ]
+ },
+ {
+  "crop": "onion",
+  "name": "Vidalia",
+  "aliases": [
+   "Vidalia F1",
+   "Condor Vidalia onion"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 75 to 80 days after transplanting",
+   "fruit": "bulb: firm, flat globe yellow bulbs of about 73 g",
+   "yield": "36 to 40 t/ha (company figure)",
+   "traits": [
+    "keeps about 4 months",
+    "tolerates splitting",
+    "upright with less foliage",
+    "rated intermediate against anthracnose and purple blotch"
+   ],
+   "elevation": "lowland, midland and highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/vidalia/"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Majesta",
+  "aliases": [
+   "Majesta lettuce",
+   "Majesta batavia"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "maturityDays": "harvest 30 to 35 days after transplanting",
+   "fruit": "head: batavia type with a large frame and green leaves that stay sweet even in low to mid elevations",
+   "yield": "25 t/ha (company figure)",
+   "traits": [
+    "tolerates bolting, heat and low light"
+   ],
+   "elevation": "lowland, midland and highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/majesta/"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Corelle",
+  "aliases": [
+   "Corelle lettuce"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "fruit": "leaves: large, heavy and even plants with finely frilled leaves",
+   "traits": [
+    "grows from the lowland to the highland, in the open or in a greenhouse"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/corelle-lettuce/"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Waldmanns Green",
+  "aliases": [
+   "Waldmann's Green",
+   "Waldmanns Green lettuce"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "fruit": "leaves: leafy type with frilled leaf edges",
+   "traits": [
+    "slow to bolt and fast growing",
+    "tolerant of tip burn",
+    "grows in the lowland and the highland"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/waldmanns-green-lettuce/"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Red Wave",
+  "aliases": [
+   "Red Wave lettuce"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "fruit": "leaves: leaf type, green leaves with red edges",
+   "traits": [
+    "little bottom rot",
+    "can be grown all year",
+    "used as a wrap for Korean barbecue"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/red-wave-lettuce/"
+  ]
+ },
+ {
+  "crop": "celery",
+  "name": "Ventura",
+  "aliases": [
+   "Ventura celery",
+   "Condor Ventura"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "open pollinated",
+  "popular": "an early Tall Utah type sold under the Condor name and in online farm shops",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after transplanting",
+   "fruit": "stalks: very long, thick, glossy and bright green stalks of 70 to 80 cm, about 400 g a plant",
+   "yield": "73 t/ha (company figure)",
+   "traits": [
+    "rated intermediate against diseases and pests, its seller says"
+   ],
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/ventura-celery/",
+   "https://agrify.ph/products/ventura-celery-seeds"
+  ]
+ },
+ {
+  "crop": "snapbean",
+  "name": "Christie",
+  "aliases": [
+   "Christie bean",
+   "Christie pole bean"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "pole snap bean",
+  "facts": {
+   "maturityDays": "first harvest 40 to 45 days after sowing",
+   "fruit": "pods: semi round green pods of 15 to 17 cm with black seeds, about 50 pods a plant",
+   "traits": [
+    "rated intermediate against bean rust",
+    "early, with a long productive life"
+   ],
+   "areas": "suits warm areas such as Lucban in Quezon, and Laguna",
+   "season": "all year",
+   "elevation": "lowland to midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/christie-beans-pole/"
+  ]
+ },
+ {
+  "crop": "snapbean",
+  "name": "Blue Lake",
+  "aliases": [
+   "Blue Lake pole bean",
+   "Blue Lake Baguio beans"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "pole snap bean",
+  "facts": {
+   "maturityDays": "first harvest 60 to 65 days after sowing",
+   "fruit": "pods: straight, tender pods with no strings",
+   "traits": [
+    "rated intermediate against bean rust",
+    "long productive life"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/blue-lake-beans-pole/"
+  ]
+ },
+ {
+  "crop": "snapbean",
+  "name": "Contender",
+  "aliases": [
+   "Contender bush bean",
+   "Contender Baguio beans"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "bush snap bean",
+  "facts": {
+   "maturityDays": "first harvest 40 to 45 days after sowing",
+   "traits": [
+    "rated intermediate against some powdery mildew races",
+    "early, with the pods set over a short span"
+   ],
+   "season": "all year",
+   "elevation": "midland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/contender-bush-beans/"
+  ]
+ },
+ {
+  "crop": "pechay",
+  "name": "Improved Vera Green",
+  "aliases": [
+   "Improved Vera Green F1",
+   "Vera Green pechay"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "leaves: thick green stalks with round, spoon shaped leaves",
+   "traits": [
+    "even and vigorous plants"
+   ],
+   "elevation": "low to mid elevation"
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/improved-vera-green-f1-hybrid-pechay/"
+  ]
+ }
+]

@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Melon",
   "profile": true,
-  "title": "Fantasista melon (Fantasista F1): Characteristics",
-  "metaTitle": "Fantasista melon: Characteristics",
+  "title": "Fantasista Melon (Fantasista F1): Characteristics",
+  "metaTitle": "Fantasista Melon: Characteristics",
   "metaDescription": "Fantasista melon is an F1 hybrid (netted muskmelon) variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Fantasista melon",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 60 to 65 days after transplanting. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -85,7 +85,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit melon fields most often: [anthracnose](/diseases/anthracnose), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [Fusarium wilt](/diseases/fusarium-wilt), [leafminer](/pests/leafminer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit melon fields most often: [anthracnose](/diseases/anthracnose), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [Fusarium wilt](/diseases/fusarium-wilt). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -152,9 +152,9 @@
       "ordered": false,
       "items": [
         "[Brilliant](/crop-varieties/melon-brilliant)",
-        "[Glamour](/crop-varieties/melon-glamour)",
-        "[Gulfstream](/crop-varieties/melon-gulfstream)",
-        "[Ilocos Gold](/crop-varieties/melon-ilocos-gold)"
+        "[Camille](/crop-varieties/melon-camille)",
+        "[Emerald Green](/crop-varieties/melon-emerald-green)",
+        "[Glamour](/crop-varieties/melon-glamour)"
       ]
     },
     {

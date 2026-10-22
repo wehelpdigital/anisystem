@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Sitao",
   "profile": true,
-  "title": "Star Premium sitao: Characteristics",
-  "metaTitle": "Star Premium sitao: Characteristics",
+  "title": "Star Premium Sitao: Characteristics",
+  "metaTitle": "Star Premium Sitao: Characteristics",
   "metaDescription": "Star Premium sitao is a sitao variety from Allied Botanical. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Star Premium sitao",
   "keywords": [
@@ -61,7 +61,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 40 to 45 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -74,7 +74,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit sitao fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit sitao fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [leafminer](/pests/leafminer), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -144,8 +144,8 @@
       "items": [
         "[Black Obama](/crop-varieties/sitao-black-obama)",
         "[Super Green 53](/crop-varieties/sitao-super-green-53)",
-        "[Green Pod Kaohsiung](/crop-varieties/sitao-green-pod-kaohsiung)",
-        "[KY Bush](/crop-varieties/sitao-ky-bush)"
+        "[Bongga](/crop-varieties/sitao-bongga)",
+        "[Galante](/crop-varieties/sitao-galante)"
       ]
     },
     {

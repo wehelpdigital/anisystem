@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Carrot",
   "profile": true,
-  "title": "Super New Kuroda carrot (Super Kuroda): Characteristics",
-  "metaTitle": "Super New Kuroda carrot: Characteristics",
+  "title": "Super New Kuroda Carrot (Super Kuroda): Characteristics",
+  "metaTitle": "Super New Kuroda Carrot: Characteristics",
   "metaDescription": "Super New Kuroda carrot is an open pollinated carrot variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Super New Kuroda carrot",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: about 105 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -151,10 +151,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Kuroda GT](/crop-varieties/carrot-kuroda-gt)",
         "[New Kuroda](/crop-varieties/carrot-new-kuroda)",
-        "[Fukutomi](/crop-varieties/carrot-fukutomi)",
-        "[Heartland](/crop-varieties/carrot-heartland)",
-        "[Sugarland](/crop-varieties/carrot-sugarland)"
+        "[Benny](/crop-varieties/carrot-benny)",
+        "[Firewedge](/crop-varieties/carrot-firewedge)"
       ]
     },
     {

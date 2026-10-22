@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Radish",
   "profile": true,
-  "title": "Everest radish (Everest F1): Characteristics",
-  "metaTitle": "Everest radish: Characteristics",
+  "title": "Everest Radish (Everest F1): Characteristics",
+  "metaTitle": "Everest Radish: Characteristics",
   "metaDescription": "Everest radish is an F1 hybrid radish variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Everest radish",
   "keywords": [
@@ -77,7 +77,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 40 to 55 days after sowing. Yield, by the seller's count: about 40 t/ha potential (Ramgo). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -157,10 +157,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Mt. Data](/crop-varieties/radish-mt-data)",
-        "[Timbac 55](/crop-varieties/radish-timbac-55)",
-        "[Improved Valiant](/crop-varieties/radish-improved-valiant)",
-        "[Sinandok](/crop-varieties/radish-sinandok)"
+        "[Daikon No. 14](/crop-varieties/radish-daikon-no-14)",
+        "[Lily](/crop-varieties/radish-lily)",
+        "[Ming Ho](/crop-varieties/radish-ming-ho)",
+        "[Mt. Data](/crop-varieties/radish-mt-data)"
       ]
     },
     {

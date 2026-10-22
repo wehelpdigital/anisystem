@@ -1,0 +1,678 @@
+[
+ {
+  "crop": "patola",
+  "name": "Primera",
+  "aliases": [
+   "Primera F1",
+   "Primera patola",
+   "East West Primera"
+  ],
+  "company": "East-West Seed",
+  "kind": "F1 hybrid",
+  "popular": "one of the ten best selling East-West seeds at Baliuag Marketing, a big farm supply chain in Bulacan (Agriculture Monthly), and sold in online farm shops",
+  "facts": {},
+  "sources": [
+   "https://agriculture.com.ph/2020/12/27/success-in-farm-supplies-business/",
+   "https://agrify.ph/products/primera-f1-seeds"
+  ]
+ },
+ {
+  "crop": "ampalaya",
+  "name": "Bonito",
+  "aliases": [
+   "Bonito F1",
+   "Bonito ampalaya",
+   "East West Bonito"
+  ],
+  "company": "East-West Seed",
+  "kind": "F1 hybrid",
+  "popular": "an East-West hybrid ampalaya sold in Philippine farm shops",
+  "facts": {
+   "traits": [
+    "sold in packs of about 10 seeds"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/easwest-ampalaya-seed-bonito/"
+  ]
+ },
+ {
+  "crop": "mustard",
+  "name": "Monteverde",
+  "aliases": [
+   "Monteverde mustasa",
+   "East West Monteverde"
+  ],
+  "company": "East-West Seed",
+  "popular": "an East-West mustasa sold by the kilo in Philippine farm shops",
+  "facts": {
+   "fruit": "leaves: bright green and even in size and shape",
+   "traits": [
+    "fast growing and vigorous, with a large leaf yield",
+    "grows in loose soil rich in organic matter"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/east-west-monteverde-mustasa/"
+  ]
+ },
+ {
+  "crop": "radish",
+  "name": "Speedy",
+  "aliases": [
+   "Speedy radish",
+   "East West Speedy"
+  ],
+  "company": "East-West Seed",
+  "kind": "open pollinated",
+  "facts": {
+   "traits": [
+    "germination of 85 percent or more on the pack"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/east-west-speedy-radish-seeds/"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Macho Dos F1",
+  "aliases": [
+   "Macho Dos",
+   "East West Macho Dos"
+  ],
+  "company": "East-West Seed",
+  "kind": "yellow sweet corn hybrid",
+  "facts": {
+   "density": "75 by 25 cm or 70 by 20 cm between rows and plants",
+   "traits": [
+    "seed of 98 percent hybridity and 85 percent germination or better",
+    "about 3,200 to 3,500 seeds a kilo"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/east-west-macho-dos-corn-seeds/"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Lega C",
+  "aliases": [
+   "Lega C F1",
+   "LegaC cucumber"
+  ],
+  "company": "East-West Seed (also sold by Harbest Agribusiness)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 38 to 40 days after transplanting",
+   "fruit": "medium to dark green, 18 to 20 cm long",
+   "traits": [
+    "strongly resists geminivirus and downy mildew, its seller says",
+    "vigorous and high yielding",
+    "suited to the rainy and the dry season"
+   ],
+   "density": "two rows to a bed with hills spaced 40 cm (or 30 cm within the row), grown on a trellis"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://goedenph.com/product/east-west-lega-c-cucumber-seeds/"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Pantastiko",
+  "aliases": [
+   "Pantastiko F1",
+   "Sitaw Pantastiko",
+   "East West Pantastiko"
+  ],
+  "company": "East-West Seed",
+  "kind": "pole sitao",
+  "popular": "an East-West F1 pole sitao sold in Philippine farm shops",
+  "facts": {
+   "traits": [
+    "an F1 hybrid",
+    "sold in packs and by the kilo"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/east-west-pantastiko-f1-pole-sitao-seeds/",
+   "https://agrify.ph/products/sitaw-pantastiko-seeds-east-west"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Galante",
+  "aliases": [
+   "Galante sitao",
+   "Sitao Galante",
+   "East West Galante"
+  ],
+  "company": "East-West Seed",
+  "kind": "pole sitao",
+  "popular": "an East-West pole sitao sold in Philippine farm shops",
+  "facts": {
+   "traits": [
+    "seed of 97 percent hybridity and 85 percent germination or better on the pack"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/sitao_galante_east-west_sachet/",
+   "https://agrify.ph/products/sitao-galante-seeds"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Bongga",
+  "aliases": [
+   "Bongga sitao",
+   "East West Bongga"
+  ],
+  "company": "East-West Seed",
+  "kind": "pole sitao",
+  "facts": {
+   "traits": [
+    "seed of 97 percent hybridity and 85 percent germination or better on the pack"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/sitao_bongga_east-west_sachet/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Hiwaga",
+  "aliases": [
+   "Hiwaga F1",
+   "Hiwaga sili panigang"
+  ],
+  "company": "East-West Seed",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "panigang (siling haba) type"
+  },
+  "sources": [
+   "https://goedenph.com/product/east-wesst-hiwaga-f1-silipanigang-seeds/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Hot Pot 207",
+  "aliases": [
+   "Hot Pot 207 F1",
+   "Kaneko Hot Pot 207"
+  ],
+  "company": "Kaneko (Pilipinas Kaneko Seeds)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 100 to 105 days after sowing",
+   "fruit": "panigang (sinigang) type, long, straight and thick fleshed, light green, about 15 cm and 12 to 15 g, very hot",
+   "traits": [
+    "highly tolerant to viruses, its seller says",
+    "high yielding with even fruit"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/kaneko-hot-pot-207-hybrid-hot-pepper/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Hot Pot 505",
+  "aliases": [
+   "Hot Pot 505 F1",
+   "Kaneko Hot Pot 505"
+  ],
+  "company": "Kaneko (Pilipinas Kaneko Seeds)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 103 to 110 days after sowing",
+   "fruit": "panigang (sinigang) type, glossy medium green with firm, thick flesh, about 12 cm and 8 to 10 g, moderately hot",
+   "traits": [
+    "a semi spreading plant"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/kaneko-hot-pot-505-hybrid-hot-pepper/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Monica",
+  "aliases": [
+   "Monica F1",
+   "Kaneko Monica squash"
+  ],
+  "company": "Kaneko (Pilipinas Kaneko Seeds)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 85 days after sowing",
+   "fruit": "large, flat and deeply ridged with a dark green rind and firm, sticky yellow orange flesh, 3.5 to 4 kg",
+   "traits": [
+    "vigorous vines with good leaf cover",
+    "keeps well after harvest"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/kaneko-monica-hybrid-squash/"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Mapalad",
+  "aliases": [
+   "Mapalad tomato",
+   "Kaneko Mapalad"
+  ],
+  "company": "Kaneko (Pilipinas Kaneko Seeds)",
+  "kind": "open pollinated",
+  "facts": {
+   "traits": [
+    "sold in 50 g cans"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/kaneko-mapalad-tomato-seed/"
+  ]
+ },
+ {
+  "crop": "patola",
+  "name": "Sta. Ana",
+  "aliases": [
+   "Santa Ana patola",
+   "Kaneko Sta. Ana"
+  ],
+  "company": "Kaneko (Pilipinas Kaneko Seeds)",
+  "kind": "open pollinated",
+  "facts": {
+   "traits": [
+    "sold in 50 g cans"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/kaneko-patola-sta-ana/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Royal Cup",
+  "aliases": [
+   "Royal Cup squash",
+   "Kaneko Royal Cup"
+  ],
+  "company": "Kaneko (Pilipinas Kaneko Seeds)",
+  "kind": "open pollinated",
+  "facts": {
+   "traits": [
+    "sold in 250 g cans"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/kaneko-royal-cup-squash-seed/"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Super Sweet Sunshine",
+  "aliases": [
+   "Super Sweet Sunshine F1",
+   "Kaneko Super Sweet Sunshine"
+  ],
+  "company": "Kaneko (Pilipinas Kaneko Seeds)",
+  "kind": "golden yellow sweet corn hybrid",
+  "facts": {
+   "density": "70 cm between rows and 20 to 25 cm between plants",
+   "traits": [
+    "golden yellow sweet corn",
+    "seed of 98 percent hybridity and 85 percent germination or better",
+    "about 3,200 to 3,500 seeds a kilo"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/kaneko-super-sweet-sunshine-corn-seeds/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Rizalina",
+  "aliases": [
+   "Rizalina squash",
+   "Ramgo Rizalina"
+  ],
+  "company": "Ramgo",
+  "kind": "open pollinated",
+  "facts": {
+   "traits": [
+    "germination of 90 percent or more on the pack",
+    "about 38 seeds in a 5 g pack"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/ramgo-rizalina-squash-seeds/"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Amber",
+  "aliases": [
+   "Amber F1",
+   "Known You Amber tomato"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 90 days after sowing",
+   "fruit": "small, about 4.2 by 3.7 cm and 18 g, with a sweetness of 8 Brix",
+   "traits": [
+    "resists fusarium wilt, bacterial wilt and tomato mosaic virus races 0 to 2, its seller says",
+    "moderately resists tomato leaf curl virus"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/tomato-seeds-amber/"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Grace",
+  "aliases": [
+   "Grace F1",
+   "Known You Grace tomato"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 105 days after sowing",
+   "fruit": "large, about 250 g and 7 by 7.8 cm, with a sweetness of 5.5 Brix",
+   "traits": [
+    "resists fusarium wilt and tomato mosaic virus races 0 to 2, its seller says"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/tomato-seeds-grace/"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Sherry",
+  "aliases": [
+   "Sherry F1",
+   "Known You Sherry tomato"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 75 days after sowing",
+   "fruit": "small, about 35 g and 4.3 by 3.6 cm, with a sweetness of 7.2 Brix",
+   "traits": [
+    "resists fusarium wilt, its seller says"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/tomato-seeds-sherry/"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Nina",
+  "aliases": [
+   "Nina F1",
+   "Known You Nina tomato"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "medium, deep globe and solid, with dark green shoulders and a red spot at the blossom end, ripening evenly",
+   "traits": [
+    "resists nematodes, its seller says",
+    "tall, vigorous plants that stand disease fairly well",
+    "sold for the Asian fresh market"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/tomato-seeds-nina-2/"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Dalagita",
+  "aliases": [
+   "Dalagita tomato",
+   "Known You Dalagita"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "open pollinated",
+  "facts": {
+   "traits": [
+    "an open pollinated variety from Taiwan, its importer says"
+   ]
+  },
+  "sources": [
+   "https://goedenph.com/product/tomato-seeds-dalagita/"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Felicity",
+  "aliases": [
+   "Felicity F1",
+   "Known You Felicity watermelon"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "round, about 25 by 24 cm and 7 kg, with a sweetness of 11 Brix"
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/watermelon-seeds-felicity/"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Full Orchid",
+  "aliases": [
+   "Full Orchid F1",
+   "Known You Full Orchid watermelon"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 75 days after sowing",
+   "fruit": "oblong, about 24 by 18 cm and 3.5 kg, with a sweetness of 11 Brix"
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/watermelon-seeds-full-orchid/"
+  ]
+ },
+ {
+  "crop": "cabbage",
+  "name": "Bright Top",
+  "aliases": [
+   "Bright Top F1",
+   "Known You Bright Top cabbage"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 105 days after sowing",
+   "fruit": "head: about 2.5 kg, 16 cm high and 21 cm across"
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/cabbage-seeds-bright-top/"
+  ]
+ },
+ {
+  "crop": "melon",
+  "name": "Emerald Green",
+  "aliases": [
+   "Emerald Green F1",
+   "Known You Emerald Green melon"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 85 days after sowing",
+   "fruit": "muskmelon of about 1.8 kg and 17.5 by 16 cm, with a sweetness of 15 to 18 Brix",
+   "traits": [
+    "resists fusarium wilt, its seller says"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/melon-seeds-emerald-green/"
+  ]
+ },
+ {
+  "crop": "melon",
+  "name": "Sheba",
+  "aliases": [
+   "Sheba F1",
+   "Known You Sheba melon"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 85 days after sowing",
+   "fruit": "muskmelon of about 1.8 kg and 17 by 15.8 cm, with a sweetness of 14 to 16 Brix",
+   "traits": [
+    "resists fusarium wilt, its seller says"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/melon-seeds-sheba/"
+  ]
+ },
+ {
+  "crop": "melon",
+  "name": "Jill",
+  "aliases": [
+   "Jill F1",
+   "Known You Jill honeydew"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 70 days after sowing",
+   "fruit": "small honeydew of about 450 g and 8.8 by 9.7 cm, with a sweetness of 15 to 17 Brix",
+   "traits": [
+    "resists fusarium wilt, its seller says"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/melon-seeds-jill/"
+  ]
+ },
+ {
+  "crop": "melon",
+  "name": "Lambkin",
+  "aliases": [
+   "Lambkin F1",
+   "Lambkin piel de sapo melon"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 65 to 75 days after transplanting",
+   "fruit": "piel de sapo type, oval with a thin, yellow rind mottled green, 0.9 to 1.8 kg, with sweet, fragrant white flesh",
+   "traits": [
+    "early and easy to grow, even in containers",
+    "stores longer than most melons"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/melon-seeds-lambkin/"
+  ]
+ },
+ {
+  "crop": "mustard",
+  "name": "King Mustard",
+  "aliases": [
+   "King Mustard F1",
+   "Known You King Mustard"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "leaves: large, thick and tender, green tinged purple, on big plants"
+  },
+  "sources": [
+   "https://goedenph.com/product/mustard-seeds-king-mustard/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Crowning",
+  "aliases": [
+   "Crowning F1",
+   "Known You Crowning winter squash"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 110 days after sowing",
+   "fruit": "winter squash of about 1.8 kg, 10 cm high and 17 cm across"
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/winter-squash-seeds-crowning/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Tetsukabuto",
+  "aliases": [
+   "Tetsukabuto F1",
+   "Known You Tetsukabuto squash"
+  ],
+  "company": "Known-You Seed (sold in Philippine farm shops)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 110 days after sowing",
+   "fruit": "winter squash of about 1.5 kg, 15 by 16 cm"
+  },
+  "claims": true,
+  "sources": [
+   "https://goedenph.com/product/winter-squash-seeds-tetsukabuto/"
+  ]
+ },
+ {
+  "crop": "onion",
+  "name": "Dakila",
+  "aliases": [
+   "Dakila F1",
+   "Dakila red onion",
+   "East West Dakila"
+  ],
+  "company": "East-West Seed",
+  "kind": "F1 hybrid",
+  "popular": "launched by East-West as its first hybrid of the red creole type for the Philippines, and shown to over 900 farmers at a Mindoro field day in March 2026",
+  "facts": {
+   "fruit": "bulb: large, very even red creole bulbs with a three layered skin that store well",
+   "yield": "at least 30 percent above open pollinated onions in the company's trials (company figure)",
+   "traits": [
+    "farmer cooperators in Mindoro cut their fertilizer cost by half or more and watered every 10 to 14 days instead of every 7, the company reports",
+    "the seed carries a coating that guards the seedlings for their first 21 days"
+   ],
+   "areas": "field tested in Mindoro"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.eastwestseed.com/dakila-f1-red-creole-hybrid-onion-philippines/"
+  ]
+ }
+]

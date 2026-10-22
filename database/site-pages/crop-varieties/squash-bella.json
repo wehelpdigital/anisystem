@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Squash",
   "profile": true,
-  "title": "Bella squash (Bella F1): Characteristics",
-  "metaTitle": "Bella squash: Characteristics",
+  "title": "Bella Squash (Bella F1): Characteristics",
+  "metaTitle": "Bella Squash: Characteristics",
   "metaDescription": "Bella squash is an F1 hybrid squash variety from East West Seed. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Bella squash",
   "keywords": [
@@ -82,7 +82,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit squash fields most often: [downy mildew of cucurbits](/diseases/downy-mildew), [melon fly](/pests/melon-fly), [squash beetle](/pests/squash-beetle), [leafminer](/pests/leafminer), [powdery mildew](/diseases/powdery-mildew). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit squash fields most often: [downy mildew of cucurbits](/diseases/downy-mildew), [melon fly](/pests/melon-fly), [squash beetle](/pests/squash-beetle), [anthracnose](/diseases/anthracnose), [cutworm](/pests/cutworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -148,9 +148,9 @@
       "ordered": false,
       "items": [
         "[Carmela](/crop-varieties/squash-carmela)",
-        "[La Vida](/crop-varieties/squash-la-vida)",
-        "[Rajah](/crop-varieties/squash-rajah)",
-        "[Solo King](/crop-varieties/squash-solo-king)"
+        "[Crowning](/crop-varieties/squash-crowning)",
+        "[Fairy](/crop-varieties/squash-fairy)",
+        "[Ivana](/crop-varieties/squash-ivana)"
       ]
     },
     {

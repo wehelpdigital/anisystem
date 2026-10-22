@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Radish",
   "profile": true,
-  "title": "Mt. Data radish (Mt. Data F1): Characteristics",
-  "metaTitle": "Mt. Data radish: Characteristics",
+  "title": "Mt. Data Radish (Mt. Data F1): Characteristics",
+  "metaTitle": "Mt. Data Radish: Characteristics",
   "metaDescription": "Mt. Data radish is an F1 hybrid radish variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Mt. Data radish",
   "keywords": [
@@ -78,7 +78,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 35 to 40 days after sowing on Ramgo's product page, growers in Ramgo's story harvested at 40 to 45 days. Yield, by the seller's count: about 40 t/ha potential (Ramgo), one grower's half hectare gave about 25 t. No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -159,10 +159,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Daikon No. 14](/crop-varieties/radish-daikon-no-14)",
         "[Everest](/crop-varieties/radish-everest)",
-        "[Timbac 55](/crop-varieties/radish-timbac-55)",
-        "[Improved Valiant](/crop-varieties/radish-improved-valiant)",
-        "[Sinandok](/crop-varieties/radish-sinandok)"
+        "[Lily](/crop-varieties/radish-lily)",
+        "[Ming Ho](/crop-varieties/radish-ming-ho)"
       ]
     },
     {

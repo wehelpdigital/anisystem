@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Lettuce",
   "profile": true,
-  "title": "Green Wave lettuce (Green Wave Batavia): Characteristics",
-  "metaTitle": "Green Wave lettuce: Characteristics",
+  "title": "Green Wave Lettuce (Green Wave Batavia): Characteristics",
+  "metaTitle": "Green Wave Lettuce: Characteristics",
   "metaDescription": "Green Wave lettuce is a Batavia (loose leaf) type lettuce variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Green Wave lettuce",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: about 45 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -153,9 +153,9 @@
       "ordered": false,
       "items": [
         "[Altima](/crop-varieties/lettuce-altima)",
-        "[Green Diamond](/crop-varieties/lettuce-green-diamond)",
-        "[Lollo Rossa](/crop-varieties/lettuce-lollo-rossa)",
-        "[Black Seeded Simpson](/crop-varieties/lettuce-black-seeded-simpson): 33 to 40 days, 1970"
+        "[Corelle](/crop-varieties/lettuce-corelle)",
+        "[Dazzling](/crop-varieties/lettuce-dazzling)",
+        "[Fame](/crop-varieties/lettuce-fame)"
       ]
     },
     {

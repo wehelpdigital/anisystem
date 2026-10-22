@@ -1,0 +1,697 @@
+[
+ {
+  "crop": "ampalaya",
+  "name": "Poseidon",
+  "aliases": [
+   "Poseidon F1",
+   "Condor Poseidon",
+   "Poseidon ampalaya"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "one of the hybrid ampalaya in Allied Botanical's Condor seed line for lowland growers",
+  "facts": {
+   "maturityDays": "first harvest 45 to 50 days after transplanting",
+   "fruit": "glossy dark green and cylindrical with thick flesh, about 30 to 35 cm long and 200 g",
+   "yield": "30 to 35 t/ha potential (company figure)",
+   "traits": [
+    "intermediate resistance to the namamarako virus, which turns vines male",
+    "the fruit holds up against cracking",
+    "bears heavily"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/poseidon-f1-hybrid-ampalaya/"
+  ]
+ },
+ {
+  "crop": "ampalaya",
+  "name": "Magnifico",
+  "aliases": [
+   "Magnifico F1",
+   "Condor Magnifico",
+   "Magnifico ampalaya"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "the short fruited hybrid in the Condor ampalaya line, sold for pinakbet and ginisa cooking",
+  "facts": {
+   "maturityDays": "first harvest 45 to 50 days after transplanting",
+   "fruit": "short and spindle shaped, dark green, 15 to 18 cm long and 70 to 100 g",
+   "traits": [
+    "intermediate resistance to the namamarako virus, which turns vines male",
+    "vigorous vines that bear heavily"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/magnifico-f1-hybrid-ampalaya/"
+  ]
+ },
+ {
+  "crop": "ampalaya",
+  "name": "Green Alpha",
+  "aliases": [
+   "Green Alpha F1",
+   "Green Alpha ampalaya"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a long, straight fruited ampalaya in Allied Botanical's newer hybrids",
+  "facts": {
+   "maturityDays": "first harvest 50 to 55 days after transplanting",
+   "fruit": "straight and cylindrical, medium green with fine warts, about 41 cm long and 283 g",
+   "yield": "21.3 t/ha (company figure)",
+   "traits": [
+    "rated intermediate against cercospora leaf spot, gummy stem blight and cucurbit aphid borne yellows virus",
+    "bears heavily"
+   ],
+   "areas": "lowland, midland and highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/green-alpha-f1/"
+  ]
+ },
+ {
+  "crop": "ampalaya",
+  "name": "Titan",
+  "aliases": [
+   "Titan F1",
+   "Condor Titan",
+   "Titan ampalaya"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "long, dark green and cylindrical, bred to resist cracking",
+   "traits": [
+    "bears heavily over a long picking period",
+    "its seller says it copes with disease and weather stress better than most"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/titan-f1-hybrid-ampalaya/"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Lightning",
+  "aliases": [
+   "Lightning F1",
+   "Condor Lightning",
+   "Lightning talong"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 60 to 65 days after transplanting",
+   "fruit": "dark purple, uniform and heavy, borne in clusters",
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/lightning-f1-hybrid-eggplant/"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Spitfire",
+  "aliases": [
+   "Spitfire F1",
+   "Condor Spitfire",
+   "Spitfire talong"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 50 days after transplanting",
+   "fruit": "large, cylindrical and purple with a green calyx, and it keeps well after picking",
+   "traits": [
+    "stands stress and keeps bearing for a long time"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/spitfire-f1-hybrid-eggplant/"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Long Purple",
+  "aliases": [
+   "Condor Long Purple",
+   "Long Purple talong",
+   "Eggplant Long Purple"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "facts": {
+   "maturityDays": "first harvest 50 to 55 days after transplanting",
+   "fruit": "long, cylindrical and purple with a green calyx",
+   "traits": [
+    "rated intermediate against nematodes and bacterial wilt",
+    "adapts to a wide range of farms"
+   ],
+   "season": "dry season",
+   "elevation": "lowland to midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/long-purple-eggplant/"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Naimas",
+  "aliases": [
+   "Naimas F1",
+   "Naimas talong"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a new hybrid in Allied Botanical's line, with the light green, oval fruit Ilocano cooks use",
+  "facts": {
+   "maturityDays": "first harvest about 41 days after transplanting",
+   "fruit": "oval, light green and glossy with faint white stripes and a green calyx, about 52 g",
+   "yield": "25 to 30 t/ha (company figure), about 35 fruits a plant",
+   "traits": [
+    "rated intermediate against shoot borer and eggplant fruit",
+    "branches strongly and sets fruit early"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/naimas-f1/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Roxana",
+  "aliases": [
+   "Roxana F1",
+   "Roxana squash",
+   "Roxana kalabasa"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a new peanut type kalabasa in Allied Botanical's line",
+  "facts": {
+   "maturityDays": "first harvest about 50 days after transplanting",
+   "fruit": "peanut shaped with a smooth light green rind, thick yellow orange flesh and a small seed cavity, 0.8 to 1 kg",
+   "yield": "20 to 25 t/ha (company figure), 2 to 3 fruits a plant",
+   "traits": [
+    "rated intermediate against gummy stem blight",
+    "early and bears heavily"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/roxana-f1/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Ivana",
+  "aliases": [
+   "Ivana F1",
+   "Ivana squash",
+   "Ivana butternut"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a butternut kalabasa in Allied Botanical's newer hybrids",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after sowing",
+   "fruit": "butternut type with a mottled green rind, thick orange flesh and even ribs, 750 g to 1 kg",
+   "yield": "30 to 40 t/ha (company figure), 3 to 5 fruits a plant",
+   "traits": [
+    "rated intermediate against zucchini yellow mosaic virus, squash leaf curl virus and gummy stem blight",
+    "keeps about 30 days after harvest"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/ivana-f1/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Saturn SQ4",
+  "aliases": [
+   "Saturn SQ4 F1",
+   "Saturn F1",
+   "Saturn calabaza"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "large, flat and smooth with thick flesh, a small seed cavity and even ridges",
+   "traits": [
+    "highly tolerant of cucurbit viruses, its seller says"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/saturn-sq4-f1-hybrid-calabasa/"
+  ]
+ },
+ {
+  "crop": "squash",
+  "name": "Neptune SQ3",
+  "aliases": [
+   "Neptune SQ3 F1",
+   "Neptune F1",
+   "Neptune calabaza"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "medium to large, high and flat, with yellow orange flesh",
+   "traits": [
+    "highly tolerant of cucurbit viruses, its seller says"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/neptune-sq3-f1-hybrid-calabasa/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Pimiento",
+  "aliases": [
+   "Pimiento F1",
+   "Pimiento panigang pepper"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a new panigang (siling haba) hybrid in Allied Botanical's line",
+  "facts": {
+   "maturityDays": "first harvest about 53 days after transplanting",
+   "fruit": "panigang (siling haba) type, straight and uniform, glossy dark green with firm, thick flesh, about 11.6 cm long and 8.1 g",
+   "yield": "30 to 35 t/ha (company figure), about 141 fruits a plant",
+   "traits": [
+    "rated intermediate against anthracnose",
+    "a strong, spreading plant that matures early"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/pimiento-f1/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Green Dynamite",
+  "aliases": [
+   "Green Dynamite F1",
+   "Green Dynamite pepper"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "popular": "a new light green dynamite pepper hybrid in Allied Botanical's line",
+  "facts": {
+   "maturityDays": "first harvest about 51 days after transplanting",
+   "fruit": "dynamite pepper type, light green, glossy and firm, about 11.2 cm long and 11 g",
+   "yield": "30 to 35 t/ha (company figure), about 230 fruits a plant",
+   "traits": [
+    "rated intermediate against bacterial leaf spot and anthracnose",
+    "keeps and travels well after picking"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/green-dynamite-f1/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Amphawa",
+  "aliases": [
+   "Amphawa F1",
+   "Amphawa hot pepper"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 68 days after transplanting",
+   "fruit": "small and strongly pungent, about 8.4 cm long and 2.4 g, glossy dark green turning red when fully ripe",
+   "yield": "25 to 30 t/ha (company figure), about 323 fruits a plant",
+   "traits": [
+    "rated intermediate against anthracnose"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/amphawa-f1/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Berdegud",
+  "aliases": [
+   "Berdegud F1",
+   "Berdegud panigang"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "about 95 days after sowing",
+   "fruit": "panigang type, dark green with a smooth, glossy skin, about 19.6 cm long",
+   "yield": "15 t/ha (company figure)",
+   "traits": [
+    "vigorous, with dense leaves over the fruit"
+   ],
+   "season": "all year",
+   "elevation": "lowland to midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/berdegud-f1/"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Panigang King",
+  "aliases": [
+   "Panigang King F1",
+   "Condor Panigang King"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "panigang (siling haba) type, set in large numbers, about 250 fruits a plant by its seller's count",
+   "traits": [
+    "sets fruit well and bears over a long period",
+    "its seller rates its pest and disease reaction as good"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/panigang-king-f1-hybrid-panigang-pepper/"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Red Crest",
+  "aliases": [
+   "Red Crest F1",
+   "Red Crest pepper"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 60 to 70 days after transplanting",
+   "fruit": "conical, sweet and thick fleshed, green turning red, about 60 g and 12.7 cm long",
+   "traits": [
+    "rated intermediate against diseases, its seller says",
+    "vigorous and bears heavily"
+   ],
+   "season": "all year",
+   "elevation": "lowland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/red-crest-f1-hybrid-chinese-pepper/"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Clarabel",
+  "aliases": [
+   "Clarabel F1",
+   "Clarabel pepper"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 60 to 65 days after transplanting",
+   "fruit": "conical, large and firm, sweet and crisp, green turning red, about 11 cm long",
+   "traits": [
+    "rated intermediate against leaf diseases and soil borne",
+    "stands heat and ships well"
+   ],
+   "season": "all year",
+   "elevation": "lowland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/clarabel-f1-hybrid-conical-pepper/"
+  ]
+ },
+ {
+  "crop": "bellpepper",
+  "name": "Maxibel",
+  "aliases": [
+   "Maxibel bell pepper",
+   "Condor Maxibel"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "open pollinated",
+  "facts": {
+   "fruit": "blocky with thick walls and 3 to 4 lobes",
+   "traits": [
+    "an improved open pollinated selection with even, vigorous plants"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/maxibel-bell-pepper-open-pollinated/"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Athena",
+  "aliases": [
+   "Athena tomato",
+   "Condor Athena",
+   "Athena kamatis"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "open pollinated",
+  "facts": {
+   "maturityDays": "first harvest 55 to 60 days after transplanting",
+   "fruit": "high round and smooth, green ripening to red, 80 to 100 g, set in several clusters",
+   "traits": [
+    "determinate plant",
+    "tolerates fruit cracking",
+    "stores and travels well"
+   ],
+   "season": "dry season",
+   "elevation": "lowland to midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/athena-tomato-open-pollinated/"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Negrostar",
+  "aliases": [
+   "Negrostar sitao",
+   "Pole Sitao Negrostar",
+   "Condor Negrostar"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "pole sitao",
+  "popular": "sold under the Condor name and in online farm shops as Pole Sitao Negrostar",
+  "facts": {
+   "maturityDays": "first harvest 50 to 55 days after sowing",
+   "fruit": "pods: dark green pods with a purple tip, about 60 cm long and 22 to 23 g",
+   "traits": [
+    "pods keep 3 to 4 days after picking",
+    "bears heavily"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/negrostar-sitao/",
+   "https://agrify.ph/products/pole-sitao-negrostar-seeds"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Verdana",
+  "aliases": [
+   "Verdana sitao",
+   "Verdana yardlong bean"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "pole sitao",
+  "facts": {
+   "maturityDays": "first harvest 40 to 45 days after sowing",
+   "fruit": "pods: medium green pods, 50 to 60 cm long",
+   "traits": [
+    "rated intermediate against bean rust",
+    "pods keep 2 to 3 days after picking",
+    "early and bears heavily"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/verdana-yardlong-bean/"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Maranaw",
+  "aliases": [
+   "Maranaw sitao",
+   "Maranaw pole sitao"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "pole sitao",
+  "facts": {
+   "fruit": "pods: long, light green pods with black seeds",
+   "traits": [
+    "bears heavily and can be planted all year"
+   ],
+   "season": "all year"
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/maranaw-sitao-pole/"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Greenstar",
+  "aliases": [
+   "Greenstar sitao",
+   "Greenstar pole sitao"
+  ],
+  "company": "Allied Botanical (Condor brand)",
+  "kind": "pole sitao",
+  "facts": {
+   "fruit": "pods: even, light green pods",
+   "traits": [
+    "even plants that keep bearing over a long period"
+   ]
+  },
+  "sources": [
+   "https://alliedbotanical.com/project/greenstar-sitao-pole/"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Hi Brix XL F1",
+  "aliases": [
+   "Hi Brix XL",
+   "HiBrix XL",
+   "Condor Hi Brix XL"
+  ],
+  "company": "Allied Botanical Corporation (Condor Quality Seeds brand)",
+  "kind": "yellow sweet corn hybrid",
+  "facts": {
+   "maturityDays": "70 to 75 days after sowing",
+   "traits": [
+    "large ears of about 440 g",
+    "sweet, tender kernels with a high kernel recovery",
+    "for eating fresh and for processing"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/hi-brix-xl-f1-hybrid-sweet-corn/"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Purple Magic F1",
+  "aliases": [
+   "Purple Magic",
+   "Condor Purple Magic",
+   "Purple Magic sweet corn"
+  ],
+  "company": "Allied Botanical Corporation (Condor Quality Seeds brand)",
+  "kind": "purple sweet corn hybrid",
+  "facts": {
+   "maturityDays": "65 to 70 days after sowing",
+   "traits": [
+    "deep purple, sweet kernels rich in anthocyanin",
+    "ears of about 267 g",
+    "early and vigorous",
+    "rated intermediate against diseases, its seller says"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/purple-magic-f1-hybrid-purple-sweet-corn/"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Sierra F1",
+  "aliases": [
+   "Sierra",
+   "Sierra sweet corn"
+  ],
+  "company": "Allied Botanical Corporation (Condor Quality Seeds brand)",
+  "kind": "yellow sweet corn hybrid",
+  "popular": "a new sweet corn hybrid in Allied Botanical's line, bred for traders with thick green husks",
+  "facts": {
+   "maturityDays": "70 to 73 days after sowing",
+   "yield": "10 to 15 t/ha of husked ears (company figure)",
+   "traits": [
+    "ears about 439 g in the husk and 273 g husked",
+    "ears 20.6 cm long and 5 cm across",
+    "sweetness of 12.8 Brix",
+    "plants about 2 m tall with the ear set low, about 66 cm up",
+    "thick green husks that keep the ears fresh and sweet longer"
+   ],
+   "season": "all year"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/sierra-f1/"
+  ]
+ },
+ {
+  "crop": "corn_glutinous",
+  "name": "White Gem F1",
+  "aliases": [
+   "White Gem",
+   "White Gem waxy corn"
+  ],
+  "company": "Allied Botanical Corporation (Condor Quality Seeds brand)",
+  "kind": "white waxy corn hybrid",
+  "popular": "a new white waxy (malagkit) corn hybrid in Allied Botanical's line",
+  "facts": {
+   "maturityDays": "65 to 70 days after sowing",
+   "yield": "10 to 15 t/ha of husked ears (company figure)",
+   "traits": [
+    "plants about 185 cm tall"
+   ],
+   "season": "all year"
+  },
+  "claims": true,
+  "sources": [
+   "https://alliedbotanical.com/project/white-gem-f1/"
+  ]
+ }
+]

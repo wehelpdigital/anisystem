@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Chili",
   "profile": true,
-  "title": "Red Hot chili (Red Hot F1): Characteristics",
-  "metaTitle": "Red Hot chili: Characteristics",
+  "title": "Red Hot Chili (Red Hot F1): Characteristics",
+  "metaTitle": "Red Hot Chili: Characteristics",
   "metaDescription": "Red Hot chili is an F1 hybrid chili variety from East West Seed. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Red Hot chili",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 60 to 75 days after transplanting (East West), Harbest gives 70 to 75, an organic Ifugao farm first picked ripe fruit about 90 days after planting. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -152,10 +152,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Cordelia](/crop-varieties/chili-cordelia)",
-        "[Django](/crop-varieties/chili-django)",
-        "[Magnum](/crop-varieties/chili-magnum)",
-        "[Panigang Best](/crop-varieties/chili-panigang-best)"
+        "[Amphawa](/crop-varieties/chili-amphawa)",
+        "[Ascent](/crop-varieties/chili-ascent)",
+        "[Berdegud](/crop-varieties/chili-berdegud)",
+        "[Cleopatra](/crop-varieties/chili-cleopatra)"
       ]
     },
     {

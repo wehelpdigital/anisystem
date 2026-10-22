@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Peanut",
   "profile": true,
-  "title": "USM Pn1 peanut (NSIC Pn 16): Yield, Maturity and Characteristics",
-  "metaTitle": "USM Pn1 peanut: Yield, Maturity and Characteristics",
+  "title": "USM Pn1 Peanut (NSIC Pn 16): Yield, Maturity and Characteristics",
+  "metaTitle": "USM Pn1 Peanut: Yield, Maturity and Characteristics",
   "metaDescription": "USM Pn1 peanut is a peanut variety for Mindanao. About 88 days to harvest, 2.1 t/ha in trials. See its ratings and traits.",
   "focusKeyword": "USM Pn1 peanut",
   "keywords": [
@@ -147,7 +147,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit peanut fields most often: [bacterial wilt](/diseases/bacterial-wilt), [eggplant leafhopper](/pests/eggplant-leafhopper), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm), [thrips](/pests/thrips). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit peanut fields most often: [bacterial wilt](/diseases/bacterial-wilt), [eggplant leafhopper](/pests/eggplant-leafhopper), [bean fly](/pests/bean-fly), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

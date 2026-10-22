@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Corn",
   "profile": true,
-  "title": "Sugar King F1 corn (Sugar King): Characteristics",
-  "metaTitle": "Sugar King F1 corn: Characteristics",
+  "title": "Sugar King F1 Corn (Sugar King): Characteristics",
+  "metaTitle": "Sugar King F1 Corn: Characteristics",
   "metaDescription": "Sugar King F1 corn is a sweet corn hybrid variety from East West Seed. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Sugar King F1 corn",
   "keywords": [
@@ -74,7 +74,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 70 to 75 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -155,9 +155,9 @@
       "ordered": false,
       "items": [
         "[Bravado F1](/crop-varieties/corn-bravado-f1)",
+        "[Bright Jean F1](/crop-varieties/corn-bright-jean-f1)",
         "[Datu F1](/crop-varieties/corn-datu-f1)",
-        "[Hi Brix F1](/crop-varieties/corn-hi-brix-f1)",
-        "[Macho F1](/crop-varieties/corn-macho-f1)"
+        "[Hi Brix F1](/crop-varieties/corn-hi-brix-f1)"
       ]
     },
     {

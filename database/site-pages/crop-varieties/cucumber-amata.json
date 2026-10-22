@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cucumber",
   "profile": true,
-  "title": "Amata cucumber (Amata F1): Characteristics",
-  "metaTitle": "Amata cucumber: Characteristics",
+  "title": "Amata Cucumber (Amata F1): Characteristics",
+  "metaTitle": "Amata Cucumber: Characteristics",
   "metaDescription": "Amata cucumber is an F1 hybrid cucumber variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Amata cucumber",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 40 to 45 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -85,7 +85,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit cucumber fields most often: [anthracnose](/diseases/anthracnose), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [leafminer](/pests/leafminer), [melon fly](/pests/melon-fly). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit cucumber fields most often: [anthracnose](/diseases/anthracnose), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [leafminer](/pests/leafminer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -154,10 +154,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Hera](/crop-varieties/cucumber-hera)",
-        "[Jenjen](/crop-varieties/cucumber-jenjen)",
-        "[Malvar White](/crop-varieties/cucumber-malvar-white)",
-        "[Poinsett](/crop-varieties/cucumber-poinsett)"
+        "[Bangkok](/crop-varieties/cucumber-bangkok)",
+        "[Fountain](/crop-varieties/cucumber-fountain)",
+        "[General Lee](/crop-varieties/cucumber-general-lee)",
+        "[Great Wall](/crop-varieties/cucumber-great-wall)"
       ]
     },
     {

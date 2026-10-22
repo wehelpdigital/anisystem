@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Tomato",
   "profile": true,
-  "title": "Fantastic tomato (Fantastic F1): Characteristics",
-  "metaTitle": "Fantastic tomato: Characteristics",
+  "title": "Fantastic Tomato (Fantastic F1): Characteristics",
+  "metaTitle": "Fantastic Tomato: Characteristics",
   "metaDescription": "Fantastic tomato is an F1 hybrid tomato variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Fantastic tomato",
   "keywords": [
@@ -77,7 +77,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 55 to 60 days after transplanting (seller sheet). Yield, by the seller's count: a Candaba, Pampanga farmer picked about 3,550 kg from 4,000 plants in the first month of harvest. No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -160,10 +160,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Amber](/crop-varieties/tomato-amber)",
+        "[Aruru](/crop-varieties/tomato-aruru)",
         "[Atlas](/crop-varieties/tomato-atlas)",
-        "[Avatar TY](/crop-varieties/tomato-avatar-ty)",
-        "[Diamante Max](/crop-varieties/tomato-diamante-max)",
-        "[Mountain Fresh Plus](/crop-varieties/tomato-mountain-fresh-plus)"
+        "[Avatar TY](/crop-varieties/tomato-avatar-ty)"
       ]
     },
     {

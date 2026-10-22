@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Bell pepper",
   "profile": true,
-  "title": "Kayen Premium Select bell pepper (Kayen): Characteristics",
-  "metaTitle": "Kayen Premium Select bell pepper: Characteristics",
+  "title": "Kayen Premium Select Bell Pepper (Kayen): Characteristics",
+  "metaTitle": "Kayen Premium Select Bell Pepper: Characteristics",
   "metaDescription": "Kayen Premium Select bell pepper is a bell pepper variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Kayen Premium Select bell pepper",
   "keywords": [
@@ -62,7 +62,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 70 to 90 days after transplanting (professional page), 65 days on the garden packet page. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -142,10 +142,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Marilag](/crop-varieties/bell-pepper-marilag)",
+        "[Clarabel](/crop-varieties/bell-pepper-clarabel)",
         "[Coralee](/crop-varieties/bell-pepper-coralee)",
-        "[Excel](/crop-varieties/bell-pepper-excel)",
-        "[California Wonder](/crop-varieties/bell-pepper-california-wonder): 90 to 100 days, 11.63 t/ha, 1970",
-        "[Yolo Wonder](/crop-varieties/bell-pepper-yolo-wonder): 90 to 110 days, 14.67 t/ha, 1970"
+        "[Excel](/crop-varieties/bell-pepper-excel)"
       ]
     },
     {

@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Chili",
   "profile": true,
-  "title": "Django chili (Django F1): Characteristics",
-  "metaTitle": "Django chili: Characteristics",
+  "title": "Django Chili (Django F1): Characteristics",
+  "metaTitle": "Django Chili: Characteristics",
   "metaDescription": "Django chili is an F1 hybrid chili variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Django chili",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest about 40 days after transplanting, Harbest gives 40 to 45. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -151,10 +151,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Cordelia](/crop-varieties/chili-cordelia)",
-        "[Magnum](/crop-varieties/chili-magnum)",
-        "[Panigang Best](/crop-varieties/chili-panigang-best)",
-        "[Pinatubo](/crop-varieties/chili-pinatubo)"
+        "[Amphawa](/crop-varieties/chili-amphawa)",
+        "[Ascent](/crop-varieties/chili-ascent)",
+        "[Berdegud](/crop-varieties/chili-berdegud)",
+        "[Cleopatra](/crop-varieties/chili-cleopatra)"
       ]
     },
     {

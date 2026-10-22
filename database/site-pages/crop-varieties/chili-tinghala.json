@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Chili",
   "profile": true,
-  "title": "Tinghala chili (Tingala): Characteristics",
-  "metaTitle": "Tinghala chili: Characteristics",
+  "title": "Tinghala Chili (Tingala): Characteristics",
+  "metaTitle": "Tinghala Chili: Characteristics",
   "metaDescription": "Tinghala chili is an open pollinated chili variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Tinghala chili",
   "keywords": [
@@ -74,7 +74,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 75 to 80 days after transplanting. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -155,9 +155,9 @@
       "ordered": false,
       "items": [
         "[Bicol Express](/crop-varieties/chili-bicol-express)",
-        "[Cindy Gang](/crop-varieties/chili-cindy-gang)",
-        "[Cordelia](/crop-varieties/chili-cordelia)",
-        "[Django](/crop-varieties/chili-django)"
+        "[Amphawa](/crop-varieties/chili-amphawa)",
+        "[Ascent](/crop-varieties/chili-ascent)",
+        "[Berdegud](/crop-varieties/chili-berdegud)"
       ]
     },
     {

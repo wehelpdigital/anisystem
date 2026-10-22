@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cowpea",
   "profile": true,
-  "title": "EG 3 2 (BPI Cp 4) cowpea: Yield, Maturity and Characteristics",
-  "metaTitle": "EG 3 2 (BPI Cp 4) cowpea: Yield and Maturity",
+  "title": "EG 3 2 (BPI Cp 4) Cowpea: Yield, Maturity and Characteristics",
+  "metaTitle": "EG 3 2 (BPI Cp 4) Cowpea: Yield and Maturity",
   "metaDescription": "EG 3 2 (BPI Cp 4) cowpea is a cowpea variety. About 47 days to harvest, 8.6 t/ha in trials. See its pest ratings and traits.",
   "focusKeyword": "EG 3 2 (BPI Cp 4) cowpea",
   "keywords": [
@@ -141,7 +141,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit cowpea fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit cowpea fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [leafminer](/pests/leafminer), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

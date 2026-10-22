@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Pechay",
   "profile": true,
-  "title": "Summer Bounty pechay (Summer Bounty F1): Characteristics",
-  "metaTitle": "Summer Bounty pechay: Characteristics",
+  "title": "Summer Bounty Pechay (Summer Bounty F1): Characteristics",
+  "metaTitle": "Summer Bounty Pechay: Characteristics",
   "metaDescription": "Summer Bounty pechay is an F1 hybrid pechay variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Summer Bounty pechay",
   "keywords": [
@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: about 29 days after sowing (Ramgo). Yield, by the seller's count: about 24 t/ha potential (Ramgo). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -156,10 +156,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Improved Vera Green](/crop-varieties/pechay-improved-vera-green)",
+        "[Summer Joy](/crop-varieties/pechay-summer-joy)",
         "[Anahaw](/crop-varieties/pechay-anahaw)",
-        "[Baby White](/crop-varieties/pechay-baby-white)",
-        "[Genghis Khan](/crop-varieties/pechay-genghis-khan)",
-        "[Green Shingkang](/crop-varieties/pechay-green-shingkang)"
+        "[Baby White](/crop-varieties/pechay-baby-white)"
       ]
     },
     {

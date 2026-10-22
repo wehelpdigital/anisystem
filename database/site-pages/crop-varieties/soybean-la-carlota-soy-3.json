@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Soybean",
   "profile": true,
-  "title": "La Carlota Soy 3 soybean: Yield, Maturity and Characteristics",
-  "metaTitle": "La Carlota Soy 3 soybean: Yield and Maturity",
+  "title": "La Carlota Soy 3 Soybean: Yield, Maturity and Characteristics",
+  "metaTitle": "La Carlota Soy 3 Soybean: Yield and Maturity",
   "metaDescription": "La Carlota Soy 3 soybean is a grain soybean variety. About 91 days to harvest, 1.7 t/ha in trials. See its ratings and traits.",
   "focusKeyword": "La Carlota Soy 3 soybean",
   "keywords": [
@@ -150,7 +150,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit soybean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit soybean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm), [root knot nematode](/diseases/root-knot-nematode). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

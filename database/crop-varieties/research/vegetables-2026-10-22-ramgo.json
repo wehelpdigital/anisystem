@@ -1,0 +1,578 @@
+[
+ {
+  "crop": "eggplant",
+  "name": "Claveria Long Purple",
+  "aliases": [
+   "Claveria Long Purple F1",
+   "Claveria talong"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "popular": "in Ramgo's professional eggplant line",
+  "facts": {
+   "maturityDays": "first harvest 60 to 65 days after transplanting",
+   "fruit": "purple, 15 to 18 cm long",
+   "traits": [
+    "tolerates bacterial wilt and phomopsis rot",
+    "even plant growth"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/eggplant-1/claveria-long-purple-f1"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Niagara",
+  "aliases": [
+   "Niagara F1",
+   "Niagara talong"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 50 to 55 days after transplanting",
+   "fruit": "8 to 20 cm long and 2.5 to 3 cm across, purple skin with a green calyx that has no spines",
+   "traits": [
+    "tolerates bacterial wilt and phomopsis rot",
+    "sets fruit well"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/eggplant-1/niagara-f1"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Purple Duke",
+  "aliases": [
+   "Purple Duke F1",
+   "Purple Duke talong"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 60 days after transplanting",
+   "fruit": "glossy purple with a green calyx",
+   "traits": [
+    "a long harvest period",
+    "vigorous and bears heavily",
+    "good disease tolerance, its seller says"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/eggplant-1/purple-duke-f1"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "American Beauty",
+  "aliases": [
+   "Eggplant American Beauty",
+   "American Beauty talong"
+  ],
+  "company": "Ramgo",
+  "popular": "sold in Ramgo's garden seed packets",
+  "facts": {
+   "maturityDays": "first harvest 65 to 70 days after transplanting",
+   "fruit": "glossy, deep purple with tender flesh, for grilling, roasting and stews",
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/eggplant-american-beauty"
+  ]
+ },
+ {
+  "crop": "eggplant",
+  "name": "Ilokano",
+  "aliases": [
+   "Eggplant Ilokano",
+   "Ilocano talong"
+  ],
+  "company": "Ramgo",
+  "popular": "sold in Ramgo's garden seed packets as the eggplant of Ilocano dishes",
+  "facts": {
+   "maturityDays": "first harvest 60 to 65 days after transplanting",
+   "fruit": "oval, green and white, with firm flesh and a slightly sweet taste",
+   "traits": [
+    "copes with somewhat dry conditions"
+   ],
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/eggplant-ilokano"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Firewedge",
+  "aliases": [
+   "Firewedge F1",
+   "Firewedge carrot"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 110 to 115 days after sowing",
+   "fruit": "root: about 20 cm long and 5 cm across with a round base and smooth skin",
+   "yield": "25 to 35 t/ha potential (company figure)",
+   "traits": [
+    "tolerates bolting and leaf blight",
+    "good eating quality"
+   ],
+   "season": "dry season",
+   "elevation": "midland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/carrot-3/firewedge-f1"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Mindagold",
+  "aliases": [
+   "Mindagold F1",
+   "Mindagold carrot"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 90 to 100 days after sowing",
+   "fruit": "root: 13 to 20 cm long and 4 to 5 cm across, bright orange inside and out",
+   "yield": "30 to 40 t/ha potential (company figure)",
+   "traits": [
+    "tolerates alternaria leaf blight and bolting"
+   ],
+   "elevation": "midland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/carrot-3/mindagold-f1"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Richland",
+  "aliases": [
+   "Richland F1",
+   "Richland carrot"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 90 to 95 days after sowing",
+   "fruit": "root: 18 to 20 cm long and about 5 cm across",
+   "yield": "30 to 40 t/ha potential (company figure)",
+   "traits": [
+    "tolerates leaf blight and soft rot",
+    "vigorous, even growth"
+   ],
+   "season": "wet and dry season",
+   "elevation": "midland to highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/carrot-3/richland-f1"
+  ]
+ },
+ {
+  "crop": "chinesecabbage",
+  "name": "Blues",
+  "aliases": [
+   "Blues F1",
+   "Blues Chinese cabbage"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 50 to 55 days after transplanting",
+   "fruit": "head: dark green heads about 23 cm long and 14 cm across",
+   "yield": "20 to 30 t/ha potential (company figure)",
+   "traits": [
+    "tolerates soft rot and clubroot"
+   ],
+   "elevation": "upland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/chinese-cabbage-1/blues-f1"
+  ]
+ },
+ {
+  "crop": "chinesecabbage",
+  "name": "Super King CR117",
+  "aliases": [
+   "Super King",
+   "Super King CR 117"
+  ],
+  "company": "Ramgo",
+  "facts": {
+   "maturityDays": "harvest 65 to 70 days after transplanting",
+   "fruit": "head: even heads of 1.3 to 2 kg, crisp and slightly sweet",
+   "season": "all year",
+   "elevation": "upland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/chinese-cabbage-1/super-king-cr117"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Wilhemina",
+  "aliases": [
+   "Wilhemina lettuce",
+   "Wilhelmina lettuce"
+  ],
+  "company": "Ramgo",
+  "facts": {
+   "maturityDays": "harvest 40 to 45 days after transplanting",
+   "fruit": "leaves: Waldmann type with thick, crisp, yellowish to light green leaves and a slightly sweet taste",
+   "traits": [
+    "tolerates stems, twisted leaves, damping off and tip burn"
+   ],
+   "season": "dry season",
+   "elevation": "midland to upland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/lettuce-leafy-type-1/wilhemina"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Fame",
+  "aliases": [
+   "Fame lettuce",
+   "Fame iceberg"
+  ],
+  "company": "Ramgo",
+  "facts": {
+   "fruit": "head: iceberg type with a crisp texture",
+   "traits": [
+    "tolerates leaf spot and bolting",
+    "copes with wet growing conditions",
+    "vigorous"
+   ]
+  },
+  "sources": [
+   "https://www.ramgoseeds.com/lettuce-ice-berg-1/fame"
+  ]
+ },
+ {
+  "crop": "onion",
+  "name": "Maserati",
+  "aliases": [
+   "Maserati F1",
+   "Maserati shallot"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 85 days after transplanting",
+   "fruit": "bulb: hybrid shallot, mostly 2 to 3 bulbs a plant, shiny deep red with several skins",
+   "yield": "35 to 40 t/ha potential (company figure)",
+   "traits": [
+    "strong foliage"
+   ],
+   "uses": "grown mostly for export",
+   "season": "dry season",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/onion-shallot/maserati-f1"
+  ]
+ },
+ {
+  "crop": "pechay",
+  "name": "Joy Choi",
+  "aliases": [
+   "Joy Choi pakchoi",
+   "Joy Choi pechay"
+  ],
+  "company": "Ramgo",
+  "facts": {
+   "maturityDays": "harvest 25 to 30 days after transplanting",
+   "fruit": "leaves: pakchoi type with bright green leaves on light green stalks",
+   "traits": [
+    "tolerates soft rot"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/pakchoi-1/joy-choi"
+  ]
+ },
+ {
+  "crop": "pechay",
+  "name": "Summer Joy",
+  "aliases": [
+   "Summer Joy F1",
+   "Summer Joy pakchoi"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 25 to 30 days after transplanting",
+   "fruit": "leaves: pakchoi type with big stalks and glossy, smooth, bright green leaves",
+   "traits": [
+    "tolerates diamondback moth, damping off and soft rot"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/pakchoi-1/summer-joy-f1"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Sweet Delight F1",
+  "aliases": [
+   "Sweet Delight",
+   "Ramgo Sweet Delight"
+  ],
+  "company": "Ramgo Seeds (Ramgo International)",
+  "kind": "yellow sweet corn hybrid",
+  "facts": {
+   "maturityDays": "about 70 days after sowing",
+   "traits": [
+    "highly cylindrical ears with closed husk tips",
+    "early, with good eating quality"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/sweet-corn-1/sweet-delight-f1"
+  ]
+ },
+ {
+  "crop": "corn_sweet",
+  "name": "Queen Ruby F1",
+  "aliases": [
+   "Sweet Queen Ruby F1",
+   "Queen Ruby",
+   "Corn Sweet Queen Ruby"
+  ],
+  "company": "Ramgo Seeds (Ramgo International)",
+  "kind": "purple sweet corn hybrid",
+  "popular": "sold in Ramgo's garden seed packets",
+  "facts": {
+   "maturityDays": "70 to 75 days after sowing",
+   "traits": [
+    "sweet, juicy purple kernels rich in anthocyanin"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/corn-sweet-queen-ruby-f1"
+  ]
+ },
+ {
+  "crop": "corn_glutinous",
+  "name": "Vinkle F1",
+  "aliases": [
+   "Vinkle",
+   "Waxy Bicolor Vinkle F1",
+   "Corn Waxy Bicolor Vinkle"
+  ],
+  "company": "Ramgo Seeds (Ramgo International)",
+  "kind": "bicolor waxy corn hybrid",
+  "facts": {
+   "maturityDays": "about 68 days after sowing (60 to 70 days on the garden packet)",
+   "traits": [
+    "big ears with good tip fill and closed husk tips",
+    "pearl white and dark purple kernels with a sticky, chewy bite",
+    "a high share of class A ears",
+    "resists the main diseases of waxy corn, its seller says"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/corn-waxy-bicolor-vinkle-f1",
+   "https://www.ramgoseeds.com/waxy-corn/vinkle-f1"
+  ]
+ },
+ {
+  "crop": "corn_glutinous",
+  "name": "Sweet Jade F1",
+  "aliases": [
+   "Sweet Jade",
+   "Waxy Sweet Jade F1",
+   "Corn Waxy Sweet Jade"
+  ],
+  "company": "Ramgo Seeds (Ramgo International)",
+  "kind": "white waxy corn hybrid",
+  "facts": {
+   "maturityDays": "60 to 70 days after sowing",
+   "traits": [
+    "even white kernels with a sticky, chewy bite"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/corn-waxy-sweet-jade-f1"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Roma",
+  "aliases": [
+   "Tomato Roma",
+   "Roma tomato",
+   "Roma kamatis"
+  ],
+  "company": "Ramgo",
+  "popular": "an old paste tomato sold in Ramgo's garden seed packets",
+  "facts": {
+   "maturityDays": "first harvest 90 to 110 days after transplanting",
+   "fruit": "long, deep red fruits with thick, meaty flesh and little juice, for sauces and paste",
+   "traits": [
+    "determinate, compact plants that need little staking"
+   ],
+   "season": "all year",
+   "elevation": "lowland to midland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/tomato-roma"
+  ]
+ },
+ {
+  "crop": "stringbean",
+  "name": "Scarlet",
+  "aliases": [
+   "Pole Sitao Scarlet",
+   "Scarlet sitao",
+   "red sitao"
+  ],
+  "company": "Ramgo",
+  "kind": "pole sitao",
+  "popular": "the red podded pole sitao in Ramgo's garden seed packets",
+  "facts": {
+   "maturityDays": "first harvest 40 to 45 days after sowing",
+   "fruit": "pods: long, deep reddish purple pods",
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/beans-pole-sitao-scarlet"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Hot Bird",
+  "aliases": [
+   "Pepper Upright Hot Bird",
+   "Hot Bird pepper",
+   "Upright Hot Bird"
+  ],
+  "company": "Ramgo",
+  "popular": "sold in Ramgo's garden seed packets and in online farm shops",
+  "facts": {
+   "maturityDays": "first harvest 70 to 75 days after transplanting",
+   "fruit": "small peppers borne upright, with bright color and moderate heat",
+   "traits": [
+    "an upright plant that keeps bearing for several months"
+   ],
+   "season": "all year",
+   "areas": "lowland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/seeds/pepper-upright-hot-bird",
+   "https://agrify.ph/products/hot-pepper-upright-hot-bird-seeds"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Portia Improved",
+  "aliases": [
+   "Portia Improved F1",
+   "Portia F1",
+   "Portia hot pepper"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "glossy red when ripe, for both the fresh and the dried market",
+   "traits": [
+    "tolerates bacterial wilt, leaf spot and anthracnose",
+    "vigorous plants that set fruit well"
+   ]
+  },
+  "sources": [
+   "https://www.ramgoseeds.com/pepper-hot/portia-improved-f1"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Lyon",
+  "aliases": [
+   "Lyon romaine",
+   "Lyon lettuce"
+  ],
+  "company": "Ramgo",
+  "facts": {
+   "maturityDays": "harvest about 70 days after transplanting",
+   "fruit": "head: romaine type with flat round, deep green heads that travel well",
+   "yield": "25 t/ha potential (company figure)",
+   "traits": [
+    "tolerates blight"
+   ],
+   "season": "dry season",
+   "elevation": "upland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/lettuce-romaine-1/lyon"
+  ]
+ },
+ {
+  "crop": "tomato",
+  "name": "Jacobina 348",
+  "aliases": [
+   "Jacobina 348 F1",
+   "Jacobina tomato"
+  ],
+  "company": "Ramgo",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "firm, thick walled fruits of 55 to 60 g, about 6 cm long and 5 cm across, 5 to 6 to a cluster",
+   "traits": [
+    "sets fruit well"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.ramgoseeds.com/tomato/jacobina-348-f1"
+  ]
+ }
+]

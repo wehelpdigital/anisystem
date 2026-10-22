@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Radish",
   "profile": true,
-  "title": "Sinandok radish (Sinandok labanos): Characteristics",
-  "metaTitle": "Sinandok radish: Characteristics",
+  "title": "Sinandok Radish (Sinandok labanos): Characteristics",
+  "metaTitle": "Sinandok Radish: Characteristics",
   "metaDescription": "Sinandok radish is an open pollinated (no F1 label) radish variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Sinandok radish",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 45 to 50 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -153,9 +153,9 @@
       "ordered": false,
       "items": [
         "[Improved Valiant](/crop-varieties/radish-improved-valiant)",
+        "[Daikon No. 14](/crop-varieties/radish-daikon-no-14)",
         "[Everest](/crop-varieties/radish-everest)",
-        "[Mt. Data](/crop-varieties/radish-mt-data)",
-        "[Timbac 55](/crop-varieties/radish-timbac-55)"
+        "[Lily](/crop-varieties/radish-lily)"
       ]
     },
     {

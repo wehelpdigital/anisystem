@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cabbage",
   "profile": true,
-  "title": "Wakamine cabbage (Wakamine F1): Characteristics",
-  "metaTitle": "Wakamine cabbage: Characteristics",
+  "title": "Wakamine Cabbage (Wakamine F1): Characteristics",
+  "metaTitle": "Wakamine Cabbage: Characteristics",
   "metaDescription": "Wakamine cabbage is an F1 hybrid cabbage variety from Allied Botanical. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Wakamine cabbage",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 65 to 70 days after transplanting. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -153,10 +153,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bright Top](/crop-varieties/cabbage-bright-top)",
+        "[Gladiator](/crop-varieties/cabbage-gladiator)",
         "[Grand KK Cross](/crop-varieties/cabbage-grand-kk-cross)",
-        "[Green Nova](/crop-varieties/cabbage-green-nova)",
-        "[Scorpio](/crop-varieties/cabbage-scorpio)",
-        "[Swerte King](/crop-varieties/cabbage-swerte-king)"
+        "[Green Nova](/crop-varieties/cabbage-green-nova)"
       ]
     },
     {

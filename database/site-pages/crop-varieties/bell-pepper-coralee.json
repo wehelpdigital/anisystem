@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Bell pepper",
   "profile": true,
-  "title": "Coralee bell pepper (Coralee F1): Characteristics",
-  "metaTitle": "Coralee bell pepper: Characteristics",
+  "title": "Coralee Bell Pepper (Coralee F1): Characteristics",
+  "metaTitle": "Coralee Bell Pepper: Characteristics",
   "metaDescription": "Coralee bell pepper is an F1 hybrid bell pepper variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Coralee bell pepper",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 60 to 70 days after transplanting. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -152,10 +152,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Clarabel](/crop-varieties/bell-pepper-clarabel)",
         "[Excel](/crop-varieties/bell-pepper-excel)",
-        "[Kayen Premium Select](/crop-varieties/bell-pepper-kayen-premium-select)",
-        "[California Wonder](/crop-varieties/bell-pepper-california-wonder): 90 to 100 days, 11.63 t/ha, 1970",
-        "[Yolo Wonder](/crop-varieties/bell-pepper-yolo-wonder): 90 to 110 days, 14.67 t/ha, 1970"
+        "[Red Crest](/crop-varieties/bell-pepper-red-crest)",
+        "[Sultan](/crop-varieties/bell-pepper-sultan)"
       ]
     },
     {

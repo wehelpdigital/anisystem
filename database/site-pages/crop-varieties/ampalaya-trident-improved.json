@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Ampalaya",
   "profile": true,
-  "title": "Trident Improved ampalaya: Characteristics",
-  "metaTitle": "Trident Improved ampalaya: Characteristics",
+  "title": "Trident Improved Ampalaya: Characteristics",
+  "metaTitle": "Trident Improved Ampalaya: Characteristics",
   "metaDescription": "Trident Improved ampalaya is an F1 hybrid ampalaya variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Trident Improved ampalaya",
   "keywords": [
@@ -78,7 +78,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 45 to 50 days after transplanting (Allied sheet), the 2015 report gives 60 to 65 days after direct sowing. Yield, by the seller's count: about 30 t/ha potential (company figure quoted in Agriculture Monthly). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -160,10 +160,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bonito](/crop-varieties/ampalaya-bonito)",
         "[Galaxy](/crop-varieties/ampalaya-galaxy)",
-        "[Jade Star](/crop-varieties/ampalaya-jade-star)",
-        "[Jadeite](/crop-varieties/ampalaya-jadeite)",
-        "[Mestisa](/crop-varieties/ampalaya-mestisa)"
+        "[Green Alpha](/crop-varieties/ampalaya-green-alpha)",
+        "[Jade Star](/crop-varieties/ampalaya-jade-star)"
       ]
     },
     {

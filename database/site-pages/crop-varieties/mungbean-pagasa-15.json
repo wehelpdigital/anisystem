@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Mungbean",
   "profile": true,
-  "title": "Pagasa 15 mungbean (NSIC Mg 9): Yield, Maturity and Characteristics",
-  "metaTitle": "Pagasa 15 mungbean: Yield, Maturity and Characteristics",
+  "title": "Pagasa 15 Mungbean (NSIC Mg 9): Yield, Maturity and Characteristics",
+  "metaTitle": "Pagasa 15 Mungbean: Yield, Maturity and Characteristics",
   "metaDescription": "Pagasa 15 mungbean is a mungbean variety. About 58 days to harvest, 1.1 t/ha in trials. See its pest ratings and traits.",
   "focusKeyword": "Pagasa 15 mungbean",
   "keywords": [
@@ -154,7 +154,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit mungbean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew), [thrips](/pests/thrips). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit mungbean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [powdery mildew](/diseases/powdery-mildew), [anthracnose](/diseases/anthracnose), [Corn earworm](/pests/corn-earworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

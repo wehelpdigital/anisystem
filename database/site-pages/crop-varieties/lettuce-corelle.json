@@ -1,0 +1,186 @@
+{
+  "section": "crop-varieties",
+  "slug": "lettuce-corelle",
+  "sortOrder": 833,
+  "lang": "en",
+  "category": "Lettuce",
+  "profile": true,
+  "title": "Corelle Lettuce: Characteristics",
+  "metaTitle": "Corelle Lettuce: Characteristics",
+  "metaDescription": "Corelle lettuce is a lettuce variety. See its days to harvest, yield, pest ratings, traits and where it grows best. Compare it with others.",
+  "focusKeyword": "Corelle lettuce",
+  "keywords": [
+    "Corelle lettuce",
+    "Corelle",
+    "Corelle lettuce variety",
+    "lettuce variety philippines"
+  ],
+  "excerpt": "Corelle is a lettuce variety. It is not a registered variety, so the facts here come from its seller and farm sources. It comes from Allied Botanical (Condor brand).",
+  "heroImage": {
+    "src": "/images/site/guides/crops-vegetables-philippines.webp",
+    "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, the kind of farm where Corelle lettuce is grown",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The facts below come from its seller and from farm sources, each one listed at the end. Compare it with the others in our [lettuce variety finder](/crop-varieties/lettuce), or see [every crop variety](/crop-varieties) we list. For the crop itself, read our guide: [vegetables in the Philippines](/crops/vegetables-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Key facts about Corelle lettuce"
+    },
+    {
+      "type": "table",
+      "caption": "From its seller and farm sources",
+      "rows": [
+        [
+          "Trait",
+          "What the record shows"
+        ],
+        [
+          "Breeder or owner",
+          "Allied Botanical (Condor brand)"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take, and how much does it yield?"
+    },
+    {
+      "type": "text",
+      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Is it resistant to pests and diseases?"
+    },
+    {
+      "type": "text",
+      "text": "No pest or disease ratings are published for this variety. So treat it as untested, and scout every week."
+    },
+    {
+      "type": "text",
+      "text": "The pests and diseases that hit lettuce fields most often: [bacterial soft rot](/diseases/soft-rot), [Cercospora leaf spot](/diseases/cercospora-leaf-spot), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [leafminer](/pests/leafminer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What its seller and farm sources say"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Fruit:** Leaves: large, heavy and even plants with finely frilled leaves.",
+        "Grows from the lowland to the highland, in the open or in a greenhouse."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Check these against what farmers near you have seen, because the same variety can do differently from one town to the next."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where and when to plant Corelle lettuce"
+    },
+    {
+      "type": "text",
+      "text": "Loose leaf lettuce grows in the lowlands, while heading types need the highlands. Pick a variety slow to bolt in the heat. Before planting, get the field ready with our guide: [Pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before you buy seed"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Buy sealed packs or tagged sacks from an accredited dealer, and check the packing date and germination rate.",
+        "Ask your municipal agriculturist or nearby farmers how it did in your area last season.",
+        "Try it on a small area first, beside the variety you usually plant, before you switch the whole farm.",
+        "Write down the planting day, inputs and harvest, so you can compare varieties on your own ground. anee.io keeps these records for you."
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next lettuce season",
+      "text": "Set the planting day of each lot and anee.io dates every task to harvest, with the weather beside it. Free on the Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Lettuce varieties like this one"
+    },
+    {
+      "type": "text",
+      "text": "These are the closest matches among the lettuce varieties we list. So if seed of this one is hard to find, compare these first."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Altima](/crop-varieties/lettuce-altima)",
+        "[Dazzling](/crop-varieties/lettuce-dazzling)",
+        "[Fame](/crop-varieties/lettuce-fame)",
+        "[General](/crop-varieties/lettuce-general)"
+      ]
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Where can I buy seed of Corelle?",
+          "a": "Ask an accredited seed dealer in your province, the seller named on this page or your municipal agriculturist. Look for the certified seed tag or a sealed pack before you pay."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Every lettuce variety, side by side",
+          "url": "/crop-varieties/lettuce"
+        },
+        {
+          "label": "Crop varieties in the Philippines",
+          "url": "/crop-varieties"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Fertilizer for vegetables",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        },
+        {
+          "label": "Rice varieties of the Philippines",
+          "url": "/rice-varieties"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Notes on Corelle from alliedbotanical.com",
+          "url": "https://alliedbotanical.com/project/corelle-lettuce/"
+        }
+      ]
+    }
+  ]
+}

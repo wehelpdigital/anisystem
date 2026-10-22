@@ -518,10 +518,14 @@ def build(v, allv, st):
     tail = 'Yield, Maturity and Characteristics' if has else ('Fruit and Tree Characteristics' if c.get('group') == 'fruit' else 'Characteristics')
     if has and not v.get('maturity') and (v.get('yield') or {}).get('unit') == 't dry beans/ha':
         tail = 'Yield and Characteristics'   # a cacao clone's record has no day count
-    title = '%s%s: %s' % (fk if fk != n else n, (' (%s)' % aliases[0]) if aliases and len(aliases[0]) <= 18 else '', tail)
+    # In a title and the H1 the crop word after the name is capitalized ("DK XPT 9674 Corn: ...",
+    # "Sigarillas Winged Bean: ..."), 2026-10-22; the body keeps it small.
+    word = crop_slug(key).replace('-', ' ')
+    fk_t = fk[:-len(word)] + ' '.join(w[:1].upper() + w[1:] for w in word.split()) if fk != n and fk.endswith(' ' + word) else fk
+    title = '%s%s: %s' % (fk_t if fk != n else n, (' (%s)' % aliases[0]) if aliases and len(aliases[0]) <= 18 else '', tail)
     if fk == n and cw not in n.lower():
         title = '%s %s Variety: %s' % (n, crop_n, tail)
-    meta_opts = ['%s: %s' % (fk, tail), '%s: Yield and Maturity' % fk if has else '%s: Characteristics' % fk, '%s Variety' % fk, fk]
+    meta_opts = ['%s: %s' % (fk_t, tail), '%s: Yield and Maturity' % fk_t if has else '%s: Characteristics' % fk_t, '%s Variety' % fk_t, fk_t]
     meta_title = next(t for t in meta_opts if len(t) <= 60)
     kind_txt = ('%s %s' % (kind, cw)).strip() if kind and cw not in kind else (kind or cw)
     desc_core = []
@@ -701,6 +705,15 @@ def build(v, allv, st):
             line += ' Each tree gave about %s %s in the records.' % (fmt(float(pt[1].replace(',', ''))), u)
         line += ' A grafted or marcotted tree bears years sooner than one grown from seed, and its yield climbs as the tree grows.'
         para.append(line)
+    if not para and (facts.get('maturityDays') or facts.get('yield')):
+        # The seller's own figures, said once more here and never denied (2026-10-23: the
+        # page used to say "no day count is published" right under the seller's day count).
+        if facts.get('maturityDays'):
+            para.append('Days to harvest, by the seller\'s count: %s.' % lower_start(safe(str(facts['maturityDays']))).rstrip('.'))
+        if facts.get('yield'):
+            para.append('Yield, by the seller\'s count: %s.' % lower_start(safe(str(facts['yield']))).rstrip('.'))
+        para.append('No trial on record checks %s yet, so treat %s as the seller\'s own and compare with farms near you before you plan a season around it.'
+                    % (('these figures', 'them') if facts.get('maturityDays') and facts.get('yield') else ('this figure', 'it')))
     if not para:
         para.append('No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.')
     if facts.get('maturityDays') and v.get('maturity'):

@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Celery",
   "profile": true,
-  "title": "Tall Utah celery: Characteristics",
-  "metaTitle": "Tall Utah celery: Characteristics",
+  "title": "Tall Utah Celery: Characteristics",
+  "metaTitle": "Tall Utah Celery: Characteristics",
   "metaDescription": "Tall Utah celery is an open pollinated celery variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Tall Utah celery",
   "keywords": [
@@ -140,6 +140,7 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Ventura](/crop-varieties/celery-ventura)",
         "[Kinchay](/crop-varieties/celery-kinchay)",
         "[Stetham](/crop-varieties/celery-stetham)"
       ]

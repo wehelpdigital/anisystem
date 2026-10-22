@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cabbage",
   "profile": true,
-  "title": "Scorpio cabbage (Scorpio F1): Characteristics",
-  "metaTitle": "Scorpio cabbage: Characteristics",
+  "title": "Scorpio Cabbage (Scorpio F1): Characteristics",
+  "metaTitle": "Scorpio Cabbage: Characteristics",
   "metaDescription": "Scorpio cabbage is an F1 hybrid cabbage variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Scorpio cabbage",
   "keywords": [
@@ -77,7 +77,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 55 to 60 days in the guide, Allied gives 65 to 70 days after transplanting. Yield, by the seller's count: about 21 t/ha marketable, averaged over three Benguet sites and four seasons under organic growing (BSU trial). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -158,10 +158,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bright Top](/crop-varieties/cabbage-bright-top)",
+        "[Gladiator](/crop-varieties/cabbage-gladiator)",
         "[Grand KK Cross](/crop-varieties/cabbage-grand-kk-cross)",
-        "[Green Nova](/crop-varieties/cabbage-green-nova)",
-        "[Swerte King](/crop-varieties/cabbage-swerte-king)",
-        "[Wakamine](/crop-varieties/cabbage-wakamine)"
+        "[Green Nova](/crop-varieties/cabbage-green-nova)"
       ]
     },
     {

@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Ampalaya",
   "profile": true,
-  "title": "Verde Buenas ampalaya (Verde Buenas F1): Characteristics",
-  "metaTitle": "Verde Buenas ampalaya: Characteristics",
+  "title": "Verde Buenas Ampalaya (Verde Buenas F1): Characteristics",
+  "metaTitle": "Verde Buenas Ampalaya: Characteristics",
   "metaDescription": "Verde Buenas ampalaya is an F1 hybrid ampalaya variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Verde Buenas ampalaya",
   "keywords": [
@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 30 to 40 days after transplanting. Yield, by the seller's count: 20 to 25 t/ha potential (company figure), with picking lasting up to two months. No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -158,10 +158,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bonito](/crop-varieties/ampalaya-bonito)",
         "[Galaxy](/crop-varieties/ampalaya-galaxy)",
-        "[Jade Star](/crop-varieties/ampalaya-jade-star)",
-        "[Jadeite](/crop-varieties/ampalaya-jadeite)",
-        "[Mestisa](/crop-varieties/ampalaya-mestisa)"
+        "[Green Alpha](/crop-varieties/ampalaya-green-alpha)",
+        "[Jade Star](/crop-varieties/ampalaya-jade-star)"
       ]
     },
     {

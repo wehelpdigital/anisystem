@@ -13,6 +13,15 @@ Two kinds of source, facts only:
 Every sentence on the pages is anee.io's own, written by build_pages.py.
 
     python database/crop-varieties/build_data.py <nsic xlsx folder> <research folder>
+
+The registry sheets and the first research notes are no longer at hand
+(2026-10-22), so new research is folded onto the catalogue as it stands:
+
+    python database/crop-varieties/build_data.py --extend database/crop-varieties/research
+
+Each note joins its variety (by NSIC number, else by name or other name within
+the crop) or becomes a variety of its own; only a new variety gets a slug, and
+running it again changes nothing.
 """
 import glob
 import json
@@ -25,7 +34,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import nsic  # noqa: E402
 
-XL = sys.argv[1] if len(sys.argv) > 1 else HERE
+EXTEND = len(sys.argv) > 1 and sys.argv[1] == '--extend'
+XL = sys.argv[1] if len(sys.argv) > 1 and not EXTEND else HERE
 RESEARCH = sys.argv[2] if len(sys.argv) > 2 else None
 
 # NSIC sheet -> (crop key, kind it implies). Left out: wheat, chickpea,
@@ -489,11 +499,12 @@ def richness(r):
     return (r['maturity'] is not None) * 3 + (r['yield'] is not None) * 3 + len(r['traits']) + len(r['reactions'])
 
 
-def load_research():
+def load_research(folder=None):
     out = []
-    if not RESEARCH:
+    folder = folder or RESEARCH
+    if not folder:
         return out
-    for f in sorted(glob.glob(os.path.join(RESEARCH, '*.json'))):
+    for f in sorted(glob.glob(os.path.join(folder, '*.json'))):
         if os.path.basename(f).startswith(('part', 'final')):
             continue   # a researcher's unchecked notes, or the pieces merged into one file
         try:
@@ -614,6 +625,133 @@ def main():
     print(', '.join('%s %d' % kv for kv in c.most_common()))
 
 
+def merge_note(old, note, replace=False):
+    """A new note on a variety that has one: the old findings stay, the new ones fill what was missing
+    (a fact not yet known, a trait not yet listed, another source). replace=True puts the new note in
+    its place (a note marked "replace": true, for a correction)."""
+    if not old or replace:
+        return note
+    out = dict(old)
+    for k in ('company', 'kind', 'popular', 'claims'):
+        if note.get(k) and not out.get(k):
+            out[k] = note[k]
+    facts = dict(old.get('facts') or {})
+    for k, v in (note.get('facts') or {}).items():
+        if k == 'traits':
+            have = list(facts.get('traits') or [])
+            seen = {key_name(t) for t in have}
+            facts['traits'] = have + [t for t in v if key_name(t) not in seen]
+        elif v and not facts.get(k):
+            facts[k] = v
+    if facts:
+        out['facts'] = facts
+    out['sources'] = list(dict.fromkeys((old.get('sources') or []) + (note.get('sources') or [])))[:6]
+    return out
+
+
+def loose_key(s, crop):
+    """A name with its F1, its crop word and its spacing gone, to warn of a variety already held under
+    another spelling (Galaxy F1 ampalaya and Galaxy)."""
+    k = key_name(s)
+    for w in {crop, crop_slug(crop).replace('-', ''), 'f1', 'hybrid', 'seeds', 'seed'}:
+        k = k.replace(w, '') if len(k) > len(w) + 2 else k
+    return k
+
+
+def extend(folder):
+    """--extend: the research notes in `folder` folded onto varieties.json as it stands (its records are
+    normalized and unsourced already). A note joins its variety by the rules main() uses, by NSIC number
+    with digits, else by name or other name within the crop, or becomes a new research only variety built
+    the way main() builds one. Only new varieties get a slug; an old slug never changes."""
+    from collections import Counter
+    path = os.path.join(HERE, 'varieties.json')
+    recs = json.load(open(path, encoding='utf-8'))
+    before = {id(r): json.dumps(r, sort_keys=True, ensure_ascii=False) for r in recs}
+    regidx = {key_reg(r['reg']): r for r in recs if r.get('reg') and any(ch.isdigit() for ch in r['reg'])}
+    nameidx, looseidx = {}, {}
+    for r in recs:
+        for nm in [r['name']] + r['aliases']:
+            nameidx.setdefault((r['crop'], key_name(nm)), r)
+            looseidx.setdefault((r['crop'], loose_key(nm, r['crop'])), r)
+    merged, added, warned = Counter(), Counter(), []
+    new = []
+    for x in load_research(folder):
+        crop = CROP_OF_RESEARCH.get(x['crop'], x['crop'])
+        hit = regidx.get(key_reg(x.get('nsic'))) if x.get('nsic') and any(ch.isdigit() for ch in x['nsic']) else None
+        if not hit and (crop, nice_name(x['name'])[0]) in SAME:
+            hit = nameidx.get((crop, key_name(SAME[(crop, nice_name(x['name'])[0])])))
+        if not hit:
+            for nm in [x['name']] + (x.get('aliases') or []):
+                hit = nameidx.get((crop, key_name(nm)))
+                if hit:
+                    break
+        if hit and hit['crop'] != crop:
+            hit = None
+        note = {k: x.get(k) for k in ('company', 'kind', 'popular', 'facts', 'claims', 'sources') if x.get(k)}
+        names = [nice_name(a)[0] for a in [x['name']] + (x.get('aliases') or [])]
+        if hit:
+            hit['research'] = merge_note(hit.get('research'), note, bool(x.get('replace')))
+            have = {key_name(a) for a in [hit['name']] + hit['aliases']}
+            for a in names:
+                if key_name(a) not in have:
+                    hit['aliases'].append(a)
+                    have.add(key_name(a))
+            hit['aliases'] = hit['aliases'][:6]
+            # A research only variety takes the seller and type a later note names, when it had none.
+            if not hit.get('reg'):
+                if not hit.get('owner') and x.get('company'):
+                    hit['owner'] = x['company']
+                if not hit.get('kind') and x.get('kind') and crop != 'corn':
+                    hit['kind'] = x['kind']
+            if crop == 'corn' and x['crop'] == 'corn_sweet':
+                hit['kind'] = 'sweet corn ' + ('hybrid' if 'hybrid' in (hit['kind'] or '') else 'open pollinated')
+            merged[crop] += 1
+            continue
+        main_, more = nice_name(x['name'])
+        near = next((looseidx.get((crop, loose_key(nm, crop))) for nm in [x['name']] + (x.get('aliases') or [])
+                     if looseidx.get((crop, loose_key(nm, crop)))), None)
+        if near:
+            warned.append('%s %s: added, but it looks like %s (%s); give it as an alias if it is the same' % (crop, main_, near['name'], near.get('slug') or 'new'))
+        # The same shape main() gives a research only variety.
+        r = {'crop': crop, 'name': main_, 'aliases': list(dict.fromkeys(more + [a for a in names[1:] if key_name(a) != key_name(main_)]))[:6],
+             'reg': None, 'year': None, 'owner': x.get('company'), 'kind': x.get('kind'), 'color': None, 'localName': None,
+             'uses': (x.get('facts') or {}).get('uses'), 'maturity': None, 'yield': None, 'height': None, 'traits': [], 'reactions': [],
+             'domain': [], 'seasons': [], 'elevation': [], 'sources': [], 'research': note}
+        if crop == 'corn':
+            r['color'] = 'white' if re.search(r'white', x.get('kind') or '', re.I) else 'yellow' if re.search(r'yellow', x.get('kind') or '', re.I) else None
+            if x['crop'] == 'corn_sweet':
+                r['kind'] = 'sweet corn ' + ('hybrid' if re.search(r'hybrid', x.get('kind') or '', re.I) else 'open pollinated')
+            elif x['crop'] == 'corn_glutinous':
+                r['kind'] = 'glutinous ' + ('hybrid' if re.search(r'hybrid', x.get('kind') or '', re.I) else 'open pollinated')
+        recs.append(r)
+        new.append(r)
+        for nm in [main_] + r['aliases']:
+            nameidx.setdefault((crop, key_name(nm)), r)
+            looseidx.setdefault((crop, loose_key(nm, crop)), r)
+        added[crop] += 1
+
+    recs = apply_fixes(recs)
+    keep = [r for r in recs if r.get('research') or r['maturity'] or r['yield'] or len(r['traits']) >= 4]
+    seen = {r['slug'] for r in keep if r.get('slug')}
+    for r in new:
+        base = '%s-%s' % (crop_slug(r['crop']), slugify(r['name']))
+        slug, i = base, 2
+        while slug in seen:
+            slug, i = '%s-%d' % (base, i), i + 1
+        seen.add(slug)
+        r['slug'] = slug
+    keep.sort(key=lambda r: (r['crop'], -(r['year'] or 0), r['name']))
+    from build_pages import unsource_page  # noqa: E402
+    keep = unsource_page(keep)
+    json.dump(keep, open(path, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
+    changed = Counter(r['crop'] for r in recs if id(r) in before and json.dumps(r, sort_keys=True, ensure_ascii=False) != before[id(r)])
+    for w in warned:
+        print('check:', w)
+    for crop in sorted(set(merged) | set(added)):
+        print('%-16s %3d added, %3d notes merged (%d records changed)' % (crop, added[crop], merged[crop], changed[crop]))
+    print('%d added, %d merged, %d varieties in all' % (sum(added.values()), sum(merged.values()), len(keep)))
+
+
 CROP_SLUGS = {'stringbean': 'sitao', 'snapbean': 'snap-bean', 'chinesecabbage': 'chinese-cabbage', 'limabean': 'lima-bean',
               'wingedbean': 'winged-bean', 'bellpepper': 'bell-pepper', 'sweetpotato': 'sweet-potato', 'ubi': 'ube',
               'starapple': 'star-apple', 'pigeonpea': 'pigeon-pea'}
@@ -624,4 +762,9 @@ def crop_slug(key):
 
 
 if __name__ == '__main__':
-    main()
+    if EXTEND:
+        if not RESEARCH or not os.path.isdir(RESEARCH):
+            sys.exit('usage: build_data.py --extend <research folder>')
+        extend(RESEARCH)
+    else:
+        main()

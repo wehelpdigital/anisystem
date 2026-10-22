@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Cowpea",
   "profile": true,
-  "title": "Mecan Pea (BPI Cp 2) cowpea: Yield, Maturity and Characteristics",
-  "metaTitle": "Mecan Pea (BPI Cp 2) cowpea: Yield and Maturity",
+  "title": "Mecan Pea (BPI Cp 2) Cowpea: Yield, Maturity and Characteristics",
+  "metaTitle": "Mecan Pea (BPI Cp 2) Cowpea: Yield and Maturity",
   "metaDescription": "Mecan Pea (BPI Cp 2) cowpea is a cowpea variety. About 70 days to harvest, 1.8 t/ha in trials. See its ratings and traits.",
   "focusKeyword": "Mecan Pea (BPI Cp 2) cowpea",
   "keywords": [
@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit cowpea fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit cowpea fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [leafminer](/pests/leafminer), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

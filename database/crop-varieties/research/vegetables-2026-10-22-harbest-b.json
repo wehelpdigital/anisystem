@@ -1,0 +1,506 @@
+[
+ {
+  "crop": "cucumber",
+  "name": "Fountain",
+  "aliases": [
+   "Fountain F1",
+   "Fountain cucumber"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 40 to 50 days after sowing",
+   "fruit": "small burpless type, light green with tiny spines",
+   "traits": [
+    "very vigorous and does well in hot, humid areas"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Thumb Sweet",
+  "aliases": [
+   "Thumb Sweet F1",
+   "Thumb Sweet pickling cucumber"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest about 30 days after sowing",
+   "fruit": "thin skinned and often bumpy, picked at 2.5 to 12.5 cm",
+   "uses": "mostly for pickling"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "cucumber",
+  "name": "Vantage",
+  "aliases": [
+   "Vantage F1",
+   "Vantage cucumber"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "first harvest 45 to 50 days after sowing",
+   "fruit": "medium to large, 23 to 25 cm long, with a smooth green skin and small white spines",
+   "traits": [
+    "keeps and ships well"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "melon",
+  "name": "Camille",
+  "aliases": [
+   "Camille F1",
+   "Camille hami melon"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 70 to 75 days after sowing",
+   "fruit": "hami melon, oblong with a netted yellow rind streaked dark green and crisp, sweet, pale apricot flesh, about 2.7 to 4 kg"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "melon",
+  "name": "Sweetie Girl",
+  "aliases": [
+   "Sweetie Girl F1",
+   "Sweet Girl melon"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 70 days after sowing",
+   "fruit": "muskmelon, oblong with a golden yellow rind, 2 to 4 kg, sugar up to 10 to 12 percent"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "melon",
+  "name": "Sweet Flavor",
+  "aliases": [
+   "Sweet Flavor F1",
+   "Sweet Flavor muskmelon"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 65 days after sowing",
+   "fruit": "muskmelon, small and round with buff yellow netting, ripening to light orange"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Dragon",
+  "aliases": [
+   "Dragon F1",
+   "Dragon watermelon"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 80 days after sowing",
+   "fruit": "round with a light green rind and thin stripes, red flesh of about 14 Brix, 6 to 10 kg"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "watermelon",
+  "name": "Golden Boy",
+  "aliases": [
+   "Golden Boy F1",
+   "Golden Boy watermelon"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 75 to 80 days after sowing",
+   "fruit": "oblong with yellow flesh"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Grand Rapid",
+  "aliases": [
+   "Grand Rapids",
+   "Grand Rapid lettuce"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "popular": "one of the best sellers in Harbest's Seeds of Hope catalogue",
+  "facts": {
+   "maturityDays": "harvest about 45 days after sowing",
+   "fruit": "leaves: leaf type with wavy leaves curled at the edges",
+   "traits": [
+    "resists tip burn"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://www.harbest.com.ph/seeds"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Dazzling",
+  "aliases": [
+   "Dazzling lettuce"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "harvest about 38 days after sowing",
+   "fruit": "head: leaf type, heads of about 300 g with good care",
+   "uses": "for salads"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "General",
+  "aliases": [
+   "General lettuce",
+   "General iceberg"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "harvest about 55 days after sowing",
+   "fruit": "head: iceberg type, firm round heads 25 to 30 cm across, packed with broad, thick, crisp leaves",
+   "traits": [
+    "tolerates heat"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Red Rapid",
+  "aliases": [
+   "Red Rapid lettuce"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "harvest about 35 days after sowing",
+   "fruit": "leaves: red leaf type growing to about 500 g",
+   "traits": [
+    "slow to bolt",
+    "also grown in pots"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "lettuce",
+  "name": "Mini Lollo Rosso",
+  "aliases": [
+   "Mini Lollo Rosso lettuce"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "harvest about 35 days after sowing",
+   "fruit": "head: a small, compact rosette of frilly, deep red violet leaves over a pale green base that does not form a head, with a bold, slightly bitter, nutty taste"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "mustard",
+  "name": "Bausin",
+  "aliases": [
+   "Bausin F1",
+   "Bau Sin mustard",
+   "Bausin mustasa"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 45 days after sowing",
+   "fruit": "leaves: smooth leaves on thick stalks, tender with a good taste",
+   "traits": [
+    "early, sturdy and semi dwarf",
+    "tolerates heat, cold and damp"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "pechay",
+  "name": "Pavito",
+  "aliases": [
+   "Pavito pechay",
+   "Pechay Pavito",
+   "East West Pavito"
+  ],
+  "company": "East-West Seed (also sold by Harbest Agribusiness)",
+  "popular": "one of the ten best selling East-West seeds at Baliuag Marketing, a big farm supply chain in Bulacan (Agriculture Monthly), and among the most repurchased seed packs on Lazada",
+  "facts": {
+   "maturityDays": "harvest 25 to 30 days after sowing",
+   "fruit": "leaves: compact and short, with very dark green leaves and pure white, crisp stalks",
+   "traits": [
+    "fast growing"
+   ],
+   "season": "all year"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+   "https://agriculture.com.ph/2020/12/27/success-in-farm-supplies-business/",
+   "https://agrify.ph/products/pechay-pavito-eastwest-seeds",
+   "https://www.lazada.com.ph/trending/Plants-Seeds-Bulbs-Top-Repurchased/1246722548"
+  ]
+ },
+ {
+  "crop": "radish",
+  "name": "Ming Ho",
+  "aliases": [
+   "Ming Ho F1",
+   "Ming-Ho radish"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 45 days after sowing",
+   "fruit": "root: white, tender roots with a mild taste",
+   "traits": [
+    "early and vigorous",
+    "not suited to cool conditions"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "broccoli",
+  "name": "Green King",
+  "aliases": [
+   "Green King F1",
+   "Green King broccoli"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest about 85 days after sowing",
+   "fruit": "head: thick, blue green heads with rather large beads and no side shoots",
+   "traits": [
+    "vigorous, even and upright",
+    "does well in warm weather"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "onion",
+  "name": "Avatar",
+  "aliases": [
+   "Avatar F1",
+   "Avatar onion"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 85 to 95 days after transplanting",
+   "fruit": "bulb: small, light red and strongly aromatic, 2 to 4 bulblets to a clump of about 120 to 130 g",
+   "uses": "for the household kitchen"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "cabbage",
+  "name": "Summer Summit",
+  "aliases": [
+   "Summer Summit F1",
+   "Summer Summit cabbage"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "head: solid, even, oval heads of about 2 kg with a tender texture",
+   "traits": [
+    "suited to warm weather",
+    "medium sized plants"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "cabbage",
+  "name": "Volcano",
+  "aliases": [
+   "Volcano F1",
+   "Volcano cabbage"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "maturityDays": "harvest 60 to 70 days after transplanting",
+   "fruit": "head: semi round, firm, grey green heads of 1.5 to 2 kg with a short core",
+   "traits": [
+    "stands heat and rain very well"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "carrot",
+  "name": "Marchew",
+  "aliases": [
+   "Marchew carrot"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "facts": {
+   "maturityDays": "harvest 90 to 110 days after sowing",
+   "fruit": "root: long, conical and deep orange"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "cauliflower",
+  "name": "Snow Ball",
+  "aliases": [
+   "Snow Ball F1",
+   "Snowball cauliflower",
+   "Cauliflower Snowball"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "F1 hybrid",
+  "facts": {
+   "fruit": "curd: crisp, tender and compact white heads of about 600 g",
+   "traits": [
+    "tolerates heat",
+    "resists downy mildew, its seller says"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "snapbean",
+  "name": "Merci",
+  "aliases": [
+   "Merci French bean",
+   "Merci bush bean"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "bush snap bean",
+  "facts": {
+   "maturityDays": "first harvest about 45 days after sowing",
+   "fruit": "pods: round, sweet and tender pods",
+   "season": "all year",
+   "elevation": "highland"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "soybean",
+  "name": "Ryokko",
+  "aliases": [
+   "Ryokko edamame",
+   "Ryokko vegetable soybean"
+  ],
+  "company": "Harbest Agribusiness (Seeds of Hope)",
+  "kind": "vegetable soybean",
+  "facts": {
+   "maturityDays": "harvest 65 to 70 days after sowing",
+   "fruit": "pods: large, deep green pods covered in white hairs",
+   "traits": [
+    "vigorous plants 80 to 100 cm tall"
+   ],
+   "uses": "for fresh markets and processing"
+  },
+  "claims": true,
+  "sources": [
+   "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+  ]
+ },
+ {
+  "crop": "chili",
+  "name": "Django Dos",
+  "aliases": [
+   "Django Dos F1",
+   "Django 2"
+  ],
+  "company": "East-West Seed",
+  "kind": "F1 hybrid",
+  "popular": "sold in Philippine online farm shops beside Django, one of the ten best selling East-West seeds at Baliuag Marketing",
+  "facts": {
+   "fruit": "glossy light green, even sized and mildly hot",
+   "traits": [
+    "rated intermediate against cucumber mosaic virus",
+    "early and high yielding",
+    "packs state 97 percent hybridity and 85 percent germination or better"
+   ]
+  },
+  "claims": true,
+  "sources": [
+   "https://agrify.ph/products/django-dos-f1-pepper-seeds",
+   "https://agriculture.com.ph/2020/12/27/success-in-farm-supplies-business/"
+  ]
+ }
+]

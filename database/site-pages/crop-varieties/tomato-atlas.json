@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Tomato",
   "profile": true,
-  "title": "Atlas tomato (Atlas F1): Characteristics",
-  "metaTitle": "Atlas tomato: Characteristics",
+  "title": "Atlas Tomato (Atlas F1): Characteristics",
+  "metaTitle": "Atlas Tomato: Characteristics",
   "metaDescription": "Atlas tomato is an F1 hybrid tomato variety from Allied Botanical. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Atlas tomato",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 55 to 60 days after transplanting. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -153,10 +153,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Amber](/crop-varieties/tomato-amber)",
+        "[Aruru](/crop-varieties/tomato-aruru)",
         "[Avatar TY](/crop-varieties/tomato-avatar-ty)",
-        "[Diamante Max](/crop-varieties/tomato-diamante-max)",
-        "[Fantastic](/crop-varieties/tomato-fantastic)",
-        "[Mountain Fresh Plus](/crop-varieties/tomato-mountain-fresh-plus)"
+        "[Diamante Max](/crop-varieties/tomato-diamante-max)"
       ]
     },
     {

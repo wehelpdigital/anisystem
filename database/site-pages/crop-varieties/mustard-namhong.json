@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Mustard",
   "profile": true,
-  "title": "Namhong mustard (Namhong mustasa): Characteristics",
-  "metaTitle": "Namhong mustard: Characteristics",
+  "title": "Namhong Mustard (Namhong mustasa): Characteristics",
+  "metaTitle": "Namhong Mustard: Characteristics",
   "metaDescription": "Namhong mustard is an open pollinated mustard variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Namhong mustard",
   "keywords": [
@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 35 to 40 days after sowing. Yield, by the seller's count: 30 to 40 t/ha potential (Ramgo). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -156,8 +156,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bausin](/crop-varieties/mustard-bausin)",
+        "[King Mustard](/crop-varieties/mustard-king-mustard)",
         "[Montana](/crop-varieties/mustard-montana)",
-        "[Super Edsel](/crop-varieties/mustard-super-edsel)"
+        "[Monteverde](/crop-varieties/mustard-monteverde)"
       ]
     },
     {

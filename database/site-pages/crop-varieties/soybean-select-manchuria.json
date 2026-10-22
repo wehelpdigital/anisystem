@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Soybean",
   "profile": true,
-  "title": "Select Manchuria soybean (Manchuria soybean): Yield, Maturity and Characteristics",
-  "metaTitle": "Select Manchuria soybean: Yield and Maturity",
+  "title": "Select Manchuria Soybean (Manchuria soybean): Yield, Maturity and Characteristics",
+  "metaTitle": "Select Manchuria Soybean: Yield and Maturity",
   "metaDescription": "Select Manchuria soybean is a grain soybean variety for Mindanao. About 70 days to harvest, 2 t/ha in trials. See its ratings and traits.",
   "focusKeyword": "Select Manchuria soybean",
   "keywords": [
@@ -147,7 +147,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit soybean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit soybean fields most often: [bean fly](/pests/bean-fly), [legume pod borer](/pests/legume-pod-borer), [Corn earworm](/pests/corn-earworm), [cutworm](/pests/cutworm), [root knot nematode](/diseases/root-knot-nematode). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",

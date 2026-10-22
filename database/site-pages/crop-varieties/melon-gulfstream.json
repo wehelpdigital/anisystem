@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Melon",
   "profile": true,
-  "title": "Gulfstream melon: Characteristics",
-  "metaTitle": "Gulfstream melon: Characteristics",
+  "title": "Gulfstream Melon: Characteristics",
+  "metaTitle": "Gulfstream Melon: Characteristics",
   "metaDescription": "Gulfstream melon is a garden packet (muskmelon) variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Gulfstream melon",
   "keywords": [
@@ -67,7 +67,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 85 to 90 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -80,7 +80,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit melon fields most often: [anthracnose](/diseases/anthracnose), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [Fusarium wilt](/diseases/fusarium-wilt), [leafminer](/pests/leafminer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit melon fields most often: [anthracnose](/diseases/anthracnose), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [downy mildew of cucurbits](/diseases/downy-mildew), [Fusarium wilt](/diseases/fusarium-wilt). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -145,9 +145,9 @@
       "ordered": false,
       "items": [
         "[Brilliant](/crop-varieties/melon-brilliant)",
-        "[Fantasista](/crop-varieties/melon-fantasista)",
-        "[Glamour](/crop-varieties/melon-glamour)",
-        "[Ilocos Gold](/crop-varieties/melon-ilocos-gold)"
+        "[Camille](/crop-varieties/melon-camille)",
+        "[Emerald Green](/crop-varieties/melon-emerald-green)",
+        "[Fantasista](/crop-varieties/melon-fantasista)"
       ]
     },
     {

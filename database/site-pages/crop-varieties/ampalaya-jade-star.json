@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Ampalaya",
   "profile": true,
-  "title": "Jade Star ampalaya (Jade Star F1): Characteristics",
-  "metaTitle": "Jade Star ampalaya: Characteristics",
+  "title": "Jade Star Ampalaya (Jade Star F1): Characteristics",
+  "metaTitle": "Jade Star Ampalaya: Characteristics",
   "metaDescription": "Jade Star ampalaya is an F1 hybrid ampalaya variety from East West Seed. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Jade Star ampalaya",
   "keywords": [
@@ -73,7 +73,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 48 to 57 days after transplanting (Jade Star L). No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -154,10 +154,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bonito](/crop-varieties/ampalaya-bonito)",
         "[Galaxy](/crop-varieties/ampalaya-galaxy)",
-        "[Jadeite](/crop-varieties/ampalaya-jadeite)",
-        "[Mestisa](/crop-varieties/ampalaya-mestisa)",
-        "[Trident Improved](/crop-varieties/ampalaya-trident-improved)"
+        "[Green Alpha](/crop-varieties/ampalaya-green-alpha)",
+        "[Jadeite](/crop-varieties/ampalaya-jadeite)"
       ]
     },
     {

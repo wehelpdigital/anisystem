@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Corn",
   "profile": true,
-  "title": "Lila F1 corn (Lila): Characteristics",
-  "metaTitle": "Lila F1 corn: Characteristics",
+  "title": "Lila F1 Corn (Lila): Characteristics",
+  "metaTitle": "Lila F1 Corn: Characteristics",
   "metaDescription": "Lila F1 corn is a glutinous hybrid corn variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Lila F1 corn",
   "keywords": [
@@ -74,7 +74,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 52 to 55 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -157,9 +157,9 @@
       "ordered": false,
       "items": [
         "[Purple Sweet F1](/crop-varieties/corn-purple-sweet-f1)",
+        "[Sweet Jade F1](/crop-varieties/corn-sweet-jade-f1)",
         "[Sweet Pearl F1](/crop-varieties/corn-sweet-pearl-f1)",
-        "[AH Ultra 357](/crop-varieties/corn-ah-ultra-357)",
-        "[B118G](/crop-varieties/corn-b118g)"
+        "[Vinkle F1](/crop-varieties/corn-vinkle-f1)"
       ]
     },
     {

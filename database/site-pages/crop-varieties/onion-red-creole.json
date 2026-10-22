@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Onion",
   "profile": true,
-  "title": "Red Creole onion: Characteristics",
-  "metaTitle": "Red Creole onion: Characteristics",
+  "title": "Red Creole Onion: Characteristics",
+  "metaTitle": "Red Creole Onion: Characteristics",
   "metaDescription": "Red Creole onion is an open pollinated onion variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Red Creole onion",
   "keywords": [
@@ -71,7 +71,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 90 to 120 days after sowing. Yield, by the seller's count: 20 to 30 t/ha potential (seller). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -84,7 +84,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit onion fields most often: [leafminer](/pests/leafminer), [onion armyworm](/pests/onion-armyworm), [purple blotch of onion](/diseases/purple-blotch), [bacterial soft rot](/diseases/soft-rot), [cutworm](/pests/cutworm). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit onion fields most often: [leafminer](/pests/leafminer), [onion armyworm](/pests/onion-armyworm), [purple blotch of onion](/diseases/purple-blotch), [anthracnose](/diseases/anthracnose), [bacterial soft rot](/diseases/soft-rot). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -150,10 +150,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Avatar](/crop-varieties/onion-avatar)",
+        "[Dakila](/crop-varieties/onion-dakila)",
         "[Improved Red Express](/crop-varieties/onion-improved-red-express)",
-        "[New Red Miracle PLB](/crop-varieties/onion-new-red-miracle-plb)",
-        "[Red Dragon](/crop-varieties/onion-red-dragon)",
-        "[Rio Bravo](/crop-varieties/onion-rio-bravo)"
+        "[Maserati](/crop-varieties/onion-maserati)"
       ]
     },
     {

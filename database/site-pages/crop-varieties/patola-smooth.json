@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Patola",
   "profile": true,
-  "title": "Smooth patola: Characteristics",
-  "metaTitle": "Smooth patola: Characteristics",
+  "title": "Smooth Patola: Characteristics",
+  "metaTitle": "Smooth Patola: Characteristics",
   "metaDescription": "Smooth patola is an open pollinated patola variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Smooth patola",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest about 60 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -85,7 +85,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit patola fields most often: [downy mildew of cucurbits](/diseases/downy-mildew), [melon fly](/pests/melon-fly), [powdery mildew](/diseases/powdery-mildew), [squash beetle](/pests/squash-beetle). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit patola fields most often: [cutworm](/pests/cutworm), [downy mildew of cucurbits](/diseases/downy-mildew), [melon fly](/pests/melon-fly), [powdery mildew](/diseases/powdery-mildew), [squash beetle](/pests/squash-beetle). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -151,10 +151,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Sta. Ana](/crop-varieties/patola-sta-ana)",
         "[Tagalog](/crop-varieties/patola-tagalog)",
         "[Aura](/crop-varieties/patola-aura)",
-        "[Española](/crop-varieties/patola-espanola)",
-        "[Santino](/crop-varieties/patola-santino)"
+        "[Española](/crop-varieties/patola-espanola)"
       ]
     },
     {

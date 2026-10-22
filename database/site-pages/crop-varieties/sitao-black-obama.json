@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Sitao",
   "profile": true,
-  "title": "Black Obama sitao (Obama): Characteristics",
-  "metaTitle": "Black Obama sitao: Characteristics",
+  "title": "Black Obama Sitao (Obama): Characteristics",
+  "metaTitle": "Black Obama Sitao: Characteristics",
   "metaDescription": "Black Obama sitao is a sitao variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Black Obama sitao",
   "keywords": [
@@ -66,7 +66,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 45 to 50 days after sowing. Yield, by the seller's count: potential 37 t/ha (seller). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -79,7 +79,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit sitao fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit sitao fields most often: [anthracnose](/diseases/anthracnose), [bean fly](/pests/bean-fly), [cutworm](/pests/cutworm), [leafminer](/pests/leafminer), [legume pod borer](/pests/legume-pod-borer). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -149,8 +149,8 @@
       "items": [
         "[Star Premium](/crop-varieties/sitao-star-premium)",
         "[Super Green 53](/crop-varieties/sitao-super-green-53)",
-        "[Green Pod Kaohsiung](/crop-varieties/sitao-green-pod-kaohsiung)",
-        "[KY Bush](/crop-varieties/sitao-ky-bush)"
+        "[Bongga](/crop-varieties/sitao-bongga)",
+        "[Galante](/crop-varieties/sitao-galante)"
       ]
     },
     {

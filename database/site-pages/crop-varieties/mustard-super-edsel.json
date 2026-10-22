@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Mustard",
   "profile": true,
-  "title": "Super Edsel mustard: Characteristics",
-  "metaTitle": "Super Edsel mustard: Characteristics",
+  "title": "Super Edsel Mustard: Characteristics",
+  "metaTitle": "Super Edsel Mustard: Characteristics",
   "metaDescription": "Super Edsel mustard is an open pollinated (no F1 label) mustard variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Super Edsel mustard",
   "keywords": [
@@ -73,7 +73,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 30 to 35 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -153,8 +153,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Bausin](/crop-varieties/mustard-bausin)",
+        "[King Mustard](/crop-varieties/mustard-king-mustard)",
         "[Montana](/crop-varieties/mustard-montana)",
-        "[Namhong](/crop-varieties/mustard-namhong)"
+        "[Monteverde](/crop-varieties/mustard-monteverde)"
       ]
     },
     {

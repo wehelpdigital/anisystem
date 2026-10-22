@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Radish",
   "profile": true,
-  "title": "Improved Valiant radish (Valiant labanos): Characteristics",
-  "metaTitle": "Improved Valiant radish: Characteristics",
+  "title": "Improved Valiant Radish (Valiant labanos): Characteristics",
+  "metaTitle": "Improved Valiant Radish: Characteristics",
   "metaDescription": "Improved Valiant radish is an open pollinated (no F1 label) radish variety. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Improved Valiant radish",
   "keywords": [
@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 45 to 60 days after sowing. Yield, by the seller's count: 40 to 45 t/ha potential (Ramgo). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -158,9 +158,9 @@
       "ordered": false,
       "items": [
         "[Sinandok](/crop-varieties/radish-sinandok)",
+        "[Daikon No. 14](/crop-varieties/radish-daikon-no-14)",
         "[Everest](/crop-varieties/radish-everest)",
-        "[Mt. Data](/crop-varieties/radish-mt-data)",
-        "[Timbac 55](/crop-varieties/radish-timbac-55)"
+        "[Lily](/crop-varieties/radish-lily)"
       ]
     },
     {

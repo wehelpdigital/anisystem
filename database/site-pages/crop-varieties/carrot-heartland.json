@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Carrot",
   "profile": true,
-  "title": "Heartland carrot (Heartland F1): Characteristics",
-  "metaTitle": "Heartland carrot: Characteristics",
+  "title": "Heartland Carrot (Heartland F1): Characteristics",
+  "metaTitle": "Heartland Carrot: Characteristics",
   "metaDescription": "Heartland carrot is an F1 hybrid carrot variety from Ramgo. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Heartland carrot",
   "keywords": [
@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 95 to 110 days after sowing. Yield, by the seller's count: 30 to 40 t/ha potential (Ramgo). No trial on record checks these figures yet, so treat them as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -158,10 +158,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Benny](/crop-varieties/carrot-benny)",
+        "[Firewedge](/crop-varieties/carrot-firewedge)",
         "[Fukutomi](/crop-varieties/carrot-fukutomi)",
-        "[Sugarland](/crop-varieties/carrot-sugarland)",
-        "[Terracotta](/crop-varieties/carrot-terracotta)",
-        "[New Kuroda](/crop-varieties/carrot-new-kuroda)"
+        "[Mindagold](/crop-varieties/carrot-mindagold)"
       ]
     },
     {

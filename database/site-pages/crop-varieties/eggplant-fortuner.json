@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Eggplant",
   "profile": true,
-  "title": "Fortuner eggplant (Fortuner F1): Characteristics",
-  "metaTitle": "Fortuner eggplant: Characteristics",
+  "title": "Fortuner Eggplant (Fortuner F1): Characteristics",
+  "metaTitle": "Fortuner Eggplant: Characteristics",
   "metaDescription": "Fortuner eggplant is an F1 hybrid eggplant variety from East West Seed. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Fortuner eggplant",
   "keywords": [
@@ -59,6 +59,10 @@
         [
           "Type",
           "F1 hybrid"
+        ],
+        [
+          "Days to harvest, per the seller",
+          "first harvest 55 to 60 days after transplanting (Harbest)"
         ]
       ]
     },
@@ -69,7 +73,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: first harvest 55 to 60 days after transplanting (Harbest). No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -82,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "The pests and diseases that hit eggplant fields most often: [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), [bacterial wilt](/diseases/bacterial-wilt), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off), [eggplant leafhopper](/pests/eggplant-leafhopper). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
+      "text": "The pests and diseases that hit eggplant fields most often: [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), [anthracnose](/diseases/anthracnose), [bacterial wilt](/diseases/bacterial-wilt), [cutworm](/pests/cutworm), [damping off](/diseases/damping-off). Our [pest finder](/pests) and [disease finder](/diseases) help you name what you see."
     },
     {
       "type": "heading",
@@ -93,7 +97,10 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Fruit:** Long, purple."
+        "**Days to harvest:** First harvest 55 to 60 days after transplanting (Harbest).",
+        "**Fruit:** Long, purple.",
+        "Compact and vigorous.",
+        "Fruits of 26 to 30 cm with a green calyx that keep well."
       ]
     },
     {
@@ -147,7 +154,7 @@
         "[Banate King](/crop-varieties/eggplant-banate-king)",
         "[Calixto](/crop-varieties/eggplant-calixto)",
         "[Casino](/crop-varieties/eggplant-casino)",
-        "[Gwapito](/crop-varieties/eggplant-gwapito)"
+        "[Charming](/crop-varieties/eggplant-charming)"
       ]
     },
     {
@@ -207,6 +214,10 @@
         {
           "label": "Notes on Fortuner from goedenph.com",
           "url": "https://goedenph.com/product/eggplant_fortuner-f1_east-west_sachet_2/"
+        },
+        {
+          "label": "Notes on Fortuner from harbest.com.ph",
+          "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
         }
       ]
     }

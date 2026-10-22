@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Carrot",
   "profile": true,
-  "title": "Sugarland carrot (Sugarland F1): Characteristics",
-  "metaTitle": "Sugarland carrot: Characteristics",
+  "title": "Sugarland Carrot (Sugarland F1): Characteristics",
+  "metaTitle": "Sugarland Carrot: Characteristics",
   "metaDescription": "Sugarland carrot is an F1 hybrid carrot variety from Allied Botanical. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Sugarland carrot",
   "keywords": [
@@ -72,7 +72,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 100 to 110 days after sowing. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -153,10 +153,10 @@
       "type": "list",
       "ordered": false,
       "items": [
+        "[Benny](/crop-varieties/carrot-benny)",
+        "[Firewedge](/crop-varieties/carrot-firewedge)",
         "[Fukutomi](/crop-varieties/carrot-fukutomi)",
-        "[Heartland](/crop-varieties/carrot-heartland)",
-        "[Terracotta](/crop-varieties/carrot-terracotta)",
-        "[New Kuroda](/crop-varieties/carrot-new-kuroda)"
+        "[Heartland](/crop-varieties/carrot-heartland)"
       ]
     },
     {

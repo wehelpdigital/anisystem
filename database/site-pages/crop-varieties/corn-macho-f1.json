@@ -5,8 +5,8 @@
   "lang": "en",
   "category": "Corn",
   "profile": true,
-  "title": "Macho F1 corn (Macho): Characteristics",
-  "metaTitle": "Macho F1 corn: Characteristics",
+  "title": "Macho F1 Corn (Macho): Characteristics",
+  "metaTitle": "Macho F1 Corn: Characteristics",
   "metaDescription": "Macho F1 corn is a sweet corn hybrid variety from East West Seed. See its days to harvest, yield, pest ratings, traits and where it grows best.",
   "focusKeyword": "Macho F1 corn",
   "keywords": [
@@ -75,7 +75,7 @@
     },
     {
       "type": "text",
-      "text": "No day count or trial yield is published for this variety. So ask the seller or your municipal agriculturist for figures from farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
+      "text": "Days to harvest, by the seller's count: 75 to 78 days after sowing, the Bukidnon grower harvests at about 75 days. No trial on record checks this figure yet, so treat it as the seller's own and compare with farms near you before you plan a season around it.\n\nOnce you know the day count, anee.io dates every task from each lot's own planting day, with [the growth stages and weather](/features/growth-stages-and-weather) beside it."
     },
     {
       "type": "heading",
@@ -156,9 +156,9 @@
       "ordered": false,
       "items": [
         "[Bravado F1](/crop-varieties/corn-bravado-f1)",
+        "[Bright Jean F1](/crop-varieties/corn-bright-jean-f1)",
         "[Datu F1](/crop-varieties/corn-datu-f1)",
-        "[Hi Brix F1](/crop-varieties/corn-hi-brix-f1)",
-        "[Purple Gem F1](/crop-varieties/corn-purple-gem-f1)"
+        "[Hi Brix F1](/crop-varieties/corn-hi-brix-f1)"
       ]
     },
     {
