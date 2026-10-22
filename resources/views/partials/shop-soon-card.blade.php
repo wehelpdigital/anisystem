@@ -5,9 +5,11 @@
 
      A storefront: a striped awning across the top, the deep green of the
      tip of the day under it with a slow sweep of light, the shop's sign and
-     a "Coming soon" pill that breathes, then its shelves drifting past (the
-     same six the Shop page lists, greyed there), and one quiet link to peek
-     in. Every motion stops for a reader who asked for less. --}}
+     a big gold "Coming soon" sign with a light running across it and a glow
+     that breathes (the owner, the same day: "remove the take a peek and make
+     the coming soon more noticeable"), then its shelves drifting past (the
+     same six the Shop page lists) and a bar of shelves still being stocked.
+     Every motion stops for a reader who asked for less. --}}
 <section class="ss-card" aria-labelledby="ssH">
     <span class="ss-awning" aria-hidden="true"></span>
     <span class="ss-glow" aria-hidden="true"></span>
@@ -20,9 +22,9 @@
                 <p class="ss-kick">Shop</p>
                 <h2 id="ssH">The Anee Shop</h2>
             </div>
-            <span class="ss-soon"><i></i>Coming soon</span>
         </div>
-        <p class="ss-p">Seeds, fertilizer, tools and safety gear for your season, picked by our technicians and priced for farmers. Opening soon, right here in your app.</p>
+        <p class="ss-p">Seeds, fertilizer, tools and safety gear for your season, picked by our technicians and priced for farmers, right here in your app.</p>
+        <p class="ss-stamp" role="status"><i aria-hidden="true"></i><span>Coming soon</span></p>
     </div>
 
     {{-- The shelves, drifting past (twice over, so the loop has no seam). --}}
@@ -47,14 +49,14 @@
     </ul>
 
     <div class="ss-foot">
+        <div class="ss-stock">
+            <span class="ss-stock-k">Stocking the shelves</span>
+            <span class="ss-bar" aria-hidden="true"><i></i></span>
+        </div>
         <span class="ss-note">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2a2 2 0 01-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
             We will tell you in your notifications the day it opens.
         </span>
-        <a href="{{ route('shop.index') }}" class="ss-go" data-nav-loader>
-            Take a peek
-            <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
-        </a>
     </div>
 </section>
 
@@ -89,11 +91,26 @@
     .ss-kick { font-size:.7rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#f5c518; }
     .ss-titles h2 { font-family:var(--font-heading); font-size:1.25rem; font-weight:800; line-height:1.15; color:#fff; }
     @media (min-width:640px) { .ss-titles h2 { font-size:1.4rem; } }
-    .ss-soon { flex:none; margin-left:auto; display:inline-flex; align-items:center; gap:.45rem; padding:.4rem .85rem; border-radius:999px;
-        font-size:.76rem; font-weight:800; white-space:nowrap; color:#1f3312; background:#f5c518; box-shadow:0 8px 20px -10px rgb(245 197 24 / .8); }
-    .ss-soon i { width:.5rem; height:.5rem; border-radius:999px; background:#2d5016; animation:ssPulse 1.8s ease-in-out infinite; }
-    @keyframes ssPulse { 0%, 100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.5); opacity:.45; } }
     .ss-p { margin-top:.85rem; max-width:36rem; font-size:.9rem; line-height:1.55; color:#c9d5bd; }
+
+    /* The sign: big, gold, a light running across it and a glow that breathes. */
+    .ss-stamp { position:relative; overflow:hidden; display:inline-flex; align-items:center; gap:.7rem; margin-top:1.05rem;
+        padding:.8rem 1.5rem .8rem 1.15rem; border-radius:999px; color:#1f3312;
+        background:linear-gradient(100deg, #f5c518 0%, #fde68a 45%, #f5c518 70%, #e9a80b 100%);
+        box-shadow:0 0 0 0 rgb(245 197 24 / .55), 0 14px 30px -14px rgb(245 197 24 / .9);
+        animation:ssGlowRing 2.2s ease-out infinite; }
+    .ss-stamp span { position:relative; font-family:var(--font-heading); font-size:clamp(1.15rem, 3.6vw, 1.45rem); font-weight:900;
+        letter-spacing:.12em; text-transform:uppercase; line-height:1; }
+    .ss-stamp i { position:relative; flex:none; width:.8rem; height:.8rem; border-radius:999px; background:#2d5016;
+        box-shadow:0 0 0 0 rgb(45 80 22 / .5); animation:ssDot 1.6s ease-out infinite; }
+    .ss-stamp::after { content:''; position:absolute; inset:0; pointer-events:none;
+        background:linear-gradient(105deg, transparent 30%, rgb(255 255 255 / .75) 50%, transparent 70%);
+        transform:translateX(-120%); animation:ssShine 3.2s cubic-bezier(.22,1,.36,1) infinite 1s; }
+    @keyframes ssGlowRing { 0% { box-shadow:0 0 0 0 rgb(245 197 24 / .55), 0 14px 30px -14px rgb(245 197 24 / .9); }
+        70%, 100% { box-shadow:0 0 0 16px rgb(245 197 24 / 0), 0 14px 30px -14px rgb(245 197 24 / .9); } }
+    @keyframes ssDot { 0% { box-shadow:0 0 0 0 rgb(45 80 22 / .55); } 70%, 100% { box-shadow:0 0 0 9px rgb(45 80 22 / 0); } }
+    @keyframes ssShine { 0%, 55% { transform:translateX(-120%); } 100% { transform:translateX(120%); } }
+    @media (max-width:479.98px) { .ss-stamp { display:flex; justify-content:center; } }
 
     .ss-shelf { position:relative; margin-top:1rem; overflow:hidden;
         -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
@@ -107,22 +124,24 @@
     .ss-item strong { display:block; font-size:.82rem; font-weight:800; color:#f2f7ec; white-space:nowrap; }
     .ss-item small { display:block; font-size:.7rem; color:#a9bb98; white-space:nowrap; }
 
-    .ss-foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.7rem 1rem; padding:1rem 1.15rem 1.15rem; }
-    @media (min-width:640px) { .ss-foot { padding:1.05rem 1.5rem 1.3rem; } }
+    .ss-foot { display:grid; gap:.75rem; padding:1rem 1.15rem 1.2rem; }
+    @media (min-width:640px) { .ss-foot { grid-template-columns:minmax(0, 1fr) auto; align-items:center; gap:1.5rem; padding:1.05rem 1.5rem 1.3rem; } }
+    /* Shelves still being stocked: a striped bar that keeps moving. */
+    .ss-stock { display:grid; gap:.4rem; }
+    .ss-stock-k { font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#f5c518; }
+    .ss-bar { position:relative; display:block; height:.6rem; border-radius:999px; overflow:hidden; background:rgb(255 255 255 / .08); }
+    .ss-bar i { position:absolute; inset:0 30% 0 0; border-radius:999px;
+        background:repeating-linear-gradient(45deg, #f5c518 0 .6rem, #e9a80b .6rem 1.2rem); background-size:1.7rem 100%;
+        animation:ssStripes .9s linear infinite, ssFill 4.5s cubic-bezier(.22,1,.36,1) infinite alternate; }
+    @keyframes ssStripes { to { background-position:1.7rem 0; } }
+    @keyframes ssFill { from { right:62%; } to { right:22%; } }
     .ss-note { display:inline-flex; align-items:center; gap:.45rem; font-size:.78rem; font-weight:600; color:#a9bb98; }
     .ss-note svg { width:1rem; height:1rem; flex:none; color:#f5c518; }
-    .ss-go { display:inline-flex; align-items:center; gap:.4rem; min-height:2.4rem; padding:.45rem 1rem; border-radius:999px; font-size:.82rem; font-weight:800;
-        color:#fff; background:rgb(255 255 255 / .1); border:1px solid rgb(255 255 255 / .22); text-decoration:none;
-        transition:background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .ss-go:hover { background:rgb(255 255 255 / .18); border-color:rgb(255 255 255 / .5); }
-    .ss-go svg { width:1rem; height:1rem; transition:transform .28s cubic-bezier(.22,1,.36,1); }
-    .ss-go:hover svg { transform:translateX(3px); }
-    @media (max-width:479.98px) { .ss-soon { padding:.35rem .7rem; font-size:.7rem; } .ss-go { width:100%; justify-content:center; } }
 
     @media (prefers-reduced-motion: reduce) {
-        .ss-card, .ss-glow, .ss-ico, .ss-soon i, .ss-track { animation:none; }
+        .ss-card, .ss-glow, .ss-ico, .ss-track, .ss-stamp, .ss-stamp i, .ss-stamp::after, .ss-bar i { animation:none; }
+        .ss-stamp::after { display:none; }
         .ss-shelf { overflow-x:auto; }
-        .ss-go, .ss-go svg { transition:none; }
     }
 </style>
 @endpush
