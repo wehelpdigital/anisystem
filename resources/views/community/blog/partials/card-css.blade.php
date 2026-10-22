@@ -96,6 +96,9 @@
     .blog-title { font-family:var(--font-heading); font-weight:700; color:var(--color-gray-900); line-height:1.25; }
     .blog-excerpt { font-size:.83rem; color:var(--color-gray-500); line-height:1.4; }
     .blog-meta { margin-top:.4rem; font-size:.72rem; color:var(--color-gray-400); display:flex; gap:.6rem; flex-wrap:wrap; }
+    /* The article's category, the public blog's own word for it. */
+    .blog-cat-tag { font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--color-brand-700); }
+    html.dark .blog-cat-tag { color:var(--color-brand-300, #a3d284); }
 
     /* Inside a page that already has a gutter — Home — the bands stay within
        it rather than reaching past both edges. */

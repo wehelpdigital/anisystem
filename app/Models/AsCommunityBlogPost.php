@@ -9,8 +9,9 @@ class AsCommunityBlogPost extends BaseModel
     protected $fillable = [
         'title', 'slug', 'coverImagePath', 'coverPaths', 'excerpt', 'body',
         'authorName', 'isPublished', 'publishedAt', 'viewCount', 'deleteStatus',
-        // The public site page this article follows (App\Support\TechBlog).
-        'sitePageId',
+        // The public site page this article follows (App\Support\TechBlog),
+        // and that page's category, for the blog's category chips.
+        'sitePageId', 'category',
     ];
 
     protected $casts = [

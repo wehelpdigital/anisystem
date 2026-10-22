@@ -34,7 +34,7 @@ class TechBlog
     public const AUTHOR = 'anee.io Technicians';
 
     /** Bump when the drawing below changes, so every article is drawn again. */
-    private const VERSION = 9;
+    private const VERSION = 10;
 
     private const STAMP = 'tech-blog:synced';
 
@@ -145,6 +145,8 @@ class TechBlog
                 'slug' => self::slug($p),
                 // The column holds 500; a page's line under the title can run longer.
                 'excerpt' => Str::limit(SitePages::plain((string) $p->excerpt), 490) ?: null,
+                // The public blog's category, so the Tech Blog filters the same way (2026-10-23).
+                'category' => Str::limit(trim((string) $p->category), 80, '') ?: null,
                 'body' => self::body((array) $p->blocks, $map, $hero),
                 'coverImagePath' => trim((string) ($hero['src'] ?? '')) ?: self::stockCover($p),
                 'coverPaths' => null,

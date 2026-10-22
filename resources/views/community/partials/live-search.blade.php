@@ -64,7 +64,10 @@
 </style>
 @endpush
 
-@push('scripts')
+{{-- Prepended (2026-10-23): a page's own scripts are pushed before this partial is
+     drawn, so a push left the helper defined AFTER the pages that call it, and
+     the Tech Blog's search box never searched. --}}
+@prepend('scripts')
 <script>
 /* The typing half of a live search, shared by every list that has one.
  *
@@ -130,5 +133,5 @@ window.plazaLiveSearch = function (input, run, opts) {
     paint();
 };
 </script>
-@endpush
+@endprepend
 @endonce
