@@ -104,10 +104,16 @@
     @keyframes pbIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
     .pb-card.dragging { opacity: .32; outline: 2px dashed #b9c6a8; outline-offset: -2px; filter: grayscale(.5); }
     .pb-card.just-moved { box-shadow: 0 0 0 3px rgba(107,159,61,.35); }
-    .pb-day { flex: none; width: 4.4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: .6rem .3rem; color: #fff; text-align: center; background: var(--prio, #6b7280); }
+    /* The day rail (2026-10-23): the band on top in the task's kind (--ty), the rest in the crop's stage (--st). */
+    .pb-day { flex: none; width: 4.4rem; display: flex; flex-direction: column; align-items: stretch; text-align: center; color: var(--st-ink, #fff); background: var(--st, #6b7280);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .pb-day b { font-size: .6rem; letter-spacing: .06em; opacity: .9; }
+    .pb-day .pb-ty { flex: none; display: block; padding: .3rem .15rem .28rem; background: var(--ty, #6b7280); color: #fff; opacity: 1; font-weight: 900; line-height: 1.1;
+        box-shadow: inset 0 -1px 0 rgb(0 0 0 / .18); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .pb-day .pb-dn { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: .45rem .3rem .55rem; }
     .pb-day span { font-size: 1.35rem; font-weight: 900; line-height: 1.1; font-variant-numeric: tabular-nums; }
     .pb-day i { font-style: normal; font-size: .58rem; opacity: .85; margin-top: .15rem; line-height: 1.15; max-width: 4rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+    .pb-chip.pb-chip-ty { box-shadow: inset 3px 0 0 var(--ty); padding-left: .6rem; }
     .pb-card[data-prio="critical"] { --prio: #9c1c1c; }
     .pb-card[data-prio="high"] { --prio: #d9534f; }
     .pb-card[data-prio="medium"] { --prio: #c9902e; }
@@ -312,11 +318,11 @@
     html.dark .pbt-when button { background: #151b12; border-color: #2b3a1c; color: #cbd5c0; }
     html.dark .pbt-when button.is-on { background: #3d6823; color: #fff; border-color: #3d6823; }
     html.dark .pbt-unit { background: #22301a; border-color: #3f5a2a; color: #cfe6b8; }
-    .pb-day.is-before { background: repeating-linear-gradient(135deg, var(--prio, #6b7280) 0 6px, color-mix(in srgb, var(--prio, #6b7280) 78%, #000) 6px 12px); }
+    .pb-day.is-before { color: #fff; background: repeating-linear-gradient(135deg, var(--st, #6b7280) 0 6px, color-mix(in srgb, var(--st, #6b7280) 78%, #000) 6px 12px); }
     /* The stripes say "before the count"; the words sit on a plate over them so they read (2026-10-22, the owner). */
     .pb-day .pb-plate { display: flex; flex-direction: column; align-items: center; gap: .05rem; width: 100%; padding: .32rem .2rem .3rem; border-radius: .6rem;
-        background: color-mix(in srgb, var(--prio, #6b7280) 55%, #0b0f08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16), 0 2px 6px -2px rgb(0 0 0 / .45); }
-    .pb-day.is-before b { font-size: .52rem; letter-spacing: .05em; opacity: 1; }
+        background: color-mix(in srgb, var(--st, #6b7280) 55%, #0b0f08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16), 0 2px 6px -2px rgb(0 0 0 / .45); }
+    .pb-day.is-before .pb-ty { font-size: .52rem; letter-spacing: .05em; }
     .pb-day.is-before .pb-plate span { font-size: 1.3rem; }
     .pb-day.is-before .pb-plate i { opacity: 1; max-width: 100%; }
     .pbt-counter { display: inline-flex; border: 1px solid var(--color-gray-200); border-radius: .75rem; overflow: hidden; flex: none; }
@@ -1170,6 +1176,63 @@
     const cmpKey = (a, b) => (a[0] - b[0]) || (a[1] - b[1]) || ((a[2] ?? 0) - (b[2] ?? 0));
     const cmpDay = (a, b) => (a[0] - b[0]) || (a[1] - b[1]);
     function sortTasks() { TASKS.sort((a, b) => cmpKey(keyOf(a), keyOf(b))); }
+    /* ---- the day rail's colours (2026-10-23, the owner: "colors of the dap counter should be dependent on the type of task as well.
+       for example, blue for irrigation. and for the growth stage like green for vegetative but going darker green on the peak and
+       then going orange for fruiting then yellow at the end of life or harvest"). The band on top is the task's kind; the rail
+       under it is the crop's stage: light green when young, darker to the peak of growth, orange from flowering and fruiting,
+       yellow at maturity and harvest, earth before the count starts. ---- */
+    const TYPE_COLOR = { irrigation: '#1d74c4', fertilizer: '#9a5b13', foliar_spray: '#0f8a7a', herbicide: '#b4235a', pesticide: '#c62828', copper_fungicide: '#b45309',
+        fungicide: '#6d28d9', microbial: '#4d7c0f', planting: '#15803d', seed_treatment: '#3f6212', land_prep: '#7c4a1e', harvest: '#a16207', monitoring: '#475569',
+        equipment_prep: '#57534e', service: '#4338ca', worker_payroll: '#0e7490', reminder_checklist: '#64748b', other: '#6b7280' };
+    const TONE = { prep: '#8d6e4f', seedbed: '#aed581', young: '#9ccc65', peak: '#1b5e20', repro: '#f59e0b', reproEnd: '#ea580c', mature: '#eab308', plain: '#558b2f', tree: '#2e7d32' };
+    const REPRO_RE = /flower|bloom|anthesis|tassel|silk|pollinat|fruit|pod\b|grain|fill|bulb|bulking|root initiation|shooting|bunch|heading|bearing/i;
+    const MATURE_RE = /harvest|ripen|matur|curing|declin|\bold\b/i;
+    const hexMix = (a, b, t) => {
+        const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+        const x = p(a), y = p(b);
+        return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join('');
+    };
+    const inkOn = (hex) => {
+        const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+        return (0.2126 * r + 0.7152 * g + 0.0722 * b) > 0.5 ? '#1a2410' : '#ffffff';
+    };
+    /** The stage's colour on this count: the crop's stages ramped young green to peak green, orange through fruiting, yellow at the end. */
+    function stageTone(counter, day, t) {
+        if (day < 0) return TONE.prep;
+        if (counters().length === 2 && counter === 'DAS') return TONE.seedbed;
+        const rows = counter === 'DOS' ? [] : (STAGES[counter] || []);
+        if (!rows.length) {
+            // No stages on this count (standing trees, a crop the book has none for): the protocol's own phases,
+            // its dividers ("Flower induction", "Fruit growth", "Harvest"), read the same way.
+            const divs = TASKS.filter(isDivider);
+            const at = TASKS.indexOf(t);
+            let i = -1;
+            divs.forEach((d, k) => { if (TASKS.indexOf(d) < at) i = k; });
+            if (i < 0) return counter === 'DOS' ? TONE.tree : TONE.plain;
+            return toneOf(divs.map((d) => d.label || ''), i);
+        }
+        let i = 0;
+        rows.forEach((r, k) => { if (r[0] <= day) i = k; });
+        return toneOf(rows.map((r) => r[1]), i);
+    }
+    function toneOf(labels, i) {
+        const kind = labels.map((l) => (REPRO_RE.test(l) ? 'repro' : (MATURE_RE.test(l) ? 'mature' : 'veg')));
+        const firstRepro = kind.indexOf('repro'), firstMature = kind.indexOf('mature');
+        if (kind[i] === 'mature') return TONE.mature;
+        if (kind[i] === 'repro') {
+            const reps = kind.map((k, n) => (k === 'repro' ? n : -1)).filter((n) => n >= 0);
+            const at = reps.indexOf(i);
+            return reps.length > 1 ? hexMix(TONE.repro, TONE.reproEnd, at / (reps.length - 1)) : TONE.repro;
+        }
+        // The green before the first flower (or before the end, for a crop grown for its leaves or roots).
+        const end = firstRepro >= 0 ? firstRepro : (firstMature >= 0 ? firstMature : labels.length);
+        return end > 1 ? hexMix(TONE.young, TONE.peak, Math.min(1, i / (end - 1))) : TONE.peak;
+    }
+    function railStyle(t) {
+        // The harvest is the end of the crop's life whatever stage its day falls in.
+        const st = t.type === 'harvest' && t.day >= 0 ? TONE.mature : stageTone(t.counter, t.day, t);
+        return `--st:${st};--st-ink:${inkOn(st)};--ty:${TYPE_COLOR[t.type] || TYPE_COLOR.other}`;
+    }
     function stageLabel(counter, day) {
         // Standing trees: the stage is the trees' age, which the protocol
         // does not fix, so the rail only marks the start.
@@ -1374,7 +1437,7 @@
         const drawn = t.groups.reduce((n, g) => n + g.items.filter((it) => it.materialId && matOf(it.materialId)).length, 0);
         const rv = reviewFor(t.id);
         const chips = [];
-        if (type) chips.push(`<span class="pb-chip">${TYPE_ICON[t.type] || '📌'} ${esc(type)}</span>`);
+        if (type) chips.push(`<span class="pb-chip pb-chip-ty" style="--ty:${TYPE_COLOR[t.type] || TYPE_COLOR.other}">${TYPE_ICON[t.type] || '📌'} ${esc(type)}</span>`);
         if ((t.spray || []).length && (OPT.sprayTypes || []).includes(t.type)) chips.push(`<span class="pb-chip pb-chip-spray">↗ ${esc(t.spray.map((d) => (OPT.sprayDirections || {})[d] || d).join(', '))}</span>`);
         chips.push(`<span class="pb-chip">${esc((OPT.priorities[t.priority] || {}).label || t.priority)}</span>`);
         if (items) chips.push(`<span class="pb-chip">🧴 ${items} ${items === 1 ? 'item' : 'items'}${drawn ? ` · 📦 ${drawn} from materials` : ''}</span>`);
@@ -1398,7 +1461,7 @@
         uniq(WARN[t.id] || []).forEach((w) => more.push(`<div class="pb-warnnote">⚠️ ${esc(w)}</div>`));
         return `
             <div class="pb-card" data-id="${esc(t.id)}" data-prio="${esc(t.priority)}">
-                <div class="pb-day${t.day < 0 ? ' is-before' : ''}">${t.day < 0 ? `<div class="pb-plate"><b>BEFORE ${esc(t.counter)}</b><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i></div>` : `<b>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div>
+                <div class="pb-day${t.day < 0 ? ' is-before' : ''}" style="${railStyle(t)}"><b class="pb-ty" title="${esc(type || 'No type yet')}">${t.day < 0 ? 'BEFORE ' : ''}${esc(t.counter)}</b><div class="pb-dn">${t.day < 0 ? `<div class="pb-plate"><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i></div>` : `<span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div></div>
                 <div class="pb-body">
                     <div class="pb-body-t"><span><b>${esc(t.title)}</b>${t.subtitle ? `<i>${esc(t.subtitle)}</i>` : ''}</span><button type="button" class="pb-chev" aria-label="Show more" title="Show more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></div>
                     <div class="pb-chips">${chips.join('')}</div>
