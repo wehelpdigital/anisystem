@@ -7,6 +7,7 @@ use App\Models\AsScheduleActivity;
 use App\Models\AsScheduleActivityVersion;
 use App\Models\AsScheduleDateNote;
 use App\Models\AsScheduleLot;
+use App\Models\AsScheduleNote;
 use App\Models\AsScheduleWorker;
 use App\Support\LandPrepPlanner as LP;
 use Illuminate\Support\Carbon;
@@ -34,7 +35,10 @@ use Illuminate\Support\Facades\DB;
  * lo and hi (the days it may move between), hands (workers a day; 0 for
  * hired work), anchor (the planting itself: never moved), zero and
  * transplant (the board's day zero and transplant marks), offset (days from
- * the planting).
+ * the planting), materials (what it uses, for the plan's lot: PlanMaterials).
+ * A lot also carries `ha` and `recs` (its recommendations as HTML), and the
+ * plan its own `recs` (2026-10-23, the owner: the materials needed and the
+ * recommendations and notes go with the plan).
  */
 class PlanPort
 {
@@ -125,6 +129,7 @@ class PlanPort
 
                 return isset($defs[$key]) ? Carbon::parse($planting)->addDays((int) $defs[$key]['from'])->toDateString() : null;
             };
+            $lotHa = NpkPlan::hectares(($l['input'] ?? null) ?: ($l['area'] ?? 1), $units[$l['unit'] ?? 'ha'] ?? 'hectare') ?? 1.0;
             $sowAt = $nursery ? ($at('sow_seedbed') ?? $at('sow_nursery') ?? $at('nursery')) : null;
             $dayZero = $nursery ? ($sowAt ?? Carbon::parse($planting)->subDays(21)->toDateString()) : $planting;
             $off = fn (string $date) => (int) Carbon::parse($planting)->diffInDays(Carbon::parse($date), false);
@@ -155,6 +160,7 @@ class PlanPort
                     'date' => $date, 'end' => (string) ($d['end'] ?? $date), 'lo' => $d['winFrom'] ?? null, 'hi' => $d['winTo'] ?? null,
                     'hands' => $hands, 'hired' => false, 'anchor' => $zero || $tp || ! empty($d['planting']), 'zero' => $zero, 'transplant' => $tp,
                     'offset' => $off($date),
+                    'materials' => PlanMaterials::landPrepStep((string) $key, (string) ($s['how'] ?? ''), $report, (int) $i, $lotHa, $lMethod),
                 ];
             }
             // The seed soak and incubation, to the hour.
@@ -169,7 +175,7 @@ class PlanPort
                     $t = Carbon::parse($ev['at']);
                     $items[] = ['key' => 'lp_seed_' . $k, 'title' => $ev['what'] . ' at ' . $t->format('g:i A'), 'html' => '<p>' . self::e($ev['how'] ?? '') . '</p>',
                         'type' => 'seed_treatment', 'priority' => 'high', 'date' => $t->toDateString(), 'end' => $t->toDateString(), 'lo' => null, 'hi' => null,
-                        'hands' => 1, 'hired' => false, 'anchor' => true, 'zero' => false, 'transplant' => false, 'offset' => $off($t->toDateString())];
+                        'hands' => 1, 'hired' => false, 'anchor' => true, 'zero' => false, 'transplant' => false, 'offset' => $off($t->toDateString()), 'materials' => []];
                 }
             }
             // The hired machines, booked ahead.
@@ -180,7 +186,7 @@ class PlanPort
                 $items[] = ['key' => 'lp_book_' . $k, 'title' => 'Book the hired ' . mb_strtolower((string) $b['name']),
                     'html' => '<p>It is first needed on ' . self::e(self::dayWord($b['use'] ?? null)) . (($b['for'] ?? '') !== '' ? ' for ' . self::e($b['for']) : '') . '. Book it now so it comes on time.</p>',
                     'type' => 'reminder_checklist', 'priority' => 'high', 'date' => (string) $b['by'], 'end' => (string) $b['by'], 'lo' => null, 'hi' => (string) ($b['use'] ?? $b['by']),
-                    'hands' => 0, 'hired' => true, 'anchor' => false, 'zero' => false, 'transplant' => false, 'offset' => $off((string) $b['by'])];
+                    'hands' => 0, 'hired' => true, 'anchor' => false, 'zero' => false, 'transplant' => false, 'offset' => $off((string) $b['by']), 'materials' => []];
             }
             usort($items, fn ($a, $b) => strcmp($a['date'], $b['date']));
             foreach ($items as $it) {
@@ -192,7 +198,7 @@ class PlanPort
                 'crop' => self::cropKey(isset($l['crop']) ? $lCrop : $crop), 'cropLabel' => preg_replace('/\s*,.*$/', '', (string) ($l['crop']['label'] ?? ($report['crop']['label'] ?? ($params['cropLabel'] ?? $crop)))),
                 'variety' => $lVariety, 'dayType' => $dayType, 'planting' => $planting, 'dayZero' => $dayZero, 'transplant' => $nursery ? $planting : null,
                 'loc' => ['town' => (string) ($loc['town'] ?? ''), 'province' => (string) ($loc['province'] ?? '')],
-                'items' => $items, 'note' => null,
+                'items' => $items, 'note' => null, 'ha' => $lotHa, 'recs' => '',
             ];
         }
         // The season's crop words, as the planner always wrote them: every lot's crop, or the plan's own label for one.
@@ -205,8 +211,43 @@ class PlanPort
             $risks = array_map(fn ($x) => '<li><strong>' . self::e($x['title'] ?? '') . ':</strong> ' . self::e($x['text'] ?? '') . '</li>', array_slice((array) ($an['risks'] ?? []), 0, 5));
             $out['note'] = ['date' => $first, 'html' => '<p><strong>Anee\'s reading of the land preparation</strong></p><p>' . self::e($an['summary']) . '</p>' . ($risks ? '<ul>' . implode('', $risks) . '</ul>' : '')];
         }
+        $out['recs'] = self::landPrepRecs($report);
 
         return $out;
+    }
+
+    /** The Land Prep plan's recommendations and notes, as the season's Notes and the builder's Rules & notes keep them. */
+    private static function landPrepRecs(array $report): string
+    {
+        $an = (array) ($report['anee'] ?? []);
+        $list = fn (array $xs) => $xs ? '<ul>' . implode('', $xs) . '</ul>' : '';
+        $h = '';
+        if (trim((string) ($an['summary'] ?? '')) !== '') {
+            $h .= '<p><strong>Anee\'s reading</strong></p><p>' . self::e($an['summary']) . '</p>';
+        }
+        $h .= $list(array_map(fn ($x) => '<li><strong>' . self::e($x['title'] ?? '') . ':</strong> ' . self::e($x['text'] ?? '') . '</li>', array_filter((array) ($an['analysis'] ?? []), 'is_array')));
+        foreach (['crew' => 'The crew', 'weather' => 'The weather'] as $k => $label) {
+            if (trim((string) ($an[$k] ?? '')) !== '') {
+                $h .= '<p><strong>' . $label . ':</strong> ' . self::e($an[$k]) . '</p>';
+            }
+        }
+        $risks = array_filter((array) ($an['risks'] ?? []), 'is_array');
+        if ($risks) {
+            $h .= '<p><strong>Risks to watch</strong></p>' . $list(array_map(fn ($x) => '<li><strong>' . self::e($x['title'] ?? '') . ':</strong> ' . self::e($x['text'] ?? '') . (! empty($x['when']) ? ' <em>(' . self::e($x['when']) . ')</em>' : '') . '</li>', $risks));
+        }
+        $rules = array_filter((array) ($report['rules'] ?? []), fn ($r) => is_array($r) && trim((string) ($r['text'] ?? '')) !== '');
+        if ($rules) {
+            $h .= '<p><strong>Notes for your field</strong></p>' . $list(array_map(fn ($r) => '<li>' . self::e($r['text']) . '</li>', $rules));
+        }
+        $seed = (array) ($report['seed'] ?? []);
+        if (! empty($seed['steps'])) {
+            $h .= '<p><strong>Getting the seed ready</strong>' . (! empty($seed['say']) ? ' (' . self::e($seed['say']) . ')' : '') . '</p><ol>' . implode('', array_map(fn ($x) => '<li>' . self::e($x) . '</li>', (array) $seed['steps'])) . '</ol>';
+        }
+        if ((array) ($an['dataGaps'] ?? [])) {
+            $h .= '<p><strong>What would make the plan surer</strong></p>' . $list(array_map(fn ($x) => '<li>' . self::e($x) . '</li>', (array) $an['dataGaps']));
+        }
+
+        return $h;
     }
 
     /** The board's type for a Crop Protocol job. */
@@ -221,7 +262,7 @@ class PlanPort
      */
     private static function fromProtocol(object $r): array
     {
-        $report = json_decode((string) $r->report, true) ?: [];
+        $report = GovSource::scrubAll(json_decode((string) $r->report, true) ?: []);
         $out = ['source' => 'protocol', 'id' => (int) $r->id, 'title' => (string) $r->title, 'phase' => 'season', 'lots' => [], 'note' => null,
             'legacy' => (int) ($report['format'] ?? 0) < 4];
         $crops = [];
@@ -266,6 +307,7 @@ class PlanPort
                     'date' => $date, 'end' => (string) ($t['to'] ?? $date), 'lo' => $lo ?: null, 'hi' => $hi ?: null,
                     'hands' => ! empty($t['hired']) ? 0 : max(1, (int) ($t['perDay'] ?? 1)), 'hired' => ! empty($t['hired']),
                     'anchor' => $zero || $tp, 'zero' => $zero, 'transplant' => $tp, 'offset' => (int) ($t['day'] ?? 0),
+                    'materials' => PlanMaterials::protocolTask($t, $L),
                 ];
             }
             if (! $items) {
@@ -290,6 +332,7 @@ class PlanPort
                 'planting' => $planting, 'dayZero' => $dayZero, 'transplant' => $dat ? $planting : null,
                 'loc' => ['town' => (string) ($L['place']['town'] ?? ''), 'province' => (string) ($L['place']['province'] ?? '')],
                 'items' => $items, 'note' => ['date' => $planting, 'html' => $note],
+                'ha' => (float) ($L['areaHa'] ?? 1) ?: 1.0, 'recs' => self::protocolRecs($L, $crop, $threats),
             ];
         }
         if ($first && trim((string) ($report['summary'] ?? '')) !== '') {
@@ -298,8 +341,60 @@ class PlanPort
                 . '<p>' . self::e($report['summary']) . '</p>'
                 . ((array) ($report['workTips'] ?? []) ? '<ul>' . implode('', array_map(fn ($w) => '<li>' . self::e($w) . '</li>', (array) $report['workTips'])) . '</ul>' : '')];
         }
+        $out['recs'] = (trim((string) ($report['summary'] ?? '')) !== '' ? '<p><strong>Anee\'s crop protocol</strong></p>' . (trim((string) ($report['headline'] ?? '')) !== '' ? '<p>' . self::e($report['headline']) . '</p>' : '') . '<p>' . self::e($report['summary']) . '</p>' : '')
+            . ((array) ($report['workTips'] ?? []) ? '<p><strong>Work tips</strong></p><ul>' . implode('', array_map(fn ($w) => '<li>' . self::e($w) . '</li>', (array) $report['workTips'])) . '</ul>' : '');
+        $out['disclaimer'] = trim((string) ($report['disclaimer'] ?? ''));
 
         return $out;
+    }
+
+    /** A Crop Protocol lot's recommendations: the soil and the bags, what to watch and scout for, the water, the shortfalls, the yield. */
+    private static function protocolRecs(array $L, ?array $crop, array $threats): string
+    {
+        $list = fn (array $xs) => $xs ? '<ul>' . implode('', $xs) . '</ul>' : '';
+        $h = '<p><strong>' . self::e(($L['name'] ?? 'This lot') . ' · ' . trim(($L['cropLabel'] ?? '') . (! empty($L['variety']) ? ', ' . $L['variety'] : ''), ', ')) . '</strong></p>';
+        if (trim((string) ($L['intro'] ?? '')) !== '') {
+            $h .= '<p>' . self::e($L['intro']) . '</p>';
+        }
+        $g = (array) ($L['granulars'] ?? []);
+        if (! empty($g['soilLogic']) || ! empty($g['timingLogic'])) {
+            $h .= '<p><strong>Why these fertilizers</strong></p>' . $list(array_values(array_filter([
+                ! empty($g['soilLogic']) ? '<li><strong>The soil decides the bag:</strong> ' . self::e($g['soilLogic']) . '</li>' : null,
+                ! empty($g['timingLogic']) ? '<li><strong>The stage decides the amount:</strong> ' . self::e($g['timingLogic']) . '</li>' : null,
+            ])));
+        }
+        $cautions = array_values(array_filter(array_map('strval', (array) ($g['cautions'] ?? []))));
+        if ($cautions) {
+            $h .= '<p><strong>Be careful</strong></p>' . $list(array_map(fn ($x) => '<li>' . self::e($x) . '</li>', $cautions));
+        }
+        $fol = array_filter((array) (($L['rec'] ?? [])['foliars'] ?? []), 'is_array');
+        if ($fol) {
+            $h .= '<p><strong>Foliar sprays</strong></p>' . $list(array_map(fn ($f) => '<li><strong>' . self::e($f['product'] ?? '') . '</strong>' . (! empty($f['stage']) ? ' at ' . self::e(mb_strtolower($f['stage'])) : '') . (! empty($f['why']) ? ': ' . self::e($f['why']) : '') . '</li>', $fol));
+        }
+        if ((array) ($L['watch'] ?? [])) {
+            $h .= '<p><strong>Watch for</strong></p>' . $list(array_map(fn ($w) => '<li>' . self::e($w) . '</li>', (array) $L['watch']));
+        }
+        if ($threats) {
+            $h .= '<p><strong>Scout for</strong></p>' . $list(array_map(fn ($x) => '<li><strong>' . self::e($x['name'] ?? '') . ':</strong> '
+                . self::e(trim((string) (($x['threshold'] ?? '') ?: ($x['sign'] ?? '')))) . (! empty($x['cultural']) ? ' First, without a spray: ' . self::e($x['cultural']) : '') . '</li>', $threats));
+        }
+        $w = (array) ($L['water'] ?? []);
+        if (! empty($w['plan'])) {
+            $h .= '<p><strong>Water:</strong> ' . self::e($w['plan']) . '</p>' . $list(array_values(array_filter([
+                ! empty($w['ifDry']) ? '<li><strong>If dry:</strong> ' . self::e($w['ifDry']) . '</li>' : null,
+                ! empty($w['ifWet']) ? '<li><strong>If wet:</strong> ' . self::e($w['ifWet']) . '</li>' : null,
+            ])));
+        }
+        $defs = array_filter((array) ($L['deficiencies'] ?? []), 'is_array');
+        if ($defs) {
+            $h .= '<p><strong>Nutrients this soil may lack</strong></p>' . $list(array_map(fn ($d) => '<li><strong>' . self::e($d['nutrient'] ?? '') . ':</strong> ' . self::e(trim(($d['signs'] ?? '') . ' ' . ($d['action'] ?? ''))) . '</li>', $defs));
+        }
+        $y = (array) ($L['yield'] ?? []);
+        if (! empty($y['target']) || ! empty($y['realistic'])) {
+            $h .= '<p><strong>Yield:</strong> ' . self::e(trim((! empty($y['target']) ? 'target ' . $y['target'] : '') . (! empty($y['realistic']) ? (! empty($y['target']) ? ', ' : '') . 'realistic ' . $y['realistic'] : ''))) . '.' . (! empty($y['note']) ? ' ' . self::e($y['note']) : '') . '</p>';
+        }
+
+        return $h;
     }
 
     /* ============================================================ seasons */
@@ -669,7 +764,7 @@ class PlanPort
      */
     public static function newSeason(array $plan, string $title, int $ownerId): array
     {
-        $made = ['activities' => 0, 'lots' => 0, 'notes' => 0];
+        $made = ['activities' => 0, 'lots' => 0, 'notes' => 0, 'materials' => 0];
         $lots = $plan['lots'];
         $cropNames = array_values(array_unique(array_filter(array_map(fn ($l) => (string) $l['cropLabel'], $lots))));
         $dayTypes = array_values(array_unique(array_column($lots, 'dayType')));
@@ -696,7 +791,8 @@ class PlanPort
                 $lot = self::makeLot($schedule, $pl);
                 $made['lots']++;
                 foreach ($pl['items'] as $it) {
-                    self::addActivity($schedule, $version, $lot, $it, $it['date'], $perDate);
+                    $a = self::addActivity($schedule, $version, $lot, $it, $it['date'], $perDate);
+                    $made['materials'] += PlanMaterials::onActivity($a, (array) ($it['materials'] ?? []), $label);
                     $made['activities']++;
                 }
                 if ($pl['note']) {
@@ -708,6 +804,7 @@ class PlanPort
                 self::addNote($schedule, $version, $plan['note']['date'], $plan['note']['html']);
                 $made['notes']++;
             }
+            $made['notes'] += self::addRecs($schedule, $plan, $lots, $ownerId) ? 1 : 0;
 
             return $schedule;
         });
@@ -727,9 +824,10 @@ class PlanPort
      */
     public static function intoSeason(array $plan, AsCroppingSchedule $s, array $shifted, array $dates, array $skip = []): array
     {
-        $made = ['activities' => 0, 'lots' => 0, 'notes' => 0, 'skipped' => 0, 'past' => 0];
+        $made = ['activities' => 0, 'lots' => 0, 'notes' => 0, 'skipped' => 0, 'past' => 0, 'materials' => 0];
         $version = self::version($s);
-        DB::transaction(function () use ($plan, $s, $shifted, $dates, $skip, $version, &$made) {
+        $label = self::SOURCES[$plan['source']]['label'];
+        DB::transaction(function () use ($plan, $s, $shifted, $dates, $skip, $version, $label, &$made) {
             $perDate = [];
             foreach (AsScheduleActivity::where('croppingScheduleId', $s->id)->where('versionId', $version->id)->where('deleteStatus', 1)
                 ->groupBy('targetDate')->selectRaw('DATE(targetDate) as d, count(*) as n')->pluck('n', 'd') as $d => $n) {
@@ -746,6 +844,11 @@ class PlanPort
                     $lot->forceFill(array_filter(['dayType' => $lot->dayType ?: $pl['dayType'], 'dayZeroDate' => $pl['dayZero'],
                         'transplantDate' => $pl['transplant'], 'crop' => $lot->crop ?: ($pl['crop'] ?: null),
                         'variety' => $lot->variety ?: ($pl['variety'] !== '' ? mb_substr($pl['variety'], 0, 255) : null)], fn ($v) => $v !== null))->save();
+                }
+                // The plan's amounts are for its own lot: a season lot of another size takes them in proportion.
+                $factor = 1.0;
+                if ($sh['lot'] && ($own = NpkPlan::hectares($lot->lotSize, $lot->lotSizeUnit)) && ($pl['ha'] ?? 0) > 0) {
+                    $factor = $own / (float) $pl['ha'];
                 }
                 $hasAnchor = AsScheduleActivity::where('croppingScheduleId', $s->id)->where('versionId', $version->id)->where('deleteStatus', 1)
                     ->where(fn ($q) => $q->where('isDayZero', 1)->orWhere('isTransplant', 1))
@@ -766,7 +869,8 @@ class PlanPort
                         $it['zero'] = false;
                         $it['transplant'] = false;
                     }
-                    self::addActivity($s, $version, $lot, $it, (string) ($dates[$k][$it['key']] ?? $it['at']), $perDate);
+                    $a = self::addActivity($s, $version, $lot, $it, (string) ($dates[$k][$it['key']] ?? $it['at']), $perDate);
+                    $made['materials'] += PlanMaterials::onActivity($a, PlanMaterials::scale((array) ($it['materials'] ?? []), $factor), $label);
                     $made['activities']++;
                 }
                 if ($pl['note']) {
@@ -779,6 +883,9 @@ class PlanPort
                 $d = Carbon::parse($plan['note']['date'])->addDays((int) $shifted[array_key_first($shifted)]['delta'])->toDateString();
                 self::addNote($s, $version, max($d, now('Asia/Manila')->toDateString()), $plan['note']['html']);
                 $made['notes']++;
+            }
+            if ($shifted) {
+                $made['notes'] += self::addRecs($s, $plan, array_map(fn ($sh) => $sh['plan'], $shifted), (int) $s->anisystemUserId) ? 1 : 0;
             }
         });
 
@@ -803,7 +910,7 @@ class PlanPort
         ], fn ($v) => $v !== null));
     }
 
-    private static function addActivity(AsCroppingSchedule $s, AsScheduleActivityVersion $v, AsScheduleLot $lot, array $it, string $date, array &$perDate): void
+    private static function addActivity(AsCroppingSchedule $s, AsScheduleActivityVersion $v, AsScheduleLot $lot, array $it, string $date, array &$perDate): AsScheduleActivity
     {
         $end = null;
         if (! empty($it['end']) && $it['end'] > $it['date']) {
@@ -819,6 +926,43 @@ class PlanPort
             'workerChecklist' => false, 'workerSelfCheck' => false, 'sequenceOrder' => ($perDate[$date] - 1) * 10, 'deleteStatus' => 1,
         ]);
         $a->lots()->attach($lot->id);
+
+        return $a;
+    }
+
+    /** The plan's recommendations and notes (the farm's, then each lot's) as one note in the season's Notes. */
+    private static function addRecs(AsCroppingSchedule $s, array $plan, array $lots, int $userId): bool
+    {
+        $html = self::recsHtml($plan, $lots);
+        if ($html === '') {
+            return false;
+        }
+        AsScheduleNote::create([
+            'croppingScheduleId' => $s->id, 'userId' => $userId,
+            'title' => mb_substr('Recommendations: ' . $plan['title'], 0, 191),
+            'body' => HtmlSanitizer::rich($html), 'sortOrder' => 0, 'deleteStatus' => 1,
+        ]);
+
+        return true;
+    }
+
+    /** The recommendations and notes of a plan for these lots, with each lot's materials, as HTML. */
+    public static function recsHtml(array $plan, array $lots): string
+    {
+        $h = (string) ($plan['recs'] ?? '');
+        foreach ($lots as $pl) {
+            $h .= (string) ($pl['recs'] ?? '');
+            $mats = PlanMaterials::totals((array) ($pl['items'] ?? []));
+            if ($mats) {
+                $h .= '<p><strong>Materials for ' . self::e($pl['name']) . ' (' . self::e(PlanMaterials::areaWords((float) ($pl['ha'] ?? 1))) . ')</strong></p><ul>'
+                    . implode('', array_map(fn ($m) => '<li>' . self::e($m['name']) . ($m['qty'] !== null ? ': ' . self::e(PlanMaterials::say($m) . ($m['unit'] === 'piece' ? ' pieces' : '')) : '') . ($m['note'] !== '' ? ' <em>' . self::e($m['note']) . '</em>' : '') . '</li>', $mats)) . '</ul>';
+            }
+        }
+        if (! empty($plan['disclaimer'])) {
+            $h .= '<p><em>' . self::e($plan['disclaimer']) . '</em></p>';
+        }
+
+        return trim($h) === '' ? '' : '<p><em>From the ' . self::e(self::SOURCES[$plan['source']]['label']) . ': ' . self::e($plan['title']) . '.</em></p>' . $h;
     }
 
     private static function addNote(AsCroppingSchedule $s, AsScheduleActivityVersion $v, string $date, string $html): void

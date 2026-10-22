@@ -13,6 +13,8 @@ use App\Support\AiPricing;
 use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\LandPrepPlanner as LP;
+use App\Support\HtmlSanitizer;
+use App\Support\PlanMaterials;
 use App\Support\PlanPort;
 use App\Support\Tier;
 use App\Support\WorkerContext;
@@ -207,7 +209,8 @@ class PlanPortController extends Controller
         $request->attributes->set('auditScheduleId', (int) $schedule->id);
         $season = $this->remember($row, $schedule);
 
-        return $this->json(true, 'The season is made: ' . $made['lots'] . ' ' . ($made['lots'] === 1 ? 'lot' : 'lots') . ' and ' . $made['activities'] . ' activities on the board, each on its day.', [
+        return $this->json(true, 'The season is made: ' . $made['lots'] . ' ' . ($made['lots'] === 1 ? 'lot' : 'lots') . ' and ' . $made['activities'] . ' activities on the board, each on its day'
+            . ($made['materials'] ? ', ' . $made['materials'] . ' material ' . ($made['materials'] === 1 ? 'line' : 'lines') . ' with the inventory to buy' : '') . ', and the recommendations in the season\'s Notes.', [
             'scheduleId' => (int) $schedule->id, 'title' => $schedule->title, 'url' => route('sm.hub', ['id' => $schedule->id]), 'made' => $made, 'season' => $season,
         ]);
     }
@@ -677,7 +680,8 @@ class PlanPortController extends Controller
         $season = $this->remember($row, $s);
 
         return $this->json(true, $made['activities'] . ' ' . ($made['activities'] === 1 ? 'activity was' : 'activities were') . ' added to ' . $s->title
-            . ($made['skipped'] ? ', ' . $made['skipped'] . ' already there left out' : '') . ($made['past'] ? ', ' . $made['past'] . ' past ones left out' : '') . '.', [
+            . ($made['skipped'] ? ', ' . $made['skipped'] . ' already there left out' : '') . ($made['past'] ? ', ' . $made['past'] . ' past ones left out' : '')
+            . ($made['materials'] ? '. ' . $made['materials'] . ' material ' . ($made['materials'] === 1 ? 'line went' : 'lines went') . ' on them, with the inventory to buy' : '') . '.', [
                 'scheduleId' => (int) $s->id, 'title' => $s->title, 'url' => route('sm.activities', ['id' => $s->id]), 'made' => $made, 'season' => $season,
             ]);
     }
@@ -709,9 +713,21 @@ class PlanPortController extends Controller
 
             return PlanPort::toBuilder($plan, $pl, $counters, $prefix);
         };
+        // What each step uses, keyed by the step's id in the builder, for the lot the plan was made for (2026-10-23).
+        $forWhom = $pl['name'] . ' (' . PlanMaterials::areaWords((float) ($pl['ha'] ?? 1)) . ')';
+        $byTask = [];
+        foreach ($pl['items'] as $it) {
+            if (empty($it['materials'])) {
+                continue;
+            }
+            $clean = preg_replace('/[^A-Za-z0-9_-]/', '', $plan['source'] === 'landprep' ? (string) substr((string) $it['key'], 3) : (string) $it['key']);
+            $byTask[$plan['source'] === 'landprep' ? 'lp' . $plan['id'] . '_' . $clean : $prefix . '_' . $clean] = $it['materials'];
+        }
+        $recs = PlanPort::recsHtml($plan, [$pl]);
         if ($request->input('mode') === 'new') {
             $dayType = ProtocolBuilderController::fitDayType($pl['crop'] ?: null, $pl['dayType']);
             $tasks = $entries(ProtocolBuilderController::DAY_TYPES[$dayType]['counters'] ?? ['DAS']);
+            [$tasks, $mats, $matN] = PlanMaterials::intoBuilder($tasks, [], $byTask, $forWhom);
             $title = trim((string) $request->input('title')) ?: mb_substr(($plan['source'] === 'landprep' ? 'Land prep: ' : 'Protocol: ') . $row->title, 0, 190);
             $p = AsProtocol::create([
                 'userId' => (int) Auth::id(), 'title' => mb_substr($title, 0, 190),
@@ -719,12 +735,13 @@ class PlanPortController extends Controller
                 'tags' => [], 'crop' => $pl['crop'] ?: null, 'variety' => $pl['variety'] !== '' ? mb_substr($pl['variety'], 0, 120) : null,
                 'dayType' => $dayType, 'tasks' => [], 'history' => ['undo' => [], 'redo' => []], 'rev' => 1, 'deleteStatus' => 1,
             ]);
-            $ver = AsProtocolVersion::create(['protocolId' => $p->id, 'userId' => (int) Auth::id(), 'name' => 'Version 1', 'tasks' => $tasks, 'materials' => [],
-                'rules' => null, 'files' => [], 'history' => ['undo' => [], 'redo' => []], 'rev' => 1, 'sortOrder' => 0, 'deleteStatus' => 1]);
+            $ver = AsProtocolVersion::create(['protocolId' => $p->id, 'userId' => (int) Auth::id(), 'name' => 'Version 1', 'tasks' => $tasks, 'materials' => $mats,
+                'rules' => $recs !== '' ? HtmlSanitizer::rich($recs) : null, 'files' => [], 'history' => ['undo' => [], 'redo' => []], 'rev' => 1, 'sortOrder' => 0, 'deleteStatus' => 1]);
             $p->forceFill(['versionId' => $ver->id])->save();
             $n = count(array_filter($tasks, fn ($t) => ($t['kind'] ?? 'task') !== 'divider'));
 
-            return $this->json(true, 'A new protocol was made with ' . $n . ' steps.', ['protocolId' => (int) $p->id, 'url' => route('pb.open', ['id' => $p->id]), 'added' => $n, 'title' => $p->title]);
+            return $this->json(true, 'A new protocol was made with ' . $n . ' steps' . ($matN ? ', ' . $matN . ($matN === 1 ? ' material' : ' materials') : '') . ($recs !== '' ? ' and the recommendations in Rules & notes' : '') . '.',
+                ['protocolId' => (int) $p->id, 'url' => route('pb.open', ['id' => $p->id]), 'added' => $n, 'materials' => $matN, 'title' => $p->title]);
         }
         $p = AsProtocol::active()->where('userId', (int) Auth::id())->where('id', (int) $request->input('protocolId'))->first();
         if (! $p) {
@@ -753,9 +770,17 @@ class PlanPortController extends Controller
         $hist = is_array($ver->history) ? $ver->history : ['undo' => [], 'redo' => []];
         $hist['undo'] = array_slice(array_merge((array) ($hist['undo'] ?? []), [['tasks' => $have, 'materials' => array_values((array) ($ver->materials ?? [])), 'tab' => 'tasks']]), -15);
         $hist['redo'] = [];
-        $ver->forceFill(['tasks' => array_merge($have, $new), 'history' => $hist, 'rev' => (int) $ver->rev + 1])->save();
+        // The steps draw on the protocol's own materials where it has them by name; the rest are added.
+        [$new, $mats, $matN] = PlanMaterials::intoBuilder($new, array_values((array) ($ver->materials ?? [])), $byTask, $forWhom);
+        // The recommendations join the Rules & notes once, under their own heading.
+        $rules = (string) ($ver->rules ?? '');
+        $head = 'From the ' . PlanPort::SOURCES[$plan['source']]['label'] . ': ' . htmlspecialchars((string) $row->title, ENT_QUOTES, 'UTF-8');
+        $withRecs = $recs !== '' && ! str_contains($rules, $head);
+        $ver->forceFill(['tasks' => array_merge($have, $new), 'materials' => $mats, 'history' => $hist, 'rev' => (int) $ver->rev + 1]
+            + ($withRecs ? ['rules' => HtmlSanitizer::rich($rules . ($rules !== '' ? '<hr>' : '') . $recs)] : []))->save();
         $added = count(array_filter($new, fn ($t) => ($t['kind'] ?? 'task') !== 'divider'));
 
-        return $this->json(true, $added . ' steps were added to ' . $p->title . ', each on its day.', ['protocolId' => (int) $p->id, 'url' => route('pb.open', ['id' => $p->id]), 'added' => $added, 'title' => $p->title]);
+        return $this->json(true, $added . ' steps were added to ' . $p->title . ', each on its day' . ($matN ? ', with ' . $matN . ' new ' . ($matN === 1 ? 'material' : 'materials') : '') . ($withRecs ? ', and the recommendations went into Rules & notes' : '') . '.',
+            ['protocolId' => (int) $p->id, 'url' => route('pb.open', ['id' => $p->id]), 'added' => $added, 'materials' => $matN, 'title' => $p->title]);
     }
 }
