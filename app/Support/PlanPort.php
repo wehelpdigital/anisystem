@@ -262,7 +262,8 @@ class PlanPort
      */
     private static function fromProtocol(object $r): array
     {
-        $report = GovSource::scrubAll(json_decode((string) $r->report, true) ?: []);
+        // With its watering and protection schedules, as the report shows them (App\Support\ProtocolSchedules).
+        $report = ProtocolSchedules::fill(GovSource::scrubAll(json_decode((string) $r->report, true) ?: []), json_decode((string) ($r->params ?? ''), true) ?: null);
         $out = ['source' => 'protocol', 'id' => (int) $r->id, 'title' => (string) $r->title, 'phase' => 'season', 'lots' => [], 'note' => null,
             'legacy' => (int) ($report['format'] ?? 0) < 4];
         $crops = [];
@@ -313,10 +314,26 @@ class PlanPort
             if (! $items) {
                 continue;
             }
+            $crop = $crops[(string) ($L['case'] ?? '')] ?? null;
+            // The watering and protection schedules go with the plan (2026-10-23, the owner): one activity a
+            // stage, over the stage's days, on their own dates (no crew is placed on them).
+            $off = fn (string $d) => (int) Carbon::parse($planting)->diffInDays(Carbon::parse($d), false);
+            $sched = fn (array $row, string $type, string $title, string $html, string $priority, ?string $water = null) => [
+                'key' => 'cp_' . $row['key'], 'title' => mb_substr($title, 0, 255), 'html' => $html, 'type' => $type, 'priority' => $priority,
+                'date' => $row['date'], 'end' => $row['end'], 'lo' => null, 'hi' => null, 'hands' => 0, 'hired' => false,
+                'anchor' => true, 'zero' => false, 'transplant' => false, 'offset' => $off($row['date']), 'materials' => [], 'waterTask' => $water,
+            ];
+            $watering = $L['watering'] ?? null;
+            foreach ((array) ($watering['rows'] ?? []) as $k => $w) {
+                $items[] = $sched($w, 'irrigation', 'Watering: ' . $w['stage'], ProtocolSchedules::waterHtml($w, $watering, $k === 0), $w['critical'] ? 'high' : 'medium', $w['task']);
+            }
+            foreach ((array) ($L['protect'] ?? []) as $p) {
+                $items[] = $sched($p, $p['type'], ProtocolSchedules::protectTitle($p),
+                    ProtocolSchedules::protectHtml($p, (string) ($crop['protection']['intro'] ?? ''), (string) ($report['disclaimer'] ?? '')), 'medium');
+            }
             usort($items, fn ($a, $b) => strcmp($a['date'], $b['date']));
             $first = $first === null || $items[0]['date'] < $first ? $items[0]['date'] : $first;
             // The lot's own reading, what to watch, and the threats to scout for, on its planting day.
-            $crop = $crops[(string) ($L['case'] ?? '')] ?? null;
             $threats = array_slice(array_values(array_filter((array) ($crop['protection']['threats'] ?? []), 'is_array')), 0, 8);
             $note = '<p><strong>Anee\'s protocol for ' . self::e($L['name'] ?? 'this lot') . '</strong></p>'
                 . (trim((string) ($L['intro'] ?? '')) !== '' ? '<p>' . self::e($L['intro']) . '</p>' : '')
@@ -921,6 +938,7 @@ class PlanPort
             'croppingScheduleId' => $s->id, 'versionId' => $v->id,
             'activityTitle' => mb_substr((string) $it['title'], 0, 255), 'targetDate' => $date, 'targetEndDate' => $end,
             'priority' => $it['priority'], 'activityType' => isset(AsScheduleActivity::ACTIVITY_TYPES[$it['type']]) ? $it['type'] : 'other',
+            'waterTask' => $it['type'] === 'irrigation' ? (isset(AsScheduleActivity::WATER_TASKS[$it['waterTask'] ?? '']) ? $it['waterTask'] : 'irrigate') : null,
             'description' => HtmlSanitizer::rich((string) $it['html']), 'timeRequired' => 'n/a',
             'isDayZero' => (bool) $it['zero'], 'isTransplant' => (bool) $it['transplant'], 'isDraft' => false, 'isHidden' => false, 'isDone' => false,
             'workerChecklist' => false, 'workerSelfCheck' => false, 'sequenceOrder' => ($perDate[$date] - 1) * 10, 'deleteStatus' => 1,

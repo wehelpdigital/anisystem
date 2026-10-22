@@ -1336,6 +1336,37 @@
     .cr-job em.is-hired { background: #e0f2fe; color: #075985; }
     html.dark .cr-job { background: #12170f; border-color: #222b1a; }
     html.dark .cr-job.is-late { background: #2a1414; border-color: #4c1d1d; }
+    /* The watering and protection schedules (2026-10-23): the jobs' rows, a blue or rust calendar chip, and their tags. */
+    .cr-cal.is-water i { background: #2f8fd8; }
+    .cr-cal.is-protect i { background: #c2410c; }
+    .cr-sline { display: block; margin-top: .2rem; font-size: .77rem; line-height: 1.5; color: var(--color-gray-700); overflow-wrap: anywhere; }
+    .cr-sline > i { font-style: normal; font-weight: 800; color: var(--color-gray-500); }
+    .cr-tags { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .3rem; }
+    .cr-tag { font-size: .64rem; font-weight: 800; padding: .1rem .5rem; border-radius: 999px; background: #eef2f7; color: #334155; }
+    .cr-tag.is-crit { background: #fde8e8; color: #991b1b; }
+    .cr-tag.is-nur { background: #e7f6ea; color: #166534; }
+    .cr-tag.is-prep { background: #fef3c7; color: #92400e; }
+    .cr-tag.wt-irrigate { background: #e0effb; color: #1d5f99; }
+    .cr-tag.wt-maintain { background: #dff4f4; color: #0f6b6b; }
+    .cr-tag.wt-drain { background: #f6ead9; color: #7c4a12; }
+    .cr-tag.wt-no_irrigation { background: #eef0f2; color: #4b5563; }
+    .cr-pth { margin-top: .45rem; padding: .45rem .55rem; border-radius: .7rem; background: #fffaf3; border: 1px solid #fde2bf; }
+    .cr-pth.is-disease { background: #fdf4f9; border-color: #f7d0e5; }
+    .cr-pth b { font-size: .8rem; }
+    .cr-season { display: flex; gap: .6rem; align-items: flex-start; margin: .2rem 0 .7rem; padding: .7rem .8rem; border-radius: .95rem; background: #eef6fd; border: 1px solid #cfe3f6; font-size: .8rem; line-height: 1.55; color: #1e3a5f; }
+    .cr-season > span:first-child { flex: none; font-size: 1.15rem; line-height: 1.2; }
+    .cr-season b { display: block; font-size: .86rem; }
+    html.dark .cr-sline { color: #cfdcc2; }
+    html.dark .cr-tag { background: #1f2933; color: #cbd5e1; }
+    html.dark .cr-tag.is-crit { background: #3a1616; color: #fca5a5; }
+    html.dark .cr-tag.is-nur { background: #14301c; color: #86efac; }
+    html.dark .cr-tag.is-prep { background: #33270f; color: #fcd34d; }
+    html.dark .cr-tag.wt-irrigate { background: #10273b; color: #93c5fd; }
+    html.dark .cr-tag.wt-maintain { background: #0f2b2b; color: #7dd3c0; }
+    html.dark .cr-tag.wt-drain { background: #2e2010; color: #f0b97a; }
+    html.dark .cr-pth { background: #241b10; border-color: #4a3518; }
+    html.dark .cr-pth.is-disease { background: #2a1422; border-color: #4d2240; }
+    html.dark .cr-season { background: #10212f; border-color: #1e3a52; color: #bfdbfe; }
     html.dark .cr-job b { color: #e8efe1; }
     @media (prefers-reduced-motion: reduce) {
         .cq-step.is-on, .cq-quote, .cq-lot, .cq-wk, .cq-hint, .cq-from, .cq-need, .cq-cast-c, .cq-cast-row, .cq-price, .cq-err, .cr-pane, .cr-day, .cr-job, .cr-fold > div { animation: none !important; }
@@ -3399,6 +3430,40 @@
         });
     });
 
+    /* ---- the watering and protection schedules (2026-10-23, the owner): App\Support\ProtocolSchedules dates them from the
+       lot's planting; they go with the plan into a season or the builder. ---- */
+    const spanSay = (a, b) => (a === b ? dayFmt(a, { month: 'short', day: 'numeric' }) : dayFmt(a, { month: 'short', day: 'numeric' }) + ' to ' + dayFmt(b, { month: 'short', day: 'numeric' }));
+    const calChip = (d, cls) => '<span class="cr-cal ' + cls + '"><i>' + esc(dayFmt(d, { month: 'short' })) + '</i><b>' + esc(dayFmt(d, { day: 'numeric' })) + '</b><small>' + esc(dayFmt(d, { weekday: 'short' })) + '</small></span>';
+    const WATER_TASK = { irrigate: 'Irrigate', maintain: 'Keep the water', drain: 'Drain', no_irrigation: 'No watering' };
+    function waterCard(L) {
+        const w = L.watering || null, a = L.water || {};
+        if (!(w && (w.rows || []).length) && !a.plan) return '';
+        const sn = (w && w.season) || {};
+        return '<div class="cr-card"><h3>Water<small>' + (w && (w.rows || []).length ? 'the watering schedule for this lot, stage by stage, on its own days' : 'what this lot\'s water asks') + '</small></h3>'
+            + (a.plan ? '<p class="cr-say">' + esc(sweepT(a.plan)) + '</p><div class="cp2-pills" style="margin-bottom:.6rem">' + (a.ifDry ? '<span class="cp2-pill">☀️ If dry: ' + esc(sweepT(a.ifDry)) + '</span>' : '') + (a.ifWet ? '<span class="cp2-pill">🌧️ If wet: ' + esc(sweepT(a.ifWet)) + '</span>' : '') + '</div>' : '')
+            + (sn.say ? '<div class="cr-season"><span>' + ({ rainfed: '🌦️', wet: '🌧️', dryseason: '☀️' }[sn.kind] || '💧') + '</span><span><b>' + esc(sn.title) + '</b>' + esc(sn.say) + (sn.also ? ' ' + esc(sn.also) : '') + '</span></div>' : '')
+            + (w && (w.rows || []).length ? '<div class="cr-jobs">' + w.rows.map((x) => '<div class="cr-job">' + calChip(x.date, 'is-water') + '<div><b>' + esc(x.stage) + '</b><small>' + esc(spanSay(x.date, x.end)) + '</small>'
+                + '<div class="cr-tags"><span class="cr-tag wt-' + esc(x.task) + '">' + esc(WATER_TASK[x.task] || 'Irrigate') + '</span>' + (x.critical ? '<span class="cr-tag is-crit">Never let it dry</span>' : '') + (x.nursery ? '<span class="cr-tag is-nur">Seedbed</span>' : '') + (x.prep ? '<span class="cr-tag is-prep">Land preparation</span>' : '') + '</div>'
+                + (x.often ? '<span class="cr-sline"><i>How often:</i> ' + esc(x.often) + '</span>' : '') + (x.amount ? '<span class="cr-sline"><i>How much:</i> ' + esc(x.amount) + '</span>' : '') + (x.why ? '<span class="cr-sline"><i>Why:</i> ' + esc(x.why) + '</span>' : '') + '</div></div>').join('') + '</div>' : '')
+            + (w && w.method ? '<p class="cp-note">' + esc(w.method) + '</p>' : '')
+            + (w && w.signs && (w.signs.dry || w.signs.wet) ? '<details class="cr-fold"><summary>How the crop tells you it needs water, or has too much</summary><div class="cr-lines">' + (w.signs.dry ? '<p>☀️ <b>Too dry:</b> ' + esc(w.signs.dry) + '</p>' : '') + (w.signs.wet ? '<p>💧 <b>Too wet:</b> ' + esc(w.signs.wet) + '</p>' : '') + '</div></details>' : '')
+            + '</div>';
+    }
+    function protectCard(L, r, crop) {
+        const rows = L.protect || [];
+        if (!rows.length) return '';
+        const kindWord = { insect: 'Insect', disease: 'Disease', other: 'Other' };
+        const pr = (crop && crop.protection) || {};
+        return '<div class="cr-card"><h3>When to check, and when to spray<small>stage by stage on this lot\'s days: what to look for, the point to act, and what to use if it is passed</small></h3>'
+            + '<div class="cr-warn" role="note" style="margin-bottom:.7rem"><span>🧑‍🌾</span><span><b>A calendar to check by, not to spray by</b>' + esc(r.disclaimer || pr.disclaimer || 'Spray only when what you see passes the point to act, and follow the label.') + '</span></div>'
+            + '<div class="cr-jobs">' + rows.map((x) => '<div class="cr-job">' + calChip(x.date, 'is-protect') + '<div><b>' + esc(x.stage) + '</b><small>' + esc(spanSay(x.date, x.end) + '. Walk the field twice a week.') + '</small>'
+                + (x.threats || []).map((t) => '<div class="cr-pth' + (t.kind === 'disease' ? ' is-disease' : '') + '"><div class="cr-th-h"><b>' + esc(t.name) + '</b><span class="cr-kind">' + esc(kindWord[t.kind] || t.kind) + '</span></div>'
+                    + (t.threshold ? '<span class="cr-sline"><i>Act when:</i> ' + esc(sweepT(t.threshold)) + '</span>' : (t.sign ? '<span class="cr-sline"><i>Look for:</i> ' + esc(sweepT(t.sign)) + '</span>' : ''))
+                    + ((t.sprays || []).length ? '<span class="cr-sline"><i>If you must spray:</i> ' + esc(t.sprays.map((s) => s.name + (s.group ? ' (' + s.group + ')' : '') + ((s.sold || []).length ? ', sold as ' + s.sold.join(', ') : '')).join('; ')) + '</span>' : '')
+                    + (t.noSpray ? '<span class="cr-sline">' + esc(sweepT(t.noSpray)) + '</span>' : '') + '</div>').join('')
+                + '</div></div>').join('') + '</div></div>';
+    }
+
     /* ---- one lot ---- */
     function lotPane(L, r, i) {
         const crop = (r.crops || []).find((c) => c.key === L.case) || null;
@@ -3442,7 +3507,8 @@
             + ((L.deficiencies || []).length ? '<div class="cr-card"><h3>Nutrients this soil may lack<small>what to watch for, and why</small></h3><div class="cp2-defs">' + L.deficiencies.map((d) => '<div class="cp2-def" style="opacity:1;transform:none"><div class="cp2-def-h"><b>' + esc(d.nutrient || '') + '</b>' + (d.when ? '<span class="tag">' + esc(d.when) + '</span>' : '') + '</div>'
                 + (d.why ? '<p>' + esc(sweepT(d.why)) + '</p>' : '') + (d.signs ? '<p><em>Signs:</em> ' + esc(sweepT(d.signs)) + '</p>' : '') + (d.action ? '<p><em>What to do:</em> ' + esc(sweepT(d.action)) + '</p>' : '') + '</div>').join('') + '</div></div>' : '')
             + (crop ? '<div class="cr-card">' + protHtml(crop, r, L.watch).replace(/^<h3 style="margin:1rem 0 .5rem;/, '<h3 style="margin:0 0 .5rem;') + '</div>' : '')
-            + ((L.water || {}).plan ? '<div class="cr-card"><h3>Water</h3><p class="cr-say">' + esc(sweepT(L.water.plan)) + '</p><div class="cp2-pills">' + (L.water.ifDry ? '<span class="cp2-pill">☀️ If dry: ' + esc(sweepT(L.water.ifDry)) + '</span>' : '') + (L.water.ifWet ? '<span class="cp2-pill">🌧️ If wet: ' + esc(sweepT(L.water.ifWet)) + '</span>' : '') + '</div></div>' : '')
+            + protectCard(L, r, crop)
+            + waterCard(L)
             + ((tN || rN || yo.note || (n.known && n.goal)) ? yieldCard(L, yo, tN, rN, unit) : '')
             + (tasks.length ? '<div class="cr-card"><h3>This lot\'s jobs, by date<small>The days the work calendar gives them</small></h3><div class="cr-jobs">' + tasks.map((t) => {
                 const days = (t.days || []).length, people = t.hired ? 'A hired crew, about ' + Math.ceil(t.pd) + ' people' : (t.pd >= 1 ? trimN(t.pd) + ' person days' + (days > 1 ? ' over ' + days + ' days' : '') : 'Part of a day');

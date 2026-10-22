@@ -2777,7 +2777,8 @@ PROMPT;
         return $this->json(true, 'Protocol ready.', [
             'status' => 'ready',
             'savedId' => (int) $r->id,
-            'report' => self::soilOnRead(\App\Support\GovSource::scrubAll(json_decode($r->report, true))),
+            // The watering and protection schedules are worked out on read (2026-10-23, App\Support\ProtocolSchedules).
+            'report' => \App\Support\ProtocolSchedules::fill(self::soilOnRead(\App\Support\GovSource::scrubAll(json_decode($r->report, true))), json_decode((string) $r->params, true)),
             'params' => json_decode($r->params, true),
             'charged' => (float) $r->credits,
             'balance' => round($this->credits->balance($this->payer()->id), 2),
@@ -2814,7 +2815,8 @@ PROMPT;
             'id' => $r->id,
             'title' => $r->title,
             'params' => json_decode($r->params, true),
-            'report' => self::soilOnRead(\App\Support\GovSource::scrubAll(json_decode($r->report, true))),
+            // The watering and protection schedules are worked out on read (2026-10-23, App\Support\ProtocolSchedules).
+            'report' => \App\Support\ProtocolSchedules::fill(self::soilOnRead(\App\Support\GovSource::scrubAll(json_decode($r->report, true))), json_decode((string) $r->params, true)),
             'credits' => (float) $r->credits,
         ]);
     }
