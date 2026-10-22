@@ -12,7 +12,7 @@
     ][$page->slug] ?? (mb_strlen($page->title) < 30 ? $page->title . ' for the anee.io Farm App' : $page->title);
 @endphp
 @section('title', $legalSeo)
-@section('meta_description', \App\Support\CommunityText::plain($page->body, 155))
+@section('meta_description', \App\Support\CommunityText::plain($page->body, 150))
 
 {{-- A member who reads the Privacy Policy from the app's footer at night
      should not be flashed with white: these pages wear the saved theme, as
@@ -126,12 +126,12 @@
     .legal-body { margin-top: 1.5rem; font-size: .98rem; line-height: 1.72; color: var(--color-gray-700); overflow-wrap: break-word; }
     @media (min-width: 768px) { .legal-body { font-size: 1.02rem; } }
     .legal-body > :first-child { margin-top: 0; }
-    .legal-body h3 { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; line-height: 1.3; letter-spacing: -.005em;
+    .legal-body h2 { font-family: var(--font-heading); font-weight: 800; font-size: 1.15rem; line-height: 1.3; letter-spacing: -.005em;
         color: var(--color-gray-900); margin: 2.1rem 0 .75rem; padding-top: 1.6rem; border-top: 1px solid var(--color-gray-100);
         scroll-margin-top: 5.5rem; }
-    @media (min-width: 768px) { .legal-body h3 { font-size: 1.28rem; scroll-margin-top: 6.5rem; } }
-    .legal-body blockquote + h3, .legal-body > h3:first-child { border-top: 0; padding-top: 0; }
-    .legal-body h4 { font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: var(--color-gray-800); margin: 1.4rem 0 .5rem; }
+    @media (min-width: 768px) { .legal-body h2 { font-size: 1.28rem; scroll-margin-top: 6.5rem; } }
+    .legal-body blockquote + h2, .legal-body > h2:first-child { border-top: 0; padding-top: 0; }
+    .legal-body h3 { font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: var(--color-gray-800); margin: 1.4rem 0 .5rem; }
     .legal-body p { margin: 0 0 1rem; }
     .legal-body ul { list-style: none; margin: 0 0 1.15rem; padding: 0; }
     .legal-body ul > li { position: relative; padding-left: 1.3rem; margin: .6rem 0; }
@@ -318,7 +318,7 @@
     if (toc && 'IntersectionObserver' in window) {
         const byId = {};
         toc.querySelectorAll('a[data-lgl-to]').forEach((a) => { byId[a.dataset.lglTo] = a; });
-        const heads = Array.from(document.querySelectorAll('.legal-body h3[id]'));
+        const heads = Array.from(document.querySelectorAll('.legal-body h2[id]'));
         const light = (id) => Object.entries(byId).forEach(([k, a]) => a.classList.toggle('is-active', k === id));
         const seen = new Set();
         const io = new IntersectionObserver((entries) => {

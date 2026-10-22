@@ -8,7 +8,7 @@
 @include('public.partials.site-css')
 
 @section('title', 'Pricing Comparison: Every anee.io Plan Side by Side')
-@section('meta_description', 'Compare anee.io plans side by side: seasons, lots, Anee the smart farm technician, the field helpers, NPK Plus, Satellite Weather, workers, reports and storage. Libre is free forever.')
+@section('meta_description', 'Compare anee.io plans side by side: seasons, lots, Anee, the field helpers, NPK Plus, Satellite Weather, workers, reports and storage. Libre is free.')
 
 @push('head')
     <link rel="canonical" href="{{ route('pricing.compare') }}">
@@ -24,8 +24,9 @@
 @section('content')
 
     {{-- ================= HERO ================= --}}
-    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 spark-field">
-        <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
+    <section class="relative isolate overflow-hidden spark-field" style="background-color:#16290d">
+        @include('public.partials.hero-photo', ['photo' => 'transplant', 'pos' => '50% 45%'])
+        <div class="absolute inset-0 bg-dot-grid opacity-25" aria-hidden="true"></div>
         <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center animate-fade-up" style="z-index:1">
             <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Compare plans</p>
             <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Every Plan, Side by Side</h1>

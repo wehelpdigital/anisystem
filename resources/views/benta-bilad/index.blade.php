@@ -53,10 +53,10 @@
     .bb-card h3 { display: flex; align-items: center; gap: .55rem; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: var(--color-gray-900); }
     .bb-card h3 i { flex: none; width: 1.9rem; height: 1.9rem; border-radius: .7rem; display: grid; place-items: center; font-style: normal; font-size: .82rem; font-weight: 900; color: #2d5016; background: #e9f2de; }
     .bb-card > p { margin-top: .25rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-500); }
-    .bb-row { display: grid; gap: .7rem; margin-top: .85rem; }
-    @media (min-width: 520px) { .bb-row.is-2 { grid-template-columns: 1fr 1fr; } .bb-row.is-3 { grid-template-columns: 1fr 1fr 1fr; } }
+    .bb-row { display: grid; gap: .85rem; margin-top: .85rem; }
+    /* One field to a row at every width (2026-10-22, the owner): the sacks, the sack weights, the moisture and the prices read down, not across. */
     .bb-f { display: grid; gap: .3rem; min-width: 0; }
-    .bb-f > span { font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
+    .bb-f > span:not(.bb-in) { font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
     .bb-f > small { font-size: .72rem; line-height: 1.4; color: var(--color-gray-500); }
     .bb-in { position: relative; display: flex; align-items: center; }
     .bb-in input { width: 100%; min-width: 0; padding-right: 3.6rem; font-variant-numeric: tabular-nums; }
@@ -236,7 +236,7 @@
             <section class="bb-card">
                 <h3><i>1</i>Your harvest</h3>
                 <p>Count the sacks as they came off the harvester, before any drying.</p>
-                <div class="bb-row is-2">
+                <div class="bb-row">
                     <label class="bb-f"><span>Sacks harvested</span>
                         <span class="bb-in"><input type="number" class="form-input" id="bbSacks" min="0" step="any" inputmode="decimal" placeholder="Like 120"><em>sacks</em></span></label>
                     <label class="bb-f"><span>Weight of one sack</span>
@@ -274,7 +274,7 @@
                     <div class="bb-f"><span>Drying labor</span>
                         <button type="button" class="bb-tag is-wide" id="bbLMode" aria-haspopup="dialog"><span>Per sack</span>{!! $chev !!}</button></div>
                 </div>
-                <div class="bb-row is-3 bb-swap" id="bbLBox">
+                <div class="bb-row bb-swap" id="bbLBox">
                     <label class="bb-f" id="bbLRateBox"><span id="bbLRateLabel">Labor per sack</span>
                         <span class="bb-in"><b>₱</b><input type="number" class="form-input is-pre" id="bbLRate" min="0" step="any" inputmode="decimal" placeholder="Like 25"><em id="bbLRateUnit">a sack</em></span></label>
                     <label class="bb-f" id="bbLWorkersBox" hidden><span>Workers</span>
@@ -292,7 +292,7 @@
                     <div class="bb-f"><span>Count the drying</span>
                         <button type="button" class="bb-tag is-wide" id="bbDryBy" aria-haspopup="dialog"><span>By moisture</span>{!! $chev !!}</button></div>
                 </div>
-                <div class="bb-row is-2 bb-swap" id="bbByKg" hidden>
+                <div class="bb-row bb-swap" id="bbByKg" hidden>
                     <label class="bb-f"><span>One sack when wet</span>
                         <span class="bb-in"><input type="number" class="form-input" id="bbKgWet" min="10" max="150" step="any" inputmode="decimal" value="{{ $defaults['kgPerSack'] }}"><em>kg</em></span>
                         <small>The same as the weight of one sack above.</small></label>
@@ -304,7 +304,7 @@
                         </div>
                         <small>Weigh a sack before and after drying. Spills and birds are already in it.</small></div>
                 </div>
-                <div class="bb-row is-3 bb-swap" id="bbByPct">
+                <div class="bb-row bb-swap" id="bbByPct">
                     <label class="bb-f"><span>Moisture at harvest{{ \App\Support\Tagalog::flag('moisture-content') }}</span>
                         <span class="bb-in"><input type="number" class="form-input" id="bbMWet" min="10" max="45" step="any" inputmode="decimal" value="{{ $defaults['wetMoisture'] }}"><em>%</em></span>
                         <small>Fresh palay: 20 to 28%.</small></label>
@@ -321,7 +321,7 @@
             <section class="bb-card">
                 <h3><i>4</i>The prices</h3>
                 <p>What a buyer pays you for one kilo, wet and dry.</p>
-                <div class="bb-row is-2">
+                <div class="bb-row">
                     <label class="bb-f"><span>Wet palay (basa)</span>
                         <span class="bb-in"><b>₱</b><input type="number" class="form-input is-pre" id="bbPWet" min="0" step="any" inputmode="decimal" placeholder="Like 17"><em>a kg</em></span></label>
                     <label class="bb-f"><span>Dry palay (tuyo)</span>

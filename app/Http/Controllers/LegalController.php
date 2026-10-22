@@ -100,6 +100,7 @@ class LegalController extends Controller
 
     /**
      * Give every section heading an id, and list them for "On this page".
+     * Sections leave as h2 and their parts as h3, under the page's h1.
      *
      * Runs AFTER the sanitiser, which allows no attributes on headings, so
      * the ids are ours and cannot be smuggled in through the editor. A
@@ -129,8 +130,12 @@ class LegalController extends Controller
             $used[$id] = true;
             $toc[] = ['id' => $id, 'num' => $num, 'text' => $words];
 
-            return '<h3 id="' . e($id) . '">' . $m[1] . '</h3>';
+            return '<h2 id="' . e($id) . '">' . $m[1] . '</h2>';
         }, $html) ?? $html;
+        // The editor writes sections as h3 and their parts as h4; under the
+        // page's h1 they are read as h2 and h3, so no level is skipped
+        // (2026-10-22 SEO audit). A section with no words stays an h3 above.
+        $html = preg_replace(['~<h4>~', '~</h4>~'], ['<h3>', '</h3>'], $html) ?? $html;
 
         return [$html, $toc];
     }

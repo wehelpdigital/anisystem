@@ -23,16 +23,15 @@
     $tierName = fn ($tier) => config('tiers.' . $tier . '.name');
 @endphp
 
-@section('title', 'Tutorial: How anee.io Works')
-@section('meta_description', 'A step by step guide to anee.io: create your free account, start a season, add your lots, plan every task, follow the growth stage and weather, ask Anee, record the harvest and read your reports.')
+@section('title', 'anee.io Tutorial: Your First Season, Step by Step')
+@section('meta_description', 'A step by step anee.io tutorial: make a free account, start a season, add your lots, plan each task, ask Anee, record the harvest and read the reports.')
 
 @section('content')
 
     {{-- ================= HERO BAND ================= --}}
-    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
-        <img src="{{ asset('images/top-yield.webp') }}" alt="" aria-hidden="true"
-             class="absolute inset-0 -z-20 h-full w-full object-cover opacity-20" loading="eager">
-        <div class="absolute inset-0 -z-10 bg-dot-grid opacity-40" aria-hidden="true"></div>
+    <section class="relative isolate overflow-hidden" style="background-color:#16290d">
+        @include('public.partials.hero-photo', ['photo' => 'hero-planting', 'pos' => '50% 40%'])
+        <div class="absolute inset-0 -z-10 bg-dot-grid opacity-25" aria-hidden="true"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center animate-fade-up">
             <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-accent-400 ring-1 ring-white/20">
                 Tutorial
@@ -296,8 +295,9 @@
     </section>
 
     {{-- ================= CTA ================= --}}
-    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
-        <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
+    <section class="relative isolate overflow-hidden" style="background-color:#16290d">
+        @include('public.partials.hero-photo', ['photo' => 'palay-heads', 'pos' => '50% 50%', 'lazy' => true])
+        <div class="absolute inset-0 bg-dot-grid opacity-25" aria-hidden="true"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center reveal">
             <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Still Have Questions?</h2>
             <p class="mt-4 max-w-xl mx-auto text-brand-100">

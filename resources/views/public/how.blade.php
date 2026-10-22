@@ -6,7 +6,7 @@
 @include('public.partials.site-css')
 
 @section('title', 'How anee.io Works: Anee at Every Step of the Season')
-@section('meta_description', 'See how anee.io works from the first plan to the last sack: plan, plant, grow, protect, harvest and look back, with Anee, your smart farm technician, at every step.')
+@section('meta_description', 'See how anee.io works from the first plan to the last sack: plan, plant, grow, protect and harvest, with Anee, your smart farm technician, at every step.')
 
 @push('head')
     <link rel="canonical" href="{{ route('how') }}">
@@ -46,6 +46,7 @@
                 <a href="{{ route('signup') }}" class="btn btn-primary btn-lg">Start free</a>
                 <a href="{{ route('pricing') }}" class="btn btn-outline btn-lg">See the plans</a>
             </div>
+            <p class="mt-6 text-gray-600">Wondering how Anee differs from ChatGPT or Gemini? <a href="{{ route('how.why') }}" class="font-bold text-brand-700 underline underline-offset-4">See what she reads before she answers</a>.</p>
             <a href="{{ url('/ask-anee') }}" class="ask-pill mt-6" style="display:inline-flex">
                 <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true">
                 <span>Or ask Anee one question for free</span>

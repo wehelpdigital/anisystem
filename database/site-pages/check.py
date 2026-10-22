@@ -125,6 +125,7 @@ def plain(s):
 def texts(page):
     """(kind, text) pieces in reading order, links already flattened."""
     out = [("excerpt", page.get("excerpt", ""))]
+    last = None  # the level of the last section heading: a step's name is drawn one level under it
     for b in page.get("blocks", []):
         t = b.get("type")
         if t in ("text",):
@@ -132,11 +133,14 @@ def texts(page):
                 out.append(("para", para))
         elif t == "heading":
             out.append(("h%s" % b.get("level", 2), b.get("text", "")))
+            if (b.get("text") or "").strip():
+                last = int(b.get("level", 2) or 2)
         elif t == "list":
             out += [("item", i) for i in b.get("items", [])]
         elif t == "steps":
             for i in b.get("items", []):
-                out.append(("h4", i.get("title", "")))
+                # public/site/blocks: an h3 under an h2, an h4 under an h3 (2026-10-22).
+                out.append(("h3" if last == 2 else "h4", i.get("title", "")))
                 out.append(("para", i.get("text", "")))
                 # A step done in parts (How to Plant, 2026-10-19): each part read like a step.
                 for pt in i.get("parts", []) or []:

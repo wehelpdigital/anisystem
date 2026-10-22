@@ -7,7 +7,7 @@
 @include('public.site.css')
 
 @section('title_full', 'Ask Anee a Farming Question for Free | anee.io')
-@section('meta_description', 'Ask Anee, the anee.io smart farm technician, one farming question for free. Palay, mais, gulay, pests or fertilizer: tell her about your farm and get a full answer.')
+@section('meta_description', 'Ask Anee, the anee.io smart farm technician, one farming question for free. Tell her about your palay, mais or gulay and get a full answer by email.')
 
 @push('head')
     <link rel="canonical" href="{{ url('/ask-anee') }}">

@@ -123,7 +123,8 @@
     .sp-step { position: relative; padding: 1rem 1.1rem 1rem 3.6rem; border-radius: 1rem; background: #f9fbf6; border: 1px solid #e5ebdf; counter-increment: sp-step; }
     .sp-step::before { content: counter(sp-step); position: absolute; left: 1rem; top: 1rem; width: 1.9rem; height: 1.9rem; border-radius: 999px;
         display: grid; place-items: center; background: #4a7c2a; color: #fff; font-weight: 800; font-size: .9rem; }
-    .sp-step b { display: block; font-family: var(--font-heading); color: #14210c; font-size: 1.02rem; }
+    .sp-step b, .sp-step .sp-step-t { display: block; font-family: var(--font-heading); color: #14210c; font-size: 1.02rem; }
+    .sp-step .sp-step-t { margin: 0; font-weight: 700; line-height: inherit; letter-spacing: normal; }
     .sp-step p { margin-top: .25rem; font-size: .97rem; color: #374151; }
     .sp-parts { margin-top: .6rem; display: grid; gap: .45rem; counter-reset: sp-part; }
     .sp-parts li { position: relative; padding: .55rem .7rem .55rem 2.3rem; border-radius: .8rem; background: #fff; border: 1px solid #e5ebdf; counter-increment: sp-part; font-size: .92rem; color: #374151; }

@@ -188,7 +188,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/how-to-plant', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
+        $static = ['/', '/how-it-works', '/how-it-works/why-anee', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/how-to-plant', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
         // Each crop's variety finder (2026-10-13).
         foreach (\App\Support\CropVarieties::crops() as $c) {
             if ($c['hasHub']) {
@@ -246,6 +246,10 @@ class SitePageController extends Controller
             }
             $out[] = '';
         }
+        $out[] = '## Why Anee';
+        $out[] = '';
+        $out[] = '- [Why Anee answers better than a general AI chat app](' . url('/how-it-works/why-anee') . '): before she answers, Anee reads the farm\'s own lots, crop, variety and planting date, its field profile and the usual soil of its barangay, the forecast for its spot, the ENSO outlook, twenty years of local rain and heat, every typhoon, flood and drought in its town since 2005, the records of over 1,600 varieties and over 7,000 fertilizers and pesticides registered in the Philippines. A general chat app only has what it learned online and what the farmer types.';
+        $out[] = '';
         $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'how-to-plant' => 'How to plant, the traditional way, crop by crop', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties', 'crop-varieties' => 'Crop varieties', 'features' => 'Feature pages'];
         try {
             $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);

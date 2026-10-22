@@ -2,14 +2,15 @@
 
 @include('public.partials.site-css')
 
-@section('title', 'Pricing: Plans for Every Farm')
-@section('meta_description', 'anee.io pricing: simple plans paid via ' . \App\Support\Region::payMethod() . ', plus AI credits so you only pay Anee for what you ask. No hidden fees, cancel anytime.')
+@section('title', 'Farm App Pricing: Start Free, Upgrade When Ready')
+@section('meta_description', 'anee.io pricing: Libre is free forever. Plans with Anee, your smart farm technician, start at ' . \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee', 'month')) . ' a month, paid through ' . \App\Support\Region::payMethod() . '.')
 
 @section('content')
 
     {{-- ================= HERO ================= --}}
-    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 spark-field">
-        <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
+    <section class="relative isolate overflow-hidden spark-field" style="background-color:#16290d">
+        @include('public.partials.hero-photo', ['photo' => 'team-thumbs', 'pos' => '50% 30%'])
+        <div class="absolute inset-0 bg-dot-grid opacity-25" aria-hidden="true"></div>
         <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center animate-fade-up" style="z-index:1">
             <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Simple prices made for farmers</p>
             <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Start Free. Grow When You're Ready.</h1>

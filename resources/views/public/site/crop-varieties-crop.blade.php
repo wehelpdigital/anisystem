@@ -26,14 +26,20 @@
     $mats = $mats->filter(fn ($v) => $v['maturity']['unit'] === $unit)->pluck('maturity.value');
     $ys = $all->filter(fn ($v) => isset($v['yield']['value']) && ($v['yield']['unit'] ?? '') === 't/ha')->pluck('yield.value');
     $hybrids = $all->filter(fn ($v) => str_contains(strtolower((string) ($v['kind'] ?? '')), 'hybrid'))->count();
-    $title = $name . ' Varieties in the Philippines';
+    // Title case in a heading: "Sugar apple" reads "Sugar Apple Varieties" (2026-10-22 SEO audit).
+    $title = ucwords($name) . ' Varieties in the Philippines';
     // The members' gate (2026-10-14): a guest sees the finder's first rows.
     $hg = \App\Support\ContentGate::finderApplies('crop-varieties');
     $member = auth()->check() && ! $hg;
     $metaTitle = collect([$title . ': Every Registered Variety', $title . ': Yield and Maturity', $title])->first(fn ($t) => mb_strlen($t) <= 60);
+    // 120 to 156 characters where the crop's name allows (Yoast): the longest that fits.
+    $descHead = 'Every registered ' . $lname . ($local ? ' (' . $local . ')' : '') . ' variety in the Philippines' . ($sold ? ', plus the seed farmers buy most' : '');
     $desc = collect([
-        'Every registered ' . $lname . ' variety' . ($sold ? ', plus the seed farmers buy most' : '') . ($local ? ' (' . $local . ')' : '') . ': days to harvest, yield, ratings and where each grows best.',
-        'Every registered ' . $lname . ' variety' . ($sold ? ', plus the seed farmers buy most' : '') . ': days to harvest, yield, ratings and where each grows best.',
+        $descHead . ': days to harvest, yield, ratings and where each grows best, with a finder to pick the right one.',
+        $descHead . ': days to harvest, yield, ratings and where each grows best.',
+        'Every registered ' . $lname . ($local ? ' (' . $local . ')' : '') . ' variety in the Philippines: days to harvest, yield, ratings and where each grows best, with a finder to pick the right one.',
+        'Every registered ' . $lname . ' variety in the Philippines: days to harvest, yield, ratings and where each grows best, with a finder to pick the right one.',
+        'Every registered ' . $lname . ' variety in the Philippines: days to harvest, yield, ratings and where each grows best.',
         'Every registered ' . $lname . ' variety: days to harvest, yield and where each grows best.',
     ])->first(fn ($d) => mb_strlen($d) <= 156);
     $intro = trim(($crop['hub'] ?? '') . ' ' . $all->count() . ' varieties' . ($sold ? ', ' . $registered . ' of them registered and ' . $sold . ' sold by seed companies or grown by farmers' : ', every one registered') . ', each with a page of its own.');
@@ -49,7 +55,7 @@
     if ($hybrids) {
         $faq[] = ['Should I plant a hybrid ' . $lname . '?', 'A hybrid often yields more, but you must buy new seed every season, and it pays back only with good water and fertilizer. Open pollinated varieties cost less, and you can save their seed.'];
     }
-    $faq[] = ['What does it mean when a variety is on the NSIC registry?', 'The National Seed Industry Council approved it after trials in several places. A variety that is not registered can still be good, but its numbers come only from its seller.'];
+    $faq[] = ['What does it mean when a variety is registered?', 'It passed official trials in several places before it was approved for sale. A variety that is not registered can still be good, but its numbers come only from its seller.'];
     $faq[] = ['Where do these numbers come from?', 'From each registered variety\'s own trials, and for unregistered varieties from their sellers and farm sources, each one named on the variety page. The words on our pages are our own.'];
 @endphp
 

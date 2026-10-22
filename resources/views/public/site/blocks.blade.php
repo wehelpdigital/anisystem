@@ -47,9 +47,15 @@
             @endif
             @break
         @case('steps')
+            {{-- Each step's name is a heading one level under the section it sits in, so a long
+                 list of steps still reads as parts with names (2026-10-22 SEO audit: Yoast's
+                 subheading spread). With no section heading above, it stays bold text. Only the
+                 inline php form in this file: a block form would swallow the inline ones above it. --}}
+            @php($spLast = collect(array_slice($blocks, 0, $i))->last(fn ($x) => ($x['type'] ?? '') === 'heading' && trim((string) ($x['text'] ?? '')) !== ''))
+            @php($spTag = $spLast ? ((int) ($spLast['level'] ?? 2) === 3 ? 'h4' : 'h3') : 'b')
             <div class="sp-steps">
                 @foreach ((array) ($b['items'] ?? []) as $it)
-                    <div class="sp-step"><b>{{ $it['title'] ?? '' }}</b><p>{!! $S::inline($it['text'] ?? '') !!}</p>
+                    <div class="sp-step"><{{ $spTag }} class="sp-step-t">{{ $it['title'] ?? '' }}</{{ $spTag }}><p>{!! $S::inline($it['text'] ?? '') !!}</p>
                         {{-- A step done in parts (How to Plant, 2026-10-19): numbered under it, each with its time. --}}
                         @if (! empty($it['parts']) && is_array($it['parts']))
                             <ol class="sp-parts">

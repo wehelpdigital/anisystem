@@ -61,6 +61,12 @@ class PublicController extends Controller
         return view('public.how');
     }
 
+    /** Why Anee (2026-10-22): what she reads before she answers, beside a general AI chat app. */
+    public function why()
+    {
+        return view('public.why-anee');
+    }
+
     public function pricing()
     {
         // The same table the in-app gates read — the page can never promise
