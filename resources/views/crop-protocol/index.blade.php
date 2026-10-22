@@ -617,6 +617,27 @@
     .cp-yo-row b { flex: none; min-width: 4.5rem; text-align: right; color: var(--color-gray-900); }
     html.dark .cp-yo-row .tr { background: #222b1a; }
     html.dark .cp-yo-row b { color: #e8efe1; }
+    /* The yield a hectare or for the lot, and what this plan carries (2026-10-23, the owner: "it shows the potential
+       yield per hectare. it should also show in a subtab ... the potential yield of the protocol based on the lot size"). */
+    .cr-ytabs { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; margin: .15rem 0 .75rem; padding: .22rem; border-radius: 999px;
+        background: var(--color-gray-100); isolation: isolate; }
+    .cr-ytabs::before { content: ''; position: absolute; z-index: -1; top: .22rem; bottom: .22rem; left: .22rem; width: calc(50% - .22rem); border-radius: 999px;
+        background: var(--color-white); box-shadow: 0 2px 8px -3px rgb(0 0 0 / .25); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .cr-ytabs.is-lot::before { transform: translateX(100%); }
+    .cr-ytabs button { min-height: 2.1rem; padding: .3rem .85rem; border-radius: 999px; font-size: .78rem; font-weight: 800; white-space: nowrap; color: var(--color-gray-500);
+        transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .cr-ytabs button[aria-selected="true"] { color: var(--color-gray-900); }
+    html.dark .cr-ytabs { background: #1b2414; }
+    html.dark .cr-ytabs::before { background: #2b3a1c; }
+    html.dark .cr-ytabs button[aria-selected="true"] { color: #fff; }
+    .cr-ycard .cp-yo-row .tr span { transform: scaleX(1); }
+    .cr-ycard .cp-yo.is-fresh .cp-yo-row .tr span { animation: crYGrow .6s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes crYGrow { from { transform: scaleX(0); } }
+    .cr-ycard .cp-yo[hidden] { display: none; }
+    .cp-yo-row .tr span.is-plan { background: #1d6fd1; }
+    html.dark .cp-yo-row .tr span.is-plan { background: #5aa9f5; }
+    .cr-yplan-say { margin-top: .55rem; font-size: .78rem; line-height: 1.5; color: var(--color-gray-500); }
+    @media (prefers-reduced-motion: reduce) { .cr-ytabs::before, .cr-ytabs button { transition: none; } .cr-ycard .cp-yo.is-fresh .cp-yo-row .tr span { animation: none; } }
 
     /* The shopping list. */
     .cp-shop { display: grid; gap: .3rem; }
@@ -3155,7 +3176,8 @@
             const pane = hostEl.querySelector('[data-pane="lot' + i + '"]');
             pane.innerHTML = lotPane(lots[i], r, i);
             paintProgram(pane.querySelector('[data-proghost]'), lots[i], hostEl);
-            paintBarrel(pane.querySelector('[data-barrel]'), lots[i]);
+            const met = paintBarrel(pane.querySelector('[data-barrel]'), lots[i]);
+            paintYield(pane, met && met.potHa);
         };
         if (lots.length === 1) paintLot(0);
         const go = (key) => {
@@ -3307,6 +3329,71 @@
             + (th.length ? '<div class="cr-threats">' + th.map(card).join('') + '</div>' : '<p class="cp-note">No threats came back for this crop.</p>') + weeds;
     }
 
+    /* ---- the yield: a hectare, or for the lot (2026-10-23) ---- */
+    // A lot's size said plainly: square meters under a hectare.
+    const areaSay = (ha) => { const a = Number(ha) || 1; return a < 1 ? Math.round(a * 10000).toLocaleString('en-US') + ' m²' : trimN(a) + (a === 1 ? ' hectare' : ' hectares'); };
+    // An amount of harvest in the lot's own unit; under a ton, said in kilos too.
+    const yieldAmt = (v, unit) => {
+        const x = Number(v) || 0, u = String(unit || 'tons');
+        if (/^tons?$/i.test(u) && x < 1) return Math.round(x * 1000).toLocaleString('en-US') + ' kg';
+        const r = x >= 100 ? Math.round(x) : x >= 10 ? Math.round(x * 10) / 10 : Math.round(x * 100) / 100;
+        return r.toLocaleString('en-US') + ' ' + (r === 1 ? u.replace(/s$/, '') : u);
+    };
+    // A yield said in words, in the lot's unit: tons, kilos and cavans each read for what they are.
+    const yieldIn = (text, tIn) => {
+        const v = numOf(text);
+        if (v === null) return null;
+        const t = String(text).toLowerCase(), cav = Number(((OPT && OPT.yieldT) || {}).cavans) || 0.05;
+        const tons = /\bkg\b|kilo/.test(t) ? v / 1000 : /\bton|\bt\b/.test(t) ? v : /cavan|sack|kaban/.test(t) ? v * cav : null;
+        return tons === null ? v : tons / (Number(tIn) || 1);
+    };
+    function yieldCard(L, yo, tN, rN, unit) {
+        const area = Number(L.areaHa) || 1;
+        const pane = (basis) => {
+            const lot = basis === 'lot';
+            const say = (v) => (lot ? yieldAmt(v * area, unit) : yieldAmt(v, unit) + ' a hectare');
+            const row = (lab, v, cls) => '<div class="cp-yo-row"><small>' + lab + '</small><div class="tr"><span class="' + cls + '" data-yv="' + v + '"></span></div><b>' + esc(say(v)) + '</b></div>';
+            return '<div class="cp-yo" data-ypane="' + basis + '"' + (lot ? ' hidden' : '') + '>'
+                + (tN ? row('Target', tN, 'is-target') : '') + (rN ? row('Realistic', rN, '') : '')
+                + '<div class="cp-yo-row" data-yplan hidden><small>This plan</small><div class="tr"><span class="is-plan" data-yv="0"></span></div><b></b></div></div>';
+        };
+        return '<div class="cr-card cr-ycard" data-ycard data-area="' + area + '" data-unit="' + esc(unit) + '"><h3>Yield<small>your target, what this variety really gives here, and what this plan carries</small></h3>'
+            + '<div class="cr-ytabs" role="tablist" aria-label="Yield for"><button type="button" role="tab" aria-selected="true" data-ybasis="ha">A hectare</button><button type="button" role="tab" aria-selected="false" data-ybasis="lot">This lot · ' + esc(areaSay(area)) + '</button></div>'
+            + pane('ha') + pane('lot') + '<p class="cr-yplan-say" data-yplansay hidden></p>' + (yo.note ? '<p class="cp-note">' + esc(sweepT(yo.note)) + '</p>' : '') + '</div>';
+    }
+    // The bars against the biggest of the three, and the plan's row once the barrel has measured it.
+    function paintYield(pane, potHa) {
+        const card = pane && pane.querySelector('[data-ycard]');
+        if (!card) return;
+        const area = Number(card.dataset.area) || 1, unit = card.dataset.unit || 'tons';
+        if (potHa) {
+            card.querySelectorAll('[data-yplan]').forEach((row) => {
+                const lot = row.closest('[data-ypane]').dataset.ypane === 'lot';
+                row.hidden = false;
+                row.querySelector('[data-yv]').dataset.yv = potHa;
+                row.querySelector('b').textContent = lot ? yieldAmt(potHa * area, unit) : yieldAmt(potHa, unit) + ' a hectare';
+            });
+            const say = card.querySelector('[data-yplansay]');
+            say.hidden = false;
+            say.textContent = 'This plan carries about ' + yieldAmt(potHa, unit) + ' a hectare, so about ' + yieldAmt(potHa * area, unit) + ' on this ' + areaSay(area) + ' lot: the goal, held where the barrel\'s shortest plank holds the water.';
+        }
+        const vals = [...card.querySelectorAll('[data-yv]')].map((x) => Number(x.dataset.yv) || 0);
+        const max = Math.max(1, ...vals);
+        card.querySelectorAll('[data-yv]').forEach((x) => { x.style.width = Math.round((Number(x.dataset.yv) || 0) / max * 100) + '%'; });
+    }
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-ybasis]');
+        if (!b) return;
+        const card = b.closest('[data-ycard]'), basis = b.dataset.ybasis;
+        b.parentElement.classList.toggle('is-lot', basis === 'lot');
+        b.parentElement.querySelectorAll('[data-ybasis]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+        card.querySelectorAll('[data-ypane]').forEach((pn) => {
+            const on = pn.dataset.ypane === basis;
+            pn.hidden = !on;
+            if (on) { pn.classList.remove('is-fresh'); void pn.offsetWidth; pn.classList.add('is-fresh'); }
+        });
+    });
+
     /* ---- one lot ---- */
     function lotPane(L, r, i) {
         const crop = (r.crops || []).find((c) => c.key === L.case) || null;
@@ -3315,7 +3402,8 @@
         const tIn = Number(((OPT && OPT.yieldT) || {})[L.yieldUnit]) || 1;
         const moved = pl.shift > 0;
         const g = (L.granulars || {});
-        const yo = L.yield || {}, tN = numOf(yo.target), rN = numOf(yo.realistic), yMax = Math.max(tN || 0, rN || 0, 1);
+        // Anee's words may name another unit than the lot's ("7.75 metric tons" on a lot counted in cavans): read in the lot's.
+        const yo = L.yield || {}, tN = yieldIn(yo.target, tIn), rN = yieldIn(yo.realistic, tIn);
         const tasks = (L.tasks || []).slice().sort((a, b) => (a.from < b.from ? -1 : (a.from > b.from ? 1 : 0)));
         const lvl = { watch: 'may run short', likely: 'likely short', test: 'low by your soil test' };
         const mics = Object.entries(n.micros || {}).filter(([, m]) => !m.beneficial);
@@ -3349,8 +3437,7 @@
                 + (d.why ? '<p>' + esc(sweepT(d.why)) + '</p>' : '') + (d.signs ? '<p><em>Signs:</em> ' + esc(sweepT(d.signs)) + '</p>' : '') + (d.action ? '<p><em>What to do:</em> ' + esc(sweepT(d.action)) + '</p>' : '') + '</div>').join('') + '</div></div>' : '')
             + (crop ? '<div class="cr-card">' + protHtml(crop, r, L.watch).replace(/^<h3 style="margin:1rem 0 .5rem;/, '<h3 style="margin:0 0 .5rem;') + '</div>' : '')
             + ((L.water || {}).plan ? '<div class="cr-card"><h3>Water</h3><p class="cr-say">' + esc(sweepT(L.water.plan)) + '</p><div class="cp2-pills">' + (L.water.ifDry ? '<span class="cp2-pill">☀️ If dry: ' + esc(sweepT(L.water.ifDry)) + '</span>' : '') + (L.water.ifWet ? '<span class="cp2-pill">🌧️ If wet: ' + esc(sweepT(L.water.ifWet)) + '</span>' : '') + '</div></div>' : '')
-            + ((tN || rN || yo.note) ? '<div class="cr-card"><h3>Yield<small>your target and what this variety really gives here</small></h3><div class="cp-yo">' + (tN ? '<div class="cp-yo-row"><small>Target</small><div class="tr"><span class="is-target" style="width:' + Math.round(tN / yMax * 100) + '%"></span></div><b>' + esc(yo.target || '') + '</b></div>' : '')
-                + (rN ? '<div class="cp-yo-row"><small>Realistic</small><div class="tr"><span style="width:' + Math.round(rN / yMax * 100) + '%"></span></div><b>' + esc(yo.realistic || '') + '</b></div>' : '') + '</div>' + (yo.note ? '<p class="cp-note">' + esc(sweepT(yo.note)) + '</p>' : '') + '</div>' : '')
+            + ((tN || rN || yo.note || (n.known && n.goal)) ? yieldCard(L, yo, tN, rN, unit) : '')
             + (tasks.length ? '<div class="cr-card"><h3>This lot\'s jobs, by date<small>The days the work calendar gives them</small></h3><div class="cr-jobs">' + tasks.map((t) => {
                 const days = (t.days || []).length, people = t.hired ? 'A hired crew, about ' + Math.ceil(t.pd) + ' people' : (t.pd >= 1 ? trimN(t.pd) + ' person days' + (days > 1 ? ' over ' + days + ' days' : '') : 'Part of a day');
                 return '<div class="cr-job' + (t.late ? ' is-late' : '') + '"><span class="cr-cal"><i>' + esc(dayFmt(t.from, { month: 'short' })) + '</i><b>' + esc(dayFmt(t.from, { day: 'numeric' })) + '</b><small>' + esc(dayFmt(t.from, { weekday: 'short' })) + '</small></span><div><b>' + esc(t.title) + '</b>'
@@ -3368,7 +3455,7 @@
         if (!host || !window.aneeBarrel) return;
         const n = L.need || {}, pg = ((L.rec || {}).programs || [])[0] || {};
         const card = host.closest('.cr-card');
-        if (!n.known || !(pg.check || []).length) { if (card) card.hidden = true; return; }
+        if (!n.known || !(pg.check || []).length) { if (card) card.hidden = true; return null; }
         const pct = (r) => (r === null ? '?' : Math.round(Math.min(r, 1) * 100) + '%');
         const amt = (kg) => { const x = Number(kg) || 0; return x >= 1 ? (Math.round(x * 10) / 10) + ' kg' : Math.round(x * 1000) + ' g'; };
         const stateOf = (r, hi) => (r === null ? 'noflag' : (r < 0.9 ? 'short' : (r > hi ? 'over' : 'right')));
@@ -3407,7 +3494,7 @@
             rows.push({ state: r < 0.97 ? 'short' : 'right', ratio: r, pct: pct(r), note: from.charAt(0).toUpperCase() + from.slice(1) + ' bring about ' + Math.round(r * 100) + '% of the water the crop drinks this season' });
         }
         const tIn = Number(((OPT && OPT.yieldT) || {})[L.yieldUnit]) || 1, unit = L.yieldWord || 'tons';
-        const goal = n.goal ? Number(n.goal.eff) / tIn : null;
+        const goal = n.goal ? Number(n.goal.eff) / tIn : null, area = Number(L.areaHa) || 1;
         const b = window.aneeBarrel.mount(host, { label: "Liebig's barrel for " + (L.name || 'this lot') });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null);
         const low = measured.length ? measured.reduce((a, c) => (c[0].ratio < a[0].ratio ? c : a)) : null;
@@ -3416,7 +3503,7 @@
             high_ca: 'the heavy calcium can crowd out magnesium', high_mg: 'the heavy magnesium can crowd out calcium', high_s: 'the heavy sulfate can hold molybdenum back', high_nh4: 'the heavy ammonium can hold magnesium and calcium back at the roots' };
         const locks = (pg.lockouts || []).map((k) => LOCK[k]).filter(Boolean);
         let say = !low ? '' : reach >= 97 ? 'Every plank reaches the rim: the plan, with what still fell short added, meets this lot\'s need for the goal.'
-            : 'The shortest plank is <b>' + esc(staves[low[1]].name) + '</b>: ' + esc(((t) => t.charAt(0).toLowerCase() + t.slice(1))((rows[low[1]].note || '').replace(/\.$/, ''))) + '. It holds the water at ' + reach + '% of the need' + (goal ? ', near ' + esc(fmt2(goal * reach / 100) + ' ' + unit) + ' a hectare' : '') + '. Raise it first: more of the others adds nothing until it rises.';
+            : 'The shortest plank is <b>' + esc(staves[low[1]].name) + '</b>: ' + esc(((t) => t.charAt(0).toLowerCase() + t.slice(1))((rows[low[1]].note || '').replace(/\.$/, ''))) + '. It holds the water at ' + reach + '% of the need' + (goal ? ', near ' + esc(yieldAmt(goal * reach / 100, unit)) + ' a hectare (about ' + esc(yieldAmt(goal * reach / 100 * area, unit)) + ' on this ' + esc(areaSay(area)) + ' lot)' : '') + '. Raise it first: more of the others adds nothing until it rises.';
         if (staves[low ? low[1] : -1] && staves[low[1]].k === 'water' && reach < 97) say += ' Water is the season, not the fertilizer: plan the irrigation, or a variety and a planting day that fit the rain.' + (sn && sn.words ? ' ' + esc(sn.words) : '');
         const over = rows.map((r, i) => [r, i]).filter(([r]) => r.state === 'over').map(([, i]) => staves[i].name.toLowerCase());
         if (over.length) say += ' Too much ' + esc(andList(over)) + ': the taller plank holds no more water, and it costs money.';
@@ -3427,8 +3514,12 @@
             + (PA.soil === 'alk' ? ', which frees some of the zinc, iron, manganese and phosphorus this soil locks up.' : PA.soil === 'sour' ? ', which on this acid soil locks molybdenum harder and washes calcium and magnesium out: lime the field.' : '.');
         if (PA && PA.gypsum > 0) say += ' The gypsum pushes sodium out, freeing some zinc, iron and manganese.';
         if (rows.some((r) => r.soil != null && r.state !== 'soil' && r.soil < 1)) say += ' The brown foot of a plank is what the soil gives of it on its own, read from the lot\'s soil type, pH, area and what locks it up; the plan adds the rest.';
+        // The yield the water points to (2026-10-23, the owner: "in the barrel in the arrow animation it should also show the potential yield"):
+        // the lot's goal held at the shortest plank, a hectare and on the lot itself.
+        const potHa = goal && reach !== null ? goal * Math.min(100, reach) / 100 : null;
         b.draw({ staves, rows, tag: goal ? 'The rim is this lot\'s goal, ' + fmt2(goal) + ' ' + unit + ' a hectare.' : 'The rim is everything the crop needs.',
-            arrow: 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : ''),
+            arrow: 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : '')
+                + (potHa ? '<small>About ' + esc(yieldAmt(potHa, unit)) + ' a ha</small><small>' + esc(yieldAmt(potHa * area, unit)) + ' on the lot</small>' : ''),
             reach: reach !== null ? '<b>' + reach + '%</b><span>of what this lot needs for its goal is met, at the shortest plank.</span>' : '',
             say: say ? '<p class="cr-say" style="margin-top:.6rem">' + say + '</p>' : '' });
         // It fills and turns when it comes into view, and rests when it leaves.
@@ -3437,6 +3528,8 @@
             const io = new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? b.enter() : b.leave())), { root: root && root.contains(host) ? root : null, threshold: 0.25 });
             io.observe(host);
         } else b.enter();
+
+        return { reach, potHa };
     }
 
     /* A lot's fertilizer by stage, per program: the tabs, the chart, the rows, the detail, the totals, the nutrient check (drawV2's, for one lot). */
