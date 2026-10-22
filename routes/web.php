@@ -244,6 +244,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'protoMeetsNeed' => method_exists(\App\Http\Controllers\CropProtocolController::class, 'withTopUps'),
             // A worker login's switches for the home screen tools (2026-10-22; true once its column is in).
             // A login's access set per cropping schedule or for all of them (2026-10-22; true once the table is in).
+            // A plan into a new or existing season, Anee's check, and the builder (2026-10-22; true once its table is in).
+            'planPort' => class_exists(\App\Http\Controllers\PlanPortController::class)
+                && rescue(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_plan_ports'), false, false),
             'accessBySeason' => class_exists(\App\Models\WorkerAccess::class)
                 && rescue(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_worker_access'), false, false),
             'homeToolSwitches' => class_exists(\App\Support\WorkerTools::class)
@@ -976,6 +979,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/land-prep/meta', [App\Http\Controllers\LandPrepController::class, 'meta'])->name('landprep.meta');
     Route::post('/app/land-prep/port', [App\Http\Controllers\LandPrepController::class, 'port'])->middleware('throttle:20,1')->name('landprep.port');
     Route::delete('/app/land-prep/{id}', [App\Http\Controllers\LandPrepController::class, 'destroy'])->whereNumber('id')->name('landprep.delete');
+    // A saved plan put to work (2026-10-22): into a new or existing cropping schedule (Anee checks a season that has work), or the Protocol Builder.
+    Route::get('/app/plan-port/targets', [App\Http\Controllers\PlanPortController::class, 'targets'])->name('planport.targets');
+    Route::get('/app/plan-port/protocols', [App\Http\Controllers\PlanPortController::class, 'protocols'])->name('planport.protocols');
+    Route::post('/app/plan-port/season', [App\Http\Controllers\PlanPortController::class, 'season'])->middleware('throttle:20,1')->name('planport.season');
+    Route::post('/app/plan-port/preview', [App\Http\Controllers\PlanPortController::class, 'preview'])->middleware('throttle:60,1')->name('planport.preview');
+    Route::post('/app/plan-port/check', [App\Http\Controllers\PlanPortController::class, 'check'])->middleware('throttle:20,1')->name('planport.check');
+    Route::get('/app/plan-port/job/{id}', [App\Http\Controllers\PlanPortController::class, 'job'])->whereNumber('id')->name('planport.job');
+    Route::post('/app/plan-port/apply', [App\Http\Controllers\PlanPortController::class, 'apply'])->middleware('throttle:20,1')->name('planport.apply');
+    Route::post('/app/plan-port/builder', [App\Http\Controllers\PlanPortController::class, 'builder'])->middleware('throttle:20,1')->name('planport.builder');
     // Field profiles (2026-10-15): a lot's soil, water and history answered once and reused by every analysis (App\Support\FieldProfile).
     Route::get('/app/field-profiles', [App\Http\Controllers\FieldProfileController::class, 'list'])->name('fieldprofile.list');
     Route::get('/app/field-profiles/troubles', [App\Http\Controllers\FieldProfileController::class, 'troubles'])->middleware('throttle:120,1')->name('fieldprofile.troubles');

@@ -145,6 +145,9 @@ final class AiPricing
             // 2026-10-18: the Compatibility Checker's online check: a research step on the products the book lacks, then the reading.
             // One size (the owner: a flat 80 for one product or six), modelled at a typical run so the list price stands.
             'compat' => ['unit' => '', 'baseIn' => 9000, 'baseOut' => 8000, 'search' => 1],
+            // 2026-10-22: a plan into a season with work: one ask, no search. A unit is a task read: the plan's new
+            // tasks plus the board's around them; she answers a date and a reason for every new task.
+            'fitcheck' => ['unit' => 'task', 'free' => 40, 'units' => 60, 'max' => 600, 'baseIn' => 9000, 'baseOut' => 4000, 'unitIn' => 110, 'unitOut' => 30, 'outCap' => 18048],
         ],
     ];
 

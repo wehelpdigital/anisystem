@@ -3129,7 +3129,7 @@
     async function openSaved(id) {
         try {
             const res = await window.api(U.one(id), { method: 'GET' });
-            openView({ report: res.data.report, params: res.data.params, charged: res.data.credits, savedId: res.data.id }, 'saved');
+            openView({ report: res.data.report, params: res.data.params, charged: res.data.credits, savedId: res.data.id, title: res.data.title }, 'saved');
         } catch (err) { window.toast?.(err.message, 'error'); }
     }
     // Any report, drawn as a saved one (for checks without a run).
@@ -3147,7 +3147,7 @@
         hostEl.innerHTML = tabs
             + '<div class="cr-pane" data-pane="farm"' + (lots.length === 1 ? ' hidden' : '') + '>' + farmPane(r, item) + '</div>'
             + lots.map((L, i) => '<div class="cr-pane" data-pane="lot' + i + '"' + (lots.length === 1 ? '' : ' hidden') + '></div>').join('')
-            + actionsHtml(mode);
+            + actionsHtml(mode, true);
         const painted = new Set();
         const paintLot = (i) => {
             if (painted.has(i)) return;
@@ -3698,9 +3698,12 @@
     }
 
     /* ---- the shared tail: the actions under either drawing ---- */
-    const actionsHtml = (mode) => `
+    // `port`: a farm protocol (format 4) can go onto a cropping schedule or into the Protocol Builder (2026-10-22).
+    const actionsHtml = (mode, port = false) => `
             <div class="wtp-acts">
-                <button type="button" class="btn btn-primary w-full" data-cp-attach>${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee</button>
+                ${port ? `<button type="button" class="btn btn-primary w-full" data-cp-season>📅 Put it on a cropping schedule</button>
+                <button type="button" class="btn btn-white w-full" data-cp-builder>🧱 Send to Protocol Builder</button>` : ''}
+                <button type="button" class="btn btn-${port ? 'white' : 'primary'} w-full" data-cp-attach>${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee</button>
                 ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" data-cp-again>📋 Write another protocol</button>` : ''}
                 <button type="button" class="btn btn-white w-full" data-cp-delete>🗑 Delete</button>
             </div>`;
@@ -4014,6 +4017,17 @@
 
         hostEl.querySelector('[data-cp-attach]').addEventListener('click', () => { if (item.savedId) window.location.href = U.anee + '?analysis=' + item.savedId; });
         hostEl.querySelector('[data-cp-again]')?.addEventListener('click', () => { VIEW_MODE = null; closeView(); wizardBack(); });
+        // Put to work (2026-10-22): onto a cropping schedule, or into the Protocol Builder (partials/plan-port).
+        const portOpts = () => {
+            const rr = item.report || {};
+            return {
+                source: 'protocol', id: item.savedId, title: item.title || $('cpViewTitle').textContent || 'Crop protocol', prev: rr.season || null,
+                lots: (rr.lots || []).map((l, k) => ({ i: l.i !== undefined ? l.i : k, name: l.name || ('Lot ' + (k + 1)), crop: l.crop || '', cropLabel: l.cropLabel || '', planting: (l.planting && l.planting.planting) || '' })),
+                onDone: (season) => { if (season && item.report) item.report.season = season; },
+            };
+        };
+        hostEl.querySelector('[data-cp-season]')?.addEventListener('click', () => { if (item.savedId) window.planPort.season(portOpts()); });
+        hostEl.querySelector('[data-cp-builder]')?.addEventListener('click', () => { if (item.savedId) window.planPort.builder(portOpts()); });
         hostEl.querySelector('[data-cp-delete]').addEventListener('click', async () => {
             const ok = window.confirmAction
                 ? await confirmAction({ title: 'Delete this protocol?', message: 'Only the report is deleted. Credits already used are not returned.', confirmText: 'Delete', danger: true })
@@ -4076,7 +4090,7 @@
         if (!b) return;
         try {
             const res = await api(U.one(b.getAttribute('data-saved')), { method: 'GET' });
-            openView({ report: res.data.report, params: res.data.params, charged: res.data.credits, savedId: res.data.id }, 'saved');
+            openView({ report: res.data.report, params: res.data.params, charged: res.data.credits, savedId: res.data.id, title: res.data.title }, 'saved');
         } catch (err) { toast(err.message, 'error'); }
     });
 
@@ -4101,6 +4115,8 @@
 
 @push('sheets')
 @include('partials.user-tags')
+{{-- Onto a cropping schedule or into the Protocol Builder (2026-10-22): the sheets Land Prep shares. --}}
+@include('partials.plan-port')
 <div class="sheet hidden" id="cpMetaSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

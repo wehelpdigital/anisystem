@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $protocol['title'])
-@section('page-title', $protocol['title'])
-@section('page-subtitle', ($protocol['cropLabel'] ?: 'No crop yet') . ' · ' . ($options['dayTypes'][$protocol['dayType']]['label'] ?? $protocol['dayType']))
+{{-- The header says where you are, the Protocol Builder (2026-10-22, the owner: "when you open it, it only
+     says builder ... it should be protocol builder"); the protocol's own name heads the card below. --}}
+@section('title', $protocol['title'] . ' · Protocol Builder')
+@section('page-title', 'Protocol Builder')
+@section('page-subtitle', $protocol['title'])
 @section('back', \App\Support\BackTo::key() === 'tags' ? route('tags.global') : \App\Support\BackTo::carry(route('pb.page')))
 {{-- An open protocol is a workspace: on a phone the app's bottom bar steps
      aside (the owner's ask, 2026-09-29), as it does in the chat. --}}
@@ -311,7 +313,12 @@
     html.dark .pbt-when button.is-on { background: #3d6823; color: #fff; border-color: #3d6823; }
     html.dark .pbt-unit { background: #22301a; border-color: #3f5a2a; color: #cfe6b8; }
     .pb-day.is-before { background: repeating-linear-gradient(135deg, var(--prio, #6b7280) 0 6px, color-mix(in srgb, var(--prio, #6b7280) 78%, #000) 6px 12px); }
-    .pb-day.is-before b { font-size: .52rem; }
+    /* The stripes say "before the count"; the words sit on a plate over them so they read (2026-10-22, the owner). */
+    .pb-day .pb-plate { display: flex; flex-direction: column; align-items: center; gap: .05rem; width: 100%; padding: .32rem .2rem .3rem; border-radius: .6rem;
+        background: color-mix(in srgb, var(--prio, #6b7280) 55%, #0b0f08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16), 0 2px 6px -2px rgb(0 0 0 / .45); }
+    .pb-day.is-before b { font-size: .52rem; letter-spacing: .05em; opacity: 1; }
+    .pb-day.is-before .pb-plate span { font-size: 1.3rem; }
+    .pb-day.is-before .pb-plate i { opacity: 1; max-width: 100%; }
     .pbt-counter { display: inline-flex; border: 1px solid var(--color-gray-200); border-radius: .75rem; overflow: hidden; flex: none; }
     .pbt-counter button { padding: 0 .8rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-500); background: var(--color-white); }
     .pbt-counter button.is-on { background: #3d6823; color: #fff; }
@@ -1326,8 +1333,9 @@
         matN.innerHTML = MATS.length ? (shortN ? `<span class="pb-n-long">${MATS.length} · ${shortN} short</span><span class="pb-n-short">${shortN}</span>` : String(MATS.length)) : '';
         matN.title = shortN ? `${shortN} ${shortN === 1 ? 'material runs' : 'materials run'} short` : '';
         matN.classList.toggle('is-short', shortN > 0);
-        const pageTitle = $id('appPageTitle'); if (pageTitle) { pageTitle.textContent = P.title; const sub = pageTitle.nextElementSibling; if (sub && sub.tagName === 'P') sub.textContent = `${P.cropLabel || 'No crop yet'} · ${dt.label || P.dayType}`; }
-        document.title = P.title + ' | anee.io';
+        // The header names the tool, the Protocol Builder; the protocol's own name is under it (2026-10-22, the owner).
+        const pageTitle = $id('appPageTitle'); if (pageTitle) { pageTitle.textContent = 'Protocol Builder'; const sub = pageTitle.nextElementSibling; if (sub && sub.tagName === 'P') sub.textContent = P.title; }
+        document.title = P.title + ' · Protocol Builder | anee.io';
     }
     function reviewFor(id) {
         if (!REVIEW || !Array.isArray(REVIEW.tasks)) return null;
@@ -1390,7 +1398,7 @@
         uniq(WARN[t.id] || []).forEach((w) => more.push(`<div class="pb-warnnote">⚠️ ${esc(w)}</div>`));
         return `
             <div class="pb-card" data-id="${esc(t.id)}" data-prio="${esc(t.priority)}">
-                <div class="pb-day${t.day < 0 ? ' is-before' : ''}">${t.day < 0 ? `<b${railTl(t.counter)}>BEFORE ${esc(t.counter)}</b><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i>` : `<b${railTl(t.counter)}>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div>
+                <div class="pb-day${t.day < 0 ? ' is-before' : ''}">${t.day < 0 ? `<div class="pb-plate"><b>BEFORE ${esc(t.counter)}</b><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i></div>` : `<b>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div>
                 <div class="pb-body">
                     <div class="pb-body-t"><span><b>${esc(t.title)}</b>${t.subtitle ? `<i>${esc(t.subtitle)}</i>` : ''}</span><button type="button" class="pb-chev" aria-label="Show more" title="Show more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></div>
                     <div class="pb-chips">${chips.join('')}</div>
@@ -1402,8 +1410,9 @@
                 </div>
             </div>`;
     }
-    /* The count on a card's rail (DAS, DAT…) carries its Tagalog flag on the
-       first card of each count only, not on every card. */
+    /* The rail carries no Tagalog flag any more (2026-10-22, the owner): on a rail
+       4.4rem wide the pill sat over the count. The count's words are flagged in
+       the head card (DAS → DAT). railTl stays for anything that still asks. */
     let RAIL_SEEN = null;
     function railTl(c) {
         if (!RAIL_SEEN || RAIL_SEEN.has(c) || !COUNTER_TL[c]) return '';

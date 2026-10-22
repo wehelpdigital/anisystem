@@ -60,6 +60,9 @@ final class AiPrices
         // The owner: a flat 80 whenever at least one product is not in the book, one product or six;
         // nothing (and no Anee) when the book knows them all. What she finds is kept, so it is asked once.
         'compat' => 80,
+        // 2026-10-22: a Land Prep or Crop Protocol plan put into a season that already has work: Anee checks it
+        // against the board (the other lots, the crew, what is already there) and places it. Priced by the work read.
+        'fitcheck' => 25,
     ];
 
     public const NAMES = [
@@ -85,6 +88,7 @@ final class AiPrices
         'lcc' => 'LCC Checker (Anee reads rice leaf photos against the leaf color chart)',
         'landprep' => 'Land Prep Planner, per lot (every lot\'s land preparation, around the crew and the weather)',
         'compat' => 'Compatibility Checker, the online check (Anee looks up the products the book lacks, searches the web; a flat price whatever the count)',
+        'fitcheck' => 'A plan put into a season that already has work (Anee checks it against the board and the crew, and places it)',
     ];
 
     /** @var array<string, int>|null */

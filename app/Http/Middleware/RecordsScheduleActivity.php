@@ -39,6 +39,8 @@ class RecordsScheduleActivity
         'sm.lots.destroy' => 'Deleted a lot',
         'sm.lots.harvest' => 'Marked a lot harvested',
         'sm.lots.harvest.undo' => "Took back a lot's harvest",
+        'planport.season' => 'Made a season from a plan',
+        'planport.apply' => 'Added a plan to the season',
         'sm.workers.store' => 'Added a worker',
         'workers.global.season' => 'Added a worker from the roster',
         'sm.workers.update' => 'Edited a worker',

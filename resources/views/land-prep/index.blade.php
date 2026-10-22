@@ -1407,65 +1407,9 @@
     </form>
 </dialog>
 
-{{-- Send to the Protocol Builder. --}}
-<dialog class="lp-sheet" id="lpPortSheet" aria-labelledby="lpPortTitle">
-    <div class="lp-sbox" tabindex="-1">
-        <div class="lp-grip" aria-hidden="true"></div>
-        <div class="lp-shead"><h2 id="lpPortTitle">Send to Protocol Builder<small>Every step lands on the protocol's own day count</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
-        <div id="lpPortForm" class="lp-slist" style="padding:0 0 1rem">
-            <div class="lp-pmode">
-                <button type="button" class="lp-choice is-on" data-pmode="new"><span class="ce">✨</span><span class="ct"><b>A new protocol</b><small>Counted the way this crop is planted</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                <div id="lpPortNew">
-                    <label class="lp-label" for="lpPortTitleIn">Its name</label>
-                    <input type="text" id="lpPortTitleIn" class="form-input" maxlength="190">
-                </div>
-                <button type="button" class="lp-choice" data-pmode="existing"><span class="ce">📋</span><span class="ct"><b>Add to one of mine</b><small>Into the version in use, and undoable there</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                <div id="lpPortOld" hidden><div class="lp-plist" id="lpPortList" role="listbox"></div></div>
-            </div>
-        </div>
-        <div class="lp-done" id="lpPortDone" hidden>
-            <div class="ok"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-            <b id="lpPortDoneT">Sent</b><p id="lpPortDoneP"></p>
-        </div>
-        <div class="lp-sfoot">
-            <span class="lp-pickline"></span>
-            <button type="button" class="btn btn-white" data-close id="lpPortClose">Cancel</button>
-            <button type="button" class="btn btn-primary" id="lpPortGo">Send</button>
-            <a class="btn btn-primary" id="lpPortOpen" href="#" hidden>Open it</a>
-        </div>
-    </div>
-</dialog>
-
-{{-- Make a cropping schedule from the plan (2026-10-15, the owner). The
-     only way in is a new season made out of it. --}}
-<dialog class="lp-sheet" id="lpMakeSheet" aria-labelledby="lpMakeTitle">
-    <div class="lp-sbox" tabindex="-1">
-        <div class="lp-grip" aria-hidden="true"></div>
-        <div class="lp-shead"><h2 id="lpMakeTitle">Make a cropping schedule<small>The plan's lots, dates and steps on a season's board</small></h2><button type="button" class="lp-x" data-close aria-label="Close">{!! $xIcon !!}</button></div>
-        <div id="lpMakeForm" class="lp-slist" style="padding:0 0 1rem">
-            <div class="lp-pmode">
-                <p class="lp-label" style="margin:.1rem 0 0">Which cropping schedule?</p>
-                <button type="button" class="lp-choice is-on" aria-pressed="true"><span class="ce">✨</span><span class="ct"><b>A new cropping schedule</b><small>Made out of this plan</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>
-                <div>
-                    <label class="lp-label" for="lpMakeName">Its name</label>
-                    <input type="text" id="lpMakeName" class="form-input" maxlength="255">
-                </div>
-            </div>
-            <div class="lp-pmode"><div class="lp-ssum" id="lpMakeSum"></div>
-            <p class="lp-sprev" id="lpMakePrev" hidden></p></div>
-        </div>
-        <div class="lp-done" id="lpMakeDone" hidden>
-            <div class="ok"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-            <b>The season is made</b><p id="lpMakeDoneP"></p>
-        </div>
-        <div class="lp-sfoot">
-            <span class="lp-pickline"></span>
-            <button type="button" class="btn btn-white" data-close id="lpMakeClose">Cancel</button>
-            <button type="button" class="btn btn-primary" id="lpMakeGo">Make the season</button>
-            <a class="btn btn-primary" id="lpMakeOpen" href="#" hidden>Open the season</a>
-        </div>
-    </div>
-</dialog>
+{{-- Send to the Protocol Builder, or onto a cropping schedule (a new one, or one you
+     have, Anee checking a board with work): the sheets the Crop Protocol shares (2026-10-22). --}}
+@include('partials.plan-port')
 
 <script>
 (() => {
@@ -3785,88 +3729,20 @@
         finally { $('lpRenSave').disabled = false; }
     });
 
-    /* ---------------- send to the Protocol Builder ---------------- */
-    const PORT = { mode: 'new', pid: null, rows: null };
-    async function openPort() {
-        if (!VIEW) return;
-        PORT.mode = 'new'; PORT.pid = null;
-        $('lpPortForm').hidden = false; $('lpPortDone').hidden = true; $('lpPortGo').hidden = false; $('lpPortOpen').hidden = true; $('lpPortClose').textContent = 'Cancel';
-        $('lpPortTitleIn').value = 'Land prep: ' + (VIEW.item.title || '');
-        paintPortMode();
-        sheetOpen($('lpPortSheet'));
-        try { PORT.rows = (await window.api(U.protocols)).data.rows || []; } catch (_) { PORT.rows = []; }
-        paintPortList();
-    }
-    function paintPortMode() {
-        $('lpPortForm').querySelectorAll('[data-pmode]').forEach((b) => b.classList.toggle('is-on', b.dataset.pmode === PORT.mode));
-        $('lpPortNew').hidden = PORT.mode !== 'new';
-        $('lpPortOld').hidden = PORT.mode !== 'existing';
-    }
-    function paintPortList() {
-        const crop = ((VIEW && VIEW.item.report && VIEW.item.report.crop) || {}).key;
-        const rows = (PORT.rows || []).slice().sort((a, b) => ((b.crop === crop) - (a.crop === crop)));
-        $('lpPortList').innerHTML = rows.length ? rows.map((p) => '<button type="button" class="lp-row" role="option" data-pid="' + p.id + '" aria-selected="' + (PORT.pid === p.id) + '"><span class="ri">' + esc(p.cropIcon || '🌱') + '</span><span class="rt"><b>' + esc(p.title) + '</b><small>' + esc([p.cropLabel, p.dayType === 'TREE' ? 'DOS' : p.dayType, 'updated ' + p.updated].filter(Boolean).join(' · ')) + '</small></span></button>').join('')
-            : '<p class="lp-snone">You have no protocols yet. Make a new one.</p>';
-    }
-    $('lpPortForm').addEventListener('click', (e) => {
-        const m = e.target.closest('[data-pmode]');
-        if (m) { PORT.mode = m.dataset.pmode; paintPortMode(); return; }
-        const p = e.target.closest('[data-pid]');
-        if (p) { PORT.pid = Number(p.dataset.pid); $('lpPortList').querySelectorAll('[data-pid]').forEach((b) => b.setAttribute('aria-selected', String(b === p))); }
-    });
-    $('lpPortGo').addEventListener('click', async () => {
-        if (!VIEW) return;
-        if (PORT.mode === 'existing' && !PORT.pid) { window.toast?.('Pick the protocol to add the steps to.', 'error'); return; }
-        $('lpPortGo').disabled = true;
-        try {
-            const res = await window.api(U.port, { method: 'POST', body: { id: VIEW.item.id, mode: PORT.mode, protocolId: PORT.pid, title: $('lpPortTitleIn').value.trim() } });
-            $('lpPortForm').hidden = true; $('lpPortDone').hidden = false;
-            $('lpPortDoneT').textContent = res.data.added ? 'Sent' : 'Already there';
-            $('lpPortDoneP').textContent = res.message;
-            $('lpPortGo').hidden = true;
-            $('lpPortOpen').href = res.data.url; $('lpPortOpen').hidden = false;
-            $('lpPortClose').textContent = 'Close';
-        } catch (err) { window.toast?.(err.message, 'error'); }
-        finally { $('lpPortGo').disabled = false; }
-    });
-
-    /* ---------------- make a cropping schedule from the plan ---------------- */
-    function openSeason() {
-        if (!VIEW) return;
+    /* ---------------- put the plan to work (2026-10-22) ----------------
+       The shared sheets (partials/plan-port): into the Protocol Builder, or
+       onto a cropping schedule, a new one or one the farmer has, lot by lot. */
+    function portOpts() {
         const r = VIEW.item.report || {};
-        const lots = r.lots || [], per = r.perLot || [];
-        $('lpMakeForm').hidden = false; $('lpMakeDone').hidden = true; $('lpMakeGo').hidden = false; $('lpMakeOpen').hidden = true; $('lpMakeClose').textContent = 'Cancel';
-        $('lpMakeName').value = VIEW.item.title || '';
-        const steps = per.reduce((n, l) => n + ((l.steps || []).length), 0);
-        const starts = per.flatMap((l) => (l.steps || []).map((s) => s.start || s.winFrom)).filter(Boolean).sort();
-        const plantings = per.map((l) => l.planting).filter(Boolean).sort();
-        const day = (d) => { try { return new Date(d + 'T00:00:00').toLocaleDateString('en-PH', { month: 'short', day: 'numeric' }); } catch (_) { return d; } };
-        $('lpMakeSum').innerHTML = [
-            ['🌾', lots.length + (lots.length === 1 ? ' lot' : ' lots'), lots.map((l) => l.name).join(', ')],
-            ['📋', 'About ' + steps + ' activities', 'Each on the day the crew starts it, with the seed soak and the machine bookings'],
-            ['📅', starts.length ? day(starts[0]) + ' to ' + day(plantings[plantings.length - 1] || starts[starts.length - 1]) : 'Your dates', (r.dayWord ? 'Counted to the ' + r.dayWord + ' day of each lot' : '')],
-        ].map(([i, b, s]) => '<div><span>' + i + '</span><p><b>' + esc(b) + '</b>' + (s ? '<small>' + esc(s) + '</small>' : '') + '</p></div>').join('');
-        const prev = r.season;
-        $('lpMakePrev').hidden = !prev;
-        if (prev) $('lpMakePrev').innerHTML = 'You made <a href="' + esc(U.hub.replace('__ID__', prev.id)) + '">' + esc(prev.title) + '</a> from this plan on ' + esc(prev.at) + '. Making it again adds another season.';
-        sheetOpen($('lpMakeSheet'));
+        return {
+            source: 'landprep', id: VIEW.item.id, title: VIEW.item.title || '', prev: r.season || null,
+            lots: (r.lots || []).map((l, i) => ({ i, name: l.name || ('Lot ' + (i + 1)), crop: (l.crop && l.crop.key) || (r.crop && r.crop.key) || '',
+                cropLabel: (l.crop && l.crop.label) || (r.crop && r.crop.label) || '', planting: ((r.perLot || [])[i] || {}).planting || l.planting || '' })),
+            onDone: (season) => { if (season && VIEW && VIEW.item.report) VIEW.item.report.season = season; },
+        };
     }
-    $('lpMakeGo').addEventListener('click', async () => {
-        if (!VIEW) return;
-        const name = $('lpMakeName').value.trim();
-        if (!name) { window.toast?.('Give the season a name.', 'error'); $('lpMakeName').focus(); return; }
-        $('lpMakeGo').disabled = true; $('lpMakeGo').textContent = 'Making it…';
-        try {
-            const res = await window.api(U.season, { method: 'POST', body: { id: VIEW.item.id, title: name } });
-            $('lpMakeForm').hidden = true; $('lpMakeDone').hidden = false;
-            $('lpMakeDoneP').textContent = res.message;
-            $('lpMakeGo').hidden = true;
-            $('lpMakeOpen').href = res.data.url; $('lpMakeOpen').hidden = false;
-            $('lpMakeClose').textContent = 'Close';
-            if (VIEW.item.report) VIEW.item.report.season = res.data.season;
-        } catch (err) { if (!err || !err.tierLock) window.toast?.(err.message, 'error'); }
-        finally { $('lpMakeGo').disabled = false; $('lpMakeGo').textContent = 'Make the season'; }
-    });
+    function openPort() { if (VIEW) window.planPort.builder(portOpts()); }
+    function openSeason() { if (VIEW) window.planPort.season(portOpts()); }
 
     /* ---------------- your plans ---------------- */
     const LIST = { page: 1, q: '', rows: [], hasMore: false, stale: true, busy: false };
