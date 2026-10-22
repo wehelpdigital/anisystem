@@ -178,6 +178,12 @@
         html.dark .qa-workers .qa-ico { background: rgb(30 75 107 / .3); }
         @media (hover: hover) {.qa-tags:hover { border-color: #bfe5d8; } .qa-tags:hover .qa-go { color: #0f766e; } }
         html.dark .qa-tags .qa-ico { background: rgb(15 118 110 / .24); color: #7dd3c0; }
+        .qa-trash .qa-ico { background: #fdecec; color: #b91c1c; }
+        @media (hover: hover) {.qa-trash:hover { border-color: #f6c9c9; } .qa-trash:hover .qa-go { color: #b91c1c; } }
+        html.dark .qa-trash .qa-ico { background: rgb(185 28 28 / .22); color: #fca5a5; }
+        .qa-trash-n { display: inline-flex; align-items: center; margin-left: .4rem; font-size: .66rem; font-weight: 900; border-radius: 999px;
+            padding: .08rem .45rem; vertical-align: middle; color: #b91c1c; background: #fee2e2; }
+        html.dark .qa-trash-n { color: #fecaca; background: rgb(185 28 28 / .3); }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
         html.dark .qa-gallery .qa-ico { background: rgb(29 78 216 / .22); color: #9fc0f5; }
         html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
@@ -639,6 +645,19 @@
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
             @endif
+            {{-- The global Trash (2026-10-23, the owner): what was deleted waits 30 days
+                 here. The owner's alone, so a worker in the farm does not see it. --}}
+            @unless (\App\Support\WorkerContext::inWorkerContext())
+            @php $qTrashN = \App\Support\Trash::countFor((int) auth()->id()); @endphp
+            <a href="{{ route('trash.page') }}" class="qa-tile qa-trash">
+                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:1.3rem;height:1.3rem"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M10 11v6M14 11v6M5.5 7l1 12a2 2 0 002 1.8h7a2 2 0 002-1.8l1-12M9 7V4.8A.8.8 0 019.8 4h4.4a.8.8 0 01.8.8V7"/></svg></span>
+                <span class="qa-txt">
+                    <b>Trash{{ \App\Support\Tagalog::flag('trash') }} @if ($qTrashN)<span class="qa-trash-n">{{ $qTrashN }}</span>@endif</b>
+                    <i>What you delete waits here for 30 days. Put it back, or let it go for good.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            @endunless
             @php
                 /* The camera and the recorder are modules the owner grants,
                    and the Hub has always drawn these two tiles only for

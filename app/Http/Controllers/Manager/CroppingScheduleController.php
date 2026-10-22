@@ -885,7 +885,7 @@ class CroppingScheduleController extends Controller
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
         $schedule->update(['deleteStatus' => 0]);
 
-        return response()->json(['success' => true, 'message' => 'Season deleted.']);
+        return response()->json(['success' => true, 'message' => 'Season moved to the Trash. You can restore it there for 30 days.']);
     }
 
     /**

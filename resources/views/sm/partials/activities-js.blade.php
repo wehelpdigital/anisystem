@@ -9237,7 +9237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // from the drag that converts a per-day note, each gated where it sits.
         if (!mayWriteNotes()) return;
         const ok = (typeof confirmAction === 'function')
-            ? await confirmAction({ title: 'Delete this note?', message: 'The note for this day will be permanently removed.', confirmText: 'Delete', danger: true })
+            ? await confirmAction({ title: 'Delete this note?', message: 'The note for this day goes to the Trash. You can restore it there for 30 days.', confirmText: 'Delete', danger: true })
             : confirm('Delete the note for this day?');
         if (!ok) return;
         try {
@@ -10998,7 +10998,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // does. `silent` marks a programmatic cleanup, which never asks.
         if (!silent) {
             const ok = (typeof confirmAction === 'function')
-                ? await confirmAction({ title: 'Delete this note?', message: 'The note and everything attached to it will be permanently removed.', confirmText: 'Delete', danger: true })
+                ? await confirmAction({ title: 'Delete this note?', message: 'The note and everything attached to it go to the Trash. You can restore it there for 30 days.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this note?');
             if (!ok) return;
         }

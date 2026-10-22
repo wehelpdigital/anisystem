@@ -179,6 +179,8 @@ class WorkerModuleAccess
         ['sm.lots.destroy',           'owner'],
         // A saved plan put into a season or the builder is the owner's act (2026-10-22).
         ['planport.*',                'owner'],
+        // The Trash is the owner's: what anyone deleted on the farm, put back or deleted for good (2026-10-23).
+        ['trash.*',                   'owner'],
 
         // Reports wear many route names — one per engine — and a name left
         // off this list is a door with no lock, which is how the expenses

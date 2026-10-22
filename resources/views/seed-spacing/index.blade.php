@@ -1909,7 +1909,7 @@
         const d = e.target.closest('[data-del]');
         if (!d) return;
         const id = d.dataset.del, row = d.closest('.sc-srow');
-        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this calculation?', message: 'It leaves your saved list for good.', confirmText: 'Delete' }) : confirm('Delete this calculation?');
+        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this calculation?', message: 'It goes to the Trash. You can restore it there for 30 days.', confirmText: 'Delete' }) : confirm('Delete this calculation?');
         if (!ok) return;
         row && row.classList.add('is-gone');
         try { const res = await window.api(B.urls.del + '/' + id, { method: 'DELETE' }); setTimeout(() => shelf(res.data, false), still() ? 0 : 260); }

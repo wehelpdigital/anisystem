@@ -344,12 +344,11 @@ class GalleryController extends BaseScheduleController
             ->whereIn('id', $ids)->where('deleteStatus', 1)->get();
 
         foreach ($rows as $row) {
+            // To the Trash: the file stays for its 30 days, so Restore brings
+            // the picture back whole (App\Support\Trash deletes it after).
             $row->update(['deleteStatus' => 0]);
-            // The file goes with it: a deleted picture nobody can reach is
-            // just storage being paid for.
-            MediaStore::delete($row->path);
         }
 
-        return $this->jsonOk($rows->count() . ' ' . \Illuminate\Support\Str::plural('picture', $rows->count()) . ' deleted.');
+        return $this->jsonOk($rows->count() . ' ' . \Illuminate\Support\Str::plural('picture', $rows->count()) . ' moved to the Trash.');
     }
 }

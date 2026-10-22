@@ -488,6 +488,10 @@
                                  contrast, movement. Account is who you are;
                                  this is how you read. --}}
                             <a href="{{ route('account.settings') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">Settings</a>
+                            {{-- The global Trash (2026-10-23): the owner's, so not in a worker's menu. --}}
+                            @unless (\App\Support\WorkerContext::inWorkerContext())
+                            <a href="{{ route('trash.page') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">Trash</a>
+                            @endunless
                             {{-- Only where the device will actually take it:
                                  hidden once installed, and hidden entirely on
                                  a browser that cannot install. --}}

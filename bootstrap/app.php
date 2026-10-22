@@ -133,6 +133,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('fertilizers:fpa-sync')->monthlyOn(3, '04:30')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         $schedule->command('fertilizers:fpa-sync')->dailyAt('04:45')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground()
             ->when(fn () => \Illuminate\Support\Facades\Schema::hasTable('as_ph_fertilizers') && ! \Illuminate\Support\Facades\DB::table('as_ph_fertilizers')->where('curated', 0)->exists());
+        // The global Trash (2026-10-23): the deletes no model event saw filed
+        // every ten minutes, and what has been in it 30 days deleted for good
+        // once a night (App\Support\Trash).
+        $schedule->command('trash:tick')->everyTenMinutes()->withoutOverlapping(15)->runInBackground();
+        $schedule->command('trash:tick --purge')->dailyAt('02:40')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))

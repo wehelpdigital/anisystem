@@ -1859,7 +1859,7 @@
         const row = LIST.rows.find((r) => String(r.id) === String(id));
         const anee = (row && row.mode === 'anee') || (VIEW && String(VIEW.item.id) === String(id) && (VIEW.item.report || {}).mode === 'anee');
         const ok = window.confirmAction
-            ? await window.confirmAction({ title: 'Delete this check?', message: 'It leaves your saved checks for good.' + (anee ? ' The credits it used are not refunded.' : ''), confirmText: 'Delete' })
+            ? await window.confirmAction({ title: 'Delete this check?', message: 'It goes to the Trash. You can restore it there for 30 days.' + (anee ? ' The credits it used are not refunded.' : ''), confirmText: 'Delete' })
             : confirm('Delete this check?');
         if (!ok) return;
         const card = $('lcList').querySelector(`[data-open="${CSS.escape(String(id))}"]`);

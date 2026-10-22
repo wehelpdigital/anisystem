@@ -981,6 +981,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/land-prep/meta', [App\Http\Controllers\LandPrepController::class, 'meta'])->name('landprep.meta');
     Route::post('/app/land-prep/port', [App\Http\Controllers\LandPrepController::class, 'port'])->middleware('throttle:20,1')->name('landprep.port');
     Route::delete('/app/land-prep/{id}', [App\Http\Controllers\LandPrepController::class, 'destroy'])->whereNumber('id')->name('landprep.delete');
+    // The global Trash (2026-10-23): what was deleted, kept 30 days, restored or deleted for good here (App\Support\Trash).
+    Route::get('/app/trash', [App\Http\Controllers\TrashController::class, 'page'])->name('trash.page');
+    Route::get('/app/trash/list', [App\Http\Controllers\TrashController::class, 'list'])->name('trash.list');
+    Route::post('/app/trash/restore', [App\Http\Controllers\TrashController::class, 'restore'])->middleware('throttle:60,1')->name('trash.restore');
+    Route::post('/app/trash/purge', [App\Http\Controllers\TrashController::class, 'purge'])->middleware('throttle:60,1')->name('trash.purge');
+    Route::post('/app/trash/empty', [App\Http\Controllers\TrashController::class, 'empty'])->middleware('throttle:6,1')->name('trash.empty');
     // A saved plan put to work (2026-10-22): into a new or existing cropping schedule (Anee checks a season that has work), or the Protocol Builder.
     Route::get('/app/plan-port/targets', [App\Http\Controllers\PlanPortController::class, 'targets'])->name('planport.targets');
     Route::get('/app/plan-port/protocols', [App\Http\Controllers\PlanPortController::class, 'protocols'])->name('planport.protocols');

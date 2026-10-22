@@ -451,7 +451,7 @@
             const n = picked.size;
             const ok = await confirmAction({
                 title: 'Delete ' + n + ' ' + (n === 1 ? 'picture' : 'pictures') + '?',
-                message: 'They are removed from the album and from storage.',
+                message: 'They go to the Trash. You can restore them there for 30 days.',
                 confirmText: 'Delete',
             });
             if (!ok) return;
@@ -821,7 +821,7 @@
             const ok = window.confirmAction
                 ? await window.confirmAction({
                     title: 'Delete this from the album?',
-                    message: 'It will be deleted from the Gallery. This cannot be undone.',
+                    message: 'It goes to the Trash. You can restore it there for 30 days.',
                     confirmText: 'Delete', danger: true,
                 })
                 : confirm('Delete this from the album?');

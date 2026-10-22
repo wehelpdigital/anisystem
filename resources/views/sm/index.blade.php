@@ -1327,7 +1327,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="del-card" role="dialog" aria-modal="true" aria-labelledby="delTitle">
                     <h3 class="del-title" id="delTitle">Delete this season?</h3>
                     <p class="del-text"><strong>${escapeHtml(title)}</strong> and all its lots, workers,
-                        activities and notes will be removed from your account.</p>
+                        activities and notes go to the Trash. You can restore them there for 30 days.</p>
                     <label class="del-label" for="delWord">Type <b>DELETE</b> to confirm</label>
                     <input type="text" id="delWord" class="form-input" autocomplete="off" spellcheck="false" placeholder="DELETE">
                     <div class="del-actions">

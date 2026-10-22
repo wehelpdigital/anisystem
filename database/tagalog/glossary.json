@@ -45,6 +45,7 @@
 {"key": "draw", "en": "Draw", "tl": "Gumuhit ng sarili mong larawan o plano, gaya ng ayos ng mga lote o daluyan ng tubig. Puwede mo itong ikabit sa tala o sa season."},
 {"key": "contact-list", "en": "Contact List", "tl": "Ang phonebook mo sa pagsasaka, gaya ng supplier ng abono, buyer at nagpapaupa ng traktora."},
 {"key": "tags", "en": "Tags", "tl": "Mga label na idinidikit mo sa season, tala o larawan."},
+{"key": "trash", "en": "Trash", "tl": "Dito napupunta ang lahat ng binura mo o ng mga trabahador mo. Nandito ito nang 30 araw, kaya puwede mo pang ibalik. Pagkalipas ng 30 araw, tuluyan na itong mabubura."},
 {"key": "quick-capture", "en": "Quick Capture", "tl": "Mabilis na kumuha ng larawan ng nakikita mo sa bukid at i-save agad sa tamang season. Gumagana kahit walang signal, at ipapadala kapag may internet na."},
 {"key": "quick-record", "en": "Quick Record", "tl": "Mabilis na kumuha ng video sa bukid. Puwede mong ipaliwanag ang nakikita mo habang kinukunan, at mase-save ito sa season."},
 {"key": "quick-voice", "en": "Quick Voice", "tl": "Irerekord ang boses mo at itatabi bilang tala."},

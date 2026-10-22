@@ -619,7 +619,7 @@
     <div class="card border-red-100 danger-head">
         <div class="card-body">
             <h3 class="font-bold text-red-700 mb-1">Danger zone</h3>
-            <p class="text-sm text-gray-500 mb-4">Delete this season and everything in it. You cannot undo this.</p>
+            <p class="text-sm text-gray-500 mb-4">Delete this season and everything in it. It waits in the Trash for 30 days, so you can still restore it.</p>
             <button type="button" id="deleteScheduleBtn" class="btn btn-danger-outline">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                 Delete season
@@ -661,8 +661,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('deleteScheduleBtn')?.addEventListener('click', async () => {
         const ok = await confirmAction({
             title: 'Delete this season?',
-            message: @json('"' . $schedule->title . '" and everything in it will be hidden from your account.'),
-            detail: 'Its lots, workers and activities are kept but hidden.',
+            message: @json('"' . $schedule->title . '" and everything in it go to the Trash.'),
+            detail: 'Restore it from the Trash within 30 days. After that it is deleted for good.',
             confirmText: 'Delete',
         });
         if (!ok) return;

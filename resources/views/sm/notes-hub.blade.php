@@ -267,7 +267,7 @@
         if (!del) return;
         e.stopPropagation();
         const ok = (typeof confirmAction === 'function')
-            ? await confirmAction({ title: 'Delete this note?', message: 'The note and its attachments will be deleted for good.', confirmText: 'Delete', danger: true })
+            ? await confirmAction({ title: 'Delete this note?', message: 'The note and its attachments go to the Trash. You can restore them there for 30 days.', confirmText: 'Delete', danger: true })
             : confirm('Delete this note?');
         if (!ok) return;
         try {
