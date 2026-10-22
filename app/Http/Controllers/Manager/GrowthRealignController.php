@@ -74,7 +74,7 @@ class GrowthRealignController extends BaseScheduleController
             // Only what is known without a read: a lot with no crop cannot be asked about, and a worker
             // the owner has not lent Anee (her runs charge the owner) is told so before the button.
             'blocked' => \App\Support\WorkerContext::inWorkerContext() && ! \App\Support\WorkerContext::canWriteModule('ai')
-                ? 'The farm owner has not given you Anee on this farm, and Realign is hers.'
+                ? 'The farm owner has not given you Anee in this season, and Realign is hers.'
                 : (CropStages::normalize($lot->crop) ? null : $this->whyNot($lot)),
             'realign' => $this->applied($lot),
         ]]);
