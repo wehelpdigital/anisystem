@@ -4213,7 +4213,7 @@
         hostEl.querySelector('[data-cp-builder]')?.addEventListener('click', () => { if (item.savedId) window.planPort.builder(portOpts()); });
         hostEl.querySelector('[data-cp-delete]').addEventListener('click', async () => {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Delete this protocol?', message: 'Only the report is deleted. Credits already used are not returned.', confirmText: 'Delete', danger: true })
+                ? await confirmAction({ title: 'Delete this protocol?', message: 'It goes to the Trash, where you can restore it for 30 days. The credits it used are not returned.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this protocol?');
             if (!ok) return;
             try {
@@ -4235,11 +4235,11 @@
         const res = await api(U.list + '?_=' + Date.now(), { method: 'GET' });
         ROWS = res.data.rows || [];
         $id('cpSavedList').innerHTML = ROWS.map((r) => `
-            <button type="button" class="wtp-saved" data-saved="${r.id}">
+            <button type="button" class="wtp-saved" data-saved="${r.id}" data-trash-row>
                 <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small>${window.userTags ? window.userTags.chips(r.tags) : ''}</span>
                 <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </span>
+                </span>${window.aneeTrash ? window.aneeTrash.btn(r.id, r.title) : ''}
                 <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </button>`).join('');
         $id('cpSavedEmpty').classList.toggle('hidden', ROWS.length > 0);
@@ -4255,6 +4255,14 @@
                 loadSaved().catch(() => {});
             } catch (err) { toast(err.message, 'error'); }
             finally { saveBtn.disabled = false; }
+            return;
+        }
+        // The bin on a saved row (2026-10-23): to the Trash, through the tool's own delete.
+        const bin = e.target.closest('[data-trash]');
+        if (bin && bin.closest('#cpSavedList')) {
+            e.stopPropagation();
+            const row = bin.closest('.wtp-saved');
+            window.aneeTrash.run(bin, U.del(bin.dataset.trash), { title: row ? (row.querySelector('b') || {}).textContent : '', what: 'protocol', paid: true, onDone: () => loadSaved().catch(() => {}) });
             return;
         }
         const pen = e.target.closest('[data-meta]');
@@ -4298,6 +4306,7 @@
 
 @push('sheets')
 @include('partials.user-tags')
+@include('partials.trash-row')
 {{-- Onto a cropping schedule or into the Protocol Builder (2026-10-22): the sheets Land Prep shares. --}}
 @include('partials.plan-port')
 <div class="sheet hidden" id="cpMetaSheet" style="--sheet-width:26rem">

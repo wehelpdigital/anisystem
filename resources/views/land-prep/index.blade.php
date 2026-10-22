@@ -450,6 +450,9 @@
     .lp-card-pen { position: absolute; top: .6rem; right: .6rem; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; color: var(--color-gray-400); transition: background-color .28s var(--lp-e), color .28s var(--lp-e); }
     .lp-card-pen:hover { color: var(--lp-gd); background: var(--lp-gl); }
     .lp-card-pen svg { width: .95rem; height: .95rem; }
+    /* The bin beside the pen (2026-10-23): the title keeps clear of both. */
+    .lp-card > .tr-bin-btn { position: absolute; top: .9rem; right: 3rem; }
+    .lp-card:has(> .tr-bin-btn) .lp-card-top { padding-right: 4.4rem; }
     .lp-empty { padding: 2.2rem 1rem; text-align: center; border-radius: 1.2rem; background: var(--color-white); border: 1px dashed var(--color-gray-300); }
     .lp-empty b { display: block; font-size: 1rem; color: var(--color-gray-900); }
     .lp-empty p { margin-top: .3rem; font-size: .84rem; color: var(--color-gray-500); }
@@ -3690,7 +3693,7 @@
         if (act === 'rename') { openRename(VIEW.item); return; }
         if (act === 'again') { VIEW.mode = 'again'; closeView(); return; }
         if (act === 'delete') {
-            const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this plan?', message: 'Only the plan is deleted. The credits are not refunded.', confirmText: 'Delete' }) : confirm('Delete this plan?');
+            const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this plan?', message: 'It goes to the Trash, where you can restore it for 30 days. The credits it used are not returned.', confirmText: 'Delete' }) : confirm('Delete this plan?');
             if (!ok) return;
             try {
                 const res = await window.api(U.del(VIEW.item.id), { method: 'DELETE' });
@@ -3755,10 +3758,10 @@
             const res = await window.api(U.list + '?page=' + page + '&q=' + encodeURIComponent(LIST.q) + '&_=' + Date.now());
             const rows = res.data.rows || [];
             LIST.page = page; LIST.hasMore = !!res.data.hasMore; LIST.rows = more ? LIST.rows.concat(rows) : rows; LIST.stale = false;
-            const html = rows.map((r, k) => '<div class="lp-card" role="button" tabindex="0" data-id="' + r.id + '" style="animation-delay:' + (k * 40) + 'ms">'
+            const html = rows.map((r, k) => '<div class="lp-card" data-trash-row role="button" tabindex="0" data-id="' + r.id + '" style="animation-delay:' + (k * 40) + 'ms">'
                 + '<div class="lp-card-top"><span class="lp-card-ico">' + esc(r.icon) + '</span><span class="lp-card-t"><b>' + esc(r.title) + '</b><small>' + esc(r.method) + '</small></span></div>'
                 + '<div class="lp-card-meta">' + (r.planting ? '<span>📅 ' + esc(r.planting) + '</span>' : '') + '<span>🟩 ' + r.lots + (r.lots === 1 ? ' lot' : ' lots') + ', ' + ha(Number(r.area || 0)) + '</span><span>Made ' + esc(r.at) + '</span></div>'
-                + '<button type="button" class="lp-card-pen" data-pen="' + r.id + '" aria-label="Rename ' + esc(r.title) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4"/></svg></button></div>').join('');
+                + '<button type="button" class="lp-card-pen" data-pen="' + r.id + '" aria-label="Rename ' + esc(r.title) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4"/></svg></button>' + (window.aneeTrash ? window.aneeTrash.btn(r.id, r.title) : '') + '</div>').join('');
             if (more) $('lpCards').insertAdjacentHTML('beforeend', html); else $('lpCards').innerHTML = html;
             $('lpEmpty').hidden = LIST.rows.length > 0;
             $('lpEmpty').querySelector('b').textContent = LIST.q ? 'No plans match' : 'No plans yet';
@@ -3775,6 +3778,13 @@
     }
     window.openSaved = openSaved;
     $('lpCards').addEventListener('click', (e) => {
+        // The bin on a saved row (2026-10-23): to the Trash, through the tool's own delete.
+        const bin = e.target.closest('[data-trash]');
+        if (bin) {
+            e.stopPropagation();
+            window.aneeTrash.run(bin, U.del(bin.dataset.trash), { what: 'plan', paid: true, onDone: () => { LIST.rows = LIST.rows.filter((x) => String(x.id) !== bin.dataset.trash); $('lpEmpty').hidden = LIST.rows.length > 0; } });
+            return;
+        }
         const pen = e.target.closest('[data-pen]');
         if (pen) { e.stopPropagation(); const r = LIST.rows.find((x) => String(x.id) === pen.dataset.pen); if (r) openRename(r); return; }
         const c = e.target.closest('.lp-card');
@@ -3798,4 +3808,5 @@
     if (window.api && window.aneeFieldProfile) go(); else window.addEventListener('load', go, { once: true });
 })();
 </script>
+@include('partials.trash-row')
 @endsection

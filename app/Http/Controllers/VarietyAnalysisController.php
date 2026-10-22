@@ -747,7 +747,7 @@ class VarietyAnalysisController extends Controller
             ->where('kind', 'variety')
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Research deleted.');
+        return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
     }
 
     /** Rename a saved analysis and describe it in your own words. */

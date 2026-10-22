@@ -606,6 +606,7 @@
     </div>
     <div class="sat-body" id="satReport"></div>
 </div>
+@include('partials.trash-row')
 @endsection
 
 @push('scripts')
@@ -1419,12 +1420,19 @@
         try {
             const r = await window.api(U.list + '?page=' + savedPage + '&q=' + encodeURIComponent(savedQ));
             const rows = (r.data && r.data.rows) || [];
-            $('satSaved').insertAdjacentHTML('beforeend', rows.map((x) => '<button type="button" class="sat-srow" data-id="' + x.id + '"><span class="mini" style="--v:' + (Number(x.score) || 0) + '">' + (x.score ?? '–') + '</span><span><b>' + esc(String(x.title || '').replace(/ — /g, ', ')) + '</b><small>' + esc(x.at) + (x.ndvi != null ? ' · NDVI ' + esc(x.ndvi) : '') + (x.mode === 'radar-only' ? ' · radar only' : '') + '</small></span></button>').join(''));
+            $('satSaved').insertAdjacentHTML('beforeend', rows.map((x) => '<button type="button" class="sat-srow" data-trash-row data-id="' + x.id + '"><span class="mini" style="--v:' + (Number(x.score) || 0) + '">' + (x.score ?? '–') + '</span><span><b>' + esc(String(x.title || '').replace(/ — /g, ', ')) + '</b><small>' + esc(x.at) + (x.ndvi != null ? ' · NDVI ' + esc(x.ndvi) : '') + (x.mode === 'radar-only' ? ' · radar only' : '') + '</small></span>' + (window.aneeTrash ? window.aneeTrash.btn(x.id, x.title) : '') + '</button>').join(''));
             $('satSavedEmpty').hidden = !!$('satSaved').children.length;
             $('satSavedMore').hidden = !r.data.hasMore;
         } catch (err) { window.toast?.(err.message, 'error'); }
     };
     $('satSaved').addEventListener('click', async (e) => {
+        // The bin on a saved row (2026-10-23): to the Trash, through the tool's own delete.
+        const bin = e.target.closest('[data-trash]');
+        if (bin) {
+            e.stopPropagation();
+            window.aneeTrash.run(bin, U.del(bin.dataset.trash), { what: 'analysis', paid: true, onDone: () => { $('satSavedEmpty').hidden = !!$('satSaved').children.length; } });
+            return;
+        }
         const b = e.target.closest('.sat-srow');
         if (!b) return;
         try { const r = await window.api(U.one(b.dataset.id)); openReport(r.data); } catch (err) { window.toast?.(err.message, 'error'); }

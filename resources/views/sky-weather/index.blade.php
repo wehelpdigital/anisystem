@@ -432,6 +432,7 @@
         <div class="dt-rows" id="skLotRows"></div>
     </div>
 </div>
+@include('partials.trash-row')
 @endsection
 
 @push('scripts')
@@ -445,7 +446,7 @@
     const U = {
         options: @json(route('sky.options')), frames: @json(route('sky.frames')), storms: @json(route('sky.storms')), forecast: @json(route('sky.forecast')),
         tile: @json(url('/app/sky-weather/tile')), generate: @json(route('sky.generate')), job: (id) => @json(url('/app/sky-weather/job')) + '/' + id,
-        list: @json(route('sky.list')), one: (id) => @json(url('/app/sky-weather/one')) + '/' + id, places: @json(route('sat.places')), grid: @json(route('sky.grid')),
+        list: @json(route('sky.list')), one: (id) => @json(url('/app/sky-weather/one')) + '/' + id, del: (id) => @json(url('/app/sky-weather')) + '/' + id, places: @json(route('sat.places')), grid: @json(route('sky.grid')),
         pass: @json(route('sky.pass')), renewal: @json(route('sky.pass.renewal')), buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const KEY = 'anee.skyPlace';
@@ -1080,10 +1081,17 @@
         try {
             const r = await window.api(U.list);
             const rows = (r.data && r.data.rows) || [];
-            $('skSaved').innerHTML = rows.length ? rows.map((x) => '<button type="button" class="sk-srow" data-id="' + x.id + '"><i class="r-' + esc(String(x.risk || '').toLowerCase()) + '"></i><span>' + esc(x.headline || x.title) + '</span><small>' + esc(x.at) + '</small></button>').join('') : '<p class="text-xs text-gray-400 mt-1">Your readings will be kept here.</p>';
+            $('skSaved').innerHTML = rows.length ? rows.map((x) => '<button type="button" class="sk-srow" data-trash-row data-id="' + x.id + '"><i class="r-' + esc(String(x.risk || '').toLowerCase()) + '"></i><span>' + esc(x.headline || x.title) + '</span><small>' + esc(x.at) + '</small>' + (window.aneeTrash ? window.aneeTrash.btn(x.id, x.headline || x.title) : '') + '</button>').join('') : '<p class="text-xs text-gray-400 mt-1">Your readings will be kept here.</p>';
         } catch (_) {}
     };
     $('skSaved').addEventListener('click', async (e) => {
+        // The bin on a saved row (2026-10-23): to the Trash, through the tool's own delete.
+        const bin = e.target.closest('[data-trash]');
+        if (bin) {
+            e.stopPropagation();
+            window.aneeTrash.run(bin, U.del(bin.dataset.trash), { what: 'reading', paid: true, onDone: () => { loadSaved(); } });
+            return;
+        }
         const b = e.target.closest('.sk-srow');
         if (!b) return;
         try { const r = await window.api(U.one(b.dataset.id)); showReport(r.data); } catch (err) { window.toast?.(err.message, 'error'); }

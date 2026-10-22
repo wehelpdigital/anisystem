@@ -354,7 +354,7 @@ class NpkPlusController extends Controller
     {
         DB::table('as_npk_calcs')->where('id', $id)->where('userId', Auth::id())->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Deleted.');
+        return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
     }
 
     /* --------------------------------------------------------------- Anee */

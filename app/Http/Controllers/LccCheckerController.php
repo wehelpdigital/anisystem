@@ -469,7 +469,7 @@ class LccCheckerController extends Controller
     {
         DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Deleted.', $this->shelf(1));
+        return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.', $this->shelf(1));
     }
 
     /**

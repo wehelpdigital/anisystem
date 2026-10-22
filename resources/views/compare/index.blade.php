@@ -371,6 +371,7 @@
 @endsection
 
 @push('sheets')
+@include('partials.trash-row')
 <div class="sheet hidden cmp-sheet" id="cmpKindSheet" style="--sheet-width:27rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -903,11 +904,11 @@ const __init = () => {
     async function removeViewing() {
         const v = S.viewing;
         if (!v) return;
-        const ok = await window.confirmAction({ title: 'Delete this comparison?', message: 'The two reports it compared stay saved.', detail: v.data.credits > 0 ? 'The credits it used are not returned.' : '', confirmText: 'Delete' });
+        const ok = await window.confirmAction({ title: 'Delete this comparison?', message: 'It goes to the Trash, where you can restore it for 30 days. The two reports it compared stay saved.', detail: v.data.credits > 0 ? 'The credits it used are not returned.' : '', confirmText: 'Delete' });
         if (!ok) return;
         try {
             await api(U.del(v.id), { method: 'DELETE' });
-            toast('Comparison deleted.');
+            toast('Comparison moved to the Trash.');
             S.savedDirty = true;
             window.reportView.close();
         } catch (err) { toast(err.message, 'error'); }
@@ -1047,7 +1048,7 @@ const __init = () => {
     function rowHtml(r, n) {
         const icon = ICONS[r.kind];
         const small = [r.when, r.author ? 'by ' + r.author : null, r.description].filter(Boolean).join(' · ');
-        return `<div class="cmp-row" role="button" tabindex="0" data-open="${r.id}" style="--i:${Math.min(n, 12)}">
+        return `<div class="cmp-row" data-trash-row role="button" tabindex="0" data-open="${r.id}" style="--i:${Math.min(n, 12)}">
             <span class="cmp-row-ico">${icon ? `<img src="${esc(icon)}" alt="">` : SVG.grid}${r.anee ? `<img class="face" src="${esc(FACE)}" alt="">` : ''}</span>
             <span class="cmp-row-t">
                 <b>${esc(r.title)}</b>
@@ -1059,6 +1060,7 @@ const __init = () => {
                 ${small ? `<small>${esc(small)}</small>` : ''}
             </span>
             ${r.mine && CAN_WRITE ? `<button type="button" class="cmp-pen" data-meta="${r.id}" title="Name and description" aria-label="Rename ${esc(r.title)}">${SVG.pen}</button>` : ''}
+            ${r.mine && CAN_WRITE && window.aneeTrash ? window.aneeTrash.btn(r.id, r.title) : ''}
             ${SVG.go}
         </div>`;
     }
@@ -1072,6 +1074,14 @@ const __init = () => {
         finally { rowEl?.classList.remove('is-busy'); }
     }
     $id('cmpRows')?.addEventListener('click', (e) => {
+        // The bin on a saved row (2026-10-23): to the Trash.
+        const bin = e.target.closest('[data-trash]');
+        if (bin) {
+            e.stopPropagation();
+            const r = L.rows.find((x) => x.id === Number(bin.dataset.trash));
+            window.aneeTrash.run(bin, U.del(bin.dataset.trash), { what: 'comparison', paid: !!(r && r.anee), onDone: () => { L.rows = L.rows.filter((x) => x.id !== Number(bin.dataset.trash)); } });
+            return;
+        }
         const pen = e.target.closest('[data-meta]');
         if (pen) {
             e.stopPropagation();

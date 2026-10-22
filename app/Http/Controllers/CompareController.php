@@ -647,7 +647,7 @@ class CompareController extends BaseScheduleController
         }
         $r->update(['deleteStatus' => 0]);
 
-        return $this->jsonOk('Comparison deleted.');
+        return $this->jsonOk('Moved to the Trash. Restore it from the Trash for 30 days.');
     }
 
     /* ============================== DOORS =============================== */

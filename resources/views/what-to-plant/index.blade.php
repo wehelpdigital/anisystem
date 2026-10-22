@@ -1524,7 +1524,7 @@
         host.querySelector('[data-wp-delete]').addEventListener('click', async () => {
             const delId = item.savedId;
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Delete this analysis?', message: 'Only the report is deleted. The credits are not refunded.', confirmText: 'Delete', danger: true })
+                ? await confirmAction({ title: 'Delete this analysis?', message: 'It goes to the Trash, where you can restore it for 30 days. The credits it used are not returned.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this analysis?');
             if (!ok) return;
             try {
@@ -1545,11 +1545,11 @@
        whole, and a name must be findable. */
     const SHELF = { page: 1, hasMore: false, q: '', busy: false };
     const rowHtml = (r) => `
-            <button type="button" class="wtp-saved" data-saved="${r.id}">
+            <button type="button" class="wtp-saved" data-saved="${r.id}" data-trash-row>
                 <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small>${window.userTags ? window.userTags.chips(r.tags) : ''}</span>
                 <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                </span>
+                </span>${window.aneeTrash ? window.aneeTrash.btn(r.id, r.title) : ''}
                 <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </button>`;
     async function loadSaved(more) {
@@ -1598,6 +1598,14 @@
             finally { saveBtn.disabled = false; }
             return;
         }
+        // The bin on a saved row (2026-10-23): to the Trash, through the tool's own delete.
+        const bin = e.target.closest('[data-trash]');
+        if (bin && bin.closest('#wpSavedList')) {
+            e.stopPropagation();
+            const row = bin.closest('.wtp-saved');
+            window.aneeTrash.run(bin, U.del(bin.dataset.trash), { title: row ? (row.querySelector('b') || {}).textContent : '', what: 'analysis', paid: true, onDone: () => loadSaved(false).catch(() => {}) });
+            return;
+        }
         const pen = e.target.closest('[data-meta]');
         if (pen && pen.closest('#wpSavedList')) {
             e.stopPropagation();
@@ -1641,6 +1649,7 @@
 @push('sheets')
 {{-- Rename a saved analysis and describe it in your own words. --}}
 @include('partials.user-tags')
+@include('partials.trash-row')
 <div class="sheet hidden" id="wpMetaSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

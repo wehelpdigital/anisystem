@@ -1122,6 +1122,7 @@
 @unless ($npFrame)
     @include('partials.farm-lots')
 @endunless
+@include('partials.trash-row')
 @endsection
 
 @push('scripts')
@@ -1131,7 +1132,7 @@
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const U = {
         options: @json(route('npk.options')), product: @json(route('npk.product')),
-        save: @json(route('npk.save')), season: @json(route('npk.season')), ph: @json(asset('data/ph-locations.json')), list: @json(route('npk.list')), one: (id) => @json(url('/app/npk-plus/one')) + '/' + id,
+        save: @json(route('npk.save')), season: @json(route('npk.season')), ph: @json(asset('data/ph-locations.json')), list: @json(route('npk.list')), one: (id) => @json(url('/app/npk-plus/one')) + '/' + id, del: (id) => @json(url('/app/npk-plus')) + '/' + id,
         analyze: @json(route('npk.analyze')), job: (id) => @json(url('/app/npk-plus/job')) + '/' + id,
         phProducts: @json(route('npk.ph')), phUse: @json(route('npk.ph.use')),
         count: @json(route('seedcalc.count')),
@@ -3196,12 +3197,19 @@
         if (!more) { savedPage = 1; $('npSaved').innerHTML = ''; }
         try {
             const r = await window.api(U.list + '?page=' + savedPage + '&q=' + encodeURIComponent(savedQ));
-            $('npSaved').insertAdjacentHTML('beforeend', (r.data.rows || []).map((x) => '<button type="button" class="np-srow" data-id="' + x.id + '"><span><b>' + esc(String(x.title || '').replace(/ — /g, ', ')) + '</b><small>' + esc(x.at) + (x.npk ? ' · ' + esc(x.npk) + ' per ha' : '') + '</small></span>' + (x.analyzed ? '<em>Read by Anee</em>' : '') + '</button>').join(''));
+            $('npSaved').insertAdjacentHTML('beforeend', (r.data.rows || []).map((x) => '<button type="button" class="np-srow" data-trash-row data-id="' + x.id + '"><span><b>' + esc(String(x.title || '').replace(/ — /g, ', ')) + '</b><small>' + esc(x.at) + (x.npk ? ' · ' + esc(x.npk) + ' per ha' : '') + '</small></span>' + (x.analyzed ? '<em>Read by Anee</em>' : '') + (window.aneeTrash ? window.aneeTrash.btn(x.id, x.title) : '') + '</button>').join(''));
             $('npSavedEmpty').hidden = !!$('npSaved').children.length;
             $('npSavedMore').hidden = !r.data.hasMore;
         } catch (err) { window.toast?.(err.message, 'error'); }
     };
     $('npSaved').addEventListener('click', async (e) => {
+        // The bin on a saved row (2026-10-23): to the Trash, through the tool's own delete.
+        const bin = e.target.closest('[data-trash]');
+        if (bin) {
+            e.stopPropagation();
+            window.aneeTrash.run(bin, U.del(bin.dataset.trash), { what: 'calculation', paid: false, onDone: () => { if (String(calcId) === bin.dataset.trash) calcId = null; $('npSavedEmpty').hidden = !!$('npSaved').children.length; } });
+            return;
+        }
         const b = e.target.closest('.np-srow');
         if (!b) return;
         try {

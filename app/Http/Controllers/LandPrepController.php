@@ -1446,7 +1446,7 @@ PROMPT;
     {
         DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)->where('kind', self::KIND)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Plan deleted.');
+        return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
     }
 
     /* ==================================================== to the builder */
