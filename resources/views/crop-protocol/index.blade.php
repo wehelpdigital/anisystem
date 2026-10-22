@@ -637,6 +637,8 @@
     .cp-yo-row .tr span.is-plan { background: #1d6fd1; }
     html.dark .cp-yo-row .tr span.is-plan { background: #5aa9f5; }
     .cr-yplan-say { margin-top: .55rem; font-size: .78rem; line-height: 1.5; color: var(--color-gray-500); }
+    .cq-need-lot { margin-top: .5rem; font-size: .8rem; line-height: 1.5; }
+    [data-stages] .cr-ytabs { margin-top: -.2rem; }
     @media (prefers-reduced-motion: reduce) { .cr-ytabs::before, .cr-ytabs button { transition: none; } .cr-ycard .cp-yo.is-fresh .cp-yo-row .tr span { animation: none; } }
 
     /* The shopping list. */
@@ -3353,13 +3355,14 @@
             const lot = basis === 'lot';
             const say = (v) => (lot ? yieldAmt(v * area, unit) : yieldAmt(v, unit) + ' a hectare');
             const row = (lab, v, cls) => '<div class="cp-yo-row"><small>' + lab + '</small><div class="tr"><span class="' + cls + '" data-yv="' + v + '"></span></div><b>' + esc(say(v)) + '</b></div>';
-            return '<div class="cp-yo" data-ypane="' + basis + '"' + (lot ? ' hidden' : '') + '>'
+            return '<div class="cp-yo" data-ypane="' + basis + '"' + (lot === (area === 1) ? ' hidden' : '') + '>'
                 + (tN ? row('Target', tN, 'is-target') : '') + (rN ? row('Realistic', rN, '') : '')
                 + '<div class="cp-yo-row" data-yplan hidden><small>This plan</small><div class="tr"><span class="is-plan" data-yv="0"></span></div><b></b></div></div>';
         };
         return '<div class="cr-card cr-ycard" data-ycard data-area="' + area + '" data-unit="' + esc(unit) + '"><h3>Yield<small>your target, what this variety really gives here, and what this plan carries</small></h3>'
-            + '<div class="cr-ytabs" role="tablist" aria-label="Yield for"><button type="button" role="tab" aria-selected="true" data-ybasis="ha">A hectare</button><button type="button" role="tab" aria-selected="false" data-ybasis="lot">This lot · ' + esc(areaSay(area)) + '</button></div>'
-            + pane('ha') + pane('lot') + '<p class="cr-yplan-say" data-yplansay hidden></p>' + (yo.note ? '<p class="cp-note">' + esc(sweepT(yo.note)) + '</p>' : '') + '</div>';
+            // The lot first (2026-10-23, the owner: the yield read for a hectare); a lot of one hectare needs no switch.
+            + (area !== 1 ? '<div class="cr-ytabs" role="tablist" aria-label="Yield for"><button type="button" role="tab" aria-selected="true" data-ybasis="lot">This lot · ' + esc(areaSay(area)) + '</button><button type="button" role="tab" aria-selected="false" data-ybasis="ha">A hectare</button></div>' : '')
+            + pane('lot') + pane('ha') + '<p class="cr-yplan-say" data-yplansay hidden></p>' + (yo.note ? '<p class="cp-note">' + esc(sweepT(yo.note)) + '</p>' : '') + '</div>';
     }
     // The bars against the biggest of the three, and the plan's row once the barrel has measured it.
     function paintYield(pane, potHa) {
@@ -3375,7 +3378,9 @@
             });
             const say = card.querySelector('[data-yplansay]');
             say.hidden = false;
-            say.textContent = 'This plan carries about ' + yieldAmt(potHa, unit) + ' a hectare, so about ' + yieldAmt(potHa * area, unit) + ' on this ' + areaSay(area) + ' lot: the goal, held where the barrel\'s shortest plank holds the water.';
+            say.textContent = area !== 1
+                ? 'This plan carries about ' + yieldAmt(potHa * area, unit) + ' on this ' + areaSay(area) + ' lot (' + yieldAmt(potHa, unit) + ' a hectare): the goal, held where the barrel\'s shortest plank holds the water.'
+                : 'This plan carries about ' + yieldAmt(potHa, unit) + ' a hectare: the goal, held where the barrel\'s shortest plank holds the water.';
         }
         const vals = [...card.querySelectorAll('[data-yv]')].map((x) => Number(x.dataset.yv) || 0);
         const max = Math.max(1, ...vals);
@@ -3385,7 +3390,7 @@
         const b = e.target.closest('[data-ybasis]');
         if (!b) return;
         const card = b.closest('[data-ycard]'), basis = b.dataset.ybasis;
-        b.parentElement.classList.toggle('is-lot', basis === 'lot');
+        b.parentElement.classList.toggle('is-lot', b === b.parentElement.lastElementChild);
         b.parentElement.querySelectorAll('[data-ybasis]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
         card.querySelectorAll('[data-ypane]').forEach((pn) => {
             const on = pn.dataset.ypane === basis;
@@ -3414,6 +3419,7 @@
             + '<span>' + esc(L.priorityLabel) + '</span>' + (L.targetYield ? '<span>🎯 ' + esc(trimN(L.targetYield) + ' ' + unit) + '</span>' : '') + '<span>📍 ' + esc(L.place) + '</span></div></div>'
             + (moved ? '<div class="cr-state is-warn"><span>📅</span><span><b>Planted ' + esc(dayFmt(pl.planting)) + ', ' + pl.shift + ' days after ' + (pl.asked ? 'your day' : 'the start of the month') + '</b>' + esc(pl.why && pl.why.by && pl.why.by.length ? 'Your crew is busy before it on other lots. Every job of this lot follows the new day.' : 'The first day that fits your crew. Every job of this lot follows it.') + '</span></div>' : '')
             + (n.known ? '<div class="cq-need"><div class="cq-need-h">This lot\'s need a hectare, counted like NPK Plus</div><div class="cq-need-n"><span><b>' + kgFmt(n.need.N) + '</b><small>kg N</small></span><span><b>' + kgFmt(n.need.P2O5) + '</b><small>kg P₂O₅</small></span><span><b>' + kgFmt(n.need.K2O) + '</b><small>kg K₂O</small></span></div>'
+                + ((Number(L.areaHa) || 1) !== 1 ? '<p class="cq-need-lot">On this ' + esc(areaSay(L.areaHa)) + ' lot that is <b>' + esc(elAmt(n.need.N * L.areaHa)) + ' N</b>, <b>' + esc(elAmt(n.need.P2O5 * L.areaHa)) + ' P₂O₅</b> and <b>' + esc(elAmt(n.need.K2O * L.areaHa)) + ' K₂O</b>.</p>' : '')
                 + (mics.length ? '<div class="cq-need-m">' + mics.map(([, m]) => '<span>' + esc(m.name) + ' ' + esc(elAmt(m.need)) + ' <small>' + esc(lvl[m.level] || '') + '</small></span>').join('') + '</div>' : '')
                 + (n.goal ? '<p>For <b>' + esc(fmt2(n.goal.eff / tIn) + ' ' + unit) + '</b> a hectare (' + esc(n.goal.why) + (Math.abs(n.goal.eff - n.goal.t) > 0.01 ? ', less for this lot\'s field' : '') + '), on this lot\'s soil, its soil test, its history' + (n.season ? ' and the weather of these weeks' : '') + '. Every program below is checked against it.</p>' : '')
                 + (n.season && n.season.words ? '<p>' + esc(n.season.words) + '</p>' : '')
@@ -3459,7 +3465,7 @@
         const pct = (r) => (r === null ? '?' : Math.round(Math.min(r, 1) * 100) + '%');
         const amt = (kg) => { const x = Number(kg) || 0; return x >= 1 ? (Math.round(x * 10) / 10) + ' kg' : Math.round(x * 1000) + ' g'; };
         const stateOf = (r, hi) => (r === null ? 'noflag' : (r < 0.9 ? 'short' : (r > hi ? 'over' : 'right')));
-        const fixGap = {}, topUp = {};
+        const fixGap = {}, topUp = {}, area = Number(L.areaHa) || 1;
         // A top up already folded into the program is in its check; only an older report's is added here.
         (L.fixes || []).forEach((f) => { if (!f.folded) fixGap[f.el] = (fixGap[f.el] || 0) + (Number(f.gap) || 0); });
         (L.micro || []).forEach((m) => { if (m.pick !== 'covered') topUp[m.el] = (topUp[m.el] || 0) + (Number(m.gap) || 0); });
@@ -3469,7 +3475,7 @@
             const [el, t, name] = KEY[c.key] || [c.key, c.label, c.label];
             const need = Number(c.need) || 0, have = (Number(c.have) || 0) + (fixGap[el] || 0), r = need > 0 ? have / need : null;
             staves.push({ k: el, t, name });
-            rows.push({ state: stateOf(r, 1.3), ratio: r, pct: pct(r), note: need > 0 ? 'The plan gives ' + Math.round(have) + ' kg of the ' + Math.round(need) + ' kg a hectare this lot needs' : 'No need counted' });
+            rows.push({ state: stateOf(r, 1.3), ratio: r, pct: pct(r), note: need > 0 ? (area !== 1 ? 'The plan gives ' + elAmt(have * area) + ' of the ' + elAmt(need * area) + ' this lot needs (' + Math.round(have) + ' of ' + Math.round(need) + ' kg a hectare)' : 'The plan gives ' + Math.round(have) + ' kg of the ' + Math.round(need) + ' kg a hectare this lot needs') : 'No need counted' });
         });
         // The secondary and micro elements NPK Plus always shows, and any other with a verdict.
         const base = ['Ca', 'Mg', 'S', 'Zn', 'B'];
@@ -3482,7 +3488,8 @@
             else if (s0 !== null && e.state === 'testok') { state = 'right'; ratio = 1; }
             else if (s0 !== null && e.state === 'noflag') { state = 'soil'; ratio = s0; }
             staves.push({ k: e.key, t: e.key, name: e.name });
-            rows.push({ state, ratio, soil: s0, pct: pct(ratio), note: need ? (s0 !== null ? 'The soil gives about ' + Math.round(s0 * 100) + '% of what the crop needs of it on its own; the plan gives ' + amt(plan) + ' of the ' + amt(need) + ' a hectare it needs for the rest' : 'The plan gives ' + amt(plan) + ' of the ' + amt(need) + ' a hectare')
+            const lotAmt = (x) => amt(area !== 1 ? x * area : x), needTail = area !== 1 ? ' this lot needs' : ' a hectare';
+            rows.push({ state, ratio, soil: s0, pct: pct(ratio), note: need ? (s0 !== null ? 'The soil gives about ' + Math.round(s0 * 100) + '% of what the crop needs of it on its own; the plan gives ' + lotAmt(plan) + ' of the ' + lotAmt(need) + needTail + ' for the rest' : 'The plan gives ' + lotAmt(plan) + ' of the ' + lotAmt(need) + needTail)
                 : state === 'soil' ? 'From the soil: by this lot\'s soil type, pH and place, the soil likely gives about all of it (' + Math.round(s0 * 100) + '%)' : state === 'right' ? 'Enough by the soil test' : 'No shortage flagged on this lot' });
         });
         // The season's water: rain (and the pump or the canal) against what the crop drinks.
@@ -3494,7 +3501,7 @@
             rows.push({ state: r < 0.97 ? 'short' : 'right', ratio: r, pct: pct(r), note: from.charAt(0).toUpperCase() + from.slice(1) + ' bring about ' + Math.round(r * 100) + '% of the water the crop drinks this season' });
         }
         const tIn = Number(((OPT && OPT.yieldT) || {})[L.yieldUnit]) || 1, unit = L.yieldWord || 'tons';
-        const goal = n.goal ? Number(n.goal.eff) / tIn : null, area = Number(L.areaHa) || 1;
+        const goal = n.goal ? Number(n.goal.eff) / tIn : null;
         const b = window.aneeBarrel.mount(host, { label: "Liebig's barrel for " + (L.name || 'this lot') });
         const measured = rows.map((r, i) => [r, i]).filter(([r]) => r.ratio !== null);
         const low = measured.length ? measured.reduce((a, c) => (c[0].ratio < a[0].ratio ? c : a)) : null;
@@ -3503,7 +3510,7 @@
             high_ca: 'the heavy calcium can crowd out magnesium', high_mg: 'the heavy magnesium can crowd out calcium', high_s: 'the heavy sulfate can hold molybdenum back', high_nh4: 'the heavy ammonium can hold magnesium and calcium back at the roots' };
         const locks = (pg.lockouts || []).map((k) => LOCK[k]).filter(Boolean);
         let say = !low ? '' : reach >= 97 ? 'Every plank reaches the rim: the plan, with what still fell short added, meets this lot\'s need for the goal.'
-            : 'The shortest plank is <b>' + esc(staves[low[1]].name) + '</b>: ' + esc(((t) => t.charAt(0).toLowerCase() + t.slice(1))((rows[low[1]].note || '').replace(/\.$/, ''))) + '. It holds the water at ' + reach + '% of the need' + (goal ? ', near ' + esc(yieldAmt(goal * reach / 100, unit)) + ' a hectare (about ' + esc(yieldAmt(goal * reach / 100 * area, unit)) + ' on this ' + esc(areaSay(area)) + ' lot)' : '') + '. Raise it first: more of the others adds nothing until it rises.';
+            : 'The shortest plank is <b>' + esc(staves[low[1]].name) + '</b>: ' + esc(((t) => t.charAt(0).toLowerCase() + t.slice(1))((rows[low[1]].note || '').replace(/\.$/, ''))) + '. It holds the water at ' + reach + '% of the need' + (goal ? ', near ' + (area !== 1 ? esc(yieldAmt(goal * reach / 100 * area, unit)) + ' on this ' + esc(areaSay(area)) + ' lot (' + esc(yieldAmt(goal * reach / 100, unit)) + ' a hectare)' : esc(yieldAmt(goal * reach / 100, unit)) + ' a hectare') : '') + '. Raise it first: more of the others adds nothing until it rises.';
         if (staves[low ? low[1] : -1] && staves[low[1]].k === 'water' && reach < 97) say += ' Water is the season, not the fertilizer: plan the irrigation, or a variety and a planting day that fit the rain.' + (sn && sn.words ? ' ' + esc(sn.words) : '');
         const over = rows.map((r, i) => [r, i]).filter(([r]) => r.state === 'over').map(([, i]) => staves[i].name.toLowerCase());
         if (over.length) say += ' Too much ' + esc(andList(over)) + ': the taller plank holds no more water, and it costs money.';
@@ -3517,9 +3524,9 @@
         // The yield the water points to (2026-10-23, the owner: "in the barrel in the arrow animation it should also show the potential yield"):
         // the lot's goal held at the shortest plank, a hectare and on the lot itself.
         const potHa = goal && reach !== null ? goal * Math.min(100, reach) / 100 : null;
-        b.draw({ staves, rows, tag: goal ? 'The rim is this lot\'s goal, ' + fmt2(goal) + ' ' + unit + ' a hectare.' : 'The rim is everything the crop needs.',
+        b.draw({ staves, rows, tag: goal ? (area !== 1 ? 'The rim is this lot\'s goal: about ' + yieldAmt(goal * area, unit) + ' on its ' + areaSay(area) + ' (' + yieldAmt(goal, unit) + ' a hectare).' : 'The rim is this lot\'s goal, ' + fmt2(goal) + ' ' + unit + ' a hectare.') : 'The rim is everything the crop needs.',
             arrow: 'The water is the need met' + (reach !== null ? '<b>' + reach + '%</b>' : '')
-                + (potHa ? '<small>About ' + esc(yieldAmt(potHa, unit)) + ' a ha</small><small>' + esc(yieldAmt(potHa * area, unit)) + ' on the lot</small>' : ''),
+                + (potHa ? (area !== 1 ? '<small>About ' + esc(yieldAmt(potHa * area, unit)) + ' on the lot</small><small>' + esc(yieldAmt(potHa, unit)) + ' a ha</small>' : '<small>About ' + esc(yieldAmt(potHa, unit)) + ' a ha</small>') : ''),
             reach: reach !== null ? '<b>' + reach + '%</b><span>of what this lot needs for its goal is met, at the shortest plank.</span>' : '',
             say: say ? '<p class="cr-say" style="margin-top:.6rem">' + say + '</p>' : '' });
         // It fills and turns when it comes into view, and rests when it leaves.
@@ -3545,6 +3552,15 @@
         const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
         const sameStage = (a, b) => { const x = norm(a), y = norm(b); return !!x && !!y && (x === y || x.includes(y) || y.includes(x)); };
         let PROG = 0, SEL = Math.max(0, stages.findIndex((st) => (st.fertilizer || []).length));
+        /* For this lot, or a hectare (2026-10-23, the owner: "50 kg bags for this lot (0.1 ha), 1.2 bags in all ... so 1000sqm is 1 bag
+           and only 1.2 bags for 1 hectare?"): the program, its totals and its nutrient check speak one of the two at a time,
+           each saying the other beside it, so a lot's bags are never read as a hectare's. */
+        let BASIS = 'lot';
+        const lotMode = () => area !== 1 && BASIS === 'lot';
+        const per = (lotV, haV) => (lotMode() || area === 1 ? Number(lotV) || 0 : Number(haV) || 0);
+        const bagsSay = (b) => { const x = Number(b) || 0; return x >= 1 ? trimN(x) + (Math.abs(x - 1) < 0.05 ? ' bag' : ' bags') + ' (' + Math.round(x * 50).toLocaleString() + ' kg)' : bagAmt(x); };
+        const other = (lotV, haV) => (area === 1 ? '' : lotMode() ? bagAmt(haV) + ' a hectare' : bagAmt(lotV) + ' on this lot');
+        const haOf = (x) => (x.bagsPerHa != null && x.bagsPerHa !== '' ? Number(x.bagsPerHa) : (Number(x.totalBags) || 0) / area);
         const verdictWord = (check, els) => {
             const v = (check || []).map((c) => c.verdict).concat((els || []).filter((e) => !e.beneficial).map((e) => ({ right: 'ok', testok: 'ok', spray: 'ok', short: 'short', over: 'over' })[e.state] || 'unchecked'));
             if (!v.length) return '';
@@ -3554,33 +3570,39 @@
         };
         const paint = () => {
             const g = programs[PROG] || programs[0];
-            const byStage = g.byStage || [], stageBags = g.stageBags || [];
+            const byStage = g.byStage || [], stageBags = (g.stageBags || []).map((b) => per(b, (Number(b) || 0) / area));
             const maxBags = Math.max(0.1, ...stageBags.map((b) => Number(b) || 0));
-            const totals = g.totals || [], maxTotal = Math.max(0.1, ...totals.map((t) => Number(t.bags) || 0));
+            const totals = g.totals || [], maxTotal = Math.max(0.1, ...totals.map((t) => per(t.bags, t.bagsPerHa)));
+            const allBags = per(g.totalBags, (Number(g.totalBags) || 0) / area);
             const check = g.check || [];
             const els = g.elements || [];
             const shown = els.filter((e) => e.need !== null || Number(e.plan) > 0);
             const word = { right: '✅ enough', over: '↑ too much', extra: 'extra, no need flagged', testok: '✅ enough by your soil test' };
             hostBox.innerHTML = '<div class="cr-card" data-stages data-sel="' + SEL + '">'
-                + (programs.length > 1 ? '<div class="cp3-tabs" role="tablist" aria-label="Fertilizer programs">' + programs.map((pg, i) => '<button type="button" class="cp3-tab' + (i === PROG ? ' is-on' : '') + '" role="tab" aria-selected="' + (i === PROG) + '" data-prog="' + i + '"><b>' + esc(pg.name || ('Option ' + (i + 1))) + '</b><small>' + esc(trimN(pg.totalBags || 0)) + ' bags' + verdictWord(pg.check, pg.elements) + '</small></button>').join('') + '</div>'
+                + (programs.length > 1 ? '<div class="cp3-tabs" role="tablist" aria-label="Fertilizer programs">' + programs.map((pg, i) => '<button type="button" class="cp3-tab' + (i === PROG ? ' is-on' : '') + '" role="tab" aria-selected="' + (i === PROG) + '" data-prog="' + i + '"><b>' + esc(pg.name || ('Option ' + (i + 1))) + '</b><small>' + esc(trimN(per(pg.totalBags || 0, (Number(pg.totalBags) || 0) / area))) + ' bags' + (area !== 1 ? (lotMode() ? ' on the lot' : ' a ha') : '') + verdictWord(pg.check, pg.elements) + '</small></button>').join('') + '</div>'
                     + (g.for ? '<p class="cp3-for">' + (PROG === 0 ? '⭐ Recommended: ' : '') + esc(sweepT(g.for)) + '</p>' : '') : '')
-                + '<h3>Fertilizer by growth stage' + (window.aneeTl ? window.aneeTl.flag('split-application') : '') + '<small>50 kg bags for this lot (' + esc(trimN(area)) + ' ha), ' + esc(trimN(g.totalBags || 0)) + ' bags in all</small></h3>'
+                + '<h3>Fertilizer by growth stage' + (window.aneeTl ? window.aneeTl.flag('split-application') : '') + '<small>' + (area === 1 ? '50 kg bags for this lot (1 hectare), ' + esc(bagsSay(allBags)) + ' in all'
+                    : lotMode() ? '50 kg bags for this lot (' + esc(areaSay(area)) + '): ' + esc(bagsSay(allBags)) + ' in all. A hectare would take ' + esc(bagsSay(allBags / area)) + '.'
+                    : '50 kg bags for a hectare: ' + esc(bagsSay(allBags)) + ' in all. This ' + esc(areaSay(area)) + ' lot takes ' + esc(bagsSay(allBags * area)) + '.') + '</small></h3>'
+                + (area !== 1 ? '<div class="cr-ytabs' + (lotMode() ? '' : ' is-lot') + '" role="tablist" aria-label="Amounts for"><button type="button" role="tab" aria-selected="' + lotMode() + '" data-pbasis="lot">This lot · ' + esc(areaSay(area)) + '</button><button type="button" role="tab" aria-selected="' + !lotMode() + '" data-pbasis="ha">A hectare</button></div>' : '')
                 + '<div class="cp-chart cp2-chart">' + stages.map((st, i) => '<button type="button" class="cp-col cp2-col" data-stage="' + i + '" aria-label="' + esc(st.stage || '') + '"><span class="cp-col-val">' + (Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) : '·') + '</span><div class="cp-bar" style="height:' + Math.max(3, Math.round(((Number(stageBags[i]) || 0) / maxBags) * 100)) + '%">'
-                    + (byStage[i] || []).map((x) => '<span class="cp-seg" style="height:' + Math.max(0, ((Number(x.totalBags) || 0) / Math.max(0.1, Number(stageBags[i]) || 0)) * 100) + '%;background:' + colour(x.product || 'Fertilizer') + '"></span>').join('') + '</div></button>').join('') + '</div>'
+                    + (byStage[i] || []).map((x) => '<span class="cp-seg" style="height:' + Math.max(0, (per(x.totalBags, haOf(x)) / Math.max(0.01, Number(stageBags[i]) || 0)) * 100) + '%;background:' + colour(x.product || 'Fertilizer') + '"></span>').join('') + '</div></button>').join('') + '</div>'
                 + '<div class="cp-lbls cp2-lbls">' + stages.map((st, i) => '<span class="cp-lbl" data-lbl="' + i + '">' + (i + 1) + '</span>').join('') + '</div>'
                 + (names.length ? '<div class="cp-legend">' + names.filter((nm) => (g.byStage || []).flat().concat(g.orphans || []).some((x) => (x.product || 'Fertilizer') === nm)).map((nm) => '<span><i style="background:' + colour(nm) + '"></i>' + esc(nm) + '</span>').join('') + '</div>' : '')
                 + '<div class="cp2-detail" data-detail></div>'
                 + '<div class="cp2-rows">' + stages.map((st, i) => '<button type="button" class="cp2-row" data-stage="' + i + '"><span class="cp2-row-n">' + (i + 1) + '</span><span class="cp2-row-t"><b>' + esc(st.stage || '') + '</b><small>' + (st.days ? '<em class="cp2-days">' + esc(st.days) + '</em>' : '')
-                    + ((byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(bagAmt(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : 'nothing to apply') + '</small></span><span class="cp2-row-b">' + (Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) + ' bags' : '') + '</span></button>').join('')
+                    + ((byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(bagAmt(per(x.totalBags, haOf(x)))) + ' ' + esc(x.product || '')).join(' · ') : 'nothing to apply') + '</small></span><span class="cp2-row-b">' + (Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) + (Math.abs(Number(stageBags[i]) - 1) < 0.05 ? ' bag' : ' bags') : '') + '</span></button>').join('')
                 + ((g.orphans || []).length ? '<div class="cp3-orphans"><b>Also in this program</b>' + g.orphans.map((x) => '<div>' + esc(bagAmt(x.totalBags)) + ' ' + esc(x.product || '') + ' · ' + esc(x.stage || '') + '</div>').join('') + '</div>' : '') + '</div></div>'
-                + ((totals.length || check.length) ? '<div class="cr-card"><h3>Totals and the nutrient check<small>for this lot, amounts only' + (programs.length > 1 ? ' · ' + esc(g.name || '') : '') + '</small></h3>'
-                    + (totals.length ? '<div class="cp2-tot">' + totals.map((t) => '<div class="cp2-tot-row"><span class="n"><i style="background:' + colour(t.product) + '"></i>' + esc(t.product) + '</span><div class="tr"><span style="width:' + Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100)) + '%;background:' + colour(t.product) + '"></span></div><b>' + esc(bagAmt(t.bags)) + '</b><small>' + esc(Number(t.bagsPerHa) >= 1 ? trimN(t.bagsPerHa) : bagAmt(t.bagsPerHa)) + '/ha</small></div>').join('') + '</div>' : '')
-                    + (check.length ? '<div class="cp2-nut"><div class="cp2-nut-h"><b>Nutrients for the season</b><small>what this program gives and what the target needs, in kg a hectare' + (area !== 1 ? ' (the whole lot in brackets)' : '') + '</small></div>'
+                + ((totals.length || check.length) ? '<div class="cr-card"><h3>Totals and the nutrient check<small>' + (area === 1 || lotMode() ? 'for this lot' + (area !== 1 ? ' (' + esc(areaSay(area)) + ')' : '') : 'for a hectare') + (programs.length > 1 ? ' · ' + esc(g.name || '') : '') + '</small></h3>'
+                    + (totals.length ? '<div class="cp2-tot">' + totals.map((t) => '<div class="cp2-tot-row"><span class="n"><i style="background:' + colour(t.product) + '"></i>' + esc(t.product) + '</span><div class="tr"><span style="width:' + Math.max(2, Math.round((per(t.bags, t.bagsPerHa) / maxTotal) * 100)) + '%;background:' + colour(t.product) + '"></span></div><b>' + esc(bagAmt(per(t.bags, t.bagsPerHa))) + '</b><small>' + esc(area === 1 ? '' : other(t.bags, t.bagsPerHa)) + '</small></div>').join('') + '</div>' : '')
+                    + (check.length ? '<div class="cp2-nut"><div class="cp2-nut-h"><b>Nutrients for the season</b><small>what this program gives and what the target needs, ' + (area === 1 ? 'in kg a hectare' : lotMode() ? 'in kg for this lot (a hectare in brackets)' : 'in kg a hectare (this lot in brackets)') + '</small></div>'
                         + check.map((c) => { const top = Math.max(1, Number(c.have) || 0, Number(c.need) || 0); return '<div class="cp2-nut-row is-' + esc(c.verdict || 'unchecked') + '"><span class="l">' + esc(c.label) + '</span><div class="tr"><span class="have" style="width:' + Math.max(2, Math.round(((Number(c.have) || 0) / top) * 100)) + '%"></span>' + (c.need != null ? '<i class="need" style="left:' + Math.min(100, Math.round(((Number(c.need) || 0) / top) * 100)) + '%"></i>' : '') + '</div>'
-                            + '<span class="v"><b>' + esc(trimN(c.have)) + '</b>' + (c.need != null ? ' / ' + esc(trimN(c.need)) : '') + (area !== 1 ? '<small>(' + esc(trimN(c.haveField)) + (c.needField != null ? ' / ' + esc(trimN(c.needField)) : '') + ')</small>' : '') + '</span>'
-                            + '<span class="vd">' + (c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? '⚠️ short by ' + esc(trimN(Math.abs(c.gap))) : (c.verdict === 'over' ? '↑ over by ' + esc(trimN(c.gap)) : 'not checked'))) + '</span></div>'; }).join('')
+                            + (lotMode()
+                                ? '<span class="v"><b>' + esc(trimN(c.haveField)) + '</b>' + (c.needField != null ? ' / ' + esc(trimN(c.needField)) : '') + '<small>(' + esc(trimN(c.have)) + (c.need != null ? ' / ' + esc(trimN(c.need)) : '') + ' a ha)</small></span>'
+                                : '<span class="v"><b>' + esc(trimN(c.have)) + '</b>' + (c.need != null ? ' / ' + esc(trimN(c.need)) : '') + (area !== 1 ? '<small>(' + esc(trimN(c.haveField)) + (c.needField != null ? ' / ' + esc(trimN(c.needField)) : '') + ' on the lot)</small>' : '') + '</span>')
+                            + '<span class="vd">' + (c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? '⚠️ short by ' + esc(trimN(Math.abs(c.gap) * (lotMode() ? area : 1))) + ' kg' : (c.verdict === 'over' ? '↑ over by ' + esc(trimN(Number(c.gap) * (lotMode() ? area : 1))) + ' kg' : 'not checked'))) + '</span></div>'; }).join('')
                         + (els.length ? '<p class="cp2-nut-sub">Secondary and micro elements</p>' + shown.map((e) => { const top = Math.max(1e-6, Number(e.plan) || 0, Number(e.need) || 0); return '<div class="cp2-nut-row is-el is-' + esc(e.state) + (e.beneficial ? ' is-ben' : '') + '"><span class="l" title="' + esc(e.name) + '">' + esc(e.key) + '</span><div class="tr"><span class="have" style="width:' + Math.max(2, Math.round(((Number(e.plan) || 0) / top) * 100)) + '%"></span>' + (e.need !== null ? '<i class="need" style="left:' + Math.min(100, Math.round(((Number(e.need) || 0) / top) * 100)) + '%"></i>' : '') + '</div>'
-                            + '<span class="v"><b>' + esc(elAmt(e.plan)) + '</b>' + (e.need !== null ? ' / ' + esc(elAmt(e.need)) : '') + '</span><span class="vd">' + esc(e.name) + ': ' + (e.beneficial ? 'it helps, but is not required, so nothing is added' : e.state === 'short' ? '⚠️ short by ' + esc(elAmt(Math.max(0, Number(e.need) - Number(e.plan)))) + (PROG === 0 ? ', added below' : '') : (e.state === 'spray' ? '💧 given by the spray' + (e.sprayAt ? ' at ' + esc(e.sprayAt) : '') : esc(word[e.state] || ''))) + (e.beneficial ? ' (beneficial, not required)' : '') + (e.soilSay && e.state !== 'testok' ? '<small class="cp2-soil">' + esc(e.soilSay) + '</small>' : '') + '</span></div>'; }).join('') : '')
+                            + '<span class="v"><b>' + esc(elAmt(Number(e.plan) * (lotMode() ? area : 1))) + '</b>' + (e.need !== null ? ' / ' + esc(elAmt(Number(e.need) * (lotMode() ? area : 1))) : '') + '</span><span class="vd">' + esc(e.name) + ': ' + (e.beneficial ? 'it helps, but is not required, so nothing is added' : e.state === 'short' ? '⚠️ short by ' + esc(elAmt(Math.max(0, Number(e.need) - Number(e.plan)) * (lotMode() ? area : 1))) + (PROG === 0 ? ', added below' : '') : (e.state === 'spray' ? '💧 given by the spray' + (e.sprayAt ? ' at ' + esc(e.sprayAt) : '') : esc(word[e.state] || ''))) + (e.beneficial ? ' (beneficial, not required)' : '') + (e.soilSay && e.state !== 'testok' ? '<small class="cp2-soil">' + esc(e.soilSay) + '</small>' : '') + '</span></div>'; }).join('') : '')
                         + ((g.unknownProducts || []).length ? '<p class="cp-note">Not counted (nutrient content unknown): ' + esc(g.unknownProducts.join(', ')) + '.</p>' : '') + '</div>' + (npk.note ? '<p class="cp-note">' + esc(sweepT(npk.note)) + '</p>' : '') : '') + '</div>' : '');
             wire();
             if (viewHost && viewHost.classList.contains('is-drawn')) requestAnimationFrame(() => hostBox.querySelectorAll('.cp-bar, .cp2-tot-row .tr span, .cp2-nut-row .have').forEach((el) => { el.style.transition = 'none'; el.style.transform = 'none'; }));
@@ -3600,7 +3622,7 @@
                 setTimeout(() => {
                     d.innerHTML = '<div class="cp2-d-head"><span class="cp2-row-n">' + (i + 1) + '</span><span><b>' + esc(st.stage || '') + '</b>' + (st.days ? '<small><em class="cp2-days">' + esc(st.days) + '</em></small>' : '') + '</span>'
                         + '<span class="cp2-d-nav"><button type="button" data-prev ' + (i === 0 ? 'disabled' : '') + ' aria-label="Previous stage">‹</button><button type="button" data-next ' + (i === stages.length - 1 ? 'disabled' : '') + ' aria-label="Next stage">›</button></span></div>'
-                        + ((st.fertilizer || []).length ? '<div class="cp2-d-fert">' + st.fertilizer.map((x) => '<div class="cp2-d-app"><i style="background:' + colour(x.product || 'Fertilizer') + '"></i><span><b>' + esc(bagAmt(x.totalBags)) + ' ' + esc(x.product || '') + '</b> <small>(' + esc(Number(x.bagsPerHa) >= 1 ? trimN(x.bagsPerHa) : bagAmt(x.bagsPerHa)) + '/ha)</small>' + (x.purpose ? '<em>' + esc(sweepT(x.purpose)) + '</em>' : '') + '</span></div>').join('') + '</div>' : '<p class="cp2-dim">No fertilizer at this stage.</p>')
+                        + ((st.fertilizer || []).length ? '<div class="cp2-d-fert">' + st.fertilizer.map((x) => '<div class="cp2-d-app"><i style="background:' + colour(x.product || 'Fertilizer') + '"></i><span><b>' + esc(bagAmt(per(x.totalBags, haOf(x)))) + ' ' + esc(x.product || '') + '</b>' + (area !== 1 ? ' <small>(' + esc(other(x.totalBags, haOf(x))) + ')</small>' : '') + (x.purpose ? '<em>' + esc(sweepT(x.purpose)) + '</em>' : '') + '</span></div>').join('') + '</div>' : '<p class="cp2-dim">No fertilizer at this stage.</p>')
                         + (rec.foliars || []).filter((f) => sameStage(f.stage, st.stage)).map((f) => '<div class="cp2-d-fol"><span>🍃 Foliar spray</span><p><b>' + esc(foliarName(f.product)) + '</b>' + (f.why ? '. ' + esc(sweepT(f.why)) : '') + '</p></div>').join('');
                     d.classList.remove('is-swap');
                 }, d.innerHTML ? 140 : 0);
@@ -3608,6 +3630,8 @@
             card.addEventListener('click', (e) => {
                 const tab = e.target.closest('[data-prog]');
                 if (tab) { PROG = Number(tab.dataset.prog) || 0; paint(); return; }
+                const pb = e.target.closest('[data-pbasis]');
+                if (pb) { if (pb.dataset.pbasis !== BASIS) { BASIS = pb.dataset.pbasis; paint(); } return; }
                 const b = e.target.closest('[data-stage]');
                 if (b) { card.dataset.sel = b.dataset.stage; detail(); return; }
                 if (e.target.closest('[data-prev]')) { card.dataset.sel = String(Math.max(0, Number(card.dataset.sel) - 1)); detail(); return; }
