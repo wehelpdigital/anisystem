@@ -117,9 +117,28 @@ class CommunityBlogController extends Controller
 
         \App\Models\CommunityReaction::attach($comments, 'blogcomment', (int) Auth::id());
 
+        // The reading page (2026-10-23, the owner: "fix how each blog looks when you read
+        // it"): how long it takes, where it lives on the public site (the link a member
+        // can share with a farmer who has no account), and what to read next.
+        $minutes = max(1, (int) ceil(str_word_count(strip_tags((string) $post->body)) / 200));
+        $publicUrl = null;
+        if ($post->sitePageId) {
+            $page = \App\Models\AsSitePage::live()->where('id', $post->sitePageId)->first(['id', 'section', 'slug']);
+            $publicUrl = $page ? url(\App\Support\SitePages::url($page->section, $page->slug)) : null;
+        }
+        $next = AsCommunityBlogPost::active()->published()
+            ->where('id', '!=', $post->id)
+            ->when($post->category, fn ($sql) => $sql->where('category', $post->category))
+            ->withCount('comments')
+            ->orderByDesc('publishedAt')->orderByDesc('id')
+            ->limit(3)->get();
+
         return view('community.blog.show', [
             'post' => $post,
             'comments' => $comments,
+            'minutes' => $minutes,
+            'publicUrl' => $publicUrl,
+            'next' => $next,
         ]);
     }
 
