@@ -52,7 +52,8 @@
         background: var(--tr-bg, #eef6f0); color: var(--tr-fg, #2c5a3c); overflow: hidden; }
     .tr-ico svg { width: 1.3rem; height: 1.3rem; }
     .tr-ico img { width: 100%; height: 100%; object-fit: cover; }
-    .tr-main { min-width: 0; flex: 1 1 auto; }
+    /* Basis 0: a long title shrinks beside the icon instead of wrapping under it. */
+    .tr-main { min-width: 0; flex: 1 1 0; }
     .tr-kind { font-size: .68rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; color: var(--tr-fg, #2c5a3c); }
     .tr-title { font-weight: 800; color: var(--color-gray-900); line-height: 1.3; margin-top: .05rem; overflow-wrap: anywhere; }
     .tr-meta { margin-top: .2rem; font-size: .78rem; color: var(--color-gray-500); line-height: 1.45; }
@@ -60,21 +61,20 @@
     .tr-with { margin-top: .45rem; display: flex; flex-wrap: wrap; gap: .3rem; }
     .tr-with span { font-size: .68rem; font-weight: 800; border-radius: 999px; padding: .14rem .55rem;
         color: var(--color-gray-600); background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
-    .tr-side { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: .45rem; }
-    .tr-left { font-size: .68rem; font-weight: 900; border-radius: 999px; padding: .18rem .55rem; white-space: nowrap;
-        color: #92400e; background: #fef3c7; border: 1px solid #fde68a; }
+    /* Days left, Restore and Delete: one line under the words, three pills of one size (the owner, 2026-10-23). */
+    .tr-row { flex-wrap: wrap; }
+    .tr-side { flex: 1 0 100%; display: grid; grid-template-columns: repeat(3, 7.4rem); justify-content: end; gap: .45rem; }
+    .tr-left, .tr-restore, .tr-kill { height: 2.25rem; padding: 0 .6rem; border-radius: 999px; border: 1px solid; display: inline-flex; align-items: center;
+        justify-content: center; gap: .35rem; font-size: .76rem; font-weight: 800; line-height: 1; white-space: nowrap; min-width: 0; }
+    .tr-left svg, .tr-restore svg, .tr-kill svg { flex: none; width: .9rem; height: .9rem; }
+    .tr-left { color: #92400e; background: #fef3c7; border-color: #fde68a; }
     .tr-left.is-soon { color: #b91c1c; background: #fee2e2; border-color: #fecaca; }
-    .tr-acts { display: flex; gap: .4rem; }
-    .tr-restore { font-size: .78rem; font-weight: 900; border-radius: 999px; padding: .42rem .85rem; display: inline-flex; align-items: center; gap: .35rem;
-        background: #f5c518; color: #3b2f00; box-shadow: 0 6px 16px -10px rgb(180 140 0 / .9);
-        transition: background .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
-    .tr-restore:hover { background: #ffd23f; transform: translateY(-1px); }
-    .tr-restore svg { width: .9rem; height: .9rem; }
-    .tr-kill { width: 2.1rem; height: 2.1rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
-        color: var(--color-gray-400); background: var(--color-gray-50); border: 1px solid var(--color-gray-200);
-        transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .tr-kill:hover { color: #dc2626; background: #fef2f2; border-color: #fecaca; }
-    .tr-kill svg { width: .95rem; height: .95rem; }
+    .tr-restore { background: #f5c518; border-color: #f5c518; color: #3b2f00; box-shadow: 0 6px 16px -10px rgb(180 140 0 / .9);
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .tr-restore:hover { background: #ffd23f; border-color: #ffd23f; transform: translateY(-1px); }
+    .tr-kill { color: var(--color-gray-600); background: var(--color-gray-50); border-color: var(--color-gray-200);
+        transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .tr-kill:hover { color: #dc2626; background: #fef2f2; border-color: #fecaca; transform: translateY(-1px); }
     .tr-row button:disabled { opacity: .55; cursor: wait; }
     /* Dark: the group's colour as a tint behind, and lifted toward white in front. */
     html.dark .tr-ico { background: color-mix(in srgb, var(--tr-fg) 24%, transparent); color: color-mix(in srgb, var(--tr-fg) 45%, white); }
@@ -86,9 +86,10 @@
     .tr-quiet { text-align: center; padding: 2.6rem 1rem; border-radius: 1.3rem; background: var(--color-white); border: 1px dashed var(--color-gray-300); }
     .tr-quiet svg { width: 2.8rem; height: 2.8rem; margin: 0 auto .7rem; color: var(--color-brand-500); }
 
+    /* A phone: the three share the card's width in equal thirds. */
     @media (max-width: 520px) {
-        .tr-row { flex-wrap: wrap; }
-        .tr-side { width: 100%; flex-direction: row; align-items: center; justify-content: space-between; padding-left: 3.5rem; }
+        .tr-side { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .35rem; }
+        .tr-left, .tr-restore, .tr-kill { padding: 0 .35rem; gap: .25rem; font-size: .74rem; }
     }
     @media (prefers-reduced-motion: reduce) {
         .tr-row { transition: none; opacity: 1; transform: none; }
@@ -190,11 +191,11 @@
             + '<div class="tr-title">' + esc(r.title || 'Untitled') + '</div>'
             + '<div class="tr-meta">' + meta.join(' · ') + '</div>'
             + (withs ? '<div class="tr-with">' + withs + '</div>' : '') + '</div>'
-            + '<div class="tr-side"><span class="tr-left' + (r.left <= 3 ? ' is-soon' : '') + '">' + left + '</span>'
-            + '<div class="tr-acts"><button type="button" class="tr-restore" data-restore="' + r.id + '">'
+            + '<div class="tr-side"><span class="tr-left' + (r.left <= 3 ? ' is-soon' : '') + '">' + P('M12 7v5l3 2M12 21a9 9 0 100-18 9 9 0 000 18z') + left + '</span>'
+            + '<button type="button" class="tr-restore" data-restore="' + r.id + '">'
             + P('M4 10h11a5 5 0 010 10h-3M4 10l4-4M4 10l4 4') + 'Restore</button>'
             + '<button type="button" class="tr-kill" data-kill="' + r.id + '" aria-label="Delete for good" title="Delete for good">'
-            + P('M4 7h16M10 11v6M14 11v6M5.5 7l1 12a2 2 0 002 1.8h7a2 2 0 002-1.8l1-12M9 7V4.8A.8.8 0 019.8 4h4.4a.8.8 0 01.8.8V7') + '</button></div></div>'
+            + P('M4 7h16M10 11v6M14 11v6M5.5 7l1 12a2 2 0 002 1.8h7a2 2 0 002-1.8l1-12M9 7V4.8A.8.8 0 019.8 4h4.4a.8.8 0 01.8.8V7') + 'Delete</button></div>'
             + '</article>';
     }
 
