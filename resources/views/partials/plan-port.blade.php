@@ -110,6 +110,13 @@
     .pp-row { padding: .55rem .7rem; border-radius: .85rem; border: 1px solid var(--color-gray-100); background: #fff; font-size: .8rem; line-height: 1.45; color: var(--color-gray-700); border-left-width: 4px; }
     .pp-row b { display: block; font-size: .8rem; color: var(--color-gray-900); }
     .pp-row.is-high { border-left-color: #dc2626; } .pp-row.is-medium { border-left-color: #f59e0b; } .pp-row.is-low { border-left-color: #84cc16; } .pp-row.is-skip { border-left-color: #94a3b8; }
+    .pp-row.is-fold { border-left-color: #2f8fd8; }
+    /* Same crop or another (2026-10-23): said on every season the plan could go into. */
+    .pp-crop { display: inline-flex; align-items: center; margin-left: .35rem; padding: .1rem .5rem; border-radius: 999px; font-size: .64rem; font-weight: 800; vertical-align: .1rem; white-space: nowrap; }
+    .pp-crop.is-same { color: #1f5c12; background: #e1f0cc; }
+    .pp-crop.is-other { color: #8a5a00; background: #fff0c2; }
+    html.dark .pp-crop.is-same { color: #bfe3a0; background: rgb(107 159 61 / .22); }
+    html.dark .pp-crop.is-other { color: #fcd34d; background: rgb(245 158 11 / .2); }
     .pp-h3 { margin: 1rem 0 .1rem; font-size: .78rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-500); }
     .pp-done { display: grid; justify-items: center; gap: .5rem; padding: 1.4rem .5rem .6rem; text-align: center; }
     .pp-done .ok { width: 3.2rem; height: 3.2rem; border-radius: 999px; display: grid; place-items: center; color: #fff; background: var(--pp-g); animation: ppPopIn .4s var(--pp-e); }
@@ -257,7 +264,7 @@
     const fold = (el, on) => el.classList.toggle('is-open', on);
 
     /* =============================== into a season =============================== */
-    const S = { opts: null, where: 'new', seasons: null, season: null, map: {}, pane: 'where', preview: null, port: null, place: 'crew', busy: false };
+    const S = { opts: null, where: 'new', seasons: null, season: null, map: {}, pane: 'where', preview: null, port: null, place: 'crew', busy: false, planFam: {}, anyCrop: false };
     const D = $('ppSeason');
     function pane(name) {
         S.pane = name;
@@ -281,14 +288,24 @@
     }
     async function loadSeasons() {
         $('ppSeasons').innerHTML = '<p class="pp-none">Loading your seasons…</p>';
-        try { S.seasons = (await api(U.targets)).data.seasons || []; } catch (err) { S.seasons = []; $('ppSeasons').innerHTML = '<p class="pp-none">' + esc(err.message) + '</p>'; return; }
+        try {
+            const res = await api(U.targets + '?source=' + encodeURIComponent(S.opts.source) + '&id=' + encodeURIComponent(S.opts.id));
+            S.planFam = res.data.planFamilies || {};
+            // The seasons of the plan's own crop first (2026-10-23, the owner: "check first if the crop is the same").
+            const rank = (s) => (s.same === true ? 0 : (s.same === null ? 1 : 2));
+            S.seasons = (res.data.seasons || []).slice().sort((a, b) => rank(a) - rank(b));
+        } catch (err) { S.seasons = []; $('ppSeasons').innerHTML = '<p class="pp-none">' + esc(err.message) + '</p>'; return; }
         paintSeasons();
     }
+    // What a season grows, in words: its own crop, else its lots'.
+    const seasonCrops = (s) => s.crop || [...new Set(s.lots.filter((l) => !l.harvested && l.cropLabel).map((l) => l.cropLabel))].join(' and ') || 'another crop';
+    const planCrops = () => [...new Set((S.opts.lots || []).map((l) => l.cropLabel || l.crop).filter(Boolean))].join(' and ') || 'another crop';
     function paintSeasons() {
         const rows = S.seasons || [];
         $('ppSeasons').innerHTML = rows.length ? rows.map((s) => {
             const open = s.lots.filter((l) => !l.harvested).length;
-            return '<button type="button" class="pp-choice' + (S.season && S.season.id === s.id ? ' is-on' : '') + '" data-season="' + s.id + '" role="option"><span class="ce">🌾</span><span class="ct"><b>' + esc(s.title) + '</b><small>'
+            const tag = s.same === true ? '<span class="pp-crop is-same">Same crop</span>' : (s.same === false ? '<span class="pp-crop is-other">Another crop</span>' : '');
+            return '<button type="button" class="pp-choice' + (S.season && S.season.id === s.id ? ' is-on' : '') + '" data-season="' + s.id + '" role="option"><span class="ce">🌾</span><span class="ct"><b>' + esc(s.title) + tag + '</b><small>'
                 + esc([s.crop, s.work ? s.work + (s.work === 1 ? ' activity' : ' activities') + ' on its board' : 'Nothing on its board yet', s.lots.length ? open + ' of ' + s.lots.length + (s.lots.length === 1 ? ' lot' : ' lots') + ' open' : 'No lots yet'].filter(Boolean).join(' · '))
                 + '</small></span><span class="ck"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span></button>';
         }).join('') : '<p class="pp-none">You have no open seasons. Make a new one instead.</p>';
@@ -318,7 +335,7 @@
         const w = e.target.closest('[data-where]');
         if (w) { S.where = w.dataset.where; paintWhere(); if (S.where === 'old' && !S.seasons) loadSeasons(); return; }
         const s = e.target.closest('[data-season]');
-        if (s) { S.season = (S.seasons || []).find((x) => String(x.id) === s.dataset.season); paintSeasons(); return; }
+        if (s) { S.season = (S.seasons || []).find((x) => String(x.id) === s.dataset.season); S.anyCrop = false; paintSeasons(); return; }
         const c = e.target.closest('[data-lot]');
         if (c && !c.disabled) { S.map[c.dataset.lot] = c.dataset.to === 'new' || c.dataset.to === 'skip' ? c.dataset.to : Number(c.dataset.to); paintLots(); return; }
         if (e.target.closest('[data-pp-recheck]')) { S.preview.prior = null; e.target.closest('.pp-fact')?.remove(); pane('offer'); return; }
@@ -327,7 +344,21 @@
     });
     $('ppBack').addEventListener('click', () => { if (S.pane === 'lots') pane('where'); else if (S.pane === 'offer') { paintLots(); pane('lots'); } });
 
-    const body = () => ({ source: S.opts.source, id: S.opts.id, scheduleId: S.season ? S.season.id : null, map: S.map });
+    const body = () => ({ source: S.opts.source, id: S.opts.id, scheduleId: S.season ? S.season.id : null, map: S.map, anyCrop: !!S.anyCrop });
+    /* Another crop is the farmer's call, asked once: at the season, at a lot, or when the server finds it. */
+    const askCrop = (message) => (window.confirmAction
+        ? window.confirmAction({ title: 'Another crop', message: message + ' A plan fits the season and the lot of its own crop. Put it there anyway?', confirmText: 'Put it there anyway', confirmClass: 'btn-primary' })
+        : Promise.resolve(window.confirm(message + ' Put it there anyway?')));
+    async function withCrop(fn) {
+        try { return await fn(); } catch (err) {
+            if (err && err.data && err.data.cropClash && !S.anyCrop) {
+                if (!(await askCrop(err.message))) return null;
+                S.anyCrop = true;
+                return await fn();
+            }
+            throw err;
+        }
+    }
     async function makeNew() {
         const name = $('ppName').value.trim();
         if (!name) { toast('Give the season a name.', 'error'); $('ppName').focus(); return; }
@@ -392,6 +423,8 @@
         let html = '';
         if ((r.conflicts || []).length) html += '<p class="pp-h3">What she found</p><div class="pp-rows">' + r.conflicts.map((c) => '<div class="pp-row is-' + esc(c.severity) + '"><b>' + esc(c.task || ({ crew: 'The crew', lots: 'Other lots', crop: 'The crop', order: 'The order of work', spacing: 'Too close together', timing: 'Timing', duplicate: 'Already there' }[c.kind] || 'Note')) + '</b>' + esc(c.text) + '</div>').join('') + '</div>';
         if ((r.skipped || []).length) html += '<p class="pp-h3">Already on the board, left out</p><div class="pp-rows">' + r.skipped.map((s) => '<div class="pp-row is-skip">' + esc(s) + '</div>').join('') + '</div>';
+        // Her fixes for redundant work: folded into the task it repeats, its amounts and how to with it.
+        if ((r.merged || []).length) html += '<p class="pp-h3">Redundant, folded into one task</p><div class="pp-rows">' + r.merged.map((s) => '<div class="pp-row is-fold">' + esc(s) + '</div>').join('') + '</div>';
         if ((r.tips || []).length) html += '<p class="pp-h3">Tips</p><div class="pp-rows">' + r.tips.map((t) => '<div class="pp-row is-low">' + esc(t) + '</div>').join('') + '</div>';
         $('ppResRows').innerHTML = html;
         pane('result');
@@ -429,22 +462,20 @@
             if (S.pane === 'where') {
                 if (S.where === 'new') await makeNew();
                 else if (!S.season) toast('Pick the season to add it to.', 'error');
-                else { guessMap(); paintLots(); pane('lots'); }
+                // The crop first (2026-10-23): a season of another crop is asked about before its lots.
+                else if (S.season.same === false && !S.anyCrop && !(await askCrop(S.season.title + ' grows ' + seasonCrops(S.season) + ', and this plan is for ' + planCrops() + '.'))) { /* stays on the seasons */ }
+                else { if (S.season.same === false) S.anyCrop = true; guessMap(); paintLots(); pane('lots'); }
             } else if (S.pane === 'lots') {
                 if (!Object.values(S.map).some((v) => v !== 'skip')) toast('Pick where at least one lot goes.', 'error');
                 else {
-                    // A lot that grows another crop is the farmer's call, asked once before anything else.
-                    const fam = (c) => String(c || '').split('_')[0];
-                    const odd = (S.opts.lots || []).map((pl) => [pl, S.season.lots.find((l) => l.id === S.map[pl.i])]).filter(([pl, l]) => l && l.crop && pl.crop && fam(l.crop) !== fam(pl.crop));
-                    const go2 = !odd.length || !window.confirmAction || await window.confirmAction({
-                        title: 'Another crop on that lot',
-                        message: odd.map(([pl, l]) => l.name + ' grows ' + (l.cropLabel || l.crop) + ', and the plan for ' + pl.name + ' is for ' + (pl.cropLabel || pl.crop) + '.').join(' ') + ' Put it there anyway?',
-                        confirmText: 'Put it there', confirmClass: 'btn-primary',
-                    });
-                    if (go2) await preview();
+                    // A lot that grows another crop than its plan lot's: asked once, unless the season's crop was already.
+                    const odd = (S.opts.lots || []).map((pl) => [pl, S.season.lots.find((l) => l.id === S.map[pl.i])])
+                        .filter(([pl, l]) => l && l.family && S.planFam[pl.i] && l.family !== S.planFam[pl.i]);
+                    const go2 = !odd.length || S.anyCrop || await askCrop(odd.map(([pl, l]) => l.name + ' grows ' + (l.cropLabel || l.crop) + ', and the plan for ' + pl.name + ' is for ' + (pl.cropLabel || pl.crop) + '.').join(' '));
+                    if (go2) { if (odd.length) S.anyCrop = true; await withCrop(preview); }
                 }
             } else if (S.pane === 'offer') {
-                if (S.preview.prior) { pane('wait'); await poll(S.preview.prior.id); } else await check();
+                if (S.preview.prior) { pane('wait'); await poll(S.preview.prior.id); } else await withCrop(check);
             }
             else if (S.pane === 'result') paintPlace();
             else if (S.pane === 'place') await apply(S.port.id, S.place);

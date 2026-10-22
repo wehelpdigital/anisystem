@@ -135,6 +135,20 @@ class PlanPortController extends Controller
         return $map;
     }
 
+    /**
+     * The crop first (2026-10-23, the owner: "check first if the crop is the
+     * same"): a plan for another crop than the season's, or than the lot it
+     * goes onto, goes in only when the farmer has said so (anyCrop).
+     */
+    private function cropGate(Request $request, array $plan, AsCroppingSchedule $s, array $map): void
+    {
+        $clash = PlanPort::cropClash($plan, $s, $map);
+        if ($clash && ! $request->boolean('anyCrop')) {
+            abort($this->json(false, implode(' ', array_map(fn ($c) => $c['name'] . ' is a plan for ' . $c['plan'] . ', and ' . $c['season'] . '.', $clash)),
+                ['cropClash' => $clash], 409));
+        }
+    }
+
     /** The mapped lots, each told whether the plan can still go onto it. */
     private function sorted(array $plan, AsCroppingSchedule $s, array $map): array
     {
@@ -162,13 +176,27 @@ class PlanPortController extends Controller
     /* ============================================================ reading */
 
     /** The owner's open seasons and their lots, for the sheet. */
-    public function targets()
+    public function targets(Request $request)
     {
         if ($no = $this->refusal()) {
             return $no;
         }
+        $seasons = PlanPort::targets((int) Auth::id());
+        // The plan's crops, so the sheet can say which seasons grow the same one (2026-10-23).
+        $fam = [];
+        $row = $request->filled('source') ? PlanPort::row((string) $request->query('source'), (int) $request->query('id'), (int) Auth::id()) : null;
+        if ($row) {
+            foreach (PlanPort::plan((string) $request->query('source'), $row)['lots'] as $pl) {
+                $fam[(string) $pl['i']] = PlanPort::family($pl['crop'] ?: $pl['cropLabel']);
+            }
+        }
+        $mine = array_values(array_unique(array_filter($fam)));
+        foreach ($seasons as &$s) {
+            $s['same'] = ! $mine || ! $s['families'] ? null : (bool) array_intersect($mine, $s['families']);
+        }
+        unset($s);
 
-        return $this->json(true, 'ok', ['seasons' => PlanPort::targets((int) Auth::id())]);
+        return $this->json(true, 'ok', ['seasons' => $seasons, 'planFamilies' => (object) $fam]);
     }
 
     /** The owner's protocols, for "add to one of mine". */
@@ -241,6 +269,7 @@ class PlanPortController extends Controller
         [, $plan] = $this->planFrom($request);
         $s = $this->seasonFrom($request);
         $map = $this->mapFrom($request, $plan, $s);
+        $this->cropGate($request, $plan, $s, $map);
         [$ok, $over] = $this->sorted($plan, $s, $map);
         $lots = array_map(fn ($x) => [
             'i' => $x['plan']['i'], 'name' => $x['plan']['name'], 'into' => $x['lot'] ? $x['lot']->lotName : 'a new lot',
@@ -315,6 +344,7 @@ class PlanPortController extends Controller
         [, $plan] = $this->planFrom($request);
         $s = $this->seasonFrom($request);
         $map = $this->mapFrom($request, $plan, $s);
+        $this->cropGate($request, $plan, $s, $map);
         [$ok] = $this->sorted($plan, $s, $map);
         if (! $ok) {
             return $this->json(false, 'This plan cannot go into ' . $s->title . ' any more.', [], 422);
@@ -396,7 +426,7 @@ class PlanPortController extends Controller
 
         return [
             'verdict' => $a['verdict'] ?? 'ok', 'headline' => $a['headline'] ?? '', 'summary' => $a['summary'] ?? '',
-            'conflicts' => array_values((array) ($a['conflicts'] ?? [])), 'skipped' => array_values((array) ($a['skipped'] ?? [])), 'tips' => array_values((array) ($a['tips'] ?? [])),
+            'conflicts' => array_values((array) ($a['conflicts'] ?? [])), 'skipped' => array_values((array) ($a['skipped'] ?? [])), 'merged' => array_values((array) ($a['merged'] ?? [])), 'tips' => array_values((array) ($a['tips'] ?? [])),
             'aneeMoved' => (int) ($a['moved'] ?? 0), 'crew' => ['moved' => (int) ($res['crew']['moved'] ?? 0), 'short' => array_values((array) ($res['crew']['short'] ?? [])), 'workers' => (int) ($res['crew']['workers'] ?? 0)],
             'tasks' => (int) ($res['tasks'] ?? 0),
         ];
@@ -419,7 +449,7 @@ class PlanPortController extends Controller
                 throw new \RuntimeException($result['error'] ?? 'Anee\'s answer could not be read. Nothing was charged. Please try again.');
             }
             $beat('place');
-            $anee = $this->settle($found, $ids, $ok);
+            $anee = $this->settle($found, $ids, $ok, $board);
             $note = AiUsage::record('fitcheck', (int) Auth::id(), $payerId, $id, $settings, $result, $price);
             $this->credits->chargeAllowingNegative($payerId, (float) $price,
                 mb_substr('Anee checked a plan for ' . mb_substr((string) $s->title, 0, 80) . ' · ' . now('Asia/Manila')->format('M j, Y') . $note, 0, 250));
@@ -476,7 +506,7 @@ class PlanPortController extends Controller
                 $lines[] = '  (' . $past . ' step' . ($past === 1 ? '' : 's') . ' of this lot fell before today and are left out.)';
             }
         }
-        $boardLines = $board ? implode("\n", array_map(fn ($a) => '- ' . $d($a['date']) . ($a['end'] && $a['end'] !== $a['date'] ? ' to ' . $d($a['end']) : '') . ' · '
+        $boardLines = $board ? implode("\n", array_map(fn ($a) => '- #' . $a['id'] . ' · ' . $d($a['date']) . ($a['end'] && $a['end'] !== $a['date'] ? ' to ' . $d($a['end']) : '') . ' · '
             . ($a['lots'] ? implode(', ', $a['lots']) : 'the whole farm') . ' · ' . $a['title'] . ' · ' . (\App\Models\AsScheduleActivity::ACTIVITY_TYPES[$a['type']] ?? $a['type'])
             . ' · ' . count($a['workers']) . ' worker' . (count($a['workers']) === 1 ? '' : 's') . ($a['done'] ? ' · DONE' : '') . ($a['anchor'] ? ' · planting' : ''), $board)) : '(nothing on the board in these weeks)';
         $crewLine = $crew['workers'] > 0
@@ -490,10 +520,12 @@ class PlanPortController extends Controller
             . 'SEASON: "' . $s->title . '"' . ($s->cropType ? ', ' . $s->cropType : '') . ".\n"
             . "ITS LOTS:\n" . ($lotLines ?: '- (none yet)') . "\n"
             . 'CREW: ' . $crewLine . "\n\n"
-            . 'THE BOARD from ' . $d(Carbon::parse($from)->subDays(7)->toDateString()) . ' to ' . $d(Carbon::parse($to)->addDays(7)->toDateString()) . " (every lot; workers = those given the task):\n" . $boardLines . "\n\n"
+            . 'THE BOARD from ' . $d(Carbon::parse($from)->subDays(7)->toDateString()) . ' to ' . $d(Carbon::parse($to)->addDays(7)->toDateString()) . " (#id · day · lots · task · type · workers = those given the task):\n" . $boardLines . "\n\n"
             . "THE NEW WORK (id · task · type · planned day · the days it may move between · workers a day):\n" . implode("\n", $lines) . "\n\n"
-            . "CHECK, in this order:\n"
+            . "CHECK, in this order, and FIX what you find yourself (the farmer is not asked):\n"
             . "1. Duplicates: a new task whose same work is already on the board for that lot (done or planned) within 7 days of it, like a second plowing or a second basal fertilizer. Leave it out: its id goes in \"skip\", and say why in conflicts (kind \"duplicate\").\n"
+            . "1b. Redundant: a new task that repeats part of the work of a task already on the board for the SAME lot (or for the whole farm) in the same days, but carries something the board task lacks (its amounts, its products, its how to), like a watering stage where the board already keeps the water, a check and spray where the board already plans that spray, a fertilizer the board already gives at that stage. Fold it into that board task: {\"id\":\"L1.3\",\"into\":\"#123\"} in \"merge\". "
+            . "Two NEW tasks of one lot that do the same job on nearly the same days: fold the later into the earlier, {\"id\":\"L1.6\",\"into\":\"L1.4\"}. A folded task is not added again; its words and materials join the task it goes into. Never fold an ANCHOR task, never fold across lots, and never fold work of a different kind (a spray is not a fertilizer). Say each fold in conflicts (kind \"duplicate\", low).\n"
             . "2. The crop: if a lot already grows a different crop than the plan's lot, the plan does not fit it (kind \"crop\", high).\n"
             . "3. The crew: on any day, the workers the board already uses plus the new work's must not pass the workers free that day (their days off count). Hired work uses no farm workers.\n"
             . "4. The other lots: do not stack heavy work of the new lot on the days other lots already have heavy work, when the task may move to a free day.\n"
@@ -502,8 +534,8 @@ class PlanPortController extends Controller
             . "PLACE every new task that is not skipped: the planned day when it has no conflict, else the nearest day inside its range that clears the conflict. When nothing clears it, keep the planned day and report the conflict.\n\n"
             . "VERDICT: \"ok\" when the new work fits as planned; \"caution\" when there are conflicts your placement solves, or the farmer should know something; \"stop\" ONLY when the plan does not fit this season at all (a lot grows another crop, most of the work is already on the board, or the lot is past it).\n\n"
             . "Write for the farmer in plain words and short sentences, no dashes, no jargon. Name lots and tasks as written.\n"
-            . 'Answer ONLY this JSON: {"verdict":"ok|caution|stop","headline":"one line","summary":"two to four sentences","conflicts":[{"id":"L1.2","kind":"duplicate|crop|crew|lots|order|spacing|timing","severity":"low|medium|high","text":"what and why"}],"skip":["L1.4"],"placement":[{"id":"L1.1","date":"YYYY-MM-DD","why":"short reason, only when moved"}],"tips":["up to three short tips"]}'
-            . "\nThe placement lists EVERY id that is not skipped.";
+            . 'Answer ONLY this JSON: {"verdict":"ok|caution|stop","headline":"one line","summary":"two to four sentences","conflicts":[{"id":"L1.2","kind":"duplicate|crop|crew|lots|order|spacing|timing","severity":"low|medium|high","text":"what and why"}],"skip":["L1.4"],"merge":[{"id":"L1.3","into":"#123"}],"placement":[{"id":"L1.1","date":"YYYY-MM-DD","why":"short reason, only when moved"}],"tips":["up to three short tips"]}'
+            . "\nThe placement lists EVERY id that is not skipped or folded.";
 
         return [$prompt, $ids];
     }
@@ -527,7 +559,7 @@ class PlanPortController extends Controller
      * today, inside each task's range (else its planned day), anchors kept;
      * a task she did not place keeps its planned day.
      */
-    private function settle(array $j, array $ids, array $ok): array
+    private function settle(array $j, array $ids, array $ok, array $board = []): array
     {
         $today = now('Asia/Manila')->toDateString();
         $items = [];
@@ -583,10 +615,62 @@ class PlanPortController extends Controller
                 $moved += $date !== $items[$k . ':' . $key]['at'] ? 1 : 0;
             }
         }
+        // Her folds (2026-10-23, the owner: "check as well for redundant tasks and auto fix"): a new task into the
+        // board task it repeats (that lot's, or the whole farm's) or into an earlier new task of its own lot.
+        $merge = [];
+        $merged = [];
+        $byId = [];
+        foreach ($board as $b) {
+            $byId[(int) $b['id']] = $b;
+        }
+        foreach (array_slice((array) ($j['merge'] ?? []), 0, 60) as $m) {
+            $tag = (string) ($m['id'] ?? '');
+            $into = trim((string) ($m['into'] ?? ''));
+            if (! is_array($m) || ! isset($ids[$tag])) {
+                continue;
+            }
+            [$k, $key] = $ids[$tag];
+            $src = $k . ':' . $key;
+            if (($items[$src]['anchor'] ?? false) || in_array($src, $skip, true)) {
+                continue;
+            }
+            if (preg_match('/^#?(\d+)$/', $into, $mm) && isset($byId[(int) $mm[1]])) {
+                $b = $byId[(int) $mm[1]];
+                $lot = $ok[$k]['lot'];
+                if ($b['lotIds'] && (! $lot || ! in_array((int) $lot->id, $b['lotIds'], true))) {
+                    continue;
+                }
+                if ($b['done']) {
+                    // Already done on the board: nothing to fold into, so it is simply left out.
+                    $skip[] = $src;
+
+                    continue;
+                }
+                $merge[$src] = ['board' => (int) $b['id']];
+                $merged[$src] = $name($tag) . ' went into "' . $b['title'] . '", already on ' . Carbon::parse($b['date'])->format('M j');
+            } elseif (isset($ids[$into]) && $into !== $tag && $ids[$into][0] === $k) {
+                $merge[$src] = ['task' => $ids[$into][0] . ':' . $ids[$into][1]];
+                $merged[$src] = $name($tag) . ' went into ' . $name($into);
+            }
+        }
+        // A fold into a task that is itself folded or left out has nowhere to go: it stays its own task.
+        foreach ($merge as $src => $to) {
+            if (isset($to['task']) && (isset($merge[$to['task']]) || in_array($to['task'], $skip, true))) {
+                unset($merge[$src], $merged[$src]);
+            }
+        }
         $conflicts = [];
         foreach (array_slice((array) ($j['conflicts'] ?? []), 0, 20) as $c) {
             if (! is_array($c) || trim((string) ($c['text'] ?? '')) === '') {
                 continue;
+            }
+            // A duplicate she named but neither left out nor folded is left out all the same.
+            if (($c['kind'] ?? '') === 'duplicate' && isset($ids[(string) ($c['id'] ?? '')])) {
+                [$k, $key] = $ids[(string) $c['id']];
+                $src = $k . ':' . $key;
+                if (! isset($merge[$src]) && ! in_array($src, $skip, true) && ! ($items[$src]['anchor'] ?? false)) {
+                    $skip[] = $src;
+                }
             }
             $conflicts[] = [
                 'task' => $name((string) ($c['id'] ?? '')),
@@ -602,12 +686,13 @@ class PlanPortController extends Controller
 
         return [
             'verdict' => $verdict, 'headline' => mb_substr(trim((string) ($j['headline'] ?? '')), 0, 200), 'summary' => mb_substr(trim((string) ($j['summary'] ?? '')), 0, 1200),
-            'conflicts' => $conflicts, 'skip' => $skip, 'skipped' => array_map(fn ($s) => (function () use ($s, $items, $ok) {
+            'merge' => $merge, 'merged' => array_values($merged),
+            'conflicts' => $conflicts, 'skip' => array_values(array_unique($skip)), 'skipped' => array_map(fn ($s) => (function () use ($s, $items, $ok) {
                 [$k, $key] = explode(':', $s, 2);
                 $it = $items[$s] ?? null;
 
                 return ($it['title'] ?? $key) . ' (' . ($ok[(int) $k]['plan']['name'] ?? '') . ')';
-            })(), $skip),
+            })(), array_values(array_unique($skip))),
             'dates' => $dates, 'moves' => array_slice($why, 0, 30), 'moved' => $moved,
             'tips' => array_values(array_slice(array_filter(array_map(fn ($t) => mb_substr(trim((string) $t), 0, 240), (array) ($j['tips'] ?? []))), 0, 3)),
         ];
@@ -647,7 +732,10 @@ class PlanPortController extends Controller
             return $this->json(false, 'This plan cannot go into ' . $s->title . ' any more.', ['over' => $over], 422);
         }
         $skip = [];
+        $merge = [];
         if (! $port) {
+            // A checked plan already passed the crop at its check.
+            $this->cropGate($request, $plan, $s, $map);
             if (PlanPort::hasWork($s)) {
                 return $this->json(false, $s->title . ' already has work on its board, so Anee checks the plan first.', ['needsCheck' => true], 409);
             }
@@ -658,6 +746,7 @@ class PlanPortController extends Controller
                 return $this->json(false, 'Anee found that this plan does not fit ' . $s->title . '.', [], 422);
             }
             $skip = (array) ($res['anee']['skip'] ?? []);
+            $merge = (array) ($res['anee']['merge'] ?? []);
             if ($placement === 'anee') {
                 $dates = PlanPort::planDates($ok);
                 foreach ((array) ($res['anee']['dates'] ?? []) as $k => $row2) {
@@ -673,14 +762,16 @@ class PlanPortController extends Controller
                 $dates = PlanPort::crewPlace($s, $ok, PlanPort::boardAround($s, $from, $to))['dates'];
             }
         }
-        $made = PlanPort::intoSeason($plan, $s, $ok, $dates, $skip);
+        $made = PlanPort::intoSeason($plan, $s, $ok, $dates, $skip, $merge);
         if ($port) {
             DB::table('as_plan_ports')->where('id', $port->id)->update(['status' => 'applied', 'updated_at' => now()]);
         }
         $season = $this->remember($row, $s);
 
         return $this->json(true, $made['activities'] . ' ' . ($made['activities'] === 1 ? 'activity was' : 'activities were') . ' added to ' . $s->title
-            . ($made['skipped'] ? ', ' . $made['skipped'] . ' already there left out' : '') . ($made['past'] ? ', ' . $made['past'] . ' past ones left out' : '')
+            . ($made['skipped'] ? ', ' . $made['skipped'] . ' already there left out' : '')
+            . ($made['merged'] ? ', ' . $made['merged'] . ' folded into the ' . ($made['merged'] === 1 ? 'task it repeated' : 'tasks they repeated') : '')
+            . ($made['past'] ? ', ' . $made['past'] . ' past ones left out' : '')
             . ($made['materials'] ? '. ' . $made['materials'] . ' material ' . ($made['materials'] === 1 ? 'line went' : 'lines went') . ' on them, with the inventory to buy' : '') . '.', [
                 'scheduleId' => (int) $s->id, 'title' => $s->title, 'url' => route('sm.activities', ['id' => $s->id]), 'made' => $made, 'season' => $season,
             ]);

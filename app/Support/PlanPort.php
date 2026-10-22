@@ -316,12 +316,13 @@ class PlanPort
             }
             $crop = $crops[(string) ($L['case'] ?? '')] ?? null;
             // The watering and protection schedules go with the plan (2026-10-23, the owner): one activity a
-            // stage, over the stage's days, on their own dates (no crew is placed on them).
+            // stage, over the stage's days, on their own dates (no hands, so the crew never moves them). Not
+            // anchors: Anee may leave one out or fold it into what the board already has.
             $off = fn (string $d) => (int) Carbon::parse($planting)->diffInDays(Carbon::parse($d), false);
             $sched = fn (array $row, string $type, string $title, string $html, string $priority, ?string $water = null) => [
                 'key' => 'cp_' . $row['key'], 'title' => mb_substr($title, 0, 255), 'html' => $html, 'type' => $type, 'priority' => $priority,
                 'date' => $row['date'], 'end' => $row['end'], 'lo' => null, 'hi' => null, 'hands' => 0, 'hired' => false,
-                'anchor' => true, 'zero' => false, 'transplant' => false, 'offset' => $off($row['date']), 'materials' => [], 'waterTask' => $water,
+                'anchor' => false, 'zero' => false, 'transplant' => false, 'offset' => $off($row['date']), 'materials' => [], 'waterTask' => $water,
             ];
             $watering = $L['watering'] ?? null;
             foreach ((array) ($watering['rows'] ?? []) as $k => $w) {
@@ -431,11 +432,78 @@ class PlanPort
 
         return $seasons->map(fn ($s) => [
             'id' => (int) $s->id, 'title' => (string) $s->title, 'crop' => (string) $s->cropType, 'work' => (int) ($counts[$s->id] ?? 0),
+            'families' => self::seasonFamilies($s, collect($lots->get($s->id, []))),
             'lots' => collect($lots->get($s->id, []))->map(fn ($l) => [
                 'id' => (int) $l->id, 'name' => (string) $l->lotName, 'crop' => (string) $l->crop, 'cropLabel' => $l->crop ? (string) (CropStages::label($l->crop) ?: $l->crop) : '',
-                'variety' => (string) $l->variety, 'planting' => self::plantingOf($l), 'harvested' => (bool) $l->harvestedAt,
+                'family' => self::family($l->crop), 'variety' => (string) $l->variety, 'planting' => self::plantingOf($l), 'harvested' => (bool) $l->harvestedAt,
             ])->values()->all(),
         ])->values()->all();
+    }
+
+    /* ============================================================ the crop */
+
+    /**
+     * Which crop a name or key is, for telling crops apart (2026-10-23, the
+     * owner: "check first if the crop is the same"). The ways of rice are one
+     * crop; field, sweet and glutinous corn are not. "Rice (Palay)", "Corn,
+     * yellow or field" and "Rice — transplanted (Palay)" all read.
+     */
+    public static function family(?string $crop): ?string
+    {
+        $t = trim((string) $crop);
+        if ($t === '') {
+            return null;
+        }
+        $k = CropStages::normalize($t);
+        if (! $k) {
+            $bare = mb_strtolower(trim((string) (preg_split('/\s*(?:—|–|,|\(|\s-\s)\s*/u', $t)[0] ?? '')));
+            $k = $bare !== '' ? (CropStages::normalize($bare) ?? $bare) : null;
+        }
+
+        return $k ? (preg_match('/^rice(?:_|$)/', $k) ? 'rice' : $k) : null;
+    }
+
+    /** The crops a season grows: its own crop and its open lots'. */
+    private static function seasonFamilies(AsCroppingSchedule $s, $lots): array
+    {
+        $f = [self::family($s->cropType)];
+        foreach ($lots as $l) {
+            if (! $l->harvestedAt) {
+                $f[] = self::family($l->crop);
+            }
+        }
+
+        return array_values(array_unique(array_filter($f)));
+    }
+
+    /**
+     * Where the plan's crop is not the season's: each plan lot against the
+     * season lot it goes onto (when that lot names a crop), else against the
+     * season's own crops. A season that names no crop has nothing to clash.
+     *
+     * @return list<array{name: string, plan: string, season: string}>
+     */
+    public static function cropClash(array $plan, AsCroppingSchedule $s, array $map): array
+    {
+        $lots = AsScheduleLot::active()->where('croppingScheduleId', $s->id)->get()->keyBy('id');
+        $families = self::seasonFamilies($s, $lots);
+        $say = fn (?string $f, string $fallback = '') => $f ? (string) (CropStages::label($f) ?: $fallback ?: $f) : $fallback;
+        $out = [];
+        foreach ($plan['lots'] as $pl) {
+            $to = $map[$pl['i']] ?? 'skip';
+            $mine = self::family($pl['crop'] ?: $pl['cropLabel']);
+            if ($to === 'skip' || ! $mine) {
+                continue;
+            }
+            $lot = is_int($to) ? $lots->get($to) : null;
+            $theirs = $lot && self::family($lot->crop) ? [self::family($lot->crop)] : $families;
+            if ($theirs && ! in_array($mine, $theirs, true)) {
+                $out[] = ['name' => (string) $pl['name'], 'plan' => $say($mine, (string) $pl['cropLabel']),
+                    'season' => $lot && self::family($lot->crop) ? $lot->lotName . ' grows ' . $say($theirs[0]) : $s->title . ' grows ' . implode(' and ', array_map(fn ($f) => $say($f), $theirs))];
+            }
+        }
+
+        return $out;
     }
 
     /** How many activities each season's board has (its version in use, drafts not counted). */
@@ -839,12 +907,14 @@ class PlanPort
      * @param  array<int, array<string, string>>  $dates  shifted index => item key => date
      * @param  list<string>  $skip  item keys to leave out ("lot index:key")
      */
-    public static function intoSeason(array $plan, AsCroppingSchedule $s, array $shifted, array $dates, array $skip = []): array
+    public static function intoSeason(array $plan, AsCroppingSchedule $s, array $shifted, array $dates, array $skip = [], array $merge = []): array
     {
-        $made = ['activities' => 0, 'lots' => 0, 'notes' => 0, 'skipped' => 0, 'past' => 0, 'materials' => 0];
+        $made = ['activities' => 0, 'lots' => 0, 'notes' => 0, 'skipped' => 0, 'past' => 0, 'materials' => 0, 'merged' => 0];
         $version = self::version($s);
         $label = self::SOURCES[$plan['source']]['label'];
-        DB::transaction(function () use ($plan, $s, $shifted, $dates, $skip, $version, $label, &$made) {
+        DB::transaction(function () use ($plan, $s, $shifted, $dates, $skip, $merge, $version, $label, &$made) {
+            $added = [];
+            $later = [];
             $perDate = [];
             foreach (AsScheduleActivity::where('croppingScheduleId', $s->id)->where('versionId', $version->id)->where('deleteStatus', 1)
                 ->groupBy('targetDate')->selectRaw('DATE(targetDate) as d, count(*) as n')->pluck('n', 'd') as $d => $n) {
@@ -886,15 +956,45 @@ class PlanPort
                         $it['zero'] = false;
                         $it['transplant'] = false;
                     }
+                    // Redundant with a task already there or another new one: folded into it once every new task is made.
+                    if (isset($merge[$k . ':' . $it['key']])) {
+                        $later[] = [$k . ':' . $it['key'], $it, $factor, $lot, (string) ($dates[$k][$it['key']] ?? $it['at'])];
+
+                        continue;
+                    }
                     $a = self::addActivity($s, $version, $lot, $it, (string) ($dates[$k][$it['key']] ?? $it['at']), $perDate);
                     $made['materials'] += PlanMaterials::onActivity($a, PlanMaterials::scale((array) ($it['materials'] ?? []), $factor), $label);
                     $made['activities']++;
+                    $added[$k . ':' . $it['key']] = $a;
                 }
                 if ($pl['note']) {
                     $d = Carbon::parse($pl['note']['date'])->addDays((int) $sh['delta'])->toDateString();
                     self::addNote($s, $version, max($d, now('Asia/Manila')->toDateString()), $pl['note']['html']);
                     $made['notes']++;
                 }
+            }
+            // Anee's fixes for redundant work (2026-10-23, the owner: "check as well for redundant tasks and auto fix"):
+            // the new task is not added twice; its words and what it applies go into the task it repeats.
+            foreach ($later as [$mk, $it, $factor, $lot, $date]) {
+                $to = $merge[$mk];
+                $a = isset($to['board'])
+                    ? AsScheduleActivity::where('croppingScheduleId', $s->id)->where('versionId', $version->id)->where('deleteStatus', 1)->find((int) $to['board'])
+                    : ($added[$to['task'] ?? ''] ?? null);
+                $mats = PlanMaterials::scale((array) ($it['materials'] ?? []), $factor);
+                if (! $a) {
+                    // What it was to join is gone: it goes on as its own task after all.
+                    $a = self::addActivity($s, $version, $lot, $it, $date, $perDate);
+                    $made['materials'] += PlanMaterials::onActivity($a, $mats, $label);
+                    $made['activities']++;
+
+                    continue;
+                }
+                $a->forceFill(['description' => HtmlSanitizer::rich((string) $a->description
+                    . '<p><strong>Also from the ' . self::e($label) . ': ' . self::e($it['title']) . '</strong></p>' . (string) $it['html'])])->save();
+                // A material the task already carries by name stands: never a second line of it.
+                $has = \App\Models\AsScheduleActivityItem::where('activityId', $a->id)->where('deleteStatus', 1)->pluck('itemName')->map(fn ($n) => mb_strtolower(trim((string) $n)))->all();
+                $made['materials'] += PlanMaterials::onActivity($a, array_values(array_filter($mats, fn ($m) => ! in_array(mb_strtolower(trim($m['name'])), $has, true))), $label);
+                $made['merged']++;
             }
             if ($plan['note'] && $shifted) {
                 $d = Carbon::parse($plan['note']['date'])->addDays((int) $shifted[array_key_first($shifted)]['delta'])->toDateString();
