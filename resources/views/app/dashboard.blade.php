@@ -978,6 +978,13 @@
         @include('partials.stash-card')
     </div>
 
+    {{-- The Shop, coming soon (2026-10-23): it left the phone's bottom bar for
+         the Blog, so Home holds its door until it opens. Not for a worker:
+         the shop buys for the farm, and the farm is the owner's. --}}
+    @unless (\App\Support\WorkerContext::inWorkerContext())
+        @include('partials.shop-soon-card')
+    @endunless
+
     {{-- My Cropping Schedules — ONLY the seasons with work on the board
          today. A quiet day shows no shelf at all; the schedules page
          still lists every season. --}}

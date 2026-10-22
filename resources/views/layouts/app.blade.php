@@ -816,16 +816,17 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 8h2m4 0h2m-8 4h2m4 0h2"/></svg>
             <span>Schedules</span>
         </a>
-        {{-- In a farm, the switch notice answers this tap (see the nav above). --}}
-        <a href="{{ route('community.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('community.*') ? 'is-active' : '' }}">
+        {{-- The Technician's Blog has its own seat (2026-10-23, the owner: the Shop leaves
+             the bar, Blog takes its place before Community). The Shop is a card on Home
+             until it opens. In a farm, the switch notice answers both taps (see the nav above). --}}
+        @php $__onBlog = request()->routeIs('community.blog', 'community.blog.*'); @endphp
+        <a href="{{ route('community.blog') }}" data-nav-loader class="tabbar-item {{ $__onBlog ? 'is-active' : '' }}">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h13v13a2 2 0 002 2H6a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 9h3v9a2 2 0 01-2 2M8 9h5M8 13h5M8 17h3"/></svg>
+            <span>Blog</span>
+        </a>
+        <a href="{{ route('community.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('community.*') && ! $__onBlog ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
             <span>Community</span>
-        </a>
-        {{-- Account lives behind the profile photo already; this seat goes
-             to the Shop, where the season's needs will be bought. --}}
-        <a href="{{ route('shop.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('shop.*') ? 'is-active' : '' }}">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l1.2-4.2A2 2 0 016.1 3.5h11.8a2 2 0 011.9 1.3L21 9M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9M3 9h18M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
-            <span>Shop</span>
         </a>
     </nav>
 
