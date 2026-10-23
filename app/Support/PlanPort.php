@@ -45,6 +45,8 @@ class PlanPort
     public const SOURCES = [
         'landprep' => ['label' => 'Land Prep Planner', 'phase' => 'prep', 'work' => 'land preparation'],
         'protocol' => ['label' => 'Crop Protocol Analysis', 'phase' => 'season', 'work' => 'season'],
+        // NPK Plus's fertilizer plan, its bags on the crop's days (2026-10-24, App\Support\NpkPort).
+        'npk' => ['label' => 'NPK Plus', 'phase' => 'season', 'work' => 'fertilizer'],
     ];
 
     /** The member's saved, finished plan of this kind, or null. */
@@ -52,6 +54,9 @@ class PlanPort
     {
         if (! isset(self::SOURCES[$source])) {
             return null;
+        }
+        if ($source === 'npk') {
+            return NpkPort::row($id, $userId);
         }
 
         return DB::table('as_plant_analyses')->where('userId', $userId)->where('id', $id)->where('kind', $source)
@@ -61,7 +66,11 @@ class PlanPort
     /** The plan as lots of dated work. */
     public static function plan(string $source, object $row): array
     {
-        return $source === 'landprep' ? self::fromLandPrep($row) : self::fromProtocol($row);
+        return match ($source) {
+            'landprep' => self::fromLandPrep($row),
+            'npk' => NpkPort::plan($row),
+            default => self::fromProtocol($row),
+        };
     }
 
     /* ============================================================ readers */
@@ -804,7 +813,11 @@ class PlanPort
 
             return [$first, $first === 'DAS' && $seed > 0 ? $off + $seed : $off];
         };
-        $label = $plan['source'] === 'landprep' ? 'Land preparation' : 'Crop protocol' . ($pl['name'] !== '' ? ' · ' . $pl['name'] : '');
+        $label = match ($plan['source']) {
+            'landprep' => 'Land preparation',
+            'npk' => 'Fertilizer plan (NPK Plus)' . ($pl['name'] !== '' ? ' · ' . $pl['name'] : ''),
+            default => 'Crop protocol' . ($pl['name'] !== '' ? ' · ' . $pl['name'] : ''),
+        };
         $items = $pl['items'];
         if (! $items) {
             return [];

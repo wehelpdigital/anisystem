@@ -2,7 +2,7 @@
      schedule (a new one, or one you have, lot by lot) or into the Protocol
      Builder. Shared by the Land Prep Planner and the Crop Protocol Analysis:
      window.planPort.season(opts) and window.planPort.builder(opts), opts =
-     {source: 'landprep'|'protocol', id, title, lots: [{i, name, crop,
+     {source: 'landprep'|'protocol'|'npk', id, title, lots: [{i, name, crop,
      cropLabel, planting}], prev: {id, title, at}|null}.
 
      Into a season that already has work, the plan goes onto lots that are
@@ -536,7 +536,7 @@
         },
         async builder(opts) {
             Object.assign(B, { opts, mode: 'new', pid: null, rows: null, lot: (opts.lots && opts.lots[0]) ? opts.lots[0].i : null });
-            $('ppBName').value = (opts.source === 'landprep' ? 'Land prep: ' : 'Protocol: ') + (opts.title || '');
+            $('ppBName').value = ({ landprep: 'Land prep: ', npk: 'Fertilizer plan: ' }[opts.source] || 'Protocol: ') + (opts.title || '');
             paneB('form'); paintB();
             open(BD);
             try { B.rows = (await api(U.protocols)).data.rows || []; } catch (_) { B.rows = []; }

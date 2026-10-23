@@ -246,8 +246,16 @@ class PlanPortController extends Controller
     /** The plan remembers the season it went into. */
     private function remember(object $row, AsCroppingSchedule $s): array
     {
-        $report = json_decode((string) $row->report, true) ?: [];
         $season = ['id' => (int) $s->id, 'title' => $s->title, 'at' => now('Asia/Manila')->format('M j, Y')];
+        if (property_exists($row, 'result') && ! property_exists($row, 'report')) {
+            // An NPK Plus calculation keeps it beside its result (its own `season` is the weather it counted).
+            $res = json_decode((string) $row->result, true) ?: [];
+            $res['portedTo'] = $season;
+            DB::table('as_npk_calcs')->where('id', $row->id)->update(['result' => json_encode($res), 'updated_at' => now()]);
+
+            return $season;
+        }
+        $report = json_decode((string) $row->report, true) ?: [];
         $report['season'] = $season;
         DB::table('as_plant_analyses')->where('id', $row->id)->update(['report' => json_encode($report), 'updated_at' => now()]);
 
@@ -796,7 +804,7 @@ class PlanPortController extends Controller
         }
         [$row, $plan] = $this->planFrom($request);
         $pl = collect($plan['lots'])->firstWhere('i', (int) $request->input('lot', $plan['lots'][0]['i'])) ?? $plan['lots'][0];
-        $prefix = ($plan['source'] === 'landprep' ? 'lp' : 'cp') . $plan['id'] . ($plan['source'] === 'protocol' ? 'l' . $pl['i'] : '');
+        $prefix = (['landprep' => 'lp', 'npk' => 'np'][$plan['source']] ?? 'cp') . $plan['id'] . ($plan['source'] === 'protocol' ? 'l' . $pl['i'] : '');
         $entries = function (array $counters) use ($plan, $pl, $row, $prefix): array {
             if ($plan['source'] === 'landprep') {
                 return LP::toProtocol(LP::plainReport(json_decode((string) $row->report, true) ?: []), $counters, (int) $row->id);
@@ -819,7 +827,7 @@ class PlanPortController extends Controller
             $dayType = ProtocolBuilderController::fitDayType($pl['crop'] ?: null, $pl['dayType']);
             $tasks = $entries(ProtocolBuilderController::DAY_TYPES[$dayType]['counters'] ?? ['DAS']);
             [$tasks, $mats, $matN] = PlanMaterials::intoBuilder($tasks, [], $byTask, $forWhom);
-            $title = trim((string) $request->input('title')) ?: mb_substr(($plan['source'] === 'landprep' ? 'Land prep: ' : 'Protocol: ') . $row->title, 0, 190);
+            $title = trim((string) $request->input('title')) ?: mb_substr((['landprep' => 'Land prep: ', 'npk' => 'Fertilizer plan: '][$plan['source']] ?? 'Protocol: ') . $row->title, 0, 190);
             $p = AsProtocol::create([
                 'userId' => (int) Auth::id(), 'title' => mb_substr($title, 0, 190),
                 'description' => 'From the ' . PlanPort::SOURCES[$plan['source']]['label'] . ': every step of "' . $row->title . '"' . ($plan['source'] === 'protocol' && count($plan['lots']) > 1 ? ' for ' . $pl['name'] : '') . ', on the protocol\'s own day count.',

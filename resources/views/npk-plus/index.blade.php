@@ -505,6 +505,10 @@
     .np-law-fig svg { width: 100%; max-width: 15rem; height: auto; }
 
     .np-acts { display: grid; gap: .5rem; margin-top: .9rem; }
+    .np-port { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+    .np-port .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; text-align: center; line-height: 1.25; }
+    .np-port svg { flex: none; width: 1.05rem; height: 1.05rem; color: #4d7c2a; }
+    @media (max-width: 420px) { .np-port { grid-template-columns: minmax(0, 1fr); } }
     .np-anee { display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1rem; border-radius: .95rem; border: 0; cursor: pointer; font-weight: 800;
         color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); transition: transform .28s var(--np-ease); }
     .np-anee:hover { transform: translateY(-1px); } .np-anee:disabled { opacity: .5; transform: none; cursor: default; }
@@ -895,6 +899,11 @@
                         <span>A guide, not a promise. The need and the yield still depend on the variety, and on your soil: how much of its own nutrients the crop can actually use. The weather and how and when the fertilizer goes on matter too. A soil test makes all of it surer.</span></div>
                     <div class="np-acts">
                         <button type="button" class="btn btn-white" id="npSave">Save this calculation</button>
+                        {{-- Put to work (2026-10-24, the owner): the bags on the crop's days, onto a cropping schedule or into the Protocol Builder (partials/plan-port, App\Support\NpkPort). --}}
+                        <div class="np-port">
+                            <button type="button" class="btn btn-white" id="npToSeason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zM9 14l2 2 4-4"/></svg>Put it on a cropping schedule</button>
+                            <button type="button" class="btn btn-white" id="npToBuilder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5h10M9 12h10M9 19h10M4 5h.01M4 12h.01M4 19h.01"/></svg>Send to Protocol Builder</button>
+                        </div>
                         <button type="button" class="np-anee" id="npAnee"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""><span id="npAneeSays">Analyze further with Anee</span></button>
                     </div>
                     {{-- The owner's rule (2026-10-15): the calculator never uses credits; only Anee's reading does, when it is ready. --}}
@@ -917,7 +926,7 @@
         .np-frame-bar span { flex: 1; min-width: 0; font-size: .82rem; font-weight: 700; color: var(--color-gray-600); }
         .np-frame-bar .btn { flex: none; }
         html.dark .np-frame-bar { background: rgb(22 28 18 / .96); border-color: #2b3a1c; }
-        html.is-frame .np-hero, html.is-frame .np-tabs, html.is-frame #npSave, html.is-frame #npAnee, html.is-frame #npFree { display: none !important; }
+        html.is-frame .np-hero, html.is-frame .np-tabs, html.is-frame #npSave, html.is-frame #npAnee, html.is-frame #npFree, html.is-frame .np-port { display: none !important; }
     </style>
     @endif
 
@@ -1123,6 +1132,8 @@
     @include('partials.farm-lots')
 @endunless
 @include('partials.trash-row')
+{{-- Onto a cropping schedule or into the Protocol Builder (2026-10-24): the sheets the Crop Protocol and Land Prep share. --}}
+@include('partials.plan-port')
 @endsection
 
 @push('scripts')
@@ -3135,6 +3146,25 @@
         return r;
     };
     $('npSave').addEventListener('click', async () => { try { const r = await save(); window.toast?.(r.message + ' It is on the Saved tab.', 'success'); } catch (err) { window.toast?.(err.message, 'error'); } });
+    /* Put to work (2026-10-24, the owner): the plan is saved first (a port reads the saved one), then the shared
+       sheets take it onto a cropping schedule or into the Protocol Builder, its bags on the crop's days. */
+    const portTo = async (where, btn) => {
+        if (!window.planPort) return;
+        if (!RES || !RES.lines.length) { window.toast?.('Add the fertilizers you plan to use first.', 'error'); return; }
+        btn.disabled = true;
+        try {
+            const r = await save();
+            const c = cropOf(st.crop);
+            window.planPort[where]({
+                source: 'npk', id: calcId, title: (r && r.data && r.data.title) || 'Fertilizer plan', prev: (RES && RES.portedTo) || null,
+                lots: [{ i: 0, name: LOT ? LOT.name : 'Field', crop: st.crop || '', cropLabel: c ? cropName(c) : '', planting: $('npPlanted').value || '' }],
+                onDone: (season) => { if (season && RES) RES.portedTo = season; },
+            });
+        } catch (err) { window.toast?.(err.message, 'error'); }
+        finally { btn.disabled = false; }
+    };
+    $('npToSeason').addEventListener('click', (e) => portTo('season', e.currentTarget));
+    $('npToBuilder').addEventListener('click', (e) => portTo('builder', e.currentTarget));
     $('npAnee').addEventListener('click', () => {
         $('npRun').disabled = !OPT.canUse;
         if (!$('npLoc').value.trim()) { const [tw, pv] = placeWords(); if (pv) $('npLoc').value = (tw ? tw + ', ' : '') + pv; }
