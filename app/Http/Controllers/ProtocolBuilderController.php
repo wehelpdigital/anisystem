@@ -20,6 +20,7 @@ use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\HtmlSanitizer;
 use App\Support\MediaStore;
+use App\Support\ProtocolNotes;
 use App\Support\Tier;
 use App\Support\WorkerContext;
 use App\Http\Controllers\UserTagController;
@@ -468,9 +469,71 @@ class ProtocolBuilderController extends Controller
         if (trim(html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8'), " \t\n\r\0\x0B\xC2\xA0") === '') {
             $html = null;
         }
-        $ver->forceFill(['rules' => $html])->save();
+        if (is_array($ver->notes)) {
+            // A page from before the entries: its one document is the first written entry.
+            $entries = ProtocolNotes::entries($ver);
+            $at = null;
+            foreach ($entries as $k => $e) {
+                if ($e['kind'] === 'text') {
+                    $at = $k;
+                    break;
+                }
+            }
+            if ($at === null) {
+                array_unshift($entries, ['id' => 'n_' . bin2hex(random_bytes(5)), 'kind' => 'text', 'title' => '', 'html' => (string) $html]);
+            } else {
+                $entries[$at]['html'] = (string) $html;
+            }
+            ProtocolNotes::put($ver, $entries);
+            $ver->save();
+        } else {
+            $ver->forceFill(['rules' => $html])->save();
+        }
 
         return $this->json(true, 'Saved.', ['savedAt' => now('Asia/Manila')->format('g:i A')]);
+    }
+
+    /**
+     * Rules & notes as entries (2026-10-24, the owner: "rules and notes should
+     * be not just one wysiwyg but user can add multiple with either uploaded
+     * file or wysiwyg"): the whole list in its order, written ones with their
+     * words, file ones naming a file the version has (App\Support\ProtocolNotes).
+     * Saved on its own beside the tasks' rev, as the one document was.
+     */
+    public function notes(Request $request, int $id, int $vid)
+    {
+        $p = $this->mine($id);
+        $ver = $p ? $this->versionOf($p, $vid) : null;
+        if (! $ver) {
+            return $this->json(false, 'That version is not yours.', [], 404);
+        }
+        $v = Validator::make($request->all(), ['entries' => 'present|array|max:' . ProtocolNotes::MAX]);
+        if ($v->fails()) {
+            return $this->json(false, 'A version keeps up to ' . ProtocolNotes::MAX . ' rules and notes.', ['errors' => $v->errors()], 422);
+        }
+        if (strlen((string) json_encode($request->input('entries'))) > ProtocolNotes::MAX_HTML * 4) {
+            return $this->json(false, 'The rules and notes are too long to keep. Split one into a file.', [], 422);
+        }
+        $entries = ProtocolNotes::clean((array) $request->input('entries'), $ver);
+        // A file uploaded while this was on its way, and not in the list it sent, keeps its place at the end.
+        $named = array_column(array_filter($entries, fn ($e) => $e['kind'] === 'file'), 'fileId');
+        foreach (ProtocolNotes::entries($ver) as $e) {
+            if ($e['kind'] === 'file' && ! in_array($e['fileId'], $named, true) && ! in_array($e['fileId'], (array) $request->input('dropped', []), true)) {
+                $entries[] = $e;
+            }
+        }
+        ProtocolNotes::put($ver, $entries);
+        $ver->save();
+
+        return $this->json(true, 'Saved.', ['savedAt' => now('Asia/Manila')->format('g:i A'), 'notes' => $this->notesShape($ver)]);
+    }
+
+    /** The entries for the editor, each file entry with its file. */
+    private function notesShape(AsProtocolVersion $v): array
+    {
+        $files = ProtocolNotes::files($v);
+
+        return array_map(fn ($e) => $e['kind'] === 'file' ? $e + ['file' => $this->fileShape($files[$e['fileId']])] : $e, ProtocolNotes::entries($v));
     }
 
     /** A file beside the rules: a label, a leaflet, a soil test. Libre + Anee and above. */
@@ -523,9 +586,16 @@ class ProtocolBuilderController extends Controller
         $ver = $ver->fresh();   // the upload took a while; add to the list as it is now
         $files = array_values((array) ($ver->files ?? []));
         $files[] = $entry;
-        $ver->forceFill(['files' => $files])->save();
+        $ver->forceFill(['files' => $files]);
+        // Its own entry in Rules & notes, at the end, with the title the farmer gave it.
+        $notes = ProtocolNotes::entries($ver);
+        $note = ['id' => 'n_' . bin2hex(random_bytes(5)), 'kind' => 'file', 'title' => mb_substr(trim(strip_tags((string) $request->input('title', ''))), 0, 160), 'fileId' => $entry['id']];
+        $notes = array_values(array_filter($notes, fn ($e) => ! ($e['kind'] === 'file' && $e['fileId'] === $entry['id'])));
+        $notes[] = $note;
+        ProtocolNotes::put($ver, $notes);
+        $ver->save();
 
-        return $this->json(true, 'Added "' . $entry['name'] . '".', ['file' => $this->fileShape($entry)]);
+        return $this->json(true, 'Added "' . $entry['name'] . '".', ['file' => $this->fileShape($entry), 'entry' => $note + ['file' => $this->fileShape($entry)]]);
     }
 
     public function fileDestroy(int $id, int $vid, string $fid)
@@ -548,7 +618,10 @@ class ProtocolBuilderController extends Controller
         if (! $gone) {
             return $this->json(false, 'That file is already gone.', [], 404);
         }
-        $ver->forceFill(['files' => $keep])->save();
+        $ver->forceFill(['files' => $keep]);
+        // Its entry in Rules & notes goes with it.
+        ProtocolNotes::put($ver, ProtocolNotes::entries($ver));
+        $ver->save();
         // A copied version or protocol points at the same stored file; it is
         // only let go once nothing points at it.
         if (! empty($gone['path']) && ! $this->fileShared((string) $gone['path'], (int) $ver->id)) {
@@ -1997,6 +2070,7 @@ PROMPT;
             'materials' => array_values((array) ($from->materials ?? [])),
             'rules' => $from->rules,
             'files' => array_values((array) ($from->files ?? [])),
+            'notes' => is_array($from->notes) ? array_values($from->notes) : null,
             'sortOrder' => $sortOrder,
         ]);
     }
@@ -2024,6 +2098,7 @@ PROMPT;
             'materials' => array_values((array) ($v->materials ?? [])),
             'rules' => (string) ($v->rules ?? ''),
             'files' => array_map(fn ($f) => $this->fileShape($f), array_values(array_filter((array) ($v->files ?? []), 'is_array'))),
+            'notes' => $this->notesShape($v),
             'history' => ['undo' => array_values((array) ($history['undo'] ?? [])), 'redo' => array_values((array) ($history['redo'] ?? []))],
             'rev' => (int) $v->rev,
         ];
@@ -2050,25 +2125,36 @@ PROMPT;
      */
     private function carryRules(AsCroppingSchedule $schedule, AsProtocol $proto, AsProtocolVersion $ver, bool $named): bool
     {
-        $html = trim((string) ($ver->rules ?? ''));
-        $files = array_values(array_filter((array) ($ver->files ?? []), fn ($f) => is_array($f) && ! empty($f['path'])));
-        if ($html === '' && ! $files) {
-            return false;
-        }
+        // The entries in their order (2026-10-24): each written one under its title, each file as a link where it
+        // stands; a picture also rides as the note's own image.
+        $files = ProtocolNotes::files($ver);
         $media = [];
-        $links = [];
-        foreach ($files as $f) {
+        $body = '';
+        foreach (ProtocolNotes::entries($ver) as $e) {
+            $title = trim((string) $e['title']);
+            if ($e['kind'] === 'text') {
+                if (! ProtocolNotes::blank((string) $e['html'])) {
+                    $body .= ($title !== '' ? '<h3>' . e($title) . '</h3>' : '') . $e['html'];
+                }
+
+                continue;
+            }
+            $f = $files[$e['fileId']] ?? null;
+            if (! $f || empty($f['path'])) {
+                continue;
+            }
             $name = trim((string) ($f['name'] ?? '')) ?: 'File';
             if (str_starts_with((string) ($f['mime'] ?? ''), 'image/')) {
-                $media[] = ['type' => 'image', 'path' => (string) $f['path'], 'title' => mb_substr($name, 0, 190)];
-                continue;
+                $media[] = ['type' => 'image', 'path' => (string) $f['path'], 'title' => mb_substr($title !== '' ? $title : $name, 0, 190)];
             }
             $url = MediaStore::url($f['path']);
             if ($url) {
-                $links[] = '<li><a href="' . e($url) . '" target="_blank" rel="noopener">' . e($name) . '</a></li>';
+                $body .= '<p>📎 ' . ($title !== '' ? '<strong>' . e($title) . ':</strong> ' : '') . '<a href="' . e($url) . '" target="_blank" rel="noopener">' . e($name) . '</a></p>';
             }
         }
-        $body = $html . ($links ? '<p><strong>Files</strong></p><ul>' . implode('', $links) . '</ul>' : '');
+        if (trim($body) === '' && ! $media) {
+            return false;
+        }
         AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,
             'userId' => (int) Auth::id(),

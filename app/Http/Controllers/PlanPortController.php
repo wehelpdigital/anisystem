@@ -827,7 +827,8 @@ class PlanPortController extends Controller
                 'dayType' => $dayType, 'tasks' => [], 'history' => ['undo' => [], 'redo' => []], 'rev' => 1, 'deleteStatus' => 1,
             ]);
             $ver = AsProtocolVersion::create(['protocolId' => $p->id, 'userId' => (int) Auth::id(), 'name' => 'Version 1', 'tasks' => $tasks, 'materials' => $mats,
-                'rules' => $recs !== '' ? HtmlSanitizer::rich($recs) : null, 'files' => [], 'history' => ['undo' => [], 'redo' => []], 'rev' => 1, 'sortOrder' => 0, 'deleteStatus' => 1]);
+                'rules' => $recs !== '' ? HtmlSanitizer::rich($recs) : null, 'files' => [], 'history' => ['undo' => [], 'redo' => []], 'rev' => 1, 'sortOrder' => 0, 'deleteStatus' => 1,
+                'notes' => $recs !== '' ? \App\Support\ProtocolNotes::first('Recommendations: ' . mb_substr((string) $row->title, 0, 140), $recs) : null]);
             $p->forceFill(['versionId' => $ver->id])->save();
             $n = count(array_filter($tasks, fn ($t) => ($t['kind'] ?? 'task') !== 'divider'));
 
@@ -863,12 +864,13 @@ class PlanPortController extends Controller
         $hist['redo'] = [];
         // The steps draw on the protocol's own materials where it has them by name; the rest are added.
         [$new, $mats, $matN] = PlanMaterials::intoBuilder($new, array_values((array) ($ver->materials ?? [])), $byTask, $forWhom);
-        // The recommendations join the Rules & notes once, under their own heading.
+        // The recommendations join the Rules & notes once, as their own entry (2026-10-24: entries, App\Support\ProtocolNotes).
         $rules = (string) ($ver->rules ?? '');
         $head = 'From the ' . PlanPort::SOURCES[$plan['source']]['label'] . ': ' . htmlspecialchars((string) $row->title, ENT_QUOTES, 'UTF-8');
-        $withRecs = $recs !== '' && ! str_contains($rules, $head);
-        $ver->forceFill(['tasks' => array_merge($have, $new), 'materials' => $mats, 'history' => $hist, 'rev' => (int) $ver->rev + 1]
-            + ($withRecs ? ['rules' => HtmlSanitizer::rich($rules . ($rules !== '' ? '<hr>' : '') . $recs)] : []))->save();
+        $ver->forceFill(['tasks' => array_merge($have, $new), 'materials' => $mats, 'history' => $hist, 'rev' => (int) $ver->rev + 1]);
+        $withRecs = $recs !== '' && ! str_contains($rules, $head)
+            && \App\Support\ProtocolNotes::append($ver, 'Recommendations: ' . mb_substr((string) $row->title, 0, 140), $recs);
+        $ver->save();
         $added = count(array_filter($new, fn ($t) => ($t['kind'] ?? 'task') !== 'divider'));
 
         return $this->json(true, $added . ' steps were added to ' . $p->title . ', each on its day' . ($matN ? ', with ' . $matN . ' new ' . ($matN === 1 ? 'material' : 'materials') : '') . ($withRecs ? ', and the recommendations went into Rules & notes' : '') . '.',

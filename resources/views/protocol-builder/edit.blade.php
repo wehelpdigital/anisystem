@@ -556,6 +556,46 @@
     .pbr-bar span { display: block; height: 100%; width: 40%; border-radius: 999px; background: #6b9f3d; animation: pbrSlide 1.1s cubic-bezier(.22,1,.36,1) infinite; }
     @keyframes pbrSlide { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
     .pbr-empty { font-size: .8rem; color: var(--color-gray-400); padding: .2rem 0 .5rem; }
+    /* Rules & notes as entries (2026-10-24): one card each, written or a file, moved up or down, written ones open their editor in place. */
+    .pbn-list { display: grid; gap: .6rem; margin-bottom: .7rem; }
+    .pbn { border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); overflow: hidden;
+        transition: box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .pbn.is-new { animation: pbIn .32s cubic-bezier(.22,1,.36,1); }
+    .pbn.is-gone { opacity: 0; transform: translateX(10px); }
+    .pbn.is-editing { border-color: #9cc46f; box-shadow: 0 0 0 3px rgb(107 159 61 / .14); }
+    .pbn-h { display: flex; align-items: center; gap: .5rem; padding: .5rem .55rem .5rem .6rem; border-bottom: 1px solid var(--color-gray-100); background: var(--color-gray-50); }
+    .pbn-e { flex: none; width: 2rem; height: 2rem; border-radius: .6rem; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; background: #eef6e6; }
+    .pbn[data-kind="file"] .pbn-e { background: #eef3fb; }
+    .pbn-title { flex: 1 1 auto; min-width: 0; border: 0; background: transparent; padding: .35rem .3rem; border-radius: .5rem; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .pbn-title::placeholder { color: var(--color-gray-400); font-weight: 700; }
+    .pbn-title:focus { outline: none; background: var(--color-white); box-shadow: inset 0 0 0 1.5px #9cc46f; }
+    .pbn-acts { flex: none; display: flex; gap: .2rem; }
+    .pbn-acts .pb-mini[disabled] { opacity: .35; pointer-events: none; }
+    .pbn-body { padding: .7rem .8rem .8rem; }
+    .pbn-view { font-size: .88rem; line-height: 1.6; color: var(--color-gray-700); cursor: text; min-height: 1.4rem; overflow-wrap: anywhere; }
+    .pbn-view:empty::before { content: attr(data-empty); color: var(--color-gray-400); }
+    .pbn-view h2, .pbn-view h3 { font-weight: 800; color: var(--color-gray-900); margin: .4rem 0 .3rem; }
+    .pbn-view ul, .pbn-view ol { padding-left: 1.2rem; margin: 0 0 .5rem; } .pbn-view ul { list-style: disc; } .pbn-view ol { list-style: decimal; }
+    .pbn-view a { color: #3d6823; text-decoration: underline; }
+    .pbn-done { display: flex; justify-content: flex-end; margin-top: .55rem; }
+    .pbn-done .pbt-add { width: auto; flex: none; padding-left: 1.4rem; padding-right: 1.4rem; }
+    .pbn-file { display: flex; align-items: center; gap: .6rem; }
+    .pbn-file a, .pbn-file span.n { min-width: 0; flex: 1 1 auto; font-size: .84rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
+    .pbn-file a:hover { color: #3d6823; text-decoration: underline; }
+    .pbn-file small { flex: none; font-size: .72rem; color: var(--color-gray-500); }
+    .pbn-pic { display: block; margin-top: .6rem; max-height: 14rem; max-width: 100%; border-radius: .7rem; object-fit: contain; background: var(--color-gray-50); }
+    .pbn-adds { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .pbn-adds .pbt-add { flex: 1 1 12rem; justify-content: center; }
+    .pbn-sizes { margin: .45rem 0 0; }
+    html.dark .pbn { background: #151b12; border-color: #2b3a1c; }
+    html.dark .pbn-h { background: #12170f; border-color: #222b1a; }
+    html.dark .pbn-title, html.dark .pbn-file a, html.dark .pbn-file span.n { color: #e8efe1; }
+    html.dark .pbn-title:focus { background: #0f140c; }
+    html.dark .pbn-view { color: #cfdcc2; }
+    html.dark .pbn-view h2, html.dark .pbn-view h3 { color: #e8efe1; }
+    html.dark .pbn-e { background: rgb(107 159 61 / .18); }
+    html.dark .pbn[data-kind="file"] .pbn-e { background: rgb(59 130 246 / .16); }
+    @media (prefers-reduced-motion: reduce) { .pbn { transition: none; } .pbn.is-new { animation: none; } }
     html.dark .pbr-h b { color: #e8efe1; }
     html.dark .pbr-file { background: #151b12; border-color: #2b3a1c; }
     html.dark .pbr-file-e { background: #22301a; }
@@ -682,22 +722,23 @@
         <div id="pbReview" hidden></div>
     </div>
 
-    {{-- Rules & notes: a document of the protocol's standing rules, and files beside it. --}}
+    {{-- Rules & notes as many entries (2026-10-24, the owner): each one written, or a file (a label, a leaflet, a soil test). --}}
     <div class="pb-panel" id="pbPanelRules" data-panel="rules" role="tabpanel" hidden>
         <div class="card pbr-card">
             <div class="pbr-h"><b>Rules &amp; notes{{ \App\Support\Tagalog::flag('protocol-rules') }}</b><span class="pb-save" id="pbRulesState" aria-live="polite"></span></div>
-            <p class="pbh-hint">Your rules for this protocol: when not to spray, how to mix, what to watch for, who to call. It saves as you type.</p>
-            <div class="pbr-ed" id="pbRulesEd"></div>
-        </div>
-        <div class="card pbr-card">
-            <div class="pbr-h"><b>Related files</b></div>
-            <p class="pbh-hint">Product labels, leaflets, soil tests or photos. PDF, pictures or documents, up to 10 MB each.</p>
-            <div class="pbr-files" id="pbFiles"></div>
-            <button type="button" class="pbt-add" id="pbFileBtn"
-                @unless ($options['canUpload']) data-tier-lock="libreAnee" data-lock-say="Adding files, like labels, leaflets or a soil test, comes with Libre + Anee. Writing rules and notes is free on every plan." @endunless>
-                <svg @unless ($options['canUpload']) class="tl-dim" @endunless viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg> <span @unless ($options['canUpload']) class="tl-dim" @endunless>Upload a file</span>
-                @unless ($options['canUpload'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
-            </button>
+            <p class="pbh-hint">As many as you need: when not to spray, how to mix, what to watch for, who to call. Write one, or upload a label, a leaflet or a soil test. They save as you go.</p>
+            <div class="pbn-list" id="pbNotes"></div>
+            <div class="pbn-adds">
+                <button type="button" class="pbt-add" id="pbNoteAdd">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> <span>Write a note</span>
+                </button>
+                <button type="button" class="pbt-add" id="pbFileBtn"
+                    @unless ($options['canUpload']) data-tier-lock="libreAnee" data-lock-say="Adding files, like labels, leaflets or a soil test, comes with Libre + Anee. Writing rules and notes is free on every plan." @endunless>
+                    <svg @unless ($options['canUpload']) class="tl-dim" @endunless viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg> <span @unless ($options['canUpload']) class="tl-dim" @endunless>Upload a file</span>
+                    @unless ($options['canUpload'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
+                </button>
+            </div>
+            <p class="pbh-hint pbn-sizes">Files: PDF, pictures or documents, up to 10 MB each.</p>
             <input type="file" id="pbFileIn" hidden multiple accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.txt,.csv,.xls,.xlsx,.ppt,.pptx,image/*,application/pdf">
         </div>
     </div>
@@ -1120,8 +1161,6 @@
     // The version being worked on — each has its own tasks, materials, rules, files and history.
     let VER = { id: BOOT.versionId, name: BOOT.versionName };
     let VERSIONS = Array.isArray(BOOT.versions) ? BOOT.versions : [];
-    let RULES = BOOT.rules || '';
-    let FILES = Array.isArray(BOOT.files) ? BOOT.files : [];
     let REVIEW = BOOT.analysis || null;
     let REVIEW_AT = BOOT.analysisAt || null;
     let REVIEW_CREDITS = BOOT.analysisCredits || 0;
@@ -1297,7 +1336,7 @@
     };
     window.addEventListener('pagehide', () => {
         if (DIRTY && !STALE) beacon(U.base + '/save', { versionId: VER.id, rev: REV, tasks: TASKS, materials: MATS, history: HIST });
-        if (R_DIRTY) beacon(U.ver(VER.id) + '/rules', { rules: rulesHtml() });
+        if (R_DIRTY) beacon(U.ver(VER.id) + '/notes', { entries: payload() });
     });
 
     /* ------------------------------------------------------------ undo / redo */
@@ -2546,30 +2585,97 @@
     document.querySelectorAll('.pb-panel').forEach((panel) => panel.addEventListener('animationend', () => panel.classList.remove('is-entering')));
 
     /* ------------------------------------------------------------ rules & notes */
-    let RQ = null, R_TOUCHED = false, R_DIRTY = false, R_BUSY = false, R_TIMER = null, R_LAST = RULES, R_FAILS = 0;
+    /* As many entries as the farmer needs (2026-10-24, the owner: "rules and notes should be not just one wysiwyg but
+       user can add multiple with either uploaded file or wysiwyg"): a written one opens its editor in place, one at a
+       time; a file one is the file. The whole list saves on its own, beside the tasks (App\Support\ProtocolNotes). */
+    let RQ = null, R_EDIT = null, R_DIRTY = false, R_BUSY = false, R_TIMER = null, R_FAILS = 0, R_LAST = '';
+    const fileIcon = (f) => /pdf/i.test(f.mime) || /\.pdf$/i.test(f.name) ? '📕' : (/^image\//i.test(f.mime) ? '🖼️' : (/sheet|excel|csv/i.test(f.mime) || /\.(xlsx?|csv)$/i.test(f.name) ? '📊' : (/presentation|powerpoint/i.test(f.mime) || /\.pptx?$/i.test(f.name) ? '📽️' : '📄')));
+    const fileSize = (b) => b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+    const OPEN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>';
+    const BIN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
+    const UP_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
+    const DOWN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';
+    const PEN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
+    const notesOf = (v) => (Array.isArray(v && v.notes) ? clone(v.notes) : []);
+    let NOTES = notesOf(BOOT);
+    let NEW_NOTE = null;
     function sayRules(state) {
         const el = $id('pbRulesState');
         el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved yet, trying again' }[state] || '';
         el.classList.toggle('is-saved', state === 'saved');
         el.classList.toggle('is-failed', state === 'failed');
     }
-    function rulesHtml() {
-        if (!RQ) return RULES;
-        const root = RQ.root;
-        const words = (root.textContent || '').replace(/\u00a0/g, ' ').trim();
-        return words ? root.innerHTML : '';
+    const blankHtml = (h) => !String(h || '').replace(/<[^>]*>/g, '').replace(/&nbsp;| /g, ' ').trim();
+    // The words of the entry being written, read from its editor.
+    function syncEditor() {
+        if (!RQ || !R_EDIT) return;
+        const n = NOTES.find((x) => x.id === R_EDIT);
+        if (n) n.html = blankHtml(RQ.root.innerHTML) ? '' : RQ.root.innerHTML;
     }
-    function ensureRules() {
-        if (RQ) return;
-        // The editor comes with the app's script, which may still be arriving.
-        if (!window.Quill) { if (!ensureRules.waiting) { ensureRules.waiting = true; window.addEventListener('load', () => { if ($id('pbPage').dataset.tab === 'rules') ensureRules(); }, { once: true }); } return; }
-        const host = $id('pbRulesEd');
-        host.innerHTML = RULES;
-        RQ = new Quill(host, { theme: 'snow', placeholder: 'Write your rules here. One idea per paragraph.', modules: { toolbar: window.SM_RICH_TOOLBAR } });
-        // Only a person's own writing saves: loading a version's document must not.
-        ['input', 'keydown', 'paste', 'cut', 'drop'].forEach((ev) => host.addEventListener(ev, () => { R_TOUCHED = true; }, true));
-        host.addEventListener('click', (e) => { if (e.target.closest('.se-toolbar, .se-btn, .se-list-layer')) R_TOUCHED = true; }, true);
-        new MutationObserver(() => { if (R_TOUCHED) rulesDirty(); }).observe(host, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['style', 'class', 'href'] });
+    const payload = () => { syncEditor(); return NOTES.map((n) => (n.kind === 'file' ? { id: n.id, kind: 'file', title: n.title || '', fileId: n.fileId } : { id: n.id, kind: 'text', title: n.title || '', html: n.html || '' })); };
+    function noteCard(n, i) {
+        const first = i === 0, last = i === NOTES.length - 1;
+        const moves = `<button type="button" class="pb-mini" data-nup aria-label="Move up" title="Move up"${first ? ' disabled' : ''}>${UP_SVG}</button><button type="button" class="pb-mini" data-ndown aria-label="Move down" title="Move down"${last ? ' disabled' : ''}>${DOWN_SVG}</button>`;
+        if (n.kind === 'file') {
+            const f = n.file || {};
+            const pic = /^image\//i.test(f.mime || '') && f.url;
+            return `<div class="pbn${NEW_NOTE === n.id ? ' is-new' : ''}" data-nid="${esc(n.id)}" data-kind="file">
+                <div class="pbn-h"><span class="pbn-e">${fileIcon(f)}</span><input class="pbn-title" data-ntitle value="${esc(n.title || '')}" placeholder="${esc(f.name || 'A file')}" maxlength="160" aria-label="Title of the file">
+                    <span class="pbn-acts">${moves}${f.url ? `<a class="pb-mini" href="${esc(f.url)}" target="_blank" rel="noopener" aria-label="Open" title="Open">${OPEN_SVG}</a>` : ''}<button type="button" class="pb-mini is-x" data-ndel aria-label="Delete the file" title="Delete">${BIN_SVG}</button></span></div>
+                <div class="pbn-body"><div class="pbn-file">${f.url ? `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name || 'File')}</a>` : `<span class="n">${esc(f.name || 'File')}</span>`}<small>${fileSize(f.size || 0)}${f.at ? ' · ' + esc(f.at) : ''}</small></div>${pic ? `<img class="pbn-pic" src="${esc(f.url)}" alt="${esc(n.title || f.name || '')}" loading="lazy">` : ''}</div>
+            </div>`;
+        }
+        return `<div class="pbn${NEW_NOTE === n.id ? ' is-new' : ''}" data-nid="${esc(n.id)}" data-kind="text">
+            <div class="pbn-h"><span class="pbn-e">📝</span><input class="pbn-title" data-ntitle value="${esc(n.title || '')}" placeholder="Add a title" maxlength="160" aria-label="Title of the note">
+                <span class="pbn-acts">${moves}<button type="button" class="pb-mini" data-nedit aria-label="Edit" title="Edit">${PEN_SVG}</button><button type="button" class="pb-mini is-x" data-ndel aria-label="Delete the note" title="Delete">${BIN_SVG}</button></span></div>
+            <div class="pbn-body"><div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${n.html || ''}</div></div>
+        </div>`;
+    }
+    function renderNotes() {
+        closeEditor(false);
+        $id('pbNotes').innerHTML = NOTES.length ? NOTES.map(noteCard).join('') : '<p class="pbr-empty">No rules or notes yet. Write one, or upload a file.</p>';
+        NEW_NOTE = null;
+    }
+    // One editor at a time: the card's words become the editor, and Done gives them back.
+    function openEditor(id, focus) {
+        if (R_EDIT === id) return;
+        closeEditor(true);
+        const n = NOTES.find((x) => x.id === id);
+        const card = $id('pbNotes').querySelector(`.pbn[data-nid="${CSS.escape(id)}"]`);
+        if (!n || !card || !window.Quill) return;
+        const body = card.querySelector('.pbn-body');
+        body.innerHTML = `<div class="pbr-ed">${n.html || ''}</div><div class="pbn-done"><button type="button" class="pbt-add" data-ndone>Done</button></div>`;
+        const host = body.querySelector('.pbr-ed');
+        RQ = new Quill(host, { theme: 'snow', placeholder: 'Write it here. One idea per paragraph.', modules: { toolbar: window.SM_RICH_TOOLBAR } });
+        R_EDIT = id;
+        card.classList.add('is-editing');
+        // Only a person's own writing saves: opening an entry must not.
+        let touched = false;
+        ['input', 'keydown', 'paste', 'cut', 'drop'].forEach((ev) => host.addEventListener(ev, () => { touched = true; }, true));
+        host.addEventListener('click', (e) => { if (e.target.closest('.se-toolbar, .se-btn, .se-list-layer')) touched = true; }, true);
+        new MutationObserver(() => { if (touched) rulesDirty(); }).observe(host, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['style', 'class', 'href'] });
+        if (focus) setTimeout(() => RQ && RQ.focus(), 60);
+    }
+    function closeEditor(repaint) {
+        if (!RQ || !R_EDIT) { RQ = null; R_EDIT = null; return; }
+        syncEditor();
+        const id = R_EDIT;
+        try { RQ._editor && RQ._editor.destroy && RQ._editor.destroy(); } catch (_) { /* gone with its card */ }
+        RQ = null; R_EDIT = null;
+        if (!repaint) return;
+        const n = NOTES.find((x) => x.id === id);
+        const card = $id('pbNotes').querySelector(`.pbn[data-nid="${CSS.escape(id)}"]`);
+        if (!card) return;
+        // A note left with nothing in it, and no title, is not kept.
+        if (n && !n.title && blankHtml(n.html)) {
+            NOTES = NOTES.filter((x) => x.id !== id);
+            card.classList.add('is-gone');
+            setTimeout(() => { renderNotes(); rulesDirty(); }, 280);
+            return;
+        }
+        card.classList.remove('is-editing');
+        card.querySelector('.pbn-body').innerHTML = `<div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${(n && n.html) || ''}</div>`;
+        flushRules();
     }
     function rulesDirty() {
         R_DIRTY = true;
@@ -2581,14 +2687,15 @@
         clearTimeout(R_TIMER);
         if (!R_DIRTY) return;
         if (R_BUSY) { R_TIMER = setTimeout(saveRules, 600); return; }
-        const html = rulesHtml();
+        const body = payload();
+        const sent = JSON.stringify(body);
         const vid = VER.id;
-        if (html === R_LAST) { R_DIRTY = false; sayRules('saved'); return; }
+        if (sent === R_LAST) { R_DIRTY = false; sayRules('saved'); return; }
         R_BUSY = true; R_DIRTY = false;
         sayRules('saving');
         try {
-            await api(U.ver(vid) + '/rules', { method: 'POST', body: { rules: html } });
-            R_LAST = html; RULES = html; R_FAILS = 0;
+            await api(U.ver(vid) + '/notes', { method: 'POST', body: { entries: body } });
+            R_LAST = sent; R_FAILS = 0;
             sayRules('saved');
         } catch (err) {
             R_DIRTY = true; sayRules('failed');
@@ -2600,65 +2707,91 @@
         for (let i = 0; i < 20 && R_BUSY; i++) await new Promise((r) => setTimeout(r, 150));
         if (R_DIRTY) await saveRules();
     }
-    function setRules(html) {
-        RULES = html || ''; R_LAST = RULES; R_TOUCHED = false; R_DIRTY = false; clearTimeout(R_TIMER); sayRules('');
-        if (!RQ) return;
-        RQ.setContents([]);
-        if (RULES.trim() !== '') RQ.clipboard.dangerouslyPasteHTML(RULES);
+    function setNotes(v) {
+        RQ = null; R_EDIT = null;
+        NOTES = notesOf(v); R_DIRTY = false; clearTimeout(R_TIMER); sayRules('');
+        R_LAST = JSON.stringify(payload());
+        renderNotes();
     }
+    // Kept for the tab switch: the list is drawn from the start, the editor only when asked.
+    function ensureRules() { if (!window.Quill && !ensureRules.waiting) { ensureRules.waiting = true; } }
+    R_LAST = JSON.stringify(payload());
 
-    /* The files beside the rules. */
-    const fileIcon = (f) => /pdf/i.test(f.mime) || /\.pdf$/i.test(f.name) ? '📕' : (/^image\//i.test(f.mime) ? '🖼️' : (/sheet|excel|csv/i.test(f.mime) || /\.(xlsx?|csv)$/i.test(f.name) ? '📊' : (/presentation|powerpoint/i.test(f.mime) || /\.pptx?$/i.test(f.name) ? '📽️' : '📄')));
-    const fileSize = (b) => b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
-    const OPEN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>';
-    const BIN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
-    let NEW_FILE = null;
-    function fileRow(f) {
-        return `<div class="pbr-file${NEW_FILE === f.id ? ' is-new' : ''}" data-fid="${esc(f.id)}">
-            <span class="pbr-file-e">${fileIcon(f)}</span>
-            <span class="pbr-file-t">${f.url ? `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name)}</a>` : `<span>${esc(f.name)}</span>`}<small>${fileSize(f.size || 0)}${f.at ? ' · ' + esc(f.at) : ''}</small></span>
-            ${f.url ? `<a class="pb-mini" href="${esc(f.url)}" target="_blank" rel="noopener" aria-label="Open" title="Open">${OPEN_SVG}</a>` : ''}
-            <button type="button" class="pb-mini is-x" data-fdel="${esc(f.id)}" aria-label="Delete the file" title="Delete">${BIN_SVG}</button>
-        </div>`;
-    }
-    function renderFiles() {
-        $id('pbFiles').innerHTML = FILES.length ? FILES.map(fileRow).join('') : '<p class="pbr-empty">No files yet.</p>';
-        NEW_FILE = null;
-    }
+    $id('pbNoteAdd').addEventListener('click', () => {
+        if (NOTES.length >= 40) { toast('A version keeps up to 40 rules and notes.', 'error'); return; }
+        closeEditor(true);
+        const n = { id: uid('n'), kind: 'text', title: '', html: '' };
+        NOTES.push(n); NEW_NOTE = n.id;
+        renderNotes();
+        openEditor(n.id, true);
+        $id('pbNotes').querySelector(`.pbn[data-nid="${CSS.escape(n.id)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    $id('pbNotes').addEventListener('input', (e) => {
+        const t = e.target.closest('[data-ntitle]'); if (!t) return;
+        const n = NOTES.find((x) => x.id === t.closest('.pbn').dataset.nid);
+        if (n) { n.title = t.value.slice(0, 160); rulesDirty(); }
+    });
+    $id('pbNotes').addEventListener('click', async (e) => {
+        const card = e.target.closest('.pbn'); if (!card) return;
+        const id = card.dataset.nid;
+        const i = NOTES.findIndex((x) => x.id === id);
+        if (i < 0) return;
+        if (e.target.closest('[data-ndone]')) { closeEditor(true); return; }
+        if (e.target.closest('[data-nedit]') || e.target.closest('[data-nview]')) { if (!e.target.closest('a')) openEditor(id, true); return; }
+        const up = e.target.closest('[data-nup]'), down = e.target.closest('[data-ndown]');
+        if (up || down) {
+            const j = up ? i - 1 : i + 1;
+            if (j < 0 || j >= NOTES.length) return;
+            syncEditor();
+            [NOTES[i], NOTES[j]] = [NOTES[j], NOTES[i]];
+            renderNotes();
+            rulesDirty();
+            const moved = $id('pbNotes').querySelector(`.pbn[data-nid="${CSS.escape(id)}"]`);
+            if (moved) { moved.classList.add('is-new'); moved.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+            return;
+        }
+        if (e.target.closest('[data-ndel]')) {
+            const n = NOTES[i];
+            const isFile = n.kind === 'file';
+            const name = n.title || (isFile ? (n.file || {}).name : '') || (isFile ? 'this file' : 'this note');
+            const ok = await window.confirmAction({ title: isFile ? 'Delete this file?' : 'Delete this note?', message: `"${name}" will be removed from this version.`, confirmText: 'Delete', danger: true });
+            if (!ok) return;
+            try {
+                if (isFile) {
+                    const res = await api(U.ver(VER.id) + '/files/' + encodeURIComponent(n.fileId) + '/delete', { method: 'POST', body: {} });
+                    toast(res.message);
+                }
+                if (R_EDIT === id) { RQ = null; R_EDIT = null; }
+                card.classList.add('is-gone');
+                await new Promise((r) => setTimeout(r, 280));
+                NOTES = NOTES.filter((x) => x.id !== id);
+                renderNotes();
+                rulesDirty();
+            } catch (err) { toast(err.message, 'error'); }
+        }
+    });
+
     $id('pbFileBtn').addEventListener('click', () => $id('pbFileIn').click());
     $id('pbFileIn').addEventListener('change', async (e) => {
         const files = [...(e.target.files || [])];
         e.target.value = '';
         const vid = VER.id;
+        // What is being written goes first, so the list the server keeps is the one on screen.
+        await flushRules();
         for (const file of files) {
             if (file.size > 10 * 1048576) { toast(`"${file.name}" is over 10 MB.`, 'error'); continue; }
-            const host = $id('pbFiles');
+            const host = $id('pbNotes');
             host.querySelector('.pbr-empty')?.remove();
-            host.insertAdjacentHTML('beforeend', `<div class="pbr-file is-new" data-up><span class="pbr-file-e">⏳</span><span class="pbr-file-t"><span>${esc(file.name)}</span><small>Uploading…</small><span class="pbr-bar"><span></span></span></span></div>`);
+            host.insertAdjacentHTML('beforeend', `<div class="pbn is-new" data-up><div class="pbn-h"><span class="pbn-e">⏳</span><span class="pbn-title">${esc(file.name)}</span></div><div class="pbn-body"><small class="text-gray-500">Uploading…</small><span class="pbr-bar"><span></span></span></div></div>`);
             const fd = new FormData();
             fd.append('file', file);
             try {
                 const res = await api(U.ver(vid) + '/files', { method: 'POST', body: fd });
-                if (VER.id === vid) { FILES.push(res.data.file); NEW_FILE = res.data.file.id; }
+                if (VER.id === vid && res.data.entry) { syncEditor(); NOTES.push(res.data.entry); NEW_NOTE = res.data.entry.id; rulesDirty(); }
                 toast(res.message);
             } catch (err) { if (!err.tierLock) toast(err.message, 'error'); }
-            renderFiles();
+            renderNotes();
         }
-    });
-    $id('pbFiles').addEventListener('click', async (e) => {
-        const b = e.target.closest('[data-fdel]'); if (!b) return;
-        const fid = b.getAttribute('data-fdel');
-        const f = FILES.find((x) => x.id === fid); if (!f) return;
-        const ok = await window.confirmAction({ title: 'Delete this file?', message: `"${f.name}" will be removed from this version.`, confirmText: 'Delete', danger: true });
-        if (!ok) return;
-        try {
-            const res = await api(U.ver(VER.id) + '/files/' + encodeURIComponent(fid) + '/delete', { method: 'POST', body: {} });
-            const row = b.closest('.pbr-file');
-            if (row) { row.classList.add('is-gone'); await new Promise((r) => setTimeout(r, 280)); }
-            FILES = FILES.filter((x) => x.id !== fid);
-            renderFiles();
-            toast(res.message);
-        } catch (err) { toast(err.message, 'error'); }
     });
 
     /* ------------------------------------------------------------ versions */
@@ -2668,10 +2801,9 @@
         MATS = Array.isArray(v.materials) ? v.materials : [];
         HIST = { undo: (v.history && v.history.undo) || [], redo: (v.history && v.history.redo) || [] };
         REV = v.rev || 1;
-        FILES = Array.isArray(v.files) ? v.files : [];
         DIRTY = false; FAILS = 0; OPEN = new Set();
-        setRules(v.rules || '');
-        sortTasks(); render(); renderFiles();
+        setNotes(v);
+        sortTasks(); render();
         say('');
         const cur = $id('pbPage').dataset.tab;
         const panel = document.querySelector(`.pb-panel[data-panel="${cur}"]`);
@@ -3029,7 +3161,7 @@
     /* ------------------------------------------------------------ boot */
     sortTasks();
     render();
-    renderFiles();
+    renderNotes();
     let firstTab = 'tasks';
     try { firstTab = localStorage.getItem(TAB_KEY) || 'tasks'; } catch (_) { /* tasks */ }
     showTab(firstTab, false);

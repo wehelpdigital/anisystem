@@ -1098,6 +1098,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/protocol-builder/{id}/versions/{vid}/rename', [App\Http\Controllers\ProtocolBuilderController::class, 'versionRename'])->whereNumber(['id', 'vid'])->name('pb.versions.rename');
     Route::post('/app/protocol-builder/{id}/versions/{vid}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'versionDestroy'])->whereNumber(['id', 'vid'])->name('pb.versions.delete');
     Route::post('/app/protocol-builder/{id}/versions/{vid}/rules', [App\Http\Controllers\ProtocolBuilderController::class, 'rules'])->whereNumber(['id', 'vid'])->name('pb.rules');
+    // Rules & notes as entries, written or a file (2026-10-24).
+    Route::post('/app/protocol-builder/{id}/versions/{vid}/notes', [App\Http\Controllers\ProtocolBuilderController::class, 'notes'])->whereNumber(['id', 'vid'])->name('pb.notes');
     Route::post('/app/protocol-builder/{id}/versions/{vid}/files', [App\Http\Controllers\ProtocolBuilderController::class, 'fileStore'])->whereNumber(['id', 'vid'])->name('pb.files.store');
     Route::post('/app/protocol-builder/{id}/versions/{vid}/files/{fid}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'fileDestroy'])->whereNumber(['id', 'vid'])->where('fid', '[A-Za-z0-9_-]+')->name('pb.files.delete');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
