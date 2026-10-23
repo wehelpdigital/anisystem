@@ -599,6 +599,10 @@
     .pbn-view ul, .pbn-view ol { padding-left: 1.2rem; margin: 0 0 .5rem; } .pbn-view ul { list-style: disc; } .pbn-view ol { list-style: decimal; }
     .pbn-view a { color: #3d6823; text-decoration: underline; }
     .pbn-done { display: flex; justify-content: flex-end; margin-top: .55rem; }
+    .pbn-split { margin-top: .7rem; font-size: .76rem; font-weight: 800; color: #3d6823; padding: .35rem .75rem; border-radius: 999px; border: 1px dashed #b9d69a; background: #f6fbf0;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .pbn-split:hover { background: #eaf5dd; }
+    html.dark .pbn-split { color: #bfe3a0; border-color: #3a5527; background: #18210f; }
     .pbn-done .pbt-add { width: auto; flex: none; padding-left: 1.4rem; padding-right: 1.4rem; }
     .pbn-file { display: flex; align-items: center; gap: .6rem; }
     .pbn-file a, .pbn-file span.n { min-width: 0; flex: 1 1 auto; font-size: .84rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
@@ -2659,7 +2663,36 @@
         }
         return shell('text', `<div class="pbn-h"><span class="pbn-e">📝</span><input class="pbn-title" data-ntitle value="${esc(n.title || '')}" placeholder="Add a title" maxlength="160" aria-label="Title of the note">
                 <span class="pbn-acts">${moves}<button type="button" class="pb-mini" data-nedit aria-label="Edit" title="Edit">${PEN_SVG}</button><button type="button" class="pb-mini is-x" data-ndel aria-label="Delete the note" title="Delete">${BIN_SVG}</button>${chev}</span></div>`,
-            `<div class="pbn-body"><div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${n.html || ''}</div></div>`);
+            `<div class="pbn-body">${viewHtml(n)}</div>`);
+    }
+    /* Words cut at their headings (an h1 to h4, or a paragraph that is all bold), each heading its own section: the
+       twin of App\Support\ProtocolNotes::split. A note with two or more offers to become one note an item. */
+    function splitHtml(html) {
+        const root = new DOMParser().parseFromString('<div id="r">' + (html || '') + '</div>', 'text/html').getElementById('r');
+        const headingOf = (n) => {
+            if (!n || n.nodeType !== 1) return null;
+            const t = (n.textContent || '').replace(/\s+/g, ' ').trim();
+            if (!t || t.length > 120) return null;
+            const tag = n.tagName.toLowerCase();
+            if (/^h[1-4]$/.test(tag)) return t.replace(/:$/, '');
+            if (tag !== 'p') return null;
+            const kids = [...n.childNodes].filter((k) => !(k.nodeType === 3 && !k.textContent.trim()));
+            return kids.length === 1 && kids[0].nodeType === 1 && /^(strong|b)$/i.test(kids[0].tagName) ? t.replace(/:$/, '') : null;
+        };
+        const out = [];
+        let cur = { title: '', html: '' };
+        [...(root ? root.childNodes : [])].forEach((n) => {
+            const h = headingOf(n);
+            if (h !== null) { if (cur.title || !blankHtml(cur.html)) out.push(cur); cur = { title: h, html: '' }; return; }
+            cur.html += n.nodeType === 1 ? n.outerHTML : (n.nodeType === 3 ? esc(n.textContent) : '');
+        });
+        if (cur.title || !blankHtml(cur.html)) out.push(cur);
+        return out;
+    }
+    function viewHtml(n) {
+        const parts = splitHtml(n.html).filter((s) => s.title).length;
+        return `<div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${n.html || ''}</div>`
+            + (parts >= 2 ? `<button type="button" class="pbn-split" data-nsplit>Make each heading its own note (${parts})</button>` : '');
     }
     // Open or fold one card in place, on the house curve.
     function foldNote(id, open) {
@@ -2724,7 +2757,7 @@
             return;
         }
         card.classList.remove('is-editing');
-        card.querySelector('.pbn-body').innerHTML = `<div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${(n && n.html) || ''}</div>`;
+        card.querySelector('.pbn-body').innerHTML = n ? viewHtml(n) : '';
         // Saved: it folds to its title and a line of what it says.
         if (n) card.querySelector('.pbn-peek').textContent = peekOf(n);
         foldNote(id, false);
@@ -2795,6 +2828,19 @@
         const i = NOTES.findIndex((x) => x.id === id);
         if (i < 0) return;
         if (e.target.closest('[data-ndone]')) { closeEditor(true); return; }
+        if (e.target.closest('[data-nsplit]')) {
+            // One note an item: the lines before the first heading keep this note's title, each heading becomes a note.
+            const parts = splitHtml(NOTES[i].html);
+            if (parts.length < 2 || NOTES.length - 1 + parts.length > 40) { toast('A version keeps up to 40 rules and notes.', 'error'); return; }
+            const made = parts.map((s, k) => ({ id: k ? uid('n') : NOTES[i].id, kind: 'text', title: (s.title || (k === 0 ? NOTES[i].title : '')).slice(0, 160), html: s.html }));
+            NOTES.splice(i, 1, ...made);
+            made.forEach((m) => OPEN_N.delete(m.id));
+            NEW_NOTE = null;
+            renderNotes();
+            rulesDirty();
+            toast(`Made ${made.length} notes, one an item.`);
+            return;
+        }
         if (e.target.closest('[data-ntoggle]')) {
             // Folding the one being written saves it and folds it, as Done does.
             if (R_EDIT === id) closeEditor(true); else foldNote(id, !card.classList.contains('is-open'));

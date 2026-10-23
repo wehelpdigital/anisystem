@@ -29,9 +29,9 @@ final class ProtocolNotes
         $kept = is_array($v->notes ?? null) ? $v->notes : null;
         $out = [];
         if ($kept === null) {
-            $html = trim((string) ($v->rules ?? ''));
-            if ($html !== '') {
-                $out[] = ['id' => 'n_rules', 'kind' => 'text', 'title' => '', 'html' => $html];
+            // The one document of before, one entry a heading (2026-10-24, the owner: fold "per item").
+            foreach (self::split((string) ($v->rules ?? '')) as $k => $s) {
+                $out[] = ['id' => 'n_rules' . ($k ?: ''), 'kind' => 'text', 'title' => $s['title'], 'html' => $s['html']];
             }
         } else {
             foreach ($kept as $e) {
@@ -42,7 +42,8 @@ final class ProtocolNotes
                     if (isset($files[(string) ($e['fileId'] ?? '')])) {
                         $out[] = ['id' => (string) $e['id'], 'kind' => 'file', 'title' => (string) ($e['title'] ?? ''), 'fileId' => (string) $e['fileId']];
                     }
-                } else {
+                } elseif (trim((string) ($e['title'] ?? '')) !== '' || ! self::blank((string) ($e['html'] ?? ''))) {
+                    // A note left with no title and nothing in it is not one.
                     $out[] = ['id' => (string) $e['id'], 'kind' => 'text', 'title' => (string) ($e['title'] ?? ''), 'html' => (string) ($e['html'] ?? '')];
                 }
             }
@@ -132,24 +133,101 @@ final class ProtocolNotes
         $v->forceFill(['notes' => array_values($entries), 'rules' => self::compose($entries)]);
     }
 
-    /** A written entry added at the end (a plan's recommendations), once by its title. Returns whether it was added. */
+    /**
+     * A plan's recommendations added at the end, one entry an item (2026-10-24, the owner: the notes should fold
+     * "per item"): each heading of the plan's words its own entry, the lines before the first under `$title`. Once:
+     * not again while an entry carries the plan's own first line. Returns whether they were added.
+     */
     public static function append(AsProtocolVersion $v, string $title, string $html): bool
     {
         $entries = self::entries($v);
+        $head = self::firstLine($html);
         foreach ($entries as $e) {
-            if ($e['kind'] === 'text' && $e['title'] === $title) {
+            if ($e['kind'] === 'text' && ($e['title'] === $title || ($head !== '' && str_contains(self::firstLine((string) $e['html']), $head)))) {
                 return false;
             }
         }
-        $entries[] = ['id' => 'n_' . bin2hex(random_bytes(5)), 'kind' => 'text', 'title' => mb_substr($title, 0, 160), 'html' => HtmlSanitizer::rich($html)];
-        self::put($v, $entries);
+        self::put($v, array_merge($entries, self::first($title, $html)));
 
         return true;
     }
 
-    /** A new version's first entry, as a value for `notes`. */
+    /** A plan's words as new entries, one an item (each heading its own), for `notes`. */
     public static function first(string $title, string $html): array
     {
-        return [['id' => 'n_' . bin2hex(random_bytes(5)), 'kind' => 'text', 'title' => mb_substr($title, 0, 160), 'html' => HtmlSanitizer::rich($html)]];
+        return array_map(fn ($s) => ['id' => 'n_' . bin2hex(random_bytes(5)), 'kind' => 'text', 'title' => mb_substr($s['title'] !== '' ? $s['title'] : $title, 0, 160), 'html' => HtmlSanitizer::rich($s['html'])],
+            self::split($html));
+    }
+
+    private static function firstLine(string $html): string
+    {
+        return preg_match('#^\s*<p>(.*?)</p>#s', $html, $m) ? trim(strip_tags($m[1])) : '';
+    }
+
+    /**
+     * Words cut at their headings: an h1 to h4, or a paragraph that is nothing
+     * but bold words. Each heading starts a section titled with it; what comes
+     * before the first heading is a section with no title. The JS twin is
+     * splitHtml() in the builder.
+     *
+     * @return list<array{title: string, html: string}>
+     */
+    public static function split(string $html): array
+    {
+        $html = trim($html);
+        if ($html === '') {
+            return [];
+        }
+        $doc = new \DOMDocument();
+        $prev = libxml_use_internal_errors(true);
+        $doc->loadHTML('<?xml encoding="utf-8"?><div id="r">' . $html . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+        libxml_use_internal_errors($prev);
+        $root = $doc->getElementById('r') ?? $doc->documentElement;
+        $out = [];
+        $cur = ['title' => '', 'html' => ''];
+        foreach (iterator_to_array($root->childNodes) as $node) {
+            $heading = self::headingOf($node);
+            if ($heading !== null) {
+                if ($cur['title'] !== '' || ! self::blank($cur['html'])) {
+                    $out[] = $cur;
+                }
+                $cur = ['title' => $heading, 'html' => ''];
+
+                continue;
+            }
+            $cur['html'] .= $doc->saveHTML($node);
+        }
+        if ($cur['title'] !== '' || ! self::blank($cur['html'])) {
+            $out[] = $cur;
+        }
+
+        return $out ?: [['title' => '', 'html' => $html]];
+    }
+
+    /** The words of a heading node, or null when it is not one. */
+    private static function headingOf(\DOMNode $n): ?string
+    {
+        if (! $n instanceof \DOMElement) {
+            return null;
+        }
+        $tag = strtolower($n->tagName);
+        $text = trim(preg_replace('/\s+/u', ' ', (string) $n->textContent));
+        if ($text === '' || mb_strlen($text) > 120) {
+            return null;
+        }
+        if (in_array($tag, ['h1', 'h2', 'h3', 'h4'], true)) {
+            return rtrim($text, ':');
+        }
+        if ($tag !== 'p') {
+            return null;
+        }
+        // A paragraph that is all bold: its only non-blank child is a <strong> or <b>.
+        $kids = array_values(array_filter(iterator_to_array($n->childNodes), fn ($k) => ! ($k instanceof \DOMText && trim($k->textContent) === '')));
+        if (count($kids) === 1 && $kids[0] instanceof \DOMElement && in_array(strtolower($kids[0]->tagName), ['strong', 'b'], true)) {
+            return rtrim($text, ':');
+        }
+
+        return null;
     }
 }
