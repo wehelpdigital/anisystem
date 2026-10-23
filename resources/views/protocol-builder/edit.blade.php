@@ -557,13 +557,34 @@
     @keyframes pbrSlide { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
     .pbr-empty { font-size: .8rem; color: var(--color-gray-400); padding: .2rem 0 .5rem; }
     /* Rules & notes as entries (2026-10-24): one card each, written or a file, moved up or down, written ones open their editor in place. */
-    .pbn-list { display: grid; gap: .6rem; margin-bottom: .7rem; }
-    .pbn { border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); overflow: hidden;
+    .pbn-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: .6rem; margin-bottom: .7rem; }
+    .pbn { min-width: 0; border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white);
         transition: box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .pbn.is-new { animation: pbIn .32s cubic-bezier(.22,1,.36,1); }
     .pbn.is-gone { opacity: 0; transform: translateX(10px); }
     .pbn.is-editing { border-color: #9cc46f; box-shadow: 0 0 0 3px rgb(107 159 61 / .14); }
-    .pbn-h { display: flex; align-items: center; gap: .5rem; padding: .5rem .55rem .5rem .6rem; border-bottom: 1px solid var(--color-gray-100); background: var(--color-gray-50); }
+    .pbn-h { display: flex; align-items: center; gap: .5rem; padding: .5rem .55rem .5rem .6rem; border-bottom: 1px solid transparent; background: var(--color-gray-50); border-radius: 1rem 1rem 0 0;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1); }
+    .pbn.is-open .pbn-h { border-bottom-color: var(--color-gray-100); }
+    /* Folded: the title and one line of what it says; open: the whole of it (2026-10-24). */
+    .pbn-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .pbn.is-open .pbn-fold { grid-template-rows: 1fr; }
+    .pbn-fold-in { min-height: 0; overflow: hidden; }
+    .pbn.is-editing .pbn-fold-in { overflow: visible; }
+    .pbn-peek { display: block; width: 100%; text-align: left; padding: .45rem .9rem .6rem 3.15rem; font-size: .8rem; line-height: 1.45; color: var(--color-gray-500);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-height: 2.6rem; border-radius: 0 0 1rem 1rem; cursor: pointer;
+        transition: max-height .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .pbn-peek:hover { color: var(--color-gray-700); }
+    .pbn.is-open .pbn-peek { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; pointer-events: none; }
+    .pbn-chev svg { transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .pbn.is-open .pbn-chev svg { transform: rotate(180deg); }
+    .pbn-all { flex: none; font-size: .74rem; font-weight: 800; color: #3d6823; padding: .25rem .6rem; border-radius: 999px; border: 1px solid #cfe3b8; background: #f3f9ec;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .pbn-all:hover { background: #e6f2d6; }
+    html.dark .pbn-all { color: #bfe3a0; border-color: #2f4520; background: #1a2513; }
+    html.dark .pbn.is-open .pbn-h { border-bottom-color: #222b1a; }
+    html.dark .pbn-peek { color: #9aa78d; }
+    @media (prefers-reduced-motion: reduce) { .pbn-fold, .pbn-peek, .pbn-chev svg { transition: none; } }
     .pbn-e { flex: none; width: 2rem; height: 2rem; border-radius: .6rem; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; background: #eef6e6; }
     .pbn[data-kind="file"] .pbn-e { background: #eef3fb; }
     .pbn-title { flex: 1 1 auto; min-width: 0; border: 0; background: transparent; padding: .35rem .3rem; border-radius: .5rem; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
@@ -588,7 +609,7 @@
     .pbn-adds .pbt-add { flex: 1 1 12rem; justify-content: center; }
     .pbn-sizes { margin: .45rem 0 0; }
     html.dark .pbn { background: #151b12; border-color: #2b3a1c; }
-    html.dark .pbn-h { background: #12170f; border-color: #222b1a; }
+    html.dark .pbn-h { background: #12170f; border-bottom-color: transparent; }
     html.dark .pbn-title, html.dark .pbn-file a, html.dark .pbn-file span.n { color: #e8efe1; }
     html.dark .pbn-title:focus { background: #0f140c; }
     html.dark .pbn-view { color: #cfdcc2; }
@@ -725,7 +746,7 @@
     {{-- Rules & notes as many entries (2026-10-24, the owner): each one written, or a file (a label, a leaflet, a soil test). --}}
     <div class="pb-panel" id="pbPanelRules" data-panel="rules" role="tabpanel" hidden>
         <div class="card pbr-card">
-            <div class="pbr-h"><b>Rules &amp; notes{{ \App\Support\Tagalog::flag('protocol-rules') }}</b><span class="pb-save" id="pbRulesState" aria-live="polite"></span></div>
+            <div class="pbr-h"><b>Rules &amp; notes{{ \App\Support\Tagalog::flag('protocol-rules') }}</b><span class="pb-save" id="pbRulesState" aria-live="polite"></span><button type="button" class="pbn-all" id="pbNotesAll" hidden>Open all</button></div>
             <p class="pbh-hint">As many as you need: when not to spray, how to mix, what to watch for, who to call. Write one, or upload a label, a leaflet or a soil test. They save as you go.</p>
             <div class="pbn-list" id="pbNotes"></div>
             <div class="pbn-adds">
@@ -2613,28 +2634,56 @@
         if (n) n.html = blankHtml(RQ.root.innerHTML) ? '' : RQ.root.innerHTML;
     }
     const payload = () => { syncEditor(); return NOTES.map((n) => (n.kind === 'file' ? { id: n.id, kind: 'file', title: n.title || '', fileId: n.fileId } : { id: n.id, kind: 'text', title: n.title || '', html: n.html || '' })); };
+    /* Folded by default (2026-10-24, the owner: "added note once saved should be contractable expandable to make it look
+       good"): a closed entry is its title and a line of what it says; the arrow, or that line, opens it; Done folds it. */
+    const OPEN_N = new Set();
+    const CHEV_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+    function peekOf(n) {
+        if (n.kind === 'file') { const f = n.file || {}; return (f.name || 'File') + (f.size ? ' · ' + fileSize(f.size) : ''); }
+        const words = String(n.html || '').replace(/<\/h[1-6][^>]*>/gi, '. ').replace(/<(br|\/p|\/li)[^>]*>/gi, ' ').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+        return words ? (words.length > 160 ? words.slice(0, 157) + '…' : words) : 'Nothing written yet. Tap to write.';
+    }
     function noteCard(n, i) {
         const first = i === 0, last = i === NOTES.length - 1;
         const moves = `<button type="button" class="pb-mini" data-nup aria-label="Move up" title="Move up"${first ? ' disabled' : ''}>${UP_SVG}</button><button type="button" class="pb-mini" data-ndown aria-label="Move down" title="Move down"${last ? ' disabled' : ''}>${DOWN_SVG}</button>`;
+        const open = OPEN_N.has(n.id);
+        const chev = `<button type="button" class="pb-mini pbn-chev" data-ntoggle aria-expanded="${open}" aria-label="${open ? 'Fold' : 'Open'}" title="${open ? 'Fold' : 'Open'}">${CHEV_SVG}</button>`;
+        const peek = `<button type="button" class="pbn-peek" data-ntoggle tabindex="-1">${esc(peekOf(n))}</button>`;
+        const shell = (kind, head, body) => `<div class="pbn${open ? ' is-open' : ''}${NEW_NOTE === n.id ? ' is-new' : ''}" data-nid="${esc(n.id)}" data-kind="${kind}">${head}${peek}<div class="pbn-fold"><div class="pbn-fold-in">${body}</div></div></div>`;
         if (n.kind === 'file') {
             const f = n.file || {};
             const pic = /^image\//i.test(f.mime || '') && f.url;
-            return `<div class="pbn${NEW_NOTE === n.id ? ' is-new' : ''}" data-nid="${esc(n.id)}" data-kind="file">
-                <div class="pbn-h"><span class="pbn-e">${fileIcon(f)}</span><input class="pbn-title" data-ntitle value="${esc(n.title || '')}" placeholder="${esc(f.name || 'A file')}" maxlength="160" aria-label="Title of the file">
-                    <span class="pbn-acts">${moves}${f.url ? `<a class="pb-mini" href="${esc(f.url)}" target="_blank" rel="noopener" aria-label="Open" title="Open">${OPEN_SVG}</a>` : ''}<button type="button" class="pb-mini is-x" data-ndel aria-label="Delete the file" title="Delete">${BIN_SVG}</button></span></div>
-                <div class="pbn-body"><div class="pbn-file">${f.url ? `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name || 'File')}</a>` : `<span class="n">${esc(f.name || 'File')}</span>`}<small>${fileSize(f.size || 0)}${f.at ? ' · ' + esc(f.at) : ''}</small></div>${pic ? `<img class="pbn-pic" src="${esc(f.url)}" alt="${esc(n.title || f.name || '')}" loading="lazy">` : ''}</div>
-            </div>`;
+            return shell('file', `<div class="pbn-h"><span class="pbn-e">${fileIcon(f)}</span><input class="pbn-title" data-ntitle value="${esc(n.title || '')}" placeholder="${esc(f.name || 'A file')}" maxlength="160" aria-label="Title of the file">
+                    <span class="pbn-acts">${moves}${f.url ? `<a class="pb-mini" href="${esc(f.url)}" target="_blank" rel="noopener" aria-label="Open the file" title="Open the file">${OPEN_SVG}</a>` : ''}<button type="button" class="pb-mini is-x" data-ndel aria-label="Delete the file" title="Delete">${BIN_SVG}</button>${chev}</span></div>`,
+                `<div class="pbn-body"><div class="pbn-file">${f.url ? `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.name || 'File')}</a>` : `<span class="n">${esc(f.name || 'File')}</span>`}<small>${fileSize(f.size || 0)}${f.at ? ' · ' + esc(f.at) : ''}</small></div>${pic ? `<img class="pbn-pic" src="${esc(f.url)}" alt="${esc(n.title || f.name || '')}" loading="lazy">` : ''}</div>`);
         }
-        return `<div class="pbn${NEW_NOTE === n.id ? ' is-new' : ''}" data-nid="${esc(n.id)}" data-kind="text">
-            <div class="pbn-h"><span class="pbn-e">📝</span><input class="pbn-title" data-ntitle value="${esc(n.title || '')}" placeholder="Add a title" maxlength="160" aria-label="Title of the note">
-                <span class="pbn-acts">${moves}<button type="button" class="pb-mini" data-nedit aria-label="Edit" title="Edit">${PEN_SVG}</button><button type="button" class="pb-mini is-x" data-ndel aria-label="Delete the note" title="Delete">${BIN_SVG}</button></span></div>
-            <div class="pbn-body"><div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${n.html || ''}</div></div>
-        </div>`;
+        return shell('text', `<div class="pbn-h"><span class="pbn-e">📝</span><input class="pbn-title" data-ntitle value="${esc(n.title || '')}" placeholder="Add a title" maxlength="160" aria-label="Title of the note">
+                <span class="pbn-acts">${moves}<button type="button" class="pb-mini" data-nedit aria-label="Edit" title="Edit">${PEN_SVG}</button><button type="button" class="pb-mini is-x" data-ndel aria-label="Delete the note" title="Delete">${BIN_SVG}</button>${chev}</span></div>`,
+            `<div class="pbn-body"><div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${n.html || ''}</div></div>`);
+    }
+    // Open or fold one card in place, on the house curve.
+    function foldNote(id, open) {
+        const card = $id('pbNotes').querySelector(`.pbn[data-nid="${CSS.escape(id)}"]`);
+        if (open) OPEN_N.add(id); else OPEN_N.delete(id);
+        if (!card) return;
+        card.classList.toggle('is-open', open);
+        const b = card.querySelector('.pbn-chev');
+        if (b) { b.setAttribute('aria-expanded', String(open)); b.setAttribute('aria-label', open ? 'Fold' : 'Open'); b.title = open ? 'Fold' : 'Open'; }
+        paintAll();
+    }
+    function paintAll() {
+        const b = $id('pbNotesAll');
+        if (!b) return;
+        b.hidden = NOTES.length < 2;
+        const all = NOTES.length && NOTES.every((n) => OPEN_N.has(n.id));
+        b.textContent = all ? 'Fold all' : 'Open all';
+        b.dataset.all = all ? '1' : '';
     }
     function renderNotes() {
         closeEditor(false);
         $id('pbNotes').innerHTML = NOTES.length ? NOTES.map(noteCard).join('') : '<p class="pbr-empty">No rules or notes yet. Write one, or upload a file.</p>';
         NEW_NOTE = null;
+        paintAll();
     }
     // One editor at a time: the card's words become the editor, and Done gives them back.
     function openEditor(id, focus) {
@@ -2643,6 +2692,7 @@
         const n = NOTES.find((x) => x.id === id);
         const card = $id('pbNotes').querySelector(`.pbn[data-nid="${CSS.escape(id)}"]`);
         if (!n || !card || !window.Quill) return;
+        foldNote(id, true);
         const body = card.querySelector('.pbn-body');
         body.innerHTML = `<div class="pbr-ed">${n.html || ''}</div><div class="pbn-done"><button type="button" class="pbt-add" data-ndone>Done</button></div>`;
         const host = body.querySelector('.pbr-ed');
@@ -2675,6 +2725,9 @@
         }
         card.classList.remove('is-editing');
         card.querySelector('.pbn-body').innerHTML = `<div class="pbn-view rich-text" data-nview data-empty="Tap to write.">${(n && n.html) || ''}</div>`;
+        // Saved: it folds to its title and a line of what it says.
+        if (n) card.querySelector('.pbn-peek').textContent = peekOf(n);
+        foldNote(id, false);
         flushRules();
     }
     function rulesDirty() {
@@ -2717,6 +2770,11 @@
     function ensureRules() { if (!window.Quill && !ensureRules.waiting) { ensureRules.waiting = true; } }
     R_LAST = JSON.stringify(payload());
 
+    $id('pbNotesAll').addEventListener('click', () => {
+        const open = !$id('pbNotesAll').dataset.all;
+        if (!open && R_EDIT) closeEditor(true);
+        NOTES.forEach((n) => foldNote(n.id, open));
+    });
     $id('pbNoteAdd').addEventListener('click', () => {
         if (NOTES.length >= 40) { toast('A version keeps up to 40 rules and notes.', 'error'); return; }
         closeEditor(true);
@@ -2737,6 +2795,11 @@
         const i = NOTES.findIndex((x) => x.id === id);
         if (i < 0) return;
         if (e.target.closest('[data-ndone]')) { closeEditor(true); return; }
+        if (e.target.closest('[data-ntoggle]')) {
+            // Folding the one being written saves it and folds it, as Done does.
+            if (R_EDIT === id) closeEditor(true); else foldNote(id, !card.classList.contains('is-open'));
+            return;
+        }
         if (e.target.closest('[data-nedit]') || e.target.closest('[data-nview]')) { if (!e.target.closest('a')) openEditor(id, true); return; }
         const up = e.target.closest('[data-nup]'), down = e.target.closest('[data-ndown]');
         if (up || down) {
