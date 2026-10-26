@@ -141,6 +141,30 @@ class MarketLoadCommand extends Command
         foreach (array_chunk($events, 100) as $chunk) {
             DB::table('as_market_events')->insert($chunk);
         }
+        // An event the daily news brought that the research also tells (the same crop and kind within two weeks)
+        // folds into the researched one: its newsrooms join that one's sources, and the story points to it.
+        $merged = 0;
+        foreach (DB::table('as_market_events')->where('eventKey', 'like', 'n%')->get() as $n) {
+            $crops = (array) json_decode((string) $n->crops, true);
+            $twin = DB::table('as_market_events')->where('eventKey', 'not like', 'n%')
+                ->whereBetween('day', [\Illuminate\Support\Carbon::parse($n->day)->subDays(14)->toDateString(), \Illuminate\Support\Carbon::parse($n->day)->addDays(14)->toDateString()])
+                ->get()->first(fn ($e) => \App\Support\MarketNews::sameEvent($e, (string) $n->kind, (string) $n->day, $crops));
+            if (! $twin) {
+                continue;
+            }
+            $src = (array) json_decode((string) $twin->sources, true);
+            foreach ((array) json_decode((string) $n->sources, true) as $s) {
+                if (! in_array($s['url'] ?? '', array_column($src, 'url'), true)) {
+                    $src[] = $s;
+                }
+            }
+            DB::table('as_market_events')->where('id', $twin->id)->update(['sources' => json_encode(array_values($src)), 'updated_at' => $now]);
+            DB::table('as_market_events')->where('id', $n->id)->delete();
+            if (Schema::hasTable('as_market_news_seen')) {
+                DB::table('as_market_news_seen')->where('eventKey', $n->eventKey)->update(['eventKey' => $twin->eventKey]);
+            }
+            $merged++;
+        }
         $imports = [];
         foreach ((array) ($doc['imports'] ?? []) as $i) {
             if (! is_numeric($i['tons'] ?? null) || ! (int) ($i['year'] ?? 0)) {
@@ -153,6 +177,6 @@ class MarketLoadCommand extends Command
         foreach (array_chunk($imports, 200) as $chunk) {
             DB::table('as_market_imports')->insert($chunk);
         }
-        $this->info('events: ' . count($events) . ', import rows: ' . count($imports));
+        $this->info('events: ' . count($events) . ($merged ? ', news events folded in: ' . $merged : '') . ', import rows: ' . count($imports));
     }
 }

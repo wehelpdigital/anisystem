@@ -693,7 +693,9 @@
             tip: (r) => '<b>' + esc(peso(r.v)) + '</b>' + esc(r.y + (r.fc ? (r.part !== undefined ? ', ' + r.part + ' months known and the rest forecast' : ', forecast') : (r.part ? ', ' + r.part + ' months on record' : ', yearly average')))
                 + (r.lo ? '<small>Likely ' + esc(peso(r.lo)) + ' to ' + esc(peso(r.hi)) + '</small>' : '')
                 + (r.mark ? '<small>' + esc(o.events.filter((e) => Number(e.day.slice(0, 4)) === r.y).slice(0, 3).map((e) => e.title).join('; ')) + '</small>' : '') });
-        if ($('mpC4')) yearsChart($('mpC4'), o.imports.map((i) => ({ y: i.y, v: i.tons, fc: false })), { tick: (v) => (v >= 1e6 ? (v / 1e6) + 'M' : (v >= 1e3 ? Math.round(v / 1e3) + 'K' : v)),
+        // Every year in its place, a year with no figure left empty.
+        const impRows = []; if (o.imports.length) for (let y = o.imports[0].y; y <= o.imports[o.imports.length - 1].y; y++) { const i = o.imports.find((x) => x.y === y); impRows.push({ y, v: i ? i.tons : null, fc: false }); }
+        if ($('mpC4')) yearsChart($('mpC4'), impRows, { tick: (v) => (v >= 1e6 ? (v / 1e6) + 'M' : (v >= 1e3 ? Math.round(v / 1e3) + 'K' : v)),
             label: (v) => (v >= 1e6 ? (v / 1e6).toFixed(1) + 'M' : Math.round(v / 1e3) + 'K') + ' t', aria: 'Imports a year in tons.',
             tip: (r) => { const i = o.imports.find((x) => x.y === r.y); return '<b>' + esc(Math.round(r.v).toLocaleString('en-PH')) + ' tons</b>' + esc(r.y + (i && i.partial ? ', the year so far' : '')) + (i && i.basis ? '<small>' + esc(i.basis) + '</small>' : ''); } });
         paintEvents(5);

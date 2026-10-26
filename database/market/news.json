@@ -1,0 +1,3690 @@
+{
+ "built": "2026-10-27",
+ "events": [
+  {
+   "id": "e001",
+   "crop_keys": [
+    "banana"
+   ],
+   "date": "2012-05",
+   "end_date": null,
+   "kind": "export",
+   "direction": "down",
+   "title": "China tightens checks on Philippine bananas during sea dispute",
+   "summary": "From the first half of 2012 China applied strict plant health checks on Philippine bananas during the Scarborough Shoal standoff. Most exporters stopped shipping to China, a market for 20% to 30% of the industry's fruit and up to 90% for some small growers, and rejected cargo meant lost income for growers.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Mindanao",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/north-america/article/2096668/philippine-firms-stop-sending-bananas-to-china/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    },
+    {
+     "url": "https://www.freshfruitportal.com/news/2012/09/27/philippines-looks-to-new-banana-markets-amid-chinese-debacle/",
+     "publisher": "FreshFruitPortal",
+     "type": "industry"
+    }
+   ],
+   "quote": "Most of us have stopped shipping to China on the advice of the buyers (Chinese)."
+  },
+  {
+   "id": "e002",
+   "crop_keys": [
+    "carrot",
+    "potato"
+   ],
+   "date": "2012-10",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Cheap Chinese carrots and potatoes flood markets in 2012",
+   "summary": "In October 2012 Benguet traders said imported Chinese vegetables, mostly carrots and potatoes and some broccoli and cauliflower, were competing hard with local produce. Manila traders bought less often and vegetable prices fell, with potatoes at P30 to P50 a kilo and carrots P20 to P45.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Prices cited in the report (October 2012): potatoes P30 to P50/kg, carrots P20 to P45/kg, cabbage P16 to P20/kg",
+   "scope": "Benguet",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/north-america/article/2101619/philippines-chinese-vegetables-flood-market/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    }
+   ],
+   "quote": "especially carrots and potatoes that are heavily competing with our local produce."
+  },
+  {
+   "id": "e003",
+   "crop_keys": [
+    "garlic"
+   ],
+   "date": "2014",
+   "end_date": null,
+   "kind": "other",
+   "direction": "up",
+   "title": "Garlic jumps from P80 to P300 a kilo as one group corners import permits",
+   "summary": "In 2014 garlic prices rose from about P80 a kilo to a peak of P300. Investigators later found one importer group held at least 75% of garlic import permits and controlled supply, while imports met about 73% of demand. Charges were filed in January 2015.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/content/400020/nbi-sues-garlic-traders-gov-t-officials-for-price-surges/story",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://www.freshplaza.com/north-america/article/2159315/filipino-garlic-scam-saga-continues/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    }
+   ],
+   "quote": "spiked garlic prices from P80 to as much as P300 per kilo in 2014"
+  },
+  {
+   "id": "e004",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2015-01-01",
+   "end_date": null,
+   "kind": "tariff",
+   "direction": "down",
+   "title": "Tariff on sugar from Southeast Asia falls to 5% under the regional free trade deal",
+   "summary": "Under the ASEAN free trade deal, the tariff on sugar from neighbors fell from 38% in 2011 to 28%, 18%, then 10% in 2014 and 5% in 2015. Sugar farm prices had already eased from P32.50 a kilo in 2010 to P27.09 in 2013, and the sugar agency warned farmers would need to produce for under P1,000 a bag to compete.",
+   "import_tons": null,
+   "tariff_from": 10,
+   "tariff_to": 5,
+   "farmgate_note": "Sugar farmgate price P32.50/kg (2010), P30.84 (2011), P28.03 (2012), P27.09 (2013)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/topstories/specialreports/357081/afta-and-the-sugar-industry-tiempo-muerto-or-tiempo-suerte/story/",
+     "publisher": "GMA News (PCIJ)",
+     "type": "news"
+    },
+    {
+     "url": "https://oxfordbusinessgroup.com/articles-interviews/exports-down-demand-up-for-the-philippines-sugar",
+     "publisher": "Oxford Business Group",
+     "type": "other"
+    }
+   ],
+   "quote": "In 2011, it was at 38 percent; this was brought down to 28 percent in 2012, and then to 18 percent in 2013."
+  },
+  {
+   "id": "e005",
+   "crop_keys": [
+    "corn_yellow",
+    "corn_white"
+   ],
+   "date": "2016",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Feed wheat imports pull down local corn prices in 2016",
+   "summary": "Local corn prices kept falling in 2016 because of large feed wheat imports, which feed millers used in place of corn. Average farm prices fell 1.75% for yellow corn and 5.81% for white corn from 2015. Corn imports also rose 39% to 718,000 tons, mostly from Thailand.",
+   "import_tons": 718000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Yellow corn farmgate down 1.75% and white corn down 5.81% in 2016 vs 2015",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-17-2017.pdf",
+     "publisher": "USDA FAS Grain and Feed Annual, Manila, March 2017",
+     "type": "government"
+    }
+   ],
+   "quote": "Local corn prices continued to decline in CY 2016 due to significant feed wheat imports during the year."
+  },
+  {
+   "id": "e006",
+   "crop_keys": [
+    "banana",
+    "pineapple"
+   ],
+   "date": "2016-10-07",
+   "end_date": null,
+   "kind": "export",
+   "direction": "up",
+   "title": "China lifts its 2016 ban on Philippine banana and pineapple exporters",
+   "summary": "Early in 2016 China blacklisted 32 Philippine banana and pineapple exporters over pest findings, and fruit exports to China fell 15% in volume in the first half. In October 2016 China lifted the ban and 28 exporters could trade again, which the agriculture chief said would relieve banana farmers.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Mindanao",
+   "sources": [
+    {
+     "url": "https://www.itfnet.org/v1/?p=10710",
+     "publisher": "The Philippine Star via ITFNet",
+     "type": "news"
+    },
+    {
+     "url": "https://www.producereport.com/print/436",
+     "publisher": "Produce Report",
+     "type": "industry"
+    }
+   ],
+   "quote": "The Chinese government has lifted the ban on the import of bananas coming from the Philippines."
+  },
+  {
+   "id": "e007",
+   "crop_keys": [
+    "garlic"
+   ],
+   "date": "2017-05",
+   "end_date": "2017-07-12",
+   "kind": "other",
+   "direction": "up",
+   "title": "Slow garlic imports push garlic prices to P200 a kilo",
+   "summary": "From January to May 2017 permits allowed 57,150 tons of garlic imports but only about 12,440 tons arrived, and garlic rose from about P150 to P160 a kilo to P200. In July the DA banned 43 importers that had brought in only 19,000 of 70,000 tons allowed for the first half, saying a cartel was controlling prices.",
+   "import_tons": 12440,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://interaksyon.philstar.com/?p=75503",
+     "publisher": "Interaksyon (Philstar)",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/headlines/2017/07/12/1719123/headlines",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "57,150 metric tons of garlic should have come in between January and May"
+  },
+  {
+   "id": "e008",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2018-04",
+   "end_date": null,
+   "kind": "other",
+   "direction": "up",
+   "title": "NFA rice runs out while imports lag, palay climbs to P20.46",
+   "summary": "By April 2018 the NFA's rice stocks were used up and 250,000 tons of government imports from Vietnam and Thailand were not due until end of May. Palay prices rose for a third straight month to an average of P20.46 a kilo, from P18.60 a year earlier.",
+   "import_tons": 250000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Average palay price P20.46/kg vs P18.60/kg a year earlier (PSA, early 2018)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://philstar.com/headlines/2018/04/09/1804242/rice-prices-3rd-month",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "the average price of palay went up to P20.46 per kilogram from P18.60 per kg last year"
+  },
+  {
+   "id": "e009",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2018-11",
+   "end_date": "2019-03-05",
+   "kind": "import_order",
+   "direction": "down",
+   "title": "Unlimited private rice imports allowed ahead of the tariff law",
+   "summary": "In November 2018 the NFA Council let private traders import rice without volume limits, paying 35% for Southeast Asian rice and 50% for others. By December, 90 firms had applied to bring in 572,278 tons. The agriculture chief warned prices could fall to where some could no longer make money.",
+   "import_tons": 572278,
+   "tariff_from": null,
+   "tariff_to": 35,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2018/12/10/1875631/more-rice-imports-arriving/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "Last month, the interagency National Food Authority Council (NFAC) allowed the unlimited importation of rice"
+  },
+  {
+   "id": "e010",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2019-01-23",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "down",
+   "title": "Plan to open sugar imports freely draws planter warnings of lower millgate prices",
+   "summary": "In January 2019 the budget secretary floated a plan to allow unrestricted sugar imports, citing high local sugar prices. Negros agrarian reform leaders signed a manifesto warning that open imports would bring lower millgate prices and push farmers into poverty and debt.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Negros Occidental",
+   "sources": [
+    {
+     "url": "https://ptvnews.ph/?p=102631",
+     "publisher": "PTV News",
+     "type": "government"
+    }
+   ],
+   "quote": "Unrestricted sugar importation will result in lower mill gate price and high cost of farm production."
+  },
+  {
+   "id": "e011",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2019-03-05",
+   "end_date": null,
+   "kind": "tariff",
+   "direction": "down",
+   "title": "Rice Tariffication Law starts, import limits replaced by a 35% tariff",
+   "summary": "From March 5, 2019 anyone could import rice by paying a tariff, 35% for rice from Southeast Asia, instead of the old import quotas. In the first year about 2.9 million tons came in and palay prices fell by about P3.62 a kilo on average, a loss farm groups put at P68 billion.",
+   "import_tons": 2900000,
+   "tariff_from": null,
+   "tariff_to": 35,
+   "farmgate_note": "Palay farmgate prices fell by P3.62/kg on average in the law's first year (Federation of Free Farmers study)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://archives.portcalls.com/imposition-rice-tariffs-begins-march-5/",
+     "publisher": "PortCalls Asia",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2020/02/22/1995025/farmers-lose-p68-billion-rice-tariffication-law",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "palay farmgate prices dipped by P3.62 per kilo"
+  },
+  {
+   "id": "e012",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2019-03-22",
+   "end_date": null,
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "Onion imports stopped while a cold storage cartel is probed",
+   "summary": "On March 22, 2019 the DA stopped bulb onion imports while competition and justice agencies probed traders accused of closing Nueva Ecija cold storages to force growers to sell cheap. Onion fell from P30 a kilo before harvest to about P15, and the DA set aside P200 million for farmer groups to buy members' onions.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Onion buying price fell from P30/kg before harvest to about P15/kg; top quality P15 to P16/kg in San Jose City, Nueva Ecija (March 2019)",
+   "scope": "Nueva Ecija",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2019/03/23/1903753/headlines",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/headlines/2019/03/25/1904242/headlines",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://ptvnews.ph/?p=112170",
+     "publisher": "PTV News",
+     "type": "government"
+    }
+   ],
+   "quote": "Prices of onion dropped from a high of P30 per kilo before harvest to only about P15 per kilo."
+  },
+  {
+   "id": "e013",
+   "crop_keys": [
+    "coconut"
+   ],
+   "date": "2019-06",
+   "end_date": null,
+   "kind": "export",
+   "direction": "down",
+   "title": "Copra falls to about P15 a kilo as world coconut oil prices slump",
+   "summary": "A world glut of vegetable oils, led by cheap palm oil, dragged down coconut oil prices from 2018. Since about 79% of coconut exports are coconut oil, copra followed: P15.23 a kilo in June 2019, down 37.76% from P24.47 a year before, and as low as P10.42 in Mimaropa by August.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Copra P15.23/kg as of June 19, 2019 vs P24.47/kg a year earlier; Mimaropa P10.42/kg in August 2019",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/amp/story/davao/business/value-adding-coconut",
+     "publisher": "SunStar Davao",
+     "type": "news"
+    },
+    {
+     "url": "https://www.sunstar.com.ph/davao/business/copra-gate-price-at-p15",
+     "publisher": "SunStar Davao",
+     "type": "news"
+    }
+   ],
+   "quote": "the farmgate price of copra has dropped to P15.23 per kilogram (kg)"
+  },
+  {
+   "id": "e014",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2019-08-05",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Palay drops to P12 to P14 a kilo as imported rice floods the market",
+   "summary": "By August 2019 traders were paying P12 to P14 a kilo for palay, down from a high of P20 the year before, and about 4,000 rice mills had stopped operating amid the flood of imported rice. Lawmakers called for a Senate review of the rice import law.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Palay P12 to P14/kg in August 2019 vs a high of P20/kg in 2018",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2019/08/05/1940713/piol-blames-economic-managers-palay-price-plunge/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "from a high of P20 per kilogram last year, to as low as P12 to P14 today."
+  },
+  {
+   "id": "e015",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2019-09",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Palay prices plunge about 24% in the third quarter of 2019",
+   "summary": "After the import door opened, government data showed palay prices fell 24.49% in the third quarter of 2019. In November the President said rice buying abroad should pause during harvest, but the DA kept imports going with stricter clearance rules instead.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Palay prices fell 24.49% in Q3 2019",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2019/11/21/1970678/da-rice-tariffication-law-will-be-pursued-stricter-measures-be-implemented/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.foodnavigator.com/Article/2019/12/10/Philippines-rice-saga-Government-confirms-stricter-import-controls-despite-President-s-pledge-to-ban-them/",
+     "publisher": "FoodNavigator Asia",
+     "type": "industry"
+    }
+   ],
+   "quote": "Government data shows prices of palay plunged 24.49% in the third quarter."
+  },
+  {
+   "id": "e016",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2019-09-04",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Palay sells for P7 to P8 a kilo in Pampanga, below rice bran",
+   "summary": "In early September 2019, months after rice imports were opened up, palay in San Luis, Pampanga sold for only P7 to P8 a kilo, less than the P12 for rice bran. Some farmers stored their harvest instead of selling and asked for the import law to be suspended.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Palay P7 to P8/kg in San Luis, Pampanga (September 2019); rice bran P12/kg",
+   "scope": "Pampanga",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/topstories/nation/706950/palay-prices-now-lower-than-that-of-darak/story",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "P7 to P8 per kilo"
+  },
+  {
+   "id": "e017",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2019-09-09",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Palay falls to P8 to P10 a kilo in Luzon, DA weighs a safeguard duty",
+   "summary": "In September 2019 government data showed palay in Luzon had dropped to P8 to P10 a kilo after imports jumped in the first half of the year. The DA considered an extra safeguard duty of up to 30% for one year on rice imports above the 350,000 ton access quota, on top of the 35% tariff.",
+   "import_tons": null,
+   "tariff_from": 35,
+   "tariff_to": null,
+   "farmgate_note": "Palay P8 to P10/kg in Luzon (PSA data cited September 2019)",
+   "scope": "Luzon",
+   "sources": [
+    {
+     "url": "https://businessmirror.com.ph/2019/09/09/da-to-slap-safeguard-duty-on-rice-imports/",
+     "publisher": "BusinessMirror",
+     "type": "news"
+    }
+   ],
+   "quote": "the average farm-gate price of unhusked rice plummeted to P8 per kilogram to P10 kg in Luzon"
+  },
+  {
+   "id": "e018",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2019-11-19",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "mixed",
+   "title": "President orders a rice import pause at harvest, DA tightens clearances instead",
+   "summary": "In November 2019 the President told the DA to stop buying rice abroad during harvest and to buy palay from farmers. The tariff law stayed, but rice importers had to meet stricter plant health clearance rules and the NFA was told to double its buffer stock with local palay.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2019/11/21/1970678/da-rice-tariffication-law-will-be-pursued-stricter-measures-be-implemented/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.foodnavigator.com/Article/2019/12/10/Philippines-rice-saga-Government-confirms-stricter-import-controls-despite-President-s-pledge-to-ban-them/",
+     "publisher": "FoodNavigator Asia",
+     "type": "industry"
+    }
+   ],
+   "quote": "directed Dar to pause the purchase of rice from abroad during harvest season to help local farmers"
+  },
+  {
+   "id": "e019",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2019-12",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Palay ends 2019 at P15.63 a kilo, 22% below 2018",
+   "summary": "At the end of 2019 the average farm price of palay was P15.63 a kilo, 22.4% below the 2018 level of P20.14. Reports said the main harvest plus imports flooding the market kept prices from recovering in the first year of open rice imports.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Average palay P15.63/kg at end of 2019 vs P20.14/kg in 2018",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2020/01/19/1985832/farm-gate-palay-prices-end-22-lower-2019/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "The current price is 22.4 percent lower than the P20.14 per kilo in 2018."
+  },
+  {
+   "id": "e020",
+   "crop_keys": [
+    "coconut"
+   ],
+   "date": "2020-01-17",
+   "end_date": null,
+   "kind": "export",
+   "direction": "up",
+   "title": "Copra recovers to P24 to P26 a kilo as world oil stocks shrink",
+   "summary": "By mid January 2020 Davao copra fetched P24 to P26 a kilo at the farm and P27 at the mill, up from about P15 in 2019. The coconut agency linked the rise to shrinking world coconut oil stocks and slower output, though cheap palm oil still held coconut oil back.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Copra farmgate P24 to P26/kg, millgate P27/kg in Davao (January 17, 2020)",
+   "scope": "Davao",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/davao/business/copra-prices-up",
+     "publisher": "SunStar Davao",
+     "type": "news"
+    },
+    {
+     "url": "https://www.sunstar.com.ph/davao/business/copra-gate-price-at-p15",
+     "publisher": "SunStar Davao",
+     "type": "news"
+    }
+   ],
+   "quote": "the farm gate price of copra pegged at P24 to P26 per kilogram (kg)"
+  },
+  {
+   "id": "e021",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2020-09",
+   "end_date": null,
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "DA asks rice importers to hold clearance requests during the 2020 harvest",
+   "summary": "Around September 2020 the DA asked rice importers to hold off on clearance requests so the wet season harvest would not push palay down further. Wet palay sold for P11 to P13 a kilo and dry as low as P16, as traders bought low fearing new import floods; 1.66 million tons had arrived from January to August.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Wet palay P11 to P13/kg, dry palay as low as P16/kg (September 2020); national average P18.39/kg in late August",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2020/11/23/2058691/business",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2020/09/15/2042410/business",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2020/10/20/2050778/business",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "give way to harvest season and not worsen the drop in palay (unhusked rice) prices"
+  },
+  {
+   "id": "e022",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2020-09",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Corn falls to about P9 a kilo, farmers blame feed wheat imports",
+   "summary": "In September 2020 the maize federation said corn farm prices hovered near P9 a kilo, below a P11.50 cost to produce, and blamed steady entry of imported feed wheat. Feed wheat imports in the first half were 1.259 million tons. The DA looked at letting corn be exported to stop the slide.",
+   "import_tons": 192349,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Corn farmgate about P9/kg vs production cost P11.50/kg (September 2020); traders buying at about P13/kg in Mindanao",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://businessmirror.com.ph/2020/09/15/da-eyeing-exports-of-corn-to-halt-farm-gate-price-slide/",
+     "publisher": "BusinessMirror",
+     "type": "news"
+    }
+   ],
+   "quote": "farm-gate prices are hovering in the vicinity of P9 per kilogram"
+  },
+  {
+   "id": "e023",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2021-05",
+   "end_date": null,
+   "kind": "tariff",
+   "direction": "down",
+   "title": "Tariff on rice from outside Southeast Asia cut to 35%",
+   "summary": "In May 2021 an order cut the tariff on rice from outside Southeast Asia to 35%, from 40% within the quota and 50% above it. Farm groups called it a blow to rice farmers because cheaper imports compete with their palay.",
+   "import_tons": null,
+   "tariff_from": 40,
+   "tariff_to": 35,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.manilatimes.net/2021/05/27/business/agribusiness/eo-135-good-economic-and-business-sense/1800790",
+     "publisher": "The Manila Times",
+     "type": "news"
+    }
+   ],
+   "quote": "lowered the tariff rates of imported rice"
+  },
+  {
+   "id": "e024",
+   "crop_keys": [
+    "carrot"
+   ],
+   "date": "2021-09-24",
+   "end_date": null,
+   "kind": "smuggling",
+   "direction": "down",
+   "title": "Smuggled Chinese carrots undercut Benguet carrots in Divisoria",
+   "summary": "In September 2021 carrots from China with no import permits were selling in Divisoria at P50 a kilo while Benguet carrots sold for P60 to P70. Benguet sellers said they had to cut prices to compete.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Imported carrots P50/kg vs Benguet carrots P60 to P70/kg in Divisoria (September 2021)",
+   "scope": "Benguet",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/804533/benguet-farmers-alarmed-over-smuggled-carrots-from-china/story",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "the imported carrots cost P50 per kilo while the Benguet carrots cost P60 to P70"
+  },
+  {
+   "id": "e025",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2022-02-11",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "mixed",
+   "title": "Court blocks a 200,000 ton refined sugar import order for a time",
+   "summary": "A February 2022 sugar order allowed 200,000 tons of refined sugar imports during the milling season. A Sagay City court issued a 20 day restraining order on February 11 after planters said the imports would hurt the price of their sugar.",
+   "import_tons": 200000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Negros Occidental",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/822093/negros-occidental-court-stops-gov-t-plan-to-import-200-000-metric-tons-of-sugar/story",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "this will negatively impact the price of sugar."
+  },
+  {
+   "id": "e026",
+   "crop_keys": [
+    "carrot"
+   ],
+   "date": "2022-03-29",
+   "end_date": null,
+   "kind": "smuggling",
+   "direction": "down",
+   "title": "Benguet growers lose P2.5 million a day to smuggled carrots",
+   "summary": "In March 2022 La Trinidad traders told senators that smuggled carrots, flooding markets since 2021, cut daily orders for Benguet vegetables by up to 40%, costing growers about P2.5 million a day. Buyers liked the imports because they keep for about two months.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Benguet",
+   "sources": [
+    {
+     "url": "https://asianews.network/?p=32127",
+     "publisher": "Philippine Daily Inquirer via Asia News Network",
+     "type": "news"
+    }
+   ],
+   "quote": "with daily orders declining by up to 40 percent due to the influx of smuggled carrots into markets."
+  },
+  {
+   "id": "e027",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2022-05-21",
+   "end_date": "2022-12-31",
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "Corn import tariff cut to 5% within quota and 15% above it",
+   "summary": "An order signed May 21, 2022 cut the corn tariff to 5% within the import quota, from 35%, and to 15% above it, from 50%, until December 31, 2022. With high world prices, yellow corn still rose at the farm from about P14 a kilo in 2021 to P17 in 2022; a think tank said cheaper imports slowed wholesale corn prices.",
+   "import_tons": null,
+   "tariff_from": 35,
+   "tariff_to": 5,
+   "farmgate_note": "Yellow corn farmgate about P14/kg in 2021 and P17/kg in 2022 (Foundation for Economic Freedom analysis of PSA data)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://portcalls.com/duterte-extends-cut-in-rice-meat-import-duties/",
+     "publisher": "PortCalls Asia",
+     "type": "news"
+    },
+    {
+     "url": "https://fef.org.ph/wp-content/uploads/2023/08/FEF-Position-Paper-EO-171-on-Corn.pdf",
+     "publisher": "Foundation for Economic Freedom",
+     "type": "other"
+    }
+   ],
+   "quote": "For corn, the in-quota MFN rate of duty is 5% and, for out-quota, 15%."
+  },
+  {
+   "id": "e028",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2022-08",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "mixed",
+   "title": "300,000 ton sugar import order recalled, smaller 150,000 ton import allowed",
+   "summary": "In August 2022 a sugar order for 300,000 tons of imports, later called illegal, was recalled, and the Palace then allowed a smaller 150,000 ton import. Millers said earlier court delays on imports had kept retail sugar prices high.",
+   "import_tons": 150000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2022/08/31/millers-head-owns-300k-import-plan",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "After SO 4 was recalled with the signature by Department of Agriculture Undersecretary Leocadio Sebastian on behalf of the President."
+  },
+  {
+   "id": "e029",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2022-12",
+   "end_date": "2023-12-31",
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "Low corn tariff extended through 2023",
+   "summary": "In December 2022 the cut corn tariffs of 5% within quota and 15% above it were stretched to December 31, 2023. A farm group called it a sad day for farming, saying only a few importers and traders gained.",
+   "import_tons": null,
+   "tariff_from": 5,
+   "tariff_to": 5,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2022/12/18/marcos-to-extend-reduced-taxes-on-imported-pork-rice-coal",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "corn at 5 percent (in-quota) and 15 percent (out-quota)"
+  },
+  {
+   "id": "e030",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2022-12-20",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "mixed",
+   "title": "64,050 tons of refined sugar ordered from abroad in December 2022",
+   "summary": "In December 2022 the President ordered 64,050 tons of refined sugar imports to bring down retail sugar, then near P105 to P110 a kilo. Planter groups said importing should be a last resort and sugar workers wanted no imports that year.",
+   "import_tons": 64050,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2022/12/22/latest-sugar-import-order-draws-mixed-reactions",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "Our position remains that there should be no importation this year."
+  },
+  {
+   "id": "e031",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2022-12-27",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "up",
+   "title": "No onion imports despite shortage, farm prices reach P300 a kilo",
+   "summary": "In late December 2022, with red onions averaging P500 a kilo in Metro Manila against a P170 suggested price, the DA said it was not considering imports because local harvests were coming. Onion prices at the farm reached up to P300 a kilo. Imports were approved only in January 2023.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Onion farmgate prices up to P300/kg (late December 2022)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/855592/da-says-no-plan-to-import-onions-as-prices-hit-p500-kg/story",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "not considering the importation of onions given the expected harvest in the coming months."
+  },
+  {
+   "id": "e032",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2023-01",
+   "end_date": "2023-01-27",
+   "kind": "import_order",
+   "direction": "down",
+   "title": "21,060 tons of onions ordered from abroad after record retail prices",
+   "summary": "In January 2023, after red onions reached P720 a kilo in some markets, the government allowed 21,060 tons of onion imports that had to land by January 27, before the harvest. Importers used only about 5,000 tons. Growers said imports hurt them; white onion sold at P70 to P80 a kilo at the farm in early February.",
+   "import_tons": 21060,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "White onion P70 to P80/kg and red onion P160 to P180/kg at farmgate in early February 2023; growers said P100/kg for red onion is only break even",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://portcalls.com/ph-importing-21060mt-of-onions-to-stabilize-price/",
+     "publisher": "PortCalls Asia",
+     "type": "news"
+    },
+    {
+     "url": "https://manilatimes.net/2023/02/05/news/national/farmers-feel-the-brunt-of-onion-importation/1877254",
+     "publisher": "The Manila Times",
+     "type": "news"
+    }
+   ],
+   "quote": "Upon issuance of SPSICs, all importations should arrive by January 27."
+  },
+  {
+   "id": "e033",
+   "crop_keys": [
+    "garlic"
+   ],
+   "date": "2023-02",
+   "end_date": null,
+   "kind": "other",
+   "direction": "up",
+   "title": "Local garlic reaches P400 a kilo as import supply tightens",
+   "summary": "In February 2023, with over 90% of garlic imported mostly from China and local output falling, locally grown bulbs fetched up to P400 a kilo. Police also found about 300 tons of illegally imported onions and garlic. Local garlic harvests usually start in March.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Locally grown garlic up to P400/kg (February 2023)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://gulfnews.com/world/asia/philippines/philippines-after-spike-in-onion-prices-garlic-is-next--now-at-726-per-kg-1.1677075467802",
+     "publisher": "Gulf News",
+     "type": "news"
+    }
+   ],
+   "quote": "Locally-grown and harvested bulbs now fetch up to Php400 ($7.26) per kg."
+  },
+  {
+   "id": "e034",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2023-02-06",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "down",
+   "title": "440,000 tons of sugar imports approved, millgate price slips",
+   "summary": "In February 2023 the sugar agency allowed 440,000 tons of refined sugar imports for the year, part as a buffer to arrive after April 1. Amid the news, the price planters got at the mill fell from P3,300 to P2,800 per 50 kilo bag, and planter groups feared more drops.",
+   "import_tons": 440000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Millgate raw sugar price fell from P3,300 to P2,800 per 50 kg bag (February 2023)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://negrosnowdaily.com/?p=16115",
+     "publisher": "Negros Now Daily",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/headlines/2023/02/16/2245338/order-out-440000-mt-sugar-imports/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2023-0035.pdf",
+     "publisher": "USDA FAS Sugar Annual RP2023-0035",
+     "type": "government"
+    }
+   ],
+   "quote": "Amid the sugar importation, its millgate price went down, from P3,300 to P2,800 per 50kilogram bag."
+  },
+  {
+   "id": "e035",
+   "crop_keys": [
+    "coconut"
+   ],
+   "date": "2023-03",
+   "end_date": null,
+   "kind": "export",
+   "direction": "down",
+   "title": "Copra drops to P20 a kilo in Eastern Visayas, half its 2022 level",
+   "summary": "In early March 2023 copra in Eastern Visayas sold for P20 a kilo at the farm, down from P42 a year before and P32.50 in early July 2022. The report noted that palm oil and soybean oil hold 35% and 26% of the world oil market, the oils coconut oil competes with.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Copra P20/kg (first week of March 2023) vs P42/kg a year earlier; P32.50/kg in early July 2022 (Eastern Visayas)",
+   "scope": "Eastern Visayas",
+   "sources": [
+    {
+     "url": "https://dzrh.com.ph/post/pca-eastern-visayas-notes-copra-price-drop-this-year",
+     "publisher": "DZRH News",
+     "type": "news"
+    }
+   ],
+   "quote": "the farmgate price of copra has dropped to PHP20 per kilogram as of the first week of March 2023"
+  },
+  {
+   "id": "e036",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2023-07-20",
+   "end_date": null,
+   "kind": "export",
+   "direction": "up",
+   "title": "India stops white rice exports, palay prices jump in the Philippines",
+   "summary": "On July 20, 2023 India banned exports of ordinary white rice, its biggest export type. World and local rice prices shot up, and palay prices at the farm rose with them, giving farmers better margins even under open imports. India lifted the ban about a week before October 9, 2024.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "PhilRice: farmgate palay prices shot up after the 2023 India ban",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://atolltimes.mv/post/world/4695",
+     "publisher": "Atoll Times (Reuters)",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philrice.gov.ph/what-contributes-to-palay-farmgate-price-formation",
+     "publisher": "PhilRice",
+     "type": "government"
+    },
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/923121/da-to-lower-nfa-s-palay-buying-price-to-p23-p25/story",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "The ban would be effective from July 20, but vessel under loading would be allowed for exports."
+  },
+  {
+   "id": "e037",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2023-09-05",
+   "end_date": "2023-10-04",
+   "kind": "price_cap",
+   "direction": "down",
+   "title": "Rice retail price cap set, farmers fear lower palay prices",
+   "summary": "A retail cap on rice ran from September 5 to October 4, 2023. In Nueva Ecija palay had already slipped from P22 to P25 a kilo in June and July to P17 to P18 in September, and farmers feared traders would pay even less because of the cap.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Palay P22 to P25/kg in June to July 2023, P17 to P18/kg in September 2023; farmers expected as low as P15/kg at peak harvest (Nueva Ecija)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2023/10/04/bbm-no-more-rice-price-cap",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://tribune.net.ph/2023/09/10/farmers-lament-palay-price-drop",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "Executive Order 39 imposed a price cap order effective 5 September"
+  },
+  {
+   "id": "e038",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2023-09-18",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "NFA raises palay buying price to P19 to P23 a kilo for dry palay",
+   "summary": "In September 2023 the NFA set new buying prices, with dry palay at P19 to P23 a kilo and wet palay at P16 to P19, up from a flat P19, to help farmers during the wet season harvest and the rice price cap.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "NFA dry palay P19 to P23/kg, wet palay P16 to P19/kg (previously P19/kg)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://asianews.network/national-food-authority-hikes-buying-price-for-unhusked-rice-to-help-philippine-farmers-earn-more-2/",
+     "publisher": "Philippine Daily Inquirer via Asia News Network",
+     "type": "news"
+    }
+   ],
+   "quote": "the new buying prices per kilogram of P19 to P23 for dry palay and P16 to P19 for wet palay"
+  },
+  {
+   "id": "e039",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2023-10-13",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Raw sugar falls to P2,500 to P2,750 a bag on too much imported sugar",
+   "summary": "In the first two weeks of the 2023 to 2024 crop year, raw sugar fell to P2,500 to P2,750 per bag, which planter leaders blamed on over importing refined sugar. The sugar agency held back release of 150,000 tons of imported refined sugar, and planters warned they would lose money as costs rose.",
+   "import_tons": 150000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Raw sugar P2,500 to P2,750 per 50 kg bag in early crop year 2023 to 2024; millsite average P2,825.35/LKg on Sept 10, sliding to slightly above P2,500/LKg by mid October, vs about P3,000 the season before",
+   "scope": "Negros Occidental",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/topstories/regions/885101/negros-occidental-sugar-planters-lament-over-importation/story",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://psma.com.ph/expect-lower-sugar-retail-prices-consumers-told",
+     "publisher": "The Philippine Star (republished by the Philippine Sugar Millers Association)",
+     "type": "news"
+    }
+   ],
+   "quote": "hold the release of 150,000 metric tons (MT) of imported refined sugar"
+  },
+  {
+   "id": "e040",
+   "crop_keys": [
+    "carrot"
+   ],
+   "date": "2023-12",
+   "end_date": null,
+   "kind": "smuggling",
+   "direction": "down",
+   "title": "Carrot price hits P1 a kilo at La Trinidad as smuggling adds to glut",
+   "summary": "Over the 2023 holidays carrots at the La Trinidad trading post dropped to a record low P1 a kilo and about 8 million kilos of highland vegetables went unsold. Traders said a bigger harvest was made worse by ongoing vegetable smuggling.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Carrots P1/kg at La Trinidad Vegetable Trading Post (late December 2023); DA wholesale P20 to P25/kg",
+   "scope": "Benguet",
+   "sources": [
+    {
+     "url": "https://asianews.network/smuggling-blamed-for-carrot-glut-in-benguet/",
+     "publisher": "Philippine Daily Inquirer via Asia News Network",
+     "type": "news"
+    }
+   ],
+   "quote": "the price of carrots at the La Trinidad Vegetable Trading Post in Benguet has dropped to an all-time low of P1 per kilo"
+  },
+  {
+   "id": "e041",
+   "crop_keys": [
+    "banana"
+   ],
+   "date": "2023-12",
+   "end_date": null,
+   "kind": "export",
+   "direction": "down",
+   "title": "Philippine banana prices in China hit a record low as Vietnam bananas flood in",
+   "summary": "In late 2023 Philippine bananas sold in China at a historical low, with prices and export volumes down about 40% from a year before. Traders blamed a large supply of Vietnamese bananas, which now outsold Philippine fruit in China, plus Panama disease and weak demand.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Mindanao",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/latin-america/article/9587691/recently-imported-banana-prices-have-reached-a-historical-low/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    }
+   ],
+   "quote": "the price of imported bananas from the Philippines has reached a historical low in the Chinese market"
+  },
+  {
+   "id": "e042",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2023-12-02",
+   "end_date": "2023-12-31",
+   "kind": "import_order",
+   "direction": "mixed",
+   "title": "21,000 tons of onions allowed in before the 2024 harvest",
+   "summary": "In December 2023 the DA cleared 17,000 tons of red and 4,000 tons of yellow onions from China, India and the Netherlands, all to arrive by December 31, 2023. The DA said the stock was a buffer to steady prices before the local harvest peak in March and April 2024. Red onions retailed up to P220 a kilo.",
+   "import_tons": 21000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2023/12/02/2315802/21000-mt-imported-onions-arrive-yearend/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://portcalls.com/da-approves-onion-imports-to-meet-holiday-demand/",
+     "publisher": "PortCalls Asia",
+     "type": "news"
+    }
+   ],
+   "quote": "All imported fresh onions are required to arrive in the country on or before Dec. 31, 2023."
+  },
+  {
+   "id": "e043",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2023-12-22",
+   "end_date": "2024-12-31",
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "Low corn tariff extended through 2024",
+   "summary": "A December 2023 order kept corn tariffs at 5% within the quota and 15% above it until December 31, 2024, together with lower tariffs on rice and pork.",
+   "import_tons": null,
+   "tariff_from": 5,
+   "tariff_to": 5,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2023/12/27/2321583/tariff-cuts-rice-pork-extended-one-year/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "The extension of tariff cuts for these commodities will remain in effect until Dec. 31, 2024."
+  },
+  {
+   "id": "e044",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2024-01-19",
+   "end_date": "2024-08-29",
+   "kind": "import_ban",
+   "direction": "up",
+   "title": "Onion imports stopped in 2024 after farm prices fell to P18 a kilo",
+   "summary": "On January 19, 2024 the DA stopped onion import clearances after white onion fell to P18 a kilo at the farm in Nueva Ecija. The stop was meant to run to May, was stretched to July, and was lifted around the end of August 2024. By June the country held about 162,000 tons of red onions in storage.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "White onion farmgate fell to P18/kg in Nueva Ecija; onion farmgate generally P50 to P70/kg, as low as P20/kg in parts of Nueva Ecija (January 2024)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2024/01/20/2327149/onion-prices-plunge-da-suspends-imports",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://journalnews.com.ph/import-of-onions-suspended/",
+     "publisher": "People's Journal",
+     "type": "news"
+    },
+    {
+     "url": "https://tribune.net.ph/2024/07/02/da-onion-inventory-could-last-until-feb-2025",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://globaltradealert.org/state-act/88790-philippines-government-temporarily-banned-the-import-of-onion",
+     "publisher": "Global Trade Alert",
+     "type": "other"
+    }
+   ],
+   "quote": "On 19 January 2024, the Secretary of Agriculture of the Philippines ordered a temporary import ban on onions until May 2024."
+  },
+  {
+   "id": "e045",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2024-02-05",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Planters blame too much sugar importing for low millgate prices",
+   "summary": "In February 2024 the Sugar Council, made up of three planter groups, opposed a plan to let traders import more sugar. They said farmers believe millgate prices dropped because of over importation, and asked for government buying instead.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/bacolod/sugar-council-objects-to-sugar-importation-plan",
+     "publisher": "SunStar Bacolod",
+     "type": "news"
+    },
+    {
+     "url": "https://psma.com.ph/producers-buck-plan-allow-more-sugar-imports",
+     "publisher": "The Philippine Star (republished by the Philippine Sugar Millers Association)",
+     "type": "news"
+    }
+   ],
+   "quote": "over-importation got us in the mess we are in today."
+  },
+  {
+   "id": "e046",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2024-02-07",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "mixed",
+   "title": "DA weighs stopping low tariff corn import quota certificates for 2024",
+   "summary": "In February 2024 the DA studied halting certificates for the low tariff import quota of corn, 216,940 tons, plus rice and pork, to the end of the year, saying the lower tariffs had brought farmers no relief. Importers objected, and the quota advisory council backed keeping the system as it was.",
+   "import_tons": 216940,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2024/02/07/2331421/da-wants-suspend-pork-corn-mav/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "The country's pork MAV stands at 54,210 metric tons, while corn MAV is at 216,940 MT."
+  },
+  {
+   "id": "e047",
+   "crop_keys": [
+    "cacao"
+   ],
+   "date": "2024-03",
+   "end_date": null,
+   "kind": "export",
+   "direction": "up",
+   "title": "World cocoa shortage lifts Davao cacao prices about threefold",
+   "summary": "Poor West African harvests pushed cocoa futures past $10,000 a ton in March 2024. In Davao, wet cacao beans that sold for at most P40 a kilo in early 2024 rose about threefold, and city farm officials expected prices to stay above early 2024 levels for about two years.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Davao wet cacao beans at most P40/kg in Q1 2024, then about three times higher",
+   "scope": "Davao",
+   "sources": [
+    {
+     "url": "https://www.confectionerynews.com/Article/2024/03/26/Future-of-cocoa-under-threat-as-prices-skyrocket-due-to-bean-shortages",
+     "publisher": "ConfectioneryNews",
+     "type": "industry"
+    },
+    {
+     "url": "https://www.davaocity.gov.ph/?p=18414",
+     "publisher": "Davao City Government",
+     "type": "government"
+    }
+   ],
+   "quote": "the price of cocoa beans smashed through the $10,000 a ton for the first time in the futures market"
+  },
+  {
+   "id": "e048",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2024-03-08",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "Traders buy farmers' raw sugar as reserve to earn future import rights",
+   "summary": "A sugar order on March 8, 2024 started voluntary buying of raw sugar, set aside as reserve stock, with buyers earning a share of future import programs. The aim was to steady farmgate sugar prices. Planter groups had objected, saying more trader importing was the cause of low millgate prices.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Mill site raw sugar averaged P2,580 per 50 kg bag in crop year 2023 to 2024 vs P3,177 the year before (SRA data in USDA report)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/bacolod/sugar-council-objects-to-sugar-importation-plan",
+     "publisher": "SunStar Bacolod",
+     "type": "news"
+    },
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2024-0014.pdf",
+     "publisher": "USDA FAS Sugar Annual RP2024-0014",
+     "type": "government"
+    },
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2025-0023.pdf",
+     "publisher": "USDA FAS Sugar Annual RP2025-0023",
+     "type": "government"
+    }
+   ],
+   "quote": "The intention of this SO is to help secure and stabilize the farmgate prices and ensure fair and reasonable retail prices."
+  },
+  {
+   "id": "e049",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2024-06",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "NFA widens palay buying range to P17 to P30 a kilo",
+   "summary": "In 2024 the NFA Council raised its palay buying range to P17 to P30 a kilo, from P16 to P23, so it could compete with private traders who were bidding prices up because of El Nino and India's rice export ban.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "NFA buying range raised to P17 to P30/kg from P16 to P23/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/923121/da-to-lower-nfa-s-palay-buying-price-to-p23-p25/story",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://www.da.gov.ph/nfa-adjusting-palay-buying-price-range-to-lower-cost-of-staple-food-to-consumers/",
+     "publisher": "Department of Agriculture",
+     "type": "government"
+    }
+   ],
+   "quote": "to enable the grains agency to compete with private traders, who have driven up prices due to the effects of El Niño and the lingering impact of India's rice export ban"
+  },
+  {
+   "id": "e050",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2024-06-20",
+   "end_date": null,
+   "kind": "tariff",
+   "direction": "down",
+   "title": "Rice tariff cut from 35% to 15%",
+   "summary": "An order made public on June 20, 2024 cut the tariff on imported rice from 35% to 15%. Within weeks a former agriculture chief reported palay buying prices had already dropped at least P5 a kilo, and farm groups asked the Supreme Court to stop the order.",
+   "import_tons": null,
+   "tariff_from": 35,
+   "tariff_to": 15,
+   "farmgate_note": "Palay farmgate price dropped by at least P5/kg within weeks of the order (July 2024 report)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2024/06/21/rice-tariff-cut-formalized",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://da.gov.ph/wp-content/uploads/2024/07/Clippings-for-July-9-2024.pdf",
+     "publisher": "The Philippine Star (Bella Cariaso, July 9, 2024), reprinted in DA news clippings",
+     "type": "government"
+    }
+   ],
+   "quote": "The farmgate price of palay has gone down by P5 per kilo amid the issuance of Executive Order 62, which lowers the tariff on imported rice"
+  },
+  {
+   "id": "e051",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2024-06-20",
+   "end_date": "2028",
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "Corn tariff kept low in the 2024 to 2028 tariff schedule",
+   "summary": "The June 2024 tariff order that cut rice to 15% kept corn at its lower rates in the import duty schedule for 2024 to 2028, so corn within the quota still pays 5% and corn above it 15%.",
+   "import_tons": null,
+   "tariff_from": 5,
+   "tariff_to": 5,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://portcalls.com/marcos-issues-eo-62-modifying-import-tariffs-including-on-rice",
+     "publisher": "PortCalls Asia",
+     "type": "news"
+    }
+   ],
+   "quote": "Under EO 62, tariffs were maintained for products such as corn, pork"
+  },
+  {
+   "id": "e052",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2024-08-08",
+   "end_date": "2024-09-15",
+   "kind": "import_order",
+   "direction": "mixed",
+   "title": "Up to 240,000 tons of refined sugar to be imported by September 2024",
+   "summary": "A sugar order dated August 8, 2024 allowed up to 240,000 tons of refined sugar to arrive by September 15, to cover the gap before the October milling season. Retail refined sugar had come down to about P75 a kilo.",
+   "import_tons": 240000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2024/08/11/2376904/philippines-import-240k-mt-sugar/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2024/06/28/2366067/government-allow-200000-mt-sugar-imports",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "looking to import up to 240,000 metric tons (MT) of refined sugar by September"
+  },
+  {
+   "id": "e053",
+   "crop_keys": [
+    "onion",
+    "carrot"
+   ],
+   "date": "2024-08-19",
+   "end_date": null,
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "Over 300 tons of smuggled onions and carrots seized, new import permits halted",
+   "summary": "In August 2024 authorities seized over 300 tons of illegal vegetables in Navotas, mostly white onions and imported carrots. The agriculture chief then stopped all new import permits for onions and carrots, citing a current surplus of both crops.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/asia/article/9650554/crackdown-on-vegetable-smuggling-in-the-philippines/",
+     "publisher": "FreshPlaza (from GMA News)",
+     "type": "industry"
+    }
+   ],
+   "quote": "citing the current surplus of onions and carrots"
+  },
+  {
+   "id": "e054",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2024-08-28",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "mixed",
+   "title": "Onion import stop ends with 16,000 tons of yellow onions, no red onion imports",
+   "summary": "In late August 2024 the DA allowed 16,000 tons of yellow onions, in batches with clearances every two weeks. Red onion stocks of about 135,551 tons were seen lasting to March 2025, and after a bumper harvest not a single red onion import was allowed in 2024.",
+   "import_tons": 16000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2024/08/28/agri-chief-oks-16kmt-onion-imports",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2025/06/23/2452502/da-may-allow-imports-onions-later-year",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "approved the importation of 16,000 metric tons (MT) of yellow onions."
+  },
+  {
+   "id": "e055",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2024-09-14",
+   "end_date": null,
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "DA will not seek a higher rice tariff at the first 15% review",
+   "summary": "The 15% rice tariff was set for review every four months from early July 2024. In September the DA said it would not recommend a higher rate at the November review, even though the agriculture chief had earlier said it would if retail prices fell enough.",
+   "import_tons": null,
+   "tariff_from": 15,
+   "tariff_to": 15,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/920461/da-not-keen-on-rice-tariff-hike-in-upcoming-eo-62-review/story",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "The EO 62 mandates a periodic review of the tariff rates every four months upon the order's effectivity in early July."
+  },
+  {
+   "id": "e056",
+   "crop_keys": [
+    "ginger"
+   ],
+   "date": "2024-10",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "down",
+   "title": "Ginger imports allowed from China, Vietnam and Indonesia as retail hits P300",
+   "summary": "In October 2024, after weather and El Nino cut local ginger output and retail reached P300 a kilo, imports came in from China and were approved from Vietnam and Indonesia. Earlier in June farmers in Nueva Vizcaya got as little as P30 a kilo, and imported ginger sold about P20 cheaper than local.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Ginger farmgate as low as P30/kg in Nueva Vizcaya (June 2024) while Metro Manila retail was P280 to P300/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/europe/article/9667592/philippines-faces-ginger-price-surge-imports-to-stabilize-market/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    },
+    {
+     "url": "https://ispweb.pcaarrd.dost.gov.ph/the-ginger-dilemma-balancing-supply-demand-and-fair-prices/",
+     "publisher": "DOST PCAARRD ISP platform",
+     "type": "government"
+    }
+   ],
+   "quote": "The Bureau of Plant Industry has also approved ginger imports from Vietnam and Indonesia"
+  },
+  {
+   "id": "e057",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2024-10-09",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "down",
+   "title": "NFA lowers its palay buying floor to P23 after India lifts export ban",
+   "summary": "A week after India lifted its rice export ban, the DA said in October 2024 it would cut the NFA's dry palay buying price to P23 to P25 a kilo, from a P25 floor, as world prices eased. Private buyers were then paying about P25 to P27.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Dry palay then procured at about P25 to P27/kg; NFA floor cut to P23/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/923121/da-to-lower-nfa-s-palay-buying-price-to-p23-p25/story",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://tribune.net.ph/2024/10/09/nfa-eyes-lowering-palay-buying-price-to-p23",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "Last week, India lifted its export ban on rice."
+  },
+  {
+   "id": "e058",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2024-11-09",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Nueva Ecija farmers dump onions as imported bulbs fill the market",
+   "summary": "In November 2024, after the DA approved 16,000 tons of imported white onions before the holidays, Nueva Ecija onion farmers were forced to dump produce that was rotting in cold storage. Retail red onions were then P75 to P150 a kilo, far below the P700 of the 2022 holidays.",
+   "import_tons": 16000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Nueva Ecija",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2024/11/09/2398743/farmers-dump-onions-amid-glut-imported-bulbs/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "Onion farmers in Nueva Ecija have been forced to dump their produce"
+  },
+  {
+   "id": "e059",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2024-12",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "4.68 million tons of rice imported in 2024 as palay slides",
+   "summary": "Rice imports were 4.68 million tons in 2024 against 3.8 million in 2023, while local output fell. Several regions saw dry palay under P20 a kilo in the last quarter, such as P18.17 in Central Luzon in September and P17.72 in Caraga in October.",
+   "import_tons": 4680000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Dry palay P18.17/kg in Central Luzon (Sept 2024), P17.72/kg in Caraga (Oct 2024); fancy dry palay national average P23.17/kg vs P24.72/kg 2024 average",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2025/03/04/2425848/da-nfa-pressed-keep-palay-farmgate-prices-fair-reduce-imports",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "the Philippines imported 4.68 million metric tons of rice in 2024, up from 3.8 million metric tons in 2023."
+  },
+  {
+   "id": "e060",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2024-12",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "mixed",
+   "title": "Rice import law amended, President may now adjust tariffs or stop imports",
+   "summary": "A December 2024 change to the Rice Tariffication Law let the DA register and inspect grain warehouses and buy rice to steady the market, and let the President adjust rice tariffs or pause imports. The rice farm fund rose from P10 billion to P30 billion until 2031. This opened the way for the 2025 import stop.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Philippines+Implements+Quarterly+Rice+Import+Tariff+Adjustment+Based+on+International+Price+Triggers+in+2026_Manila_Philippines_RP2026-0004.pdf",
+     "publisher": "USDA Foreign Agricultural Service",
+     "type": "government"
+    }
+   ],
+   "quote": "It also authorizes the President to adjust tariffs or temporarily suspend imports in response to market conditions."
+  },
+  {
+   "id": "e061",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2025-02-06",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "down",
+   "title": "4,000 tons of onions imported in early 2025 as harvest neared",
+   "summary": "In February 2025 the DA allowed 3,000 tons of red and 1,000 tons of white onions as a buffer before harvest. By March retail fell from P200 to P130 a kilo and farm prices dropped to P32 for white and P45 for red. Growers said imports should have waited, as white onion costs about P30 a kilo to grow.",
+   "import_tons": 4000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "By March 2025 farmgate fell to P32/kg for white onion and P45/kg for red; white onion production cost about P30/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2025/03/11/2427452/da-3270-mt-imported-onions-arrive/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://tribune.net.ph/2025/02/06/da-okays-onion-imports",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/headlines/2025/02/08/2420041/ex-da-chief-criticizes-decision-import-onions/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.freshplaza.com/europe/article/9703886/philippines-sets-february-20-deadline-for-onion-imports-amid-farmer-concerns/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    }
+   ],
+   "quote": "dropped to P32 per kilo for white onions and P45 per kilo for red onions"
+  },
+  {
+   "id": "e062",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2025-02-07",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "Second round lets traders buy up to 500,000 tons of farmers' sugar for import rights",
+   "summary": "In January 2025 millgate raw sugar sank to as low as P2,400 a bag and imports were put on hold until midyear. A February 7 order let buyers take up to 500,000 tons of raw sugar off the market as reserve, in return for future import rights, to keep farm prices profitable. Raw sugar was near P2,900 a bag by end January.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Millgate raw sugar as low as P2,400 per 50 kg bag in January 2025; farmgate raw sugar P2,900 per bag at end of January 2025",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2025/02/14/2421308/government-hiking-purchase-raw-sugar-500k-mt",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://cropgpt.ai/philippines-sugar-regulatory-administration-launches-voluntary-purchasing-program-to-stabilise-millgate-prices",
+     "publisher": "CropGPT",
+     "type": "industry"
+    },
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2025-0023.pdf",
+     "publisher": "USDA FAS Sugar Annual RP2025-0023",
+     "type": "government"
+    }
+   ],
+   "quote": "keep farmgate prices of sugar profitable to planters"
+  },
+  {
+   "id": "e063",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2025-03-05",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "NFA raises palay buying to P18 fresh and P24 dry as world prices sink",
+   "summary": "In early March 2025, with world rice prices at their lowest in over two years, the NFA raised its price for fresh palay to P18 a kilo and for clean dry palay to P24. Private millers were paying about P20 to P22 for dry palay and about P5 less for wet.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "NFA P18/kg fresh, P24/kg dry; millers P20 to P22/kg dry palay (March 2025)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.da.gov.ph/nfa-urges-farmers-to-maximize-profits-by-drying-palay-selling-to-agency/",
+     "publisher": "Department of Agriculture",
+     "type": "government"
+    }
+   ],
+   "quote": "This week, we've raised our buying price to P18 per kilo for fresh palay and P24 per kilo for clean and dry palay,"
+  },
+  {
+   "id": "e064",
+   "crop_keys": [
+    "coconut"
+   ],
+   "date": "2025-03-31",
+   "end_date": null,
+   "kind": "export",
+   "direction": "up",
+   "title": "Copra more than doubles to P58 a kilo on strong world demand",
+   "summary": "By March 31, 2025 copra averaged P58.10 a kilo at the farm, more than double a year earlier, while millgate copra reached P75.34. Coconut oil from Manila hit $2,306 a ton in March as buyers in the United States and Europe bought heavily and copra ran short.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Copra farmgate P58.10/kg as of March 31, 2025; millgate monthly average P75.34/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://prestasisawit.mpob.gov.my/en/palmnews/news/37801",
+     "publisher": "BusinessMirror via Malaysian Palm Oil Board news",
+     "type": "news"
+    },
+    {
+     "url": "https://vespertool.com/news/coconut-oil-prices-surge-amid-supply-constraints-and-rising-global-demand/",
+     "publisher": "Vesper",
+     "type": "industry"
+    }
+   ],
+   "quote": "the national average farmgate price of copra reached P58.10 per kilo as of March 31"
+  },
+  {
+   "id": "e065",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2025-07-15",
+   "end_date": "2025-11-30",
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "424,000 tons of sugar imports land as milling starts, millgate falls",
+   "summary": "A July 2025 order let 424,000 tons of refined sugar arrive from July 15 to November 30, 2025, while planters had agreed to only 150,000 tons. Stocks hit 902,082 tons when milling opened in October, and by January 2026 the millgate price fell to P2,000 to P2,200 per 50 kilo bag, below the cost to produce.",
+   "import_tons": 424000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Millgate price P2,000 to P2,200 per 50 kg bag by January 2026, below production cost (about P2,500/bag)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/companies/952050/philippines-sra-sugar-importation-428-000-metric-tons/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://negrosnowdaily.com/oversupply-triggered-decline-in-sugar-prices-rep-benitez/",
+     "publisher": "Negros Now Daily",
+     "type": "news"
+    },
+    {
+     "url": "https://negrosnowdaily.com/planters-group-expresses-concern-over-excessive-sugar-importation/",
+     "publisher": "Negros Now Daily",
+     "type": "news"
+    }
+   ],
+   "quote": "fell to between P2,000 and P2,200 per 50-kilo bag by January 2026"
+  },
+  {
+   "id": "e066",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2025-08",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Palay price down by more than a quarter after big rice imports",
+   "summary": "In August 2025 the average farmgate price of palay was P17.11 a kilo, down 27.8% from P23.71 a year before. Farm level monitoring showed palay as low as P7.50 a kilo. The country had brought in about 4.7 million tons of rice the year before.",
+   "import_tons": 4700000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Palay P17.11/kg in August 2025 vs P23.71/kg a year earlier; range P7.50 to P18.20/kg in DA monitoring",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://wealthinsights.metrobank.com.ph/bworldonline/philippines-eyes-1-month-rice-import-window-in-january-2026",
+     "publisher": "BusinessWorld",
+     "type": "news"
+    }
+   ],
+   "quote": "fell by 27.8% to PHP 17.11 per kilo in August from the PHP 23.71 per kilo last year"
+  },
+  {
+   "id": "e067",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2025-09",
+   "end_date": "2026-01-15",
+   "kind": "import_order",
+   "direction": "mixed",
+   "title": "Clearances for 69,040 tons of red onions, but slow arrivals",
+   "summary": "From September 2025 the DA cleared up to 69,040 tons of red onion imports, but only 12,824 tons had arrived by November 20 and retail prices passed P300 a kilo. All clearances had to be used by January 15, 2026, and the DA warned that late arrivals could pull down farm prices at harvest.",
+   "import_tons": 69040,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://wealthinsights.metrobank.com.ph/bworldonline/da-probes-slow-imports-of-red-onions-as-prices-soar-past-p300-per-kilo",
+     "publisher": "BusinessWorld",
+     "type": "news"
+    }
+   ],
+   "quote": "The DA earlier issued SPSICs for up to 69,040 metric tons (MT) of red onions"
+  },
+  {
+   "id": "e068",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2025-09-01",
+   "end_date": "2025-10-30",
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "Rice imports stopped for 60 days to lift palay prices",
+   "summary": "The government stopped imports of regular and well milled rice from September 1 to October 30, 2025, over the wet season harvest. Palay had fallen hard after a flood of cheaper imports at the lower tariff. Before the stop, fresh palay sold for about P8 to P17 a kilo and dry palay P15 to P22.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Before the stop wet palay fell to P8 to P10/kg (fresh P8.33 to P17, dry P15 to P22 per PhilRice); by mid September it reached P17/kg in parts of Mindanao but only P13 to P14/kg in Isabela and Nueva Ecija, against a P14/kg cost",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2025/11/05/rice-import-freeze-until-years-end",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://www.sunstar.com.ph/cebu/da-seeks-rice-import-ban-extension",
+     "publisher": "SunStar Cebu",
+     "type": "news"
+    },
+    {
+     "url": "https://millingmea.com/philippines-suspends-rice-imports-for-60-days-to-support-local-farmers/",
+     "publisher": "Milling Middle East and Africa",
+     "type": "industry"
+    },
+    {
+     "url": "https://www.da.gov.ph/president-marcos-eye-longer-rice-import-ban-higher-tariff-da-chief/",
+     "publisher": "Department of Agriculture",
+     "type": "government"
+    }
+   ],
+   "quote": "fresh palay prices ranging from P8.33 to P17 (US$0.14-US$0.29) per kilo"
+  },
+  {
+   "id": "e069",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2025-09-29",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "Emergency palay buying planned as prices slip back during the import stop",
+   "summary": "By late September 2025 palay had fallen back to levels seen before the import stop, with wet palay reportedly as low as P6 a kilo in parts of Northern Luzon after weather damage and a big harvest. The DA said emergency NFA buying at about P17 a kilo for wet palay, a floor price and a longer import stop would follow.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Wet palay reportedly as low as P6/kg in parts of Northern Luzon (late September 2025); NFA emergency buying price about P17/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/manila/palay-prices-rebound-after-rice-import-halt",
+     "publisher": "SunStar",
+     "type": "news"
+    },
+    {
+     "url": "https://www.da.gov.ph/president-marcos-orders-emergency-palay-procurement-to-aid-farmers/",
+     "publisher": "Department of Agriculture",
+     "type": "government"
+    }
+   ],
+   "quote": "Prices have again fallen to pre-import ban levels"
+  },
+  {
+   "id": "e070",
+   "crop_keys": [
+    "carrot",
+    "onion"
+   ],
+   "date": "2025-10-01",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "down",
+   "title": "Carrot imports allowed from October 2025 as local carrots pass P250 a kilo",
+   "summary": "With local carrots retailing near P258 a kilo in Metro Manila, the DA allowed a few hundred tons of carrot imports from October 1, 2025. It also moved red onion imports earlier than October 15 and said white onion imports since September had pulled white onion prices down to about P100 to P120.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/europe/article/9771435/philippines-allows-onion-and-carrot-imports-to-ease-prices/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    }
+   ],
+   "quote": "Since last month, we've been importing white onions, so prices have already dropped to around PHP100 to PHP120."
+  },
+  {
+   "id": "e071",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2025-10-15",
+   "end_date": "2026-06",
+   "kind": "import_ban",
+   "direction": "up",
+   "title": "No sugar imports until mid 2026 after low prices at first bidding",
+   "summary": "After weak raw sugar prices at the first Negros bidding on October 9, 2025, the DA and the sugar agency promised no sugar imports until the milling season ends around May or June 2026. Millgate prices averaged about P2,200 per 50 kilo bag, near P300 below the P2,500 cost to produce.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Average millgate price about P2,200 per 50 kg bag in October 2025 vs production cost of P2,500",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/bacolod/da-sra-assure-no-sugar-importation-until-mid-2026",
+     "publisher": "SunStar Bacolod",
+     "type": "news"
+    },
+    {
+     "url": "https://www.sunstar.com.ph/bacolod/probe-into-steep-drop-in-millgate-sugar-prices-urged",
+     "publisher": "SunStar Bacolod",
+     "type": "news"
+    },
+    {
+     "url": "https://negrosnowdaily.com/no-sugar-importation-until-mid-2026-sra-exec-says/",
+     "publisher": "Negros Now Daily",
+     "type": "news"
+    }
+   ],
+   "quote": "no sugar importation is planned until the end of the current milling season, projected between May and June 2026."
+  },
+  {
+   "id": "e072",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2025-11-01",
+   "end_date": "2025-12-31",
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "Rice import stop extended to the end of 2025",
+   "summary": "The rice import stop was stretched to December 31, 2025, for a total of four months. The agriculture chief said the stop barely moved retail rice prices but had a big effect on the palay price farmers got, and it was paired with a floor price and emergency palay buying.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Palay in Isabela and Nueva Ecija climbed to P13 to P14/kg from as low as P8/kg before the freeze, near the P12 to P14/kg cost; gains tapered as the first stop neared expiry",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2025/11/05/rice-import-freeze-until-years-end",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://tribune.net.ph/2025/11/02/marcos-extends-rice-import-ban-to-year-end",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://tribune.net.ph/2025/11/01/department-of-agriculture-recommends-extending-rice-import-ban",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "extending the suspension of the importation of regular milled and well-milled rice until 31 December 2025."
+  },
+  {
+   "id": "e073",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2025-11-07",
+   "end_date": null,
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "Rice tariff kept at 15% and tied to world prices from 2026",
+   "summary": "An order signed in November 2025 kept the 15% rice tariff to the end of 2025. From January 1, 2026 the tariff moves each quarter between 15% and 35%, going up 5 points for every 5% drop in world rice prices. The aim includes helping farmers sell palay at a fair price.",
+   "import_tons": null,
+   "tariff_from": 15,
+   "tariff_to": 15,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2025/11/09/palace-extends-15-rice-import-tariff",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Philippines+Implements+Quarterly+Rice+Import+Tariff+Adjustment+Based+on+International+Price+Triggers+in+2026_Manila_Philippines_RP2026-0004.pdf",
+     "publisher": "USDA Foreign Agricultural Service",
+     "type": "government"
+    }
+   ],
+   "quote": "The price-indexed rice import tariff rates will range from 15 to 35 percent, changing by five percentage points for every 5 percent movement in international prices."
+  },
+  {
+   "id": "e074",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2025-12-16",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "up",
+   "title": "DA plans smaller rice imports for 2026 to avoid hurting palay prices",
+   "summary": "In December 2025 the DA said 2026 rice imports would likely be 3.6 to 3.8 million tons, below 4 million, so farm prices are not pulled down again. It said earlier excess imports had dragged palay prices down. Imports for 2025 were put at about 3.5 million tons.",
+   "import_tons": 3500000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/969739/da-pegs-ph-rice-importation-below-4m-mt-in-2026/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://www.da.gov.ph/da-moves-to-better-manage-rice-importation-to-protect-farmers-incomes/",
+     "publisher": "Department of Agriculture",
+     "type": "government"
+    }
+   ],
+   "quote": "import volumes next year will likely range between 3.6 million and 3.8 million metric tons."
+  },
+  {
+   "id": "e075",
+   "crop_keys": [
+    "mungbean"
+   ],
+   "date": "2025-12-17",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "up",
+   "title": "DA plans to time mung bean imports around the local harvest",
+   "summary": "In December 2025 the DA said the country imports nearly 50,000 tons of mung beans a year and planned to grow more on rice land hurt by irrigation damage. The agriculture chief said imports would be timed at harvest so local farmers still make a profit.",
+   "import_tons": 50000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.da.gov.ph/da-eyes-munggo-as-irrigation-damage-threatens-rice-output-expands-income-base-for-farmers/",
+     "publisher": "Department of Agriculture",
+     "type": "government"
+    }
+   ],
+   "quote": "When harvest season comes, we must time importation so our farmers profit."
+  },
+  {
+   "id": "e076",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2025-12-21",
+   "end_date": "2026-12",
+   "kind": "import_ban",
+   "direction": "up",
+   "title": "Sugar import ban stretched to December 2026",
+   "summary": "On December 21, 2025 the DA said the sugar import ban would stay until December 2026, not end with the crop year in September. The agriculture chief cited stronger local raw sugar output and the need to favor locally made sugar while steadying the market, after more output had pushed farm prices down.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://thepeninsulaqatar.com/article/21/12/2025/philippines-extends-sugar-import-ban-until-december-2026",
+     "publisher": "The Peninsula (Qatar)",
+     "type": "news"
+    },
+    {
+     "url": "https://seasia.co/2026/08/27/the-philippines-has-a-government-agency-just-for-sugar-why",
+     "publisher": "Seasia",
+     "type": "news"
+    }
+   ],
+   "quote": "a longer import moratorium than initially suggested is necessary,"
+  },
+  {
+   "id": "e077",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-01-01",
+   "end_date": null,
+   "kind": "import_order",
+   "direction": "down",
+   "title": "Rice imports reopen in January 2026 with 500,000 tons allowed",
+   "summary": "After four months without imports, rice could come in again from January 1, 2026 at a 15% tariff. About 500,000 tons were allowed for the first window, through 17 ports, with arrivals due by end of February. Millers were asked to help hold up palay prices during the summer harvest.",
+   "import_tons": 500000,
+   "tariff_from": 15,
+   "tariff_to": 15,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2026/01/09/2499697/philippines-resumes-importing-rice-tariff-still-15",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "500,000 metric tons of rice will be allowed to enter the country"
+  },
+  {
+   "id": "e078",
+   "crop_keys": [
+    "mungbean",
+    "chili"
+   ],
+   "date": "2026-01-16",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "up",
+   "title": "State buyer told to purchase local mung beans and chili to cut imports",
+   "summary": "In January 2026 the DA told Food Terminals Inc. to buy up to 80% of local mung bean output, about 3,000 tons a month, and large volumes of chili straight from farmers. The aim was to shield growers from price swings and reduce imports, mostly mung beans from Argentina.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.da.gov.ph/da-chief-tells-fti-to-provide-market-for-munggo-sili-output/",
+     "publisher": "Department of Agriculture",
+     "type": "government"
+    }
+   ],
+   "quote": "FTI should initially purchase up to 80 percent of domestic output"
+  },
+  {
+   "id": "e079",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-01-22",
+   "end_date": "2026-04",
+   "kind": "support_price",
+   "direction": "up",
+   "title": "Millers agree to pay at least P17 wet and P21 dry for palay to April 2026",
+   "summary": "In January 2026 rice industry players agreed to buy wet palay at P17 a kilo and dry at P21 until the harvest peak in April, in areas like Nueva Ecija, Pangasinan and Bulacan. They also agreed to bring in up to 300,000 tons of rice that had to land by February 28.",
+   "import_tons": 300000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Agreed buying price P17/kg wet palay and P21/kg dry palay until April 2026; 2025 average dry palay P17.70/kg, down 24.62% from P23.48/kg in 2024 (PSA preliminary)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/973734/palay-price-set-at-p17-p21-per-kilo/story",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://wealthinsights.metrobank.com.ph/news/rice-millers-committed-to-higher-farmgate-prices-for-palay-da",
+     "publisher": "BusinessWorld",
+     "type": "news"
+    }
+   ],
+   "quote": "Rice industry stakeholders have agreed to set the buying price of wet and dry palay at P17.00 and P21.00 per kilo"
+  },
+  {
+   "id": "e080",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-01-28",
+   "end_date": "2026-03",
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "Rice tariff stays at 15% in early 2026 as world price stays above trigger",
+   "summary": "The first quarterly check under the new rule kept the rice tariff at 15% because Vietnam rice sold near $382 a ton, above the $350 to $367 range that raises it to 20%. Millers and traders pledged to buy palay at P17 a kilo wet and P21 dry.",
+   "import_tons": null,
+   "tariff_from": 15,
+   "tariff_to": 15,
+   "farmgate_note": "Millers and traders committed to buy palay at P17/kg wet and P21/kg dry; before the ban palay fell as low as P8/kg in some areas",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news_duplicate/money/economy/974488/da-sees-rice-prices-remaining-stable-as-tariff-stays-at-15/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Philippines+Implements+Quarterly+Rice+Import+Tariff+Adjustment+Based+on+International+Price+Triggers+in+2026_Manila_Philippines_RP2026-0004.pdf",
+     "publisher": "USDA Foreign Agricultural Service",
+     "type": "government"
+    }
+   ],
+   "quote": "P17 per kilo for wet and P21 per kilo for dry"
+  },
+  {
+   "id": "e081",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-01-30",
+   "end_date": null,
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "Palay prices recover after the four month rice import stop",
+   "summary": "By January 30, 2026 dry palay averaged P21.52 a kilo and fresh palay P18.42, up from lows near P13.38 in the October 2025 peak harvest, when some traders offered as little as P6 to P8. The DA said 2024 imports of 4.8 million tons were more than the country needed.",
+   "import_tons": 4800000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Fresh palay as low as P13.38/kg in October 2025; dry palay P21.52/kg and fresh P18.42/kg by Jan 30, 2026",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/manila/palay-prices-rebound-after-rice-import-halt",
+     "publisher": "SunStar",
+     "type": "news"
+    }
+   ],
+   "quote": "as low as PHP13.38/kg during the October peak harvest"
+  },
+  {
+   "id": "e082",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2026-01-31",
+   "end_date": "2026-09",
+   "kind": "import_suspension",
+   "direction": "mixed",
+   "title": "Red onion import clearances stopped from end of January 2026",
+   "summary": "The DA stopped issuing red onion import clearances at the end of January 2026, as the harvest runs from January to a March peak. Farm prices still fell, with red onion down 28.42% from a year before in February. Clearances were expected to resume around September 2026.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "PSA: domestic red onion farmgate price down 28.42% year on year in February 2026 (reported as US$0.79/kg vs US$1.11/kg)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/asia/article/9813433/philippines-halts-red-onion-imports-as-harvest-season-peaks/",
+     "publisher": "FreshPlaza (from BusinessWorld)",
+     "type": "industry"
+    }
+   ],
+   "quote": "Import clearances are expected to resume around September."
+  },
+  {
+   "id": "e083",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2026-02",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Onion farm prices crash in early 2026 as imports overlap the harvest",
+   "summary": "Onion farm prices in Nueva Ecija and Occidental Mindoro fell from P120 to P150 a kilo in January 2026 to P30 to P40 in February. A Senate resolution blamed about 4,000 tons of imports landing at peak harvest, clearances valid to February 15, cold storage 82% full, and smuggled Chinese onions found in Bulacan.",
+   "import_tons": 4000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Onion farmgate P120 to P150/kg in January 2026, P30 to P40/kg in February 2026 (Nueva Ecija, Occidental Mindoro)",
+   "scope": "Nueva Ecija, Occidental Mindoro",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2026/03/12/weak-onion-prices-triggers-senate-probe",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://www.freshplaza.com/north-america/article/9819635/philippines-senate-probes-onion-price-collapse-during-harvest/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    },
+    {
+     "url": "https://lorenlegarda.com.ph/legarda-demands-accountability-for-onion-price-crash-import-overlap-and-cold-storage-monopoly/",
+     "publisher": "Office of Senator Loren Legarda",
+     "type": "government"
+    }
+   ],
+   "quote": "plunged from ₱120–₱150 per kilogram in January 2026 to just ₱30–40 in February 2026"
+  },
+  {
+   "id": "e084",
+   "crop_keys": [
+    "onion"
+   ],
+   "date": "2026-02-24",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "up",
+   "title": "State buyer starts purchasing onions to hold up farm prices",
+   "summary": "In late February 2026 the DA had Food Terminals Inc. buy onions during the harvest, with cold storage for about 1,400 tons arranged in Nueva Ecija. Farm prices there had reached up to P45 a kilo, and imported stocks were expected to run out by peak harvest.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Nueva Ecija onion farmgate prices up to P45/kg (late February 2026)",
+   "scope": "Nueva Ecija",
+   "sources": [
+    {
+     "url": "https://www.freshplaza.com/asia/article/9813697/philippines-begins-onion-procurement-to-stabilise-farmgate-prices/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    }
+   ],
+   "quote": "farmgate prices in Nueva Ecija recently reached up to P45 per kilo (US$0.80 per kilo)."
+  },
+  {
+   "id": "e085",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-03",
+   "end_date": "2026-04",
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "Rice importers agree to bring in only 150,000 tons a month at harvest",
+   "summary": "For the March and April 2026 harvest, traders and importers agreed with the DA to limit rice imports to about 150,000 tons a month, far below usual arrivals, so imports would not pull down palay prices. More than 700,000 tons had already arrived by February 26. It was an agreement, not an order.",
+   "import_tons": 150000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://edgedavao.net/the-economy/2026/03/da-says-import-arrivals-must-translate-to-cheaper-rice-amid-harvest-season/",
+     "publisher": "Edge Davao",
+     "type": "news"
+    },
+    {
+     "url": "https://www.hellenicshippingnews.com/?p=1123567",
+     "publisher": "Hellenic Shipping News (S&P Global Platts)",
+     "type": "news"
+    }
+   ],
+   "quote": "There's an agreement that from March to April, imports will be limited to 150,000 MT per month"
+  },
+  {
+   "id": "e086",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2026-04",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Millgate sugar price down almost 30%, blamed on imports",
+   "summary": "In April 2026 a senator said the price of local sugar at the mill had dropped by almost 30% because of imports, with some farmers losing P200 to P400 per bag, while store prices did not fall. A House member earlier put industry losses from the imports at P7.28 billion.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Millgate price down almost 30%; some farmers losing P200 to P400 per bag (April 2026)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/985576/imee-sugar-millgate-prices-dropped-by-almost-30-due-to-importation/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "the millgate price of locally produced sugar has dropped by almost 30%."
+  },
+  {
+   "id": "e087",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2026-04",
+   "end_date": null,
+   "kind": "tariff",
+   "direction": "mixed",
+   "title": "Order to cut corn import duties, DA offers a bigger quota timed for lean months",
+   "summary": "In April 2026 the President told the DA and the Tariff Commission to reduce duties on imported corn and pork. The DA proposed raising the low tariff corn quota instead of cutting tariffs. Corn growers agreed only if imported corn is scheduled to arrive in lean months, not at harvest, to protect farm prices.",
+   "import_tons": 216940,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://businessmirror.com.ph/2026/04/27/local-producers-nix-hike-in-port-imports-at-lower-tariff/",
+     "publisher": "BusinessMirror",
+     "type": "news"
+    },
+    {
+     "url": "https://www.manilatimes.net/2026/04/15/business/top-business/da-eyeing-mav-plus-for-pork-corn-imports/2319997",
+     "publisher": "The Manila Times",
+     "type": "news"
+    }
+   ],
+   "quote": "Under the corn MAV Plus plan, imported corn should be scheduled not to arrive during harvest time."
+  },
+  {
+   "id": "e088",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-05-03",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "NFA lifts dry palay buying to P30 as wet palay drops to P16 to P17",
+   "summary": "In May 2026 wet palay fell to P16 to P17 a kilo in parts of Nueva Ecija, Pampanga, Isabela and Cagayan. The NFA raised dry palay buying to as much as P30 and bought more there. The DA weighed limits on monthly rice imports for June to August and targeted P22 a kilo for the September to November harvest.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Wet palay P16 to P17/kg in parts of Nueva Ecija, Pampanga, Isabela, Cagayan; Palawan P23 to P24/kg (May 2026); DA target P22/kg for Sept to Nov harvest",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news_duplicate/money/economy/986239/palay-rice-prices-agriculture-nfa/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    }
+   ],
+   "quote": "wet palay prices have dropped to P16–P17 per kilo in isolated areas of Nueva Ecija, Pampanga, Isabela, and Cagayan."
+  },
+  {
+   "id": "e089",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-05-13",
+   "end_date": "2026-06-13",
+   "kind": "price_cap",
+   "direction": "mixed",
+   "title": "P50 a kilo cap on imported rice for 30 days",
+   "summary": "An order on May 13, 2026 capped 5% broken imported rice at P50 a kilo for 30 days. It lapsed on June 13. The DA asked for two more months because there was no local harvest yet, then dropped the idea in August. USDA said the cap squeezed importer margins and cut the urge to stock imported rice.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/993352/imported-rice-price-cap-p50-per-kilo/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2026/08/05/2546956/da-shelves-rice-cap-plan-rules-out-ban-imports/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://agriexchange.apeda.gov.in/MarketReport/10323060520267216234964.pdf",
+     "publisher": "USDA FAS Grain and Feed Update RP2026-0017",
+     "type": "government"
+    }
+   ],
+   "quote": "It was on May 13, 2026 when President Ferdinand Marcos Jr. issued Executive Order 118."
+  },
+  {
+   "id": "e090",
+   "crop_keys": [
+    "garlic",
+    "onion"
+   ],
+   "date": "2026-05-21",
+   "end_date": null,
+   "kind": "smuggling",
+   "direction": "up",
+   "title": "Customs seizes 12,350 bags of Chinese garlic and imported onions",
+   "summary": "In May and June 2026 Customs seized 12,350 bags of Chinese garlic plus about 10,900 bags of imported onions, worth about P35.4 million, from a Nueva Ecija cold storage. Market watchers said the crackdown was likely to support farm prices of garlic.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Nueva Ecija",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/manila/nueva-ecija-cold-storage-yields-p35-m-smuggled-agri-products",
+     "publisher": "SunStar",
+     "type": "news"
+    },
+    {
+     "url": "https://commodity-board.com/garlic-market-steadies-as-philippine-smuggling-crackdown-tightens-supply-risks",
+     "publisher": "Commodity Market Board",
+     "type": "industry"
+    }
+   ],
+   "quote": "is likely to underpin domestic farmgate prices and increase compliance costs for importers"
+  },
+  {
+   "id": "e091",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2026-06-16",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "down",
+   "title": "Plan to more than double the low tariff corn import quota",
+   "summary": "In mid 2026 the DA proposed raising the corn import quota at the 5% tariff from 216,940 tons to 500,000 tons. A farm group warned feed millers could cut their buying price for local corn by about P1.70 a kilo, costing farmers up to P12 billion a year. Corn output fell to 8.14 million tons in 2025.",
+   "import_tons": 500000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Farm group estimate: corn farmgate could fall by P1.70/kg if the quota is raised",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2026/06/16/2535429/corn-farmers-risk-losing-p12-billion-import-quota-hike",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.manilatimes.net/2026/04/15/business/top-business/da-eyeing-mav-plus-for-pork-corn-imports/2319997",
+     "publisher": "The Manila Times",
+     "type": "news"
+    }
+   ],
+   "quote": "corn farmers would suffer up to P12 billion in annual losses if farmgate prices fall by P1.7 per kilo"
+  },
+  {
+   "id": "e092",
+   "crop_keys": [
+    "carrot"
+   ],
+   "date": "2026-06-17",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Imported carrots push Benguet carrot prices down to P20 a kilo",
+   "summary": "In mid June 2026 large volumes of boxed imported carrots reached Balintawak and Sariaya, and buyers skipped local carrots at La Trinidad. Benguet and Mountain Province carrots fell to as low as P20 a kilo wholesale, with low grades near P8. Traders asked the DA to check the import permits and possible smuggling.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Benguet carrots wholesale as low as P20/kg, premium up to P38/kg, low grade about P8/kg (June 2026)",
+   "scope": "Benguet",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2026/06/19/farmers-reel-as-imported-carrots-surge",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    },
+    {
+     "url": "https://www.freshplaza.com/asia/article/9848983/imported-carrots-pressure-philippine-market-prices/",
+     "publisher": "FreshPlaza",
+     "type": "industry"
+    }
+   ],
+   "quote": "wholesale prices of Benguet and Mountain Province carrots have dropped to as low as P20 per kilo."
+  },
+  {
+   "id": "e093",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-07",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "up",
+   "title": "DA stops entry of 5% broken rice from July 2026 to shield the harvest",
+   "summary": "From July 2026 only rice with 25% or more broken grains may come in. The DA said the aim is to keep newly harvested palay from dropping to P8 to P12 a kilo in September and October, as it did in 2025.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Aim: keep fresh palay from falling to P8 to P12/kg in the September to October harvest as in 2025",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/business-as-usual/2026/07/03/2539375/da-asks-traders-halt-5-broken-rice-imports",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "We will no longer allow the entry of rice with five percent broken grains into the Philippines starting this July."
+  },
+  {
+   "id": "e094",
+   "crop_keys": [
+    "coconut"
+   ],
+   "date": "2026-07",
+   "end_date": null,
+   "kind": "export",
+   "direction": "down",
+   "title": "Copra slides to about P44 a kilo as exports weaken",
+   "summary": "By July 2026 copra averaged P44.52 a kilo at the farm and P52.54 at the mill, well below earlier highs. The coconut agency blamed weaker demand, export disruption and oversupply, noting about 80% of output is exported, so drops overseas hit local prices.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "Copra farmgate P44.52/kg and millgate P52.54/kg (July 2026, PCA data)",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/business/2026/07/22/2543688/pca-seeks-regulatory-powers-copra-prices/amp/",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "The current local farmgate price for copra averaged at P44.52 per kilo"
+  },
+  {
+   "id": "e095",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-07-01",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "up",
+   "title": "Safeguard probe on rice imports opens, farmers ask for 30% extra duty",
+   "summary": "The Tariff Commission opened a safeguard probe on rice imports on July 1, 2026, after the DA found imports hurt local growers. Farm groups asked for a 30% duty on top of the 15% tariff, saying cheap imports pull down palay prices. Imports hit a record 2.75 million tons in the first half of 2026.",
+   "import_tons": 2750000,
+   "tariff_from": 15,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2026/08/04/2546742/farmer-groups-seek-30-safeguard-duty-imported-rice",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "a record-high of 2.75 million MT in the first half of 2026"
+  },
+  {
+   "id": "e096",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-07-09",
+   "end_date": null,
+   "kind": "import_surge",
+   "direction": "down",
+   "title": "Record 2.75 million tons of rice imported in the first half of 2026",
+   "summary": "Rice imports hit a record 2.75 million tons from January to June 2026, up 20.1% from 2.29 million a year earlier and above the 2.34 million of 2024. The DA said imports filled a gap left by costly fuel and fertilizer and El Nino, and the NFA set buying prices of P22 wet and P27 dry for the coming harvest.",
+   "import_tons": 2750000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "NFA to buy wet palay at P22/kg and dry at P27/kg from the third quarter 2026 harvest; palay had dropped as low as P8/kg in some areas in 2025",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.philstar.com/headlines/2026/07/09/2540783/rice-imports-rise-record-275-million-mt-h1",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://newswav.com/article/rice-imports-hit-record-high-of-2-75-million-mt-A2607_KA12v7",
+     "publisher": "The Manila Times via Newswav",
+     "type": "news"
+    }
+   ],
+   "quote": "rice imports increased by 20.1 percent, or about 460,000 MT, during the first six months"
+  },
+  {
+   "id": "e097",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-08-05",
+   "end_date": null,
+   "kind": "policy",
+   "direction": "mixed",
+   "title": "No national rice import stop in 2026 because of El Nino",
+   "summary": "The DA said it would not stop rice imports in 2026, unlike 2025, to build stocks before a strong El Nino that could cut palay output by about 750,000 tons. Imports had reached 3.3 million tons by August 3. The NFA floor price was the main support for farmgate prices.",
+   "import_tons": 3300000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "NFA buying wet palay at a minimum P21/kg, dry P25 to P27/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.sunstar.com.ph/cebu/da-skips-rice-import-suspension",
+     "publisher": "SunStar",
+     "type": "news"
+    }
+   ],
+   "quote": "Unlike last year, we will not suspend imports because we have to prepare for the impact of a strong El Niño expected around November and December."
+  },
+  {
+   "id": "e098",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-09",
+   "end_date": null,
+   "kind": "support_price",
+   "direction": "up",
+   "title": "NFA raises its wet palay buying price to P21 a kilo",
+   "summary": "The NFA said it would pay at least P21 a kilo for wet palay, up from P17, starting with the September 2026 harvest. Dry palay would fetch P25 to P27. It aimed to buy about 500,000 tons of palay in the wet season.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": "NFA wet palay floor P21/kg (from P17); dry palay P25 to P27/kg",
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/995055/nfa-raises-palay-buying-price-halts-entry-of-rice-imports-in-iloilo/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2026/07/17/2542611/nfa-palay-buying-price-increase-p21kilo",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    },
+    {
+     "url": "https://www.sunstar.com.ph/cebu/da-skips-rice-import-suspension",
+     "publisher": "SunStar",
+     "type": "news"
+    }
+   ],
+   "quote": "minimum buying price for wet palay at P21 per kilo"
+  },
+  {
+   "id": "e099",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-09",
+   "end_date": "2026-11-30",
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "No rice imports through Iloilo ports during the 2026 wet harvest",
+   "summary": "The DA barred imported rice from entering Iloilo ports from mid September to the end of November 2026, the peak local harvest, to protect palay prices in Western Visayas.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Iloilo",
+   "sources": [
+    {
+     "url": "https://www.gmanetwork.com/news/money/economy/995055/nfa-raises-palay-buying-price-halts-entry-of-rice-imports-in-iloilo/story/",
+     "publisher": "GMA News",
+     "type": "news"
+    },
+    {
+     "url": "https://www.philstar.com/business/2026/07/17/2542611/nfa-palay-buying-price-increase-p21kilo",
+     "publisher": "The Philippine Star",
+     "type": "news"
+    }
+   ],
+   "quote": "from mid-September until the end of November"
+  },
+  {
+   "id": "e100",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-09-14",
+   "end_date": null,
+   "kind": "import_suspension",
+   "direction": "up",
+   "title": "DA turns back a 12,480 ton Vietnam rice cargo during harvest",
+   "summary": "In September 2026 the DA cancelled the import clearance of a 12,480 ton shipment of Vietnam rice that reached Davao, saying more supply in the harvest season would push palay prices down further.",
+   "import_tons": 12480,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Davao",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2026/10/14/govt-defends-rice-import-halt-ahead-of-harvest",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "12,480-metric-ton shipment of Vietnamese rice"
+  },
+  {
+   "id": "e101",
+   "crop_keys": [
+    "broccoli"
+   ],
+   "date": "2026-09-23",
+   "end_date": null,
+   "kind": "smuggling",
+   "direction": "down",
+   "title": "Smuggled broccoli found at La Trinidad trading post",
+   "summary": "In September 2026 a La Trinidad task force found smuggled broccoli at the vegetable trading post. The town council asked the DA to stop vegetable imports to protect farmers from falling prices and asked for a list of importers.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "Benguet",
+   "sources": [
+    {
+     "url": "https://tribune.net.ph/2026/09/23/la-trinidad-probe-confirms-smuggled-broccoli-in-trading-areas",
+     "publisher": "Daily Tribune",
+     "type": "news"
+    }
+   ],
+   "quote": "The second resolution urges the DA to suspend vegetable importation to protect local farmers from falling prices."
+  },
+  {
+   "id": "e102",
+   "crop_keys": [
+    "corn_yellow"
+   ],
+   "date": "2026-10-20",
+   "end_date": null,
+   "kind": "scheduled",
+   "direction": "mixed",
+   "title": "Corn import quota increase held back until after the harvest",
+   "summary": "As of October 20, 2026 the President had not signed the order raising the low tariff corn quota to 500,000 tons, because it could hurt corn farmers during the current harvest. No signing date was set. Above quota corn pays 15%.",
+   "import_tons": 500000,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://thechronicle.com.ph/marcos-holds-off-on-corn-import-quota-hike-amid-harvest-season/",
+     "publisher": "The Manila Chronicle",
+     "type": "news"
+    }
+   ],
+   "quote": "could affect the local feed sector and corn farmers as it is currently harvest season."
+  },
+  {
+   "id": "e103",
+   "crop_keys": [
+    "rice"
+   ],
+   "date": "2026-11-16",
+   "end_date": "2027-01-15",
+   "kind": "scheduled",
+   "direction": "mixed",
+   "title": "Next rice tariff review period starts November 16, 2026",
+   "summary": "Under the price linked tariff rule, the DA checks the September world rice price and certifies any change by October 9, with Customs acting by October 15. The rate found applies from November 16, 2026 to January 15, 2027. A lower world price means a higher tariff, up to 35%.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Philippines+Implements+Quarterly+Rice+Import+Tariff+Adjustment+Based+on+International+Price+Triggers+in+2026_Manila_Philippines_RP2026-0004.pdf",
+     "publisher": "USDA Foreign Agricultural Service",
+     "type": "government"
+    }
+   ],
+   "quote": "Within the first month of each quarter, the DA will monitor prices and issue a certification if a trigger price is breached, alongside the applicable tariff based on Tables 1 and 2."
+  },
+  {
+   "id": "e104",
+   "crop_keys": [
+    "sugarcane"
+   ],
+   "date": "2026-12-31",
+   "end_date": null,
+   "kind": "scheduled",
+   "direction": "mixed",
+   "title": "Sugar import ban set to run until the end of December 2026",
+   "summary": "The sugar import moratorium announced in December 2025 runs through December 2026. Any later import decision would come after that, and earlier policy said any imports would be classed as reserve sugar kept off the local market at first.",
+   "import_tons": null,
+   "tariff_from": null,
+   "tariff_to": null,
+   "farmgate_note": null,
+   "scope": "national",
+   "sources": [
+    {
+     "url": "https://seasia.co/2026/08/27/the-philippines-has-a-government-agency-just-for-sugar-why",
+     "publisher": "Seasia",
+     "type": "news"
+    },
+    {
+     "url": "https://thepeninsulaqatar.com/article/21/12/2025/philippines-extends-sugar-import-ban-until-december-2026",
+     "publisher": "The Peninsula (Qatar)",
+     "type": "news"
+    },
+    {
+     "url": "https://www.sunstar.com.ph/bacolod/da-sra-assure-no-sugar-importation-until-mid-2026",
+     "publisher": "SunStar Bacolod",
+     "type": "news"
+    }
+   ],
+   "quote": "In December, the government extended the import moratorium through December 2026,"
+  }
+ ],
+ "imports": [
+  {
+   "crop_key": "corn_yellow",
+   "year": 2015,
+   "tons": 519000,
+   "basis": "preliminary customs data, calendar year 2015 (all corn)",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-17-2017.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual, Manila, March 2017",
+    "type": "government"
+   },
+   "quote": "corn imports in 2016 increased 39 percent from 519,000 tons in 2015 to 718,000 tons last year"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2016,
+   "tons": 718000,
+   "basis": "preliminary customs data, calendar year 2016 (all corn, 77 percent from Thailand)",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-17-2017.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual, Manila, March 2017",
+    "type": "government"
+   },
+   "quote": "corn imports in 2016 increased 39 percent from 519,000 tons in 2015 to 718,000 tons last year"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2017,
+   "tons": 724000,
+   "basis": "USDA marketing year July 2017 to June 2018 (all corn)",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-8-2019.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual RP1902 (March 20, 2019)",
+    "type": "government"
+   },
+   "quote": "MY Imports 724 724 700 700 0 700"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2018,
+   "tons": 700000,
+   "basis": "USDA marketing year July 2018 to June 2019 (all corn)",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-8-2019.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual RP1902 (March 20, 2019)",
+    "type": "government"
+   },
+   "quote": "corn imports declined 24,000 tons to 700,000 tons due to strong feed-wheat imports"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2020,
+   "tons": 192349,
+   "basis": "PSA import data, January to June 2020 (all corn)",
+   "partial_year": true,
+   "source": {
+    "url": "https://businessmirror.com.ph/2020/09/15/da-eyeing-exports-of-corn-to-halt-farm-gate-price-slide/",
+    "publisher": "BusinessMirror",
+    "type": "news"
+   },
+   "quote": "corn imports during the six-month period fell by 12.5 percent to 192,349.261 MT"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2021,
+   "tons": 600000,
+   "basis": "USDA marketing year July 2021 to June 2022 (all corn, mostly feed corn)",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_RP2023-0025.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual RP2023-0025 (April 7, 2023)",
+    "type": "government"
+   },
+   "quote": "MY Imports (1000 MT)  600 600 800 900 0 800"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2022,
+   "tons": 933713,
+   "basis": "trade data for marketing year July 2022 to June 2023, HS 1005 all corn (USDA table)",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_RP2024-0009.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual RP2024-0009 (March 22, 2024)",
+    "type": "government"
+   },
+   "quote": "Total 933,713 716,650 714,243 -0.3"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2024,
+   "tons": 1588000,
+   "basis": "USDA marketing year July 2024 to June 2025 (all corn, mostly feed corn)",
+   "partial_year": false,
+   "source": {
+    "url": "https://agriexchange.apeda.gov.in/MarketReport/10323060520267216234964.pdf",
+    "publisher": "USDA FAS Grain and Feed Update RP2026-0017 (June 24, 2026)",
+    "type": "government"
+   },
+   "quote": "MY Imports (1000 MT)  1588 1588 2500 2250 2400 2300"
+  },
+  {
+   "crop_key": "corn_yellow",
+   "year": 2025,
+   "tons": 2250000,
+   "basis": "USDA Post estimate for marketing year July 2025 to June 2026 (all corn)",
+   "partial_year": true,
+   "source": {
+    "url": "https://agriexchange.apeda.gov.in/MarketReport/10323060520267216234964.pdf",
+    "publisher": "USDA FAS Grain and Feed Update RP2026-0017 (June 24, 2026)",
+    "type": "government"
+   },
+   "quote": "FAS Manila likewise raises its MY 2025/26 corn import estimate by 15.4 percent to 2.25 MMT"
+  },
+  {
+   "crop_key": "garlic",
+   "year": 2017,
+   "tons": 12440,
+   "basis": "arrivals January to May 2017, against 57,150 tons allowed by permits",
+   "partial_year": true,
+   "source": {
+    "url": "https://interaksyon.philstar.com/?p=75503",
+    "publisher": "Interaksyon (Philstar)",
+    "type": "news"
+   },
+   "quote": "57,150 metric tons of garlic should have come in between January and May"
+  },
+  {
+   "crop_key": "garlic",
+   "year": 2017,
+   "tons": 19000,
+   "basis": "imports January to June 2017 by 43 banned importers, against 70,000 tons allowed",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.philstar.com/headlines/2017/07/12/1719123/headlines",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "only imported 19,000 MT."
+  },
+  {
+   "crop_key": "garlic",
+   "year": 2022,
+   "tons": 61977,
+   "basis": "imports January to September 2022, sum of quarterly BPI figures as reported (23,141 + 18,183 + 20,653)",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.freshplaza.com/asia/article/9455233/philippines-rely-heavily-on-garlic-imports/",
+    "publisher": "FreshPlaza",
+    "type": "industry"
+   },
+   "quote": "Of the total supply, 23,141 MT were imported while only 4,971 MT were locally sourced."
+  },
+  {
+   "crop_key": "mungbean",
+   "year": 2025,
+   "tons": 50000,
+   "basis": "approximate yearly volume stated by the DA in December 2025 ('nearly 50,000')",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.da.gov.ph/da-eyes-munggo-as-irrigation-damage-threatens-rice-output-expands-income-base-for-farmers/",
+    "publisher": "Department of Agriculture",
+    "type": "government"
+   },
+   "quote": "The Philippines imports nearly 50,000 metric tons of mung beans annually."
+  },
+  {
+   "crop_key": "onion",
+   "year": 2023,
+   "tons": 21060,
+   "basis": "import volume approved in January 2023 (permits); importers used only about 5,000 tons",
+   "partial_year": true,
+   "source": {
+    "url": "https://portcalls.com/ph-importing-21060mt-of-onions-to-stabilize-price/",
+    "publisher": "PortCalls Asia",
+    "type": "news"
+   },
+   "quote": "President Ferdinand Marcos Jr., concurrently head of the Department of Agriculture (DA), has approved the importation of 21,060 metric tons (MT) of fresh onions"
+  },
+  {
+   "crop_key": "onion",
+   "year": 2023,
+   "tons": 3500,
+   "basis": "arrivals before the January 27, 2023 deadline (at least)",
+   "partial_year": true,
+   "source": {
+    "url": "https://manilatimes.net/2023/02/05/news/national/farmers-feel-the-brunt-of-onion-importation/1877254",
+    "publisher": "The Manila Times",
+    "type": "news"
+   },
+   "quote": "At least 3,500 metric tons (MT) of imported onions arrived before the Jan. 27, 2023 deadline."
+  },
+  {
+   "crop_key": "onion",
+   "year": 2023,
+   "tons": 21000,
+   "basis": "import clearances for December 2023 (17,000 tons red, 4,000 tons yellow), to arrive by December 31, 2023",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.philstar.com/headlines/2023/12/02/2315802/21000-mt-imported-onions-arrive-yearend/amp/",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "17,000 MT of fresh red onions and 4,000 MT of fresh yellow onions"
+  },
+  {
+   "crop_key": "onion",
+   "year": 2024,
+   "tons": 16000,
+   "basis": "yellow onion imports approved in August 2024; no red onion imports were allowed in 2024",
+   "partial_year": true,
+   "source": {
+    "url": "https://tribune.net.ph/2024/08/28/agri-chief-oks-16kmt-onion-imports",
+    "publisher": "Daily Tribune",
+    "type": "news"
+   },
+   "quote": "approved the importation of 16,000 metric tons (MT) of yellow onions."
+  },
+  {
+   "crop_key": "onion",
+   "year": 2025,
+   "tons": 4000,
+   "basis": "import volume approved February 2025 (3,000 tons red, 1,000 tons white)",
+   "partial_year": true,
+   "source": {
+    "url": "https://tribune.net.ph/2025/02/06/da-okays-onion-imports",
+    "publisher": "Daily Tribune",
+    "type": "news"
+   },
+   "quote": "3,000 metric tons of red onions and 1,000 MT of white onions"
+  },
+  {
+   "crop_key": "onion",
+   "year": 2025,
+   "tons": 69040,
+   "basis": "red onion import clearances (SPSIC) issued from September 2025, valid to January 15, 2026",
+   "partial_year": true,
+   "source": {
+    "url": "https://wealthinsights.metrobank.com.ph/bworldonline/da-probes-slow-imports-of-red-onions-as-prices-soar-past-p300-per-kilo",
+    "publisher": "BusinessWorld",
+    "type": "news"
+   },
+   "quote": "The DA earlier issued SPSICs for up to 69,040 metric tons (MT) of red onions"
+  },
+  {
+   "crop_key": "onion",
+   "year": 2025,
+   "tons": 12824,
+   "basis": "red onion arrivals from September to November 20, 2025",
+   "partial_year": true,
+   "source": {
+    "url": "https://wealthinsights.metrobank.com.ph/bworldonline/da-probes-slow-imports-of-red-onions-as-prices-soar-past-p300-per-kilo",
+    "publisher": "BusinessWorld",
+    "type": "news"
+   },
+   "quote": "bringing in 12,824 MT since September"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2010,
+   "tons": 2450000,
+   "basis": "as reported (Reuters via Business Recorder), record year",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.brecorder.com/news/amp/52743",
+    "publisher": "Business Recorder (Reuters)",
+    "type": "news"
+   },
+   "quote": "a record 2.45 million tonnes in 2010"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2010,
+   "tons": 2250000,
+   "basis": "government (NFA) purchases only; private traders bought another 242,500 tons",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.gmanetwork.com/news/money/content/210366/phl-to-cut-rice-imports-in-2011/story",
+    "publisher": "GMA News",
+    "type": "news"
+   },
+   "quote": "The government purchased 2.48 tons (2.25 million metric tons)"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2011,
+   "tons": 860000,
+   "basis": "as reported (Reuters via Business Recorder)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.brecorder.com/news/amp/52743",
+    "publisher": "Business Recorder (Reuters)",
+    "type": "news"
+   },
+   "quote": "860,000 tonnes last year"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2015,
+   "tons": 1600000,
+   "basis": "USDA marketing year July 2015 to June 2016; not a calendar year",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-17-2017.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual, Manila, March 2017",
+    "type": "government"
+   },
+   "quote": "MY Imports 1600 1600 1000 1000 0 2000"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2017,
+   "tons": 1300000,
+   "basis": "USDA marketing year July 2017 to June 2018; not a calendar year",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-8-2019.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual RP1902 (March 20, 2019)",
+    "type": "government"
+   },
+   "quote": "MY Imports 1300 1300 2300 2300 0 2300"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2018,
+   "tons": 1900000,
+   "basis": "USDA FAS figure (as reported December 2019)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.philstar.com/business/2019/12/12/1976248/philippines-remain-largest-rice-importer-next-year/amp/",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "This year's importation for the Philippines is 68 percent higher than the 1.9 million MT imports in 2018."
+  },
+  {
+   "crop_key": "rice",
+   "year": 2018,
+   "tons": 2300000,
+   "basis": "USDA marketing year July 2018 to June 2019; not a calendar year",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_3-8-2019.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual RP1902 (March 20, 2019)",
+    "type": "government"
+   },
+   "quote": "rice imports increased by a million tons to 2.3 million tons to contain rising inflation ahead of the Philippine mid-term elections in May 2019"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2019,
+   "tons": 2900000,
+   "basis": "as reported (Federation of Free Farmers study)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.philstar.com/business/2020/02/22/1995025/farmers-lose-p68-billion-rice-tariffication-law",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "as much as 2.9 million metric tons of imported rice in 2019"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2019,
+   "tons": 3200000,
+   "basis": "USDA FAS estimate (as reported December 2019)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.philstar.com/business/2019/12/12/1976248/philippines-remain-largest-rice-importer-next-year/amp/",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "reaching a record 3.2 million MT"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2020,
+   "tons": 2500000,
+   "basis": "USDA FAS estimate (as reported January 2021)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.philstar.com/business/2021/01/14/2070205/lower-rice-imports-seen-year",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "compared to the estimated 2.5 million MT in 2020"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2020,
+   "tons": 1660000,
+   "basis": "arrivals January to August 2020 (as reported)",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.philstar.com/business/2020/09/15/2042410/business",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "imports from January to August totaled only 1.66 million metric tons"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2021,
+   "tons": 2770000,
+   "basis": "Bureau of Plant Industry arrivals, calendar year (as reported)",
+   "partial_year": false,
+   "source": {
+    "url": "https://manilatimes.net/2023/01/05/business/top-business/ph-rice-imports-up-27-in-2022/1872806",
+    "publisher": "The Manila Times",
+    "type": "news"
+   },
+   "quote": "37 percent higher than the 2.77 MMT recorded in 2021."
+  },
+  {
+   "crop_key": "rice",
+   "year": 2022,
+   "tons": 3790000,
+   "basis": "Bureau of Plant Industry arrivals, calendar year (as reported)",
+   "partial_year": false,
+   "source": {
+    "url": "https://manilatimes.net/2023/01/05/business/top-business/ph-rice-imports-up-27-in-2022/1872806",
+    "publisher": "The Manila Times",
+    "type": "news"
+   },
+   "quote": "THE Philippines imported 3.79 million metric tons (MMT) of rice last year, latest Bureau of Plant Industry figures showed,"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2022,
+   "tons": 3600000,
+   "basis": "USDA marketing year July 2022 to June 2023 (Post estimate, March 2024); not a calendar year",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain and Feed Annual_Manila_Philippines_RP2024-0009.pdf",
+    "publisher": "USDA FAS Grain and Feed Annual RP2024-0009 (March 22, 2024)",
+    "type": "government"
+   },
+   "quote": "MY Imports (1000 MT)  3750 3600 4200 4000 0 4000"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2023,
+   "tons": 3800000,
+   "basis": "Bureau of Plant Industry import data (as reported)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.philstar.com/business/2025/03/04/2425848/da-nfa-pressed-keep-palay-farmgate-prices-fair-reduce-imports",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "the Philippines imported 4.68 million metric tons of rice in 2024, up from 3.8 million metric tons in 2023."
+  },
+  {
+   "crop_key": "rice",
+   "year": 2024,
+   "tons": 4800000,
+   "basis": "DA figure (arrivals, as reported)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.gmanetwork.com/news_duplicate/money/economy/974488/da-sees-rice-prices-remaining-stable-as-tariff-stays-at-15/story/",
+    "publisher": "GMA News",
+    "type": "news"
+   },
+   "quote": "about 4.8 million metric tons"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2024,
+   "tons": 4680000,
+   "basis": "Bureau of Plant Industry import data (as reported)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.philstar.com/business/2025/03/04/2425848/da-nfa-pressed-keep-palay-farmgate-prices-fair-reduce-imports",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "the Philippines imported 4.68 million metric tons of rice in 2024, up from 3.8 million metric tons in 2023."
+  },
+  {
+   "crop_key": "rice",
+   "year": 2024,
+   "tons": 4700000,
+   "basis": "as reported (BusinessWorld, rounded)",
+   "partial_year": false,
+   "source": {
+    "url": "https://wealthinsights.metrobank.com.ph/bworldonline/philippines-eyes-1-month-rice-import-window-in-january-2026",
+    "publisher": "BusinessWorld",
+    "type": "news"
+   },
+   "quote": "last year imported about 4.7 million MT of rice"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2024,
+   "tons": 5425000,
+   "basis": "USDA marketing year July 2024 to June 2025 (Post estimate); not a calendar year",
+   "partial_year": false,
+   "source": {
+    "url": "https://agriexchange.apeda.gov.in/MarketReport/10323060520267216234964.pdf",
+    "publisher": "USDA FAS Grain and Feed Update RP2026-0017 (June 24, 2026)",
+    "type": "government"
+   },
+   "quote": "MY Imports (1000 MT)  5420 5425 4400 4400 5600 5200"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2024,
+   "tons": 2340000,
+   "basis": "Bureau of Plant Industry arrivals, January to June 2024 (previous first half record)",
+   "partial_year": true,
+   "source": {
+    "url": "https://newswav.com/article/rice-imports-hit-record-high-of-2-75-million-mt-A2607_KA12v7",
+    "publisher": "The Manila Times via Newswav",
+    "type": "news"
+   },
+   "quote": "This surpassed the previous record of 2.34 million MT seen in 2024"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2025,
+   "tons": 3360000,
+   "basis": "DA figure (arrivals, as reported)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.gmanetwork.com/news_duplicate/money/economy/974488/da-sees-rice-prices-remaining-stable-as-tariff-stays-at-15/story/",
+    "publisher": "GMA News",
+    "type": "news"
+   },
+   "quote": "3.36 million MT"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2025,
+   "tons": 3645000,
+   "basis": "USDA trade year (calendar 2025) Post estimate",
+   "partial_year": false,
+   "source": {
+    "url": "https://agriexchange.apeda.gov.in/MarketReport/10323060520267216234964.pdf",
+    "publisher": "USDA FAS Grain and Feed Update RP2026-0017 (June 24, 2026)",
+    "type": "government"
+   },
+   "quote": "TY Imports (1000 MT)  3640 3645 5500 5500 5600 5700"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2025,
+   "tons": 3500000,
+   "basis": "Bureau of Plant Industry estimate made in December 2025 (about)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.gmanetwork.com/news/money/economy/969739/da-pegs-ph-rice-importation-below-4m-mt-in-2026/story/",
+    "publisher": "GMA News",
+    "type": "news"
+   },
+   "quote": "the total rice imports this year could hit around 3.5 million MT"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2025,
+   "tons": 2290000,
+   "basis": "Bureau of Plant Industry arrivals, January to June 2025 (almost)",
+   "partial_year": true,
+   "source": {
+    "url": "https://newswav.com/article/rice-imports-hit-record-high-of-2-75-million-mt-A2607_KA12v7",
+    "publisher": "The Manila Times via Newswav",
+    "type": "news"
+   },
+   "quote": "the almost 2.29 million MT imported during the same period last year"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2026,
+   "tons": 3300000,
+   "basis": "DA figure, imports as of August 3, 2026",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.sunstar.com.ph/cebu/da-skips-rice-import-suspension",
+    "publisher": "SunStar",
+    "type": "news"
+   },
+   "quote": "As of Aug. 3, rice imports have reached 3.3 million metric tons."
+  },
+  {
+   "crop_key": "rice",
+   "year": 2026,
+   "tons": 2750000,
+   "basis": "first half of 2026, as cited by farm groups",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.philstar.com/headlines/2026/08/04/2546742/farmer-groups-seek-30-safeguard-duty-imported-rice",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "a record-high of 2.75 million MT in the first half of 2026"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2026,
+   "tons": 700000,
+   "basis": "imported rice arrivals as of February 26, 2026 (more than)",
+   "partial_year": true,
+   "source": {
+    "url": "https://edgedavao.net/the-economy/2026/03/da-says-import-arrivals-must-translate-to-cheaper-rice-amid-harvest-season/",
+    "publisher": "Edge Davao",
+    "type": "news"
+   },
+   "quote": "more than 700,000 metric tons (MT) of imported rice as of Feb. 26"
+  },
+  {
+   "crop_key": "rice",
+   "year": 2026,
+   "tons": 500000,
+   "basis": "volume allowed for the January to February 2026 import window",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.philstar.com/headlines/2026/01/09/2499697/philippines-resumes-importing-rice-tariff-still-15",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "500,000 metric tons of rice will be allowed to enter the country"
+  },
+  {
+   "crop_key": "sugarcane",
+   "year": 2022,
+   "tons": 235000,
+   "basis": "refined sugar imports in raw value, USDA marketing year September 2021 to August 2022",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2023-0035.pdf",
+    "publisher": "USDA FAS Sugar Annual RP2023-0035 (April 19, 2023)",
+    "type": "government"
+   },
+   "quote": "Refined Imp. (Raw Val) (1000 MT)  235 235 275 700 257"
+  },
+  {
+   "crop_key": "sugarcane",
+   "year": 2022,
+   "tons": 200000,
+   "basis": "refined sugar import authorized by Sugar Order 3 (February 2022), temporarily blocked by a court",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.gmanetwork.com/news/money/economy/822093/negros-occidental-court-stops-gov-t-plan-to-import-200-000-metric-tons-of-sugar/story",
+    "publisher": "GMA News",
+    "type": "news"
+   },
+   "quote": "allows the importation of 200,000 metric tons of standard and bottler's grade refined sugar."
+  },
+  {
+   "crop_key": "sugarcane",
+   "year": 2023,
+   "tons": 735000,
+   "basis": "refined sugar imports in raw value, USDA marketing year September 2022 to August 2023",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2024-0014.pdf",
+    "publisher": "USDA FAS Sugar Annual RP2024-0014 (April 18, 2024)",
+    "type": "government"
+   },
+   "quote": "Refined Imports (Raw Value)  735 735 257 100 0"
+  },
+  {
+   "crop_key": "sugarcane",
+   "year": 2023,
+   "tons": 440000,
+   "basis": "refined sugar import authorized by Sugar Order 6 (February 2023)",
+   "partial_year": false,
+   "source": {
+    "url": "https://www.philstar.com/headlines/2023/02/16/2245338/order-out-440000-mt-sugar-imports/amp/",
+    "publisher": "The Philippine Star",
+    "type": "news"
+   },
+   "quote": "Sugar Order No. 6 (SO6) for the importation of 440,000 metric tons of refined sugar this year."
+  },
+  {
+   "crop_key": "sugarcane",
+   "year": 2024,
+   "tons": 86000,
+   "basis": "refined sugar imports in raw value, USDA marketing year September 2023 to August 2024 (Post figure)",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2025-0023.pdf",
+    "publisher": "USDA FAS Sugar Annual RP2025-0023 (April 16, 2025)",
+    "type": "government"
+   },
+   "quote": "Refined Imports (Raw Value)  71 86 0 236 321"
+  },
+  {
+   "crop_key": "sugarcane",
+   "year": 2025,
+   "tons": 236000,
+   "basis": "refined sugar imports in raw value (221,000 tons refined), USDA marketing year September 2024 to August 2025, as reported by SRA",
+   "partial_year": false,
+   "source": {
+    "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Sugar Annual_Manila_Philippines_RP2025-0023.pdf",
+    "publisher": "USDA FAS Sugar Annual RP2025-0023 (April 16, 2025)",
+    "type": "government"
+   },
+   "quote": "Post revises refined imports to 221,000 MT (236,000 raw sugar equivalent) as reported by SRA."
+  },
+  {
+   "crop_key": "sugarcane",
+   "year": 2025,
+   "tons": 424000,
+   "basis": "refined sugar import authorized by Sugar Order 8, to arrive July 15 to November 30, 2025",
+   "partial_year": true,
+   "source": {
+    "url": "https://www.gmanetwork.com/news/money/companies/952050/philippines-sra-sugar-importation-428-000-metric-tons/story/",
+    "publisher": "GMA News",
+    "type": "news"
+   },
+   "quote": "allowed the entry of a total of 424,000 MT of imported refined sugar"
+  }
+ ],
+ "notes": "COVERAGE. Events run from 2012 to the scheduled end of 2026, most of them 2019 to 2026. Rice, onion, sugarcane, corn and carrots carry most events. No verifiable trade-linked farmgate event was found for shallot, tomato, eggplant, ampalaya, soybean, peanut, mango, coffee, calamansi, cassava, sweetpotato, squash, pechay, lettuce or bellpepper. Searches turned up only retail price spikes from typhoons, or no import tie. Potato, broccoli, ginger, chili, cacao and pineapple have one event each.\n\nSOURCES THAT COULD NOT BE FETCHED. The Inquirer (all subdomains), Manila Bulletin, Rappler, ABS-CBN, S&P Global, PSA, the Senate site and BusinessWorld's own domain returned 403. BusinessWorld stories were read through the Metrobank Wealth Insights mirror, and some Inquirer stories through Asia News Network republications. Items known only from search snippets were left out. Left out: (a) S&P Global, September 14, 2026: the Philippines stopped issuing rice import clearances for Thailand, Vietnam and Myanmar, with issuance expected to resume around mid November 2026. Only the separate Iloilo port halt and the 12,480 ton Davao cargo are in the file. (b) Inquirer reports on 2019 to 2021 onion and palay prices. (c) BusinessWorld 2021 palay averages. (d) The outcome of the 2026 rice safeguard probe. The Tariff Commission was due to report by September 2026, and no ruling was found as of late October 2026.\n\nIMPORT ROWS MIX SEVERAL BASES. Do not add rows together. Pick one basis per chart. Bases used: Bureau of Plant Industry calendar year arrivals; DA statements; USDA FAS marketing years; permits or clearances issued; and partial year arrivals (partial_year true). For USDA marketing year rows, \"year\" is the first calendar year of the marketing year. Rice and corn run July to June; sugar runs September to August, so sugar \"year\" 2023 means Sept 2022 to Aug 2023. The basis text gives the exact months. Sugar rows are refined sugar imports in raw value unless the basis says \"authorized\". Onion rows are mostly authorized volumes. Actual onion arrivals are often far lower: in January 2023 only about 5,000 of 21,060 tons were used, and only 12,824 of 69,040 tons had arrived by November 20, 2025. No source gave a full year onion, potato, cabbage or carrot import total.\n\nDISAGREEMENTS KEPT AS SEPARATE ROWS. Rice 2024: 4.8 Mt (DA via GMA), 4.68 Mt (BPI via Philstar), about 4.7 Mt (BusinessWorld), and 5.425 Mt for USDA marketing year 2024/25. Rice 2025: 3.36 Mt (GMA, January 2026), about 3.5 Mt (BPI estimate, December 2025), and 3.645 Mt (USDA trade year). Rice 2019: 3.2 Mt (USDA via Philstar) against 2.9 Mt (Federation of Free Farmers via Philstar). Rice 2018: 1.9 Mt (USDA via Philstar) against 2.3 Mt for USDA marketing year 2018/19. Rice 2010: 2.45 Mt total (Reuters) against 2.25 Mt NFA purchases only (GMA). NFA wet palay buying price for the 2026 wet harvest: P21/kg (GMA and Philstar, July 2026) against P22 wet and P27 dry (Philstar, July 9, 2026).\n\nUNITS AND TERMS. Sugar millgate and mill site prices are per LKg, which is one 50 kg bag. Palay prices are per kg of unhusked rice: fresh or wet unless marked dry. \"corn_yellow\" is used where a source says corn without a color, since it is mostly feed corn. One event is also tagged corn_white because its source gave white corn prices.\n\nDIRECTION. \"up\" or \"down\" is the farmgate effect the source reports or clearly implies. \"mixed\" marks a policy whose effect was not reported, or that cut both ways, such as tariff extensions, recalled orders and quota proposals. Export events for banana, coconut and cacao follow world prices, and some report only export prices, not farmgate prices.\n\nDATES. A date is YYYY-MM when the source gives only the month, and \"2014\" for the garlic price spike, where only the year is known. end_date marks when a stop or window ended or was due to end. Several end dates were only expected when reported: onion clearances to resume around September 2026, unconfirmed; Iloilo rice import halt to November 30, 2026; sugar import ban to December 2026. Three events are kind \"scheduled\": the corn import quota increase awaiting signature after the harvest (as of October 20, 2026); the rice tariff period from November 16, 2026 to January 15, 2027 under the price linked tariff; and the end of the sugar import ban in December 2026.\n\nGOVERNMENT ONLY SOURCES. Seven events cite only government sources, because no independent outlet could be fetched: 2016 feed wheat and corn prices (USDA); the 2019 sugar import liberalization plan (PTV); the December 2024 rice law amendment (USDA); NFA buying prices in March 2025 (DA); mung bean import timing in December 2025 (DA); the FTI mung bean and chili purchases in January 2026 (DA); and the rice tariff period starting November 16, 2026 (USDA). PTV News and the Office of Senator Loren Legarda are typed \"government\". USDA FAS reports are typed \"government\" (foreign).\n\nQUOTES. Quotes were copied from the fetched pages, usually in pieces under 125 characters. Quotes taken from USDA PDF tables keep the words and numbers but normalize line breaks and spacing. One onion event cites a story from DA news clippings: The Philippine Star, July 9, 2024, by Bella Cariaso, whose own page could not be found."
+}

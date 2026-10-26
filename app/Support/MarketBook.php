@@ -349,7 +349,10 @@ final class MarketBook
             'key' => $r->eventKey, 'day' => $r->day, 'precision' => $r->precision, 'end' => $r->endDay, 'kind' => $r->kind, 'direction' => $r->direction,
             'title' => $r->title, 'summary' => $r->summary, 'tons' => $r->importTons !== null ? (float) $r->importTons : null,
             'tariff' => $r->tariffTo !== null ? ['from' => (float) $r->tariffFrom, 'to' => (float) $r->tariffTo] : null, 'farmgate' => $r->farmgateNote, 'scope' => $r->scope,
-            'sources' => array_values(array_map(fn ($x) => ['publisher' => (string) ($x['publisher'] ?? ''), 'url' => (string) ($x['url'] ?? '')], GovSource::keep((array) json_decode((string) $r->sources, true)))),
+            // Newsrooms only: no agency, ours or abroad (USDA and the like are kept for the record, never shown).
+            'sources' => array_values(array_map(fn ($x) => ['publisher' => (string) ($x['publisher'] ?? ''), 'url' => (string) ($x['url'] ?? '')],
+                array_filter(GovSource::keep((array) json_decode((string) $r->sources, true)), fn ($x) => ($x['type'] ?? 'news') !== 'government'
+                    && ! preg_match('/\busda\b|foreign agricultural service|\.gov\b|tariff commission/i', ($x['publisher'] ?? '') . ' ' . ($x['url'] ?? ''))))),
             'move3' => $move($r->day, 3), 'move6' => $move($r->day, 6),
             'ahead' => $r->day > Carbon::now('Asia/Manila')->toDateString(),
         ])->values()->all();
@@ -363,10 +366,25 @@ final class MarketBook
         }
         $out = [];
         foreach (DB::table('as_market_imports')->where('cropKey', $crop)->orderBy('year')->orderBy('id')->get() as $r) {
-            $out[$r->year] ??= ['y' => (int) $r->year, 'tons' => (float) $r->tons, 'basis' => $r->basis, 'partial' => (bool) $r->partialYear];
+            $out[$r->year] ??= ['y' => (int) $r->year, 'tons' => (float) $r->tons, 'basis' => self::basisWords((string) $r->basis), 'partial' => (bool) $r->partialYear];
         }
 
         return array_values($out);
+    }
+
+    /** What an import figure counts, in plain words that name no agency. */
+    private static function basisWords(string $b): string
+    {
+        $b = mb_strtolower($b);
+
+        return match (true) {
+            str_contains($b, 'marketing year'), str_contains($b, 'trade year') => 'a trade year estimate, not the calendar year',
+            (bool) preg_match('/clearance|permit|approved|authori[sz]ed|allowed/', $b) => 'the volume allowed in, not all of it arrived',
+            str_contains($b, 'purchases') => 'government buying only',
+            str_contains($b, 'arrivals') => 'arrivals',
+            (bool) preg_match('/customs|import data|trade data/', $b) => 'customs records',
+            default => 'as reported',
+        };
     }
 
     /** The latest local reports for the item near the place (its province, else its region), newest first. */

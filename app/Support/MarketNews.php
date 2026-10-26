@@ -46,6 +46,21 @@ final class MarketNews
 
     public const KINDS = ['import_surge', 'import_ban', 'import_suspension', 'import_order', 'tariff', 'price_cap', 'support_price', 'smuggling', 'export', 'policy', 'scheduled', 'other'];
 
+    /** Kinds that tell the same sort of news: a decision on imports, what came in or went out, a price set from above. */
+    private const GROUPS = ['import_ban' => 'decide', 'import_suspension' => 'decide', 'import_order' => 'decide', 'tariff' => 'decide', 'policy' => 'decide', 'scheduled' => 'decide',
+        'import_surge' => 'flow', 'smuggling' => 'flow', 'export' => 'flow', 'price_cap' => 'price', 'support_price' => 'price', 'other' => 'other'];
+
+    /**
+     * Whether two events are one: the same sort of news on a crop they share, within two weeks.
+     * $e = an as_market_events row; the other is given by its kind, day and crops.
+     */
+    public static function sameEvent(object $e, string $kind, string $day, array $crops): bool
+    {
+        return (self::GROUPS[$e->kind] ?? $e->kind) === (self::GROUPS[$kind] ?? $kind)
+            && abs(Carbon::parse($e->day)->diffInDays(Carbon::parse($day), false)) <= 14
+            && (bool) array_intersect($crops, (array) json_decode((string) $e->crops, true));
+    }
+
     public static function ready(): bool
     {
         return Schema::hasTable('as_market_news_seen') && Schema::hasTable('as_news_items') && Schema::hasTable('as_market_events');
@@ -193,8 +208,10 @@ final class MarketNews
             $same = DB::table('as_market_events')->where('eventKey', (string) $x['same_as'])->first();
         }
         if (! $same) {
-            foreach (DB::table('as_market_events')->where('kind', $kind)->whereBetween('day', [Carbon::parse($day)->subDays(14)->toDateString(), Carbon::parse($day)->addDays(14)->toDateString()])->get() as $e) {
-                if (array_intersect($crops, (array) json_decode((string) $e->crops, true))) {
+            // A researched event first, then one the news brought.
+            foreach (DB::table('as_market_events')->whereBetween('day', [Carbon::parse($day)->subDays(14)->toDateString(), Carbon::parse($day)->addDays(14)->toDateString()])
+                ->orderByRaw("eventKey LIKE 'n%'")->get() as $e) {
+                if (self::sameEvent($e, $kind, $day, $crops)) {
                     $same = $e;
                     break;
                 }
