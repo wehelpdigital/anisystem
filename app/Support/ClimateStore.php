@@ -434,6 +434,37 @@ final class ClimateStore
         return $by;
     }
 
+    /** weekTable()'s answers in this request, by cell. */
+    private static array $weekMemo = [];
+
+    /**
+     * Every kept week of a point's cell as [year][week] => [days, rain, et0,
+     * hot35], for a reader that runs its own water count over the years
+     * (App\Support\WaterBudget, 2026-10-26). Read only: a cell not yet
+     * filled answers null and nothing is fetched or made, since it is read
+     * while a saved report opens.
+     */
+    public static function weekTable(float $lat, float $lng): ?array
+    {
+        $key = self::cellKey($lat, $lng);
+        if (array_key_exists($key, self::$weekMemo)) {
+            return self::$weekMemo[$key];
+        }
+        if (! self::schema()->hasTable('as_weather_weeks')) {
+            return self::$weekMemo[$key] = null;
+        }
+        $cell = self::db()->table('as_weather_cells')->where('cellKey', $key)->first();
+        if (! $cell || ! $cell->fetchedThrough) {
+            return self::$weekMemo[$key] = null;
+        }
+        $by = [];
+        foreach (self::db()->table('as_weather_weeks')->where('cellId', $cell->id)->get(['year', 'week', 'days', 'rain', 'et0', 'hot35']) as $r) {
+            $by[(int) $r->year][(int) $r->week] = ['days' => (int) $r->days, 'rain' => (float) $r->rain, 'et0' => (float) $r->et0, 'hot35' => (int) $r->hot35];
+        }
+
+        return self::$weekMemo[$key] = $by ?: null;
+    }
+
     /**
      * The same weeks in each of the last twenty years: rain, sun, the water
      * the air pulls from a crop, heat. From the shelf; a new cell is filled

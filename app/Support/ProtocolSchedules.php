@@ -24,6 +24,13 @@ use Illuminate\Support\Carbon;
  *     report already chose), and what to do first without a spray.
  * The protection schedule is a calendar to check by, not to spray by: the
  * report's disclaimer goes with it everywhere.
+ *
+ * Since 2026-10-26 (the owner: "base it as well in all factors") every
+ * watering stage carries the lot's own numbers, App\Support\WaterBudget:
+ * how often and how much from the soil, the crop's stage, twenty years of
+ * the place's rain and heat, the ENSO outlook, the water source and the way
+ * it is applied, for this lot's area and plants. The How to Plant words stay
+ * beside them as the usual way.
  */
 final class ProtocolSchedules
 {
@@ -45,7 +52,7 @@ final class ProtocolSchedules
             }
             try {
                 $crop = $crops[(string) ($L['case'] ?? '')] ?? null;
-                $report['lots'][$i]['watering'] = self::watering($L, self::waterOf($L, $params, (int) $i));
+                $report['lots'][$i]['watering'] = self::watering($L, self::waterOf($L, $params, (int) $i), self::facts($L, $params, (int) $i));
                 $report['lots'][$i]['protect'] = $crop ? self::protect($L, $crop) : [];
             } catch (\Throwable $e) {
                 report($e);
@@ -96,6 +103,20 @@ final class ProtocolSchedules
         return $w === '' ? 'irrigated' : $w;
     }
 
+    /** What WaterBudget counts the lot's water from: its field answers, plants, the outlook's tilt and the pump. */
+    private static function facts(array $L, ?array $params, int $i): array
+    {
+        $lp = is_array($params['lots'][$i] ?? null) ? $params['lots'][$i] : [];
+        $pa = is_array($lp['profile'] ?? null) ? $lp['profile'] : (is_array($lp['p']['fieldProfile'] ?? null) ? $lp['p']['fieldProfile'] : []);
+        $sp = $lp['spacing'] ?? ($lp['p']['spacing'] ?? null);
+        $sn = (array) ($L['need']['season'] ?? []);
+        $legacy = $pa ? FieldProfile::legacy($pa) : [];
+
+        return ['profile' => $pa, 'soil' => (string) ($lp['p']['soil'] ?? ''), 'tilt' => (float) ($sn['tilt'] ?? 1),
+            'perHa' => is_array($sp) ? (float) ($sp['perHa'] ?? 0) : (float) ($L['need']['stand']['plants'] ?? 0),
+            'pump' => $legacy['pump'] ?? null];
+    }
+
     /* ============================================================ watering */
 
     /**
@@ -103,7 +124,7 @@ final class ProtocolSchedules
      * {method, season: [kind, words], rows: [{key, stage, from, to, date, end,
      * often, amount, why, critical, nursery, prep, task}], critical, signs}.
      */
-    public static function watering(array $L, string $water = 'irrigated'): ?array
+    public static function watering(array $L, string $water = 'irrigated', array $facts = []): ?array
     {
         $day0 = self::day0($L);
         $guide = $day0 ? HowToPlant::guide((string) ($L['crop'] ?? '')) : null;
@@ -142,9 +163,44 @@ final class ProtocolSchedules
         if (! $rows) {
             return null;
         }
+        // The lot's own numbers on every stage; the guide's words stay as the usual way.
+        $budget = null;
+        try {
+            $budget = WaterBudget::lot($L, $rows, $facts + ['day0' => $day0, 'water' => $water, 'method' => (string) ($w['method'] ?? ''),
+                'critical' => array_values(array_map(fn ($r) => $r['key'], array_filter($rows, fn ($r) => $r['critical'])))]);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+        foreach ($rows as $n => $r) {
+            $b = $budget['rows'][$r['key']] ?? null;
+            if (! $b) {
+                continue;
+            }
+            $say = $b['say'];
+            unset($b['say']);
+            $rows[$n]['usual'] = ['often' => $r['often'], 'amount' => $r['amount']];
+            if ($say['often'] !== '') {
+                $rows[$n]['often'] = rtrim($say['often'], '.');
+            }
+            if ($say['amount'] !== '') {
+                $rows[$n]['amount'] = rtrim($say['amount'], '.');
+            } elseif (! empty($say['noAmount'])) {
+                $rows[$n]['amount'] = '';
+            }
+            $rows[$n]['budget'] = $say['budget'];
+            $rows[$n]['warn'] = $say['warn'];
+            $rows[$n]['plan'] = $b;
+            // "Usually no watering" was said for the rain of most years: where the count finds this lot short, it is watered.
+            if ($r['task'] === 'no_irrigation' && $water !== 'rainfed' && $water !== 'rain' && in_array($b['kind'], ['soil', 'awd', 'pond'], true)
+                && (int) ($b['countDry'] ?? 0) > 0 && ! preg_match('/^\s*(stop|no water)/i', $r['often'])) {
+                $rows[$n]['task'] = 'irrigate';
+            }
+        }
+
         return [
             'method' => trim((string) ($w['method'] ?? '')),
             'season' => self::seasonTip($L, $w, $water, $day0),
+            'budget' => $budget ? ['factors' => $budget['factors'], 'season' => $budget['season'], 'climate' => $budget['climate']] : null,
             'rows' => $rows,
             'critical' => array_values(array_filter(array_map('strval', (array) ($w['critical'] ?? [])))),
             'signs' => array_filter(['dry' => trim((string) ($w['signs']['dry'] ?? '')), 'wet' => trim((string) ($w['signs']['wet'] ?? ''))]),
@@ -289,10 +345,14 @@ final class ProtocolSchedules
         return '<p><strong>Watering, ' . self::e($row['stage']) . ':</strong> ' . self::e($span) . '.</p>'
             . ($row['often'] !== '' ? '<p><strong>How often:</strong> ' . self::e($row['often']) . '.</p>' : '')
             . ($row['amount'] !== '' ? '<p><strong>How much:</strong> ' . self::e($row['amount']) . '.</p>' : '')
+            . (($row['budget'] ?? '') !== '' ? '<p>' . self::e($row['budget']) . '</p>' : '')
+            . implode('', array_map(fn ($x) => '<p><strong>Watch:</strong> ' . self::e($x) . '</p>', (array) ($row['warn'] ?? [])))
             . ($row['why'] !== '' ? '<p><strong>Why:</strong> ' . self::e($row['why']) . '</p>' : '')
             . ($row['critical'] ? '<p><strong>This stage must never go dry.</strong></p>' : '')
+            . (! empty($row['usual']['often']) && $row['usual']['often'] !== $row['often'] ? '<p><strong>The usual way:</strong> ' . self::e($row['usual']['often']) . '. ' . self::e($row['usual']['amount'] ?? '') . '</p>' : '')
+            . ($first && ! empty($watering['budget']['season']['words']) ? '<p><strong>This season:</strong> ' . self::e($watering['budget']['season']['words']) . '</p>' : '')
             . ($first && ($sn['say'] ?? '') !== '' ? '<p><strong>' . self::e($sn['title'] ?? 'This season') . ':</strong> ' . self::e($sn['say']) . '</p>' : '')
-            . ($first && ($watering['method'] ?? '') !== '' ? '<p><strong>The usual way:</strong> ' . self::e($watering['method']) . '</p>' : '')
+            . ($first && ($watering['method'] ?? '') !== '' ? '<p><strong>How the water is put on:</strong> ' . self::e($watering['method']) . '</p>' : '')
             . '<p><em>From the Crop Protocol Analysis.</em></p>';
     }
 

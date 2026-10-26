@@ -1367,6 +1367,26 @@
     html.dark .cr-pth { background: #241b10; border-color: #4a3518; }
     html.dark .cr-pth.is-disease { background: #2a1422; border-color: #4d2240; }
     html.dark .cr-season { background: #10212f; border-color: #1e3a52; color: #bfdbfe; }
+    /* The lot's own water count (2026-10-26, App\Support\WaterBudget): what it was based on, the season, each stage's numbers. */
+    .cr-wsum { margin: .2rem 0 .7rem; padding: .8rem .9rem; border-radius: 1rem; background: linear-gradient(135deg, #e8f3fd, #f3f9ff); border: 1px solid #cfe3f6; }
+    .cr-wsum-n { display: flex; flex-wrap: wrap; gap: .4rem .9rem; margin-bottom: .45rem; }
+    .cr-wsum-n span { display: flex; flex-direction: column; min-width: 4.5rem; }
+    .cr-wsum-n b { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #1d5f99; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .cr-wsum-n small { font-size: .66rem; font-weight: 800; color: #5b7a99; text-transform: uppercase; letter-spacing: .03em; }
+    .cr-wsum p { font-size: .8rem; line-height: 1.55; color: #1e3a5f; }
+    .cr-wfac { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .55rem; }
+    .cr-wfac span { font-size: .68rem; font-weight: 700; padding: .15rem .55rem; border-radius: 999px; background: #fff; border: 1px solid #d3e4f4; color: #35577a; }
+    .cr-wfac-h { display: block; margin-top: .55rem; font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #5b7a99; }
+    .cr-wbud { display: block; margin-top: .25rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-500); }
+    .cr-wwarn { display: block; margin-top: .3rem; padding: .3rem .5rem; border-radius: .55rem; font-size: .74rem; line-height: 1.45; background: #fff7e6; color: #8a4b08; border: 1px solid #f7dcaa; }
+    .cr-wold { display: block; margin-top: .25rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-500); }
+    .cr-wold > i { font-style: normal; font-weight: 800; }
+    html.dark .cr-wsum { background: linear-gradient(135deg, #0f2232, #122a3d); border-color: #1e3a52; }
+    html.dark .cr-wsum-n b { color: #93c5fd; } html.dark .cr-wsum-n small, html.dark .cr-wfac-h { color: #7fa3c4; }
+    html.dark .cr-wsum p { color: #bfdbfe; }
+    html.dark .cr-wfac span { background: #0c1a26; border-color: #1e3a52; color: #a8c7e6; }
+    html.dark .cr-wbud, html.dark .cr-wold { color: #9fb09a; }
+    html.dark .cr-wwarn { background: #2b2210; color: #f5c77e; border-color: #4a3a18; }
     html.dark .cr-job b { color: #e8efe1; }
     @media (prefers-reduced-motion: reduce) {
         .cq-step.is-on, .cq-quote, .cq-lot, .cq-wk, .cq-hint, .cq-from, .cq-need, .cq-cast-c, .cq-cast-row, .cq-price, .cq-err, .cr-pane, .cr-day, .cr-job, .cr-fold > div { animation: none !important; }
@@ -3439,12 +3459,27 @@
         const w = L.watering || null, a = L.water || {};
         if (!(w && (w.rows || []).length) && !a.plan) return '';
         const sn = (w && w.season) || {};
-        return '<div class="cr-card"><h3>Water<small>' + (w && (w.rows || []).length ? 'the watering schedule for this lot, stage by stage, on its own days' : 'what this lot\'s water asks') + '</small></h3>'
+        // The lot's own count: the season in numbers, then what it was based on.
+        const B = (w && w.budget) || null, S = (B && B.season) || null;
+        const m3 = (v) => Number(v).toLocaleString('en-US') + ' m³';
+        const sumBox = B ? '<div class="cr-wsum">'
+            + (S && !(sn.kind === 'rainfed') && (S.count || S.countDry) ? '<div class="cr-wsum-n"><span><b>' + esc(String(S.count)) + '</b><small>waterings</small></span>'
+                + (S.m3 != null ? '<span><b>' + esc(m3(S.m3)) + '</b><small>on top of the rain</small></span>' : '')
+                + (S.countDry > S.count ? '<span><b>' + esc(String(S.countDry)) + '</b><small>in a dry year</small></span>' : '') + '<span><b>' + esc(String(S.rain)) + ' mm</b><small>usual rain</small></span></div>' : '')
+            + (S && S.words ? '<p>' + esc(S.words) + '</p>' : '')
+            + ((B.factors || []).length ? '<span class="cr-wfac-h">Counted for this lot from</span><div class="cr-wfac">' + B.factors.map((f) => '<span>' + esc(f) + '</span>').join('') + '</div>' : '')
+            + '</div>' : '';
+        return '<div class="cr-card"><h3>Water<small>' + (w && (w.rows || []).length ? 'the watering schedule for this lot, stage by stage, on its own days' + (B ? ', counted from its soil, its water and twenty years of its weather' : '') : 'what this lot\'s water asks') + '</small></h3>'
             + (a.plan ? '<p class="cr-say">' + esc(sweepT(a.plan)) + '</p><div class="cp2-pills" style="margin-bottom:.6rem">' + (a.ifDry ? '<span class="cp2-pill">☀️ If dry: ' + esc(sweepT(a.ifDry)) + '</span>' : '') + (a.ifWet ? '<span class="cp2-pill">🌧️ If wet: ' + esc(sweepT(a.ifWet)) + '</span>' : '') + '</div>' : '')
+            + sumBox
             + (sn.say ? '<div class="cr-season"><span>' + ({ rainfed: '🌦️', wet: '🌧️', dryseason: '☀️' }[sn.kind] || '💧') + '</span><span><b>' + esc(sn.title) + '</b>' + esc(sn.say) + (sn.also ? ' ' + esc(sn.also) : '') + '</span></div>' : '')
             + (w && (w.rows || []).length ? '<div class="cr-jobs">' + w.rows.map((x) => '<div class="cr-job">' + calChip(x.date, 'is-water') + '<div><b>' + esc(x.stage) + '</b><small>' + esc(spanSay(x.date, x.end)) + '</small>'
                 + '<div class="cr-tags"><span class="cr-tag wt-' + esc(x.task) + '">' + esc(WATER_TASK[x.task] || 'Irrigate') + '</span>' + (x.critical ? '<span class="cr-tag is-crit">Never let it dry</span>' : '') + (x.nursery ? '<span class="cr-tag is-nur">Seedbed</span>' : '') + (x.prep ? '<span class="cr-tag is-prep">Land preparation</span>' : '') + '</div>'
-                + (x.often ? '<span class="cr-sline"><i>How often:</i> ' + esc(x.often) + '</span>' : '') + (x.amount ? '<span class="cr-sline"><i>How much:</i> ' + esc(x.amount) + '</span>' : '') + (x.why ? '<span class="cr-sline"><i>Why:</i> ' + esc(x.why) + '</span>' : '') + '</div></div>').join('') + '</div>' : '')
+                + (x.often ? '<span class="cr-sline"><i>How often:</i> ' + esc(x.often) + '</span>' : '') + (x.amount ? '<span class="cr-sline"><i>How much:</i> ' + esc(x.amount) + '</span>' : '')
+                + (x.budget ? '<span class="cr-wbud">' + esc(x.budget) + '</span>' : '')
+                + (x.warn || []).map((t) => '<span class="cr-wwarn">' + esc(t) + '</span>').join('')
+                + (x.why ? '<span class="cr-sline"><i>Why:</i> ' + esc(x.why) + '</span>' : '')
+                + (x.usual && x.usual.often && x.usual.often !== x.often ? '<span class="cr-wold"><i>The usual way:</i> ' + esc(x.usual.often + '. ' + (x.usual.amount || '')) + '</span>' : '') + '</div></div>').join('') + '</div>' : '')
             + (w && w.method ? '<p class="cp-note">' + esc(w.method) + '</p>' : '')
             + (w && w.signs && (w.signs.dry || w.signs.wet) ? '<details class="cr-fold"><summary>How the crop tells you it needs water, or has too much</summary><div class="cr-lines">' + (w.signs.dry ? '<p>☀️ <b>Too dry:</b> ' + esc(w.signs.dry) + '</p>' : '') + (w.signs.wet ? '<p>💧 <b>Too wet:</b> ' + esc(w.signs.wet) + '</p>' : '') + '</div></details>' : '')
             + '</div>';
