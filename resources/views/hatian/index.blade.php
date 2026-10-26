@@ -13,6 +13,9 @@
      share is said in sacks and in kilos, with both ends.
 
      The arithmetic is App\Support\Hatian's, the same here in compute().
+     The farm manager is one of the farmer's Global Workers, picked in a sheet
+     (or added there), never typed: the name on a saved calculation is the
+     roster's.
      Paid in money (the owner, the same day): the share is the same, but the
      farmer keeps every sack and pays its worth at the price a kilo.
      Saved calculations live on the Saved tab (as_plant_analyses, 'hatian').
@@ -94,13 +97,18 @@
     /* Beside the questions the column is narrow: one share a row, its figures to the right. */
     @media (min-width: 1024px) {
         .ht-shares { grid-template-columns: minmax(0, 1fr); }
-        .ht-share { display: grid; grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); column-gap: 1.1rem; align-items: start; }
-        .ht-share .ht-lines { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+        .ht-share { display: grid; grid-template-columns: minmax(0, 12rem) minmax(0, 1fr); column-gap: 1.1rem; align-items: start; }
+        .ht-share .ht-lines { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; }
     }
     .ht-share { position: relative; padding: .9rem .9rem 1rem; border-radius: 1.15rem; background: var(--color-white); border: 1.5px solid var(--color-gray-200); border-top: 4px solid var(--c); animation: htIn .4s var(--ht-e) both; }
     .ht-share h4 { font-size: .78rem; font-weight: 900; letter-spacing: .02em; color: var(--color-gray-700); overflow-wrap: anywhere; }
     .ht-big { margin-top: .3rem; font-family: var(--font-heading); font-size: clamp(1.3rem, 3.8vw, 1.65rem); font-weight: 800; line-height: 1.1; color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
     .ht-big small { font-size: .78rem; font-weight: 800; color: var(--color-gray-500); }
+    .ht-big small.is-under { display: block; margin-top: .15rem; }
+    /* What the sacks are worth, as big as the sacks (the owner: "make the amount or price of the sacks bigger"). */
+    .ht-peso { margin-top: .4rem; }
+    .ht-peso b { display: block; font-family: var(--font-heading); font-size: clamp(1.25rem, 3.6vw, 1.55rem); font-weight: 800; line-height: 1.1; color: #2f7a14; font-variant-numeric: tabular-nums; }
+    .ht-peso small { display: block; margin-top: .15rem; font-size: .72rem; font-weight: 700; line-height: 1.35; color: var(--color-gray-500); }
     .ht-lines { margin-top: .55rem; display: grid; gap: .25rem; font-size: .74rem; color: var(--color-gray-600); }
     .ht-lines div { display: flex; justify-content: space-between; gap: .5rem; }
     .ht-lines div b { font-weight: 800; color: var(--color-gray-800); font-variant-numeric: tabular-nums; text-align: right; }
@@ -150,6 +158,17 @@
     .ht-opt i { flex: none; width: 1.4rem; height: 1.4rem; border-radius: 999px; border: 2px solid #cbd5c1; display: grid; place-items: center; transition: background-color .28s var(--ht-e), border-color .28s var(--ht-e); }
     .ht-opt.is-on i { background: #4a7c2a; border-color: #4a7c2a; }
     .ht-opt i::after { content: ''; width: .45rem; height: .45rem; border-radius: 999px; background: #fff; transform: scale(0); transition: transform .28s var(--ht-e); }
+    /* ---- the farm manager, from the workers ---- */
+    .ht-tag.is-none > span { color: var(--color-gray-500); font-weight: 700; }
+    .ht-opt .ht-ava, .ht-ava { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; font-size: .82rem; font-weight: 900; color: #fff; background: #1d6fd1; }
+    .ht-badge { display: inline-block; font-style: normal; margin-left: .35rem; padding: .05rem .45rem; border-radius: 999px; font-size: .64rem; font-weight: 900; vertical-align: .1rem; color: #1f4f8f; background: #e2eefb; }
+    .ht-wsay { font-size: .8rem; line-height: 1.5; color: var(--color-gray-600); }
+    .ht-wadd { display: grid; gap: .6rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-gray-200); }
+    .ht-wadd h4 { font-size: .86rem; font-weight: 900; color: var(--color-gray-800); }
+    .ht-wgo { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-height: 2.75rem; padding: 0 1rem; border-radius: .9rem; font-weight: 800; font-size: .88rem;
+        color: #14210c; background: #f5c518; transition: transform .28s var(--ht-e), opacity .28s var(--ht-e); }
+    .ht-wgo:hover { transform: translateY(-1px); } .ht-wgo:disabled { opacity: .55; transform: none; }
+    .ht-wlink { font-size: .8rem; font-weight: 800; color: #2d6fb8; text-decoration: underline; text-underline-offset: 2px; }
     .ht-opt.is-on i::after { transform: scale(1); }
 
     /* ---- dark ---- */
@@ -164,6 +183,10 @@
     html.dark .ht-box.is-warn { background: #2a240f; border-color: #4a3f17; }
     html.dark .ht-empty.is-bad { background: #2a1414; border-color: #4c1d1d; color: #fca5a5; }
     html.dark .ht-opt.is-on { background: #1f2d16; }
+    html.dark .ht-badge { background: #13243a; color: #bcd6f5; }
+    html.dark .ht-peso b { color: #a6dc7e; }
+    html.dark .ht-wadd { border-top-color: #2b3a1c; } html.dark .ht-wadd h4 { color: #e8efe1; } html.dark .ht-wsay { color: #c5d2b8; }
+    html.dark .ht-wlink { color: #8fbdf0; }
     html.dark .ht-tab-n { background: #2b3a1c; color: #d5e3c5; }
     html.dark .ht-more { background: #22301a; color: #cfe3bd; }
 
@@ -180,7 +203,9 @@
     $chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
     // Built here: the json directive reads one argument, and an inline array is cut at its first comma.
     $htBoot = ['modes' => $modes, 'paid' => $paid, 'quick' => $quick, 'defaults' => $defaults,
-        'urls' => ['save' => route('hatian.save'), 'list' => route('hatian.list'), 'one' => url('/app/hatian/one'), 'del' => url('/app/hatian')]];
+        'roster' => $roster, 'owner' => $owner, 'canWorkers' => $canWorkers, 'workersPlan' => $workersPlan,
+        'urls' => ['save' => route('hatian.save'), 'list' => route('hatian.list'), 'one' => url('/app/hatian/one'), 'del' => url('/app/hatian'),
+            'workerSave' => route('workers.global.store'), 'workers' => route('workers.global'), 'plans' => route('account.subscription')]];
 @endphp
 <script type="application/json" id="htBoot">@json($htBoot)</script>
 <div class="ht-wrap">
@@ -232,8 +257,11 @@
                 <h3><i>2</i>Your farm manager's share</h3>
                 <p>Counted from the whole harvest, before your home food.</p>
                 <div class="ht-row">
-                    <label class="ht-f"><span>Farm manager's name <small style="font-weight:600;color:var(--color-gray-400)">(optional)</small></span>
-                        <span class="ht-in"><input type="text" class="form-input is-text" id="htManager" maxlength="60" placeholder="Like Mang Tonyo" autocomplete="off"></span></label>
+                    @if ($owner)
+                    <div class="ht-f"><span>Your farm manager</span>
+                        <button type="button" class="ht-tag is-none" id="htWho" aria-haspopup="dialog"><span>Choose from your workers</span>{!! $chev !!}</button>
+                        <small id="htWhoHint">Pick who manages your farm.</small></div>
+                    @endif
                     <div class="ht-f"><span>How the share is set</span>
                         <button type="button" class="ht-tag" id="htMode" aria-haspopup="dialog"><span>A percent of the harvest</span>{!! $chev !!}</button></div>
                     <label class="ht-f ht-swap" id="htShareBox"><span id="htShareLabel">Share of the harvest</span>
@@ -282,9 +310,9 @@
                     <div class="ht-key" id="htKey"></div>
                 </div>
                 <div class="ht-shares">
-                    <div class="ht-share" style="--c:var(--ht-m)"><h4 id="htMName">Farm manager</h4><div class="ht-big" id="htMBig"></div><div class="ht-lines" id="htMLines"></div></div>
-                    <div class="ht-share" style="--c:var(--ht-h)"><h4>Your home food</h4><div class="ht-big" id="htHBig"></div><div class="ht-lines" id="htHLines"></div></div>
-                    <div class="ht-share" style="--c:var(--ht-o)"><h4>Yours to sell or keep</h4><div class="ht-big" id="htOBig"></div><div class="ht-lines" id="htOLines"></div></div>
+                    <div class="ht-share" style="--c:var(--ht-m)"><h4 id="htMName">Farm manager</h4><div class="ht-big" id="htMBig"></div><div class="ht-peso" id="htMPeso" hidden></div><div class="ht-lines" id="htMLines"></div></div>
+                    <div class="ht-share" style="--c:var(--ht-h)"><h4>Your home food</h4><div class="ht-big" id="htHBig"></div><div class="ht-peso" id="htHPeso" hidden></div><div class="ht-lines" id="htHLines"></div></div>
+                    <div class="ht-share" style="--c:var(--ht-o)"><h4>Yours to sell or keep</h4><div class="ht-big" id="htOBig"></div><div class="ht-peso" id="htOPeso" hidden></div><div class="ht-lines" id="htOLines"></div></div>
                 </div>
                 <div class="ht-box">
                     <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 11V7a5 5 0 0110 0v4M5 11h14v9H5z"/></svg><span id="htHandT">Handing it over</span></h5>
@@ -324,6 +352,33 @@
     </div>
     <div class="sheet-body"><div class="ht-opts" id="htPickRows"></div></div>
 </div>
+
+@if ($owner)
+<div class="sheet hidden" id="htWhoSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Your farm manager</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="ht-opts" id="htWhoRows"></div>
+        @if ($canWorkers)
+        <form class="ht-wadd" id="htWhoAdd" novalidate>
+            <h4>Not on the list? Add them to your workers</h4>
+            <label class="ht-f"><span>Name</span><span class="ht-in"><input type="text" class="form-input is-text" id="htWhoName" maxlength="255" placeholder="Like Mang Tonyo" autocomplete="off"></span></label>
+            <label class="ht-f"><span>Phone <small style="font-weight:600;color:var(--color-gray-400)">(optional)</small></span><span class="ht-in"><input type="tel" class="form-input is-text" id="htWhoPhone" maxlength="32" placeholder="Like 0917 123 4567" autocomplete="off"></span></label>
+            <button type="submit" class="ht-wgo" id="htWhoGo">Add and choose</button>
+            <a class="ht-wlink" href="{{ route('workers.global') }}">Open Workers</a>
+        </form>
+        @else
+        <div class="ht-wadd">
+            <p class="ht-wsay">Your farm manager is picked from your Workers, which come with {{ $workersPlan }}. Until then the hatian says "Farm manager".</p>
+            <a class="ht-wgo" href="{{ route('account.subscription') }}">See {{ $workersPlan }}</a>
+        </div>
+        @endif
+    </div>
+</div>
+@endif
 @endsection
 
 @push('scripts')
@@ -343,7 +398,7 @@
     const kgRange = (a) => (Math.abs(a.hi - a.lo) < 0.05 ? kg(a.kg) : kg(a.lo) + ' to ' + kg(a.hi));
     // Two ends as one figure when they round the same (a few kilos of a big harvest).
     const rng = (a, b, d = 1) => { const x = num(a, d), y = num(b, d); return x === y ? x : x + ' to ' + y; };
-    const st = { mode: 'pct', paid: 'sacks', last: null };
+    const st = { mode: 'pct', paid: 'sacks', who: null, last: null };
     const LS = 'anee.hatian.last';
 
     /* ---- the choice sheet ---- */
@@ -393,6 +448,54 @@
     $('htPaid').addEventListener('click', () => pick('How you pay your farm manager', B.paid, st.paid, (k) => { if (k !== st.paid) { st.paid = k; paintPaid(); calc(); } }));
     $('htQuick').addEventListener('click', (e) => { const c = e.target.closest('[data-q]'); if (!c) return; $('htShare').value = c.dataset.q; paintQuick(); calc(); });
 
+    /* ---- the farm manager: one of your workers, picked or added in the sheet ---- */
+    const initials = (n) => String(n || '?').trim().split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase();
+    const paintWho = () => {
+        if (!$('htWho')) return;
+        const w = st.who;
+        $('htWho').classList.toggle('is-none', !w);
+        $('htWho').querySelector('span').textContent = w ? w.name : 'Choose from your workers';
+        $('htWhoHint').textContent = w ? (w.gone ? 'No longer in your workers. Choose again to save it.' : [w.manager ? 'Manager in your workers' : 'From your workers', w.phone].filter(Boolean).join(' · '))
+            : !B.canWorkers ? 'Picked from your Workers, which come with ' + B.workersPlan + '.'
+            : B.roster.length ? 'Pick who manages your farm.' : 'Add your farm manager to your workers.';
+    };
+    const whoRows = () => {
+        const cur = st.who ? st.who.id : null;
+        $('htWhoRows').innerHTML = (B.roster.length ? B.roster.map((w) => '<button type="button" class="ht-opt' + (w.id === cur ? ' is-on' : '') + '" data-w="' + w.id + '">'
+                + '<span class="ht-ava" aria-hidden="true">' + esc(initials(w.name)) + '</span><span><b>' + esc(w.name) + (w.manager ? '<em class="ht-badge">Manager</em>' : '') + '</b>'
+                + (w.phone ? '<small>' + esc(w.phone) + '</small>' : '') + '</span><i></i></button>').join('')
+            : '<p class="ht-wsay">' + (B.canWorkers ? 'No workers yet. Add your farm manager below.' : 'No workers yet.') + '</p>')
+            + (cur ? '<button type="button" class="ht-opt" data-w="0"><span><b>No one</b><small>The hatian says "Farm manager"</small></span><i></i></button>' : '');
+    };
+    if ($('htWho')) {
+        $('htWho').addEventListener('click', () => { whoRows(); window.openSheet('htWhoSheet'); });
+        $('htWhoRows').addEventListener('click', (e) => {
+            const b = e.target.closest('[data-w]');
+            if (!b) return;
+            const id = Number(b.dataset.w);
+            $('htWhoRows').querySelectorAll('.ht-opt').forEach((x) => x.classList.toggle('is-on', x === b));
+            st.who = id ? B.roster.find((w) => w.id === id) || null : null;
+            paintWho(); calc();
+            setTimeout(() => window.closeSheet('htWhoSheet'), 160);
+        });
+        $('htWhoAdd') && $('htWhoAdd').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = $('htWhoName').value.trim(), phone = $('htWhoPhone').value.trim();
+            if (!name) { toast('Write the name of your farm manager.', 'error'); $('htWhoName').focus(); return; }
+            $('htWhoGo').disabled = true;
+            try {
+                const res = await window.api(B.urls.workerSave, { method: 'POST', body: { workerName: name, phone: phone || null, skills: ['manager'] } });
+                const g = res.data, w = { id: Number(g.id), name: g.workerName, phone: g.phone || '', manager: true };
+                B.roster = [w].concat(B.roster);
+                st.who = w; $('htWhoName').value = ''; $('htWhoPhone').value = '';
+                paintWho(); calc();
+                window.closeSheet('htWhoSheet');
+                toast(w.name + ' is in your workers now.', 'success');
+            } catch (err) { toast(err.message || 'They could not be added.', 'error'); }
+            finally { $('htWhoGo').disabled = false; }
+        });
+    }
+
     /* ---- the arithmetic: App\Support\Hatian::clean(), compute() and problem(), the same ---- */
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     const read = () => {
@@ -401,7 +504,7 @@
         if (lo === null && hi === null) { lo = B.defaults.kgMin; hi = B.defaults.kgMax; } else { lo = lo ?? hi; hi = hi ?? lo; }
         return { sacks: n('htSacks', 0, 1000000), kgMin: Math.min(lo, hi), kgMax: Math.max(lo, hi), mode: st.mode, paid: st.paid,
             share: n('htShare', 0, st.mode === 'pct' ? 100 : 100000000), home: n('htHome', 0, 1000000, 0), price: n('htPrice', 0, 100000),
-            manager: $('htManager').value.trim().slice(0, 60) };
+            managerId: st.who && !st.who.gone ? st.who.id : null, manager: st.who ? st.who.name : '' };
     };
     const compute = (c) => {
         const S = c.sacks, lo = c.kgMin, hi = c.kgMax, avg = (lo + hi) / 2, x = c.share;
@@ -462,27 +565,33 @@
         // The three shares.
         const line = (k, v) => '<div><span>' + esc(k) + '</span><b>' + esc(v) + '</b></div>';
         const big = (n) => num(n, 2) + ' <small>' + (Math.abs(n - 1) < 1e-9 ? 'sack' : 'sacks') + '</small>';
+        // The worth, big under the sacks: the middle figure, the two ends under it when the sacks differ.
+        const worthBig = (id, w, label, ranged) => {
+            $(id).hidden = !w;
+            if (w) $(id).innerHTML = '<b>' + esc(peso(w.kg)) + '</b><small>' + esc(label + (ranged && Math.round(w.lo) !== Math.round(w.hi) ? ', ' + peso(w.lo) + ' to ' + peso(w.hi) : '')) + '</small>';
+        };
+        worthBig('htMPeso', P ? null : r.manager.worth, 'worth', spread);
+        worthBig('htHPeso', c.home > 0 ? r.home.worth : null, 'worth if you sold it', !r.even);
+        worthBig('htOPeso', P ? P.keep.worth : r.left.worth, P ? 'worth of the sacks' : 'worth', !r.even);
         $('htMName').textContent = c.manager ? c.manager + ', farm manager' : 'Farm manager';
-        $('htMBig').innerHTML = P ? esc(peso(P.kg)) + ' <small>in money</small>' : big(r.manager.sacks);
+        $('htMBig').innerHTML = P ? esc(peso(P.kg)) + '<small class="is-under">in money</small>' : big(r.manager.sacks);
         $('htMLines').innerHTML = P
             ? line('The worth of', sk(r.manager.sacks)) + line('Weight', c.mode === 'kg' ? kg(r.manager.kg) : about + kg(r.manager.kg))
               + (spread ? line('The pay', pr(P)) : '') + line('Of the harvest', c.mode === 'kg' && !r.even ? rng(r.manager.pctLo, r.manager.pctHi) + '%' : num(r.manager.pct, 1) + '%')
               + line('Each ₱1 on the price', peso(P.perPeso))
             : line('Weight', c.mode === 'kg' ? kg(r.manager.kg) + ', weighed' : (r.even ? kg(r.manager.kg) : 'about ' + kg(r.manager.kg)))
             + (c.mode === 'kg' && !r.even ? line('In sacks', rng(r.manager.sacksLo, r.manager.sacksHi)) : (!r.even ? line('Range', kgRange(r.manager)) : ''))
-            + line('Of the harvest', c.mode === 'kg' && !r.even ? rng(r.manager.pctLo, r.manager.pctHi) + '%' : num(r.manager.pct, 1) + '%')
-            + (r.manager.worth ? line('Worth', c.mode === 'kg' || r.even ? peso(r.manager.worth.kg) : peso(r.manager.worth.lo) + ' to ' + peso(r.manager.worth.hi)) : '');
+            + line('Of the harvest', c.mode === 'kg' && !r.even ? rng(r.manager.pctLo, r.manager.pctHi) + '%' : num(r.manager.pct, 1) + '%');
         $('htHBig').innerHTML = big(r.home.sacks);
         $('htHLines').innerHTML = (c.home > 0 ? line('Weight', r.even ? kg(r.home.kg) : 'about ' + kg(r.home.kg)) + (!r.even ? line('Range', kgRange(r.home)) : '')
-            + line('Of the harvest', num(r.home.pct, 1) + '%') + (r.home.worth ? line('Worth', r.even ? peso(r.home.worth.kg) : peso(r.home.worth.lo) + ' to ' + peso(r.home.worth.hi)) : '') : line('None kept', ''));
+            + line('Of the harvest', num(r.home.pct, 1) + '%') : line('None kept', ''));
         $('htOBig').innerHTML = big(P ? P.keep.sacks : r.left.sacks);
         $('htOLines').innerHTML = P
             ? line('Weight', r.even ? kg(P.keep.kg) : 'about ' + kg(P.keep.kg)) + (!r.even ? line('Range', kgRange(P.keep)) : '')
-              + line('Worth', r.even ? peso(P.keep.worth.kg) : peso(P.keep.worth.lo) + ' to ' + peso(P.keep.worth.hi))
               + line('Less the pay', about + peso(P.kg))
               + line('Yours after paying', r.even ? peso(r.left.worth.kg) : peso(r.left.worth.lo) + ' to ' + peso(r.left.worth.hi))
             : line('Weight', r.even ? kg(r.left.kg) : 'about ' + kg(r.left.kg)) + (!r.even ? line('Range', kgRange(r.left)) : '')
-            + line('Of the harvest', num(r.left.pct, 1) + '%') + (r.left.worth ? line('Worth', r.even ? peso(r.left.worth.kg) : peso(r.left.worth.lo) + ' to ' + peso(r.left.worth.hi)) : '')
+            + line('Of the harvest', num(r.left.pct, 1) + '%')
             + line('Your share in all', sk(r.owner.sacks));
         // Handing it over: whole sacks, and the part of one more in kilos.
         const H2 = r.hand;
@@ -538,21 +647,25 @@
             !P && c.price ? 'At ₱' + num(c.price, 2) + ' a kilo: ' + whoShort + ' ' + peso(r.manager.worth.kg) + (c.home > 0 ? ', home food ' + peso(r.home.worth.kg) : '') + ', yours ' + peso(r.left.worth.kg) + '.' : null,
         ].filter(Boolean).map((x) => '<li>' + esc(x) + '</li>').join('');
     };
-    ['htSacks', 'htKgMin', 'htKgMax', 'htShare', 'htHome', 'htPrice', 'htManager'].forEach((id) => $(id).addEventListener('input', () => { if (id === 'htShare') paintQuick(); calc(); }));
+    ['htSacks', 'htKgMin', 'htKgMax', 'htShare', 'htHome', 'htPrice'].forEach((id) => $(id).addEventListener('input', () => { if (id === 'htShare') paintQuick(); calc(); }));
 
     /* ---- put inputs back (a saved one, or the last one on this phone) ---- */
     const fill = (c) => {
         if (!c) return;
         const set = (id, v) => { $(id).value = v === null || v === undefined ? '' : v; };
         set('htSacks', c.sacks); set('htKgMin', c.kgMin ?? B.defaults.kgMin); set('htKgMax', c.kgMax ?? B.defaults.kgMax); set('htShare', c.share);
-        set('htHome', c.home || ''); set('htPrice', c.price ?? ''); set('htManager', c.manager || '');
+        set('htHome', c.home || ''); set('htPrice', c.price ?? '');
+        // The worker as the roster has them now; one taken off the roster keeps the saved name, marked.
+        const w = c.managerId ? B.roster.find((x) => x.id === Number(c.managerId)) : null;
+        st.who = w || (c.managerId && c.manager ? { id: Number(c.managerId), name: c.manager, gone: true } : null);
+        paintWho();
         st.mode = B.modes[c.mode] ? c.mode : 'pct';
         st.paid = B.paid[c.paid] ? c.paid : 'sacks';
         paintMode(false); paintPaid(); calc();
     };
-    try { const last = JSON.parse(localStorage.getItem(LS) || 'null'); if (last && typeof last === 'object') fill(last); else { paintMode(false); paintPaid(); } } catch (e) { paintMode(false); paintPaid(); }
+    try { const last = JSON.parse(localStorage.getItem(LS) || 'null'); if (last && typeof last === 'object') fill(last); else { paintMode(false); paintPaid(); paintWho(); } } catch (e) { paintMode(false); paintPaid(); paintWho(); }
     $('htReset').addEventListener('click', () => {
-        ['htSacks', 'htShare', 'htHome', 'htPrice', 'htManager'].forEach((id) => { $(id).value = ''; });
+        ['htSacks', 'htShare', 'htHome', 'htPrice'].forEach((id) => { $(id).value = ''; });
         $('htKgMin').value = B.defaults.kgMin; $('htKgMax').value = B.defaults.kgMax;
         paintQuick(); calc(); $('htSacks').focus();
     });

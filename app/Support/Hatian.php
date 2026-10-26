@@ -90,7 +90,10 @@ final class Hatian
             'sacks' => $sacks, 'kgMin' => $lo, 'kgMax' => $hi, 'mode' => $mode, 'share' => $share,
             'paid' => isset(self::PAID[$in['paid'] ?? '']) ? $in['paid'] : 'sacks',
             'home' => $num('home', 0, 1000000, 0), 'price' => $num('price', 0, 100000),
-            'manager' => mb_substr(trim(strip_tags((string) ($in['manager'] ?? ''))), 0, 60),
+            // The farm manager is one of the farmer's workers (the owner: "select it from workers, not ask the
+            // name"): the id only; the name is the roster's, set by the controller.
+            'managerId' => ($id = (int) ($in['managerId'] ?? 0)) > 0 ? $id : null,
+            'manager' => '',
         ];
     }
 

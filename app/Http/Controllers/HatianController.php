@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AsGlobalWorker;
 use App\Support\Hatian;
+use App\Support\Tier;
+use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +18,11 @@ use Illuminate\Support\Facades\DB;
  * you type (App\Support\Hatian is the same arithmetic); a calculation the
  * farmer saves is counted again here and kept on the analyses shelf
  * (as_plant_analyses, kind 'hatian', no credits), listed on the Saved tab.
+ *
+ * The farm manager is picked from the farmer's Global Workers, never typed
+ * (the owner, 2026-10-26); someone new is added there from the page. Only
+ * the farm owner has the roster: a worker in someone's farm sees "Farm
+ * manager", and plans without Workers are told which plan brings them.
  */
 class HatianController extends Controller
 {
@@ -22,7 +30,31 @@ class HatianController extends Controller
 
     public function page()
     {
-        return view('hatian.index', ['modes' => Hatian::MODES, 'paid' => Hatian::PAID, 'quick' => Hatian::QUICK, 'defaults' => Hatian::DEFAULTS]);
+        $owner = ! WorkerContext::inWorkerContext();
+        $can = $owner && Tier::can('workers');
+
+        return view('hatian.index', ['modes' => Hatian::MODES, 'paid' => Hatian::PAID, 'quick' => Hatian::QUICK, 'defaults' => Hatian::DEFAULTS,
+            'roster' => $owner ? $this->roster() : [], 'owner' => $owner, 'canWorkers' => $can,
+            'workersPlan' => $owner && ! $can ? Tier::planName(Tier::unlocksAt('workers')) : null]);
+    }
+
+    /** The farmer's workers, those marked Manager first. */
+    private function roster(): array
+    {
+        return AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->orderBy('workerName')->limit(300)->get(['id', 'workerName', 'phone', 'skills'])
+            ->map(fn ($g) => ['id' => (int) $g->id, 'name' => (string) $g->workerName, 'phone' => (string) ($g->phone ?? ''), 'manager' => in_array('manager', (array) ($g->skills ?: []), true)])
+            ->sortBy(fn ($w) => ($w['manager'] ? '0' : '1') . mb_strtolower($w['name']))->values()->all();
+    }
+
+    /** The chosen farm manager, from the farmer's own workers; anyone else is no one. */
+    private function manager(array $c): array
+    {
+        $g = $c['managerId'] && ! WorkerContext::inWorkerContext()
+            ? AsGlobalWorker::where('id', $c['managerId'])->where('userId', Auth::id())->where('deleteStatus', 1)->first(['id', 'workerName']) : null;
+        $c['managerId'] = $g ? (int) $g->id : null;
+        $c['manager'] = $g ? mb_substr((string) $g->workerName, 0, 60) : '';
+
+        return $c;
     }
 
     /** Save one: counted again here, so what is kept is what the rule says. */
@@ -32,6 +64,7 @@ class HatianController extends Controller
         if (! $c) {
             return $this->json(false, 'Fill in the sacks harvested and the farm manager\'s share.', [], 422);
         }
+        $c = $this->manager($c);
         $res = Hatian::compute($c);
         if ($why = Hatian::problem($c, $res)) {
             return $this->json(false, $why, [], 422);
