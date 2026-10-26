@@ -308,6 +308,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.hatian' => [
+            'title' => 'Hatian Calculator',
+            'blurb' => 'Share the harvest fairly with your farm manager. Give a percent, a number of sacks or kilos, keep sacks for your home food, and see what each of you gets in sacks and kilos.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.howtoplant' => [
             'title' => 'How to Plant',
             'blurb' => 'Pick a crop and see how traditional farmers plant it, step by step with the days, then what to change for a higher yield. Send it to your Protocol Builder to make it your own.',
@@ -447,6 +453,7 @@ return [
         'npk.page'      => 'tool.npk',
         'lcc.page'      => 'tool.lcc',
         'bilad.page'    => 'tool.bilad',
+        'hatian.page'   => 'tool.hatian',
         'seedcalc.page' => 'tool.seedcount',
         'htp.page'      => 'tool.howtoplant',
         // One route for the field helpers: {tool} is the route's own parameter.

@@ -58,6 +58,7 @@ class WorkerTools
             'npk' => ['NPK Plus Calculator', 'tools', 'images/icons/npk.svg', ['npk.*', 'seedcalc.count'], []],
             'lcc' => ['LCC Checker', 'tools', 'images/icons/leaf-color.svg', ['lcc.*'], []],
             'bilad' => ['Benta o Bilad Calculator', 'tools', 'images/icons/benta-bilad.svg', ['bilad.*'], []],
+            'hatian' => ['Hatian Calculator', 'tools', 'images/icons/hatian.svg', ['hatian.*'], []],
             'seedcalc' => ['Seed Count and Distance Calculator', 'tools', 'images/icons/seed-count.svg', ['seedcalc.*'], []],
             'htp' => ['How to Plant', 'tools', 'images/icons/how-to-plant.svg', ['htp.*'], []],
         ];

@@ -232,6 +232,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && str_contains((string) @file_get_contents(resource_path('views/land-prep/index.blade.php')), '.lp-fd em'),
             // 2026-10-19: the Benta o Bilad Calculator in Quick Tools.
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
+            // 2026-10-26: the Hatian Calculator in Quick Tools.
+            'hatian' => class_exists(\App\Support\Hatian::class) && \Illuminate\Support\Facades\Route::has('hatian.page'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
             // By spacing or by amount in the Crop Protocol and NPK Plus (2026-10-21).
@@ -918,6 +920,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/benta-o-bilad/list', [App\Http\Controllers\BentaBiladController::class, 'list'])->name('bilad.list');
     Route::get('/app/benta-o-bilad/one/{id}', [App\Http\Controllers\BentaBiladController::class, 'one'])->whereNumber('id')->name('bilad.one');
     Route::delete('/app/benta-o-bilad/{id}', [App\Http\Controllers\BentaBiladController::class, 'destroy'])->whereNumber('id')->name('bilad.delete');
+    // Hatian (2026-10-26, the owner): the harvest shared with the farm manager, the share counted from the gross.
+    Route::get('/app/hatian', [App\Http\Controllers\HatianController::class, 'page'])->name('hatian.page');
+    Route::post('/app/hatian/save', [App\Http\Controllers\HatianController::class, 'save'])->name('hatian.save');
+    Route::get('/app/hatian/list', [App\Http\Controllers\HatianController::class, 'list'])->name('hatian.list');
+    Route::get('/app/hatian/one/{id}', [App\Http\Controllers\HatianController::class, 'one'])->whereNumber('id')->name('hatian.one');
+    Route::delete('/app/hatian/{id}', [App\Http\Controllers\HatianController::class, 'destroy'])->whereNumber('id')->name('hatian.delete');
     // Seed Count and Distance (2026-10-19, the owner): spacing, seeds, stand and yield, either way round.
     Route::get('/app/seed-count-distance', [App\Http\Controllers\SeedSpacingController::class, 'page'])->name('seedcalc.page');
     Route::post('/app/seed-count-distance/save', [App\Http\Controllers\SeedSpacingController::class, 'save'])->name('seedcalc.save');
