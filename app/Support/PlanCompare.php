@@ -75,7 +75,7 @@ class PlanCompare
                 // The chart is read on every plan; Anee reading photos of the leaves needs her.
                 ['LCC Checker', 'Rice: is it time for nitrogen, and how much urea', fn (array $t) => ! empty($t['aiAnalyses']) ? 'Chart and photos' : 'Your own chart', 'lcc-checker'],
                 ['Benta o Bilad Calculator', 'Sell the palay wet or dry it first: which leaves you more money', $gate('bentaBilad'), 'benta-o-bilad'],
-                ['Hatian Calculator', 'The harvest shared fairly with your farm manager, in sacks and kilos', $gate('hatian'), 'hatian'],
+                ['Hatian Calculator', 'The harvest shared fairly with your farm manager, in sacks or in money', $gate('hatian'), 'hatian'],
                 ['Seed Count and Distance Calculator', 'The seeds for your spacing, or the spacing for your seeds, with the stand and the yield', $gate('seedCount'), 'seed-count-distance'],
                 ['How to Plant', 'How traditional farmers plant every crop, step by step, into your Protocol Builder', $gate('howToPlant'), 'how-to-plant'],
             ], 'The calculators and finders use no credits. Anee reading a plan, a photo or a product the book does not know uses a few.'],

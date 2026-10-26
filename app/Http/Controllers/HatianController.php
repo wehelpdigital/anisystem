@@ -22,7 +22,7 @@ class HatianController extends Controller
 
     public function page()
     {
-        return view('hatian.index', ['modes' => Hatian::MODES, 'quick' => Hatian::QUICK, 'defaults' => Hatian::DEFAULTS]);
+        return view('hatian.index', ['modes' => Hatian::MODES, 'paid' => Hatian::PAID, 'quick' => Hatian::QUICK, 'defaults' => Hatian::DEFAULTS]);
     }
 
     /** Save one: counted again here, so what is kept is what the rule says. */
@@ -85,6 +85,7 @@ class HatianController extends Controller
 
                 return ['id' => (int) $r->id, 'title' => (string) $r->title,
                     'manager' => $rep['manager']['sacks'] ?? null, 'home' => $rep['home']['sacks'] ?? null, 'left' => $rep['left']['sacks'] ?? null,
+                    'pay' => $rep['pay']['kg'] ?? null, 'keep' => $rep['pay']['keep']['sacks'] ?? null,
                     'day' => $at->format('j'), 'month' => $at->format('M'), 'at' => $at->format('M j, Y g:i A')];
             })->values()->all(),
             'hasMore' => $rows->count() > $per,

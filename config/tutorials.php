@@ -310,7 +310,7 @@ return [
 
         'tool.hatian' => [
             'title' => 'Hatian Calculator',
-            'blurb' => 'Share the harvest fairly with your farm manager. Give a percent, a number of sacks or kilos, keep sacks for your home food, and see what each of you gets in sacks and kilos.',
+            'blurb' => 'Share the harvest fairly with your farm manager. Give a percent, a number of sacks or kilos, paid in sacks or in money, keep sacks for your home food, and see what each of you gets.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 

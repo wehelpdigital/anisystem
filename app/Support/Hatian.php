@@ -33,6 +33,14 @@ namespace App\Support;
  *     and, when sacks differ in weight, that whole sacks are fair only if
  *     weighed, or picked in turns.
  *  7. With a price a kilo (optional), what each share is worth.
+ *  8. Paid in money (2026-10-26, the owner: "also show if the farm manager
+ *     gets money and not sacks"): the share is the same, counted the same
+ *     way, but the owner keeps every sack and pays its worth at the price a
+ *     kilo, which is then needed. The owner keeps the gross less the home
+ *     food; what is the owner's is that, less the pay (the same worth as the
+ *     owner's share in sacks). A percent paid from a sale must also pay the
+ *     percent of the home food the owner kept, or the share is counted after
+ *     the home food after all; the page says how much.
  */
 final class Hatian
 {
@@ -44,6 +52,12 @@ final class Hatian
         'pct' => ['A percent of the harvest', 'Like 10%, or a third, counted from all the sacks'],
         'sacks' => ['A set number of sacks', 'A fixed number of sacks, whatever the harvest'],
         'kg' => ['A set weight in kilos', 'A fixed number of kilos, weighed out'],
+    ];
+
+    /** How the farm manager is paid. */
+    public const PAID = [
+        'sacks' => ['In sacks of palay', 'Your farm manager takes the share in sacks'],
+        'money' => ['In money', 'You keep all the sacks and pay what the share is worth'],
     ];
 
     /** The shares people use, for one tap: [percent, words]. */
@@ -74,6 +88,7 @@ final class Hatian
 
         return [
             'sacks' => $sacks, 'kgMin' => $lo, 'kgMax' => $hi, 'mode' => $mode, 'share' => $share,
+            'paid' => isset(self::PAID[$in['paid'] ?? '']) ? $in['paid'] : 'sacks',
             'home' => $num('home', 0, 1000000, 0), 'price' => $num('price', 0, 100000),
             'manager' => mb_substr(trim(strip_tags((string) ($in['manager'] ?? ''))), 0, 60),
         ];
@@ -84,6 +99,9 @@ final class Hatian
     {
         if ($r['manager']['sacks'] > $c['sacks'] + 1e-9 || $r['manager']['kg'] > $r['gross']['kg'] + 1e-9) {
             return 'The farm manager\'s share is more than the whole harvest.';
+        }
+        if (($c['paid'] ?? 'sacks') === 'money' && empty($c['price'])) {
+            return 'Fill in the price a kilo, to count the pay in money.';
         }
         if ($c['home'] > $r['owner']['sacks'] + 1e-9) {
             return 'Your home food is more than your share. Your share is ' . self::n($r['owner']['sacks']) . ' sacks.';
@@ -126,6 +144,18 @@ final class Hatian
             'up' => $part > 1e-6 ? $whole + 1 : $whole, 'backKg' => $part > 1e-6 ? (1 - $part) * $avg : 0.0];
         $price = $c['price'] ?? null;
         $worth = fn (array $a) => $price ? ['kg' => $a['kg'] * $price, 'lo' => $a['lo'] * $price, 'hi' => $a['hi'] * $price] : null;
+        // Paid in money: the owner keeps every sack but the home food's, and pays the share's worth.
+        $pay = null;
+        if (($c['paid'] ?? 'sacks') === 'money' && $price) {
+            $keep = ['sacks' => $S - $H, 'kg' => $gross['kg'] - $h['kg'], 'lo' => $gross['lo'] - $h['lo'], 'hi' => $gross['hi'] - $h['hi']];
+            $pay = $worth($m) + [
+                // Every peso on the price moves the pay by the share's kilos.
+                'perPeso' => $m['kg'],
+                'keep' => $keep + ['worth' => $worth($keep)],
+                // A percent paid from what the kept sacks sell for, and the percent of the home food on top.
+                'homeTopUp' => $c['mode'] === 'pct' ? ['kg' => $h['kg'] * $x / 100 * $price, 'lo' => $h['lo'] * $x / 100 * $price, 'hi' => $h['hi'] * $x / 100 * $price] : null,
+            ];
+        }
 
         return [
             'avg' => $avg, 'even' => $hi - $lo < 1e-9, 'gross' => $gross,
@@ -135,6 +165,7 @@ final class Hatian
             'left' => $left + ['pct' => $pctOf($left['kg']), 'worth' => $worth($left)],
             'after' => $after ? $after + ['less' => $m['sacks'] - $after['sacks'], 'lessKg' => ($m['sacks'] - $after['sacks']) * $avg] : null,
             'hand' => $hand,
+            'pay' => $pay,
             // On the light end, a set weight can take more of the harvest than the middle shows.
             'tightAtLight' => $c['mode'] === 'kg' && $left['lo'] < -1e-6,
         ];
@@ -150,7 +181,7 @@ final class Hatian
             default => self::n($c['share']) . ' kg',
         };
 
-        return 'Hatian · ' . self::n($c['sacks']) . ' sacks · ' . $who . ' ' . $share . ($c['home'] > 0 ? ' · ' . self::n($c['home']) . ' for home' : '');
+        return 'Hatian · ' . self::n($c['sacks']) . ' sacks · ' . $who . ' ' . $share . (($c['paid'] ?? 'sacks') === 'money' ? ' in money' : '') . ($c['home'] > 0 ? ' · ' . self::n($c['home']) . ' for home' : '');
     }
 
     private static function n(float $v): string

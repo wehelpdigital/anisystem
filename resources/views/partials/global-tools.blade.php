@@ -484,7 +484,7 @@
             <span class="qa-ico"><img src="{{ asset('images/icons/hatian.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
             <span class="qa-txt">
                 <b>Hatian Calculator{{ \App\Support\Tagalog::flag('hatian') }}</b>
-                <i>Share the harvest fairly with your farm manager. Give a percent, sacks or kilos, keep sacks for your home food, and see what each of you gets.</i>
+                <i>Share the harvest fairly with your farm manager. Give a percent, sacks or kilos, paid in sacks or in money, keep sacks for your home food, and see what each of you gets.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>

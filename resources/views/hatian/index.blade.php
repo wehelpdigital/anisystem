@@ -13,6 +13,8 @@
      share is said in sacks and in kilos, with both ends.
 
      The arithmetic is App\Support\Hatian's, the same here in compute().
+     Paid in money (the owner, the same day): the share is the same, but the
+     farmer keeps every sack and pays its worth at the price a kilo.
      Saved calculations live on the Saved tab (as_plant_analyses, 'hatian').
      Every choice is a tag that opens a sheet; nothing turns by itself. --}}
 @push('head')
@@ -177,7 +179,7 @@
 @php
     $chev = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
     // Built here: the json directive reads one argument, and an inline array is cut at its first comma.
-    $htBoot = ['modes' => $modes, 'quick' => $quick, 'defaults' => $defaults,
+    $htBoot = ['modes' => $modes, 'paid' => $paid, 'quick' => $quick, 'defaults' => $defaults,
         'urls' => ['save' => route('hatian.save'), 'list' => route('hatian.list'), 'one' => url('/app/hatian/one'), 'del' => url('/app/hatian')]];
 @endphp
 <script type="application/json" id="htBoot">@json($htBoot)</script>
@@ -238,6 +240,9 @@
                         <span class="ht-in"><input type="number" class="form-input" id="htShare" min="0" step="any" inputmode="decimal" placeholder="Like 10"><em id="htShareUnit">%</em></span>
                         <small id="htShareHint">Like 10% when your farm manager gets 1 sack in every 10.</small></label>
                     <div class="ht-chips" id="htQuick" aria-label="Shares people use"></div>
+                    <div class="ht-f"><span>How you pay your farm manager</span>
+                        <button type="button" class="ht-tag" id="htPaid" aria-haspopup="dialog"><span>In sacks of palay</span>{!! $chev !!}</button>
+                        <small id="htPaidHint">Your farm manager takes the share in sacks.</small></div>
                 </div>
             </section>
 
@@ -254,8 +259,8 @@
 
             {{-- 4. The price --}}
             <section class="ht-card">
-                <h3><i>4</i>Price <small style="font-family:inherit;font-size:.74rem;font-weight:700;color:var(--color-gray-400)">(optional)</small></h3>
-                <p>To see what each share is worth.</p>
+                <h3><i>4</i>Price <small id="htPriceTag" style="font-family:inherit;font-size:.74rem;font-weight:700;color:var(--color-gray-400)">(optional)</small></h3>
+                <p id="htPriceSay">To see what each share is worth.</p>
                 <div class="ht-row">
                     <label class="ht-f"><span>Price a kilo</span>
                         <span class="ht-in"><b>₱</b><input type="number" class="form-input is-pre" id="htPrice" min="0" step="any" inputmode="decimal" placeholder="Like 17"><em>a kg</em></span></label>
@@ -282,8 +287,9 @@
                     <div class="ht-share" style="--c:var(--ht-o)"><h4>Yours to sell or keep</h4><div class="ht-big" id="htOBig"></div><div class="ht-lines" id="htOLines"></div></div>
                 </div>
                 <div class="ht-box">
-                    <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 11V7a5 5 0 0110 0v4M5 11h14v9H5z"/></svg>Handing it over</h5>
+                    <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 11V7a5 5 0 0110 0v4M5 11h14v9H5z"/></svg><span id="htHandT">Handing it over</span></h5>
                     <p id="htHand"></p>
+                    <p id="htHand2" hidden></p>
                 </div>
                 <div class="ht-box">
                     <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M5 21h14M4 7h16M4 7l-3 7a4 4 0 006 0zM20 7l-3 7a4 4 0 006 0z"/></svg>Why it is fair</h5>
@@ -337,7 +343,7 @@
     const kgRange = (a) => (Math.abs(a.hi - a.lo) < 0.05 ? kg(a.kg) : kg(a.lo) + ' to ' + kg(a.hi));
     // Two ends as one figure when they round the same (a few kilos of a big harvest).
     const rng = (a, b, d = 1) => { const x = num(a, d), y = num(b, d); return x === y ? x : x + ' to ' + y; };
-    const st = { mode: 'pct', last: null };
+    const st = { mode: 'pct', paid: 'sacks', last: null };
     const LS = 'anee.hatian.last';
 
     /* ---- the choice sheet ---- */
@@ -376,6 +382,15 @@
         $('htQuick').innerHTML = B.quick.map(([p, w]) => '<button type="button" class="ht-chip' + (v !== null && Math.abs(v - p) < 0.01 ? ' is-on' : '') + '" data-q="' + p + '">' + esc(w) + '</button>').join('');
     };
     $('htMode').addEventListener('click', () => pick('How the share is set', B.modes, st.mode, (k) => { if (k !== st.mode) { st.mode = k; $('htShare').value = ''; paintMode(); calc(); } }));
+    // In sacks or in money: the share is the same; in money the price is needed.
+    const paintPaid = () => {
+        const money = st.paid === 'money';
+        $('htPaid').querySelector('span').textContent = B.paid[st.paid][0];
+        $('htPaidHint').textContent = B.paid[st.paid][1] + '.';
+        $('htPriceTag').textContent = money ? '(needed for the pay)' : '(optional)';
+        $('htPriceSay').textContent = money ? 'The pay is counted at this price. Use the price you sell at, or one you both agree on.' : 'To see what each share is worth.';
+    };
+    $('htPaid').addEventListener('click', () => pick('How you pay your farm manager', B.paid, st.paid, (k) => { if (k !== st.paid) { st.paid = k; paintPaid(); calc(); } }));
     $('htQuick').addEventListener('click', (e) => { const c = e.target.closest('[data-q]'); if (!c) return; $('htShare').value = c.dataset.q; paintQuick(); calc(); });
 
     /* ---- the arithmetic: App\Support\Hatian::clean(), compute() and problem(), the same ---- */
@@ -384,7 +399,7 @@
         const n = (id, lo, hi, def = null) => { const v = val(id); return v === null || !isFinite(v) ? def : clamp(v, lo, hi); };
         let lo = n('htKgMin', 1, 150), hi = n('htKgMax', 1, 150);
         if (lo === null && hi === null) { lo = B.defaults.kgMin; hi = B.defaults.kgMax; } else { lo = lo ?? hi; hi = hi ?? lo; }
-        return { sacks: n('htSacks', 0, 1000000), kgMin: Math.min(lo, hi), kgMax: Math.max(lo, hi), mode: st.mode,
+        return { sacks: n('htSacks', 0, 1000000), kgMin: Math.min(lo, hi), kgMax: Math.max(lo, hi), mode: st.mode, paid: st.paid,
             share: n('htShare', 0, st.mode === 'pct' ? 100 : 100000000), home: n('htHome', 0, 1000000, 0), price: n('htPrice', 0, 100000),
             manager: $('htManager').value.trim().slice(0, 60) };
     };
@@ -403,27 +418,41 @@
         const whole = Math.floor(m.sacks + 1e-9), part = m.sacks - whole;
         const hand = { whole, part, partKg: part * avg, partLo: part * lo, partHi: part * hi, up: part > 1e-6 ? whole + 1 : whole, backKg: part > 1e-6 ? (1 - part) * avg : 0 };
         const worth = (a) => (c.price ? { kg: a.kg * c.price, lo: a.lo * c.price, hi: a.hi * c.price } : null);
+        // Paid in money: the farmer keeps every sack but the home food's, and pays the share's worth.
+        let pay = null;
+        if (c.paid === 'money' && c.price) {
+            const keep = { sacks: S - H, kg: gross.kg - h.kg, lo: gross.lo - h.lo, hi: gross.hi - h.hi };
+            const q = x / 100 * c.price;
+            pay = Object.assign(worth(m), { perPeso: m.kg, keep: Object.assign(keep, { worth: worth(keep) }),
+                homeTopUp: c.mode === 'pct' ? { kg: h.kg * q, lo: h.lo * q, hi: h.hi * q } : null });
+        }
         return { avg, even: hi - lo < 1e-9, gross, manager: Object.assign(m, { worth: worth(m) }),
             owner: Object.assign(o, { pct: pctOf(o.kg), worth: worth(o) }), home: Object.assign(h, { pct: pctOf(h.kg), worth: worth(h) }),
             left: Object.assign(left, { pct: pctOf(left.kg), worth: worth(left) }),
             after: after ? Object.assign(after, { less: m.sacks - after.sacks, lessKg: (m.sacks - after.sacks) * avg }) : null,
-            hand, tightAtLight: c.mode === 'kg' && left.lo < -1e-6 };
+            hand, pay, tightAtLight: c.mode === 'kg' && left.lo < -1e-6 };
     };
     const problem = (c, r) => (r.manager.sacks > c.sacks + 1e-9 || r.manager.kg > r.gross.kg + 1e-9 ? 'The farm manager\'s share is more than the whole harvest.'
+        : c.paid === 'money' && !c.price ? 'Fill in the price a kilo, to count the pay in money.'
         : c.home > r.owner.sacks + 1e-9 ? 'Your home food is more than your share. Your share is ' + sk(r.owner.sacks) + '.' : '');
 
     /* ---- paint the answer ---- */
     const calc = () => {
         const c = read();
         try { localStorage.setItem(LS, JSON.stringify(c)); } catch (e) {}
-        const empty = !c.sacks ? 'Fill in how many sacks you harvested.' : !c.share ? 'Fill in the farm manager\'s share.' : '';
+        const empty = !c.sacks ? 'Fill in how many sacks you harvested.' : !c.share ? 'Fill in the farm manager\'s share.'
+            : c.paid === 'money' && !c.price ? 'Fill in the price a kilo, to count the pay in money.' : '';
         let r = null, bad = '';
         if (!empty) { r = compute(c); bad = problem(c, r); }
         $('htEmpty').hidden = !(empty || bad); $('htEmpty').classList.toggle('is-bad', !!bad); $('htRes').hidden = !!(empty || bad);
         if (empty || bad) { $('htEmptySay').textContent = empty || bad; st.last = null; return; }
         st.last = { c, r };
         const whoShort = c.manager || 'Farm manager';
-        $('htHead').textContent = 'From ' + sk(c.sacks) + ': ' + whoShort + ' ' + sk(r.manager.sacks) + (c.home > 0 ? ', your home food ' + sk(c.home) : '') + ', and ' + sk(r.left.sacks) + ' left to you.';
+        const P = r.pay, spread = !r.even && c.mode !== 'kg', about = spread ? 'about ' : '', at = '₱' + num(c.price, 2);
+        const pr = (w) => (spread ? peso(w.lo) + ' to ' + peso(w.hi) : peso(w.kg));
+        $('htHead').textContent = P
+            ? 'From ' + sk(c.sacks) + ': ' + whoShort + ' is paid ' + about + peso(P.kg) + (c.home > 0 ? ', your home food ' + sk(c.home) : '') + ', and you keep ' + sk(P.keep.sacks) + '.'
+            : 'From ' + sk(c.sacks) + ': ' + whoShort + ' ' + sk(r.manager.sacks) + (c.home > 0 ? ', your home food ' + sk(c.home) : '') + ', and ' + sk(r.left.sacks) + ' left to you.';
         // The bar: the whole harvest, in its three parts.
         const seg = (id, pct, label) => { $(id).style.flexBasis = Math.max(0, pct) + '%'; $(id).textContent = pct >= 9 ? num(pct, 0) + '%' : ''; $(id).title = label; };
         seg('htBM', r.manager.pct, whoShort); seg('htBH', r.home.pct, 'Home food'); seg('htBO', r.left.pct, 'Yours');
@@ -434,36 +463,63 @@
         const line = (k, v) => '<div><span>' + esc(k) + '</span><b>' + esc(v) + '</b></div>';
         const big = (n) => num(n, 2) + ' <small>' + (Math.abs(n - 1) < 1e-9 ? 'sack' : 'sacks') + '</small>';
         $('htMName').textContent = c.manager ? c.manager + ', farm manager' : 'Farm manager';
-        $('htMBig').innerHTML = big(r.manager.sacks);
-        $('htMLines').innerHTML = line('Weight', c.mode === 'kg' ? kg(r.manager.kg) + ', weighed' : (r.even ? kg(r.manager.kg) : 'about ' + kg(r.manager.kg)))
+        $('htMBig').innerHTML = P ? esc(peso(P.kg)) + ' <small>in money</small>' : big(r.manager.sacks);
+        $('htMLines').innerHTML = P
+            ? line('The worth of', sk(r.manager.sacks)) + line('Weight', c.mode === 'kg' ? kg(r.manager.kg) : about + kg(r.manager.kg))
+              + (spread ? line('The pay', pr(P)) : '') + line('Of the harvest', c.mode === 'kg' && !r.even ? rng(r.manager.pctLo, r.manager.pctHi) + '%' : num(r.manager.pct, 1) + '%')
+              + line('Each ₱1 on the price', peso(P.perPeso))
+            : line('Weight', c.mode === 'kg' ? kg(r.manager.kg) + ', weighed' : (r.even ? kg(r.manager.kg) : 'about ' + kg(r.manager.kg)))
             + (c.mode === 'kg' && !r.even ? line('In sacks', rng(r.manager.sacksLo, r.manager.sacksHi)) : (!r.even ? line('Range', kgRange(r.manager)) : ''))
             + line('Of the harvest', c.mode === 'kg' && !r.even ? rng(r.manager.pctLo, r.manager.pctHi) + '%' : num(r.manager.pct, 1) + '%')
             + (r.manager.worth ? line('Worth', c.mode === 'kg' || r.even ? peso(r.manager.worth.kg) : peso(r.manager.worth.lo) + ' to ' + peso(r.manager.worth.hi)) : '');
         $('htHBig').innerHTML = big(r.home.sacks);
         $('htHLines').innerHTML = (c.home > 0 ? line('Weight', r.even ? kg(r.home.kg) : 'about ' + kg(r.home.kg)) + (!r.even ? line('Range', kgRange(r.home)) : '')
             + line('Of the harvest', num(r.home.pct, 1) + '%') + (r.home.worth ? line('Worth', r.even ? peso(r.home.worth.kg) : peso(r.home.worth.lo) + ' to ' + peso(r.home.worth.hi)) : '') : line('None kept', ''));
-        $('htOBig').innerHTML = big(r.left.sacks);
-        $('htOLines').innerHTML = line('Weight', r.even ? kg(r.left.kg) : 'about ' + kg(r.left.kg)) + (!r.even ? line('Range', kgRange(r.left)) : '')
+        $('htOBig').innerHTML = big(P ? P.keep.sacks : r.left.sacks);
+        $('htOLines').innerHTML = P
+            ? line('Weight', r.even ? kg(P.keep.kg) : 'about ' + kg(P.keep.kg)) + (!r.even ? line('Range', kgRange(P.keep)) : '')
+              + line('Worth', r.even ? peso(P.keep.worth.kg) : peso(P.keep.worth.lo) + ' to ' + peso(P.keep.worth.hi))
+              + line('Less the pay', about + peso(P.kg))
+              + line('Yours after paying', r.even ? peso(r.left.worth.kg) : peso(r.left.worth.lo) + ' to ' + peso(r.left.worth.hi))
+            : line('Weight', r.even ? kg(r.left.kg) : 'about ' + kg(r.left.kg)) + (!r.even ? line('Range', kgRange(r.left)) : '')
             + line('Of the harvest', num(r.left.pct, 1) + '%') + (r.left.worth ? line('Worth', r.even ? peso(r.left.worth.kg) : peso(r.left.worth.lo) + ' to ' + peso(r.left.worth.hi)) : '')
             + line('Your share in all', sk(r.owner.sacks));
         // Handing it over: whole sacks, and the part of one more in kilos.
         const H2 = r.hand;
-        $('htHand').innerHTML = c.mode === 'kg'
+        $('htHandT').textContent = P ? 'Paying it' : 'Handing it over';
+        $('htHand').innerHTML = P ? (c.mode === 'kg'
+            ? 'Pay <b>' + esc(peso(P.kg)) + '</b>, the worth of ' + esc(kg(c.share)) + ' at ' + esc(at) + ' a kilo. It stays the same whatever the sacks weigh.'
+            : c.mode === 'sacks'
+            ? 'Pay <b>' + esc(about + peso(P.kg)) + '</b>, the worth of ' + esc(sk(c.share)) + (spread ? ', anywhere from ' + esc(pr(P)) + ' by how heavy the sacks are. For the exact pay, weigh ' + esc(sk(c.share)) + ' of the harvest: their kilos times ' + esc(at) + '.' : '.')
+            : 'Pay <b>' + esc(about + peso(P.kg)) + '</b>' + (spread ? ', anywhere from ' + esc(pr(P)) + ' by how heavy the sacks are. For the exact pay, weigh the harvest: ' + esc(num(c.share, 2)) + '% of the kilos times ' + esc(at) + '.' : '.'))
+            : c.mode === 'kg'
             ? 'Weigh out <b>' + esc(kg(c.share)) + '</b>. That is about ' + esc(sk(r.manager.sacks)) + (r.even || !rng(r.manager.sacksLo, r.manager.sacksHi).includes(' to ') ? '' : ', anywhere from ' + esc(rng(r.manager.sacksLo, r.manager.sacksHi)) + ' sacks by how heavy they are') + '.'
             : H2.part < 1e-6 ? 'Give <b>' + esc(sk(H2.whole)) + '</b>. It comes out in whole sacks.'
             : 'Give <b>' + esc(sk(H2.whole)) + '</b> and about <b>' + esc(kg(H2.partKg)) + '</b> more from the next sack' + (r.even ? '' : ' (' + esc(kg(H2.partLo)) + ' to ' + esc(kg(H2.partHi)) + ')') + ', weighed out.'
               + ' Or give ' + esc(sk(H2.up)) + ' and take back about ' + esc(kg(H2.backKg)) + (c.price ? ', or ' + esc(peso(H2.backKg * c.price)) + ' at your price' : '') + '.';
+        // A percent paid out of a sale: the home food kept back still owes its percent.
+        const sale = P && c.mode === 'pct' ? 'Paying from the sale? Give ' + esc(num(c.share, 2)) + '% of the money from ' + (c.home > 0 ? 'the ' + esc(sk(P.keep.sacks)) + ' you sell, and <b>' + esc(pr(P.homeTopUp)) + '</b> more for the ' + esc(sk(c.home)) + ' of home food you kept, or the share is counted after your home food.' : 'the harvest you sell.') : '';
+        $('htHand2').hidden = !sale; $('htHand2').innerHTML = sale;
         // Why it is fair.
         const fair = [];
-        if (c.mode === 'pct') {
+        if (P && c.mode === 'pct') {
+            fair.push('Counted from the whole harvest of ' + esc(sk(c.sacks)) + ', the home food sacks too. You keep all the sacks and pay the share in money.');
+            if (c.home > 0 && r.after) fair.push('Had it been counted after your home food, ' + esc(c.manager || 'your farm manager') + ' would get only ' + esc(peso(r.after.sacks * r.avg * c.price)) + ', <b>' + esc(peso(r.after.lessKg * c.price)) + '</b> less. Counting from the whole harvest keeps that in the pay.');
+        } else if (c.mode === 'pct') {
             fair.push('Counted from the whole harvest of ' + esc(sk(c.sacks)) + ', before your home food. Your home food comes out of your own share only.');
             if (c.home > 0 && r.after) fair.push('Had it been counted after your home food, ' + esc(c.manager || 'your farm manager') + ' would get only ' + esc(sk(r.after.sacks)) + ', <b>' + esc(sk(r.after.less)) + '</b> (about ' + esc(kg(r.after.lessKg)) + ') less. Counting from the whole harvest keeps that in the share.');
         } else {
             fair.push('A set share stays the same whatever you keep for home food. It is <b>' + esc(c.mode === 'kg' && !r.even ? rng(r.manager.pctLo, r.manager.pctHi) : num(r.manager.pct, 1)) + '%</b> of the whole harvest.');
             fair.push('Your home food comes out of your own share only.');
         }
-        if (!r.even && c.mode !== 'kg') fair.push('Your sacks weigh ' + esc(num(c.kgMin, 1)) + ' to ' + esc(num(c.kgMax, 1)) + ' kg. Whole sacks are fair only if you weigh them, or take turns picking the sacks so the heavy and the light ones are shared.');
-        if (r.even) fair.push('Every sack weighs ' + esc(kg(c.kgMin)) + ', so a sack is the same for both of you.');
+        if (P) {
+            fair.push('Agree on the price before you pay. Each peso more or less a kilo moves the pay by ' + esc(peso(P.perPeso)) + '.');
+            if (spread) fair.push('Your sacks weigh ' + esc(num(c.kgMin, 1)) + ' to ' + esc(num(c.kgMax, 1)) + ' kg, so the pay is a range until you weigh. Weigh the harvest, or agree to count every sack at ' + esc(num(r.avg, 1)) + ' kg.');
+            if (r.even) fair.push('Every sack weighs ' + esc(kg(c.kgMin)) + ', so the pay is exact.');
+        } else {
+            if (!r.even && c.mode !== 'kg') fair.push('Your sacks weigh ' + esc(num(c.kgMin, 1)) + ' to ' + esc(num(c.kgMax, 1)) + ' kg. Whole sacks are fair only if you weigh them, or take turns picking the sacks so the heavy and the light ones are shared.');
+            if (r.even) fair.push('Every sack weighs ' + esc(kg(c.kgMin)) + ', so a sack is the same for both of you.');
+        }
         $('htFair').innerHTML = fair.map((x) => '<li>' + x + '</li>').join('');
         // Check this.
         const warn = r.tightAtLight ? 'If your sacks are on the light side, ' + esc(kg(c.share)) + ' for your farm manager and your home food may not leave you anything. Weigh the harvest first.'
@@ -476,8 +532,10 @@
                 : c.mode === 'sacks' ? whoShort + ': ' + sk(c.share) + ', that is ' + num(r.manager.pct, 1) + '% of ' + sk(c.sacks) + '.'
                 : whoShort + ': ' + kg(c.share) + ', about ' + sk(r.manager.sacks) + ' at ' + num(r.avg, 1) + ' kg a sack.',
             'Your share: ' + sk(c.sacks) + ' less ' + sk(r.manager.sacks) + ' = ' + sk(r.owner.sacks) + '.',
-            c.home > 0 ? 'Your home food, ' + sk(c.home) + ', from your share: ' + sk(r.owner.sacks) + ' less ' + sk(c.home) + ' = ' + sk(r.left.sacks) + ' left to you.' : 'No home food set aside: all ' + sk(r.owner.sacks) + ' are yours.',
-            c.price ? 'At ₱' + num(c.price, 2) + ' a kilo: ' + whoShort + ' ' + peso(r.manager.worth.kg) + (c.home > 0 ? ', home food ' + peso(r.home.worth.kg) : '') + ', yours ' + peso(r.left.worth.kg) + '.' : null,
+            c.home > 0 ? 'Your home food, ' + sk(c.home) + ', from your share: ' + sk(r.owner.sacks) + ' less ' + sk(c.home) + ' = ' + sk(r.left.sacks) + (P ? ', the worth that is yours.' : ' left to you.') : P ? 'No home food set aside: the worth of all ' + sk(r.owner.sacks) + ' is yours.' : 'No home food set aside: all ' + sk(r.owner.sacks) + ' are yours.',
+            P ? 'Paid in money at ' + at + ' a kilo: ' + about + kg(r.manager.kg) + ' times ' + at + ' = ' + peso(P.kg) + '.' : null,
+            P ? 'You keep ' + sk(c.sacks) + (c.home > 0 ? ' less ' + sk(c.home) + ' of home food = ' + sk(P.keep.sacks) : '') + ', worth ' + peso(P.keep.worth.kg) + '. Less the pay, yours is ' + peso(r.left.worth.kg) + '.' : null,
+            !P && c.price ? 'At ₱' + num(c.price, 2) + ' a kilo: ' + whoShort + ' ' + peso(r.manager.worth.kg) + (c.home > 0 ? ', home food ' + peso(r.home.worth.kg) : '') + ', yours ' + peso(r.left.worth.kg) + '.' : null,
         ].filter(Boolean).map((x) => '<li>' + esc(x) + '</li>').join('');
     };
     ['htSacks', 'htKgMin', 'htKgMax', 'htShare', 'htHome', 'htPrice', 'htManager'].forEach((id) => $(id).addEventListener('input', () => { if (id === 'htShare') paintQuick(); calc(); }));
@@ -489,9 +547,10 @@
         set('htSacks', c.sacks); set('htKgMin', c.kgMin ?? B.defaults.kgMin); set('htKgMax', c.kgMax ?? B.defaults.kgMax); set('htShare', c.share);
         set('htHome', c.home || ''); set('htPrice', c.price ?? ''); set('htManager', c.manager || '');
         st.mode = B.modes[c.mode] ? c.mode : 'pct';
-        paintMode(false); calc();
+        st.paid = B.paid[c.paid] ? c.paid : 'sacks';
+        paintMode(false); paintPaid(); calc();
     };
-    try { const last = JSON.parse(localStorage.getItem(LS) || 'null'); if (last && typeof last === 'object') fill(last); else paintMode(false); } catch (e) { paintMode(false); }
+    try { const last = JSON.parse(localStorage.getItem(LS) || 'null'); if (last && typeof last === 'object') fill(last); else { paintMode(false); paintPaid(); } } catch (e) { paintMode(false); paintPaid(); }
     $('htReset').addEventListener('click', () => {
         ['htSacks', 'htShare', 'htHome', 'htPrice', 'htManager'].forEach((id) => { $(id).value = ''; });
         $('htKgMin').value = B.defaults.kgMin; $('htKgMax').value = B.defaults.kgMax;
@@ -517,7 +576,8 @@
         $('htList').innerHTML = LIST.rows.map((r, i) => '<div class="ht-srow" style="animation-delay:' + Math.min(i, 8) * 40 + 'ms" data-id="' + r.id + '">'
             + '<span class="ht-date"><b>' + esc(r.day) + '</b><small>' + esc(r.month) + '</small></span>'
             + '<button type="button" class="ht-sopen" data-open="' + r.id + '"><b>' + esc(r.title) + '</b><small>'
-            + esc((r.manager != null ? 'Farm manager ' + num(r.manager, 2) : '') + (r.home ? ' · home ' + num(r.home, 2) : '') + (r.left != null ? ' · yours ' + num(r.left, 2) + ' sacks' : '') + ' · ' + r.at) + '</small></button>'
+            + esc((r.pay != null ? 'Farm manager ' + peso(r.pay) : r.manager != null ? 'Farm manager ' + num(r.manager, 2) : '') + (r.home ? ' · home ' + num(r.home, 2) : '')
+                + (r.pay != null && r.keep != null ? ' · you keep ' + num(r.keep, 2) + ' sacks' : r.left != null ? ' · yours ' + num(r.left, 2) + ' sacks' : '') + ' · ' + r.at) + '</small></button>'
             + '<button type="button" class="ht-sdel" data-del="' + r.id + '" aria-label="Move to the Trash" title="Move to the Trash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M10 11v6m4-6v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3"/></svg></button></div>').join('');
     };
     const load = async (page) => {
