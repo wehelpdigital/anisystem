@@ -50,6 +50,7 @@ return [
         'npkPlus'           => false,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
+        'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => false,   // and so is the shed
@@ -118,6 +119,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
+        'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => false,
@@ -187,6 +189,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
+        'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,
@@ -257,6 +260,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
+        'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,
@@ -321,6 +325,7 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
+        'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,

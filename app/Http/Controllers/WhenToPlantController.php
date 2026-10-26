@@ -435,7 +435,7 @@ class WhenToPlantController extends Controller
         return $this->json(true, 'Analysis ready.', [
             'status' => 'ready',
             'savedId' => (int) $r->id,
-            'report' => json_decode($r->report, true),
+            'report' => self::withMarket(json_decode($r->report, true) ?: [], json_decode($r->params, true) ?: []),
             'params' => json_decode($r->params, true),
             'charged' => (float) $r->credits,
             'balance' => round($this->credits->balance($this->payer()->id), 2),
@@ -510,9 +510,48 @@ class WhenToPlantController extends Controller
             'id' => $r->id,
             'title' => $r->title,
             'params' => json_decode($r->params, true),
-            'report' => json_decode($r->report, true),
+            'report' => self::withMarket(json_decode($r->report, true) ?: [], json_decode($r->params, true) ?: []),
             'credits' => (float) $r->credits,
         ]);
+    }
+
+    /**
+     * The market at harvest (2026-10-27, the owner: "add it as a consideration or factor in the when to plant
+     * analysis ... for the timing of the market price"): each ranked week with the crop's farmgate price in the
+     * month a planting that week is harvested (the forecast there, else the usual month against its year), and
+     * the crop's best and glut months. Worked out on read from the price shelf (App\Support\MarketBook), so
+     * reports written before it get it too. Left as it came where the crop has no prices.
+     */
+    public static function withMarket(array $report, array $p): array
+    {
+        if (empty($report['weekRanks']) || ! is_array($report['weekRanks']) || ! class_exists(\App\Support\MarketBook::class)) {
+            return $report;
+        }
+        try {
+            $days = self::daysOf($p);
+            $first = null;
+            foreach ($report['weekRanks'] as $i => $w) {
+                if (! is_array($w) || ! preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) ($w['from'] ?? ''))) {
+                    continue;
+                }
+                $h = \Illuminate\Support\Carbon::parse($w['from'])->addDays(3 + $days);
+                $m = \App\Support\MarketBook::forHarvest((string) ($p['crop'] ?? ''), (string) ($p['location'] ?? ''), $h->year * 12 + $h->month - 1);
+                if (! $m) {
+                    return $report;
+                }
+                $first ??= $m;
+                $report['weekRanks'][$i]['market'] = ['month' => $m['month'], 'year' => $h->year, 'p' => $m['p'], 'lo' => $m['lo'], 'hi' => $m['hi'], 'index' => round($m['index'], 3),
+                    'forecast' => $m['forecast'], 'unit' => $m['unit']];
+            }
+            if ($first) {
+                $report['market'] = ['item' => $first['item'], 'place' => $first['place'], 'best' => $first['best'], 'worst' => $first['worst'], 'latest' => $first['latest'],
+                    'store' => $first['store'], 'unit' => $first['unit'], 'url' => \Illuminate\Support\Facades\Route::has('market.page') ? route('market.page', ['crop' => \App\Support\MarketBook::cropOf((string) ($p['crop'] ?? ''))]) : null];
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return $report;
     }
 
     /**
@@ -935,6 +974,19 @@ PROMPT;
             $atlas = trim(\App\Support\SoilAtlas::words(\App\Support\SoilAtlas::forWhere((string) $p['location'], (string) $p['crop']), 'short'));
             $soilBlock .= $atlas !== '' ? '- ' . $atlas . "\n" : '';
         }
+        // The market at harvest (2026-10-27, the owner): the crop's farmgate price by month, where it is heading, and
+        // the latest import news, with the harvest month of a planting in each of the farmer's months.
+        $marketBlock = '';
+        if (class_exists(\App\Support\MarketBook::class)) {
+            $harvests = [];
+            $from = (int) $p['fromYear'] * 12 + (int) $p['fromMonth'] - 1;
+            $to = (int) ($p['toYear'] ?: $p['fromYear']) * 12 + (int) ($p['toMonth'] ?: $p['fromMonth']) - 1;
+            for ($t = $from; $t <= max($from, min($to, $from + 11)); $t++) {
+                $harvests[] = $t + (int) round(((int) ($varDays ?: $cropDays) + 15) / 30.4);
+            }
+            $mk = \App\Support\MarketBook::forPrompt((string) $p['crop'], (string) $p['location'], array_values(array_unique($harvests)));
+            $marketBlock = $mk !== '' ? "- THE MARKET AT HARVEST (the app's own farmgate price records; never name where they come from). The harvest month of a planting in each of the farmer's months is listed with its price:\n" . $mk : '';
+        }
         $ensoRule = $enso !== ''
             ? 'the observed ENSO state AND the official ENSO forecast given above (weigh its stated probabilities toward the planting window rather than assuming neutral conditions, and say plainly where the forecast still leaves uncertainty)'
             : 'general ENSO behaviour — state plainly that you cannot know the live ENSO state for ' . $p['year'] . ' and mark it as uncertainty rather than inventing a forecast';
@@ -985,20 +1037,21 @@ FACTS GIVEN
 - Location as the farmer wrote it: {$p['location']}
 - Field problems the farmer reports: {$problems}
 - Soil condition as the farmer knows it: {$soil}
-{$soilBlock}{$ensoBlock}
+{$soilBlock}{$ensoBlock}{$marketBlock}
 GROUND RULES
 - At the end of this brief: THE PLACE'S HAZARD HISTORY (for a Philippine town: the storms measured near it from their tracks, with the wind and rain they brought there, the dry spells, hot spells and heavy rain measured near it, and the floods and other events reported for the town or its province, with a month tally of the years with one; never say where it comes from) or THE PLACE'S RISK RECORD (year by year from earlier research, with a month tally), THE FIELD'S WEATHER RECORD (twenty years of measured rain, heavy rain days, storm gust years and heat, month by month, with what El Niño and La Niña months did there), and any research notes gathered just now (the variety, the newest year). Rely on them first for riskHistory, typhoonOdds and the avoid windows; where they and memory disagree, they win; where they are silent, say so in dataGaps. Weigh the ENSO rows of the weather record against the ENSO outlook above: they say what this phase has done to THIS field's rain before.
 - Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, the soil condition given, and the crop calendar arithmetic above.
 - The soil condition moves the window too: a correction that must go on before planting (lime for acidic soil, gypsum and leaching for sodic, a salt flush for saline) pushes the earliest good week back by its lead time, and weather that worsens the condition at emergence (salts peaking in the driest weeks, a sodic soil crusting under heavy rain, an acid sulfate soil flushing acid with the first rains after a dry spell) lowers those weeks' scores. Say this in the week reasons and the threats where it applies. If the soil condition is not known, add a soil test to dataGaps.
 - Weigh the WHOLE crop cycle, not just the planting day: a planting month is only as good as the weather the crop meets at its sensitive stages (flowering, grain fill, harvest) in the months after it.
+- The market at harvest, when it is given above, comes AFTER the weather and the crop's safety: between weeks of like risk, prefer the one whose harvest lands in a better price month, and say so in that week's factors.market (e.g. "harvest lands in March, usually 4% above its year"). Never trade a real weather risk for a better price. A crop sold fresh cannot wait for a better month, so its harvest month matters more; a crop that keeps can be stored and sold later, so say that instead. Mention a recent import or policy event only when it bears on the harvest months.
 - Where the given facts cannot answer something (exact distance to river or sea, microclimate, irrigation reliability), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no product recommendations, no marketing tone, no bias toward any input or brand.
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown. Ranges are written with "to", never a dash ("Nov 9 to 15, 2027").
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"weekRanks":[{"rank":1,"from":"2026-11-09","to":"2026-11-15","label":"","score":0,"why":"","factors":{"rain":"","storms":"","enso":"","field":""},"flowering":"","harvest":"","watch":""}],"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],{$riskShape}"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
+{"weekRanks":[{"rank":1,"from":"2026-11-09","to":"2026-11-15","label":"","score":0,"why":"","factors":{"rain":"","storms":"","enso":"","field":"","market":""},"flowering":"","harvest":"","watch":""}],"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],{$riskShape}"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
-- weekRanks is THE CORE OF THIS ANALYSIS — the farmer wants the best WEEK, not the best month. Work through the farmer's months ({$whenShort}) WEEK BY WEEK (Monday to Sunday) and judge each week as a planting week against everything above: the place's recent rain onset and dry spells, its storm / flood / drought / heat record from the research notes, the ENSO outlook, the crop's own calendar (work out, from the variety's days to maturity where the notes give it or else the crop's, when a crop planted that week flowers or reaches its sensitive stage and when it is harvested, and what weather those stages meet), every field problem the farmer reported, and the variety's traits. Then return the best week ranges RANKED: rank 1 is the best, then the second best, and so on, up to five. A range is one week, or two or three adjacent weeks that score alike; ranges never overlap; all sit inside the farmer's months; rank 1 lies inside bestWindow. For each: from and to as ISO dates (YYYY-MM-DD: the Monday and the Sunday), label spelling the dates WITH THE YEAR (e.g. "Nov 9 to 15, 2026" or "Nov 30 to Dec 13, 2026"), score 0–100 as a planting week, why ≤ 45 words naming the concrete reasons for its place in the ranking, factors = one line each (≤ 14 words) on how rain, storms, ENSO and this field's reported problems bear on that range (field = "" when the farmer reported none), flowering "around Jan 20 to 27, 2027" (the sensitive stage for a planting in that range; "" for a crop without one), harvest "around Feb 25, 2027", watch ≤ 15 words — the one thing to watch for in that range. Differentiate the scores honestly; if fewer than five ranges are worth planting in, return fewer and say why in the summary.
+- weekRanks is THE CORE OF THIS ANALYSIS — the farmer wants the best WEEK, not the best month. Work through the farmer's months ({$whenShort}) WEEK BY WEEK (Monday to Sunday) and judge each week as a planting week against everything above: the place's recent rain onset and dry spells, its storm / flood / drought / heat record from the research notes, the ENSO outlook, the crop's own calendar (work out, from the variety's days to maturity where the notes give it or else the crop's, when a crop planted that week flowers or reaches its sensitive stage and when it is harvested, and what weather those stages meet), every field problem the farmer reported, and the variety's traits. Then return the best week ranges RANKED: rank 1 is the best, then the second best, and so on, up to five. A range is one week, or two or three adjacent weeks that score alike; ranges never overlap; all sit inside the farmer's months; rank 1 lies inside bestWindow. For each: from and to as ISO dates (YYYY-MM-DD: the Monday and the Sunday), label spelling the dates WITH THE YEAR (e.g. "Nov 9 to 15, 2026" or "Nov 30 to Dec 13, 2026"), score 0–100 as a planting week, why ≤ 45 words naming the concrete reasons for its place in the ranking, factors = one line each (≤ 14 words) on how rain, storms, ENSO, this field's reported problems and the market at harvest bear on that range (field = "" when the farmer reported none; market = "" when no market is given above), flowering "around Jan 20 to 27, 2027" (the sensitive stage for a planting in that range; "" for a crop without one), harvest "around Feb 25, 2027", watch ≤ 15 words — the one thing to watch for in that range. Differentiate the scores honestly; if fewer than five ranges are worth planting in, return fewer and say why in the summary.
 - variety: what the research found about the stated variety — found true only when the notes carry real published traits; name as published; maturityDays (0 when unknown); season it is bred for in a few words; traits ≤ 60 words in plain words (yield, height, tolerances, resistances, and how they shaped this timing); caution ≤ 25 words (its known weakness on this ground, or ""); source = the seed company whose page the notes cite, else "published variety records" (never an agency, the registry or an institute). When the farmer named no variety, or none was found: found false and the rest empty or 0.
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates INSIDE the farmer's months ({$whenShort}), and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 to Jan 5, 2027") — NEVER a season name or a whole month range. fromYear/toYear carry the calendar year of each end. If none of the farmer's months is sound, still give the least risky weeks inside them, lower the confidence, and say plainly in the why, the threats and the summary which nearby months would be safer.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July to mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".

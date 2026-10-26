@@ -544,7 +544,7 @@ class WhatToPlantController extends Controller
         return $this->json(true, 'Analysis ready.', [
             'status' => 'ready',
             'savedId' => (int) $r->id,
-            'report' => self::withVarieties(json_decode($r->report, true) ?: [], $params),
+            'report' => self::withMarket(self::withVarieties(json_decode($r->report, true) ?: [], $params), $params),
             'params' => $params,
             'charged' => (float) $r->credits,
             'balance' => round($this->credits->balance($this->payer()->id), 2),
@@ -590,7 +590,7 @@ class WhatToPlantController extends Controller
             'id' => $r->id,
             'title' => $r->title,
             'params' => $params,
-            'report' => self::withVarieties(json_decode($r->report, true) ?: [], $params),
+            'report' => self::withMarket(self::withVarieties(json_decode($r->report, true) ?: [], $params), $params),
             'credits' => (float) $r->credits,
         ]);
     }
@@ -648,6 +648,54 @@ class WhatToPlantController extends Controller
         }
         if (! empty($report['topPick']) && is_array($report['topPick'])) {
             $report['topPick'] = $add($report['topPick']);
+        }
+
+        return $report;
+    }
+
+    /**
+     * Each crop of a report with its market (2026-10-27, the owner: "add it as a consideration or factor in ...
+     * what to plant analysis for the timing of the market price as well as the market price if its an expensive
+     * crop"): its farmgate price lately at the field's province (else region, else country), where its harvest
+     * month sits against its year, its best and glut months, and how dear it is among crops. Light arithmetic on
+     * the price shelf (App\Support\MarketBook::briefs), done on read, so earlier reports get it too.
+     */
+    public static function withMarket(array $report, array $p): array
+    {
+        if (! class_exists(\App\Support\MarketBook::class) || ($p['country'] ?? 'PH') !== 'PH') {
+            return $report;
+        }
+        try {
+            $keyOf = fn ($x) => is_array($x) ? \App\Support\VarietyBook::cropKeyFor((string) ($x['crop'] ?? '')) : null;
+            $all = array_merge((array) ($report['recommendations'] ?? []), (array) ($report['surprises'] ?? []), [(array) ($report['topPick'] ?? [])]);
+            $keys = array_values(array_unique(array_filter(array_map($keyOf, $all))));
+            $briefs = $keys ? \App\Support\MarketBook::briefs($keys, (string) ($p['location'] ?? '')) : [];
+            if (! $briefs) {
+                return $report;
+            }
+            $add = function ($x) use ($keyOf, $briefs) {
+                $k = $keyOf($x);
+                $b = $k ? ($briefs[$k] ?? null) : null;
+                if (! $b) {
+                    return $x;
+                }
+                $m = (int) ($x['harvestMonth'] ?? 0);
+                $x['market'] = ['p' => $b['avg12'], 'unit' => $b['unit'], 'place' => $b['place'], 'best' => $b['best'], 'worst' => $b['worst'], 'store' => $b['store'],
+                    'harvest' => $m >= 1 && $m <= 12 ? round($b['season'][$m - 1] - 1, 3) : null, 'rank' => $b['rank']['pct'] ?? null,
+                    'url' => \Illuminate\Support\Facades\Route::has('market.page') ? route('market.page', ['crop' => \App\Support\MarketBook::cropOf($k)]) : null];
+
+                return $x;
+            };
+            foreach (['recommendations', 'surprises'] as $k) {
+                if (! empty($report[$k]) && is_array($report[$k])) {
+                    $report[$k] = array_map($add, $report[$k]);
+                }
+            }
+            if (! empty($report['topPick']) && is_array($report['topPick'])) {
+                $report['topPick'] = $add($report['topPick']);
+            }
+        } catch (\Throwable $e) {
+            report($e);
         }
 
         return $report;
@@ -944,6 +992,12 @@ RULE;
                 report($e);
             }
         }
+        // The market (2026-10-27, the owner): each crop's farmgate price lately at this field's province, its best and glut
+        // months, where a harvest from this start lands, and how dear it is among crops, from the app's own records.
+        $marketLines = $fieldPH && class_exists(\App\Support\MarketBook::class)
+            ? \App\Support\MarketBook::poolLines(array_keys($book), (string) $p['location'], \Illuminate\Support\Carbon::parse($p['startMonth'] . '-01')->year * 12 + \Illuminate\Support\Carbon::parse($p['startMonth'] . '-01')->month - 1)
+            : '';
+        $marketBlock = $marketLines !== '' ? "- MARKET PRICES (the app's own farmgate price records for this province or its region; never name where they come from):\n" . $marketLines : '';
         // The crops the farmer has in mind, by the book's name, plus their own words.
         $askedNames = array_map(fn ($k) => (string) ($book[$k]['label'] ?? $k), self::picks($book, $p['cropsAsked'] ?? []));
         $asked = ($askedNames ? implode('; ', $askedNames) : '')
@@ -987,7 +1041,7 @@ FACTS GIVEN
 - Crops the farmer has in mind (each must be analysed and ranked, honestly): {$asked}
 - Crop families the farmer does NOT want at all: {$excludedLine}. Families still in play: {$familiesLeft}.
 - What matters most to the farmer, in their order, with the weight each carries in the score: {$prioLine}
-{$ensoBlock}{$history}{$hardLine}{$soilLine}
+{$ensoBlock}{$history}{$hardLine}{$soilLine}{$marketBlock}
 GROUND RULES
 - BE REALISTIC ABOUT THE PLACE. Recommend only crops that are actually grown commercially and sold in {$countryName}, and that really grow in the climate of the region and elevation named — the climate decides, not the wish list. Concretely: {$realism}. A crop that cannot grow in that climate is simply left out; it is not a recommendation and not padding for the avoid list.
 - CANDIDATE POOL. Choose the top pick and every recommendation from these crops, which this app keeps a calendar for in {$countryName} (days to harvest in brackets, and where the app keeps variety records, how many varieties are registered and the spread of their days, so a crop's daysToHarvest can reflect its early and late varieties): {$pool}. If a crop that is genuinely important in the region named is missing from the pool, you may add it only when it is really grown commercially there, and you must say so in dataGaps.
@@ -995,6 +1049,7 @@ GROUND RULES
 - THE FARMER'S PRIORITIES. Score every crop on the six fits (fit.profit, fit.survival, fit.ease, fit.speed, fit.market, fit.food, each 0-100 for THIS ground and farmer), then make score the weighted average of those six using the weights given above (the farmer's first priority weighs most). Rank by score. When a priority decided a placing, say so in the why.
 - HARVEST DAY. A fine planting window is not enough: the crop must also come off the field safely. For every recommendation give plantMonth (1-12, the month its window opens), daysToHarvest (days from planting to first harvest for this crop in this climate, from its real maturity — for a tree crop, months to first bearing times 30), harvestWindow in words (e.g. "late February – mid March"), harvestMonth (1-12, when most of the harvest lands), and harvestRisk: what the region's climate typically does in that harvest month — floods, typhoons/storms, drought, heat, frost — as score 0-100 (0 = calm, 100 = a harvest very likely lost or delayed), kind (one of "flood", "storm", "drought", "heat", "frost", "none") and a note of at most 20 words. A crop whose harvest lands in the flood or typhoon peak must say so, and that risk must pull down fit.survival and the score.
 {$riskRule}- Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
+- THE MARKET, from MARKET PRICES above when given: fit.profit and fit.market weigh each crop's price level (a dearer crop earns more a kilo, but only with a yield and costs that make sense here), the month its harvest lands from this start (a harvest in its glut months scores lower, one in its best months higher, and a crop that keeps can wait for a better month), and boom and bust. Say it briefly in a crop's why when it moved the pick (e.g. "harvest lands in March, its best month, about P52/kg"). These prices win over the research notes' prices.
 - REAL HARVESTS AND PRICES: research notes gathered from the web just now follow at the end of this brief (what farmers in the province really harvest of each main crop, the latest farmgate prices, recent derbies). fit.profit and fit.market rest on them first, over memory: a crop real farmers there harvest well and sell at a fair farmgate price scores higher than one with a better textbook yield. Where a crop's why rests on a real figure, say it briefly with its year (e.g. "farmers here averaged 4.2 t/ha in the 2025 dry season, PSA"). A crop the notes say nothing about is scored from established knowledge, and not flattered.
 - Read the extra signals as an agronomist would, and say in each "why" which ones moved the pick: soil pH sets which crops tolerate the ground (acid-tolerant vs lime-loving); the LOOK of the irrigation water is a clue — muddy/brown carries silt (fine for paddy, clogs drip), grayish carries fine silt, fine sand or volcanic ash as in lahar areas (it leaves a gray crust that seals the seedbed, wears pumps and clogs drip and sprinklers, so let it settle in a pond first; sand itself settles fast, so gray water that stays gray is mostly fine silt or ash), cloudy white or milky suggests suspended lime/minerals or fine clay (check salinity and hardness before drip or sensitive vegetables), greenish means algae and nutrient load (watch clogging and disease), salty taste or a white crust means salinity (favor salt-tolerant crops), a bad smell or oily film means contamination (avoid leafy vegetables eaten raw); the lay and elevation set drainage, cold and cloud; sunlight rules out sun-loving crops in shade; the previous crop sets rotation (do not repeat a family that shares its pests and diseases); labor, budget and the market decide whether a labor-heavy, input-heavy or perishable crop is realistic. A skipped signal is "not stated" — do not guess it; name it in dataGaps if it would have changed the ranking.
 - EXCLUDED FAMILIES. A family the farmer does not want never appears in recommendations, topPick or surprises — not one crop of it. The family-coverage rule below applies only to the families still in play. The crops the farmer named themselves are exempt: they asked, so they are ranked.
@@ -1038,6 +1093,10 @@ PROMPT;
         $asked = trim(implode('; ', array_filter([implode(', ', array_map(fn ($k) => \App\Support\CropCatalog::label($k), $keys)), trim((string) ($p['cropsOther'] ?? ''))]))) ?: 'none named';
         $rk = $fieldPH ? \App\Support\ClimateRecord::placeKey((string) $p['location'], 'PH') : null;
         $place = $rk && ! empty($rk['province']) ? 'the province of ' . $rk['place'] : $p['location'];
+        // At home the app keeps the farmgate prices (2026-10-27): only a recent crash or spike is looked up.
+        $priceAsk = $fieldPH && class_exists(\App\Support\MarketBook::class) && \App\Support\MarketBook::ready()
+            ? 'skip; the app keeps them. Only note a price crash or spike reported in the last six months, with its month.'
+            : 'the latest farmgate prices of those crops in the province or region, with the month and year.';
 
         return <<<PROMPT
 You are a research assistant for agriculture in {$countryName} with web search. SEARCH THE WEB NOW and write research notes for a farmer choosing WHAT to plant. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
@@ -1049,7 +1108,7 @@ THE CASE
 
 FIND, IN THIS ORDER
 1. REAL YIELDS: what farmers in this province (or region, when the province has no figure) really harvest of the main crops grown there, rice, corn, the main vegetables, root crops, legumes and fruit, in the last two or three years, per hectare, by season where it is given; and of every crop the farmer has in mind. Name the year and the source of each figure.
-2. FARMGATE PRICES: the latest farmgate prices of those crops in the province or region, with the month and year.
+2. FARMGATE PRICES: {$priceAsk}
 3. REAL HARVESTS: the most recent derbies, techno demos and farmers' reported harvests in or near the province (any crop), with the yield, the season and the source.
 4. Which crops the province's agriculture office and the DA are promoting there now, and any market trouble (a glut, a price crash, an import surge) for a crop in the last year.
 

@@ -223,7 +223,7 @@
             $qVoiceSeasons = $qSeasonsWith('voice');
             $qQuickAny = $qCamSeasons->isNotEmpty() || $qVidSeasons->isNotEmpty() || $qVoiceSeasons->isNotEmpty();
             $qShowAnee = $qAnyOn(['wtp', 'whatp', 'vary', 'proto', 'sat', 'landprep']);
-            $qShowInside = $qMayCompare || $qAnyOn(array_merge(['sky', 'pb', 'npk', 'lcc', 'bilad', 'hatian', 'seedcalc', 'htp'], $qFhKeys));
+            $qShowInside = $qMayCompare || $qAnyOn(array_merge(['sky', 'pb', 'npk', 'lcc', 'bilad', 'hatian', 'market', 'seedcalc', 'htp'], $qFhKeys));
             $qShowRecords = ! \App\Support\WorkerContext::inWorkerContext() || $qQuickAny
                 || $qAnyOn(['notes', 'gallery', 'farmlots', 'maps', 'draw', 'contacts', 'tags']);
             // Nothing to show (every tool switched off for this login): no panel at all.
@@ -485,6 +485,17 @@
             <span class="qa-txt">
                 <b>Hatian Calculator{{ \App\Support\Tagalog::flag('hatian') }}</b>
                 <i>Share the harvest fairly with your farm manager. Give a percent, sacks or kilos, paid in sacks or in money, keep sacks for your home food, and see what each of you gets.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        @endif
+        {{-- Market Price Forecast (2026-10-27, the owner): when to sell, from the crop's prices and the imports that moved them. --}}
+        @if ($qOn('market'))
+        <a href="{{ route('market.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/market-forecast.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>Market Price Forecast{{ \App\Support\Tagalog::flag('market-forecast') }}</b>
+                <i>Pick your crop and where you sell. See its price these years, the forecast for this year and next, the best months to sell, and what imports did to it.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>

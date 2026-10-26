@@ -234,6 +234,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'bentaBilad' => class_exists(\App\Support\BentaBilad::class) && \Illuminate\Support\Facades\Route::has('bilad.page'),
             // 2026-10-26: the Hatian Calculator in Quick Tools.
             'hatian' => class_exists(\App\Support\Hatian::class) && \Illuminate\Support\Facades\Route::has('hatian.page'),
+            // 2026-10-27: the Market Price Forecast, its tables loaded, and the import events the daily news brings.
+            'marketPrices' => class_exists(\App\Support\MarketBook::class) && \Illuminate\Support\Facades\Route::has('market.page') && \App\Support\MarketBook::ready(),
+            'marketNews' => class_exists(\App\Support\MarketNews::class) && \App\Support\MarketNews::ready(),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
             // By spacing or by amount in the Crop Protocol and NPK Plus (2026-10-21).
@@ -922,6 +925,14 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/benta-o-bilad/{id}', [App\Http\Controllers\BentaBiladController::class, 'destroy'])->whereNumber('id')->name('bilad.delete');
     // Hatian (2026-10-26, the owner): the harvest shared with the farm manager, the share counted from the gross.
     Route::get('/app/hatian', [App\Http\Controllers\HatianController::class, 'page'])->name('hatian.page');
+    // Market Price Forecast (2026-10-27, the owner): when to sell, from the kept farmgate prices and the import events.
+    Route::get('/app/market-prices', [App\Http\Controllers\MarketPriceController::class, 'page'])->name('market.page');
+    Route::get('/app/market-prices/places', [App\Http\Controllers\MarketPriceController::class, 'places'])->name('market.places');
+    Route::get('/app/market-prices/outlook', [App\Http\Controllers\MarketPriceController::class, 'outlook'])->middleware('throttle:120,1')->name('market.outlook');
+    Route::post('/app/market-prices/save', [App\Http\Controllers\MarketPriceController::class, 'save'])->name('market.save');
+    Route::get('/app/market-prices/list', [App\Http\Controllers\MarketPriceController::class, 'list'])->name('market.list');
+    Route::get('/app/market-prices/one/{id}', [App\Http\Controllers\MarketPriceController::class, 'one'])->whereNumber('id')->name('market.one');
+    Route::delete('/app/market-prices/{id}', [App\Http\Controllers\MarketPriceController::class, 'destroy'])->whereNumber('id')->name('market.delete');
     Route::post('/app/hatian/save', [App\Http\Controllers\HatianController::class, 'save'])->name('hatian.save');
     Route::get('/app/hatian/list', [App\Http\Controllers\HatianController::class, 'list'])->name('hatian.list');
     Route::get('/app/hatian/one/{id}', [App\Http\Controllers\HatianController::class, 'one'])->whereNumber('id')->name('hatian.one');

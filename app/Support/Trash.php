@@ -79,7 +79,7 @@ class Trash
 
     /** The tool a saved analysis came from (as_plant_analyses.kind), shown as its label. */
     private const TOOLS = ['when' => 'When to Plant', 'what' => 'What to Plant', 'variety' => 'Variety analysis', 'protocol' => 'Crop Protocol', 'landprep' => 'Land Prep',
-        'lcc' => 'LCC Checker', 'bilad' => 'Benta o Bilad', 'hatian' => 'Hatian Calculator', 'seedcalc' => 'Seed Count and Distance', 'compat' => 'Compatibility Checker', 'satellite' => 'Satellite Analysis',
+        'lcc' => 'LCC Checker', 'bilad' => 'Benta o Bilad', 'hatian' => 'Hatian Calculator', 'market' => 'Market Price Forecast', 'seedcalc' => 'Seed Count and Distance', 'compat' => 'Compatibility Checker', 'satellite' => 'Satellite Analysis',
         'skyweather' => 'Satellite Weather', 'npk' => 'NPK Plus', 'npkplan' => 'NPK Plus', 'npkproto' => 'NPK Plus'];
 
     public const GROUPS = ['seasons' => 'Seasons', 'board' => 'Board', 'lots' => 'Lots', 'notes' => 'Notes', 'photos' => 'Photos', 'supplies' => 'Inventory', 'money' => 'Money and harvest',

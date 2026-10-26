@@ -1482,7 +1482,19 @@
         /* The best weeks, ranked — the week-by-week answer (older analyses
            have none, and simply do not show the card). */
         const weeks = Array.isArray(r.weekRanks) ? r.weekRanks : [];
-        const FACT = [['rain', '🌧️ Rain'], ['storms', '🌀 Storms'], ['enso', '🌡️ El Niño / La Niña'], ['field', '🌾 Your field']];
+        const FACT = [['rain', '🌧️ Rain'], ['storms', '🌀 Storms'], ['enso', '🌡️ El Niño / La Niña'], ['field', '🌾 Your field'], ['market', '💰 Market']];
+        /* The market at harvest (2026-10-27): the farmgate price in the month a planting that week is harvested,
+           worked out on read from the price shelf (WhenToPlantController::withMarket). */
+        const MK = r.market || null, MKM = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const peso2 = (v) => '₱' + Number(v).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const mkChip = (w) => { const m = w.market; if (!m) return ''; const d = Math.round((m.index - 1) * 100);
+            return `<span>💰 Harvest in ${esc(MKM[m.month - 1] + ' ' + m.year)}: about ${esc(peso2(m.p))}${m.unit === 'kg' ? '/kg' : ''}${d ? ', ' + (d > 0 ? '+' : '−') + Math.abs(d) + '% against its year' : ''}</span>`; };
+        const marketCard = MK ? `
+            <div class="wtp-card">
+                <h3>The market at harvest <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${esc(MK.item)}, farmgate prices in ${esc(MK.place)}</small></h3>
+                <p class="wtp-mnote" style="margin-top:.2rem">It usually sells best in <b>${esc(MK.best.map((m) => MKM[m - 1]).join(', '))}</b> and lowest in <b>${esc(MK.worst.map((m) => MKM[m - 1]).join(', '))}</b>, when everyone harvests. ${esc(MK.store ? 'It keeps about ' + MK.store + ' months, so it can wait for a better month after harvest.' : 'It is sold fresh, so the harvest month sets the price.')} Each week above shows the price expected in its harvest month.</p>
+                ${MK.url ? `<p class="wtp-mnote"><a href="${esc(MK.url)}" style="font-weight:800;text-decoration:underline">See the full price forecast</a></p>` : ''}
+            </div>` : '';
         const weeksCard = weeks.length ? `
             <div class="wtp-card">
                 <h3>The best weeks to plant, ranked <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">Each week scored on rain, storms, El Niño or La Niña, your field and your crop</small></h3>
@@ -1495,7 +1507,7 @@
                                 <div class="wtp-wk-bar"><i style="--w:${Math.max(0, Math.min(100, Number(w.score) || 0)) / 100}"></i></div>
                                 <p>${esc(sweep(w.why))}</p>
                                 ${FACT.some(([k]) => w.factors && w.factors[k]) ? `<div class="wtp-wk-f">${FACT.filter(([k]) => w.factors && w.factors[k]).map(([k, lbl]) => `<span><b>${lbl}:</b> ${esc(sweep(w.factors[k]))}</span>`).join('')}</div>` : ''}
-                                ${(w.flowering || w.harvest) ? `<div class="wtp-wk-c">${w.flowering ? `<span>🌼 Flowers ${esc(w.flowering)}</span>` : ''}${w.harvest ? `<span>🧺 Harvest ${esc(w.harvest)}</span>` : ''}</div>` : ''}
+                                ${(w.flowering || w.harvest || w.market) ? `<div class="wtp-wk-c">${w.flowering ? `<span>🌼 Flowers ${esc(w.flowering)}</span>` : ''}${w.harvest ? `<span>🧺 Harvest ${esc(w.harvest)}</span>` : ''}${mkChip(w)}</div>` : ''}
                                 ${w.watch ? `<p class="wtp-wk-w">👁 ${esc(sweep(w.watch))}</p>` : ''}
                             </div>
                         </div>`).join('')}
@@ -1557,6 +1569,7 @@
             </div>
 
             ${weeksCard}
+            ${marketCard}
 
             ${windowsCard}
 

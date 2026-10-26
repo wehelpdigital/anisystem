@@ -157,6 +157,9 @@
     .wtp-report.is-drawn .wp-fill { transform: scaleX(1); }
     .wp-why { font-size: .8rem; color: var(--color-gray-600); line-height: 1.55; }
     .wp-watch { font-size: .74rem; color: #92610e; margin-top: .15rem; }
+    /* A crop's market line (2026-10-27). */
+    .wp-mk { display: inline-flex; flex-wrap: wrap; gap: .2rem; align-items: center; }
+    .wp-mk a { font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
     /* The varieties on record that fit, under each crop (2026-10-14). */
     .wp-vars { margin-top: .5rem; padding: .5rem .6rem; border-radius: .8rem; background: #f4f9ee; border: 1px solid #e1edd3; }
     .wp-vars-h { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #4a7c2a; }
@@ -1404,6 +1407,12 @@
                 <div class="wp-vars-a"><a href="${esc(U.vary)}?crop=${encodeURIComponent(v.cropKey)}">Compare varieties with Anee ›</a>${v.finder ? `<a href="${esc(v.finder)}" target="_blank" rel="noopener">All ${esc(String(v.count))} on record ›</a>` : ''}</div>
             </div>`;
         };
+        /* The market of a crop (2026-10-27): its farmgate price lately and where its harvest month sits against
+           its year, worked out on read from the price shelf (WhatToPlantController::withMarket). */
+        const MKM = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const mkLine = (x) => { const m = x.market; if (!m) return '';
+            const d = m.harvest === null || m.harvest === undefined ? null : Math.round(m.harvest * 100);
+            return `<span class="wp-mk">💰 About ₱${esc(Number(m.p).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }))}${m.unit === 'kg' ? '/kg' : ''} lately${d !== null && d !== 0 ? ` · harvest ${d > 0 ? '+' : '−'}${Math.abs(d)}% against its year` : ''}${m.url ? ` · <a href="${esc(m.url)}">forecast ›</a>` : ''}</span>`; };
         // The farmer's priorities in their order (older rows have none: no fit bars, no line).
         const prio = (Array.isArray(p.priorities) && p.priorities.length && (r.recommendations || []).some((x) => x.fit)) ? p.priorities : [];
 
@@ -1415,6 +1424,7 @@
                 <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}${top.daysToHarvest ? ' Harvest in about ' + esc(String(Math.round(Number(top.daysToHarvest)))) + ' days' + (top.harvestWindow ? ' (' + esc(top.harvestWindow) + ')' : '') + (top.harvestRisk && top.harvestRisk.note ? '. ' + esc(sweep(top.harvestRisk.note)) : '.') : ''}</p>
                 <div class="wtp-chips">
                     ${top.harvestRisk && top.harvestRisk.score != null ? `<span class="wtp-chip">${riskWord(top.harvestRisk.score)} risk at harvest</span>` : ''}
+                    ${top.market ? `<span class="wtp-chip">💰 About ₱${esc(Number(top.market.p).toFixed(2))}${top.market.unit === 'kg' ? '/kg' : ''} lately</span>` : ''}
                     <span class="wtp-chip">📍 ${p.lotName ? esc(p.lotName) + ' · ' : ''}${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
                     ${p.ph && p.ph !== 'unsure' ? `<span class="wtp-chip">pH ${esc(p.phValue || String((OPT && OPT.phLevels && OPT.phLevels[p.ph]) || p.ph).split(' — ')[0].toLowerCase())}</span>` : ''}
@@ -1442,10 +1452,11 @@
                         <div class="wp-track"><span class="wp-fill" style="width:${Math.max(4, Math.min(100, Number(x.score) || 0))}%;transition-delay:${120 + Math.min(i, 10) * 70}ms"></span></div>
                         <p class="wp-why">${esc(sweep(x.why))}</p>
                         ${x.watch ? `<p class="wp-watch">⚠️ ${esc(x.watch)}</p>` : ''}
-                        ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) ? `
+                        ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) || x.market ? `
                         <div class="wp-hv">
                             ${x.daysToHarvest ? `<span>⏱ Harvest in ~${esc(String(Math.round(Number(x.daysToHarvest))))} days${x.harvestWindow ? ' · ' + esc(x.harvestWindow) : ''}</span>` : ''}
                             ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} risk at harvest${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
+                            ${mkLine(x)}
                         </div>
                         ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
                         ${x.fit && prio.length ? `<div class="wp-fit">${prio.map((k) => `<span class="wp-fit-k" title="${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}: ${esc(String(Math.round(Number(x.fit[k]) || 0)))}/100"><i style="--v:${Math.max(0, Math.min(100, Number(x.fit[k]) || 0))}%"></i><small>${PRIO_E[k] || ''} ${esc(PRIO_SHORT[k] || shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</small><b>${esc(String(Math.round(Number(x.fit[k]) || 0)))}</b></span>`).join('')}</div>` : ''}
@@ -1465,10 +1476,11 @@
                             ${x.window ? `<span class="wp-win">${esc(x.window)}</span>` : ''}
                         </div>
                         <p class="wp-sur-why">${esc(sweep(x.why))}</p>
-                        ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) ? `
+                        ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) || x.market ? `
                         <div class="wp-hv">
                             ${x.daysToHarvest ? `<span>⏱ Harvest in ~${esc(String(Math.round(Number(x.daysToHarvest))))} days${x.harvestWindow ? ' · ' + esc(x.harvestWindow) : ''}</span>` : ''}
                             ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} risk at harvest${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
+                            ${mkLine(x)}
                         </div>
                         ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
                         ${varLine(x)}

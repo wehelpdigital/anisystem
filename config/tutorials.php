@@ -308,6 +308,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.market' => [
+            'title' => 'Market Price Forecast',
+            'blurb' => 'Pick your crop and where you sell. See its farmgate price these years, the forecast for this year and next, the best months to sell, whether to keep the harvest, and what imports did to the price.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.hatian' => [
             'title' => 'Hatian Calculator',
             'blurb' => 'Share the harvest fairly with your farm manager. Give a percent, a number of sacks or kilos, paid in sacks or in money, keep sacks for your home food, and see what each of you gets.',
@@ -454,6 +460,7 @@ return [
         'lcc.page'      => 'tool.lcc',
         'bilad.page'    => 'tool.bilad',
         'hatian.page'   => 'tool.hatian',
+        'market.page'   => 'tool.market',
         'seedcalc.page' => 'tool.seedcount',
         'htp.page'      => 'tool.howtoplant',
         // One route for the field helpers: {tool} is the route's own parameter.

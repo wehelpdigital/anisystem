@@ -59,6 +59,7 @@ class WorkerTools
             'lcc' => ['LCC Checker', 'tools', 'images/icons/leaf-color.svg', ['lcc.*'], []],
             'bilad' => ['Benta o Bilad Calculator', 'tools', 'images/icons/benta-bilad.svg', ['bilad.*'], []],
             'hatian' => ['Hatian Calculator', 'tools', 'images/icons/hatian.svg', ['hatian.*'], []],
+            'market' => ['Market Price Forecast', 'tools', 'images/icons/market-forecast.svg', ['market.*'], []],
             'seedcalc' => ['Seed Count and Distance Calculator', 'tools', 'images/icons/seed-count.svg', ['seedcalc.*'], []],
             'htp' => ['How to Plant', 'tools', 'images/icons/how-to-plant.svg', ['htp.*'], []],
         ];
