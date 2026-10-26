@@ -412,7 +412,7 @@ class WhenToPlantController extends Controller
                     'updated_at' => now(),
                 ]);
 
-                return $this->json(false, $why, ['status' => 'failed'], 502);
+                return $this->json(false, $why, ['status' => 'failed'], 422);
             }
             $beat = json_decode((string) $r->report, true) ?: [];
 
@@ -429,7 +429,7 @@ class WhenToPlantController extends Controller
             // A failed job is not worth a place on the shelf.
             DB::table('as_plant_analyses')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-            return $this->json(false, $r->error ?: 'The analysis failed and nothing was charged. Please try again.', ['status' => 'failed'], 502);
+            return $this->json(false, $r->error ?: 'The analysis failed and nothing was charged. Please try again.', ['status' => 'failed'], 422);
         }
 
         return $this->json(true, 'Analysis ready.', [

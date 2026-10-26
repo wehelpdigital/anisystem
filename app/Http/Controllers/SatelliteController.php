@@ -385,7 +385,7 @@ class SatelliteController extends Controller
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')
                     ->update(['status' => 'failed', 'deleteStatus' => 0, 'error' => $why, 'updated_at' => now()]);
 
-                return $this->json(false, $why, ['status' => 'failed'], 502);
+                return $this->json(false, $why, ['status' => 'failed'], 422);
             }
             $beat = json_decode((string) $r->report, true) ?: [];
 
@@ -398,7 +398,7 @@ class SatelliteController extends Controller
         if ($r->status === 'failed') {
             DB::table('as_plant_analyses')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-            return $this->json(false, $r->error ?: 'The analysis failed and nothing was charged. Please try again.', ['status' => 'failed'], 502);
+            return $this->json(false, $r->error ?: 'The analysis failed and nothing was charged. Please try again.', ['status' => 'failed'], 422);
         }
 
         return $this->json(true, 'Analysis ready.', [

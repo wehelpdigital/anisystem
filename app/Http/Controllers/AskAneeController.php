@@ -376,7 +376,7 @@ class AskAneeController extends Controller
             if ($this->dead($q)) {
                 $q->update(['answerStatus' => 'failed', 'answerError' => 'The answer was interrupted. Please try again.']);
 
-                return $this->json(false, 'The answer was interrupted. Please try again.', ['status' => 'failed'], 502);
+                return $this->json(false, 'The answer was interrupted. Please try again.', ['status' => 'failed'], 422);
             }
 
             return $this->json(true, 'Working…', [
@@ -387,7 +387,7 @@ class AskAneeController extends Controller
             ]);
         }
         if ($q->answerStatus === 'failed') {
-            return $this->json(false, $q->answerError ?: 'The answer could not be written. Please try again.', ['status' => 'failed'], 502);
+            return $this->json(false, $q->answerError ?: 'The answer could not be written. Please try again.', ['status' => 'failed'], 422);
         }
 
         return $this->json(true, 'Not started.', ['status' => 'idle']);

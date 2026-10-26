@@ -788,7 +788,7 @@ class ProtocolBuilderController extends Controller
             if ($this->dead($p)) {
                 $p->forceFill(['analysisStatus' => 'failed', 'analysisError' => 'The review was stopped halfway. Nothing was charged. Please try again.'])->save();
 
-                return $this->json(false, $p->analysisError, ['status' => 'failed'], 502);
+                return $this->json(false, $p->analysisError, ['status' => 'failed'], 422);
             }
             $beat = is_array($p->analysis) ? $p->analysis : [];
 
@@ -799,7 +799,7 @@ class ProtocolBuilderController extends Controller
             ]);
         }
         if ($p->analysisStatus === 'failed') {
-            return $this->json(false, $p->analysisError ?: 'The review failed. Nothing was charged.', ['status' => 'failed'], 502);
+            return $this->json(false, $p->analysisError ?: 'The review failed. Nothing was charged.', ['status' => 'failed'], 422);
         }
         if ($p->analysisStatus === 'ready') {
             $payer = $this->payer();

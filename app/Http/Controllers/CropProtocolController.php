@@ -2736,11 +2736,18 @@ PROMPT;
             || \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(self::MAX_MINUTES));
     }
 
-    /** Where a job stands — polled by the page until ready or failed. */
+    /**
+     * Where a job stands — polled by the page until ready or failed. A failed
+     * run is hidden once told, but told again if asked again (2026-10-26: a
+     * reply lost on the way made the next poll say "That protocol is gone"
+     * instead of why it failed). A failure answers 422, never a 5xx: the host
+     * in front of anee.io swaps a 5xx body for its own page, and the waiter
+     * reads that as the server out of reach and asks again.
+     */
     public function jobState(int $id)
     {
         $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
-            ->where('id', $id)->where('kind', 'protocol')->where('deleteStatus', 1)->first();
+            ->where('id', $id)->where('kind', 'protocol')->where(fn ($q) => $q->where('deleteStatus', 1)->orWhere('status', 'failed'))->first();
         if (! $r) {
             return $this->json(false, 'That protocol is gone.', [], 404);
         }
@@ -2755,7 +2762,7 @@ PROMPT;
                     'updated_at' => now(),
                 ]);
 
-                return $this->json(false, $why, ['status' => 'failed'], 502);
+                return $this->json(false, $why, ['status' => 'failed'], 422);
             }
             $beat = json_decode((string) $r->report, true) ?: [];
 
@@ -2771,7 +2778,7 @@ PROMPT;
         if ($r->status === 'failed') {
             DB::table('as_plant_analyses')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-            return $this->json(false, $r->error ?: 'The protocol failed and nothing was charged. Please try again.', ['status' => 'failed'], 502);
+            return $this->json(false, $r->error ?: 'The protocol failed and nothing was charged. Please try again.', ['status' => 'failed'], 422);
         }
 
         return $this->json(true, 'Protocol ready.', [

@@ -581,11 +581,13 @@ class AiClient
     private function providerError(?string $message, int $status): string
     {
         if ($message) {
-            logger()->warning('AI provider error', ['status' => $status, 'message' => $message]);
+            // 402: the provider account's prepaid balance is used up, and every ask fails until it is topped up.
+            logger()->{$status === 402 ? 'error' : 'warning'}('AI provider error', ['status' => $status, 'message' => $message]);
         }
 
         return match (true) {
             $status === 401 || $status === 403 => 'The AI key was rejected. Please contact support.',
+            $status === 402 => 'Anee is not available right now because of a problem on our side. Nothing was charged. Please try again later.',
             $status === 429 => 'The AI is busy right now. Please try again in a minute.',
             $status >= 500 => 'The AI service is having trouble. Please try again shortly.',
             default => 'The AI could not answer that. Please try rephrasing your question.',

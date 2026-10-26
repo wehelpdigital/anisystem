@@ -673,7 +673,7 @@ class AneeAutoController extends Controller
                 'beatAgo' => $auto->jobAt ? (int) max(0, now()->diffInSeconds($auto->jobAt, true)) : null]);
         }
         if ($status === 'failed') {
-            return $this->json(false, $s['error'] ?? 'Anee could not finish. Please try again.', ['status' => 'failed'], 502);
+            return $this->json(false, $s['error'] ?? 'Anee could not finish. Please try again.', ['status' => 'failed'], 422);
         }
 
         return $this->json(true, 'Ready.', ['status' => 'ready', 'kind' => $auto->job, 'analysis' => $auto->analysis, 'live' => $auto->status === AsAutoSeason::ACTIVE, 'url' => route('auto.show', $auto->id)]);

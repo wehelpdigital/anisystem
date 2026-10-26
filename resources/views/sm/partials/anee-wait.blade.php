@@ -272,7 +272,9 @@
         /* The poll every AI run shares: reads the job until it is ready,
            feeds the bar, forgives a poll that could not reach the server
            (a phone losing signal, a gateway hiccup -- up to eight in a row),
-           and throws only on the job's own word that it failed. */
+           and throws only on the job's own word that it failed. A failed
+           job answers 422 with data.status 'failed', never a 5xx: the host
+           swaps a 5xx body for its own page, which reads as out of reach. */
         async poll({ id, job, phases, every = 3000, limit = 260 }) {
             startProg(phases || RESEARCH_PHASES);
             let misses = 0;
