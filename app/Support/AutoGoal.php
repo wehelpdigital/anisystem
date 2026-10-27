@@ -48,6 +48,13 @@ final class AutoGoal
     /** The usual harvest beside the farms around (the lot's yieldLast answer): what the traditional yield leans by. */
     private const LAST = ['worse' => 0.85, 'same' => 1.0, 'better' => 1.15, 'better_care' => 1.15];
 
+    /**
+     * A crowded stand: past the top of the crop's usual stand each share more takes half that share off the goal
+     * (30% too many: 85%; 60%: 70%), never below 60%. An estimate in the spirit of yield trials that fall past the
+     * best density; the owner may tune it.
+     */
+    private const CROWD = ['per' => 0.5, 'floor' => 0.6];
+
     /** The inputs a lot keeps, as saved in the season's answers (answers.goals[lotId]): its planting and the goal picked. */
     public static function clean(array $g): array
     {
@@ -162,10 +169,39 @@ final class AutoGoal
         $fmt = fn ($v) => rtrim(rtrim(number_format((float) $v, 1, '.', ''), '0'), '.');
         $standLo = $standHi = null;
         $sf = 1.0;
+        $crowd = 1.0;
+        $extra = false;
         if ($st && ! empty($st['hi'])) {
             [$standLo, $standHi] = [(float) $st['lo'], (float) $st['hi']];
             $out['standKnown'] = true;
-            $out['standSay'] = 'About ' . number_format(round((float) $st['plants'], -2)) . ($hills ? ' hills stand filled' : ' plants stand') . ' a hectare.';
+            $num = fn ($v) => number_format(round((float) $v, $v >= 10000 ? -2 : 0));
+            $u = (array) ($st['usual'] ?? []);
+            $usual = count($u) === 2 ? ' (the usual is ' . $num($u[0]) . ' to ' . $num($u[1]) . ')' : '';
+            // Crowding (2026-10-28, the owner: "the goal will also depend in the seeds to plant or spacing (but of course you
+            // should see as well if high crowding already like the npk calculator)"): the seed calculator stops counting plants
+            // past the top of the usual stand, and a crowded field gives less, not the same: plants fight for light, water and
+            // food, ears and panicles stay small, more stay barren, stalks lodge and disease spreads. CROWD below.
+            $over = count($u) === 2 && $u[1] > 0 ? (float) $st['plants'] / (float) $u[1] - 1 : 0.0;
+            $status = (string) ($st['status'] ?? '');
+            // Seedlings raised from an amount of seed: the extras stay in the seedbed, the spacing sets the stand. Too much
+            // seed then crowds nothing; too little still thins it.
+            $extra = $byAmount && in_array($method, ['transplanted', 'nursery'], true) && in_array($status, ['crowded', 'danger'], true);
+            if ($extra) {
+                $status = 'good';
+                $over = 0.0;
+            }
+            if (in_array($status, ['crowded', 'danger'], true) && $over > 0) {
+                $crowd = max(self::CROWD['floor'], 1 - self::CROWD['per'] * $over);
+            }
+            $out['standStatus'] = $status;
+            $out['standSay'] = $extra ? 'Enough seed for a full stand' . (count($u) === 2 ? ' (the usual is ' . $num($u[0]) . ' to ' . $num($u[1]) . ($hills ? ' hills' : ' plants') . ' a hectare)' : '') . '. The extra seedlings stay in the seedbed: give the spacing for a surer count.'
+                : 'About ' . $num($st['plants']) . ($hills ? ' hills stand filled' : ' plants stand') . ' a hectare' . match ($status) {
+                'sparse' => ': very thin' . $usual . '. The goals drop with it.',
+                'thin' => ': a little thin' . $usual . '.',
+                'crowded' => ': crowded' . $usual . '. Crowded plants give less, so the goals drop.',
+                'danger' => ': far too crowded' . $usual . '. The goals drop a lot.',
+                default => $usual . '.',
+            };
         } elseif ($sd) {
             $out['standKnown'] = true;
             $out['standSay'] = (string) $sd['words'];
@@ -182,14 +218,19 @@ final class AutoGoal
             'reading' => 'The best Anee found for ' . $vname,
             default => 'A good field of this crop, from the Philippine usual',
         }, $fmt($P) . ' t/ha'];
-        if ($standHi !== null) {
+        if ($standHi !== null && $extra) {
+            $out['steps'][] = ['🌱', 'Enough seed for a full stand: the spacing sets it', 'holds'];
+        } elseif ($standHi !== null) {
             $out['steps'][] = ['🌱', 'Your stand of about ' . number_format(round((float) $st['plants'], -2)) . ($hills ? ' hills' : ' plants') . ' a hectare carries', $fmt($standLo) . ' to ' . $fmt($standHi) . ' t/ha'];
+            if ($crowd < 1) {
+                $out['steps'][] = ['🌾', 'Crowded: about ' . round($over * 100) . '% more ' . ($hills ? 'hills' : 'plants') . ' than the top of the usual stand. They fight for light, water and food; ears and panicles stay small and stalks lodge', '× ' . round($crowd * 100) . '%'];
+            }
         } elseif ($sf < 1) {
             $out['steps'][] = ['🌱', 'A thin stand for this crop: ' . $sd['words'], '× ' . round($sf * 100) . '%'];
         } elseif ($sd) {
             $out['steps'][] = ['🌱', 'Your planting makes a full stand', 'holds'];
         } else {
-            $out['steps'][] = ['🌱', 'A full usual stand is counted: say how much you plant on the Lots step for surer goals', 'assumed'];
+            $out['steps'][] = ['🌱', 'A full usual stand is counted: say how much you plant for surer goals', 'assumed'];
         }
 
         // 3. The field: the water (the lower of its cap and the season's share), salt and sodium.
@@ -239,7 +280,7 @@ final class AutoGoal
                 if ($standHi !== null) {
                     $t = min($t, $key === 'realistic' ? ($standLo + $standHi) / 2 : $standHi);
                 }
-                $t *= $sf * ($capped ? $k : 1.0);
+                $t *= $sf * $crowd * ($capped ? $k : 1.0);
             }
             $levels[$key] = ['key' => $key, 'label' => $label, 'icon' => $icon, 'say' => $say, 't' => round($t, 1)];
         }

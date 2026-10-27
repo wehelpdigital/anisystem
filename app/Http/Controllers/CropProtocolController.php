@@ -536,7 +536,10 @@ class CropProtocolController extends Controller
         }
 
         return ['plants' => (int) round((float) $r['standHa']), 'lo' => round((float) $r['kgHaLo'] / 1000, 2), 'hi' => round((float) $r['kgHaHi'] / 1000, 2),
-            'what' => (string) (\App\Support\SeedSpacing::CROPS[$key]['yield']['what'] ?? 'harvest'), 'basis' => $r['basis'] ?? null];
+            'what' => (string) (\App\Support\SeedSpacing::CROPS[$key]['yield']['what'] ?? 'harvest'), 'basis' => $r['basis'] ?? null,
+            // How the stand sits against the crop's usual one (sparse, thin, good, crowded, danger), for the readers that weigh it.
+            'status' => (string) ($r['status'] ?? ''), 'usual' => \App\Support\SeedSpacing::CROPS[$key]['stand'] ?? null,
+            'standBy' => (string) (\App\Support\SeedSpacing::CROPS[$key]['standBy'] ?? 'plants')];
     }
 
     /** A protocol's answers as NPK Plus's inputs: the simple answers first, the field in detail where they are silent. */

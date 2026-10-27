@@ -221,6 +221,8 @@
     .au-gl input { width: 100%; padding-right: 2.3rem; }
     .au-gl em { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%); font-style: normal; font-size: .76rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none; }
     .au-stand { display: flex; gap: .5rem; margin-top: .7rem; padding: .55rem .7rem; border-radius: .85rem; font-size: .78rem; line-height: 1.45; color: #2d4a17; background: #f3f8ec; border: 1px solid #dcebc8; animation: auFade .3s var(--au-ease) both; }
+    .au-stand.is-warn { color: #6b4a00; background: #fff6dd; border-color: #f3d98f; transition: background-color .28s var(--au-ease), color .28s var(--au-ease); }
+    html.dark .au-stand.is-warn { background: #2a2210; border-color: #5b4716; color: #f3d9a4; }
     .au-goals { margin: .75rem 0 .2rem; display: grid; gap: .5rem; }
     .au-goals-h b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
     .au-goals-h small { display: block; font-size: .76rem; line-height: 1.45; color: var(--color-gray-500); }
@@ -934,11 +936,13 @@
                 : '<div class="flex gap-2 mt-2"><input type="number" class="form-input flex-1" data-gf="amount" min="0" step="any" inputmode="decimal" value="' + (g.amount || '') + '" placeholder="For this lot">'
                     + '<button type="button" class="au-pill" data-unit aria-label="Change the unit">' + esc((pl.unitWords || {})[unit] || unit) + '</button></div>')
             + (germOn ? '<label class="au-gl mt-2"><i>Germination on the seed bag <small>(optional)</small></i><span><input type="number" class="form-input" data-gf="germ" min="1" max="100" step="1" inputmode="numeric" value="' + (g.germ || '') + '" placeholder="Like 90"><em>%</em></span></label>' : '')
-            + '<p class="au-stand" data-goalout>' + standHtml(l) + '</p>';
+            + '<p class="au-stand' + standCls(l) + '" data-goalout>' + standHtml(l) + '</p>';
     };
+    // A stand off the usual range says so in yellow: thin, crowded or far too crowded moves the goals.
+    const standCls = (l) => ['sparse', 'thin', 'crowded', 'danger'].includes((S.goalOut[l.id] || {}).standStatus) ? ' is-warn' : '';
     const standHtml = (l) => {
         const o = S.goalOut[l.id], after = S.analysis ? ' The goals are counted from it.' : ' The goals come after Anee reads the farm.';
-        if (o && o.standSay) return '<span aria-hidden="true">🌱</span><span>' + esc(o.standSay) + after + '</span>';
+        if (o && o.standSay) return '<span aria-hidden="true">🌱</span><span>' + esc(o.standSay) + (/goals/.test(o.standSay) ? '' : after) + '</span>';
         return '<span aria-hidden="true">🌱</span><span>Not given: a full usual stand is counted.' + after + '</span>';
     };
     // The planting in a few words, for the row that opens it on the Reading step.
@@ -952,7 +956,7 @@
     // A lot's planting block can sit in two places (its lot card, and the Reading step above its goals): data-goal = the lot.
     const goalBoxes = (l) => document.querySelectorAll('[data-goal="' + l.id + '"]');
     const paintGoalOut = (l) => {
-        goalBoxes(l).forEach((b) => { const o = b.querySelector('[data-goalout]'); if (o) o.innerHTML = standHtml(l); });
+        goalBoxes(l).forEach((b) => { const o = b.querySelector('[data-goalout]'); if (o) { o.innerHTML = standHtml(l); o.className = 'au-stand' + standCls(l); } });
         document.querySelectorAll('[data-plantsay="' + l.id + '"]').forEach((x) => { x.textContent = plantLine(l); });
     };
     const paintGoal = (l) => { goalBoxes(l).forEach((b) => { b.innerHTML = goalBlock(l); }); paintGoalOut(l); };
