@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Anee Auto setup')
-@section('body-class', 'hide-tabbar')
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Anee Auto')
 @section('page-subtitle', 'Setting up your season')
 @section('back', \App\Support\BackTo::url(route('sm.index')))
@@ -21,6 +21,10 @@
 <style>
     :root { --au-ease: cubic-bezier(.22,1,.36,1); }
     .au { max-width: 52rem; margin: 0 auto; }
+    /* No footer on Anee Auto (2026-10-28, the owner): the buttons sit at the foot of the screen, even on a short step. */
+    main:has(> .au) { display: flex; flex-direction: column; padding-bottom: 0; }
+    main > .au { width: 100%; flex: 1 0 auto; display: flex; flex-direction: column; }
+    main > .au > .au-nav { margin-top: auto; }
     .au-top { position: relative; overflow: hidden; border-radius: 1.3rem; padding: 1rem 1.1rem .9rem; color: #e8f1de; margin-bottom: 1rem;
         background: radial-gradient(130% 160% at 100% 0%, #5d9431 0%, #24410f 55%, #10200a 100%); }
     .au-top::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;

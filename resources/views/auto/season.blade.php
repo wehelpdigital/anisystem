@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Anee Auto')
-@section('body-class', 'hide-tabbar')
+@section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Anee Auto')
 @section('page-subtitle', $schedule->title)
 @section('back', \App\Support\BackTo::url(route('sm.index')))
