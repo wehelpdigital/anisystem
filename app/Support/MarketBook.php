@@ -49,6 +49,17 @@ final class MarketBook
         return (int) Cache::get('market:ver', 1);
     }
 
+    /**
+     * A crop's name for the price records, without the way it is planted
+     * (2026-10-27, the owner: "remove the text that says transplanted, etc.
+     * because those are technically the same in price"): "Rice, transplanted
+     * (Palay)" reads "Rice (Palay)", since palay sells the same however it went in.
+     */
+    public static function cropWord(string $crop): string
+    {
+        return trim((string) preg_replace('/,\s*(transplanted|direct seeded( wet| dry)?)\b/i', '', CropCatalog::label($crop)));
+    }
+
     /** Month index (year * 12 + month - 1) of a "YYYY-MM". */
     public static function idx(string $ym): int
     {
@@ -73,7 +84,7 @@ final class MarketBook
     /** The crops with prices, in the app's crop order, each with its items (the first is the one most farmers sell). */
     public static function catalog(): array
     {
-        return self::$memo['catalog'] ??= Cache::remember('market:catalog:' . self::ver(), 86400, function () {
+        return self::$memo['catalog'] ??= Cache::remember('market:catalog2:' . self::ver(), 86400, function () {
             $have = DB::table('as_market_series')->where('level', 'f')->selectRaw('itemKey, max(lastYm) as last, count(*) as places')->groupBy('itemKey')->get()->keyBy('itemKey');
             $byCrop = [];
             foreach (self::items() as $k => $it) {
@@ -85,7 +96,7 @@ final class MarketBook
             $out = [];
             foreach (array_keys(CropStages::crops()) as $crop) {
                 if (isset($byCrop[$crop])) {
-                    $out[] = ['crop' => $crop, 'label' => CropCatalog::label($crop), 'icon' => CropStages::icon($crop), 'items' => $byCrop[$crop]];
+                    $out[] = ['crop' => $crop, 'label' => self::cropWord($crop), 'icon' => CropStages::icon($crop), 'items' => $byCrop[$crop]];
                 }
             }
 
@@ -265,7 +276,7 @@ final class MarketBook
             $yoy = isset($v[$last - 12]) ? round($lp / $v[$last - 12] - 1, 4) : null;
 
             return [
-                'item' => $it + ['cropLabel' => CropCatalog::label($it['crop'])],
+                'item' => $it + ['cropLabel' => self::cropWord($it['crop'])],
                 'place' => ['key' => $s['geo'], 'name' => $s['geo'] === 'PH' ? 'the Philippines' : $s['name'], 'level' => $s['level'], 'region' => $s['region'], 'asked' => $geo ?: 'PH', 'why' => $why],
                 'data' => ['from' => self::ym(min(array_keys($v))), 'last' => self::ym($last), 'points' => count($v), 'stale' => $last < $now - 6],
                 'latest' => ['ym' => self::ym($last), 'p' => round($lp, 2), 'yoy' => $yoy],
@@ -675,7 +686,7 @@ final class MarketBook
             $done[$x['item']] = true;
             $days = (int) (CropCatalog::maturity($crop) ?: 0);
             $harvest = ! CropStages::isPerennial($crop) && $days > 0 ? $startIdx + (int) round($days / 30.4) : null;
-            $lines[] = '- ' . preg_replace('/,\s*(transplanted|yellow \/ field)\b/i', '', CropCatalog::label($crop)) . ': P' . number_format($x['avg12'], 2) . ($x['unit'] === 'kg' ? '/kg' : ' a ' . $x['unit'])
+            $lines[] = '- ' . preg_replace('/,\s*yellow \/ field\b/i', '', self::cropWord($crop)) . ': P' . number_format($x['avg12'], 2) . ($x['unit'] === 'kg' ? '/kg' : ' a ' . $x['unit'])
                 . ' (' . $x['place'] . '); best ' . implode(', ', array_map($mn, $x['best'])) . '; glut ' . implode(', ', array_map($mn, $x['worst']))
                 . ($harvest !== null ? '; harvest ~' . $mn($harvest % 12 + 1) . ' ' . $pct($x['season'][$harvest % 12] - 1) : '')
                 . ($x['rank'] ? '; dearer than ' . round($x['rank']['pct'] * 100) . '%' : '') . ($x['store'] ? '; keeps ' . $x['store'] . ' mo' : '; fresh only') . '.';
