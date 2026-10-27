@@ -599,18 +599,25 @@ class AiClient
 
     // ------------------------------------------------------------------
 
+    /** Whether a provider's words say its account has run out of prepaid credit. */
+    private static function outOfCredit(?string $message): bool
+    {
+        return (bool) preg_match('/credit balance is too low|prepayment credits are depleted|insufficient.{0,20}(credit|quota|balance)/i', (string) $message);
+    }
+
     /** Provider errors are for the operator; clients get something actionable. */
     private function providerError(?string $message, int $status): string
     {
         $this->lastProviderError = ['status' => $status, 'message' => mb_substr((string) $message, 0, 300)];
         if ($message) {
             // 402: the provider account's prepaid balance is used up, and every ask fails until it is topped up.
-            logger()->{$status === 402 ? 'error' : 'warning'}('AI provider error', ['status' => $status, 'message' => $message]);
+            logger()->{$status === 402 || self::outOfCredit($message) ? 'error' : 'warning'}('AI provider error', ['status' => $status, 'message' => $message]);
         }
 
         return match (true) {
             $status === 401 || $status === 403 => 'The AI key was rejected. Please contact support.',
-            $status === 402 => 'Anee is not available right now because of a problem on our side. Nothing was charged. Please try again later.',
+            // Anthropic says an empty prepaid balance with a 400 ("Your credit balance is too low"), Gemini with a 402.
+            $status === 402 || self::outOfCredit($message) => 'Anee is not available right now because of a problem on our side. Nothing was charged. Please try again later.',
             $status === 429 => 'The AI is busy right now. Please try again in a minute.',
             $status >= 500 => 'The AI service is having trouble. Please try again shortly.',
             default => 'The AI could not answer that. Please try rephrasing your question.',
