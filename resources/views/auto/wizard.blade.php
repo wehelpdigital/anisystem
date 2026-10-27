@@ -221,6 +221,11 @@
     .au-gl input { width: 100%; padding-right: 2.3rem; }
     .au-gl em { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%); font-style: normal; font-size: .76rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none; }
     .au-stand { display: flex; gap: .5rem; margin-top: .7rem; padding: .55rem .7rem; border-radius: .85rem; font-size: .78rem; line-height: 1.45; color: #2d4a17; background: #f3f8ec; border: 1px solid #dcebc8; animation: auFade .3s var(--au-ease) both; }
+    .au-rec { display: flex; align-items: flex-start; gap: .5rem; margin: .1rem 0 .6rem; padding: .55rem .7rem; border-radius: .85rem; background: #eaf4fb; border: 1px solid #c6e0f2; font-size: .76rem; line-height: 1.45; color: #305a77; animation: auFade .3s var(--au-ease) both; }
+    .au-rec > span:nth-child(2) { flex: 1; min-width: 0; display: grid; gap: .1rem; }
+    .au-rec b { color: #1e4b6b; font-weight: 800; }
+    .au-rec .au-link { flex: none; color: #1e4b6b; }
+    html.dark .au-rec { background: #10202b; border-color: #1f3a4d; color: #9fc3dd; } html.dark .au-rec b, html.dark .au-rec .au-link { color: #d4e7f5; }
     .au-stand.is-warn { color: #6b4a00; background: #fff6dd; border-color: #f3d98f; transition: background-color .28s var(--au-ease), color .28s var(--au-ease); }
     html.dark .au-stand.is-warn { background: #2a2210; border-color: #5b4716; color: #f3d9a4; }
     .au-goals { margin: .75rem 0 .2rem; display: grid; gap: .5rem; }
@@ -255,6 +260,7 @@
     .au-gc-t tr.is-micro td:first-child { color: #2d5016; }
     .au-gc-t td small { display: inline-block; margin-left: .25rem; padding: 0 .35rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #2d5016; background: #e4efd4; }
     .au-gc-unfed { padding: .4rem .55rem; border-radius: .7rem; font-size: .74rem; line-height: 1.45; color: #6b4a00; background: #fff6dd; border: 1px solid #f3d98f; }
+    .au-gc-as { font-size: .72rem; line-height: 1.45; color: var(--color-gray-500); }
     .au-gc-add { display: flex; gap: .45rem; padding: .4rem .55rem; border-radius: .7rem; font-size: .74rem; line-height: 1.45; color: #2d4a17; background: #f3f8ec; border: 1px solid #dcebc8; }
     .au-gc-add b { color: #1d330d; }
     .au-goals-disc { display: flex; gap: .5rem; margin-top: .2rem; padding: .6rem .7rem; border-radius: .9rem; font-size: .74rem; line-height: 1.5; color: #6b4a00; background: #fff6dd; border: 1px solid #f3d98f; }
@@ -915,7 +921,7 @@
     const LEVELS = @json(collect(\App\Support\AutoGoal::LEVELS)->map(fn ($l) => ['label' => $l[0], 'icon' => $l[1], 'say' => $l[4]]));
     S.goalIn = (S.answers.goals && !Array.isArray(S.answers.goals)) ? S.answers.goals : {};
     // How each lot's planting is asked, from the page's first paint; the goals themselves come with the count.
-    S.goalOut = Object.fromEntries(S.lots.filter((l) => l.plant).map((l) => [l.id, { plant: l.plant, method: l.protoMethod }]));
+    S.goalOut = Object.fromEntries(S.lots.filter((l) => l.plant).map((l) => [l.id, { plant: l.plant, method: l.protoMethod, recommend: l.recommend || null }]));
     const goalOf = (l) => (S.goalIn[l.id] = S.goalIn[l.id] || {});
     const fmt1 = (v) => String(Math.round(Number(v) * 10) / 10);
     const goalBlock = (l) => {
@@ -927,6 +933,7 @@
         const ph = (r) => r ? String(m ? r[1] / 100 : r[1]) : '';
         const germOn = pl.germ === 'seed' ? (by === 'spacing' || ['kg', 'g', 'seeds', 'hills'].includes(unit)) : (pl.germ === 'seedlings' ? by !== 'spacing' && ['kg', 'g', 'seeds'].includes(unit) : false);
         return '<span class="au-lab">How much you plant <small>(optional: it sets the harvest the lot can carry)</small></span>'
+            + '<div data-rec>' + recHtml(l) + '</div>'
             + '<div class="au-pills">' + (sp ? '<button type="button" class="au-pill" data-by="spacing" aria-pressed="' + (by === 'spacing') + '">By spacing</button>' : '') + '<button type="button" class="au-pill" data-by="amount" aria-pressed="' + (by !== 'spacing' || !sp) + '">By amount</button></div>'
             + (by === 'spacing' && sp
                 ? '<div class="au-row is-3 mt-2"><label class="au-gl">Between rows<span><input type="number" class="form-input" data-gf="row" min="0" step="any" inputmode="decimal" value="' + val(g.row, m ? 100 : 1) + '" placeholder="' + ph(sp.row) + '"><em>' + (m ? 'm' : 'cm') + '</em></span></label>'
@@ -937,6 +944,18 @@
                     + '<button type="button" class="au-pill" data-unit aria-label="Change the unit">' + esc((pl.unitWords || {})[unit] || unit) + '</button></div>')
             + (germOn ? '<label class="au-gl mt-2"><i>Germination on the seed bag <small>(optional)</small></i><span><input type="number" class="form-input" data-gf="germ" min="1" max="100" step="1" inputmode="numeric" value="' + (g.germ || '') + '" placeholder="Like 90"><em>%</em></span></label>' : '')
             + '<p class="au-stand' + standCls(l) + '" data-goalout>' + standHtml(l) + '</p>';
+    };
+    // The usual planting for the crop, for a farmer who is not sure (2026-10-28, the owner: "in seeds and spacing, just to
+    // guide the user if he doesn't know just add a recommendation part"): AutoGoal::recommend, with a button that fills it in.
+    const recHtml = (l) => {
+        const r = (S.goalOut[l.id] || {}).recommend, pl = (S.goalOut[l.id] || {}).plant || {};
+        if (!r || !r.say) return '';
+        const f = r.meters ? 100 : 1, u = r.meters ? ' m' : ' cm';
+        const w = String(r.word || 'seeds'), each = r.perHill === 1 ? w.replace(/(ies)$/, 'y').replace(/s$/, '') : w;
+        const head = r.by === 'spacing' ? fmt1(r.row / f) + ' by ' + fmt1(r.plant / f) + u + ', ' + r.perHill + ' ' + each + ' a hill'
+            : (r.by === 'amount' ? fmt1(r.amount) + ' ' + ((pl.unitWords || {})[r.unit] || r.unit) + ' for this lot' : '');
+        return '<div class="au-rec"><span aria-hidden="true">💡</span><span><b>Not sure? The usual for this crop' + (head ? ': ' + esc(head) : '') + '</b><small>' + esc(r.say) + '</small></span>'
+            + (head ? '<button type="button" class="au-link" data-rec-use>Use this</button>' : '') + '</div>';
     };
     // A stand off the usual range says so in yellow: thin, crowded or far too crowded moves the goals.
     const standCls = (l) => ['sparse', 'thin', 'crowded', 'danger'].includes((S.goalOut[l.id] || {}).standStatus) ? ' is-warn' : '';
@@ -956,7 +975,10 @@
     // A lot's planting block can sit in two places (its lot card, and the Reading step above its goals): data-goal = the lot.
     const goalBoxes = (l) => document.querySelectorAll('[data-goal="' + l.id + '"]');
     const paintGoalOut = (l) => {
-        goalBoxes(l).forEach((b) => { const o = b.querySelector('[data-goalout]'); if (o) { o.innerHTML = standHtml(l); o.className = 'au-stand' + standCls(l); } });
+        goalBoxes(l).forEach((b) => {
+            const o = b.querySelector('[data-goalout]'); if (o) { o.innerHTML = standHtml(l); o.className = 'au-stand' + standCls(l); }
+            const rc = b.querySelector('[data-rec]'); if (rc) rc.innerHTML = recHtml(l);
+        });
         document.querySelectorAll('[data-plantsay="' + l.id + '"]').forEach((x) => { x.textContent = plantLine(l); });
     };
     const paintGoal = (l) => { goalBoxes(l).forEach((b) => { b.innerHTML = goalBlock(l); }); paintGoalOut(l); };
@@ -982,7 +1004,14 @@
         const box = e.target.closest('[data-goal]'); if (!box) return;
         const l = lotById(box.dataset.goal); if (!l) return;
         const g = goalOf(l), out = S.goalOut[l.id] || {};
-        const by = e.target.closest('[data-by]'), un = e.target.closest('[data-unit]');
+        const by = e.target.closest('[data-by]'), un = e.target.closest('[data-unit]'), use = e.target.closest('[data-rec-use]');
+        if (use && out.recommend) {
+            const r = out.recommend;
+            if (r.by === 'spacing') Object.assign(g, { by: 'spacing', row: r.row, plant: r.plant, perHill: r.perHill });
+            if (r.by === 'amount') Object.assign(g, { by: 'amount', amount: r.amount, unit: r.unit });
+            paintGoal(l); goalsSoon(l, 100);
+            return;
+        }
         if (by && g.by !== by.dataset.by) { g.by = by.dataset.by; paintGoal(l); goalsSoon(l, 300); }
         if (un) { const us = (out.plant || {}).units || ['kg']; g.unit = us[(us.indexOf(g.unit && us.includes(g.unit) ? g.unit : us[0]) + 1) % us.length]; paintGoal(l); goalsSoon(l, 300); }
     });
@@ -1628,6 +1657,8 @@
                 + Object.entries(NUTW).map(([n, w]) => row(w, (lv.need || {})[n], (lv.lotNeed || {})[n])).join('')
                 + (lv.micros || []).map((m) => row(esc(m.name) + (m.likely ? ' <small>fixes a shortage</small>' : ''), m.need, m.lot, 'is-micro')).join('')
                 + '</tbody></table>'
+                // A crop with no fertilizer figures of its own is counted as a close one (AutoGoal::PROXY): said plainly.
+                + (lv.needAs ? '<p class="au-gc-as">Counted as for ' + esc(lv.needAs) + ', a close crop: this one has no fertilizer figures of its own yet.</p>' : '')
                 // What its micronutrients add: left unfed, the scarcest of them would hold the harvest to what the soil gives alone.
                 + (lv.without ? '<p class="au-gc-add"><span aria-hidden="true">🧪</span><span>' + (k === 'high' ? 'The complete micro protocol adds' : 'These micronutrients add') + ' about <b>' + fmt1(lv.t - lv.without) + ' t/ha</b>. Without them, about ' + fmt1(lv.without) + ' t/ha.</span></p>' : '')
                 + ((lv.unfed || []).length ? '<p class="au-gc-unfed">No micronutrients: ' + esc(lv.unfed.map((x) => x.toLowerCase()).join(' and ')) + (lv.unfed.length > 1 ? ' stay' : ' stays') + ' short, so the harvest is not secured.</p>' : '')
