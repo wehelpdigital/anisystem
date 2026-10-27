@@ -127,7 +127,39 @@
     .au-day[aria-pressed="true"] { color: #fff; background: var(--color-brand-600); }
     .au-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; color: var(--color-gray-400); display: grid; place-items: center; }
     .au-x:hover { background: #fde8e8; color: #b91c1c; }
-    .au-roster { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .8rem; }
+    /* The farm's workers come from one button and a list (2026-10-28, the owner:
+       "have a taglike button that when clicked shows a modal list of the workers to add"). */
+    .au-gwopen { margin-bottom: .8rem; color: var(--color-brand-700); background: #f8fbf4; border: 1.5px dashed #b7d597; }
+    .au-gwopen[hidden] { display: none; }
+    .au-gwopen em { font-style: normal; min-width: 1.35rem; padding: .05rem .4rem; border-radius: 999px; font-size: .72rem; text-align: center; color: #fff; background: var(--color-brand-600); }
+    .au-gw { border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white); margin-bottom: .5rem; transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease); }
+    .au-gw.is-open { border-color: var(--color-brand-500, #6b9f3d); background: #fbfdf8; }
+    .au-gw-h { display: flex; align-items: center; gap: .65rem; width: 100%; padding: .65rem .75rem; text-align: left; }
+    .au-gw-h:disabled { cursor: default; }
+    .au-gw-i { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px; display: grid; place-items: center; font-weight: 800; color: #2d5016; background: #e4efd4; }
+    .au-gw-t { flex: 1; min-width: 0; }
+    .au-gw-t b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .au-gw-t small { display: block; margin-top: .1rem; font-size: .74rem; line-height: 1.4; color: var(--color-gray-500); overflow-wrap: anywhere; }
+    .au-gw-s { flex: none; padding: .25rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--color-brand-700); background: #f3f8ec; border: 1px solid #cfe3b8;
+        transition: background-color .28s var(--au-ease), border-color .28s var(--au-ease), color .28s var(--au-ease); }
+    .au-gw.is-in .au-gw-s { color: #fff; background: var(--color-brand-600); border-color: var(--color-brand-600); }
+    .au-gw-f { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s var(--au-ease); }
+    .au-gw.is-open .au-gw-f { grid-template-rows: 1fr; }
+    .au-gw-f > div { overflow: hidden; }
+    .au-gw-in { display: grid; gap: .55rem; padding: .1rem .75rem .8rem; }
+    .au-gw-l { display: grid; gap: .25rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
+    .au-gw-l small { font-weight: 600; color: var(--color-gray-400); }
+    .au-gw-err { font-size: .78rem; font-weight: 700; color: #b91c1c; }
+    .au-gw-err[hidden] { display: none; }
+    .au-gw-acts { display: flex; gap: .5rem; justify-content: flex-end; }
+    html.dark .au-gwopen { background: #1a2114; border-color: #3f5a2a; color: #c5e09f; }
+    html.dark .au-gw { background: #161c12; border-color: #2b3a1c; }
+    html.dark .au-gw.is-open { background: #1a2216; border-color: #4a7c2a; }
+    html.dark .au-gw-t b { color: #eef3e8; }
+    html.dark .au-gw-i, html.dark .au-gw-s { background: #1c2616; border-color: #2b3a1c; color: #c5e09f; }
+    html.dark .au-gw.is-in .au-gw-s { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+    html.dark .au-gw-l { color: #b9c5ad; }
+    html.dark .au-gw-err { color: #fca5a5; }
 
     /* Soil, water, troubles */
     .au-signs { display: grid; gap: .5rem; grid-template-columns: minmax(0, 1fr); }
@@ -264,7 +296,7 @@
     html.dark .au-bar-t { background: #26301e; } html.dark .au-bar-t i { background: #f1f5e9; }
     @media (prefers-reduced-motion: reduce) {
         .au-top::after, .au-top img, .au-reading-cta img, .au-big, .au-step.is-on, .au-lot, .au-w, .au-rl, .au-reads div, .au-note, .au-risk, .au-q, .au-from, .au-tag.is-bump { animation: none; }
-        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link { transition: none; }
+        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link, .au-gw, .au-gw-s, .au-gw-f { transition: none; }
     }
 </style>
 
@@ -315,7 +347,7 @@
         <div class="au-card">
             <h3 class="au-h">Who works the farm</h3>
             <p class="au-sub" id="auWSub">Anee gives out the work by who can come. Tap the days each one can work.</p>
-            <div class="au-roster" id="auRoster"></div>
+            <button type="button" class="au-pill au-gwopen" id="auGwOpen" hidden></button>
             <div id="auWorkers"></div>
             <button type="button" class="au-add" id="auAddWorker">+ Add a worker</button>
             <p class="au-note is-info" id="auWNote" hidden></p>
@@ -414,6 +446,23 @@
     <div class="sheet-body">
         <input type="search" id="auPickQ" class="form-input mb-3" placeholder="Search" autocomplete="off">
         <div class="dt-rows" id="auPickRows"></div>
+    </div>
+</div>
+
+{{-- The farm's workers (Global Workers). A worker is tapped open, their
+     name, email and phone can be put right, then they are added; what is put
+     right is kept on the farm's list too (AsGlobalWorker::forCard). --}}
+<div class="sheet hidden" id="auGwSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header"><h3 class="sheet-title">Your workers</h3><button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button></div>
+    <div class="sheet-body">
+        <p class="text-sm text-gray-500 mb-3">Tap a worker to add them to this season. You can fix their name, email or phone first, and the change is kept on your workers list too.</p>
+        <input type="search" id="auGwQ" class="form-input mb-3" placeholder="Search your workers" autocomplete="off" maxlength="60">
+        <div id="auGwRows"></div>
+    </div>
+    <div class="sheet-footer">
+        <a href="{{ route('workers.global') }}" target="_blank" rel="noopener" class="btn btn-white">Manage your workers</a>
+        <button type="button" class="btn btn-primary" data-sheet-close>Done</button>
     </div>
 </div>
 
@@ -796,24 +845,98 @@
         : (S.answers.crew || []).map((c) => ({ name: c.name, off: c.off || [] }));
     const saveWorkers = () => put(U.workers, { workers: S.crewList.filter((w) => (w.name || '').trim()).map((w) => ({ id: w.id || null, globalWorkerId: w.globalWorkerId || null, name: w.name.trim(), email: w.email || null, phone: w.phone || null, off: w.off })) })
         .then((r) => { (r.data && r.data.workers || []).forEach((w) => { const row = S.crewList.find((c) => c.id === w.id) || S.crewList.find((c) => !c.id && (c.name || '').trim() === w.name); if (row) { row.id = w.id; row.globalWorkerId = w.globalWorkerId || row.globalWorkerId; } }); });
+    const gwIn = (g) => S.crewList.some((w) => String(w.globalWorkerId) === String(g.id));
     const paintWorkers = () => {
         $('auWSub').textContent = S.canWorkers ? 'Anee gives out the work by who can come, and emails each one their day. Tap the days each one can work.' : 'Anee gives out the work by who can come. Tap the days each helper can work.';
         $('auWNote').hidden = S.canWorkers;
         $('auWNote').textContent = 'On your plan the helpers are kept for planning only. Worker cards, their logins and their morning emails come with Solo Farmer.';
-        const inIds = S.crewList.map((w) => w.globalWorkerId).filter(Boolean);
-        $('auRoster').innerHTML = S.canWorkers && S.roster.length ? '<span class="au-lab w-full" style="margin-top:0">From your workers</span>' + S.roster.map((g) => '<button type="button" class="au-pill" data-g="' + g.id + '" aria-pressed="' + inIds.includes(g.id) + '">' + (inIds.includes(g.id) ? '✓ ' : '+ ') + esc(g.name) + '</button>').join('') : '';
+        const left = S.roster.filter((g) => !gwIn(g)).length;
+        $('auGwOpen').hidden = !(S.canWorkers && S.roster.length);
+        $('auGwOpen').innerHTML = left ? '<span aria-hidden="true">👥</span>Add from your workers<em>' + left + '</em>' : '<span aria-hidden="true">👥</span>All your workers are in';
         $('auWorkers').innerHTML = S.crewList.map((w, i) => '<div class="au-w" data-w="' + i + '"><div class="au-w-top"><input type="text" class="form-input" data-wf="name" value="' + esc(w.name) + '" placeholder="Name" maxlength="255">'
             + '<button type="button" class="au-x" data-wx aria-label="Remove">✕</button></div>'
             + (S.canWorkers ? '<div class="au-row is-2"><input type="email" class="form-input" data-wf="email" value="' + esc(w.email) + '" placeholder="Email, for the morning list (optional)"><input type="tel" class="form-input" data-wf="phone" value="' + esc(w.phone) + '" placeholder="Phone (optional)"></div>' : '')
             + '<div><span class="text-xs font-bold text-gray-500">Days they can work</span><div class="au-days mt-1">' + DOW.map((d, k) => '<button type="button" class="au-day" data-dow="' + k + '" aria-pressed="' + !w.off.includes(k) + '">' + d + '</button>').join('') + '</div></div></div>').join('')
             || '<p class="text-sm text-gray-500 mb-3">No workers yet. A farm worked by the family alone is fine: Anee plans for a small crew.</p>';
     };
-    $('auRoster').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-g]'); if (!b) return;
-        const g = S.roster.find((x) => String(x.id) === b.dataset.g);
-        const at = S.crewList.findIndex((w) => String(w.globalWorkerId) === String(g.id));
-        if (at >= 0) S.crewList.splice(at, 1); else S.crewList.push({ id: null, globalWorkerId: g.id, name: g.name, email: g.email || '', phone: g.phone || '', off: (g.off || []).map(Number) });
-        paintWorkers(); later('workers', saveWorkers, 300);
+    // The farm's workers sheet: one worker open at a time, their details put right there, then added.
+    let GW = null; // { id, name, email, phone } of the worker open in the sheet
+    const gwSay = (g) => [g.email, g.phone, (g.off || []).length ? 'Off ' + g.off.map((k) => DOW[k]).join(', ') : 'Works every day'].filter(Boolean).join(' · ');
+    const gwRow = (g) => {
+        const isIn = gwIn(g), open = !isIn && GW && GW.id === g.id, d = open ? GW : g;
+        const say = gwSay(g);
+        return '<div class="au-gw' + (isIn ? ' is-in' : '') + (open ? ' is-open' : '') + '" data-gw="' + g.id + '">'
+            + '<button type="button" class="au-gw-h"' + (isIn ? ' disabled' : ' aria-expanded="' + !!open + '"') + '><span class="au-gw-i" aria-hidden="true">' + esc((g.name || '?').trim().charAt(0).toUpperCase()) + '</span>'
+            + '<span class="au-gw-t"><b>' + esc(g.name) + '</b><small>' + esc(say) + '</small></span><span class="au-gw-s">' + (isIn ? '✓ In this season' : '+ Add') + '</span></button>'
+            + (isIn ? '' : '<div class="au-gw-f"' + (open ? '' : ' inert') + '><div><div class="au-gw-in">'
+                + '<label class="au-gw-l">Name<input type="text" class="form-input" data-gf="name" value="' + esc(d.name) + '" maxlength="255" autocomplete="off"></label>'
+                + '<div class="au-row is-2"><label class="au-gw-l"><span>Email <small>(for the morning list)</small></span><input type="email" class="form-input" data-gf="email" value="' + esc(d.email || '') + '" maxlength="255" autocomplete="off" placeholder="Optional"></label>'
+                + '<label class="au-gw-l">Phone<input type="tel" class="form-input" data-gf="phone" value="' + esc(d.phone || '') + '" maxlength="32" autocomplete="off" placeholder="Optional"></label></div>'
+                + '<p class="au-gw-err" hidden></p>'
+                + '<div class="au-gw-acts"><button type="button" class="btn btn-white btn-sm" data-gcancel>Cancel</button><button type="button" class="btn btn-primary btn-sm" data-gadd>Add to this season</button></div>'
+                + '</div></div></div>')
+            + '</div>';
+    };
+    const paintGw = () => {
+        const q = $('auGwQ').value.trim().toLowerCase();
+        $('auGwRows').innerHTML = S.roster.filter((g) => !q || [g.name, g.email, g.phone].join(' ').toLowerCase().includes(q)).map(gwRow).join('')
+            || '<p class="text-sm text-gray-500">Nobody by that name.</p>';
+    };
+    // Opens or closes a row in place, so its fold slides instead of the list being painted over.
+    const gwFold = (box, open) => {
+        box.classList.toggle('is-open', open);
+        box.querySelector('.au-gw-h').setAttribute('aria-expanded', String(open));
+        box.querySelector('.au-gw-f').toggleAttribute('inert', !open);
+    };
+    $('auGwOpen').addEventListener('click', () => {
+        GW = null; $('auGwQ').value = '';
+        paintGw();
+        window.openSheet('auGwSheet');
+    });
+    $('auGwQ').addEventListener('input', paintGw);
+    $('auGwRows').addEventListener('input', (e) => { const f = e.target.dataset.gf; if (f && GW) GW[f] = e.target.value; });
+    $('auGwRows').addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.dataset.gf) { e.preventDefault(); e.target.closest('.au-gw')?.querySelector('[data-gadd]')?.click(); } });
+    $('auGwRows').addEventListener('click', async (e) => {
+        const box = e.target.closest('[data-gw]'); if (!box) return;
+        const g = S.roster.find((x) => String(x.id) === box.dataset.gw); if (!g || gwIn(g)) return;
+        if (e.target.closest('.au-gw-h')) {
+            const was = $('auGwRows').querySelector('.au-gw.is-open');
+            if (was && was !== box) gwFold(was, false);
+            if (GW && GW.id === g.id) { GW = null; gwFold(box, false); return; }
+            GW = { id: g.id, name: g.name, email: g.email || '', phone: g.phone || '' };
+            ['name', 'email', 'phone'].forEach((k) => { box.querySelector('[data-gf="' + k + '"]').value = GW[k]; });
+            box.querySelector('.au-gw-err').hidden = true;
+            gwFold(box, true);
+            return;
+        }
+        if (e.target.closest('[data-gcancel]')) { GW = null; gwFold(box, false); return; }
+        const add = e.target.closest('[data-gadd]'); if (!add || !GW) return;
+        const err = box.querySelector('.au-gw-err');
+        const mail = box.querySelector('[data-gf="email"]');
+        const name = GW.name.trim(), email = GW.email.trim(), phone = GW.phone.trim();
+        err.hidden = true;
+        if (!name) { err.textContent = 'Each worker needs a name.'; err.hidden = false; return; }
+        if (email && !mail.checkValidity()) { err.textContent = 'That email does not look right.'; err.hidden = false; return; }
+        const row = { id: null, globalWorkerId: g.id, name, email, phone, off: (g.off || []).map(Number) };
+        S.crewList.push(row);
+        add.disabled = true;
+        try { await saveWorkers(); } catch (_) {
+            S.crewList.splice(S.crewList.indexOf(row), 1);
+            add.disabled = false;
+            return;
+        }
+        // Who they are was put right on their card, and the server carried it to the farm's list.
+        Object.assign(g, { name, email, phone });
+        GW = null;
+        gwFold(box, false);
+        box.classList.add('is-in');
+        const h = box.querySelector('.au-gw-h');
+        h.disabled = true; h.removeAttribute('aria-expanded');
+        box.querySelector('.au-gw-t b').textContent = name;
+        box.querySelector('.au-gw-t small').textContent = gwSay(g);
+        box.querySelector('.au-gw-s').textContent = '✓ In this season';
+        paintWorkers();
+        window.toast?.(name + ' is in this season. Check their days below.');
     });
     $('auAddWorker').addEventListener('click', () => { S.crewList.push({ id: null, name: '', email: '', phone: '', off: [0] }); paintWorkers(); $('auWorkers').lastElementChild?.querySelector('input')?.focus(); });
     $('auWorkers').addEventListener('input', (e) => { const row = e.target.closest('[data-w]'); if (!row) return; S.crewList[Number(row.dataset.w)][e.target.dataset.wf] = e.target.value; later('workers', saveWorkers, 900); });
