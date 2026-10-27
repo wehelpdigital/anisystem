@@ -113,8 +113,12 @@ class MarketPriceController extends Controller
         $harvest = (string) ($in['harvest'] ?? '');
         $harvest = preg_match('/^(20\d\d)-(0[1-9]|1[0-2])$/', $harvest) ? $harvest : null;
         $qty = is_numeric($in['qty'] ?? null) ? max(0, min(10000000, (float) $in['qty'])) : null;
+        // How the farmer counted it (2026-10-27): kilos, tons, cavans or cavans a hectare, kept to put the page back as it was.
+        $n = fn ($k, float $hi) => is_numeric($in[$k] ?? null) && (float) $in[$k] > 0 ? min($hi, (float) $in[$k]) : null;
 
-        return ['item' => $item, 'place' => $place, 'harvest' => $harvest, 'qty' => $qty ?: null];
+        return ['item' => $item, 'place' => $place, 'harvest' => $harvest, 'qty' => $qty ?: null,
+            'qtyUnit' => in_array($in['qtyUnit'] ?? '', ['kg', 't', 'cav', 'cavha', 'unit'], true) ? $in['qtyUnit'] : 'kg',
+            'qtyRaw' => $n('qtyRaw', 10000000), 'ha' => $n('ha', 100000), 'cavLo' => $n('cavLo', 150), 'cavHi' => $n('cavHi', 150)];
     }
 
     private function plan(array $o, array $c): ?array

@@ -66,6 +66,15 @@
     .mp-in input { width: 100%; min-width: 0; padding-right: 3.4rem; font-variant-numeric: tabular-nums; }
     .mp-in em { position: absolute; right: .75rem; font-style: normal; font-size: .78rem; font-weight: 800; color: var(--color-gray-400); pointer-events: none; }
     .mp-hint { margin-top: .4rem; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    /* How the harvest is counted (2026-10-27): kilos, tons, cavans, or cavans a hectare with the hectares, and the cavan's weight. */
+    .mp-units { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .6rem; }
+    .mp-units .mp-chip { padding: .3rem .6rem; font-size: .72rem; }
+    .mp-sublabel { display: block; margin-top: .6rem; font-size: .76rem; font-weight: 800; color: var(--color-gray-700); }
+    .mp-sublabel small { font-weight: 600; color: var(--color-gray-400); }
+    .mp-range { display: flex; align-items: center; gap: .45rem; }
+    .mp-range .mp-in { flex: 1 1 0; min-width: 0; margin-top: .35rem; }
+    .mp-range > i { flex: none; margin-top: .35rem; font-style: normal; font-size: .78rem; font-weight: 700; color: var(--color-gray-500); }
+    .mp-swap { animation: mpIn .32s var(--mp-e) both; }
 
     /* ---- the answer ---- */
     .mp-out { margin-top: 1rem; transition: opacity .28s var(--mp-e); }
@@ -276,7 +285,18 @@
             <section class="mp-q">
                 <h3><i>3</i>Your harvest <small>(optional)</small></h3>
                 <button type="button" class="mp-tag is-none" id="mpHarvest" aria-haspopup="dialog"><span>When is it harvested?</span>{!! $chev !!}</button>
+                <div class="mp-units" id="mpUnits" role="group" aria-label="How you count your harvest"></div>
                 <label class="mp-in"><input type="number" class="form-input" id="mpQty" min="0" step="any" inputmode="decimal" placeholder="How much, like 5000" aria-label="How much you will sell"><em id="mpQtyUnit">kg</em></label>
+                <label class="mp-in mp-swap" id="mpHaBox" hidden><input type="number" class="form-input" id="mpHa" min="0" step="any" inputmode="decimal" placeholder="Hectares harvested, like 1.5" aria-label="Hectares harvested"><em>ha</em></label>
+                <div class="mp-swap" id="mpCavBox" hidden>
+                    <span class="mp-sublabel">Kilos in one cavan <small>(optional)</small></span>
+                    <div class="mp-range">
+                        <label class="mp-in"><input type="number" class="form-input" id="mpCavLo" min="1" max="150" step="any" inputmode="decimal" placeholder="Like 45" aria-label="The lightest cavan, kg"><em>kg</em></label>
+                        <i>to</i>
+                        <label class="mp-in"><input type="number" class="form-input" id="mpCavHi" min="1" max="150" step="any" inputmode="decimal" placeholder="Like 55" aria-label="The heaviest cavan, kg"><em>kg</em></label>
+                    </div>
+                </div>
+                <p class="mp-hint" id="mpQtySay" aria-live="polite"></p>
             </section>
         </div>
 
@@ -336,10 +356,11 @@
         return w.length < 2 ? w[0] : w.slice(0, -1).join(', ') + ' and ' + w[w.length - 1];
     };
 
-    const st = { crop: null, item: null, place: 'PH', placeName: 'The whole country', harvest: null, qty: null, o: null, plan: null, saved: null, places: {} };
+    const st = { crop: null, item: null, place: 'PH', placeName: 'The whole country', harvest: null, qty: null, qtyUnit: 'kg', qtyRaw: null, ha: null, cavLo: null, cavHi: null, o: null, plan: null, saved: null, places: {} };
     const LS = 'anee.market.last';
-    try { const l = JSON.parse(localStorage.getItem(LS) || 'null'); if (l && typeof l === 'object') { Object.assign(st, { crop: l.crop || null, item: l.item || null, place: l.place || 'PH', placeName: l.placeName || 'The whole country', harvest: null, qty: l.qty || null }); } } catch (e) {}
-    const remember = () => { try { localStorage.setItem(LS, JSON.stringify({ crop: st.crop, item: st.item, place: st.place, placeName: st.placeName, qty: st.qty })); } catch (e) {} };
+    try { const l = JSON.parse(localStorage.getItem(LS) || 'null'); if (l && typeof l === 'object') { Object.assign(st, { crop: l.crop || null, item: l.item || null, place: l.place || 'PH', placeName: l.placeName || 'The whole country', harvest: null,
+        qtyUnit: l.qtyUnit || 'kg', qtyRaw: l.qtyRaw || l.qty || null, ha: l.ha || null, cavLo: l.cavLo || null, cavHi: l.cavHi || null }); } } catch (e) {}
+    const remember = () => { try { localStorage.setItem(LS, JSON.stringify({ crop: st.crop, item: st.item, place: st.place, placeName: st.placeName, qtyUnit: st.qtyUnit, qtyRaw: st.qtyRaw, ha: st.ha, cavLo: st.cavLo, cavHi: st.cavHi })); } catch (e) {} };
     const cropOf = (k) => B.catalog.find((c) => c.crop === k) || null;
     const itemOf = (k) => { for (const c of B.catalog) { const i = c.items.find((x) => x.key === k); if (i) return i; } return null; };
 
@@ -409,8 +430,63 @@
         for (let k = -2; k <= 16; k++) { const ym = ymOf(t0 + k); rows.push({ key: ym, title: ymWord(ym, true), sub: k < 0 ? 'Already harvested, still to sell' : (k === 0 ? 'This month' : ''), on: st.harvest === ym }); }
         openSheet('When is it harvested?', rows, (k) => { st.harvest = k || null; paintInputs(); if (st.item) load(); }, false);
     });
+    /* How much: kilos, tons, cavans, or cavans a hectare times the hectares (2026-10-27, the owner). A cavan is
+       counted at the weight the farmer gives, a range when the cavans differ, 50 kg when none is given. The
+       forecast is asked in kilos; the money is said back with the range the cavans' weight leaves. */
+    const UNITS = [['kg', 'Kilos'], ['t', 'Tons'], ['cav', 'Cavans'], ['cavha', 'Cavans a hectare']];
+    const CAV_KG = 50;
+    const perUnit = () => { const it = itemOf(st.item); return !!(it && it.unit !== 'kg'); };
+    const cavKg = () => { const a = st.cavLo || st.cavHi || CAV_KG, b = st.cavHi || st.cavLo || CAV_KG; return [Math.min(a, b), Math.max(a, b)]; };
+    const amount = () => {
+        const raw = Number(st.qtyRaw) || 0;
+        if (raw <= 0) return null;
+        if (perUnit() || st.qtyUnit === 'kg') return { mid: raw, lo: raw, hi: raw };
+        if (st.qtyUnit === 't') return { mid: raw * 1000, lo: raw * 1000, hi: raw * 1000 };
+        const n = st.qtyUnit === 'cavha' ? raw * (Number(st.ha) || 0) : raw;
+        if (n <= 0) return null;
+        const [lo, hi] = cavKg();
+        return { mid: n * (lo + hi) / 2, lo: n * lo, hi: n * hi, cavans: n };
+    };
+    const num0 = (v) => Math.round(Number(v)).toLocaleString('en-PH'), num2 = (v) => Number(v).toLocaleString('en-PH', { maximumFractionDigits: 2 });
+    // The amount in the farmer's own words: "120 cavans (about 6,000 kg)", "5 tons", "1,000 nuts".
+    const amountWords = (o) => {
+        const a = amount(); if (!a) return '';
+        if (perUnit()) return num0(a.mid) + ' ' + (o ? o.item.unit : 'unit') + 's';
+        if (st.qtyUnit === 't') return num2(st.qtyRaw) + (Number(st.qtyRaw) === 1 ? ' ton' : ' tons');
+        if (a.cavans) return num2(a.cavans) + ' cavans (about ' + num0(a.mid) + ' kg)';
+        return num0(a.mid) + ' kg';
+    };
+    const moneyWords = (m) => { const a = amount(); if (!a || m === null || m === undefined) return ''; const k = a.mid ? m / a.mid : 0;
+        return a.lo !== a.hi ? pesoWhole(m) + ' (' + pesoWhole(k * a.lo) + ' to ' + pesoWhole(k * a.hi) + ' by how heavy the cavans are)' : pesoWhole(m); };
     let qtyT = null;
-    $('mpQty').addEventListener('input', () => { const v = Number($('mpQty').value); st.qty = v > 0 ? v : null; remember(); clearTimeout(qtyT); if (st.item && st.harvest) qtyT = setTimeout(load, 450); });
+    const qtySync = (reload = true) => {
+        const a = amount();
+        st.qty = a ? Math.round(a.mid * 100) / 100 : null;
+        const [lo, hi] = cavKg();
+        $('mpQtySay').textContent = !a ? (st.qtyUnit === 'cavha' && st.qtyRaw && !st.ha ? 'Add the hectares harvested.' : '')
+            : st.qtyUnit === 'cavha' ? num2(a.cavans) + ' cavans in all, about ' + num0(a.mid) + ' kg' + (lo !== hi ? ' (' + num0(a.lo) + ' to ' + num0(a.hi) + ' kg)' : '') + (st.cavLo || st.cavHi ? '.' : ', at 50 kg a cavan.')
+            : st.qtyUnit === 'cav' ? 'About ' + num0(a.mid) + ' kg' + (lo !== hi ? ' (' + num0(a.lo) + ' to ' + num0(a.hi) + ' kg)' : '') + (st.cavLo || st.cavHi ? '.' : ', at 50 kg a cavan.')
+            : st.qtyUnit === 't' ? 'That is ' + num0(a.mid) + ' kg.' : '';
+        remember();
+        clearTimeout(qtyT);
+        if (reload && st.item && st.harvest) qtyT = setTimeout(load, 450);
+    };
+    const paintUnits = () => {
+        const it = itemOf(st.item), nut = perUnit();
+        $('mpUnits').hidden = nut;
+        if (!nut) $('mpUnits').innerHTML = UNITS.map(([k, w]) => '<button type="button" class="mp-chip' + (k === st.qtyUnit ? ' is-on' : '') + '" data-unit="' + k + '" aria-pressed="' + (k === st.qtyUnit) + '">' + esc(w) + '</button>').join('');
+        const u = nut ? 'nut' : st.qtyUnit;
+        $('mpQtyUnit').textContent = nut ? (it.unit + 's') : ({ kg: 'kg', t: 'tons', cav: 'cavans', cavha: 'cav/ha' })[u];
+        $('mpQty').placeholder = nut ? 'How many, like 1000' : ({ kg: 'How much, like 5000', t: 'How much, like 5', cav: 'How many, like 100', cavha: 'Cavans a hectare, like 120' })[u];
+        $('mpHaBox').hidden = nut || u !== 'cavha';
+        $('mpCavBox').hidden = nut || (u !== 'cav' && u !== 'cavha');
+    };
+    $('mpUnits').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-unit]'); if (!b || b.dataset.unit === st.qtyUnit) return;
+        st.qtyUnit = b.dataset.unit; paintUnits(); qtySync();
+    });
+    const field = (id, key, lo = 0, hi = 1e9) => $(id).addEventListener('input', () => { const v = Number($(id).value); st[key] = v > lo && v <= hi ? v : null; qtySync(); });
+    field('mpQty', 'qtyRaw'); field('mpHa', 'ha', 0, 100000); field('mpCavLo', 'cavLo', 0, 150); field('mpCavHi', 'cavHi', 0, 150);
 
     const paintInputs = () => {
         const c = cropOf(st.crop), it = itemOf(st.item);
@@ -422,9 +498,10 @@
         $('mpPlace').querySelector('span').textContent = st.placeName;
         $('mpHarvest').classList.toggle('is-none', !st.harvest);
         $('mpHarvest').querySelector('span').textContent = st.harvest ? 'Harvest in ' + ymWord(st.harvest, true) : 'When is it harvested?';
-        $('mpQtyUnit').textContent = it && it.unit !== 'kg' ? it.unit + 's' : 'kg';
-        if (st.qty && !$('mpQty').value) $('mpQty').value = st.qty;
-        remember();
+        paintUnits();
+        const put = (id, v) => { if (document.activeElement !== $(id)) $(id).value = v === null || v === undefined ? '' : v; };
+        put('mpQty', st.qtyRaw); put('mpHa', st.ha); put('mpCavLo', st.cavLo); put('mpCavHi', st.cavHi);
+        qtySync(false);
     };
 
     /* ---- the forecast ---- */
@@ -714,8 +791,8 @@
         let s = '<p>' + esc(o.item.store ? 'The price each month you could wait, less what keeping it costs: about ' + p.loss + '% a month lost in storage and 1% for the money.' : 'It does not keep, so it sells the month it is harvested.') + '</p>';
         s += '<div class="mp-big">' + (b.wait > 0
             ? 'Harvest in ' + esc(ymWord(h.ym, true)) + ': about <b>' + esc(peso(h.p)) + '</b>. Keep it and sell in <b>' + esc(ymWord(b.ym, true)) + '</b> for about ' + esc(peso(b.p)) + ', or ' + esc(peso(b.net)) + ' after the losses: <b>' + esc(pct(p.gain)) + '</b>'
-                + (st.qty && b.money !== null && h.money !== null ? '. On ' + esc(Number(st.qty).toLocaleString('en-PH') + ' ' + (o.item.unit === 'kg' ? 'kg' : o.item.unit + 's')) + ' that is about <b>' + esc(pesoWhole(b.money - h.money)) + '</b> more.' : '.')
-            : 'Sell at harvest in ' + esc(ymWord(h.ym, true)) + ', about <b>' + esc(peso(h.p)) + '</b>' + (st.qty && h.money !== null ? ', about <b>' + esc(pesoWhole(h.money)) + '</b> for ' + esc(Number(st.qty).toLocaleString('en-PH') + ' ' + (o.item.unit === 'kg' ? 'kg' : o.item.unit + 's')) : '') + '. '
+                + (st.qty && b.money !== null && h.money !== null ? '. On ' + esc(amountWords(o)) + ' that is about <b>' + esc(moneyWords(b.money - h.money)) + '</b> more.' : '.')
+            : 'Sell at harvest in ' + esc(ymWord(h.ym, true)) + ', about <b>' + esc(peso(h.p)) + '</b>' + (st.qty && h.money !== null ? ', about <b>' + esc(moneyWords(h.money)) + '</b> for ' + esc(amountWords(o)) : '') + '. '
                 + (o.item.store ? (top.net > h.net ? esc('Keeping it to ' + ymWord(top.ym, true) + ' adds only about ' + Math.max(1, Math.round((top.net / h.p - 1) * 100)) + '% after the losses, too little for the risk.') : 'Keeping it is not expected to pay this time.') : '')) + '</div>';
         if (p.rows.length > 1) {
             s += '<div class="mp-plan">' + p.rows.map((r) => '<div class="mp-prow' + (r.ym === b.ym ? ' is-best' : '') + (r.wait === 0 ? ' is-harvest' : '') + '"><b>' + esc(ymWord(r.ym)) + '</b><span class="mp-bar"><span style="width:' + Math.max(4, r.net / max * 100) + '%"></span></span><em>' + esc(peso(r.net)) + ' <small>' + esc(r.wait ? 'after ' + r.wait + ' mo' : 'at harvest') + '</small></em></div>').join('') + '</div>';
@@ -743,13 +820,13 @@
         if (a.dataset.act === 'moreEv') { paintEvents(999); a.remove(); return; }
         if (a.dataset.act === 'fresh') { st.saved = null; load(); return; }
         if (a.dataset.act === 'reset') {
-            Object.assign(st, { crop: null, item: null, place: 'PH', placeName: 'The whole country', harvest: null, qty: null, o: null, plan: null, saved: null });
-            $('mpQty').value = ''; paintInputs(); $('mpOut').hidden = true; $('mpEmpty').hidden = false; $('mpEmptySay').textContent = 'Choose a crop, and its prices and forecast show here.';
+            Object.assign(st, { crop: null, item: null, place: 'PH', placeName: 'The whole country', harvest: null, qty: null, qtyRaw: null, ha: null, cavLo: null, cavHi: null, o: null, plan: null, saved: null });
+            ['mpQty', 'mpHa', 'mpCavLo', 'mpCavHi'].forEach((id) => { $(id).value = ''; }); paintInputs(); $('mpOut').hidden = true; $('mpEmpty').hidden = false; $('mpEmptySay').textContent = 'Choose a crop, and its prices and forecast show here.';
             window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' }); return;
         }
         if (a.dataset.act === 'save') {
             a.disabled = true;
-            try { const r = await window.api(B.urls.save, { method: 'POST', body: { item: st.item, place: st.place, harvest: st.harvest, qty: st.qty } }); shelf(r.data, false); toast('Saved: ' + r.data.title, 'success'); }
+            try { const r = await window.api(B.urls.save, { method: 'POST', body: { item: st.item, place: st.place, harvest: st.harvest, qty: st.qty, qtyUnit: perUnit() ? 'unit' : st.qtyUnit, qtyRaw: st.qtyRaw, ha: st.ha, cavLo: st.cavLo, cavHi: st.cavHi } }); shelf(r.data, false); toast('Saved: ' + r.data.title, 'success'); }
             catch (err) { toast(err.message || 'It could not be saved.', 'error'); }
             finally { a.disabled = false; }
         }
@@ -790,8 +867,9 @@
                 const r = await window.api(B.urls.one + '/' + o.dataset.open, { method: 'GET' }), d = r.data;
                 const it = itemOf(d.params.item);
                 Object.assign(st, { crop: it ? it.crop : null, item: d.params.item, place: d.params.place, harvest: d.params.harvest, qty: d.params.qty, o: d.outlook, plan: d.plan, saved: d.savedAt,
+                    qtyUnit: ['kg', 't', 'cav', 'cavha'].includes(d.params.qtyUnit) ? d.params.qtyUnit : 'kg', qtyRaw: d.params.qtyRaw || d.params.qty || null, ha: d.params.ha || null, cavLo: d.params.cavLo || null, cavHi: d.params.cavHi || null,
                     placeName: d.params.place === 'PH' ? 'The whole country' : (d.outlook && d.outlook.place ? (d.outlook.place.level === 'province' || d.outlook.place.level === 'region' ? d.outlook.place.name : d.params.place) : d.params.place) });
-                $('mpQty').value = st.qty || ''; paintInputs(); tab(false); window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' });
+                ['mpQty', 'mpHa', 'mpCavLo', 'mpCavHi'].forEach((id) => { $(id).value = ''; }); paintInputs(); tab(false); window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' });
             } catch (err) { toast(err.message, 'error'); }
             return;
         }
