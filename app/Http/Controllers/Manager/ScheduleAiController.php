@@ -411,6 +411,8 @@ class ScheduleAiController extends BaseScheduleController
         // A question about the weather or timing gets the forecast data the chat rules need (2026-10-19): the ENSO
         // line and the week ahead at the season's places, from what the app keeps. Other questions go without.
         $context = \App\Support\SkyLines::into($context, \App\Support\SkyLines::forQuestion((string) $prompt, $schedule));
+        // A question about prices, selling or imports gets the app's own price records (2026-10-27), never a forecast.
+        $context = \App\Support\SkyLines::into($context, \App\Support\MarketLines::forQuestion((string) $prompt, $schedule, (int) $askerId));
         // What Anee has already worked out for this season, one line each
         // (AneeMemory::season): her own words, not the plan.
         $context = ($request->boolean('forget') ? '' : \App\Support\AneeMemory::season($schedule, $askerId)) . $context;

@@ -1184,6 +1184,13 @@ class FarmReportController extends BaseScheduleController
             })->implode(' | ');
         }
 
+        // The market for the season's crops (2026-10-27): what the crop sells for at the lots' place, the month the
+        // harvest lands in against its year, and for a harvest still to come whether keeping it pays.
+        $market = $this->marketLines($lot ? collect([$lot]) : $schedule->lots, $kind);
+        if ($market !== '') {
+            $ctx[] = $market;
+        }
+
         // The sky's records: the live ENSO picture (observed state AND the
         // official NOAA CPC forecast) plus the season's own daily archive.
         $enso = \App\Support\EnsoOutlook::forPrompt();
@@ -1253,6 +1260,60 @@ class FarmReportController extends BaseScheduleController
             . ' Say protocol timings in ' . $schedule->dayType . ' day-counts, not bare dates. Use plain language a farmer reads easily; short sentences. No emoji shortcodes like :name:.'
             . "\n\n=== THE RECORDS ===\n" . implode("\n\n", $ctx)
             . "\n\n=== YOUR ANSWER ===\nReturn ONLY a single JSON object, no fences, no commentary, exactly this shape:\n" . $schema;
+    }
+
+    /**
+     * The market in a few lines for Anee's two reports (2026-10-27): for each crop the lots grow (at most two), its
+     * farmgate price at the lots' place, the months of its year, the import events and the forecast
+     * (MarketBook::forPrompt), with the month each lot's harvest lands in (the harvest marked, else day zero plus
+     * its days); for a harvest still to come or just in, whether keeping it pays (MarketBook::sellLine). With the
+     * rule that a sale price is set only against its like: the records are by the kilo.
+     */
+    private function marketLines($lots, string $kind): string
+    {
+        $by = [];
+        foreach ($lots as $L) {
+            $crop = \App\Support\MarketBook::cropOf((string) $L->crop);
+            if (! $crop || ! \App\Support\MarketBook::mainItem($crop)) {
+                continue;
+            }
+            $by[$crop] ??= ['where' => '', 'harvests' => []];
+            $by[$crop]['where'] = $by[$crop]['where'] ?: trim(implode(', ', array_filter([(string) $L->locTown, (string) $L->locProvince])));
+            $days = (int) ($L->maturityDays() ?: 0);
+            $h = $L->harvestedAt ? \Carbon\Carbon::parse((string) $L->harvestedAt)
+                : ($L->dayZeroDate && $days > 0 ? \Carbon\Carbon::parse((string) $L->dayZeroDate)->addDays($days) : null);
+            if ($h) {
+                $by[$crop]['harvests'][] = $h->year * 12 + $h->month - 1;
+            }
+        }
+        $lines = [];
+        try {
+            foreach (array_slice($by, 0, 2, true) as $crop => $b) {
+                $hs = array_values(array_unique($b['harvests']));
+                sort($hs);
+                $hs = array_slice($hs, 0, 3);
+                $line = \App\Support\MarketBook::forPrompt($crop, $b['where'], $hs);
+                if ($line === '') {
+                    continue;
+                }
+                $lines[] = rtrim($line);
+                foreach ($hs as $h) {
+                    if ($h >= \App\Support\MarketBook::nowIdx() - 1 && ($s = \App\Support\MarketBook::sellLine($crop, $b['where'], $h)) !== '') {
+                        $lines[] = rtrim($s);
+                        break;
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            report($e);
+
+            return '';
+        }
+
+        return $lines ? "THE MARKET (the app's own farmgate price records for these crops at the lots' place; never say where they come from). Use it where it teaches: set the month the harvest lands in against the crop's year and its best months"
+            . ($kind === 'season' ? ' in the money story, and the timing that sells better in next season\'s advice' : ', and the sell or keep line in the harvest outlook and the next steps')
+            . ". Set the farmer's own sale price against these only when both are a kilo of the same form (dry palay with dry palay); a wet sale, or a price by the sack or cavan, is not the same figure, so say so rather than compare. A forecast is a guide with a range, never a promise.\n"
+            . implode("\n", $lines) : '';
     }
 
     /** The so-far report's graphs, said in words for Anee's prompt. */

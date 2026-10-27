@@ -882,9 +882,11 @@
     });
 
     const boot = () => {
-        // Opened from When to Plant or What to Plant: ?crop=okra picks that crop.
-        const want = new URLSearchParams(location.search).get('crop');
+        // Opened from When to Plant or What to Plant: ?crop=okra picks that crop. From a calculator's palay card
+        // (2026-10-27): &place=pangasinan&placeName=Pangasinan reads that province.
+        const qs = new URLSearchParams(location.search), want = qs.get('crop'), wantPlace = qs.get('place');
         if (want && cropOf(want) && want !== st.crop) { st.crop = want; st.item = cropOf(want).items[0].key; st.harvest = null; }
+        if (want && cropOf(want) && wantPlace && /^[a-z0-9_]{2,60}$/i.test(wantPlace)) { st.place = wantPlace; st.placeName = qs.get('placeName') || wantPlace; }
         if (st.item && !itemOf(st.item)) { st.crop = null; st.item = null; }
         paintInputs();
         loadList(1);

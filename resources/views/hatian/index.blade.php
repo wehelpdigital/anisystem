@@ -293,6 +293,8 @@
                     <label class="ht-f"><span>Price a kilo</span>
                         <span class="ht-in"><b>₱</b><input type="number" class="form-input is-pre" id="htPrice" min="0" step="any" inputmode="decimal" placeholder="Like 17"><em>a kg</em></span></label>
                 </div>
+                {{-- For palay: what buyers paid farmers lately near them, wet and dry (2026-10-27); a Use puts it in the box. --}}
+                @include('partials.palay-now', ['id' => 'htPalay', 'url' => route('hatian.palay'), 'fill' => ['wet' => 'htPrice', 'dry' => 'htPrice']])
             </section>
         </div>
 

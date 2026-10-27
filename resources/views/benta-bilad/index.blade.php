@@ -327,6 +327,8 @@
                     <label class="bb-f"><span>Dry palay (tuyo)</span>
                         <span class="bb-in"><b>₱</b><input type="number" class="form-input is-pre" id="bbPDry" min="0" step="any" inputmode="decimal" placeholder="Like 22"><em>a kg</em></span></label>
                 </div>
+                {{-- What buyers paid farmers lately near them, wet and dry (2026-10-27): a Use puts it in the box. --}}
+                @include('partials.palay-now', ['id' => 'bbPalay', 'url' => route('bilad.palay'), 'fill' => ['wet' => 'bbPWet', 'dry' => 'bbPDry']])
             </section>
         </div>
 

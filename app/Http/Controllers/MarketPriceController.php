@@ -101,6 +101,24 @@ class MarketPriceController extends Controller
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.', $this->shelf(1));
     }
 
+    /**
+     * Palay's going price lately near the farmer, wet and dry (MarketBook::palayNow), for the price a kilo
+     * Benta o Bilad and Hatian ask (2026-10-27). Served on their own routes (bilad.palay, hatian.palay), so a
+     * worker given either tool reads it. The province asked, else the farmer's newest farm lot's, else the
+     * profile's, else the whole country.
+     */
+    public function palay(Request $request)
+    {
+        $asked = $request->has('province') ? (string) $request->query('province') : MarketBook::homeProvince((int) Auth::id());
+        $r = MarketBook::palayNow(mb_substr(trim($asked), 0, 80));
+        if (! $r || (! $r['wet'] && ! $r['dry'])) {
+            return $this->json(false, 'No palay prices are kept yet.', [], 404);
+        }
+        $key = $r['province'] ? MarketBook::provinceKey($r['province']) : null;
+
+        return $this->json(true, 'ok', $r + ['url' => route('market.page') . '?' . http_build_query(['crop' => 'rice'] + ($key && $r['tip'] && $r['tip']['where'] === $r['province'] ? ['place' => $key, 'placeName' => $r['province']] : []))]);
+    }
+
     /** The inputs held to what is kept: an item, a place it has, a harvest month, an amount. */
     private function clean(array $in): ?array
     {

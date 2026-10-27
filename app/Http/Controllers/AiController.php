@@ -354,8 +354,11 @@ class AiController extends Controller
         $context = $this->applyLinkContext($context, $conversation);
         // A question about the weather or timing gets the forecast data the chat rules need (2026-10-19): the ENSO line,
         // and inside a season the week ahead at its places, from what the app keeps. Other questions go without.
-        $context = \App\Support\SkyLines::into($context, \App\Support\SkyLines::forQuestion((string) $prompt,
-            $request->boolean('attachPlan') || $request->boolean('usePlan') ? $this->planFor($request->input('scheduleId'), $userId) : null));
+        $season = $request->boolean('attachPlan') || $request->boolean('usePlan') ? $this->planFor($request->input('scheduleId'), $userId) : null;
+        $context = \App\Support\SkyLines::into($context, \App\Support\SkyLines::forQuestion((string) $prompt, $season));
+        // A question about prices, selling or imports gets the app's own price records (2026-10-27): what the crop has
+        // sold for at the farmer's place and the months that usually pay, never a forecast (the chat rules).
+        $context = \App\Support\SkyLines::into($context, \App\Support\MarketLines::forQuestion((string) $prompt, $season, (int) $userId));
         // An attached analysis goes before the plan's closing "Question: " (2026-10-19): appended after it, it sat between
         // the label and the farmer's own question.
         $tail = 'Question: ';

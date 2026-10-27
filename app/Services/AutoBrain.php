@@ -310,6 +310,7 @@ class AutoBrain
         $stages = $crop ? CropStages::stagesFor($crop, $lot['counter'] ?? null, $lot['maturityDays'] ?? null) : [];
         $problems = $this->cropProblemsForPrompt($crop);
         $tree = ($lot['method'] ?? null) === 'tree';
+        $market = $tree ? '' : self::marketFor($lot);
         $anchors = $tree
             ? "This is a standing orchard. Every task's anchor is \"start\" (today, day 0) and day counts from today; plan the next 12 months."
             : ('Anchors: "field" = the day the crop goes into the field (' . ($lot['counter'] ?? 'DAP') . ' 0, ' . ($lot['fieldDate'] ?? '?') . '), with negative days for land preparation before it'
@@ -327,6 +328,7 @@ class AutoBrain
             . "GROWTH STAGES (day counts from the field day):\n" . json_encode($stages, JSON_UNESCAPED_UNICODE) . "\n\n"
             . "THE CROP BOOK:\n" . AutoBook::forPrompt($crop) . "\n\n"
             . "THIS CROP'S WORST PESTS AND DISEASES IN THE PHILIPPINES, with active ingredients:\n" . $problems . "\n\n"
+            . ($market !== '' ? "THE MARKET (the app's own farmgate price records at this lot's place; never say where they come from):\n" . $market . "\n" : '')
             . $anchors . "\n\n"
             . "RULES:\n"
             . "1. Cover the whole season, in order: land preparation (each pass its own task), seedbed, sowing or transplanting or planting, water management (when to flood, keep moist, drain, last irrigation before harvest; fit it to their water source), every fertilizer application, weed control, scouting walks (about weekly in the critical weeks), prevention, harvest and right after harvest. 30 to 50 tasks; keep each summary to one sentence, each why to two, and at most five steps.\n"
@@ -335,11 +337,32 @@ class AutoBrain
             . "4. SAFETY on every spray: the protective clothing, the re-entry time, the days before harvest (pre harvest interval) to respect, not near water or bees where it applies, and tank mix cautions (never propanil within 14 days of carbamates or organophosphates on rice; copper and sulfur not with oils; nothing alkaline with most insecticides). Put the farm's whole list in safetyChecks and the mixes to avoid in compatibility.\n"
             . "5. Each task: a short title a farmer understands, a one line summary of what to do, and why (the agronomy, in plain words). critical = true only where a few days late costs yield (transplanting, basal and panicle fertilizer, the first weed control, harvest at maturity).\n"
             . "6. weather: \"spray\" for any spraying, \"fert\" for granular fertilizer, \"dry\" for land preparation, sowing in the field and harvest, \"any\" otherwise. crew: workers needed (1 to 6). early/late: days the task may move before or after its day.\n"
-            . "7. No dashes in the words you write. Plain English. Use the farmer's crop and lot names.\n\n"
+            . "7. No dashes in the words you write. Plain English. Use the farmer's crop and lot names.\n"
+            . ($market !== '' ? "8. THE SALE: among the after harvest tasks, one that plans the sale from THE MARKET: the months this crop usually sells best here, and whether drying and storing it pays more than selling at harvest (the sell or keep line). A guide, never a promised price.\n" : '')
+            . "\n"
             . 'Return exactly: {"strategy":"two or three sentences: how this lot will be run and what matters most","harvestDay":0,'
             . '"tasks":[{"kind":"' . implode('|', array_keys(AutoBook::KINDS)) . '","title":"","summary":"","why":"","anchor":"field|sow|start","day":0,"early":0,"late":2,"critical":false,"weather":"dry|spray|fert|any","crew":1,"time":"morning|afternoon|any",'
             . '"steps":[""],"products":[{"name":"what it is, by active ingredient or the farmer\'s product","group":"IRAC or FRAC or HRAC group, or empty","rate":"label rate","amount":"for this lot"}],"safety":[""],"bring":["what to have ready"]}],'
             . '"safetyChecks":[""],"compatibility":[""]}';
+    }
+
+    /**
+     * The market for one lot's calendar (2026-10-27): the crop's farmgate price at the lot's place, the months of its
+     * year, the forecast at the harvest month, and whether keeping the harvest pays (MarketBook). '' without prices.
+     */
+    private static function marketFor(array $lot): string
+    {
+        $crop = $lot['cropKey'] ?? null;
+        $days = (int) ($lot['maturityDays'] ?? 0);
+        if (! $crop || empty($lot['fieldDate']) || $days <= 0) {
+            return '';
+        }
+        $h = \Illuminate\Support\Carbon::parse((string) $lot['fieldDate'])->addDays($days);
+        $idx = $h->year * 12 + $h->month - 1;
+        $where = (string) ($lot['place'] ?? '');
+        $line = \App\Support\MarketBook::forPrompt($crop, $where, [$idx], false);
+
+        return $line === '' ? '' : $line . \App\Support\MarketBook::sellLine($crop, $where, $idx);
     }
 
     private function cropProblemsForPrompt(?string $crop): string

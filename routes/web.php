@@ -239,6 +239,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'marketNews' => class_exists(\App\Support\MarketNews::class) && \App\Support\MarketNews::ready(),
             // 2026-10-27: the daily news reading runs on the owner's own Claude (true once its key is kept).
             'newsClaude' => method_exists(\App\Models\AiSetting::class, 'newsReader') && (bool) rescue(fn () => \App\Models\AiSetting::newsReader(), null, false),
+            // 2026-10-27: the price records reach the calculators' palay card, the chats, the season reports and Anee Auto.
+            'marketEverywhere' => class_exists(\App\Support\MarketLines::class) && \Illuminate\Support\Facades\Route::has('bilad.palay') && method_exists(\App\Support\MarketBook::class, 'sellLine'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
             // By spacing or by amount in the Crop Protocol and NPK Plus (2026-10-21).
@@ -932,6 +934,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/benta-o-bilad/list', [App\Http\Controllers\BentaBiladController::class, 'list'])->name('bilad.list');
     Route::get('/app/benta-o-bilad/one/{id}', [App\Http\Controllers\BentaBiladController::class, 'one'])->whereNumber('id')->name('bilad.one');
     Route::delete('/app/benta-o-bilad/{id}', [App\Http\Controllers\BentaBiladController::class, 'destroy'])->whereNumber('id')->name('bilad.delete');
+    // Palay's going price lately near the farmer (2026-10-27), on each calculator's own route so its worker gate holds.
+    Route::get('/app/benta-o-bilad/palay', [App\Http\Controllers\MarketPriceController::class, 'palay'])->name('bilad.palay');
+    Route::get('/app/hatian/palay', [App\Http\Controllers\MarketPriceController::class, 'palay'])->name('hatian.palay');
     // Hatian (2026-10-26, the owner): the harvest shared with the farm manager, the share counted from the gross.
     Route::get('/app/hatian', [App\Http\Controllers\HatianController::class, 'page'])->name('hatian.page');
     // Market Price Forecast (2026-10-27, the owner): when to sell, from the kept farmgate prices and the import events.

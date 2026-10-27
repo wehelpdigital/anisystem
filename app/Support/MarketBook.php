@@ -419,6 +419,77 @@ final class MarketBook
         };
     }
 
+    /** The province a farmer most likely farms in: their newest farm lot that names one, else their profile's, else ''. */
+    public static function homeProvince(int $userId): string
+    {
+        $p = $userId && FarmLots::ready()
+            ? DB::table('as_field_profiles')->where('userId', $userId)->where('deleteStatus', 1)->whereNotNull('province')->where('province', '!=', '')->orderByDesc('updated_at')->value('province')
+            : null;
+
+        return trim((string) ($p ?: ($userId ? \App\Models\User::whereKey($userId)->value('province') : '') ?: ''));
+    }
+
+    /**
+     * Palay's going price lately near a province, wet and dry (2026-10-27, for the calculators that ask a price a
+     * kilo: Benta o Bilad, Hatian), from the dated local reports of the last 75 days. A buying program's price
+     * (the government's, a town's) and a wholesale price are left out: neither is what a buyer at the field pays.
+     * A report that does not say wet or dry is not read. Each form reads the province when it has three reports,
+     * else its region's, else the country's, and says which. With the dry palay's sell plan from this month (the
+     * forecast's own): whether keeping it dry pays. Null without the tables. Kept six hours.
+     */
+    public static function palayNow(?string $province): ?array
+    {
+        if (! self::ready() || ! Schema::hasTable('as_market_local')) {
+            return null;
+        }
+        $province = trim((string) $province);
+        $since = Carbon::now('Asia/Manila')->subDays(75)->toDateString();
+
+        return Cache::remember('market:palay:' . self::ver() . ':' . $since . ':' . md5(mb_strtolower($province)), 21600, function () use ($province, $since) {
+            $rows = DB::table('as_market_local')->where('itemKey', 'palay')->whereNotNull('day')->where('day', '>=', $since)
+                ->where(fn ($q) => $q->where('form', 'like', '%wet%')->orWhere('form', 'like', 'dry palay%'))
+                ->whereRaw("COALESCE(buyer, '') NOT REGEXP 'NFA|LGU|support|wholesale'")
+                ->get(['form', 'price', 'day', 'region', 'province'])
+                ->map(fn ($r) => ['dry' => str_starts_with((string) $r->form, 'dry'), 'p' => (float) $r->price, 'day' => (string) $r->day, 'region' => (string) $r->region, 'province' => (string) $r->province]);
+            $places = $rows->pluck('province')->filter()->unique()->sort()->values()->all();
+            // The province as the reports spell it, and its region from any report of it.
+            $own = $province !== '' ? (collect($places)->first(fn ($p) => strcasecmp($p, $province) === 0)
+                ?? DB::table('as_market_local')->where('itemKey', 'palay')->where('province', $province)->value('province')) : null;
+            $region = $own ? (string) DB::table('as_market_local')->where('itemKey', 'palay')->where('province', $own)->whereNotNull('region')->value('region') : '';
+            $read = function (bool $dry) use ($rows, $own, $region) {
+                $form = $rows->where('dry', $dry);
+                foreach ([[$own, 'province', fn ($r) => strcasecmp($r['province'], (string) $own) === 0], [$region, 'region', fn ($r) => $r['region'] === $region], ['the whole country', 'country', fn () => true]] as [$where, $level, $keep]) {
+                    if (! $where) {
+                        continue;
+                    }
+                    $set = $form->filter($keep);
+                    if ($set->count() >= 3 || ($level === 'country' && $set->isNotEmpty())) {
+                        $p = $set->pluck('p')->all();
+
+                        return ['p' => round(MarketForecast::median($p), 2), 'lo' => round(MarketForecast::pct($p, 0.25), 2), 'hi' => round(MarketForecast::pct($p, 0.75), 2),
+                            'n' => count($p), 'from' => $set->min('day'), 'to' => $set->max('day'),
+                            'where' => $level === 'region' ? trim(preg_replace('/^Region\s+[IVXL]+(-?[AB])?\s*\(|\)$/', '', $where)) : $where, 'level' => $level];
+                    }
+                }
+
+                return null;
+            };
+            // Kept dry, does it pay to wait? The dry palay's own forecast from this month, less what keeping costs.
+            $tip = null;
+            try {
+                $o = self::outlook('palay', self::provinceKey($own ?: null));
+                if ($o && $o['forecast'] && $o['seasonal'] && ($plan = self::sellPlan($o, self::nowIdx()))) {
+                    $tip = ['gain' => $plan['gain'], 'best' => $plan['best']['ym'], 'wait' => $plan['best']['wait'], 'store' => $plan['store'], 'where' => $o['place']['name'],
+                        'bestMonths' => $o['best']];
+                }
+            } catch (\Throwable $e) {
+                report($e);
+            }
+
+            return ['province' => $own, 'asked' => $province, 'wet' => $read(false), 'dry' => $read(true), 'tip' => $tip, 'places' => $places];
+        });
+    }
+
     /** How dear the item is among all the crops sold by the kilo: its price lately and its place (0 cheapest, 1 dearest). */
     public static function rank(string $item): ?array
     {
@@ -666,9 +737,10 @@ final class MarketBook
     /**
      * The market in a few lines for a prompt: the crop's farmgate price lately, its months, where the forecast
      * goes, how dear it is among crops, and the latest import and policy events. $harvests = month indexes the
-     * analysis is weighing (each said with its price). '' without prices.
+     * analysis is weighing (each said with its price). $forecast = false keeps to what has been (the chat, whose
+     * rules forbid saying what a price will be): no forecast figures. '' without prices.
      */
-    public static function forPrompt(?string $crop, ?string $where, array $harvests = [], bool $events = true): string
+    public static function forPrompt(?string $crop, ?string $where, array $harvests = [], bool $events = true, bool $forecast = true): string
     {
         $item = self::mainItem($crop);
         if (! $item || ! self::ready()) {
@@ -689,9 +761,9 @@ final class MarketBook
         $u = $o['item']['unit'] === 'kg' ? '/kg' : ' a ' . $o['item']['unit'];
         $line = '- ' . $o['item']['name'] . ', farmgate in ' . $o['place']['name'] . ': ' . 'P' . number_format($o['latest']['p'], 2) . $u . ' in ' . date('M Y', mktime(0, 0, 0, (int) substr($o['latest']['ym'], 5), 1, (int) substr($o['latest']['ym'], 0, 4)))
             . ($o['latest']['yoy'] !== null ? ' (' . $pct($o['latest']['yoy']) . ' on a year before)' : '')
-            . '. Months of the year against its average: ' . implode(', ', array_map(fn ($x) => $mn($x['m']) . ' ' . round($x['idx'] * 100), $o['seasonal']))
+            . '. Months of the year against its average' . ($forecast ? '' : ' (the last ten years)') . ': ' . implode(', ', array_map(fn ($x) => $mn($x['m']) . ' ' . round($x['idx'] * 100), $o['seasonal']))
             . '. Best months to sell: ' . implode(', ', array_map($mn, $o['best'])) . '; harvest glut months: ' . implode(', ', array_map($mn, $o['worst'])) . '.';
-        if ($o['years']['next']) {
+        if ($forecast && $o['years']['next']) {
             $line .= ' Forecast average ' . $o['years']['next']['y'] . ': P' . number_format($o['years']['next']['avg'], 2) . $u . ' (likely P' . number_format($o['years']['next']['lo'], 2) . ' to P' . number_format($o['years']['next']['hi'], 2) . ')';
             $line .= $o['growth'] !== null ? ', long run ' . $pct($o['growth']) . ' a year.' : '.';
         }
@@ -710,7 +782,7 @@ final class MarketBook
             }
             $i = $o['seasonal'][$h % 12]['idx'] ?? 1;
             $line .= "\n  - Harvest in " . date('M Y', mktime(0, 0, 0, $h % 12 + 1, 1, intdiv($h, 12))) . ': usually ' . $pct($i - 1) . ' against the year'
-                . ($f ? ', forecast P' . number_format($f['p'], 2) . $u . ' (P' . number_format($f['lo'], 2) . ' to P' . number_format($f['hi'], 2) . ')' : '') . '.';
+                . ($f && $forecast ? ', forecast P' . number_format($f['p'], 2) . $u . ' (P' . number_format($f['lo'], 2) . ' to P' . number_format($f['hi'], 2) . ')' : '') . '.';
         }
         if ($events) {
             $ev = array_slice(array_filter($o['events'], fn ($e) => $e['day'] >= Carbon::now('Asia/Manila')->subYears(3)->toDateString()), 0, 4);
@@ -721,5 +793,36 @@ final class MarketBook
         }
 
         return $line . "\n";
+    }
+
+    /**
+     * Sell at harvest or keep it, in one line for a prompt (2026-10-27, for the season reports and Anee Auto): the
+     * sell plan from a harvest month, the forecast less what keeping costs. '' without a forecast.
+     */
+    public static function sellLine(?string $crop, ?string $where, int $harvestIdx): string
+    {
+        $item = self::mainItem($crop);
+        if (! $item || ! self::ready()) {
+            return '';
+        }
+        try {
+            $o = self::outlook($item, self::provinceKey($where));
+            $p = $o && $o['forecast'] && $o['seasonal'] ? self::sellPlan($o, $harvestIdx) : null;
+        } catch (\Throwable $e) {
+            report($e);
+
+            return '';
+        }
+        if (! $p) {
+            return '';
+        }
+        $m = fn (string $ym) => date('M Y', mktime(0, 0, 0, (int) substr($ym, 5), 1, (int) substr($ym, 0, 4)));
+        $head = '  - Sell or keep, after a harvest in ' . $m($p['harvest']['ym']) . ' (' . $o['place']['name'] . '): ';
+
+        return $head . match (true) {
+            ! $p['store'] => 'it does not keep; it is sold fresh at harvest.',
+            $p['best']['wait'] > 0 => 'kept and stored, it pays most around ' . $m($p['best']['ym']) . ', about ' . round($p['gain'] * 100) . '% more than selling at harvest after the weight lost in storage and the money\'s own cost (it keeps up to ' . $p['store'] . ' months).',
+            default => 'keeping it does not pay more than its storage costs; selling at harvest is as good as any month ahead.',
+        } . "\n";
     }
 }
