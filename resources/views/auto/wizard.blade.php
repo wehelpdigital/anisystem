@@ -211,17 +211,8 @@
     .au-rl h5 { margin: .75rem 0 .25rem; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
     .au-rl p, .au-rl li { font-size: .84rem; line-height: 1.55; color: var(--color-gray-700); }
     .au-rl ul { margin: .2rem 0 0 1rem; list-style: disc; }
-    /* A lot's goal: the aim, how much is planted, and the goal the app counts from them (AutoGoal, 2026-10-28). */
+    /* How much a lot plants (on its card), then its three goals with their fertilizer (on the Reading step), AutoGoal 2026-10-28. */
     .au-goal { margin-top: 1rem; padding-top: .3rem; border-top: 1px dashed var(--color-gray-200); }
-    .au-aims { display: grid; gap: .4rem; grid-template-columns: minmax(0, 1fr); }
-    @media (min-width: 640px) { .au-aims { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    .au-aim { display: flex; align-items: flex-start; gap: .55rem; padding: .6rem .7rem; border-radius: .9rem; text-align: left; border: 1px solid var(--color-gray-200); background: var(--color-white);
-        transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease), transform .2s var(--au-ease); }
-    .au-aim:active { transform: scale(.985); }
-    .au-aim > span:first-child { flex: none; font-size: 1.1rem; line-height: 1.2; }
-    .au-aim b { display: block; font-size: .84rem; font-weight: 800; color: var(--color-gray-800); }
-    .au-aim small { display: block; margin-top: .1rem; font-size: .72rem; line-height: 1.35; color: var(--color-gray-500); }
-    .au-aim[aria-pressed="true"] { border-color: var(--color-brand-500, #6b9f3d); background: #f3f8ec; box-shadow: inset 0 0 0 1px var(--color-brand-500, #6b9f3d); }
     .au-row.is-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
     .au-gl { display: grid; gap: .25rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
     .au-gl small { font-weight: 600; color: var(--color-gray-400); }
@@ -229,12 +220,28 @@
     .au-gl > span { position: relative; display: block; }
     .au-gl input { width: 100%; padding-right: 2.3rem; }
     .au-gl em { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%); font-style: normal; font-size: .76rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none; }
-    .au-goalout { margin-top: .9rem; border-radius: 1rem; background: linear-gradient(115deg, #fdf8e8, #f6edc8); border: 1px solid #ecd98d; padding: .75rem .85rem; }
-    .au-goal-n { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; }
-    .au-goal-n span { font-size: .78rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #8a6a00; }
-    .au-goal-n b { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #3d2e00; display: inline-block; }
-    .au-goal-n small { flex-basis: 100%; font-size: .74rem; color: #6b5300; }
-    .au-goal-n.is-wait span { text-transform: none; letter-spacing: 0; font-weight: 600; }
+    .au-stand { display: flex; gap: .5rem; margin-top: .7rem; padding: .55rem .7rem; border-radius: .85rem; font-size: .78rem; line-height: 1.45; color: #2d4a17; background: #f3f8ec; border: 1px solid #dcebc8; animation: auFade .3s var(--au-ease) both; }
+    .au-goals { margin: .75rem 0 .2rem; display: grid; gap: .5rem; }
+    .au-goals-h b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-goals-h small { display: block; font-size: .76rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-goals-wait { font-size: .82rem; color: var(--color-gray-500); }
+    .au-gc { display: grid; gap: .35rem; width: 100%; padding: .7rem .8rem; border-radius: 1rem; text-align: left; border: 1.5px solid var(--color-gray-200); background: var(--color-white);
+        transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease), box-shadow .28s var(--au-ease), transform .2s var(--au-ease); animation: auFade .3s var(--au-ease) both; }
+    .au-gc:active { transform: scale(.99); }
+    .au-gc:hover { border-color: #b7d597; }
+    .au-gc-top { display: flex; align-items: center; gap: .5rem; }
+    .au-gc-top > span { flex: none; font-size: 1.05rem; }
+    .au-gc-top b { flex: 1; min-width: 0; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-gc-top em { flex: none; font-style: normal; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #2d5016; }
+    .au-gc.is-risky .au-gc-top em { color: #8a5a00; } .au-gc.is-high .au-gc-top em { color: #6b4e00; }
+    .au-gc-top i { flex: none; width: 1.25rem; height: 1.25rem; border-radius: 999px; border: 2px solid var(--color-gray-300); display: grid; place-items: center; transition: background-color .28s var(--au-ease), border-color .28s var(--au-ease); }
+    .au-gc-top i::after { content: '✓'; font-style: normal; font-size: .7rem; font-weight: 900; color: #fff; opacity: 0; transition: opacity .2s; }
+    .au-gc-say { font-size: .78rem; line-height: 1.45; color: var(--color-gray-600); }
+    .au-gc-need { display: grid; gap: .15rem; padding: .45rem .6rem; border-radius: .75rem; background: var(--color-gray-50); font-size: .74rem; line-height: 1.45; color: var(--color-gray-600); }
+    .au-gc-need b { font-weight: 800; color: var(--color-gray-900); }
+    .au-gc[aria-pressed="true"] { border-color: var(--color-brand-600, #4a7c2a); background: #f6faf0; box-shadow: 0 8px 20px -14px rgb(61 104 35 / .7); }
+    .au-gc[aria-pressed="true"] .au-gc-top i { background: var(--color-brand-600, #4a7c2a); border-color: var(--color-brand-600, #4a7c2a); }
+    .au-gc[aria-pressed="true"] .au-gc-top i::after { opacity: 1; }
     .au-steps { display: grid; gap: .1rem; margin-top: .45rem; }
     .au-steps > div { display: flex; align-items: baseline; gap: .5rem; padding: .3rem 0; border-top: 1px solid rgb(0 0 0 / .06); font-size: .78rem; line-height: 1.4; color: #4a3b0a; }
     .au-steps > div > span:first-child { flex: none; width: 1.2rem; text-align: center; }
@@ -243,11 +250,14 @@
     .au-acc-in .au-steps { margin: 0 0 .5rem; padding: .35rem .7rem; border-radius: .8rem; background: #fdf8e8; border: 1px solid #f0e2a8; }
     .au-acc-in .au-steps > div:first-child { border-top: 0; }
     html.dark .au-goal { border-color: #2b3a1c; }
-    html.dark .au-aim { background: #161c12; border-color: #2b3a1c; } html.dark .au-aim b { color: #eef3e8; }
-    html.dark .au-aim[aria-pressed="true"] { background: #1c2616; border-color: #6b9f3d; }
     html.dark .au-gl { color: #b9c5ad; }
-    html.dark .au-goalout, html.dark .au-acc-in .au-steps { background: #2a2410; border-color: #5b4d16; }
-    html.dark .au-goal-n span, html.dark .au-goal-n small { color: #f0dfa0; } html.dark .au-goal-n b, html.dark .au-steps > div > b { color: #fff3c4; }
+    html.dark .au-stand { background: #17220f; border-color: #2b3a1c; color: #c5e09f; }
+    html.dark .au-goals-h b, html.dark .au-gc-top b, html.dark .au-gc-need b { color: #eef3e8; }
+    html.dark .au-gc { background: #161c12; border-color: #2b3a1c; } html.dark .au-gc[aria-pressed="true"] { background: #1c2616; border-color: #6b9f3d; }
+    html.dark .au-gc-say, html.dark .au-gc-need { color: #b9c5ad; } html.dark .au-gc-need { background: #1a2114; }
+    html.dark .au-gc-top em { color: #c5e09f; } html.dark .au-gc.is-risky .au-gc-top em, html.dark .au-gc.is-high .au-gc-top em { color: #f0dfa0; }
+    html.dark .au-acc-in .au-steps { background: #2a2410; border-color: #5b4d16; }
+    html.dark .au-steps > div > b { color: #fff3c4; }
     html.dark .au-steps > div { color: #eadcae; border-color: rgb(255 255 255 / .06); }
 
     /* The reading, one row per item, each folded until tapped (2026-10-28, the owner: "make it 1 row per item and make
@@ -384,7 +394,7 @@
     html.dark .au-bar-t { background: #26301e; } html.dark .au-bar-t i { background: #f1f5e9; }
     @media (prefers-reduced-motion: reduce) {
         .au-top::after, .au-top img, .au-reading-cta img, .au-big, .au-step.is-on, .au-lot, .au-w, .au-rl, .au-reads div, .au-note, .au-risk, .au-q, .au-from, .au-tag.is-bump { animation: none; }
-        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link, .au-gw, .au-gw-s, .au-gw-f, .au-acc-b, .au-acc-h, .au-acc-h > svg, .au-acc-t small, .au-aim { transition: none; }
+        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link, .au-gw, .au-gw-s, .au-gw-f, .au-acc-b, .au-acc-h, .au-acc-h > svg, .au-acc-t small, .au-gc, .au-gc-top i, .au-stand { transition: none; animation: none; }
     }
 </style>
 
@@ -658,7 +668,14 @@
         finally { busy--; savedSay(); }
     };
     const soon = (key, fn, ms = 650) => { clearTimeout(timers[key]); timers[key] = setTimeout(() => fn().catch(() => {}), ms); };
-    const flush = async () => { for (const k of Object.keys(timers)) { clearTimeout(timers[k]); } await Promise.all(Object.values(pending).map((f) => f().catch(() => {}))); for (const k in pending) delete pending[k]; };
+    // Runs what waits now. Only what it runs is taken off the list: a save asked while it runs keeps its own turn
+    // (the goals asked at load were lost when the list was emptied after the wait).
+    const flush = async () => {
+        for (const k of Object.keys(timers)) { clearTimeout(timers[k]); }
+        const run = Object.entries(pending);
+        run.forEach(([k]) => { delete pending[k]; });
+        await Promise.all(run.map(([, f]) => f().catch(() => {})));
+    };
     const pending = {};
     const later = (key, fn, ms) => { pending[key] = fn; soon(key, async () => { const f = pending[key]; delete pending[key]; if (f) await f(); }, ms); };
     window.addEventListener('beforeunload', () => { Object.values(pending).forEach((f) => f().catch(() => {})); });
@@ -718,6 +735,8 @@
         if (n === 1) { for (const l of S.lots) { const g = lotGap(l); if (g) return (l.name || 'A lot') + ': ' + g; } }
         if (n === 4 && !S.answers.water) return 'Pick where the water comes from.';
         if (n === 6 && !S.analysis) return 'Let Anee read the farm first.';
+        // The target is the farmer's pick, one for each lot, before the fertilizer is planned for it.
+        if (n === 6) { const l = S.lots.find((x) => !goalOf(x).pick); if (l) return 'Choose a goal for ' + (l.name || 'each lot') + ': it sets the fertilizer.'; }
         return null;
     };
     const paintStep = (n) => {
@@ -825,25 +844,26 @@
             + '</div></div>';
     };
 
-    /* ---- each lot's goal (App\Support\AutoGoal, 2026-10-28, the owner: "realistic goal is 6.5t/ha when i tried it ...
-       it really depends in the # of seeds planted in corn ... also goal is not selected like if the goal is max yield").
-       The farmer picks the aim and says how much they plant; the app counts the goal from the variety's best, the
-       aim, the stand, the water, salt and sodium, and says each step. Anee's reading takes that number. ---- */
-    const AIMS = @json(collect(\App\Support\AutoGoal::AIMS)->map(fn ($a) => ['label' => $a[0], 'sub' => $a[1], 'icon' => $a[2]]));
+    /* ---- how much each lot plants, then its goal (App\Support\AutoGoal, 2026-10-28, the owner: "first, user should be
+       asked how much to plant, the spacing if needed (all optional). this is before the analysis of anee. then based on
+       the calculation of npk calculator plus the anee analysis, show realistic to achieve then achievable but risky (then
+       show the high potential). then user selects about it (each selection will have its own requirement for
+       fertilizer first so that user can choose what is the target)"). The lot card asks the planting; the Reading step
+       shows the three goals, each with the fertilizer it takes, and the farmer picks one. ---- */
+    const LEVELS = @json(collect(\App\Support\AutoGoal::LEVELS)->map(fn ($l) => ['label' => $l[0], 'icon' => $l[1], 'say' => $l[4]]));
     S.goalIn = (S.answers.goals && !Array.isArray(S.answers.goals)) ? S.answers.goals : {};
     S.goalOut = {};
-    const goalOf = (l) => (S.goalIn[l.id] = S.goalIn[l.id] || { aim: 'balanced' });
+    const goalOf = (l) => (S.goalIn[l.id] = S.goalIn[l.id] || {});
     const fmt1 = (v) => String(Math.round(Number(v) * 10) / 10);
     const goalBlock = (l) => {
-        if (!l.crop) return '<span class="au-lab">Your goal</span><p class="text-sm text-gray-500">Pick the crop first: the goal is counted for it.</p>';
+        if (!l.crop) return '';
         const g = goalOf(l), out = S.goalOut[l.id] || {}, pl = out.plant || {};
         const sp = pl.spacing, units = pl.units || ['kg'], by = g.by || (sp ? 'spacing' : 'amount');
         const unit = units.includes(g.unit) ? g.unit : units[0], m = sp && sp.meters;
         const val = (v, f) => v ? Number(v) / f : '';
         const ph = (r) => r ? String(m ? r[1] / 100 : r[1]) : '';
         const germOn = pl.germ === 'seed' ? (by === 'spacing' || ['kg', 'g', 'seeds', 'hills'].includes(unit)) : (pl.germ === 'seedlings' ? by !== 'spacing' && ['kg', 'g', 'seeds'].includes(unit) : false);
-        return '<span class="au-lab">What you are aiming for</span><div class="au-aims">' + Object.entries(AIMS).map(([k, a]) => '<button type="button" class="au-aim" data-aim="' + k + '" aria-pressed="' + (g.aim === k) + '"><span aria-hidden="true">' + a.icon + '</span><span><b>' + esc(a.label) + '</b><small>' + esc(a.sub) + '</small></span></button>').join('') + '</div>'
-            + '<span class="au-lab">How much you plant <small>(it sets the harvest the lot can carry)</small></span>'
+        return '<span class="au-lab">How much you plant <small>(optional: it sets the harvest the lot can carry)</small></span>'
             + '<div class="au-pills">' + (sp ? '<button type="button" class="au-pill" data-by="spacing" aria-pressed="' + (by === 'spacing') + '">By spacing</button>' : '') + '<button type="button" class="au-pill" data-by="amount" aria-pressed="' + (by !== 'spacing' || !sp) + '">By amount</button></div>'
             + (by === 'spacing' && sp
                 ? '<div class="au-row is-3 mt-2"><label class="au-gl">Between rows<span><input type="number" class="form-input" data-gf="row" min="0" step="any" inputmode="decimal" value="' + val(g.row, m ? 100 : 1) + '" placeholder="' + ph(sp.row) + '"><em>' + (m ? 'm' : 'cm') + '</em></span></label>'
@@ -853,26 +873,16 @@
                 : '<div class="flex gap-2 mt-2"><input type="number" class="form-input flex-1" data-gf="amount" min="0" step="any" inputmode="decimal" value="' + (g.amount || '') + '" placeholder="For this lot">'
                     + '<button type="button" class="au-pill" data-unit aria-label="Change the unit">' + esc((pl.unitWords || {})[unit] || unit) + '</button></div>')
             + (germOn ? '<label class="au-gl mt-2"><i>Germination on the seed bag <small>(optional)</small></i><span><input type="number" class="form-input" data-gf="germ" min="1" max="100" step="1" inputmode="numeric" value="' + (g.germ || '') + '" placeholder="Like 90"><em>%</em></span></label>' : '')
-            + '<label class="au-gl mt-2"><i>Your own target <small>(optional)</small></i><span><input type="number" class="form-input" data-gf="target" min="0" step="any" inputmode="decimal" value="' + (g.target || '') + '" placeholder="Anee counts one for you"><em>t/ha</em></span></label>'
-            + '<div class="au-goalout" data-goalout>' + goalOutHtml(l) + '</div>';
+            + '<p class="au-stand" data-goalout>' + standHtml(l) + '</p>';
     };
-    const goalOutHtml = (l) => {
+    const standHtml = (l) => {
         const o = S.goalOut[l.id];
-        if (!o) return '<div class="au-goal-n is-wait"><span>Counting the goal…</span></div>';
-        if (!o.tPerHa) return '<div class="au-goal-n is-wait"><span>No goal can be counted for this crop yet.</span></div>';
-        return '<div class="au-goal-n"><span>Realistic goal</span><b>' + fmt1(o.tPerHa) + ' t/ha</b>' + (o.areaHa && Math.abs(o.areaHa - 1) > 0.001 ? '<small>About ' + fmt1(o.lotTons) + ' t on this lot</small>' : '') + '</div>'
-            + '<div class="au-steps">' + (o.steps || []).filter((s) => s[1] !== 'Realistic goal').map((s) => '<div><span aria-hidden="true">' + s[0] + '</span><span>' + esc(s[1]) + '</span><b>' + esc(s[2]) + '</b></div>').join('') + '</div>';
+        if (o && o.standSay) return '<span aria-hidden="true">🌱</span><span>' + esc(o.standSay) + ' The goals are counted from it after Anee reads the farm.</span>';
+        return '<span aria-hidden="true">🌱</span><span>Not given: a full usual stand is counted. The goals come after Anee reads the farm.</span>';
     };
-    const paintGoalOut = (l) => {
-        const box = lotEl(l.id)?.querySelector('[data-goalout]');
-        if (!box) return;
-        const was = box.querySelector('.au-goal-n b')?.textContent;
-        box.innerHTML = goalOutHtml(l);
-        const b = box.querySelector('.au-goal-n b');
-        if (b && was && was !== b.textContent && !still()) b.animate([{ transform: 'scale(1.12)', color: '#b45309' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.22, 1, .36, 1)' });
-    };
+    const paintGoalOut = (l) => { const box = lotEl(l.id)?.querySelector('[data-goalout]'); if (box) box.innerHTML = standHtml(l); };
     const paintGoal = (l) => { const box = lotEl(l.id)?.querySelector('[data-goal]'); if (box) box.innerHTML = goalBlock(l); };
-    // Saves a lot's inputs (when given) and brings every lot's goal back counted.
+    // Saves a lot's planting or its pick (when given) and brings every lot's goals back counted.
     const saveGoals = async (l) => {
         const r = await put(U.goal, l ? { lotId: l.id, goal: goalOf(l) } : {}, 'POST');
         const before = JSON.stringify(Object.fromEntries(Object.entries(S.goalOut).map(([k, o]) => [k, [o.plant, o.method]])));
@@ -880,14 +890,14 @@
         // The planting asked changes with the crop and its way in: then the block is painted again.
         const after = JSON.stringify(Object.fromEntries(Object.entries(S.goalOut).map(([k, o]) => [k, [o.plant, o.method]])));
         S.lots.forEach((x) => { if (before !== after) paintGoal(x); else paintGoalOut(x); });
-        if (step === 6 && S.analysis) paintReading();
+        if (step === 6 && S.analysis) paintGoalCards();
+        if (step === 6) navSay();
     };
     const goalsSoon = (l, ms = 700) => later(l ? 'goal' + l.id : 'goals', () => saveGoals(l), ms);
     $('auLots').addEventListener('click', (e) => {
         const box = e.target.closest('[data-goal]'); if (!box) return;
         const l = lotById(box.closest('.au-lot').dataset.lot), g = goalOf(l), out = S.goalOut[l.id] || {};
-        const aim = e.target.closest('[data-aim]'), by = e.target.closest('[data-by]'), un = e.target.closest('[data-unit]');
-        if (aim) { g.aim = aim.dataset.aim; box.querySelectorAll('[data-aim]').forEach((b) => b.setAttribute('aria-pressed', String(b === aim))); goalsSoon(l, 150); }
+        const by = e.target.closest('[data-by]'), un = e.target.closest('[data-unit]');
         if (by && g.by !== by.dataset.by) { g.by = by.dataset.by; paintGoal(l); goalsSoon(l, 300); }
         if (un) { const us = (out.plant || {}).units || ['kg']; g.unit = us[(us.indexOf(g.unit && us.includes(g.unit) ? g.unit : us[0]) + 1) % us.length]; paintGoal(l); goalsSoon(l, 300); }
     });
@@ -1444,6 +1454,15 @@
 
     /* ---- 6. Anee reads the farm ---- */
     const READS = [['🌾', 'Your varieties, looked up on the web: maturity, yield, weak points'], ['🌏', 'ENSO and the season ahead, with the seasonal outlook'], ['🌦️', 'Sixteen days of weather at each lot'], ['🧪', 'Your soil from its signs and the soil model at the spot'], ['🐛', 'Your past troubles, to get ahead of them']];
+    // One row per item: an icon, the name and its first sentence; a tap unfolds the rest. All folded at first.
+    const first = (s) => String(s || '').split(/(?<=[.!?])\s+/)[0];
+    const list = (xs, plain) => (xs || []).length ? '<ul' + (plain ? ' class="is-plain"' : '') + '>' + xs.map((x) => '<li>' + x + '</li>').join('') + '</ul>' : '';
+    const acc = (icon, title, teaser, body, count, warn) => body ? '<div class="au-acc"><button type="button" class="au-acc-h" aria-expanded="false"><span class="au-acc-i" aria-hidden="true">' + icon + '</span>'
+        + '<span class="au-acc-t"><b>' + esc(title) + '</b>' + (teaser ? '<small>' + esc(teaser) + '</small>' : '') + '</span>'
+        + (count ? '<span class="au-acc-n' + (warn ? ' is-warn' : '') + '">' + count + '</span>' : '') + CHEV + '</button>'
+        + '<div class="au-acc-b"><div><div class="au-acc-in">' + body + '</div></div></div></div>' : '';
+    const para = (s) => s ? '<p>' + esc(s) + '</p>' : '';
+    const kv = (icon, label, value) => '<div class="au-kv"><span aria-hidden="true">' + icon + '</span><span>' + esc(label) + '</span><b' + (value ? '' : ' class="is-none"') + '>' + esc(value || 'not found') + '</b></div>';
     const paintReading = () => {
         const A = S.analysis;
         if (!A) {
@@ -1456,15 +1475,6 @@
         }
         const lotName = (id) => (S.lots.find((l) => l.id === id) || {}).name || 'Lot';
         const sea = A.season || {};
-        // One row per item: an icon, the name and its first sentence; a tap unfolds the rest. All folded at first.
-        const first = (s) => String(s || '').split(/(?<=[.!?])\s+/)[0];
-        const list = (xs, plain) => (xs || []).length ? '<ul' + (plain ? ' class="is-plain"' : '') + '>' + xs.map((x) => '<li>' + x + '</li>').join('') + '</ul>' : '';
-        const acc = (icon, title, teaser, body, count, warn) => body ? '<div class="au-acc"><button type="button" class="au-acc-h" aria-expanded="false"><span class="au-acc-i" aria-hidden="true">' + icon + '</span>'
-            + '<span class="au-acc-t"><b>' + esc(title) + '</b>' + (teaser ? '<small>' + esc(teaser) + '</small>' : '') + '</span>'
-            + (count ? '<span class="au-acc-n' + (warn ? ' is-warn' : '') + '">' + count + '</span>' : '') + CHEV + '</button>'
-            + '<div class="au-acc-b"><div><div class="au-acc-in">' + body + '</div></div></div></div>' : '';
-        const para = (s) => s ? '<p>' + esc(s) + '</p>' : '';
-        const kv = (icon, label, value) => '<div class="au-kv"><span aria-hidden="true">' + icon + '</span><span>' + esc(label) + '</span><b' + (value ? '' : ' class="is-none"') + '>' + esc(value || 'not found') + '</b></div>';
         $('auReading').innerHTML = '<div class="au-rl" style="--i:0"><h4>🌏 ' + esc(A.headline || 'The season ahead') + '</h4>'
             + (sea.outlook ? '<p class="au-rl-lead">' + esc(sea.outlook) + '</p>' : '')
             + '<div class="au-rows">'
@@ -1477,17 +1487,12 @@
             + (A.lots || []).map((r, i) => {
                 const v = r.variety || {}, so = r.soil || {}, g = r.goal || {}, f = r.fertilizer || {}, risks = r.risks || [];
                 return '<div class="au-rl" style="--i:' + (i + 1) + '"><h4>🌾 ' + esc(lotName(r.lotId)) + (v.name ? ' · ' + esc(v.name) : '') + '</h4>'
+                    // The three goals, each with its fertilizer; the farmer picks the target (AutoGoal, counted again as answers change).
+                    + '<div class="au-goals" data-goals="' + r.lotId + '">' + goalCards(r.lotId, g) + '</div>'
                     + '<div class="au-rows">'
                     + kv('⏳', 'Matures in', v.maturityDays ? v.maturityDays + ' days' : '')
-                    + kv('🏆', 'Potential', v.yieldPotentialTPerHa ? v.yieldPotentialTPerHa + ' t/ha' : '')
                     + kv('📊', 'Usual harvest', v.averageTPerHa ? v.averageTPerHa + ' t/ha' : '')
-                    // The goal as the app counts it now (AutoGoal), so a changed aim or planting shows at once; the reading's when not yet counted.
-                    + (() => {
-                        const go = S.goalOut[r.lotId], t = go && go.tPerHa ? go.tPerHa : g.tPerHa, steps = (go && go.steps) || g.steps || [], aim = AIMS[(go && go.aim) || g.aim];
-                        return acc('🎯', 'Realistic goal' + (t ? ': ' + fmt1(t) + ' t/ha' : ''), [aim ? aim.label : '', first(g.why)].filter(Boolean).join(' · '),
-                            (steps.length ? '<div class="au-steps">' + steps.filter((s) => s[1] !== 'Realistic goal').map((s) => '<div><span aria-hidden="true">' + s[0] + '</span><span>' + esc(s[1]) + '</span><b>' + esc(s[2]) + '</b></div>').join('') + '</div>' : '')
-                            + para(g.why) + '<p class="text-xs text-gray-500">Change the aim or how much you plant on the Lots step: the goal is counted again.</p>');
-                    })()
+                    + '<div data-goalsteps="' + r.lotId + '">' + goalSteps(r.lotId, g) + '</div>'
                     + acc('🧬', 'The variety', v.season ? first(v.season) : first((v.traits || [])[0]),
                         (v.by ? '<p><b>' + esc(v.by) + '</b></p>' : '') + para(v.season) + list((v.traits || []).map(esc)) + ((v.cautions || []).length ? '<h6>Careful</h6>' + list(v.cautions.map((t) => '⚠️ ' + esc(t)), true) : ''),
                         (v.cautions || []).length ? (v.cautions.length === 1 ? '1 caution' : v.cautions.length + ' cautions') : 0, true)
@@ -1511,6 +1516,43 @@
             + '<p class="text-center text-xs text-gray-400 mb-3">Read ' + esc(A.at || '') + (A.searched ? ', with what Anee found on the web' : '') + '. ' + (S.readingsLeft > 0 ? '<button type="button" class="underline font-bold text-brand-700" id="auReread">Read it again</button> (changed an answer?)' : '') + '</p>';
         $('auReread')?.addEventListener('click', runReading);
     };
+    // A lot's three goals as cards: the yield, what it rests on (Anee's words when she gave them), and the fertilizer it takes.
+    const NUT = { N: 'N', P2O5: 'P₂O₅', K2O: 'K₂O' };
+    const needLine = (need) => Object.entries(NUT).map(([k, w]) => w + ' <b>' + Math.round(Number(need[k] || 0)) + '</b>').join(' · ');
+    const goalCards = (lotId, rg) => {
+        const go = S.goalOut[lotId], l = lotById(lotId);
+        if (!go || !go.levels || !l) return '<p class="au-goals-wait">Counting the goals…</p>';
+        const pick = goalOf(l).pick, words = (rg && rg.words) || {}, lotHa = Number(go.areaHa) || 1, one = Math.abs(lotHa - 1) < 0.001;
+        return '<div class="au-goals-h"><b>Choose your goal</b><small>Each one takes its own fertilizer. The one you pick is the target Anee plans the season for.</small></div>'
+            + Object.entries(go.levels).map(([k, lv]) => '<button type="button" class="au-gc is-' + k + '" data-level="' + k + '" aria-pressed="' + (pick === k) + '">'
+                + '<span class="au-gc-top"><span aria-hidden="true">' + lv.icon + '</span><b>' + esc(lv.label) + '</b><em>' + fmt1(lv.t) + ' t/ha</em><i aria-hidden="true"></i></span>'
+                + '<span class="au-gc-say">' + esc(words[k] || lv.say) + '</span>'
+                + '<span class="au-gc-need"><span>Fertilizer, kg a hectare: ' + needLine(lv.need) + '</span>'
+                + (one ? '' : '<span>For this lot: ' + needLine(lv.lotNeed) + ' · about ' + fmt1(lv.lotT) + ' t</span>')
+                + ((lv.micros || []).length ? '<span>Also: ' + lv.micros.map((m) => esc(m.name) + ' ' + fmt1(m.need) + ' kg').join(', ') + ' a hectare</span>' : '') + '</span>'
+                + '</button>').join('');
+    };
+    const goalSteps = (lotId, rg) => {
+        const go = S.goalOut[lotId], steps = (go && go.steps) || (rg && rg.steps) || [];
+        return steps.length ? acc('📐', 'How the goals are counted', first(rg && rg.why) || 'The variety\'s best, your stand, the water and the soil',
+            '<div class="au-steps">' + steps.map((s) => '<div><span aria-hidden="true">' + s[0] + '</span><span>' + esc(s[1]) + '</span><b>' + esc(s[2]) + '</b></div>').join('') + '</div>'
+            + para(rg && rg.why) + '<p class="text-xs text-gray-500">Change how much you plant on the Lots step: the goals are counted again.</p>') : '';
+    };
+    // Only the goal cards and their steps are painted again when the count comes back, so open rows stay open.
+    const paintGoalCards = () => ((S.analysis || {}).lots || []).forEach((r) => {
+        const box = document.querySelector('[data-goals="' + r.lotId + '"]');
+        if (box) box.innerHTML = goalCards(r.lotId, r.goal || {});
+        const st = document.querySelector('[data-goalsteps="' + r.lotId + '"]');
+        if (st && !st.querySelector('.au-acc.is-open')) st.innerHTML = goalSteps(r.lotId, r.goal || {});
+    });
+    $('auReading').addEventListener('click', (e) => {
+        const c = e.target.closest('[data-level]'); if (!c) return;
+        const l = lotById(c.closest('[data-goals]').dataset.goals); if (!l) return;
+        goalOf(l).pick = c.dataset.level;
+        c.parentElement.querySelectorAll('[data-level]').forEach((b) => b.setAttribute('aria-pressed', String(b === c)));
+        navSay();
+        goalsSoon(l, 100);
+    });
     $('auReading').addEventListener('click', (e) => {
         const h = e.target.closest('.au-acc-h'); if (!h) return;
         const box = h.closest('.au-acc'), open = !box.classList.contains('is-open');
@@ -1557,6 +1599,9 @@
         const read = ((S.analysis || {}).lots || []).find((r) => r.lotId === l.id) || {};
         const fr = read.fertilizer || {};
         let html = '<div class="au-rl" style="--i:0"><h4>' + (cropOf(l.crop)?.icon || '🌱') + ' ' + esc(l.name) + ' · ' + esc(cropName(l.crop).split(',')[0]) + (l.size ? ' · ' + l.size + ' ' + (l.unit === 'sqm' ? 'm²' : 'ha') : '') + '</h4>';
+        // The goal picked on the Reading step: the fertilizer is planned for it.
+        const pk = goalOf(l).pick, lv = pk && ((S.goalOut[l.id] || {}).levels || {})[pk];
+        if (lv) html += '<div class="au-note is-ok"><span>' + lv.icon + '</span><span>Your goal: <b>' + esc(lv.label) + ', ' + fmt1(lv.t) + ' t/ha</b>. It takes about ' + needLine(lv.need) + ' kg a hectare. <button type="button" class="au-link" data-go-goal>Change it</button></span></div>';
         if (fr.focus) html += '<h5>Anee\'s advice for this soil</h5><p>' + esc(fr.focus) + '</p>'
             + ((fr.goodSources || []).length ? '<div class="au-chips mt-1">' + fr.goodSources.map((x) => '<span class="au-chip">👍 ' + esc(x) + '</span>').join('') + (fr.avoid || []).map((x) => '<span class="au-chip is-warn">✋ ' + esc(x) + '</span>').join('') + '</div>' : '')
             + ((fr.micros || []).length ? '<p class="mt-2 text-sm"><b>Micronutrients and foliars worth adding:</b> ' + esc(fr.micros.join(', ')) + '</p>' : '');
@@ -1590,7 +1635,7 @@
         if (S.lots.findIndex((x) => x.id === FLOT) < S.lots.length - 1) navLabel($('auNext'), '', 'Next lot', 'next'); else navLabel($('auNext'), 'Next: ', 'Start', 'next');
     };
     $('auFTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-l]'); if (b) { FLOT = Number(b.dataset.l); paintFert(); } });
-    $('auFPane').addEventListener('click', (e) => { if (e.target.closest('[data-open-fert]')) openFert(lotById(FLOT)); });
+    $('auFPane').addEventListener('click', (e) => { if (e.target.closest('[data-open-fert]')) openFert(lotById(FLOT)); if (e.target.closest('[data-go-goal]')) show(6, true); });
 
     /* NPK Plus, in a window of its own, prefilled from the lot and the reading. */
     const NPK_CONDS = ['acidic', 'neutral', 'alkaline', 'sodic', 'saline', 'acid_sulfate', 'low_om', 'peat', 'waterlogged'];
@@ -1603,7 +1648,7 @@
             areaHa: l.unit === 'sqm' ? (Number(l.size) || 0) / 10000 : (Number(l.size) || 1),
             // The goal as the app counts it (AutoGoal), the farmer's own target when typed, and how much they plant.
             potential: (S.goalOut[l.id] || {}).potential || (read.variety || {}).yieldPotentialTPerHa || null,
-            target: goalOf(l).target || (S.goalOut[l.id] || {}).tPerHa || (read.goal || {}).tPerHa || null,
+            target: (S.goalOut[l.id] || {}).tPerHa || (((S.goalOut[l.id] || {}).levels || {}).realistic || {}).t || null,
             seed: (() => {
                 const g = goalOf(l);
                 if (g.by === 'spacing' && g.row && g.plant) return { by: 'spacing', spacing: { row: g.row, plant: g.plant, perHill: g.perHill || null }, germination: g.germ || null };
@@ -1693,8 +1738,9 @@
     // Resume where the farmer left off.
     $('auTitleTop').textContent = S.title || 'Anee Auto';
     show(step);
-    // Every lot's goal, counted by the app (AutoGoal).
-    goalsSoon(null, 0);
+    // Every lot's goal, counted by the app (AutoGoal). window.api comes with app.js, a module that runs after this
+    // script: until then the count waits for the page to finish loading.
+    if (window.api) goalsSoon(null, 0); else document.addEventListener('DOMContentLoaded', () => goalsSoon(null, 0), { once: true });
     // The farm's lots this season was filled from, as they are now.
     if (Object.keys(LINK).length) loadFarm().then(() => {
         if (!FLROWS) return;

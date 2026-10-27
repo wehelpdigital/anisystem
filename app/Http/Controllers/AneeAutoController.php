@@ -734,13 +734,15 @@ class AneeAutoController extends Controller
                     ['via' => 'auto', 'userId' => (int) $this->payer()->id, 'searched' => (bool) ($result['searched'] ?? false), 'sources' => (array) ($result['sources'] ?? [])]);
             }
             $data = $result['data'];
-            // The goal is the app's count, never Anee's guess (2026-10-28, AutoGoal): the number and its steps are set here.
+            // The goals are the app's count, never Anee's guess (2026-10-28, AutoGoal): Anee says their words only.
+            // The numbers kept here are as read; the wizard shows them counted again (the farmer may change the planting).
             $goals = rescue(fn () => AutoGoal::forSeason($auto), [], false);
             foreach ((array) ($data['lots'] ?? []) as $i => $rl) {
                 $g = $goals[(int) ($rl['lotId'] ?? 0)] ?? null;
-                if ($g && $g['tPerHa']) {
-                    $data['lots'][$i]['goal'] = ['tPerHa' => $g['tPerHa'], 'why' => (string) (($rl['goal'] ?? [])['why'] ?? ''), 'steps' => $g['steps'], 'aim' => $g['aim']];
-                }
+                $w = (array) ($rl['goal'] ?? []);
+                $data['lots'][$i]['goal'] = ['why' => (string) ($w['why'] ?? ''),
+                    'words' => array_map(fn ($k) => mb_substr(trim((string) ($w[$k] ?? '')), 0, 400), array_combine(array_keys(AutoGoal::LEVELS), array_keys(AutoGoal::LEVELS)))]
+                    + ($g && $g['levels'] ? ['levels' => array_map(fn ($lv) => $lv['t'], $g['levels']), 'steps' => $g['steps'], 'tPerHa' => $g['levels']['realistic']['t']] : []);
             }
             $data['at'] = now('Asia/Manila')->format('M j, Y g:i A');
             $data['sources'] = array_slice((array) ($result['sources'] ?? []), 0, 12);

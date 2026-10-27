@@ -3359,7 +3359,11 @@
             if (e.origin !== location.origin || !e.data || e.data.type !== 'auto-prefill') return;
             const p = e.data.data || {};
             try {
-                if (p.calcId) { applyCalc((await window.api(U.one(p.calcId))).data); }
+                if (p.calcId) {
+                    applyCalc((await window.api(U.one(p.calcId))).data);
+                    // A goal picked again in Anee Auto: the saved plan opens on the new target, in tons.
+                    if (p.target && st.yUnit === 't' && Math.abs(num('npTarget') - p.target) > 0.001) { $('npTarget').value = p.target; $('npTarget').dispatchEvent(new Event('input', { bubbles: true })); }
+                }
                 else {
                     applyCalc({ id: null, crop: p.crop || null, areaHa: p.areaHa || 1, targetYield: p.target || null, lines: [], soil: p.ph != null ? { ph: p.ph } : {},
                         result: { setup: { variety: p.variety || '', areaUnit: p.areaUnit || 'ha', areaValue: p.areaValue || 1, yUnit: 't',
