@@ -42,7 +42,7 @@ final class AutoGoal
         'traditional' => ['Traditional yield (unsecured)', '🌾', null, false, 'What farms around here usually harvest with the usual fertilizer and no micronutrients. Nothing secures it against the shortages of this soil.', []],
         'realistic' => ['Realistic to achieve', '✅', 0.8, true, 'What a well run field usually reaches, held to your stand, your water and your soil.', ['likely']],
         'risky' => ['Achievable but risky', '⚠️', 0.9, true, 'More fertilizer, and the weather and the water must go right.', ['likely', 'watch']],
-        'high' => ['High potential', '🏆', 1.0, false, 'The best on record: a full stand, water whenever it is needed, and the soil put right.', ['likely', 'watch']],
+        'high' => ['High potential (complete micro protocol)', '🏆', 1.0, false, 'The best on record, with every element this soil and crop may run short of fed, a full stand, water whenever it is needed, and the soil put right.', ['likely', 'watch', 'test']],
     ];
 
     /** The usual harvest beside the farms around (the lot's yieldLast answer): what the traditional yield leans by. */
@@ -258,13 +258,21 @@ final class AutoGoal
             // The secondary and micro elements fed for this goal (LEVELS), the likely short ones first.
             $micros = [];
             $feed = self::LEVELS[$key][5];
+            $low = 1.0;
             foreach ((array) ($n['micros'] ?? []) as $el => $m) {
                 if (in_array($m['level'] ?? '', $feed, true) && empty($m['beneficial']) && (float) $m['need'] > 0) {
-                    $micros[] = ['el' => $el, 'name' => $m['name'], 'need' => round((float) $m['need'], 2), 'lot' => round((float) $m['need'] * $areaHa, 2), 'likely' => $m['level'] === 'likely'];
+                    $share = (float) ($m['soil'] ?? 1);
+                    $micros[] = ['el' => $el, 'name' => $m['name'], 'need' => round((float) $m['need'], 2), 'lot' => round((float) $m['need'] * $areaHa, 2), 'likely' => $m['level'] === 'likely', 'soil' => round($share, 2)];
+                    $low = min($low, $share);
                 }
             }
             usort($micros, fn ($x, $y) => $y['likely'] <=> $x['likely']);
+            // What the micronutrients in it add (2026-10-28, the owner: "we should atleast provide a potential for the complete
+            // micro protocol ... that should increase the potential"): left unfed, the scarcest of them holds the harvest to the
+            // share the soil gives of it on its own (the shortest plank, as NPK Plus's barrel counts it).
+            $without = $low < 0.99 ? round($lv['t'] * $low, 1) : null;
             $levels[$key] += ['lotT' => round($lv['t'] * $areaHa, 2), 'need' => $need, 'lotNeed' => array_map(fn ($v) => (int) round($v * $areaHa), $need), 'micros' => $micros,
+                'without' => $without !== null && $without < $lv['t'] ? $without : null,
                 // What the traditional yield leaves unfed: the shortages that stay.
                 'unfed' => $feed === [] ? $out['feed'] : []];
         }

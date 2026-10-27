@@ -251,8 +251,28 @@
     .au-gc-t td:first-child { text-align: left; font-weight: 600; color: var(--color-gray-700); white-space: normal; }
     .au-gc-t tr:last-child td { border-bottom: 0; }
     .au-gc-t tr.is-micro td:first-child { color: #2d5016; }
-    .au-gc-t td small { display: inline-block; margin-left: .25rem; padding: 0 .35rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #8a5a00; background: #fff4d6; }
+    .au-gc-t td small { display: inline-block; margin-left: .25rem; padding: 0 .35rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #2d5016; background: #e4efd4; }
     .au-gc-unfed { padding: .4rem .55rem; border-radius: .7rem; font-size: .74rem; line-height: 1.45; color: #6b4a00; background: #fff6dd; border: 1px solid #f3d98f; }
+    .au-gc-add { display: flex; gap: .45rem; padding: .4rem .55rem; border-radius: .7rem; font-size: .74rem; line-height: 1.45; color: #2d4a17; background: #f3f8ec; border: 1px solid #dcebc8; }
+    .au-gc-add b { color: #1d330d; }
+    .au-goals-disc { display: flex; gap: .5rem; margin-top: .2rem; padding: .6rem .7rem; border-radius: .9rem; font-size: .74rem; line-height: 1.5; color: #6b4a00; background: #fff6dd; border: 1px solid #f3d98f; }
+    .au-goals-disc b { color: #4a3300; }
+    @media (min-width: 768px) { .au-goals-disc { grid-column: 1 / -1; } }
+    /* How much the lot plants, on the Reading step: one row that opens the lot card's own inputs. */
+    .au-plant { margin: .7rem 0 .2rem; border-radius: 1rem; border: 1px solid #dcebc8; background: #f8fbf4; overflow: hidden; }
+    .au-plant-h { display: flex; align-items: center; gap: .6rem; width: 100%; padding: .6rem .75rem; text-align: left; }
+    .au-plant-h > span:first-child { flex: none; font-size: 1.05rem; }
+    .au-plant-h > span:nth-child(2) { flex: 1; min-width: 0; display: grid; }
+    .au-plant-h b { font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-plant-h small { font-size: .74rem; line-height: 1.4; color: var(--color-gray-600); }
+    .au-plant-h em { flex: none; font-style: normal; font-size: .78rem; font-weight: 800; color: var(--color-brand-700, #3d6823); text-decoration: underline; text-underline-offset: 3px; }
+    .au-plant.is-open .au-acc-b { grid-template-rows: 1fr; }
+    .au-goal.is-inline { margin: 0; padding: 0 .75rem .8rem; border-top: 0; }
+    .au-goal.is-inline > .au-lab:first-child { display: none; }
+    html.dark .au-gc-add { background: #17220f; border-color: #2b3a1c; color: #c5e09f; } html.dark .au-gc-add b { color: #e3f0d2; }
+    html.dark .au-goals-disc { background: #2a2210; border-color: #5b4716; color: #f3d9a4; } html.dark .au-goals-disc b { color: #fbe7bd; }
+    html.dark .au-plant { background: #17220f; border-color: #2b3a1c; } html.dark .au-plant-h b { color: #eef3e8; } html.dark .au-plant-h small { color: #b9c5ad; } html.dark .au-plant-h em { color: #a5c97e; }
+    html.dark .au-gc-t td small { background: #1c2616; color: #c5e09f; }
     .au-gc[aria-checked="true"] { border-color: var(--color-brand-600, #4a7c2a); background: #f6faf0; box-shadow: 0 8px 20px -14px rgb(61 104 35 / .7); }
     .au-gc[aria-checked="true"] .au-gc-top i { background: var(--color-brand-600, #4a7c2a); border-color: var(--color-brand-600, #4a7c2a); }
     .au-gc[aria-checked="true"] .au-gc-top i::after { opacity: 1; }
@@ -880,7 +900,7 @@
                 + '<div><span class="au-lab">Town or city</span><button type="button" class="au-tag' + (l.town ? '' : ' is-none') + '" data-act="town"' + (l.province ? '' : ' disabled') + '><span>' + esc(l.town ? townName(l.town) : (l.province ? 'Choose the town' : 'Province first')) + '</span>' + CHEV + '</button></div></div>'
                 + '<label class="au-lab">Barangay <small>(optional)</small></label><input type="text" class="form-input w-full" data-f="barangay" maxlength="120" value="' + esc(l.barangay || '') + '">')
             + (mapped ? '' : '<span class="au-lab">Pin on the map <small>(optional)</small></span><button type="button" class="au-pin' + (l.pin ? ' is-set' : '') + '" data-act="pin"><span aria-hidden="true">📍</span><span>' + (l.pin ? 'Pinned at ' + Number(l.pin.lat).toFixed(4) + ', ' + Number(l.pin.lng).toFixed(4) + '<small>Tap to move it</small>' : 'Drop a pin on the lot<small>Optional: the weather and the soil are then read at the exact spot</small>') + '</span></button>')
-            + '<div class="au-goal" data-goal>' + goalBlock(l) + '</div>'
+            + '<div class="au-goal" data-goal="' + l.id + '">' + goalBlock(l) + '</div>'
             + '</div></div>';
     };
 
@@ -917,12 +937,25 @@
             + '<p class="au-stand" data-goalout>' + standHtml(l) + '</p>';
     };
     const standHtml = (l) => {
-        const o = S.goalOut[l.id];
-        if (o && o.standSay) return '<span aria-hidden="true">🌱</span><span>' + esc(o.standSay) + ' The goals are counted from it after Anee reads the farm.</span>';
-        return '<span aria-hidden="true">🌱</span><span>Not given: a full usual stand is counted. The goals come after Anee reads the farm.</span>';
+        const o = S.goalOut[l.id], after = S.analysis ? ' The goals are counted from it.' : ' The goals come after Anee reads the farm.';
+        if (o && o.standSay) return '<span aria-hidden="true">🌱</span><span>' + esc(o.standSay) + after + '</span>';
+        return '<span aria-hidden="true">🌱</span><span>Not given: a full usual stand is counted.' + after + '</span>';
     };
-    const paintGoalOut = (l) => { const box = lotEl(l.id)?.querySelector('[data-goalout]'); if (box) box.innerHTML = standHtml(l); };
-    const paintGoal = (l) => { const box = lotEl(l.id)?.querySelector('[data-goal]'); if (box) box.innerHTML = goalBlock(l); };
+    // The planting in a few words, for the row that opens it on the Reading step.
+    const plantLine = (l) => {
+        const g = goalOf(l), pl = (S.goalOut[l.id] || {}).plant || {}, m = pl.spacing && pl.spacing.meters, f = m ? 100 : 1;
+        const said = g.by === 'spacing' && g.row && g.plant ? fmt1(g.row / f) + ' by ' + fmt1(g.plant / f) + (m ? ' m' : ' cm') + (g.perHill ? ', ' + g.perHill + ' a hill' : '')
+            : (g.by !== 'spacing' && g.amount ? fmt1(g.amount) + ' ' + ((pl.unitWords || {})[g.unit || (pl.units || ['kg'])[0]] || g.unit || 'kg') + ' for the lot' : '');
+        const st = (S.goalOut[l.id] || {}).standSay;
+        return said ? said + (st ? ' · ' + st : '') : 'Not given: a full usual stand is counted. Tap to say how much you plant.';
+    };
+    // A lot's planting block can sit in two places (its lot card, and the Reading step above its goals): data-goal = the lot.
+    const goalBoxes = (l) => document.querySelectorAll('[data-goal="' + l.id + '"]');
+    const paintGoalOut = (l) => {
+        goalBoxes(l).forEach((b) => { const o = b.querySelector('[data-goalout]'); if (o) o.innerHTML = standHtml(l); });
+        document.querySelectorAll('[data-plantsay="' + l.id + '"]').forEach((x) => { x.textContent = plantLine(l); });
+    };
+    const paintGoal = (l) => { goalBoxes(l).forEach((b) => { b.innerHTML = goalBlock(l); }); paintGoalOut(l); };
     // Saves a lot's planting or its pick (when given) and brings every lot's goals back counted.
     const saveGoals = async (l) => {
         let r;
@@ -941,19 +974,23 @@
         if (step === 8) paintReview();
     };
     const goalsSoon = (l, ms = 700) => later(l ? 'goal' + l.id : 'goals', () => saveGoals(l), ms);
-    $('auLots').addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
         const box = e.target.closest('[data-goal]'); if (!box) return;
-        const l = lotById(box.closest('.au-lot').dataset.lot), g = goalOf(l), out = S.goalOut[l.id] || {};
+        const l = lotById(box.dataset.goal); if (!l) return;
+        const g = goalOf(l), out = S.goalOut[l.id] || {};
         const by = e.target.closest('[data-by]'), un = e.target.closest('[data-unit]');
         if (by && g.by !== by.dataset.by) { g.by = by.dataset.by; paintGoal(l); goalsSoon(l, 300); }
         if (un) { const us = (out.plant || {}).units || ['kg']; g.unit = us[(us.indexOf(g.unit && us.includes(g.unit) ? g.unit : us[0]) + 1) % us.length]; paintGoal(l); goalsSoon(l, 300); }
     });
-    $('auLots').addEventListener('input', (e) => {
+    document.addEventListener('input', (e) => {
         const f = e.target.dataset.gf; if (!f) return;
-        const l = lotById(e.target.closest('.au-lot').dataset.lot), g = goalOf(l), m = ((S.goalOut[l.id] || {}).plant || {}).spacing?.meters;
+        const box = e.target.closest('[data-goal]'); if (!box) return;
+        const l = lotById(box.dataset.goal); if (!l) return;
+        const g = goalOf(l), m = ((S.goalOut[l.id] || {}).plant || {}).spacing?.meters;
         const v = e.target.value === '' ? null : Number(e.target.value);
         g[f] = v === null ? null : ((f === 'row' || f === 'plant') && m ? v * 100 : v);
         if (f === 'amount' || f === 'row' || f === 'plant') g.by = g.by || (f === 'amount' ? 'amount' : 'spacing');
+        document.querySelectorAll('[data-plantsay="' + l.id + '"]').forEach((x) => { x.textContent = plantLine(l); });
         goalsSoon(l, 800);
     });
     const dayLabel = (l) => ({ transplanted: 'Transplanting day (DAT 0)', direct: 'Sowing day in the field (DAS 0)', planted: 'Planting day (DAP 0)' })[l.method] || 'Planting day';
@@ -1535,6 +1572,8 @@
                 const v = r.variety || {}, so = r.soil || {}, g = r.goal || {}, f = r.fertilizer || {}, risks = r.risks || [];
                 return '<div class="au-rl" style="--i:' + (i + 1) + '"><h4>🌾 ' + esc(lotName(r.lotId)) + (v.name ? ' · ' + esc(v.name) : '') + '</h4>'
                     // The three goals, each with its fertilizer; the farmer picks the target (AutoGoal, counted again as answers change).
+                    // How much the lot plants, open to change right here: the goals below are counted again from it.
+                    + plantBox(r.lotId)
                     + '<div class="au-goals" data-goals="' + r.lotId + '">' + goalCards(r.lotId, g) + '</div>'
                     + '<div class="au-rows">'
                     + kv('⏳', 'Matures in', v.maturityDays ? v.maturityDays + ' days' : '')
@@ -1583,16 +1622,29 @@
                 + '<p class="au-gc-say">' + esc(words[k] || lv.say) + '</p>'
                 + '<table class="au-gc-t"><thead><tr><th>What it takes</th><th>kg a hectare</th>' + (one ? '' : '<th>this lot</th>') + '</tr></thead><tbody>'
                 + Object.entries(NUTW).map(([n, w]) => row(w, (lv.need || {})[n], (lv.lotNeed || {})[n])).join('')
-                + (lv.micros || []).map((m) => row(esc(m.name) + (m.likely ? ' <small>likely short</small>' : ''), m.need, m.lot, 'is-micro')).join('')
+                + (lv.micros || []).map((m) => row(esc(m.name) + (m.likely ? ' <small>fixes a shortage</small>' : ''), m.need, m.lot, 'is-micro')).join('')
                 + '</tbody></table>'
+                // What its micronutrients add: left unfed, the scarcest of them would hold the harvest to what the soil gives alone.
+                + (lv.without ? '<p class="au-gc-add"><span aria-hidden="true">🧪</span><span>' + (k === 'high' ? 'The complete micro protocol adds' : 'These micronutrients add') + ' about <b>' + fmt1(lv.t - lv.without) + ' t/ha</b>. Without them, about ' + fmt1(lv.without) + ' t/ha.</span></p>' : '')
                 + ((lv.unfed || []).length ? '<p class="au-gc-unfed">No micronutrients: ' + esc(lv.unfed.map((x) => x.toLowerCase()).join(' and ')) + (lv.unfed.length > 1 ? ' stay' : ' stays') + ' short, so the harvest is not secured.</p>' : '')
-                + '</div>').join('') + '</div>';
+                + '</div>').join('') + '</div>'
+            // An estimate, said plainly (2026-10-28, the owner).
+            + '<p class="au-goals-disc"><span aria-hidden="true">⚠️</span><span><b>These are estimates, not a promise.</b> They are counted from the variety\'s record, your planting, your soil and water, and the season\'s outlook. The real harvest still depends on the weather, pests and diseases, the seed, and how well and on time the work is done.</span></p>';
+    };
+    // How much the lot plants, on the Reading step: a row that opens the same inputs as the lot card.
+    const PLANT_OPEN = {};
+    const plantBox = (lotId) => {
+        const l = lotById(lotId); if (!l || !l.crop) return '';
+        const open = !!PLANT_OPEN[lotId];
+        return '<div class="au-plant' + (open ? ' is-open' : '') + '"><button type="button" class="au-plant-h" data-plant-toggle="' + lotId + '" aria-expanded="' + open + '"><span aria-hidden="true">🌱</span>'
+            + '<span><b>How much you plant</b><small data-plantsay="' + lotId + '">' + esc(plantLine(l)) + '</small></span><em>' + (open ? 'Done' : 'Change') + '</em></button>'
+            + '<div class="au-acc-b"' + (open ? '' : ' inert') + '><div><div class="au-goal is-inline" data-goal="' + lotId + '">' + goalBlock(l) + '</div></div></div></div>';
     };
     const goalSteps = (lotId, rg) => {
         const go = S.goalOut[lotId], steps = (go && go.steps) || (rg && rg.steps) || [];
         return steps.length ? acc('📐', 'How the goals are counted', first(rg && rg.why) || 'The variety\'s best, your stand, the water and the soil',
             '<div class="au-steps">' + steps.map((s) => '<div><span aria-hidden="true">' + s[0] + '</span><span>' + esc(s[1]) + '</span><b>' + esc(s[2]) + '</b></div>').join('') + '</div>'
-            + para(rg && rg.why) + '<p class="text-xs text-gray-500">Change how much you plant on the Lots step: the goals are counted again.</p>') : '';
+            + para(rg && rg.why) + '<p class="text-xs text-gray-500">Change how much you plant above: the goals are counted again.</p>') : '';
     };
     // Only the goal cards and their steps are painted again when the count comes back, so open rows stay open.
     const paintGoalCards = () => ((S.analysis || {}).lots || []).forEach((r) => {
@@ -1609,6 +1661,13 @@
         goalsSoon(l, 100);
     };
     $('auReading').addEventListener('click', (e) => {
+        const t = e.target.closest('[data-plant-toggle]');
+        if (t) {
+            const id = t.dataset.plantToggle, box = t.closest('.au-plant'), open = !box.classList.contains('is-open');
+            PLANT_OPEN[id] = open; box.classList.toggle('is-open', open); t.setAttribute('aria-expanded', String(open));
+            box.querySelector('.au-acc-b').toggleAttribute('inert', !open); t.querySelector('em').textContent = open ? 'Done' : 'Change';
+            return;
+        }
         const c = e.target.closest('[data-level]'); if (c) pickGoal(c);
         if (e.target.closest('[data-goal-retry]')) { S.goalErr = false; paintGoalCards(); goalsSoon(null, 0); }
     });
