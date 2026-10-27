@@ -334,6 +334,10 @@
     .au-acc-in h6 { font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
     .au-acc-in ul { margin: .15rem 0 0 1rem; list-style: disc; }
     .au-acc-in li + li { margin-top: .2rem; }
+    /* A thin line between the items of every list in the wizard (2026-10-28, the owner: "add a thin line between the items
+       for easier readability. do this for all lists in the wizard"). */
+    .au ul > li + li { margin-top: .4rem; padding-top: .4rem; border-top: 1px solid var(--color-gray-200); }
+    html.dark .au ul > li + li { border-top-color: #2b3a1c; }
     .au-acc-in ul.is-plain { margin-left: 0; list-style: none; }
     .au-risk-i { padding: .5rem .65rem; border-radius: .8rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
     .au-risk-i + .au-risk-i { margin-top: .4rem; }
