@@ -672,6 +672,86 @@ document.addEventListener('click', (e) => {
 });
 
 /* ------------------------------------------------------------------ */
+/* A search box never shrinks the window it lives in                    */
+/* ------------------------------------------------------------------ */
+/* The owner, 2026-10-28: "all search modals should not change height  */
+/* if item while searching results is only one. because in mobile it   */
+/* becomes small that it becomes behind the keypad of the phone". A    */
+/* sheet sits on the bottom of the screen, so a list filtered down to   */
+/* one row pulled the box, search field and all, under the keyboard.    */
+/* The moment a search field in any modal takes focus its panel is held */
+/* at its height (a min-height, so it can still grow); on a phone a     */
+/* bottom panel first rises to most of the screen, so the field and the */
+/* first rows stay above the keyboard. Released once the panel is gone  */
+/* (hidden, or slid off the screen), never while it is still closing.   */
+/* Covers .sheet, <dialog> and every page's own modal; a                */
+/* panel or field that must not take part carries data-steady="off".   */
+/* ------------------------------------------------------------------ */
+(function steadySearchPanels() {
+    const FIELD = 'input[type="search"], input[enterkeyhint="search"], input[data-steady],'
+        + ' input[placeholder^="Search" i], input[placeholder^="Find" i]';
+    const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        || document.documentElement.classList.contains('sm-still');
+    const held = new Map(); // panel -> the inline min-height it had before
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+        entries.forEach((en) => { if (!en.isIntersecting) release(en.target); });
+    }) : null;
+
+    function release(panel) {
+        if (!held.has(panel)) return;
+        panel.style.minHeight = held.get(panel);
+        held.delete(panel);
+        io?.unobserve(panel);
+    }
+
+    // The box that would shrink: the fixed panel itself, or, when the fixed
+    // layer is a full screen backdrop (a <dialog>, an overlay that centers
+    // its card), the first box inside it smaller than the screen. A full
+    // screen layer that scrolls is a page of its own (the analyses' views),
+    // and a search on a page is left alone.
+    function panelOf(input) {
+        const chain = [];
+        let fixed = null;
+        for (let el = input.parentElement; el && el !== document.body; el = el.parentElement) {
+            chain.push(el);
+            if (getComputedStyle(el).position === 'fixed') { fixed = el; break; }
+        }
+        if (!fixed || fixed.closest('[data-steady="off"]')) return null;
+        const vh = document.documentElement.clientHeight;
+        if (fixed.offsetHeight < vh - 2) return fixed;
+        if (/(auto|scroll)/.test(getComputedStyle(fixed).overflowY)) return null;
+        for (let i = chain.length - 2; i >= 0; i--) {
+            if (chain[i].offsetHeight < vh - 2) return chain[i];
+            if (/(auto|scroll)/.test(getComputedStyle(chain[i]).overflowY)) return null;
+        }
+        return null;
+    }
+
+    document.addEventListener('focusin', (e) => {
+        const input = e.target;
+        if (!(input instanceof HTMLInputElement) || !input.matches(FIELD) || input.dataset.steady === 'off') return;
+        const panel = panelOf(input);
+        if (!panel || held.has(panel)) return;
+        const now = panel.offsetHeight;
+        if (!now) return;
+        let to = now;
+        const vh = document.documentElement.clientHeight;
+        if (window.matchMedia('(max-width: 639px)').matches
+            && panel.getBoundingClientRect().bottom >= vh - 2) {
+            const cap = parseFloat(getComputedStyle(panel).maxHeight);
+            to = Math.max(now, Math.round(Math.min(vh * 0.86, Number.isFinite(cap) ? cap : vh * 0.92)));
+        }
+        held.set(panel, panel.style.minHeight);
+        panel.style.minHeight = to + 'px';
+        if (to > now + 1 && !reduced()) {
+            panel.animate([{ minHeight: now + 'px' }, { minHeight: to + 'px' }],
+                { duration: 280, easing: 'cubic-bezier(.22, 1, .36, 1)' });
+        }
+        io?.observe(panel);
+    });
+})();
+
+/* ------------------------------------------------------------------ */
 /* Confirm dialog (promise-based)                                       */
 /* ------------------------------------------------------------------ */
 
