@@ -32,14 +32,21 @@ use App\Models\AsScheduleLot;
 final class AutoGoal
 {
     /**
-     * The three goals: label, icon, the share of the variety's best, whether the field's caps hold
-     * it down, and what it rests on. The high potential is the best itself, held only to the stand.
+     * The goals: label, icon, the share of the variety's best (null: the traditional yield, counted from
+     * the usual harvest), whether the field's caps hold it down, what it rests on, and the secondary and
+     * micro elements fed for it (2026-10-28, the owner: "add traditional yield (unsecured) the one that is
+     * low yield with low fertilizer use ... in higher yields add the micros"): none for the traditional
+     * one, the likely short ones for the realistic one, and those to watch too for the higher ones.
      */
     public const LEVELS = [
-        'realistic' => ['Realistic to achieve', '✅', 0.8, true, 'What a well run field usually reaches, held to your stand, your water and your soil.'],
-        'risky' => ['Achievable but risky', '⚠️', 0.9, true, 'More fertilizer, and the weather and the water must go right.'],
-        'high' => ['High potential', '🏆', 1.0, false, 'The best on record: a full stand, water whenever it is needed, and the soil put right.'],
+        'traditional' => ['Traditional yield (unsecured)', '🌾', null, false, 'What farms around here usually harvest with the usual fertilizer and no micronutrients. Nothing secures it against the shortages of this soil.', []],
+        'realistic' => ['Realistic to achieve', '✅', 0.8, true, 'What a well run field usually reaches, held to your stand, your water and your soil.', ['likely']],
+        'risky' => ['Achievable but risky', '⚠️', 0.9, true, 'More fertilizer, and the weather and the water must go right.', ['likely', 'watch']],
+        'high' => ['High potential', '🏆', 1.0, false, 'The best on record: a full stand, water whenever it is needed, and the soil put right.', ['likely', 'watch']],
     ];
+
+    /** The usual harvest beside the farms around (the lot's yieldLast answer): what the traditional yield leans by. */
+    private const LAST = ['worse' => 0.85, 'same' => 1.0, 'better' => 1.15, 'better_care' => 1.15];
 
     /** The inputs a lot keeps, as saved in the season's answers (answers.goals[lotId]): its planting and the goal picked. */
     public static function clean(array $g): array
@@ -214,35 +221,52 @@ final class AutoGoal
             $out['feed'][] = $m['name'];
         }
         if ($out['feed']) {
-            $out['steps'][] = ['🧪', 'Every goal needs ' . self::join(array_map('mb_strtolower', $out['feed'])) . ' fed: likely short on this soil', ''];
+            $out['steps'][] = ['🧪', 'The goals above the traditional one need ' . self::join(array_map('mb_strtolower', $out['feed'])) . ' fed: likely short on this soil', ''];
         }
 
-        // The three goals: the realistic one at the stand's middle, the risky one at its top, the high potential
-        // at the best the stand allows with nothing held back. Each with the fertilizer it takes.
+        // The goals: the traditional yield from the usual harvest of these parts (leaned by how the lot's last harvest
+        // compared with its neighbours), the realistic one at the stand's middle, the risky one at its top, the high
+        // potential at the best the stand allows with nothing held back. Each with the fertilizer it takes.
+        $fp = ! empty($a['fieldProfile']) ? FieldProfile::normalize((array) $a['fieldProfile']) : [];
+        $usual = ! empty($c['typicalYield']['hi']) ? (float) $c['typicalYield']['hi'] : $P * 0.45;
+        $lean = self::LAST[$fp['yieldLast'] ?? ''] ?? 1.0;
         $levels = [];
         foreach (self::LEVELS as $key => [$label, $icon, $share, $capped, $say]) {
-            $t = $P * $share;
-            if ($standHi !== null) {
-                $t = min($t, $key === 'realistic' ? ($standLo + $standHi) / 2 : $standHi);
+            if ($share === null) {
+                $t = $usual * $lean;
+            } else {
+                $t = $P * $share;
+                if ($standHi !== null) {
+                    $t = min($t, $key === 'realistic' ? ($standLo + $standHi) / 2 : $standHi);
+                }
+                $t *= $sf * ($capped ? $k : 1.0);
             }
-            $t *= $sf * ($capped ? $k : 1.0);
             $levels[$key] = ['key' => $key, 'label' => $label, 'icon' => $icon, 'say' => $say, 't' => round($t, 1)];
         }
         // Never out of order: a lower goal never above a higher one.
+        $levels['traditional']['t'] = min($levels['traditional']['t'], $levels['realistic']['t']);
         $levels['risky']['t'] = max($levels['risky']['t'], $levels['realistic']['t']);
         $levels['high']['t'] = max($levels['high']['t'], $levels['risky']['t']);
+        if ($lean !== 1.0) {
+            $out['steps'][] = ['🌾', 'Your last harvest ' . ($lean > 1 ? 'beat' : 'fell short of') . ' the farms around it: the traditional yield leans ' . ($lean > 1 ? 'up' : 'down'), '× ' . round($lean * 100) . '%'];
+        }
         // The goals already carry the stand, so the need is counted without it (NPK Plus would thin the goal a second time).
         $pNeed = array_merge($p, ['seedAmount' => null, 'seedUnit' => null, 'germination' => null, 'spacing' => null]);
         foreach ($levels as $key => $lv) {
             $n = rescue(fn () => CropProtocolController::needFor($pNeed + ['potential' => $P, 'targetYield' => $lv['t']]), ['known' => false], false);
             $need = array_intersect_key((array) ($n['need'] ?? []), array_flip(['N', 'P2O5', 'K2O']));
+            // The secondary and micro elements fed for this goal (LEVELS), the likely short ones first.
             $micros = [];
+            $feed = self::LEVELS[$key][5];
             foreach ((array) ($n['micros'] ?? []) as $el => $m) {
-                if (($m['level'] ?? '') === 'likely' && empty($m['beneficial'])) {
-                    $micros[] = ['el' => $el, 'name' => $m['name'], 'need' => round((float) $m['need'], 2)];
+                if (in_array($m['level'] ?? '', $feed, true) && empty($m['beneficial']) && (float) $m['need'] > 0) {
+                    $micros[] = ['el' => $el, 'name' => $m['name'], 'need' => round((float) $m['need'], 2), 'lot' => round((float) $m['need'] * $areaHa, 2), 'likely' => $m['level'] === 'likely'];
                 }
             }
-            $levels[$key] += ['lotT' => round($lv['t'] * $areaHa, 2), 'need' => $need, 'lotNeed' => array_map(fn ($v) => (int) round($v * $areaHa), $need), 'micros' => $micros];
+            usort($micros, fn ($x, $y) => $y['likely'] <=> $x['likely']);
+            $levels[$key] += ['lotT' => round($lv['t'] * $areaHa, 2), 'need' => $need, 'lotNeed' => array_map(fn ($v) => (int) round($v * $areaHa), $need), 'micros' => $micros,
+                // What the traditional yield leaves unfed: the shortages that stay.
+                'unfed' => $feed === [] ? $out['feed'] : []];
         }
         $out['levels'] = $levels;
         $out['tPerHa'] = $out['pick'] ? $levels[$out['pick']]['t'] : null;

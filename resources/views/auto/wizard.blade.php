@@ -225,23 +225,34 @@
     .au-goals-h b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
     .au-goals-h small { display: block; font-size: .76rem; line-height: 1.45; color: var(--color-gray-500); }
     .au-goals-wait { font-size: .82rem; color: var(--color-gray-500); }
-    .au-gc { display: grid; gap: .35rem; width: 100%; padding: .7rem .8rem; border-radius: 1rem; text-align: left; border: 1.5px solid var(--color-gray-200); background: var(--color-white);
+    .au-goals-g { display: grid; gap: .5rem; }
+    .au-gc { display: grid; gap: .4rem; width: 100%; padding: .7rem .8rem; border-radius: 1rem; text-align: left; cursor: pointer; border: 1.5px solid var(--color-gray-200); background: var(--color-white);
         transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease), box-shadow .28s var(--au-ease), transform .2s var(--au-ease); animation: auFade .3s var(--au-ease) both; }
     .au-gc:active { transform: scale(.99); }
     .au-gc:hover { border-color: #b7d597; }
+    .au-gc:focus-visible { outline: 3px solid rgb(107 159 61 / .45); outline-offset: 2px; }
     .au-gc-top { display: flex; align-items: center; gap: .5rem; }
     .au-gc-top > span { flex: none; font-size: 1.05rem; }
     .au-gc-top b { flex: 1; min-width: 0; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
     .au-gc-top em { flex: none; font-style: normal; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #2d5016; }
+    .au-gc.is-traditional .au-gc-top em { color: var(--color-gray-500); }
     .au-gc.is-risky .au-gc-top em { color: #8a5a00; } .au-gc.is-high .au-gc-top em { color: #6b4e00; }
     .au-gc-top i { flex: none; width: 1.25rem; height: 1.25rem; border-radius: 999px; border: 2px solid var(--color-gray-300); display: grid; place-items: center; transition: background-color .28s var(--au-ease), border-color .28s var(--au-ease); }
     .au-gc-top i::after { content: '✓'; font-style: normal; font-size: .7rem; font-weight: 900; color: #fff; opacity: 0; transition: opacity .2s; }
+    .au-gc-lot { margin-top: -.3rem; text-align: right; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
     .au-gc-say { font-size: .78rem; line-height: 1.45; color: var(--color-gray-600); }
-    .au-gc-need { display: grid; gap: .15rem; padding: .45rem .6rem; border-radius: .75rem; background: var(--color-gray-50); font-size: .74rem; line-height: 1.45; color: var(--color-gray-600); }
-    .au-gc-need b { font-weight: 800; color: var(--color-gray-900); }
-    .au-gc[aria-pressed="true"] { border-color: var(--color-brand-600, #4a7c2a); background: #f6faf0; box-shadow: 0 8px 20px -14px rgb(61 104 35 / .7); }
-    .au-gc[aria-pressed="true"] .au-gc-top i { background: var(--color-brand-600, #4a7c2a); border-color: var(--color-brand-600, #4a7c2a); }
-    .au-gc[aria-pressed="true"] .au-gc-top i::after { opacity: 1; }
+    .au-gc-t { width: 100%; border-collapse: collapse; font-size: .76rem; }
+    .au-gc-t th { padding: .3rem .5rem; font-size: .64rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-400); text-align: right; background: var(--color-gray-50); }
+    .au-gc-t th:first-child { text-align: left; border-radius: .6rem 0 0 .6rem; } .au-gc-t th:last-child { border-radius: 0 .6rem .6rem 0; }
+    .au-gc-t td { padding: .3rem .5rem; border-bottom: 1px solid var(--color-gray-100); text-align: right; font-weight: 800; color: var(--color-gray-900); white-space: nowrap; }
+    .au-gc-t td:first-child { text-align: left; font-weight: 600; color: var(--color-gray-700); white-space: normal; }
+    .au-gc-t tr:last-child td { border-bottom: 0; }
+    .au-gc-t tr.is-micro td:first-child { color: #2d5016; }
+    .au-gc-t td small { display: inline-block; margin-left: .25rem; padding: 0 .35rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #8a5a00; background: #fff4d6; }
+    .au-gc-unfed { padding: .4rem .55rem; border-radius: .7rem; font-size: .74rem; line-height: 1.45; color: #6b4a00; background: #fff6dd; border: 1px solid #f3d98f; }
+    .au-gc[aria-checked="true"] { border-color: var(--color-brand-600, #4a7c2a); background: #f6faf0; box-shadow: 0 8px 20px -14px rgb(61 104 35 / .7); }
+    .au-gc[aria-checked="true"] .au-gc-top i { background: var(--color-brand-600, #4a7c2a); border-color: var(--color-brand-600, #4a7c2a); }
+    .au-gc[aria-checked="true"] .au-gc-top i::after { opacity: 1; }
     .au-steps { display: grid; gap: .1rem; margin-top: .45rem; }
     .au-steps > div { display: flex; align-items: baseline; gap: .5rem; padding: .3rem 0; border-top: 1px solid rgb(0 0 0 / .06); font-size: .78rem; line-height: 1.4; color: #4a3b0a; }
     .au-steps > div > span:first-child { flex: none; width: 1.2rem; text-align: center; }
@@ -252,9 +263,10 @@
     html.dark .au-goal { border-color: #2b3a1c; }
     html.dark .au-gl { color: #b9c5ad; }
     html.dark .au-stand { background: #17220f; border-color: #2b3a1c; color: #c5e09f; }
-    html.dark .au-goals-h b, html.dark .au-gc-top b, html.dark .au-gc-need b { color: #eef3e8; }
-    html.dark .au-gc { background: #161c12; border-color: #2b3a1c; } html.dark .au-gc[aria-pressed="true"] { background: #1c2616; border-color: #6b9f3d; }
-    html.dark .au-gc-say, html.dark .au-gc-need { color: #b9c5ad; } html.dark .au-gc-need { background: #1a2114; }
+    html.dark .au-goals-h b, html.dark .au-gc-top b, html.dark .au-gc-t td { color: #eef3e8; }
+    html.dark .au-gc { background: #161c12; border-color: #2b3a1c; } html.dark .au-gc[aria-checked="true"] { background: #1c2616; border-color: #6b9f3d; }
+    html.dark .au-gc-say, html.dark .au-gc-t td:first-child { color: #b9c5ad; } html.dark .au-gc-t th { background: #1a2114; } html.dark .au-gc-t td { border-color: #2b3a1c; }
+    html.dark .au-gc-t tr.is-micro td:first-child { color: #c5e09f; } html.dark .au-gc-unfed { background: #2a2210; border-color: #5b4716; color: #f3d9a4; }
     html.dark .au-gc-top em { color: #c5e09f; } html.dark .au-gc.is-risky .au-gc-top em, html.dark .au-gc.is-high .au-gc-top em { color: #f0dfa0; }
     html.dark .au-acc-in .au-steps { background: #2a2410; border-color: #5b4d16; }
     html.dark .au-steps > div > b { color: #fff3c4; }
@@ -1516,21 +1528,30 @@
             + '<p class="text-center text-xs text-gray-400 mb-3">Read ' + esc(A.at || '') + (A.searched ? ', with what Anee found on the web' : '') + '. ' + (S.readingsLeft > 0 ? '<button type="button" class="underline font-bold text-brand-700" id="auReread">Read it again</button> (changed an answer?)' : '') + '</p>';
         $('auReread')?.addEventListener('click', runReading);
     };
-    // A lot's three goals as cards: the yield, what it rests on (Anee's words when she gave them), and the fertilizer it takes.
+    // A lot's goals as cards: the yield, what it rests on (Anee's words when she gave them), and a table of what it
+    // takes, N, P and K, then the secondary and micro elements fed for it (2026-10-28, the owner: "in higher yields add
+    // the micros like say it in the table as well for nutrients"). A card is a radio: it holds a table, so not a button.
     const NUT = { N: 'N', P2O5: 'P₂O₅', K2O: 'K₂O' };
+    const NUTW = { N: 'Nitrogen (N)', P2O5: 'Phosphorus (P₂O₅)', K2O: 'Potassium (K₂O)' };
     const needLine = (need) => Object.entries(NUT).map(([k, w]) => w + ' <b>' + Math.round(Number(need[k] || 0)) + '</b>').join(' · ');
+    const kg = (v) => { const n = Number(v) || 0; return n >= 10 ? String(Math.round(n)) : fmt1(n); };
     const goalCards = (lotId, rg) => {
         const go = S.goalOut[lotId], l = lotById(lotId);
         if (!go || !go.levels || !l) return '<p class="au-goals-wait">Counting the goals…</p>';
         const pick = goalOf(l).pick, words = (rg && rg.words) || {}, lotHa = Number(go.areaHa) || 1, one = Math.abs(lotHa - 1) < 0.001;
+        const row = (name, ha, lot, cls) => '<tr' + (cls ? ' class="' + cls + '"' : '') + '><td>' + name + '</td><td>' + kg(ha) + '</td>' + (one ? '' : '<td>' + kg(lot) + '</td>') + '</tr>';
         return '<div class="au-goals-h"><b>Choose your goal</b><small>Each one takes its own fertilizer. The one you pick is the target Anee plans the season for.</small></div>'
-            + Object.entries(go.levels).map(([k, lv]) => '<button type="button" class="au-gc is-' + k + '" data-level="' + k + '" aria-pressed="' + (pick === k) + '">'
-                + '<span class="au-gc-top"><span aria-hidden="true">' + lv.icon + '</span><b>' + esc(lv.label) + '</b><em>' + fmt1(lv.t) + ' t/ha</em><i aria-hidden="true"></i></span>'
-                + '<span class="au-gc-say">' + esc(words[k] || lv.say) + '</span>'
-                + '<span class="au-gc-need"><span>Fertilizer, kg a hectare: ' + needLine(lv.need) + '</span>'
-                + (one ? '' : '<span>For this lot: ' + needLine(lv.lotNeed) + ' · about ' + fmt1(lv.lotT) + ' t</span>')
-                + ((lv.micros || []).length ? '<span>Also: ' + lv.micros.map((m) => esc(m.name) + ' ' + fmt1(m.need) + ' kg').join(', ') + ' a hectare</span>' : '') + '</span>'
-                + '</button>').join('');
+            + '<div class="au-goals-g" role="radiogroup" aria-label="Your goal for ' + esc(l.name || 'this lot') + '">'
+            + Object.entries(go.levels).map(([k, lv]) => '<div class="au-gc is-' + k + '" role="radio" tabindex="0" data-level="' + k + '" aria-checked="' + (pick === k) + '">'
+                + '<div class="au-gc-top"><span aria-hidden="true">' + lv.icon + '</span><b>' + esc(lv.label) + '</b><em>' + fmt1(lv.t) + ' t/ha</em><i aria-hidden="true"></i></div>'
+                + (one ? '' : '<div class="au-gc-lot">About ' + fmt1(lv.lotT) + ' t on this lot</div>')
+                + '<p class="au-gc-say">' + esc(words[k] || lv.say) + '</p>'
+                + '<table class="au-gc-t"><thead><tr><th>What it takes</th><th>kg a hectare</th>' + (one ? '' : '<th>this lot</th>') + '</tr></thead><tbody>'
+                + Object.entries(NUTW).map(([n, w]) => row(w, (lv.need || {})[n], (lv.lotNeed || {})[n])).join('')
+                + (lv.micros || []).map((m) => row(esc(m.name) + (m.likely ? ' <small>likely short</small>' : ''), m.need, m.lot, 'is-micro')).join('')
+                + '</tbody></table>'
+                + ((lv.unfed || []).length ? '<p class="au-gc-unfed">No micronutrients: ' + esc(lv.unfed.map((x) => x.toLowerCase()).join(' and ')) + (lv.unfed.length > 1 ? ' stay' : ' stays') + ' short, so the harvest is not secured.</p>' : '')
+                + '</div>').join('') + '</div>';
     };
     const goalSteps = (lotId, rg) => {
         const go = S.goalOut[lotId], steps = (go && go.steps) || (rg && rg.steps) || [];
@@ -1545,13 +1566,21 @@
         const st = document.querySelector('[data-goalsteps="' + r.lotId + '"]');
         if (st && !st.querySelector('.au-acc.is-open')) st.innerHTML = goalSteps(r.lotId, r.goal || {});
     });
-    $('auReading').addEventListener('click', (e) => {
-        const c = e.target.closest('[data-level]'); if (!c) return;
+    const pickGoal = (c) => {
         const l = lotById(c.closest('[data-goals]').dataset.goals); if (!l) return;
         goalOf(l).pick = c.dataset.level;
-        c.parentElement.querySelectorAll('[data-level]').forEach((b) => b.setAttribute('aria-pressed', String(b === c)));
+        c.parentElement.querySelectorAll('[data-level]').forEach((b) => b.setAttribute('aria-checked', String(b === c)));
         navSay();
         goalsSoon(l, 100);
+    };
+    $('auReading').addEventListener('click', (e) => { const c = e.target.closest('[data-level]'); if (c) pickGoal(c); });
+    $('auReading').addEventListener('keydown', (e) => {
+        const c = e.target.closest('[data-level]'); if (!c) return;
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickGoal(c); }
+        if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(e.key)) {
+            const all = [...c.parentElement.querySelectorAll('[data-level]')], i = all.indexOf(c) + (['ArrowDown', 'ArrowRight'].includes(e.key) ? 1 : -1);
+            if (all[i]) { e.preventDefault(); all[i].focus(); }
+        }
     });
     $('auReading').addEventListener('click', (e) => {
         const h = e.target.closest('.au-acc-h'); if (!h) return;
