@@ -361,18 +361,32 @@ class AiClient
         $content[] = ['type' => 'text', 'text' => $prompt];
         $messages[] = ['role' => 'user', 'content' => $content];
 
+        /* The Claude models of 2026 (2026-10-27): no sampling settings (a temperature is refused with a 400), thinking
+         * that is always on and paced by effort instead, and room in max_tokens for it; a decline on safety grounds
+         * re-run by the API on the model it picks (server-side fallback). Older models keep the old request. */
+        $model = $s->effectiveModel();
+        $current = (bool) preg_match('/^claude-(opus-(4-[678]|5)|sonnet-5|fable-5|haiku-5)/', $model);
         $body = [
-            'model' => $s->effectiveModel(),
-            'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
-            'temperature' => (float) $s->temperature,
+            'model' => $model,
+            'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens) + ($current ? 4096 : 0),
             'system' => $this->system ?? $s->instructions(),
             'messages' => $messages,
         ];
+        if (! $current) {
+            $body['temperature'] = (float) $s->temperature;
+        } elseif ($s->thinkingLevel) {
+            $body['output_config'] = ['effort' => in_array($s->thinkingLevel, ['minimal', 'low'], true) ? 'low' : 'medium'];
+        }
+        $headers = ['x-api-key' => $key, 'anthropic-version' => '2023-06-01'];
+        if (preg_match('/^claude-(opus-5|fable-5-1|sonnet-5-5)/', $model)) {
+            $body['fallbacks'] = 'default';
+            $headers['anthropic-beta'] = 'server-side-fallback-2026-07-01';
+        }
         if ($search) {
-            $body['tools'] = [['type' => 'web_search_20250305', 'name' => 'web_search', 'max_uses' => self::SEARCH_MAX_USES]];
+            $body['tools'] = [['type' => $current && ! str_starts_with($model, 'claude-haiku') ? 'web_search_20260209' : 'web_search_20250305', 'name' => 'web_search', 'max_uses' => self::SEARCH_MAX_USES]];
         }
         $res = Http::timeout($this->timeout)
-            ->withHeaders(['x-api-key' => $key, 'anthropic-version' => '2023-06-01'])
+            ->withHeaders($headers)
             ->post('https://api.anthropic.com/v1/messages', $body);
 
         if (! $res->successful()) {
@@ -380,6 +394,11 @@ class AiClient
         }
 
         $json = $res->json();
+        if (($json['stop_reason'] ?? '') === 'refusal') {
+            logger()->warning('Claude declined', ['model' => $model, 'category' => $json['stop_details']['category'] ?? null]);
+
+            return $this->fail('The AI declined to answer that.');
+        }
         $text = collect($json['content'] ?? [])
             ->where('type', 'text')
             ->pluck('text')

@@ -88,7 +88,7 @@ class AiSetting extends BaseModel
      */
     public function plainApiKey(): ?string
     {
-        return AiKeyCipher::decrypt($this->attributes['apiKey'] ?? null);
+        return $this->keyOverride ?? AiKeyCipher::decrypt($this->attributes['apiKey'] ?? null);
     }
 
     public function hasKey(): bool
@@ -346,6 +346,34 @@ class AiSetting extends BaseModel
 
     /** The thinking level a copy asks for instead of the client's budget (Gemini: minimal, low, medium, high). */
     public ?string $thinkingLevel = null;
+
+    /** A key a copy carries instead of the settings row's (never saved). */
+    public ?string $keyOverride = null;
+
+    /** The model the daily news reading runs on, unless the shelf says another (news.claude_model). */
+    public const NEWS_CLAUDE_MODEL = 'claude-opus-5-5';
+
+    /**
+     * The daily farm news reading on the owner's own Claude (2026-10-27, the owner: "for the daily reading
+     * news, can we use my claude instead? not gemini? only for the daily news"): a copy of these settings on
+     * Claude with the owner's Anthropic key, from ANTHROPIC_API_KEY or, kept encrypted on the shared settings
+     * shelf, news.claude_key (`php artisan news:claude-key`). Null when no key is kept, and the reading then
+     * stays on Anee's cheapest model. Thinking low: it is a sorting job.
+     */
+    public static function newsReader(): ?static
+    {
+        $key = trim((string) (config('services.anthropic.key') ?: AiKeyCipher::decrypt((string) \App\Models\AsSiteSetting::get('news.claude_key', ''))));
+        if ($key === '') {
+            return null;
+        }
+        $c = clone static::current();
+        $c->provider = 'claude';
+        $c->model = (string) (\App\Models\AsSiteSetting::get('news.claude_model') ?: config('services.anthropic.news_model') ?: self::NEWS_CLAUDE_MODEL);
+        $c->thinkingLevel = 'low';
+        $c->keyOverride = $key;
+
+        return $c;
+    }
 
     /** A copy of these settings on the provider's cheapest model, thinking at its least or a little (never saved). */
     public function cheap(string $thinking = 'minimal'): static

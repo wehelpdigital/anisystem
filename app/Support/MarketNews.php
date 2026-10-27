@@ -110,16 +110,18 @@ final class MarketNews
      */
     public static function scan(int $limit = 60, bool $dry = false): array
     {
-        $stat = ['read' => 0, 'events' => 0, 'joined' => 0, 'failed' => 0, 'made' => []];
+        $stat = ['read' => 0, 'events' => 0, 'joined' => 0, 'failed' => 0, 'made' => [], 'via' => null];
         if (! self::ready()) {
             return $stat;
         }
         $ai = app(AiClient::class);
-        $settings = AiSetting::current()->cheap('low');
+        // The owner's own Claude when its key is kept (2026-10-27); else Anee's cheapest model, as before.
+        $settings = AiSetting::newsReader() ?? AiSetting::current()->cheap('low');
+        $stat['via'] = $settings->provider . ' ' . $settings->effectiveModel();
         foreach (self::candidates($limit)->chunk(12) as $batch) {
             $known = DB::table('as_market_events')->where('day', '>=', now()->subMonths(18)->toDateString())->orderByDesc('day')->limit(60)->get(['eventKey', 'day', 'title', 'crops']);
             $prompt = self::prompt($batch, $known);
-            $result = $ai->askForJson($settings, $prompt, 3500, fn (string $t) => self::parse($t),
+            $result = $ai->askForJson($settings, $prompt, 6000, fn (string $t) => self::parse($t),
                 ['system' => 'You read Philippine farm news for a market price desk. You answer only with JSON.', 'timeout' => 90, 'retryAfterTimeout' => false]);
             if ((int) ($result['tokensIn'] ?? 0) > 0) {
                 rescue(fn () => AiUsage::record('market-news', 0, 0, null, $settings, $result, 0), null, false);

@@ -107,6 +107,13 @@ return [
     // The cheapest model, for the system's own checks (AiSetting::cheap()).
     'ai_cheap_model' => (string) env('AI_CHEAP_MODEL', ''),
 
+    // The owner's own Claude, for the daily farm news reading only (2026-10-27, App\Models\AiSetting::newsReader).
+    // The key can instead be kept encrypted on the shared settings shelf: `php artisan news:claude-key`.
+    'anthropic' => [
+        'key' => env('ANTHROPIC_API_KEY'),
+        'news_model' => env('ANTHROPIC_NEWS_MODEL'),
+    ],
+
     // The field health service (services/field-health, FastAPI + Google Earth
     // Engine): Sentinel-2 NDVI and Sentinel-1 radar for Satellite Analysis,
     // and storm tracks for Satellite Weather. Blank url = not connected yet.

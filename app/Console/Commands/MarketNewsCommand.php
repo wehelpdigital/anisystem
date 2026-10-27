@@ -20,7 +20,7 @@ class MarketNewsCommand extends Command
     public function handle(): int
     {
         $s = MarketNews::scan(max(1, (int) $this->option('limit')), (bool) $this->option('dry'));
-        $this->info('read ' . $s['read'] . ', new events ' . $s['events'] . ', newsrooms added ' . $s['joined'] . ($s['failed'] ? ', failed asks ' . $s['failed'] : ''));
+        $this->info('read ' . $s['read'] . ', new events ' . $s['events'] . ', newsrooms added ' . $s['joined'] . ($s['failed'] ? ', failed asks ' . $s['failed'] : '') . ($s['via'] ? ' (on ' . $s['via'] . ')' : ''));
         foreach ($s['made'] as $m) {
             $this->line('  ' . $m);
         }

@@ -237,6 +237,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-27: the Market Price Forecast, its tables loaded, and the import events the daily news brings.
             'marketPrices' => class_exists(\App\Support\MarketBook::class) && \Illuminate\Support\Facades\Route::has('market.page') && \App\Support\MarketBook::ready(),
             'marketNews' => class_exists(\App\Support\MarketNews::class) && \App\Support\MarketNews::ready(),
+            // 2026-10-27: the daily news reading runs on the owner's own Claude (true once its key is kept).
+            'newsClaude' => method_exists(\App\Models\AiSetting::class, 'newsReader') && (bool) rescue(fn () => \App\Models\AiSetting::newsReader(), null, false),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
             // By spacing or by amount in the Crop Protocol and NPK Plus (2026-10-21).
