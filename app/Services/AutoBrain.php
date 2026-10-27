@@ -8,6 +8,7 @@ use App\Models\AsAutoTask;
 use App\Models\AsCroppingSchedule;
 use App\Models\AsScheduleLot;
 use App\Support\AutoBook;
+use App\Support\AutoGoal;
 use App\Support\CropCatalog;
 use App\Support\CropStages;
 use App\Support\EnsoOutlook;
@@ -86,6 +87,13 @@ class AutoBrain
             if ($at && $withWeather) {
                 $row['soilGrids'] = $this->soilGrids($at[0], $at[1]);
                 $row['forecast'] = $this->forecastWords($at[0], $at[1]);
+            }
+            // The lot's goal, the app's count (AutoGoal, 2026-10-28): the variety's best, the farmer's aim, the stand they
+            // plant, the water, salt and sodium, and what it needs fed. Every brief reads the same number.
+            $goal = rescue(fn () => AutoGoal::forLot($auto, $lot, $al, []), null, false);
+            if ($goal && $goal['tPerHa']) {
+                $row['goal'] = ['tPerHa' => $goal['tPerHa'], 'aim' => AutoGoal::AIMS[$goal['aim']][0], 'howCounted' => AutoGoal::words($goal)]
+                    + (! empty($goal['inputs']['target']) ? ['farmerTarget' => $goal['inputs']['target']] : []);
             }
             if ($al->fert) {
                 $row['fertilizerPlan'] = $this->fertWords((array) $al->fert);
@@ -230,7 +238,7 @@ class AutoBrain
         $doc = "You are Anee, a smart farm technician for Filipino farmers. You are reading a farm before planning its whole season. Return ONE JSON object, nothing else. Plain words a farmer understands. Never invent a number the facts or the research do not support; where you are unsure, say so in dataGaps.\n\n"
             . "THE FARM:\n" . $json . "\n\nTHE CROP BOOK (land preparation, seedbed, preventive sprays, safety):\n" . json_encode($book, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n"
             . ($stages ? "EACH CROP'S STAGES (day counts from the field day, the app's own table):\n" . json_encode($stages, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n\n" : '')
-            . "RULES: Read the soil from the farmer's signs and pH answer FIRST, then the lot's areaSoil (soil samples taken in that area, typical for the area and not a test of this lot), then the SoilGrids model; if they disagree, trust the farmer's signs, then the samples, and say so. Call the samples \"typical for your area\" and never say where they came from. The goal must be realistic for the variety, the soil, the water and the season, not the variety's best ever. Fertilizer focus is about WHICH nutrients and WHEN matter most on this soil, not amounts; the farmer chooses products next.\n\n"
+            . "RULES: Read the soil from the farmer's signs and pH answer FIRST, then the lot's areaSoil (soil samples taken in that area, typical for the area and not a test of this lot), then the SoilGrids model; if they disagree, trust the farmer's signs, then the samples, and say so. Call the samples \"typical for your area\" and never say where they came from. THE GOAL is the app's own count in each lot's goal (tPerHa and howCounted: the variety's best, the farmer's aim, the stand they plant, the water, salt and sodium): use that tPerHa as the lot's goal everywhere, never another number, and in goal.why say in two plain sentences what it rests on and what would raise it. Fertilizer focus is about WHICH nutrients and WHEN matter most on this soil, not amounts; the farmer chooses products next.\n\n"
             . "THE SEASON: no outlook was searched. Read season.outlook, rain, typhoon and heat from THE FARM's climate (the field's weather record for these months, with what El Nino and La Nina did there), each lot's placeHistory and the ENSO outlook. The fertilizer's critical moments follow EACH CROP'S STAGES and the crop book. A lot with varietiesOnRecord and no variety named: name the one that fits it best in its variety block, from that list. A lot's areaSoil and its soil signs: say how that soil locks up or frees nutrients (sodic and alkaline soils lock phosphorus, zinc and iron; ammonium sulfate and elemental sulfur acidify around the roots; gypsum's calcium pushes sodium out).\n\n"
             . "HISTORY: each lot's placeHistory is its town's twenty years of storms, floods, dry spells and heat, kept by the app. Count season.typhoon, rain and heat and the lots' risks from it (how many of the years a storm or flood hit the months this crop stands in the field, the worst one by name and year), and let it move the risks' prevent advice. Never say where it comes from.\n\n"
             . 'Return exactly: {"headline":"one line","season":{"outlook":"","enso":"","rain":"","typhoon":"","heat":"","watch":["",""]},'

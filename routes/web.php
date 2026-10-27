@@ -629,6 +629,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/app/auto/{id}/lot', [App\Http\Controllers\AneeAutoController::class, 'addLot'])->whereNumber('id')->middleware('throttle:10,1')->name('auto.lot.add');
     Route::put('/app/auto/{id}/workers', [App\Http\Controllers\AneeAutoController::class, 'saveWorkers'])->whereNumber('id')->name('auto.workers');
     Route::put('/app/auto/{id}/answers', [App\Http\Controllers\AneeAutoController::class, 'saveAnswers'])->whereNumber('id')->name('auto.answers');
+    Route::post('/app/auto/{id}/goal', [App\Http\Controllers\AneeAutoController::class, 'goal'])->whereNumber('id')->middleware('throttle:60,1')->name('auto.goal');
     Route::get('/app/auto/{id}/crop-problems', [App\Http\Controllers\AneeAutoController::class, 'cropProblems'])->whereNumber('id')->name('auto.problems');
     Route::post('/app/auto/{id}/analyze', [App\Http\Controllers\AneeAutoController::class, 'analyze'])->whereNumber('id')->name('auto.analyze');
     Route::post('/app/auto/{id}/generate', [App\Http\Controllers\AneeAutoController::class, 'generate'])->whereNumber('id')->name('auto.generate');

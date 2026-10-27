@@ -211,6 +211,45 @@
     .au-rl h5 { margin: .75rem 0 .25rem; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
     .au-rl p, .au-rl li { font-size: .84rem; line-height: 1.55; color: var(--color-gray-700); }
     .au-rl ul { margin: .2rem 0 0 1rem; list-style: disc; }
+    /* A lot's goal: the aim, how much is planted, and the goal the app counts from them (AutoGoal, 2026-10-28). */
+    .au-goal { margin-top: 1rem; padding-top: .3rem; border-top: 1px dashed var(--color-gray-200); }
+    .au-aims { display: grid; gap: .4rem; grid-template-columns: minmax(0, 1fr); }
+    @media (min-width: 640px) { .au-aims { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .au-aim { display: flex; align-items: flex-start; gap: .55rem; padding: .6rem .7rem; border-radius: .9rem; text-align: left; border: 1px solid var(--color-gray-200); background: var(--color-white);
+        transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease), transform .2s var(--au-ease); }
+    .au-aim:active { transform: scale(.985); }
+    .au-aim > span:first-child { flex: none; font-size: 1.1rem; line-height: 1.2; }
+    .au-aim b { display: block; font-size: .84rem; font-weight: 800; color: var(--color-gray-800); }
+    .au-aim small { display: block; margin-top: .1rem; font-size: .72rem; line-height: 1.35; color: var(--color-gray-500); }
+    .au-aim[aria-pressed="true"] { border-color: var(--color-brand-500, #6b9f3d); background: #f3f8ec; box-shadow: inset 0 0 0 1px var(--color-brand-500, #6b9f3d); }
+    .au-row.is-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+    .au-gl { display: grid; gap: .25rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
+    .au-gl small { font-weight: 600; color: var(--color-gray-400); }
+    .au-gl > i { font-style: normal; }
+    .au-gl > span { position: relative; display: block; }
+    .au-gl input { width: 100%; padding-right: 2.3rem; }
+    .au-gl em { position: absolute; right: .7rem; top: 50%; transform: translateY(-50%); font-style: normal; font-size: .76rem; font-weight: 700; color: var(--color-gray-400); pointer-events: none; }
+    .au-goalout { margin-top: .9rem; border-radius: 1rem; background: linear-gradient(115deg, #fdf8e8, #f6edc8); border: 1px solid #ecd98d; padding: .75rem .85rem; }
+    .au-goal-n { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; }
+    .au-goal-n span { font-size: .78rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #8a6a00; }
+    .au-goal-n b { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #3d2e00; display: inline-block; }
+    .au-goal-n small { flex-basis: 100%; font-size: .74rem; color: #6b5300; }
+    .au-goal-n.is-wait span { text-transform: none; letter-spacing: 0; font-weight: 600; }
+    .au-steps { display: grid; gap: .1rem; margin-top: .45rem; }
+    .au-steps > div { display: flex; align-items: baseline; gap: .5rem; padding: .3rem 0; border-top: 1px solid rgb(0 0 0 / .06); font-size: .78rem; line-height: 1.4; color: #4a3b0a; }
+    .au-steps > div > span:first-child { flex: none; width: 1.2rem; text-align: center; }
+    .au-steps > div > span:nth-child(2) { flex: 1; min-width: 0; }
+    .au-steps > div > b { flex: none; font-weight: 800; color: #3d2e00; white-space: nowrap; }
+    .au-acc-in .au-steps { margin: 0 0 .5rem; padding: .35rem .7rem; border-radius: .8rem; background: #fdf8e8; border: 1px solid #f0e2a8; }
+    .au-acc-in .au-steps > div:first-child { border-top: 0; }
+    html.dark .au-goal { border-color: #2b3a1c; }
+    html.dark .au-aim { background: #161c12; border-color: #2b3a1c; } html.dark .au-aim b { color: #eef3e8; }
+    html.dark .au-aim[aria-pressed="true"] { background: #1c2616; border-color: #6b9f3d; }
+    html.dark .au-gl { color: #b9c5ad; }
+    html.dark .au-goalout, html.dark .au-acc-in .au-steps { background: #2a2410; border-color: #5b4d16; }
+    html.dark .au-goal-n span, html.dark .au-goal-n small { color: #f0dfa0; } html.dark .au-goal-n b, html.dark .au-steps > div > b { color: #fff3c4; }
+    html.dark .au-steps > div { color: #eadcae; border-color: rgb(255 255 255 / .06); }
+
     /* The reading, one row per item, each folded until tapped (2026-10-28, the owner: "make it 1 row per item and make
        it expandable (contracted by default) and make it look good"). */
     .au-rl > p.au-rl-lead { margin-top: .35rem; color: var(--color-gray-600); }
@@ -345,7 +384,7 @@
     html.dark .au-bar-t { background: #26301e; } html.dark .au-bar-t i { background: #f1f5e9; }
     @media (prefers-reduced-motion: reduce) {
         .au-top::after, .au-top img, .au-reading-cta img, .au-big, .au-step.is-on, .au-lot, .au-w, .au-rl, .au-reads div, .au-note, .au-risk, .au-q, .au-from, .au-tag.is-bump { animation: none; }
-        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link, .au-gw, .au-gw-s, .au-gw-f, .au-acc-b, .au-acc-h, .au-acc-h > svg, .au-acc-t small { transition: none; }
+        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link, .au-gw, .au-gw-s, .au-gw-f, .au-acc-b, .au-acc-h, .au-acc-h > svg, .au-acc-t small, .au-aim { transition: none; }
     }
 </style>
 
@@ -566,7 +605,7 @@
     const U = {
         state: @json(route('auto.state', $auto->id)), basics: @json(route('auto.basics', $auto->id)), lot: @json(route('auto.lot', $auto->id)), lotAdd: @json(route('auto.lot.add', $auto->id)),
         workers: @json(route('auto.workers', $auto->id)), answers: @json(route('auto.answers', $auto->id)), problems: @json(route('auto.problems', $auto->id)),
-        analyze: @json(route('auto.analyze', $auto->id)), generate: @json(route('auto.generate', $auto->id)), job: () => @json(route('auto.job', $auto->id)),
+        analyze: @json(route('auto.analyze', $auto->id)), generate: @json(route('auto.generate', $auto->id)), job: () => @json(route('auto.job', $auto->id)), goal: @json(route('auto.goal', $auto->id)),
         fert: @json(route('auto.fert', $auto->id)), imbalance: @json(route('auto.imbalance', $auto->id)), ph: @json(asset('data/ph-locations.json')),
         npk: @json(route('npk.page')) + '?frame=auto', buy: @json(route('ai.credits') . '?tab=buy'),
     };
@@ -735,7 +774,7 @@
     };
     const saveLot = (l, extra = {}) => put(U.lot, Object.assign({ lotId: l.id, name: l.name, size: l.size, unit: l.unit || 'ha', crop: l.crop, variety: l.variety || '', method: l.method,
         fieldDate: l.method === 'tree' ? null : l.fieldDate, treeMonths: l.method === 'tree' ? l.treeMonths : null, province: l.province, town: l.town, barangay: l.barangay,
-        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); return r; });
+        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); goalsSoon(null, 900); return r; });
     const methodsOf = (l) => (cropOf(l.crop) || {}).methods || {};
     /* The farm lot this lot was filled from: the loaded row, or (until the
        farm's lots load) what was copied from it into this lot. */
@@ -782,8 +821,84 @@
                 + '<div><span class="au-lab">Town or city</span><button type="button" class="au-tag' + (l.town ? '' : ' is-none') + '" data-act="town"' + (l.province ? '' : ' disabled') + '><span>' + esc(l.town ? townName(l.town) : (l.province ? 'Choose the town' : 'Province first')) + '</span>' + CHEV + '</button></div></div>'
                 + '<label class="au-lab">Barangay <small>(optional)</small></label><input type="text" class="form-input w-full" data-f="barangay" maxlength="120" value="' + esc(l.barangay || '') + '">')
             + (mapped ? '' : '<span class="au-lab">Pin on the map <small>(optional)</small></span><button type="button" class="au-pin' + (l.pin ? ' is-set' : '') + '" data-act="pin"><span aria-hidden="true">📍</span><span>' + (l.pin ? 'Pinned at ' + Number(l.pin.lat).toFixed(4) + ', ' + Number(l.pin.lng).toFixed(4) + '<small>Tap to move it</small>' : 'Drop a pin on the lot<small>Optional: the weather and the soil are then read at the exact spot</small>') + '</span></button>')
+            + '<div class="au-goal" data-goal>' + goalBlock(l) + '</div>'
             + '</div></div>';
     };
+
+    /* ---- each lot's goal (App\Support\AutoGoal, 2026-10-28, the owner: "realistic goal is 6.5t/ha when i tried it ...
+       it really depends in the # of seeds planted in corn ... also goal is not selected like if the goal is max yield").
+       The farmer picks the aim and says how much they plant; the app counts the goal from the variety's best, the
+       aim, the stand, the water, salt and sodium, and says each step. Anee's reading takes that number. ---- */
+    const AIMS = @json(collect(\App\Support\AutoGoal::AIMS)->map(fn ($a) => ['label' => $a[0], 'sub' => $a[1], 'icon' => $a[2]]));
+    S.goalIn = (S.answers.goals && !Array.isArray(S.answers.goals)) ? S.answers.goals : {};
+    S.goalOut = {};
+    const goalOf = (l) => (S.goalIn[l.id] = S.goalIn[l.id] || { aim: 'balanced' });
+    const fmt1 = (v) => String(Math.round(Number(v) * 10) / 10);
+    const goalBlock = (l) => {
+        if (!l.crop) return '<span class="au-lab">Your goal</span><p class="text-sm text-gray-500">Pick the crop first: the goal is counted for it.</p>';
+        const g = goalOf(l), out = S.goalOut[l.id] || {}, pl = out.plant || {};
+        const sp = pl.spacing, units = pl.units || ['kg'], by = g.by || (sp ? 'spacing' : 'amount');
+        const unit = units.includes(g.unit) ? g.unit : units[0], m = sp && sp.meters;
+        const val = (v, f) => v ? Number(v) / f : '';
+        const ph = (r) => r ? String(m ? r[1] / 100 : r[1]) : '';
+        const germOn = pl.germ === 'seed' ? (by === 'spacing' || ['kg', 'g', 'seeds', 'hills'].includes(unit)) : (pl.germ === 'seedlings' ? by !== 'spacing' && ['kg', 'g', 'seeds'].includes(unit) : false);
+        return '<span class="au-lab">What you are aiming for</span><div class="au-aims">' + Object.entries(AIMS).map(([k, a]) => '<button type="button" class="au-aim" data-aim="' + k + '" aria-pressed="' + (g.aim === k) + '"><span aria-hidden="true">' + a.icon + '</span><span><b>' + esc(a.label) + '</b><small>' + esc(a.sub) + '</small></span></button>').join('') + '</div>'
+            + '<span class="au-lab">How much you plant <small>(it sets the harvest the lot can carry)</small></span>'
+            + '<div class="au-pills">' + (sp ? '<button type="button" class="au-pill" data-by="spacing" aria-pressed="' + (by === 'spacing') + '">By spacing</button>' : '') + '<button type="button" class="au-pill" data-by="amount" aria-pressed="' + (by !== 'spacing' || !sp) + '">By amount</button></div>'
+            + (by === 'spacing' && sp
+                ? '<div class="au-row is-3 mt-2"><label class="au-gl">Between rows<span><input type="number" class="form-input" data-gf="row" min="0" step="any" inputmode="decimal" value="' + val(g.row, m ? 100 : 1) + '" placeholder="' + ph(sp.row) + '"><em>' + (m ? 'm' : 'cm') + '</em></span></label>'
+                    + '<label class="au-gl">Between ' + (sp.perHill && sp.perHill[1] > 1 ? 'hills' : 'plants') + '<span><input type="number" class="form-input" data-gf="plant" min="0" step="any" inputmode="decimal" value="' + val(g.plant, m ? 100 : 1) + '" placeholder="' + ph(sp.plant) + '"><em>' + (m ? 'm' : 'cm') + '</em></span></label>'
+                    + '<label class="au-gl">' + (['transplanted', 'nursery'].includes(out.method) ? 'Seedlings' : sp.word === 'seeds' ? 'Seeds' : 'Plants') + ' a hill<span><input type="number" class="form-input" data-gf="perHill" min="1" max="50" step="1" inputmode="numeric" value="' + (g.perHill || '') + '" placeholder="' + (sp.perHill ? sp.perHill[1] : 1) + '"></span></label></div>'
+                    + (sp.note ? '<p class="text-xs text-gray-500 mt-1">' + esc(sp.note) + '</p>' : '')
+                : '<div class="flex gap-2 mt-2"><input type="number" class="form-input flex-1" data-gf="amount" min="0" step="any" inputmode="decimal" value="' + (g.amount || '') + '" placeholder="For this lot">'
+                    + '<button type="button" class="au-pill" data-unit aria-label="Change the unit">' + esc((pl.unitWords || {})[unit] || unit) + '</button></div>')
+            + (germOn ? '<label class="au-gl mt-2"><i>Germination on the seed bag <small>(optional)</small></i><span><input type="number" class="form-input" data-gf="germ" min="1" max="100" step="1" inputmode="numeric" value="' + (g.germ || '') + '" placeholder="Like 90"><em>%</em></span></label>' : '')
+            + '<label class="au-gl mt-2"><i>Your own target <small>(optional)</small></i><span><input type="number" class="form-input" data-gf="target" min="0" step="any" inputmode="decimal" value="' + (g.target || '') + '" placeholder="Anee counts one for you"><em>t/ha</em></span></label>'
+            + '<div class="au-goalout" data-goalout>' + goalOutHtml(l) + '</div>';
+    };
+    const goalOutHtml = (l) => {
+        const o = S.goalOut[l.id];
+        if (!o) return '<div class="au-goal-n is-wait"><span>Counting the goal…</span></div>';
+        if (!o.tPerHa) return '<div class="au-goal-n is-wait"><span>No goal can be counted for this crop yet.</span></div>';
+        return '<div class="au-goal-n"><span>Realistic goal</span><b>' + fmt1(o.tPerHa) + ' t/ha</b>' + (o.areaHa && Math.abs(o.areaHa - 1) > 0.001 ? '<small>About ' + fmt1(o.lotTons) + ' t on this lot</small>' : '') + '</div>'
+            + '<div class="au-steps">' + (o.steps || []).filter((s) => s[1] !== 'Realistic goal').map((s) => '<div><span aria-hidden="true">' + s[0] + '</span><span>' + esc(s[1]) + '</span><b>' + esc(s[2]) + '</b></div>').join('') + '</div>';
+    };
+    const paintGoalOut = (l) => {
+        const box = lotEl(l.id)?.querySelector('[data-goalout]');
+        if (!box) return;
+        const was = box.querySelector('.au-goal-n b')?.textContent;
+        box.innerHTML = goalOutHtml(l);
+        const b = box.querySelector('.au-goal-n b');
+        if (b && was && was !== b.textContent && !still()) b.animate([{ transform: 'scale(1.12)', color: '#b45309' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.22, 1, .36, 1)' });
+    };
+    const paintGoal = (l) => { const box = lotEl(l.id)?.querySelector('[data-goal]'); if (box) box.innerHTML = goalBlock(l); };
+    // Saves a lot's inputs (when given) and brings every lot's goal back counted.
+    const saveGoals = async (l) => {
+        const r = await put(U.goal, l ? { lotId: l.id, goal: goalOf(l) } : {}, 'POST');
+        const before = JSON.stringify(Object.fromEntries(Object.entries(S.goalOut).map(([k, o]) => [k, [o.plant, o.method]])));
+        S.goalOut = (r.data && r.data.goals) || {};
+        // The planting asked changes with the crop and its way in: then the block is painted again.
+        const after = JSON.stringify(Object.fromEntries(Object.entries(S.goalOut).map(([k, o]) => [k, [o.plant, o.method]])));
+        S.lots.forEach((x) => { if (before !== after) paintGoal(x); else paintGoalOut(x); });
+        if (step === 6 && S.analysis) paintReading();
+    };
+    const goalsSoon = (l, ms = 700) => later(l ? 'goal' + l.id : 'goals', () => saveGoals(l), ms);
+    $('auLots').addEventListener('click', (e) => {
+        const box = e.target.closest('[data-goal]'); if (!box) return;
+        const l = lotById(box.closest('.au-lot').dataset.lot), g = goalOf(l), out = S.goalOut[l.id] || {};
+        const aim = e.target.closest('[data-aim]'), by = e.target.closest('[data-by]'), un = e.target.closest('[data-unit]');
+        if (aim) { g.aim = aim.dataset.aim; box.querySelectorAll('[data-aim]').forEach((b) => b.setAttribute('aria-pressed', String(b === aim))); goalsSoon(l, 150); }
+        if (by && g.by !== by.dataset.by) { g.by = by.dataset.by; paintGoal(l); goalsSoon(l, 300); }
+        if (un) { const us = (out.plant || {}).units || ['kg']; g.unit = us[(us.indexOf(g.unit && us.includes(g.unit) ? g.unit : us[0]) + 1) % us.length]; paintGoal(l); goalsSoon(l, 300); }
+    });
+    $('auLots').addEventListener('input', (e) => {
+        const f = e.target.dataset.gf; if (!f) return;
+        const l = lotById(e.target.closest('.au-lot').dataset.lot), g = goalOf(l), m = ((S.goalOut[l.id] || {}).plant || {}).spacing?.meters;
+        const v = e.target.value === '' ? null : Number(e.target.value);
+        g[f] = v === null ? null : ((f === 'row' || f === 'plant') && m ? v * 100 : v);
+        if (f === 'amount' || f === 'row' || f === 'plant') g.by = g.by || (f === 'amount' ? 'amount' : 'spacing');
+        goalsSoon(l, 800);
+    });
     const dayLabel = (l) => ({ transplanted: 'Transplanting day (DAT 0)', direct: 'Sowing day in the field (DAS 0)', planted: 'Planting day (DAP 0)' })[l.method] || 'Planting day';
     const paintLots = () => {
         $('auLots').innerHTML = S.lots.map(lotCard).join('');
@@ -1366,7 +1481,13 @@
                     + kv('⏳', 'Matures in', v.maturityDays ? v.maturityDays + ' days' : '')
                     + kv('🏆', 'Potential', v.yieldPotentialTPerHa ? v.yieldPotentialTPerHa + ' t/ha' : '')
                     + kv('📊', 'Usual harvest', v.averageTPerHa ? v.averageTPerHa + ' t/ha' : '')
-                    + acc('🎯', 'Realistic goal' + (g.tPerHa ? ': ' + g.tPerHa + ' t/ha' : ''), first(g.why), para(g.why))
+                    // The goal as the app counts it now (AutoGoal), so a changed aim or planting shows at once; the reading's when not yet counted.
+                    + (() => {
+                        const go = S.goalOut[r.lotId], t = go && go.tPerHa ? go.tPerHa : g.tPerHa, steps = (go && go.steps) || g.steps || [], aim = AIMS[(go && go.aim) || g.aim];
+                        return acc('🎯', 'Realistic goal' + (t ? ': ' + fmt1(t) + ' t/ha' : ''), [aim ? aim.label : '', first(g.why)].filter(Boolean).join(' · '),
+                            (steps.length ? '<div class="au-steps">' + steps.filter((s) => s[1] !== 'Realistic goal').map((s) => '<div><span aria-hidden="true">' + s[0] + '</span><span>' + esc(s[1]) + '</span><b>' + esc(s[2]) + '</b></div>').join('') + '</div>' : '')
+                            + para(g.why) + '<p class="text-xs text-gray-500">Change the aim or how much you plant on the Lots step: the goal is counted again.</p>');
+                    })()
                     + acc('🧬', 'The variety', v.season ? first(v.season) : first((v.traits || [])[0]),
                         (v.by ? '<p><b>' + esc(v.by) + '</b></p>' : '') + para(v.season) + list((v.traits || []).map(esc)) + ((v.cautions || []).length ? '<h6>Careful</h6>' + list(v.cautions.map((t) => '⚠️ ' + esc(t)), true) : ''),
                         (v.cautions || []).length ? (v.cautions.length === 1 ? '1 caution' : v.cautions.length + ' cautions') : 0, true)
@@ -1479,7 +1600,15 @@
         const soilTex = (read.soil || {}).texture && read.soil.texture !== 'unsure' ? read.soil.texture : (sr.texture || 'unsure');
         const conds = [...new Set([...(sr.conditions || []), ...((read.soil || {}).conditions || []), ...(((read.soil || {}).ph && read.soil.ph !== 'unsure') ? [read.soil.ph] : [])])].filter((c) => NPK_CONDS.includes(c));
         const pre = { calcId: l.calcId || null, crop: l.crop, variety: l.variety || ((read.variety || {}).name || ''), areaValue: Number(l.size) || 1, areaUnit: l.unit === 'sqm' ? 'sqm' : 'ha',
-            areaHa: l.unit === 'sqm' ? (Number(l.size) || 0) / 10000 : (Number(l.size) || 1), potential: (read.variety || {}).yieldPotentialTPerHa || null, target: (read.goal || {}).tPerHa || null,
+            areaHa: l.unit === 'sqm' ? (Number(l.size) || 0) / 10000 : (Number(l.size) || 1),
+            // The goal as the app counts it (AutoGoal), the farmer's own target when typed, and how much they plant.
+            potential: (S.goalOut[l.id] || {}).potential || (read.variety || {}).yieldPotentialTPerHa || null,
+            target: goalOf(l).target || (S.goalOut[l.id] || {}).tPerHa || (read.goal || {}).tPerHa || null,
+            seed: (() => {
+                const g = goalOf(l);
+                if (g.by === 'spacing' && g.row && g.plant) return { by: 'spacing', spacing: { row: g.row, plant: g.plant, perHill: g.perHill || null }, germination: g.germ || null };
+                return g.amount ? { by: 'amount', amount: g.amount, key: g.unit || (((S.goalOut[l.id] || {}).plant || {}).units || ['kg'])[0], germination: g.germ || null } : null;
+            })(),
             prov: l.province || null, town: l.town || null, water: (BOOK.water[S.answers.water] || [])[2] || 'irrigated', planted: l.fieldDate || '', texture: soilTex, conditions: conds,
             ph: (S.answers.soil || {}).tested ?? null, say: 'Add the fertilizers you plan for ' + (l.name || 'this lot') + ', then Use this plan.',
             // The field in detail: NPK Plus counts it in the need too (2026-10-15).
@@ -1564,6 +1693,8 @@
     // Resume where the farmer left off.
     $('auTitleTop').textContent = S.title || 'Anee Auto';
     show(step);
+    // Every lot's goal, counted by the app (AutoGoal).
+    goalsSoon(null, 0);
     // The farm's lots this season was filled from, as they are now.
     if (Object.keys(LINK).length) loadFarm().then(() => {
         if (!FLROWS) return;

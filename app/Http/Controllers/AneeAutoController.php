@@ -21,6 +21,7 @@ use App\Support\AiPrices;
 use App\Support\AiUsage;
 use App\Support\AneeEmoji;
 use App\Support\AutoBook;
+use App\Support\AutoGoal;
 use App\Support\CropCatalog;
 use App\Support\CropStages;
 use App\Support\FieldCatalogue;
@@ -457,6 +458,31 @@ class AneeAutoController extends Controller
         return $this->json(true, 'Saved.', ['workers' => $this->wizardState($auto, $schedule)['workers']]);
     }
 
+    /**
+     * The lots' goals (App\Support\AutoGoal, 2026-10-28): a lot's aim and planting saved when they are sent,
+     * then every lot's goal counted again, since the soil, the water and the season move them too.
+     */
+    public function goal(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($request->has('lotId')) {
+            if ($no = $this->setupOnly($auto)) {
+                return $no;
+            }
+            $lotId = (int) $request->input('lotId');
+            if (! AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->exists()) {
+                return $this->json(false, 'That lot is not in this season.', [], 404);
+            }
+            $a = (array) $auto->answers;
+            $goals = (array) ($a['goals'] ?? []);
+            $goals[(string) $lotId] = AutoGoal::clean((array) $request->input('goal', []));
+            $a['goals'] = $goals;
+            $auto->update(['answers' => $a]);
+        }
+
+        return $this->json(true, 'ok', ['goals' => (object) AutoGoal::forSeason($auto->fresh())]);
+    }
+
     public function saveAnswers(Request $request, int $id)
     {
         $auto = $this->auto($id);
@@ -708,6 +734,14 @@ class AneeAutoController extends Controller
                     ['via' => 'auto', 'userId' => (int) $this->payer()->id, 'searched' => (bool) ($result['searched'] ?? false), 'sources' => (array) ($result['sources'] ?? [])]);
             }
             $data = $result['data'];
+            // The goal is the app's count, never Anee's guess (2026-10-28, AutoGoal): the number and its steps are set here.
+            $goals = rescue(fn () => AutoGoal::forSeason($auto), [], false);
+            foreach ((array) ($data['lots'] ?? []) as $i => $rl) {
+                $g = $goals[(int) ($rl['lotId'] ?? 0)] ?? null;
+                if ($g && $g['tPerHa']) {
+                    $data['lots'][$i]['goal'] = ['tPerHa' => $g['tPerHa'], 'why' => (string) (($rl['goal'] ?? [])['why'] ?? ''), 'steps' => $g['steps'], 'aim' => $g['aim']];
+                }
+            }
             $data['at'] = now('Asia/Manila')->format('M j, Y g:i A');
             $data['sources'] = array_slice((array) ($result['sources'] ?? []), 0, 12);
             $data['searched'] = (bool) ($result['searched'] ?? false);

@@ -3364,6 +3364,8 @@
                     applyCalc({ id: null, crop: p.crop || null, areaHa: p.areaHa || 1, targetYield: p.target || null, lines: [], soil: p.ph != null ? { ph: p.ph } : {},
                         result: { setup: { variety: p.variety || '', areaUnit: p.areaUnit || 'ha', areaValue: p.areaValue || 1, yUnit: 't',
                             potential: p.potential ? { value: p.potential, key: 't' } : null, target: p.target ? { value: p.target } : null,
+                            // How much the lot plants, as Anee Auto asked it (2026-10-28): by spacing or by amount.
+                            seed: p.seed || null,
                             prov: p.prov || null, town: p.town || null, water: p.water || 'irrigated', planted: p.planted || '', texture: p.texture || 'unsure', conditions: p.conditions || [], ph: p.ph != null ? p.ph : null } } });
                     // The season's field in detail (Anee Auto keeps one): the calculator counts it too.
                     if (p.fieldProfile && FPC) FPC.set(p.fieldProfile, null);
