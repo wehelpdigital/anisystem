@@ -143,18 +143,18 @@ class AneeAutoController extends Controller
 
     /* -------------------------------------------------------------- pages */
 
+    /**
+     * There is no Anee Auto seasons page any more (2026-10-27, the owner: "remove the my seasons button and that
+     * page when you click it"): each season opens from its card on Cropping Schedules, where a new one starts
+     * too, so an old link or bookmark lands there.
+     */
     public function index()
     {
         if (WorkerContext::inWorkerContext()) {
             return redirect()->route('app.dashboard')->with('error', 'Only the farm owner runs Anee Auto.');
         }
-        $rows = AsAutoSeason::where('userId', Auth::id())->where('deleteStatus', 1)->orderByDesc('id')->get();
-        $schedules = AsCroppingSchedule::whereIn('id', $rows->pluck('croppingScheduleId'))->where('deleteStatus', 1)->get()->keyBy('id');
 
-        return view('auto.index', ['seasons' => $rows->filter(fn ($r) => $schedules->has($r->croppingScheduleId))->map(fn ($r) => [
-            'id' => $r->id, 'title' => $schedules[$r->croppingScheduleId]->title, 'status' => $r->status, 'lots' => $r->lotsPaid,
-            'next' => $r->status === AsAutoSeason::ACTIVE ? AsAutoTask::where('autoId', $r->id)->where('deleteStatus', 1)->where('status', 'planned')->whereNotNull('plannedDate')->orderBy('plannedDate')->first(['title', 'plannedDate']) : null,
-        ])->values()]);
+        return redirect()->route('sm.index');
     }
 
     public function quote()

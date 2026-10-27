@@ -663,7 +663,6 @@
              the floating + button is the phone equivalent. --}}
         <div class="hidden md:flex md:justify-end md:items-center gap-2">
             @if (! $isWorkerHere)
-            <a href="{{ route('auto.index') }}" class="btn btn-white">Anee Auto seasons</a>
             <button type="button" class="sch-auto-cta is-desk" data-auto-start><span class="sch-auto-face" aria-hidden="true"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""></span> Anee Auto</button>
             <a href="{{ route('sm.create') }}" class="btn btn-primary">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>

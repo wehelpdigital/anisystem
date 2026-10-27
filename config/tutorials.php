@@ -454,7 +454,8 @@ return [
         // Every tool of Global and Quick Tools has its own card (2026-10-16, the owner; the clips come later).
         'sat.page'      => 'analysis.satellite',
         'landprep.page' => 'analysis.land-prep',
-        'auto.index'    => 'analysis.anee-auto',
+        // Anee Auto's card shows on the season's own page (no seasons page since 2026-10-27).
+        'auto.show'     => 'analysis.anee-auto',
         'sky.page'      => 'tool.sky-weather',
         'npk.page'      => 'tool.npk',
         'lcc.page'      => 'tool.lcc',

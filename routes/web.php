@@ -244,6 +244,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'marketCropWord' => method_exists(\App\Support\MarketBook::class, 'cropWord'),
             // 2026-10-27: every province is in "Where you sell"; one without its own prices reads its region's.
             'marketAllProvinces' => method_exists(\App\Support\MarketBook::class, 'provinceBook'),
+            // 2026-10-27: no Anee Auto seasons page or "My seasons" button; /app/auto lands on Cropping Schedules.
+            'autoNoSeasonsPage' => ! view()->exists('auto.index'),
             // 2026-10-27: every AI ask goes to the owner's Claude first, and to Gemini when Claude cannot answer.
             'claudeFirst' => class_exists(\App\Support\ClaudeFirst::class) && method_exists(\App\Models\AiSetting::class, 'onClaude'),
             'marketEverywhere' => class_exists(\App\Support\MarketLines::class) && \Illuminate\Support\Facades\Route::has('bilad.palay') && method_exists(\App\Support\MarketBook::class, 'sellLine'),

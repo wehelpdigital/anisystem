@@ -3,7 +3,7 @@
 @section('body-class', 'hide-tabbar')
 @section('page-title', 'Anee Auto')
 @section('page-subtitle', $schedule->title)
-@section('back', route('auto.index'))
+@section('back', \App\Support\BackTo::url(route('sm.index')))
 
 {{-- ANEE AUTO, THE SEASON (2026-10-12; cards since 2026-10-27, the owner:
      "don't make it look like a simple chat. so daily thing should appear as

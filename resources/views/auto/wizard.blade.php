@@ -3,7 +3,7 @@
 @section('body-class', 'hide-tabbar')
 @section('page-title', 'Anee Auto')
 @section('page-subtitle', 'Setting up your season')
-@section('back', route('auto.index'))
+@section('back', \App\Support\BackTo::url(route('sm.index')))
 
 {{-- ANEE AUTO, THE WIZARD (2026-10-12). Nine steps, each saved as it is
      typed (the season already exists, in setup): the season, the lots, the
@@ -75,6 +75,7 @@
         background: rgb(249 250 251 / .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-top: 1px solid var(--color-gray-200); }
     .au-nav .btn { min-width: 0; }
     .au-nav #auNext { margin-left: auto; }
+    .au-nav [hidden] { display: none !important; }
     .au-nav small { font-size: .74rem; color: var(--color-gray-500); font-weight: 700; }
     html.dark .au-nav { background: rgb(16 20 13 / .94); border-color: #2b3a1c; }
 
@@ -533,7 +534,9 @@
         document.querySelectorAll('#auRail button').forEach((b, i) => { b.hidden = stepHidden(i); b.classList.toggle('is-on', i === step); b.classList.toggle('is-done', i < step); b.disabled = i > reached(); });
         $('auStepSay').textContent = 'Step ' + (Math.max(0, shown.indexOf(step)) + 1) + ' of ' + shown.length + ' · ' + STEPS[step];
         const p = prevOf(step);
-        $('auBack').textContent = p < 0 ? 'My seasons' : 'Back to ' + STEPS[p];
+        // The first step has no Back: the header's arrow leaves the setup (no seasons page since 2026-10-27, the owner).
+        $('auBack').hidden = p < 0;
+        if (p >= 0) $('auBack').textContent = 'Back to ' + STEPS[p];
         $('auNext').hidden = step === STEPS.length - 1;
         if (step !== 7) $('auNext').textContent = step === 5 ? 'Next: Anee reads it' : step === 6 ? 'Next: Fertilizer' : 'Next: ' + STEPS[nextOf(step)];
     };
@@ -551,7 +554,7 @@
         window.scrollTo({ top: 0, behavior: 'auto' });
     };
     $('auRail').addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b && !b.disabled) show(Number(b.dataset.go), Number(b.dataset.go) < step); });
-    $('auBack').addEventListener('click', () => { const p = prevOf(step); if (p < 0) location.href = @json(route('auto.index')); else show(p, true); });
+    $('auBack').addEventListener('click', () => { const p = prevOf(step); if (p >= 0) show(p, true); });
     $('auNext').addEventListener('click', () => {
         // The fertilizer step walks the lots one by one before it moves on.
         if (step === 7) { const at = S.lots.findIndex((x) => x.id === FLOT); if (at >= 0 && at < S.lots.length - 1) { FLOT = S.lots[at + 1].id; paintFert(); window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' }); return; } }

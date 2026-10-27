@@ -545,7 +545,7 @@ class HowItWorks
                     self::item('auto', 'Anee Auto', 'Anee plans the season, you just follow', 'anee/avatar-160.jpg', true,
                         'Answer a few questions once: your lots, the crop and variety, your soil, your water, your fertilizer and your workers. Anee looks up your variety, reads the forecast and the season ahead, and writes every task from land preparation to harvest. Then she keeps it on track every day.',
                         ["Today's work every morning, by email too, for you and each worker", "Can't today? She moves it to the best day near it", 'Send a photo, a video or a voice note and she adjusts the plan'],
-                        null, 'auto.index'),
+                        null, 'sm.index'),
                 ],
             ],
         ]));
